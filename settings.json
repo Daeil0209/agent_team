@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebSearch",
+      "WebFetch",
+      "Skill",
+      "Agent",
+      "TaskCreate",
+      "TaskUpdate",
+      "TaskGet",
+      "TaskList",
+      "TaskOutput",
+      "TaskStop",
+      "SendMessage",
+      "NotebookEdit",
+      "EnterPlanMode",
+      "ExitPlanMode",
+      "EnterWorktree",
+      "ExitWorktree",
+      "ToolSearch",
+      "AskUserQuestion",
+      "CronCreate",
+      "CronDelete",
+      "CronList",
+      "RemoteTrigger",
+      "TeamCreate",
+      "TeamDelete"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/session-boot-cleanup.sh\"",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/hook-health-self-check.sh\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/boot-enforcement-guard.sh\"",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/sync-closeout-intent-from-prompt.sh\"",
+            "timeout": 8
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/agent-activity-monitor.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-supervisor-edit.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/enforce-continuity-root.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-supervisor-bash.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "WebSearch|WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-supervisor-web.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "TeamCreate|Agent|SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/runtime-entry-gate.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Agent|SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-agent-dispatch.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-skill-authorization.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "TaskGet|TaskUpdate|TaskOutput|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/validate-task-target.sh\"",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-skill-authorization.sh\"",
+            "timeout": 2
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/track-closeout-phase.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/track-closeout-phase.sh\"",
+            "timeout": 2
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/track-runtime-sequence.sh\"",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/suppress-permission-prompts.sh\"",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/session-end-capture.sh\"",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/session-end-cleanup.sh\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/teammate-quality-gate.sh\"",
+            "timeout": 2
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-dev": false
+  },
+  "extraKnownMarketplaces": {
+    "superpowers-dev": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "agent": "team-lead",
+  "autoMemoryEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
+  "teammateMode": "tmux"
+}
