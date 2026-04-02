@@ -196,6 +196,50 @@ if [[ -z "$AGENT_ID" ]]; then
   done
 fi
 
+# ── Pre-dispatch: alive-orphan process reconciliation ─────────────────
+# Kills worker processes that are alive but NOT in any team config,
+# AND kills their tmux panes to prevent bash-shell residue in the UI.
+# Handles context compaction: session ID unchanged but team lead lost
+# memory, config stripped at boot, processes still running.
+# Triggered at Agent dispatch — natural point where team work resumes.
+if [[ -z "$AGENT_ID" ]]; then
+  _known_members=$(python3 -c "
+import json, glob, os
+names = set()
+for f in glob.glob(os.path.expanduser('~/.claude/teams/*/config.json')):
+    try:
+        with open(f) as fh:
+            cfg = json.load(fh)
+        for m in cfg.get('members', []):
+            n = m.get('name', '')
+            if n: names.add(n)
+    except: pass
+print('\n'.join(sorted(names)))
+" 2>/dev/null) || true
+  if [[ -n "$_known_members" ]]; then
+    _sock="${RUNTIME_TMUX_SOCKET_NAME:-}"
+    ps aux 2>/dev/null | grep -- "--parent-session-id" | grep -v grep | while IFS= read -r _line; do
+      _proc_name=$(echo "$_line" | grep -oP '(?<=--agent-name )\S+' || true)
+      _proc_pid=$(echo "$_line" | awk '{print $2}')
+      [[ -n "$_proc_name" && -n "$_proc_pid" ]] || continue
+      echo "$_known_members" | grep -qx "$_proc_name" && continue
+      # Kill the tmux pane (kills process + pane together, no bash residue)
+      if [[ -n "$_sock" ]] && command -v tmux &>/dev/null; then
+        _ppid=$(ps -o ppid= -p "$_proc_pid" 2>/dev/null | tr -d ' ')
+        if [[ -n "$_ppid" ]]; then
+          _orphan_pane=$(tmux -L "$_sock" list-panes -a -F '#{pane_id} #{pane_pid}' 2>/dev/null | awk -v pid="$_ppid" '$2 == pid {print $1}')
+          if [[ -n "$_orphan_pane" ]]; then
+            tmux -L "$_sock" kill-pane -t "$_orphan_pane" 2>/dev/null || true
+            continue
+          fi
+        fi
+      fi
+      # Fallback: kill process directly if pane not found
+      kill -TERM "$_proc_pid" 2>/dev/null || true
+    done
+  fi
+fi
+
 deny_dispatch() {
   local log_code="${1:?log code required}"
   local deny_reason="${2:?deny reason required}"

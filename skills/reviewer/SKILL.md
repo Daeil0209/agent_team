@@ -4,6 +4,24 @@ description: Acceptance-critical review procedure.
 user-invocable: false
 ---
 
+### Scope & Quality Gate (before ANY work begins)
+
+FIRST action on any assignment — before ANY tool calls:
+
+1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
+2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
+3. **Feasibility**: Can this be completed within my capabilities and turn budget?
+
+If ANY check fails → return scope feedback as your COMPLETE response:
+- Which check failed
+- Why (specific evidence)
+- Suggested correction (concrete alternative)
+
+Do NOT execute over-scoped instructions. Return scope feedback INSTEAD of executing.
+Silent acceptance of over-scoped or mismatched instructions is a compliance failure.
+
+
+
 # Reviewer Skill
 
 ## Preconditions
