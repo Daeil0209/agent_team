@@ -42,6 +42,15 @@ Sharded triggers: genuinely broad question where one pass forces shallow coverag
 - Name baseline, comparison surface, axes, fairness notes, provenance.
 - State whether packet supports modification proposal or remains HOLD.
 
+### 5B. Multi-Layer Evidence Construction
+- **Regulatory/Legal depth**: Go beyond law names to specific articles, clauses, enforcement details, fine amounts, penalties, compliance rates, and enforcement dates. If registration or compliance statistics exist, include them (e.g., "only 23 out of ~440 universities registered = 5.2%").
+- **Quantitative backing mandate**: For every major claim or recommendation, actively search for supporting quantitative data: statistical trends, percentages, rates, thresholds, and specific technical parameters. Mark claims without quantitative backing as `evidence-thin`.
+- **Real-world case/incident research**: When the topic involves risk, safety, compliance, or condition review, actively search for at least 1–2 actual incidents, failures, or case studies. For each case record: date, location, what happened, root cause, consequence, and lesson learned. If no cases found after genuine search, state that explicitly rather than silently omitting.
+- **International standard cross-reference**: When domestic regulations are involved, check for relevant international standards (ISO, ASHRAE, IEEE, etc.) for additional authority or context.
+- **Evidence density self-check**: Before handoff, verify each major section has at least one of: specific regulation citation, quantitative data point, case study reference, or expert standard citation. Sections with none are `evidence-thin` and should be flagged.
+- **Regulation-reality gap data**: When researching regulatory or compliance topics, actively search for data showing the gap between regulatory requirements and actual compliance rates. Examples: registration rates ("only 23 of ~440 universities = 5.2%"), accident trend data ("gas-related lab accidents increased 3.5x from 2018 to 2021"), compliance audit failure rates. This gap data is among the most persuasive evidence a report can contain because it demonstrates that the problem is not hypothetical. Mark topics where gap data likely exists but was not found as `gap-data-unsearched`.
+- **Cascade risk and secondary hazard identification**: When researching primary risks or hazards, explicitly investigate secondary/cascade risks that emerge as consequences of the primary event. Examples: refrigerant contacting flame → thermal decomposition → toxic gas generation (HF, phosgene); high-pressure vessel failure → rapid vaporization → frostbite + projectile hazard. For each primary risk identified, ask: "What secondary dangers does this primary event create?" Primary-only risk research when cascade risks are plausible is an `evidence-thin` finding.
+
 ### 6. Research The Validation Path
 - Identify what downstream lanes need to verify findings.
 

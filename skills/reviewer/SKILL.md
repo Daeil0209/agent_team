@@ -38,6 +38,7 @@ user-invocable: false
 **F: Failure/Risk** - Failure modes identified? Rollback possible? Blast radius bounded?
 **G: UX** - User path intuitive? Error messages helpful? Exit paths clean?
 **H: Business Logic** - Rules correct? Edge cases? Compliance met?
+**I: Report/Document Quality** - Metadata present? (date, author, scope) Conclusion substantive? References detailed? (law names, standard numbers) Summary accessible in 30s? Actionable elements? (checklists, steps) Density appropriate? (tables over redundant prose) Scope/limits stated? Bidirectional criteria present?
 
 ### 6. Classify Findings
 
@@ -49,6 +50,8 @@ user-invocable: false
 | Advisory | Observation only |
 
 Each finding: severity, evidence, impact, owner, fix direction.
+
+For report/document reviews, also check for **information dilution**: content that is correct but adds reading time without improving decision quality. Excessive detail in areas the reader already understands, redundant explanations across sections, and prose that could be a table row are Minor findings of type `density-defect`.
 
 ### 7. Define Retest Requirements
 - For blocking findings: what must change and how to verify.

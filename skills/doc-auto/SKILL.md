@@ -110,6 +110,157 @@ Use this skill when a request depends on preserving the structure, format intent
 - if the chosen format path cannot preserve required fidelity, document-job clarity, evidence boundaries, equation rendering, or faithful adaptation of critical source material, mark the path `HOLD` and require a different generation path or stronger source asset
 - if a research or survey report collapses into a source dump without reader decision order, explicit traceability, or visible cross-check and uncertainty state, mark the path `HOLD` rather than soft-passing the draft
 
+## Review and Analysis Report Persuasion Structure Design
+
+When generating reports that analyze risks, evaluate conditions, or support go/no-go decisions, apply the "Why → So What → Now What" three-stage persuasion structure.
+
+**Stage 1 — Why: Multi-dimensional risk or issue decomposition**
+- Decompose risk into distinct named categories with specific mechanisms; do not lump all risk content into one paragraph
+- Each category must state the concrete mechanism that makes it dangerous (e.g., "R-290 flammability range 2.1–9.5 vol%"); category labels alone are a persuasion defect
+- Aim for 4–6 distinct risk categories rather than a single generic risk paragraph
+
+**Stage 2 — So What: Context-specific limitation analysis**
+- Analyze why the target environment makes the identified risks specifically worse — not general risk restatement but environment-amplification logic
+- Dedicate a named structural section to the target environment's limitations; burying this analysis inside a generic risk table is a persuasion defect
+- Provide 4–6 concrete points explaining why THIS environment is specifically problematic, not any environment in general
+
+**Stage 3 — Now What: Actionable conditions with graduated recommendations**
+- Present recommendations tiered by risk level (low → medium → high) so readers can locate guidance for their specific situation without wading through irrelevant tiers
+- Pair each condition or recommendation with the risk tier it addresses
+- Do not present one-size-fits-all guidance when the reader population spans meaningfully different risk contexts
+
+**Real-world case study integration**
+- When the report involves safety, risk, or condition review, include at minimum a directive to seek actual incident cases with lessons learned
+- Case studies transform abstract risk descriptions into concrete persuasion; their absence in a safety-review report is a persuasion defect
+
+**Bidirectional criteria framing**
+- Present both what must NOT be done and what conditions MUST be met, rather than only one direction
+- This gives the reader clear decision boundaries from both sides; unidirectional framing is a completeness defect in condition-review reports
+
+## Information Density Design
+
+Apply these rules to keep reports concise, decision-focused, and respectful of reader time. Note that persuasion depth (the section above) and information density are in direct tension — the resolution is: apply full persuasion depth for the one decisive argument that changes the reader's mind, and apply maximum density discipline for everything else.
+
+**Top-down conclusion placement**
+- The core conclusion must be accessible within 30 seconds of reading; place a summary conclusion table or executive summary at the document top, not at the end
+- A reader who cannot locate the answer within 30 seconds is experiencing a structure defect, not a content defect
+
+**Three-layer reading design**
+- Structure the document so it can be consumed at three different depth levels:
+  - 30-second layer: conclusion table or summary (what is the answer?)
+  - 3-minute layer: section headings and key tables (what are the main points?)
+  - Full-read layer: complete body text (what are all the details?)
+- Each layer must be independently coherent; a reader who stops at the 30-second layer must not reach a false or dangerously incomplete conclusion
+
+**Density over volume**
+- Prefer tables over prose paragraphs when the same information can be expressed in either form
+- Before every paragraph, apply the decision-necessity test: "Does removing this paragraph prevent the reader from making the correct decision?" If not, convert it to a table row or cut it
+- Adding correct content that dilutes focus is a negative contribution; report value = content quality ÷ reading time required
+
+**Document scope honesty**
+- Explicitly state the document's scope and limitations at the beginning (e.g., "This is a general review; site-specific analysis is required before actual implementation")
+- Scope disclosure builds professional trust and prevents over-reliance; its absence is a reader-contract defect
+
+**Tension resolution between persuasion depth and density**
+- Persuasion structure depth (the Why → So What → Now What progression) applies to the decisive section — the one argument that must change the reader's conclusion
+- All other sections default to density-first: tables over prose, 30-second accessibility, decision-necessity filtering
+- When both cannot be satisfied, prefer depth on the deciding argument and density everywhere else; do not apply persuasion expansion uniformly across every section
+
+## Practical Application Tools Integration
+
+When generating review reports, condition assessments, or safety evaluations, make the output immediately actionable by embedding ready-to-use tools directly in the document.
+
+**Actionable checklist inclusion**
+- Include a checklist with judgment columns (e.g., □ 적합 / 보완 필요 or ✔ format) that the reader can use directly in their workflow
+- A review report without a decision-ready checklist forces the reader to extract and reformat findings manually; this is an execution defect
+- The checklist must reference the concrete conditions established in the report body, not generic compliance items
+
+**Step-by-step implementation sequence**
+- The conclusion must include a numbered implementation sequence linking conditions to actions (e.g., "① Determine refrigerant type → ② Conduct risk analysis → ③ Secure required facilities → ④ Confirm reporting requirements")
+- The sequence must be specific enough that the reader can begin execution without consulting additional documents for the standard path
+- A conclusion that states findings without a sequenced action path is decision-incomplete
+
+**Practical judgment column in condition tables**
+- When presenting conditions or requirements in table format, add a "실무 판단" (practical judgment) column that gives real-world interpretation guidance alongside the formal requirement
+- The practical judgment column bridges the gap between regulatory or academic language and field execution; its absence leaves interpretation work to the reader
+
+**Risk-level graduated recommendations**
+- Present recommendations tiered by risk level (low → medium → high) rather than one-size-fits-all advice
+- Each tier must be independently readable so readers can locate guidance relevant to their specific situation without parsing the full recommendation set
+- Untiered recommendations in risk-differentiated contexts are a usability defect
+
+## Introduction and Reader Preparation Design
+
+When generating reports that establish context before analysis, apply these introduction-design patterns to ensure reader comprehension before analysis begins.
+
+**Macro-to-micro zoom introduction**
+- For reports analyzing specific problems within broader contexts, structure the introduction as a zoom-in: start with the global or industry-wide trend or regulation driving the issue, then narrow to the specific domain, then to the specific environment being analyzed
+- This gives the reader the "why now?" and "why this matters?" context before diving into details
+- An introduction that starts at the micro level without macro context fails to establish urgency; micro-first introductions without macro framing are a reader-preparation defect
+
+**Taxonomy pre-education**
+- When the report's analysis depends on a specialized classification system (e.g., ASHRAE safety grades, ISO risk levels, regulatory categories), explain that classification system BEFORE using it in analysis
+- The reader must understand the framework before consuming analysis built on it
+- Using specialized classification codes without prior explanation is a reader-accessibility defect
+
+**Self-selection axis design**
+- When the report covers multiple categories that readers may belong to differently (e.g., different safety grades, different risk tiers), structure the key reference table so one axis represents the reader's self-identified category
+- This lets the reader locate their specific row without reading the entire table
+- Tables without a clear self-selection axis force linear reading when random access is possible; absence of a self-selection axis in categorized-reader tables is a usability defect
+
+## Analysis Depth Techniques
+
+When generating risk analyses, condition evaluations, or safety assessments, apply these techniques to achieve analytical depth beyond surface-level issue naming.
+
+**Causal chain narration**
+- Within each risk or issue category, do not stop at naming the risk; narrate the full causal chain: trigger → mechanism → immediate consequence → ultimate outcome
+- Example: "vapor density > 1 → gas accumulates from floor upward → displaces oxygen → loss of consciousness within minutes → death"
+- A risk statement without its causal chain is a persuasion gap; causal chain omission in risk categories is an analysis-depth defect
+
+**Cascade risk identification**
+- After analyzing primary risks, explicitly check for secondary or cascade risks — dangers that emerge only as a consequence of the primary risk event
+- Example: "fluorine-based refrigerant contacts flame → thermal decomposition → generates hydrogen fluoride (HF) and phosgene (COCl₂) → secondary casualties from toxic gas"
+- Stopping analysis at primary risks when cascade risks exist is an analysis-depth defect
+
+**Sensory limitation preemption**
+- When a risk is invisible to normal human senses (colorless, odorless, inaudible), state this explicitly as a reason why passive awareness is insufficient and engineered detection is mandatory
+- This preempts the reader's instinctive "I'll just be careful" objection
+- Omitting sensory limitation analysis when the hazard is imperceptible is a persuasion gap
+
+**Regulation-reality gap quantification**
+- When presenting regulatory requirements, actively seek and present data showing the gap between what regulations require and what is actually practiced (e.g., "only 5.2% of universities have completed required registration")
+- This gap data is one of the most powerful persuasion tools because it shows the reader that compliance is the exception, not the norm
+- When gap data is available but omitted, it is a missed persuasion opportunity; regulation-without-gap-data in compliance-review reports is a persuasion defect
+
+## Conclusion Design Techniques
+
+When generating conclusions for review reports, safety evaluations, or condition assessments, apply these patterns to deliver unambiguous decision support.
+
+**Explicit Go/No-Go judgment line**
+- The conclusion must state an unambiguous decision criterion — not just "be careful" but "if conditions X, Y, Z are not met, the activity should NOT be performed"
+- Vague concluding advice without a clear decision boundary is a judgment-delivery failure
+
+**Value priority declaration**
+- When the report involves competing priorities (e.g., research output vs. safety, cost vs. compliance), the conclusion must explicitly declare which value takes precedence
+- Example: "Research outcomes are less important than researcher safety"
+- This declaration anchors the reader's subsequent decisions; conclusions that avoid stating value priorities leave the reader to guess the intended hierarchy, which is a judgment-delivery defect
+
+**Conservative design principle for uncertainty**
+- When the reader's specific situation may not yet be determined (e.g., which exact refrigerant will be used), state an explicit decision principle for uncertain conditions
+- Example: "When the substance is undetermined, judge spatial suitability based on the most hazardous possible substance"
+- This prevents the reader from defaulting to optimistic assumptions; omitting a conservative-design principle when reader conditions are undetermined is a judgment-delivery defect
+
+**Reader context bridging in tables**
+- When presenting legal, technical, or regulatory content in tables, add a column that translates each item into the reader's specific context
+- Example: a law table with a "Meaning for refrigerant experiments" column
+- This bridges the gap between abstract regulation and concrete application; tables that present regulations without context-specific interpretation leave translation work to the reader, which is a usability defect
+
+**Optimal length calibration for maximum impact**
+- Report length is not a byproduct of content — it is a deliberate design decision; the optimal length is the point where removing anything would lose a critical argument and adding anything would dilute focus
+- Before finalizing, apply the impact-per-page test: "If this report were 30% shorter, would the reader reach a worse decision? If 30% longer, would the reader reach a better decision?" If the answer to both is no, the report is at the wrong length
+- Different report purposes have different optimal densities: a safety review needs enough depth to build urgency but not so much that urgency drowns in detail; a compliance checklist needs maximum compression; a technical analysis needs enough mechanism explanation to build credibility without becoming a textbook
+- The goal is not "short" — the goal is "every sentence earns its place in driving the reader toward the correct decision"; length without impact contribution is a density defect
+
 ## Non-Goals
 
 - do not replace domain validation

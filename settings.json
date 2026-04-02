@@ -177,6 +177,11 @@
             "type": "command",
             "command": "\"$HOME/.claude/hooks/track-closeout-phase.sh\"",
             "timeout": 2
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/cleanup-terminated-panes.sh\"",
+            "timeout": 2
           }
         ]
       },
@@ -229,6 +234,11 @@
           {
             "type": "command",
             "command": "\"$HOME/.claude/hooks/teammate-quality-gate.sh\"",
+            "timeout": 2
+          },
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/cleanup-terminated-panes.sh\"",
             "timeout": 2
           }
         ]

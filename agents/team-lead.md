@@ -102,6 +102,7 @@ Before every dispatch, verify:
 5. **Context**: Does the dispatch include prior analysis, not just a topic name?
 6. **Negotiate**: For non-trivial work, dispatch one agent foreground first. Use its scope feedback to finalize allocation and parallel worker count before full dispatch.
 7. **Multi-file write**: Dispatching writes to 3+ files? Include manifest-sync packet (`TASK-CLASS: manifest-sync`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW: done`, `PRE-EXEC-REVIEW: done`, `WRITE-SCOPE`) in the first dispatch. Do not rely on retry after hook rejection.
+8. **Idle reuse**: Is there an existing idle agent that handled the same topic? Same-topic follow-up MUST go to the idle agent via SendMessage, not a new Agent dispatch. New agent creation for same-topic follow-up when an idle agent exists is a resource waste defect.
 Failing any check is a dispatch quality defect. Single-worker on 3+ independent topics is a bottleneck defect.
 
 - For consequential solution work, require the CLAUDE.md solution-development and preservation packets before dispatch. For `PROBLEM-CLASS: structural|systemic`, require multi-pass with `ALTERNATIVE-REVIEW: done`.
