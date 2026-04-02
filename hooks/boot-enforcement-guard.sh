@@ -17,7 +17,7 @@ if [[ -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
   
   if echo "$USER_PROMPT" | grep -qiP "$CORRECTION_PATTERN" 2>/dev/null; then
     # Strong trigger: correction detected
-    CONTEXT="SELF-GROWTH TRIGGER: User correction detected. BEFORE responding: (1) Record defect to \$HOME/.claude/.self-growth-log (append 1 line), (2) Classify: non-compliance or missing rule, (3) Then respond with changed behavior. Do NOT just apologize."
+    CONTEXT="SELF-GROWTH TRIGGER: User correction detected. BEFORE responding: (1) Record defect to \$HOME/.claude/.self-growth-log (append 1 line), (2) Classify: non-compliance or missing rule, (3) Dispatch a Self-Growth agent for correction via Self-Growth Sequence, (4) Then respond with changed behavior. Do NOT just apologize."
   else
     # Lightweight reminder: every message
     CONTEXT="PRE-RESPONSE: Execute Primary Operating Loop - (1) Classify message type, (2) Determine governance tier, (3) Follow tier procedure, (4) Verify before responding."

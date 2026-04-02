@@ -240,15 +240,48 @@ print('\n'.join(sorted(names)))
   fi
 fi
 
+# Mirror messages accumulated during enforcement checks
+MIRROR_MESSAGES=()
+
 deny_dispatch() {
   local log_code="${1:?log code required}"
   local deny_reason="${2:?deny reason required}"
 
+  # Keep existing audit log (unchanged)
   printf '[%s] PACKET-ADVISORY %s: %s | %s\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" \
     "$log_code" \
     "${DESCRIPTION:0:240}" \
     "${deny_reason:0:300}" >> "$VIOLATION_LOG"
+
+  # NEW: Accumulate mirror message for model feedback
+  MIRROR_MESSAGES+=("${log_code}: ${deny_reason:0:200}")
+}
+
+emit_mirror_output() {
+  [[ ${#MIRROR_MESSAGES[@]} -gt 0 ]] || return 0
+
+  # Cap at 3 messages to prevent context flood
+  local max_mirrors=3
+  local count=${#MIRROR_MESSAGES[@]}
+  (( count > max_mirrors )) && count=$max_mirrors
+
+  local combined=""
+  for (( i=0; i<count; i++ )); do
+    combined+="${MIRROR_MESSAGES[$i]}"
+    (( i < count - 1 )) && combined+=" | "
+  done
+
+  # Output as additionalContext — non-blocking, model sees it and decides
+  COMBINED="$combined" node <<'NODE'
+const ctx = "SELF-AWARENESS MIRROR: Your dispatch triggered compliance observations: " + (process.env.COMBINED || "") + ". These are reflections, not blocks. Review your dispatch against the relevant checkpoint before proceeding.";
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    additionalContext: ctx
+  }
+}));
+NODE
 }
 
 resolve_sender_role() {
@@ -1384,4 +1417,5 @@ if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
   printf '[%s] HEALTH-CRON: first agent dispatched\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$VIOLATION_LOG"
 fi
 
+emit_mirror_output
 exit 0
