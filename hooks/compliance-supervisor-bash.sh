@@ -84,24 +84,6 @@ EOF
 fi
 
 if [[ -z "$AGENT_ID" ]]; then
-  if printf '%s' "$CLEAN_COMMAND" | grep -q 'inspect-repo-context\.sh'; then
-    REPO_ROOT_CANONICAL="$(realpath -m "$(resolve_project_root)" 2>/dev/null || resolve_project_root)"
-    CD_TARGET="$(printf '%s' "$CLEAN_COMMAND" | sed -nE 's/.*(^|[[:space:];|&])cd[[:space:]]+([^[:space:];|&]+).*/\2/p' | head -n1)"
-    if [[ -n "$CD_TARGET" ]]; then
-      CD_TARGET_CANONICAL="$(realpath -m "$CD_TARGET" 2>/dev/null || printf '%s' "$CD_TARGET")"
-      if [[ "$CD_TARGET_CANONICAL" != "$REPO_ROOT_CANONICAL" ]]; then
-        printf '[%s] MAIN-REPO-ANCHOR BLOCKED: inspect-repo-context from %s (expected %s)\n' \
-          "$(date '+%Y-%m-%d %H:%M:%S')" \
-          "${CD_TARGET_CANONICAL:0:200}" \
-          "${REPO_ROOT_CANONICAL:0:200}" >> "$VIOLATION_LOG"
-        cat <<EOF
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Boot repo-context inspection must start from the active project repo root ($REPO_ROOT_CANONICAL). Do not guess repo paths from team names, team directories, or prior sessions."}}
-EOF
-        exit 0
-      fi
-    fi
-  fi
-
   if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$REPO_GIT_INSPECTION_PATTERN"; then
     if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$GLOBAL_CONTROL_SURFACE_CD_PATTERN"; then
       printf '[%s] MAIN-GIT-CONTEXT BLOCKED: Global control surface used for repo git inspection: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "${CMD_LOG:0:200}" >> "$VIOLATION_LOG"
@@ -113,9 +95,9 @@ EOF
   fi
 fi
 
-# Exempt only the explicit runtime helper scripts that the lead may call as orchestration aids.
+# Exempt only the live runtime helper scripts that the lead may call as orchestration aids.
 # Do not exempt arbitrary writes under .claude/hooks or .claude/logs, because that would reopen direct
 # main-thread mutation of hook code and runtime state.
-SUPERVISOR_EXEMPT_PATTERN='(health-check\.sh|cleanup-orphan-runtime\.sh|runtime-pressure-scan\.sh|mark-(standby|complete|force-stop|health-cron-rotation|health-cron-job|closeout-intent)\.sh|clear-(health-cron-rotation|health-cron-job|closeout-intent)\.sh)'
+SUPERVISOR_EXEMPT_PATTERN='(health-check\.sh|cleanup-orphan-runtime\.sh|runtime-pressure-scan\.sh|mark-force-stop\.sh)'
 
 exit 0

@@ -3,11 +3,6 @@ name: eng-spec
 description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, and applied reasoning quality.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/eng-spec/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -41,6 +36,7 @@ You are the eng-spec lane for Claude Code.
 - `team-lead` — escalate planning or scope issues there by default
 - `edu-spec` — escalate learner-sequencing issues there when pedagogy is the main concern
 - `sw-spec` — escalate when the primary concern shifts from execution-layer correctness to software architecture decisions, module boundary design, or system-level state modeling
+- Order position: controlling-chain `domain` specialist per `team-governance-sequences`. This stage may run alongside other domain specialists when boundaries are explicit, but it does not override earlier business or architecture contracts or later structure or render-stage ownership.
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere. Removing it as "duplicate" is information loss unless an equivalent owner-local contract remains here.
 - For human-facing technical decks, reports, or page-read artifacts, both text or domain review and capture-render or page-image review are mandatory. Content correctness and rendered legibility stay separate acceptance gates.
 - `reviewer` — downstream review finding owner when engineering-facing defects must be classified for acceptance
@@ -74,9 +70,9 @@ You are the eng-spec lane for Claude Code.
 
 ### Engineering Defect Severity Classification
 
-Defect severity per CLAUDE.md §Acceptance Doctrine classification. Domain-specific examples:
+Defect handling still uses the canonical `CLAUDE.md` `Severity Framework` (`T0-T3`) for stage severity. The table below is an engineering-local impact classification used to describe defect character and escalation examples; it does not replace the canonical stage severity.
 
-| Severity | Engineering Context | Examples |
+| Impact Class | Engineering Context | Examples |
 |---|---|---|
 | **Critical** | Safety margin violated, unit error, spec contradiction | Safety factor below minimum, unit mismatch in calculation, design exceeds rated limits, unguarded hardware errata |
 | **Major** | Spec not referenced, important constraint missing | Assumption without datasheet citation, missing operating condition bound, thermal budget unverified, timing budget exceeded |
@@ -84,11 +80,11 @@ Defect severity per CLAUDE.md §Acceptance Doctrine classification. Domain-speci
 
 ### Engineering Assumption Governance
 
-Assumption Governance follows CLAUDE.md §Assumption Governance classification (Critical/Major/Minor). Domain-specific criteria:
+Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `§Assumption Governance`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid; they do not replace the canonical blocking rule.
 
-- **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation
-- **Major**: environmental conditions, load profiles, duty cycles, component tolerances beyond datasheet — document with source
-- **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters
+- **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation; unresolved critical assumptions are blocking
+- **Major**: environmental conditions, load profiles, duty cycles, component tolerances beyond datasheet — document with source; if unresolved and they materially affect core logic, deliverables, or verification, treat them as blocking per `CLAUDE.md`
+- **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters — may proceed only when explicitly disclosed and kept proportionate to their impact
 
 ### Thermal System Modeling
 
@@ -167,8 +163,8 @@ Role-specific application of CLAUDE.md Deliverable Quality Philosophy principles
 
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm.
-- On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing
+Apply the active `Self-Growth Sequence`.
+- On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 - Convert repeated unit drift, unsafe assumption, missing operating-condition, or theory-only defects into stronger engineering-check and constraint rules for this role.
 - If the same engineering-structure defect recurs twice, or later review/testing proves this role approved a design that cannot survive applied use, keep engineering acceptance on `HOLD` until the constraint rule is updated and the path is rerun.
 - Leave a compact growth handoff naming the broken assumption chain, the practical failure mode, and the smallest engineering correction; do not absorb business, software, or validation ownership while escalating the defect.

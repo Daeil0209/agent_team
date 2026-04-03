@@ -4,19 +4,15 @@ description: Test execution and verification procedure.
 user-invocable: false
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/tester/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
   1. `Scope & Quality Gate` when present
-  2. `Preconditions` or required input surface
-  3. the main workflow block
-  4. blocked/proof/self-check sections when present
-  5. `Active Communication Protocol`
+  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
+  3. `Preconditions` or required input surface
+  4. the main workflow block
+  5. blocked/proof/self-check sections when present
+  6. `Active Communication Protocol`
 - Do not add new peer top-level sections without explicit governance review.
 - Strengthen the existing workflow block before appending a new sidecar doctrine block.
 - Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
@@ -28,15 +24,20 @@ FIRST action on any assignment — before ANY tool calls:
 
 1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
 2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
-3. **Feasibility**: Can this be completed within my capabilities and turn budget?
+3. **Charter fit**: Does this work belong inside the tester lane, or is it actually implementation, review-side defect ownership, validation, or orchestration work?
+4. **Feasibility / quality risk**: Can this be completed honestly within the available environment, proof surface, and turn budget without overstating proof?
 
-If ANY check fails → return scope feedback as your COMPLETE response:
-- Which check failed
-- Why (specific evidence)
-- Suggested correction (concrete alternative)
+If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
 
-Do NOT execute over-scoped instructions. Return scope feedback INSTEAD of executing.
-Silent acceptance of over-scoped or mismatched instructions is a compliance failure.
+### User-Perspective Gate
+
+Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface. It is a tester-local proof gate, not reviewer defect classification or validator verdict ownership.
+
+1. Has the proof included the real start path and core completion path for the intended user or operator?
+2. Are the results based on executed workflow evidence rather than smoke checks, extracted text, or render-only impressions?
+3. If the full workflow cannot be proven, is the result classified as blocked proof instead of softened into pass-like language?
+
+Page loads, opens, or renders are not enough when the user is supposed to complete a task.
 
 
 
@@ -47,8 +48,8 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 - If brief, artifact, or environment not credible, return HOLD.
 - For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
   - `tester` -> `PROOF-TARGET`, `ENV-BASIS`, `SCENARIO-SCOPE`, `PROOF-EXPECTATION`
-- When the consequential lane work is building or reviewing a request-bound artifact whose value depends on question-fit or decision-fit, extend that packet with the request-fit fields as well: `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- For office-format or page-read artifacts, require the rendered review path per CLAUDE.md: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
+- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
+- For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - Do not treat reviewer or tester output alone as implicit final validation ownership.
 - Do not use `tester` as a substitute for defect classification or final acceptance judgment.
 
@@ -91,10 +92,24 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 ### 6. Classify Test Findings
 - Each: proof level, commands, expected vs actual, severity.
 
+### 6A. Retry Governance
+- Before rerunning a failed, flaky, or blocked scenario, state what failed and what changed in the corrective basis, environment basis, or scenario framing.
+- Do not exceed 3 materially similar reruns without escalation or `HOLD`, unless the dispatch explicitly authorizes a longer repeat-run pattern.
+
 ### 7. Build The Test Handoff
 - Top-line state. All findings with classification and evidence.
 - Retest gates. Unverified areas. Recommended next lane.
 - Keep the handoff reproducible: include exact commands, environment basis, scenario exercised, observed outcomes, and blocked surfaces clearly enough that downstream lanes do not reinterpret proof strength.
+- For consequential upward `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the authoritative handoff block explicit:
+  - `TEST-STATE: ready|hold|blocked`
+  - `OUTPUT-SURFACE: <artifact, version, or proof surface exercised>`
+  - `EVIDENCE-BASIS: <proof summary plus exact commands, environment, and decisive outcomes>`
+  - `OPEN-SURFACES: <blocked or unverified surfaces plus rerun gates, or none-material>`
+  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
+  - `REQUESTED-LIFECYCLE: standby|shutdown`
+- `TEST-STATE` is `ready` when the assigned proof surface has an explicit usable proof classification with decisive evidence, including disproof when that is what execution established, `hold` when framing or expectation basis is too weak for honest proof closure, and `blocked` when required execution could not complete because of environment, access, or runtime blockers.
+- Default to `REQUESTED-LIFECYCLE: standby` when preserved proof context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
+- This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.
 
 ## Pre-Handoff Self-Check
 1. All scenarios executed or marked blocked.
@@ -104,5 +119,4 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 
 ## Active Communication Protocol
 
-- After handoff content is prepared, actively deliver it via `SendMessage` to the governing lane. Passive output availability alone is not sufficient.
-- When approaching turn-budget exhaustion (last ~5 turns), proactively report via `SendMessage`: current progress, preserved state, incomplete surfaces, and what a successor worker would need to continue. Do not exhaust turns silently.
+- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the block above, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.

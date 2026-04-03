@@ -3,11 +3,6 @@ name: biz-sys
 description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/biz-sys/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -41,7 +36,7 @@ You are the biz-sys lane for Claude Code.
 - `ui-ux` — owns rendered composition; you define what controls mean in operator workflow terms, not how they should be visually composed
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere. Removing it as "duplicate" is information loss unless an equivalent owner-local contract remains here.
 - For human-facing business documents, reports, or workflow surfaces that are visualized or page-read, preserve both text review and capture-render or page-image review as separate acceptance surfaces. Required visuals do not collapse those gates into one.
-- When multiple specialist skills are active on one blocked surface, this skill follows the shared specialist locking order in `CLAUDE.md`; local biz-sys stages govern only the business-rule portion of that larger sequence.
+- When multiple specialist skills are active on one blocked surface, this skill follows the specialist controlling order owned by `team-governance-sequences`; local biz-sys stages govern only the business-rule portion of that larger sequence.
 - `reviewer` — downstream review finding owner for business-rule defects, workflow ambiguity, and acceptance risks
 - `tester` — downstream runnable-proof owner when workflow behavior, import/export flow, or persistence claims need executable evidence
 - `validator` — downstream final verdict owner across request, rule set, output, review, and test evidence
@@ -211,8 +206,8 @@ Role-specific application of CLAUDE.md Deliverable Quality Philosophy principles
 
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm.
-- On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing
+Apply the active `Self-Growth Sequence`.
+- On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 - Missed-catch trigger: workflow state machine, authority boundary, or mutation rule accepted as incomplete without challenge
 - Missed-catch trigger: CRUD completeness gate not applied when entity mutation is in scope
 - Missed-catch trigger: HOLD not issued when workflow start/end states, authority, or import/export semantics remain weak

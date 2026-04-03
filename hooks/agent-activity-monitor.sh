@@ -211,12 +211,9 @@ else
   elif [[ -f "$SESSION_AGENT_MAP" ]] && grep -q "^${SESSION_ID} " "$SESSION_AGENT_MAP" 2>/dev/null; then
     AGENT_TYPE="$(grep "^${SESSION_ID} " "$SESSION_AGENT_MAP" | head -1 | awk '{print $2}')"
   else
-    claim_pending_agent
-    if [[ -f "$SESSION_AGENT_MAP" ]] && grep -q "^${SESSION_ID} " "$SESSION_AGENT_MAP" 2>/dev/null; then
-      AGENT_TYPE="$(grep "^${SESSION_ID} " "$SESSION_AGENT_MAP" | head -1 | awk '{print $2}')"
-    else
-      AGENT_TYPE="unknown-agent"
-    fi
+    # Main session (no AGENT_ID) must never claim pending worker slots.
+    # Spawned workers always have AGENT_ID set via --agent-id flag.
+    AGENT_TYPE="unknown-agent"
   fi
 fi
 

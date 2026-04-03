@@ -3,11 +3,6 @@ name: math-spec
 description: Protect mathematical correctness, derivation fidelity, and problem-sequencing quality in quantitatively demanding work.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/math-spec/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -38,6 +33,7 @@ You are the math-spec lane for Claude Code.
 
 - `edu-spec` — escalate learner-sequencing issues there when pedagogy (not math correctness) is the main defect
 - `eng-spec` — escalate applied-realism issues there when engineering usage risk is the main defect
+- Order position: controlling-chain `domain` specialist per `team-governance-sequences`. This stage may run alongside other domain specialists when boundaries are explicit, but it does not override earlier business or architecture contracts or later structure or render-stage ownership.
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere. Removing it as "duplicate" is information loss unless an equivalent owner-local contract remains here.
 - For formula-heavy human-facing visual or page-read artifacts, both mathematical or text review and capture-render or page-image review are mandatory. Derivation correctness and rendered legibility are separate acceptance gates.
 - `reviewer` — downstream review finding owner when mathematical defects must be classified for acceptance
@@ -93,9 +89,9 @@ Note: The exactness test and integrating factor decision tree below are exemplar
 
 ### Mathematical Defect Severity Classification
 
-Defect severity per CLAUDE.md §Acceptance Doctrine classification. Domain-specific examples:
+Defect handling still uses the canonical `CLAUDE.md` `Severity Framework` (`T0-T3`) for stage severity. The table below is a mathematical local impact classification used to describe defect character and escalation examples; it does not replace the canonical stage severity.
 
-| Severity | Mathematical Context | Examples |
+| Impact Class | Mathematical Context | Examples |
 |---|---|---|
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
@@ -103,11 +99,11 @@ Defect severity per CLAUDE.md §Acceptance Doctrine classification. Domain-speci
 
 ### Mathematical Assumption Governance
 
-Assumption Governance follows CLAUDE.md §Assumption Governance classification (Critical/Major/Minor). Domain-specific criteria:
+Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `§Assumption Governance`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid; they do not replace the canonical blocking rule.
 
-- **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding — unverified critical assumptions propagate through all dependent derivations
-- **Major**: smoothness/continuity requirements, parameter ranges, independence conditions, linearity approximations — document and proceed
-- **Minor**: notation conventions, variable naming, coordinate system choice
+- **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations
+- **Major**: smoothness/continuity requirements, parameter ranges, independence conditions, linearity approximations — document with source; if unresolved and materially relevant to correctness or verification, treat them as blocking per `CLAUDE.md`
+- **Minor**: notation conventions, variable naming, coordinate system choice — may proceed only when explicitly disclosed and kept proportionate to their impact
 
 ## Non-Goals
 
@@ -147,9 +143,9 @@ Role-specific application of CLAUDE.md Deliverable Quality Philosophy:
 
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm.
-- On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing
+Apply the active `Self-Growth Sequence`.
+- On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 - Convert repeated notation ambiguity, skipped derivation, weak proof assumption, or equation-contract defects into stronger derivation-order and notation rules for this role.
 - If the same mathematical-structure defect recurs twice, or later review proves this role approved a formula path that does not survive explicit checking, keep mathematical acceptance on `HOLD` until the derivation rule is updated and rerun.
 - Leave a compact growth handoff naming the broken derivation edge, the correctness or teaching failure it causes, and the smallest mathematical rewrite; do not absorb education, engineering, or review ownership while escalating the defect.
-- For escalation protocol (same defect x2, HOLD gate, skill guide update trigger), follow CLAUDE.md §Growth Algorithm.
+- For escalation protocol (same defect x2, HOLD gate, skill guide update trigger), follow the active `Self-Growth Sequence` and role-update path in `team-governance-sequences`.

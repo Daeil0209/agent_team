@@ -34,6 +34,9 @@
 - `.claude/agents/*.md` own role identity, activation criteria, authority boundaries, output format, and completion conditions.
 - `.claude/skills/*/SKILL.md` own repeatable procedures, checklists, detailed workflows, and operational playbooks.
 - `.claude/settings.json` owns shared permissions, hooks, environment assumptions, and default runtime policy.
+- When an owning document declares a `Structural Contract`, that contract is mandatory doctrine for the document's maintained shape.
+- Required top-level order, priority-group mapping, and in-section numbering declared by an owning document's `Structural Contract` must be preserved unless shared doctrine intentionally revises them.
+- New role, procedure, or reference surfaces must be inserted into the correct declared structural group rather than appended in a way that breaks the owning document's numbering or group order.
 - Project-local doctrine may add repository-specific constraints, workflows, and architecture guidance, but should not silently weaken this shared doctrine; session artifacts, ledgers, temporary files, and project-local execution state are not part of the portable rules package.
 - Portable operational doctrine must remain readable and enforceable from the operational doctrine package itself, without auxiliary verification assets as runtime prerequisites.
 - Every agent must comply with the behavioral rules, authority boundaries, and operational procedures defined in their assigned agent document and skill documents. Role-specific documents carry the same binding force as this doctrine for the assigned role.
@@ -51,23 +54,24 @@
 
 ### Standard Lifecycle Vocabulary
 
-- These lifecycle terms are normative; use them consistently across doctrine, agent files, skills, hooks, and reports rather than replaced with ad hoc synonyms.
-- `Boot Sequence`: mandatory runtime activation when the active environment uses explicit team runtime. Must execute at session start before any user-facing response or delegated work.
-- `Session-Start Sequence`: continuity establishment that confirms inherited state, current ownership, blockers, and execution readiness at session start or resume.
-- `Monitoring Sequence`: lane-health, worker-availability, standby, reuse, shutdown-decision, and stale-detection control flow during active team operation.
-- `Change Sequence`: the controlled path for rule, code, config, governance, update, or upgrade changes, including classification, routing, execution, review, and verification.
-- `Closeout Sequence`: the mandatory session-end path for unresolved-state disclosure, continuity capture, cleanup, shutdown of temporary runtime elements, and any operator-facing closeout reporting still materially needed.
-- `Self-Growth Sequence`: the hardening and self-improvement flow used when the team updates its own rules, skills, charters, or capability boundaries from evidence.
-- `Update/Upgrade Sequence`: the change-governance path used when doctrine, agents, skills, settings, hooks, or other team-system assets are modified.
-- These sequence names define the standard control surfaces for team operation and should remain stable unless the doctrine is intentionally revised. Stop-hook feedback is not evidence that the user wants session end and is not a worker-status channel.
-- Lifecycle shutdown commands remain message-first control surfaces; hooks may record or guard them, but must not invent closeout authority from runtime residue alone.
+- These lifecycle terms are normative; use them consistently across doctrine, agents, skills, hooks, and reports.
+- `Boot Sequence`: mandatory activation for explicit team runtime before any user-facing response or delegated work.
+- `Session-Start Sequence`: continuity establishment for inherited state, ownership, blockers, and execution readiness.
+- `Monitoring Sequence`: lane-health, availability, standby, reuse, shutdown, and stale-detection control flow during active team operation.
+- `Change Sequence`: the controlled path for rule, code, config, governance, update, or upgrade changes: classification, routing, execution, review, and verification.
+- `Closeout Sequence`: the mandatory session-end path for unresolved-state disclosure, continuity capture, cleanup, runtime teardown, and any materially needed closeout reporting.
+- `Self-Growth Sequence`: the hardening path for evidence-based updates to rules, skills, charters, or capability boundaries.
+- `Update/Upgrade Sequence`: the governance path for modifying doctrine, agents, skills, settings, hooks, or other team-system assets.
+- These names define the standard control surfaces for team operation and remain stable unless doctrine intentionally revises them.
+- Hook feedback is not worker-status authority or evidence that the user wants session end.
+- Lifecycle shutdown remains message-first; hooks may record or guard it, but do not create closeout authority from runtime residue.
 
 ### Procedure Fidelity
 
 - When doctrine or an owning procedure defines a staged path, repeated habit does not authorize a shorter path.
-- Do not silently merge, skip, reorder, or collapse required stages just because the likely next step feels obvious or a similar prior session took a shortcut.
-- If a step is truly optional, that optionality must come from the owning doctrine, agent file, skill, or runtime policy rather than from local convenience judgment.
-- Runtime hardening may enforce only selected control points, but those control points exist to preserve the intended procedure against habitual simplification.
+- Do not silently merge, skip, reorder, or collapse required stages because the next step feels obvious or a past session took a shortcut.
+- Optionality must come from the owning doctrine, agent file, skill, or runtime policy, not local convenience judgment.
+- Runtime hardening may enforce only selected control points, but those controls exist to preserve the intended procedure.
 
 ## Editing Constraints
 
@@ -132,7 +136,7 @@
 - An agent that forces its successor to re-discover what it already analyzed wastes the team's specialization advantage and violates this protocol.
 - When approaching turn-budget exhaustion, every agent must proactively report current progress, preserved state, incomplete surfaces, and what a successor worker would need to continue. Silent turn exhaustion is a handoff failure.
 - The governing lane must include concrete prior-stage analysis in every dispatch packet rather than instructing workers to re-read and re-analyze files that upstream agents already examined.
-- This obligation is bidirectional. The team lead's dispatch must include prior analysis, concrete context, decision rationale, and bounded scope — not just a topic name. A dispatch that forces re-derivation of already-performed analysis is a handoff failure.
+- This obligation is bidirectional. The governing lane's dispatch must include prior analysis, concrete context, decision rationale, and bounded scope — not just a topic name. A dispatch that forces re-derivation of already-performed analysis is a handoff failure.
 
 ### Preflight Responsibility
 
@@ -163,7 +167,7 @@
 - When the problem is structural or systemic, solution development must target the recurrence path instead of instance-only symptom relief unless the limitation and follow-up owner are made explicit. When root-cause confidence is below `confirmed`, keep competing hypotheses visible instead of presenting the first explanation as settled fact.
 - Do not let a ceremonial "second pass" satisfy this doctrine. The later pass should state what changed, which alternatives were rejected, and why the selected scope is still the right one.
 - When the task description already signals recurrence, architecture, doctrine, or systemic hardening pressure, relabeling it as a one-off issue is governance evasion. This discipline applies across planning, research, implementation, review, validation, and reporting.
-- This discipline applies equally to dispatch routing decisions. When the team lead selects a worker type, scope boundary, or task decomposition for consequential work, the first plausible staffing answer is also a candidate. The lead must verify worker-charter fit, scope appropriateness, and whether an alternative routing would be more effective before dispatch.
+- This discipline applies equally to dispatch routing decisions. When the governing lane selects a worker type, scope boundary, or task decomposition for consequential work, the first plausible staffing answer is also a candidate. The governing lane must verify worker-charter fit, scope appropriateness, and whether an alternative routing would be more effective before dispatch.
 
 ## Role Separation And Decision Ownership
 
@@ -226,24 +230,19 @@
 
 ### Skill Update Governance
 
-- Rule and skill updates require semantic overlap checking, not keyword-only comparison.
-- Prefer `replace`, `trim`, or `re-home` over append-only accumulation.
-- No new operational rule should exist without a clear owner.
+- Rule and skill updates require semantic overlap checking, clear ownership, and preference for `replace`, `trim`, or `re-home` over append-only accumulation.
 - Structural connectivity defined by an owner document is protected meaning, not cosmetic formatting.
-- When a role document uses an approved role -> procedure -> reference hierarchy, self-growth and upgrade work must preserve that hierarchy and keep the explicit downward mappings intact.
-- When a skill document uses a fixed structural contract, self-growth and upgrade work must preserve that contract and attach new meaning to an owning sequence, workflow, or gate block rather than creating detached sidecar doctrine.
-- New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken structure mappings require explicit governance review before execution.
+- Preserve approved role -> procedure -> reference hierarchies and fixed skill structural contracts; attach new meaning to an owning sequence, workflow, or gate block rather than creating detached sidecar doctrine.
+- New top-level sections, orphaned procedure/reference blocks, or broken structure mappings require explicit governance review before execution.
 - Canonical cross-lane evidence-status taxonomy: `confirmed`, `supported`, `inferred`, `unconfirmed`, `conflicting`.
-- Cross-role doctrine may appear in both `CLAUDE.md` and `SKILL.md` only for hierarchical consistency; local restatements of boundaries, contracts, and gates are protected when they keep an owner file readable in isolation.
-- Instruction flow: `team-lead` issues control downward, workers report upward; worker-to-worker traffic is limited to bounded peer advice or challenge — ownership, rerouting, and acceptance changes return to the governing lane.
-- All governance text modifications — additions, deletions, rewrites, migrations, compressions, optimizations — are the same modification class for loss-risk; none is exempt from preservation analysis.
-- Before any governance modification, distinguish protected contracts from cosmetic duplication; keep `MODIFICATION-PROPOSAL`, `SOURCE-MEANING-INVENTORY`, `DESTINATION-OWNER-MAP`, and `CHANGE-BOUNDARY` explicit.
-- When targeting high-traffic surfaces (`CLAUDE.md`, `agents/team-lead.md`, `skills/team-governance-sequences/SKILL.md`, `skills/team-session-sequences/SKILL.md`, hooks, or `settings.json`), add `SESSION-REVALIDATION: current-session-repo` and `BASELINE-ANCHOR: captured` to the standard preservation packet.
-- If a session resets or resumes mid-modification of those surfaces, treat remembered partial review as continuity only; keep the topic in `HOLD` until the current session rebuilds the packet from repository state.
+- Cross-role doctrine may appear in both `CLAUDE.md` and `SKILL.md` for hierarchical consistency; protected local restatements remain allowed when they keep an owner file readable in isolation.
+- Instruction flow stays directional: the governing lane issues control downward, workers report upward, and worker-to-worker traffic stays limited to bounded peer advice or challenge.
+- All governance text modifications share the same loss-risk class and require a preservation packet with `MODIFICATION-PROPOSAL`, `SOURCE-MEANING-INVENTORY`, `DESTINATION-OWNER-MAP`, and `CHANGE-BOUNDARY`.
+- For high-traffic surfaces (`CLAUDE.md`, `agents/team-lead.md`, `skills/team-governance-sequences/SKILL.md`, `skills/team-session-sequences/SKILL.md`, hooks, `settings.json`), add `SESSION-REVALIDATION: current-session-repo` and `BASELINE-ANCHOR: captured`.
+- If such work resumes mid-modification, treat remembered partial review as continuity only and keep the topic on `HOLD` until the packet is rebuilt from repository state.
 - `CLAUDE.md` must not retain role-exclusive detail; migrate it to that role's skill or agent document.
 - Rule, skill, settings, hook, and agent changes must use the `Update/Upgrade Sequence` without bypassing ownership, overlap review, or migration discipline.
-- Governance-sensitive edits must be reconstructable from repository state alone; keep patch class, owner surface, preserved meaning, and verification basis explicit enough for another model to continue without session memory.
-- Embed reconstructability in touched owner surfaces, preservation packets, and verification assets; do not depend on session handoff prose or a patch-ledger file as the sole persistence surface.
+- Governance-sensitive edits must stay reconstructable from repository state through touched owner surfaces, preservation packets, and verification assets, not session handoff prose or a patch-ledger file alone.
 
 ### Rule Hygiene
 
@@ -261,7 +260,7 @@
 - Shared wording across owner files is not proof that the repeated text is removable.
 - When governance content is moved or rewritten, before/after comparison must confirm no unique meaning was lost.
 - For governance-sensitive patches, the patch packet or owner documentation must show where each preserved or re-homed meaning now lives; a generic summary is insufficient.
-- For benchmark-sensitive claims, keep provenance and cross-check state explicit: repo-confirmed, externally corroborated, mixed-confirmed, or simulator-only. `HALLUCINATION-GUARD: cite-or-hold` is not satisfied by narrative confidence alone.
+- For benchmark-sensitive claims, keep provenance and cross-check state explicit. When a structured benchmark packet is in use, use the shared values `repo-confirmed`, `authority-confirmed`, `mixed-confirmed`, or `simulator-unconfirmed`. `HALLUCINATION-GUARD: cite-or-hold` is not satisfied by narrative confidence alone.
 
 ### Memory Hardening
 
@@ -348,6 +347,22 @@ Additional rules:
 
 - Freeze purpose, audience, decision target, and expected reaction before drafting structured artifacts.
 - Preserve the boundary between fact and design interpretation, and use visuals to clarify rather than duplicate text or create decorative noise.
+
+### Deliverable Quality Philosophy
+
+- These principle IDs are shared doctrine for designing, generating, reviewing, and accepting deliverables. Downstream skills may apply only the relevant subset and may add role-specific consequences, but they must not silently redefine the shared principle numbers or invent a different owner for them.
+- `P1 Purpose`: freeze the real user, reader, or decision job before optimizing style, structure, or implementation detail.
+- `P2 Benchmark`: when quality claims, novelty claims, or comparison-sensitive choices depend on an external baseline, benchmark against inspectable standards, prior versions, or credible exemplars before hardening the claim.
+- `P3 Structure`: freeze the governing skeleton, section logic, or system shape before bulk detail work, dense drafting, or implementation expansion.
+- `P4 Context`: adapt to the actual audience, workflow, environment, and usage density rather than generic default conditions.
+- `P5 Fact-Design Boundary`: keep verified facts, simulated evidence, generated structure, and design interpretation explicitly separated; do not let presentation fluency masquerade as proof.
+- `P6 Visualization`: visual elements must carry operational, explanatory, or comparison value; unreadable or purely decorative visuals are defects.
+- `P8 Burden`: when human effort materially affects success, treat cognitive load, session length, and operational burden as design constraints rather than afterthoughts.
+- `P9 Operational Usability`: prefer deliverables that are practically usable on the intended run path, not merely technically complete in isolation.
+- `P10 Hidden Requirements`: surface latent constraints, waits, preferences, dependencies, and failure paths before downstream production or acceptance.
+- `P11 Cross-Verification`: consequential claims require corroboration, contradiction checks, or independent validation paths proportional to the risk.
+- `P12 Hierarchical Clarity`: make scan order, emphasis, density layering, and priority obvious enough for the intended audience to use the deliverable without guesswork.
+- Keep the numbering stable. Unused IDs remain reserved until shared doctrine intentionally defines them.
 
 ### Specialist Activation
 

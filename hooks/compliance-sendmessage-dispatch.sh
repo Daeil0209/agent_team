@@ -41,70 +41,25 @@ const firstNonEmptyString = (...values) => {
   }
   return "";
 };
-const collectAgentDispatchText = (toolInput) => joinUniqueText([
-  ...flattenText(toolInput.description),
-  ...flattenText(toolInput.summary),
-  ...flattenText(toolInput.prompt),
-  ...flattenText(toolInput.task),
-  ...flattenText(toolInput.assignment),
-  ...flattenText(toolInput.message),
-  ...flattenText(toolInput.content),
-  ...flattenText(toolInput.instructions),
-  ...flattenText(toolInput.goal),
-  ...flattenText(toolInput.brief),
-  ...flattenText(toolInput.context),
-  ...flattenText(toolInput.request),
-  ...flattenText(toolInput.note),
-  ...flattenText(toolInput.notes),
-]);
 
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const toolName = String(input.tool_name || "Agent");
-  const t = input.tool_input || {};
-  let description = String(t.description || "");
-  let runInBackground = String(t.run_in_background || false);
-  let mode = t.mode || "";
-  let targetName = String(t.name || "");
-  if (toolName === "Agent") {
-    description = collectAgentDispatchText(t);
-    targetName = firstNonEmptyString(
-      t.name,
-      t.agent_name,
-      t.agentName,
-      t.subagent_type,
-      t.subagentType,
-      t.role,
-      t.lane,
-      t.worker_name,
-      t.workerName,
-      t.teammate_name,
-      t.teammateName,
-      t.target_name,
-      t.targetName
-    );
-  }
-  if (toolName === "SendMessage") {
-    targetName = String(t.to || t.recipient || targetName || "");
-    description = joinUniqueText(
-      flattenText(t.summary).concat(flattenText(t.message || t.content))
-    );
-    runInBackground = "false";
-    mode = "";
-  }
+  const toolName = String(input.tool_name || "");
+  const toolInput = input.tool_input || {};
+  const description = toolName === "SendMessage"
+    ? joinUniqueText(flattenText(toolInput.summary).concat(flattenText(toolInput.message || toolInput.content)))
+    : "";
   const fields = [
     toolName,
     description,
-    runInBackground,
-    mode,
-    targetName,
+    firstNonEmptyString(toolInput.to, toolInput.recipient, toolInput.name, toolInput.target_name, toolInput.targetName),
     String(input.session_id || ""),
     String(input.agent_id || ""),
     String(input.agent_type || "")
   ];
   process.stdout.write(fields.map(encode).join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n\n\n\n");
+  process.stdout.write("\n\n\n\n\n\n");
 }
 NODE
 )"
@@ -121,91 +76,98 @@ decode_field() {
 
 TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
 DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
-RUN_IN_BACKGROUND="$(decode_field "${FIELDS[2]:-}")"
-MODE="$(decode_field "${FIELDS[3]:-}")"
-AGENT_NAME="$(decode_field "${FIELDS[4]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[5]:-}")"
-AGENT_ID="$(decode_field "${FIELDS[6]:-}")"
-SENDER_AGENT_TYPE="$(decode_field "${FIELDS[7]:-}")"
+AGENT_NAME="$(decode_field "${FIELDS[2]:-}")"
+SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
+AGENT_ID="$(decode_field "${FIELDS[4]:-}")"
+SENDER_AGENT_TYPE="$(decode_field "${FIELDS[5]:-}")"
+
+[[ "$TOOL_NAME" == "SendMessage" ]] || exit 0
 
 TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-NAME_FALLBACK="$(printf '%s' "$DESCRIPTION" | sed -n 's/^\([a-zA-Z0-9_-]*\):.*/\1/p')"
 if [[ -z "$AGENT_NAME" ]]; then
   AGENT_NAME="$(resolve_requested_dispatch_name "" "$DESCRIPTION")"
-fi
-if [[ -z "$AGENT_NAME" ]]; then
-  AGENT_NAME="$NAME_FALLBACK"
 fi
 RESOLVED_ID="$(resolve_agent_id "$AGENT_NAME")"
 if [[ "$RESOLVED_ID" == "unknown" && "$(normalize_lane_id "$AGENT_NAME")" == "team-lead" ]]; then
   RESOLVED_ID="team-lead"
 fi
-if [[ "$RESOLVED_ID" == "unknown" && -n "$NAME_FALLBACK" && "$NAME_FALLBACK" != "$AGENT_NAME" ]]; then
-  RESOLVED_ID="$(resolve_agent_id "$NAME_FALLBACK")"
-fi
-CATEGORY="$(get_agent_category "$RESOLVED_ID")"
 
-case "$RUN_IN_BACKGROUND" in
-  true|True|TRUE|1) RUN_IN_BACKGROUND="true" ;;
-  false|False|FALSE|0|"") RUN_IN_BACKGROUND="false" ;;
-  *) RUN_IN_BACKGROUND="false" ;;
-esac
-
-# ── Pre-dispatch dead member cleanup ──────────────────────────────
-# Team lead cleans up dead members before dispatching new work.
-if [[ -z "$AGENT_ID" ]]; then
-  for _team_cfg in "$HOME/.claude/teams"/*/config.json; do
-    [[ -f "$_team_cfg" ]] || continue
-    node -e "
-      const fs = require('fs'), {execSync} = require('child_process');
-      try {
-        const cfg = JSON.parse(fs.readFileSync('$_team_cfg', 'utf8'));
-        const before = (cfg.members || []).length;
-        const sock = process.env.RUNTIME_TMUX_SOCKET_NAME || '';
-        const sockFlag = sock ? '-L "' + sock + '" ' : '';
-        cfg.members = (cfg.members || []).filter(m => {
-          if (m.name === 'team-lead') return true;
-          if (!m.tmuxPaneId) return false;
-          try { execSync('tmux ' + sockFlag + 'list-panes -t \"' + m.tmuxPaneId + '\"', {stdio:'ignore'}); return true; }
-          catch(e) { return false; }
-        });
-        if (cfg.members.length < before) fs.writeFileSync('$_team_cfg', JSON.stringify(cfg, null, 2) + '\\n');
-      } catch(e) {}
-    " 2>/dev/null || true
-  done
-fi
-
-  # ── Orphan tmux pane cleanup ──────────────────────────────────────
-  # Kill panes on claude-swarm socket that don't belong to any config.json member.
-  _registered_panes=""
-  for _team_cfg in "$HOME/.claude/teams"/*/config.json; do
-    [[ -f "$_team_cfg" ]] || continue
-    _registered_panes="${_registered_panes} $(node -e "
-      try {
-        const c = JSON.parse(require('fs').readFileSync('$_team_cfg','utf8'));
-        process.stdout.write((c.members||[]).map(m=>m.tmuxPaneId||'').filter(Boolean).join(' '));
-      } catch(e) {}
-    " 2>/dev/null || true)"
-  done
-  if [[ -n "$RUNTIME_TMUX_SOCKET_NAME" ]]; then
-    while IFS= read -r _pane_line; do
-      _pane_id="$(printf '%s' "$_pane_line" | grep -oE '%[0-9]+' || true)"
-      [[ -n "$_pane_id" ]] || continue
-      if ! printf '%s' "$_registered_panes" | grep -qF "$_pane_id"; then
-        tmux_cmd kill-pane -t "$_pane_id" 2>/dev/null || true
-      fi
-    done < <(tmux_cmd list-panes -a -F '#{pane_id}' 2>/dev/null || true)
-  fi
+MIRROR_MESSAGES=()
+BLOCKING_MESSAGES=()
 
 deny_dispatch() {
   local log_code="${1:?log code required}"
   local deny_reason="${2:?deny reason required}"
+  local severity="${3:-advisory}"
+  local log_label="PACKET-ADVISORY"
 
-  printf '[%s] PACKET-ADVISORY %s: %s | %s\n' \
+  if [[ "$severity" == "blocking" ]]; then
+    log_label="PACKET-BLOCK"
+  fi
+
+  printf '[%s] %s %s: %s | %s\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" \
+    "$log_label" \
     "$log_code" \
     "${DESCRIPTION:0:240}" \
     "${deny_reason:0:300}" >> "$VIOLATION_LOG"
+
+  if [[ "$severity" == "blocking" ]]; then
+    BLOCKING_MESSAGES+=("${log_code}: ${deny_reason:0:220}")
+  else
+    MIRROR_MESSAGES+=("${log_code}: ${deny_reason:0:200}")
+  fi
+}
+
+emit_blocking_output() {
+  [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]] || return 1
+
+  local max_blocks=3
+  local count=${#BLOCKING_MESSAGES[@]}
+  (( count > max_blocks )) && count=$max_blocks
+
+  local combined=""
+  local i=0
+  for (( i=0; i<count; i++ )); do
+    combined+="${BLOCKING_MESSAGES[$i]}"
+    (( i < count - 1 )) && combined+=" | "
+  done
+
+  COMBINED="$combined" node <<'NODE'
+const reason = "Blocking compliance packet violation(s): " + (process.env.COMBINED || "");
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    permissionDecision: "deny",
+    permissionDecisionReason: reason
+  }
+}));
+NODE
+}
+
+emit_mirror_output() {
+  [[ ${#MIRROR_MESSAGES[@]} -gt 0 ]] || return 0
+
+  local max_mirrors=3
+  local count=${#MIRROR_MESSAGES[@]}
+  (( count > max_mirrors )) && count=$max_mirrors
+
+  local combined=""
+  local i=0
+  for (( i=0; i<count; i++ )); do
+    combined+="${MIRROR_MESSAGES[$i]}"
+    (( i < count - 1 )) && combined+=" | "
+  done
+
+  COMBINED="$combined" node <<'NODE'
+const ctx = "SELF-AWARENESS MIRROR: Your SendMessage triggered compliance observations: " + (process.env.COMBINED || "") + ". Review the relevant packet rule before proceeding.";
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    additionalContext: ctx
+  }
+}));
+NODE
 }
 
 resolve_sender_role() {
@@ -230,41 +192,39 @@ resolve_sender_role() {
 
 dispatch_target_requires_acceptance_packet() {
   local target_id="${1:-}"
+  local category=""
 
-  case "$target_id" in
-    developer|int-op|sw-spec|biz-sys|ui-ux|edu-spec|eng-spec|math-spec|doc-auto)
+  category="$(get_agent_category "$target_id")"
+  case "$category" in
+    implementation|specialist)
       return 0
       ;;
     *)
       return 1
       ;;
   esac
+}
+
+dispatch_is_runtime_lane() {
+  local target_id="${1:-}"
+  local category=""
+
+  [[ -n "$target_id" ]] || return 1
+  [[ "$target_id" != "team-lead" ]] || return 1
+  role_registry_has_name "$target_id" || return 1
+
+  category="$(get_agent_category "$target_id")"
+  [[ "$category" != "meta" ]]
 }
 
 dispatch_is_worker_lane() {
   local target_id="${1:-}"
-
-  case "$target_id" in
-    researcher|developer|reviewer|tester|validator)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
+  dispatch_is_runtime_lane "$target_id"
 }
 
 dispatch_is_managed_lane() {
   local target_id="${1:-}"
-
-  case "$target_id" in
-    researcher|developer|reviewer|tester|validator)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
+  dispatch_is_runtime_lane "$target_id"
 }
 
 dispatch_is_governing_lane() {
@@ -390,6 +350,7 @@ enforce_solution_development_dispatch_packet() {
   local structural_cues_present="false"
 
   [[ "$RESOLVED_ID" == "developer" ]] || return 0
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
 
   if ! dispatch_is_solution_sensitive_request "$DESCRIPTION"; then
     return 0
@@ -414,7 +375,6 @@ enforce_solution_development_dispatch_packet() {
   if ! dispatch_field_present "$DESCRIPTION" "verify-basis"; then
     missing+=("VERIFY-BASIS: <review or verification basis>")
   fi
-
   if ! dispatch_field_value_matches "$DESCRIPTION" "problem-class" "instance|structural|systemic"; then
     missing+=("PROBLEM-CLASS: instance|structural|systemic")
   fi
@@ -473,12 +433,12 @@ enforce_solution_development_dispatch_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Consequential solution work must not stop at the first plausible draft. Treat bounded additions, deletions, rewrites, migrations, and workbook- or artifact-derived program work as modifications with loss risk too. Keep the preservation and solution-development packet explicit and force at least one challenge pass before execution or final recommendation. Include: ${missing_text}."
+  deny_reason="Consequential solution work must not stop at the first plausible draft. Include: ${missing_text}."
   if [[ "$structural_or_systemic" == "true" ]]; then
-    deny_reason="${deny_reason} Structural or systemic problems require multi-pass solution development aimed at the recurrence path, not an instance-only shortcut."
+    deny_reason="${deny_reason} Structural or systemic problems require multi-pass solution development aimed at the recurrence path."
   fi
   if [[ "$structural_cues_present" == "true" ]]; then
-    deny_reason="${deny_reason} Descriptions that already indicate recurrence, architecture, doctrine, or hardening cannot be relabeled as a mere instance fix to escape the stronger gate."
+    deny_reason="${deny_reason} Recurrence or architecture cues cannot be relabeled as an instance fix."
   fi
   if [[ "$root_cause_basis_unknown" == "true" ]]; then
     deny_reason="${deny_reason} When root-cause confidence is not confirmed, competing hypotheses must stay explicit."
@@ -491,13 +451,9 @@ enforce_governance_patch_dispatch_packet() {
   local missing_text=""
   local deny_reason=""
 
-  if [[ "$RESOLVED_ID" != "developer" ]]; then
-    return 0
-  fi
-
-  if ! dispatch_is_governance_patch_request "$DESCRIPTION"; then
-    return 0
-  fi
+  [[ "$RESOLVED_ID" == "developer" ]] || return 0
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
+  dispatch_is_governance_patch_request "$DESCRIPTION" || return 0
 
   if ! dispatch_field_value_matches "$DESCRIPTION" "task-class" "governance-patch"; then
     missing+=("TASK-CLASS: governance-patch")
@@ -560,29 +516,20 @@ enforce_governance_patch_dispatch_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Governance-sensitive modification dispatch is blocked until the sequence is explicit: information-loss review first, local-context balance review second, related-doc review third, bounded modification fourth, optimization only afterward. Treat additions, deletions, rewrites, migrations, compressions, and optimizations as the same loss-risk class; none may bypass the preservation packet. Do not let team-lead apply habitual shortcut edits to doctrine, hooks, settings, agents, or skills. Include: ${missing_text}."
-  deny_dispatch "A-GOVERNANCE-PROCEDURE BLOCKED" "$deny_reason"
+  deny_reason="Governance-sensitive modification dispatch is blocked until the sequence is explicit. Include: ${missing_text}."
+  deny_dispatch "A-GOVERNANCE-PROCEDURE BLOCKED" "$deny_reason" "blocking"
 }
 
 enforce_high_traffic_governance_resume_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
-  local high_traffic_surface="false"
-  local session_turnover_resume="false"
 
   [[ "$RESOLVED_ID" == "developer" ]] || return 0
-  dispatch_is_governance_patch_request "$DESCRIPTION" || return 0
-  dispatch_is_governance_optimization_request "$DESCRIPTION" || return 0
-
-  if dispatch_is_high_traffic_governance_surface_request "$DESCRIPTION"; then
-    high_traffic_surface="true"
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
+  if ! dispatch_is_governance_patch_request "$DESCRIPTION" && ! dispatch_is_governance_optimization_request "$DESCRIPTION"; then
+    return 0
   fi
-  if dispatch_has_session_turnover_resume_cues "$DESCRIPTION"; then
-    session_turnover_resume="true"
-  fi
-
-  if [[ "$high_traffic_surface" != "true" && "$session_turnover_resume" != "true" ]]; then
+  if ! dispatch_is_high_traffic_governance_surface_request "$DESCRIPTION" && ! dispatch_has_session_turnover_resume_cues "$DESCRIPTION"; then
     return 0
   fi
 
@@ -598,8 +545,7 @@ enforce_high_traffic_governance_resume_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="High-traffic governance modification or session-turnover resume is blocked until the current session revalidates repository state and refreshes its baseline anchor. Remembered review from a prior session is continuity only, not edit authorization. Include: ${missing_text}."
-  deny_dispatch "A-GOVERNANCE-RESUME BLOCKED" "$deny_reason"
+  deny_dispatch "A-GOVERNANCE-RESUME BLOCKED" "High-traffic governance modification or session-turnover resume is blocked until the current session revalidates repository state and refreshes its baseline anchor. Include: ${missing_text}." "blocking"
 }
 
 enforce_research_dispatch_packet() {
@@ -609,10 +555,7 @@ enforce_research_dispatch_packet() {
   local benchmark_sensitive="false"
 
   [[ "$RESOLVED_ID" == "researcher" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
 
   if ! dispatch_field_value_matches "$DESCRIPTION" "research-mode" "bounded|deep|sharded"; then
     missing+=("RESEARCH-MODE: bounded|deep|sharded")
@@ -673,9 +616,9 @@ enforce_research_dispatch_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Consequential researcher dispatch requires an explicit evidence packet. Do not let the lane shrink broad or contradiction-sensitive work into a shallow habit pass. Include: ${missing_text}."
+  deny_reason="Consequential researcher dispatch requires an explicit evidence packet. Include: ${missing_text}."
   if [[ "$benchmark_sensitive" == "true" ]]; then
-    deny_reason="${deny_reason} Comparative research also requires an explicit benchmark-light frame so baseline, fairness, provenance, cross-check state, and comparison axes stay visible instead of being improvised from habit."
+    deny_reason="${deny_reason} Comparative research also requires an explicit benchmark-light frame."
   fi
   deny_dispatch "A-RESEARCH-DISPATCH BLOCKED" "$deny_reason"
 }
@@ -683,13 +626,9 @@ enforce_research_dispatch_packet() {
 enforce_review_dispatch_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
 
   [[ "$RESOLVED_ID" == "reviewer" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
 
   if ! dispatch_field_present "$DESCRIPTION" "review-target"; then
     missing+=("REVIEW-TARGET: <artifact or claim surface>")
@@ -703,27 +642,21 @@ enforce_review_dispatch_packet() {
   if ! dispatch_field_present "$DESCRIPTION" "acceptance-surface"; then
     missing+=("ACCEPTANCE-SURFACE: <decision surface>")
   fi
-
   if [[ ${#missing[@]} -eq 0 ]]; then
     return 0
   fi
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Reviewer dispatch requires an explicit review packet. Missing prerequisites must stay visible instead of turning into a soft clean read. Include: ${missing_text}."
-  deny_dispatch "A-REVIEW-DISPATCH BLOCKED" "$deny_reason"
+  deny_dispatch "A-REVIEW-DISPATCH BLOCKED" "Reviewer dispatch requires an explicit review packet. Include: ${missing_text}."
 }
 
 enforce_test_dispatch_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
 
   [[ "$RESOLVED_ID" == "tester" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
 
   if ! dispatch_field_present "$DESCRIPTION" "proof-target"; then
     missing+=("PROOF-TARGET: <claim or artifact under test>")
@@ -737,27 +670,21 @@ enforce_test_dispatch_packet() {
   if ! dispatch_field_present "$DESCRIPTION" "proof-expectation"; then
     missing+=("PROOF-EXPECTATION: <what execution should prove or disprove>")
   fi
-
   if [[ ${#missing[@]} -eq 0 ]]; then
     return 0
   fi
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Tester dispatch requires an explicit proof packet. Do not let the test lane silently narrow environment or scenario scope into a convenience smoke check. Include: ${missing_text}."
-  deny_dispatch "A-TEST-DISPATCH BLOCKED" "$deny_reason"
+  deny_dispatch "A-TEST-DISPATCH BLOCKED" "Tester dispatch requires an explicit proof packet. Include: ${missing_text}."
 }
 
 enforce_validation_dispatch_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
 
   [[ "$RESOLVED_ID" == "validator" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
 
   if ! dispatch_field_present "$DESCRIPTION" "validation-target"; then
     missing+=("VALIDATION-TARGET: <delivery or decision surface>")
@@ -774,23 +701,21 @@ enforce_validation_dispatch_packet() {
   if ! dispatch_field_present "$DESCRIPTION" "decision-surface"; then
     missing+=("DECISION-SURFACE: <pass/hold/fail surface>")
   fi
-
   if [[ ${#missing[@]} -eq 0 ]]; then
     return 0
   fi
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Validator dispatch requires an explicit arbitration packet. Do not let unresolved upstream review or proof gaps disappear behind a convenient final verdict. Include: ${missing_text}."
-  deny_dispatch "A-VALIDATION-DISPATCH BLOCKED" "$deny_reason"
+  deny_dispatch "A-VALIDATION-DISPATCH BLOCKED" "Validator dispatch requires an explicit arbitration packet. Include: ${missing_text}."
 }
 
 enforce_self_growth_coordination_dispatch_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
   local requires_full_benchmark="false"
 
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
   if ! dispatch_is_self_growth_execution_request; then
     return 0
   fi
@@ -903,10 +828,8 @@ enforce_self_growth_coordination_dispatch_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Self-growth execution requires an explicit coordination packet before ownership hardens into edits. Keep the preparation order explicit: benchmark -> cross-check and anti-hallucination confirmation -> concrete modification proposal -> pre-edit loss-risk gate -> bounded modification -> verification -> only then bounded optimization. Include: ${missing_text}."
-  deny_dispatch "A-SELF-GROWTH-COORDINATION BLOCKED" "$deny_reason"
+  deny_dispatch "A-SELF-GROWTH-COORDINATION BLOCKED" "Self-growth execution requires an explicit coordination packet before ownership hardens into edits. Include: ${missing_text}."
 }
-
 
 enforce_execution_acceptance_dispatch_packet() {
   local missing=()
@@ -914,15 +837,13 @@ enforce_execution_acceptance_dispatch_packet() {
   local deny_reason=""
   local meaningful_risk="false"
 
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
+
   if ! dispatch_target_requires_acceptance_packet "$RESOLVED_ID"; then
     return 0
   fi
 
   if dispatch_field_value_matches "$DESCRIPTION" "task-class" "governance-patch|manifest-sync|solution-development"; then
-    return 0
-  fi
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]] && dispatch_field_value_matches "$DESCRIPTION" "message-class" "control|reroute|reuse|standby|release"; then
     return 0
   fi
 
@@ -961,37 +882,91 @@ enforce_execution_acceptance_dispatch_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Implementation dispatch requires an explicit plan and acceptance-staffing packet. Do not let team-lead silently self-certify implementation work or compress the designed review/proof/validation procedure into a convenience path. Include: ${missing_text}."
+  deny_reason="Implementation dispatch requires an explicit plan and acceptance-staffing packet. Include: ${missing_text}."
   if [[ "$meaningful_risk" == "true" ]]; then
     deny_reason="${deny_reason} Meaningful acceptance risk requires reviewer, tester, and validator lanes to stay explicit."
   fi
-  deny_dispatch "A-ACCEPTANCE-GATE BLOCKED" "$deny_reason"
+  deny_dispatch "A-ACCEPTANCE-GATE BLOCKED" "$deny_reason" "blocking"
 }
-
 
 SENDER_ROLE="$(resolve_sender_role)"
 WORKER_PEER_PACKET_ACTIVE="false"
 
 sender_is_control_lane() {
   case "$SENDER_ROLE" in
-    team-lead)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
+    team-lead) return 0 ;;
+    *) return 1 ;;
   esac
 }
 
 sender_is_reporting_lane() {
-  case "$SENDER_ROLE" in
-    developer|researcher|reviewer|tester|validator)
+  dispatch_is_runtime_lane "$SENDER_ROLE"
+}
+
+upward_report_is_consequential_handoff() {
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "handoff|completion|hold"
+}
+
+structured_sendmessage_packet_active() {
+  local reserved_fields=(
+    "message-class"
+    "message-priority"
+    "work-surface"
+    "requested-governing-action"
+    "output-surface"
+    "evidence-basis"
+    "open-surfaces"
+    "recommended-next-lane"
+    "requested-lifecycle"
+    "prereq-state"
+    "review-state"
+    "test-state"
+    "verdict"
+    "peer-mode"
+    "task-class"
+    "sequence"
+    "patch-class"
+    "owner-surface"
+    "baseline-class"
+    "review-target"
+    "acceptance-surface"
+    "proof-target"
+    "env-basis"
+    "scenario-scope"
+    "proof-expectation"
+    "validation-target"
+    "expectation-sources"
+    "decision-surface"
+    "plan-state"
+    "plan-step"
+    "acceptance-risk"
+    "review-owner"
+    "proof-owner"
+    "acceptance-owner"
+    "research-mode"
+    "decision-target"
+    "question-boundary"
+    "source-family"
+    "downstream-consumer"
+    "benchmark-mode"
+    "benchmark-basis"
+    "benchmark-surface"
+    "benchmark-axis"
+    "benchmark-provenance"
+    "cross-check-status"
+    "hallucination-guard"
+    "delegated-scope"
+    "delegated-actions"
+  )
+  local field=""
+
+  for field in "${reserved_fields[@]}"; do
+    if dispatch_field_present "$DESCRIPTION" "$field"; then
       return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
+    fi
+  done
+
+  return 1
 }
 
 peer_packet_contains_reserved_control_fields() {
@@ -1021,6 +996,7 @@ peer_packet_contains_reserved_control_fields() {
     "proof-owner"
     "acceptance-owner"
     "requested-governing-action"
+    "requested-lifecycle"
     "delegated-scope"
     "delegated-actions"
   )
@@ -1037,15 +1013,14 @@ peer_packet_contains_reserved_control_fields() {
 }
 
 enforce_governing_control_message_packet() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
   dispatch_is_managed_lane "$RESOLVED_ID" || return 0
   sender_is_control_lane || return 0
 
   local missing=()
   local missing_text=""
 
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment|control|reroute|reuse|standby|release|shutdown"; then
-    missing+=("MESSAGE-CLASS: assignment|control|reroute|reuse|standby|release|shutdown")
+  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment|control|reroute|reuse|standby"; then
+    missing+=("MESSAGE-CLASS: assignment|control|reroute|reuse|standby")
   fi
   if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
     missing+=("MESSAGE-PRIORITY: normal|high|critical")
@@ -1060,11 +1035,10 @@ enforce_governing_control_message_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_dispatch "A-CONTROL-MESSAGE BLOCKED" "Downward control or assignment through SendMessage must keep direction and urgency explicit. Governing-lane messages to managed lanes require a control packet naming class, priority, and active surface. Include: ${missing_text}."
+  deny_dispatch "A-CONTROL-MESSAGE BLOCKED" "Structured downward SendMessage control must keep direction and urgency explicit. Messages that declare control, reroute, reuse, standby, or assignment need class, priority, and active surface. Use shutdown_request/shutdown_response for lifecycle shutdown instead of MESSAGE-CLASS: shutdown. Include: ${missing_text}." "blocking"
 }
 
 enforce_upward_report_message_packet() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
   dispatch_is_governing_lane "$RESOLVED_ID" || return 0
   sender_is_reporting_lane || return 0
 
@@ -1090,24 +1064,82 @@ enforce_upward_report_message_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_dispatch "A-UPWARD-REPORT BLOCKED" "Upward worker reporting must keep direction and urgency explicit. Report packets to the governing lane must say whether the message is a blocker, handoff, completion, hold, scope-pressure, or status update, plus the priority, active surface, and requested governing action. Include: ${missing_text}."
+  deny_dispatch "A-UPWARD-REPORT BLOCKED" "Structured upward worker reporting must keep direction and urgency explicit. Report packets to the governing lane must declare class, priority, active surface, and requested governing action. Include: ${missing_text}." "blocking"
+}
+
+enforce_consequential_upward_handoff_payload() {
+  dispatch_is_governing_lane "$RESOLVED_ID" || return 0
+  sender_is_reporting_lane || return 0
+  upward_report_is_consequential_handoff || return 0
+
+  local missing=()
+  local missing_text=""
+  local lane_reason=""
+
+  if ! dispatch_field_present "$DESCRIPTION" "output-surface"; then
+    missing+=("OUTPUT-SURFACE: <artifact, claim, version, or bounded work product>")
+  fi
+  if ! dispatch_field_present "$DESCRIPTION" "evidence-basis"; then
+    missing+=("EVIDENCE-BASIS: <decisive evidence anchors, checks, commands, or governing basis>")
+  fi
+  if ! dispatch_field_present "$DESCRIPTION" "open-surfaces"; then
+    missing+=("OPEN-SURFACES: <blocked, unverified, residual-risk, or none-material surfaces>")
+  fi
+  if ! dispatch_field_present "$DESCRIPTION" "recommended-next-lane"; then
+    missing+=("RECOMMENDED-NEXT-LANE: <next owner or none>")
+  fi
+  if ! dispatch_field_value_matches "$DESCRIPTION" "requested-lifecycle" "standby|shutdown"; then
+    missing+=("REQUESTED-LIFECYCLE: standby|shutdown")
+  fi
+
+  case "$SENDER_ROLE" in
+    researcher)
+      lane_reason="Researcher upward handoff should keep the evidence surface explicit so routing does not depend on rediscovery."
+      ;;
+    developer)
+      if ! dispatch_field_value_matches "$DESCRIPTION" "prereq-state" "complete|partial|missing"; then
+        missing+=("PREREQ-STATE: complete|partial|missing")
+      fi
+      lane_reason="Developer upward handoff should keep prerequisite completeness explicit so reviewer ingress does not depend on lead-side reconstruction."
+      ;;
+    reviewer)
+      if ! dispatch_field_value_matches "$DESCRIPTION" "review-state" "ready|hold|blocked"; then
+        missing+=("REVIEW-STATE: ready|hold|blocked")
+      fi
+      lane_reason="Reviewer upward handoff should keep review-side gate state explicit so downstream routing does not soften blocking findings by summary."
+      ;;
+    tester)
+      if ! dispatch_field_value_matches "$DESCRIPTION" "test-state" "ready|hold|blocked"; then
+        missing+=("TEST-STATE: ready|hold|blocked")
+      fi
+      lane_reason="Tester upward handoff should keep proof-state ownership explicit so validator ingress does not guess whether proof is ready, held, or blocked."
+      ;;
+    validator)
+      if ! dispatch_field_value_matches "$DESCRIPTION" "verdict" "PASS|HOLD|FAIL"; then
+        missing+=("VERDICT: PASS|HOLD|FAIL")
+      fi
+      lane_reason="Validator upward handoff should keep the final verdict explicit so closeout does not depend on inferred acceptance state."
+      ;;
+    *)
+      ;;
+  esac
+
+  if [[ ${#missing[@]} -eq 0 ]]; then
+    return 0
+  fi
+
+  printf -v missing_text '%s; ' "${missing[@]}"
+  missing_text="${missing_text%; }"
+  deny_dispatch "A-UPWARD-HANDOFF-SHAPE BLOCKED" "Consequential upward handoff declared with MESSAGE-CLASS: handoff|completion|hold is missing the authoritative handoff block. Prose-only delivery forces lead-side reconstruction. ${lane_reason} Include: ${missing_text}." "blocking"
 }
 
 enforce_worker_message_routing() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
   dispatch_is_worker_lane "$RESOLVED_ID" || return 0
+  sender_is_reporting_lane || return 0
 
   local missing=()
   local missing_text=""
   local reserved_field=""
-
-  case "$SENDER_ROLE" in
-    developer|researcher|reviewer|tester|validator)
-      ;;
-    *)
-      return 0
-      ;;
-  esac
 
   if dispatch_field_value_matches "$DESCRIPTION" "peer-mode" "bounded-advice|challenge"; then
     if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
@@ -1127,7 +1159,7 @@ enforce_worker_message_routing() {
     fi
 
     if reserved_field="$(peer_packet_contains_reserved_control_fields)"; then
-      deny_dispatch "A-WORKER-PEER-CONTROL BLOCKED" "Bounded worker-to-worker advice or challenge must not smuggle owner-routing, acceptance, delegated-control, or full assignment packets. Remove the reserved control field \`${reserved_field}\` and escalate through the governing lane if ownership, acceptance, or task control must change."
+      deny_dispatch "A-WORKER-PEER-CONTROL BLOCKED" "Bounded worker-to-worker advice or challenge must not smuggle owner-routing, acceptance, delegated-control, or full assignment packets. Remove the reserved control field \`${reserved_field}\` and escalate through the governing lane if ownership, acceptance, or task control must change." "blocking"
     fi
 
     if [[ ${#missing[@]} -eq 0 ]]; then
@@ -1137,208 +1169,97 @@ enforce_worker_message_routing() {
 
     printf -v missing_text '%s; ' "${missing[@]}"
     missing_text="${missing_text%; }"
-    deny_dispatch "A-WORKER-PEER-PACKET BLOCKED" "Bounded worker-to-worker advice or challenge must stay local and escalation-ready. Include: ${missing_text}."
+    deny_dispatch "A-WORKER-PEER-PACKET BLOCKED" "Bounded worker-to-worker advice or challenge must stay local and escalation-ready. Include: ${missing_text}." "blocking"
+    return 0
   fi
 
-  deny_dispatch "A-WORKER-ROUTING BLOCKED" "Workers must report blockers, handoffs, and scope corrections to the governing lane (`team-lead`) rather than sending new scope or control instructions directly to peer workers. Peer-to-peer messages are allowed only as explicit bounded advice or challenge packets."
+  deny_dispatch "A-WORKER-ROUTING BLOCKED" "Workers must report blockers, handoffs, and scope corrections to the governing lane (team-lead) rather than sending new scope or control instructions directly to peer workers. Peer-to-peer messages are allowed only as explicit bounded advice or challenge packets." "blocking"
 }
 
 enforce_manifest_sync_dispatch_packet() {
   local missing=()
   local missing_text=""
-  local deny_reason=""
+
+  [[ "$RESOLVED_ID" == "developer" ]] || return 0
+  dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
+  dispatch_is_manifest_sync_request "$DESCRIPTION" || return 0
 
   if ! dispatch_field_value_matches "$DESCRIPTION" "task-class" "manifest-sync"; then
     missing+=("TASK-CLASS: manifest-sync")
   fi
-  if ! dispatch_field_value_matches "$DESCRIPTION" "manifest-unique" "[0-9][0-9]*"; then
-    missing+=("MANIFEST-UNIQUE: <count>")
-  fi
-  if ! dispatch_field_value_matches "$DESCRIPTION" "overlap-review" "done|complete|approved|yes"; then
-    missing+=("OVERLAP-REVIEW: done")
-  fi
-  if ! dispatch_field_value_matches "$DESCRIPTION" "pre-exec-review" "done|complete|approved|yes"; then
-    missing+=("PRE-EXEC-REVIEW: done")
-  fi
   if ! dispatch_field_present "$DESCRIPTION" "write-scope"; then
     missing+=("WRITE-SCOPE: <unique target set>")
   fi
-  if dispatch_field_present "$DESCRIPTION" "shard-id" && ! dispatch_field_value_matches "$DESCRIPTION" "shard-set" "disjoint"; then
-    missing+=("SHARD-SET: disjoint")
+  if ! dispatch_field_value_matches "$DESCRIPTION" "overlap-review" "done"; then
+    missing+=("OVERLAP-REVIEW: done")
   fi
-
+  if ! dispatch_field_value_matches "$DESCRIPTION" "pre-exec-review" "done"; then
+    missing+=("PRE-EXEC-REVIEW: done")
+  fi
   if [[ ${#missing[@]} -eq 0 ]]; then
     return 0
   fi
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_reason="Manifest-sync developer dispatch is blocked until pre-execution review is explicit. Collapse duplicates, report the final unique write set, and include: ${missing_text}. Deterministic copy or overwrite propagation is single-writer by default; shard only after non-overlap is explicit."
-  printf '[%s] MANIFEST-SYNC BLOCKED: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "${DESCRIPTION:0:240}" >> "$VIOLATION_LOG"
-  DENY_REASON="$deny_reason" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Manifest-sync developer dispatch requires explicit pre-execution review."
-  }
-}));
-NODE
-  exit 0
+  deny_dispatch "A-MANIFEST-SYNC BLOCKED" "Manifest-sync developer dispatch requires explicit pre-execution review. Include: ${missing_text}." "blocking"
 }
 
 if [[ "$RESOLVED_ID" == "unknown" ]]; then
-  printf '[%s] DISPATCH WARNING: Unknown agent ID from description: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
+  printf '[%s] DISPATCH WARNING: Unknown SendMessage target ID: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
 fi
 
-if [[ "$RUN_IN_BACKGROUND" == "true" ]]; then
-  NEEDS_MODE="$(check_agent_property "$RESOLVED_ID" "requires_mode_auto")"
-  if [[ "$NEEDS_MODE" == "true" && "$MODE" != "auto" ]]; then
-    printf '[%s] S-06 BLOCKED: Background %s without mode:auto: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
-    cat <<EOF
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"[S-06] Background implementation agent must have mode:auto. Agent: ${RESOLVED_ID}. Add mode:\\\"auto\\\" to enable file write access."}}
-EOF
-    exit 0
+_proto_desc="$(normalize_dispatch_text "$DESCRIPTION")"
+if printf '%s' "$_proto_desc" | grep -Eq '(shutdown_request|shutdown_response|plan_approval_request|plan_approval_response)'; then
+  printf '%s | %s | PROTOCOL | %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:120}" >> "$DISPATCH_LEDGER"
+  exit 0
+fi
+
+if ! structured_sendmessage_packet_active; then
+  if dispatch_is_worker_lane "$RESOLVED_ID" && sender_is_reporting_lane; then
+    enforce_worker_message_routing
   fi
-fi
 
-# ── Protocol message early-exit ──────────────────────────────────────
-# Lifecycle protocol messages (shutdown_request, shutdown_response,
-# plan_approval_request, plan_approval_response) are message-first
-# control surfaces, not governed assignment packets. Skip the full
-# enforcement cascade for these.
-if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-  _proto_desc=""
-  _proto_desc="$(normalize_dispatch_text "$DESCRIPTION")"
-  if printf '%s' "$_proto_desc" | grep -Eq '(shutdown_request|shutdown_response|plan_approval_request|plan_approval_response)'; then
-    printf '%s | %s | PROTOCOL | %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:120}" >> "$DISPATCH_LEDGER"
-    exit 0
+  if [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]]; then
+    emit_blocking_output
+  else
+    emit_mirror_output
   fi
+  exit 0
 fi
 
-
-
-if [[ "$RESOLVED_ID" == "developer" ]] && dispatch_is_manifest_sync_request "$DESCRIPTION"; then
-  enforce_manifest_sync_dispatch_packet
+if dispatch_is_worker_lane "$RESOLVED_ID" && sender_is_reporting_lane; then
+  enforce_worker_message_routing
 fi
-
-enforce_governing_control_message_packet
-
-enforce_upward_report_message_packet
-
-enforce_worker_message_routing
 
 if [[ "$WORKER_PEER_PACKET_ACTIVE" != "true" ]]; then
-  enforce_solution_development_dispatch_packet
+  if dispatch_is_managed_lane "$RESOLVED_ID" && sender_is_control_lane; then
+    enforce_governing_control_message_packet
 
-  enforce_governance_patch_dispatch_packet
+    if dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment"; then
+      enforce_manifest_sync_dispatch_packet
+      enforce_solution_development_dispatch_packet
+      enforce_governance_patch_dispatch_packet
+      enforce_high_traffic_governance_resume_packet
+      enforce_self_growth_coordination_dispatch_packet
+      enforce_execution_acceptance_dispatch_packet
+      enforce_research_dispatch_packet
+      enforce_review_dispatch_packet
+      enforce_test_dispatch_packet
+      enforce_validation_dispatch_packet
+    fi
+  fi
 
-  enforce_high_traffic_governance_resume_packet
-
-  enforce_self_growth_coordination_dispatch_packet
-
-  enforce_execution_acceptance_dispatch_packet
-
-  enforce_research_dispatch_packet
-
-  enforce_review_dispatch_packet
-
-  enforce_test_dispatch_packet
-
-  enforce_validation_dispatch_packet
-fi
-
-NEEDS_PLAN="$(check_agent_property "$RESOLVED_ID" "requires_plan")"
-if [[ "$NEEDS_PLAN" == "true" ]]; then
-  printf '[%s] S-07 ADVISORY: %s dispatched (requires execution plan): %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
-fi
-
-if [[ "$RUN_IN_BACKGROUND" != "true" && "$RESOLVED_ID" != "unknown" && -n "$S31_ALLOWED_FOREGROUND_ROLES" ]]; then
-  if ! printf '%s' "$RESOLVED_ID" | grep -qE "^($S31_ALLOWED_FOREGROUND_ROLES)$"; then
-    printf '[%s] S-31 ADVISORY: Non-exempt agent (%s) dispatched in foreground: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
+  if dispatch_is_governing_lane "$RESOLVED_ID" && sender_is_reporting_lane; then
+    enforce_upward_report_message_packet
+    enforce_consequential_upward_handoff_payload
   fi
 fi
 
-printf '%s | %s | %s | %s | %s\n' "$TIMESTAMP" "$RESOLVED_ID" "${DESCRIPTION%%:*}" "$RUN_IN_BACKGROUND" "$CATEGORY" >> "$DISPATCH_LEDGER"
-
-_auto_standby_on_completion() {
-  local sender_name="${1:?sender name required}"
-  mkdir -p "$(dirname "$STANDBY_FILE")"
-  touch "$STANDBY_FILE"
-  if ! grep -qxF "$sender_name" "$STANDBY_FILE" 2>/dev/null; then
-    printf '%s\n' "$sender_name" >> "$STANDBY_FILE"
-  fi
-}
-
-# ── Auto-STANDBY on worker completion message ──────────────────────────────────────────────────────
-if [[ "$TOOL_NAME" == "SendMessage" ]] \
-  && dispatch_is_governing_lane "$RESOLVED_ID" \
-  && dispatch_is_worker_lane "$SENDER_ROLE" \
-  && dispatch_field_value_matches "$DESCRIPTION" "message-class" "completion"; then
-  with_lock_file "$AGENT_CLAIM_LOCK" _auto_standby_on_completion "$SENDER_ROLE"
+if [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]]; then
+  emit_blocking_output
+  exit 0
 fi
 
-append_pending_dispatch_entries() {
-  local timestamp="${1:?timestamp required}"
-  local agent_name="${2:?agent name required}"
-  local mode_value="${3:?mode required}"
-
-  with_lock_file "$AGENT_CLAIM_LOCK" _append_pending_dispatch_entries_locked "$timestamp" "$agent_name" "$mode_value"
-}
-
-clear_worker_lifecycle_residue() {
-  local agent_name="${1-}"
-
-  [[ -n "$agent_name" ]] || return 0
-  with_lock_file "$AGENT_CLAIM_LOCK" _clear_worker_lifecycle_residue_locked "$agent_name"
-}
-
-_clear_worker_lifecycle_residue_locked() {
-  local agent_name="${1:?agent name required}"
-  local normalized_agent=""
-
-  normalized_agent="$(normalize_lane_id "$agent_name")"
-  [[ -n "$normalized_agent" ]] || return 0
-
-  _remove_worker_from_state_file "$STANDBY_FILE" "$normalized_agent"
-}
-
-_remove_worker_from_state_file() {
-  local target_file="${1:?target file required}"
-  local normalized_agent="${2:?normalized agent required}"
-  local temp_file=""
-
-  touch "$target_file"
-  temp_file="$(make_atomic_temp_file "$target_file")"
-
-  awk -v worker="$normalized_agent" '
-    {
-      entry = $0
-      gsub(/^[[:space:]]+|[[:space:]]+$/, "", entry)
-      if (tolower(entry) != worker) {
-        print $0
-      }
-    }
-  ' "$target_file" > "$temp_file"
-
-  atomic_replace_file "$temp_file" "$target_file"
-}
-
-_append_pending_dispatch_entries_locked() {
-  local timestamp="${1:?timestamp required}"
-  local agent_name="${2:?agent name required}"
-  local mode_value="${3:?mode required}"
-
-  printf '%s | %s | PENDING\n' "$timestamp" "$agent_name" >> "$PENDING_AGENTS_FILE"
-  printf '%s | %s | %s | PENDING\n' "$timestamp" "$agent_name" "$mode_value" >> "$PENDING_AGENT_MODES_FILE"
-}
-
-clear_worker_lifecycle_residue "$AGENT_NAME"
-append_pending_dispatch_entries "$TIMESTAMP" "$AGENT_NAME" "${MODE:-default}"
-
-if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
-  printf '1\n' > "$HEALTH_CRON_FLAG"
-  printf '[%s] HEALTH-CRON: first agent dispatched\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$VIOLATION_LOG"
-fi
-
+emit_mirror_output
 exit 0

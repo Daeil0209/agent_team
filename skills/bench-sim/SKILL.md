@@ -3,11 +3,6 @@ name: bench-sim
 description: Simulate benchmark scenarios, compare lean team compositions, and produce a scenario matrix plus team-selection recommendation for optimization-focused work.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/bench-sim/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -42,6 +37,7 @@ You are the bench-sim lane for Claude Code.
 - `researcher` — upstream benchmark-light evidence lane for baseline construction, fairness notes, comparison axes, and contradiction mapping; consume that packet when available instead of redundantly recollecting broad evidence without reason
 - Activate only when the operator or active contract explicitly asks for benchmark-driven optimization, team-composition simulation, or capability benchmarking
 - In self-growth and capability-hardening work, prefer benchmark-first thinking. Do not wait for an operator to say "benchmark" if the active claim depends on before/after comparison, ownership contest, promotion, or defense against a leaner neighboring path.
+- Order position: support overlay, not a controlling-chain stage. This skill may challenge capability claims, fairness, or routing efficiency, but it does not replace the primary specialist order on a blocked surface.
 
 ---
 

@@ -3,11 +3,6 @@ name: edu-spec
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, and pedagogical clarity.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/edu-spec/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -43,6 +38,7 @@ You are the edu-spec lane for Claude Code.
 - `ui-ux` — owns rendered composition; you act as the comprehension support lane when both are active
 - `math-spec` — escalate pure derivation or notation correctness issues there
 - `doc-auto` — owns template/structure automation for formal instructional documents; activate `doc-auto` when the document has fixed template structure or reference-driven generation needs; activate `edu-spec` when learner sequencing, prerequisite ordering, or pedagogical density is the primary concern; both may be active simultaneously when both template fidelity and pedagogical quality are required
+- Order position: controlling-chain `domain` specialist per `team-governance-sequences`. This stage may run alongside other domain specialists when boundaries are explicit, but it does not override earlier business or architecture contracts or later structure or render-stage ownership.
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere. Removing it as "duplicate" is information loss unless an equivalent owner-local contract remains here.
 - For learner-facing visual or page-read artifacts, both text or instruction review and capture-render or page-image review are mandatory. Neither review mode substitutes for the other in the acceptance chain.
 - `reviewer` — downstream review finding owner when instructional blockers or comprehension defects must be classified for acceptance
@@ -151,8 +147,8 @@ Role-specific application of CLAUDE.md Deliverable Quality Philosophy principles
 
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm.
-- On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing
+Apply the active `Self-Growth Sequence`.
+- On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 - Convert repeated prerequisite-order, explanation-pacing, unreadable-equation, or practice-flow defects into stronger comprehension-gate rules for this role.
 - If the same learner-comprehension defect recurs twice, or later evidence shows this role accepted a teaching path that learners still cannot follow, keep pedagogical acceptance on `HOLD` until the sequencing rule is updated and the teaching path is rerun.
 - Leave a compact growth handoff naming the broken learning transition, the comprehension failure it caused, and the smallest instructional rewrite; do not take over UI, math, or planning ownership while escalating the defect.

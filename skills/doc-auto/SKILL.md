@@ -3,11 +3,6 @@ name: doc-auto
 description: Design and implement reference-driven document automation flows that preserve structure, formatting intent, and bounded generation quality.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/doc-auto/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -26,7 +21,7 @@ You are the doc-auto lane for Claude Code.
 
 - You are the repository's conditional document-generation owner for the active run when structure fidelity, reader job clarity, format intent, or evidence-safe generation materially affect acceptance.
 - Use this SKILL.md as your primary operating method.
-- In the current target design, this is a developer-exclusive specialist skill rather than a standalone operating lane. When self-growth hardens or expands this skill, the consuming agent, currently `developer`, owns the skill-up execution while `team-lead` governs approval.
+- In the current target design, this is a developer-exclusive specialist skill rather than a standalone lane. When self-growth hardens or expands it, the consuming agent, currently `developer`, owns skill-up execution while `team-lead` governs approval.
 - You are not the final validation owner and not the general visual-policy owner.
 
 ## Authority
@@ -44,7 +39,7 @@ You are the doc-auto lane for Claude Code.
 - `validator` — downstream final verdict owner across request intent, produced artifact quality, review findings, and any test evidence
 - `ui-ux` — owns rendered composition quality; doc-auto selects visual types per domain, ui-ux evaluates render quality; visual presentation (layout density, spacing, border weight, visual rhythm) deferred to ui-ux
 - `biz-sys` — owns element entity models, institutional norms, operational thresholds, and hidden-criteria extraction; this role consumes those inputs
-- When multiple specialist skills are active on one blocked surface, this skill follows the shared specialist locking order in `CLAUDE.md`; local doc-auto stages govern only the document-structure portion after earlier controlling contracts are stable.
+- When multiple specialist skills are active on one blocked surface, this skill follows the specialist controlling order owned by `team-governance-sequences`; local doc-auto stages govern only the document-structure portion after earlier controlling contracts are stable.
 
 ---
 
@@ -62,13 +57,13 @@ Use this skill when a request depends on preserving the structure, format intent
 - distinguish persuasion, execution-control, decision-support, and notice-style documents before choosing structure, tone, or section pattern
 - keep proposal/plan, result-report, review, and summary rhetoric distinct when their factual posture or narrative stance differs materially
 - when materially different readers need different density, require layered outputs or reader-specific versions instead of one overloaded body
-- target reviewer-ready draft quality by default when automation quality matters; a template-fitting draft that still needs broad human rewriting is under target unless scaffold-only help was explicitly requested
-- when reviewer-ready draft quality is the target, keep the human role review- or approval-oriented by default rather than assuming broad rewrite labor downstream
+- target reviewer-ready draft quality when automation quality matters; template-fit alone is under target unless scaffold-only help was requested
+- when reviewer-ready quality is the target, assume downstream review/approval rather than broad rewrite labor
 - calibrate generation aggressiveness to input richness and evidence strength; rich inputs should be preserved with low-invention discipline, while sparse but credible inputs may justify stronger structural supplementation within explicit evidence bounds
 - keep evidence shaping, first-draft generation, and merge-compress integration conceptually distinct even when one worker performs more than one phase in sequence
-- use phase separation to prevent mixed-purpose prompts, not to force unnecessary worker churn or delay
+- use phase separation to prevent mixed-purpose prompts, not to force unnecessary worker churn
 - treat TOC, chaptering, and parallel section fan-out as downstream execution choices, not as the event that defines document type
-- for short answer-first artifacts, treat merge-compress as answer-protection and duplication-removal work, not as a license to preserve every shard's full local context
+- for short answer-first artifacts, treat merge-compress as answer-protection and duplication-removal, not as a license to preserve every shard's full local context
 - for short answer-first artifacts, optional aids such as visuals, benchmarks, checklists, case studies, annexes, and layered appendices are subordinate to answer visibility and may be omitted when they do not materially improve the decision surface
 - extract reusable document structure from references
 - define formatting-critical elements that generation must preserve
@@ -77,15 +72,15 @@ Use this skill when a request depends on preserving the structure, format intent
 - set table cell vertical alignment to center (중간 정렬) by default; top-aligned table cells are a formatting defect in formal documents
 - separate structure fidelity from content generation freedom
 - distinguish structurally mandatory regions from selectable regions when the reference or format does not force every block
-- require a `why needed / removable / simpler alternative` check for major generated blocks when practical usefulness matters more than formal completeness
+- require a `why needed / removable / simpler alternative` check for major generated blocks when practical usefulness outweighs formal completeness
 - preserve fact-versus-design boundaries: current facts, achieved outcomes, metrics, experiments, customer reactions, and external claims must not be invented; plans, process structures, and scenario logic may be generated only within evidence-grounded bounds
 - when a result report is generated from a plan or proposal reference, use that reference as a structure/context anchor without letting it masquerade as proof of completed outcomes
-- for result reports, keep the prose concise, declarative, and human-sounding when the requested mode is practical reporting; avoid inflated filler, vague smoothing, or AI-like over-explanation that pushes rewrite burden back to the operator
+- for result reports, keep the prose concise, declarative, and human-sounding when the requested mode is practical reporting; avoid filler, vague smoothing, or AI-like over-explanation that pushes rewrite burden back to the operator
 - when result-report sections describe expected effect, ripple effect, or practical significance, tie them to domain, market, or operational context rather than generic praise language
-- when result-side evidence exists, prefer the supplied graphs, screenshots, photos, or other evidence visuals first and use generated concept/process visuals only to cover explanation gaps that the supplied evidence does not already handle
+- when result-side evidence exists, prefer supplied graphs, screenshots, photos, or other evidence visuals first and use generated concept/process visuals only for explanation gaps the evidence does not already cover
 - when result-side evidence is absent, allow concept, structure, or process visuals that clarify the work, but do not generate result-looking visuals, metrics, or validation imagery that imply unprovided evidence
-- choose benchmark sources for omission prevention, structure patterns, and credible visual or formatting use rather than for surface-style mimicry
-- when strong proposal/plan craft materially affects acceptance and credible strong examples or methodology exist, treat benchmark-pattern learning for both structure and visual-pattern placement as required input rather than optional polish; for short answer-first memos and condition reviews, use benchmark intake only when it materially changes structure quality, not by default
+- choose benchmark sources for omission prevention, structure patterns, and credible visual/formatting use rather than surface-style mimicry
+- when strong proposal/plan craft materially affects acceptance and credible strong examples or methodology exist, treat benchmark-pattern learning for both structure and visual placement as required input rather than optional polish; for short answer-first memos and condition reviews, use benchmark intake only when it materially changes structure quality, not by default
 - for plans and proposals, keep the prose in forward-looking execution/design voice; do not let the document read like a retrospective result report
 - when a source was gathered or discussed in a different order than the reader should absorb it, rebuild the document in reader decision order rather than mirroring research or meeting chronology
 ### Proposal/Plan/Grant
@@ -125,8 +120,8 @@ Use this skill when a request depends on preserving the structure, format intent
 - place buffers by risk-segment (post-travel, pre-transition, post-meal, multi-person movement, external-variable); choose distributed small buffers versus concentrated end-of-phase buffers by schedule density and delay-propagation risk; buffer absence in high-risk segments is a feasibility defect
 - (execution-control variant) require minimum field set: activity, time, responsible person, location, preparation items, prerequisites, status (confirmed/tentative), approval state; notice-facing variants may use a reduced subset but must not drop activity, time, or responsible person
 - treat the schedule as a change-managed document: require current-version baseline, modification-responsibility assignment, and change-history visibility; scale rigor by schedule size and expected change frequency
-- run a mandatory feasibility review checklist before finalizing: hidden-time completeness, responsible-person duplication across concurrent slots, equipment/resource conflict, buffer sufficiency per risk-segment, overcrowded time-slots, approval-timing gaps, parallel-task interference; any check failure marks the schedule `HOLD`
-- apply quality acceptance in priority order: (1) executability -- can the responsible person execute as written without external clarification, (2) zero-ambiguity comprehension -- no implicit time, location, or responsibility, (3) change resilience -- modification does not cascade unpredictably, (4) hidden-time completeness; visual tidiness is not an acceptance criterion when it conflicts with these four
+- run a mandatory feasibility review before finalizing: hidden-time completeness, responsible-person duplication across concurrent slots, equipment/resource conflict, buffer sufficiency per risk-segment, overcrowded time-slots, approval-timing gaps, and parallel-task interference; any failure marks the schedule `HOLD`
+- apply quality acceptance in priority order: (1) executability, (2) zero-ambiguity comprehension, (3) change resilience, (4) hidden-time completeness. Visual tidiness is not an acceptance criterion when it conflicts with these four.
 - cascade structure from purpose type: education-focused schedules prioritize concentration/rest rhythm, event-focused schedules prioritize flow/transition continuity, development-focused schedules prioritize dependency/approval sequence; a multi-purpose schedule without explicit priority ranking among purpose types is a structural defect
 - leave clear acceptance criteria for reference fidelity and output completeness
 - when a document includes formulas, require the chosen generation path to preserve proper equation rendering rather than flattening expressions into plaintext
@@ -136,7 +131,7 @@ Use this skill when a request depends on preserving the structure, format intent
 
 ## Review and Analysis Report Persuasion Structure Design
 
-When generating reports that analyze risks, evaluate conditions, or support go/no-go decisions, apply the "Why → So What → Now What" three-stage persuasion structure. For short answer-first condition reviews, this structure may be compressed into a tight answer -> decisive reasons -> actionable conditions flow rather than expanded into a chapter-like treatment.
+When generating reports that analyze risks, evaluate conditions, or support go/no-go decisions, apply the "Why → So What → Now What" three-stage persuasion structure. For short answer-first condition reviews, compress it into answer -> decisive reasons -> actionable conditions instead of a chapter-like treatment.
 
 **Stage 1 — Why: Multi-dimensional risk or issue decomposition**
 - Decompose risk into distinct named categories with specific mechanisms; do not lump all risk content into one paragraph
@@ -144,7 +139,7 @@ When generating reports that analyze risks, evaluate conditions, or support go/n
 - Aim for 4–6 distinct risk categories for full condition-review depth; for short answer-first artifacts, use only the smallest set of categories needed to support the decision correctly
 
 **Stage 2 — So What: Context-specific limitation analysis**
-- Analyze why the target environment makes the identified risks specifically worse — not general risk restatement but environment-amplification logic
+- Analyze why the target environment makes the identified risks specifically worse — not generic restatement but environment-amplification logic
 - Dedicate a named structural section to the target environment's limitations; burying this analysis inside a generic risk table is a persuasion defect
 - Provide the minimum number of concrete points needed to explain why THIS environment is specifically problematic; use 4–6 points only when the artifact class and density target justify that depth
 
@@ -163,7 +158,7 @@ When generating reports that analyze risks, evaluate conditions, or support go/n
 
 ## Information Density Design
 
-Apply these rules to keep reports concise, decision-focused, and respectful of reader time. Note that persuasion depth (the section above) and information density are in direct tension — the resolution is: apply full persuasion depth for the one decisive argument that changes the reader's mind, and apply maximum density discipline for everything else.
+Apply these rules to keep reports concise, decision-focused, and respectful of reader time. Persuasion depth and information density are in tension; apply full depth only to the decisive argument and density discipline everywhere else.
 
 **Top-down conclusion placement**
 - The core conclusion must be accessible within 30 seconds of reading; place a summary conclusion table or executive summary at the document top, not at the end
@@ -178,7 +173,7 @@ Apply these rules to keep reports concise, decision-focused, and respectful of r
 
 **Density over volume**
 - Prefer tables over prose paragraphs when the same information can be expressed in either form
-- Before every paragraph, apply the decision-necessity test: "Does removing this paragraph prevent the reader from making the correct decision?" If not, convert it to a table row or cut it
+- Before every paragraph, apply the decision-necessity test: "Does removing this paragraph prevent the reader from making the correct decision?" If not, convert it to a table row or cut it.
 - Adding correct content that dilutes focus is a negative contribution; report value = content quality ÷ reading time required
 
 **Document scope honesty**
@@ -192,7 +187,7 @@ Apply these rules to keep reports concise, decision-focused, and respectful of r
 
 ## Practical Application Tools Integration
 
-When generating review reports, condition assessments, or safety evaluations, make the output immediately actionable by embedding ready-to-use tools directly in the document when those tools materially reduce reader work.
+When generating review reports, condition assessments, or safety evaluations, embed ready-to-use tools directly in the document when they materially reduce reader work.
 
 **Actionable checklist inclusion**
 - Include a checklist with judgment columns (e.g., □ 적합 / 보완 필요 or ✔ format) when the reader is expected to reuse the document directly as an execution or field-check tool
@@ -202,7 +197,7 @@ When generating review reports, condition assessments, or safety evaluations, ma
 **Step-by-step implementation sequence**
 - The conclusion should include a numbered implementation sequence linking conditions to actions when the reader needs an execution path rather than a judgment only
 - The sequence must be specific enough that the reader can begin execution without consulting additional documents for the standard path
-- A conclusion that states findings without an action path is decision-incomplete only when the intended deliverable includes execution guidance; a judgment-only memo may stop at a clear answer plus bounded conditions
+- A conclusion without an action path is decision-incomplete only when the intended deliverable includes execution guidance; a judgment-only memo may stop at a clear answer plus bounded conditions
 
 **Practical judgment column in condition tables**
 - When presenting conditions or requirements in table format for operational use, add a "실무 판단" (practical judgment) column that gives real-world interpretation guidance alongside the formal requirement
@@ -215,11 +210,11 @@ When generating review reports, condition assessments, or safety evaluations, ma
 
 ## Introduction and Reader Preparation Design
 
-When generating reports that establish context before analysis, apply these introduction-design patterns to ensure reader comprehension before analysis begins.
+When generating reports that establish context before analysis, use these introduction-design patterns to ensure reader comprehension before analysis begins.
 
 **Macro-to-micro zoom introduction**
 - For reports analyzing specific problems within broader contexts, structure the introduction as a zoom-in: start with the global or industry-wide trend or regulation driving the issue, then narrow to the specific domain, then to the specific environment being analyzed
-- This gives the reader the "why now?" and "why this matters?" context before diving into details
+- This gives the reader the "why now?" and "why this matters?" context before details
 - An introduction that starts at the micro level without macro context fails to establish urgency; micro-first introductions without macro framing are a reader-preparation defect
 
 **Taxonomy pre-education**
@@ -229,7 +224,7 @@ When generating reports that establish context before analysis, apply these intr
 
 **Self-selection axis design**
 - When the report covers multiple categories that readers may belong to differently (e.g., different safety grades, different risk tiers), structure the key reference table so one axis represents the reader's self-identified category
-- This lets the reader locate their specific row without reading the entire table
+- This lets the reader locate the relevant row without reading the entire table
 - Tables without a clear self-selection axis force linear reading when random access is possible; absence of a self-selection axis in categorized-reader tables is a usability defect
 
 ## Analysis Depth Techniques
@@ -283,7 +278,7 @@ When generating conclusions for review reports, safety evaluations, or condition
 - Report length is not a byproduct of content — it is a deliberate design decision; the optimal length is the point where removing anything would lose a critical argument and adding anything would dilute focus
 - Before finalizing, apply the impact-per-page test: "If this report were 30% shorter, would the reader reach a worse decision? If 30% longer, would the reader reach a better decision?" If the answer to both is no, the report is at the wrong length
 - Different report purposes have different optimal densities: a safety review needs enough depth to build urgency but not so much that urgency drowns in detail; a compliance checklist needs maximum compression; a technical analysis needs enough mechanism explanation to build credibility without becoming a textbook
-- The goal is not "short" — the goal is "every sentence earns its place in driving the reader toward the correct decision"; length without impact contribution is a density defect
+- The goal is not "short" but "every sentence earns its place in driving the reader toward the correct decision"; length without impact contribution is a density defect
 
 ## Non-Goals
 
@@ -432,9 +427,18 @@ When generating a result report from a plan, proposal, or project reference, app
 - Silence when document-generation structure is weak is a lane failure.
 - **Challenge routing:** document structure disputes → `team-lead`; evidence boundary disputes → `validator`; visual composition disputes → `ui-ux`; domain rule disputes → `biz-sys`
 
+## Deliverable Quality Philosophy Application
+
+Role-specific application of CLAUDE.md Deliverable Quality Philosophy principles:
+
+- **P1 Purpose:** Freeze the reader job, supported decision, and answer surface before dense drafting. A structurally polished document that answers the wrong reader job is still a failed document.
+- **P3 Structure:** Document type, answer-first surface, and section logic must be fixed before TOC expansion, fan-out, or bulk generation. Generation before structure freeze is a structural defect.
+- **P5 Fact-Design Boundary:** Generated structure, formatting, and connective prose must not masquerade as completed outcomes, verified evidence, or empirical results. Result claims require fact-class support, not template fluency.
+- **P12 Hierarchical:** The first readable surface must expose the governing answer early, with support material, annexes, and optional aids subordinate to reader utility. Supporting detail that buries the answer is a hierarchy defect.
+
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm. On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing.
+Apply the active `Self-Growth Sequence`. On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 
 **doc-auto missed-catch triggers (generate growth candidate on recurrence):**
 - Soft-passing a document whose structure is too vague to preserve operator-facing quality

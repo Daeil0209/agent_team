@@ -47,7 +47,7 @@ else
     "BOOT SPEED: In your SECOND turn, call TeamCreate if no team config exists, then IMMEDIATELY respond to the user's original message. Do NOT output a boot-status report — answer the user." \
     "Use the continuity read only as a startup anchor. Do not stop at a context summary." \
     "Do not probe repo-local .claude/hooks during normal boot to rediscover these runtime-owned values." \
-    "Do not run inspect-repo-context, git status/log/branch/remote, or enumerate optional project-local .claude paths during startup unless continuity is missing, contradictory, or the user explicitly asks for repository analysis." \
+    "Do not run repo-context reconstruction, git status/log/branch/remote, or enumerate optional project-local .claude paths during startup unless continuity is missing, contradictory, or the user explicitly asks for repository analysis." \
     "Apply the same root-local rule to the current repo, clone, or worktree." \
     "TeamCreate is automatic; do not wait for the user to request it." \
     "CRITICAL: After boot completes, you MUST respond to the user's original message content. The boot is invisible infrastructure — the user expects a reply to what they said."

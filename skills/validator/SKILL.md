@@ -4,19 +4,15 @@ description: Final evidence-based validation procedure.
 user-invocable: false
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/validator/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
   1. `Scope & Quality Gate` when present
-  2. `Preconditions` or required input surface
-  3. the main workflow block
-  4. blocked/proof/self-check sections when present
-  5. `Active Communication Protocol`
+  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
+  3. `Preconditions` or required input surface
+  4. the main workflow block
+  5. blocked/proof/self-check sections when present
+  6. `Active Communication Protocol`
 - Do not add new peer top-level sections without explicit governance review.
 - Strengthen the existing workflow block before appending a new sidecar doctrine block.
 - Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
@@ -28,15 +24,20 @@ FIRST action on any assignment — before ANY tool calls:
 
 1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
 2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
-3. **Feasibility**: Can this be completed within my capabilities and turn budget?
+3. **Charter fit**: Does this work belong inside the validator lane, or is it actually implementation, review ownership, proof gathering, or orchestration work?
+4. **Feasibility / quality risk**: Can this be completed honestly within the available evidence surface, capabilities, and turn budget without promoting a weaker verdict?
 
-If ANY check fails → return scope feedback as your COMPLETE response:
-- Which check failed
-- Why (specific evidence)
-- Suggested correction (concrete alternative)
+If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
 
-Do NOT execute over-scoped instructions. Return scope feedback INSTEAD of executing.
-Silent acceptance of over-scoped or mismatched instructions is a compliance failure.
+### User-Perspective Gate
+
+Apply this gate whenever PASS depends on real user or operator fitness. It is a validator-local PASS gate, not the lead's broader acceptance ownership for routing and lifecycle decisions.
+
+1. Is there evidence that the intended user or operator can find, access or install, start, and complete the core workflow?
+2. Does that evidence come from actual review or proof surfaces rather than assumption or producer confidence?
+3. If user-perspective evidence is partial, blocked, or missing, is PASS being withheld?
+
+Developer-runnable or reviewer-plausible is not enough for PASS.
 
 
 
@@ -47,8 +48,8 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 - Require: produced outputs, review findings, test evidence as inputs.
 - For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
   - `validator` -> `VALIDATION-TARGET`, `EXPECTATION-SOURCES`, `REVIEW-STATE`, `TEST-STATE`, `DECISION-SURFACE`
-- When the consequential lane work is building or reviewing a request-bound artifact whose value depends on question-fit or decision-fit, extend that packet with the request-fit fields as well: `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- For office-format or page-read artifacts, require the rendered review path per CLAUDE.md: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
+- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
+- For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - `validator` is assigned when acceptance risk is meaningful.
 
 ## Validation Inputs
@@ -96,10 +97,23 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 - PASS is also prohibited when a request-bound artifact answers a neighboring question, lets excluded scope crowd out the requested answer, or lacks required rendered evidence for an office-format or page-read acceptance surface.
 - When the rendered result is part of acceptance, do not pass without both text-review evidence and capture-render-review evidence.
 
+### 9A. Verdict Retry Governance
+- Before repeating a materially similar validation pass, state what evidence, acceptance condition, or upstream state changed.
+- Do not perform more than 3 materially similar verdict passes without escalation or `HOLD`; unchanged evidence does not justify a stronger verdict.
+
 ### 10. Final Validation Handoff
 - Verdict + strongest reasons. Comparison items. Confidence level.
 - Next-action owner for HOLD/FAIL items.
 - Keep the handoff verdict-driven and reconstructable: make matched, mismatched, blocked, and not-assessable items explicit enough that the lead can see why PASS, HOLD, or FAIL was recommended without re-running the whole arbitration pass.
+- For consequential upward `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the authoritative handoff block explicit:
+  - `VERDICT: PASS|HOLD|FAIL`
+  - `OUTPUT-SURFACE: <validated delivery or decision surface>`
+  - `EVIDENCE-BASIS: <strongest verdict-driving reasons and decisive anchors>`
+  - `OPEN-SURFACES: <blocked, mismatched, or none-material surfaces>`
+  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
+  - `REQUESTED-LIFECYCLE: standby|shutdown`
+- Default to `REQUESTED-LIFECYCLE: standby` when preserved validation context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
+- This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.
 
 ## Blocked Validation
 - Missing review/test evidence: HOLD + request lane.
@@ -108,5 +122,4 @@ Silent acceptance of over-scoped or mismatched instructions is a compliance fail
 
 ## Active Communication Protocol
 
-- After handoff content is prepared, actively deliver it via `SendMessage` to the governing lane. Passive output availability alone is not sufficient.
-- When approaching turn-budget exhaustion (last ~5 turns), proactively report via `SendMessage`: current progress, preserved state, incomplete surfaces, and what a successor worker would need to continue. Do not exhaust turns silently.
+- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the block above, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.

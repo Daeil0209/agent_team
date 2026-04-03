@@ -4,11 +4,6 @@ description: Standard operating sequences for boot, session start, monitoring, a
 user-invocable: false
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/team-session-sequences/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -94,7 +89,7 @@ Run it automatically after the minimal continuity anchor. Skip only when the ope
 - If the runtime does not use explicit team orchestration, skip only the steps that are truly runtime-specific and still complete continuity establishment.
 - Do not start `Boot Sequence` only to inspect the repository. In this environment, use it to arm the agent-team runtime, not to produce repository summaries.
 - Previous setup logs and project auto memory are stale carryover by default, not authoritative planning inputs, unless the current task explicitly reopens them as evidence.
-- When continuity is empty, stale, or contradictory and repo context must be rebuilt, use `bash "$HOME/.claude/hooks/inspect-repo-context.sh" "<repo-root>"` or an equivalent verified branch-discovery step before any cross-branch comparison.
+- When continuity is empty, stale, or contradictory and repo context must be rebuilt, use a verified branch-discovery step from the active repo root before any cross-branch comparison.
 - Apply the same root-local startup rule to the active repo, clone, or worktree. Do not guess continuity or repo paths from team names, prior sessions, or remembered directories.
 - Do not assume `main`, `master`, or any other branch exists just because it is common elsewhere or appears in stale carryover. Verify actual heads first, then compare only existing refs.
 - Treat a missing branch ref as repository topology information, not as an operational error that needs recovery action.
@@ -127,8 +122,8 @@ The `Session-Start Sequence` applies at fresh start, resume, and pause-return.
 - Do not inspect commit history, compare branches, or probe `main` versus `master` during startup unless continuity is missing or contradictory, or the user explicitly asks for repository analysis.
 - Do not inspect current branch, dirty state, or general repository status during startup unless continuity is missing or contradictory, or the user explicitly asks for repository analysis.
 - Do not enumerate optional project-local `.claude/skills`, `.claude/hooks`, or `.claude/settings.json` as part of startup unless continuity or the active task explicitly depends on them.
-- Do not run `inspect-repo-context.sh` during startup when the repo-local continuity file exists and is readable.
-- If repo context must be rebuilt, prefer the canonical helper and keep it bounded to repo root and verified heads. Do not escalate into branch-to-branch diff, merge-base, or broad repository status checks during startup by default.
+- Do not run repo-context reconstruction during startup when the repo-local continuity file exists and is readable.
+- If repo context must be rebuilt, keep it bounded to repo root and verified heads. Do not escalate into branch-to-branch diff, merge-base, or broad repository status checks during startup by default.
 - Do not emit startup repository summaries, branch reports, or wide tables unless the user explicitly asked for them or the next visible action depends on them.
 - Default startup completion should be a short readiness line or the exact blocking activation step, not a state bulletin.
 - Do not enumerate project-root paths, inherited continuity warnings, previous-session advisory codes such as `S-32`, cron job ids, cron cadence restatements, or cron expiration metadata in the default startup completion unless the operator explicitly asked for that detail or one of those items is the current blocker.
@@ -156,17 +151,24 @@ The `Monitoring Sequence` is continuous during active delegated operation.
 
 ### Worker lifecycle states
 
-- `ACTIVE`: currently executing work
-- `IDLE`: completed a turn and awaiting supervisor decision; this is an observation state, not approval for standby, replacement, or shutdown
-- `STANDBY`: approved idle state preserving context for reuse
+- `ACTIVE`: currently executing work — includes the period after turn completion until the governing lane explicitly approves standby, reuse, or shutdown
+- `STANDBY`: governing lane has approved the worker to wait with preserved context for future reuse
 - `FORCE-STOPPED`: explicitly terminated — worker is no longer needed, harmful, stuck, or must be stopped immediately
+
+### Runtime signals (not governance states)
+
+- `idle_notification`: automatic runtime message indicating a worker's turn has ended. This is a technical signal, not a state transition. The worker remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
+- Receiving `idle_notification` without a preceding completion report from the worker is a **handoff failure** (T2).
+- Receiving a completion report without `REQUESTED-LIFECYCLE: standby` is a **standby non-entry defect** (T3).
 
 ### Worker identity rule
 
 - If multiple workers of the same capability may exist concurrently, assign unique worker names at dispatch time.
 - Standby, shutdown, stale tracking, and reuse decisions must refer to those concrete worker names rather than to the generic capability label alone.
 
-### Supervisor decisions on worker idle
+### Supervisor decisions on idle_notification
+
+When an idle_notification is received with a valid completion report, the governing lane must make one of these decisions:
 
 - `Reuse`: more work is immediately available and preserved context is still valuable
 - `Standby Approve`: no immediate work, but near-future reuse is plausible. Current standard control path is an explicit governing-lane message (`MESSAGE-CLASS: standby`) to the concrete worker name; any helper or hook state update exists only to reflect that approved decision, not to replace it.
@@ -174,11 +176,14 @@ The `Monitoring Sequence` is continuous during active delegated operation.
 
 ### Message-first lifecycle rule
 
-- Worker lifecycle control is message-first: completion, reuse, standby approval, and shutdown decisions travel through explicit internal messages rather than through Stop-hook inference. `force-stop` remains the emergency runtime fallback when explicit shutdown cannot complete cleanly.
+- Worker lifecycle control is message-first: completion, reuse, standby approval, and shutdown decisions travel through explicit internal messages rather than through hook-feedback inference. `force-stop` remains the emergency runtime fallback when explicit shutdown cannot complete cleanly.
 - Treat `TeammateIdle`, ledgers, and health-check output as observation surfaces that inform the next lifecycle message, not as authority to skip that message.
 - Completion is an upward report requesting a governing decision; it does not by itself authorize auto-standby, replacement, or teammate removal.
-- The governing lane owns the lifecycle transitions: dispatch or approved `assignment|reuse` moves a live worker to `ACTIVE`; turn completion without a further decision leaves the worker `IDLE`; explicit `standby` approval moves the worker to `STANDBY`; confirmed shutdown/removal removes the worker from teammate population.
-- `assignment` is the generic downward activation packet for bounded work. `reuse` is the specific downward activation packet that reactivates an existing idle or standby worker on the same preserved topic/context. Both return the target worker to `ACTIVE`; neither creates a new teammate by itself.
+- Consequential completion handoff should carry `REQUESTED-LIFECYCLE: standby|shutdown`. This is a worker request, not lifecycle authority.
+- The governing lane owns the lifecycle transitions: dispatch or approved `assignment|reuse` moves a live worker to `ACTIVE`; turn completion without a further governing decision leaves the worker in ACTIVE state awaiting the governing lane's explicit lifecycle decision; explicit `standby` approval moves the worker to `STANDBY`; confirmed shutdown/removal removes the worker from teammate population.
+- Until the governing lane answers with `standby`, `reuse`, or `shutdown`, the worker remains `ACTIVE`.
+- Do not ignore a worker lifecycle request without reason. Brief hold is valid only while immediate reuse is being prepared.
+- `assignment` is the generic downward activation packet for bounded work. `reuse` is the specific downward activation packet that reactivates an existing standby worker or reassigns work to an active worker awaiting a lifecycle decision on the same preserved topic/context. Both return the target worker to `ACTIVE`; neither creates a new teammate by itself.
 - Teammate population changes only on worker creation and confirmed shutdown/removal. `standby` and `reuse` are state transitions, not teammate-count changes.
 - Hook feedback may record or guard a lifecycle edge, but it does not create authority to infer session end or worker shutdown by itself.
 - A worker-targeted `shutdown_request` sent after that worker is explicitly marked `FORCE-STOPPED` is part of worker lifecycle cleanup, not by itself evidence that the whole session is entering `Closeout Sequence`.
@@ -255,6 +260,11 @@ Before sending a dispatch, verify that all structured fields match the target la
 | researcher (benchmark) | BENCHMARK-PROVENANCE | `repo-observed` \| `authoritative-external` \| `mixed` \| `simulator-only` |
 | researcher (benchmark) | CROSS-CHECK-STATUS | `repo-confirmed` \| `authority-confirmed` \| `mixed-confirmed` \| `simulator-unconfirmed` |
 | researcher (benchmark) | HALLUCINATION-GUARD | `cite-or-hold` |
+| developer | PLAN-STATE | `ready` \| `approved` \| `updated` \| `revalidated` |
+| developer | ACCEPTANCE-RISK | `low` \| `meaningful` \| `high` \| `critical` |
+| developer | REVIEW-OWNER | `reviewer` |
+| developer | PROOF-OWNER | `tester` \| `not-needed` |
+| developer | ACCEPTANCE-OWNER | `reviewer` \| `validator` |
 | reviewer | PREREQ-STATE | `complete` \| `partial` \| `missing` |
 | validator | REVIEW-STATE | `ready` \| `hold` \| `blocked` |
 | validator | TEST-STATE | `ready` \| `hold` \| `blocked` \| `not-needed` |
@@ -264,11 +274,15 @@ Before sending a dispatch, verify that all structured fields match the target la
 - researcher (always): DECISION-TARGET, QUESTION-BOUNDARY, DOWNSTREAM-CONSUMER
 - researcher (sharded): SHARD-ID, SHARD-BOUNDARY, MERGE-OWNER
 - researcher (benchmark): BENCHMARK-BASIS, BENCHMARK-SURFACE, BENCHMARK-AXIS
+- developer: PLAN-STEP, CHANGE-SPEC
+- developer (consequential): WORKER-FIT, SCOPE-MATCH, PRIOR-ANALYSIS
 - reviewer: REVIEW-TARGET, EVIDENCE-BASIS, ACCEPTANCE-SURFACE
 - tester: PROOF-TARGET, ENV-BASIS, SCENARIO-SCOPE, PROOF-EXPECTATION
 - validator: VALIDATION-TARGET, EXPECTATION-SOURCES, DECISION-SURFACE
 
 Free-form descriptions in enumerated fields are compliance failures. Use the exact values above.
+
+For governance-sensitive `developer` packets, keep the human-readable packet contract in `skills/team-governance-sequences/SKILL.md`. `team-session-sequences` remains the owner for the shared cross-lane dispatch baseline, while hooks enforce the exact runtime contract.
 
 ### Agent Load Guard
 
@@ -320,7 +334,7 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
   - duplication or conflict risk seen from that shard
   - recommended downstream placement when the parent artifact will be recomposed
 - Merge work is its own phase-intent. Do not hide merge responsibility inside one shard writer's ordinary draft step after parallel fan-out has already happened.
-- Phase separation does not require idle waiting. Starting draft from an incomplete but already useful shard set, then advancing the designated owner through bounded merge-compress follow-up as later shard results arrive, is valid when the parent packet, merge ownership, and unresolved gaps stay explicit.
+- Phase separation does not require passive waiting. Starting draft from an incomplete but already useful shard set, then advancing the designated owner through bounded merge-compress follow-up as later shard results arrive, is valid when the parent packet, merge ownership, and unresolved gaps stay explicit.
 - The merge owner must:
   - collect shard outputs against the frozen parent packet
   - remove duplication and collapse overlapping support material
@@ -335,8 +349,27 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
 - Task-scoped tools such as `TaskGet`, `TaskUpdate`, `TaskOutput`, and `TaskStop` take the task id from the explicit `task_assignment` packet, not a worker name or `agentId@team`.
 - Agent-scoped communication remains separate: use `SendMessage(to: "<worker-or-agentId>")` for worker control, and do not reuse that worker identifier as a task identifier.
 - Treat worker-to-worker communication as challenger traffic, not shared management. Workers may send bounded peer advice or challenge on a local claim, but any ownership, acceptance, routing, or task-control change must come back through `team-lead`.
-- Keep `SendMessage` direction explicit. Downward ordinary control packets use `MESSAGE-CLASS: assignment|control|reroute|reuse|standby`, `MESSAGE-PRIORITY: normal|high|critical`, and `WORK-SURFACE: <bounded active surface>`; lifecycle shutdown uses the explicit `shutdown_request` / `shutdown_response` protocol path; upward reports use `MESSAGE-CLASS: blocker|handoff|completion|hold|scope-pressure|status`, `MESSAGE-PRIORITY: normal|high|critical`, `WORK-SURFACE: <current surface>`, and `REQUESTED-GOVERNING-ACTION: <decision needed or none>`; peer worker challenge stays on `PEER-MODE` plus `MESSAGE-PRIORITY`.
+- Keep `SendMessage` direction explicit. Free-form is fine for status, acknowledgment, clarification, or partial-result notes that do not change ownership, lifecycle, routing, or active surface. Downward authoritative control uses `MESSAGE-CLASS: assignment|control|reroute|reuse|standby`, `MESSAGE-PRIORITY: normal|high|critical`, and `WORK-SURFACE: <bounded active surface>`; lifecycle shutdown uses `shutdown_request` / `shutdown_response`; upward authoritative reports use `MESSAGE-CLASS: blocker|handoff|completion|hold|scope-pressure|status`, `MESSAGE-PRIORITY: normal|high|critical`, `WORK-SURFACE: <current surface>`, and `REQUESTED-GOVERNING-ACTION: <decision needed or none>`; peer worker challenge stays on `PEER-MODE` plus `MESSAGE-PRIORITY`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the worker name by guesswork.
+
+### Consequential Upward Handoff Block
+
+- For consequential upward `SendMessage` reports from runtime lanes with `MESSAGE-CLASS: handoff|completion|hold`, keep one authoritative handoff block explicit instead of scattering acceptance-critical state across prose.
+- `status`, `blocker`, and `scope-pressure` may stay lighter, and ordinary conversational notes may remain free-form unless the sender is actually handing off a finished, held, or decision-ready surface.
+- Runtime checks must not bottleneck ordinary chat. Once a lane declares `MESSAGE-CLASS: handoff|completion|hold`, the authoritative handoff block is mandatory and blocking.
+- Common presence-required fields for consequential upward handoff blocks:
+  - `OUTPUT-SURFACE: <artifact, claim, version, or bounded work product>`
+  - `EVIDENCE-BASIS: <decisive evidence anchors, checks, commands, or governing basis>`
+  - `OPEN-SURFACES: <blocked, unverified, residual-risk, or none-material surfaces>`
+  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
+  - `REQUESTED-LIFECYCLE: standby|shutdown`
+- Lane-owned enumerated fields for consequential upward handoff blocks:
+  - `developer` -> `PREREQ-STATE: complete|partial|missing`
+  - `reviewer` -> `REVIEW-STATE: ready|hold|blocked`
+  - `tester` -> `TEST-STATE: ready|hold|blocked`
+  - `validator` -> `VERDICT: PASS|HOLD|FAIL`
+- Preserve lane-owned state monotonically across reroute and re-dispatch. `team-lead` may summarize or route from these fields, but must not silently strengthen a worker-owned state without a fresh explicit report from the owning lane or stronger evidence on that same lane surface.
+- `tester` does not emit `TEST-STATE: not-needed`; that remains a lead-side validation-ingress decision when the acceptance design truthfully does not require tester proof.
 
 ### Health-check standard
 
@@ -344,9 +377,9 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
 - The configured cron cadence and stale thresholds are defined in `hook-config.sh`.
 - Treat `hook-config.sh` as the single literal owner for those runtime values. Session procedure text should reference the configured thresholds rather than re-copying the current numbers.
 - Direct oversight, event-driven worker monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
-- `health-check.sh` classifies agents as active, standby, stale, or ghost (>600s idle, auto force-killed) based on the current ledgers.
-- In single-primary automation mode, keep the watchdog armed during idle standby periods. Do not pause the health-check cron merely because all workers are currently standby.
-- Replacing the tracked health-check cron is not the same as session closeout. For monitor rotation, mark explicit rotation intent first with `bash "$HOME/.claude/hooks/mark-health-cron-rotation.sh"`, then perform `CronDelete` and the replacement `CronCreate`, and clear the helper only if rotation is deferred.
+- `health-check.sh` classifies agents as active, standby, stale, or ghost (>600s without activity, auto force-killed) based on the current ledgers.
+- In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all workers are currently standby.
+- Replacing the tracked health-check cron is not the same as session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, then perform `CronDelete` and the replacement `CronCreate`. If rotation is deferred after intent was recorded, clear the deferred rotation residue before returning to normal monitoring.
 - If no tracked health-check cron is active, do not create, rotate, or narrate one by ceremony. Continue the `Monitoring Sequence` through direct oversight until runtime policy or explicit runtime state requires cron-backed monitoring.
 
 ### Stale-response rule
@@ -354,7 +387,7 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
 - High-confidence stale: investigate quickly and consider replacement or force-stop.
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan rather than silent hope.
-- Treat stale or idle signals as observational only. Do not assert a specific tool-phase hang or a team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support that diagnosis.
+- Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or a team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support that diagnosis.
 - Repo-local generated-output cleanup may use bounded destructive commands only inside the active repo's approved output roots (`./projects/`, `./backups/`). Keep that allowance scoped to generated contents; it does not authorize arbitrary repo deletion or main-thread mutation.
 
 ### Runtime-pressure rule
@@ -367,9 +400,9 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
 ## Closeout Sequence
 
 The `Closeout Sequence` is mandatory whenever the session is explicitly ending or a confirmed handoff requires runtime teardown.
-Stop-hook feedback alone is not sufficient evidence that the user wants the session to end.
+Hook feedback alone is not sufficient evidence that the user wants the session to end.
 
-Treat this skill as the procedure owner for closeout sequencing. Closeout `phase` is teardown progress only; clean closeout also requires an explicit governance-completeness vector that covers final validation ownership, authoritative acceptance evidence, and supervisor review state.
+Treat this skill as the procedure owner for closeout sequencing. Closeout `phase` is teardown progress only; clean closeout also requires an explicit governance-completeness vector that covers final validation ownership, authoritative acceptance evidence, and supervisor review state. The persisted runtime fields for that vector live in the hook-owned runtime state surface; this skill remains the human-readable procedure owner.
 
 ### Closeout preemption rule
 
@@ -381,7 +414,7 @@ Treat this skill as the procedure owner for closeout sequencing. Closeout `phase
 ### Required actions
 
 1. Mark explicit closeout intent before sending any session-level `shutdown_request`, deleting the tracked health-check cron, or tearing down the explicit team runtime.
-   Current standard helpers: `bash "$HOME/.claude/hooks/mark-closeout-intent.sh" "<reason>"` to enter closeout mode, and `bash "$HOME/.claude/hooks/clear-closeout-intent.sh"` if closeout is deferred. The helper owns a session-bound structured closeout state; do not model closeout as a timeless on/off residue.
+   Current standard: set explicit closeout intent in the session-bound structured closeout state before teardown begins, and clear that state if closeout is later deferred. Do not model closeout as a timeless on/off residue.
    When the current user prompt itself explicitly requests session end, the `UserPromptSubmit` hook should pre-mark closeout intent before the lead reaches any guarded closeout tool. In that case, do not intentionally trigger `CronDelete`, `TeamDelete`, or `shutdown_request` once just to discover that intent is required.
    Worker-specific termination remains message-first: after `mark-force-stop.sh` terminates a worker, the cleanup is a worker lifecycle edge, not by itself a session closeout edge.
 2. Integrate worker outputs and disclose unresolved issues.
@@ -389,15 +422,15 @@ Treat this skill as the procedure owner for closeout sequencing. Closeout `phase
    When acceptance risk is meaningful, assign an explicit final validation owner before closeout rather than letting review or testing silently stand in for final validation.
    When standalone review, test, or validation reports are intentionally suppressed, keep one authoritative acceptance-evidence block in the closeout or continuity state before granting clean closeout.
    At closeout, do not rely on remembered intent to prove governance completeness. Record the final closeout governance packet explicitly before clean stop, and if governance is still unresolved, prepare a truthful hold rather than compressing the sequence.
-   Current standard helper: `bash "$HOME/.claude/hooks/mark-closeout-governance.sh" "<validation-owner-state>" "<acceptance-evidence-state>" "<supervisor-review-state>"`.
-   If truthful clean closeout is not yet earned, prepare the carry-forward state explicitly with `bash "$HOME/.claude/hooks/prepare-closeout-hold.sh" "<reason>"` instead of compressing the sequence or hoping Stop will infer it.
+   Current standard: record the final closeout governance packet explicitly in the same structured closeout state, including validation-owner state, acceptance-evidence state, and supervisor-review state.
+   If truthful clean closeout is not yet earned, prepare explicit carry-forward hold state with a concrete reason instead of compressing the sequence or hoping teardown cleanup will infer it.
 3. Release or explicitly account for remaining workers through explicit internal lifecycle messages.
    Closeout is not the time to invent a new continuity lane. `session-state.md` should already be current from normal work, and remaining live workers must be accounted for before monitor teardown.
 4. Keep continuity handling minimal during teardown.
    Do not dispatch a new continuity writer or other ad hoc helper lane as part of normal closeout. If continuity is materially stale, refresh it before teardown starts as ordinary session work. Otherwise rely on `SessionEnd` capture for the final timestamp and residual warnings.
 5. Remove periodic session runtime monitors that were registered for the live session only after current-runtime workers have been fully accounted for.
-   Current standard: read the stored job ID, run `CronDelete(id: stored_job_id)`, then clear it with `bash "$HOME/.claude/hooks/clear-health-cron-job.sh"`.
-   Do not use the health-check rotation helper for this step. Closeout teardown still requires explicit closeout intent, not rotation intent.
+   Current standard: read the stored job ID, run `CronDelete(id: stored_job_id)`, then clear the tracked health-check job record from runtime state.
+   Do not treat monitor-rotation handling as a substitute for this step. Closeout teardown still requires explicit closeout intent, not rotation intent.
    Delete the tracked health-check only after the current-runtime workers that still need coordination have been fully accounted for. Do not recreate the monitor just to keep messaging open.
    If no tracked health-check cron is active, skip this step rather than manufacturing monitor teardown ceremony.
 6. Tear down the explicit team runtime when that runtime was used and the workers are no longer active.
@@ -416,12 +449,12 @@ Treat this skill as the procedure owner for closeout sequencing. Closeout `phase
 - Do not leave orphaned workers or live recurring monitors silently running.
 - Do not treat a force-stopped worker as fully cleaned up until the tmux pane is confirmed terminated or equivalent runtime teardown is complete.
 - Do not manually write runtime marker files to bypass boot or closeout gates. If runtime state is contradictory, hold and clean the residue instead of inventing runtime truth.
-- Do not infer user end-of-session intent from Stop-hook feedback, runtime residue, or repeated closeout warnings alone.
+- Do not infer user end-of-session intent from hook feedback, runtime residue, or repeated closeout warnings alone.
 - Do not trust closeout state that belongs to another session. Closeout guards and stop gating must bind to the current runtime session before they authorize teardown.
 - Lifecycle shutdown decisions must remain message-first: hooks may guard or report, but they must not invent shutdown authority in place of the lead's explicit message path.
 - Do not dispatch a new continuity helper during normal closeout. The fast path is worker accounting -> `CronDelete` -> `TeamDelete` -> `SessionEnd` capture.
 - Do not dispatch a new `Agent` for continuity capture after `CronDelete` or `TeamDelete`.
-- If stale continuity is the only remaining issue after teardown, stop there and let `SessionEnd` capture it. Do not loop on repeated stop-hook feedback.
+- If stale continuity is the only remaining issue after teardown, stop there and let `SessionEnd` capture it. Do not loop on repeated hook feedback.
 - If closeout is aborted, deferred, or narrowed, clear explicit closeout intent immediately and return control to the `Monitoring Sequence`.
 - Do not present blocked or partially cleaned-up closeout as complete success.
 - Prefer lean closeout: default to silence or one-line acknowledgement; expand only for decisive evidence, blockers, restart requirements, or residual risk.
@@ -431,4 +464,4 @@ Treat this skill as the procedure owner for closeout sequencing. Closeout `phase
 - Keep clean closeout reporting compact. Do not emit long diagnostic tables or retrospective audits unless the user asked or the teardown actually blocked.
 - Do not replace unfinished teardown with a long retrospective diagnosis. State the concrete residue, keep the state on `HOLD`, and stop.
 - If a full closeout cannot be completed, report the exact residual state explicitly.
-- Do not expect `Stop` or `SessionEnd` cleanup to invent missing governance resolution. Those gates now require an explicit clean governance packet or an explicit truthful hold.
+- Do not expect runtime cleanup or `SessionEnd` cleanup to invent missing governance resolution. Those gates now require an explicit clean governance packet or an explicit truthful hold.

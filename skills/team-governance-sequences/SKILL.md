@@ -4,11 +4,6 @@ description: Standard governance procedures for change control, self-growth, and
 user-invocable: false
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/team-governance-sequences/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -147,25 +142,13 @@ The `Self-Growth Sequence` applies when the team hardens its own rules, skills, 
 - Default preparation sequence: benchmark -> cross-check and anti-hallucination confirmation -> concrete modification proposal -> pre-edit loss-risk gate -> bounded modification -> verification -> only then bounded optimization.
 - Early investigation and benchmark stages identify the actual deficiency and determine whether self-growth is warranted. Do not jump from a recurring symptom into edits.
 - `BENCHMARK-PROVENANCE: simulator-only` or `CROSS-CHECK-STATUS: simulator-unconfirmed` is still a benchmark-stage `HOLD`, not edit authorization.
-- When a lane, skill, or routing path is said to have advanced, become promotion-ready, or improved at lower cost, keep promotion-readiness status, throughput or neighbor-regression visibility, and follow-on optimization closure explicit before the claim is treated as closed.
-- Failure to claim clearly relevant improvement work is a passivity defect and requires corrective follow-up, and may justify promotion hold or role-fitness review.
+- When a self-growth round claims advancement, keep the current readiness label, visible evidence delta, throughput or neighbor-regression visibility, and follow-on optimization closure explicit in the active sequence packet before the round is handed back for lead judgment.
 
-### Capability Hardening And Promotion
+### Readiness And Promotion Handoff
 
-- When team capability improvement is the active goal, use staged hardening with observable evidence gates rather than vague claims of improvement.
-- Promotion or readiness claims must be tied to repository-local results, relevant benchmarks, or directly inspectable task evidence. Failure at a stage gate requires relearning, corrective hardening, or narrowed scope rather than cosmetic promotion.
-- Capability hardening should focus on one target lane or one bounded capability surface at a time unless the operator explicitly requests a wider program.
-
-### Master-Readiness Doctrine
-
-- `master`-level claims require repeated live-task evidence, rendered or user-perceivable evidence where relevant, and non-recurrence proof for corrected defect classes.
-- `master` is blocked when missed-catches remain unresolved, when the team average remains below `stable`, when critical roles remain below `high`, or when the claimed evidence depends on hidden supervisor takeover.
-- Readiness levels should remain explicit rather than flattering: `emerging`, `stable`, `high`, and `master` express progressively stronger independence and judgment quality.
-
-### Competitive Adaptation Detail
-
-- Promotion, trust, and routing priority should decay when fresh evidence is absent or when repeated omissions, soft passes, stagnant benchmark results, or rescue dependency accumulate. Unproven or regressing roles may need narrowing, retraining, demotion, replacement, or tighter activation boundaries.
-- Capability growth must not blur charters; stronger roles should become more precise, not more diffuse.
+- Readiness, promotion, and adaptation policy stay in `agents/team-lead.md` `RPA-4` because the lead owns those judgments directly during self-growth supervision.
+- This sequence skill uses that policy only as execution-gating context; it does not become a second owner of promotion doctrine.
+- When a self-growth round reaches hardening or promotion evaluation, keep the target capability surface, current readiness label, evidence basis, and follow-on optimization closure explicit before the round is treated as closed.
 
 ## Update/Upgrade Sequence
 
@@ -227,6 +210,7 @@ The `Update/Upgrade Sequence` applies when doctrine, agents, skills, settings, h
   - Common-skill ownership binds a shared procedure surface to one primary owner plus named impacted lanes.
 - For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. Let `researcher` own the benchmark-light evidence shaping for baseline, fairness, comparison-axis framing, provenance visibility, and cross-check visibility; use `bench-sim` as the supporting specialist when the active packet escalates into the full benchmark form.
 - When multiple specialist skills are active on one blocked surface, keep the controlling order explicit: `biz-sys` -> `sw-spec` -> domain specialists (`edu-spec`, `eng-spec`, `math-spec`) -> `doc-auto` -> `ui-ux`; `bench-sim` and `int-op` support evaluation or integration without overriding earlier controlling contracts.
+- This controlling order is a lead-side routing discipline for logical flow, not a runtime chaining engine. Authorization hooks may gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
 - When approving developer-side specialist skill use, send an explicit authorization packet to the target developer lane using `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` so runtime enforcement and human doctrine stay aligned.
 - Route specialist skills per the controlling order in the Skill Routing And Specialist Architecture section above. Authorize via `SKILL-AUTH` packet bound to lane, surface, and `skill-id`.
 
@@ -320,6 +304,15 @@ Use this method when an AI model updates doctrine, agents, skills, settings, hoo
 - When normalizing folder structure, update the owning index or doctrine surfaces that explain the layout.
   - At minimum keep the governing patch method aligned with the real active and reference paths.
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
+- Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-cost, and available from the current tool payload or current session state.
+- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.
+- Do not add new hard-blocks merely to raise apparent coverage or enforcement rate. Protect operator autonomy and ordinary throughput before ceremonial enforcement expansion.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
 - Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
 - For governance-sensitive patches, require the patch class, owner surfaces, preserved meaning, and verification basis to remain explicit enough that another model can continue safely from repository state alone without relying on a dedicated patch-ledger file.
+
+### Human-readable packet owners
+
+- For `developer` governance-modification execution, keep the governance packet readable here even though hooks enforce it at dispatch time. Current packet surface: `TASK-CLASS: governance-patch`, `SEQUENCE: change|self-growth|update-upgrade`, `PATCH-CLASS: hardening|structural-normalization|migration-rehome|config-owner-standardization|skill-up|new-skill|follow-on-optimization`, `OWNER-SURFACE`, `BASELINE-CLASS: preserved-asset|improvement-target|stability-anchor`, `INFO-LOSS-REVIEW: done`, `BALANCE-REVIEW: local-context-checked`, `RELATED-DOC-REVIEW: adjacent-owner-surfaces-checked`, `PATCH-REVIEW: pre-exec-done|done|approved`, `MODIFICATION-PROPOSAL: explicit`, `SOURCE-MEANING-INVENTORY: explicit`, `DESTINATION-OWNER-MAP: explicit`, `CHANGE-BOUNDARY`, `VERIFY-BASIS`.
+- For consequential solution work, keep the solution-development packet readable here even though hooks enforce it at dispatch time. Current packet surface: `PROBLEM-CLASS: instance|structural|systemic`, `ROOT-CAUSE-BASIS: confirmed|supported|hypothesis|unknown`, `SOLUTION-PASS: 1|2|3`, `DECISION-BASIS`, `REJECTED-OPTIONS`. When `SOLUTION-PASS: 2|3`, also keep `PASS-DELTA`. When `PROBLEM-CLASS: structural|systemic`, also keep `ALTERNATIVE-REVIEW: done` and `SELECTED-SCOPE: class-fix|system-fix|staged-class-fix`. When `ROOT-CAUSE-BASIS: hypothesis|unknown`, also keep `COMPETING-HYPOTHESES`. When `SELECTED-SCOPE: staged-class-fix`, also keep `FOLLOW-UP-OWNER`.
+- `team-session-sequences` remains the owner for shared cross-lane dispatch packets and common enumerated runtime values. This section exists so governance-sensitive packet meaning stays readable without requiring a hook-code lookup.

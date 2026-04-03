@@ -50,6 +50,11 @@
           },
           {
             "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/refresh-name-registry.sh\"",
+            "timeout": 3
+          },
+          {
+            "type": "command",
             "command": "\"$HOME/.claude/hooks/hook-health-self-check.sh\"",
             "timeout": 3
           }
@@ -134,11 +139,21 @@
         ]
       },
       {
-        "matcher": "Agent|SendMessage",
+        "matcher": "Agent",
         "hooks": [
           {
             "type": "command",
             "command": "\"$HOME/.claude/hooks/compliance-agent-dispatch.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/compliance-sendmessage-dispatch.sh\"",
             "timeout": 2
           }
         ]
@@ -165,6 +180,16 @@
       }
     ],
     "PostToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/track-agent-dispatch.sh\"",
+            "timeout": 2
+          }
+        ]
+      },
       {
         "matcher": "SendMessage",
         "hooks": [

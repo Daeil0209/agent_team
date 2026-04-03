@@ -197,7 +197,11 @@ try {
       let configMatch = false;
       if (fs.existsSync(configPath)) {
         const config = tryParseJson(fs.readFileSync(configPath, "utf8"));
-        const agents = Array.isArray(config && config.agents) ? config.agents : [];
+        const agents = Array.isArray(config && config.members)
+          ? config.members
+          : Array.isArray(config && config.agents)
+            ? config.agents
+            : [];
         configMatch = agents.some((agent) =>
           normalize(agent && agent.agentId) === normalize(value) ||
           normalize(agent && agent.name) === normalize(agentName)
@@ -214,7 +218,11 @@ try {
       let configMatch = false;
       if (fs.existsSync(configPath)) {
         const config = tryParseJson(fs.readFileSync(configPath, "utf8"));
-        const agents = Array.isArray(config && config.agents) ? config.agents : [];
+        const agents = Array.isArray(config && config.members)
+          ? config.members
+          : Array.isArray(config && config.agents)
+            ? config.agents
+            : [];
         configMatch = agents.some((agent) =>
           normalize(agent && agent.agentId) === normalize(`${agentName}@${candidateTeam}`) ||
           normalize(agent && agent.name) === normalize(agentName)

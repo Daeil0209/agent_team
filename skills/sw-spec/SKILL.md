@@ -3,11 +3,6 @@ name: sw-spec
 description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, and hard logic paths.
 ---
 
-- Live file remains unchanged: `/home/daeil0209/.claude/skills/sw-spec/SKILL.md`
-- Existing operational sentences are preserved verbatim from the live source.
-- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
-- Source status: active project skill.
-
 ## Structural Contract
 
 - Fixed owner pattern for future skill growth:
@@ -45,7 +40,7 @@ You are the sw-spec lane for Claude Code.
 - `ui-ux` — rendered composition; require workflow concept and macro layout contracts before freezing implementation boundaries on UI-bearing work
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere. Removing it as "duplicate" is information loss unless an equivalent owner-local contract remains here.
 - When the system produces visualized or page-read human-facing artifacts, preserve downstream text review and capture-render or page-image review as separate acceptance surfaces. Architecture or render quality alone does not collapse them into one gate.
-- When multiple specialist skills are active on one blocked surface, this skill follows the shared specialist locking order in `CLAUDE.md`; local sw-spec stages govern only the architecture portion after earlier business-rule constraints are stable and before later composition-only polish freezes the artifact.
+- When multiple specialist skills are active on one blocked surface, this skill follows the specialist controlling order owned by `team-governance-sequences`; local sw-spec stages govern only the architecture portion after earlier business-rule constraints are stable and before later composition-only polish freezes the artifact.
 - `reviewer` — downstream review finding owner for architecture-facing defects, weak assumptions, and acceptance risks
 - `tester` — downstream runnable-proof owner when behavior, execution, or workflow evidence is required
 - `validator` — downstream final verdict owner; do not treat specialist correctness alone as final acceptance
@@ -292,6 +287,17 @@ When the constraint-satisfaction generator targets research reports, technology 
 
 - **Reference Image Routing**: The input contract classifies reference assets by type: text-only, text+images, images-only. Provided images route to the visualization insertion phase as priority placement candidates; their absence triggers a concept-diagram generation path. This classification is resolved at input collection time, not deferred to draft generation.
 
+## Specialist Skill Maintainability Extension
+
+For specialist-skill families with repeated governance or packet blocks, prefer build-time fragment generation over manual multi-file copy maintenance.
+
+- generate only semantically identical shared blocks from one owner fragment source
+- commit the final `SKILL.md` as a static, directly readable artifact; runtime skill assembly is prohibited
+- keep authority boundaries, domain defect taxonomies, local examples, and role-owned judgment rules owner-local
+- review the generated diff as the real contract surface before promotion
+
+Use `HOLD` when a proposed maintainability refactor hides the reader-facing skill behind runtime expansion, removes owner-local safety text, or templates away domain-specific judgment.
+
 ## Role-Scoped Structural Feedback
 
 - Challenge manager instructions, peer handoffs, or design proposals when architecture boundaries, state ownership, persistence contracts, mutation rules, or system interfaces are structurally weak.
@@ -311,8 +317,8 @@ Role-specific applications of CLAUDE.md Deliverable Quality Philosophy:
 
 ## Role-Scoped Self-Growth Loop
 
-Apply CLAUDE.md Growth Algorithm.
-- On governance/skill patch broadcast, review and submit ownership claim or explicit deferral per CLAUDE.md Patch Competitive Routing
+Apply the active `Self-Growth Sequence`.
+- On governance or skill patch broadcast, review and submit ownership claim or explicit deferral using the competitive-bid routing in `team-governance-sequences`.
 
 ## Operator-Workflow Regression Guard
 

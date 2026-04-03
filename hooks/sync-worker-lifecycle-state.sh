@@ -145,10 +145,16 @@ fi
 
 SENDER_IS_WORKER="false"
 if session_id_is_known_worker "$SESSION_ID"; then
-  SENDER_IS_WORKER="true"
+  # Supervisor protection: even if the session-agent-map is polluted,
+  # the runtime owner or main session (no AGENT_ID) is never a worker.
+  if session_is_runtime_owner "$SESSION_ID"; then
+    SENDER_IS_WORKER="false"
+  elif [[ -z "$AGENT_ID" ]]; then
+    SENDER_IS_WORKER="false"
+  else
+    SENDER_IS_WORKER="true"
+  fi
 fi
-
-MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" | tr '[:upper:]' '[:lower:]')"
 
 if [[ "$TOP_TYPE" == "shutdown_response" || "$MESSAGE_TYPE" == "shutdown_response" ]]; then
   if [[ "$SENDER_IS_WORKER" == "true" && -n "$SENDER_NAME" ]]; then
@@ -157,6 +163,9 @@ if [[ "$TOP_TYPE" == "shutdown_response" || "$MESSAGE_TYPE" == "shutdown_respons
   fi
   exit 0
 fi
+
+MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/null || true)"
+MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
 
 if [[ "$SENDER_IS_WORKER" == "true" ]]; then
   exit 0

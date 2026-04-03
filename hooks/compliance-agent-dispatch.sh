@@ -62,49 +62,34 @@ try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolName = String(input.tool_name || "Agent");
   const t = input.tool_input || {};
-  let description = String(t.description || "");
-  let runInBackground = String(t.run_in_background || false);
-  let mode = t.mode || "";
-  let targetName = String(t.name || "");
-  if (toolName === "Agent") {
-    description = collectAgentDispatchText(t);
-    targetName = firstNonEmptyString(
-      t.name,
-      t.agent_name,
-      t.agentName,
-      t.subagent_type,
-      t.subagentType,
-      t.role,
-      t.lane,
-      t.worker_name,
-      t.workerName,
-      t.teammate_name,
-      t.teammateName,
-      t.target_name,
-      t.targetName
-    );
-  }
-  if (toolName === "SendMessage") {
-    targetName = String(t.to || t.recipient || targetName || "");
-    description = joinUniqueText(
-      flattenText(t.summary).concat(flattenText(t.message || t.content))
-    );
-    runInBackground = "false";
-    mode = "";
-  }
+  const description = toolName === "Agent" ? collectAgentDispatchText(t) : "";
+  const runInBackground = String(t.run_in_background || false);
+  const mode = t.mode || "";
+  const targetName = firstNonEmptyString(
+    t.name,
+    t.agent_name,
+    t.agentName,
+    t.subagent_type,
+    t.subagentType,
+    t.role,
+    t.lane,
+    t.worker_name,
+    t.workerName,
+    t.teammate_name,
+    t.teammateName,
+    t.target_name,
+    t.targetName
+  );
   const fields = [
     toolName,
     description,
     runInBackground,
     mode,
-    targetName,
-    String(input.session_id || ""),
-    String(input.agent_id || ""),
-    String(input.agent_type || "")
+    targetName
   ];
   process.stdout.write(fields.map(encode).join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n\n\n\n");
+  process.stdout.write("\n\n\n\n");
 }
 NODE
 )"
@@ -124,9 +109,8 @@ DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
 RUN_IN_BACKGROUND="$(decode_field "${FIELDS[2]:-}")"
 MODE="$(decode_field "${FIELDS[3]:-}")"
 AGENT_NAME="$(decode_field "${FIELDS[4]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[5]:-}")"
-AGENT_ID="$(decode_field "${FIELDS[6]:-}")"
-SENDER_AGENT_TYPE="$(decode_field "${FIELDS[7]:-}")"
+
+[[ "$TOOL_NAME" == "Agent" ]] || exit 0
 
 TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 NAME_FALLBACK="$(printf '%s' "$DESCRIPTION" | sed -n 's/^\([a-zA-Z0-9_-]*\):.*/\1/p')"
@@ -151,94 +135,9 @@ case "$RUN_IN_BACKGROUND" in
   *) RUN_IN_BACKGROUND="false" ;;
 esac
 
-# ── Pre-dispatch: safe dead-member cleanup ───────────────────────────
-# Removes only members whose tmux panes are confirmed unreachable.
-# Uses RUNTIME_TMUX_SOCKET_NAME for correct socket targeting.
-# Includes 10s grace period for newly registered members.
-# Also cleans up inbox files of removed dead members.
-# NOTE: orphan pane kill is intentionally NOT done here — health-check.sh
-# handles it periodically without the dispatch-time race condition.
-if [[ -z "$AGENT_ID" ]]; then
-  for _team_cfg in "$HOME/.claude/teams"/*/config.json; do
-    [[ -f "$_team_cfg" ]] || continue
-    _team_dir="$(dirname "$_team_cfg")"
-    node -e "
-      const fs = require('fs'), {execSync} = require('child_process');
-      try {
-        const cfg = JSON.parse(fs.readFileSync('${_team_cfg}', 'utf8'));
-        const before = (cfg.members || []).length;
-        const sock = process.env.RUNTIME_TMUX_SOCKET_NAME || '';
-        const sockFlag = sock ? '-L ' + sock + ' ' : '';
-        const now = Date.now();
-        const GRACE_MS = 10000;
-        const removed = [];
-        cfg.members = (cfg.members || []).filter(m => {
-          if (m.name === 'team-lead') return true;
-          if (!m.tmuxPaneId) return true;
-          if (m.joinedAt && (now - m.joinedAt) < GRACE_MS) return true;
-          try {
-            execSync('tmux ' + sockFlag + 'display-message -t \"' + m.tmuxPaneId + '\" -p \"\"', {stdio:'ignore', timeout: 2000});
-            return true;
-          } catch(e) {
-            removed.push(m.name || '');
-            return false;
-          }
-        });
-        if (removed.length > 0) {
-          fs.writeFileSync('${_team_cfg}', JSON.stringify(cfg, null, 2) + '\n');
-          removed.forEach(name => {
-            if (!name) return;
-            try { fs.unlinkSync('${_team_dir}/inboxes/' + name + '.json'); } catch(e) {}
-          });
-        }
-      } catch(e) {}
-    " 2>/dev/null || true
-  done
-fi
-
-# ── Pre-dispatch: alive-orphan process reconciliation ─────────────────
-# Kills worker processes that are alive but NOT in any team config,
-# AND kills their tmux panes to prevent bash-shell residue in the UI.
-# Handles context compaction: session ID unchanged but team lead lost
-# memory, config stripped at boot, processes still running.
-# Triggered at Agent dispatch — natural point where team work resumes.
-if [[ -z "$AGENT_ID" ]]; then
-  _known_members=$(python3 -c "
-import json, glob, os
-names = set()
-for f in glob.glob(os.path.expanduser('~/.claude/teams/*/config.json')):
-    try:
-        with open(f) as fh:
-            cfg = json.load(fh)
-        for m in cfg.get('members', []):
-            n = m.get('name', '')
-            if n: names.add(n)
-    except: pass
-print('\n'.join(sorted(names)))
-" 2>/dev/null) || true
-  if [[ -n "$_known_members" ]]; then
-    _sock="${RUNTIME_TMUX_SOCKET_NAME:-}"
-    ps aux 2>/dev/null | grep -- "--parent-session-id" | grep -v grep | while IFS= read -r _line; do
-      _proc_name=$(echo "$_line" | grep -oP '(?<=--agent-name )\S+' || true)
-      _proc_pid=$(echo "$_line" | awk '{print $2}')
-      [[ -n "$_proc_name" && -n "$_proc_pid" ]] || continue
-      echo "$_known_members" | grep -qx "$_proc_name" && continue
-      # Kill the tmux pane (kills process + pane together, no bash residue)
-      if [[ -n "$_sock" ]] && command -v tmux &>/dev/null; then
-        _ppid=$(ps -o ppid= -p "$_proc_pid" 2>/dev/null | tr -d ' ')
-        if [[ -n "$_ppid" ]]; then
-          _orphan_pane=$(tmux -L "$_sock" list-panes -a -F '#{pane_id} #{pane_pid}' 2>/dev/null | awk -v pid="$_ppid" '$2 == pid {print $1}')
-          if [[ -n "$_orphan_pane" ]]; then
-            tmux -L "$_sock" kill-pane -t "$_orphan_pane" 2>/dev/null || true
-            continue
-          fi
-        fi
-      fi
-      # Fallback: kill process directly if pane not found
-      kill -TERM "$_proc_pid" 2>/dev/null || true
-    done
-  fi
-fi
+# Runtime reconciliation is intentionally excluded from this 2s PreToolUse
+# hook. Health-check and cleanup-orphan-runtime own process and pane cleanup
+# so packet enforcement remains available even when runtime maintenance fails.
 
 # Mirror messages accumulated during enforcement checks
 MIRROR_MESSAGES=()
@@ -262,7 +161,7 @@ deny_dispatch() {
     "${deny_reason:0:300}" >> "$VIOLATION_LOG"
 
   if [[ "$severity" == "blocking" ]]; then
-    BLOCKING_MESSAGES+=("${log_code}: ${deny_reason:0:220}")
+    BLOCKING_MESSAGES+=("${log_code}: ${deny_reason:0:500}")
   else
     MIRROR_MESSAGES+=("${log_code}: ${deny_reason:0:200}")
   fi
@@ -320,70 +219,13 @@ process.stdout.write(JSON.stringify({
 NODE
 }
 
-resolve_sender_role() {
-  local sender_role=""
-
-  sender_role="$SENDER_AGENT_TYPE"
-  if [[ -z "$sender_role" ]] && [[ -n "$SESSION_ID" ]] && [[ -f "$SESSION_AGENT_MAP" ]]; then
-    sender_role="$(awk -v sid="$SESSION_ID" '$1 == sid {print $2; exit}' "$SESSION_AGENT_MAP" 2>/dev/null || true)"
-  fi
-  if [[ -z "$sender_role" ]] && [[ -n "$AGENT_ID" ]]; then
-    sender_role="$(resolve_agent_id "$AGENT_ID")"
-  fi
-  if [[ -z "$sender_role" ]] && session_is_runtime_owner "$SESSION_ID"; then
-    sender_role="team-lead"
-  fi
-  if [[ -z "$sender_role" ]] && [[ -z "$AGENT_ID" ]]; then
-    sender_role="team-lead"
-  fi
-
-  printf '%s' "${sender_role:-unknown}"
-}
-
 dispatch_target_requires_acceptance_packet() {
   local target_id="${1:-}"
+  local category=""
 
-  case "$target_id" in
-    developer|int-op|sw-spec|biz-sys|ui-ux|edu-spec|eng-spec|math-spec|doc-auto)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
-dispatch_is_worker_lane() {
-  local target_id="${1:-}"
-
-  case "$target_id" in
-    researcher|developer|reviewer|tester|validator)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
-dispatch_is_managed_lane() {
-  local target_id="${1:-}"
-
-  case "$target_id" in
-    researcher|developer|reviewer|tester|validator)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
-dispatch_is_governing_lane() {
-  local target_id="${1:-}"
-
-  case "$target_id" in
-    team-lead)
+  category="$(get_agent_category "$target_id")"
+  case "$category" in
+    implementation|specialist)
       return 0
       ;;
     *)
@@ -457,11 +299,9 @@ dispatch_is_solution_sensitive_request() {
     return 0
   fi
 
+  # governance-patch has its own dedicated enforcement; unconditionally exempt from solution-development
   if [[ "$desc" == *"task-class: governance-patch"* ]]; then
-    if [[ "$desc" != *"problem-class:"* && "$desc" != *"root-cause-basis:"* && "$desc" != *"solution-pass:"* \
-      && "$desc" != *"alternative-review:"* && "$desc" != *"selected-scope:"* && "$desc" != *"competing-hypotheses:"* ]]; then
-      return 1
-    fi
+    return 1
   fi
 
   if printf '%s' "$desc" | grep -Eq '(root cause|root-cause|systemic|structural|recurr|architecture|architectural|redesign|remediation|hardening|solution|proposal|approach|fix type|corrective|counterexample|alternative)' \
@@ -684,8 +524,10 @@ enforce_high_traffic_governance_resume_packet() {
   local session_turnover_resume="false"
 
   [[ "$RESOLVED_ID" == "developer" ]] || return 0
-  dispatch_is_governance_patch_request "$DESCRIPTION" || return 0
-  dispatch_is_governance_optimization_request "$DESCRIPTION" || return 0
+  if ! dispatch_is_governance_patch_request "$DESCRIPTION" \
+    && ! dispatch_is_governance_optimization_request "$DESCRIPTION"; then
+    return 0
+  fi
 
   if dispatch_is_high_traffic_governance_surface_request "$DESCRIPTION"; then
     high_traffic_surface="true"
@@ -721,10 +563,6 @@ enforce_research_dispatch_packet() {
   local benchmark_sensitive="false"
 
   [[ "$RESOLVED_ID" == "researcher" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
 
   if ! dispatch_field_value_matches "$DESCRIPTION" "research-mode" "bounded|deep|sharded"; then
     missing+=("RESEARCH-MODE: bounded|deep|sharded")
@@ -799,10 +637,6 @@ enforce_review_dispatch_packet() {
 
   [[ "$RESOLVED_ID" == "reviewer" ]] || return 0
 
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
-
   if ! dispatch_field_present "$DESCRIPTION" "review-target"; then
     missing+=("REVIEW-TARGET: <artifact or claim surface>")
   fi
@@ -833,10 +667,6 @@ enforce_test_dispatch_packet() {
 
   [[ "$RESOLVED_ID" == "tester" ]] || return 0
 
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
-
   if ! dispatch_field_present "$DESCRIPTION" "proof-target"; then
     missing+=("PROOF-TARGET: <claim or artifact under test>")
   fi
@@ -866,10 +696,6 @@ enforce_validation_dispatch_packet() {
   local deny_reason=""
 
   [[ "$RESOLVED_ID" == "validator" ]] || return 0
-
-  if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-    dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment" || return 0
-  fi
 
   if ! dispatch_field_present "$DESCRIPTION" "validation-target"; then
     missing+=("VALIDATION-TARGET: <delivery or decision surface>")
@@ -1034,10 +860,6 @@ enforce_execution_acceptance_dispatch_packet() {
     return 0
   fi
 
-  if [[ "$TOOL_NAME" == "SendMessage" ]] && dispatch_field_value_matches "$DESCRIPTION" "message-class" "control|reroute|reuse|standby"; then
-    return 0
-  fi
-
   if ! dispatch_field_value_matches "$DESCRIPTION" "plan-state" "ready|approved|updated|revalidated"; then
     missing+=("PLAN-STATE: ready|approved|updated|revalidated")
   fi
@@ -1078,181 +900,6 @@ enforce_execution_acceptance_dispatch_packet() {
     deny_reason="${deny_reason} Meaningful acceptance risk requires reviewer, tester, and validator lanes to stay explicit."
   fi
   deny_dispatch "A-ACCEPTANCE-GATE BLOCKED" "$deny_reason" "blocking"
-}
-
-
-SENDER_ROLE="$(resolve_sender_role)"
-WORKER_PEER_PACKET_ACTIVE="false"
-
-sender_is_control_lane() {
-  case "$SENDER_ROLE" in
-    team-lead)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
-sender_is_reporting_lane() {
-  case "$SENDER_ROLE" in
-    developer|researcher|reviewer|tester|validator)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
-peer_packet_contains_reserved_control_fields() {
-  local reserved_fields=(
-    "message-class"
-    "task-class"
-    "sequence"
-    "patch-class"
-    "owner-surface"
-    "baseline-class"
-    "review-target"
-    "prereq-state"
-    "acceptance-surface"
-    "proof-target"
-    "env-basis"
-    "scenario-scope"
-    "proof-expectation"
-    "validation-target"
-    "expectation-sources"
-    "review-state"
-    "test-state"
-    "decision-surface"
-    "plan-state"
-    "plan-step"
-    "acceptance-risk"
-    "review-owner"
-    "proof-owner"
-    "acceptance-owner"
-    "requested-governing-action"
-    "delegated-scope"
-    "delegated-actions"
-  )
-  local field=""
-
-  for field in "${reserved_fields[@]}"; do
-    if dispatch_field_present "$DESCRIPTION" "$field"; then
-      printf '%s' "$field"
-      return 0
-    fi
-  done
-
-  return 1
-}
-
-enforce_governing_control_message_packet() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
-  dispatch_is_managed_lane "$RESOLVED_ID" || return 0
-  sender_is_control_lane || return 0
-
-  local missing=()
-  local missing_text=""
-
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment|control|reroute|reuse|standby"; then
-    missing+=("MESSAGE-CLASS: assignment|control|reroute|reuse|standby")
-  fi
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
-    missing+=("MESSAGE-PRIORITY: normal|high|critical")
-  fi
-  if ! dispatch_field_present "$DESCRIPTION" "work-surface"; then
-    missing+=("WORK-SURFACE: <bounded active surface>")
-  fi
-
-  if [[ ${#missing[@]} -eq 0 ]]; then
-    return 0
-  fi
-
-  printf -v missing_text '%s; ' "${missing[@]}"
-  missing_text="${missing_text%; }"
-  deny_dispatch "A-CONTROL-MESSAGE BLOCKED" "Downward ordinary control or assignment through SendMessage must keep direction and urgency explicit. Governing-lane messages to managed lanes require a control packet naming class, priority, and active surface. Use the explicit shutdown_request/shutdown_response protocol path for lifecycle shutdown instead of MESSAGE-CLASS: shutdown. Include: ${missing_text}." "blocking"
-}
-
-enforce_upward_report_message_packet() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
-  dispatch_is_governing_lane "$RESOLVED_ID" || return 0
-  sender_is_reporting_lane || return 0
-
-  local missing=()
-  local missing_text=""
-
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "blocker|handoff|completion|hold|scope-pressure|status"; then
-    missing+=("MESSAGE-CLASS: blocker|handoff|completion|hold|scope-pressure|status")
-  fi
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
-    missing+=("MESSAGE-PRIORITY: normal|high|critical")
-  fi
-  if ! dispatch_field_present "$DESCRIPTION" "work-surface"; then
-    missing+=("WORK-SURFACE: <current surface>")
-  fi
-  if ! dispatch_field_present "$DESCRIPTION" "requested-governing-action"; then
-    missing+=("REQUESTED-GOVERNING-ACTION: <decision needed or none>")
-  fi
-
-  if [[ ${#missing[@]} -eq 0 ]]; then
-    return 0
-  fi
-
-  printf -v missing_text '%s; ' "${missing[@]}"
-  missing_text="${missing_text%; }"
-  deny_dispatch "A-UPWARD-REPORT BLOCKED" "Upward worker reporting must keep direction and urgency explicit. Report packets to the governing lane must say whether the message is a blocker, handoff, completion, hold, scope-pressure, or status update, plus the priority, active surface, and requested governing action. Include: ${missing_text}." "blocking"
-}
-
-enforce_worker_message_routing() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 0
-  dispatch_is_worker_lane "$RESOLVED_ID" || return 0
-
-  local missing=()
-  local missing_text=""
-  local reserved_field=""
-
-  case "$SENDER_ROLE" in
-    developer|researcher|reviewer|tester|validator)
-      ;;
-    *)
-      return 0
-      ;;
-  esac
-
-  if dispatch_field_value_matches "$DESCRIPTION" "peer-mode" "bounded-advice|challenge"; then
-    if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
-      missing+=("MESSAGE-PRIORITY: normal|high|critical")
-    fi
-    if ! dispatch_field_present "$DESCRIPTION" "surface-boundary"; then
-      missing+=("SURFACE-BOUNDARY: <local issue>")
-    fi
-    if ! dispatch_field_value_matches "$DESCRIPTION" "no-ownership-change" "true"; then
-      missing+=("NO-OWNERSHIP-CHANGE: true")
-    fi
-    if ! dispatch_field_value_matches "$DESCRIPTION" "no-acceptance-change" "true"; then
-      missing+=("NO-ACCEPTANCE-CHANGE: true")
-    fi
-    if ! dispatch_field_value_matches "$DESCRIPTION" "escalate-if-unresolved" "true"; then
-      missing+=("ESCALATE-IF-UNRESOLVED: true")
-    fi
-
-    if reserved_field="$(peer_packet_contains_reserved_control_fields)"; then
-      deny_dispatch "A-WORKER-PEER-CONTROL BLOCKED" "Bounded worker-to-worker advice or challenge must not smuggle owner-routing, acceptance, delegated-control, or full assignment packets. Remove the reserved control field \`${reserved_field}\` and escalate through the governing lane if ownership, acceptance, or task control must change." "blocking"
-    fi
-
-    if [[ ${#missing[@]} -eq 0 ]]; then
-      WORKER_PEER_PACKET_ACTIVE="true"
-      return 0
-    fi
-
-    printf -v missing_text '%s; ' "${missing[@]}"
-    missing_text="${missing_text%; }"
-    deny_dispatch "A-WORKER-PEER-PACKET BLOCKED" "Bounded worker-to-worker advice or challenge must stay local and escalation-ready. Include: ${missing_text}." "blocking"
-  fi
-
-  deny_dispatch "A-WORKER-ROUTING BLOCKED" "Workers must report blockers, handoffs, and scope corrections to the governing lane (`team-lead`) rather than sending new scope or control instructions directly to peer workers. Peer-to-peer messages are allowed only as explicit bounded advice or challenge packets." "blocking"
 }
 
 enforce_manifest_sync_dispatch_packet() {
@@ -1314,51 +961,27 @@ EOF
   fi
 fi
 
-# ── Protocol message early-exit ──────────────────────────────────────
-# Lifecycle protocol messages (shutdown_request, shutdown_response,
-# plan_approval_request, plan_approval_response) are message-first
-# control surfaces, not governed assignment packets. Skip the full
-# enforcement cascade for these.
-if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-  _proto_desc=""
-  _proto_desc="$(normalize_dispatch_text "$DESCRIPTION")"
-  if printf '%s' "$_proto_desc" | grep -Eq '(shutdown_request|shutdown_response|plan_approval_request|plan_approval_response)'; then
-    printf '%s | %s | PROTOCOL | %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:120}" >> "$DISPATCH_LEDGER"
-    exit 0
-  fi
-fi
-
-
-
 if [[ "$RESOLVED_ID" == "developer" ]] && dispatch_is_manifest_sync_request "$DESCRIPTION"; then
   enforce_manifest_sync_dispatch_packet
 fi
 
-enforce_governing_control_message_packet
+enforce_solution_development_dispatch_packet
 
-enforce_upward_report_message_packet
+enforce_governance_patch_dispatch_packet
 
-enforce_worker_message_routing
+enforce_high_traffic_governance_resume_packet
 
-if [[ "$WORKER_PEER_PACKET_ACTIVE" != "true" ]]; then
-  enforce_solution_development_dispatch_packet
+enforce_self_growth_coordination_dispatch_packet
 
-  enforce_governance_patch_dispatch_packet
+enforce_execution_acceptance_dispatch_packet
 
-  enforce_high_traffic_governance_resume_packet
+enforce_research_dispatch_packet
 
-  enforce_self_growth_coordination_dispatch_packet
+enforce_review_dispatch_packet
 
-  enforce_execution_acceptance_dispatch_packet
+enforce_test_dispatch_packet
 
-  enforce_research_dispatch_packet
-
-  enforce_review_dispatch_packet
-
-  enforce_test_dispatch_packet
-
-  enforce_validation_dispatch_packet
-fi
+enforce_validation_dispatch_packet
 
 if [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]]; then
   emit_blocking_output
@@ -1377,71 +1000,9 @@ if [[ "$RUN_IN_BACKGROUND" != "true" && "$RESOLVED_ID" != "unknown" && -n "$S31_
 fi
 
 printf '%s | %s | %s | %s | %s\n' "$TIMESTAMP" "$RESOLVED_ID" "${DESCRIPTION%%:*}" "$RUN_IN_BACKGROUND" "$CATEGORY" >> "$DISPATCH_LEDGER"
-
-append_pending_dispatch_entries() {
-  local timestamp="${1:?timestamp required}"
-  local agent_name="${2:?agent name required}"
-  local mode_value="${3:?mode required}"
-
-  with_lock_file "$AGENT_CLAIM_LOCK" _append_pending_dispatch_entries_locked "$timestamp" "$agent_name" "$mode_value"
-}
-
-clear_worker_lifecycle_residue() {
-  local agent_name="${1-}"
-
-  [[ -n "$agent_name" ]] || return 0
-  with_lock_file "$AGENT_CLAIM_LOCK" _clear_worker_lifecycle_residue_locked "$agent_name"
-}
-
-_clear_worker_lifecycle_residue_locked() {
-  local agent_name="${1:?agent name required}"
-  local normalized_agent=""
-
-  normalized_agent="$(normalize_lane_id "$agent_name")"
-  [[ -n "$normalized_agent" ]] || return 0
-
-  _remove_worker_from_state_file "$STANDBY_FILE" "$normalized_agent"
-}
-
-_remove_worker_from_state_file() {
-  local target_file="${1:?target file required}"
-  local normalized_agent="${2:?normalized agent required}"
-  local temp_file=""
-
-  touch "$target_file"
-  temp_file="$(make_atomic_temp_file "$target_file")"
-
-  awk -v worker="$normalized_agent" '
-    {
-      entry = $0
-      gsub(/^[[:space:]]+|[[:space:]]+$/, "", entry)
-      if (tolower(entry) != worker) {
-        print $0
-      }
-    }
-  ' "$target_file" > "$temp_file"
-
-  atomic_replace_file "$temp_file" "$target_file"
-}
-
-_append_pending_dispatch_entries_locked() {
-  local timestamp="${1:?timestamp required}"
-  local agent_name="${2:?agent name required}"
-  local mode_value="${3:?mode required}"
-
-  printf '%s | %s | PENDING\n' "$timestamp" "$agent_name" >> "$PENDING_AGENTS_FILE"
-  printf '%s | %s | %s | PENDING\n' "$timestamp" "$agent_name" "$mode_value" >> "$PENDING_AGENT_MODES_FILE"
-}
-
-if [[ "$TOOL_NAME" == "Agent" ]]; then
-  clear_worker_lifecycle_residue "$AGENT_NAME"
-  append_pending_dispatch_entries "$TIMESTAMP" "$AGENT_NAME" "${MODE:-default}"
-fi
-
-if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
-  printf '1\n' > "$HEALTH_CRON_FLAG"
-  printf '[%s] HEALTH-CRON: first agent dispatched\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$VIOLATION_LOG"
-fi
+# Lifecycle bookkeeping is applied only after a successful Agent dispatch in
+# PostToolUse so failed dispatch attempts do not consume standby state or create
+# false active intent.
 
 emit_mirror_output
 exit 0

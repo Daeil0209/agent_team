@@ -105,6 +105,21 @@ sendmessage_is_closeout_exempt() {
 }
 
 if [[ "$TOOL_NAME" == "TeamCreate" ]]; then
+  # If a team already exists, re-affirm runtime state and skip TeamCreate
+  for _rtg_cfg in "$HOME/.claude/teams"/*/config.json; do
+    if [[ -f "$_rtg_cfg" ]]; then
+      if [[ -n "$SESSION_ID" ]]; then
+        record_runtime_session_id "$SESSION_ID"
+      fi
+      printf '%s | explicit-team-runtime-active\n' \
+        "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$TEAM_RUNTIME_ACTIVE_FILE"
+      printf '%s | boot-complete\n' \
+        "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
+      emit_deny "Team already active — runtime re-affirmed. No TeamCreate needed."
+      exit 0
+    fi
+  done
+
   run_scan
 
   REAP_OUTPUT=""
