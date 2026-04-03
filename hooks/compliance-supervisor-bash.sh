@@ -116,6 +116,6 @@ fi
 # Exempt only the explicit runtime helper scripts that the lead may call as orchestration aids.
 # Do not exempt arbitrary writes under .claude/hooks or .claude/logs, because that would reopen direct
 # main-thread mutation of hook code and runtime state.
-SUPERVISOR_EXEMPT_PATTERN='(health-check\.sh|cleanup-orphan-runtime\.sh|runtime-pressure-scan\.sh|mark-(release|standby|complete|force-stop|health-cron-rotation|health-cron-job|closeout-intent)\.sh|clear-(health-cron-rotation|health-cron-job|closeout-intent)\.sh)'
+SUPERVISOR_EXEMPT_PATTERN='(health-check\.sh|cleanup-orphan-runtime\.sh|runtime-pressure-scan\.sh|mark-(standby|complete|force-stop|health-cron-rotation|health-cron-job|closeout-intent)\.sh|clear-(health-cron-rotation|health-cron-job|closeout-intent)\.sh)'
 
 exit 0

@@ -52,19 +52,4 @@ else
     "TeamCreate is automatic; do not wait for the user to request it." \
     "CRITICAL: After boot completes, you MUST respond to the user's original message content. The boot is invisible infrastructure — the user expects a reply to what they said."
 
-  # ── Boot-time stale member cleanup ────────────────────────────────────
-  for _team_cfg in "$HOME/.claude/teams"/*/config.json; do
-    [[ -f "$_team_cfg" ]] || continue
-    node -e "
-      const fs = require('fs');
-      try {
-        const cfg = JSON.parse(fs.readFileSync('$_team_cfg', 'utf8'));
-        const before = (cfg.members || []).length;
-        cfg.members = (cfg.members || []).filter(m => m.name === 'team-lead');
-        if (cfg.members.length < before) {
-          fs.writeFileSync('$_team_cfg', JSON.stringify(cfg, null, 2) + '\n');
-        }
-      } catch(e) {}
-    " 2>/dev/null || true
-  done
 fi

@@ -242,20 +242,56 @@ fi
 
 # Mirror messages accumulated during enforcement checks
 MIRROR_MESSAGES=()
+BLOCKING_MESSAGES=()
 
 deny_dispatch() {
   local log_code="${1:?log code required}"
   local deny_reason="${2:?deny reason required}"
+  local severity="${3:-advisory}"
+  local log_label="PACKET-ADVISORY"
 
-  # Keep existing audit log (unchanged)
-  printf '[%s] PACKET-ADVISORY %s: %s | %s\n' \
+  if [[ "$severity" == "blocking" ]]; then
+    log_label="PACKET-BLOCK"
+  fi
+
+  printf '[%s] %s %s: %s | %s\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" \
+    "$log_label" \
     "$log_code" \
     "${DESCRIPTION:0:240}" \
     "${deny_reason:0:300}" >> "$VIOLATION_LOG"
 
-  # NEW: Accumulate mirror message for model feedback
-  MIRROR_MESSAGES+=("${log_code}: ${deny_reason:0:200}")
+  if [[ "$severity" == "blocking" ]]; then
+    BLOCKING_MESSAGES+=("${log_code}: ${deny_reason:0:220}")
+  else
+    MIRROR_MESSAGES+=("${log_code}: ${deny_reason:0:200}")
+  fi
+}
+
+emit_blocking_output() {
+  [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]] || return 1
+
+  local max_blocks=3
+  local count=${#BLOCKING_MESSAGES[@]}
+  (( count > max_blocks )) && count=$max_blocks
+
+  local combined=""
+  local i=0
+  for (( i=0; i<count; i++ )); do
+    combined+="${BLOCKING_MESSAGES[$i]}"
+    (( i < count - 1 )) && combined+=" | "
+  done
+
+  COMBINED="$combined" node <<'NODE'
+const reason = "Blocking compliance packet violation(s): " + (process.env.COMBINED || "");
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    permissionDecision: "deny",
+    permissionDecisionReason: reason
+  }
+}));
+NODE
 }
 
 emit_mirror_output() {
@@ -637,7 +673,7 @@ enforce_governance_patch_dispatch_packet() {
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
   deny_reason="Governance-sensitive modification dispatch is blocked until the sequence is explicit: information-loss review first, local-context balance review second, related-doc review third, bounded modification fourth, optimization only afterward. Treat additions, deletions, rewrites, migrations, compressions, and optimizations as the same loss-risk class; none may bypass the preservation packet. Do not let team-lead apply habitual shortcut edits to doctrine, hooks, settings, agents, or skills. Include: ${missing_text}."
-  deny_dispatch "A-GOVERNANCE-PROCEDURE BLOCKED" "$deny_reason"
+  deny_dispatch "A-GOVERNANCE-PROCEDURE BLOCKED" "$deny_reason" "blocking"
 }
 
 enforce_high_traffic_governance_resume_packet() {
@@ -675,7 +711,7 @@ enforce_high_traffic_governance_resume_packet() {
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
   deny_reason="High-traffic governance modification or session-turnover resume is blocked until the current session revalidates repository state and refreshes its baseline anchor. Remembered review from a prior session is continuity only, not edit authorization. Include: ${missing_text}."
-  deny_dispatch "A-GOVERNANCE-RESUME BLOCKED" "$deny_reason"
+  deny_dispatch "A-GOVERNANCE-RESUME BLOCKED" "$deny_reason" "blocking"
 }
 
 enforce_research_dispatch_packet() {
@@ -998,7 +1034,7 @@ enforce_execution_acceptance_dispatch_packet() {
     return 0
   fi
 
-  if [[ "$TOOL_NAME" == "SendMessage" ]] && dispatch_field_value_matches "$DESCRIPTION" "message-class" "control|reroute|reuse|standby|release"; then
+  if [[ "$TOOL_NAME" == "SendMessage" ]] && dispatch_field_value_matches "$DESCRIPTION" "message-class" "control|reroute|reuse|standby"; then
     return 0
   fi
 
@@ -1041,7 +1077,7 @@ enforce_execution_acceptance_dispatch_packet() {
   if [[ "$meaningful_risk" == "true" ]]; then
     deny_reason="${deny_reason} Meaningful acceptance risk requires reviewer, tester, and validator lanes to stay explicit."
   fi
-  deny_dispatch "A-ACCEPTANCE-GATE BLOCKED" "$deny_reason"
+  deny_dispatch "A-ACCEPTANCE-GATE BLOCKED" "$deny_reason" "blocking"
 }
 
 
@@ -1120,8 +1156,8 @@ enforce_governing_control_message_packet() {
   local missing=()
   local missing_text=""
 
-  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment|control|reroute|reuse|standby|release|shutdown"; then
-    missing+=("MESSAGE-CLASS: assignment|control|reroute|reuse|standby|release|shutdown")
+  if ! dispatch_field_value_matches "$DESCRIPTION" "message-class" "assignment|control|reroute|reuse|standby"; then
+    missing+=("MESSAGE-CLASS: assignment|control|reroute|reuse|standby")
   fi
   if ! dispatch_field_value_matches "$DESCRIPTION" "message-priority" "normal|high|critical"; then
     missing+=("MESSAGE-PRIORITY: normal|high|critical")
@@ -1136,7 +1172,7 @@ enforce_governing_control_message_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_dispatch "A-CONTROL-MESSAGE BLOCKED" "Downward control or assignment through SendMessage must keep direction and urgency explicit. Governing-lane messages to managed lanes require a control packet naming class, priority, and active surface. Include: ${missing_text}."
+  deny_dispatch "A-CONTROL-MESSAGE BLOCKED" "Downward ordinary control or assignment through SendMessage must keep direction and urgency explicit. Governing-lane messages to managed lanes require a control packet naming class, priority, and active surface. Use the explicit shutdown_request/shutdown_response protocol path for lifecycle shutdown instead of MESSAGE-CLASS: shutdown. Include: ${missing_text}." "blocking"
 }
 
 enforce_upward_report_message_packet() {
@@ -1166,7 +1202,7 @@ enforce_upward_report_message_packet() {
 
   printf -v missing_text '%s; ' "${missing[@]}"
   missing_text="${missing_text%; }"
-  deny_dispatch "A-UPWARD-REPORT BLOCKED" "Upward worker reporting must keep direction and urgency explicit. Report packets to the governing lane must say whether the message is a blocker, handoff, completion, hold, scope-pressure, or status update, plus the priority, active surface, and requested governing action. Include: ${missing_text}."
+  deny_dispatch "A-UPWARD-REPORT BLOCKED" "Upward worker reporting must keep direction and urgency explicit. Report packets to the governing lane must say whether the message is a blocker, handoff, completion, hold, scope-pressure, or status update, plus the priority, active surface, and requested governing action. Include: ${missing_text}." "blocking"
 }
 
 enforce_worker_message_routing() {
@@ -1203,7 +1239,7 @@ enforce_worker_message_routing() {
     fi
 
     if reserved_field="$(peer_packet_contains_reserved_control_fields)"; then
-      deny_dispatch "A-WORKER-PEER-CONTROL BLOCKED" "Bounded worker-to-worker advice or challenge must not smuggle owner-routing, acceptance, delegated-control, or full assignment packets. Remove the reserved control field \`${reserved_field}\` and escalate through the governing lane if ownership, acceptance, or task control must change."
+      deny_dispatch "A-WORKER-PEER-CONTROL BLOCKED" "Bounded worker-to-worker advice or challenge must not smuggle owner-routing, acceptance, delegated-control, or full assignment packets. Remove the reserved control field \`${reserved_field}\` and escalate through the governing lane if ownership, acceptance, or task control must change." "blocking"
     fi
 
     if [[ ${#missing[@]} -eq 0 ]]; then
@@ -1213,10 +1249,10 @@ enforce_worker_message_routing() {
 
     printf -v missing_text '%s; ' "${missing[@]}"
     missing_text="${missing_text%; }"
-    deny_dispatch "A-WORKER-PEER-PACKET BLOCKED" "Bounded worker-to-worker advice or challenge must stay local and escalation-ready. Include: ${missing_text}."
+    deny_dispatch "A-WORKER-PEER-PACKET BLOCKED" "Bounded worker-to-worker advice or challenge must stay local and escalation-ready. Include: ${missing_text}." "blocking"
   fi
 
-  deny_dispatch "A-WORKER-ROUTING BLOCKED" "Workers must report blockers, handoffs, and scope corrections to the governing lane (`team-lead`) rather than sending new scope or control instructions directly to peer workers. Peer-to-peer messages are allowed only as explicit bounded advice or challenge packets."
+  deny_dispatch "A-WORKER-ROUTING BLOCKED" "Workers must report blockers, handoffs, and scope corrections to the governing lane (`team-lead`) rather than sending new scope or control instructions directly to peer workers. Peer-to-peer messages are allowed only as explicit bounded advice or challenge packets." "blocking"
 }
 
 enforce_manifest_sync_dispatch_packet() {
@@ -1324,6 +1360,11 @@ if [[ "$WORKER_PEER_PACKET_ACTIVE" != "true" ]]; then
   enforce_validation_dispatch_packet
 fi
 
+if [[ ${#BLOCKING_MESSAGES[@]} -gt 0 ]]; then
+  emit_blocking_output
+  exit 0
+fi
+
 NEEDS_PLAN="$(check_agent_property "$RESOLVED_ID" "requires_plan")"
 if [[ "$NEEDS_PLAN" == "true" ]]; then
   printf '[%s] S-07 ADVISORY: %s dispatched (requires execution plan): %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$RESOLVED_ID" "${DESCRIPTION:0:200}" >> "$VIOLATION_LOG"
@@ -1336,23 +1377,6 @@ if [[ "$RUN_IN_BACKGROUND" != "true" && "$RESOLVED_ID" != "unknown" && -n "$S31_
 fi
 
 printf '%s | %s | %s | %s | %s\n' "$TIMESTAMP" "$RESOLVED_ID" "${DESCRIPTION%%:*}" "$RUN_IN_BACKGROUND" "$CATEGORY" >> "$DISPATCH_LEDGER"
-
-_auto_standby_on_completion() {
-  local sender_name="${1:?sender name required}"
-  mkdir -p "$(dirname "$STANDBY_FILE")"
-  touch "$STANDBY_FILE"
-  if ! grep -qxF "$sender_name" "$STANDBY_FILE" 2>/dev/null; then
-    printf '%s\n' "$sender_name" >> "$STANDBY_FILE"
-  fi
-}
-
-# ── Auto-STANDBY on worker completion message ──────────────────────────────────────────────────────
-if [[ "$TOOL_NAME" == "SendMessage" ]] \
-  && dispatch_is_governing_lane "$RESOLVED_ID" \
-  && dispatch_is_worker_lane "$SENDER_ROLE" \
-  && dispatch_field_value_matches "$DESCRIPTION" "message-class" "completion"; then
-  with_lock_file "$AGENT_CLAIM_LOCK" _auto_standby_on_completion "$SENDER_ROLE"
-fi
 
 append_pending_dispatch_entries() {
   local timestamp="${1:?timestamp required}"
@@ -1409,8 +1433,10 @@ _append_pending_dispatch_entries_locked() {
   printf '%s | %s | %s | PENDING\n' "$timestamp" "$agent_name" "$mode_value" >> "$PENDING_AGENT_MODES_FILE"
 }
 
-clear_worker_lifecycle_residue "$AGENT_NAME"
-append_pending_dispatch_entries "$TIMESTAMP" "$AGENT_NAME" "${MODE:-default}"
+if [[ "$TOOL_NAME" == "Agent" ]]; then
+  clear_worker_lifecycle_residue "$AGENT_NAME"
+  append_pending_dispatch_entries "$TIMESTAMP" "$AGENT_NAME" "${MODE:-default}"
+fi
 
 if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
   printf '1\n' > "$HEALTH_CRON_FLAG"

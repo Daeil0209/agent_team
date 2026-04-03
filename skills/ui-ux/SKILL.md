@@ -3,6 +3,23 @@ name: ui-ux
 description: Own presentation visual composition, rendered legibility, and operator-facing clarity for decks, visual reports, and UI-bearing deliverables.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/ui-ux/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the ui-ux lane for Claude Code.
@@ -66,6 +83,7 @@ Use this skill when a deliverable is judged by rendered composition, visual hier
 ## Activation
 
 Activate for operator-facing UIs, workflow tools, decks, visual reports, dashboards, or any work where rendered usability and visual acceptance are real success conditions.
+For document-class or operator-facing surfaces, activate only after the surface role and target reader or operator are explicit enough that hierarchy can be judged against a real job rather than aesthetic preference alone.
 
 ## Inputs
 
@@ -74,6 +92,7 @@ Activate for operator-facing UIs, workflow tools, decks, visual reports, dashboa
 - execution plan
 - rendered artifact or runnable UI when available
 - business workflow or software architecture packets when the visual layer depends on them
+- When the artifact is request-bound or document-class, include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`, and any declared format class or surface-role contract before freezing layout judgments.
 
 ## Outputs
 
@@ -84,10 +103,12 @@ Report in-conversation, not as a separate file. Required elements:
 3. **Dense-state risks**: identified viewport, overflow, or density failure scenarios
 4. **Blocking defects**: defect type, owner role, severity, retest condition per blocker
 5. **Retest conditions**: explicit condition that clears each held surface
+6. **Downstream acceptance state**: whether text review, runnable proof, or final validation still remain required after the visual pass
 
 ## Handoff Boundary
 
 Hand off when the surface has a clear role, primary action and next step are visible, hierarchy and spacing survive stress-state, and viewport-proof first-glance readability is acceptable for the target audience.
+Hand off only when downstream lanes can tell which visual blockers are cleared, which remain, and whether the remaining problem is visual, workflow-rooted, or architecture-rooted.
 
 Escalate to `team-lead`, `biz-sys`, or `sw-spec` when the visual problem is really a workflow, rule, or architecture defect.
 

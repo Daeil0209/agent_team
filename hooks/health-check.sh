@@ -305,30 +305,7 @@ for _gc_config_file in "$HOME/.claude/teams"/*/config.json; do
   while IFS='|' read -r _gc_name _gc_pane; do
     [[ -n "$_gc_name" ]] || continue
     if [[ -z "$_gc_pane" ]]; then
-      # no pane assigned — remove
-      remove_member_from_config "$_gc_name"
-      # Clean from STANDBY_FILE
-      if [[ -f "$STANDBY_FILE" ]]; then
-        _gc_tmp="$(grep -v "^${_gc_name}$" "$STANDBY_FILE" 2>/dev/null || true)"
-        if [[ -n "$_gc_tmp" ]]; then
-          printf '%s\n' "$_gc_tmp" > "$STANDBY_FILE"
-        else
-          : > "$STANDBY_FILE"
-        fi
-      fi
-      # Clean from SESSION_AGENT_MAP
-      if [[ -f "$SESSION_AGENT_MAP" ]]; then
-        _gc_tmp="$(awk -v name="$_gc_name" '{
-          w = $2
-          gsub(/^[[:space:]]+|[[:space:]]+$/, "", w)
-          if (w != name) print
-        }' "$SESSION_AGENT_MAP" 2>/dev/null || true)"
-        if [[ -n "$_gc_tmp" ]]; then
-          printf '%s\n' "$_gc_tmp" > "$SESSION_AGENT_MAP"
-        else
-          : > "$SESSION_AGENT_MAP"
-        fi
-      fi
+      remove_worker_everywhere "$_gc_name"
     else
       _gc_alive=false
       for _retry in 1 2 3; do
@@ -339,29 +316,7 @@ for _gc_config_file in "$HOME/.claude/teams"/*/config.json; do
         sleep 0.5
       done
       if [[ "$_gc_alive" == "false" ]]; then
-        remove_member_from_config "$_gc_name"
-        # Clean from STANDBY_FILE
-        if [[ -f "$STANDBY_FILE" ]]; then
-          _gc_tmp="$(grep -v "^${_gc_name}$" "$STANDBY_FILE" 2>/dev/null || true)"
-          if [[ -n "$_gc_tmp" ]]; then
-            printf '%s\n' "$_gc_tmp" > "$STANDBY_FILE"
-          else
-            : > "$STANDBY_FILE"
-          fi
-        fi
-        # Clean from SESSION_AGENT_MAP
-        if [[ -f "$SESSION_AGENT_MAP" ]]; then
-          _gc_tmp="$(awk -v name="$_gc_name" '{
-            w = $2
-            gsub(/^[[:space:]]+|[[:space:]]+$/, "", w)
-            if (w != name) print
-          }' "$SESSION_AGENT_MAP" 2>/dev/null || true)"
-          if [[ -n "$_gc_tmp" ]]; then
-            printf '%s\n' "$_gc_tmp" > "$SESSION_AGENT_MAP"
-          else
-            : > "$SESSION_AGENT_MAP"
-          fi
-        fi
+        remove_worker_everywhere "$_gc_name"
       fi
     fi
   done <<< "$_gc_ghost_list"

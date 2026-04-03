@@ -3,6 +3,23 @@ name: edu-spec
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, and pedagogical clarity.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/edu-spec/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the edu-spec lane for Claude Code.
@@ -90,11 +107,13 @@ Before delivering instructional output to reviewer or tester:
 2. **Geometry/state annotation** — every process or CAD visual has explicit geometry labels, state labels, or handoff context; no unlabeled spatial artifacts
 3. **5-component worked examples** — every worked example contains all five components (classification, method rationale, full solution with units, verification, error warnings)
 4. **Concept-cascade frozen** — lesson concept structure, prerequisite map, and reveal order were defined before dense fill began; if not, `HOLD` before handoff
+5. **Downstream acceptance path explicit** — for learner-facing visual or page-read artifacts, text or instruction review and capture-render review are both prepared; if one surface is missing, `HOLD`
 
 ## Non-Goals
 
 - do not optimize for slide count or decorative presentation alone
 - do not activate on text-first reports unless the output is explicitly learner-facing
+- do not start sequencing or explanation-density decisions on hidden audience assumptions; if learner profile or prerequisite floor is still vague, escalate rather than guessing
 
 ## Concept-Cascade Extension
 
@@ -115,11 +134,11 @@ Required rules when relevant:
 
 ## Contracts
 
-**Input:** Educational deliverable requirements (curriculum, instructional design, learning materials); target learner profile and prerequisite knowledge level; subject domain context.
+**Input:** Educational deliverable requirements (curriculum, instructional design, learning materials); target learner profile and prerequisite knowledge level; subject domain context. When learner fit, document shape, or decision-fit materially affects the teaching contract, also keep `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` explicit.
 
-**Output:** Instructional design review or educational deliverable quality assessment; learning objective alignment verification; pedagogical clarity improvement suggestions.
+**Output:** Instructional design review or educational deliverable quality assessment; learning objective alignment verification; pedagogical clarity improvement suggestions; prerequisite map, concept-cascade, confusion-point list, and any required equation or diagram readability gates that downstream owners must preserve. State explicitly whether the packet is integration-ready or still on `HOLD`, and name the next owner per unresolved surface when learner flow, math rigor, visual readability, review acceptance, or proof remains open.
 
-**Handoff:** Return educational constraints, critique, or implementation guidance to the active `developer` lane for integration; `reviewer` may later consume that integrated packet as acceptance evidence. Receives: specialist activation inside an explicitly authorized developer blocked surface, with planning or scope escalation routed back to `team-lead`.
+**Handoff:** Return educational constraints, critique, or implementation guidance to the active `developer` lane for integration; `reviewer` may later consume that integrated packet as acceptance evidence. Make explicit whether unresolved blockers route to `math-spec`, `ui-ux`, `reviewer`, or `tester`, and preserve the smallest rerun or rewrite condition required to clear each blocker. For learner-facing visual or page-read artifacts, keep both text or instruction review and capture-render review on the downstream path. Receives: specialist activation inside an explicitly authorized developer blocked surface, with planning or scope escalation routed back to `team-lead`.
 
 ## Deliverable Quality Philosophy Application
 

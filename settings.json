@@ -180,6 +180,11 @@
           },
           {
             "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/sync-worker-lifecycle-state.sh\"",
+            "timeout": 2
+          },
+          {
+            "type": "command",
             "command": "\"$HOME/.claude/hooks/cleanup-terminated-panes.sh\"",
             "timeout": 2
           }

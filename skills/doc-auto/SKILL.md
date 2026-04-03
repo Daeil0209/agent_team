@@ -3,6 +3,23 @@ name: doc-auto
 description: Design and implement reference-driven document automation flows that preserve structure, formatting intent, and bounded generation quality.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/doc-auto/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the doc-auto lane for Claude Code.
@@ -40,12 +57,19 @@ Use this skill when a request depends on preserving the structure, format intent
 ## Responsibilities
 
 - define the document purpose, primary reader, supported decision or action, and desired recipient response before dense drafting begins
+- freeze document type, answer surface, and intended page/volume class before TOC expansion, staffing choice, or shard strategy
+- for short answer-first artifacts, default to the minimum viable document that answers the question correctly, early, and with enough support to justify the conclusion; do not import full-report machinery unless it materially improves the reader's decision
 - distinguish persuasion, execution-control, decision-support, and notice-style documents before choosing structure, tone, or section pattern
 - keep proposal/plan, result-report, review, and summary rhetoric distinct when their factual posture or narrative stance differs materially
 - when materially different readers need different density, require layered outputs or reader-specific versions instead of one overloaded body
 - target reviewer-ready draft quality by default when automation quality matters; a template-fitting draft that still needs broad human rewriting is under target unless scaffold-only help was explicitly requested
 - when reviewer-ready draft quality is the target, keep the human role review- or approval-oriented by default rather than assuming broad rewrite labor downstream
 - calibrate generation aggressiveness to input richness and evidence strength; rich inputs should be preserved with low-invention discipline, while sparse but credible inputs may justify stronger structural supplementation within explicit evidence bounds
+- keep evidence shaping, first-draft generation, and merge-compress integration conceptually distinct even when one worker performs more than one phase in sequence
+- use phase separation to prevent mixed-purpose prompts, not to force unnecessary worker churn or delay
+- treat TOC, chaptering, and parallel section fan-out as downstream execution choices, not as the event that defines document type
+- for short answer-first artifacts, treat merge-compress as answer-protection and duplication-removal work, not as a license to preserve every shard's full local context
+- for short answer-first artifacts, optional aids such as visuals, benchmarks, checklists, case studies, annexes, and layered appendices are subordinate to answer visibility and may be omitted when they do not materially improve the decision surface
 - extract reusable document structure from references
 - define formatting-critical elements that generation must preserve
 - for Korean-language documents, explicitly set a Korean-compatible font (e.g., 맑은 고딕, 나눔고딕, Noto Sans CJK KR) in the generation code; never rely on default Latin fonts for CJK content
@@ -61,7 +85,7 @@ Use this skill when a request depends on preserving the structure, format intent
 - when result-side evidence exists, prefer the supplied graphs, screenshots, photos, or other evidence visuals first and use generated concept/process visuals only to cover explanation gaps that the supplied evidence does not already handle
 - when result-side evidence is absent, allow concept, structure, or process visuals that clarify the work, but do not generate result-looking visuals, metrics, or validation imagery that imply unprovided evidence
 - choose benchmark sources for omission prevention, structure patterns, and credible visual or formatting use rather than for surface-style mimicry
-- when strong proposal/plan craft materially affects acceptance and credible strong examples or methodology exist, treat benchmark-pattern learning for both structure and visual-pattern placement as required input rather than optional polish
+- when strong proposal/plan craft materially affects acceptance and credible strong examples or methodology exist, treat benchmark-pattern learning for both structure and visual-pattern placement as required input rather than optional polish; for short answer-first memos and condition reviews, use benchmark intake only when it materially changes structure quality, not by default
 - for plans and proposals, keep the prose in forward-looking execution/design voice; do not let the document read like a retrospective result report
 - when a source was gathered or discussed in a different order than the reader should absorb it, rebuild the document in reader decision order rather than mirroring research or meeting chronology
 ### Proposal/Plan/Grant
@@ -112,26 +136,26 @@ Use this skill when a request depends on preserving the structure, format intent
 
 ## Review and Analysis Report Persuasion Structure Design
 
-When generating reports that analyze risks, evaluate conditions, or support go/no-go decisions, apply the "Why → So What → Now What" three-stage persuasion structure.
+When generating reports that analyze risks, evaluate conditions, or support go/no-go decisions, apply the "Why → So What → Now What" three-stage persuasion structure. For short answer-first condition reviews, this structure may be compressed into a tight answer -> decisive reasons -> actionable conditions flow rather than expanded into a chapter-like treatment.
 
 **Stage 1 — Why: Multi-dimensional risk or issue decomposition**
 - Decompose risk into distinct named categories with specific mechanisms; do not lump all risk content into one paragraph
 - Each category must state the concrete mechanism that makes it dangerous (e.g., "R-290 flammability range 2.1–9.5 vol%"); category labels alone are a persuasion defect
-- Aim for 4–6 distinct risk categories rather than a single generic risk paragraph
+- Aim for 4–6 distinct risk categories for full condition-review depth; for short answer-first artifacts, use only the smallest set of categories needed to support the decision correctly
 
 **Stage 2 — So What: Context-specific limitation analysis**
 - Analyze why the target environment makes the identified risks specifically worse — not general risk restatement but environment-amplification logic
 - Dedicate a named structural section to the target environment's limitations; burying this analysis inside a generic risk table is a persuasion defect
-- Provide 4–6 concrete points explaining why THIS environment is specifically problematic, not any environment in general
+- Provide the minimum number of concrete points needed to explain why THIS environment is specifically problematic; use 4–6 points only when the artifact class and density target justify that depth
 
 **Stage 3 — Now What: Actionable conditions with graduated recommendations**
 - Present recommendations tiered by risk level (low → medium → high) so readers can locate guidance for their specific situation without wading through irrelevant tiers
 - Pair each condition or recommendation with the risk tier it addresses
-- Do not present one-size-fits-all guidance when the reader population spans meaningfully different risk contexts
+- Do not present one-size-fits-all guidance when the reader population spans meaningfully different risk contexts. For short answer-first artifacts with one dominant decision path, a single standard path plus bounded exceptions is acceptable and often preferable to artificial tier inflation.
 
 **Real-world case study integration**
-- When the report involves safety, risk, or condition review, include at minimum a directive to seek actual incident cases with lessons learned
-- Case studies transform abstract risk descriptions into concrete persuasion; their absence in a safety-review report is a persuasion defect
+- When the report involves safety, risk, or condition review, include actual incident cases or a directive to seek them only when they are materially available, materially decision-changing, or explicitly requested
+- Case studies are persuasive aids, not a universal minimum requirement for short answer-first condition reviews. Their absence is a defect only when the decision surface materially depends on them
 
 **Bidirectional criteria framing**
 - Present both what must NOT be done and what conditions MUST be met, rather than only one direction
@@ -168,21 +192,21 @@ Apply these rules to keep reports concise, decision-focused, and respectful of r
 
 ## Practical Application Tools Integration
 
-When generating review reports, condition assessments, or safety evaluations, make the output immediately actionable by embedding ready-to-use tools directly in the document.
+When generating review reports, condition assessments, or safety evaluations, make the output immediately actionable by embedding ready-to-use tools directly in the document when those tools materially reduce reader work.
 
 **Actionable checklist inclusion**
-- Include a checklist with judgment columns (e.g., □ 적합 / 보완 필요 or ✔ format) that the reader can use directly in their workflow
-- A review report without a decision-ready checklist forces the reader to extract and reformat findings manually; this is an execution defect
+- Include a checklist with judgment columns (e.g., □ 적합 / 보완 필요 or ✔ format) when the reader is expected to reuse the document directly as an execution or field-check tool
+- A review report whose reader must repeatedly reformat the findings into an operational checklist is an execution defect; a short answer-first memo may satisfy this need with a compact condition table or concise decision checklist instead of a full worksheet
 - The checklist must reference the concrete conditions established in the report body, not generic compliance items
 
 **Step-by-step implementation sequence**
-- The conclusion must include a numbered implementation sequence linking conditions to actions (e.g., "① Determine refrigerant type → ② Conduct risk analysis → ③ Secure required facilities → ④ Confirm reporting requirements")
+- The conclusion should include a numbered implementation sequence linking conditions to actions when the reader needs an execution path rather than a judgment only
 - The sequence must be specific enough that the reader can begin execution without consulting additional documents for the standard path
-- A conclusion that states findings without a sequenced action path is decision-incomplete
+- A conclusion that states findings without an action path is decision-incomplete only when the intended deliverable includes execution guidance; a judgment-only memo may stop at a clear answer plus bounded conditions
 
 **Practical judgment column in condition tables**
-- When presenting conditions or requirements in table format, add a "실무 판단" (practical judgment) column that gives real-world interpretation guidance alongside the formal requirement
-- The practical judgment column bridges the gap between regulatory or academic language and field execution; its absence leaves interpretation work to the reader
+- When presenting conditions or requirements in table format for operational use, add a "실무 판단" (practical judgment) column that gives real-world interpretation guidance alongside the formal requirement
+- The practical judgment column is strongly preferred when field execution depends on interpretation; for short answer-first memos, the same function may be satisfied by a concise interpretation note rather than a dedicated extra column
 
 **Risk-level graduated recommendations**
 - Present recommendations tiered by risk level (low → medium → high) rather than one-size-fits-all advice
@@ -387,7 +411,7 @@ When generating a result report from a plan, proposal, or project reference, app
 
 ### Volume-Dependent Visualization Ratio
 
-- Short documents (2-3 pages): heavier visual ratio for information compression; long documents (10+ pages): approximately 5:5 to 6:4 text-to-visual ratio.
+- Short documents (2-3 pages): consider a heavier visual ratio only when visuals actually compress decision-relevant information better than text; visuals are optional, not mandatory, in short answer-first artifacts. Long documents (10+ pages): approximately 5:5 to 6:4 text-to-visual ratio.
 - This specializes the base visual-selection-after-content rule (line 71) with format-length-aware density targets.
 
 ### Proactive Gap-Filling for Plan-to-Report Conversion
@@ -424,6 +448,7 @@ Apply CLAUDE.md Growth Algorithm. On governance/skill patch broadcast, review an
 Before any document generation begins:
 1. Freeze document purpose, primary reader, and supported decision or action
 2. Freeze the request-fit packet: `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`
+   - `REQUIRED-DELIVERABLE` must freeze artifact class, answer surface, and intended length/volume class before dense drafting or staffing
 3. Separate the direct answer from supporting context before section drafting: identify what the document must answer first, what merely qualifies that answer, and what should stay out unless scope is widened
 4. Do not let the work drift materially beyond the core of the question, even if the extra material is true or potentially useful.
 5. Do not silently narrow the document to one subtype or example unless that branch is declared.
@@ -431,10 +456,15 @@ Before any document generation begins:
 7. Decide whether benchmark-pattern intake is required for structure, section order, compression, or rendered composition quality. If yes, freeze `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-PROVENANCE`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD` before dense drafting; otherwise record why no benchmark intake is needed.
 8. Decide whether capture-based visual review will be required for acceptance. If the answer depends on visual impression, page-read usefulness, or layout quality, make that review path explicit before drafting.
 9. For visualized, office-format, or page-read human-facing artifacts, keep text review mandatory alongside capture-based visual review. Wording, logic, and request-fit still need a distinct text review surface even when rendered review is also required.
-10. Confirm document type (proposal/plan, result report, research report, schedule, or other)
-11. Verify evidence-safe generation boundary: what may be generated vs what requires fact-class input
-12. Confirm template and format path can preserve required fidelity, equation rendering, and evidence boundaries
-13. If any item above is unresolvable, mark `HOLD` and surface the intake gap before proceeding
+   - When acceptance risk is meaningful, keep the downstream rendered review path explicit: `developer/doc-auto -> tester render evidence -> reviewer acceptance -> validator`.
+10. Confirm document type (proposal/plan, result report, research report, condition review / decision memo, schedule, or other)
+11. If the user asked a narrow go/no-go or "can X be done and under what conditions" question and did not explicitly request a broad survey, default to a short answer-first condition review / decision memo rather than a chapter-grade research report
+12. TOC, section fan-out, and parallel drafting are downstream implementation choices, not the trigger that defines document type. Only full multi-section reports should default to chapter-level TOC expansion.
+13. Verify evidence-safe generation boundary: what may be generated vs what requires fact-class input
+14. Confirm template and format path can preserve required fidelity, equation rendering, and evidence boundaries
+15. If a core decision surface remains unresolvable, mark `HOLD` and surface the intake gap before proceeding. Core decision surfaces are: request-fit packet, document type, answer surface, evidence-safe generation boundary, and any mandatory format-preservation requirement that would make the artifact misleading if ignored.
+16. If non-core aids remain unresolved (benchmark-pattern intake, capture-based visual review, optional visuals, optional checklist form, optional case-study depth), default to the simpler valid path instead of marking `HOLD`
+17. Before dense drafting begins, freeze the intended handoff form: section-ready draft, integrated draft, review-ready artifact, or `HOLD` packet. If parallel drafting or later merge-compress is expected, make that follow-on form explicit so downstream lanes do not have to infer whether this pass is still expansion, integration, or acceptance preparation.
 
 **HOLD escalation path:** doc-auto issues HOLD → surfaces to `team-lead` for scope clarification.
 
@@ -446,6 +476,8 @@ Before handing off any generated document:
 - [ ] The draft did not drift materially beyond the core of the question just because adjacent true material was available
 - [ ] `EXCLUDED-SCOPE` did not take over the draft without explicit need
 - [ ] The document did not silently narrow the named subject to one subtype or example without declaring that branch
+- [ ] If the deliverable is a short condition review / decision memo, the merged draft did not inflate into a chapter-grade report just because supporting context or parallel shards expanded faster than the answer
+- [ ] Optional aids (benchmarks, case studies, visuals, checklists, annexes) were included only when they materially improved the decision surface and did not crowd out the main answer
 - [ ] Benchmark-sensitive structure, compression, or rendered composition choices were grounded in explicit benchmark intake or an explicit no-benchmark rationale
 - [ ] Document purpose and reader job preserved in output structure
 - [ ] Source lists, evidence appendices, or follow-on annexes stay trailing and proportional instead of displacing the main answer
@@ -454,6 +486,9 @@ Before handing off any generated document:
 - [ ] Korean or CJK content uses an explicitly specified CJK-compatible font — not the python-docx or tool default
 - [ ] Body text uses justified alignment and table cells use vertical center alignment
 - [ ] Text review is also ready when the document is visualized, office-format, or page-read for a human reader; rendered review did not displace wording, logic, or request-fit review
+- [ ] When acceptance risk is meaningful, the downstream gate map is explicit: render evidence, review acceptance, and final validation ownership are named rather than implied
+- [ ] The handoff packet states the current artifact state clearly: section-ready draft, integrated draft, review-ready artifact, or `HOLD`
+- [ ] The handoff packet names the next owner and the smallest unresolved blocker or merge obligation so downstream lanes do not have to infer whether they are continuing draft work, compressing, reviewing, or waiting on intake repair
 - [ ] Page-level repetition, oversized prose blocks, or late-buried conclusions are either fixed or explicitly flagged for rendered review
 - [ ] Fact vs design boundary respected: no invented metrics, results, or validation claims
 - [ ] All mandatory sections per document type present and non-empty

@@ -3,6 +3,23 @@ name: biz-sys
 description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/biz-sys/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the biz-sys lane for Claude Code.
@@ -63,6 +80,7 @@ Use this skill when spreadsheets, manual operations, or approval-heavy work hide
 ## Activation
 
 Activate for spreadsheet-to-program migrations, rule-heavy internal tools, finance or approval flows, or operations systems where hidden workflow rules are a major delivery risk.
+- For request-bound artifacts or workflow products, freeze purpose type, primary audience, and output class before element enumeration, screen decomposition, or module-boundary pressure begins.
 
 ## Inputs
 
@@ -70,12 +88,15 @@ Activate for spreadsheet-to-program migrations, rule-heavy internal tools, finan
 - relevant references or legacy workbooks
 - canonical contract when present
 - active execution plan when planning is underway
+- When the active surface is request-bound, carry `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` so business-rule extraction stays tied to the real reader or operator job.
+- When multiple audiences or authority tiers exist, make their density, privilege, or priority differences explicit in the input packet instead of collapsing them into one generic workflow.
 
 ## Outputs
 
 Preferred output: `./projects/{project_name}/business_workflow_packet.md`
 
-Optional folded target: the business-system-owned section of `execution_plan.md` when a separate file is unnecessary.
+Optional folded target: the business-system-owned section of the current authoritative planning artifact when a separate file is unnecessary.
+Treat `{project_name}` as a placeholder only when the active packet or existing artifact root already defines that project path. If no project-root plan surface is already defined, keep the workflow packet in conversation or fold it into the current authoritative plan instead of inventing a new path by convention alone.
 
 Capture only the decisive workflow packet:
 
@@ -85,10 +106,14 @@ Capture only the decisive workflow packet:
 - import/export and persistence semantics
 - reconciliation or audit-sensitive transitions
 - negative checks that would make a false pass dangerous
+- purpose type, audience split, hidden criteria, and unresolved human decision points when those items control downstream structure or acceptance
+- next owner by surface when downstream routing diverges, for example `doc-auto` for document structure, `sw-spec` for architecture, `ui-ux` for rendered composition, `reviewer` for acceptance review, or `tester` for executable proof
 
 ## Handoff Boundary
 
 Hand off when authoritative entities and states, mutation and recovery semantics, relevant import/export and reconciliation behavior, and the operator workflow meaning of major controls are explicit enough that downstream lanes do not need to invent them.
+- Hand off only when downstream owners can implement or review without guessing purpose, audience, authority, or mutation rules from the spreadsheet shape alone.
+- If an authority-preference conflict, audience split, or approval-rule conflict remains unresolved, keep it explicit as a decision point rather than flattening it into a silent default.
 
 Escalate to `team-lead` when the business workflow implies a different execution shape.
 Escalate to `sw-spec` when the rule set is clear but the implementation architecture is weak.

@@ -3,6 +3,23 @@ name: sw-spec
 description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, and hard logic paths.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/sw-spec/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the sw-spec lane for Claude Code.
@@ -57,6 +74,7 @@ You are the sw-spec lane for Claude Code.
 ## Activation & Purpose
 
 Use this skill when a deliverable needs stronger software architecture, state modeling, or hard-logic design than the ordinary producer lane should infer alone. Activate for non-trivial applications, multi-module tools, stateful workflow products, integration-heavy programs, or refactors where architecture quality materially affects the outcome.
+For request-bound workflow or document-generation products, architecture work should start only after purpose, business-rule packet, and output class are explicit enough that module boundaries are not standing in for missing policy.
 
 ## Inputs
 
@@ -65,12 +83,14 @@ Use this skill when a deliverable needs stronger software architecture, state mo
 - execution plan
 - business workflow packet when present
 - relevant references or legacy code/artifacts when present
+- When request-fit or document or workflow shape materially affects architecture, include the active request-fit packet and the controlling business-workflow or document packet before freezing state or module boundaries.
 
 ## Outputs
 
 Preferred output: `./projects/{project_name}/software_architecture_packet.md`
 
-Optional folded target: the software-design-owned section of `./projects/{project_name}/execution_plan.md` when a separate file is unnecessary.
+Optional folded target: the software-design-owned section of the current authoritative planning artifact when a separate file is unnecessary.
+Treat `{project_name}` as a placeholder only when the active packet or existing artifact root already defines that project path. If no project-root plan surface is already defined, keep the architecture packet in conversation or fold it into the current authoritative plan instead of inventing a new directory.
 
 Capture only the decisive architecture packet:
 
@@ -80,10 +100,12 @@ Capture only the decisive architecture packet:
 - import/export boundary
 - risky logic paths and their invariants
 - failure/recovery expectations
+- next owner per unresolved surface when the packet still depends on `biz-sys`, `ui-ux`, `reviewer`, or `tester`
 
 ## Handoff Boundary
 
 Hand off when authoritative state and module boundaries, persistence and failure semantics, and risky workflow contracts are explicit enough that downstream implementation does not have to invent hidden architecture.
+Hand off with the next owner per surface explicit: implementation, unresolved business rules, rendered composition, review, or proof should not be left implicit in the architecture packet.
 
 Escalate to `team-lead` when the architecture implies a different execution shape.
 Escalate to `biz-sys` when the software design is blocked by unresolved workflow rules.

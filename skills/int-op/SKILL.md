@@ -3,6 +3,23 @@ name: int-op
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, and blocked-condition reporting without taking over other roles.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/int-op/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the int-op lane for Claude Code.
@@ -64,12 +81,15 @@ Activate only when the requested outcome genuinely needs external bridging, such
 - canonical contract
 - execution plan
 - external dependency details, credentials constraints, or tool prerequisites when available
+- Make the bridge packet explicit before activation: required external capability, why local-first is insufficient, verification path, cleanup path, and fallback or blocked expectation.
+- When the bridge exists to support a request-bound artifact, workflow, or operator task, also keep `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` explicit so external setup does not drift away from the real task surface.
 
 ## Outputs
 
 Preferred output: `./projects/{project_name}/integration_bridge_note.md`
 
-Optional folded target: the integration-owned section of `./projects/{project_name}/execution_plan.md` when a separate file is unnecessary.
+Optional folded target: the integration-owned section of the current authoritative planning artifact when a separate file is unnecessary.
+Treat `{project_name}` as a placeholder only when the active packet or existing artifact root already defines that project path. If no project-root path is already defined, report in conversation or fold into the current authoritative plan surface instead of creating a guessed directory.
 
 Capture only the decisive bridge packet:
 
@@ -78,10 +98,13 @@ Capture only the decisive bridge packet:
 - verification path
 - fallback or blocked condition
 - rollback or cleanup expectations when relevant
+- bridge status (`verified`, `blocked`, or `fallback-used`), real-network or real-tool evidence basis, and cleanup outcome
 
 ## Handoff Boundary
 
 Hand off when the bridge need, verification path, and fallback or blocked conditions are explicit enough that the rest of the team can proceed without guessing the dependency contract.
+Hand off only when the next owner can tell whether the bridge is ready, blocked, or should be replaced by a safer local-first path without re-deriving the external dependency story.
+Keep environmental failure, bridge-design failure, and permission failure distinct in the handoff so downstream lanes do not misclassify the block.
 
 ## Expert Integration Standard
 

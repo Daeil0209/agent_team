@@ -3,6 +3,23 @@ name: eng-spec
 description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, and applied reasoning quality.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/eng-spec/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the eng-spec lane for Claude Code.
@@ -122,6 +139,7 @@ Claims failing any of the above are `HOLD` until corrected.
 ## Activation
 
 Activate for engineering tools, calculation programs, engineering education assets, or workflows with applied domain constraints.
+Activate only when operating conditions, constraint sources, and the intended acceptance surface are explicit enough that engineering realism can be checked against a real use condition instead of an abstract idealization.
 
 ## Role-Scoped Structural Feedback
 
@@ -132,11 +150,11 @@ Activate for engineering tools, calculation programs, engineering education asse
 
 ## Handoff Contract
 
-**Input:** Engineering calculation/analysis requirements; domain constraints (units, tolerances, safety factors); practical assumptions and environmental conditions.
+**Input:** Engineering calculation/analysis requirements; domain constraints (units, tolerances, safety factors); practical assumptions and environmental conditions. When request-fit, decision-fit, or artifact shape materially affects the engineering judgment, also keep `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` explicit.
 
-**Output:** Engineering feasibility verification results; calculation accuracy and unit consistency assessment; domain constraint compliance confirmation.
+**Output:** Engineering feasibility verification results; calculation accuracy and unit consistency assessment; domain constraint compliance confirmation; explicit constraint sources, operating conditions, assumption class, and `HOLD` status on any still-unverified engineering claim. State whether the packet is implementation-ready or still blocked, and name the next owner per unresolved surface when the remaining issue belongs to `math-spec`, `sw-spec`, `tester`, or `reviewer`.
 
-**Handoff:** Return engineering constraints, verification notes, or implementation guidance to the active `developer` lane for integration; `reviewer` may later consume that integrated packet as acceptance evidence. Receives: specialist activation inside an explicitly authorized developer blocked surface, with planning or scope escalation routed back to `team-lead`.
+**Handoff:** Return engineering constraints, verification notes, or implementation guidance to the active `developer` lane for integration; `reviewer` may later consume that integrated packet as acceptance evidence. Make explicit whether unresolved issues route to `math-spec`, `sw-spec`, `tester`, or `reviewer`, and preserve the smallest corrective condition needed to clear each engineering `HOLD`. For human-facing technical artifacts, preserve both domain review and capture-render review on the downstream path. Receives: specialist activation inside an explicitly authorized developer blocked surface, with planning or scope escalation routed back to `team-lead`.
 
 ## Deliverable Quality Philosophy Application
 

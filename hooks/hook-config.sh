@@ -202,11 +202,9 @@ SESSION_SCOPED_FILES=(
 STARTUP_VOLATILE_FILES=(
   "$BOOT_SEQUENCE_COMPLETE_FILE"
   "$STOP_BLOCK_FLAG"
-  "$SESSION_AGENT_MAP"
   "$CLOSEOUT_STATE_FILE"
   "$LEGACY_CLOSEOUT_INTENT_FILE"
   "$TEAM_RUNTIME_ACTIVE_FILE"
-  "$STANDBY_FILE"
   "$PENDING_AGENTS_FILE"
   "$PENDING_AGENT_MODES_FILE"
   "$KILL_LIST"
@@ -1633,6 +1631,7 @@ resolve_agent_id() {
 
   prefix="$(printf '%s' "$desc" | sed -n 's/^\([a-zA-Z_-]*\):.*/\1/p' | tr '[:upper:]' '[:lower:]')"
   case "$prefix" in
+    team-lead|teamlead|lead) echo "team-lead"; return ;;
     researcher) echo "researcher"; return ;;
     developer|dev-[a-z]) echo "developer"; return ;;
     int-op|integration-operator) echo "int-op"; return ;;
@@ -1651,6 +1650,7 @@ resolve_agent_id() {
 
   lower_desc="$(printf '%s' "$desc" | tr '[:upper:]' '[:lower:]')"
   case "$lower_desc" in
+    *team-lead*|*team\ lead*) echo "team-lead"; return ;;
     *integration?operator*|*int-op*) echo "int-op"; return ;;
     *validate?against?reference*|*validator*|*val-ref*) echo "validator"; return ;;
     *software?specialist*|*software?spec*|*sw-spec*) echo "sw-spec"; return ;;
@@ -1757,44 +1757,59 @@ dispatch_is_manifest_sync_request() {
 }
 
 dispatch_field_present() {
-  local desc=""
-  local field=""
-  desc="$(normalize_dispatch_text "${1-}")"
-  field="$(normalize_dispatch_text "${2-}")"
-
-  [[ -n "$desc" && -n "$field" ]] || return 1
-  printf '%s' "$desc" | grep -Eq "(^|[ ;,])${field}:[[:space:]]*[^;[:space:]][^;]*"
+  local raw_value=""
+  raw_value="$(dispatch_field_raw_value "${1-}" "${2-}" 2>/dev/null || true)"
+  [[ -n "$raw_value" ]]
 }
 
 dispatch_field_value_matches() {
-  local desc=""
+  local raw_value=""
   local field=""
   local value_pattern=""
-  desc="$(normalize_dispatch_text "${1-}")"
   field="$(normalize_dispatch_text "${2-}")"
   value_pattern="${3-}"
 
-  [[ -n "$desc" && -n "$field" && -n "$value_pattern" ]] || return 1
-  printf '%s' "$desc" | grep -Eq "(^|[ ;,])${field}:[[:space:]]*(${value_pattern})([ ;,]|$)"
+  [[ -n "$field" && -n "$value_pattern" ]] || return 1
+  raw_value="$(dispatch_field_raw_value "${1-}" "$field" 2>/dev/null || true)"
+  [[ -n "$raw_value" ]] || return 1
+  raw_value="$(normalize_dispatch_text "$raw_value")"
+  printf '%s' "$raw_value" | grep -Eq "^(${value_pattern})$"
 }
 
 dispatch_field_raw_value() {
-  local desc=""
   local field=""
-  desc="$(normalize_dispatch_text "${1-}")"
+  local raw_desc="${1-}"
   field="$(normalize_dispatch_text "${2-}")"
 
-  [[ -n "$desc" && -n "$field" ]] || return 1
+  [[ -n "$raw_desc" && -n "$field" ]] || return 1
 
-  awk -v desc="$desc" -v field="$field" '
-    BEGIN {
-      pattern = "(^|[ ;,])" field ":[[:space:]]*"
-      if (match(desc, pattern)) {
-        value = substr(desc, RSTART + RLENGTH)
-        sub(/[;].*$/, "", value)
-        gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-        if (length(value) > 0) {
-          print value
+  printf '%s\n' "$raw_desc" | awk -v field="$field" '
+    BEGIN { IGNORECASE = 1 }
+    {
+      line = $0
+      while (length(line) > 0) {
+        split_index = index(line, ";")
+        if (split_index > 0) {
+          segment = substr(line, 1, split_index - 1)
+          line = substr(line, split_index + 1)
+        } else {
+          segment = line
+          line = ""
+        }
+
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", segment)
+        if (segment == "") {
+          continue
+        }
+
+        if (match(segment, /^([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*(.*)$/, parts)) {
+          key = tolower(parts[1])
+          value = parts[2]
+          gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+          if (key == field && length(value) > 0) {
+            print value
+            exit
+          }
         }
       }
     }
@@ -1851,6 +1866,151 @@ remove_member_from_config() {
   done
 }
 
+worker_name_for_session_id() {
+  local session_id="${1-}"
+  [[ -n "$session_id" ]] || return 0
+
+  if [[ -f "$SESSION_AGENT_MAP" ]]; then
+    awk -v sid="$session_id" '$1 == sid {print $2; exit}' "$SESSION_AGENT_MAP" 2>/dev/null || true
+  fi
+}
+
+session_ids_for_worker_name() {
+  local worker_name="${1-}"
+  local normalized_worker=""
+
+  [[ -n "$worker_name" && -f "$SESSION_AGENT_MAP" ]] || return 0
+  normalized_worker="$(normalize_lane_id "$worker_name")"
+  [[ -n "$normalized_worker" ]] || return 0
+
+  awk -v worker="$normalized_worker" '
+    {
+      name = $2
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", name)
+      if (tolower(name) == worker) {
+        print $1
+      }
+    }
+  ' "$SESSION_AGENT_MAP" 2>/dev/null || true
+}
+
+mark_worker_standby() {
+  local worker_name="${1-}"
+  [[ -n "$worker_name" ]] || return 0
+
+  mkdir -p "$(dirname "$STANDBY_FILE")"
+  touch "$STANDBY_FILE"
+  if ! grep -qxF "$worker_name" "$STANDBY_FILE" 2>/dev/null; then
+    printf '%s\n' "$worker_name" >> "$STANDBY_FILE"
+  fi
+}
+
+clear_worker_standby() {
+  local worker_name="${1-}"
+  local normalized_worker=""
+  local temp_file=""
+
+  [[ -n "$worker_name" && -f "$STANDBY_FILE" ]] || return 0
+  normalized_worker="$(normalize_lane_id "$worker_name")"
+  [[ -n "$normalized_worker" ]] || return 0
+
+  temp_file="$(make_atomic_temp_file "$STANDBY_FILE")"
+  awk -v worker="$normalized_worker" '
+    {
+      entry = $0
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", entry)
+      if (tolower(entry) != worker) {
+        print $0
+      }
+    }
+  ' "$STANDBY_FILE" > "$temp_file"
+  atomic_replace_file "$temp_file" "$STANDBY_FILE"
+}
+
+drop_worker_rows_from_map_file() {
+  local target_file="${1:?target file required}"
+  local worker_name="${2-}"
+  local normalized_worker=""
+  local temp_file=""
+
+  [[ -n "$worker_name" && -f "$target_file" ]] || return 0
+  normalized_worker="$(normalize_lane_id "$worker_name")"
+  [[ -n "$normalized_worker" ]] || return 0
+
+  temp_file="$(make_atomic_temp_file "$target_file")"
+  awk -v worker="$normalized_worker" '
+    {
+      name = $2
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", name)
+      if (tolower(name) != worker) {
+        print
+      }
+    }
+  ' "$target_file" > "$temp_file"
+  atomic_replace_file "$temp_file" "$target_file"
+}
+
+drop_worker_rows_from_pending_file() {
+  local target_file="${1:?target file required}"
+  local worker_name="${2-}"
+  local normalized_worker=""
+  local temp_file=""
+
+  [[ -n "$worker_name" && -f "$target_file" ]] || return 0
+  normalized_worker="$(normalize_lane_id "$worker_name")"
+  [[ -n "$normalized_worker" ]] || return 0
+
+  temp_file="$(make_atomic_temp_file "$target_file")"
+  awk -F' \\| ' -v worker="$normalized_worker" '
+    function trim(value) {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+      return value
+    }
+    {
+      name = trim($2)
+      if (tolower(name) != worker) {
+        print
+      }
+    }
+  ' "$target_file" > "$temp_file"
+  atomic_replace_file "$temp_file" "$target_file"
+}
+
+remove_worker_inboxes() {
+  local worker_name="${1-}"
+  local team_dir=""
+  local inbox_path=""
+
+  [[ -n "$worker_name" ]] || return 0
+  for team_dir in "$HOME/.claude/teams"/*/; do
+    [[ -d "$team_dir" ]] || continue
+    inbox_path="${team_dir}inboxes/${worker_name}.json"
+    if [[ -f "$inbox_path" ]]; then
+      rm -f "$inbox_path"
+    fi
+  done
+}
+
+remove_worker_everywhere() {
+  local worker_name="${1-}"
+  local session_id=""
+  local worker_session_ids=()
+  [[ -n "$worker_name" ]] || return 0
+
+  mapfile -t worker_session_ids < <(session_ids_for_worker_name "$worker_name")
+
+  clear_worker_standby "$worker_name"
+  drop_worker_rows_from_map_file "$SESSION_AGENT_MAP" "$worker_name"
+  for session_id in "${worker_session_ids[@]}"; do
+    [[ -n "$session_id" ]] || continue
+    drop_session_rows_from_map_file "$SESSION_AGENT_MODE_MAP" "$session_id"
+  done
+  drop_worker_rows_from_pending_file "$PENDING_AGENTS_FILE" "$worker_name"
+  drop_worker_rows_from_pending_file "$PENDING_AGENT_MODES_FILE" "$worker_name"
+  remove_member_from_config "$worker_name"
+  remove_worker_inboxes "$worker_name"
+}
+
 get_worker_pane_id() {
   local worker_name="$1"
   local config_file pane_id
@@ -1903,8 +2063,7 @@ memory_pressure_shutdown_standby() {
       tmux_cmd kill-pane -t "$_pane_id" 2>/dev/null || true
     fi
 
-    # Remove from config.json
-    remove_member_from_config "$_worker_name"
+    remove_worker_everywhere "$_worker_name"
 
     _shutdown_count=$(( _shutdown_count + 1 ))
     printf '[%s] MEM-PRESSURE AUTO-SHUTDOWN: %s | pane=%s | mem=%d%%\n' \

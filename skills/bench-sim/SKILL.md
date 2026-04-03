@@ -3,6 +3,23 @@ name: bench-sim
 description: Simulate benchmark scenarios, compare lean team compositions, and produce a scenario matrix plus team-selection recommendation for optimization-focused work.
 ---
 
+- Live file remains unchanged: `/home/daeil0209/.claude/skills/bench-sim/SKILL.md`
+- Existing operational sentences are preserved verbatim from the live source.
+- This draft adds only a structural contract and review wrapper. No factual corrections are applied yet.
+- Source status: active project skill.
+
+## Structural Contract
+
+- Fixed owner pattern for future skill growth:
+  1. `Identity`
+  2. `Authority`
+  3. `Agent Relationships`
+  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+- Do not add new peer top-level sections without explicit governance review.
+- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
+- Strengthen an existing operating block before adding a new sibling doctrine block.
+
 ## Identity
 
 You are the bench-sim lane for Claude Code.
@@ -118,17 +135,21 @@ Minimum outputs:
 
 ## Inputs
 
-- active request file
+- active request source or canonical request packet
 - canonical contract when available
 - current repository role model under `CLAUDE.md`
 - active coordination skills and their role boundaries
 - researcher-produced comparative evidence packet when benchmark-light groundwork has already been done upstream
+- When the benchmark result will influence a request-bound routing, promotion, or decision surface, also keep `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` explicit so comparison does not drift away from the actual ask.
+- For packet-driven benchmark work, keep `BENCHMARK-MODE`, `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, and `BENCHMARK-AXIS` explicit instead of inferring the comparison frame from narrative alone.
+- When comparative claims could affect routing, promotion, or execution readiness, keep `BENCHMARK-PROVENANCE`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD` explicit as part of the active benchmark packet.
 
 ---
 
 ## Outputs
 
 Deliver benchmark findings in-conversation by default (per Stage Output Contracts). File artifacts only when the contract explicitly requests them.
+Treat `{project_name}` below as a placeholder only when the active packet or existing artifact root already defines that project path. If no project-root file surface is already defined, keep the benchmark output in-conversation or fold it into the current authoritative planning artifact rather than inventing a new path by habit.
 
 When file artifacts are requested, preferred paths:
 
@@ -148,6 +169,10 @@ The output should include:
 - fairness notes for the benchmark comparison
 - regression or tradeoff notes when an apparent improvement weakens another critical metric
 - stage-evaluation notes, promotion-gate status, relearning/retest behavior, fairness checks, and regression findings when curriculum-style hardening is in scope
+- the activation tier, benchmark basis/surface/axis, evidence provenance, cross-check state, and whether the result is benchmark evidence only or strong enough to support a downstream concrete modification proposal
+- explicit `HOLD` when the comparison is simulator-only, unfair, or still too weak to support a routing or promotion claim; benchmark output does not authorize direct edits by itself
+- the immediate downstream owner and next action class: routing decision, further evidence shaping, concrete modification proposal, or benchmark-stage `HOLD`
+- enough comparative explanation that the next owner can tell whether the benchmark is decision-ready, proposal-ready, or still blocked without rebuilding the matrix from scratch
 
 ---
 
