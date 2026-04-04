@@ -37,7 +37,7 @@ ADDITIONAL_CONTEXT=""
 case "$ACTION" in
   set)
     set_closeout_intent "$USER_PROMPT_CLOSEOUT_INTENT_REASON" "user-prompt" "intent_marked" "$PROMPT_SESSION_ID"
-    ADDITIONAL_CONTEXT="Explicit user-directed closeout intent is already active for this turn because the current user prompt explicitly requests session end. If the prompt also requests bounded pre-closeout cleanup, perform that cleanup inside Closeout Sequence and then proceed directly to shutdown_request, tracked CronDelete, and TeamDelete without probing the closeout gate first."
+    ADDITIONAL_CONTEXT="Explicit user-directed closeout intent is already active for this turn because the current user prompt explicitly requests session end. Load the session-closeout skill first. If the prompt also requests bounded pre-closeout cleanup, perform that cleanup inside Closeout Sequence and then proceed directly to shutdown_request, tracked CronDelete, and TeamDelete without probing the closeout gate first."
     ;;
   clear)
     if closeout_intent_is_active "$PROMPT_SESSION_ID"; then

@@ -13,11 +13,11 @@ if [[ -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
   USER_PROMPT=$(echo "$INPUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('prompt',''))" 2>/dev/null || echo "")
   
   # Correction pattern detection (Korean + English)
-  CORRECTION_PATTERN="(왜.*안|잘못|틀[렸린]|다시.*해|하지.*말|또.*같은|안.*된다고|그게.*아니|못하는|규정.*무시|절차.*무시|wrong|mistake|shouldn.t|not like that|you missed|don.t do|why did you)"
+  CORRECTION_PATTERN="(잘못|틀[렸린]|다시.*해|하지.*말|또.*같은|안.*된다고|그게.*아니|못하는|규정.*무시|절차.*무시|wrong|mistake|shouldn.t|not like that|you missed|don.t do|why did you)"
   
   if echo "$USER_PROMPT" | grep -qiP "$CORRECTION_PATTERN" 2>/dev/null; then
     # Strong trigger: correction detected
-    CONTEXT="SELF-GROWTH TRIGGER: User correction detected. BEFORE responding: (1) Record defect to \$HOME/.claude/.self-growth-log (append 1 line), (2) Classify: non-compliance or missing rule, (3) Dispatch a Self-Growth agent for correction via Self-Growth Sequence, (4) Then respond with changed behavior. Do NOT just apologize."
+    CONTEXT="SELF-GROWTH TRIGGER: User correction detected. BEFORE responding: (1) Record defect to \$HOME/.claude/.self-growth-log (append 1 line), (2) Load the self-growth-sequence skill, (3) Classify: non-compliance or missing rule, (4) Dispatch a Self-Growth agent for correction via Self-Growth Sequence, (5) Then respond with changed behavior. Do NOT just apologize."
   else
     # Lightweight reminder: every message
     CONTEXT="PRE-RESPONSE: Execute Primary Operating Loop - (1) Classify message type, (2) Determine governance tier, (3) Follow tier procedure, (4) Verify before responding."
@@ -45,7 +45,7 @@ cat <<'JSON'
   "suppressOutput": true,
   "hookSpecificOutput": {
     "hookEventName": "UserPromptSubmit",
-    "additionalContext": "BOOT SEQUENCE NOT YET COMPLETE. In ONE turn, execute in parallel: (1) Read session-state.md, (2) ToolSearch select:TeamCreate, (3) check team existence. Next turn: TeamCreate if needed + respond to the user's message. Do NOT output boot status — just answer the user after boot."
+    "additionalContext": "BOOT SEQUENCE NOT YET COMPLETE. Load the session-boot skill first. In ONE turn, execute in parallel: (1) Read session-state.md, (2) ToolSearch select:TeamCreate, (3) check team existence. Next turn: TeamCreate if needed + respond to the user's message. Do NOT output boot status — just answer the user after boot."
   }
 }
 JSON

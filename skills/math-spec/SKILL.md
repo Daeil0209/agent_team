@@ -1,6 +1,7 @@
 ---
 name: math-spec
 description: Protect mathematical correctness, derivation fidelity, and problem-sequencing quality in quantitatively demanding work.
+user-invocable: false
 ---
 
 ## Structural Contract

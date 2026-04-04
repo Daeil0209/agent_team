@@ -68,7 +68,7 @@ is_health_check_cron() {
   local normalized=""
 
   [[ -n "$raw" ]] || return 1
-  normalized="$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed 's/[[:space:]]\+/ /g; s/^ //; s/ $//')"
+  normalized="$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed -E 's/[[:space:]]+/ /g; s/^ //; s/ $//')"
 
   if [[ "$normalized" == *"health-check.sh"* ]]; then
     return 0

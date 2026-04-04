@@ -1,6 +1,7 @@
 ---
 name: biz-sys
 description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery.
+user-invocable: false
 ---
 
 ## Structural Contract

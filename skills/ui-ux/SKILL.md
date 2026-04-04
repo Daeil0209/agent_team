@@ -1,6 +1,7 @@
 ---
 name: ui-ux
 description: Own presentation visual composition, rendered legibility, and operator-facing clarity for decks, visual reports, and UI-bearing deliverables.
+user-invocable: false
 ---
 
 ## Structural Contract

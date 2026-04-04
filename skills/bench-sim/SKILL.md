@@ -1,6 +1,7 @@
 ---
 name: bench-sim
 description: Simulate benchmark scenarios, compare lean team compositions, and produce a scenario matrix plus team-selection recommendation for optimization-focused work.
+user-invocable: false
 ---
 
 ## Structural Contract

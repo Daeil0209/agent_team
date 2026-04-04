@@ -1,6 +1,7 @@
 ---
 name: edu-spec
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, and pedagogical clarity.
+user-invocable: false
 ---
 
 ## Structural Contract

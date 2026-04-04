@@ -112,6 +112,11 @@ Sharded triggers: genuinely broad question where one pass forces shallow coverag
 - Keep the handoff teammate-efficient: include concrete evidence anchors, decision-ready conclusions, and the smallest useful unblock step so the next lane does not re-derive the same research pass.
 - For consequential `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the shared handoff block from `skills/team-session-sequences/SKILL.md` explicit.
 - Include `REQUESTED-LIFECYCLE: standby|shutdown` in that shared block. Default to `standby` unless `shutdown` is the honest request. It is a request, not authority.
+- OUTPUT-SURFACE: <research topic>
+- EVIDENCE-BASIS: <sources examined and cross-check status>
+- OPEN-SURFACES: <unresolved questions or gaps>
+- RECOMMENDED-NEXT-LANE: <suggested next worker>
+- REQUESTED-LIFECYCLE: standby|shutdown
 
 ## Evidence Standards
 - Separate facts from inferences from assumptions. Mark weak claims UNVERIFIED.

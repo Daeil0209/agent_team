@@ -1,6 +1,7 @@
 ---
 name: eng-spec
 description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, and applied reasoning quality.
+user-invocable: false
 ---
 
 ## Structural Contract

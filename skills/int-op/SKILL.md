@@ -1,6 +1,7 @@
 ---
 name: int-op
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, and blocked-condition reporting without taking over other roles.
+user-invocable: false
 ---
 
 ## Structural Contract

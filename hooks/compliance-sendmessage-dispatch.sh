@@ -266,6 +266,10 @@ dispatch_is_governance_optimization_request() {
   if [[ "$desc" == *"patch-class: follow-on-optimization"* ]]; then
     return 0
   fi
+  # If PATCH-CLASS is explicitly set to a non-optimization value, respect that classification
+  if dispatch_field_present "${1-}" "patch-class"; then
+    return 1
+  fi
   printf '%s' "$desc" | grep -Eq '(optimi[sz]|compress|compression|dedup|trim|rewrite|refactor|normalize|follow-on optimization)'
 }
 

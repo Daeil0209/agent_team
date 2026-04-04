@@ -111,12 +111,12 @@ canonicalize_runtime_lane_id() {
 
 normalize_surface_id() {
   local raw="${1-}"
-  printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed 's/|/%7C/g; s/[[:space:]]\+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
+  printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed -E 's/\|/%7C/g; s/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
 sanitize_ledger_field() {
   local raw="${1-}"
-  printf '%s' "$raw" | tr '\n' ' ' | sed 's/|/%7C/g; s/[[:space:]]\+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
+  printf '%s' "$raw" | tr '\n' ' ' | sed -E 's/\|/%7C/g; s/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
 specialist_skill_requires_explicit_approval() {
@@ -271,7 +271,7 @@ NODE
 
 normalize_dispatch_text() {
   local raw="${1-}"
-  printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed 's/[[:space:]]\+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
+  printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ' | sed -E 's/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
 declare -gA DISPATCH_FIELD_CACHE_VALUES=()
@@ -369,7 +369,11 @@ dispatch_is_manifest_sync_request() {
   fi
 
   # If TASK-CLASS is explicitly set to a different value, respect that classification
-  if dispatch_field_present "$desc" "task-class"; then
+  # Use original text for field lookup: normalize_dispatch_text collapses
+  # newlines to spaces, causing the awk field parser to absorb fields that
+  # started on separate lines into the preceding field value.
+  # Pattern matching (lines below) still uses normalized $desc.
+  if dispatch_field_present "${1-}" "task-class"; then
     return 1
   fi
 

@@ -284,6 +284,12 @@
         "source": "github",
         "repo": "obra/superpowers"
       }
+    },
+    "bkit-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "popup-studio-ai/bkit-claude-code"
+      }
     }
   },
   "effortLevel": "high",

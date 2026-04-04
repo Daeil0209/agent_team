@@ -384,6 +384,12 @@ NODE
   exit 0
 fi
 
+if [[ "$SPECIALIST_SKILL_ENFORCEMENT_MODE" == "autonomous" ]]; then
+  # Autonomous mode: all specialist skills freely loadable by any role.
+  # Role-local enforcement (above) still applies.
+  exit 0
+fi
+
 if ! skill_requires_explicit_approval "$SKILL_ID"; then
   exit 0
 fi

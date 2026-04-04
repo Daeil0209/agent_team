@@ -1,6 +1,7 @@
 ---
 name: sw-spec
 description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, and hard logic paths.
+user-invocable: false
 ---
 
 ## Structural Contract

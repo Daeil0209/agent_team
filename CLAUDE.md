@@ -34,6 +34,7 @@
 - `.claude/agents/*.md` own role identity, activation criteria, authority boundaries, output format, and completion conditions.
 - `.claude/skills/*/SKILL.md` own repeatable procedures, checklists, detailed workflows, and operational playbooks.
 - `.claude/settings.json` owns shared permissions, hooks, environment assumptions, and default runtime policy.
+- Default setup location is `$HOME/.claude/` (global). Project-local `<project-root>/.claude/` is reserved for session state and project-specific overlay only. When inspecting or modifying agent, skill, settings, or hook files, start from the global path unless a project-local override is explicitly documented.
 - When an owning document declares a `Structural Contract`, that contract is mandatory doctrine for the document's maintained shape.
 - Required top-level order, priority-group mapping, and in-section numbering declared by an owning document's `Structural Contract` must be preserved unless shared doctrine intentionally revises them.
 - New role, procedure, or reference surfaces must be inserted into the correct declared structural group rather than appended in a way that breaks the owning document's numbering or group order.

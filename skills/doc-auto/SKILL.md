@@ -1,6 +1,7 @@
 ---
 name: doc-auto
 description: Design and implement reference-driven document automation flows that preserve structure, formatting intent, and bounded generation quality.
+user-invocable: false
 ---
 
 ## Structural Contract

@@ -22,8 +22,8 @@ This skill defines the standard procedural sequences for system-governance work.
 
 Use the exact lifecycle names defined in `CLAUDE.md`:
 - `Change Sequence`
-- `Self-Growth Sequence`
-- `Update/Upgrade Sequence`
+- `Self-Growth Sequence` (on-demand: self-growth-sequence skill)
+- `Update/Upgrade Sequence` (on-demand: update-upgrade-sequence skill)
 
 These procedures apply whenever governance-sensitive artifacts are being changed.
 
@@ -76,177 +76,11 @@ The `Change Sequence` is the standard controlled path for rule, code, config, ho
 
 ## Self-Growth Sequence
 
-The `Self-Growth Sequence` applies when the team hardens its own rules, skills, charters, or capability boundaries.
-
-- Treat self-growth as a quality-and-capability upgrade path first. Resource or cost optimization is secondary and must not outrun the upgraded quality bar.
-- When self-growth expands a lane's charter, capability, or reusable content, require a bounded follow-on optimization decision before the topic is fully closed. Run the optimization pass when material avoidable cost, runtime burden, or redundancy is visible; otherwise close with an explicit `FOLLOW-ON-OPTIMIZATION: not-needed` record while preserving the upgraded quality bar and protected meaning.
-
-### Trigger discipline
-
-- On recognizing a behavioral defect (self-detected or user-corrected): Classify (missing rule or non-compliance?) → Dispatch a separate agent for correction via `Self-Growth Sequence` in parallel as a sidecar — current work continues without stopping. Self-growth must not preempt freezing the active user task's request-fit, deliverable shape, or immediate correctness/safety basis. If the defect directly blocks correct or safe handling of the current request, stabilize that basis first, then dispatch or explicitly queue the self-growth lane at the nearest safe boundary. Classify and Dispatch/Queue are atomic — analysis without dispatch or explicit queueing is failure, not action. If an equivalent rule exists, the defect is non-compliance — harden adherence instead of adding duplicates.
-- Self-growth dispatch may be immediate, but governance-sensitive file modification is still execution-gated. Use the dispatch to classify, route, inspect, and prepare the bounded patch packet; do not execute the modification on approval-gated surfaces until the explicit user confirmation step is satisfied.
-- When a missing reusable skill blocks execution, authorize skill introduction under `Self-Growth Sequence` with explicit ownership: gap confirmation, target owner, bounded scope, review path, and verification.
-- When you authorize new skill introduction, keep ownership explicit: capability-gap confirmation, target owner, bounded creation scope, review path, and post-adoption verification must all be named before execution begins.
-- When more than one lane could plausibly own the growth topic, do not let the most familiar lane win by habit. Open the competitive bid packet and record why the chosen route was better for long-run cumulative team benefit.
-
-### Self-Growth Ownership Adjudication
-
-- Ownership claims for improvement work must be explicitly adjudicated by the supervisor; approve, reject, merge, reduce, defer, and reassign are all valid outcomes.
-- Ownership of improvement work must be explicit; ownerless gaps are not allowed at round close.
-- The supervisor remains the staffing, mediation, adjudication, and merge-governance owner for self-growth rounds and must not become the hidden primary producer or bottleneck.
-
-### Required order
-
-1. Identify the active improvement topic from evidence.
-2. Require relevant lanes to inspect the topic before ownership is finalized.
-3. Adjudicate ownership explicitly.
-4. Keep self-growth role-scoped.
-   A lane hardens its own charter-bound failures first.
-5. Apply the actual change through the normal `Change Sequence`.
-6. After the quality-raising change lands, make a bounded follow-on optimization decision. Run the optimization pass only when material avoidable cost, runtime burden, or redundancy is now visible; otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed` and close without manufacturing a redundant extra loop.
-7. When the active topic came from recurrence, missed-catch, or rejected-challenge evidence, require a rerun, retest, or equivalent fresh evidence gate before treating the hardening topic as fully closed.
-8. Close only after identified improvements, unresolved missed-catches, and deferred passivity defects are either hardened into the correct parent document or explicitly assigned follow-up ownership.
-
-### Capability-Gap Fast Path
-
-- When a missing reusable skill is the active improvement topic, `team-lead` may authorize a bounded rapid-skill sprint inside the `Self-Growth Sequence`.
-- When that missing skill is a prerequisite for safe, credible, or non-duplicative completion of the active task, stop only the genuinely blocked work surface and complete the skill update or introduction before that surface resumes normal downstream execution. Unrelated or already-safe work should continue instead of being stalled by habit.
-- The fast path still requires:
-  1. gap confirmation
-  2. overlap check against existing skills, agents, and rules
-  3. explicit owner assignment
-  4. bounded creation scope
-  5. review of the resulting skill content
-  6. post-adoption verification that the new skill actually closes the gap
-- Fast path means reduced delay, not reduced governance. Do not skip owner fit, overlap review, or information-preservation checks merely because the need is urgent.
-- Do not retroactively create a skill just to justify ad hoc behavior that already bypassed the missing capability.
-- Default rapid-skill routing:
-  - `researcher` confirms the gap and checks for overlap with existing assets
-  - `team-lead` fixes owner, scope, and adoption path
-  - `developer` creates or updates the skill assets
-  - `reviewer` checks placement, overlap, and information-loss risk
-  - `validator` is assigned when acceptance risk is meaningful
-
-### Self-growth constraints
-
-- Do not allow undocumented doctrine drift.
-- Do not let self-growth become a hidden excuse for unrelated refactors.
-- Do not declare improvement complete without evidence of the actual hardening change.
-- Do not introduce a new skill when a bounded update to an existing owner would solve the same problem more cleanly.
-- Do not use self-growth, optimization, compression, or rewrite work as justification for removing protected local restatements that keep owner files safe to read in isolation.
-- When self-growth affects reusable ownership, protect average-capability and prevent lane hollowing.
-
-### Benchmark Protocol Detail (migrated from CLAUDE.md)
-- Comparative self-growth, reusable-ownership, and quality-hardening claims default to benchmark-first discipline. Name the baseline and comparison surface before the hardening claim is allowed to harden into routing or ownership.
-- Benchmark conclusions must declare provenance. If benchmark inputs are not directly inspectable or credibly cited, downgrade to `HOLD`, `UNVERIFIED`, or simulator-only status.
-- Default preparation sequence: benchmark -> cross-check and anti-hallucination confirmation -> concrete modification proposal -> pre-edit loss-risk gate -> bounded modification -> verification -> only then bounded optimization.
-- Early investigation and benchmark stages identify the actual deficiency and determine whether self-growth is warranted. Do not jump from a recurring symptom into edits.
-- `BENCHMARK-PROVENANCE: simulator-only` or `CROSS-CHECK-STATUS: simulator-unconfirmed` is still a benchmark-stage `HOLD`, not edit authorization.
-- When a self-growth round claims advancement, keep the current readiness label, visible evidence delta, throughput or neighbor-regression visibility, and follow-on optimization closure explicit in the active sequence packet before the round is handed back for lead judgment.
-
-### Readiness And Promotion Handoff
-
-- Readiness, promotion, and adaptation policy stay in `agents/team-lead.md` `RPA-4` because the lead owns those judgments directly during self-growth supervision.
-- This sequence skill uses that policy only as execution-gating context; it does not become a second owner of promotion doctrine.
-- When a self-growth round reaches hardening or promotion evaluation, keep the target capability surface, current readiness label, evidence basis, and follow-on optimization closure explicit before the round is treated as closed.
+> On-demand: see `self-growth-sequence` skill. Loaded when behavioral defect is detected via hook trigger or team-lead agent rules.
 
 ## Update/Upgrade Sequence
 
-The `Update/Upgrade Sequence` applies when doctrine, agents, skills, settings, hooks, or other team-system assets are modified.
-
-### Required checks
-
-1. Confirm the target artifact owner.
-2. Perform semantic overlap review before adding new rules or procedures.
-3. Prefer `replace`, `trim`, or `re-home` over append-only accumulation.
-4. Preserve migration traceability.
-   The source meaning, destination owner, and verification basis must remain inspectable.
-5. Perform zero-information-loss confirmation for moved, merged, compressed, or re-homed operational meaning.
-   The before/after comparison must show where each unique rule meaning now lives.
-6. Where a runtime setting or threshold must remain configurable, keep one owner for the value and make all other documents or prompts reference that owner instead of duplicating the literal value.
-7. When a hook still enforces a contract, keep that contract understandable through owner-document prose and human-readable deny reasons rather than requiring a large central code table.
-8. Treat intentional local restatements of role boundaries, lane contracts, and acceptance gates as protected meaning, not cosmetic duplication.
-   If a rule is repeated so a file remains safe to read in isolation, do not remove it unless an equivalent owner-local contract still exists after the change.
-9. When optimization, compression, rewrite, or self-evolution is the stated reason for the change, explicitly classify each repeated governance sentence as either protected common contract or safely removable duplication before trimming it.
-10. Preserve approved structural hierarchies and connection mappings when the target document already uses them.
-   Role documents must preserve their declared role/procedure/reference hierarchy and keep required mapping lines intact. Skill documents must preserve their fixed structural contract and keep reference detail attached to an owning workflow or sequence block.
-11. New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require explicit governance review before execution.
-12. Run the full `Change Sequence`.
-13. Record any remaining migration gap explicitly rather than assuming the update is complete.
-
-### Skill Introduction Rules
-
-- New skills are allowed when a reusable procedure or specialist judgment surface is missing and repeated reuse is expected.
-- Treat the consuming lane as the default skill-up owner. If a specialist skill is developer-exclusive, `developer` is the default maintenance and upgrade owner while `team-lead` governs approval and adoption.
-- Distinguish `specialist skill` from `common skill` before assigning ownership.
-  - A `specialist skill` sharpens one lane's charter-bound execution or judgment surface. That lane is the direct patch owner.
-  - A `common skill` carries shared runtime, governance, routing, lifecycle, or other cross-lane operating procedure. A common skill is not jointly owned even when many lanes consume it.
-- Common-skill ownership follows the Single Writer Principle.
-  - Every common skill must have exactly one primary owner.
-  - Other impacted lanes are required inspectors, challengers, or reviewers, not co-owners of the direct patch.
-  - A patch packet for a common skill must name at minimum: `PRIMARY-OWNER`, `IMPACTED-LANES`, `OVERLAP-REVIEW`, `INFO-LOSS-REVIEW`, and `VERIFY-BASIS`.
-- Current default rule for shared team-operation skills:
-  - `team-session-sequences` and `team-governance-sequences` are `team-lead`-owned common skills unless an explicit governance decision reassigns them.
-  - Impacted lanes may inspect, challenge, and review those skills, but final direct patch execution still belongs to the primary owner.
-- Before introducing a new skill, check whether the need is better handled by:
-  - updating an existing skill
-  - strengthening an existing agent charter
-  - adding a path-scoped rule
-- If the missing skill is the declared prerequisite for finishing the active task safely or credibly, the skill update or introduction must be completed before the blocked task surface re-enters normal execution, but keep that pause scoped to the blocked surface rather than freezing unrelated safe work.
-- A new skill must state:
-  - the capability gap it closes
-  - its owning role
-  - what it does not own
-  - when it should be invoked instead of ordinary lane behavior
-
-### Specialist Skill Routing Architecture
-
-- In the current target design, specialist capabilities live as skills under the current project skill root `.claude/skills` using the active specialist subpath `<skill-id>/SKILL.md`, not as active subagents under `.claude/agents/`.
-- Authorization packets should name `skill-id` and bind it to the target lane plus blocked surface.
-- `developer` resolves `skill-id` against the current project skill root and active specialist subpath.
-- `team-lead` may authorize developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
-- Do not treat a common skill like a developer-exclusive specialist skill by habit.
-  - Specialist-skill authorization binds a blocked lane to a bounded specialist aid.
-  - Common-skill ownership binds a shared procedure surface to one primary owner plus named impacted lanes.
-- For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. Let `researcher` own the benchmark-light evidence shaping for baseline, fairness, comparison-axis framing, provenance visibility, and cross-check visibility; use `bench-sim` as the supporting specialist when the active packet escalates into the full benchmark form.
-- When multiple specialist skills are active on one blocked surface, keep the controlling order explicit: `biz-sys` -> `sw-spec` -> domain specialists (`edu-spec`, `eng-spec`, `math-spec`) -> `doc-auto` -> `ui-ux`; `bench-sim` and `int-op` support evaluation or integration without overriding earlier controlling contracts.
-- This controlling order is a lead-side routing discipline for logical flow, not a runtime chaining engine. Authorization hooks may gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
-- When approving developer-side specialist skill use, send an explicit authorization packet to the target developer lane using `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` so runtime enforcement and human doctrine stay aligned.
-- Route specialist skills per the controlling order in the Skill Routing And Specialist Architecture section above. Authorize via `SKILL-AUTH` packet bound to lane, surface, and `skill-id`.
-
-### Skill Introduction Category Gate
-
-- Every proposed new skill must be classified into exactly one primary category before approval:
-  - `repeatable procedure`
-    - reusable multi-step workflow that will recur across tasks or sessions
-  - `specialist judgment surface`
-    - recurring expert perspective that sharpens implementation, review, or planning quality
-  - `integration or environment bridge`
-    - reusable external-tool, connector, or setup protocol with stable verification and fallback steps
-  - `governance or quality hardening`
-    - reusable review, validation, migration, or operational-discipline procedure not already owned elsewhere
-- Reject the proposal when it is primarily:
-  - a one-off task brief
-  - project-local knowledge that belongs in local doctrine
-  - a temporary workaround with no expected reuse
-  - a duplicate of an existing skill, agent charter, or rule owner
-  - a style preference with no clear reusable procedure or authority boundary
-- Approval packet for a new skill must name:
-  - category
-  - expected reuse pattern
-  - existing-owner overlap result
-  - chosen owner
-  - why existing skill expansion was insufficient
-  - first adoption path
-- If the proposal cannot survive this category gate cleanly, do not create a new skill. Update the correct existing owner instead.
-
-### Update/upgrade constraints
-
-- No new operational rule without a clear owner.
-- Do not weaken shared doctrine silently in lower-level documents.
-- Do not leave the same rule half-owned by multiple documents unless duplication is intentional and justified for hierarchy consistency.
-- Treat rule, skill, settings, and hook changes as governance-sensitive by default.
-- When the active patch is governance-sensitive, the sequence must keep the user-confirmation boundary explicit: classify and prepare autonomously if allowed, but do not execute the actual modification until the operator-facing approval gate is satisfied.
+> On-demand: see `update-upgrade-sequence` skill. Loaded when doctrine, agents, skills, settings, hooks, or team-system assets need modification.
 
 ## Patch Execution Method
 
@@ -288,6 +122,7 @@ Use this method when an AI model updates doctrine, agents, skills, settings, hoo
 - When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution, but keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
 - Treat the consuming lane as the default skill-up owner.
   - For current developer-exclusive specialist skills, `developer` performs the skill-up execution while `team-lead` governs approval and adoption.
+- When multiple specialist skills are active on one blocked surface, the controlling order is: `biz-sys` -> `sw-spec` -> domain specialists (`edu-spec`, `eng-spec`, `math-spec`) -> `doc-auto` -> `ui-ux`. `bench-sim` and `int-op` are support overlays without controlling-chain position; they may evaluate or integrate without overriding earlier controlling contracts.
 - Treat common-skill hardening differently from specialist skill-up.
   - Common-skill patches still require one primary owner, never diffuse co-ownership.
   - Inspectors may propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
