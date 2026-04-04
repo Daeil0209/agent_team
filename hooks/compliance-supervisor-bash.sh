@@ -83,12 +83,13 @@ EOF
   exit 0
 fi
 
+# $HOME/.claude is the global setup git repo — git operations there are legitimate.
+# Only advise (additionalContext) so the lead stays aware of which repo context is active.
 if [[ -z "$AGENT_ID" ]]; then
   if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$REPO_GIT_INSPECTION_PATTERN"; then
     if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$GLOBAL_CONTROL_SURFACE_CD_PATTERN"; then
-      printf '[%s] MAIN-GIT-CONTEXT BLOCKED: Global control surface used for repo git inspection: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "${CMD_LOG:0:200}" >> "$VIOLATION_LOG"
       cat <<'EOF'
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Repository git inspection must stay anchored to the active project repo root. Do not run git log/status/branch/remote from $HOME or $HOME/.claude; use the session cwd or git rev-parse --show-toplevel first."}}
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":"Note: This git command targets the global setup repo ($HOME/.claude), not the active project repo. This is allowed for agent system management."}}
 EOF
       exit 0
     fi
