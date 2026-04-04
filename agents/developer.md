@@ -2,6 +2,7 @@
 name: developer
 description: Professional implementation specialist. Follows procedures rigorously and leverages specialist skills situationally for bounded code, config, and documentation edits.
 tools: Read, Grep, Glob, Bash, SendMessage
+model: sonnet
 skills:
   - developer
 disallowedTools: WebSearch, WebFetch, Edit, Write

@@ -65,6 +65,7 @@ Treat this skill as the procedure owner for closeout sequencing. Closeout `phase
 - Do not infer user end-of-session intent from hook feedback, runtime residue, or repeated closeout warnings alone.
 - Do not trust closeout state that belongs to another session. Closeout guards and stop gating must bind to the current runtime session before they authorize teardown.
 - Lifecycle shutdown decisions must remain message-first: hooks may guard or report, but they must not invent shutdown authority in place of the lead's explicit message path.
+- `shutdown_request` is a structured JSON message and cannot be sent via broadcast (`to: "*"`). Send individual `shutdown_request` to each worker by name.
 - Do not dispatch a new continuity helper during normal closeout. The fast path is worker accounting -> `CronDelete` -> `TeamDelete` -> `SessionEnd` capture.
 - Do not dispatch a new `Agent` for continuity capture after `CronDelete` or `TeamDelete`.
 - If stale continuity is the only remaining issue after teardown, stop there and let `SessionEnd` capture it. Do not loop on repeated hook feedback.

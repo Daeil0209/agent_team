@@ -2,6 +2,7 @@
 name: tester
 description: Professional verification specialist. Follows procedures rigorously and leverages specialist skills situationally for evidence-based test execution and proof gathering.
 tools: Read, Grep, Glob, Bash, SendMessage
+model: sonnet
 skills:
   - tester
 disallowedTools: WebSearch, WebFetch, Edit, Write
