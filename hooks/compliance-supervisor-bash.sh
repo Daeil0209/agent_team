@@ -83,18 +83,8 @@ EOF
   exit 0
 fi
 
-# $HOME/.claude is the global setup git repo — git operations there are legitimate.
-# Only advise (additionalContext) so the lead stays aware of which repo context is active.
-if [[ -z "$AGENT_ID" ]]; then
-  if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$REPO_GIT_INSPECTION_PATTERN"; then
-    if printf '%s' "$CLEAN_COMMAND" | grep -qEi "$GLOBAL_CONTROL_SURFACE_CD_PATTERN"; then
-      cat <<'EOF'
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":"Note: This git command targets the global setup repo ($HOME/.claude), not the active project repo. This is allowed for agent system management."}}
-EOF
-      exit 0
-    fi
-  fi
-fi
+# $HOME/.claude is the canonical global setup git repo — git operations there are always allowed.
+# No block, no advisory. This is the primary management target.
 
 # Exempt only the live runtime helper scripts that the lead may call as orchestration aids.
 # Do not exempt arbitrary writes under .claude/hooks or .claude/logs, because that would reopen direct
