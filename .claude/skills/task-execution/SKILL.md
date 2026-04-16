@@ -232,7 +232,7 @@ Tier rule:
 - Precision: run the full checklist, including all applicable extended checks.
 
 **Rapid pre-checks (always run first):**
-If prior-turn dispatch already confirmed these conditions and scope has not changed, rapid re-confirm (1 sentence each) suffices.
+For all check groups below: if prior-turn dispatch already confirmed conditions and scope has not changed, rapid re-confirm (1 sentence each) suffices.
 - Is any worker idle without `reuse`, `standby`, `shutdown`, or `hold-for-validation`? Resolve lifecycle backlog before `Agent`, `TaskCreate`, or assignment-grade `SendMessage`. Corrective urgency and parallelization pressure do not bypass this.
 - Does this dispatch include REQUIRED-SKILLS field with at minimum work-planning(start) and self-verification(plan-verify, handoff)? Dispatch without skill-loading instruction = unverified execution. (Pattern: skillless dispatch)
 - For researcher/developer dispatch: does this dispatch include `SKILL-RECOMMENDATIONS` when applicable skills were identified during Skill Applicability Validation? Dispatch without skill recommendations when applicable skills exist = missed routing opportunity.
@@ -242,7 +242,6 @@ If prior-turn dispatch already confirmed these conditions and scope has not chan
 - Does this Agent dispatch include an explicit permission mode aligned with the work surface and current repository policy? Do not assume one universal default; match the configured autonomy model and make sure destructive-risk handling remains explicit. (Pattern: missing permission mode)
 
 **Fast-path checks (always run):**
-If prior-turn dispatch already confirmed these conditions and scope has not changed, rapid re-confirm (1 sentence each) suffices.
 
 | # | Check | Fail action |
 |---|-------|-------------|
@@ -252,7 +251,6 @@ If prior-turn dispatch already confirmed these conditions and scope has not chan
 | 4 | Deliverable shape: for request-bound artifacts, did `REQUIRED-DELIVERABLE` already freeze artifact class, answer surface, and length/volume class before TOC expansion or staffing? | Redefine before dispatch |
 
 **Extended checks (consequential dispatch):**
-If prior-turn dispatch already confirmed these conditions and scope has not changed, rapid re-confirm (1 sentence each) suffices.
 
 | # | Check | Fail action |
 |---|-------|-------------|

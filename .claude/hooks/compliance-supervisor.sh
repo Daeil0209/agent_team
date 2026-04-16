@@ -28,10 +28,12 @@ log_violation() {
   local tool="${1:-unknown}" path_hint="${2:-}" reason="${3:-}"
   local log_dir="${LOG_DIR:-${HOME}/.claude/logs}"
   mkdir -p "$log_dir" 2>/dev/null || return 0
-  printf '[%s] COMPLIANCE-DENIED tool=%s path=%s reason=%s\n' \
-    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-    "$tool" "$path_hint" "$reason" \
-    >> "${log_dir}/compliance-violations.log" 2>/dev/null || true
+  {
+    printf '[%s] COMPLIANCE-DENIED tool=%s path=%s reason=%s\n' \
+      "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+      "$tool" "$path_hint" "$reason" \
+      >> "${log_dir}/compliance-violations.log"
+  } 2>/dev/null || true
 }
 
 is_governance_surface_path() {
@@ -82,10 +84,12 @@ allowed_package_or_build_command() {
 # Destructive sub-command pattern — mirrors the destructive check below for
 # per-sub-command validation inside validate_compound_command.
 _DESTRUCTIVE_SUBCMD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
+_MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)'
 
 # validate_compound_command: split cmd on &&/||/; and validate each sub-command.
-# Returns 0 only if ALL sub-commands pass check_fn and none are destructive.
-# Returns 1 if any sub-command is destructive or fails check_fn (falls through).
+# denylist-first behavior: fail only when a sub-command is destructive or clearly mutating
+# and not accepted by the specific check_fn. Read-only sub-commands may co-exist inside the
+# compound command without being enumerated in every allowlist.
 validate_compound_command() {
   local cmd="$1"
   local check_fn="$2"
@@ -97,7 +101,10 @@ validate_compound_command() {
     if printf '%s' "$subcmd" | grep -Eiq "$_DESTRUCTIVE_SUBCMD_PATTERN"; then
       return 1
     fi
-    if ! "$check_fn" "$subcmd"; then
+    if "$check_fn" "$subcmd"; then
+      continue
+    fi
+    if printf '%s' "$subcmd" | grep -Eiq "$_MUTATING_SUBCMD_PATTERN"; then
       return 1
     fi
   done < <(printf '%s' "$cmd" | sed 's/&&/\n/g; s/||/\n/g; s/;/\n/g')

@@ -179,9 +179,6 @@ set_default_export NON_EXECUTION_CLOSEOUT_PROMPT_JS_PATTERN "(?:\\bhook(?:s)?\\b
 set_default_export MANIFEST_SYNC_DISPATCH_VERB_PATTERN "copy|overwrite|sync|mirror|propagat|deploy|replace"
 set_default_export MANIFEST_SYNC_DISPATCH_SCOPE_PATTERN "manifest|~/.claude|/\\.claude|global folder|patch folder|payload|file list|write-scope|original patch|target folder|source folder"
 
-set_default_export A04_DESTRUCTIVE_PATTERN "(mkfs\\.|dd\\s+if=|>\\s*/dev/(sd|nvme|loop|mem|kmem)|git\\s+reset\\s+--hard)"
-set_default_export S02_DIAGNOSTIC_PATTERN "(pytest|python.*-m\\s+pytest|python.*-m\\s+pdb|unittest|strace|ltrace|gdb|lldb|valgrind|node\\s+--inspect|docker\\s+logs|journalctl|uv\\s+run\\s+pytest|npm\\s+(run\\s+)?test|pnpm\\s+(run\\s+)?test|yarn\\s+test|go\\s+test|cargo\\s+test|npx\\s+jest|npx\\s+vitest|(^|[[:space:]])jest([[:space:]]|$)|(^|[[:space:]])vitest([[:space:]]|$))"
-set_default_export MAIN_MUTATING_BASH_PATTERN "(^|\\s)(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|git\\s+checkout|git\\s+switch|git\\s+restore|git\\s+reset|git\\s+clean|git\\s+commit|git\\s+merge|git\\s+rebase|git\\s+push|git\\s+pull|sed\\s+-i|perl\\s+-i|tee)(\\s|$)|>>?|(^|\\s):\\s*>"
 
 RUNTIME_TRANSIENT_FILES=(
   "$VIOLATION_LOG"

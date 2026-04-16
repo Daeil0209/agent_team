@@ -197,17 +197,7 @@ See ## Gap Detection And YAGNI Review below for full iteration protocol detail a
 
 ---
 
-> For Interactive Checkpoints details, see reference.md
-
-> For Phase Transition Gates details, see reference.md
-
-> For Context Anchor details, see reference.md
-
-> For Decision Record Chain details, see reference.md
-
-> For Lane Responsibility Map details, see reference.md
-
-> For Incident Response details, see reference.md
+> For Interactive Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, and Incident Response details, see reference.md.
 
 ## Phase Transition Notification
 

@@ -127,12 +127,12 @@ sv_verify_block() {
   printf 'BLOCKED: verification preflight incomplete. Detail: %s missing Phase 1 self-verification. Next: %s.' "$tool_name" "$next_step"
 }
 
-lead_follow_on_verification_sendmessage_allowed() {
+lead_existing_worker_sendmessage_allowed() {
   local message_class="${1-}"
   local message_text="${2-}"
   local teammate_name="${3-}"
   local target_name=""
-  local target_lane=""
+  local -a target_session_ids=()
 
   case "$message_class" in
     assignment|reuse|reroute) ;;
@@ -140,11 +140,14 @@ lead_follow_on_verification_sendmessage_allowed() {
   esac
 
   target_name="$(resolve_requested_dispatch_name "$teammate_name" "$message_text")"
-  target_lane="$(resolve_agent_id "$target_name")"
-  case "$target_lane" in
-    reviewer|tester|validator) ;;
-    *) return 1 ;;
-  esac
+  [[ -n "$target_name" ]] || return 1
+
+  if worker_is_standby "$target_name" || worker_is_idle_pending "$target_name"; then
+    return 0
+  fi
+
+  mapfile -t target_session_ids < <(session_ids_for_worker_name "$target_name" 2>/dev/null || true)
+  [[ "${#target_session_ids[@]}" -gt 0 ]] || return 1
   return 0
 }
 
@@ -164,10 +167,10 @@ case "$TOOL_NAME" in
       if [[ "$LEAD_MESSAGE_CLASS" == "control" ]] && dispatch_field_present "$MESSAGE_TEXT" "LIFECYCLE-DECISION"; then
         exit 0
       fi
-      # Minimal-guide exception: follow-on verification assignment to an existing
-      # reviewer/tester/validator worker should not be serialized behind fresh-turn
-      # planning ceremony.
-      if lead_follow_on_verification_sendmessage_allowed "$LEAD_MESSAGE_CLASS" "$MESSAGE_TEXT" "$TEAMMATE_NAME"; then
+      # Minimal-guide exception: assignment/reuse/reroute SendMessage to an existing
+      # worker (live, standby, or idle-pending) should not be serialized behind
+      # fresh-turn planning ceremony. This is worker reuse, not new fan-out.
+      if lead_existing_worker_sendmessage_allowed "$LEAD_MESSAGE_CLASS" "$MESSAGE_TEXT" "$TEAMMATE_NAME"; then
         exit 0
       fi
       if dispatch_field_present "$MESSAGE_TEXT" "REQUIRED-SKILLS" || [[ "$LEAD_MESSAGE_CLASS" == "assignment" || "$LEAD_MESSAGE_CLASS" == "reuse" || "$LEAD_MESSAGE_CLASS" == "reroute" ]]; then
@@ -246,9 +249,9 @@ case "$TOOL_NAME" in
       exit 0
     fi
     ;;
-  Edit|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete)
-    # Team-lead gate: block file/state mutation when task is in progress but plan is not yet verified.
-    # TaskUpdate, TeamDelete, CronDelete are included per Identity Lock (team-lead.md IR-2 §10).
+  TaskUpdate|TeamDelete|CronDelete)
+    # Team-lead gate: block runtime/state mutation when task is in progress but plan is not yet verified.
+    # Local file edits are intentionally excluded under the minimal-guidance policy.
     if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi

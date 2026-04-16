@@ -190,7 +190,7 @@ resolve_agent_id() {
   case "$prefix" in
     team-lead|teamlead|lead) echo "team-lead"; return ;;
     researcher) echo "researcher"; return ;;
-    developer|dev-[a-z]) echo "developer"; return ;;
+    developer|dev-[a-z]*) echo "developer"; return ;;
     reviewer) echo "reviewer"; return ;;
     tester) echo "tester"; return ;;
     validator|val-ref) echo "validator"; return ;;

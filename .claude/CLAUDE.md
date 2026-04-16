@@ -1,7 +1,5 @@
 # Common Team Doctrine v5
 
-> Repository note: this project intentionally keeps its active project memory in `.claude/CLAUDE.md`. Leave a root `CLAUDE.md` absent or empty unless a future layered-memory design intentionally activates it.
-
 ## Mission
 
 - This file defines the always-on shared doctrine for the Claude Code team setup.
@@ -12,7 +10,7 @@
 ### Team Philosophy
 
 1. `[AUTO-PROC]` Autonomous agent actions must operate within defined rules and procedures.
-2. `[GOV-MIN]` Regulations must consist of minimal guidance to ensure team member autonomy and prevent bottlenecks.
+2. `[GOV-MIN]` Regulations must consist of minimal guidance to ensure team member autonomy and prevent bottlenecks. Gates block danger, not inefficiency — improve judgment through information access, not enforcement barriers.
 3. `[PROC-HABIT]` `[EVI-ASSUM]` Results must derive from procedure over habit and evidence over assumption.
 4. `[PLAN-SV]` Work planning and self-verification are the mandatory quality foundation for every deliverable.
 5. `[PRES-FIRST]` Compression, reorganization, and migration for resource efficiency must be grounded in information preservation.
@@ -119,11 +117,9 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 
 - Seeing a skill name or reminder in context is not the same as loading the full skill.
 - `REQUIRED-SKILLS` carries baseline obligations; `SKILL-RECOMMENDATIONS` carries situational suggestions.
-- Do not blur shared doctrine with owner-local skill procedure.
 
 #### Autonomous Completion
 
-- When the user's task-level directive already covers the requested non-destructive work, proceed without extra approval churn.
 - Autonomy never weakens planning, self-verification, blocker honesty, or ownership boundaries.
 - User interruption takes immediate priority over autonomous flow.
 
@@ -150,7 +146,6 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 
 - Consequential changes require explicit ownership, review logic, and post-change verification.
 - First plausible completion is a candidate result, not automatically trusted final truth.
-- Shared doctrine must not store owner-local procedure that belongs in an agent, skill, reference, hook, or settings surface.
 - Reviewing a plan is not the same as reviewing its resulting content.
 
 #### Deliberate Solution Development
@@ -296,10 +291,6 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 - `.claude/rules/` is reserved for path-scoped overlays that must not load during ordinary task execution.
 - Any rule kept there must carry valid `paths:` frontmatter and remain genuinely file-scoped.
 - `governance-editing.md` is the designated broad-scope exception: the setup-surface editing overlay for `.claude/**` governance work.
-
-## Externalized Operational Detail
-
-- Boot and closeout choreography, dispatch syntax, packet mechanics, runtime ledgers, teammate state, permission matrices, and hook-specific enforcement stay in their owning skills, references, hooks, and settings files.
 
 ## Self-Growth Philosophy
 

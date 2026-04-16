@@ -66,7 +66,6 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 ### RPA-4. Completion Control. For IR-4
 
-- Complete only through a truthful handoff or HOLD through the approved worker communication path.
 - The handoff must state blocking status, evidence anchors, retest requirements, and recommended next-lane ownership.
 
 ## Priority 3: Reference Notes(RN)

@@ -22,6 +22,8 @@ Quick contract:
 - produce the plan block
 - then load `self-verification` before execution
 
+Output channel: Steps 1-5 are internal reasoning that produces the frozen scope. The user sees the results of work done from this plan, never the planning procedure itself.
+
 Boundary:
 - this skill governs agent-local execution planning
 - dispatch governance, staffing, and workflow selection belong to `task-execution`
@@ -38,7 +40,7 @@ Load this skill via the Skill tool and execute the full procedure at work start.
 2. At reuse/reroute: when a standby worker receives a new assignment via SendMessage.
 3. At scope change: when governing lane changes scope, approach, or output target mid-task.
 
-Before the first consequential tool call on any new assignment, reuse, or reroute: confirm work-planning is loaded and scope is frozen. This skill does not substitute for `task-execution` on Standard or Precision lead work.
+Before the first consequential tool call on any new assignment, reuse, or reroute: confirm work-planning is loaded and scope is frozen.
 
 ## Step 1: Instruction Confirmation And Work Analysis
 
@@ -91,7 +93,7 @@ Break the work into executable steps before acting:
 3. Flag highest-risk steps — steps with irreversible effects, wide blast radius, or low confidence.
 4. For multi-file or multi-concern work: confirm whether steps are parallelizable or must be sequential.
 5. Size each step: if a step exceeds one clear purpose, decompose further.
-6. Treat methodology skills as approach refinement, not scope authority. If a methodology requirement would change `WORK-INTENT`, `EXPECTED-OUTPUT`, or `EXCLUDED-SCOPE`, re-run Step 2 before continuing. If Step 2 re-freeze and the methodology conflict recur after one cycle, HOLD with the exact conflict rather than looping further.
+6. Treat methodology skills as approach refinement, not scope authority. If a methodology requirement would change `WORK-INTENT`, `EXPECTED-OUTPUT`, or `EXCLUDED-SCOPE`, re-run Step 2 before continuing. If Step 2 re-freezes and the methodology conflict recurs after one cycle, HOLD with the exact conflict rather than looping further.
 7. For each planned step, confirm it derives from a specific user instruction or stated requirement. Steps based solely on agent inference must be labeled as inference and explicitly justified.
 8. Before finalizing the step list, challenge it critically: what is missing? what assumptions does this plan make? what would a critical reviewer identify as insufficient or ungrounded?
 9. When evaluating an existing state under review, verify the approach includes the Step 2 dependency chain (understand → identify protection → classify cost → judge proportionality → assess change risk) before any action classification.

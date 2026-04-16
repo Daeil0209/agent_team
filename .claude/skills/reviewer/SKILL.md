@@ -37,7 +37,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Use only after team-lead assigns a review surface.
 - If review prerequisites or producer handoff missing, return HOLD.
 - For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
-  - `reviewer` -> `REVIEW-TARGET`, `PREREQ-STATE`, `EVIDENCE-BASIS`, `ACCEPTANCE-SURFACE`
+  - `reviewer` -> `REVIEW-SCOPE`, `REVIEW-TARGET`, `PREREQ-STATE`, `EVIDENCE-BASIS`, `ACCEPTANCE-SURFACE`
 - When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
 - For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - Do not treat reviewer or tester output alone as implicit final validation ownership.

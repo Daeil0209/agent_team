@@ -264,6 +264,6 @@ Research report generation follows a strict state sequence. Do not skip or reord
 
 - Every research report must include an explicit uncertainty disclosure section or integrated uncertainty markers throughout the body.
 - Use evidence-strength indicators: **confirmed** (multiple independent sources agree), **supported** (credible evidence exists but limited), **inferred** (logically derived from available evidence), **unconfirmed** (plausible but without direct evidence), **conflicting** (sources disagree with no resolution).
-- These evidence-strength indicators are the canonical cross-lane taxonomy from `CLAUDE.md`; do not invent a parallel confidence vocabulary for the same claim surface.
+- These evidence-strength indicators are the reference-local uncertainty taxonomy; do not invent a parallel confidence vocabulary for the same claim surface.
 - When sources conflict on a material claim, present both positions with their evidence bases rather than silently choosing one side.
 - Areas where the search strategy could not achieve adequate coverage must be disclosed as known gaps rather than omitted.

@@ -15,6 +15,14 @@ PRIMARY-OWNER: team-lead
 Load this skill when explicit user-directed session end is detected. The `UserPromptSubmit` hook (`.claude/hooks/user-prompt-gate.sh`) detects closeout intent and provides the loading trigger.
 
 
+## Runtime Teardown Preflight
+
+Run this before `TeamDelete`, `CronDelete`, or closeout cleanup that mutates runtime state.
+
+1-2. Prerequisite: Fresh Turn Dispatch Gate must be satisfied.
+3. Confirm explicit closeout or teardown intent and determine whether any live worker still needs action.
+4. Delete runtime resources only after live worker cleanup and monitor ownership are accounted for. If runtime deletion fails and only non-live residue remains, stop retries and report the exact residual state truthfully instead of improvising teardown repair work.
+
 ## Closeout Sequence
 
 The `Closeout Sequence` is mandatory whenever the session is explicitly ending or a confirmed handoff requires runtime teardown.
@@ -68,7 +76,7 @@ Apply the no-runtime fast path whenever no explicit team runtime or recurring mo
    `TeamDelete` is not a shortcut for worker cleanup. Drain live current-runtime workers first.
    Attempt bounded runtime teardown once worker state is drained. Do not loop on repeated teardown retries, repeated sleep polling, or manual config surgery.
    If `TeamDelete` fails and the remaining problem is non-live runtime residue only (for example stale config with no live worker or tmux session), stop there and close out truthfully with an exact residual note instead of escalating repair work inside closeout.
-   On a fresh user turn, `TeamDelete` and `CronDelete` still require the runtime teardown preflight: `work-planning` -> Phase 1 `self-verification` -> closeout/teardown intent confirmed -> runtime mutation.
+   On a fresh user turn, `TeamDelete` and `CronDelete` still require the runtime teardown preflight: `work-planning` -> post-planning `self-verification` -> closeout/teardown intent confirmed -> runtime mutation.
 7. Let `SessionEnd` finish continuity stamping after runtime teardown.
    Preserve the workspace-local continuity surface and its migration mirror; do not clear them as part of closeout cleanup. Hook-owned closeout state remains teardown authority. After `CronDelete` or `TeamDelete`, do not dispatch a new `Agent` just to write continuity.
    If continuity remains stale at that point, do not reopen runtime teardown or start a helper lane just to change the continuity timestamp. Leave the state truthful and let `SessionEnd` capture it as warnings-bearing continuity.

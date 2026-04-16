@@ -5,7 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 
-# Self-Verification Skill
+## Self-Verification Skill
 
 ## Structural Contract
 - Fixed section order: Purpose, Reporting Principle, Activation Trigger, Step 1: Scope Match, Step 2: Role-Specific Checklist, Step 3: Critical Challenge, Step 4: Evidence Basis Check, Step 5: Convergence Loop, Execution Depth Guide, Step 6: Output The Verified Result, Verification Output Format (internal handoff only)

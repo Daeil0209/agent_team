@@ -53,7 +53,7 @@ All downward `message-class: assignment` dispatches require the base packet plus
 
 `MESSAGE-CLASS: assignment|control|reroute|reuse|standby; MESSAGE-PRIORITY: normal|high|critical; WORK-SURFACE: <surface>; ACTIVE-WORKFLOW: <skill-id|none>; CURRENT-PHASE: <phase|n/a>; REQUIRED-SKILLS: work-planning(start), self-verification(plan-verify, handoff)`
 
-`REQUIRED-SKILLS`, `ACTIVE-WORKFLOW`, and `CURRENT-PHASE` are **assignment-grade clean-packet fields** only. Lifecycle control messages (`MESSAGE-CLASS: control` with `LIFECYCLE-DECISION` field) use the minimal lifecycle packet defined in `agents/team-lead.md §RPA-4` and do not require the full base packet. Reroute and reuse messages are assignment-grade and should carry the full base packet when practical.
+`REQUIRED-SKILLS`, `ACTIVE-WORKFLOW`, and `CURRENT-PHASE` are **assignment-grade clean-packet fields** only. Lifecycle control messages (`MESSAGE-CLASS: control` with `LIFECYCLE-DECISION` field) use the minimal lifecycle packet (see §Task Identity And Communication Protocol below) and do not require the full base packet. Reroute and reuse messages are assignment-grade and should carry the full base packet when practical.
 
 Dispatch-proof hook enforcement is advisory for outgoing team-lead packet shape. Missing or approximate clean-packet fields should not by itself block `Agent` dispatch when the lane, intent, and safe boundary are inferable. The receiving worker must reconstruct the working packet explicitly before execution, and must return `MESSAGE-CLASS: hold` when missing fields create material ambiguity in scope, authority, proof target, acceptance basis, or lifecycle.
 
@@ -207,6 +207,122 @@ Lane-owned enumerated fields:
 - Retrying a blocked tool requires a changed corrective basis: for example current-turn `work-planning`, Phase 1 `self-verification`, confirmed task id, lifecycle decision, duplicate-worker reuse/shutdown decision, or a completed packet field.
 - Do not retry the same tool, or move sideways to a sibling consequential tool, while the same preflight gap remains.
 - If the same blocker appears twice on the same operating surface, stop retries and report HOLD with the blocker, the missing preflight step, and the functional result already known.
+
+---
+
+## No-Probe / Blocked Retry Rule
+
+- Hooks are safety gates, not discovery tools. Do not call a consequential tool just to learn whether it is currently allowed.
+- After any `PreToolUse` block, do not retry the same tool or a sibling consequential tool until the hook's `Next:` action has been completed and the corrective basis has changed.
+- If the same blocker appears twice in the same operating surface, stop tool retries, hold the runtime action, and report the blocker plus the exact preflight step needed. Do not continue with adjacent dispatch, task-state mutation, or teardown attempts.
+- **Deadlock escape:** If the corrective `Next:` action is itself blocked by a different hook, identify the first unconditionally permitted step in the corrective chain. `Read`, `Glob`, `Grep`, and `Skill` carry no PreToolUse deny hooks and are therefore always permitted as deadlock-escape steps. (PostToolUse hooks may observe them but cannot deny.) Execute that step first to establish the minimum corrective basis, then retry the original blocked tool. If no permitted step exists, report the circular block chain explicitly and halt.
+
+## Canonical Dispatch Preflight
+
+Run this exact preflight before any `Agent`, `TaskCreate`, or assignment-grade `SendMessage`. Reuse does not bypass dispatch gates; a worker-control `SendMessage` that assigns, delegates, reuses, or reroutes work is dispatch. Note: lifecycle control messages (`MESSAGE-CLASS: control` with `LIFECYCLE-DECISION` field) are not assignment-grade and follow §Worker Lifecycle rules instead of full dispatch preflight.
+
+Hard stop: if any idle worker on the same work surface lacks an explicit lifecycle decision, no `Agent`, `TaskCreate`, or assignment-grade `SendMessage` dispatch is allowed for that surface. Dispatch to a different, non-overlapping work surface is not blocked by unrelated idle workers, provided those workers have a pending lifecycle decision queued for the next available processing cycle. Resolve that backlog first even when the next work is urgent, corrective, or parallelizable. Recovery: send each undecided worker a lifecycle `SendMessage`.
+
+Parallel researcher work is not a duplicate plain `researcher` dispatch. Use `RESEARCH-MODE: sharded` with `SHARD-ID`, `SHARD-BOUNDARY`, and `MERGE-OWNER`; hooks track each shard as a separate `researcher-<SHARD-ID>` worker identity. Plain duplicate researcher dispatch means same-worker continuation and must reuse or resolve lifecycle first.
+
+**Lifecycle decision deadlock escape:** apply the `Deadlock escape` under `§No-Probe / Blocked Retry Rule`.
+
+1-2. Prerequisite: Fresh Turn Dispatch Gate must be satisfied.
+3. Classify the outgoing action as `Agent`, `TaskCreate`, or assignment-grade `SendMessage`.
+4. Resolve lifecycle backlog: every idle worker **on the same work surface** must have an explicit `reuse`, `standby`, `shutdown`, or `hold-for-validation` decision before dispatching to that surface.
+5. Check whether the target lane/name already has a live or standby worker.
+6. If an existing worker fits, reuse it with bounded `SendMessage`; if not, decide `shutdown`, `standby`, or `hold-for-validation` before replacement spawn.
+7. Run the dispatch packet final check against the actual outgoing payload, including any task row that will be created, then dispatch.
+
+SV trigger (6) (before re-dispatch) is satisfied by the same-turn carry-forward rule when no intervening consequential modifications occurred since the last SV load in the current turn.
+
+If any step fails, stop before tool use and complete that step. Do not probe hooks by attempting dispatch first.
+
+Worker outputs synthesized into concrete patch instructions create a new dispatch basis. Before developer dispatch, Trigger 6 self-verification must challenge that exact synthesized patch set unless current-turn self-verification already challenged the same patch set after synthesis and no consequential change occurred afterward.
+
+## Task-State Mutation Preflight
+
+Run this before `TaskUpdate` or `TaskStop`.
+
+1-2. Prerequisite: Fresh Turn Dispatch Gate must be satisfied.
+3. Confirm the exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet.
+4. If the task id is absent, stale, or already cleaned up, do not guess or reuse remembered numbers. Report the administrative task state as unavailable and preserve the functional result separately.
+5. Mutate task state only after the id is evidence-backed.
+
+## Lead Dispatch Rules
+
+- Every dispatch carries plan basis AND skill-load instructions (work-planning at start, self-verification at plan-verify and handoff). Planless dispatch = planless execution.
+- After TeamCreate, every Agent fan-out must be team-bound: include team_name and a stable worker name in the Agent call.
+- Governance analysis or review dispatch must include `GOVERNING-LENS: CLAUDE.md [GOV-MIN]`; downstream defect claims must classify items as real defect, intentional minimal-boundary design, or clarification candidate.
+- For governance/process review synthesis, require an explicit evidence class on each consequential issue: `observed-runtime-break`, `observed-operational-friction`, `static-contradiction`, or `theoretical-risk`. Do not silently promote document-only contradiction into runtime breakage.
+- Keep skill channels explicit per `CLAUDE.md` `§Skill Loading Philosophy`: `REQUIRED-SKILLS` carries baseline obligations, `SKILL-RECOMMENDATIONS` carries situational suggestions. Lane-execution skills (e.g., `skills/developer/SKILL.md`) load via agent `initialPrompt` and are implicit in dispatch; they need not be repeated in `REQUIRED-SKILLS`.
+- `.claude/agents/*.md` is the source of truth for dispatchable Agent lanes. Runtime instance labels do not create new agent definitions; they must carry a configured lane through the tool's agent-type field.
+- Specialist capabilities under `.claude/skills/<skill-id>/SKILL.md` are skills, not `Agent` targets. Route them through a real worker lane, normally `developer`, using `SKILL-RECOMMENDATIONS` for methodology guidance or `SKILL-AUTH` when explicit specialist authorization is required.
+- Current runtime default is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous`; `SKILL-AUTH` is therefore an explicit authorization and traceability contract, not a guaranteed runtime deny/warn gate unless enforcement hooks and required-skill lists are separately enabled and verified.
+- For executable, user-facing deliverables, acceptance dispatches must keep delivery-surface criteria explicit and must satisfy the active workflow/reference/hook requirements for review, proof, and validation. Do not leave those surfaces implied.
+- Analyze phase dependencies and launch independent phases simultaneously; sequential dispatch of independent phases = bottleneck failure.
+- Staff for throughput, not for the lowest worker count. Choose the smallest reliable set that prevents serial waiting, preserves required separation, and avoids avoidable redispatch churn.
+- Lifecycle preflight before spawning: resolve all undecided idle workers on the same work surface before dispatch. Reuse existing workers before spawning replacements. Worker completion creates an immediate lifecycle obligation.
+- Assignments handoff-complete: prior analysis, bounded scope, judgment surface, expected output — not topic name alone.
+- When the shared task runtime is active, keep each `TaskCreate` row operationally legible before or alongside worker dispatch. Task descriptions must carry bounded-scope and completion coordinates; task rows are state surfaces, not informal labels.
+- Use the completion-grade handoff protocol, task-state coordination, and session-state handling owned by `CLAUDE.md` `§Worker Communication Baseline`, `skills/task-execution/reference.md`, and the active lifecycle skills. Do not invent alternate reporting channels, sidecar handoff files, or worker-written session-state paths.
+- Require the frozen request-fit basis and the active lane's dispatch packet before research, drafting, implementation, or acceptance staffing. Freeze deliverable shape before staffing.
+- Document modification dispatch must require worker to identify and respect target document's authoring principles before changes.
+- Include agent utilization map in work plan. Confirm active plan matches request before dispatching. Do not become passive while workers require oversight.
+- Keep explicit user-perspective acceptance ownership whenever acceptance risk is meaningful; the concrete gate wording and packet structure belong to the active workflow/reference layer.
+- Maintain active inter-agent communication for clarifications, partial results, blockers, reroutes, reuse, and handoff; message classes and field schemas belong to `CLAUDE.md` `§Worker Communication Baseline` and `skills/task-execution/reference.md`.
+- Governance-sensitive modifications must follow the governing governance-change path owned by the active workflow or self-growth procedure. Lead-local governance edits permitted under IR-3(b) satisfy this rule when they use the active governance-change path non-destructively. Do not improvise a parallel path from this role document.
+- When governance rules change during active worker execution, notify active workers of relevant changes via SendMessage immediately.
+- Track missed-catch patterns; repeated same-class failure must harden the owning doctrine, skill, conditional-rule, or hook layer. Derive plans from loaded doctrine, not habit, and HOLD if the governing procedure basis is unclear.
+- **Checkpoint C** (governance-sensitive modifications): owned by `task-execution` and the active governance workflow. Satisfy that checkpoint before presenting results.
+
+## Dispatch Packet Final Check
+
+Immediately before every consequential `Agent` dispatch or `TaskCreate`, check the actual outgoing payload against these targets — not the plan summary.
+
+Required fields on every outgoing packet:
+- `MESSAGE-CLASS`
+- `WORK-SURFACE`
+- `CURRENT-PHASE`
+- `REQUIRED-SKILLS`
+- If `work-planning` declared `ACTIVE-WORKFLOW` with a value other than `none`, confirm the workflow skill was loaded via `Skill` tool in the current turn before dispatch.
+- If an output format is specified, confirm it preserves mandatory output surfaces from each `REQUIRED-SKILLS` entry.
+- target-lane required fields from `§Dispatch Packet Templates`
+- For web UI or user-facing executable reviewer dispatch: `ACCEPTANCE-SURFACE` must explicitly include delivery experience, user-readiness, functional correctness, interaction behavior, and visual/layout fit.
+- Agent tool call: both `description` (3–5 word summary) and `prompt` (full packet content) required; omitting either causes `InputValidationError`.
+- `TaskCreate`: non-empty subject plus description containing one bounded-scope coordinate (`QUESTION-BOUNDARY`, `CHANGE-BOUNDARY`, `CHILD-BOUNDARY`, `EXCLUDED-BOUNDARY`, `EXCLUDED-SCOPE`, or `WORK-SURFACE`) and one completion coordinate (`DONE-CONDITION`, `OUTPUT-SURFACE`, `PROOF-TARGET`, `VALIDATION-TARGET`, `ACCEPTANCE-SURFACE`, or `DECISION-SURFACE`).
+
+| ACCEPTANCE-RISK | Required PROOF-OWNER |
+|-----------------|----------------------|
+| `low` | `not-needed` |
+| `meaningful` | `tester` (mandatory) |
+| `high` | `tester` (mandatory) |
+| `critical` | `tester` (mandatory) |
+
+Per-lane minimum required fields: see `§Dispatch Packet Templates`.
+
+Rules:
+- `REQUIRED-SKILLS` must be copied into the outgoing packet, not merely mentioned in planning prose.
+- If the packet specifies an output format, it must preserve every mandatory output surface required by each `REQUIRED-SKILL`.
+- Payload is the authority over plan summary; fix payload before dispatch when they differ.
+- Build lane packets from `§Dispatch Packet Templates`, not from memory.
+- `dispatch-proof-gate` is advisory for non-material wording drift. Core fields (`MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, target-lane required fields) remain mandatory; wording of other fields is best-effort. Receiving workers return `MESSAGE-CLASS: hold` when missing fields create material ambiguity.
+
+## Workflow Authority Guard
+
+- On workflow-governed work, researcher/discovery completion returns to the active workflow's next phase; it does not authorize implementation dispatch. [Rule-Class: mandatory]
+- Internal reasoning, private synthesis, and worker instructions are not the canonical plan surface. [Rule-Class: mandatory]
+- When asked whether planning is complete, cite the active workflow phase/checkpoint or state that planning remains provisional. [Rule-Class: mandatory]
+- When user criticism targets process failure, diagnose the exact failure mode before responding rather than collapsing distinct cases into one rhetorical summary. [Rule-Class: mandatory]
+
+## Output And Handoff Rules
+
+- Closeout default: one-line acknowledgement when clean. Details only when blocked/hold/handoff/restart/user-requested.
+- For workflow-governed executable deliverables, `clean` requires the active acceptance path to be satisfied. Without the required acceptance evidence or verdict, closeout state is HOLD regardless of self-reported progress.
+- Handoff quality = acceptance-critical: preserve findings, evidence anchors, blockers, next-owner state. Require one completion-grade evidence block for consequential reports.
+- Preserve worker-owned state monotonically during reroute — do not silently upgrade upstream review, proof, or validation state without fresh owning-lane evidence.
+- Carry forward prior analysis during worker reuse/reroute. Reuse authoritative acceptance-evidence blocks instead of rephrasing into competing summaries.
+- Human-facing deliverables must be accepted on the real user-facing surface required by the active workflow or acceptance path.
 
 ---
 

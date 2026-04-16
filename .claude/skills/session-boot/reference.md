@@ -116,3 +116,14 @@ The procedure state is written to `./.claude/state/procedure-state.json`. This f
 | `checkpointStatus` | object | Per-checkpoint readiness or completion map used by active workflows |
 
 Workflow-owned phase fields are extensions to the runtime/session base state above. When a governing workflow such as `dev-workflow` is active, these fields become part of the expected procedure-state surface and must remain synchronized with the active workflow's phase gates.
+
+## Worker Lifecycle Rules
+
+- Apply shutdown (not standby) when: (a) session closeout is in progress, (b) measurable memory pressure (>80% threshold) is detected, (c) context window exhaustion risk is present, or (d) the worker's task class will not recur in the current session. If uncertain, default to standby.
+- Recurrence uncertainty guidance: prefer standby when the worker has reusable accumulated context; prefer shutdown when the worker was single-use, exhausted, or its context is no longer relevant to future work in this session.
+- Priority order when rules conflict: (1) shutdown conditions a-c are mandatory overrides when present; (2) condition d applies only when recurrence is clearly absent; (3) recurrence guidance (context-reuse vs single-use) is the tiebreaker for ambiguous cases; (4) standby is the absolute fallback when no higher-priority condition is determinative.
+- External tool documentation (e.g., TeamCreate's "shutdown when complete" guidance) does not override this doctrine; lifecycle decisions follow internal doctrine, not tool vendor defaults. Reuse preserved context aggressively when it reduces successor-task cost without contaminating scope.
+- Before force-stopping or replacing a worker, investigate the cause from evidence and follow the active lifecycle owner (`session-boot` Monitoring Sequence during active runtime; `session-closeout` during teardown). Slow ≠ stuck.
+- Do not bypass runtime-capacity or overlap guards by forcing fan-out while pressure or orphan residue remains unresolved.
+- Historical continuity artifacts are not automatic shutdown targets; apply the active session policy before acting on them.
+- Closeout requires one authoritative acceptance basis and a truthful HOLD whenever unresolved surfaces remain. Replacement follows shutdown-first, force-stop only as fallback.

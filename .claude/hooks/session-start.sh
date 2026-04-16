@@ -65,6 +65,16 @@ describe_team_runtime_snapshot() {
 
   if [[ -n "$live_config" ]]; then
     printf '%s\n' "Team runtime snapshot: live team config detected at $live_config."
+    _member_names="$(CONFIG_FILE="$live_config" node -e "
+      try {
+        const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
+        const names=(c.members||[]).map(m=>m.name).filter(Boolean);
+        if(names.length)process.stdout.write(names.join(', '));
+      } catch {}
+    " 2>/dev/null || true)"
+    if [[ -n "$_member_names" ]]; then
+      printf '%s\n' "Team members: $_member_names"
+    fi
     if [[ "$summarized" != "$live_config" ]]; then
       printf '%s\n' "Observed team config files: $summarized"
     fi

@@ -82,11 +82,23 @@ bash_requires_planning_preflight() {
   # Block only when the shell command is plausibly mutating files, mutating git/runtime state,
   # or creating an external side effect. Leave read-only probes to downstream safety hooks.
   printf '%s' "$normalized" | grep -Eiq \
-    '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(add|commit|push|pull|checkout|switch|restore|reset|clean|merge|rebase|stash)([[:space:]]|$)'
+    '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?'
 }
 
 self_growth_block() {
   printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
+}
+
+self_growth_gate_applies_to_tool() {
+  local tool_name="${1:-}"
+  case "$tool_name" in
+    Agent|TaskCreate|SendMessage)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
 }
 
 lead_preflight_block_reason() {
@@ -162,7 +174,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   if planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND"; then
     exit 0
   fi
-  if self_growth_required "$SESSION_ID"; then
+  if self_growth_required "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
     deny_tool_use "$(self_growth_block)"
     exit 0
   fi

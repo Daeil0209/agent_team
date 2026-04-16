@@ -251,7 +251,7 @@ For each DELIVERY requirement:
 Verify that the deliverable is practically usable by the end user — not just technically correct.
 
 Prerequisite: Delivery Experience Check passed.
-Verification tool: Select per Phase 4 § Deliverable-type verification tool mapping. For web app deliverables, tester uses Playwright CLI on the browser interaction surface in all phases. Playwright MCP belongs to validator for final acceptance. curl/API-only checks can supplement diagnosis, but they do not satisfy the UI proof obligation.
+Verification tool: Select per Phase 4 § Deliverable-type verification tool recommendations. For web app deliverables, tester uses Playwright CLI on the browser interaction surface in all phases. Playwright MCP belongs to validator for final acceptance. curl/API-only checks can supplement diagnosis, but they do not satisfy the UI proof obligation.
 
 For software deliverables:
 1. Seed the application with representative demo data that exercises all implemented features.
