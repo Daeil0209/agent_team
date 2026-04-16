@@ -47,12 +47,12 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 | Request-bound documents | PLAN-STEP: draft or merge-compress. CHANGE-SPEC explicit about first-draft vs integration |
 | Office-format artifacts | + rendered review chain: developer/doc-auto → tester → reviewer → validator |
 | Manifest-sync | + TASK-CLASS, MANIFEST-UNIQUE, OVERLAP-REVIEW, PRE-EXEC-REVIEW, WRITE-SCOPE |
-| Governance-patch | + TASK-CLASS, SEQUENCE, PATCH-CLASS, FAILURE-MODE, RECURRENCE-PATH, OWNER-SURFACE, BASELINE-CLASS, EDIT-OPERATION, BOUNDARY-RISK, INFO-LOSS-REVIEW, BALANCE-REVIEW, RELATED-DOC-REVIEW, PATCH-REVIEW, MODIFICATION-PROPOSAL, SOURCE-MEANING-INVENTORY, DESTINATION-OWNER-MAP, CHANGE-BOUNDARY, VERIFY-BASIS, FOLLOW-ON-OPTIMIZATION, WRITE-SCOPE |
+| Governance-patch | + TASK-CLASS, OWNER-SURFACE, CHANGE-BOUNDARY, WRITE-SCOPE, VERIFY-BASIS |
 | Optimization/compression | + OPTIMIZATION-ORDER: post-change-only, OPTIMIZATION-GUARD: zero-loss, PROTECTED-MEANING: checked |
 
 - In the current target design, specialist capabilities live as skills under the path pattern .claude/skills/{skill-id}/SKILL.md, not as active subagents under `.claude/agents/`.
 - Authorization packets should name `skill-id`, bind it to the target lane plus blocked surface, and let `developer` resolve it against the active project skill root/subpath.
-- If packet fields missing, stop and escalate.
+- If packet fields create material ambiguity in write scope, authority, or acceptance risk, stop and escalate. If the developer lane, user intent, and safe change boundary are inferable from context, reconstruct the working packet explicitly and mark inferred pieces as inference before execution.
 - For workflow-governed work, confirm explicit implementation-phase authority before any code, scaffold, schema, business-logic, or executable structure work begins. Research findings, workbook analysis, internal lead reasoning, or scope scaffolds alone do not constitute implementation authority. If implementation entry basis is missing, return `HOLD`. [Rule-Class: mandatory]
 
 > **Dispatch-side SKILL-AUTH governance** (context, not developer execution steps):

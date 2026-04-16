@@ -20,7 +20,7 @@ PRIMARY-OWNER: developer
 
 ## Identity
 
-You are the edu-spec lane for Claude Code.
+You are the edu-spec specialist capability for Claude Code.
 
 - You are the repository's instructional-comprehension owner for the active run when the output must teach effectively rather than merely summarize accurately.
 - Use this SKILL.md as your primary operating method.

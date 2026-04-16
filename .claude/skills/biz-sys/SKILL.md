@@ -22,7 +22,7 @@ PRIMARY-OWNER: developer
 
 ## Identity
 
-You are the biz-sys lane for Claude Code.
+You are the biz-sys specialist capability for Claude Code.
 
 - You are the repository's conditional business-workflow owner when hidden operational rules, approval logic, workflow states, authority boundaries, persistence meaning, or reconciliation semantics materially affect delivery quality.
 - Use this SKILL.md as your primary operating method.

@@ -79,6 +79,56 @@ allowed_package_or_build_command() {
   printf '%s' "$command_text" | grep -Eiq '^[[:space:]]*((npm|pnpm|yarn)[[:space:]]+(install|ci|add|remove|run[[:space:]]+(build|test|lint|typecheck))|(uv|python[0-9.]*[[:space:]]+-m[[:space:]]+pip|pip|pip3)[[:space:]]+(install|uninstall|sync|lock|check|freeze|show|list)|make[[:space:]]+([[:alnum:]_.-]+)|cargo[[:space:]]+(build|test|check)|go[[:space:]]+(build|test)|npm[[:space:]]+run[[:space:]]+build)([[:space:]].*)?$'
 }
 
+# Destructive sub-command pattern — mirrors the destructive check below for
+# per-sub-command validation inside validate_compound_command.
+_DESTRUCTIVE_SUBCMD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
+
+# validate_compound_command: split cmd on &&/||/; and validate each sub-command.
+# Returns 0 only if ALL sub-commands pass check_fn and none are destructive.
+# Returns 1 if any sub-command is destructive or fails check_fn (falls through).
+validate_compound_command() {
+  local cmd="$1"
+  local check_fn="$2"
+  local subcmd
+  while IFS= read -r subcmd; do
+    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
+    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
+    [[ -z "$subcmd" ]] && continue
+    if printf '%s' "$subcmd" | grep -Eiq "$_DESTRUCTIVE_SUBCMD_PATTERN"; then
+      return 1
+    fi
+    if ! "$check_fn" "$subcmd"; then
+      return 1
+    fi
+  done < <(printf '%s' "$cmd" | sed 's/&&/\n/g; s/||/\n/g; s/;/\n/g')
+  return 0
+}
+
+# Allowlist wrappers used as check_fn arguments to validate_compound_command.
+# GIT_READONLY_PATTERN, S02_IMPLEMENTATION_PATTERN, and LEAD_OPERATIONAL_ALLOWLIST
+# are set in the Bash case block before these wrappers are called.
+allowed_git_readonly_subcmd() {
+  local sanitized
+  sanitized="$(strip_read_only_null_redirections "$1")"
+  printf '%s' "$sanitized" | grep -qE "$GIT_READONLY_PATTERN" 2>/dev/null
+}
+
+allowed_worker_impl_subcmd() {
+  printf '%s' "$1" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null
+}
+
+allowed_lead_operational_subcmd() {
+  local subcmd="${1-}"
+  local trimmed="${subcmd#"${subcmd%%[![:space:]]*}"}"
+  local pat
+  for pat in "${LEAD_OPERATIONAL_ALLOWLIST[@]}"; do
+    if [[ "$trimmed" == "${pat}"* ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
 PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -157,7 +207,9 @@ case "$TOOL_NAME" in
       fi
     fi
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
-      : # fall through to further checks — compound command, skip allowlist fast path
+      if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
+        exit 0
+      fi
     else
       if allowed_package_or_build_command "$CLEAN_COMMAND"; then
         exit 0
@@ -167,7 +219,9 @@ case "$TOOL_NAME" in
 
     GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
-      : # fall through to further checks — compound command, skip allowlist fast path
+      if validate_compound_command "$CLEAN_COMMAND" allowed_git_readonly_subcmd; then
+        exit 0
+      fi
     else
       if printf '%s' "$SANITIZED_COMMAND" | grep -qE "$GIT_READONLY_PATTERN" 2>/dev/null; then
         exit 0
@@ -186,7 +240,9 @@ case "$TOOL_NAME" in
     S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])(git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|(mkdir|touch|cp|chmod)[[:space:]]|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python[[:space:]]|node[[:space:]]|make[[:space:]]|cargo[[:space:]]|go[[:space:]]+(build|test|run)|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
       if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
-        : # fall through to further checks — compound command, skip allowlist fast path
+        if validate_compound_command "$CLEAN_COMMAND" allowed_worker_impl_subcmd; then
+          exit 0
+        fi
       else
         if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
           exit 0
@@ -218,7 +274,9 @@ case "$TOOL_NAME" in
     # string and bypass the mutable-command block below — a compliance bypass.
     TRIMMED_LEAD_CMD="${CLEAN_COMMAND#"${CLEAN_COMMAND%%[![:space:]]*}"}"
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
-      : # fall through to further checks — compound command, skip allowlist fast path
+      if validate_compound_command "$CLEAN_COMMAND" allowed_lead_operational_subcmd; then
+        exit 0
+      fi
     else
       for allowed_pattern in "${LEAD_OPERATIONAL_ALLOWLIST[@]}"; do
           if [[ "$TRIMMED_LEAD_CMD" == "${allowed_pattern}"* ]]; then
@@ -227,7 +285,7 @@ case "$TOOL_NAME" in
       done
     fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|>>?|[[:space:]]>[[:space:]]*[^[:space:]]'; then
+    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
       if printf '%s' "$SANITIZED_COMMAND" | grep -qE '(^|[[:space:]])[^[:space:]]*\.claude/|/\.claude/'; then
         emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
