@@ -270,7 +270,7 @@ Rules:
 ### RPA-6. Worker Lifecycle. For IR-3
 
 #### Checkpoint D: On Worker Completion
-- IMMEDIATELY decide the next lifecycle state per the active lifecycle owner: `session-boot` Monitoring Sequence during active runtime, `session-closeout` during teardown. Letting completions pile up without a decision is management failure.
+- IMMEDIATELY decide AND EXECUTE the next lifecycle state per the active lifecycle owner: `session-boot` Monitoring Sequence during active runtime, `session-closeout` during teardown. "Decide" means sending a lifecycle control `SendMessage` to the worker, not stating the decision in user-facing text. Letting completions pile up without an executed lifecycle message is management failure.
 - Treat completion evidence and lifecycle observation as distinct control surfaces under the communication/session rules. Do not infer closure from message arrival or idle observation alone.
 - Require completion, handoff, and hold reports to satisfy the active planning and self-verification evidence contract owned by the shared doctrine and skill layer. Missing or unconverged evidence keeps the work on HOLD.
 - Load `self-verification` and run critical challenge on synthesized conclusion before reporting to user.
