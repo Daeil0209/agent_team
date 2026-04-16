@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "opus",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "agent": "team-lead",
+  "effortLevel": "medium",
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "LS",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Edit",
+      "MultiEdit",
+      "Write",
+      "NotebookEdit",
+      "Agent"
+    ],
+    "ask": [],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./config/credentials.json)"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/user-prompt-gate.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|MultiEdit|Write|NotebookEdit|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/agent-activity-monitor.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit|TaskCreate|TaskUpdate|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/task-start-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent|TaskCreate|SendMessage|Edit|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/sv-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskGet|TaskUpdate|TaskOutput|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/validate-task-target.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskCreate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/task-created-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TeamCreate|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/runtime-entry-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/dispatch-sizing-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/dispatch-proof-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/compliance-supervisor.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/sv-tracker.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/track-worker-report.sh"
+          },
+          {
+            "type": "command",
+            "command": "./.claude/hooks/worker-lifecycle-sync.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent|TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/track-runtime-lifecycle.sh"
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/task-completed-gate.sh"
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/worker-lifecycle-sync.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.claude/hooks/session-end.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

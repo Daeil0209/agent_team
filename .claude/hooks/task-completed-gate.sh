@@ -1,0 +1,413 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/hook-config.sh"
+
+INPUT="$(cat)"
+
+PARSED="$(INPUT_JSON="$INPUT" WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" LOG_DIR="$LOG_DIR" SESSION_AGENT_MAP="$SESSION_AGENT_MAP" PENDING_AGENTS_FILE="$PENDING_AGENTS_FILE" PENDING_AGENT_MODES_FILE="$PENDING_AGENT_MODES_FILE" node <<'NODE'
+const fs = require("fs");
+const path = require("path");
+
+const readTextIfExists = (filePath) => {
+  try {
+    return fs.readFileSync(filePath, "utf8");
+  } catch {
+    return "";
+  }
+};
+
+const readIfExists = (filePath) => readTextIfExists(filePath).trim();
+const trimText = (value) => String(value || "").trim();
+const normalize = (value) => trimText(value).toLowerCase();
+
+const addTrimmed = (targetSet, value) => {
+  const trimmed = trimText(value);
+  if (trimmed) targetSet.add(trimmed);
+};
+
+const parseSessionMapRows = (filePath) => {
+  const rows = [];
+  const content = readTextIfExists(filePath);
+  if (!content) return rows;
+  for (const line of content.split(/\r?\n/)) {
+    const trimmed = trimText(line);
+    if (!trimmed) continue;
+    const [sessionId = "", name = ""] = trimmed.split(/\s+/, 2);
+    if (!sessionId || !name) continue;
+    rows.push({ sessionId: trimText(sessionId), name: trimText(name) });
+  }
+  return rows;
+};
+
+const parseClaimedPendingRows = (filePath, statusIndex) => {
+  const rows = [];
+  const content = readTextIfExists(filePath);
+  if (!content) return rows;
+  for (const line of content.split(/\r?\n/)) {
+    const trimmed = trimText(line);
+    if (!trimmed) continue;
+    const parts = trimmed.split(/\s*\|\s*/);
+    const name = trimText(parts[1] || "");
+    const status = trimText(parts[statusIndex] || "");
+    if (!name || !status.startsWith("CLAIMED:")) continue;
+    const sessionId = trimText(status.slice("CLAIMED:".length));
+    if (!sessionId) continue;
+    rows.push({ sessionId, name });
+  }
+  return rows;
+};
+
+const markerStateForSession = (sessionId, logDir) => {
+  const resolvedSessionId = trimText(sessionId);
+  if (!resolvedSessionId) {
+    return { sessionId: "", wpTimestamp: "", svPlanPresent: false, svResultPresent: false };
+  }
+  const wpMarker = path.join(logDir, `.wp-loaded-${resolvedSessionId}`);
+  const svPlanMarker = path.join(logDir, `.sv-plan-loaded-${resolvedSessionId}`);
+  const svResultMarker = path.join(logDir, `.sv-result-loaded-${resolvedSessionId}`);
+  return {
+    sessionId: resolvedSessionId,
+    wpTimestamp: readIfExists(wpMarker),
+    svPlanPresent: fs.existsSync(svPlanMarker),
+    svResultPresent: fs.existsSync(svResultMarker)
+  };
+};
+
+const markerStateScore = (state) => {
+  if (!state) return 0;
+  let score = 0;
+  if (state.wpTimestamp) score += 1;
+  if (state.svPlanPresent) score += 2;
+  if (state.svResultPresent) score += 4;
+  return score;
+};
+
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const sessionId = trimText(input.session_id || "");
+  const teammateName = trimText(input.teammate_name || "");
+  const teamName = trimText(input.team_name || "");
+  const taskId = trimText(input.task_id || "");
+  const taskSubject = trimText(input.task_subject || "");
+
+  const logDir = process.env.LOG_DIR || "";
+  const sessionMapRows = parseSessionMapRows(process.env.SESSION_AGENT_MAP || "");
+  const pendingAgentRows = parseClaimedPendingRows(process.env.PENDING_AGENTS_FILE || "", 2);
+  const pendingModeRows = parseClaimedPendingRows(process.env.PENDING_AGENT_MODES_FILE || "", 3);
+  const identityRows = sessionMapRows.concat(pendingAgentRows, pendingModeRows);
+  const candidateSessionIdsSet = new Set();
+  const candidateSenderNamesSet = new Set();
+
+  addTrimmed(candidateSessionIdsSet, sessionId);
+  addTrimmed(candidateSenderNamesSet, teammateName);
+
+  for (const row of identityRows) {
+    const rowSessionId = trimText(row && row.sessionId);
+    const rowName = trimText(row && row.name);
+    if (!rowSessionId || !rowName) continue;
+    if (sessionId && rowSessionId === sessionId) {
+      addTrimmed(candidateSenderNamesSet, rowName);
+    }
+    if (teammateName && normalize(rowName) === normalize(teammateName)) {
+      addTrimmed(candidateSessionIdsSet, rowSessionId);
+    }
+  }
+
+  const candidateSessionIds = Array.from(candidateSessionIdsSet);
+  const candidateSenderNames = Array.from(candidateSenderNamesSet);
+  const candidateSessionIdLookup = new Set(candidateSessionIds);
+  const candidateSenderNameLookup = new Set(candidateSenderNames.map(normalize).filter(Boolean));
+
+  let latest = null;
+  let latestExactTask = null;
+  let latestFallback = null;
+  let reportRejectionReason = "";
+  const ledgerPath = process.env.WORKER_REPORT_LEDGER || "";
+  if (ledgerPath && fs.existsSync(ledgerPath)) {
+    const lines = fs.readFileSync(ledgerPath, "utf8").split(/\r?\n/).filter(Boolean);
+    for (const line of lines) {
+      let parsed;
+      try {
+        parsed = JSON.parse(line);
+      } catch {
+        continue;
+      }
+      if (!parsed || typeof parsed !== "object") continue;
+      const messageClass = String(parsed.messageClass || "").toLowerCase();
+      if (!["handoff", "completion", "hold"].includes(messageClass)) continue;
+
+      const parsedSessionId = trimText(parsed.sessionId || "");
+      const parsedSenderName = trimText(parsed.senderName || "");
+      const parsedTeamName = trimText(parsed.teamName || "");
+      const parsedTaskId = trimText(parsed.taskId || "");
+      const sameSession = parsedSessionId && candidateSessionIdLookup.has(parsedSessionId);
+      const sameTeammate = parsedSenderName && candidateSenderNameLookup.has(normalize(parsedSenderName));
+      const sameTeam = !teamName || !parsedTeamName || parsedTeamName === teamName;
+      // When teammateName is absent (TaskCompleted event provides only session_id+task_id),
+      // accept entries that exactly match the task_id — the session/sender filter cannot
+      // resolve a worker identity and would otherwise skip all worker ledger entries.
+      // When teammateName IS provided the stricter session+sender guard still applies.
+      const taskIdAnchorMatch = !teammateName && taskId && parsedTaskId === taskId;
+      if (!sameSession && !(sameTeammate && sameTeam) && !taskIdAnchorMatch) continue;
+
+      const timestamp = String(parsed.timestamp || "");
+      const matchesExplicitTask = taskId && parsedTaskId && parsedTaskId === taskId;
+      const hasConflictingExplicitTask = taskId && parsedTaskId && parsedTaskId !== taskId;
+
+      if (matchesExplicitTask) {
+        if (!latestExactTask || timestamp >= String(latestExactTask.timestamp || "")) {
+          latestExactTask = parsed;
+        }
+        continue;
+      }
+
+      if (hasConflictingExplicitTask) {
+        continue;
+      }
+
+      if (!latestFallback || timestamp >= String(latestFallback.timestamp || "")) {
+        latestFallback = parsed;
+      }
+    }
+  }
+
+  latest = latestExactTask || latestFallback;
+  // When teammateName is absent and the entry was found via taskIdAnchorMatch,
+  // the matched entry's sessionId is the worker's session — it is not in
+  // candidateSessionIds (which only contains the lead's session from the event).
+  // Include it here so evidenceState resolves to the actual worker session markers
+  // rather than falling back to the lead's session and rejecting the report as
+  // "report-before-planning" due to the lead's WP timestamp post-dating the report.
+  const taskIdAnchorSession = (!teammateName && latestExactTask)
+    ? trimText(latestExactTask.sessionId || "")
+    : "";
+  const markerSessionIds = candidateSessionIds.slice();
+  if (taskIdAnchorSession && !candidateSessionIdLookup.has(taskIdAnchorSession)) {
+    markerSessionIds.push(taskIdAnchorSession);
+  }
+  const markerStates = (markerSessionIds.length ? markerSessionIds : [sessionId])
+    .map((candidateSessionId) => markerStateForSession(candidateSessionId, logDir));
+  const preferredEvidenceSessionId = trimText((latest && latest.sessionId) || sessionId);
+  const sortedMarkerStates = markerStates
+    .slice()
+    .sort((left, right) => {
+      const scoreDelta = markerStateScore(right) - markerStateScore(left);
+      if (scoreDelta !== 0) return scoreDelta;
+      const tsLeft = trimText(left && left.wpTimestamp);
+      const tsRight = trimText(right && right.wpTimestamp);
+      if (tsLeft === tsRight) return 0;
+      return tsRight.localeCompare(tsLeft);
+    });
+  const evidenceState =
+    markerStates.find((state) => state.sessionId && state.sessionId === preferredEvidenceSessionId) ||
+    sortedMarkerStates[0] ||
+    { sessionId: sessionId, wpTimestamp: "", svPlanPresent: false, svResultPresent: false };
+
+  if (
+    latest &&
+    evidenceState.wpTimestamp &&
+    trimText(latest.timestamp || "") &&
+    trimText(latest.timestamp || "") < evidenceState.wpTimestamp
+  ) {
+    latest = null;
+    latestExactTask = null;
+    latestFallback = null;
+    reportRejectionReason = "report-before-planning";
+  }
+
+  const fields = latest && latest.fields && typeof latest.fields === "object" ? latest.fields : {};
+  const fieldValues = latest && latest.fieldValues && typeof latest.fieldValues === "object" ? latest.fieldValues : {};
+  const missingFields = [];
+  const requiredFieldMap = [
+    ["outputSurface", "OUTPUT-SURFACE"],
+    ["evidenceBasis", "EVIDENCE-BASIS"],
+    ["openSurfaces", "OPEN-SURFACES"],
+    ["recommendedNextLane", "RECOMMENDED-NEXT-LANE"],
+    ["planningBasis", "PLANNING-BASIS"],
+    ["svPlanVerify", "SV-PLAN-VERIFY"],
+    ["selfVerification", "SELF-VERIFICATION"],
+    ["convergencePass", "CONVERGENCE-PASS"]
+  ];
+  for (const [key, label] of requiredFieldMap) {
+    if (!fields[key]) missingFields.push(label);
+  }
+  if (!latest || !String(latest.requestedLifecycle || "").trim()) {
+    missingFields.push("REQUESTED-LIFECYCLE");
+  }
+
+  const identitySummary = `sessions=${candidateSessionIds.join(",") || "none"}; senders=${candidateSenderNames.join(",") || "none"}; evidence=${trimText(evidenceState.sessionId || "") || "none"}`;
+
+  const result = {
+    sessionId,
+    teammateName,
+    teamName,
+    taskId,
+    taskSubject,
+    evidenceSessionId: trimText(evidenceState.sessionId || ""),
+    wpTimestamp: trimText(evidenceState.wpTimestamp || ""),
+    svPlanPresent: Boolean(evidenceState.svPlanPresent),
+    svResultPresent: Boolean(evidenceState.svResultPresent),
+    exactTaskReportPresent: Boolean(latestExactTask),
+    explicitTaskIdFieldPresent: latest ? Boolean(latest.taskIdFieldPresent) : false,
+    latestMessageClass: latest ? String(latest.messageClass || "") : "",
+    latestTimestamp: latest ? String(latest.timestamp || "") : "",
+    planningBasisValue: String(fieldValues.planningBasis || ""),
+    svPlanVerifyValue: String(fieldValues.svPlanVerify || ""),
+    selfVerificationValue: String(fieldValues.selfVerification || ""),
+    convergencePassValue: String(fieldValues.convergencePass || ""),
+    missingFields,
+    identitySummary,
+    reportRejectionReason
+  };
+
+  process.stdout.write(JSON.stringify(result));
+} catch (error) {
+  process.stdout.write(JSON.stringify({
+    sessionId: "",
+    teammateName: "",
+    teamName: "",
+    taskId: "",
+    taskSubject: "",
+    evidenceSessionId: "",
+    wpTimestamp: "",
+    svPlanPresent: false,
+    svResultPresent: false,
+    exactTaskReportPresent: false,
+    explicitTaskIdFieldPresent: false,
+    latestMessageClass: "",
+    latestTimestamp: "",
+    planningBasisValue: "",
+    svPlanVerifyValue: "",
+    selfVerificationValue: "",
+    convergencePassValue: "",
+    missingFields: [],
+    identitySummary: "",
+    reportRejectionReason: "",
+    parseError: String(error && error.message || error)
+  }));
+}
+NODE
+)"
+
+deny_task_complete() {
+  local reason="${1:?reason required}"
+  printf '[%s] TASK-COMPLETED BLOCKED: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
+  printf '%s\n' "$reason" >&2
+  exit 1
+}
+
+mapfile -d '' -t TASK_COMPLETED_FIELDS < <(
+  RESULT_JSON="$PARSED" node <<'NODE'
+const parsed = JSON.parse(process.env.RESULT_JSON || "{}");
+const fieldValues = [
+  parsed.sessionId || "",
+  parsed.teammateName || "",
+  parsed.taskId || "",
+  parsed.taskSubject || "",
+  parsed.evidenceSessionId || "",
+  parsed.wpTimestamp || "",
+  parsed.svPlanPresent ? "true" : "false",
+  parsed.svResultPresent ? "true" : "false",
+  parsed.exactTaskReportPresent ? "true" : "false",
+  parsed.explicitTaskIdFieldPresent ? "true" : "false",
+  parsed.latestMessageClass || "",
+  parsed.planningBasisValue || "",
+  parsed.svPlanVerifyValue || "",
+  parsed.selfVerificationValue || "",
+  parsed.convergencePassValue || "",
+  Array.isArray(parsed.missingFields) ? parsed.missingFields.join(", ") : "",
+  parsed.identitySummary || "",
+  parsed.reportRejectionReason || ""
+];
+
+for (const value of fieldValues) {
+  process.stdout.write(String(value) + "\0");
+}
+NODE
+)
+
+SESSION_ID="${TASK_COMPLETED_FIELDS[0]-}"
+TEAMMATE_NAME="${TASK_COMPLETED_FIELDS[1]-}"
+TASK_ID="${TASK_COMPLETED_FIELDS[2]-}"
+TASK_SUBJECT="${TASK_COMPLETED_FIELDS[3]-}"
+EVIDENCE_SESSION_ID="${TASK_COMPLETED_FIELDS[4]-}"
+WP_TIMESTAMP="${TASK_COMPLETED_FIELDS[5]-}"
+SV_PLAN_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
+SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
+EXACT_TASK_REPORT_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
+EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[9]-false}"
+LATEST_CLASS="${TASK_COMPLETED_FIELDS[10]-}"
+PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[11]-}"
+SV_PLAN_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[12]-}"
+SELF_VERIFICATION_VALUE="${TASK_COMPLETED_FIELDS[13]-}"
+CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[14]-}"
+MISSING_FIELDS="${TASK_COMPLETED_FIELDS[15]-}"
+IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[16]-}"
+REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[17]-}"
+
+if [[ -z "$SESSION_ID" && -z "$TEAMMATE_NAME" ]]; then
+  deny_task_complete "Task completion denied: identity resolution failed. Cannot verify completion requirements."
+fi
+
+if [[ -z "$WP_TIMESTAMP" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No observed work-planning load exists for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill, freeze scope for this task, and only then continue toward completion."
+fi
+
+if [[ "$SV_PLAN_PRESENT" != "true" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No Phase 1 self-verification skill-entry marker was observed for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, challenge the plan, and only then continue toward completion."
+fi
+
+if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No Phase 2 self-verification skill-entry marker was observed for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Hook markers alone do not prove convergence. Load self-verification, verify results, then retry task completion. Do not retry before this sequence is complete."
+fi
+
+if [[ -z "$LATEST_CLASS" ]]; then
+  if [[ "$REPORT_REJECTION_REASON" == "report-before-planning" ]]; then
+    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). The latest completion-grade report predates the resolved planning evidence (${IDENTITY_SUMMARY}). Send a fresh consequential report to team-lead via SendMessage after verification, then retry task completion. Do not retry before this sequence is complete."
+  fi
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No completion-grade report matched the resolved worker identity (${IDENTITY_SUMMARY}). Send a consequential report to team-lead via SendMessage before completing the task."
+fi
+
+case "$LATEST_CLASS" in
+  hold)
+    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Latest consequential SendMessage report is HOLD, so the task must remain open until the governing lane reroutes or resolves it."
+    ;;
+  handoff|completion) ;;
+  *)
+    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Latest consequential SendMessage report is '${LATEST_CLASS}', which is not a completion-grade report."
+    ;;
+esac
+
+if [[ "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade reporting must carry an explicit TASK-ID field (TASK-ID: <assigned-id|none>), then retry task completion. Do not retry before this sequence is complete."
+fi
+
+if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade reporting must carry the matching TASK-ID coordinate. Send a consequential report to team-lead via SendMessage including TASK-ID: ${TASK_ID}, then retry task completion. Do not retry before this sequence is complete."
+fi
+
+if [[ -n "$MISSING_FIELDS" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade report is missing required fields: ${MISSING_FIELDS}."
+fi
+
+if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry PLANNING-BASIS: loaded for an actually observed plan step. If planning was not completed, report HOLD instead of closing the task."
+fi
+
+if [[ "$SV_PLAN_VERIFY_VALUE" != "done" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry SV-PLAN-VERIFY: done. If plan verification did not complete, report HOLD instead of closing the task."
+fi
+
+if [[ "$SELF_VERIFICATION_VALUE" != "converged" ]]; then
+  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry SELF-VERIFICATION: converged. Non-converged work cannot close task state."
+fi
+
+case "$CONVERGENCE_PASS_VALUE" in
+  1|2|3) ;;
+  *)
+    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry CONVERGENCE-PASS: 1|2|3."
+    ;;
+esac
+
+exit 0
