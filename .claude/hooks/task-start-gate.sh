@@ -115,7 +115,7 @@ planning_bootstrap_tool_allowed() {
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
     Bash)
-      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME)[[:space:]]*$'
+      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME|git[[:space:]]+status([[:space:]]+--short|[[:space:]]+--branch|[[:space:]]+--short[[:space:]]+--branch|[[:space:]]+--branch[[:space:]]+--short)?|git[[:space:]]+remote[[:space:]]+(-v|--verbose)|git[[:space:]]+log([[:space:]]+--oneline)?([[:space:]]+-[0-9]+|[[:space:]]+--max-count(=|[[:space:]])[0-9]+)?|git[[:space:]]+rev-parse[[:space:]]+--show-toplevel)[[:space:]]*$'
       return
       ;;
     *) return 1 ;;

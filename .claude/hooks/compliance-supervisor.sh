@@ -165,7 +165,7 @@ case "$TOOL_NAME" in
     fi
     SANITIZED_COMMAND="$(strip_read_only_null_redirections "$CLEAN_COMMAND")"
 
-    GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file)([[:space:]]|$)'
+    GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
       : # fall through to further checks — compound command, skip allowlist fast path
     else
