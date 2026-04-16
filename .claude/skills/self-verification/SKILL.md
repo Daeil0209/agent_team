@@ -60,6 +60,8 @@ Load this skill and execute the full procedure at these points:
 5. Before handoff or reporting: handoff and reporting share ONE verification obligation.
 6. Before re-dispatch: when synthesizing upstream results into a downstream dispatch.
 
+**Temporal gate principle:** Self-verification is a gate, not a concurrent annotation. The gated action (reporting, execution, dispatch, handoff) must not begin until verification completes and conclusions survive Critical Challenge. Composing a report in the same response as the SV invocation defeats the gate — if Critical Challenge would change the conclusion, the already-composed output cannot reflect the correction. Complete verification first; compose the gated output from verified conclusions only.
+
 Note on trigger (1): This trigger fires after work-planning has frozen the request scope, not before work-planning loads. The sequence is always work-planning → self-verification (post-planning gate). Trigger (1) is the post-planning verification gate, not a pre-planning check.
 
 **Same-turn carry-forward:** If this skill was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, the existing in-turn verification satisfies the current trigger. A second Skill invocation is not required unless the work since the last SV load introduced material that was not already covered by that verification. Carry-forward holds when the agent synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, file modifications, or consequential dispatch actions (Agent, TaskCreate, assignment-grade SendMessage) are produced after the last SV load. (This mirrors the carry-forward rule in `agents/team-lead.md §RPA-7`.)
@@ -154,13 +156,13 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
 - Use induction first to generate candidate explanations. Then use deduction to decide which candidate, if any, is justified as a consequential conclusion.
 - For root-cause claims, policy judgments, structural diagnoses, and corrective recommendations, distinguish what was observed, what rule or constraint applied, what conclusion follows, and what remains inference-grade.
 - If the conclusion does not follow from explicit facts plus applicable rules, downgrade it to `INFERENCE` or `UNVERIFIED` instead of presenting it as settled.
-- When evaluating an existing state under review, require five explicit evidence surfaces before a "change needed" or "change unnecessary" conclusion is treated as settled:
+- When evaluating an existing state under review, require five explicit evidence surfaces before a "change needed" or "change unnecessary" conclusion is treated as settled. Verify that each surface was derived from its required input per the `work-planning` Step 2 dependency chain (understand → identify protection → classify cost → judge proportionality → assess change risk), not filled independently or in reverse from a pre-formed conclusion:
   - current-state rationale confirmed from an owner surface or direct code path
-  - protected value stated explicitly
-  - rationale justification judged explicitly as proportionate, excessive, stale, or unclear under current operating reality
-  - current cost or friction classified as observed or merely inferred
-  - change risk stated explicitly
-- If one of those five surfaces is missing, downgrade the conclusion to `INFERENCE`, `clarification candidate`, or `needs rationale confirmation` instead of hardening it into a final recommendation.
+  - protected value derived from the confirmed rationale above
+  - current cost or friction classified as (a) observed or merely inferred AND (b) protective cost (expected price of the stated protected value) or unnecessary overhead — classification requires the protected value as input
+  - rationale justification judged explicitly as proportionate, excessive, stale, or unclear — judgment requires both the protected value and cost classification as inputs
+  - change risk stated explicitly — requires all above as inputs
+- If one of those five surfaces is missing or was not derived from its required input, downgrade the conclusion to `INFERENCE`, `clarification candidate`, or `needs rationale confirmation` instead of hardening it into a final recommendation.
 
 ## Step 5: Convergence Loop
 
@@ -182,8 +184,8 @@ All depth levels still require formal Skill tool loading. The guide below contro
 ### MWEC Phase Depth Mapping
 
 The Mandatory Worker Execution Cycle defines two structural verification phases. Workers may not reclassify these phases to access lower depth levels:
-- **MWEC Step 2 (Verify Plan)**: Quick critical challenge — Step 3 including all four sub-checks (3a-3d). The Minimum depth (3d only) does not apply to MWEC-defined phases.
-- **MWEC Step 4 (Verify Results)**: Full procedure (Steps 1-6) — includes convergence checks.
+- **MWEC Verify-Plan phase**: Quick critical challenge — Step 3 including all four sub-checks (3a-3d). The Minimum depth (3d only) does not apply to MWEC-defined phases.
+- **MWEC Verify-Results phase**: Full procedure (Steps 1-6) — includes convergence checks.
 
 **Trigger 4+5 co-occurrence:** When trigger 4 (after applying a modification) and trigger 5 (before handoff or reporting) co-occur in the same step — that is, a modification is applied and immediately followed by handoff with no intervening changes — a single full-procedure invocation satisfies both triggers. A second Skill invocation is not required for the same completed result.
 

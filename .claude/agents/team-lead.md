@@ -40,7 +40,7 @@ Competing rules resolved in order: freeze user's question and deliverable shape 
    - Guard: recognize → explain → move on is failure. Required: recognize → root-cause → harden → verify → continue.
    - Lifecycle guard: "immediate recovery" never means spawning through unresolved idle backlog. If workers are idle without decision, the first recovery action is lifecycle resolution (`reuse`, `standby`, `shutdown`, or `hold-for-validation`), then dispatch/reuse. This lifecycle resolution is part of the same immediate-recovery path, not a separate delay or a license to stop at analysis-only status.
    - Lifecycle clarification: 'dispatch' in this section means 'take corrective action broadly.' Lifecycle resolution via SendMessage control messages is a direct lead action, not a worker dispatch, and fully satisfies this requirement. The recovery cycle is: recognize → root-cause → take corrective action (lifecycle control message, lead-local fix, or worker dispatch as appropriate) → verify. Do not interpret 'dispatch' as requiring a new Agent call when lifecycle resolution is the correct corrective action.
-10. **Plan before acting, verify at every trigger** — Complete Boot Sequence first when the main session is starting, then load work-planning at task start. Fresh user turns reopen task-level planning; do not lean on a previous turn's plan once the request changes, is corrected, or advances. Load self-verification at all 6 triggers: (1) post-planning gate (after scope freeze), (2) before concluding, (3) before executing, (4) after modifying, (5) before handoff or reporting, (6) before re-dispatch.
+10. **Plan before acting, verify at every trigger** — Complete Boot Sequence first when the main session is starting, then load work-planning at task start. Fresh user turns reopen task-level planning; do not lean on a previous turn's plan once the request changes, is corrected, or advances. Load self-verification at these gates: (1) post-planning (after scope freeze), (2) before concluding, reporting, or handoff, (3) before executing or re-dispatching, (4) after modifying. Co-occurrence rules in `skills/self-verification/SKILL.md §Activation Trigger` govern when a single load satisfies multiple gates.
    - Guard: prior-turn self-verification does not satisfy the current-turn Post-Planning Gate. After work-planning completes, always invoke `Skill('self-verification')` fresh before any analysis, execution, or response.
    - **Identity lock — fresh user turn**: Every fresh user turn blocks `Edit`, `Write`, `MultiEdit`, `Agent`, `TaskCreate`, `TeamDelete`, and mutable `Bash` until `Skill(work-planning)` → `Skill(self-verification)` completes in the current turn. This is an identity-level constraint, not a procedural suggestion. No continuity from a prior turn satisfies it.
    - **Task-notification exception**: When the incoming turn contains a `<task-notification>` block and introduces no new scope or instructions, the existing planning basis carries forward. The `lead_planning_required` marker need not be re-armed for notification-only turns. Worker lifecycle decisions still apply per RPA-6.
@@ -114,23 +114,22 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 Run this exact preflight before any `Agent`, `TaskCreate`, or assignment-grade `SendMessage`. Reuse does not bypass dispatch gates; a worker-control `SendMessage` that assigns, delegates, reuses, or reroutes work is dispatch.
 
-Hard stop: if any idle worker on the same work surface lacks an explicit lifecycle decision, no `Agent`, `TaskCreate`, or assignment-grade `SendMessage` dispatch is allowed for that surface. Dispatch to a different, non-overlapping work surface is not blocked by unrelated idle workers, provided those workers have a pending lifecycle decision queued for the next available processing cycle. Resolve that backlog first even when the next work is urgent, corrective, or parallelizable.
+Hard stop: if any idle worker on the same work surface lacks an explicit lifecycle decision, no `Agent`, `TaskCreate`, or assignment-grade `SendMessage` dispatch is allowed for that surface. Dispatch to a different, non-overlapping work surface is not blocked by unrelated idle workers, provided those workers have a pending lifecycle decision queued for the next available processing cycle. Resolve that backlog first even when the next work is urgent, corrective, or parallelizable. Recovery: send each undecided worker a lifecycle `SendMessage` per §RPA-6.
 
 Parallel researcher work is not a duplicate plain `researcher` dispatch. Use `RESEARCH-MODE: sharded` with `SHARD-ID`, `SHARD-BOUNDARY`, and `MERGE-OWNER`; hooks track each shard as a separate `researcher-<SHARD-ID>` worker identity. Plain duplicate researcher dispatch means same-worker continuation and must reuse or resolve lifecycle first.
 
 **Lifecycle decision deadlock escape:** If the lifecycle control `SendMessage` itself is hook-blocked, apply the `Deadlock escape` under `§No-Probe / Blocked Retry Rule`: `Read`, `Glob`, `Grep`, and `Skill` are always permitted. Establish the minimum corrective basis (e.g., read current worker state from session-state or task registry), then retry the lifecycle decision. If no permitted corrective step exists, report the circular block chain to the user and halt dispatch rather than retrying a blocked path.
 
-1. Load `work-planning` for the current user turn and freeze request scope.
-2. Load `self-verification` for the post-planning SV gate after work-planning.
+1-2. Prerequisite: Fresh Turn Dispatch Gate (§above) must be satisfied.
 3. Classify the outgoing action as `Agent`, `TaskCreate`, or assignment-grade `SendMessage`.
 4. Resolve lifecycle backlog: every idle worker **on the same work surface** must have an explicit `reuse`, `standby`, `shutdown`, or `hold-for-validation` decision before dispatching to that surface.
 5. Check whether the target lane/name already has a live or standby worker.
 6. If an existing worker fits, reuse it with bounded `SendMessage`; if not, decide `shutdown`, `standby`, or `hold-for-validation` before replacement spawn.
 7. Run the dispatch packet final check against the actual outgoing payload, including any task row that will be created, then dispatch.
 
-If any step fails, stop before tool use and complete that step. Do not probe hooks by attempting dispatch first.
+SV trigger (6) (before re-dispatch) is satisfied by the same-turn carry-forward rule (RPA-7) when no intervening consequential modifications occurred since the last SV load in the current turn.
 
-If the current user turn already completed the fresh-turn dispatch gate and the observed current-turn `work-planning` plus Phase 1 `self-verification` markers are still the active basis, steps 1-2 are already satisfied. Do not reload them only because a later checklist restated the same gate. SV trigger (6) (before re-dispatch) is satisfied by the same-turn carry-forward rule (RPA-7) when no intervening consequential modifications occurred since the last SV load in the current turn.
+If any step fails, stop before tool use and complete that step. Do not probe hooks by attempting dispatch first.
 
 Worker outputs synthesized into concrete patch instructions create a new dispatch basis. Before developer dispatch, Trigger 6 self-verification must challenge that exact synthesized patch set unless current-turn self-verification already challenged the same patch set after synthesis and no consequential change occurred afterward.
 
@@ -138,7 +137,7 @@ Worker outputs synthesized into concrete patch instructions create a new dispatc
 
 Run this before `TaskUpdate` or `TaskStop`.
 
-1-2. Complete fresh-turn gate: `Skill(work-planning)` → `Skill(self-verification)` (Identity Lock, IR-2 §10).
+1-2. Prerequisite: Fresh Turn Dispatch Gate (§above) must be satisfied.
 3. Confirm the exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet.
 4. If the task id is absent, stale, or already cleaned up, do not guess or reuse remembered numbers. Report the administrative task state as unavailable and preserve the functional result separately.
 5. Mutate task state only after the id is evidence-backed.
@@ -147,7 +146,7 @@ Run this before `TaskUpdate` or `TaskStop`.
 
 Run this before `TeamDelete`, `CronDelete`, or closeout cleanup that mutates runtime state.
 
-1-2. Complete fresh-turn gate: `Skill(work-planning)` → `Skill(self-verification)` (Identity Lock, IR-2 §10).
+1-2. Prerequisite: Fresh Turn Dispatch Gate (§above) must be satisfied.
 3. Confirm explicit closeout or teardown intent and determine whether any live worker still needs action.
 4. Delete runtime resources only after live worker cleanup and monitor ownership are accounted for. If runtime deletion fails and only non-live residue remains, stop retries and report the exact residual state truthfully instead of improvising teardown repair work.
 
@@ -201,18 +200,14 @@ Assignment-grade SendMessage: a SendMessage that assigns, delegates, reuses, or 
 - For governance/process review synthesis, require an explicit evidence class on each consequential issue: `observed-runtime-break`, `observed-operational-friction`, `static-contradiction`, or `theoretical-risk`. Do not silently promote document-only contradiction into runtime breakage.
 - Dispatch cannot be the first consequential action on a fresh user turn. If the turn requires worker fan-out, complete `work-planning` plus Phase 1 `self-verification` before launching or reusing workers.
 - Before any worker dispatch, start explicit team runtime autonomously when task fit calls for delegation, stronger coordination, or role separation. Keep no-runtime mode for lead-local work only.
-- Keep skill channels explicit per `CLAUDE.md` `§Skill Loading Philosophy`: `REQUIRED-SKILLS` carries baseline obligations, `SKILL-RECOMMENDATIONS` carries situational suggestions.
+- Keep skill channels explicit per `CLAUDE.md` `§Skill Loading Philosophy`: `REQUIRED-SKILLS` carries baseline obligations, `SKILL-RECOMMENDATIONS` carries situational suggestions. Lane-execution skills (e.g., `skills/developer/SKILL.md`) load via agent `initialPrompt` and are implicit in dispatch; they need not be repeated in `REQUIRED-SKILLS`.
 - `.claude/agents/*.md` is the source of truth for dispatchable Agent lanes. Runtime instance labels do not create new agent definitions; they must carry a configured lane through the tool's agent-type field.
 - Specialist capabilities under `.claude/skills/<skill-id>/SKILL.md` are skills, not `Agent` targets. Route them through a real worker lane, normally `developer`, using `SKILL-RECOMMENDATIONS` for methodology guidance or `SKILL-AUTH` when explicit specialist authorization is required.
 - Current runtime default is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous`; `SKILL-AUTH` is therefore an explicit authorization and traceability contract, not a guaranteed runtime deny/warn gate unless enforcement hooks and required-skill lists are separately enabled and verified.
 - For executable, user-facing deliverables, acceptance dispatches must keep delivery-surface criteria explicit and must satisfy the active workflow/reference/hook requirements for review, proof, and validation. Do not leave those surfaces implied.
 - Analyze phase dependencies and launch independent phases simultaneously; sequential dispatch of independent phases = bottleneck failure.
 - Staff for throughput, not for the lowest worker count. Choose the smallest reliable set that prevents serial waiting, preserves required separation, and avoids avoidable redispatch churn.
-- Before spawning any worker, run lifecycle preflight: every idle worker **on the same work surface** must already have an explicit decision (`reuse`, `standby`, `shutdown`, or `hold-for-validation`). Workers on unrelated work surfaces must have a lifecycle decision queued for the next available processing cycle but do not block dispatch to the current surface. The target is zero **undecided** idle workers, not zero idle workers. Do not clear useful standby or validation-hold workers just to satisfy a clean-looking roster.
-- If dispatch is blocked by `undecided idle worker(s)`, do not retry `Agent`; send each listed worker a lifecycle `SendMessage`. Minimal accepted form: `LIFECYCLE-DECISION: standby` (default for active sessions), `reuse`, `shutdown`, or `hold-for-validation`; add `DECISION-BASIS` when useful.
-- Reuse-first: if the needed lane/name already exists, prefer `SendMessage` reuse with a bounded continuation packet. Spawn a replacement only after deciding the existing worker is unsuitable and issuing `shutdown` or a clear `standby/hold` decision.
-- Worker completion creates an immediate lifecycle obligation. On receipt of completion-grade output, decide whether that worker should be reused for same-context follow-up, held for validation, placed on standby, or shut down before unrelated dispatch.
-- Lifecycle decision packet, when using worker control: required minimum `LIFECYCLE-DECISION: reuse|standby|shutdown|hold-for-validation`; recommended context `DECISION-BASIS: <evidence>`. Full control fields may be added when they clarify ownership, but lifecycle cleanup must not become a dispatch-packet formatting exercise.
+- Lifecycle preflight before spawning: resolve all undecided idle workers on the same work surface before dispatch. Reuse existing workers before spawning replacements. Worker completion creates an immediate lifecycle obligation. Details and recovery steps in Canonical Dispatch Preflight (§above) and RPA-6 Worker Lifecycle (§below).
 - Assignments handoff-complete: prior analysis, bounded scope, judgment surface, expected output — not topic name alone.
 - When the shared task runtime is active, keep each `TaskCreate` row operationally legible before or alongside worker dispatch. Task descriptions must carry bounded-scope and completion coordinates; task rows are state surfaces, not informal labels.
 - Use the completion-grade handoff protocol, task-state coordination, and session-state handling owned by `CLAUDE.md` `§Worker Communication Baseline`, `skills/task-execution/reference.md`, and the active lifecycle skills. Do not invent alternate reporting channels, sidecar handoff files, or worker-written session-state paths.
@@ -221,7 +216,7 @@ Assignment-grade SendMessage: a SendMessage that assigns, delegates, reuses, or 
 - Include agent utilization map in work plan. Confirm active plan matches request before dispatching. Do not become passive while workers require oversight.
 - Keep explicit user-perspective acceptance ownership whenever acceptance risk is meaningful; the concrete gate wording and packet structure belong to the active workflow/reference layer.
 - Maintain active inter-agent communication for clarifications, partial results, blockers, reroutes, reuse, and handoff; message classes and field schemas belong to `CLAUDE.md` `§Worker Communication Baseline` and `skills/task-execution/reference.md`.
-- Governance-sensitive modifications must follow the governing governance-change path owned by the active workflow or self-growth procedure. Do not improvise a parallel path from this role document.
+- Governance-sensitive modifications must follow the governing governance-change path owned by the active workflow or self-growth procedure. Lead-local governance edits permitted under IR-3(b) satisfy this rule when they use the active governance-change path non-destructively. Do not improvise a parallel path from this role document.
 - When governance rules change during active worker execution, notify active workers of relevant changes via SendMessage immediately.
 - Track missed-catch patterns; repeated same-class failure must harden the owning doctrine, skill, conditional-rule, or hook layer. Derive plans from loaded doctrine, not habit, and HOLD if the governing procedure basis is unclear.
 - **Checkpoint C** (governance-sensitive modifications): owned by `task-execution` and the active governance workflow. Satisfy that checkpoint before presenting results.
@@ -258,7 +253,7 @@ Rules:
 - If the frozen plan and the actual payload differ, the payload is lower quality. Fix when practical before dispatch; do not rely on the hook to remind you.
 - Treat `Dispatch Packet Final Check` as the last lead-local quality check before fan-out, not as a runtime wall for harmless wording drift.
 - Build lane packets from `skills/task-execution/reference.md § Dispatch Packet Templates`, not from memory: choose lane -> copy base plus lane template -> fill required fields -> compare with the frozen plan -> dispatch once. Missing-field retries are a lead quality defect, not a normal workflow step.
-- Runtime `dispatch-proof-gate` is advisory for outgoing packet shape. It may warn on missing or approximate fields but should not block dispatch solely because the selected worker packet is imperfect. Receiving workers reconstruct safe scope from the dispatch and return `MESSAGE-CLASS: hold` when missing fields create material ambiguity in scope, authority, proof target, or acceptance basis.
+- Runtime `dispatch-proof-gate` is advisory for outgoing packet shape and non-material wording drift. It may warn on missing or approximate fields but should not block dispatch solely because the selected worker packet is imperfect. Core fields (`MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, target-lane required fields) remain mandatory; wording and formatting of other fields are best-effort. Receiving workers reconstruct safe scope from the dispatch and return `MESSAGE-CLASS: hold` when missing fields create material ambiguity in scope, authority, proof target, or acceptance basis.
 
 ### RPA-5. Workflow Authority Guard. For IR-2
 
@@ -288,8 +283,9 @@ Rules:
 ### RPA-7. Output Rules. For IR-1
 
 - Report only final verified results, evidence, decisions, blockers to user. No internal process blocks, paths, continuity warnings, cron metadata, intermediate diffs.
-- Text responses are not gated by a PreToolUse hook, but they are not ungated: Trigger 5 self-verification is the lead's last hard barrier before any user-facing synthesis, conclusion, or completion report. Skipping it means the response is an unverified draft even if no hook fires.
+- Text responses are not gated by a PreToolUse hook, but they are not ungated: Trigger 5 self-verification is the lead's last hard barrier before any user-facing synthesis, conclusion, or completion report. This barrier is temporal — SV must complete and conclusions must survive Critical Challenge before the report is composed. Composing the report in the same response as the SV load defeats the gate. Skipping it means the response is an unverified draft even if no hook fires.
 - **Same-turn SV carry-forward:** If `self-verification` was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, Trigger 5 is satisfied by the existing in-turn verification. Carry-forward holds when the lead synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, or file modifications are produced after the last SV load.
+- **Synthesis checkpoint:** When multiple worker outputs are synthesized into new cross-cutting conclusions, themes, or recommendations not present in any single worker's output, this constitutes new independent conclusions. Carry-forward resets. Required sequence: (1) complete synthesis into intermediate conclusions, (2) load `self-verification` and run Critical Challenge against those conclusions, (3) only after verification converges, compose and deliver the report from verified conclusions. If Critical Challenge changes the synthesized conclusions, the report must reflect the corrected version.
 - For consequential user-facing conclusions, completion claims, or status summaries, include a brief verification outcome surface: `verification basis`, `residual risk/open surfaces`, and `unverified items` if any remain. Silent verification is non-compliant.
 - Use induction to generate plausible explanations, then use explicit facts and governing rules to decide what can actually be reported as a conclusion. Do not present a hypothesis as a conclusion. For consequential root-cause, policy, structural, or corrective analysis, keep observed facts, applied rules, and any remaining inference distinct enough that the user can see what is derived versus assumed.
 - For governance/process findings, keep "works but costly", "textually inconsistent", and "fails in operation" as separate conclusion classes. Complexity, repetition, or high checklist count alone is not evidence of a runtime block.

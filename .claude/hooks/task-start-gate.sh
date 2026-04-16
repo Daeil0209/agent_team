@@ -71,6 +71,29 @@ planning_preflight_block() {
   printf 'BLOCKED: planning preflight incomplete. Detail: %s requires fresh work-planning. Next: %s.' "$tool_name" "$next_step"
 }
 
+read_only_bash_probe_allowed() {
+  local command="${1:-}"
+  READ_ONLY_BASH_PROBE_COMMAND="$command" node <<'NODE'
+const raw = String(process.env.READ_ONLY_BASH_PROBE_COMMAND || "");
+const normalized = raw.replace(/\s+/g, " ").trim();
+
+if (!normalized) process.exit(1);
+if (normalized.includes("||") || normalized.includes(";") || normalized.includes("|")) process.exit(1);
+
+const segments = normalized.split(/\s*&&\s*/).map((value) => value.trim()).filter(Boolean);
+if (!segments.length) process.exit(1);
+
+for (const segment of segments) {
+  if (segment.startsWith("bash -n ") || segment.startsWith("sh -n ") || segment.startsWith("echo ")) {
+    continue;
+  }
+  process.exit(1);
+}
+
+process.exit(0);
+NODE
+}
+
 self_growth_block() {
   printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
 }
@@ -115,7 +138,8 @@ planning_bootstrap_tool_allowed() {
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
     Bash)
-      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME|git[[:space:]]+status([[:space:]]+--short|[[:space:]]+--branch|[[:space:]]+--short[[:space:]]+--branch|[[:space:]]+--branch[[:space:]]+--short)?|git[[:space:]]+remote[[:space:]]+(-v|--verbose)|git[[:space:]]+log([[:space:]]+--oneline)?([[:space:]]+-[0-9]+|[[:space:]]+--max-count(=|[[:space:]])[0-9]+)?|git[[:space:]]+rev-parse[[:space:]]+--show-toplevel)[[:space:]]*$'
+      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME|git[[:space:]]+status([[:space:]]+--short|[[:space:]]+--branch|[[:space:]]+--short[[:space:]]+--branch|[[:space:]]+--branch[[:space:]]+--short)?|git[[:space:]]+remote[[:space:]]+(-v|--verbose)|git[[:space:]]+log([[:space:]]+--oneline)?([[:space:]]+-[0-9]+|[[:space:]]+--max-count(=|[[:space:]])[0-9]+)?|git[[:space:]]+rev-parse[[:space:]]+--show-toplevel)[[:space:]]*$' \
+        || read_only_bash_probe_allowed "$command"
       return
       ;;
     *) return 1 ;;

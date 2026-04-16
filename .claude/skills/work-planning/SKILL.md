@@ -56,12 +56,18 @@ Define and record before any tool calls:
 - `EXPECTED-OUTPUT`: what artifact, result, or state will be produced.
 - `EXCLUDED-SCOPE`: what is explicitly not part of this work.
 - `DONE-CONDITION`: the specific observable state that marks completion.
-- When the work involves evaluating, reviewing, analyzing, or judging an existing rule, mechanism, structure, process, or policy, freeze these before choosing the analytical approach:
-  - `CURRENT-STATE-RATIONALE`: why the current rule, mechanism, structure, or process appears to exist
-  - `PROTECTED-VALUE`: what failure, ambiguity, quality property, or user-facing value it appears to protect
-  - `RATIONALE-JUSTIFICATION`: why that protection appears proportionate, excessive, stale, or unclear under current operating reality
-  - `CURRENT-COST`: what friction, delay, retry churn, complexity, or operator burden is actually observed
-  - `CHANGE-RISK`: what protection or value might be lost if simplified, merged, removed, or replaced
+- When the work involves evaluating, reviewing, analyzing, or judging an existing rule, mechanism, structure, process, or policy, follow this dependency chain before choosing the analytical approach. Each step takes the previous step's output as required input; skipping ahead produces UNVERIFIED conclusions:
+  1. **Understand** — read the owner surface and describe what this does and why it was built this way.
+     Output: `CURRENT-STATE-RATIONALE`
+  2. **Identify protection** — based on the rationale from step 1, name what failure, degradation, or ambiguity this prevents.
+     Output: `PROTECTED-VALUE` · Requires: step 1
+  3. **Classify cost** — based on the protected value from step 2, classify any observed friction, delay, or burden as (a) observed or merely inferred AND (b) protective cost (expected price of the stated protected value) or unnecessary overhead.
+     Output: `CURRENT-COST` · Requires: step 2
+  4. **Judge proportionality** — based on the protected value (step 2) and cost classification (step 3), judge whether the current protection level is proportionate, excessive, stale, or unclear.
+     Output: `RATIONALE-JUSTIFICATION` · Requires: steps 2–3
+  5. **Assess change risk** — based on all above, describe what protection or value would be lost if simplified, merged, removed, or replaced.
+     Output: `CHANGE-RISK` · Requires: steps 1–4
+  - Classification entry condition: FIX/IMPROVE/ACCEPT or equivalent action classification may begin only after steps 1–5 are complete. An incomplete chain produces UNVERIFIED classifications.
 - If the scope includes quantitative targets (reduction percentages, line counts, timelines), those targets must be derived from prior review of the actual target surface. HOLD if review has not been performed.
 - Verify the frozen scope and intended approach do not conflict with the `CLAUDE.md §Team Philosophy` coordinates identified in Step 1. If a conflict exists, revise the scope before proceeding.
 
@@ -79,7 +85,7 @@ Break the work into executable steps before acting:
 6. Treat methodology skills as approach refinement, not scope authority. If a methodology requirement would change `WORK-INTENT`, `EXPECTED-OUTPUT`, or `EXCLUDED-SCOPE`, re-run Step 2 before continuing. If Step 2 re-freeze and the methodology conflict recur after one cycle, HOLD with the exact conflict rather than looping further.
 7. For each planned step, confirm it derives from a specific user instruction or stated requirement. Steps based solely on agent inference must be labeled as inference and explicitly justified.
 8. Before finalizing the step list, challenge it critically: what is missing? what assumptions does this plan make? what would a critical reviewer identify as insufficient or ungrounded?
-9. When evaluating an existing state under review, include one explicit step to confirm the rationale of that current state from owner surfaces before recommending simplification, removal, replacement, or severity escalation.
+9. When evaluating an existing state under review, verify the approach includes the Step 2 dependency chain (understand → identify protection → classify cost → judge proportionality → assess change risk) before any action classification.
 
 Team-lead routing pre-signal:
 

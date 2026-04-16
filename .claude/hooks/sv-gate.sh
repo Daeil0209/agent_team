@@ -75,9 +75,10 @@ try {
       .concat(flattenText(toolInput.description))
   );
   const targetPaths = collectPaths(toolInput).join('\n');
-  process.stdout.write([sid, agentId, toolName, messageText, targetPaths].map(encode).join('\n'));
+  const teammateName = String(input.teammate_name || input.teammateName || toolInput.teammate_name || toolInput.teammateName || '');
+  process.stdout.write([sid, agentId, toolName, messageText, targetPaths, teammateName].map(encode).join('\n'));
 } catch {
-  process.stdout.write('\n\n\n\n\n');
+  process.stdout.write('\n\n\n\n\n\n');
 }
 NODE
 )"
@@ -93,6 +94,7 @@ AGENT_ID="$(decode_field "${FIELDS[1]:-}")"
 TOOL_NAME="$(decode_field "${FIELDS[2]:-}")"
 MESSAGE_TEXT="$(decode_field "${FIELDS[3]:-}")"
 TARGET_PATHS="$(decode_field "${FIELDS[4]:-}")"
+TEAMMATE_NAME="$(decode_field "${FIELDS[5]:-}")"
 WORKER_NAME=""
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
@@ -125,6 +127,27 @@ sv_verify_block() {
   printf 'BLOCKED: verification preflight incomplete. Detail: %s missing Phase 1 self-verification. Next: %s.' "$tool_name" "$next_step"
 }
 
+lead_follow_on_verification_sendmessage_allowed() {
+  local message_class="${1-}"
+  local message_text="${2-}"
+  local teammate_name="${3-}"
+  local target_name=""
+  local target_lane=""
+
+  case "$message_class" in
+    assignment|reuse|reroute) ;;
+    *) return 1 ;;
+  esac
+
+  target_name="$(resolve_requested_dispatch_name "$teammate_name" "$message_text")"
+  target_lane="$(resolve_agent_id "$target_name")"
+  case "$target_lane" in
+    reviewer|tester|validator) ;;
+    *) return 1 ;;
+  esac
+  return 0
+}
+
 if session_id_is_known_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
 fi
@@ -139,6 +162,12 @@ case "$TOOL_NAME" in
       # Lifecycle-control exemption per team-lead.md IR-2 §10:
       # MESSAGE-CLASS: control + LIFECYCLE-DECISION bypass WP+SV requirements.
       if [[ "$LEAD_MESSAGE_CLASS" == "control" ]] && dispatch_field_present "$MESSAGE_TEXT" "LIFECYCLE-DECISION"; then
+        exit 0
+      fi
+      # Minimal-guide exception: follow-on verification assignment to an existing
+      # reviewer/tester/validator worker should not be serialized behind fresh-turn
+      # planning ceremony.
+      if lead_follow_on_verification_sendmessage_allowed "$LEAD_MESSAGE_CLASS" "$MESSAGE_TEXT" "$TEAMMATE_NAME"; then
         exit 0
       fi
       if dispatch_field_present "$MESSAGE_TEXT" "REQUIRED-SKILLS" || [[ "$LEAD_MESSAGE_CLASS" == "assignment" || "$LEAD_MESSAGE_CLASS" == "reuse" || "$LEAD_MESSAGE_CLASS" == "reroute" ]]; then

@@ -70,7 +70,7 @@ Before any fresh-turn `Agent`, `TaskCreate`, or assignment-grade `SendMessage` f
 
 If `task-execution` is loaded first to classify tier or inspect workflow fit, stop before dispatch and satisfy the fresh-turn `work-planning` and post-planning `self-verification` markers. `task-execution` may refine the plan; it does not replace those markers.
 
-**Same-turn carry-forward:** If `work-planning` and post-planning `self-verification` were both executed in the current turn and no `Edit`, `Write`, `MultiEdit`, `Agent`, `TaskCreate`, or assignment-grade `SendMessage` occurred since the last SV load, those markers carry forward — `task-execution` Decision Freeze does not require reloading them. If scope changed materially after those markers (e.g., tier reclassification that changes the approach), re-run `work-planning` explicitly before continuing.
+**Same-turn carry-forward:** If `work-planning` and post-planning `self-verification` were both executed in the current turn and no `Edit`, `Write`, `MultiEdit`, `Agent`, `TaskCreate`, or assignment-grade `SendMessage` occurred since the last SV load, those markers carry forward — `task-execution` Decision Freeze does not require reloading them. If scope changed materially after those markers (e.g., tier reclassification that changes the approach), re-run `work-planning` explicitly before continuing. For the authoritative carry-forward reset conditions, see `skills/self-verification/SKILL.md §Activation Trigger`.
 
 Before any consequential tool use, apply the reference `Consequential Tool Recovery Contract`: answer status-only turns without mutation, do not probe hooks, and do not retry a blocked tool until the hook's `Next:` action has been completed.
 

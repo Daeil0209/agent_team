@@ -237,7 +237,7 @@ case "$TOOL_NAME" in
     # V-06 fix: Allow worker sessions to run diagnostic/test patterns.
     # Developer implementation commands — allowed for worker sessions
     # E-20 fix: moved AFTER destructive command check to prevent compound-command bypass.
-    S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])(git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|(mkdir|touch|cp|chmod)[[:space:]]|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python[[:space:]]|node[[:space:]]|make[[:space:]]|cargo[[:space:]]|go[[:space:]]+(build|test|run)|pytest|jest|mocha)([[:space:]]|$)'
+    S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])(git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|(mkdir|touch|cp|chmod)[[:space:]]|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python[[:space:]]|python3[[:space:]]|node[[:space:]]|npx[[:space:]]|tsc[[:space:]]|curl[[:space:]]|make[[:space:]]|cargo[[:space:]]|go[[:space:]]+(build|test|run)|diff[[:space:]]|wc[[:space:]]|sort[[:space:]]|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
       if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
         if validate_compound_command "$CLEAN_COMMAND" allowed_worker_impl_subcmd; then
@@ -266,6 +266,13 @@ case "$TOOL_NAME" in
         "cp "
         "mv "
         "ln "
+        "node "
+        "python "
+        "python3 "
+        "npx "
+        "tsc "
+        "curl "
+        "chmod "
     )
 
     # Check if this is an allowlisted operational command (prefix match only).

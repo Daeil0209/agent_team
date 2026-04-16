@@ -346,68 +346,79 @@ MISSING_FIELDS="${TASK_COMPLETED_FIELDS[15]-}"
 IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[16]-}"
 REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[17]-}"
 
+FAILURES=()
+
 if [[ -z "$SESSION_ID" && -z "$TEAMMATE_NAME" ]]; then
-  deny_task_complete "Task completion denied: identity resolution failed. Cannot verify completion requirements."
+  FAILURES+=("Identity resolution failed. Cannot verify completion requirements.")
 fi
 
 if [[ -z "$WP_TIMESTAMP" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No observed work-planning load exists for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill, freeze scope for this task, and only then continue toward completion."
+  FAILURES+=("No observed work-planning load for session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill first.")
 fi
 
 if [[ "$SV_PLAN_PRESENT" != "true" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No Phase 1 self-verification skill-entry marker was observed for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, challenge the plan, and only then continue toward completion."
+  FAILURES+=("No Phase 1 self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and challenge the plan.")
 fi
 
 if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No Phase 2 self-verification skill-entry marker was observed for the resolved worker evidence session ${EVIDENCE_SESSION_ID:-unknown}. Hook markers alone do not prove convergence. Load self-verification, verify results, then retry task completion. Do not retry before this sequence is complete."
+  FAILURES+=("No Phase 2 self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, verify results.")
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then
   if [[ "$REPORT_REJECTION_REASON" == "report-before-planning" ]]; then
-    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). The latest completion-grade report predates the resolved planning evidence (${IDENTITY_SUMMARY}). Send a fresh consequential report to team-lead via SendMessage after verification, then retry task completion. Do not retry before this sequence is complete."
+    FAILURES+=("Latest completion-grade report predates planning evidence (${IDENTITY_SUMMARY}). Send fresh report after verification.")
+  else
+    FAILURES+=("No completion-grade report matched worker identity (${IDENTITY_SUMMARY}). Send a report to team-lead via SendMessage.")
   fi
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). No completion-grade report matched the resolved worker identity (${IDENTITY_SUMMARY}). Send a consequential report to team-lead via SendMessage before completing the task."
 fi
 
 case "$LATEST_CLASS" in
   hold)
-    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Latest consequential SendMessage report is HOLD, so the task must remain open until the governing lane reroutes or resolves it."
+    FAILURES+=("Latest report is HOLD. Task must remain open until governing lane resolves it.")
     ;;
-  handoff|completion) ;;
+  handoff|completion|"") ;;
   *)
-    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Latest consequential SendMessage report is '${LATEST_CLASS}', which is not a completion-grade report."
+    FAILURES+=("Latest report is '${LATEST_CLASS}', not a completion-grade report.")
     ;;
 esac
 
 if [[ "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade reporting must carry an explicit TASK-ID field (TASK-ID: <assigned-id|none>), then retry task completion. Do not retry before this sequence is complete."
+  FAILURES+=("Completion-grade report must carry TASK-ID field.")
 fi
 
 if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade reporting must carry the matching TASK-ID coordinate. Send a consequential report to team-lead via SendMessage including TASK-ID: ${TASK_ID}, then retry task completion. Do not retry before this sequence is complete."
+  FAILURES+=("Report must carry matching TASK-ID: ${TASK_ID}.")
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade report is missing required fields: ${MISSING_FIELDS}."
+  FAILURES+=("Missing required fields: ${MISSING_FIELDS}.")
 fi
 
 if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry PLANNING-BASIS: loaded for an actually observed plan step. If planning was not completed, report HOLD instead of closing the task."
+  FAILURES+=("Report must carry PLANNING-BASIS: loaded.")
 fi
 
 if [[ "$SV_PLAN_VERIFY_VALUE" != "done" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry SV-PLAN-VERIFY: done. If plan verification did not complete, report HOLD instead of closing the task."
+  FAILURES+=("Report must carry SV-PLAN-VERIFY: done.")
 fi
 
 if [[ "$SELF_VERIFICATION_VALUE" != "converged" ]]; then
-  deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry SELF-VERIFICATION: converged. Non-converged work cannot close task state."
+  FAILURES+=("Report must carry SELF-VERIFICATION: converged.")
 fi
 
 case "$CONVERGENCE_PASS_VALUE" in
   1|2|3) ;;
   *)
-    deny_task_complete "TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). Completion-grade handoff/completion reports must carry CONVERGENCE-PASS: 1|2|3."
+    FAILURES+=("Report must carry CONVERGENCE-PASS: 1|2|3.")
     ;;
 esac
+
+if [[ ${#FAILURES[@]} -gt 0 ]]; then
+  FAILURE_MSG="TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). ${#FAILURES[@]} issue(s) found:"
+  for f in "${FAILURES[@]}"; do
+    FAILURE_MSG+=$'\n'"  - $f"
+  done
+  deny_task_complete "$FAILURE_MSG"
+fi
 
 exit 0
