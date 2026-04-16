@@ -47,8 +47,7 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 | Request-bound documents | PLAN-STEP: draft or merge-compress. CHANGE-SPEC explicit about first-draft vs integration |
 | Office-format artifacts | + rendered review chain: developer/doc-auto → tester → reviewer → validator |
 | Manifest-sync | + TASK-CLASS, MANIFEST-UNIQUE, OVERLAP-REVIEW, PRE-EXEC-REVIEW, WRITE-SCOPE |
-| Governance-patch | + TASK-CLASS, OWNER-SURFACE, CHANGE-BOUNDARY, WRITE-SCOPE, VERIFY-BASIS |
-| Optimization/compression | + OPTIMIZATION-ORDER: post-change-only, OPTIMIZATION-GUARD: zero-loss, PROTECTED-MEANING: checked |
+| Governance-patch | + TASK-CLASS, CHANGE-BOUNDARY, WRITE-SCOPE |
 
 - In the current target design, specialist capabilities live as skills under the path pattern .claude/skills/{skill-id}/SKILL.md, not as active subagents under `.claude/agents/`.
 - Authorization packets should name `skill-id`, bind it to the target lane plus blocked surface, and let `developer` resolve it against the active project skill root/subpath.

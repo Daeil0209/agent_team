@@ -109,6 +109,11 @@ ACCEPTANCE_RISK_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACCEPTANCE-RISK"
 REVIEW_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "REVIEW-OWNER" 2>/dev/null || true)"
 PROOF_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-OWNER" 2>/dev/null || true)"
 ACCEPTANCE_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACCEPTANCE-OWNER" 2>/dev/null || true)"
+ACTIVE_WORKFLOW_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACTIVE-WORKFLOW" 2>/dev/null || true)"
+TASK_CLASS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-CLASS" 2>/dev/null || true)"
+TASK_CLASS_NORM="$(normalize_dispatch_text "$TASK_CLASS_RAW")"
+CHANGE_BOUNDARY_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "CHANGE-BOUNDARY" 2>/dev/null || true)"
+WRITE_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
 
 CURRENT_PHASE_NORM="$(normalize_dispatch_text "$CURRENT_PHASE_RAW")"
 WORK_SURFACE_NORM="$(normalize_dispatch_text "$WORK_SURFACE_RAW")"
@@ -118,6 +123,7 @@ ACCEPTANCE_RISK_NORM="$(normalize_dispatch_text "$ACCEPTANCE_RISK_RAW")"
 REVIEW_OWNER_NORM="$(normalize_dispatch_text "$REVIEW_OWNER_RAW")"
 PROOF_OWNER_NORM="$(normalize_dispatch_text "$PROOF_OWNER_RAW")"
 ACCEPTANCE_OWNER_NORM="$(normalize_dispatch_text "$ACCEPTANCE_OWNER_RAW")"
+ACTIVE_WORKFLOW_NORM="$(normalize_dispatch_text "$ACTIVE_WORKFLOW_RAW")"
 
 developer_dispatch_needs_acceptance_chain() {
   local text="${1-}"
@@ -162,6 +168,11 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
   if [[ "$packet_warning_needed" == "true" ]]; then
     emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS, WORK-SURFACE, and CURRENT-PHASE if known; worker should infer safe scope or HOLD if ambiguity affects ownership, scope, proof, or acceptance."
   fi
+
+  # Advisory: check ACTIVE-WORKFLOW presence for workflow-aware dispatch
+  if [[ -z "$ACTIVE_WORKFLOW_NORM" ]]; then
+    emit_packet_warning "Dispatch packet missing ACTIVE-WORKFLOW field. Add ACTIVE-WORKFLOW from work-planning Step 1 Q3 result if applicable."
+  fi
 fi
 
 # This hook only reviews the team-lead's outgoing Agent dispatch packet shape.
@@ -191,6 +202,26 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
     esac
     if [[ "$acceptance_warning_needed" == "true" ]]; then
       emit_packet_warning "Developer dispatch may have incomplete acceptance ownership. Add acceptance chain if known; worker must HOLD if review, proof, or final acceptance ownership is ambiguous."
+    fi
+  fi
+
+  # Advisory: governance-patch guardrail check
+  if [[ "$TASK_CLASS_NORM" == "governance-patch" || "$TASK_CLASS_NORM" == "governancepatch" ]]; then
+    gov_warning_needed="false"
+    if [[ -z "$CHANGE_BOUNDARY_RAW" ]]; then
+      gov_warning_needed="true"
+    fi
+    if [[ -z "$WRITE_SCOPE_RAW" ]]; then
+      gov_warning_needed="true"
+    fi
+    if [[ "$gov_warning_needed" == "true" ]]; then
+      emit_packet_warning "Governance-patch dispatch missing CHANGE-BOUNDARY or WRITE-SCOPE. Both are required guardrails for bounded governance modification."
+    fi
+    # Migration advisory: detect move/migrate/re-home without meaning inventory
+    if [[ -n "$CHANGE_BOUNDARY_RAW" ]] && printf '%s' "$CHANGE_BOUNDARY_RAW" | grep -qiE '(move|migrate|re-home|transfer|relocate)'; then
+      if ! printf '%s' "$CHANGE_BOUNDARY_RAW" | grep -qiE '(source.?meaning|meaning.?inventory|cross.?reference)'; then
+        emit_packet_warning "Governance-patch appears to be a migration but CHANGE-BOUNDARY may lack source-meaning inventory or cross-reference list."
+      fi
     fi
   fi
 fi

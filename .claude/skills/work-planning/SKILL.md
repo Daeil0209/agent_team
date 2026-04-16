@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Planning Output Format, Post-Planning Gate
+- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Planning Output Format, Post-Planning Gate
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
@@ -40,11 +40,20 @@ Load this skill via the Skill tool and execute the full procedure at work start.
 
 Before the first consequential tool call on any new assignment, reuse, or reroute: confirm work-planning is loaded and scope is frozen. This skill does not substitute for `task-execution` on Standard or Precision lead work.
 
-## Step 1: Instruction Confirmation
+## Step 1: Instruction Confirmation And Work Analysis
 
 - Read the user's request.
 - Read the dispatch or assignment instructions.
 - Cross-check scope, purpose, and output target.
+- Analyze the work through the following thinking flow before scope freeze:
+  · **Q1 (Purpose)**: What is the user trying to achieve? Extract the real goal, not just the surface task.
+  · **Q2 (Work Types)**: What types of work does this purpose require? (e.g., software development, document creation, research/analysis, design, engineering calculation)
+  · **Q3 (Channels)**: For each work type, identify the governing workflow or methodology skill. Use the Deliverable-Type reference in `task-execution/reference.md` as a guide. If the match is unclear, ask the user before proceeding.
+  · **Q4 (Relationships)**: If multiple work types exist, map their relationships: independent, sequential, or interdependent.
+  · **Q5 (Supporting Skills)**: Within each stream, identify methodology or domain skills that support the work.
+- Q3 results become the `ACTIVE-WORKFLOW` field in the planning output. Q5 results feed `SKILL-RECOMMENDATIONS` at dispatch time.
+- If Q1 cannot determine the purpose, HOLD and ask the user for clarification.
+- If Q3 cannot confidently match a workflow, ask the user rather than guessing.
 - Identify which `CLAUDE.md §Team Philosophy` coordinates apply to this work — these become non-negotiable constraints on the resulting plan.
 - If user intent and dispatch conflict, HOLD or escalate before proceeding.
 
@@ -129,6 +138,7 @@ WORK-INTENT: <one sentence>
 EXPECTED-OUTPUT: <artifact or state>
 EXCLUDED-SCOPE: <what is out>
 DONE-CONDITION: <observable completion signal>
+ACTIVE-WORKFLOW: <workflow-id(s)|none|pending-user-clarification>
 PHILOSOPHY-CONSTRAINTS: <applicable §Team Philosophy coordinate IDs>
 ROUTING-SIGNAL: <lead-local candidate | team-routing candidate | ambiguous-route>
 STEPS: <numbered list>

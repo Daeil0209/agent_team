@@ -9,6 +9,7 @@ auto-inject: false
 > **Not auto-injected.** This file does NOT load automatically when the `task-execution` skill activates.
 > Load explicitly via `Read` when you need dispatch packet field specifications, compliance lookup tables, or governance-patch packet tier definitions.
 > Referenced in SKILL.md at: § Pre-Dispatch Scope Check (items 10–13), § Dispatch Packet Compliance, § Task Decomposition Protocol. Full sections for Dispatch Packet And Authority Boundaries and Agent Dispatch Discipline are housed here.
+> Also referenced in work-planning/SKILL.md at: § Step 1 Q3 (Deliverable-Type Workflow Reference table).
 
 ---
 
@@ -16,9 +17,31 @@ auto-inject: false
 
 | Tier | Criteria | Fields Required |
 |------|----------|----------------|
-| Quick hardening | Existing rule compliance fix, single-file scope | base + TASK-CLASS: governance-patch + FAILURE-MODE + RECURRENCE-PATH + CHANGE-BOUNDARY + WRITE-SCOPE + VERIFY-BASIS + BASELINE-CLASS + EDIT-OPERATION |
-| Structural change | Multi-file, new sections | Full governance-patch fields — see § Developer (governance-patch) below |
+| Standard | Single-file, compliance fix, typo, clarification, wording | developer-general + TASK-CLASS: governance-patch + CHANGE-BOUNDARY + WRITE-SCOPE |
+| Structural | Multi-file, new sections, meaning migration, architecture | Standard + BASELINE-CLASS + EDIT-OPERATION. For migration: CHANGE-BOUNDARY must include source-meaning inventory + cross-reference list |
 | New capability | skill-up / new-skill | Full self-growth fields — see § Developer (self-growth) below |
+
+---
+
+## Deliverable-Type Workflow Reference
+
+This table supports Q3 judgment in `work-planning` Step 1. It is a reference aid, not a rigid lookup. When Q3 judgment is unclear, ask the user rather than forcing a match.
+
+| Deliverable Type | Governing Workflow | Typical Methodology Skills |
+|---|---|---|
+| Web/mobile application | dev-workflow | ui-ux, design-token, biz-sys |
+| CLI tool / library / API | dev-workflow | sw-spec, code-quality |
+| Data pipeline / ETL system | dev-workflow | eng-spec, biz-sys |
+| Spreadsheet/workflow conversion to software | dev-workflow | biz-sys, ui-ux |
+| Technical report / analysis report | doc-auto | eng-spec, math-spec |
+| User manual / operation guide | doc-auto | ui-ux, biz-sys |
+| Business report | doc-auto | biz-sys |
+| Presentation | doc-auto | ui-ux |
+| Single bug fix / small patch | none (Lightweight) | code-quality |
+| Research / investigation | none (researcher dispatch) | domain-specific |
+| Governance change | none (self-growth-sequence) | — |
+| Design mockup only | none (methodology skills) | ui-mockup, ui-ux, design-token |
+| Engineering calculation | none (methodology skills) | eng-spec, math-spec, bench-sim |
 
 ---
 
@@ -52,11 +75,17 @@ For `dev-workflow` on executable, user-facing software deliverables:
 
 ### Developer (governance-patch)
 
-base + `TASK-CLASS: governance-patch; SEQUENCE: change|self-growth|update-upgrade; PATCH-CLASS: hardening|structural-normalization|migration-rehome|config-owner-standardization|skill-up|new-skill|follow-on-optimization; FAILURE-MODE: missing-owner|weak-owner|wrong-owner|non-compliance|weak-enforcement|capability-gap; RECURRENCE-PATH: <path>; OWNER-SURFACE: <files>; BASELINE-CLASS: preserved-asset|improvement-target|stability-anchor; EDIT-OPERATION: tighten|replace|re-home|merge|append|delete; BOUNDARY-RISK: <risk>; INFO-LOSS-REVIEW: done; BALANCE-REVIEW: local-context-checked; RELATED-DOC-REVIEW: adjacent-owner-surfaces-checked; PATCH-REVIEW: pre-exec-done; MODIFICATION-PROPOSAL: explicit; SOURCE-MEANING-INVENTORY: explicit; DESTINATION-OWNER-MAP: explicit; CHANGE-BOUNDARY: <delta>; VERIFY-BASIS: <method>; FOLLOW-ON-OPTIMIZATION: needed|not-needed; WRITE-SCOPE: <paths>`
+Governance patches use the developer-general template plus 3 guardrail fields. Developer WP+SV cycle owns the protection that was previously carried by lead self-declaration checkboxes.
+
+**Standard** (single-file, compliance fix, typo, clarification, wording):
+base + developer-general fields + `TASK-CLASS: governance-patch; CHANGE-BOUNDARY: <bounded delta>; WRITE-SCOPE: <paths>`
+
+**Structural** (multi-file, new sections, meaning migration, architecture change):
+base + developer-general fields + `TASK-CLASS: governance-patch; CHANGE-BOUNDARY: <bounded delta>; WRITE-SCOPE: <paths>; BASELINE-CLASS: preserved-asset|improvement-target|stability-anchor; EDIT-OPERATION: tighten|replace|re-home|merge|append|delete`
+
+For meaning migration (re-home, move, transfer): CHANGE-BOUNDARY must include source-meaning inventory, destination rationale, and cross-reference update list.
 
 High-traffic surfaces add: `SESSION-REVALIDATION: current-session-repo; BASELINE-ANCHOR: captured`
-
-Optimization add: `OPTIMIZATION-ORDER: post-change-only; OPTIMIZATION-GUARD: zero-loss; PROTECTED-MEANING: checked`
 
 ### Developer (self-growth)
 
@@ -64,9 +93,9 @@ governance-patch fields + `CAPABILITY-SIGNAL: <why>; INSPECT-LANES: <lanes>; OWN
 
 ### Developer (solution-dev)
 
-base + `PROBLEM-CLASS: instance|structural|systemic; ROOT-CAUSE-BASIS: confirmed|supported|hypothesis|unknown; SOLUTION-PASS: 1|2|3; DECISION-BASIS: <why>; REJECTED-OPTIONS: <alternatives>; INFO-LOSS-REVIEW: done; SOURCE-MEANING-INVENTORY: explicit; DESTINATION-OWNER-MAP: explicit; CHANGE-BOUNDARY: <delta>; VERIFY-BASIS: <method>`
+base + `PROBLEM-CLASS: instance|structural|systemic; ROOT-CAUSE-BASIS: confirmed|supported|hypothesis|unknown; SOLUTION-PASS: 1|2|3; DECISION-BASIS: <why>; REJECTED-OPTIONS: <alternatives>; CHANGE-BOUNDARY: <delta>`
 
-structural/systemic add: `SOLUTION-PASS: 2|3; ALTERNATIVE-REVIEW: done; SELECTED-SCOPE: class-fix|system-fix|staged-class-fix`
+structural/systemic add: `SOLUTION-PASS: 2|3; SELECTED-SCOPE: class-fix|system-fix|staged-class-fix`
 
 solution-pass 2|3 add: `PASS-DELTA: <what improved>`
 

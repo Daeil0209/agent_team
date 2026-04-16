@@ -71,27 +71,18 @@ planning_preflight_block() {
   printf 'BLOCKED: planning preflight incomplete. Detail: %s requires fresh work-planning. Next: %s.' "$tool_name" "$next_step"
 }
 
-read_only_bash_probe_allowed() {
+bash_requires_planning_preflight() {
   local command="${1:-}"
-  READ_ONLY_BASH_PROBE_COMMAND="$command" node <<'NODE'
-const raw = String(process.env.READ_ONLY_BASH_PROBE_COMMAND || "");
-const normalized = raw.replace(/\s+/g, " ").trim();
+  local normalized=""
 
-if (!normalized) process.exit(1);
-if (normalized.includes("||") || normalized.includes(";") || normalized.includes("|")) process.exit(1);
+  normalized="$(printf '%s' "$command" | tr '\n' ' ' | sed -E 's/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//')"
+  [[ -n "$normalized" ]] || return 1
 
-const segments = normalized.split(/\s*&&\s*/).map((value) => value.trim()).filter(Boolean);
-if (!segments.length) process.exit(1);
-
-for (const segment of segments) {
-  if (segment.startsWith("bash -n ") || segment.startsWith("sh -n ") || segment.startsWith("echo ")) {
-    continue;
-  }
-  process.exit(1);
-}
-
-process.exit(0);
-NODE
+  # Planning preflight is for consequential shell actions, not ordinary read-only discovery.
+  # Block only when the shell command is plausibly mutating files, mutating git/runtime state,
+  # or creating an external side effect. Leave read-only probes to downstream safety hooks.
+  printf '%s' "$normalized" | grep -Eiq \
+    '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(add|commit|push|pull|checkout|switch|restore|reset|clean|merge|rebase|stash)([[:space:]]|$)'
 }
 
 self_growth_block() {
@@ -138,8 +129,7 @@ planning_bootstrap_tool_allowed() {
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
     Bash)
-      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME|git[[:space:]]+status([[:space:]]+--short|[[:space:]]+--branch|[[:space:]]+--short[[:space:]]+--branch|[[:space:]]+--branch[[:space:]]+--short)?|git[[:space:]]+remote[[:space:]]+(-v|--verbose)|git[[:space:]]+log([[:space:]]+--oneline)?([[:space:]]+-[0-9]+|[[:space:]]+--max-count(=|[[:space:]])[0-9]+)?|git[[:space:]]+rev-parse[[:space:]]+--show-toplevel)[[:space:]]*$' \
-        || read_only_bash_probe_allowed "$command"
+      ! bash_requires_planning_preflight "$command"
       return
       ;;
     *) return 1 ;;

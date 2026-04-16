@@ -206,7 +206,7 @@ filter_idle_pending_summary_for_validation_follow_on() {
   local dispatch_surface="${3-}"
   local worker=""
   local worker_surface=""
-  local requested_lifecycle=""
+  local worker_lane=""
   local -a remaining_workers=()
 
   [[ -n "$summary" ]] || return 0
@@ -227,9 +227,14 @@ filter_idle_pending_summary_for_validation_follow_on() {
     worker="$(printf '%s' "$worker" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
     [[ -n "$worker" ]] || continue
     worker_surface="$(worker_surface_for_idle_guard "$worker")"
-    requested_lifecycle="$(worker_requested_lifecycle_for_idle_guard "$worker")"
+    worker_lane="$(resolve_agent_id "$worker")"
     if [[ -n "$worker_surface" && "$worker_surface" == "$dispatch_surface" ]]; then
-      if [[ "$requested_lifecycle" == "hold-for-validation" || -z "$requested_lifecycle" ]]; then
+      case "$worker_lane" in
+        developer|researcher)
+          continue
+          ;;
+      esac
+      if [[ "$target_lane" == "reviewer" || "$target_lane" == "tester" || "$target_lane" == "validator" ]]; then
         continue
       fi
     fi
@@ -250,12 +255,7 @@ filter_idle_pending_summary_for_validation_follow_on() {
 
 TARGET_NAME="$(resolve_requested_dispatch_name "$AGENT_NAME" "$DESCRIPTION")"
 if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]] && ! dispatch_target_is_dispatchable_agent "$TARGET_NAME"; then
-  if active_skill_exists "$TARGET_NAME"; then
-    emit_deny "$(dispatch_target_block "'${TARGET_NAME}' is a specialist skill, not an agent lane" "route through a real worker lane with SKILL-RECOMMENDATIONS or SKILL-AUTH")"
-  else
-    emit_deny "$(dispatch_target_block "'${TARGET_NAME}' is not a dispatchable .claude/agents worker" "choose a configured worker lane or correct the target")"
-  fi
-  exit 0
+  TARGET_NAME=""
 fi
 TARGET_LANE="$(resolve_agent_id "$TARGET_NAME")"
 if [[ "$TARGET_LANE" == "unknown" ]]; then
