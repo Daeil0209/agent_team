@@ -105,7 +105,7 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 #### Fresh Turn Dispatch Gate
 - Fresh user turns begin with `Bootstrap Inspection` before planning freeze: read-only context gathering only; must not drift into execution, mutation, dispatch, task creation, or completion-style reporting.
 - Before any fresh-turn `Agent`, `TaskCreate`, or assignment-grade `SendMessage` fan-out: load `work-planning`, freeze the current request scope, then load `self-verification` for the post-planning SV gate.
-- Standard and Precision work still require `task-execution` for tier, workflow, and dispatch governance. `task-execution` does not replace the fresh-turn `work-planning` marker or Phase 1 `self-verification` marker.
+- Standard and Precision work still require `task-execution` for tier, workflow, and dispatch governance. `task-execution` does not replace the fresh-turn `work-planning` marker or post-planning `self-verification` marker.
 - `TeamCreate` may be performed when runtime setup is required, but worker dispatch remains blocked until the fresh-turn dispatch gate is complete.
 
 #### Canonical Dispatch Preflight
@@ -123,7 +123,7 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 ### RPA-2. Direct vs Team Decision Checklist. For IR-2
 
-Run this checklist after `work-planning` and Phase 1 `self-verification`, before choosing lead-local execution or team fan-out.
+Run this checklist after `work-planning` and post-planning `self-verification`, before choosing lead-local execution or team fan-out.
 
 #### Lead-Local Direct Work Is Allowed Only When All Are True
 
@@ -152,15 +152,15 @@ Run this checklist after `work-planning` and Phase 1 `self-verification`, before
 - `lead-local clerical`: wording cleanup, bounded documentation edits, narrow continuity updates, and similar low-risk repairs.
 - `lead-local consequential`: direct work on hooks, settings, governance surfaces, or other consequential system behavior. This class is still allowed when narrowly bounded, but it requires stronger regression discipline and explicit verification outcome reporting.
 
-### RPA-3. [MERGED into IR-3 §Authority Boundaries and RPA-6]
+### RPA-3. [MERGED into session-boot/SKILL.md]
 
-Prior RPA-3 content (main-thread editing discipline and worker lifecycle micro-rules) was merged into IR-3 §Authority Boundaries and RPA-6 §Checkpoint D per governance review. Refer to those sections; do not reintroduce RPA-3 as an independent surface.
+Prior RPA-3 content (startup conditionality — Boot Sequence required only when an explicit agent team is actually needed; end startup without runtime narration) was merged into session-boot/SKILL.md §Boot Sequence (intro) and §Startup Constraints per governance review. Refer to those sections; do not reintroduce RPA-3 as an independent surface.
 
 ### RPA-4. Dispatch Rules. For IR-2
 
 Assignment-grade SendMessage: a SendMessage that assigns, delegates, reuses, or reroutes work to a worker agent. Lifecycle control messages (MESSAGE-CLASS: control with LIFECYCLE-DECISION field) are NOT assignment-grade and are not blocked by the Identity Lock.
 
-- Dispatch cannot be the first consequential action on a fresh user turn. Complete `work-planning` plus Phase 1 `self-verification` before launching or reusing workers.
+- Dispatch cannot be the first consequential action on a fresh user turn. Complete `work-planning` plus post-planning `self-verification` before launching or reusing workers.
 - Before any worker dispatch, start explicit team runtime autonomously when task fit calls for delegation, stronger coordination, or role separation. Keep no-runtime mode for lead-local work only.
 - Full dispatch rules, packet compliance, and agent dispatch discipline: `skills/task-execution/SKILL.md` and `skills/task-execution/reference.md §Lead Dispatch Rules`.
 
