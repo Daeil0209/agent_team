@@ -16,6 +16,7 @@
 5. `[PRES-FIRST]` Compression, reorganization, and migration for resource efficiency must be grounded in information preservation.
 6. `[HARDEN]` Valid defects must be immediately strengthened through corrective patches.
 7. `[PARALLEL]` Independent work with clear task boundaries and merge ownership must proceed in parallel.
+8. `[CHANNEL]` Cognition flows along the gravity of habit; rules channel that flow toward evidence and procedure, not wall it off. Compression that prunes a habit must preserve or re-carve the channel it carried.
 
 ### Interpretation Priority Stack
 
