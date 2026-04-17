@@ -46,6 +46,14 @@ try {
     input.team_name,
     input.teamName
   );
+  const recipientName = firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.target,
+    toolInput.teammate,
+    nestedMessage.to,
+    nestedMessage.recipient
+  );
   process.stdout.write([
     toolName,
     topType,
@@ -53,7 +61,8 @@ try {
     sessionId,
     description,
     agentName,
-    agentTeamName
+    agentTeamName,
+    recipientName
   ].map(encode).join("\n"));
 } catch {
   process.stdout.write("\n\n\n\n\n\n\n");
@@ -75,6 +84,7 @@ SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
 TOOL_DESCRIPTION="$(decode_field "${FIELDS[4]:-}")"
 TOOL_AGENT_NAME="$(decode_field "${FIELDS[5]:-}")"
 TOOL_AGENT_TEAM_NAME="$(decode_field "${FIELDS[6]:-}")"
+TOOL_RECIPIENT_NAME="$(decode_field "${FIELDS[7]:-}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 emit_deny() {
@@ -248,10 +258,27 @@ if [[ ! -s "$TEAM_RUNTIME_ACTIVE_FILE" ]]; then
   exit 0
 fi
 
-# Guide team-bound Agent identity when runtime is active without blocking dispatch.
-if [[ "$TOOL_NAME" == "Agent" && -s "$TEAM_RUNTIME_ACTIVE_FILE" ]]; then
-  if [[ -z "$TOOL_AGENT_TEAM_NAME" || -z "$TOOL_AGENT_NAME" ]]; then
-    emit_runtime_warning "team-bound Agent identity inferred weakly. Recommended: include top-level team_name and stable worker name; current dispatch allowed to preserve smooth runtime flow."
+# Pinpoint must-block: SendMessage to a teammate name that does not appear in the live team
+# config causes silent ghost-dispatch (tool reports success while the message is never delivered).
+# Block this to preserve runtime truth; pass through when config or member list cannot be
+# resolved, and bypass for shutdown_request lifecycle control messages.
+if [[ "$TOOL_NAME" == "SendMessage" && -s "$TEAM_RUNTIME_ACTIVE_FILE" && -n "$TOOL_RECIPIENT_NAME" ]]; then
+  if [[ "$TOP_TYPE" != "shutdown_request" && "$MESSAGE_TYPE" != "shutdown_request" ]]; then
+    if _rtg_live_cfg="$(active_team_config_live 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
+      _rtg_member_list="$(CONFIG_FILE="$_rtg_live_cfg" node -e "
+        try {
+          const c = JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE, 'utf8'));
+          const names = (c.members || []).map(m => m && m.name).filter(Boolean);
+          process.stdout.write(names.join(','));
+        } catch {}
+      " 2>/dev/null || true)"
+      if [[ -n "$_rtg_member_list" ]]; then
+        if ! printf '%s' ",${_rtg_member_list}," | grep -qF ",${TOOL_RECIPIENT_NAME},"; then
+          emit_deny "BLOCKED: SendMessage target '${TOOL_RECIPIENT_NAME}' is not a member of the live team. Members: ${_rtg_member_list}. Next: correct the 'to' field to a live team member, or use Agent for non-team dispatch."
+          exit 0
+        fi
+      fi
+    fi
   fi
 fi
 

@@ -59,7 +59,7 @@ Dispatch-proof hook enforcement is advisory for outgoing team-lead packet shape.
 
 ### Developer (general)
 
-base + `PLAN-STATE: ready|approved|updated|revalidated; PLAN-STEP: <step>; ACCEPTANCE-RISK: low|meaningful|high|critical; REVIEW-OWNER: reviewer; PROOF-OWNER: tester|not-needed; ACCEPTANCE-OWNER: reviewer|validator|not-needed; CHANGE-SPEC: <bounded-change|first-draft|integration>; SKILL-RECOMMENDATIONS: applicable skills with rationale or none`
+base + `PLAN-STATE: ready|bounded|updated|revalidated; PLAN-STEP: <step>; ACCEPTANCE-RISK: low|meaningful|high|critical; REVIEW-OWNER: reviewer; PROOF-OWNER: tester|not-needed; ACCEPTANCE-OWNER: reviewer|validator|not-needed; CHANGE-SPEC: <bounded-change|first-draft|integration>; SKILL-RECOMMENDATIONS: applicable skills with rationale or none`
 
 For `ACCEPTANCE-RISK: low` — `ACCEPTANCE-OWNER: reviewer` (quality gate, no formal PASS/HOLD/FAIL verdict required) or `not-needed`. For `ACCEPTANCE-RISK: meaningful|high|critical` — `ACCEPTANCE-OWNER: validator` (formal verdict required): `PROOF-OWNER: tester; ACCEPTANCE-OWNER: validator`
 
@@ -157,7 +157,7 @@ Enumerated fields (exact values enforced):
 | researcher (benchmark) | BENCHMARK-PROVENANCE | repo-observed or authoritative-external or mixed or simulator-only |
 | researcher (benchmark) | CROSS-CHECK-STATUS | repo-confirmed or authority-confirmed or mixed-confirmed or simulator-unconfirmed |
 | researcher (benchmark) | HALLUCINATION-GUARD | cite-or-hold |
-| developer | PLAN-STATE | ready or approved or updated or revalidated |
+| developer | PLAN-STATE | ready or bounded or updated or revalidated |
 | developer | ACCEPTANCE-RISK | low or meaningful or high or critical |
 | developer | REVIEW-OWNER | reviewer |
 | developer | PROOF-OWNER | tester or not-needed |
@@ -257,8 +257,8 @@ Run this before `TaskUpdate` or `TaskStop`.
 - For governance/process review synthesis, require an explicit evidence class on each consequential issue: `observed-runtime-break`, `observed-operational-friction`, `static-contradiction`, or `theoretical-risk`. Do not silently promote document-only contradiction into runtime breakage.
 - Keep skill channels explicit per `CLAUDE.md` `§Skill Loading Philosophy`: `REQUIRED-SKILLS` carries baseline obligations, `SKILL-RECOMMENDATIONS` carries situational suggestions. Lane-execution skills (e.g., `skills/developer/SKILL.md`) load via agent `initialPrompt` and are implicit in dispatch; they need not be repeated in `REQUIRED-SKILLS`.
 - `.claude/agents/*.md` is the source of truth for dispatchable Agent lanes. Runtime instance labels do not create new agent definitions; they must carry a configured lane through the tool's agent-type field.
-- Specialist capabilities under `.claude/skills/<skill-id>/SKILL.md` are skills, not `Agent` targets. Route them through a real worker lane, normally `developer`, using `SKILL-RECOMMENDATIONS` for methodology guidance or `SKILL-AUTH` when explicit specialist authorization is required.
-- Current runtime default is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous`; `SKILL-AUTH` is therefore an explicit authorization and traceability contract, not a guaranteed runtime deny/warn gate unless enforcement hooks and required-skill lists are separately enabled and verified.
+- Specialist capabilities under `.claude/skills/<skill-id>/SKILL.md` are skills, not `Agent` targets. Route them through a real worker lane, normally `developer`, using `SKILL-RECOMMENDATIONS` for methodology guidance or `SKILL-AUTH` when explicit specialist routing basis is required.
+- Current runtime default is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous`; `SKILL-AUTH` is therefore an explicit routing and traceability contract, not a guaranteed runtime deny/warn gate unless enforcement hooks and required-skill lists are separately enabled and verified.
 - For executable, user-facing deliverables, acceptance dispatches must keep delivery-surface criteria explicit and must satisfy the active workflow/reference/hook requirements for review, proof, and validation. Do not leave those surfaces implied.
 - Analyze phase dependencies and launch independent phases simultaneously; sequential dispatch of independent phases = bottleneck failure.
 - Staff for throughput, not for the lowest worker count. Choose the smallest reliable set that prevents serial waiting, preserves required separation, and avoids avoidable redispatch churn.
@@ -340,7 +340,7 @@ Rules:
 - `TaskCreate` must keep the shared task runtime legible: non-empty subject, plus a description that states bounded scope and expected completion surface using existing packet coordinates. For scope, use fields such as `QUESTION-BOUNDARY`, `CHANGE-BOUNDARY`, `CHILD-BOUNDARY`, `EXCLUDED-BOUNDARY`, `EXCLUDED-SCOPE`, or `WORK-SURFACE`. For completion surface, use fields such as `DONE-CONDITION`, `OUTPUT-SURFACE`, `PROOF-TARGET`, `VALIDATION-TARGET`, `ACCEPTANCE-SURFACE`, or `DECISION-SURFACE`. Placeholder or topic-only task rows are non-compliant.
 - Agent-scoped communication remains separate: use SendMessage(to: worker-name) for worker control; do not reuse the worker identifier as a task identifier.
 - SendMessage direction: downward authoritative control uses MESSAGE-CLASS, MESSAGE-PRIORITY, WORK-SURFACE; lifecycle shutdown uses shutdown_request / shutdown_response; upward authoritative reports use message-class, message-priority, work-surface, requested-governing-action; peer worker challenge uses PEER-MODE + MESSAGE-PRIORITY. Free-form is fine for status, acknowledgment, clarification, partial-result notes, or inferable assignment context that does not create material ambiguity in ownership, lifecycle, routing, or active surface.
-- Structured worker-control or lifecycle messages must target a concrete worker name. Do not send structured packets to `to: "*"`; broadcast is not a valid target for structured control surfaces such as phase transitions, assignments, reroutes, standby approvals, or `shutdown_request`.
+- Structured worker-control or lifecycle messages must target a concrete worker name. Do not send structured packets to `to: "*"`; broadcast is not a valid target for structured control surfaces such as phase transitions, assignments, reroutes, standby decisions, or `shutdown_request`.
 - Minimal lifecycle decision packet: `LIFECYCLE-DECISION: reuse|standby|shutdown|hold-for-validation`. Add `DECISION-BASIS: <evidence>` when useful. Full control fields are optional for lifecycle cleanup; they must not become a formatting wall before dispatch can resume.
 - Consequential upward reports should arrive before TaskCompleted; the completion gate evaluates the report and its verification evidence before task state closes.
 - If task output must be read later, carry the assigned task id forward explicitly; do not reconstruct from the worker name.
@@ -426,12 +426,12 @@ See `reference.md § Task Identity And Communication Protocol` for tool-scoping,
 - The lead's routing order is fixed: `intent -> deliverable shape -> phase -> staffing -> lifecycle -> dispatch packet`. Do not let bottleneck pressure, TOC existence, self-growth urgency, or runtime convenience reorder that chain.
 - During explicit team-runtime sessions, all worker lanes must run in background (`run_in_background: true`). No exceptions.
 - When a dispatched lane requires explicit write authority under runtime policy, supply the required execution mode via agent configuration, not via dispatch mode shortcuts.
-- All Agent tool dispatches must use a deliberate permission mode that matches the work surface and the active repository policy. Do not assume one universal default. If the repository intentionally operates with high autonomy, keep destructive-risk handling explicit instead of smuggling in extra approval gates.
+- All Agent tool dispatches must use a deliberate permission mode that matches the work surface and the active repository policy. Do not assume one universal default. If the repository intentionally operates with high autonomy, keep destructive-risk handling explicit instead of smuggling in extra confirmation gates.
 - Agent dispatch requires an active team runtime (`TeamCreate`) — without it, inter-agent communication, task tracking, and lifecycle management are unavailable. Lead-managed no-runtime is strictly lead-local; activate explicit runtime before any delegation.
 - Cost efficiency is measured by end-to-end throughput, reuse value, and rework avoidance — not by minimizing active workers as a standalone goal.
 - Understaffing that serializes already-independent work or pushes specialist work back onto the lead is a cost defect even when it appears cheaper in the moment.
 - `AGENT-MAP` is a routing commitment, not a planning note. After post-planning verification, a declared team map must advance to `TeamCreate`, `Agent`, or assignment-grade `SendMessage` unless the lead names a concrete dispatch blocker being cleared.
-- When project scale or supervision load is unusually high, you may delegate bounded management-support work to an approved support lane, but you retain top-level ownership, user communication, and final integration responsibility.
+- When project scale or supervision load is unusually high, you may delegate bounded management-support work to a designated support lane, but you retain top-level ownership, user communication, and final integration responsibility.
 - For broad-scope research (3+ independent sub-topics), split into parallel researcher shards by default. Single-researcher dispatch on independent domains is a bottleneck defect.
 - Dispatch independent work immediately upon discovery when independence, non-overlap, and phase boundaries are already explicit. Do not wait for unrelated active work to complete before dispatching. Batching independent work into sequential phases is a bottleneck.
 - For request-bound document work, phase selection comes before staffing choice. Decide first whether the next needed work is `research`, `draft`, or `merge-compress`; then choose the smallest reliable staffing shape for that phase.

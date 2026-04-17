@@ -87,12 +87,9 @@ has_any_dispatch_field() {
   return 1
 }
 
-if ! has_any_dispatch_field "QUESTION-BOUNDARY" "CHANGE-BOUNDARY" "CHILD-BOUNDARY" "EXCLUDED-BOUNDARY" "EXCLUDED-SCOPE" "WORK-SURFACE"; then
-  deny_task_create "$(task_create_error "a bounded-scope coordinate in the description. Use QUESTION-BOUNDARY, CHANGE-BOUNDARY, CHILD-BOUNDARY, EXCLUDED-BOUNDARY, EXCLUDED-SCOPE, or WORK-SURFACE.")"
-fi
-
-if ! has_any_dispatch_field "DONE-CONDITION" "OUTPUT-SURFACE" "PROOF-TARGET" "VALIDATION-TARGET" "ACCEPTANCE-SURFACE" "DECISION-SURFACE"; then
-  deny_task_create "$(task_create_error "an expected completion surface in the description. Use DONE-CONDITION, OUTPUT-SURFACE, PROOF-TARGET, VALIDATION-TARGET, ACCEPTANCE-SURFACE, or DECISION-SURFACE.")"
-fi
+# Minimal-guidance policy: TaskCreate should block only when the shared task row
+# is effectively unusable as a state surface. Non-empty subject + description are
+# sufficient for execution; bounded-scope and completion coordinates remain best
+# practice but do not justify a hard block by themselves.
 
 exit 0

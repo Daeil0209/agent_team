@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Implementation procedure for bounded approved edits.
+description: Implementation procedure for bounded assigned edits.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -50,21 +50,21 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 | Governance-patch | + TASK-CLASS, CHANGE-BOUNDARY, WRITE-SCOPE |
 
 - In the current target design, specialist capabilities live as skills under the path pattern .claude/skills/{skill-id}/SKILL.md, not as active subagents under `.claude/agents/`.
-- Authorization packets should name `skill-id`, bind it to the target lane plus blocked surface, and let `developer` resolve it against the active project skill root/subpath.
+- `SKILL-AUTH` packets should name `skill-id`, bind it to the target lane plus blocked surface, and let `developer` resolve it against the active project skill root/subpath.
 - If packet fields create material ambiguity in write scope, authority, or acceptance risk, stop and escalate. If the developer lane, user intent, and safe change boundary are inferable from context, reconstruct the working packet explicitly and mark inferred pieces as inference before execution.
-- For workflow-governed work, confirm explicit implementation-phase authority before any code, scaffold, schema, business-logic, or executable structure work begins. Research findings, workbook analysis, internal lead reasoning, or scope scaffolds alone do not constitute implementation authority. If implementation entry basis is missing, return `HOLD`. [Rule-Class: mandatory]
+- For workflow-governed work, confirm explicit implementation-phase basis before any code, scaffold, schema, business-logic, or executable structure work begins. Research findings, workbook analysis, internal lead reasoning, or scope scaffolds alone do not constitute implementation entry basis. If implementation entry basis is missing, return `HOLD`. [Rule-Class: mandatory]
 
 > **Dispatch-side SKILL-AUTH governance** (context, not developer execution steps):
-- `team-lead` may authorize developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
+- `team-lead` may route developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - When the blocked capability is a developer-exclusive specialist skill, `developer` is the default skill-up owner.
-- When approving developer-side specialist skill use, send `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>`. Default mode is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous` — this packet is an authorization and traceability contract.
-- Scope boundary: SKILL-AUTH is for security-sensitive or governance-sensitive specialist skills requiring explicit team-lead authorization before loading. SKILL-RECOMMENDATIONS is for methodology and workflow skills that guide the execution approach within the dispatched scope. When a skill appears in both systems, SKILL-AUTH authorization takes precedence.
-- Specialist skill ids such as `sw-spec`, `biz-sys`, `ui-ux`, or `design-token` must not be treated as `Agent` targets. They are loaded inside the assigned worker lane after the dispatch packet establishes the owning lane, surface, and authorization basis.
+- When dispatching developer-side specialist skill use, send `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>`. Default mode is `SPECIALIST_SKILL_ENFORCEMENT_MODE=autonomous` — this packet is a routing and traceability contract.
+- Scope boundary: SKILL-AUTH is for security-sensitive or governance-sensitive specialist skills that need explicit team-lead routing basis before loading. SKILL-RECOMMENDATIONS is for methodology and workflow skills that guide the execution approach within the dispatched scope. When a skill appears in both systems, SKILL-AUTH routing basis takes precedence.
+- Specialist skill ids such as `sw-spec`, `biz-sys`, `ui-ux`, or `design-token` must not be treated as `Agent` targets. They are loaded inside the assigned worker lane after the dispatch packet establishes the owning lane, surface, and routing basis.
 
 ## Escalation Triggers
 
 - Change touches 3+ files across modules
-  (Exception: when the dispatch packet explicitly covers the multi-file scope in `CHANGE-BOUNDARY` or `WRITE-SCOPE`, the scope was pre-authorized. No escalation needed unless actual changes exceed declared scope.)
+  (Exception: when the dispatch packet explicitly covers the multi-file scope in `CHANGE-BOUNDARY` or `WRITE-SCOPE`, the scope was already bounded. No escalation needed unless actual changes exceed declared scope.)
 - New inter-module dependency introduced
 - Shared interface contract modified
 - Pattern reused in 5+ places affected
@@ -74,7 +74,7 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 ### 1. Confirm Assigned Scope
 - Restate scope before editing. Confirm mode: proposal-only, diff-only, or apply.
 - If scope exceeded, stop and escalate.
-- For workflow-governed work, also confirm phase legitimacy: "Am I being asked to implement during an authorized implementation phase?" If the expected output includes runtime code, scaffolding, schema creation, business-rule modules, or executable app structure, and implementation-phase authority is not explicit in the dispatch, stop and escalate. [Rule-Class: mandatory]
+- For workflow-governed work, also confirm phase legitimacy: "Am I being asked to implement during an implementation-bounded phase?" If the expected output includes runtime code, scaffolding, schema creation, business-rule modules, or executable app structure, and implementation-phase basis is not explicit in the dispatch, stop and escalate. [Rule-Class: mandatory]
 - See §Escalation Triggers for scope conditions that require stopping before any edits begin.
 
 ### 2. Pre-Implementation Discovery
@@ -92,7 +92,7 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
   - **Evaluation baseline**: Cross-reference the user's original instructions with the dispatch packet's `REQUEST-INTENT`, `CORE-QUESTION`, and `REQUIRED-DELIVERABLE`. Skill evaluation must serve both the user's stated intent and the role-based criteria below — technical fit alone is insufficient if the skill does not advance the user's actual goal.
   1. **Implementation fit**: Will this skill's approach improve the implementation quality for the assigned scope?
   2. **Proportionality**: Does the task complexity warrant this methodology's overhead, or would standard implementation workflow be more effective?
-  3. **Architecture alignment**: Does this skill's patterns align with the existing codebase conventions and the approved design?
+  3. **Architecture alignment**: Does this skill's patterns align with the existing codebase conventions and the active design?
 - **Applicable and beneficial** → load the skill to guide implementation (e.g., `enterprise-arch` for architecture patterns, `ui-mockup` for UI conversion, `design-token` for design systems).
 - **Applicable but disproportionate** → note the skill's availability without loading; proceed with standard implementation workflow.
 - **No recommendation fits** → independently search available skill descriptions for a better alternative. If found, report upward via SendMessage before loading.
@@ -123,7 +123,7 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 Apply 5 Whys when fix type is hypothesis-based or open.
 
 ### 4. Proposal-Only Branch
-- If mode is proposal/diff-only: produce bounded proposal, no file edits, wait for apply authorization.
+- If mode is proposal/diff-only: produce bounded proposal, no file edits, wait for apply direction.
 
 ### 4A. Retry Governance
 - Max 3 retries before mandatory escalation.
