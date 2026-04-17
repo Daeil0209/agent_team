@@ -12,17 +12,17 @@ PRIMARY-OWNER: team-lead
 
 ## Purpose
 
-Use this skill to freeze scope before consequential work begins. The output is a short execution plan grounded in verified scope, user instructions, and `CLAUDE.md §Team Philosophy` — not assumption.
+Use this skill to freeze scope before consequential work begins. The output is an internal execution plan grounded in verified scope, user instructions, and `CLAUDE.md §Team Philosophy` — not assumption.
 
 Quick contract:
 - load at work start
 - ground plan in `CLAUDE.md §Team Philosophy` and user instructions
 - freeze scope before consequential tool use
 - define approach, verification, and hold conditions
-- produce the plan block
+- produce the internal plan block
 - then load `self-verification` before execution
 
-Output channel: Steps 1-5 are internal reasoning that produces the frozen scope. The user sees the results of work done from this plan, never the planning procedure itself.
+Output channel: Steps 1-5 are internal reasoning that produces the frozen scope. The user sees the results of work done from this plan, never the planning procedure itself. If a progress update is needed before execution, keep it to one or two sentences covering only current decision, next action, or blocker — never the full plan block or packet fields.
 
 Boundary:
 - this skill governs agent-local execution planning
@@ -131,9 +131,9 @@ Before beginning execution, define:
 - For governance analysis, apply `[GOV-MIN]` and `[PLAN-SV]` as interpretation lenses before classifying anything as a defect.
 - When evaluating an existing state under review, do not let "currently exists for a reason" collapse into "therefore patch unnecessary." Record both the protected value and the observed or inferred cost so later verification can judge proportionality instead of defaulting to preservation.
 
-## Planning Output Format
+## Internal Planning Record
 
-After completing Steps 1–5, record a brief plan block before the first execution tool call that follows this skill load:
+After completing Steps 1–5, freeze the internal plan block in agent-local reasoning before the first execution tool call that follows this skill load. This record is for internal scope control and downstream proof surfaces only. Do not emit it through commentary, progress updates, or any user-facing channel.
 
 ```
 WORK-INTENT: <one sentence>
@@ -160,7 +160,26 @@ VERIFICATION: <self-check and handoff evidence>
 
 This block governs agent-local execution only; it is not user-facing. The upward proof surface is `PLANNING-BASIS`, not the full plan block.
 
-Output rules:
+## Progress Update Surface
+
+When a progress update is actually needed before execution or dispatch:
+
+- Use plain prose only.
+- Keep it to one or two sentences.
+- Allowed content: current decision, next action, or blocker.
+- Forbidden content: field labels, packet schemas, numbered plan blocks, `WORK-INTENT`/`EXPECTED-OUTPUT`/`AGENT-MAP` echoes, or any field-by-field restatement of the internal planning record.
+
+Good:
+- `범위를 확정했고, 다음은 self-verification 후 researcher 3개 lens를 병렬 배정합니다.`
+- `패치 범위를 좁혔고, 다음은 reviewer 검증입니다.`
+
+Bad:
+- `WORK-INTENT: ...`
+- `EXPECTED-OUTPUT: ...`
+- `AGENT-MAP: ...`
+- full or partial reproduction of the internal planning record
+
+Planning record rules:
 
 - `ROUTING-SIGNAL` is mandatory for `team-lead`. Workers may omit it unless the parent packet explicitly asks for routing input.
 - If `ROUTING-SIGNAL` is `team-routing candidate`, `AGENT-MAP` must be present or `DISPATCH-BLOCKERS` must name the exact reason it is not yet present.

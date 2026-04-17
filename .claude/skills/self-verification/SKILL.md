@@ -32,14 +32,14 @@ Boundary: this is agent-local verification. Independent review still belongs to 
 
 Self-verification is internal process work, not a user-facing deliverable. Do not expose the challenge procedure itself to the user.
 
-However, for consequential user-facing conclusions, recommendations, completion reports, or status claims, the response must still surface the verification outcome concisely. Minimum user-facing verification surface:
+However, for final user-facing conclusions, recommendations, completion reports, explicit audit responses, or detailed status reports that the user explicitly asked for, the response must still surface the verification outcome concisely. Ordinary progress commentary does not carry this full verification surface. Minimum user-facing verification surface when that final/audit shape applies:
 - verification basis: what evidence or checks the conclusion rests on
 - residual risk or open surfaces: what remains unverified, blocked, or conditional
 - unverified items: explicit if any remain
 
 This is an outcome summary, not a process dump. The verification output format below remains for internal handoff blocks only.
 
-Default user-facing consequential result template:
+Default user-facing final/audit result template:
 
 ```text
 <final result or decision>
@@ -48,7 +48,7 @@ Residual risk/open surfaces: <none|remaining conditions or blockers>
 Unverified items: <none|explicit list>
 ```
 
-Use natural prose around it when needed, but do not omit these surfaces on consequential reporting.
+Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose.
 
 ## Activation Trigger
 
@@ -196,13 +196,13 @@ The Mandatory Worker Execution Cycle defines two structural verification phases.
 - Present only the final verified conclusion to the user or governing lane.
 - When reporting a process mistake, state the exact failed step, what valid work exists, and the corrective action. Do not overstate failure scope.
 - Do NOT present Steps 1-5 as a separate section in user-facing output.
-- For consequential user-facing reports, include a concise verification outcome surface: verification basis, residual risk/open surfaces, unverified items. State explicitly if nothing material remains open.
+- For final/audit user-facing reports, include a concise verification outcome surface: verification basis, residual risk/open surfaces, unverified items. State explicitly if nothing material remains open.
 - When user instructions or user philosophy materially constrained the analysis, the reported verification basis must make that alignment explicit rather than implying it.
 - When the analysis includes root-cause, policy, structural, or corrective conclusions, make the deductive basis explicit in brief form rather than as a long method dump.
 - When evaluating an existing state under review, make the user-facing verification basis name both sides of the proportionality judgment: what the current state protects or preserves and what current cost or ambiguity was actually observed.
 - If a preferred verification path was unavailable because an environment assumption failed (for example no git repository at the current root), state the fallback evidence path briefly instead of surfacing raw tool noise.
 - If the rationale is confirmed but its justification remains unclear, say that explicitly; do not collapse "explained" into "validated."
-- The default labels are `Verification basis`, `Residual risk/open surfaces`, and `Unverified items`. Equivalent wording is allowed only when the same meaning remains explicit.
+- The default labels are `Verification basis`, `Residual risk/open surfaces`, and `Unverified items`. Equivalent wording is allowed only when the same meaning remains explicit. Do not use these labels in routine progress commentary.
 - If Critical Challenge changed the conclusion, present the corrected conclusion directly — not the journey from wrong to right.
 - The verification output format below is for agent-to-agent handoff blocks only.
 
