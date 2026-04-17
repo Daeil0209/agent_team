@@ -228,7 +228,7 @@ filter_idle_pending_summary_for_validation_follow_on() {
     [[ -n "$worker" ]] || continue
     worker_surface="$(worker_surface_for_idle_guard "$worker")"
     worker_lane="$(resolve_agent_id "$worker")"
-    if [[ -n "$worker_surface" && "$worker_surface" == "$dispatch_surface" ]]; then
+    if [[ -z "$worker_surface" || "$worker_surface" == "$dispatch_surface" ]]; then
       case "$worker_lane" in
         developer|researcher)
           continue
@@ -297,13 +297,11 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_standby "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is on standby" "reuse preserved shard context with SendMessage, or choose a unique SHARD-ID for a separate parallel shard")"
-    exit 0
+    emit_dispatch_warning "sharded researcher worker '${SHARDED_TARGET_NAME}' is on standby; allowing spawn under minimal-guidance policy. Prefer reuse with SendMessage or choose a unique SHARD-ID if separate context is intended."
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is idle without lifecycle decision" "decide reuse/standby/shutdown/hold-for-validation for that shard before respawning the same SHARD-ID")"
-    exit 0
+    emit_dispatch_warning "sharded researcher worker '${SHARDED_TARGET_NAME}' is idle without lifecycle decision; allowing spawn under minimal-guidance policy. Lead still owes authoritative lifecycle cleanup for that shard."
   fi
 fi
 
@@ -314,13 +312,11 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_standby "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "standby worker '${TARGET_NAME}' already exists" "reuse preserved context with SendMessage, or make an explicit lifecycle decision before replacement spawn. For parallel researcher work, retry as RESEARCH-MODE: sharded with SHARD-ID, SHARD-BOUNDARY, and MERGE-OWNER")"
-    exit 0
+    emit_dispatch_warning "standby worker '${TARGET_NAME}' already exists; allowing replacement spawn under minimal-guidance policy. Prefer reuse with SendMessage when context preservation matters."
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "worker '${TARGET_NAME}' is idle without lifecycle decision" "decide reuse/standby/shutdown/hold-for-validation before duplicate spawn. For parallel researcher work, retry as RESEARCH-MODE: sharded with SHARD-ID, SHARD-BOUNDARY, and MERGE-OWNER")"
-    exit 0
+    emit_dispatch_warning "worker '${TARGET_NAME}' is idle without lifecycle decision; allowing replacement spawn under minimal-guidance policy. Lead still owes lifecycle cleanup."
   fi
 fi
 
@@ -333,12 +329,17 @@ fi
 # completed normally. Allow the idle-pending check to be bypassed for them so
 # that parallel shard fan-out is not serialized by the first shard's lifecycle decision.
 # Idle-pending enforcement is scoped to the current dispatch's work-surface: workers on a
-# different known surface are excluded. Workers with unknown surface are included as a safe
-# fallback (never weaker than the previous global check).
+# different known surface are excluded. Under the minimal-guidance policy, an unknown dispatch
+# surface must not serialize the entire team behind a global backlog guess; duplicate/liveness
+# checks above already protect the must-block cases.
 if [[ "$_is_sharded_researcher" != "true" ]]; then
   IDLE_PENDING_COUNT="$(idle_pending_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
   if [[ "$IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( IDLE_PENDING_COUNT >= 1 )); then
     IDLE_PENDING_SUMMARY="$(idle_pending_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
+    if [[ -z "$DISPATCH_WORK_SURFACE" ]]; then
+      emit_dispatch_warning "allowing '${TARGET_LANE}' dispatch with unknown work-surface despite idle worker backlog (${IDLE_PENDING_SUMMARY:-unknown}). Unknown surface must not trigger global serialization; lead still owes lifecycle cleanup."
+      exit 0
+    fi
     FILTERED_IDLE_PENDING_SUMMARY="$(filter_idle_pending_summary_for_validation_follow_on "$IDLE_PENDING_SUMMARY" "$TARGET_LANE" "$DISPATCH_WORK_SURFACE")"
     if [[ -n "$FILTERED_IDLE_PENDING_SUMMARY" ]]; then
       FILTERED_IDLE_PENDING_COUNT="$(printf '%s' "$FILTERED_IDLE_PENDING_SUMMARY" | awk -F',' '{print NF}')"
@@ -350,8 +351,7 @@ if [[ "$_is_sharded_researcher" != "true" ]]; then
     elif [[ "$FILTERED_IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( FILTERED_IDLE_PENDING_COUNT == 0 )); then
       emit_dispatch_warning "allowing '${TARGET_LANE}' follow-on verification on work-surface '${DISPATCH_WORK_SURFACE:-unknown}' despite idle worker backlog (${IDLE_PENDING_SUMMARY:-unknown}). Verification follow-on should not be serialized behind lifecycle housekeeping. Lead still owes authoritative lifecycle cleanup."
     else
-      emit_deny "$(dispatch_sizing_block "${FILTERED_IDLE_PENDING_COUNT:-$IDLE_PENDING_COUNT} undecided idle worker(s) on work-surface '${DISPATCH_WORK_SURFACE:-global}' (${FILTERED_IDLE_PENDING_SUMMARY:-$IDLE_PENDING_SUMMARY})" "SendMessage each listed worker with LIFECYCLE-DECISION: standby(default)|reuse|shutdown|hold-for-validation; optional DECISION-BASIS, then retry dispatch.")"
-      exit 0
+      emit_dispatch_warning "allowing '${TARGET_LANE}' dispatch despite ${FILTERED_IDLE_PENDING_COUNT:-$IDLE_PENDING_COUNT} undecided idle worker(s) on work-surface '${DISPATCH_WORK_SURFACE:-global}' (${FILTERED_IDLE_PENDING_SUMMARY:-$IDLE_PENDING_SUMMARY}). Idle backlog is guidance-only under minimal-guidance policy; lead still owes lifecycle decisions."
     fi
   fi
 fi

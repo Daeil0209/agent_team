@@ -58,7 +58,7 @@ When rules compete, resolve them in this order:
 - `stage-pass|stage-fail`: evidence-backed stage verdicts where the owning workflow explicitly permits stage-local verdicts.
 - `blocked`: unable to proceed without a changed condition; report honestly instead of smoothing it into success.
 
-Note on `hold`: (1) workflow state (this section), (2) validator verdict (`HOLD` in PASS/HOLD/FAIL), (3) worker lifecycle state (`hold-for-validation`), (4) execution pause signal (`HOLD and escalate`). Use compound forms by default. Bare forms are only permitted in these fixed contexts: bare HOLD in validator output = verdict-HOLD; bare hold in lifecycle packets = hold-for-validation; bare HOLD in skill procedure text = execution-HOLD.
+Note on `hold`: (1) workflow state (this section), (2) validator verdict (`HOLD` in PASS/HOLD/FAIL), (3) worker lifecycle state (`hold-for-validation`), (4) execution pause signal (`HOLD and escalate`). Use compound forms by default. Bare forms are only permitted in these fixed contexts: bare HOLD in validator output = verdict-HOLD; bare hold in lifecycle packets = hold-for-validation; bare HOLD in skill procedure text = execution-HOLD; bare HOLD in acceptance-gate prescriptive text = verdict-HOLD.
 
 Note on work surface: a work surface is the bounded set of files, concerns, and judgment scope named in a worker's dispatch-packet WORK-SURFACE field. Two workers share a work surface when their WORK-SURFACE values overlap in files or concerns. "Same work surface" in lifecycle and dispatch rules means overlapping WORK-SURFACE, not merely the same team or session.
 

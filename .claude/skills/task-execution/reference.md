@@ -204,7 +204,7 @@ Lane-owned enumerated fields:
 - This contract applies to dispatch (`Agent`, `TaskCreate`, assignment-grade `SendMessage`), task-state mutation (`TaskUpdate`, `TaskStop`), runtime teardown (`TeamDelete`, `CronDelete`), file mutation (`Edit`, `Write`, `MultiEdit`), and mutable `Bash`.
 - Status, progress, current-state, and "what remains?" questions do not authorize consequential tool use by themselves. Answer from existing evidence unless the user explicitly requests continuation, correction, dispatch, validation, mutation, or cleanup.
 - A hook block is not a workflow step to probe through. Treat the hook's `Next:` field as the required recovery path.
-- Retrying a blocked tool requires a changed corrective basis: for example current-turn `work-planning`, Phase 1 `self-verification`, confirmed task id, lifecycle decision, duplicate-worker reuse/shutdown decision, or a completed packet field.
+- Retrying a blocked tool requires a changed corrective basis: for example current-turn `work-planning`, post-planning `self-verification`, confirmed task id, lifecycle decision, duplicate-worker reuse/shutdown decision, or a completed packet field.
 - Do not retry the same tool, or move sideways to a sibling consequential tool, while the same preflight gap remains.
 - If the same blocker appears twice on the same operating surface, stop retries and report HOLD with the blocker, the missing preflight step, and the functional result already known.
 
@@ -329,12 +329,12 @@ Rules:
 ## Task Identity And Communication Protocol
 
 - Task-scoped tools (TaskGet, TaskUpdate, TaskOutput, TaskStop) take the task id from the explicit task_assignment packet — not a worker name or agentId@team.
-- Dispatch preflight is shared by `Agent`, `TaskCreate`, and assignment-grade `SendMessage`. Required order: current-turn `work-planning` -> Phase 1 `self-verification` -> lifecycle backlog decision -> target reuse/duplicate check -> packet final check -> dispatch. `SendMessage` reuse is still dispatch and must not be used to bypass the fresh-turn gate.
+- Dispatch preflight is shared by `Agent`, `TaskCreate`, and assignment-grade `SendMessage`. Required order: current-turn `work-planning` -> post-planning `self-verification` -> lifecycle backlog decision -> target reuse/duplicate check -> packet final check -> dispatch. `SendMessage` reuse is still dispatch and must not be used to bypass the fresh-turn gate.
 - Lifecycle backlog means idle workers without an explicit `reuse`, `standby`, `shutdown`, or `hold-for-validation` decision. The target is zero undecided idle workers before additional fan-out, not zero idle workers.
 - Corrective work and bottleneck fixes still obey lifecycle order. When a new fix is needed and idle workers exist, the next action is lifecycle resolution or bounded reuse, not a fresh `Agent` spawn.
 - Reuse-first: when the target lane/name already has a live or standby worker, use bounded `SendMessage` reuse if the context fits. Spawn a replacement only after an explicit lifecycle decision makes the existing worker unsuitable for reuse.
-- Task-state mutation preflight is shared by `TaskUpdate` and `TaskStop`: current-turn `work-planning` -> Phase 1 `self-verification` -> confirm exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet -> mutate task state. If the id is stale or absent, do not guess; report administrative task-state unavailable.
-- Runtime teardown preflight is shared by `TeamDelete`, `CronDelete`, and closeout cleanup: current-turn `work-planning` -> Phase 1 `self-verification` -> confirm closeout/teardown intent -> verify no active worker has unresolved handoff, task-state, or lifecycle decision -> mutate runtime state.
+- Task-state mutation preflight is shared by `TaskUpdate` and `TaskStop`: current-turn `work-planning` -> post-planning `self-verification` -> confirm exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet -> mutate task state. If the id is stale or absent, do not guess; report administrative task-state unavailable.
+- Runtime teardown preflight is shared by `TeamDelete`, `CronDelete`, and closeout cleanup: current-turn `work-planning` -> post-planning `self-verification` -> confirm closeout/teardown intent -> verify no active worker has unresolved handoff, task-state, or lifecycle decision -> mutate runtime state.
 - When the runtime exposes a task id or `task_assignment` packet, preserve that id across reroute, follow-up task-tool use, completion-grade SendMessage reports, and completion review. Do not reconstruct task identity from worker names, message order, or remembered chronology.
 - Task state is authoritative on the shared task runtime. SendMessage carries communication and handoff content, but does not by itself close a task.
 - `TaskCreate` must keep the shared task runtime legible: non-empty subject, plus a description that states bounded scope and expected completion surface using existing packet coordinates. For scope, use fields such as `QUESTION-BOUNDARY`, `CHANGE-BOUNDARY`, `CHILD-BOUNDARY`, `EXCLUDED-BOUNDARY`, `EXCLUDED-SCOPE`, or `WORK-SURFACE`. For completion surface, use fields such as `DONE-CONDITION`, `OUTPUT-SURFACE`, `PROOF-TARGET`, `VALIDATION-TARGET`, `ACCEPTANCE-SURFACE`, or `DECISION-SURFACE`. Placeholder or topic-only task rows are non-compliant.
@@ -407,10 +407,6 @@ Required minimum: shard id or surface label; covered boundary; excluded boundary
 - Before dispatching a developer for user-provided file-list copy, overwrite, or sync work, complete a manifest review gate: collapse duplicates, verify the final unique write set, and make that review explicit before execution starts.
 - For manifest review packet fields and single-writer sharding rule: see `reference.md § Manifest Sync Packet`.
 - When sending ordinary control downward, keep the message packet explicit: message class, priority, and work surface must be readable. Worker shutdown uses the explicit `shutdown_request` protocol path rather than an ordinary control packet.
-
-### Task Identity And Communication Protocol
-
-See `reference.md § Task Identity And Communication Protocol` for tool-scoping, SendMessage direction types, and task-id carry-forward rules.
 
 ### Consequential Upward Evidence Block
 

@@ -47,6 +47,7 @@ Team governance is still the default even when explicit runtime is not activated
   2. `ToolSearch` for `TeamCreate` schema (`select:TeamCreate`)
   3. Also read `./.claude/state/procedure-state.json` in the same parallel turn. If absent, treat all phase states as null.
 - Only if the startup hook did not provide a usable team-runtime snapshot, add a third call: `Glob(<literal-home>/.claude/teams/*/config.json)`. Do not fall back to Bash `ls` for this check.
+- Treat that fallback literally: it is a narrow boot-only existence check, not permission to inspect runtime storage in depth. Do not read inbox JSON, do not parse team/task files ad hoc, and do not continue browsing `$HOME/.claude/teams/**` or `$HOME/.claude/tasks/**` once the boot decision is made.
 - In the next turn:
   - If explicit team runtime is not needed for the current request → stop after continuity and proceed without `TeamCreate`.
   - If explicit team runtime is needed and the snapshot says no team config exists → call `TeamCreate`.
@@ -56,6 +57,7 @@ Team governance is still the default even when explicit runtime is not activated
   - If `TeamCreate` fails with "Already leading team" → call `TeamDelete` first then retry `TeamCreate`.
   - Then proceed to the user's original message through the Primary Operating Loop.
 - Boot is infrastructure. Do not output verbose boot-status reports unless the user explicitly asks.
+- After boot, runtime state questions revert to the normal authoritative surfaces: `SessionStart` snapshot, `TaskList`/`TaskGet`/`TaskOutput`, `TeamCreate`, and `TeamDelete`. Do not reopen `$HOME/.claude/...` storage with Bash/Read unless a procedure explicitly re-enters `session-boot`.
 
 ### Startup Constraints
 
@@ -95,6 +97,17 @@ Relationship to Boot Sequence: Session-Start Sequence always runs at fresh start
 6. Make the initial owner map explicit enough to avoid drift.
 7. When explicit runtime activation becomes necessary later, rely on the runtime-entry gate to audit runtime hygiene before `TeamCreate` or new worker fan-out. Do not run memory-pressure or orphan-runtime scans during `Session-Start Sequence` by default.
 
+### Compaction-Triggered Variant
+
+When the session entry is triggered by context compaction (`SessionStart:compact hook success` present in session context), perform these additional steps before the first consequential dispatch:
+
+1. Treat the compacted summary as UNVERIFIED for dispatch decisions. Re-derive the open work list from `./.claude/session-state.md` and `TaskList` — not from summary memory.
+2. Re-read the live team roster from current task state. Do not rely on remembered worker assignments.
+3. For each live worker, confirm WORK-SURFACE and lifecycle state from task records.
+4. Re-group live workers by surface; identify parallelizable surfaces and dispatch-vacuum gaps.
+5. Proceed to first consequential dispatch only after steps 1–4 are complete.
+
+This variant is a recovery guide, not a block gate. Skip inapplicable steps (e.g., step 3 when no live workers exist).
 
 ### Session-state discipline
 

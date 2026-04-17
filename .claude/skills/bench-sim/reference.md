@@ -27,7 +27,7 @@ Required rules:
 
 When a concrete benchmark asset is requested, prefer a small repository-local script under:
 
-- `./.claude/skills/bench-sim/scripts/`
+- *(scripts/ directory not yet present — future-work)*
 
 The script should:
 

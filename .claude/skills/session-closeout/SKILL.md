@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Activation, Closeout Sequence
+- Fixed section order: Activation, Runtime Teardown Preflight, Closeout Sequence
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
