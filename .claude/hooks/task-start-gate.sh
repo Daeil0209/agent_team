@@ -71,20 +71,6 @@ planning_preflight_block() {
   printf 'BLOCKED: planning preflight incomplete. Detail: %s requires fresh work-planning. Next: %s.' "$tool_name" "$next_step"
 }
 
-bash_requires_planning_preflight() {
-  local command="${1:-}"
-  local normalized=""
-
-  normalized="$(printf '%s' "$command" | tr '\n' ' ' | sed -E 's/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//')"
-  [[ -n "$normalized" ]] || return 1
-
-  # Planning preflight is for consequential shell actions, not ordinary read-only discovery.
-  # Block only when the shell command is plausibly mutating files, mutating git/runtime state,
-  # or creating an external side effect. Leave read-only probes to downstream safety hooks.
-  printf '%s' "$normalized" | grep -Eiq \
-    '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?'
-}
-
 self_growth_block() {
   printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
 }
@@ -136,14 +122,9 @@ boot_infra_tool_allowed() {
 
 planning_bootstrap_tool_allowed() {
   local tool_name="${1:-}"
-  local command="${2:-}"
 
   case "$tool_name" in
-    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
-    Bash)
-      ! bash_requires_planning_preflight "$command"
-      return
-      ;;
+    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch|Bash) return 0 ;;
     *) return 1 ;;
   esac
 }

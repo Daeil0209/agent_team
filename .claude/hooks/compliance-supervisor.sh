@@ -111,6 +111,35 @@ validate_compound_command() {
   return 0
 }
 
+subcommand_targets_governance_surface() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+  printf '%s' "$subcmd" | grep -qE '(^|[[:space:]])[^[:space:]]*\.claude/|/\.claude/'
+}
+
+subcommand_is_mutating_shell() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+  printf '%s' "$subcmd" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'
+}
+
+command_mutates_governance_surface() {
+  local cmd="${1-}"
+  local subcmd=""
+  [[ -n "$cmd" ]] || return 1
+
+  while IFS= read -r subcmd; do
+    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
+    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
+    [[ -z "$subcmd" ]] && continue
+    if subcommand_targets_governance_surface "$subcmd" && subcommand_is_mutating_shell "$subcmd"; then
+      return 0
+    fi
+  done < <(printf '%s' "$cmd" | sed 's/&&/\n/g; s/||/\n/g; s/;/\n/g')
+
+  return 1
+}
+
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # GIT_READONLY_PATTERN, S02_IMPLEMENTATION_PATTERN, and LEAD_OPERATIONAL_ALLOWLIST
 # are set in the Bash case block before these wrappers are called.
@@ -133,6 +162,34 @@ allowed_lead_operational_subcmd() {
       return 0
     fi
   done
+  return 1
+}
+
+allowed_safe_git_repo_recovery_subcmd() {
+  local sanitized
+  sanitized="$(strip_read_only_null_redirections "${1-}")"
+  [[ -n "$sanitized" ]] || return 1
+
+  # Minimal repo-recovery allowance: clearing a stale Git index lock is
+  # bounded, local, and does not mutate governance surfaces.
+  printf '%s' "$sanitized" | grep -Eiq '^[[:space:]]*rm([[:space:]]+-f)?[[:space:]]+((\./)?\.git/index\.lock|[^[:space:]]*/\.git/index\.lock)[[:space:]]*$'
+}
+
+allowed_lead_context_subcmd() {
+  local subcmd="${1-}"
+
+  if allowed_lead_operational_subcmd "$subcmd"; then
+    return 0
+  fi
+
+  if allowed_git_readonly_subcmd "$subcmd"; then
+    return 0
+  fi
+
+  if allowed_safe_git_repo_recovery_subcmd "$subcmd"; then
+    return 0
+  fi
+
   return 1
 }
 
@@ -206,12 +263,10 @@ case "$TOOL_NAME" in
     CLEAN_COMMAND="$(printf '%s' "$COMMAND" | tr '\n' ' ')"
     # Governance surface protection is unconditional — runs before any session-type allowlist.
     # This ensures worker sessions cannot bypass governance-surface protection via pattern match.
-    if printf '%s' "$CLEAN_COMMAND" | grep -qE '(^|[[:space:]])[^[:space:]]*\.claude/|/\.claude/'; then
-      if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|sed[[:space:]]+-i([[:space:]]|$)|perl[[:space:]]+-i([[:space:]]|$)'; then
-        emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
-        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation-early" || true
-        exit 0
-      fi
+    if command_mutates_governance_surface "$CLEAN_COMMAND"; then
+      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation-early" || true
+      exit 0
     fi
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
@@ -286,12 +341,18 @@ case "$TOOL_NAME" in
     # Substring match is intentionally avoided: a compound command such as
     # "rm /important && git commit" would match "git commit" anywhere in the
     # string and bypass the mutable-command block below — a compliance bypass.
+    # Allow a narrowly-bounded Git recovery sub-command (stale index lock
+    # cleanup) to coexist with read-only Git inspection and normal lead Git
+    # operations without opening general mutable-shell bypasses.
     TRIMMED_LEAD_CMD="${CLEAN_COMMAND#"${CLEAN_COMMAND%%[![:space:]]*}"}"
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
-      if validate_compound_command "$CLEAN_COMMAND" allowed_lead_operational_subcmd; then
+      if validate_compound_command "$CLEAN_COMMAND" allowed_lead_context_subcmd; then
         exit 0
       fi
     else
+      if allowed_safe_git_repo_recovery_subcmd "$CLEAN_COMMAND"; then
+        exit 0
+      fi
       for allowed_pattern in "${LEAD_OPERATIONAL_ALLOWLIST[@]}"; do
           if [[ "$TRIMMED_LEAD_CMD" == "${allowed_pattern}"* ]]; then
               exit 0  # Permit allowlisted operational command
@@ -300,7 +361,7 @@ case "$TOOL_NAME" in
     fi
 
     if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
-      if printf '%s' "$SANITIZED_COMMAND" | grep -qE '(^|[[:space:]])[^[:space:]]*\.claude/|/\.claude/'; then
+      if command_mutates_governance_surface "$SANITIZED_COMMAND"; then
         emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0

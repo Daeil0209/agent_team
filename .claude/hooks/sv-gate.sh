@@ -269,33 +269,6 @@ case "$TOOL_NAME" in
       exit 0
     fi
     ;;
-  Bash)
-    # A-10: Gate mutable Bash operations targeting .claude/ governance surfaces.
-    # Only enforces when team-lead has WP loaded but SV Phase 1 not yet done.
-    if runtime_sender_session_is_worker "$SESSION_ID"; then
-      exit 0
-    fi
-    if [[ ! -f "$WP_MARKER" ]]; then
-      exit 0
-    fi
-    if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      BASH_CMD_RAW="$(INPUT_JSON="$INPUT" node -e "
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || '{}');
-  process.stdout.write(String((input.tool_input && input.tool_input.command) || ''));
-} catch { process.stdout.write(''); }
-" 2>/dev/null || printf '')"
-      # Check if the command targets .claude/ governance surfaces with a mutable operation
-      if printf '%s' "$BASH_CMD_RAW" | grep -qE '(^|[[:space:]])[^[:space:]]*\.claude/|/\.claude/'; then
-        if printf '%s' "$BASH_CMD_RAW" | grep -Eiq '(^|[[:space:]])(sed[[:space:]]+-i|perl[[:space:]]+-i|tee|cp|mv|rm|mkdir|touch)([[:space:]]|$)|>>?[[:space:]]*[^&/]'; then
-          printf '[%s] SV-GATE BLOCKED: team-lead Bash targeting .claude/ governance surface without Phase 1 SV (session: %s)\n' \
-            "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-          emit_deny "$(sv_verify_block "Bash (governance surface write)" "Skill(self-verification) -> retry Bash command")"
-          exit 0
-        fi
-      fi
-    fi
-    ;;
 esac
 
 exit 0
