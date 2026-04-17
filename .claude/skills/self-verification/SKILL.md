@@ -48,7 +48,7 @@ Residual risk/open surfaces: <none|remaining conditions or blockers>
 Unverified items: <none|explicit list>
 ```
 
-Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose.
+Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose. Do not preface routine progress updates with `SV converged`, `Checkpoint ...`, verification labels, or any other verification-packet heading.
 
 ## Activation Trigger
 
@@ -57,7 +57,7 @@ Load this skill and execute the full procedure at these points:
 2. Before any conclusion or recommendation: root-cause analysis, corrective proposals, or consequential advice to user or governing lane.
 3. Before executing a plan: verify the plan solves the stated problem before committing resources.
 4. After applying a modification: verify the change produced the expected consequence without unintended effects.
-5. Before handoff or reporting: handoff and reporting share ONE verification obligation.
+5. Before handoff or reporting: handoff and reporting share ONE verification obligation. (Paradigmatic trigger: synthesizing 2+ worker reports into a consolidated conclusion, even when each upstream report was already SV-converged.)
 6. Before re-dispatch: when synthesizing upstream results into a downstream dispatch.
 
 **Temporal gate principle:** Self-verification is a gate, not a concurrent annotation. The gated action (reporting, execution, dispatch, handoff) must not begin until verification completes and conclusions survive Critical Challenge. Composing a report in the same response as the SV invocation defeats the gate — if Critical Challenge would change the conclusion, the already-composed output cannot reflect the correction. Complete verification first; compose the gated output from verified conclusions only.
@@ -202,7 +202,7 @@ The Mandatory Worker Execution Cycle defines two structural verification phases.
 - When evaluating an existing state under review, make the user-facing verification basis name both sides of the proportionality judgment: what the current state protects or preserves and what current cost or ambiguity was actually observed.
 - If a preferred verification path was unavailable because an environment assumption failed (for example no git repository at the current root), state the fallback evidence path briefly instead of surfacing raw tool noise.
 - If the rationale is confirmed but its justification remains unclear, say that explicitly; do not collapse "explained" into "validated."
-- The default labels are `Verification basis`, `Residual risk/open surfaces`, and `Unverified items`. Equivalent wording is allowed only when the same meaning remains explicit. Do not use these labels in routine progress commentary.
+- The default labels are `Verification basis`, `Residual risk/open surfaces`, and `Unverified items`. Equivalent wording is allowed only when the same meaning remains explicit. Do not use these labels in routine progress commentary, and do not announce routine progress with scaffolding such as `SV converged` or `Checkpoint ...`.
 - If Critical Challenge changed the conclusion, present the corrected conclusion directly — not the journey from wrong to right.
 - The verification output format below is for agent-to-agent handoff blocks only.
 
