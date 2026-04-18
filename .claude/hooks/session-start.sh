@@ -64,7 +64,7 @@ describe_team_runtime_snapshot() {
   fi
 
   if [[ -n "$live_config" ]]; then
-    printf '%s\n' "Team runtime snapshot: live team config detected at $live_config."
+    printf '%s\n' "Team runtime snapshot: live team config detected at $live_config (session-owned panes attached; workers may be idle and require SendMessage to act — 'live' ≠ 'actively processing')."
     _member_names="$(CONFIG_FILE="$live_config" node -e "
       try {
         const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
