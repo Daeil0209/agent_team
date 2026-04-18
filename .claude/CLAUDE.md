@@ -33,7 +33,7 @@ When rules compete, resolve them in this order:
 ### Document Ownership
 
 - Claude Code accepts two project-memory locations: `.claude/CLAUDE.md` and project-root `CLAUDE.md`. This repository activates `.claude/CLAUDE.md` only. Keep root `CLAUDE.md` absent or empty unless a future design intentionally activates it.
-- `.claude/rules/*.md` owns conditional shared rules only. Every retained rule there must carry valid `paths:` frontmatter and justify file-scoped loading.
+- `.claude/rules/*.md` owns conditional shared rules only. Every retained rule there must carry valid `paths:` frontmatter and justify file-scoped loading (broad-scope overlays permitted only via the §Conditional Rules exception).
 - `.claude/agents/*.md` owns role identity, authority boundaries, and role-local completion rules.
 - `.claude/skills/*/SKILL.md` owns executable workflow procedure.
 - `.claude/skills/*/reference.md` owns explicit reference material and detailed schemas that must not load as always-on doctrine.

@@ -124,26 +124,26 @@ GOVERNANCE_BLOCKERS=""
 CURRENT_DISPOSITION=""
 UNCOMMITTED="$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null | head -5 || true)"
 if [ -n "$UNCOMMITTED" ]; then
-  WARNINGS="${WARNINGS}S-32: Uncommitted changes detected at session end\n"
+  WARNINGS="${WARNINGS}Session residual-state: Uncommitted changes detected at session end\n"
 fi
 
 if [ -s "${TEAM_RUNTIME_ACTIVE_FILE:-}" ]; then
-  WARNINGS="${WARNINGS}S-32: explicit team runtime still marked active at session end\n"
+  WARNINGS="${WARNINGS}Session residual-state: explicit team runtime still marked active at session end\n"
 fi
 
 if [ -s "${HEALTH_CRON_JOB_FILE:-}" ]; then
   HEALTH_JOB_ID="$(tr -d '\n' < "$HEALTH_CRON_JOB_FILE" 2>/dev/null || true)"
   if [ -n "$HEALTH_JOB_ID" ]; then
-    WARNINGS="${WARNINGS}S-32: recurring health-check cron still registered at session end (${HEALTH_JOB_ID})\n"
+    WARNINGS="${WARNINGS}Session residual-state: recurring health-check cron still registered at session end (${HEALTH_JOB_ID})\n"
   else
-    WARNINGS="${WARNINGS}S-32: recurring health-check cron marker still present at session end\n"
+    WARNINGS="${WARNINGS}Session residual-state: recurring health-check cron marker still present at session end\n"
   fi
 fi
 
 if [ -f "$STATE_FILE" ]; then
   state_age=$(( $(date +%s) - $(stat -c %Y "$STATE_FILE" 2>/dev/null || echo 0) ))
   if [ "$state_age" -gt "$SESSION_STATE_STALE_THRESHOLD" ]; then
-    WARNINGS="${WARNINGS}S-32: session-state.md stale (${state_age}s old) at session end\n"
+    WARNINGS="${WARNINGS}Session residual-state: session-state.md stale (${state_age}s old) at session end\n"
   fi
 fi
 
@@ -154,12 +154,12 @@ if [[ -f "$CLOSEOUT_STATE_FILE" ]]; then
   CURRENT_DISPOSITION="$(get_closeout_state_field closeoutDisposition "$SESSION_ID" "none")"
 
   if [[ "$CURRENT_DISPOSITION" == "hold" || -n "$HOLD_REASON" || -n "$GOVERNANCE_BLOCKERS" ]]; then
-    WARNINGS="${WARNINGS}S-32: closeout completed in truthful hold mode\n"
+    WARNINGS="${WARNINGS}Session residual-state: closeout completed in truthful hold mode\n"
     if [[ -n "$HOLD_REASON" ]]; then
-      WARNINGS="${WARNINGS}S-32: closeout hold reason preserved (${HOLD_REASON})\n"
+      WARNINGS="${WARNINGS}Session residual-state: closeout hold reason preserved (${HOLD_REASON})\n"
     fi
     if [[ -n "$GOVERNANCE_BLOCKERS" ]]; then
-      WARNINGS="${WARNINGS}S-32: unresolved closeout governance preserved (${GOVERNANCE_BLOCKERS})\n"
+      WARNINGS="${WARNINGS}Session residual-state: unresolved closeout governance preserved (${GOVERNANCE_BLOCKERS})\n"
     fi
   fi
 fi
