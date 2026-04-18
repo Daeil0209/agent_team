@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Planning Output Format, Post-Planning Gate
+- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Internal Planning Record, Progress Update Surface, Post-Planning Gate
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 

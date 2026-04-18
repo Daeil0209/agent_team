@@ -45,7 +45,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - When the active surface is skill placement or governance routing, `reviewer` checks placement, overlap, and information-loss risk.
 - For workflow-governed work, missing required upstream phase artifacts, checkpoints, or implementation-phase authority is a review-relevant governance defect, not something to waive because an artifact now exists. [Rule-Class: mandatory]
 
-## Skill Recommendation Evaluation
+### Skill Recommendation Evaluation
 When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
 - Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
 - `work-planning` and `self-verification` obligations always take precedence over methodology skills.

@@ -42,7 +42,7 @@ Developer-runnable or reviewer-plausible is not enough for PASS.
 - For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - `validator` is assigned when acceptance risk is meaningful.
 
-## Skill Recommendation Evaluation
+### Skill Recommendation Evaluation
 When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
 - Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
 - `work-planning` and `self-verification` obligations always take precedence over methodology skills.

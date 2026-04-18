@@ -45,7 +45,7 @@ For executable, user-facing software, build success, API-smoke-only proof, or se
 - Do not use `tester` as a substitute for defect classification or final acceptance judgment.
 - For workflow-governed work, executable behavior does not legitimize missing implementation-phase authority. If the proof target comes from implementation that started without the required governing checkpoint, keep that governance gap explicit in the proof packet. If the missing workflow basis materially weakens honest proof closure, return `HOLD` or `blocked`. [Rule-Class: mandatory]
 
-## Skill Recommendation Evaluation
+### Skill Recommendation Evaluation
 When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
 - Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
 - `work-planning` and `self-verification` obligations always take precedence over methodology skills.
