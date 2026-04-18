@@ -24,6 +24,7 @@ if [[ -n "$SESSION_ID" ]]; then
 fi
 
 ensure_procedure_state_surfaces
+clear_stale_team_state_for_new_session "$SESSION_ID"
 CONTINUITY_SEED_ACTION="$(seed_project_continuity_from_global_if_missing)"
 refresh_procedure_state_sensors "$SESSION_ID"
 update_procedure_state_fields \
@@ -42,10 +43,14 @@ CONTINUITY_PATH="$(effective_continuity_file_path)"
 
 describe_team_runtime_snapshot() {
   local config_file=""
+  local current_live_config=""
   local live_config=""
+  local live_lead_session_id=""
   local config_files=()
   local summarized=""
+  local snapshot_label=""
 
+  current_live_config="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null || true)"
   live_config="$(active_team_config_live 2>/dev/null || true)"
 
   for config_file in "$HOME/.claude/teams"/*/config.json; do
@@ -63,8 +68,16 @@ describe_team_runtime_snapshot() {
     summarized+=" (+$(( ${#config_files[@]} - 1 )) more)"
   fi
 
+  if [[ -n "$current_live_config" ]]; then
+    live_config="$current_live_config"
+    snapshot_label="Team runtime snapshot: current-session pane-backed team config detected at $live_config (workers may be idle and require SendMessage to act — 'team exists' still ≠ 'actively processing')."
+  elif [[ -n "$live_config" ]]; then
+    live_lead_session_id="$(team_config_lead_session_id "$live_config" 2>/dev/null || true)"
+    snapshot_label="Team runtime snapshot: pane-backed team config detected at $live_config but owned by session ${live_lead_session_id:-unknown}; treat this as a carry-over runtime hint, not current-session proof."
+  fi
+
   if [[ -n "$live_config" ]]; then
-    printf '%s\n' "Team runtime snapshot: live team config detected at $live_config (session-owned panes attached; workers may be idle and require SendMessage to act — 'live' ≠ 'actively processing')."
+    printf '%s\n' "$snapshot_label"
     _member_names="$(CONFIG_FILE="$live_config" node -e "
       try {
         const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
@@ -83,6 +96,62 @@ describe_team_runtime_snapshot() {
 
   printf '%s\n' "Team runtime snapshot: config files exist but no live worker panes were detected."
   printf '%s\n' "Observed team config files: $summarized"
+}
+
+describe_procedure_state_team_channel() {
+  local runtime_state=""
+  local runtime_evidence=""
+  local dispatch_state=""
+  local dispatch_evidence=""
+  local pending_worker=""
+  local claimed_worker=""
+  local meaningful="false"
+  local parts=()
+
+  runtime_state="$(get_procedure_state_field "teamRuntimeState" "")"
+  runtime_evidence="$(get_procedure_state_field "teamExistenceEvidence" "")"
+  dispatch_state="$(get_procedure_state_field "teamDispatchState" "")"
+  dispatch_evidence="$(get_procedure_state_field "teamDispatchEvidence" "")"
+  pending_worker="$(get_procedure_state_field "lastPendingWorker" "")"
+  claimed_worker="$(get_procedure_state_field "lastClaimedWorker" "")"
+
+  if [[ -n "$runtime_state" && "$runtime_state" != "inactive" ]]; then
+    meaningful="true"
+  fi
+  if [[ -n "$dispatch_state" && "$dispatch_state" != "none" ]]; then
+    meaningful="true"
+  fi
+  if [[ -n "$pending_worker" || -n "$claimed_worker" ]]; then
+    meaningful="true"
+  fi
+
+  [[ "$meaningful" == "true" ]] || return 0
+
+  if [[ -n "$runtime_state" ]] && { [[ "$runtime_state" != "inactive" ]] || [[ -n "$pending_worker" || -n "$claimed_worker" ]] || [[ -n "$dispatch_state" && "$dispatch_state" != "none" ]]; }; then
+    parts+=("runtime=${runtime_state}${runtime_evidence:+/${runtime_evidence}}")
+  fi
+  if [[ -n "$dispatch_state" ]] && { [[ "$dispatch_state" != "none" ]] || [[ -n "$pending_worker" || -n "$claimed_worker" ]]; }; then
+    parts+=("dispatch=${dispatch_state}${dispatch_evidence:+/${dispatch_evidence}}")
+  fi
+  if [[ -n "$pending_worker" ]]; then
+    parts+=("pending=${pending_worker}")
+  fi
+  if [[ -n "$claimed_worker" ]]; then
+    parts+=("claimed=${claimed_worker}")
+  fi
+
+  if [[ ${#parts[@]} -gt 0 ]]; then
+    printf '%s' "Persisted team state channel (corroborate before dispatch):"
+    local idx=""
+    for idx in "${!parts[@]}"; do
+      if [[ "$idx" == "0" ]]; then
+        printf ' %s' "${parts[$idx]}"
+      else
+        printf '; %s' "${parts[$idx]}"
+      fi
+    done
+    printf '\n'
+  fi
 }
 
 if runtime_sender_session_is_worker "$SESSION_ID" || is_worker_session; then
@@ -119,6 +188,7 @@ else
   fi
   printf '%s\n' "Lead session | root: $REPO_ROOT | boot before team runtime"
   describe_team_runtime_snapshot
+  describe_procedure_state_team_channel
 fi
 
 # --- Refresh Name Registry ---

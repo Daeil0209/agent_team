@@ -66,6 +66,8 @@ Note on trigger (1): This trigger fires after work-planning has frozen the reque
 
 **Same-turn carry-forward:** If this skill was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, the existing in-turn verification satisfies the current trigger. A second Skill invocation is not required unless the work since the last SV load introduced material that was not already covered by that verification. Carry-forward holds when the agent synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, file modifications, or consequential dispatch actions (Agent, TaskCreate, assignment-grade SendMessage) are produced after the last SV load. (This mirrors the carry-forward rule in `agents/team-lead.md §RPA-7`.)
 
+**Derived-conclusion reset:** Carry-forward applies only to faithful use of already-verified evidence. When synthesis, aggregation, classification, or restructuring creates a conclusion not covered by the prior verification basis, that derived conclusion resets carry-forward for itself. Examples: a new grouping or pattern label, severity or priority change, causal claim, scope-closing claim, or downstream recommendation. Prior self-verification confirms only the claims it actually covered. Verify each material derived conclusion at the applicable depth before execution, reporting, handoff, or re-dispatch, or downgrade it to `INFERENCE`/`UNVERIFIED`.
+
 If you are about to state a conclusion, execute a plan, report a completed change, or present consequential status, ask: "Did this survive Critical Challenge?" If not, execute this procedure first.
 
 ## Step 1: Scope Match
@@ -93,6 +95,10 @@ Execute the owning role's pre-handoff self-check:
 | team-lead | agents/team-lead.md §RPA-1 Checkpoint A (Before Every Response) + IR-2 §"Plan before acting, verify at every trigger" section (6 SV activation triggers) | evidence basis for every claim, worker output verified not assumed, self-verification loaded at every applicable trigger boundary |
 
 Record each item as pass or fail.
+
+Additional team-lead routing check:
+- If the current plan froze `ROUTING-SIGNAL: team-routing candidate` or `ambiguous-route`, verify that `NEXT-CONSEQUENTIAL-ACTION` is explicit and valid per `skills/work-planning/SKILL.md`.
+- If `NEXT-CONSEQUENTIAL-ACTION` is missing, vague, or hides broad further inspection, fail verification and return to `work-planning`. Team routing without an explicit next runtime move is not converged.
 
 ### Step 2a: Workflow Phase Gate Check (team-lead only)
 
@@ -148,6 +154,7 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
 - Every claim has supporting evidence.
 - Unsupported items labeled UNVERIFIED or removed.
 - A conclusion inherited from a prior-session summary, compacted conversation, or remembered analysis is a claim, not evidence — treat it as UNVERIFIED until re-confirmed by direct source access (file read, tool output, or fresh observation) in the current session.
+- Scope-closing claims require falsification evidence proportional to risk. Claims that assert broad presence, absence, uniqueness, universality, or commonality must identify what would falsify the claim and check a direct source against that falsifier (for example a file, tool output, runtime surface, search term, observed artifact, or cited source). Summaries alone are not direct-source evidence for these claims. If direct falsification evidence is unavailable or not performed, narrow the wording to the inspected scope or downgrade the claim to `INFERENCE`/`UNVERIFIED`.
 - Assumptions explicitly stated.
 - Verify environment assumptions before using environment-specific evidence paths. If a verification method assumes repository history, git metadata, branch state, or diff surfaces, confirm those surfaces exist first. When the assumption fails, switch to the closest truthful fallback (for example file-based inspection instead of git-based diff) rather than treating the failed assumption itself as a blocker.
 - When the user has stated governing philosophy or operating doctrine, check and state whether the analysis aligns with it, partially aligns, or conflicts with it.
@@ -163,6 +170,7 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
   - rationale justification judged explicitly as proportionate, excessive, stale, or unclear — judgment requires both the protected value and cost classification as inputs
   - change risk stated explicitly — requires all above as inputs
 - If one of those five surfaces is missing or was not derived from its required input, downgrade the conclusion to `INFERENCE`, `clarification candidate`, or `needs rationale confirmation` instead of hardening it into a final recommendation.
+- When reporting or progress text mentions team operation, apply `agents/team-lead.md §RPA-7` state vocabulary. If the strongest evidence is only planning or `NEXT-CONSEQUENTIAL-ACTION`, report only the next action.
 
 ## Step 5: Convergence Loop
 

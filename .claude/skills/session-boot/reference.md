@@ -65,6 +65,8 @@ Lifecycle decision mapping: team-lead 'shutdown' decision = (1) send shutdown_re
 - Treat `hooks/lib/hook-policy.sh` as the single literal owner for cron cadence and stale threshold values. Session procedure text should reference the configured thresholds rather than re-copying the current numbers.
 - Direct oversight, event-driven worker monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
 - `health-check.sh` classifies agents as active, standby, stale, or ghost based on the configured thresholds from `hooks/lib/hook-policy.sh`; do not restate the current numeric ghost threshold here.
+- Actual team existence is proved by current-session `TeamCreate` success or a live team config backed by session-owned panes. Stored config files alone are continuity artifacts, not live-existence proof.
+- A live team is not automatically an actively processing team. Keep `team exists`, `dispatch pending`, and `worker started` as separate monitoring questions.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all workers are currently standby.
 - Replacing the tracked health-check cron is not the same as session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, then perform `CronDelete` and the replacement `CronCreate`. If rotation is deferred after intent was recorded, clear the deferred rotation residue before returning to normal monitoring.
 - If no tracked health-check cron is active, do not create, rotate, or narrate one by ceremony. Continue the `Monitoring Sequence` through direct oversight until runtime policy or explicit runtime state requires cron-backed monitoring.
@@ -110,12 +112,21 @@ The procedure state is written to `./.claude/state/procedure-state.json`. This f
 | `bootSessionId` | string | Session identifier captured at boot |
 | `continuitySeedAction` | string | Action that seeded continuity on this session start (`project-present`, `global-present`, `rebuilt`, etc.) |
 | `startupState` | string | Current startup phase (`booting` or `ready`). startupState tracks the current boot phase only. Session termination state is owned by session-closeout; a new session always resets startupState to 'booting'. |
+| `teamRuntimeState` | string | Current-session team-runtime state (`active` or `inactive`) |
+| `teamExistenceEvidence` | string | Evidence class backing `teamRuntimeState` (`team-create`, `live-config`, `worker-activity`, `none`) |
+| `teamDispatchState` | string | Current-session dispatch state (`none`, `pending`, or `claimed`) |
+| `teamDispatchEvidence` | string | Evidence class backing `teamDispatchState` (`agent-dispatch`, `sendmessage-assignment`, `worker-activity`, `none`) |
+| `lastDispatchWorker` | string | Most recent worker name mentioned by the dispatch channel |
+| `lastPendingWorker` | string | Most recent worker with dispatch-pending evidence |
+| `lastClaimedWorker` | string | Most recent worker with worker-start/claim evidence |
 | `currentPhase` | string | Active governing workflow phase for the current session when a workflow owns execution |
 | `phaseHistory` | array | Ordered record of completed or entered workflow phases for the current session |
 | `designDocPath` | string | Concrete design-document path recorded by workflow gates when required |
 | `checkpointStatus` | object | Per-checkpoint readiness or completion map used by active workflows |
 
 Workflow-owned phase fields are extensions to the runtime/session base state above. When a governing workflow such as `dev-workflow` is active, these fields become part of the expected procedure-state surface and must remain synchronized with the active workflow's phase gates.
+
+- Compaction/resume rule: when context is compacted, re-read the team channel from procedure state before any consequential dispatch. Use the `SessionStart` runtime snapshot and task state only to corroborate or refine that channel, never to replace it with summary memory.
 
 ## Worker Lifecycle Rules
 

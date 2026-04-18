@@ -208,12 +208,13 @@ NODE
     PERMISSION_BASIS="${PERMISSION_FIELDS[2]:-runtime-fallback}"
     PERMISSION_SOURCE="${PERMISSION_FIELDS[3]:-missing-mode}"
 
-    clear_worker_standby "$AGENT_NAME"
-    record_pending_agent_dispatch "$TIMESTAMP" "$AGENT_NAME" "$EFFECTIVE_MODE" "$DISPATCH_AGENT_LANE"
-    mark_worker_planning_required "$AGENT_NAME"
-    record_permission_provenance "$SESSION_ID" "$RESOLVED_MODE" "$PERMISSION_BASIS" "$PERMISSION_SOURCE" "$MODE" "$AGENT_NAME"
+	    clear_worker_standby "$AGENT_NAME"
+	    record_pending_agent_dispatch "$TIMESTAMP" "$AGENT_NAME" "$EFFECTIVE_MODE" "$DISPATCH_AGENT_LANE"
+	    mark_worker_planning_required "$AGENT_NAME"
+	    record_permission_provenance "$SESSION_ID" "$RESOLVED_MODE" "$PERMISSION_BASIS" "$PERMISSION_SOURCE" "$MODE" "$AGENT_NAME"
+	    mark_team_dispatch_pending "$SESSION_ID" "$AGENT_NAME" "agent-dispatch"
 
-    if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
+	    if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
       printf '1\n' > "$HEALTH_CRON_FLAG"
       printf '[%s] HEALTH-CRON: first agent dispatched\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$VIOLATION_LOG"
     fi
@@ -291,37 +292,42 @@ NODE
       [[ -s "$TEAM_RUNTIME_ACTIVE_FILE" ]] && clear_boot_complete
     }
 
-    # TeamCreate "Already leading" is not a runtime failure — the team IS active.
-    # Re-affirm runtime state even when TeamCreate returns an already-exists error.
-    if [[ "$TOOL_NAME" == "TeamCreate" ]] && ! tool_response_succeeded; then
-      if [[ "$ERROR_VALUE" == *"Already leading"* ]]; then
-        if [[ -n "$SESSION_ID" ]]; then
-          record_runtime_session_id "$SESSION_ID"
-          mark_procedure_startup_ready "$SESSION_ID"
-        fi
-        mark_runtime_active
-        mark_boot_complete
-      fi
-      exit 0
-    fi
+    # TeamCreate "Already leading" re-affirms runtime only when the current
+    # session can actually corroborate ownership of a pane-backed live config.
+	    if [[ "$TOOL_NAME" == "TeamCreate" ]] && ! tool_response_succeeded; then
+	      if [[ "$ERROR_VALUE" == *"Already leading"* ]] && _current_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null || true)" && [[ -n "$_current_cfg" ]]; then
+	        if [[ -n "$SESSION_ID" ]]; then
+	          record_runtime_session_id "$SESSION_ID"
+	          mark_procedure_startup_ready "$SESSION_ID"
+	        fi
+	        mark_runtime_active
+	        mark_boot_complete
+	        record_team_runtime_state "$SESSION_ID" "active" "live-config"
+	      fi
+	      exit 0
+	    fi
 
     tool_response_succeeded || exit 0
 
     case "$TOOL_NAME" in
-      TeamCreate)
-        if [[ -n "$SESSION_ID" ]]; then
-          record_runtime_session_id "$SESSION_ID"
-          mark_procedure_startup_ready "$SESSION_ID"
-        fi
-        mark_runtime_active
-        mark_boot_complete
-        ;;
-      TeamDelete)
-        clear_runtime_active
-        clear_boot_complete
-        clear_runtime_session_id
-        clear_health_cron_rotation_intent "team-runtime-removed" "$SESSION_ID"
-        ;;
+	      TeamCreate)
+	        if [[ -n "$SESSION_ID" ]]; then
+	          record_runtime_session_id "$SESSION_ID"
+	          mark_procedure_startup_ready "$SESSION_ID"
+	        fi
+	        mark_runtime_active
+	        mark_boot_complete
+	        record_team_runtime_state "$SESSION_ID" "active" "team-create"
+	        clear_team_dispatch_state "$SESSION_ID"
+	        ;;
+	      TeamDelete)
+	        clear_runtime_active
+	        clear_boot_complete
+	        clear_runtime_session_id
+	        clear_health_cron_rotation_intent "team-runtime-removed" "$SESSION_ID"
+	        record_team_runtime_state "$SESSION_ID" "inactive" "none"
+	        clear_team_dispatch_state "$SESSION_ID"
+	        ;;
       CronCreate)
         if is_health_check_cron "$COMMAND_LIKE"; then
           record_health_cron "$RESPONSE_ID"

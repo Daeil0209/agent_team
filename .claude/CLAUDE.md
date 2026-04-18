@@ -58,6 +58,9 @@ When rules compete, resolve them in this order:
 - `hold`: blocked by missing prerequisite, ownership gap, or unresolved blocker.
 - `stage-pass|stage-fail`: evidence-backed stage verdicts where the owning workflow explicitly permits stage-local verdicts.
 - `blocked`: unable to proceed without a changed condition; report honestly instead of smoothing it into success.
+- Team-runtime truth uses 3 separate questions: `does a live team exist?`, `is work only enqueued?`, and `has a worker actually started?` Do not collapse them into one "live team" judgment.
+- Canonical team-existence evidence is current-session `TeamCreate` success or a live team config backed by session-owned panes. Config-file residue, attached panes without live ownership, task rows, or `SendMessage` success alone are not team-existence proof.
+- Canonical dispatch-pending evidence is successful `Agent` dispatch or assignment-grade `SendMessage`. Canonical worker-start evidence is observed worker activity (claim/first tool use or worker-originated handoff). `dispatch-pending` is not `active`.
 
 Note on `hold`: (1) workflow state (this section), (2) validator verdict (`HOLD` in PASS/HOLD/FAIL), (3) worker lifecycle state (`hold-for-validation`), (4) execution pause signal (`HOLD and escalate`). Use compound forms by default. Bare forms are only permitted in these fixed contexts: bare HOLD in validator output = verdict-HOLD; bare hold in lifecycle packets = hold-for-validation; bare HOLD in skill procedure text = execution-HOLD; bare HOLD in acceptance-gate prescriptive text = verdict-HOLD.
 
@@ -112,7 +115,7 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 - Re-verification after meaningful modification is mandatory before handoff.
 - Fresh user turns, reroutes, and new assignments reset task-level planning discipline.
 - Hook markers are observation evidence only; they do not replace planning, Critical Challenge, or truthful handoff content.
-- Positive-state reporting requires actual observed planning and self-verification on the current task, not retrospective claims.
+- Positive-state reporting requires actual observed planning and self-verification on the current task, not retrospective claims. Runtime-active evidence does not justify "workers are already running"; dispatch-pending evidence does not justify "parallel work is underway" until worker-start evidence exists.
 
 #### Skill Loading Philosophy
 

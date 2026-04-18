@@ -1026,6 +1026,20 @@ try {
 NODE
 }
 
+team_config_lead_session_id() {
+  local config_file="${1-}"
+  [[ -f "$config_file" ]] || return 0
+
+  CONFIG_FILE="$config_file" node <<'NODE' 2>/dev/null || true
+const fs = require("fs");
+try {
+  const config = JSON.parse(fs.readFileSync(process.env.CONFIG_FILE || "", "utf8"));
+  const leadSessionId = String(config.leadSessionId || "").trim();
+  if (leadSessionId) process.stdout.write(leadSessionId);
+} catch {}
+NODE
+}
+
 team_config_has_live_pane() {
   local config_file="${1:?config file required}"
   local pane_id=""
@@ -1037,6 +1051,28 @@ team_config_has_live_pane() {
       return 0
     fi
   done < <(team_config_pane_ids "$config_file")
+
+  return 1
+}
+
+current_session_live_team_config() {
+  local session_id="${1-}"
+  local config_file=""
+  local lead_session_id=""
+
+  [[ -n "$session_id" ]] || return 1
+
+  for config_file in "$HOME/.claude/teams"/*/config.json; do
+    [[ -f "$config_file" ]] || continue
+    if ! team_config_has_live_pane "$config_file"; then
+      continue
+    fi
+    lead_session_id="$(team_config_lead_session_id "$config_file")"
+    if [[ -n "$lead_session_id" && "$lead_session_id" == "$session_id" ]]; then
+      printf '%s' "$config_file"
+      return 0
+    fi
+  done
 
   return 1
 }

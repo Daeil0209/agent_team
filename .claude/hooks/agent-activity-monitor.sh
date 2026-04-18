@@ -238,6 +238,11 @@ if [[ "$AGENT_TYPE" == "unknown-agent" ]]; then
   exit 0
 fi
 
+if runtime_sender_session_is_worker "$SESSION_ID" && [[ "$TOOL_NAME" != "SendMessage" ]]; then
+  record_team_runtime_state "" "active" "worker-activity"
+  mark_team_dispatch_claimed "" "$AGENT_TYPE" "worker-activity"
+fi
+
 if [[ "$TOOL_NAME" == "Bash" ]]; then
   CMD_SUMMARY="$(printf '%s' "$COMMAND" | head -c 50 | tr '|"\\' '_')"
   printf '%s | %s | %s | %s | Bash:%s\n' "$TIMESTAMP" "$SESSION_ID" "$AGENT_TYPE" "$CWD_SUFFIX" "$CMD_SUMMARY" >> "$ACTIVITY_LEDGER"

@@ -178,19 +178,20 @@ sendmessage_is_closeout_exempt() {
 }
 
 if [[ "$TOOL_NAME" == "TeamCreate" ]]; then
-  # Config files alone are not runtime truth; require a live pane proof.
-  if _rtg_cfg="$(active_team_config_live 2>/dev/null)"; then
+  # Only current-session pane-backed runtime proves redundant TeamCreate.
+  if _rtg_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null)"; then
     if [[ -n "$SESSION_ID" ]]; then
       record_runtime_session_id "$SESSION_ID"
       mark_procedure_startup_ready "$SESSION_ID"
     fi
-    printf '%s | explicit-team-runtime-active | source=%s\n' \
-      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$_rtg_cfg" > "$TEAM_RUNTIME_ACTIVE_FILE"
-    printf '%s | boot-complete\n' \
-      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
-    emit_deny "BLOCKED: runtime already active. Next: reuse current runtime; no TeamCreate needed."
-    exit 0
-  fi
+	    printf '%s | explicit-team-runtime-active | source=%s\n' \
+	      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$_rtg_cfg" > "$TEAM_RUNTIME_ACTIVE_FILE"
+	    printf '%s | boot-complete\n' \
+	      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
+	    record_team_runtime_state "$SESSION_ID" "active" "live-config"
+	    emit_deny "BLOCKED: runtime already active. Next: reuse current runtime; no TeamCreate needed."
+	    exit 0
+	  fi
 
   run_scan
 
@@ -229,13 +230,14 @@ if [[ ! -s "$TEAM_RUNTIME_ACTIVE_FILE" ]]; then
     esac
   fi
 
-  # Auto-recover only when a team config is backed by a live pane.
-  if _rtg_cfg="$(active_team_config_live 2>/dev/null)"; then
-    [[ -n "$SESSION_ID" ]] && mark_procedure_startup_ready "$SESSION_ID"
-    printf '%s | explicit-team-runtime-active (auto-recovered) | source=%s\n' \
-      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$_rtg_cfg" > "$TEAM_RUNTIME_ACTIVE_FILE"
-    exit 0
-  fi
+  # Auto-recover only when the current session already owns a pane-backed team runtime.
+	  if _rtg_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null)"; then
+	    [[ -n "$SESSION_ID" ]] && mark_procedure_startup_ready "$SESSION_ID"
+	    printf '%s | explicit-team-runtime-active (auto-recovered) | source=%s\n' \
+	      "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$_rtg_cfg" > "$TEAM_RUNTIME_ACTIVE_FILE"
+	    record_team_runtime_state "$SESSION_ID" "active" "live-config"
+	    exit 0
+	  fi
 
   if [[ "$TOOL_NAME" == "Agent" && -n "$SESSION_ID" ]] && closeout_intent_is_active "$SESSION_ID"; then
     cleanup_denied_agent_dispatch_residue

@@ -19,6 +19,7 @@ Quick contract:
 - ground plan in `CLAUDE.md §Team Philosophy` and user instructions
 - freeze scope before consequential tool use
 - define approach, verification, and hold conditions
+- freeze the next consequential action when routing implies explicit runtime or worker dispatch
 - produce the internal plan block
 - then load `self-verification` before execution
 
@@ -105,6 +106,8 @@ Team-lead routing pre-signal:
 - Use `ambiguous-route` when the work might still be lead-local but the current evidence does not cleanly satisfy all direct-work conditions from `agents/team-lead.md §RPA-2`.
 - For `team-routing candidate` or `ambiguous-route`, the next consequential skill after post-planning `self-verification` is `task-execution` unless a bounded blocker is explicit; do not let a large or multi-concern request remain implicitly single-worker just because the current plan block omitted staffing details.
 - If the plan already implies delegation, explicit runtime, or worker-owned surfaces, record that implication now instead of leaving it to later interpretation.
+- Positive channel rule: when the plan implies team routing, freeze one explicit `NEXT-CONSEQUENTIAL-ACTION` now. Allowed values are `TeamCreate`, `reuse-via-SendMessage`, `Agent`, or `clear-blocker:<exact blocker>`. Do not leave the runtime move as a vague future intention.
+- If `NEXT-CONSEQUENTIAL-ACTION` is `clear-blocker:<...>`, the blocker must be concrete, bounded, and immediately relevant to runtime activation, worker reuse, or dispatch packet completion. Broad additional inspection is not a valid blocker.
 
 ## Step 4: Verification Criteria
 
@@ -147,6 +150,7 @@ STEPS: <numbered list>
 PARALLEL-GROUPS: which steps run concurrently
 AGENT-MAP: agent to phase assignment (Required for team-lead plans with delegation. Optional for workers dispatching sub-tasks. May be omitted for single-worker plans with no downstream delegation.)
 NEXT-SKILL: <self-verification | task-execution after self-verification | other bounded owner-directed next step>
+NEXT-CONSEQUENTIAL-ACTION: <lead-local-none | TeamCreate | reuse-via-SendMessage | Agent | clear-blocker:<exact blocker>>
 DISPATCH-BLOCKERS: <none or the concrete blocker that prevents immediate TeamCreate/dispatch once routing is confirmed>
 CURRENT-STATE-RATIONALE: <required when evaluating an existing state under review; otherwise n/a>
 PROTECTED-VALUE: <required when evaluating an existing state under review; otherwise n/a>
@@ -170,7 +174,8 @@ When a progress update is actually needed before execution or dispatch:
 - Forbidden content: field labels, packet schemas, numbered plan blocks, `WORK-INTENT`/`EXPECTED-OUTPUT`/`AGENT-MAP` echoes, or any field-by-field restatement of the internal planning record.
 
 Good:
-- `범위를 확정했고, 다음은 self-verification 후 researcher 3개 lens를 병렬 배정합니다.`
+- `범위를 확정했고, 다음 consequential action은 TeamCreate입니다.`
+- `범위를 확정했고, 다음은 self-verification 후 기존 researcher 재사용 여부를 확인합니다.`
 - `패치 범위를 좁혔고, 다음은 reviewer 검증입니다.`
 
 Bad:
@@ -183,6 +188,9 @@ Planning record rules:
 
 - `ROUTING-SIGNAL` is mandatory for `team-lead`. Workers may omit it unless the parent packet explicitly asks for routing input.
 - If `ROUTING-SIGNAL` is `team-routing candidate`, `AGENT-MAP` must be present or `DISPATCH-BLOCKERS` must name the exact reason it is not yet present.
+- If `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`, `NEXT-CONSEQUENTIAL-ACTION` is mandatory.
+- If `ROUTING-SIGNAL` is `team-routing candidate` and `DISPATCH-BLOCKERS` is `none`, `NEXT-CONSEQUENTIAL-ACTION` must be `TeamCreate`, `reuse-via-SendMessage`, or `Agent` — not `lead-local-none`.
+- Do not use `NEXT-CONSEQUENTIAL-ACTION: clear-blocker:<...>` as a parking spot for broad lead-local analysis. The blocker must be narrow enough that clearing it immediately returns the path to runtime activation or dispatch.
 - If `ROUTING-SIGNAL` is `ambiguous-route`, default `NEXT-SKILL` to `task-execution after self-verification` unless a concrete, bounded reason keeps the work lead-local.
 - Do not use an empty or omitted `AGENT-MAP` to silently downgrade obviously multi-surface work into single-worker execution.
 
@@ -194,4 +202,5 @@ After completing the planning output, load `self-verification` before execution.
 For `team-lead`:
 
 - If the plan block shows `team-routing candidate`, `ambiguous-route`, `AGENT-MAP`, or non-trivial `DISPATCH-BLOCKERS`, treat that as an explicit handoff basis into `task-execution`; do not continue broad lead-local inspection unless the blocker is named and being cleared.
+- If the plan block shows `team-routing candidate` or `ambiguous-route`, verify that `NEXT-CONSEQUENTIAL-ACTION` names the exact runtime move or the exact blocker-clear move. A missing or vague next action is a planning defect.
 - If the request is clearly Standard/Precision-shaped but the plan block still looks like a single-worker lightweight plan, treat that as a planning defect and correct the plan before proceeding.

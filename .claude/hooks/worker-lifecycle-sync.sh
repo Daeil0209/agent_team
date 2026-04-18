@@ -452,13 +452,14 @@ ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
           clear_worker_standby "$TARGET_NAME"
         fi
         ;;
-      assignment|reuse|reroute)
-        if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
-          clear_worker_idle_pending "$TARGET_NAME"
-          clear_worker_idle_notice "$TARGET_NAME"
-          clear_worker_standby "$TARGET_NAME"
-          # Guard: if the worker already has an active WP marker for any known session,
-          # they are in mid-task execution (turn paused, not task complete). Preserve
+	      assignment|reuse|reroute)
+	        if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
+	          clear_worker_idle_pending "$TARGET_NAME"
+	          clear_worker_idle_notice "$TARGET_NAME"
+	          clear_worker_standby "$TARGET_NAME"
+	          mark_team_dispatch_pending "$SESSION_ID" "$TARGET_NAME" "sendmessage-${MESSAGE_CLASS}"
+	          # Guard: if the worker already has an active WP marker for any known session,
+	          # they are in mid-task execution (turn paused, not task complete). Preserve
           # their planning state and skip the planning_required reset to avoid blocking
           # a subsequent completion-grade SendMessage for the current task.
           _wp_already_loaded="false"

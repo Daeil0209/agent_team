@@ -274,7 +274,7 @@ const next = {
   ...previous,
   workspaceRoot: process.env.WORKSPACE_ROOT || previous.workspaceRoot || "",
   sessionId: sessionId || previous.sessionId || "",
-  runtimeSessionId: process.env.RUNTIME_SESSION_ID || previous.runtimeSessionId || "",
+  runtimeSessionId: process.env.RUNTIME_SESSION_ID || "",
   procedureAuthority: "workspace-local",
   migrationPhase: process.env.PROCEDURE_STATE_MIGRATION_PHASE || previous.migrationPhase || "",
   projectContinuityFile: process.env.PROJECT_CONTINUITY_FILE || previous.projectContinuityFile || "",
@@ -313,4 +313,92 @@ record_permission_provenance() {
     lastPermissionSource "$permission_source" \
     lastRawMode "$raw_mode" \
     lastAgentDispatchName "$agent_name"
+}
+
+record_team_runtime_state() {
+  local session_id="${1-}"
+  local runtime_state="${2:-inactive}"
+  local evidence="${3:-none}"
+
+  update_procedure_state_fields \
+    "$session_id" \
+    teamRuntimeState "$runtime_state" \
+    teamExistenceEvidence "$evidence"
+}
+
+reset_team_state_channel() {
+  local session_id="${1-}"
+
+  update_procedure_state_fields \
+    "$session_id" \
+    teamRuntimeState "inactive" \
+    teamExistenceEvidence "none" \
+    teamDispatchState "none" \
+    teamDispatchEvidence "none" \
+    lastDispatchWorker "" \
+    lastPendingWorker "" \
+    lastClaimedWorker ""
+}
+
+record_team_dispatch_state() {
+  local session_id="${1-}"
+  local dispatch_state="${2:-none}"
+  local dispatch_worker="${3-}"
+  local pending_worker="${4-}"
+  local claimed_worker="${5-}"
+  local evidence="${6:-none}"
+
+  update_procedure_state_fields \
+    "$session_id" \
+    teamDispatchState "$dispatch_state" \
+    teamDispatchEvidence "$evidence" \
+    lastDispatchWorker "$dispatch_worker" \
+    lastPendingWorker "$pending_worker" \
+    lastClaimedWorker "$claimed_worker"
+}
+
+clear_team_dispatch_state() {
+  local session_id="${1-}"
+
+  record_team_dispatch_state "$session_id" "none" "" "" "" "none"
+}
+
+mark_team_dispatch_pending() {
+  local session_id="${1-}"
+  local worker_name="${2-}"
+  local evidence="${3:-agent-dispatch}"
+  local previous_claimed=""
+
+  [[ -n "$worker_name" ]] || return 0
+  previous_claimed="$(get_procedure_state_field "lastClaimedWorker" "")"
+  record_team_dispatch_state "$session_id" "pending" "$worker_name" "$worker_name" "$previous_claimed" "$evidence"
+}
+
+mark_team_dispatch_claimed() {
+  local session_id="${1-}"
+  local worker_name="${2-}"
+  local evidence="${3:-worker-activity}"
+
+  [[ -n "$worker_name" ]] || return 0
+  record_team_dispatch_state "$session_id" "claimed" "$worker_name" "" "$worker_name" "$evidence"
+}
+
+clear_stale_team_state_for_new_session() {
+  local session_id="${1-}"
+  local previous_boot_session_id=""
+  local previous_session_id=""
+
+  [[ -n "$session_id" ]] || return 0
+
+  previous_boot_session_id="$(get_procedure_state_field "bootSessionId" "")"
+  previous_session_id="$(get_procedure_state_field "sessionId" "")"
+
+  if [[ -n "$previous_boot_session_id" && "$previous_boot_session_id" != "$session_id" ]]; then
+    reset_team_state_channel "$session_id"
+    return 0
+  fi
+
+  if [[ -z "$previous_boot_session_id" && -n "$previous_session_id" && "$previous_session_id" != "$session_id" ]]; then
+    reset_team_state_channel "$session_id"
+  fi
 }

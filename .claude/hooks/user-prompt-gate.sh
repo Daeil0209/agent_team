@@ -128,7 +128,7 @@ esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-planning-required. Next: Skill('work-planning') -> Skill('self-verification') before consequential tools; read-only inspection allowed."
+  PLANNING_CONTEXT="CTX: fresh-turn-planning-required. Next: Skill('work-planning') -> Skill('self-verification') before consequential tools; read-only inspection allowed. Reporting rule: before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
 fi
 
 # ─── OUTPUT ──────────────────────────────────────────────────────────────────

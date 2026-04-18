@@ -102,12 +102,14 @@ Relationship to Boot Sequence: Session-Start Sequence always runs at fresh start
 When the session entry is triggered by context compaction (`SessionStart:compact hook success` present in session context), perform these additional steps before the first consequential dispatch:
 
 1. Treat the compacted summary as UNVERIFIED for dispatch decisions. Re-derive the open work list from `./.claude/session-state.md` and `TaskList` — not from summary memory.
-2. Re-read the live team roster from current task state. Do not rely on remembered worker assignments.
-3. For each live worker, confirm WORK-SURFACE and lifecycle state from task records.
-4. Re-group live workers by surface; identify parallelizable surfaces and dispatch-vacuum gaps.
-5. Proceed to first consequential dispatch only after steps 1–4 are complete.
+2. Re-read the team state channel from `./.claude/state/procedure-state.json`: `teamRuntimeState`, `teamExistenceEvidence`, `teamDispatchState`, `teamDispatchEvidence`, `lastPendingWorker`, and `lastClaimedWorker`. Treat these as the persisted current-session runtime channel, not as summary prose.
+3. Cross-check the team state channel against the `SessionStart` runtime snapshot and current task state. Keep `team exists`, `dispatch pending`, and `worker started` as separate recovery questions.
+4. Re-read the live team roster from authoritative runtime surfaces, not from remembered assignments. Current task state may corroborate worker ownership and WORK-SURFACE, but it does not by itself prove live team existence or worker start.
+5. For each live or claimed worker, confirm WORK-SURFACE and lifecycle state from current task records and current-session runtime evidence.
+6. Re-group live workers by surface; identify parallelizable surfaces and dispatch-vacuum gaps.
+7. Proceed to first consequential dispatch only after steps 1–6 are complete.
 
-This variant is a recovery guide, not a block gate. Skip inapplicable steps (e.g., step 3 when no live workers exist).
+This variant is a recovery guide, not a block gate. Skip inapplicable steps (e.g., step 5 when no live workers exist), but do not silently collapse missing runtime evidence into "the team is probably still working."
 
 ### Session-state discipline
 
