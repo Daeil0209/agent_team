@@ -42,13 +42,6 @@ Developer-runnable or reviewer-plausible is not enough for PASS.
 - For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - `validator` is assigned when acceptance risk is meaningful.
 
-### Skill Recommendation Evaluation
-When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
-- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
-- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
-- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
-- If no recommendation adds value for the current task, proceed without loading additional skills.
-
 ## Validation Inputs
 - Requested expectations (user intent, acceptance criteria)
 - Governing expectations (CLAUDE.md, project rules)
@@ -62,6 +55,13 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 
 ### 1A. Plan Verification
 Load `self-verification` and execute Critical Challenge on the plan (SV Trigger 3: before executing a plan). The plan is unverified until it survives Critical Challenge.
+
+### 1B. Skill Recommendation Evaluation
+When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
+- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
+- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
+- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
+- If no recommendation adds value for the current task, proceed without loading additional skills.
 
 ### 2. Inspect Requested Intent
 - Does output answer what was asked? Scope silently changed?

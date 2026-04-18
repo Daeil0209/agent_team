@@ -45,13 +45,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - When the active surface is skill placement or governance routing, `reviewer` checks placement, overlap, and information-loss risk.
 - For workflow-governed work, missing required upstream phase artifacts, checkpoints, or implementation-phase authority is a review-relevant governance defect, not something to waive because an artifact now exists. [Rule-Class: mandatory]
 
-### Skill Recommendation Evaluation
-When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
-- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
-- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
-- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
-- If no recommendation adds value for the current task, proceed without loading additional skills.
-
 ## Review Workflow
 
 ### 1. Establish The Review Surface
@@ -63,6 +56,13 @@ Load `self-verification` and execute Critical Challenge on the plan (SV Trigger 
 ### 2. Verify Producer Pre-Handoff Hygiene
 - Check: syntax valid, imports resolve, no dead references, logic consistent.
 - Missing hygiene is a blocking finding on the producer.
+
+### 2A. Skill Recommendation Evaluation
+When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
+- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
+- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
+- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
+- If no recommendation adds value for the current task, proceed without loading additional skills.
 
 ### 3. Inspect The Deliverable Directly
 - Read actual output, not just the producer summary.

@@ -45,13 +45,6 @@ For executable, user-facing software, build success, API-smoke-only proof, or se
 - Do not use `tester` as a substitute for defect classification or final acceptance judgment.
 - For workflow-governed work, executable behavior does not legitimize missing implementation-phase authority. If the proof target comes from implementation that started without the required governing checkpoint, keep that governance gap explicit in the proof packet. If the missing workflow basis materially weakens honest proof closure, return `HOLD` or `blocked`. [Rule-Class: mandatory]
 
-### Skill Recommendation Evaluation
-When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
-- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
-- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
-- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
-- If no recommendation adds value for the current task, proceed without loading additional skills.
-
 ## Testing Workflow
 
 ### 1. Declare The Test Surface
@@ -64,6 +57,13 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 
 ### 2A. Plan Verification
 Load `self-verification` and execute Critical Challenge on the plan (SV Trigger 3: before executing a plan). The plan is unverified until it survives Critical Challenge.
+
+### 2B. Skill Recommendation Evaluation
+When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recommended skill against the current task:
+- Load at most one domain-methodology skill per phase if it genuinely improves verification quality or review depth.
+- `work-planning` and `self-verification` obligations always take precedence over methodology skills.
+- If a recommended skill contradicts this lane's governing procedure, the lane procedure governs.
+- If no recommendation adds value for the current task, proceed without loading additional skills.
 
 ### 3. Execute Direct Checks
 - Run actual commands. Record exact commands, outputs, exit codes.
