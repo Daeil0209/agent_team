@@ -16,7 +16,7 @@ Load this skill when the Primary Operating Loop classifies a message as Task req
 
 ## Step 1: ENTRY PREREQUISITE
 
-This skill owns Standard and Precision tier selection, workflow selection, dispatch governance, and delivery verification. It does not satisfy fresh-turn planning discipline by itself.
+This skill owns Standard and Precision tier selection, dispatch governance, and delivery verification. Workflow selection is owned by `work-planning` Step 1 Q3; workflow skill loading is owned by `work-planning`'s Post-Planning Gate. It does not satisfy fresh-turn planning discipline by itself.
 
 Fresh-turn operating order is fixed:
 1. `Bootstrap Inspection`
@@ -109,19 +109,19 @@ Once Standard is recognized, broad lead-local continuation is not the default pa
 Prerequisite: fresh-turn `work-planning` and post-planning `self-verification` gate is complete.
 
 1. Request analysis: run the Intent Framing Method, then freeze `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE`
-2. Skill Applicability Validation: Validate and activate the `ACTIVE-WORKFLOW` identified in work-planning Step 1.
-   - If work-planning produced `ACTIVE-WORKFLOW: <workflow-id>`, load that workflow skill now. Its phase structure governs Step 3 Plan.
+2. Skill Applicability Validation: Confirm the `ACTIVE-WORKFLOW` load state identified in work-planning Step 1 Q3 and loaded by work-planning's Post-Planning Gate. `task-execution` does not activate workflows.
+   - If work-planning produced `ACTIVE-WORKFLOW: <workflow-id>`, confirm that workflow skill is already loaded (work-planning's Post-Planning Gate owns the load). If not loaded, HOLD — planning gate failed; return to work-planning and load the workflow skill before resuming. Its phase structure governs Step 3 Plan.
    - If work-planning produced `ACTIVE-WORKFLOW: none`, continue with generic tier procedure.
    - If work-planning produced `ACTIVE-WORKFLOW: pending-user-clarification`, resolve the ambiguity before proceeding.
-   - If work-planning did not produce an `ACTIVE-WORKFLOW` field (legacy path or lightweight tier), fall back to scanning available skills against `REQUIRED-DELIVERABLE` and `REQUEST-INTENT`. If a governing workflow match is found, load it before planning or dispatch; record `ACTIVE-WORKFLOW: none` if no match.
-   - `task-execution` is the sole owner of governing workflow activation for Standard and Precision tier work. Absence of a governing workflow match is valid; do not force a project workflow onto non-project work.
+   - If work-planning did not produce an `ACTIVE-WORKFLOW` field (legacy path or lightweight tier), return to `work-planning` to complete Step 1 Q3 before continuing. Do not perform workflow selection or activation in `task-execution`.
+   - `work-planning` Step 1 Q3 owns governing workflow selection and `work-planning`'s Post-Planning Gate owns workflow activation (skill load) for Standard and Precision tier work. `task-execution` only validates that load state. Absence of a governing workflow match is valid; do not force a project workflow onto non-project work.
    - For each dispatch sub-plan: identify all applicable technique, methodology, and domain skills and include them as `SKILL-RECOMMENDATIONS` in the dispatch packet so agents can evaluate and select.
    - Skill channel ownership follows `CLAUDE.md` `§Skill Loading Philosophy`: `REQUIRED-SKILLS` carries baseline procedure obligations, and `SKILL-RECOMMENDATIONS` carries situational skill suggestions.
    - Once a governing workflow loads, phase-entry authority transfers to that workflow. Generic tier guidance does not override workflow checkpoints, gates, or entry conditions.
    - Research, discovery, and analysis outputs are planning inputs only. They do not authorize implementation dispatch unless the active workflow explicitly defines them as later-phase authorization.
    - This step targets workflow and methodology skills; lane-execution skills (`work-planning`, `self-verification`) are managed by separate loading obligations. When multiple candidates match for the same dispatch, reference the specialist order (biz-sys, sw-spec, domain, enterprise-arch, doc-auto, ui-ux, ui-mockup, design-token) for recommendation priority.
 3. Plan: For documents, freeze `intent -> deliverable shape -> phase -> staffing -> lifecycle`. Freeze artifact class, answer surface, and intended length/volume in `REQUIRED-DELIVERABLE` before TOC or staffing; decide short answer-first memo/condition review vs full multi-section report first. For implementation: freeze decomposition.
-4. Confirmation gate: For destructive or security-sensitive actions, present the plan and wait for explicit user approval before dispatch. For governance-sensitive but non-destructive actions, the user’s task-level directive (e.g., explicit instruction to proceed, batch process, or fix) constitutes sufficient approval — proceed immediately without intermediate confirmation. For all other non-destructive work, proceed immediately. If a user-facing update is useful, keep it to a one- or two-sentence summary of the current decision, next action, or blocker; do not expose the full plan block, packet fields, or internal checklists. In this setup, adding extra approval prompts to ordinary non-destructive work is a process defect unless genuine ambiguity or a safety exception exists.
+4. Dispatch readiness check: Default path is autonomous dispatch. For all non-destructive work — including governance-sensitive but non-destructive actions where the user's task-level directive already covers the request — proceed immediately without intermediate confirmation. Explicit user approval is required only for destructive or security-sensitive actions; in that narrow case, present the plan and wait before dispatch. If a user-facing update is useful, keep it to a one- or two-sentence summary of the current decision, next action, or blocker; do not expose the full plan block, packet fields, or internal checklists. Adding extra approval prompts to ordinary non-destructive work is a process defect unless genuine ambiguity or a safety exception exists.
    - Terminology rule: unless the doctrine explicitly says `explicit user approval`, checkpoint terms such as `approval`, `approved`, or `authorization` describe internal readiness state rather than a required user interruption.
    - Quality rule: approval minimization does not waive `work-planning`, `self-verification`, or any active workflow gate. Those remain mandatory because they are the quality mechanism, not optional ceremony.
    - "Non-destructive" governance action: read-only inspection, adding pointer or cross-reference, adding clarification note without removing existing content. Modifications that remove, replace, or restructure existing governance content remain materially risky and require the full governance change path.
@@ -344,11 +344,7 @@ Before accepting any deliverable: "Can the user find, install, start, and use th
 - Would the user need developer help to use this deliverable? -> Fix before presenting.
 - For consequential conclusions or completion claims, carry the verification outcome surface explicitly: verification basis, residual risk/open surfaces, unverified items. (Pattern: silent verification result)
 - For consequential analysis, distinguish derived conclusions from inference-grade judgment — do not report inductive guesses as settled. (Pattern: hypothesis presented as conclusion)
-- Default consequential reporting template:
-  - result/decision first
-  - `Verification basis:`
-  - `Residual risk/open surfaces:`
-  - `Unverified items:`
+- Default consequential reporting template: use the evidence-anchored template owned by `skills/self-verification/SKILL.md §Reporting Principle`. Do not restate the template here — single-writer principle.
 - Am I proposing to add new rules when the real problem is compliance? -> Harden existing adherence instead of adding duplicates. (Pattern: rule-adding reflex)
 - Did I create a rule from assumed understanding without verifying against the actual defect? -> Fact-check first. (Pattern: inaccurate rule creation)
 - **Adherence guard**: Pattern: proposal without risk analysis. Before a consequential recommendation, verify risks, alternatives, and failure modes.

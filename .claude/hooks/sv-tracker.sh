@@ -7,9 +7,10 @@ source "$(dirname "$0")/hook-config.sh"
 # entry markers when the self-growth-sequence skill is explicitly loaded.
 # Loading proves sequence entry only; route/patch closure remains governed by
 # the self-growth procedure and downstream verification, not this hook.
-# session-boot load marks lead-local boot completion as an observed activation
-# checkpoint only; runtime authorization still belongs to TeamCreate and
-# runtime-entry enforcement.
+# session-boot load marks lead-local boot procedure entry only. Boot-infra
+# completion is recorded later when runtime setup succeeds or task planning
+# begins; runtime authorization still belongs to TeamCreate and runtime-entry
+# enforcement.
 # Phase 1 marker (sv-plan) = self-verification load observed after work-planning
 # Phase 2 marker (sv-result) = later self-verification load observed before handoff
 # Markers prove skill-load entry only; Critical Challenge remains procedural work.
@@ -42,7 +43,6 @@ fi
 case "$SKILL_NAME" in
   *session-boot*)
     if ! runtime_sender_session_is_worker "$SESSION_ID"; then
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$BOOT_SEQUENCE_COMPLETE_FILE"
       mark_procedure_startup_ready "$SESSION_ID"
       # Re-anchor the boot session marker to the confirmed lead session.
       # A worker's session-start may have overwritten SESSION_BOOT_MARKER_FILE
@@ -63,6 +63,9 @@ case "$SKILL_NAME" in
     if [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]]; then
       # First SV after WP = Phase 1 load marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_PLAN_MARKER"
+      if [[ -z "$WORKER_NAME" ]]; then
+        clear_lead_planning_required "$SESSION_ID"
+      fi
     else
       # Subsequent SV = Phase 2 load marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
@@ -75,7 +78,9 @@ case "$SKILL_NAME" in
     if [[ -n "$WORKER_NAME" ]]; then
       clear_worker_planning_required "$WORKER_NAME"
     else
-      clear_lead_planning_required "$SESSION_ID"
+      if [[ "$(get_procedure_state_field "startupState" "")" == "ready" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
+        printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
+      fi
     fi
     ;;
 esac

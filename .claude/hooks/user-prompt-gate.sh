@@ -73,12 +73,17 @@ elif printf '%s' "$USER_PROMPT" | grep -qiE "$CORRECTION_PATTERN" 2>/dev/null; t
   if [[ -n "$PROMPT_SESSION_ID" ]]; then
     mark_self_growth_suspected "$PROMPT_SESSION_ID"
   fi
-  BOOT_CONTEXT="CTX: self-growth-suspected. Check whether the criticism identifies a real defect before consequential fan-out."
+  BOOT_CONTEXT="CTX: user-challenge-observed. Treat the prompt as evidence to evaluate, not proof of defect. Preserve prior verified conclusions unless direct evidence or governing rules overturn them. If a real behavioral defect is confirmed, then enter self-growth; otherwise answer the current request from verified evidence."
 fi
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
-  BOOT_CONTEXT="CTX: boot-required. Next: Skill(session-boot) before task-level work."
-  BOOT_SUPPRESS="true"
+  BOOT_STARTUP_STATE="$(get_procedure_state_field "startupState" "")"
+  if [[ "$BOOT_STARTUP_STATE" == "ready" ]]; then
+    printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
+  else
+    BOOT_CONTEXT="CTX: boot-required. Next: Skill(session-boot) before task-level work."
+    BOOT_SUPPRESS="true"
+  fi
 fi
 
 # ─── SECTION 2: CLOSEOUT INTENT SYNC + TASK-START PLANNING REMINDER ─────────
@@ -128,7 +133,7 @@ esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-planning-required. Next: Skill('work-planning') -> Skill('self-verification') before consequential tools; read-only inspection allowed. Reporting rule: before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
+  PLANNING_CONTEXT="CTX: fresh-turn-preflight. If this turn introduces a new analysis, classification, recommendation, correction, execution, patch, dispatch, or mutation scope, first freeze scope with Skill('work-planning'), then load Skill('self-verification') before reporting conclusions or using consequential tools. Read-only inspection is evidence gathering only; it does not authorize reporting, dispatch, or mutation. Already-reviewed changes may use work-planning only to freeze the current-turn mutation scope. Before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
 fi
 
 # ─── OUTPUT ──────────────────────────────────────────────────────────────────

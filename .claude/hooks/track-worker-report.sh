@@ -122,7 +122,7 @@ MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/
 MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
 
 case "$MESSAGE_CLASS" in
-  handoff|completion|hold|status|blocker|scope-pressure) ;;
+  handoff|completion|hold|status|blocker|scope-pressure|dispatch-ack) ;;
   *) exit 0 ;;
 esac
 

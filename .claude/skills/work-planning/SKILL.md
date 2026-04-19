@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Internal Planning Record, Progress Update Surface, Post-Planning Gate
+- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 1.5: Underspecification Axis Audit, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Internal Planning Record, Progress Update Surface, Post-Planning Gate
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
@@ -27,7 +27,7 @@ Output channel: Steps 1-5 are internal reasoning that produces the frozen scope.
 
 Boundary:
 - this skill governs agent-local execution planning
-- dispatch governance, staffing, and workflow selection belong to `task-execution`
+- dispatch governance and staffing belong to `task-execution`; workflow selection (Step 1 Q3) and workflow skill loading (Post-Planning Gate) remain owned by this skill
 - `session-boot` still comes first for the main session when boot is required
 - for workflow-governed `team-lead` work, this skill is only a local scope scaffold, not phase authority
 - for `team-lead`, this skill must leave the next owner unambiguous enough that Standard/Precision work reaches `task-execution` without silent lead-local compression
@@ -39,7 +39,7 @@ Load this skill via the Skill tool and execute the full procedure at work start.
 
 1. At task start: when a new assignment or dispatch is received.
 2. At reuse/reroute: when a standby worker receives a new assignment via SendMessage.
-3. At scope change: when governing lane changes scope, approach, or output target mid-task.
+3. At scope change: when governing lane changes scope, approach, or output target mid-task. This includes phase transitions within a governing workflow when the new phase introduces independent sub-surfaces not resolved in the previous phase's plan (e.g., `dev-workflow` Phase 2 → Phase 3 transition emitting feature-modular decomposition that requires fresh `PARALLEL-GROUPS` and `AGENT-MAP` judgment against `CLAUDE.md [PARALLEL]` and `agents/team-lead.md §IR-2 #8`).
 
 Before the first consequential tool call on any new assignment, reuse, or reroute: confirm work-planning is loaded and scope is frozen.
 
@@ -50,15 +50,63 @@ Before the first consequential tool call on any new assignment, reuse, or rerout
 - Cross-check scope, purpose, and output target.
 - Analyze the work through the following thinking flow before scope freeze:
   · **Q1 (Purpose)**: What is the user trying to achieve? Extract the real goal, not just the surface task.
-  · **Q2 (Work Types)**: What types of work does this purpose require? (e.g., software development, document creation, research/analysis, design, engineering calculation)
-  · **Q3 (Channels)**: For each work type, identify the governing workflow or methodology skill. Use the Deliverable-Type reference in `task-execution/reference.md` as a guide. If the match is unclear, ask the user before proceeding.
+  · **Q2 (Work Types)**: What types of work does this purpose require? Classify explicitly as one or more of: software-development, document-creation, research-analysis, presentation-material, simple-report, governance-edit, question-answer, engineering-calculation, design, data-analysis, or an equivalent named type. Declare the chosen classification explicitly before proceeding to Q3 — this classification is the required input for Q3 and Q5.
+  · **Q3 (Channels)**: Based on the Q2 classification, identify the governing workflow or methodology skill for each named work type. Use the Deliverable-Type reference in `task-execution/reference.md` as a guide. If the match is unclear, ask the user before proceeding.
   · **Q4 (Relationships)**: If multiple work types exist, map their relationships: independent, sequential, or interdependent.
   · **Q5 (Supporting Skills)**: Within each stream, identify methodology or domain skills that support the work.
 - Q3 results become the `ACTIVE-WORKFLOW` field in the planning output. Q5 results feed `SKILL-RECOMMENDATIONS` at dispatch time.
 - If Q1 cannot determine the purpose, HOLD and ask the user for clarification.
+- If Q2 cannot be classified into one or more named work types, HOLD and ask the user rather than guessing. Q3 and Q5 must not proceed on an unclassified Q2.
 - If Q3 cannot confidently match a workflow, ask the user rather than guessing.
 - Identify which `CLAUDE.md §Team Philosophy` coordinates apply to this work — these become non-negotiable constraints on the resulting plan.
 - If user intent and dispatch conflict, HOLD or escalate before proceeding.
+
+## Step 1.5: Underspecification Axis Audit
+
+Execute before Step 2 Scope Freeze. This step operationalizes the Underspecification surfacing rule in `agents/team-lead.md §IR-2 #11`. It is generative: derive axes from the request, do not check a fixed list.
+
+### A. Enumerate axes
+
+From the user request and any supplied reference, list the decision axes the deliverable requires resolution on. Axis families that typically apply (non-exhaustive — add domain-specific axes as needed):
+
+- artifact shape (what form is the output?)
+- delivery / interaction mode (how does the end user interact with it?)
+- scope boundary (what is in vs out?)
+- operating environment (where does it run?)
+- scale (single user, team, enterprise?)
+- quality-vs-speed tradeoff
+- any domain-specific axis the request implies
+
+Label each axis as one of:
+
+- (1) specified by user — user's words directly resolve it
+- (2) specified by reference — bounded inspection of supplied reference resolves it
+- (3) underspecified — neither user nor reference resolves it
+
+### B. Material-impact filter
+
+For every axis labeled (3) Underspecified, test against four criteria:
+
+- **M1 (deliverable look):** Would a wrong default make the deliverable look materially different to the user?
+- **M2 (rework cost):** Would a wrong default incur substantial downstream rework if corrected later?
+- **M3 (literal-term departure):** Would any plausible default conflict with the ordinary meaning of a term the user used literally?
+- **M4 (derivability):** Is the axis obvious to ask but non-obvious to derive correctly from context alone?
+
+Axes triggering M1, M2, M3, or M4 → label **SURFACE**. Others → label **DEFAULT** with the assumed value explicitly recorded.
+
+### C. Surface and commit
+
+- For SURFACE axes: present a bounded question naming (1) the specific axis, (2) 2–3 candidate defaults considered, (3) why none can be chosen without user input. Do not batch more than the necessary minimum; do not pad with axes that already passed to DEFAULT. Route the question per the agent's normal upward communication channel as defined by its role file.
+- For DEFAULT axes: record `axis → assumed value → rationale` in the internal planning record (`DEFAULTS-RECORDED` in the plan block). Downstream sessions and acceptance lanes audit this record to distinguish user-committed decisions from agent-assumed defaults.
+
+### D. Gate
+
+Step 2 Scope Freeze cannot proceed while any SURFACE axis remains unasked.
+
+### Scope note
+
+- For narrowly scoped tasks bounded by existing context, axis enumeration typically yields few axes and most pass to DEFAULT. The step still runs — its purpose is to force the enumeration habit, not to generate work.
+- **Axis-specific autonomy only.** User autonomy directives waive SURFACE only when they name the specific axis being waived. Generic autonomy directives that do not name an axis do NOT waive axis enumeration (A), the material-impact filter (B), or SURFACE obligations on axes that still trigger M1/M2/M3/M4. Blanket-autonomy interpretation of unnamed directives is the exact failure mode this step exists to prevent.
 
 ## Step 2: Scope Freeze
 
@@ -160,6 +208,7 @@ CHANGE-RISK: <required when evaluating an existing state under review; otherwise
 HIGHEST-RISK: <step or condition>
 HOLD-CONDITIONS: <escalation triggers>
 VERIFICATION: <self-check and handoff evidence>
+DEFAULTS-RECORDED: <from Step 1.5 — list of axis → assumed value → rationale for each DEFAULT axis; "none" if no underspecified axes remained after filtering>
 ```
 
 This block governs agent-local execution only; it is not user-facing. The upward proof surface is `PLANNING-BASIS`, not the full plan block.
@@ -198,6 +247,8 @@ Planning record rules:
 ## Post-Planning Gate
 
 After completing the planning output, load `self-verification` before execution. This gate requires a fresh Skill tool invocation in the current turn — prior-turn context presence does not satisfy it (`CLAUDE.md` `§Skill Loading Philosophy`).
+
+If `ACTIVE-WORKFLOW` is a workflow id (not `none`, not `pending-user-clarification`), load that workflow skill via the Skill tool before the first consequential action, including `task-execution` skill load, tier decision, `TeamCreate`, or any fan-out. Seeing the workflow name in the plan block does not satisfy this — an explicit Skill tool invocation is required (`CLAUDE.md` `§Skill Loading Philosophy`).
 
 For `team-lead`:
 

@@ -10,7 +10,7 @@ PRIMARY-OWNER: team-lead
 - Fixed owner pattern:
   1. `Activation Criteria`
   2. Phase sections (Phase 0-5) in order
-  3. Reference-owned workflow sections: `Interactive Checkpoints`, `Phase Transition Gates`, `Context Anchor`, `Decision Record Chain`, `Lane Responsibility Map`, `Incident Response`, `Gap Detection And YAGNI Review`
+  3. Reference-owned workflow sections: `Checkpoints`, `Phase Transition Gates`, `Context Anchor`, `Decision Record Chain`, `Lane Responsibility Map`, `Incident Response`, `Gap Detection And YAGNI Review`
   4. Local orchestration sections: `Phase Transition Notification`, `Related Skills`, `Deliverable Quality Philosophy Application`, `Self-Growth And Structural Feedback`
 - Do not add new top-level phase definitions without governance review.
 - Keep exact phase names stable when referenced by doctrine or dispatch packets.
@@ -21,7 +21,7 @@ Governs how team-lead orchestrates researcher, developer, reviewer, tester, and 
 
 ## Activation Criteria
 
-Activated by `task-execution` when a governing workflow match exists for a multi-phase development request. This skill does not self-authorize from generic planning alone.
+Activated by `work-planning`'s Post-Planning Gate when Step 1 Q3 sets `ACTIVE-WORKFLOW: dev-workflow` for a multi-phase development request. `task-execution` validates the load state but does not activate this skill. This skill does not self-authorize from generic planning alone.
 
 Load when:
 - team-lead orchestrates a feature development or implementation task spanning multiple phases
@@ -65,7 +65,11 @@ Discovery output feeds Phase 1 planning only. When a reference is supplied, the 
 **Owner lane**: developer (writes plan doc); researcher supports if evidence gaps remain after Phase 0.
 **Output artifact**: docs/01-plan/features/{feature}.plan.md _(default path — override in project config if structure differs)_
 
-Plan doc must begin with a 4-line executive summary (Problem / Solution / Impact / Scope) and include:
+Plan doc must begin with:
+- **USER-INSTRUCTION**: the user's original request quoted verbatim at the very top of the document, preserved without paraphrase. This block persists across all downstream phase artifacts as a live comparison anchor; if the user's instruction is later amended, append the amendment verbatim with its turn reference rather than overwriting.
+- 4-line executive summary (Problem / Solution / Impact / Scope)
+
+Plan doc must also include:
 - Problem statement (WHY), Target users and stakeholders (WHO), Known risks and mitigation (RISK)
 - Measurable success criteria (SUCCESS), Explicit scope boundaries (SCOPE)
 - Delivery experience (DELIVERY), Open questions (resolved at CP2)
@@ -105,7 +109,7 @@ _(Table above is the full-form template with three options. For Lightweight tier
 team-lead presents the CP3 selection basis. Default path: team-lead auto-resolves per the CP3 auto-resolution criteria in reference.md while keeping one selected architecture option explicit and reporting it concisely. Escalate to the user only when the architecture family, risk posture, or expected implementation scope would materially change beyond the active directive.
 For executable, user-facing software deliverables, CP3 comparison must explicitly surface delivery burden, user run path, shutdown path, user action count per operation, and infrastructure exposure across the presented options. Silent omission is a compliance failure.
 
-**Design doc must include**: Selected option + rationale, component list with responsibilities, API contracts (inputs/outputs/error paths), data flow description, dependency map. For executable, user-facing software deliverables: delivery surface design with minimum user action principle: launch path (single-action start from the end-user's OS environment — e.g., desktop icon or file double-click; CLI commands requiring terminal navigation are not single-action), first view (immediately usable state), shutdown path (window close = stop, no separate shutdown script unless technically unavoidable with documented justification), and infrastructure exposure policy (no consoles, logs, or server processes visible to user). Every user-facing operation path (start, use, stop) must require the fewest possible steps — if a step can be eliminated or automated, its presence is a design defect.,
+**Design doc must include**: The **USER-INSTRUCTION** block inherited verbatim from the Plan doc at the very top of the document (unchanged across phases unless the user amended the instruction). Selected option + rationale, component list with responsibilities, API contracts (inputs/outputs/error paths), data flow description, dependency map. For executable, user-facing software deliverables: delivery surface design with minimum user action principle: launch path (single-action start from the end-user's OS environment — e.g., desktop icon or file double-click; CLI commands requiring terminal navigation are not single-action), first view (immediately usable state), shutdown path (window close = stop, no separate shutdown script unless technically unavoidable with documented justification), and infrastructure exposure policy (no consoles, logs, or server processes visible to user). Every user-facing operation path (start, use, stop) must require the fewest possible steps — if a step can be eliminated or automated, its presence is a design defect.,
 - For executable, user-facing software deliverables — Hybrid file structure (feature-modular + shared core): combine the debugging clarity of feature-modular organization with the maintainability of a shared infrastructure layer. (1) **Feature-modular layer** — each functional module groups its router, service, templates, and module-specific business logic in one folder, enabling isolated per-feature debugging and parallel development. (2) **Shared core layer** — cross-module infrastructure (DB, i18n, middleware) and common functions used by 2+ modules go in a `core/` layer to prevent duplication and centralize cross-cutting concerns. The design doc must show the module folder tree and explicitly identify which functions belong to core vs. module-specific.
  Decision Record Chain header referencing plan doc constraints. For user-facing software deliverables: i18n architecture decision (target locale font stack, character encoding strategy, locale-specific formatting, and whether runtime language switching is in scope or explicitly excluded).
 
@@ -116,14 +120,15 @@ For executable, user-facing software deliverables, CP3 comparison must explicitl
 ## Phase 3: Implementation
 
 **Purpose**: Implement the feature per the resolved design.
-**Owner lane**: developer
+**Owner lanes**: developer(s) — single when feature decomposition shows no parallel surfaces; multiple when independent feature modules exist after serial prerequisites (spike, shared core) are resolved. Lane count is fixed by the CP4 lane decomposition, not by habit.
 
 **Prerequisite hard gates**:
 1. Design doc exists at docs/02-design/features/{feature}.design.md
 2. Architecture resolved at CP3 — explicit user choice or team-lead auto-resolution per CP3 criteria (recorded in design doc)
-3. CP4 implementation scope resolved — autonomous when aligned; explicit user confirmation only for destructive, security-sensitive, or materially scope-expanding changes
+3. CP4 implementation scope resolved — team-lead auto-resolves by default when scope matches the resolved design and the user's task-level directive. Explicit user confirmation is required only for destructive, security-sensitive, or materially scope-expanding changes.
+4. Parallelization re-planning resolved — at Phase 3 entry, re-run `work-planning` Step 3.4 (parallelizability) and the `PARALLEL-GROUPS` field against the feature decomposition from Phase 2 Design. Apply `CLAUDE.md [PARALLEL]` and `agents/team-lead.md §IR-2 #8` as non-negotiable constraints. The CP4 scope summary must then carry a lane decomposition (serial-vs-parallel phase boundaries, module-to-worker map, merge ownership). Single-developer dispatch is valid only when decomposition evidence shows no independent parallel surfaces; otherwise serializing independent module work is a bottleneck defect.
 
-**CP4 scope summary** (team-lead presents before implementation begins): files to create/modify, estimated change volume per file, out-of-scope items, known risk points, delivery experience check. Default path: team-lead resolves CP4 autonomously by verifying that implementation scope matches the resolved design doc and the user's task-level directive. Feature additions, destructive actions, security-sensitive actions, or scope changes beyond the resolved design require explicit user confirmation.
+**CP4 scope summary** (team-lead freezes internally before implementation begins; presented to the user only when CP4 escalation criteria trigger): files to create/modify, estimated change volume per file, out-of-scope items, known risk points, delivery experience check, and lane decomposition (serial prerequisite phases, parallel-eligible feature modules, module-to-worker map, merge ownership) per Prerequisite hard gate 4. Default path: team-lead resolves CP4 autonomously by verifying that implementation scope matches the resolved design doc and the user's task-level directive. Feature additions, destructive actions, security-sensitive actions, or scope changes beyond the resolved design require explicit user confirmation.
 For executable, user-facing software deliverables, team-lead must verify that the planned delivery surface satisfies the Plan's DELIVERY requirements before CP4 resolution.
 Any dispatch whose expected output includes code creation, app scaffolding, database/schema setup, business-logic implementation, or executable project structure is implementation-phase work and must not begin before CP4 resolution.
 
@@ -197,7 +202,7 @@ See ## Gap Detection And YAGNI Review below for full iteration protocol detail a
 
 ---
 
-> For Interactive Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, and Incident Response details, see reference.md.
+> For Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, and Incident Response details, see reference.md.
 
 ## Phase Transition Notification
 

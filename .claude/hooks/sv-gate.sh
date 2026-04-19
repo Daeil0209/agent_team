@@ -2,7 +2,7 @@
 set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 
-# PreToolUse hook for SendMessage, Agent, and TaskCreate.
+# PreToolUse hook for SendMessage, Agent, TaskCreate, TaskUpdate, TeamDelete, and CronDelete.
 # Enforces two-phase Mandatory Worker Execution Cycle:
 # Plan -> Verify Plan (Phase 1) -> Execute -> Verify Results (Phase 2) -> Report
 #
@@ -250,8 +250,10 @@ case "$TOOL_NAME" in
     fi
     ;;
   TaskUpdate|TeamDelete|CronDelete)
-    # Team-lead gate: block runtime/state mutation when task is in progress but plan is not yet verified.
-    # Local file edits are intentionally excluded under the minimal-guidance policy.
+    # This branch enforces Phase 1 SV for runtime/state mutation tools only.
+    # File edits are not hard-blocked by this branch: their fresh-turn planning
+    # lock is enforced by task-start-gate, while SV remains a doctrine/procedure
+    # obligation under team-lead.md IR-2 #10.
     if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
@@ -265,7 +267,7 @@ case "$TOOL_NAME" in
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
       printf '[%s] SV-GATE BLOCKED: team-lead %s without Phase 1 self-verification load (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_verify_block "file modification" "Skill(self-verification) -> retry file modification")"
+      emit_deny "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> retry $TOOL_NAME")"
       exit 0
     fi
     ;;

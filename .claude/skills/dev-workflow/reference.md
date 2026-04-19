@@ -1,6 +1,6 @@
 # Reference Material
 
-## Interactive Checkpoints
+## Checkpoints
 
 Checkpoint policy. CP1-CP4 are checkpoint surfaces, not automatic user-stop points. In this repository, team-lead resolves checkpoints autonomously when the user's directive and available evidence are sufficient. Escalate to the user only when the checkpoint exposes material ambiguity, destructive or security-sensitive action, or a material change in architecture, risk posture, or implementation scope. CP5 is auto-resolved by team-lead in normal gap-resolution flow; T0/T1 severity gaps follow the incident-response workflow instead.
 
@@ -47,7 +47,7 @@ Design-level means the resolved design no longer satisfies the original requirem
 **Incident exception**: T0/T1 severity gaps do not follow normal CP5 auto-resolution. Route them through Incident Response immediately.
 **Notification**: When auto-resolved, report the gap summary, mismatch analysis against CP1/CP2, chosen next path, and fix direction. Do not proceed silently.
 
-**Autonomy rule**: If the user says "전부 자동으로" or equivalent, treat that as an explicit instruction to minimize mid-task user interruption. Continue using checkpoint auto-resolution wherever the checkpoint criteria are satisfied, report concise checkpoint results instead of asking for approval, and interrupt the user only for destructive, security-sensitive, or materially scope-changing decisions.
+**Autonomy rule**: Mid-task user interruption is minimized by default. Use checkpoint auto-resolution wherever the checkpoint criteria are satisfied, report concise checkpoint results instead of asking for approval, and interrupt the user only for destructive, security-sensitive, or materially scope-changing decisions. If the user explicitly requests tighter confirmation on specific decisions (e.g., "이 부분은 먼저 물어봐"), tighten accordingly for that scope.
 
 **Auto-resolution vs destructive escalation**: Checkpoint auto-resolution is team-lead exercising delegated authority under specific conditions. It does not waive destructive or security-sensitive safeguards.
 

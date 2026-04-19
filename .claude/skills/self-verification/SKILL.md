@@ -43,10 +43,14 @@ Default user-facing final/audit result template:
 
 ```text
 <final result or decision>
-Verification basis: <checks, evidence, acceptance basis>
-Residual risk/open surfaces: <none|remaining conditions or blockers>
-Unverified items: <none|explicit list>
+Verification basis:
+  · <claim> — source: <file:line-range | user-turn reference | prior-decision id>
+  · [for classification/judgment claims] considered alternative: <alt>. rejected because: <reason>.
+Residual risk/open surfaces: <none | specific remaining conditions>
+Unverified items: <none | explicit list>
 ```
+
+The `source:` slot requires a concrete coordinate (file path with line range, user-turn reference, or prior-decision id) when the claim references existing source material. A paraphrase alone does not satisfy this slot — that path defeats the gate, since head-trace and prior-memory can produce paraphrase without actual re-access. The `considered alternative / rejected because` line materializes Critical Challenge Step 3a output; if 3a was not executed on a classification or judgment, that line is blank and the report is not yet verified.
 
 Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose. Do not preface routine progress updates with `SV converged`, `Checkpoint ...`, verification labels, or any other verification-packet heading.
 
@@ -66,7 +70,7 @@ Note on trigger (1): This trigger fires after work-planning has frozen the reque
 
 **Same-turn carry-forward:** If this skill was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, the existing in-turn verification satisfies the current trigger. A second Skill invocation is not required unless the work since the last SV load introduced material that was not already covered by that verification. Carry-forward holds when the agent synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, file modifications, or consequential dispatch actions (Agent, TaskCreate, assignment-grade SendMessage) are produced after the last SV load. (This mirrors the carry-forward rule in `agents/team-lead.md §RPA-7`.)
 
-**Derived-conclusion reset:** Carry-forward applies only to faithful use of already-verified evidence. When synthesis, aggregation, classification, or restructuring creates a conclusion not covered by the prior verification basis, that derived conclusion resets carry-forward for itself. Examples: a new grouping or pattern label, severity or priority change, causal claim, scope-closing claim, or downstream recommendation. Prior self-verification confirms only the claims it actually covered. Verify each material derived conclusion at the applicable depth before execution, reporting, handoff, or re-dispatch, or downgrade it to `INFERENCE`/`UNVERIFIED`.
+**Derived-conclusion boundary:** Do not treat prior verification as covering conclusions it did not actually verify. When synthesis, aggregation, classification, or restructuring creates a material conclusion beyond the prior verification basis, that conclusion is not reportable as verified unless the current verification basis covers it. Otherwise narrow it to the verified scope or label it `INFERENCE`/`UNVERIFIED`.
 
 If you are about to state a conclusion, execute a plan, report a completed change, or present consequential status, ask: "Did this survive Critical Challenge?" If not, execute this procedure first.
 
@@ -154,7 +158,7 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
 - Every claim has supporting evidence.
 - Unsupported items labeled UNVERIFIED or removed.
 - A conclusion inherited from a prior-session summary, compacted conversation, or remembered analysis is a claim, not evidence — treat it as UNVERIFIED until re-confirmed by direct source access (file read, tool output, or fresh observation) in the current session.
-- Scope-closing claims require falsification evidence proportional to risk. Claims that assert broad presence, absence, uniqueness, universality, or commonality must identify what would falsify the claim and check a direct source against that falsifier (for example a file, tool output, runtime surface, search term, observed artifact, or cited source). Summaries alone are not direct-source evidence for these claims. If direct falsification evidence is unavailable or not performed, narrow the wording to the inspected scope or downgrade the claim to `INFERENCE`/`UNVERIFIED`.
+- Do not report scope-closing claims as settled from summaries, samples, or incomplete evidence. Claims that assert broad presence, absence, uniqueness, universality, or commonality must be narrowed to the inspected scope or labeled `INFERENCE`/`UNVERIFIED` unless direct evidence supports the full reported scope.
 - Assumptions explicitly stated.
 - Verify environment assumptions before using environment-specific evidence paths. If a verification method assumes repository history, git metadata, branch state, or diff surfaces, confirm those surfaces exist first. When the assumption fails, switch to the closest truthful fallback (for example file-based inspection instead of git-based diff) rather than treating the failed assumption itself as a blocker.
 - When the user has stated governing philosophy or operating doctrine, check and state whether the analysis aligns with it, partially aligns, or conflicts with it.

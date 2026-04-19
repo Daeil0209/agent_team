@@ -139,9 +139,11 @@ For executable, user-facing deliverables:
 
 ### Upward Worker Reports (worker → lead)
 
-`message-class: blocker|handoff|completion|hold|scope-pressure|status; message-priority: normal|high|critical; work-surface: <current surface>; task-id: <assigned-id|none>; requested-governing-action: <decision needed or none>`
+`message-class: blocker|handoff|completion|hold|scope-pressure|status|dispatch-ack; message-priority: normal|high|critical; work-surface: <current surface>; task-id: <assigned-id|none>; requested-governing-action: <decision needed or none>`
 
 Note: Lane-specific completion-grade evidence blocks (tester, validator, researcher, developer handoff packets) extend this base template. Their fields augment rather than replace the base fields above. The base template provides the minimum shared communication surface; lane-specific blocks add proof, validation, or research-specific tracing fields.
+
+`dispatch-ack`: on receipt of an assignment-grade `SendMessage` (new assignment, reuse, or reroute), the worker's first upward message must be `MESSAGE-CLASS: dispatch-ack` carrying `TASK-ID: <assigned-id|none>`, `WORK-SURFACE` echo, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loaded|loading`. This is the worker-start OK-sign; it is not a completion-grade report and does not require converged SV fields. Handoff, completion, or hold reports follow later on their own evidence contracts.
 
 ---
 

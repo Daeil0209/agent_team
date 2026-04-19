@@ -68,7 +68,7 @@ NODE
 planning_preflight_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-Skill(work-planning) -> Skill(self-verification) -> retry}"
-  printf 'BLOCKED: planning preflight incomplete. Detail: %s requires fresh work-planning. Next: %s.' "$tool_name" "$next_step"
+  printf 'BLOCKED: fresh-turn preflight sequence incomplete. Detail: %s cannot run before observed Skill(work-planning) -> Skill(self-verification) in this user turn. Prior analysis may narrow the plan scope, but it does not replace the fresh-turn sequence. Next first tools: %s.' "$tool_name" "$next_step"
 }
 
 self_growth_block() {

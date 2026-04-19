@@ -70,6 +70,11 @@ strip_read_only_null_redirections() {
   '
 }
 
+strip_full_line_shell_comments() {
+  local command_text="${1-}"
+  printf '%s' "$command_text" | sed '/^[[:space:]]*#/d'
+}
+
 allowed_package_or_build_command() {
   local command_text="${1-}"
   [[ -n "$command_text" ]] || return 1
@@ -140,6 +145,15 @@ command_mutates_governance_surface() {
   return 1
 }
 
+command_removes_team_runtime_dir() {
+  local cmd="${1-}"
+  local team_rm_pattern=""
+  [[ -n "$cmd" ]] || return 1
+
+  team_rm_pattern="(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]+)*[[:space:]]+(--[[:space:]]+)?([^;|&[:space:]]+[[:space:]]+)*['\"]?((~|[$]HOME|/home/[^/[:space:]'\"]+)/[.]claude/teams)(/[^[:space:];|&'\"]*)?['\"]?([[:space:];|&]|$)"
+  [[ "$cmd" =~ $team_rm_pattern ]]
+}
+
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # GIT_READONLY_PATTERN, S02_IMPLEMENTATION_PATTERN, and LEAD_OPERATIONAL_ALLOWLIST
 # are set in the Bash case block before these wrappers are called.
@@ -194,13 +208,14 @@ allowed_lead_context_subcmd() {
 }
 
 PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
+const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolName = String(input.tool_name || "");
   const toolInput = input.tool_input || {};
   const filePath = String(toolInput.file_path || toolInput.path || "");
   const command = String(toolInput.command || "");
-  process.stdout.write(`${toolName}\n${filePath}\n${command}\n`);
+  process.stdout.write([toolName, filePath, command].map(encode).join("\n"));
 } catch {
   process.stdout.write("\n\n\n");
 }
@@ -208,9 +223,15 @@ NODE
 )"
 
 mapfile -t FIELDS <<<"$PARSED"
-TOOL_NAME="${FIELDS[0]:-}"
-FILE_PATH="${FIELDS[1]:-}"
-COMMAND="${FIELDS[2]:-}"
+decode_field() {
+  local encoded="${1-}"
+  [[ -z "$encoded" ]] && { printf ''; return 0; }
+  printf '%s' "$encoded" | base64 -d
+}
+
+TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
+FILE_PATH="$(decode_field "${FIELDS[1]:-}")"
+COMMAND="$(decode_field "${FIELDS[2]:-}")"
 
 CANONICAL_PATH=""
 if [[ -n "$FILE_PATH" ]]; then
@@ -260,7 +281,12 @@ case "$TOOL_NAME" in
     ;;
 
   Bash)
-    CLEAN_COMMAND="$(printf '%s' "$COMMAND" | tr '\n' ' ')"
+    CLEAN_COMMAND="$(strip_full_line_shell_comments "$COMMAND" | tr '\n' ' ')"
+    if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
+      emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-worker state first; if only stale residue remains, use TeamDelete or report the exact residual state."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "team-runtime-shell-delete" || true
+      exit 0
+    fi
     # Governance surface protection is unconditional — runs before any session-type allowlist.
     # This ensures worker sessions cannot bypass governance-surface protection via pattern match.
     if command_mutates_governance_surface "$CLEAN_COMMAND"; then
