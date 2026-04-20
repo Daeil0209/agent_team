@@ -36,7 +36,7 @@ procedure_state_edit_target_allowed() {
   local target_paths="${2-}"
 
   case "$tool_name" in
-    Edit|MultiEdit) ;;
+    Edit|Update|MultiEdit) ;;
     *) return 1 ;;
   esac
 
@@ -73,7 +73,7 @@ project_continuity_edit_target_allowed() {
   local target_paths="${2-}"
 
   case "$tool_name" in
-    Edit|MultiEdit|Write) ;;
+    Edit|Update|MultiEdit|Write) ;;
     *) return 1 ;;
   esac
 
@@ -405,11 +405,19 @@ clear_stale_team_state_for_new_session() {
   local session_id="${1-}"
   local previous_boot_session_id=""
   local previous_session_id=""
+  local previous_runtime_session_id=""
+  local current_runtime_id=""
 
   [[ -n "$session_id" ]] || return 0
 
   previous_boot_session_id="$(get_procedure_state_field "bootSessionId" "")"
   previous_session_id="$(get_procedure_state_field "sessionId" "")"
+  previous_runtime_session_id="$(get_procedure_state_field "runtimeSessionId" "")"
+  current_runtime_id="$(current_runtime_session_id)"
+
+  if [[ -n "$current_runtime_id" && -n "$previous_runtime_session_id" && "$current_runtime_id" == "$previous_runtime_session_id" ]]; then
+    return 0
+  fi
 
   if [[ -n "$previous_boot_session_id" && "$previous_boot_session_id" != "$session_id" ]]; then
     reset_team_state_channel "$session_id"

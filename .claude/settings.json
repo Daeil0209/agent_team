@@ -18,6 +18,7 @@
       "WebFetch",
       "WebSearch",
       "Edit",
+      "Update",
       "MultiEdit",
       "Write",
       "NotebookEdit",
@@ -55,7 +56,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|MultiEdit|Write|NotebookEdit|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
         "hooks": [
           {
             "type": "command",
@@ -64,7 +65,7 @@
         ]
       },
       {
-        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit|TaskCreate|TaskUpdate|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
         "hooks": [
           {
             "type": "command",
@@ -73,7 +74,7 @@
         ]
       },
       {
-        "matcher": "Agent|TaskCreate|SendMessage|Edit|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete|Bash",
+        "matcher": "Agent|TaskCreate|SendMessage|Edit|Update|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete|Bash",
         "hooks": [
           {
             "type": "command",
@@ -127,7 +128,7 @@
         ]
       },
       {
-        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit",
+        "matcher": "Bash|Edit|Update|MultiEdit|Write|NotebookEdit",
         "hooks": [
           {
             "type": "command",

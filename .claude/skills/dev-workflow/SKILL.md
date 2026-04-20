@@ -44,6 +44,11 @@ Gap detection and YAGNI review procedures are defined in reference.md §Gap Dete
 **When to activate**: User request is high-level or open-ended; target users, constraints, and success criteria are unclear.
 
 **Researcher dispatch**: include RESEARCH-MODE: bounded; DECISION-TARGET: requirements clarity; QUESTION-BOUNDARY: target users, key constraints, success criteria, scope boundaries; SOURCE-FAMILY: repo|web|mixed; DOWNSTREAM-CONSUMER: developer (plan doc).
+**Discovery split check**: Before Phase 0 researcher dispatch, classify the discovery shape as `single`, `scout-then-shards`, or `immediate-shards`.
+- `single`: one bounded decision target with tightly coupled questions.
+- `scout-then-shards`: mechanical inventory, source mapping, or sheet/file extraction is the prerequisite for clean shard boundaries.
+- `immediate-shards`: 2+ explicit non-overlapping discovery surfaces already exist; 3+ time-consuming independent surfaces default here.
+The default bounded researcher dispatch applies only to `single` discovery or a scout-only inventory that excludes independent interpretation. For shard paths, use `RESEARCH-MODE: sharded`, assign `SHARD-ID`, `SHARD-BOUNDARY`, and `MERGE-OWNER` before fan-out, and return one integrated Phase 1 handoff.
 **Discovery questions** (structure researcher evidence gathering; present findings at CP1):
 1. Core Problem: What specific problem does this feature solve? Who experiences it and how often?
 2. Target Users: Who are the primary users? What is their technical level and workflow context?
@@ -52,6 +57,9 @@ Gap detection and YAGNI review procedures are defined in reference.md §Gap Dete
 5. Delivery Experience: How should the end user receive, launch, and operate the deliverable?
 6. Reference Fit (when reference is supplied): What is the user asking to preserve, what is the user asking to change, and what parts of the reference are only inspirational rather than binding?
 7. Target Language/Locale: What language, locale, and internationalization requirements exist? _(Technical font stack and encoding decisions belong to Phase 2 Design.)_
+8. Acceptance Evidence Basis: From the user's original instruction, request-fit synthesis or any `request-intent-fit` packet, and supplied references, what evidence would prove the requested outcome later? Derive defaults from references when bounded; surface only non-derivable or contradictory validation ambiguities.
+
+**Discovery verification method**: Before Phase 1 synthesis, team-lead verifies evidence anchors, inference labels, reference-fit separation, unresolved assumptions, and split basis. If independent unresolved surfaces remain, run sharded discovery or mark them non-blocking; only verified findings or labeled inferences may enter CP1.
 
 Discovery output feeds Phase 1 planning only. When a reference is supplied, the output must separate: (1) what the reference is, (2) what the user actually wants from it, and (3) what must be adopted, adapted, or rejected before planning begins. Reference analysis alone does not authorize plan direction. It does not authorize implementation dispatch or design freeze.
 
@@ -72,18 +80,20 @@ Plan doc must begin with:
 Plan doc must also include:
 - Problem statement (WHY), Target users and stakeholders (WHO), Known risks and mitigation (RISK)
 - Measurable success criteria (SUCCESS), Explicit scope boundaries (SCOPE)
+- Acceptance Evidence Basis: instruction-derived done state, reference-derived evidence/defaults, tolerance or baseline artifact when known, and unresolved validation assumptions that cannot be derived without changing scope or risk
+- Verification Strategy Basis: what must later be proven, expected proof surface, evidence source (instruction/reference/default), and verification assumptions or blockers; not a full Phase 4 test plan.
 - Delivery experience (DELIVERY), Open questions (resolved at CP2)
 - When a user-supplied reference exists: Reference Fit Summary (user-requested intent, adopted elements, adapted elements, rejected elements, unresolved adaptation questions)
 
 **Mandatory checkpoints**: CP1 before plan doc finalized; CP2 after plan doc draft.
 Before CP2: apply YAGNI scope pruning -- full procedure in ## Gap Detection And YAGNI Review below.
 
-**Exit condition**: Plan doc exists; CP1 + CP2 complete; unresolved open questions recorded before advancing. When a reference was supplied, the plan must explicitly record how the reference was interpreted against the user's request before Phase 2 begins.
+**Exit condition**: Plan doc exists; CP1 + CP2 complete; unresolved open questions recorded before advancing. When a reference was supplied, the plan must explicitly record how that reference was interpreted against the user's request before Phase 2 begins. Acceptance Evidence Basis and Verification Strategy Basis are planning handoffs, not full Phase 4 test plans or extra user-interruption gates; they must preserve enough proof intent that Phase 2 can produce the Verification Plan.
 
 ### Canonical Plan Surface
 
 Planning is complete only when: (1) Phase 1 plan artifact exists, (2) CP1 complete, (3) CP2 complete, (4) unresolved open questions explicitly recorded. Internal reasoning, scope freeze notes, or worker instructions are not the canonical plan surface. Until these conditions hold, planning remains provisional.
-When a reference is part of the request, planning is not complete until the canonical plan surface explicitly states how that reference is being used relative to the user's requested outcome.
+When a reference is part of the request, planning is not complete until the canonical plan surface explicitly states how that reference is being used relative to the user's requested outcome. For request-bound development, the canonical plan surface must also preserve the Acceptance Evidence Basis and Verification Strategy Basis derived at CP1 so downstream design, testing, and validation do not reconstruct acceptance expectations or proof scope from memory.
 
 ---
 
@@ -109,11 +119,11 @@ _(Table above is the full-form template with three options. For Lightweight tier
 team-lead presents the CP3 selection basis. Default path: team-lead auto-resolves per the CP3 auto-resolution criteria in reference.md while keeping one selected architecture option explicit and reporting it concisely. Escalate to the user only when the architecture family, risk posture, or expected implementation scope would materially change beyond the active directive.
 For executable, user-facing software deliverables, CP3 comparison must explicitly surface delivery burden, user run path, shutdown path, user action count per operation, and infrastructure exposure across the presented options. Silent omission is a compliance failure.
 
-**Design doc must include**: The **USER-INSTRUCTION** block inherited verbatim from the Plan doc at the very top of the document (unchanged across phases unless the user amended the instruction). Selected option + rationale, component list with responsibilities, API contracts (inputs/outputs/error paths), data flow description, dependency map. For executable, user-facing software deliverables: delivery surface design with minimum user action principle: launch path (single-action start from the end-user's OS environment — e.g., desktop icon or file double-click; CLI commands requiring terminal navigation are not single-action), first view (immediately usable state), shutdown path (window close = stop, no separate shutdown script unless technically unavoidable with documented justification), and infrastructure exposure policy (no consoles, logs, or server processes visible to user). Every user-facing operation path (start, use, stop) must require the fewest possible steps — if a step can be eliminated or automated, its presence is a design defect.,
+**Design doc must include**: The **USER-INSTRUCTION** block inherited verbatim from the Plan doc at the very top of the document (unchanged across phases unless the user amended the instruction). Selected option + rationale, component list with responsibilities, API contracts (inputs/outputs/error paths), data flow description, dependency map. Verification Plan derived from the Plan's Verification Strategy Basis: critical paths, data/state changes, reference-derived behaviors, contracts, delivery proof surface, tool mapping, and verification blockers. The Verification Plan must be concrete enough for Phase 4 to execute without re-deriving scope, but it is not full test-script enumeration by default. For executable, user-facing software deliverables: delivery surface design with minimum user action principle: launch path (single-action start from the end-user's OS environment — e.g., desktop icon or file double-click; CLI commands requiring terminal navigation are not single-action), first view (immediately usable state), shutdown path (window close = stop, no separate shutdown script unless technically unavoidable with documented justification), and infrastructure exposure policy (no consoles, logs, or server processes visible to user). Every user-facing operation path (start, use, stop) must require the fewest possible steps — if a step can be eliminated or automated, its presence is a design defect.,
 - For executable, user-facing software deliverables — Hybrid file structure (feature-modular + shared core): combine the debugging clarity of feature-modular organization with the maintainability of a shared infrastructure layer. (1) **Feature-modular layer** — each functional module groups its router, service, templates, and module-specific business logic in one folder, enabling isolated per-feature debugging and parallel development. (2) **Shared core layer** — cross-module infrastructure (DB, i18n, middleware) and common functions used by 2+ modules go in a `core/` layer to prevent duplication and centralize cross-cutting concerns. The design doc must show the module folder tree and explicitly identify which functions belong to core vs. module-specific.
  Decision Record Chain header referencing plan doc constraints. For user-facing software deliverables: i18n architecture decision (target locale font stack, character encoding strategy, locale-specific formatting, and whether runtime language switching is in scope or explicitly excluded).
 
-**Exit condition**: Design doc exists; architecture selection resolved at CP3 (explicit user choice or team-lead auto-resolution per CP3 criteria); selection and resolution basis recorded in doc before advancing.
+**Exit condition**: Design doc exists; architecture selection resolved at CP3 (explicit user choice or team-lead auto-resolution per CP3 criteria); selection, resolution basis, and Verification Plan recorded in doc before advancing.
 
 ---
 
@@ -132,27 +142,27 @@ For executable, user-facing software deliverables, CP3 comparison must explicitl
 For executable, user-facing software deliverables, team-lead must verify that the planned delivery surface satisfies the Plan's DELIVERY requirements before CP4 resolution.
 Any dispatch whose expected output includes code creation, app scaffolding, database/schema setup, business-logic implementation, or executable project structure is implementation-phase work and must not begin before CP4 resolution.
 
-**Developer rules**: Use Claude Code's edit tools as the default file-mutation path; stay within resolved scope; carry Context Anchor (WHY/WHO/RISK/SUCCESS/SCOPE) forward in commit messages or implementation notes; report blockers immediately rather than silently resolving scope ambiguity.
+**Developer rules**: Use Claude Code's edit tools as the default file-mutation path; stay within resolved scope; carry Context Anchor (WHY/WHO/RISK/SUCCESS/SCOPE) forward in commit messages or implementation notes; preserve implementation compatibility with the Design Verification Plan; report blockers immediately rather than silently resolving scope ambiguity.
 
-**Exit condition**: Implementation complete per resolved design. Developer sends explicit handoff naming changed files, executed checks, unresolved assumptions, and next lane (reviewer/tester).
+**Exit condition**: Implementation complete per resolved design. Developer sends explicit handoff naming changed files, executed checks, Verification Plan coverage/delta, invalidated verification assumptions if any, unresolved assumptions, and next lane (reviewer/tester). If implementation changes a planned proof surface, user path, data/state behavior, or delivery promise, mark the affected Verification Plan row stale and route back to Phase 2 or HOLD unless the design doc already reflects the delta.
 
 ---
 
 ## Phase 4: Analysis
 
-**Purpose**: Verify that implementation matches design; produce gap analysis.
+**Purpose**: Execute the planned verification against the implementation and produce gap analysis.
 **Owner lanes**: reviewer (design conformance, blocking defect classification) + tester (executable verification, proof classification)
 
-**Input**: Phase 3 developer handoff; design doc at docs/02-design/features/{feature}.design.md
-**Gap Detection**: reviewer and tester each apply gap detection checks from their lane perspective across structural, functional, contract, delivery experience, and user-readiness dimensions per ## Gap Detection And YAGNI Review below.
+**Input**: Phase 3 developer handoff including Verification Plan coverage/delta; design doc at docs/02-design/features/{feature}.design.md including Verification Plan; plan doc including Verification Strategy Basis.
+**Gap Detection**: reviewer and tester execute planned verification first, then apply gap detection checks from their lane perspective across structural, functional, contract, delivery experience, and user-readiness dimensions per ## Gap Detection And YAGNI Review below. Exploratory checks are allowed as support, but they do not replace planned scope or silently expand acceptance beyond the active plan/design.
 
 **Coverage scoring** (team-lead judgment signal -- NOT an automatic gate):
 - 0=empty; 20=stubs only; 40=partial logic; 60=key paths work; 80=minor gaps; 100=fully implements designed behavior
 - High aggregate score does not equal PASS if a blocking defect exists. Lower score is not auto-FAIL if gaps are explicitly accepted.
 
-**Reviewer dispatch**: REVIEW-TARGET: implementation vs design doc; PREREQ-STATE: complete; EVIDENCE-BASIS: design doc at concrete file path + developer handoff changed file list (abstract "included" prohibited — team-lead must supply the actual design doc path or session-state.md section coordinate containing requirements); ACCEPTANCE-SURFACE: blocking defects, gap classification across all check dimensions (structural, functional, contract, delivery experience, user-readiness)
+**Reviewer dispatch**: REVIEW-TARGET: implementation vs design doc and Verification Plan; PREREQ-STATE: complete; EVIDENCE-BASIS: design doc at concrete file path + Verification Plan coordinate + developer handoff changed file list and Verification Plan coverage/delta (abstract "included" prohibited — team-lead must supply the actual design doc path or session-state.md section coordinate containing requirements); ACCEPTANCE-SURFACE: blocking defects, stale proof-surface deltas, gap classification across all check dimensions (structural, functional, contract, delivery experience, user-readiness)
 
-**Tester dispatch**: For executable, user-facing software deliverables, `PROOF-TARGET` is the actual delivery surface and user-operable behavior; `ENV-BASIS` is repo runtime; `SCENARIO-SCOPE` includes the real launch/start path verified from the end-user's OS environment (double-click launcher, not developer terminal), the core completion path, cross-feature workflows, persistence/restart checks, and an interaction-coverage matrix for all user-visible controls within resolved scope; `PROOF-EXPECTATION` is direct proof, disproof, or blocked proof per scenario/control, with exact commands, route/view, user action, expected result, and observed result. Keep the delivery contract explicit in the packet with `USER-RUN-PATH: <promised user launch/operation path>` and `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`. For other deliverable types, apply the normal proof surface appropriate to the artifact.
+**Tester dispatch**: Tester executes the Design Verification Plan. For executable, user-facing software deliverables, `PROOF-TARGET` is the planned actual delivery surface and user-operable behavior; `ENV-BASIS` is repo runtime; `SCENARIO-SCOPE` is derived from the Verification Plan and includes the real launch/start path verified from the end-user's OS environment (double-click launcher, not developer terminal), the core completion path, cross-feature workflows, persistence/restart checks, and an interaction-coverage matrix for all user-visible controls within resolved scope; `PROOF-EXPECTATION` is direct proof, disproof, or blocked proof per planned scenario/control, with exact commands, route/view, user action, expected result, and observed result. Keep the delivery contract explicit in the packet with `USER-RUN-PATH: <promised user launch/operation path>` and `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`. For other deliverable types, apply the proof surface planned in the design doc. Report exploratory checks separately from planned verification coverage.
 **Skill recommendations**: team-lead selects relevant specialist skills for Phase 4 dispatch based on deliverable type per User-Readiness Check in reference.md.
 
 **Deliverable-type verification tool recommendations** (reference for tool selection based on deliverable type):
@@ -166,6 +176,17 @@ Any dispatch whose expected output includes code creation, app scaffolding, data
 
 Deliverable-type proof follows proof-surface correspondence (see `CLAUDE.md` `§Acceptance Core`): verification evidence must be gathered at the same interaction level the end user actually uses. For web app deliverables, the default and expected tester proof path is Playwright CLI on the browser-level interaction surface, and final acceptance requires Playwright MCP visual inspection. curl/API-only checks are supportive evidence only; they do not replace browser-level proof for UI deliverables. If the browser-level path is blocked, report blocked proof and HOLD rather than silently downgrading the proof surface.
 For promised single-action or low-touch delivery paths, failure on the real user run path reopens acceptance as a blocking defect. Do not shift cleanup commands, manual rebuild steps, or terminal recovery onto the user before self-owned remediation is exhausted.
+
+**UI evidence ladder**: For web/UI deliverables, classify evidence by the strongest directly observed surface:
+
+| Level | Evidence surface | Permitted claim |
+|---|---|---|
+| L1 | build success, server start, health endpoint, curl/API response | runtime/API support only |
+| L2 | route HTML or static text response | routing/content support only |
+| L3 | browser-level interaction proof from the tester tool path | tester proof for exercised controls |
+| L4 | validator visual/user-perspective inspection on the required acceptance tool path | final user-view acceptance |
+
+Lower levels support diagnosis but cannot be promoted to a higher claim. If Playwright MCP visual inspection is the required validator path and it is unavailable, screenshot or HTML fallback must be reported as blocked or partial validation unless the workflow explicitly changes the required acceptance path before validation begins and records why the substitute is equivalent for the user-view claim.
 
 
 **Phase 4 completeness rule**: For executable, user-facing software deliverables, Phase 4 is incomplete if either the reviewer or tester completion-grade evidence block is missing. Reviewer-only closure, build-only proof, API-smoke-only proof, or tester omission is not sufficient.
@@ -223,7 +244,7 @@ Send this packet at every phase transition to each worker whose active assignmen
 
 ### Phase State Recording
 
-Team-lead must record every phase transition in the workspace-local procedure state (`./.claude/state/procedure-state.json`) and mirror continuity in `./.claude/session-state.md`. Exact `Edit` or `MultiEdit` updates to `./.claude/state/procedure-state.json`, and exact `Edit`, `MultiEdit`, or `Write` updates to `./.claude/session-state.md`, are bounded checkpoint/continuity writes, not production implementation or semantic governance editing; edits to any other `.claude` surface remain governed by the normal planning and compliance gates. The current-session authority is workspace-local procedure state plus workspace-local continuity. During the active migration path, `$HOME/.claude/session-state.md` remains a legacy mirror and fallback only. Phase 3 (Implementation) entry is blocked until the design doc path is recorded in phase state and the file exists at that path. For executable, user-facing software deliverables, validator PASS coordinate must also be recorded before workflow completion. This recording obligation is mechanical and remains a hard gate. If the phase state is missing or incomplete at the point of completion reporting, the report is HOLD until the section is reconstructed from evidence.
+Team-lead must record every phase transition in the workspace-local procedure state (`./.claude/state/procedure-state.json`) and mirror continuity in `./.claude/session-state.md`. Exact `Edit`, `Update`, or `MultiEdit` updates to `./.claude/state/procedure-state.json`, and exact `Edit`, `Update`, `MultiEdit`, or `Write` updates to `./.claude/session-state.md`, are bounded checkpoint/continuity writes, not production implementation or semantic governance editing; edits to any other `.claude` surface remain governed by the normal planning and compliance gates. The current-session authority is workspace-local procedure state plus workspace-local continuity. During the active migration path, `$HOME/.claude/session-state.md` remains a legacy mirror and fallback only. Phase 3 (Implementation) entry is blocked until the design doc path is recorded in phase state and the file exists at that path. For executable, user-facing software deliverables, validator PASS coordinate must also be recorded before workflow completion. This recording obligation is mechanical and remains a hard gate. If the phase state is missing or incomplete at the point of completion reporting, the report is HOLD until the section is reconstructed from evidence.
 
 
 ---

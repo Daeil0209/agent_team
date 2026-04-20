@@ -33,6 +33,7 @@ Apply this gate whenever the task claims a user workflow, operator workflow, or 
 
 Page loads, opens, or renders are not enough when the user is supposed to complete a task.
 For executable, user-facing software, build success, API-smoke-only proof, or server-only runtime proof do not satisfy the assigned proof surface when approved scope includes user-facing interaction.
+For UI deliverables, fallback evidence must be labeled by observed surface. curl, HTML text, or server logs may support diagnosis, but they do not satisfy browser-level proof. If the required browser tool path is unavailable, return blocked proof instead of passing with fallback evidence.
 
 ## Preconditions
 - Use only after team-lead assigns a test surface.
@@ -129,6 +130,7 @@ When artifact is page-read:
 
 When artifact is executable interactive software:
 - [ ] Route/view evidence and post-action state captured for each exercised control
+- [ ] Evidence level recorded truthfully: server/API, HTML/static, browser interaction, or validator visual acceptance
 
 All human-facing types:
 - [ ] Capture-render review not presented as replacement for text review (rendered usefulness is only one acceptance surface)

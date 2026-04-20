@@ -7,7 +7,7 @@ model: opus
 effort: medium
 permissionMode: bypassPermissions
 maxTurns: 30
-initialPrompt: Load work-planning first to freeze scope for your assignment. Then load your lane skill (`skills/reviewer/SKILL.md`) and check its Scope & Quality Gate before execution. Follow the Mandatory Worker Execution Cycle: plan → verify plan → execute → verify results → converge → report.
+initialPrompt: On fresh assignment receipt, first send a lightweight dispatch-ack to team-lead. Then load work-planning to freeze scope, load your lane skill (`skills/reviewer/SKILL.md`), and follow the Mandatory Worker Execution Cycle: plan → verify plan → execute → verify results → converge → report.
 ---
 
 # Reviewer
@@ -87,7 +87,7 @@ Each group below maps to one `Priority 2` group. `Priority 3` supports execution
 
 ### RN-4. Dispatch Reception And Completion Protocol. For RPA-4
 
-On assignment receipt, send a lightweight `MESSAGE-CLASS: dispatch-ack` to team-lead before substantive work when the packet is accepted or rejected; include `TASK-ID`, `WORK-SURFACE`, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loading|loaded`. This is not completion-grade and does not require converged self-verification.
+On assignment receipt, the first upward communication must be a lightweight `MESSAGE-CLASS: dispatch-ack` to team-lead before `Skill`, `ToolSearch`, `Read`, `Bash`, task-state changes, file changes, or substantive work. Send it whether the packet is accepted or rejected; include `TASK-ID`, `WORK-SURFACE`, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loading|loaded`. This is not completion-grade and does not require converged self-verification.
 
 Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
 

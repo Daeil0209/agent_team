@@ -211,6 +211,7 @@ NODE
 	    clear_worker_standby "$AGENT_NAME"
 	    record_pending_agent_dispatch "$TIMESTAMP" "$AGENT_NAME" "$EFFECTIVE_MODE" "$DISPATCH_AGENT_LANE"
 	    mark_worker_planning_required "$AGENT_NAME"
+	    mark_worker_dispatch_ack_required "$AGENT_NAME"
 	    record_permission_provenance "$SESSION_ID" "$RESOLVED_MODE" "$PERMISSION_BASIS" "$PERMISSION_SOURCE" "$MODE" "$AGENT_NAME"
 	    mark_team_dispatch_pending "$SESSION_ID" "$AGENT_NAME" "agent-dispatch"
 

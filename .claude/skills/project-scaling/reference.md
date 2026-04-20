@@ -11,6 +11,9 @@ These signals indicate a likely tier. They are suggestions for `team-lead` judgm
 | API integration, third-party service wiring, multi-file feature | Standard |
 | Structured development project with spec or design doc | Standard |
 | Single page, simple script, isolated config change, typo fix | Lightweight |
+| Single-user local app/tool/dashboard with bounded features, local data, no auth, no multi-tenant deployment, and no infrastructure orchestration | Lightweight by default; Standard if multi-feature business logic or persistence risk is material |
+
+Local-app fast-path boundary: delivery-surface proof can never be downshifted by tier. A Lightweight local app may use fewer workers and fewer design options, but if it promises double-click/low-touch/browser UI operation, the real launch path and first usable view remain acceptance-critical.
 
 ## Governance Parameters Per Tier Table
 

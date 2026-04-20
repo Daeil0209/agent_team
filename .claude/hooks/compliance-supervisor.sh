@@ -95,6 +95,18 @@ _MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chm
 # denylist-first behavior: fail only when a sub-command is destructive or clearly mutating
 # and not accepted by the specific check_fn. Read-only sub-commands may co-exist inside the
 # compound command without being enumerated in every allowlist.
+split_compound_command() {
+  local cmd="${1-}"
+
+  COMMAND_TEXT="$cmd" node <<'NODE'
+const command = String(process.env.COMMAND_TEXT || "");
+for (const part of command.split(/&&|\|\||;/)) {
+  const trimmed = part.trim();
+  if (trimmed) console.log(trimmed);
+}
+NODE
+}
+
 validate_compound_command() {
   local cmd="$1"
   local check_fn="$2"
@@ -112,7 +124,7 @@ validate_compound_command() {
     if printf '%s' "$subcmd" | grep -Eiq "$_MUTATING_SUBCMD_PATTERN"; then
       return 1
     fi
-  done < <(printf '%s' "$cmd" | sed 's/&&/\n/g; s/||/\n/g; s/;/\n/g')
+  done < <(split_compound_command "$cmd")
   return 0
 }
 
@@ -140,7 +152,7 @@ command_mutates_governance_surface() {
     if subcommand_targets_governance_surface "$subcmd" && subcommand_is_mutating_shell "$subcmd"; then
       return 0
     fi
-  done < <(printf '%s' "$cmd" | sed 's/&&/\n/g; s/||/\n/g; s/;/\n/g')
+  done < <(split_compound_command "$cmd")
 
   return 1
 }
@@ -152,6 +164,145 @@ command_removes_team_runtime_dir() {
 
   team_rm_pattern="(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]+)*[[:space:]]+(--[[:space:]]+)?([^;|&[:space:]]+[[:space:]]+)*['\"]?((~|[$]HOME|/home/[^/[:space:]'\"]+)/[.]claude/teams)(/[^[:space:];|&'\"]*)?['\"]?([[:space:];|&]|$)"
   [[ "$cmd" =~ $team_rm_pattern ]]
+}
+
+command_uses_interpreter_fs_mutation() {
+  local cmd="${1-}"
+  local trimmed=""
+  [[ -n "$cmd" ]] || return 1
+
+  trimmed="${cmd#"${cmd%%[![:space:]]*}"}"
+  if ! printf '%s' "$trimmed" | grep -Eiq '^([^[:space:]/]+/)?(node|nodejs|python([0-9]+([.][0-9]+)?)?)([[:space:]]|$)'; then
+    return 1
+  fi
+
+  if printf '%s' "$cmd" | grep -Eiq "([^[:alnum:]_.]|^)(fs[.])?(rmSync|rm|rmdirSync|rmdir|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync)[[:space:]]*[(]"; then
+    return 0
+  fi
+  if printf '%s' "$cmd" | grep -Eiq "require[[:space:]]*[(][[:space:]]*['\"]fs['\"][[:space:]]*[)][[:space:]]*[.][[:space:]]*(rmSync|rm|rmdirSync|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync)[[:space:]]*[(]"; then
+    return 0
+  fi
+  if printf '%s' "$cmd" | grep -Eiq "(child_process|execSync|exec|spawnSync|spawn).*['\"][^'\"]*(^|[^[:alnum:]_])(rm|mv|cp|touch|mkdir|chmod|chown|tee|sed[[:space:]]+-i|perl[[:space:]]+-i|git[[:space:]]+(reset|clean|checkout|restore|push))([^[:alnum:]_]|$)"; then
+    return 0
+  fi
+  if printf '%s' "$cmd" | grep -Eiq "(shutil[.]rmtree|os[.](remove|unlink|rmdir|rename|replace)|Path[(][^)]*[)][.](unlink|rmdir|write_text|write_bytes|rename|replace)|[.]write_text[[:space:]]*[(]|[.]write_bytes[[:space:]]*[(]|open[[:space:]]*[(][^)]*,[[:space:]]*['\"][wa+]|subprocess[.](run|call|Popen|check_call|check_output).*['\"][^'\"]*(^|[^[:alnum:]_])(rm|mv|cp|touch|mkdir|chmod|chown|tee|sed[[:space:]]+-i|perl[[:space:]]+-i|git[[:space:]]+(reset|clean|checkout|restore|push))([^[:alnum:]_]|$))"; then
+    return 0
+  fi
+
+  return 1
+}
+
+bounded_generated_cleanup_command() {
+  local cmd="${1-}"
+  local project_root=""
+  [[ -n "$cmd" ]] || return 1
+
+  project_root="$(resolve_project_root)"
+  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node "$HOOK_LIB_DIR/generated-command-policy.js" cleanup
+}
+
+bounded_generated_reset_scaffold_command() {
+  local cmd="${1-}"
+  local project_root=""
+  [[ -n "$cmd" ]] || return 1
+
+  project_root="$(resolve_project_root)"
+  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node "$HOOK_LIB_DIR/generated-command-policy.js" reset-scaffold
+}
+
+user_approved_delete_command() {
+  local cmd="${1-}"
+  [[ -n "$cmd" && -s "$USER_APPROVED_DELETE_ROOTS_FILE" ]] || return 1
+
+  COMMAND_TEXT="$cmd" \
+  APPROVED_ROOTS_FILE="$USER_APPROVED_DELETE_ROOTS_FILE" \
+  WORKSPACE_ROOT="$(resolve_project_root)" \
+  node <<'NODE'
+const fs = require("fs");
+const path = require("path");
+
+const command = String(process.env.COMMAND_TEXT || "");
+const rootsFile = String(process.env.APPROVED_ROOTS_FILE || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+
+function tokenize(text) {
+  const words = [];
+  let current = "";
+  let quote = "";
+  for (let index = 0; index < text.length; index += 1) {
+    const ch = text[index];
+    if (quote) {
+      if (ch === quote) quote = "";
+      else if (ch === "\\" && quote === '"' && index + 1 < text.length) current += text[++index];
+      else current += ch;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (/\s/.test(ch)) {
+      if (current) {
+        words.push(current);
+        current = "";
+      }
+      continue;
+    }
+    current += ch;
+  }
+  if (quote) return null;
+  if (current) words.push(current);
+  return words;
+}
+
+if (!command.trim() || /[|;&<>`$*?[\]{}]/.test(command)) process.exit(1);
+const words = tokenize(command);
+if (!words || words.length < 3 || words[0] !== "rm") process.exit(1);
+
+let sawRecursive = false;
+let sawForce = false;
+const targets = [];
+for (let index = 1; index < words.length; index += 1) {
+  const word = words[index];
+  if (word === "--") continue;
+  if (word.startsWith("-")) {
+    if (!/^-+[rf]+$/.test(word)) process.exit(1);
+    if (word.includes("r")) sawRecursive = true;
+    if (word.includes("f")) sawForce = true;
+    continue;
+  }
+  targets.push(path.resolve(word));
+}
+if (!sawRecursive || !sawForce || targets.length !== 1) process.exit(1);
+
+let approved = [];
+try {
+  approved = fs.readFileSync(rootsFile, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => path.resolve(line));
+} catch {
+  process.exit(1);
+}
+
+const target = targets[0];
+const relative = path.relative(workspaceRoot, target).replace(/\\/g, "/");
+if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) process.exit(1);
+if (
+  relative === "." ||
+  relative === "" ||
+  relative === ".claude" ||
+  relative.startsWith(".claude/") ||
+  relative === ".git" ||
+  relative.startsWith(".git/") ||
+  relative === "references" ||
+  relative.startsWith("references/")
+) process.exit(1);
+if (!approved.includes(target)) process.exit(1);
+
+process.exit(0);
+NODE
 }
 
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
@@ -239,7 +390,7 @@ if [[ -n "$FILE_PATH" ]]; then
 fi
 
 case "$TOOL_NAME" in
-  Edit|MultiEdit|Write|NotebookEdit)
+  Edit|Update|MultiEdit|Write|NotebookEdit)
     if [[ -n "$CANONICAL_PATH" ]]; then
       BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
       if [[ "$CANONICAL_PATH" == */references/* ]]; then
@@ -260,7 +411,7 @@ case "$TOOL_NAME" in
         if procedure_state_target_exact "$CANONICAL_PATH"; then
           case "$TOOL_NAME" in
             Write|NotebookEdit)
-              emit_deny "Procedure state must not be overwritten wholesale. Use exact structured Edit or MultiEdit checkpoint updates for .claude/state/procedure-state.json."
+              emit_deny "Procedure state must not be overwritten wholesale. Use exact structured Edit, Update, or MultiEdit checkpoint updates for .claude/state/procedure-state.json."
               log_violation "$TOOL_NAME" "$CANONICAL_PATH" "procedure-state-wholesale-write" || true
               exit 0
               ;;
@@ -270,7 +421,7 @@ case "$TOOL_NAME" in
         if is_high_traffic_governance_surface_path "$CANONICAL_PATH"; then
           case "$TOOL_NAME" in
             Write|NotebookEdit)
-              emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit or MultiEdit changes so governance intent remains reviewable."
+              emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit, Update, or MultiEdit changes so governance intent remains reviewable."
               log_violation "$TOOL_NAME" "$CANONICAL_PATH" "governance-wholesale-write" || true
               exit 0
               ;;
@@ -290,8 +441,13 @@ case "$TOOL_NAME" in
     # Governance surface protection is unconditional — runs before any session-type allowlist.
     # This ensures worker sessions cannot bypass governance-surface protection via pattern match.
     if command_mutates_governance_surface "$CLEAN_COMMAND"; then
-      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
+      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation-early" || true
+      exit 0
+    fi
+    if command_uses_interpreter_fs_mutation "$CLEAN_COMMAND"; then
+      emit_deny "Interpreter-based filesystem mutation is blocked. Use structured file tools for edits or the bounded generated-output cleanup path for approved cleanup roots."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
       exit 0
     fi
     if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
@@ -319,6 +475,20 @@ case "$TOOL_NAME" in
     if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'; then
       emit_deny "Destructive shell command blocked. Use a safer bounded command or obtain explicit user approval first."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "destructive-shell" || true
+      exit 0
+    fi
+    if user_approved_delete_command "$CLEAN_COMMAND"; then
+      exit 0
+    fi
+    if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
+      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt explicitly names the generated artifact root, and the command is a standalone rm -rf of that exact approved root. Stop/cancel requests must use lifecycle control, not filesystem deletion."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
+      exit 0
+    fi
+    if bounded_generated_cleanup_command "$CLEAN_COMMAND"; then
+      exit 0
+    fi
+    if bounded_generated_reset_scaffold_command "$CLEAN_COMMAND"; then
       exit 0
     fi
 
@@ -388,11 +558,11 @@ case "$TOOL_NAME" in
 
     if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
       if command_mutates_governance_surface "$SANITIZED_COMMAND"; then
-        emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit or MultiEdit changes so policy and hook edits remain reviewable."
+        emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0
       fi
-      emit_deny "Mutable shell command blocked. Read-only Bash discovery is allowed, but file-changing shell actions require a safer tool path or explicit authorization."
+      emit_deny "Mutable shell command blocked. Read-only Bash discovery is allowed. Reclassify the action: use structured file tools for edits, a bounded generated-output cleanup command for cleanup, or the bounded reset-scaffold pattern for approved generated roots. Worker/developer reroute is not a bypass for the same blocked shell shape."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-shell" || true
       exit 0
     fi

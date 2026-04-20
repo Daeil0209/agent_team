@@ -126,6 +126,25 @@ case "$MESSAGE_CLASS" in
   *) exit 0 ;;
 esac
 
+record_team_runtime_state "$SESSION_ID" "active" "worker-report:${MESSAGE_CLASS}"
+CURRENT_DISPATCH_STATE="$(get_procedure_state_field "teamDispatchState" "")"
+CURRENT_PENDING_WORKER="$(get_procedure_state_field "lastPendingWorker" "")"
+CURRENT_DISPATCH_WORKER="$(get_procedure_state_field "lastDispatchWorker" "")"
+ACK_WAS_REQUIRED="false"
+if worker_dispatch_ack_required "$SENDER_NAME"; then
+  ACK_WAS_REQUIRED="true"
+fi
+if [[ "$CURRENT_DISPATCH_STATE" == "pending" ]] \
+  && { [[ "$CURRENT_PENDING_WORKER" == "$SENDER_NAME" ]] || [[ "$CURRENT_DISPATCH_WORKER" == "$SENDER_NAME" ]]; }; then
+  mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-report:${MESSAGE_CLASS}"
+elif [[ "$MESSAGE_CLASS" == "dispatch-ack" && "$ACK_WAS_REQUIRED" == "true" ]]; then
+  mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-report:${MESSAGE_CLASS}"
+fi
+
+if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]]; then
+  clear_worker_dispatch_ack_required "$SENDER_NAME"
+fi
+
 REQUESTED_LIFECYCLE="$(dispatch_field_raw_value "$DESCRIPTION" "REQUESTED-LIFECYCLE" 2>/dev/null || true)"
 REQUESTED_LIFECYCLE="$(printf '%s' "$REQUESTED_LIFECYCLE" | tr '[:upper:]' '[:lower:]')"
 

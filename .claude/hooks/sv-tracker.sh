@@ -66,7 +66,7 @@ case "$SKILL_NAME" in
       if [[ -z "$WORKER_NAME" ]]; then
         clear_lead_planning_required "$SESSION_ID"
       fi
-    else
+    elif [[ -f "$WP_MARKER" ]]; then
       # Subsequent SV = Phase 2 load marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
     fi

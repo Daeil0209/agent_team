@@ -8,10 +8,10 @@ _**Korean escalation prompts** below are locale-specific examples for Korean-lan
 
 ### CP1 -- Plan Confirmation
 **Phase**: Plan (before plan doc finalized) | **Trigger**: problem understanding synthesized
-**Present**: Problem being solved; scope boundaries; known constraints; delivery experience. When the user supplied a reference, also present: the user's requested outcome, the key elements observed from the reference, what will be adopted, what will be adapted, and what will not be adopted.
+**Present**: Problem being solved; scope boundaries; known constraints; delivery experience; acceptance evidence basis; and lightweight verification strategy basis. When the user supplied a reference, also present: the user's requested outcome, the key elements observed from the reference, what will be adopted, what will be adapted, what will not be adopted, and which reference-derived evidence/defaults can later prove the requested outcome.
 **Korean escalation prompt**: "현재 요구사항 해석에 결정이 필요한 불명확점이 있습니다. 아래 항목만 확인해주세요."
 When a reference was supplied, use instead: "레퍼런스 반영 방향에서 결정이 필요한 불명확점이 있습니다. 아래 항목만 확인해주세요."
-**Required action**: Resolve or correct the plan basis. Team-lead should auto-resolve when the user's directive and available evidence make the basis clear. Escalate to the user only when material ambiguity remains. When a reference was supplied, any escalation must cover both (1) whether the reference was understood correctly and (2) whether the planned interpretation of that reference matches the user's actual request. If corrected, revise the plan basis before continuing.
+**Required action**: Resolve or correct the plan basis. Team-lead should auto-resolve when the user's directive, request-fit synthesis or packet when present, and available evidence make the basis clear. Escalate to the user only when material ambiguity remains. When a reference was supplied, any escalation must cover both (1) whether the reference was understood correctly and (2) whether the planned interpretation of that reference matches the user's actual request. Validation or proof questions derivable from the original instruction, reference evidence, or request-fit defaults are recorded as plan defaults rather than user-facing questions; only non-derivable or contradictory acceptance evidence assumptions remain open. If corrected, revise the plan basis before continuing.
 
 ### CP2 -- Ambiguity Resolution
 **Phase**: Plan (after plan doc draft) | **Trigger**: open questions surfaced
@@ -21,7 +21,7 @@ When a reference was supplied, use instead: "레퍼런스 반영 방향에서 �
 
 ### CP3 -- Architecture Selection
 **Phase**: Design (after design options generated) | **Trigger**: Minimal/Clean/Pragmatic options produced
-**Present**: Full comparison table (see Phase 2 format)
+**Present**: Full comparison table (see Phase 2 format), including verification-plan implications when options differ materially.
 **Korean escalation prompt**: "설계 방향이 실제로 갈릴 수 있어 결정이 필요합니다. 아래 옵션 중 하나를 선택해주세요. 추천안은 Pragmatic입니다."
 **Required action**: Select one option; record selection and basis in the design doc before advancing.
 **Default path**: Team-lead auto-resolution.
@@ -31,7 +31,7 @@ When a reference was supplied, use instead: "레퍼런스 반영 방향에서 �
 
 ### CP4 -- Implementation Scope Resolution
 **Phase**: Implementation (before any implementation begins) | **Trigger**: scope summary prepared from design doc
-**Present**: Files to create/modify; estimated change volume; out-of-scope items; risk points; delivery experience
+**Present**: Files to create/modify; estimated change volume; out-of-scope items; risk points; delivery experience; verification-plan coverage risks
 **Korean escalation prompt**: "현재 범위를 넘는 변경이 필요합니다. 아래 확장/위험 항목에 대한 결정이 필요합니다."
 **Required action**: Implementation may begin autonomously when the scope matches the design doc and the user's task-level directive. If the user modifies scope, update the design doc and re-present the summary. Destructive actions, security-sensitive actions, or scope expansion beyond the resolved design still require explicit user confirmation.
 
@@ -59,11 +59,11 @@ Hard gates verified by team-lead before dispatching any lane. Dispatching before
 
 | Transition               | Gate Condition                                                                 |
 |--------------------------|--------------------------------------------------------------------------------|
-| Phase 0 -> Phase 1       | Discovery output delivered to team-lead (if Phase 0 activated)                 |
-| Phase 1 -> Phase 2       | Plan doc exists at docs/01-plan/features/{feature}.plan.md; CP1 + CP2 done     |
-| Phase 2 -> Phase 3       | Design doc exists at docs/02-design/features/{feature}.design.md; CP3 resolved |
+| Phase 0 -> Phase 1       | Discovery output delivered to team-lead and discovery verification resolved (if Phase 0 activated) |
+| Phase 1 -> Phase 2       | Plan doc exists at docs/01-plan/features/{feature}.plan.md; Verification Strategy Basis present; CP1 + CP2 done |
+| Phase 2 -> Phase 3       | Design doc exists at docs/02-design/features/{feature}.design.md; Verification Plan present; CP3 resolved |
 | Phase 3 start            | CP4 scope resolved; design doc confirmed as prerequisite                       |
-| Phase 3 -> Phase 4       | Developer explicit handoff received with changed file list and executed checks  |
+| Phase 3 -> Phase 4       | Developer explicit handoff received with changed file list, executed checks, and Verification Plan coverage/delta |
 | Phase 4 -> Phase 2       | CP5 resolved: at least one blocking gap is design-level                        |
 | Phase 4 -> Phase 5       | CP5 resolved: blocking gap or significant coverage gap is implementation-level |
 | Phase 4 -> Complete      | No blocking gaps remain and coverage is sufficient; for executable, user-facing software deliverables, validator PASS is also required |
@@ -151,6 +151,8 @@ Identify what failed (error log, test failure, user report, monitoring alert). C
 - T1 (governance block): core feature broken -> block further work, fix first
 - T2 (quality gate): non-critical defect -> fix in current iteration cycle
 - T3 (advisory): minor issue -> record and schedule
+
+User-reported first-view or launch-path failures ("blank", "nothing shows", "unstyled", "404", "won't start", or equivalent) are blocking until reproduced or disproven on the intended user surface. Stabilize that visible blocker before unrelated completion claims, lifecycle cleanup, or lower-priority backlog. Workarounds for the user are temporary diagnostics only, not delivery success or acceptance evidence.
 
 **Step 2: Impact Analysis**
 - Scope: which components/services are affected?

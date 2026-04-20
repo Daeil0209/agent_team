@@ -116,6 +116,8 @@ staged-class-fix add: `FOLLOW-UP-OWNER: <owner>`
 
 base + `RESEARCH-MODE: bounded|deep|sharded; DECISION-TARGET: <blocked decision>; QUESTION-BOUNDARY: <bounded question>; OUTPUT-SURFACE: <artifact or state the research must produce>; SOURCE-FAMILY: repo|runtime|web|mixed; DOWNSTREAM-CONSUMER: <consumer>; SKILL-RECOMMENDATIONS: applicable skills with rationale or none`
 
+Mode semantics: `bounded` = one decision target with tightly coupled subquestions; `deep` = one decision target with broader evidence or contradiction mapping; `sharded` = multiple independent decision targets, source families, domains, or question axes.
+
 sharded add: `SHARD-ID: <id>; SHARD-BOUNDARY: <boundary>; MERGE-OWNER: <owner>`
 
 Parallel researcher work must use sharded dispatch, not duplicate plain `researcher` dispatch. Runtime tracking uses `researcher-<SHARD-ID>` as the shard worker identity; keep `SHARD-ID` stable for same-shard reuse and unique for independent parallel shards.
@@ -152,7 +154,7 @@ For executable, user-facing deliverables:
 
 Note: Lane-specific completion-grade evidence blocks (tester, validator, researcher, developer handoff packets) extend this base template. Their fields augment rather than replace the base fields above. The base template provides the minimum shared communication surface; lane-specific blocks add proof, validation, or research-specific tracing fields.
 
-`dispatch-ack`: on receipt of a new assignment from `Agent` or assignment-grade `SendMessage` (new assignment, reuse, or reroute), the worker's first upward message should be `MESSAGE-CLASS: dispatch-ack` carrying `TASK-ID: <assigned-id|none>`, `WORK-SURFACE` echo, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loaded|loading`. This is the worker-start OK-sign; it is not a completion-grade report and does not require converged SV fields. Handoff, completion, or hold reports follow later on their own evidence contracts.
+`dispatch-ack`: on receipt of a new assignment from `Agent` or assignment-grade `SendMessage` (new assignment, reuse, or reroute), the worker's first upward communication must be `MESSAGE-CLASS: dispatch-ack` to team-lead before `Skill`, `ToolSearch`, `Read`, `Bash`, task-state changes, file changes, or substantive work. This is the authoritative assignment-receipt channel: worker-local prompts, lane-skill ordering, and stale planning markers must conform to it rather than override it. It carries `TASK-ID: <assigned-id|none>`, `WORK-SURFACE` echo, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loaded|loading`. This is the worker-start OK-sign; it is not a completion-grade report and does not require converged SV fields. Handoff, completion, or hold reports follow later on their own evidence contracts.
 
 `status` milestone contract:
 - Scope: default internal worker-to-lead progress signal for non-trivial or multi-step assignments.
@@ -223,10 +225,12 @@ Lane-owned enumerated fields:
 
 ## Consequential Tool Recovery Contract
 
-- This contract applies to dispatch (`Agent`, `TaskCreate`, assignment-grade `SendMessage`), task-state mutation (`TaskUpdate`, `TaskStop`), runtime teardown (`TeamDelete`, `CronDelete`), file mutation (`Edit`, `Write`, `MultiEdit`), and mutable `Bash`.
+- This contract applies to dispatch (`Agent`, `TaskCreate`, assignment-grade `SendMessage`), task-state mutation (`TaskUpdate`, `TaskStop`), runtime teardown (`TeamDelete`, `CronDelete`), file mutation (`Edit`, `Update`, `Write`, `MultiEdit`), and mutable `Bash`.
 - Routine status, progress, current-state, and "what remains?" questions do not authorize consequential tool use by themselves. Before closing such a turn as answer-only, test for explicit runtime recovery or continuation states unless the user explicitly pauses, cancels, or forbids action in the current turn. Answer routine status from existing evidence unless the user explicitly requests continuation, correction, dispatch, validation, mutation, or cleanup. Explicit runtime recovery states such as `pipeline-ready-idle`, `unclaimed-dispatch-failure`, `idle-no-completion`, or another active runtime handoff failure are continuation/correction states, not routine status-only turns; a brief status answer may precede same-turn WP/SV and the required execute/dispatch/recovery path.
 - A hook block is not a workflow step to probe through. Treat the hook's `Next:` field as the required recovery path.
 - Retrying a blocked tool requires a changed corrective basis: for example current-turn `work-planning`, post-planning `self-verification`, confirmed task id, lifecycle decision, duplicate-worker reuse/shutdown decision, or a completed packet field.
+- For blocked mutable Bash, worker dispatch is not a corrective basis unless the work ownership truly changes. First reclassify the command: cleanup -> bounded generated-output cleanup; reset plus scaffold -> bounded reset-scaffold pattern; file edit -> structured edit tool; runtime teardown -> closeout/teardown path; destructive or security-sensitive action -> explicit approval.
+- Destructive cleanup is target-verified, not verb-banned: a user-approved delete may remove the exact named generated artifact root, but stop/cancel/pause requests do not imply filesystem deletion. Never translate lifecycle control into `rm -rf`.
 - Do not retry the same tool, or move sideways to a sibling consequential tool, while the same preflight gap remains.
 - If the same blocker appears twice on the same operating surface, stop retries and report HOLD with the blocker, the missing preflight step, and the functional result already known.
 
@@ -266,10 +270,10 @@ Worker outputs synthesized into concrete patch instructions create a new dispatc
 
 Run this before `TaskUpdate` or `TaskStop`.
 
-1-2. Prerequisite: Fresh Turn Dispatch Gate must be satisfied.
-3. Confirm the exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet.
-4. If the task id is absent, stale, or already cleaned up, do not guess or reuse remembered numbers. Report the administrative task state as unavailable and preserve the functional result separately.
-5. Mutate task state only after the id is evidence-backed.
+1. Confirm the exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet.
+2. If the task id is absent, stale, or already cleaned up, do not guess or reuse remembered numbers. Report the administrative task state as unavailable and preserve the functional result separately.
+3. Mutate task state only after the id is evidence-backed.
+4. These tools are administrative state-channel updates, not fresh-turn dispatch or semantic execution. Do not route them through the generic WP+SV fan-out wall when exact-id validation is the real prerequisite. If a current execution plan has already started and post-planning self-verification is still pending, complete that self-verification before mutating task state.
 
 ## Lead Dispatch Rules
 
@@ -371,9 +375,9 @@ Rules:
 - Corrective work and bottleneck fixes still obey lifecycle order. When a new fix is needed and idle workers exist, the next action is lifecycle resolution or bounded reuse, not a fresh `Agent` spawn.
 - Reuse-first: when the target lane/name already has a live or standby worker, use bounded `SendMessage` reuse if the context fits. Spawn a replacement only after an explicit lifecycle decision makes the existing worker unsuitable for reuse.
 - State-channel rule: `TaskCreate` and `TaskUpdate` keep shared task state legible, but task owner/status values are not team-existence proof and are not worker-start proof. Use task state alongside dispatch evidence, not instead of it; `in_progress` without worker-start evidence remains dispatch-pending in reports.
-- Task-state mutation preflight is shared by `TaskUpdate` and `TaskStop`: current-turn `work-planning` -> post-planning `self-verification` -> confirm exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet -> mutate task state. If the id is stale or absent, do not guess; report administrative task-state unavailable.
+- Task-state mutation preflight is shared by `TaskUpdate` and `TaskStop`: confirm the exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet before mutating task state. If the id is stale or absent, do not guess; report administrative task-state unavailable. These tools are administrative state-channel updates, not deliverable execution; they may record already-established runtime truth without opening a fresh planning cycle, but if a current execution plan has been started and not yet self-verified, complete post-planning `self-verification` before mutating task state.
 - After `TaskUpdate` or `TaskStop`, resume any active workflow/development cursor that was pending before the administrative mutation. Task-state mutation records completion or coordination state; it does not consume a declared next stage or replace `execute`, `dispatch`, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
-- Runtime teardown preflight is shared by `TeamDelete`, `CronDelete`, and closeout cleanup: current-turn `work-planning` -> post-planning `self-verification` -> confirm closeout/teardown intent -> verify no active worker has unresolved handoff, task-state, or lifecycle decision -> mutate runtime state.
+- Runtime teardown preflight is shared by `TeamDelete`, `CronDelete`, and closeout cleanup: confirm explicit closeout/teardown intent -> enter the session-closeout/teardown readiness path -> verify no active worker has unresolved handoff, task-state, or lifecycle decision -> mutate runtime state. Do not use runtime teardown tools to answer routine status questions, and do not route teardown through the generic dispatch WP/SV gate when the closeout path already owns the readiness check.
 - When the runtime exposes a task id or `task_assignment` packet, preserve that id across reroute, follow-up task-tool use, completion-grade SendMessage reports, and completion review. Do not reconstruct task identity from worker names, message order, or remembered chronology.
 - Task state is authoritative on the shared task runtime. SendMessage carries communication and handoff content, but does not by itself close a task.
 - `TaskCreate` must keep the shared task runtime legible: non-empty subject, plus a description that states bounded scope and expected completion surface using existing packet coordinates. For scope, use fields such as `QUESTION-BOUNDARY`, `CHANGE-BOUNDARY`, `CHILD-BOUNDARY`, `EXCLUDED-BOUNDARY`, `EXCLUDED-SCOPE`, or `WORK-SURFACE`. For completion surface, use fields such as `DONE-CONDITION`, `OUTPUT-SURFACE`, `PROOF-TARGET`, `VALIDATION-TARGET`, `ACCEPTANCE-SURFACE`, or `DECISION-SURFACE`. Placeholder or topic-only task rows are non-compliant.

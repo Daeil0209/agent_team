@@ -114,3 +114,27 @@ worker_planning_required() {
 
   identity_present_in_file "$WORKER_PLANNING_PENDING_FILE" "$worker_name"
 }
+
+mark_worker_dispatch_ack_required() {
+  local worker_name=""
+  worker_name="$(normalize_planning_worker_name "${1-}")"
+  [[ -n "$worker_name" ]] || return 0
+
+  with_lock_file "$PLANNING_DISCIPLINE_LOCK" _mark_identity_in_file_locked "$WORKER_DISPATCH_ACK_PENDING_FILE" "$worker_name"
+}
+
+clear_worker_dispatch_ack_required() {
+  local worker_name=""
+  worker_name="$(normalize_planning_worker_name "${1-}")"
+  [[ -n "$worker_name" ]] || return 0
+
+  with_lock_file "$PLANNING_DISCIPLINE_LOCK" _clear_identity_in_file_locked "$WORKER_DISPATCH_ACK_PENDING_FILE" "$worker_name"
+}
+
+worker_dispatch_ack_required() {
+  local worker_name=""
+  worker_name="$(normalize_planning_worker_name "${1-}")"
+  [[ -n "$worker_name" ]] || return 1
+
+  identity_present_in_file "$WORKER_DISPATCH_ACK_PENDING_FILE" "$worker_name"
+}

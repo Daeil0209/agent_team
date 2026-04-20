@@ -77,7 +77,7 @@ Lifecycle decision mapping: team-lead 'shutdown' decision = (1) send shutdown_re
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan rather than silent hope.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or a team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support that diagnosis.
-- Repo-local generated-output cleanup may use bounded destructive commands only inside the active repo's approved output roots (`./projects/`, `./backups/`). Keep that allowance scoped to generated contents; it does not authorize arbitrary repo deletion or main-thread mutation.
+- Repo-local generated-output cleanup may use bounded destructive commands only inside the active repo's approved output roots (`./projects/`, `./outputs/`, `./backups/`). Keep that allowance scoped to generated child contents; it does not authorize deleting the root directories themselves, arbitrary repo deletion, hidden interpreter-based filesystem mutation, or main-thread mutation. A reset followed only by `mkdir -p` scaffold recreation under the same approved generated roots may use the bounded reset-scaffold pattern; do not mix that reset with build/test/git/touch/edit commands.
 
 ## Runtime-Pressure Rule
 
@@ -88,7 +88,7 @@ Lifecycle decision mapping: team-lead 'shutdown' decision = (1) send shutdown_re
 
 ## Procedure-State Schema
 
-The procedure state is written to `./.claude/state/procedure-state.json`. This file is read-only from the skill layer as doctrine; governing hooks and session lifecycle procedures own it. A team-lead may make an exact `Edit` or `MultiEdit` checkpoint update to this file when recording required phase/procedure state. The workspace continuity surface is `./.claude/session-state.md`; exact `Edit`, `MultiEdit`, or `Write` updates to that file are bounded continuity writes. These narrow operational exceptions do not authorize edits to sibling `.claude` files or semantic governance changes without the normal planning path.
+The procedure state is written to `./.claude/state/procedure-state.json`. This file is read-only from the skill layer as doctrine; governing hooks and session lifecycle procedures own it. A team-lead may make an exact `Edit`, `Update`, or `MultiEdit` checkpoint update to this file when recording required phase/procedure state. The workspace continuity surface is `./.claude/session-state.md`; exact `Edit`, `Update`, `MultiEdit`, or `Write` updates to that file are bounded continuity writes. These narrow operational exceptions do not authorize edits to sibling `.claude` files or semantic governance changes without the normal planning path.
 
 | Field | Type | Description |
 |-------|------|-------------|

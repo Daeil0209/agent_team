@@ -76,6 +76,7 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 
 - Operate only inside the active workspace, repository, and approved output roots.
 - Do not destructively modify files outside the repository, expose secrets, alter protected security settings, or use destructive shell actions without explicit approval.
+- Do not hide filesystem mutation behind interpreter snippets. Use structured edit tools for file edits and the bounded generated-output cleanup path for approved cleanup roots.
 
 ## Core Doctrine
 
@@ -232,6 +233,8 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 - Runnable deliverables require actual execution evidence when the environment permits.
 - Verification evidence must match the deliverable's real user-interaction surface.
 - Simulated or indirect evidence must not be presented as stronger proof than it is.
+- User-view truth is distinct from runtime truth: build success, server health, API responses, task completion, or worker handoff are supportive evidence only unless they directly prove the user-facing surface promised to the user.
+- Positive delivery vocabulary (`ready`, `done`, `complete`, `proven`, `works`) for human-facing runnable deliverables requires matched evidence for the promised launch path, first view, core workflow, and burden contract. Otherwise report the exact partial state and remaining blocker.
 
 ##### Blocking And Resolution
 

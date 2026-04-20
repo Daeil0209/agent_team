@@ -256,6 +256,12 @@ if [[ "$AGENT_TYPE" == "unknown-agent" ]]; then
   exit 0
 fi
 
+if runtime_sender_session_is_worker "$SESSION_ID" \
+  && [[ "$TOOL_NAME" != "SendMessage" ]] \
+  && worker_dispatch_ack_required "$AGENT_TYPE"; then
+  exit 0
+fi
+
 if runtime_sender_session_is_worker "$SESSION_ID" && [[ "$TOOL_NAME" != "SendMessage" ]]; then
   record_team_runtime_state "" "active" "worker-activity"
   mark_team_dispatch_claimed "" "$AGENT_TYPE" "worker-activity"

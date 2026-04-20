@@ -27,18 +27,20 @@ try {
 	    }
 	    return [...new Set(paths)];
 	  };
-	  const toolInput = input.tool_input || {};
-	  const fields = [
-	    String(input.tool_name || ""),
-	    String(input.session_id || ""),
-	    String(input.agent_id || ""),
-	    String(input.agent_type || ""),
-	    String(toolInput.command || ""),
-	    collectPaths(toolInput).join("\n")
-	  ];
+		  const toolInput = input.tool_input || {};
+		  const fields = [
+		    String(input.tool_name || ""),
+		    String(input.session_id || ""),
+		    String(input.agent_id || ""),
+		    String(input.agent_type || ""),
+		    String(toolInput.command || ""),
+		    String(toolInput.skill || ""),
+		    String(toolInput.task_id || toolInput.taskId || toolInput.id || ""),
+		    collectPaths(toolInput).join("\n")
+		  ];
 	  process.stdout.write(fields.join("\n"));
 	} catch {
-	  process.stdout.write("\n\n\n\n\n");
+	  process.stdout.write("\n\n\n\n\n\n");
 	}
 NODE
 )"
@@ -49,8 +51,12 @@ SESSION_ID="${FIELDS[1]:-}"
 AGENT_ID="${FIELDS[2]:-}"
 AGENT_TYPE="${FIELDS[3]:-}"
 COMMAND="${FIELDS[4]:-}"
-TARGET_PATHS="$(printf '%s\n' "${FIELDS[@]:5}")"
+SKILL_NAME_RAW="${FIELDS[5]:-}"
+TASK_ID="${FIELDS[6]:-}"
+TARGET_PATHS="$(printf '%s\n' "${FIELDS[@]:7}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
+SKILL_NAME_NORM="$(printf '%s' "$SKILL_NAME_RAW" | tr '[:upper:]' '[:lower:]')"
+WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 
 deny_tool_use() {
   local reason="${1:?reason required}"
@@ -87,6 +93,157 @@ self_growth_gate_applies_to_tool() {
   esac
 }
 
+sendmessage_is_dispatch_ack_to_lead() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  local parsed=""
+  local message_class=""
+  local target_name=""
+
+  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
+const flattenText = (value) => {
+  if (value == null) return [];
+  if (typeof value === "string") return value ? [value] : [];
+  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
+  if (Array.isArray(value)) return value.flatMap(flattenText);
+  if (typeof value === "object") {
+    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+    const preferred = preferredKeys
+      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
+      .flatMap((key) => flattenText(value[key]));
+    if (preferred.length) return preferred;
+    return Object.entries(value).flatMap(([key, nested]) => {
+      const nestedChunks = flattenText(nested);
+      if (!nestedChunks.length) return [String(key)];
+      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
+    });
+  }
+  return [];
+};
+const firstNonEmptyString = (...values) => {
+  for (const value of values) {
+    if (typeof value !== "string") continue;
+    const trimmed = value.trim();
+    if (trimmed) return trimmed;
+  }
+  return "";
+};
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const text = flattenText(toolInput.summary)
+    .concat(flattenText(toolInput.message || toolInput.content))
+    .concat(flattenText(toolInput.description))
+    .join("\n");
+  const match = text.match(/(?:^|\n)\s*message-class\s*:\s*([^\n\r]+)/i);
+  const messageClass = String(match ? match[1] : "").trim().toLowerCase();
+  const targetName = firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.recipient_name,
+    toolInput.recipientName,
+    toolInput.name,
+    toolInput.target_name,
+    toolInput.targetName,
+    toolInput.teammate_name,
+    toolInput.teammateName
+  ).toLowerCase();
+  process.stdout.write(`${messageClass}\n${targetName}\n`);
+} catch {
+  process.stdout.write("\n\n");
+}
+NODE
+)"
+  mapfile -t _ack_fields <<<"$parsed"
+  message_class="${_ack_fields[0]:-}"
+  target_name="${_ack_fields[1]:-}"
+
+  [[ "$message_class" == "dispatch-ack" ]] || return 1
+  case "$target_name" in
+    team-lead|lead|supervisor) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+worker_dispatch_ack_block_reason() {
+  local tool_name="${1:-tool}"
+
+  printf 'BLOCKED: worker dispatch-ack required. Detail: %s cannot run before the worker sends the assignment receipt signal to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nTASK-ID: <assigned-id|none>\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted|rejected:<reason>\nPLANNING-BASIS: loading|loaded").' "$tool_name"
+}
+
+lead_sendmessage_is_lifecycle_control() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  local parsed=""
+  local message_class=""
+  local lifecycle_decision=""
+  local top_type=""
+  local nested_type=""
+
+  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
+const flattenText = (value) => {
+  if (value == null) return [];
+  if (typeof value === "string") return value ? [value] : [];
+  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
+  if (Array.isArray(value)) return value.flatMap(flattenText);
+  if (typeof value === "object") {
+    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+    const preferred = preferredKeys
+      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
+      .flatMap((key) => flattenText(value[key]));
+    if (preferred.length) return preferred;
+    return Object.entries(value).flatMap(([key, nested]) => {
+      const nestedChunks = flattenText(nested);
+      if (!nestedChunks.length) return [String(key)];
+      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
+    });
+  }
+  return [];
+};
+const field = (text, name) => {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = text.match(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*:\\s*([^\\n\\r]+)`, "i"));
+  return String(match ? match[1] : "").trim().toLowerCase();
+};
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const nestedMessage = toolInput.message || {};
+  const text = flattenText(toolInput.summary)
+    .concat(flattenText(toolInput.message || toolInput.content))
+    .concat(flattenText(toolInput.description))
+    .join("\n");
+  const fields = [
+    field(text, "message-class"),
+    field(text, "lifecycle-decision"),
+    String(toolInput.type || "").trim().toLowerCase(),
+    String(nestedMessage.type || "").trim().toLowerCase()
+  ];
+  process.stdout.write(fields.join("\n"));
+} catch {
+  process.stdout.write("\n\n\n\n");
+}
+NODE
+)"
+  mapfile -t _lifecycle_fields <<<"$parsed"
+  message_class="${_lifecycle_fields[0]:-}"
+  lifecycle_decision="${_lifecycle_fields[1]:-}"
+  top_type="${_lifecycle_fields[2]:-}"
+  nested_type="${_lifecycle_fields[3]:-}"
+
+  case "$top_type:$nested_type" in
+    shutdown_request:*|*:shutdown_request) return 0 ;;
+  esac
+
+  case "$lifecycle_decision" in
+    reuse|standby|shutdown|hold-for-validation)
+      [[ -z "$message_class" || "$message_class" == "control" ]] && return 0
+      ;;
+  esac
+
+  return 1
+}
+
 lead_preflight_block_reason() {
   local tool_name="${1:-tool}"
 
@@ -106,12 +263,36 @@ lead_preflight_block_reason() {
   esac
 }
 
+task_state_tool_allowed_for_target_validation() {
+  local tool_name="${1:-}"
+
+  case "$tool_name" in
+    TaskUpdate|TaskStop)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+runtime_teardown_intent_block_reason() {
+  local tool_name="${1:-tool}"
+
+  printf 'BLOCKED: runtime teardown intent incomplete. Detail: %s is not a routine status or dispatch action. Next: answer status from authoritative read-only surfaces, or if teardown is explicitly requested, enter session-closeout/teardown readiness and retry.' "$tool_name"
+}
+
 boot_infra_tool_allowed() {
   local tool_name="${1:-}"
   local command="${2:-}"
+  local skill_name="${3:-}"
 
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|TeamCreate|TeamDelete|WebFetch|WebSearch) return 0 ;;
+    Skill)
+      [[ "$skill_name" == *session-boot* ]]
+      return
+      ;;
     Bash)
       printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME)[[:space:]]*$'
       return
@@ -120,11 +301,30 @@ boot_infra_tool_allowed() {
   esac
 }
 
-planning_bootstrap_tool_allowed() {
+worker_planning_bootstrap_tool_allowed() {
   local tool_name="${1:-}"
+  local skill_name="${2:-}"
 
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch|Bash) return 0 ;;
+    Skill)
+      [[ "$skill_name" == *work-planning* ]]
+      return
+      ;;
+    *) return 1 ;;
+  esac
+}
+
+lead_planning_bootstrap_tool_allowed() {
+  local tool_name="${1:-}"
+  local skill_name="${2:-}"
+
+  case "$tool_name" in
+    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch|Bash) return 0 ;;
+    Skill)
+      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* ]]
+      return
+      ;;
     *) return 1 ;;
   esac
 }
@@ -134,15 +334,22 @@ if [[ -z "$TOOL_NAME" || -z "$SESSION_ID" ]]; then
 fi
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && ! session_id_is_known_worker "$SESSION_ID"; then
-  if boot_infra_tool_allowed "$TOOL_NAME" "$COMMAND"; then
+  if boot_infra_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
     exit 0
   fi
 fi
 
 if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
+    if [[ -n "$WORKER_NAME" ]] && worker_dispatch_ack_required "$WORKER_NAME"; then
+      if sendmessage_is_dispatch_ack_to_lead; then
+        exit 0
+      fi
+      deny_tool_use "$(worker_dispatch_ack_block_reason "$TOOL_NAME")"
+      exit 0
+    fi
     if [[ -n "$WORKER_NAME" ]] && worker_planning_required "$WORKER_NAME"; then
-      if planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND"; then
+      if worker_planning_bootstrap_tool_allowed "$TOOL_NAME" "$SKILL_NAME_NORM"; then
         exit 0
       fi
       deny_tool_use "$(planning_preflight_block "$TOOL_NAME" "Skill(work-planning) -> continue current task")"
@@ -152,7 +359,10 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
 fi
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
-  if planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND"; then
+  if lead_planning_bootstrap_tool_allowed "$TOOL_NAME" "$SKILL_NAME_NORM"; then
+    exit 0
+  fi
+  if lead_sendmessage_is_lifecycle_control; then
     exit 0
   fi
   if self_growth_required "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
@@ -163,6 +373,26 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if lead_planning_required "$SESSION_ID"; then
+    if task_state_tool_allowed_for_target_validation "$TOOL_NAME"; then
+      # TaskUpdate/TaskStop are administrative state-channel tools. Let the
+      # task-target validator enforce exact task id and stale-target rules
+      # instead of hiding those diagnostics behind the generic WP/SV wall.
+      exit 0
+    fi
+    case "$TOOL_NAME" in
+      Agent|TaskCreate|SendMessage)
+        # Dispatch surfaces still require WP+SV, but once WP is observed the
+        # remaining missing-SV block belongs to sv-gate to avoid duplicate
+        # fresh-turn vs verification denials for the same attempt.
+        if [[ -f "$WP_MARKER" ]]; then
+          exit 0
+        fi
+        ;;
+      TeamDelete|CronDelete)
+        deny_tool_use "$(runtime_teardown_intent_block_reason "$TOOL_NAME")"
+        exit 0
+        ;;
+    esac
     deny_tool_use "$(lead_preflight_block_reason "$TOOL_NAME")"
     exit 0
   fi

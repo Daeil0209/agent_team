@@ -1028,6 +1028,9 @@ remove_worker_everywhere() {
   if declare -F clear_worker_planning_required >/dev/null 2>&1; then
     clear_worker_planning_required "$worker_name"
   fi
+  if declare -F clear_worker_dispatch_ack_required >/dev/null 2>&1; then
+    clear_worker_dispatch_ack_required "$worker_name"
+  fi
   remove_member_from_config "$worker_name"
   remove_worker_inboxes "$worker_name"
 }

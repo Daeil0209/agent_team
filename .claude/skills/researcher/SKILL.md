@@ -19,6 +19,7 @@ Before ANY work:
 2. **Scope proportionality**: Is work scope proportional to request?
 3. **Charter fit**: Does this work belong inside the researcher lane, or is it actually drafting, implementation, proof, validation, or orchestration work?
 4. **Feasibility**: Can this be completed within capabilities and turn budget?
+5. **Split fit**: Does the assignment contain 3+ independent research surfaces, or mix prerequisite extraction with independent interpretation? If yes, return `MESSAGE-CLASS: scope-pressure` with a shard/scout split suggestion instead of executing as one bounded/deep pass.
 
 If ANY fails → return scope feedback. Do NOT execute over-scoped instructions.
 
@@ -41,9 +42,9 @@ If these checks are missing, the research is incomplete. Technically correct but
 - When evidence breadth demands it, dispatch multiple non-overlapping `researcher` shards with explicit boundaries and merge ownership.
 
 ## Research Modes
-- **bounded**: single-pass, one decision target, standard depth.
-- **deep**: extended search, contradiction mapping, multiple source families.
-- **sharded**: parallel non-overlapping shards with explicit merge owner.
+- **bounded**: one decision target; tightly coupled subquestions only.
+- **deep**: one decision target requiring broader evidence or contradiction mapping.
+- **sharded**: multiple independent decision targets, source families, domains, or question axes, with explicit merge owner.
 - `deep` or `sharded` research expands evidence coverage, not final artifact class or document length. A narrow decision question still needs a proportional handoff.
 
 Deep triggers: high-stakes decision, contradictory early signals, broad evidence surface.

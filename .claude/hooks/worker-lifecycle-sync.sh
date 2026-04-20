@@ -44,6 +44,79 @@ schedule_current_pane_shutdown() {
   ) >/dev/null 2>&1 &
 }
 
+latest_worker_report_class() {
+  local worker_name="${1-}"
+
+  [[ -n "$worker_name" ]] || return 1
+
+  WORKER_NAME="$worker_name" WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" node <<'NODE' 2>/dev/null || true
+const fs = require("fs");
+
+const ledgerPath = process.env.WORKER_REPORT_LEDGER || "";
+const workerName = String(process.env.WORKER_NAME || "").trim().toLowerCase();
+if (!ledgerPath || !workerName || !fs.existsSync(ledgerPath)) process.exit(0);
+
+let latest = null;
+for (const line of fs.readFileSync(ledgerPath, "utf8").split(/\r?\n/)) {
+  if (!line) continue;
+  let parsed;
+  try {
+    parsed = JSON.parse(line);
+  } catch {
+    continue;
+  }
+  if (!parsed || typeof parsed !== "object") continue;
+  const senderName = String(parsed.senderName || "").trim().toLowerCase();
+  if (senderName !== workerName) continue;
+  const timestamp = String(parsed.timestamp || "");
+  if (!latest || timestamp >= String(latest.timestamp || "")) latest = parsed;
+}
+
+if (latest) {
+  process.stdout.write(`${String(latest.messageClass || "").toLowerCase()}\n${String(latest.timestamp || "")}\n`);
+}
+NODE
+}
+
+worker_idle_classification() {
+  local worker_name="${1-}"
+  local last_message_class=""
+  local last_message_timestamp=""
+  local parsed=""
+  local dispatch_worker=""
+  local dispatch_at=""
+
+  [[ -n "$worker_name" ]] || {
+    printf 'idle-awaiting-lifecycle'
+    return 0
+  }
+
+  if worker_dispatch_ack_required "$worker_name"; then
+    printf 'idle-no-completion'
+    return 0
+  fi
+
+  parsed="$(latest_worker_report_class "$worker_name")"
+  mapfile -t _idle_report_fields <<<"$parsed"
+  last_message_class="${_idle_report_fields[0]:-}"
+  last_message_timestamp="${_idle_report_fields[1]:-}"
+  dispatch_worker="$(get_procedure_state_field "lastDispatchWorker" "")"
+  dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
+
+  case "$last_message_class" in
+    handoff|completion|hold)
+      if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
+        printf 'idle-no-completion'
+        return 0
+      fi
+      printf 'idle-awaiting-lifecycle'
+      ;;
+    *)
+      printf 'idle-no-completion'
+      ;;
+  esac
+}
+
 # ---------------------------------------------------------------------------
 # Helper: clean stale pane entries from team config (lock-safe)
 # ---------------------------------------------------------------------------
@@ -458,23 +531,13 @@ ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
 	          clear_worker_idle_notice "$TARGET_NAME"
 	          clear_worker_standby "$TARGET_NAME"
 	          mark_team_dispatch_pending "$SESSION_ID" "$TARGET_NAME" "sendmessage-${MESSAGE_CLASS}"
-	          # Guard: if the worker already has an active WP marker for any known session,
-	          # they are in mid-task execution (turn paused, not task complete). Preserve
-          # their planning state and skip the planning_required reset to avoid blocking
-          # a subsequent completion-grade SendMessage for the current task.
-          _wp_already_loaded="false"
-          mapfile -t _target_sids < <(session_ids_for_worker_name "$TARGET_NAME" 2>/dev/null || true)
-          for _tsid in "${_target_sids[@]}"; do
-            if [[ -n "$_tsid" && -f "$LOG_DIR/.wp-loaded-${_tsid}" ]]; then
-              _wp_already_loaded="true"
-              break
-            fi
-          done
-          if [[ "$_wp_already_loaded" == "false" ]]; then
-            mark_worker_planning_required "$TARGET_NAME"
-          fi
-        fi
-        ;;
+	          mark_worker_dispatch_ack_required "$TARGET_NAME"
+	          # Every new assignment/reuse/reroute starts a fresh task-level planning window.
+	          # Reusing a stale WP marker would let a previous task's planning residue mask a
+	          # missing plan on the current dispatch.
+	          mark_worker_planning_required "$TARGET_NAME"
+	        fi
+	        ;;
     esac
 
     run_pane_cleanup
@@ -501,27 +564,35 @@ NODE
     IDLE_REASON="${IDLE_FIELDS[1]:-unknown}"
     COMPLETED_TASK="${IDLE_FIELDS[2]:-none}"
     COMPLETED_STATUS="${IDLE_FIELDS[3]:-none}"
+    IDLE_CLASSIFICATION="$(worker_idle_classification "$TEAMMATE")"
+    IDLE_NOTICE_REASON="$IDLE_REASON"
+    if [[ "$IDLE_CLASSIFICATION" == "idle-no-completion" ]]; then
+      IDLE_NOTICE_REASON="idle-no-completion"
+    fi
 
     TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
     printf '%s | TEAMMATE_IDLE | %s | reason:%s | status:%s | task:%s | mode:mirror\n' \
-      "$TIMESTAMP" "$TEAMMATE" "$IDLE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
+      "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
       if ! worker_is_standby "$TEAMMATE"; then
-        mark_worker_idle_pending "$TEAMMATE" "$IDLE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"
+        mark_worker_idle_pending "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"
       fi
     fi
 
-    if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"; then
+    if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"; then
       run_pane_cleanup
       exit 0
     fi
 
-    TEAMMATE_VAR="$TEAMMATE" IDLE_REASON_VAR="$IDLE_REASON" COMPLETED_STATUS_VAR="$COMPLETED_STATUS" node <<'NODE'
+    TEAMMATE_VAR="$TEAMMATE" IDLE_REASON_VAR="$IDLE_REASON" COMPLETED_STATUS_VAR="$COMPLETED_STATUS" IDLE_CLASSIFICATION_VAR="$IDLE_CLASSIFICATION" node <<'NODE'
 const teammate = process.env.TEAMMATE_VAR || "unknown";
 const reason = process.env.IDLE_REASON_VAR || "unknown";
 const status = process.env.COMPLETED_STATUS_VAR || "none";
-const ctx = `Worker idle: ${teammate} (${reason}, ${status}). Next: decide reuse, standby, shutdown, or hold-for-validation before unrelated dispatch.`;
+const classification = process.env.IDLE_CLASSIFICATION_VAR || "idle-awaiting-lifecycle";
+const ctx = classification === "idle-no-completion"
+  ? `Handoff failure: ${teammate} emitted idle_notification without a completion-grade worker report. State: idle-no-completion. Next: treat this as runtime correction, not a normal turn boundary.`
+  : `Worker idle: ${teammate} (${reason}, ${status}). Next: decide reuse, standby, shutdown, or hold-for-validation before unrelated dispatch.`;
 process.stdout.write(JSON.stringify({ systemMessage: ctx }));
 NODE
 

@@ -66,7 +66,7 @@ Apply the no-runtime fast path whenever no explicit team runtime or recurring mo
    Account for live workers only. If a worker is already dead and only registry or config residue remains, do not start ad hoc repair work during closeout; record the exact residue truthfully instead.
 4. Keep continuity handling minimal during teardown.
    Do not dispatch a new continuity writer or other ad hoc helper lane as part of normal closeout. If continuity is materially stale, refresh it before teardown starts as ordinary session work. Otherwise rely on `SessionEnd` capture for the final timestamp and residual warnings.
-   Any pre-teardown continuity refresh must be lead-local and structured: use `Edit`, `MultiEdit`, or `Write` on the continuity surface. Do not use Bash redirection, `tee`, heredocs, or other mutable shell paths for `.claude/` continuity files, because compliance hooks intentionally block mutable shell writes there.
+   Any pre-teardown continuity refresh must be lead-local and structured: use `Edit`, `Update`, `MultiEdit`, or `Write` on the continuity surface. Do not use Bash redirection, `tee`, heredocs, or other mutable shell paths for `.claude/` continuity files, because compliance hooks intentionally block mutable shell writes there.
 5. Remove periodic session runtime monitors that were registered for the live session only after current-runtime workers have been fully accounted for.
    Current standard: read the stored job ID, run `CronDelete(id: stored_job_id)`, then clear the tracked health-check job record from runtime state.
    Do not treat monitor-rotation handling as a substitute for this step. Closeout teardown still requires explicit closeout intent, not rotation intent.
@@ -76,7 +76,7 @@ Apply the no-runtime fast path whenever no explicit team runtime or recurring mo
    `TeamDelete` is not a shortcut for worker cleanup. Drain live current-runtime workers first.
    Attempt bounded runtime teardown once worker state is drained. Do not loop on repeated teardown retries, repeated sleep polling, or manual config surgery.
    If `TeamDelete` fails and the remaining problem is non-live runtime residue only (for example stale config with no live worker or tmux session), stop there and close out truthfully with an exact residual note instead of escalating repair work inside closeout.
-   On a fresh user turn, `TeamDelete` and `CronDelete` still require the runtime teardown preflight: `work-planning` -> post-planning `self-verification` -> closeout/teardown intent confirmed -> runtime mutation.
+   On a fresh user turn, `TeamDelete` and `CronDelete` still require the runtime teardown preflight owned by this skill: closeout/teardown intent confirmed -> live-worker and monitor readiness checked -> runtime mutation. Do not route routine status questions into teardown, and do not add a generic dispatch WP/SV wall on top of the closeout readiness path.
 7. Let `SessionEnd` finish continuity stamping after runtime teardown.
    Preserve the workspace-local continuity surface and its migration mirror; do not clear them as part of closeout cleanup. Hook-owned closeout state remains teardown authority. After `CronDelete` or `TeamDelete`, do not dispatch a new `Agent` just to write continuity.
    If continuity remains stale at that point, do not reopen runtime teardown or start a helper lane just to change the continuity timestamp. Leave the state truthful and let `SessionEnd` capture it as warnings-bearing continuity.

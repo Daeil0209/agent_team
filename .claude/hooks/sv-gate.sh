@@ -127,30 +127,6 @@ sv_verify_block() {
   printf 'BLOCKED: verification preflight incomplete. Detail: %s missing Phase 1 self-verification. Next: %s.' "$tool_name" "$next_step"
 }
 
-lead_existing_worker_sendmessage_allowed() {
-  local message_class="${1-}"
-  local message_text="${2-}"
-  local teammate_name="${3-}"
-  local target_name=""
-  local -a target_session_ids=()
-
-  case "$message_class" in
-    assignment|reuse|reroute) ;;
-    *) return 1 ;;
-  esac
-
-  target_name="$(resolve_requested_dispatch_name "$teammate_name" "$message_text")"
-  [[ -n "$target_name" ]] || return 1
-
-  if worker_is_standby "$target_name" || worker_is_idle_pending "$target_name"; then
-    return 0
-  fi
-
-  mapfile -t target_session_ids < <(session_ids_for_worker_name "$target_name" 2>/dev/null || true)
-  [[ "${#target_session_ids[@]}" -gt 0 ]] || return 1
-  return 0
-}
-
 if session_id_is_known_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
 fi
@@ -167,19 +143,11 @@ case "$TOOL_NAME" in
       if [[ "$LEAD_MESSAGE_CLASS" == "control" ]] && dispatch_field_present "$MESSAGE_TEXT" "LIFECYCLE-DECISION"; then
         exit 0
       fi
-      # Minimal-guide exception: assignment/reuse/reroute SendMessage to an existing
-      # worker (live, standby, or idle-pending) should not be serialized behind
-      # fresh-turn planning ceremony. This is worker reuse, not new fan-out.
-      if lead_existing_worker_sendmessage_allowed "$LEAD_MESSAGE_CLASS" "$MESSAGE_TEXT" "$TEAMMATE_NAME"; then
-        exit 0
-      fi
       if dispatch_field_present "$MESSAGE_TEXT" "REQUIRED-SKILLS" || [[ "$LEAD_MESSAGE_CLASS" == "assignment" || "$LEAD_MESSAGE_CLASS" == "reuse" || "$LEAD_MESSAGE_CLASS" == "reroute" ]]; then
-        if [[ ! -f "$WP_MARKER" ]]; then
-          printf '[%s] SV-GATE BLOCKED: lead assignment-grade SendMessage without work-planning (session: %s)\n' \
-            "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-          emit_deny "$(sv_plan_block "assignment-grade SendMessage" "Skill(work-planning) -> Skill(self-verification) -> lifecycle/reuse check -> retry SendMessage")"
-          exit 0
-        fi
+        # Missing-WP/fresh-turn dispatch is owned by task-start-gate. Avoid
+        # emitting a second hard block for the same defect; this gate owns
+        # Phase-1 SV after work-planning is observed.
+        [[ -f "$WP_MARKER" ]] || exit 0
         if [[ ! -f "$SV_PLAN_MARKER" ]]; then
           printf '[%s] SV-GATE BLOCKED: lead assignment-grade SendMessage without Phase 1 SV (session: %s)\n' \
             "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
@@ -229,18 +197,9 @@ case "$TOOL_NAME" in
     if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
-    if lead_planning_required "$SESSION_ID"; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s before fresh work-planning (session: %s)\n' \
-        "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_plan_block "$TOOL_NAME" "Skill(work-planning) -> Skill(self-verification) -> lifecycle/reuse check -> retry dispatch")"
-      exit 0
-    fi
-    if [[ ! -f "$WP_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s without observed work-planning (session: %s)\n' \
-        "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_plan_block "$TOOL_NAME" "Skill(work-planning) -> Skill(self-verification) -> lifecycle/reuse check -> retry dispatch")"
-      exit 0
-    fi
+    # Missing-WP/fresh-turn dispatch is owned by task-start-gate. This avoids
+    # duplicate block messages while preserving the same hard stop.
+    [[ -f "$WP_MARKER" ]] || exit 0
     # Phase 1 gate: team-lead must load self-verification and verify the plan before dispatching.
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
       printf '[%s] SV-GATE BLOCKED: team-lead %s without Phase 1 self-verification load (session: %s)\n' \

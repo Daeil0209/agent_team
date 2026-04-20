@@ -38,6 +38,12 @@ This skill is a **team-lead** common skill. It supplements `task-execution` Step
 4. Record the user-confirmed tier as the active project tier before applying any governance parameters.
 5. If tier changes mid-project, re-present and re-confirm before adjusting governance depth.
 
+### Local-App Fast Path
+
+For a single-user local app, prototype, dashboard, or operator tool with bounded scope, local data, no authentication/security boundary, no multi-tenant infrastructure, and no destructive external side effects, start from `Lightweight` unless concrete signals require `Standard`. Use `Precision` only when the actual request introduces enterprise architecture, security/compliance risk, infrastructure orchestration, or hard-to-reverse data consequences.
+
+This fast path reduces ceremony and staffing only. It does not weaken request fit, burden reduction, real launch-path proof, user-view evidence, or blocker honesty.
+
 ## Governance Parameters Per Tier
 
 Apply these parameters only after user-confirmed tier is established.
@@ -66,6 +72,7 @@ Quick classification to supplement team-lead's tier determination in the Primary
 | Task Signal | Primary Loop Tier | Team-Lead Action |
 |---|---|---|
 | Quick fix, typo, config change | Lightweight | Direct dispatch, minimal oversight |
+| Bounded first-view/run-path blocker with narrow reversible fix | Lightweight | Stabilize or dispatch smallest owner, then re-verify affected user surface |
 | Feature with clear spec, bounded scope | Standard | Scope check → dispatch → verify |
 | Open-ended feature, architectural change | Precision | Full analysis → plan → confirm → dispatch → review → verify |
 | Security-sensitive or destructive change | Precision + `sec-review` | Full pipeline with security specialist skill authorization |

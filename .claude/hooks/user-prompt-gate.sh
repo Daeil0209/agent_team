@@ -53,6 +53,112 @@ if is_system_generated_followup_prompt "$USER_PROMPT"; then
   exit 0
 fi
 
+# Real user turns reset destructive cleanup approval. A new approval must name
+# the generated artifact root for this turn; stop/cancel wording is lifecycle
+# control, not delete approval.
+: > "$USER_APPROVED_DELETE_ROOTS_FILE"
+
+USER_DELETE_APPROVAL_ROOTS="$(USER_PROMPT="$USER_PROMPT" PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'
+const fs = require("fs");
+const path = require("path");
+
+const prompt = String(process.env.USER_PROMPT || "");
+const normalizedPrompt = prompt.replace(/\\/g, "/");
+const promptSearch = normalizedPrompt.toLowerCase();
+const deleteIntent = /(\bdelete\b|\bremove\b|삭제\s*(해|해줘|하라|하자|진행|해도\s*돼)|지워\s*(줘|라|버려)?|날려\s*(줘|라|버려)?|초기화\s*(해|해줘|하라)|리셋\s*(해|해줘|하라)|reset\s+it|remove\s+it)/iu.test(prompt);
+if (!deleteIntent) process.exit(0);
+
+const statePath = process.env.PROCEDURE_STATE_FILE || "";
+const workspaceRoot = path.resolve(process.env.WORKSPACE_ROOT || process.cwd());
+let state = {};
+try {
+  state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+} catch {
+  state = {};
+}
+
+const unique = (values) => [...new Set(values.filter(Boolean))];
+const isWorkspaceChild = (candidate) => {
+  const relative = path.relative(workspaceRoot, candidate).replace(/\\/g, "/");
+  return Boolean(relative) && !relative.startsWith("..") && !path.isAbsolute(relative);
+};
+const isProtectedRelative = (relativePath) => {
+  return (
+    relativePath === "." ||
+    relativePath === "" ||
+    relativePath === ".claude" ||
+    relativePath.startsWith(".claude/") ||
+    relativePath === ".git" ||
+    relativePath.startsWith(".git/") ||
+    relativePath === "references" ||
+    relativePath.startsWith("references/")
+  );
+};
+
+const roots = [];
+const checkpoints = state && state.checkpointStatus && typeof state.checkpointStatus === "object"
+  ? state.checkpointStatus
+  : {};
+for (const value of Object.values(checkpoints)) {
+  if (!value || typeof value !== "object") continue;
+  if (typeof value.projectRoot === "string" && value.projectRoot.trim()) {
+    roots.push(value.projectRoot.trim());
+  }
+}
+
+const explicitPathMatches = normalizedPrompt.match(/(?:[a-zA-Z]:)?\/[^\s"'`]+/g) || [];
+for (const rawPath of explicitPathMatches) {
+  const candidate = path.resolve(rawPath);
+  const relative = path.relative(workspaceRoot, candidate).replace(/\\/g, "/");
+  if (isWorkspaceChild(candidate) && !isProtectedRelative(relative)) {
+    roots.push(candidate);
+  }
+}
+
+const explicitRelativeMatches = normalizedPrompt.match(/[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*/g) || [];
+for (const rawRelative of explicitRelativeMatches) {
+  const relative = rawRelative.replace(/^\.\/+/, "").replace(/\/+$/, "");
+  if (!relative || !/[._/-]/.test(relative)) continue;
+  if (relative.includes("..")) continue;
+  if (isProtectedRelative(relative)) continue;
+  const candidate = path.resolve(workspaceRoot, relative);
+  if (isWorkspaceChild(candidate)) {
+    roots.push(candidate);
+  }
+}
+
+try {
+  for (const entry of fs.readdirSync(workspaceRoot, { withFileTypes: true })) {
+    const name = String(entry.name || "").trim();
+    if (!name) continue;
+    const relative = name.replace(/\\/g, "/");
+    if (isProtectedRelative(relative)) continue;
+    if (promptSearch.includes(relative.toLowerCase())) {
+      roots.push(path.resolve(workspaceRoot, name));
+    }
+  }
+} catch {}
+
+const approved = [];
+for (const root of unique(roots)) {
+  const normalizedRoot = root.replace(/\\/g, "/");
+  const base = path.basename(normalizedRoot);
+  if (!base) continue;
+  const resolvedRoot = path.resolve(root);
+  const relative = path.relative(workspaceRoot, resolvedRoot).replace(/\\/g, "/");
+  if (isProtectedRelative(relative)) continue;
+  if (promptSearch.includes(normalizedRoot.toLowerCase()) || promptSearch.includes(base.toLowerCase())) {
+    approved.push(resolvedRoot);
+  }
+}
+
+process.stdout.write(unique(approved).join("\n"));
+NODE
+)"
+if [[ -n "$USER_DELETE_APPROVAL_ROOTS" ]]; then
+  printf '%s\n' "$USER_DELETE_APPROVAL_ROOTS" > "$USER_APPROVED_DELETE_ROOTS_FILE"
+fi
+
 # ─── SECTION 1: BOOT ENFORCEMENT ────────────────────────────────────────────
 BOOT_CONTEXT=""
 BOOT_SUPPRESS="false"

@@ -32,6 +32,7 @@ It is a validator-local PASS gate, not the lead's broader acceptance ownership f
 4. For executable, interactive software, is there tester evidence that every in-scope user-visible control was directly exercised or explicitly classified as blocked, disproven, or out-of-scope by dispatch?
 
 Developer-runnable or reviewer-plausible is not enough for PASS.
+For UI deliverables, server/API evidence, curl responses, HTML text, build success, and non-required fallback screenshots are lower-level support evidence. If the required visual/user-perspective acceptance tool path is unavailable, issue HOLD unless the workflow explicitly changed the acceptance path before validation and recorded why the substitute proves the same user-view claim.
 
 ## Preconditions
 - Use only after team-lead assigns validation surface.
@@ -90,6 +91,7 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 - For office-format or page-read artifacts, require rendered evidence strong enough to assess first-glance comprehension, page-level repetition, conclusion visibility, and section-order fitness.
 - Keep matched, mismatched, blocked, and not-assessable items explicit rather than flattening weak evidence into a soft pass.
 - For executable, user-facing software, require evidence for the real launch/start path, shutdown path or window-close behavior, first view after launch, infrastructure exposure on intended user run path, the core completion path, interaction coverage across all in-scope controls, cross-feature state propagation, and restart/persistence where the workflow depends on saved state.
+- For web/UI deliverables, explicitly reconcile the UI evidence ladder: runtime/API support, route/content support, browser interaction proof, and visual/user-perspective acceptance. Missing or blocked higher-level evidence prevents PASS even when lower-level evidence is clean.
 
 ### 9. Final Acceptance Gate
 - PASS: all met, no blocking findings, evidence sufficient.
