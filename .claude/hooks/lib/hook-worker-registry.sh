@@ -88,8 +88,15 @@ current_runtime_activation_iso() {
   date -u -d "@$runtime_epoch" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || true
 }
 
+pending_dispatch_retention_cutoff_iso() {
+  local retention_seconds="${PENDING_DISPATCH_RETENTION_SECONDS:-\
+${GOVERNANCE_HEAVY_PENDING_DISPATCH_STALE_SECONDS:-${PENDING_DISPATCH_STALE_SECONDS:-120}}}"
+
+  date -u -d "-${retention_seconds} seconds" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || true
+}
+
 pending_dispatch_stale_cutoff_iso() {
-  date -u -d "-${PENDING_DISPATCH_STALE_SECONDS} seconds" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || true
+  date -u -d "-${PENDING_DISPATCH_STALE_SECONDS:-120} seconds" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || true
 }
 
 prune_noncurrent_pending_dispatch_residue() {
@@ -99,11 +106,13 @@ prune_noncurrent_pending_dispatch_residue() {
 _prune_noncurrent_pending_dispatch_residue_locked() {
   local runtime_started_iso=""
   local stale_cutoff_iso=""
+  local retention_cutoff_iso=""
 
   runtime_started_iso="$(current_runtime_activation_iso)"
   stale_cutoff_iso="$(pending_dispatch_stale_cutoff_iso)"
-  _prune_pending_dispatch_file_locked "$PENDING_AGENTS_FILE" 3 "$runtime_started_iso" "$stale_cutoff_iso"
-  _prune_pending_dispatch_file_locked "$PENDING_AGENT_MODES_FILE" 4 "$runtime_started_iso" "$stale_cutoff_iso"
+  retention_cutoff_iso="$(pending_dispatch_retention_cutoff_iso)"
+  _prune_pending_dispatch_file_locked "$PENDING_AGENTS_FILE" 3 "$runtime_started_iso" "$stale_cutoff_iso" "$retention_cutoff_iso"
+  _prune_pending_dispatch_file_locked "$PENDING_AGENT_MODES_FILE" 4 "$runtime_started_iso" "$stale_cutoff_iso" "$retention_cutoff_iso"
 }
 
 _prune_pending_dispatch_file_locked() {
@@ -111,12 +120,17 @@ _prune_pending_dispatch_file_locked() {
   local status_field="${2:?status field required}"
   local runtime_started_iso="${3-}"
   local stale_cutoff_iso="${4-}"
+  local retention_cutoff_iso="${5-}"
   local temp_file=""
 
   [[ -f "$target_file" ]] || return 0
   temp_file="$(make_atomic_temp_file "$target_file")"
 
-  awk -F' \\| ' -v status_field="$status_field" -v runtime_started="$runtime_started_iso" -v stale_cutoff="$stale_cutoff_iso" '
+  awk -F' \\| ' \
+    -v status_field="$status_field" \
+    -v runtime_started="$runtime_started_iso" \
+    -v stale_cutoff="$stale_cutoff_iso" \
+    -v retention_cutoff="$retention_cutoff_iso" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
@@ -138,10 +152,18 @@ _prune_pending_dispatch_file_locked() {
       if (runtime_started != "" && ts != "" && ts < runtime_started) {
         next
       }
-      if (status == "PENDING" && stale_cutoff != "" && ts != "" && ts < stale_cutoff) {
+      if ((status == "PENDING" || status == "UNCLAIMED_STALE") && retention_cutoff != "" && ts != "" && ts < retention_cutoff) {
         next
       }
-      print
+      if (status == "PENDING" && stale_cutoff != "" && ts != "" && ts < stale_cutoff) {
+        status = "UNCLAIMED_STALE"
+      }
+      if (status_field == 3) {
+        printf "%s | %s | %s\n", ts, name, status
+      } else {
+        mode = trim($3)
+        printf "%s | %s | %s | %s\n", ts, name, mode, status
+      }
     }
   ' "$target_file" > "$temp_file"
 
@@ -366,11 +388,15 @@ session_id_is_known_worker() {
 
   [[ -n "$session_id" ]] || return 1
 
-  if [[ -f "$SESSION_AGENT_MAP" ]] && awk -v sid="$session_id" '$1 == sid {found=1; exit} END {exit found ? 0 : 1}' "$SESSION_AGENT_MAP" 2>/dev/null; then
+  if [[ -f "$SESSION_AGENT_MAP" ]] \
+    && awk -v sid="$session_id" '$1 == sid {found=1; exit} END {exit found ? 0 : 1}' \
+      "$SESSION_AGENT_MAP" 2>/dev/null; then
     return 0
   fi
 
-  if [[ -f "$SESSION_AGENT_MODE_MAP" ]] && awk -v sid="$session_id" '$1 == sid {found=1; exit} END {exit found ? 0 : 1}' "$SESSION_AGENT_MODE_MAP" 2>/dev/null; then
+  if [[ -f "$SESSION_AGENT_MODE_MAP" ]] \
+    && awk -v sid="$session_id" '$1 == sid {found=1; exit} END {exit found ? 0 : 1}' \
+      "$SESSION_AGENT_MODE_MAP" 2>/dev/null; then
     return 0
   fi
 
@@ -684,7 +710,14 @@ mark_worker_idle_pending() {
   local completed_status="${4-none}"
 
   [[ -n "$worker_name" ]] || return 0
-  with_lock_file "$IDLE_DECISION_PENDING_LOCK" _update_idle_pending_locked "mark" "$worker_name" "$idle_reason" "$completed_task" "$completed_status"
+  with_lock_file \
+    "$IDLE_DECISION_PENDING_LOCK" \
+    _update_idle_pending_locked \
+    "mark" \
+    "$worker_name" \
+    "$idle_reason" \
+    "$completed_task" \
+    "$completed_status"
 }
 
 clear_worker_idle_pending() {
@@ -879,7 +912,9 @@ record_pending_agent_dispatch() {
   local dispatch_agent_lane=""
 
   dispatch_agent_lane="${lane_hint:-$(resolve_agent_id "$agent_name")}"
-  [[ -n "$dispatch_agent_lane" && "$dispatch_agent_lane" != "unknown" && "$dispatch_agent_lane" != "team-lead" ]] || return 0
+  [[ -n "$dispatch_agent_lane" \
+    && "$dispatch_agent_lane" != "unknown" \
+    && "$dispatch_agent_lane" != "team-lead" ]] || return 0
   agent_registry_has_name "$dispatch_agent_lane" || return 0
   # Keep runtime instance labels distinct. Only exact aliases collapse to a
   # canonical agent name.
@@ -888,7 +923,12 @@ record_pending_agent_dispatch() {
   fi
   agent_name="$(sanitize_ledger_field "$agent_name")"
 
-  with_lock_file "$AGENT_CLAIM_LOCK" _record_pending_agent_dispatch_locked "$timestamp" "$agent_name" "$mode_value"
+  with_lock_file \
+    "$AGENT_CLAIM_LOCK" \
+    _record_pending_agent_dispatch_locked \
+    "$timestamp" \
+    "$agent_name" \
+    "$mode_value"
 }
 
 _record_pending_agent_dispatch_locked() {
@@ -977,6 +1017,7 @@ remove_worker_everywhere() {
   local _wsurface_key=""
   _wsurface_key="$(printf '%s' "$worker_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')"
   rm -f "$LOG_DIR/.worker-surface-${_wsurface_key}" 2>/dev/null || true
+  rm -f "$LOG_DIR/.worker-shard-boundary-${_wsurface_key}" 2>/dev/null || true
   drop_worker_rows_from_map_file "$SESSION_AGENT_MAP" "$worker_name"
   for session_id in "${worker_session_ids[@]}"; do
     [[ -n "$session_id" ]] || continue
@@ -1102,7 +1143,8 @@ _memory_pressure_shutdown_standby_locked() {
   _standby_count="$(grep -cve '^[[:space:]]*$' "$STANDBY_FILE" 2>/dev/null || echo 0)"
   (( _standby_count > 0 )) || return 0
 
-  printf '[%s] MEM-PRESSURE STANDBY HOLD: %d standby worker(s) preserved at mem=%d%%. Runtime pressure does not bypass message-first shutdown; supervisor must coordinate shutdown_request or explicit reuse.\n' \
+  printf '[%s] MEM-PRESSURE STANDBY HOLD: %d standby worker(s) preserved at mem=%d%%. '\
+'Runtime pressure does not bypass message-first shutdown; supervisor must coordinate shutdown_request or explicit reuse.\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "$_standby_count" "$_mem_pct" >> "$VIOLATION_LOG"
 }
 

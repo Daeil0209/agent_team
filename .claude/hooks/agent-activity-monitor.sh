@@ -112,10 +112,19 @@ _claim_pending_name_file() {
         if (preferred != "" && name[NR] == preferred && !preferred_pending) {
           preferred_pending = NR
         }
+      } else if (status[NR] == "UNCLAIMED_STALE") {
+        stale_count++
+        sole_stale = NR
+        if (preferred != "" && name[NR] == preferred && !preferred_stale) {
+          preferred_stale = NR
+        }
       }
     }
     END {
-      chosen = preferred_pending ? preferred_pending : first_pending
+      chosen = preferred_pending ? preferred_pending : (preferred_stale ? preferred_stale : first_pending)
+      if (!chosen && stale_count == 1) {
+        chosen = sole_stale
+      }
       if (chosen) {
         print name[chosen] > meta
       }
@@ -166,10 +175,19 @@ _claim_pending_mode_file() {
         if (target != "" && name[NR] == target && !named_pending) {
           named_pending = NR
         }
+      } else if (status[NR] == "UNCLAIMED_STALE") {
+        stale_count++
+        sole_stale = NR
+        if (target != "" && name[NR] == target && !named_stale) {
+          named_stale = NR
+        }
       }
     }
     END {
-      chosen = named_pending ? named_pending : first_pending
+      chosen = named_pending ? named_pending : (named_stale ? named_stale : first_pending)
+      if (!chosen && stale_count == 1) {
+        chosen = sole_stale
+      }
       if (chosen) {
         print mode[chosen] > meta
       }

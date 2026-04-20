@@ -87,6 +87,10 @@ Each group below maps to one `Priority 2` group. `Priority 3` supports execution
 
 ### RN-4. Dispatch Reception And Completion Protocol. For RPA-4
 
+On assignment receipt, send a lightweight `MESSAGE-CLASS: dispatch-ack` to team-lead before substantive work when the packet is accepted or rejected; include `TASK-ID`, `WORK-SURFACE`, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loading|loaded`. This is not completion-grade and does not require converged self-verification.
+
+Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
+
 #### Expected Incoming Dispatch Fields
 Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the tester lane, proof target, environment basis, and safe scenario boundary are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in proof objective, scenario scope, tool requirement, or expected proof level, return `MESSAGE-CLASS: hold` instead of improvising.
 
@@ -100,6 +104,8 @@ Treat these fields as the clean incoming packet target. If the dispatch is incom
 - `PROOF-EXPECTATION` (required — expected proof level: direct|indirect|blocked)
 - `PROOF-SURFACE` (required — the artifact or interaction surface to test against)
 - `TOOL-REQUIREMENT` (required for UI/web — browser or interaction tool needed)
+- `USER-RUN-PATH` (required when the proof target depends on a promised user launch or operation path — use the actual promised path or `not-applicable`)
+- `BURDEN-CONTRACT` (required when the proof target depends on hands-off/low-touch delivery expectations — `hands-off|low-touch|normal|not-applicable`)
 
 See `skills/tester/SKILL.md §Preconditions` for field specifications and conditional UI/web requirements.
 
@@ -116,3 +122,10 @@ When sending completion-grade `SendMessage` to team-lead, include ALL of:
 - `SELF-VERIFICATION: converged`
 - `CONVERGENCE-PASS: 1|2|3`
 - `REQUESTED-LIFECYCLE: standby` or `shutdown` or `hold-for-validation`
+- `USER-RUN-PATH: <promised user run path or not-applicable>`
+- `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
+- `PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable`
+- `RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`

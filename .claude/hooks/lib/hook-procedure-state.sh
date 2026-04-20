@@ -337,7 +337,10 @@ reset_team_state_channel() {
     teamDispatchEvidence "none" \
     lastDispatchWorker "" \
     lastPendingWorker "" \
-    lastClaimedWorker ""
+    lastClaimedWorker "" \
+    lastDispatchAt "" \
+    lastPendingSince "" \
+    lastClaimedAt ""
 }
 
 record_team_dispatch_state() {
@@ -347,6 +350,9 @@ record_team_dispatch_state() {
   local pending_worker="${4-}"
   local claimed_worker="${5-}"
   local evidence="${6:-none}"
+  local dispatch_at="${7-}"
+  local pending_since="${8-}"
+  local claimed_at="${9-}"
 
   update_procedure_state_fields \
     "$session_id" \
@@ -354,7 +360,10 @@ record_team_dispatch_state() {
     teamDispatchEvidence "$evidence" \
     lastDispatchWorker "$dispatch_worker" \
     lastPendingWorker "$pending_worker" \
-    lastClaimedWorker "$claimed_worker"
+    lastClaimedWorker "$claimed_worker" \
+    lastDispatchAt "$dispatch_at" \
+    lastPendingSince "$pending_since" \
+    lastClaimedAt "$claimed_at"
 }
 
 clear_team_dispatch_state() {
@@ -368,19 +377,28 @@ mark_team_dispatch_pending() {
   local worker_name="${2-}"
   local evidence="${3:-agent-dispatch}"
   local previous_claimed=""
+  local previous_claimed_at=""
+  local dispatch_at=""
 
   [[ -n "$worker_name" ]] || return 0
   previous_claimed="$(get_procedure_state_field "lastClaimedWorker" "")"
-  record_team_dispatch_state "$session_id" "pending" "$worker_name" "$worker_name" "$previous_claimed" "$evidence"
+  previous_claimed_at="$(get_procedure_state_field "lastClaimedAt" "")"
+  dispatch_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  record_team_dispatch_state "$session_id" "pending" "$worker_name" "$worker_name" "$previous_claimed" "$evidence" "$dispatch_at" "$dispatch_at" "$previous_claimed_at"
 }
 
 mark_team_dispatch_claimed() {
   local session_id="${1-}"
   local worker_name="${2-}"
   local evidence="${3:-worker-activity}"
+  local dispatch_at=""
+  local claimed_at=""
 
   [[ -n "$worker_name" ]] || return 0
-  record_team_dispatch_state "$session_id" "claimed" "$worker_name" "" "$worker_name" "$evidence"
+  dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
+  claimed_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  [[ -n "$dispatch_at" ]] || dispatch_at="$claimed_at"
+  record_team_dispatch_state "$session_id" "claimed" "$worker_name" "" "$worker_name" "$evidence" "$dispatch_at" "" "$claimed_at"
 }
 
 clear_stale_team_state_for_new_session() {

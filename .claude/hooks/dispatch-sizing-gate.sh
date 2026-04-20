@@ -125,38 +125,6 @@ dispatch_target_block() {
   printf 'BLOCKED: dispatch target invalid. Detail: %s. Next: %s.' "$detail" "$next_step"
 }
 
-idle_pending_summary_allows_phase_progress() {
-  local summary="${1-}"
-  local target_lane="${2-}"
-  local worker=""
-
-  [[ -n "$summary" && -n "$target_lane" ]] || return 1
-  [[ "$target_lane" != "researcher" ]] || return 1
-
-  IFS=',' read -r -a _idle_workers <<< "$summary"
-  [[ "${#_idle_workers[@]}" -ge 1 ]] || return 1
-
-  for worker in "${_idle_workers[@]}"; do
-    worker="$(printf '%s' "$worker" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-    [[ -n "$worker" ]] || return 1
-    [[ "$worker" == researcher-* ]] || return 1
-  done
-
-  return 0
-}
-
-worker_surface_for_idle_guard() {
-  local worker_name="${1-}"
-  local worker_key=""
-  local surface_file=""
-
-  [[ -n "$worker_name" ]] || return 0
-  worker_key="$(printf '%s' "$worker_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')"
-  surface_file="$LOG_DIR/.worker-surface-${worker_key}"
-  [[ -f "$surface_file" ]] || return 0
-  sed -n '1p' "$surface_file" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
-}
-
 worker_requested_lifecycle_for_idle_guard() {
   local worker_name="${1-}"
   local normalized_worker=""
@@ -200,55 +168,107 @@ process.stdout.write(String((latest && latest.requestedLifecycle) || "").trim().
 NODE
 }
 
-filter_idle_pending_summary_for_validation_follow_on() {
-  local summary="${1-}"
-  local target_lane="${2-}"
-  local dispatch_surface="${3-}"
-  local worker=""
-  local worker_surface=""
-  local worker_lane=""
-  local -a remaining_workers=()
+idle_pending_recovery_step() {
+  local worker_summary="${1-}"
+  local requested_lifecycle=""
+  local primary_worker=""
 
-  [[ -n "$summary" ]] || return 0
-  case "$target_lane" in
-    reviewer|tester|validator) ;;
-    *)
-      printf '%s' "$summary"
-      return 0
-      ;;
-  esac
-  [[ -n "$dispatch_surface" ]] || {
-    printf '%s' "$summary"
-    return 0
-  }
+  primary_worker="$(printf '%s' "$worker_summary" | awk -F',' '{print $1}' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  if [[ -n "$primary_worker" && "$worker_summary" != *","* ]]; then
+    requested_lifecycle="$(worker_requested_lifecycle_for_idle_guard "$primary_worker")"
+  fi
 
-  IFS=',' read -r -a _idle_workers <<< "$summary"
-  for worker in "${_idle_workers[@]}"; do
-    worker="$(printf '%s' "$worker" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-    [[ -n "$worker" ]] || continue
-    worker_surface="$(worker_surface_for_idle_guard "$worker")"
-    worker_lane="$(resolve_agent_id "$worker")"
-    if [[ -z "$worker_surface" || "$worker_surface" == "$dispatch_surface" ]]; then
-      case "$worker_lane" in
-        developer|researcher)
-          continue
-          ;;
-      esac
-      if [[ "$target_lane" == "reviewer" || "$target_lane" == "tester" || "$target_lane" == "validator" ]]; then
-        continue
-      fi
-    fi
-    remaining_workers+=("$worker")
-  done
-
-  if [[ "${#remaining_workers[@]}" -eq 0 ]]; then
-    printf ''
+  if [[ -n "$primary_worker" && "$worker_summary" != *","* && -n "$requested_lifecycle" ]]; then
+    printf "send lifecycle SendMessage for '%s' with LIFECYCLE-DECISION: %s -> retry dispatch" \
+      "$primary_worker" "$requested_lifecycle"
     return 0
   fi
 
-  local joined=""
-  printf -v joined '%s,' "${remaining_workers[@]}"
-  printf '%s' "${joined%,}"
+  if [[ -n "$worker_summary" ]]; then
+    printf "send lifecycle SendMessage(s) for undecided worker(s) (%s) with explicit reuse|standby|shutdown|hold-for-validation -> retry dispatch" \
+      "$worker_summary"
+    return 0
+  fi
+
+  printf 'send lifecycle SendMessage with explicit reuse|standby|shutdown|hold-for-validation -> retry dispatch'
+}
+
+worker_shard_boundary_for_idle_guard() {
+  local worker_name="${1-}"
+  local worker_key=""
+  local boundary_file=""
+
+  [[ -n "$worker_name" ]] || return 0
+  worker_key="$(printf '%s' "$worker_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')"
+  boundary_file="$LOG_DIR/.worker-shard-boundary-${worker_key}"
+  [[ -f "$boundary_file" ]] || return 0
+  sed -n '1p' "$boundary_file" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
+}
+
+acceptance_follow_on_can_proceed() {
+  local worker_summary="${1-}"
+  local target_lane="${2-}"
+  local worker=""
+  local requested_lifecycle=""
+
+  case "$target_lane" in
+    reviewer|tester|validator) ;;
+    *)
+      return 1
+      ;;
+  esac
+
+  [[ -n "$worker_summary" ]] || return 1
+  IFS=',' read -r -a _idle_workers <<< "$worker_summary"
+  [[ "${#_idle_workers[@]}" -ge 1 ]] || return 1
+
+  for worker in "${_idle_workers[@]}"; do
+    worker="$(printf '%s' "$worker" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+    [[ -n "$worker" ]] || return 1
+    requested_lifecycle="$(worker_requested_lifecycle_for_idle_guard "$worker")"
+    [[ -n "$requested_lifecycle" ]] || return 1
+  done
+
+  return 0
+}
+
+sharded_researcher_follow_on_can_proceed() {
+  local worker_summary="${1-}"
+  local target_lane="${2-}"
+  local target_worker="${3-}"
+  local target_shard_boundary="${4-}"
+  local worker=""
+  local requested_lifecycle=""
+  local worker_shard_boundary=""
+  local normalized_target_boundary=""
+  local normalized_worker_boundary=""
+
+  [[ "$target_lane" == "researcher" ]] || return 1
+  [[ -n "$target_worker" && "$target_worker" == researcher-* ]] || return 1
+  [[ -n "$worker_summary" && -n "$target_shard_boundary" ]] || return 1
+
+  normalized_target_boundary="$(normalize_surface_id "$target_shard_boundary")"
+  [[ -n "$normalized_target_boundary" ]] || return 1
+
+  IFS=',' read -r -a _idle_workers <<< "$worker_summary"
+  [[ "${#_idle_workers[@]}" -ge 1 ]] || return 1
+
+  for worker in "${_idle_workers[@]}"; do
+    worker="$(printf '%s' "$worker" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+    [[ -n "$worker" && "$worker" == researcher-* ]] || return 1
+    [[ "$worker" != "$target_worker" ]] || return 1
+
+    requested_lifecycle="$(worker_requested_lifecycle_for_idle_guard "$worker")"
+    [[ -n "$requested_lifecycle" ]] || return 1
+
+    worker_shard_boundary="$(worker_shard_boundary_for_idle_guard "$worker")"
+    [[ -n "$worker_shard_boundary" ]] || return 1
+
+    normalized_worker_boundary="$(normalize_surface_id "$worker_shard_boundary")"
+    [[ -n "$normalized_worker_boundary" && "$normalized_worker_boundary" != "$normalized_target_boundary" ]] || return 1
+  done
+
+  return 0
 }
 
 [[ "$TOOL_NAME" == "Agent" ]] || exit 0
@@ -271,6 +291,7 @@ fi
 NORMALIZED_DESC="$(normalize_dispatch_text "$DESCRIPTION")"
 RESEARCH_MODE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "RESEARCH-MODE" 2>/dev/null || true)")"
 DISPATCH_WORK_SURFACE="$(dispatch_field_raw_value "$DESCRIPTION" "WORK-SURFACE" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
+TARGET_SHARD_BOUNDARY="$(dispatch_field_raw_value "$DESCRIPTION" "SHARD-BOUNDARY" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
 
 # Sharded researcher dispatches are intentionally parallel instances, each identified by a
 # unique SHARD-ID. Duplicate-prevention and idle-backlog checks do not apply to them;
@@ -297,11 +318,13 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_standby "$SHARDED_TARGET_NAME"; then
-    emit_dispatch_warning "sharded researcher worker '${SHARDED_TARGET_NAME}' is on standby; allowing spawn under minimal-guidance policy. Prefer reuse with SendMessage or choose a unique SHARD-ID if separate context is intended."
+    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is already on standby" "reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV, or choose a unique SHARD-ID for a genuinely distinct shard")"
+    exit 0
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    emit_dispatch_warning "sharded researcher worker '${SHARDED_TARGET_NAME}' is idle without lifecycle decision; allowing spawn under minimal-guidance policy. Lead still owes authoritative lifecycle cleanup for that shard."
+    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is idle without lifecycle decision" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
+    exit 0
   fi
 fi
 
@@ -312,11 +335,13 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_standby "$TARGET_NAME"; then
-    emit_dispatch_warning "standby worker '${TARGET_NAME}' already exists; allowing replacement spawn under minimal-guidance policy. Prefer reuse with SendMessage when context preservation matters."
+    emit_deny "$(dispatch_sizing_block "standby worker '${TARGET_NAME}' already exists" "reuse '${TARGET_NAME}' with assignment-grade SendMessage after WP+SV instead of replacement spawn")"
+    exit 0
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    emit_dispatch_warning "worker '${TARGET_NAME}' is idle without lifecycle decision; allowing replacement spawn under minimal-guidance policy. Lead still owes lifecycle cleanup."
+    emit_deny "$(dispatch_sizing_block "worker '${TARGET_NAME}' is idle without lifecycle decision" "$(idle_pending_recovery_step "$TARGET_NAME")")"
+    exit 0
   fi
 fi
 
@@ -325,35 +350,29 @@ fi
 # exemption is needed here: lifecycle decisions use SendMessage, not Agent, so
 # MESSAGE-CLASS: control cannot appear in a real Agent dispatch payload.
 
-# Sharded researcher dispatches may co-exist with an idle-pending first shard that
-# completed normally. Allow the idle-pending check to be bypassed for them so
-# that parallel shard fan-out is not serialized by the first shard's lifecycle decision.
-# Idle-pending enforcement is scoped to the current dispatch's work-surface: workers on a
-# different known surface are excluded. Under the minimal-guidance policy, an unknown dispatch
-# surface must not serialize the entire team behind a global backlog guess; duplicate/liveness
-# checks above already protect the must-block cases.
-if [[ "$_is_sharded_researcher" != "true" ]]; then
-  IDLE_PENDING_COUNT="$(idle_pending_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
-  if [[ "$IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( IDLE_PENDING_COUNT >= 1 )); then
-    IDLE_PENDING_SUMMARY="$(idle_pending_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
-    if [[ -z "$DISPATCH_WORK_SURFACE" ]]; then
-      emit_dispatch_warning "allowing '${TARGET_LANE}' dispatch with unknown work-surface despite idle worker backlog (${IDLE_PENDING_SUMMARY:-unknown}). Unknown surface must not trigger global serialization; lead still owes lifecycle cleanup."
-      exit 0
-    fi
-    FILTERED_IDLE_PENDING_SUMMARY="$(filter_idle_pending_summary_for_validation_follow_on "$IDLE_PENDING_SUMMARY" "$TARGET_LANE" "$DISPATCH_WORK_SURFACE")"
-    if [[ -n "$FILTERED_IDLE_PENDING_SUMMARY" ]]; then
-      FILTERED_IDLE_PENDING_COUNT="$(printf '%s' "$FILTERED_IDLE_PENDING_SUMMARY" | awk -F',' '{print NF}')"
-    else
-      FILTERED_IDLE_PENDING_COUNT="0"
-    fi
-    if idle_pending_summary_allows_phase_progress "$IDLE_PENDING_SUMMARY" "$TARGET_LANE"; then
-      emit_dispatch_warning "researcher shard idle backlog left undecided (${IDLE_PENDING_SUMMARY:-unknown}); allowing cross-lane phase progress for '${TARGET_LANE}'. Recommended follow-up: send lifecycle decisions to those shard workers."
-    elif [[ "$FILTERED_IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( FILTERED_IDLE_PENDING_COUNT == 0 )); then
-      emit_dispatch_warning "allowing '${TARGET_LANE}' follow-on verification on work-surface '${DISPATCH_WORK_SURFACE:-unknown}' despite idle worker backlog (${IDLE_PENDING_SUMMARY:-unknown}). Verification follow-on should not be serialized behind lifecycle housekeeping. Lead still owes authoritative lifecycle cleanup."
-    else
-      emit_dispatch_warning "allowing '${TARGET_LANE}' dispatch despite ${FILTERED_IDLE_PENDING_COUNT:-$IDLE_PENDING_COUNT} undecided idle worker(s) on work-surface '${DISPATCH_WORK_SURFACE:-global}' (${FILTERED_IDLE_PENDING_SUMMARY:-$IDLE_PENDING_SUMMARY}). Idle backlog is guidance-only under minimal-guidance policy; lead still owes lifecycle decisions."
-    fi
+# Idle-pending enforcement is scoped to the current dispatch's work-surface:
+# workers on a different known surface are excluded, while workers with unknown
+# surfaces remain blocking because non-overlap cannot be proven truthfully.
+IDLE_PENDING_COUNT="$(idle_pending_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
+if [[ "$IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( IDLE_PENDING_COUNT >= 1 )); then
+  IDLE_PENDING_SUMMARY="$(idle_pending_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
+  if [[ -z "$DISPATCH_WORK_SURFACE" ]]; then
+    emit_deny "$(dispatch_sizing_block "dispatch packet omits WORK-SURFACE while undecided idle worker backlog exists (${IDLE_PENDING_SUMMARY:-unknown})" "add explicit WORK-SURFACE, or $(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
+    exit 0
   fi
+
+  if acceptance_follow_on_can_proceed "$IDLE_PENDING_SUMMARY" "$TARGET_LANE"; then
+    emit_dispatch_warning "allowing '${TARGET_LANE}' acceptance follow-on on work-surface '${DISPATCH_WORK_SURFACE}' despite idle backlog (${IDLE_PENDING_SUMMARY}). Upstream completion-grade handoff exists; lead still owes an explicit lifecycle SendMessage."
+    exit 0
+  fi
+
+  if sharded_researcher_follow_on_can_proceed "$IDLE_PENDING_SUMMARY" "$TARGET_LANE" "$SHARDED_TARGET_NAME" "$TARGET_SHARD_BOUNDARY"; then
+    emit_dispatch_warning "allowing sharded researcher fan-out on work-surface '${DISPATCH_WORK_SURFACE}' despite idle shard backlog (${IDLE_PENDING_SUMMARY}). Distinct SHARD-BOUNDARY values and completion-grade handoff are present; lead still owes an explicit lifecycle SendMessage."
+    exit 0
+  fi
+
+  emit_deny "$(dispatch_sizing_block "undecided idle worker(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${IDLE_PENDING_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
+  exit 0
 fi
 
 case "$TARGET_LANE" in
@@ -391,6 +410,9 @@ if [[ -n "$DISPATCH_WORK_SURFACE" ]]; then
     _dispatch_surface_key="$(printf '%s' "$_dispatch_target" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g')"
     mkdir -p "$LOG_DIR"
     printf '%s\n' "$DISPATCH_WORK_SURFACE" > "$LOG_DIR/.worker-surface-${_dispatch_surface_key}"
+    if [[ "$_is_sharded_researcher" == "true" && -n "$TARGET_SHARD_BOUNDARY" ]]; then
+      printf '%s\n' "$TARGET_SHARD_BOUNDARY" > "$LOG_DIR/.worker-shard-boundary-${_dispatch_surface_key}"
+    fi
   fi
 fi
 

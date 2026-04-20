@@ -56,6 +56,7 @@ fi
 # ─── SECTION 1: BOOT ENFORCEMENT ────────────────────────────────────────────
 BOOT_CONTEXT=""
 BOOT_SUPPRESS="false"
+DELIVERY_CONTEXT=""
 
 # E-12 fix: Correction pattern detection runs regardless of boot state so that
 # self-growth markers are always set when corrections arrive, including during boot.
@@ -74,6 +75,21 @@ elif printf '%s' "$USER_PROMPT" | grep -qiE "$CORRECTION_PATTERN" 2>/dev/null; t
     mark_self_growth_suspected "$PROMPT_SESSION_ID"
   fi
   BOOT_CONTEXT="CTX: user-challenge-observed. Treat the prompt as evidence to evaluate, not proof of defect. Preserve prior verified conclusions unless direct evidence or governing rules overturn them. If a real behavioral defect is confirmed, then enter self-growth; otherwise answer the current request from verified evidence."
+fi
+
+DELIVERY_INCIDENT_PATTERN="(double[-[:space:]]*click|더블클릭|start[._-]?bat|start[._-]?sh|launcher|아이콘|실행[^.]{0,20}(안[[:space:]]*돼|안돼|안됨|실패)|안[[:space:]]*열리|won.t[[:space:]]+launch|doesn.t[[:space:]]+launch|launch[[:space:]]+fail)"
+BURDEN_SHIFT_PROMPT_PATTERN="(내[[:space:]]*손이[[:space:]]*가|더블클릭만|hands[-[:space:]]*off|low[-[:space:]]*touch|cmd|powershell|terminal|명령[[:space:]]*(프롬프트|입력)|터미널|삭제[[:space:]]*후|node_modules|\\.next)"
+
+if printf '%s' "$USER_PROMPT" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null; then
+  DELIVERY_CONTEXT="CTX: delivery-incident-reopen. Treat reported user-run-path failure as an acceptance blocker reopen. Next: verify on the promised user run path, remediate hands-off in the product or launcher, and keep the task open until run-path proof is re-established."
+fi
+
+if printf '%s' "$USER_PROMPT" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null \
+  && printf '%s' "$USER_PROMPT" | grep -qiE "$BURDEN_SHIFT_PROMPT_PATTERN" 2>/dev/null; then
+  if [[ -n "$PROMPT_SESSION_ID" ]]; then
+    mark_self_growth_required "$PROMPT_SESSION_ID"
+  fi
+  DELIVERY_CONTEXT="CTX: self-owned-remediation-required. A promised hands-off delivery path failed and the user is being pulled into recovery steps. Reopen acceptance, keep remediation agent-owned, and enter self-growth before consequential follow-on."
 fi
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
@@ -150,6 +166,13 @@ if [[ -n "$PLANNING_CONTEXT" ]]; then
     COMBINED_CONTEXT="$COMBINED_CONTEXT $PLANNING_CONTEXT"
   else
     COMBINED_CONTEXT="$PLANNING_CONTEXT"
+  fi
+fi
+if [[ -n "$DELIVERY_CONTEXT" ]]; then
+  if [[ -n "$COMBINED_CONTEXT" ]]; then
+    COMBINED_CONTEXT="$COMBINED_CONTEXT $DELIVERY_CONTEXT"
+  else
+    COMBINED_CONTEXT="$DELIVERY_CONTEXT"
   fi
 fi
 

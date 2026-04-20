@@ -16,6 +16,7 @@ Use this skill to freeze scope before consequential work begins. The output is a
 
 Quick contract:
 - load at work start
+- apply the request-fit outcome lens before clarifying or defaulting; use explicit `request-intent-fit` only when intent/default inference is non-trivial
 - ground plan in `CLAUDE.md §Team Philosophy` and user instructions
 - freeze scope before consequential tool use
 - define approach, verification, and hold conditions
@@ -48,6 +49,7 @@ Before the first consequential tool call on any new assignment, reuse, or rerout
 - Read the user's request.
 - Read the dispatch or assignment instructions.
 - Cross-check scope, purpose, and output target.
+- Before surfacing clarifications or freezing defaults, apply the request-fit outcome lens: identify the concrete user-visible deliverable, reference-backed defaults, burden-reduction implications, and material blockers. Use an explicit `request-intent-fit` load when the inference is non-trivial, multiple axes would otherwise be surfaced, supplied reference or burden-reduction cues drive the deliverable, or the task was corrected for over-asking. If no material blocker remains, record derived defaults rather than re-ask them.
 - Analyze the work through the following thinking flow before scope freeze:
   · **Q1 (Purpose)**: What is the user trying to achieve? Extract the real goal, not just the surface task.
   · **Q2 (Work Types)**: What types of work does this purpose require? Classify explicitly as one or more of: software-development, document-creation, research-analysis, presentation-material, simple-report, governance-edit, question-answer, engineering-calculation, design, data-analysis, or an equivalent named type. Declare the chosen classification explicitly before proceeding to Q3 — this classification is the required input for Q3 and Q5.
@@ -67,7 +69,7 @@ Execute before Step 2 Scope Freeze. This step operationalizes the Underspecifica
 
 ### A. Enumerate axes
 
-From the user request and any supplied reference, list the decision axes the deliverable requires resolution on. Axis families that typically apply (non-exhaustive — add domain-specific axes as needed):
+From the user request, any supplied reference, and any `request-intent-fit` packet, list the decision axes the deliverable requires resolution on. Axis families that typically apply (non-exhaustive — add domain-specific axes as needed):
 
 - artifact shape (what form is the output?)
 - delivery / interaction mode (how does the end user interact with it?)
@@ -80,14 +82,14 @@ From the user request and any supplied reference, list the decision axes the del
 Label each axis as one of:
 
 - (1) specified by user — user's words directly resolve it
-- (2) specified by reference — bounded inspection of supplied reference resolves it
-- (3) underspecified — neither user nor reference resolves it
+- (2) resolved by reference or request-fit — bounded inspection or derived request-fit defaults resolve it
+- (3) underspecified — neither user, reference, nor request-fit resolves it
 
 ### B. Material-impact filter
 
 For every axis labeled (3) Underspecified, apply the criteria in this order. **M4 is the gating criterion; M1/M2/M3 decide only after M4 holds.**
 
-- **M4 (derivability) — gate:** Is the axis responsibly derivable from the user's stated constraints, the supplied reference (per `agents/team-lead.md §IR-2 #11` reference-asymmetry rule), or standard engineering practice for the named work type from Q2? If yes (derivable), label **DEFAULT** with the assumed value and rationale recorded — do not proceed to M1/M2/M3 for SURFACE.
+- **M4 (derivability) — gate:** Is the axis responsibly derivable from the user's stated constraints, the `request-intent-fit` packet (`DERIVED-DEFAULT` or `REVERSIBLE-DEFAULT`), the supplied reference (per `agents/team-lead.md §IR-2 #11` reference-asymmetry rule), or standard engineering practice for the named work type from Q2? If yes, label **DEFAULT** with rationale and do not test M1/M2/M3 for SURFACE. If `request-intent-fit` marks the axis as `MATERIAL-BLOCKER`, treat M4 as true and test the impact criteria.
 - When M4 is true (axis is genuinely non-derivable), test the impact criteria below; any one triggering is sufficient to label **SURFACE**:
   - **M1 (deliverable look):** Would a wrong default make the deliverable look materially different to the user?
   - **M2 (rework cost):** Would a wrong default incur substantial downstream rework if corrected later?
@@ -103,7 +105,7 @@ Labeling rule:
 ### C. Surface and commit
 
 - For SURFACE axes: present a bounded question naming (1) the specific axis, (2) 2–3 candidate defaults considered, (3) why none can be chosen without user input. Do not batch more than the necessary minimum; do not pad with axes that already passed to DEFAULT. Route the question per the agent's normal upward communication channel as defined by its role file.
-- For DEFAULT axes: record `axis → assumed value → rationale` in the internal planning record (`DEFAULTS-RECORDED` in the plan block). Downstream sessions and acceptance lanes audit this record to distinguish user-committed decisions from agent-assumed defaults.
+- For DEFAULT axes: record `axis → assumed value → rationale` in the internal planning record (`DEFAULTS-RECORDED` in the plan block). Copy `request-intent-fit` `DERIVED-DEFAULT` and `REVERSIBLE-DEFAULT` entries here when present. Downstream sessions and acceptance lanes audit this record to distinguish user-committed decisions from agent-assumed defaults.
 
 ### D. Gate
 

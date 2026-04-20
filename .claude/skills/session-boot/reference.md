@@ -44,7 +44,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Teammate population changes only on worker creation and confirmed shutdown/removal. `standby` and `reuse` are state transitions, not teammate-count changes.
 - Hook feedback may record or guard a lifecycle edge, but it does not create authority to infer session end or worker shutdown by itself.
 - A worker-targeted `shutdown_request` sent after that worker is explicitly marked `FORCE-STOPPED` is part of worker lifecycle cleanup, not by itself evidence that the whole session is entering `Closeout Sequence`.
-- If a stale current-runtime worker must be replaced outside closeout, follow message-first lifecycle order (→ Message-first lifecycle rule): send `shutdown_request`, wait for acknowledgment or timeout, use `mark-force-stop.sh` only if the worker is unresponsive, then dispatch the replacement. Do not skip directly to replacement unless the worker is confirmed terminated.
+- If a stale current-runtime worker with worker-start evidence must be replaced outside closeout, follow message-first lifecycle order (→ Message-first lifecycle rule): send `shutdown_request`, wait for acknowledgment or timeout, use `mark-force-stop.sh` only if the worker is unresponsive, then dispatch the replacement. This does not govern `unclaimed-dispatch-failure`, where work continuity follows the dispatch reception channel's replacement-first rule.
 - Previous-session remembered workers are continuity artifacts, not runtime shutdown targets in a later session. Do not send `shutdown_request` to historical workers unless they have been re-established as live workers in the current runtime.
 
 Closeout exception: During session teardown (session-closeout sequence active), standby workers may be released with a brief shutdown_request without the full lifecycle decision packet. See `session-closeout/SKILL.md` for details.
@@ -119,6 +119,9 @@ The procedure state is written to `./.claude/state/procedure-state.json`. This f
 | `lastDispatchWorker` | string | Most recent worker name mentioned by the dispatch channel |
 | `lastPendingWorker` | string | Most recent worker with dispatch-pending evidence |
 | `lastClaimedWorker` | string | Most recent worker with worker-start/claim evidence |
+| `lastDispatchAt` | string | UTC timestamp of the most recent worker dispatch event |
+| `lastPendingSince` | string | UTC timestamp when the current unclaimed dispatch-pending state began; compare with dispatch reception thresholds before failure classification |
+| `lastClaimedAt` | string | UTC timestamp of the latest worker-start/claim evidence |
 | `currentPhase` | string | Active governing workflow phase for the current session when a workflow owns execution |
 | `phaseHistory` | array | Ordered record of completed or entered workflow phases for the current session |
 | `designDocPath` | string | Concrete design-document path recorded by workflow gates when required |

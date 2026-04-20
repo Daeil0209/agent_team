@@ -38,6 +38,7 @@ Developer-runnable or reviewer-plausible is not enough for PASS.
 - Require: produced outputs, review findings, test evidence as inputs.
 - For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
   - `validator` -> `VALIDATION-TARGET`, `EXPECTATION-SOURCES`, `REVIEW-STATE`, `TEST-STATE`, `DECISION-SURFACE`, `VALIDATION-SURFACE`, `TOOL-REQUIREMENT`
+- When the assigned verdict depends on a promised user launch or usability contract, also require `USER-RUN-PATH` and `BURDEN-CONTRACT`. Use the actual promised run path or `not-applicable`; do not leave the user path implicit.
 - When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
 - For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - `validator` is assigned when acceptance risk is meaningful.
@@ -139,6 +140,14 @@ Build the full handoff block (fields below) and send via SendMessage to team-lea
   - `SELF-VERIFICATION: converged`
   - `CONVERGENCE-PASS: 1|2|3`
   - `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`
+  - `USER-RUN-PATH: <promised user run path or not-applicable>`
+  - `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
+  - `PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable`
   - If any of those procedure states is not true yet, use `MESSAGE-CLASS: hold` and explain the blocked surface in `OPEN-SURFACES` instead of formatting the report as completion-ready.
 - Default to `REQUESTED-LIFECYCLE: standby` when preserved validation context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
 - Use the task id from the runtime assignment packet whenever one exists. Do not substitute a worker name, inferred chronology, or remembered topic label.

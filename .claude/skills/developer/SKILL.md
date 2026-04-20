@@ -122,6 +122,16 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 
 Apply 5 Whys when fix type is hypothesis-based or open.
 
+### 3B. Regression Guard Gate (for defect-fix)
+
+Trigger: `TASK-CLASS: defect-fix` or assigned work is clearly an observed defect correction.
+
+Rules:
+- DEFAULT: reproducible + practical guard -> create failing guard/simulation before target correction -> confirm fail -> correct -> confirm pass -> keep guard.
+- FALLBACK: guard impossible or disproportionate -> record `FALLBACK-BASIS` and use direct proof or downstream tester retest.
+- NON-SKIP: no silent correction-only path; handoff must state `REGRESSION-GUARD`, `RETEST-SURFACE`, and any blocked proof.
+- HOLD: root cause unknown and no safe hypothesis -> hold instead of speculative patch.
+
 ### 4. Proposal-Only Branch
 - If mode is proposal/diff-only: produce bounded proposal, no file edits, wait for apply direction.
 

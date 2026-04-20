@@ -73,6 +73,15 @@ For `dev-workflow` on executable, user-facing software deliverables:
 - Phase 4 analysis routing is non-compliant unless both reviewer and tester are explicitly dispatched on the acceptance path.
 - Reviewer-only closeout, build-only proof, or tester omission is a dispatch defect and requires HOLD.
 
+### Developer (defect-fix)
+
+Developer-general fields + `TASK-CLASS: defect-fix; DEFECT-BASIS: <observed failure or finding>; REPRO-STATUS: reproduced|not-reproduced|blocked|not-applicable; REGRESSION-GUARD: guard-first|simulation-first|direct-proof|not-applicable:<reason>; RETEST-SURFACE: <command|scenario|render|manual-proof|blocked>; FALLBACK-BASIS: none|ui-only|visual-only|flaky-env|external-dependency|root-cause-unknown|not-practical:<reason>`
+
+Rules:
+- DEFAULT: if the defect is reproducible and a practical guard can catch it, create the failing guard before target correction, then make it pass. Guards may be tests, scripts, simulations, rendered/browser scenarios, or structured proof checks.
+- FALLBACK: if no practical guard exists, use `direct-proof` or `not-applicable:<reason>` and name the retest owner/surface.
+- NON-BLOCKER: guard absence is allowed only with explicit `FALLBACK-BASIS`; it is not a silent skip.
+
 ### Developer (governance-patch)
 
 Governance patches use the developer-general template plus 3 guardrail fields. Developer WP+SV cycle owns the protection that was previously carried by lead self-declaration checkboxes.
@@ -123,7 +132,7 @@ For executable, user-facing deliverables:
 
 ### Tester
 
-base + `PROOF-TARGET: <claim under test>; ENV-BASIS: <environment>; SCENARIO-SCOPE: <scope>; PROOF-EXPECTATION: <expected proof>; PROOF-SURFACE: browser-ui|api|cli|document-rendered; TOOL-REQUIREMENT: <tooling requirement>`
+base + `PROOF-TARGET: <claim under test>; ENV-BASIS: <environment>; SCENARIO-SCOPE: <scope>; PROOF-EXPECTATION: <expected proof>; PROOF-SURFACE: browser-ui|api|cli|document-rendered; TOOL-REQUIREMENT: <tooling requirement>; USER-RUN-PATH: <promised user path or not-applicable>; BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
 
 For executable, user-facing deliverables:
 - `SCENARIO-SCOPE` must explicitly include the real launch/start path, shutdown path, infrastructure exposure, and interaction coverage basis.
@@ -131,7 +140,7 @@ For executable, user-facing deliverables:
 
 ### Validator
 
-base + `VALIDATION-TARGET: <delivery surface>; EXPECTATION-SOURCES: <comparison sources>; REVIEW-STATE: ready|hold|blocked; TEST-STATE: ready|hold|blocked|not-needed; DECISION-SURFACE: <pass/hold/fail surface>; VALIDATION-SURFACE: browser-ui|api|cli|document-rendered; TOOL-REQUIREMENT: <tooling requirement>`
+base + `VALIDATION-TARGET: <delivery surface>; EXPECTATION-SOURCES: <comparison sources>; REVIEW-STATE: ready|hold|blocked; TEST-STATE: ready|hold|blocked|not-needed; DECISION-SURFACE: <pass/hold/fail surface>; VALIDATION-SURFACE: browser-ui|api|cli|document-rendered; TOOL-REQUIREMENT: <tooling requirement>; USER-RUN-PATH: <promised user path or not-applicable>; BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
 
 For executable, user-facing deliverables:
 - `DECISION-SURFACE` must explicitly reconcile delivery experience, user-readiness, and interaction coverage.
@@ -143,7 +152,15 @@ For executable, user-facing deliverables:
 
 Note: Lane-specific completion-grade evidence blocks (tester, validator, researcher, developer handoff packets) extend this base template. Their fields augment rather than replace the base fields above. The base template provides the minimum shared communication surface; lane-specific blocks add proof, validation, or research-specific tracing fields.
 
-`dispatch-ack`: on receipt of an assignment-grade `SendMessage` (new assignment, reuse, or reroute), the worker's first upward message must be `MESSAGE-CLASS: dispatch-ack` carrying `TASK-ID: <assigned-id|none>`, `WORK-SURFACE` echo, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loaded|loading`. This is the worker-start OK-sign; it is not a completion-grade report and does not require converged SV fields. Handoff, completion, or hold reports follow later on their own evidence contracts.
+`dispatch-ack`: on receipt of a new assignment from `Agent` or assignment-grade `SendMessage` (new assignment, reuse, or reroute), the worker's first upward message should be `MESSAGE-CLASS: dispatch-ack` carrying `TASK-ID: <assigned-id|none>`, `WORK-SURFACE` echo, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loaded|loading`. This is the worker-start OK-sign; it is not a completion-grade report and does not require converged SV fields. Handoff, completion, or hold reports follow later on their own evidence contracts.
+
+`status` milestone contract:
+- Scope: default internal worker-to-lead progress signal for non-trivial or multi-step assignments.
+- Budget: at most one routine milestone per assignment; no time-based heartbeat.
+- Payload: boundary crossed, current surface, next evidence step.
+- Non-gates: not completion-grade, not phase advancement, not lifecycle decision, not task-completion evidence.
+- Absence: never HOLD, blocker, redispatch, wait-barrier, or user-confirmation reason.
+- Escalations: `blocker|hold|scope-pressure` report immediately.
 
 ---
 
@@ -164,6 +181,9 @@ Enumerated fields (exact values enforced):
 | developer | REVIEW-OWNER | reviewer |
 | developer | PROOF-OWNER | tester or not-needed |
 | developer | ACCEPTANCE-OWNER | reviewer or validator or not-needed |
+| developer (defect-fix) | TASK-CLASS | defect-fix |
+| developer (defect-fix) | REPRO-STATUS | reproduced or not-reproduced or blocked or not-applicable |
+| developer (defect-fix) | REGRESSION-GUARD | guard-first or simulation-first or direct-proof or not-applicable:<reason> |
 | reviewer | PREREQ-STATE | complete or partial or missing |
 | tester | PROOF-SURFACE | browser-ui or api or cli or document-rendered |
 | validator | REVIEW-STATE | ready or hold or blocked |
@@ -204,7 +224,7 @@ Lane-owned enumerated fields:
 ## Consequential Tool Recovery Contract
 
 - This contract applies to dispatch (`Agent`, `TaskCreate`, assignment-grade `SendMessage`), task-state mutation (`TaskUpdate`, `TaskStop`), runtime teardown (`TeamDelete`, `CronDelete`), file mutation (`Edit`, `Write`, `MultiEdit`), and mutable `Bash`.
-- Status, progress, current-state, and "what remains?" questions do not authorize consequential tool use by themselves. Answer from existing evidence unless the user explicitly requests continuation, correction, dispatch, validation, mutation, or cleanup.
+- Routine status, progress, current-state, and "what remains?" questions do not authorize consequential tool use by themselves. Before closing such a turn as answer-only, test for explicit runtime recovery or continuation states unless the user explicitly pauses, cancels, or forbids action in the current turn. Answer routine status from existing evidence unless the user explicitly requests continuation, correction, dispatch, validation, mutation, or cleanup. Explicit runtime recovery states such as `pipeline-ready-idle`, `unclaimed-dispatch-failure`, `idle-no-completion`, or another active runtime handoff failure are continuation/correction states, not routine status-only turns; a brief status answer may precede same-turn WP/SV and the required execute/dispatch/recovery path.
 - A hook block is not a workflow step to probe through. Treat the hook's `Next:` field as the required recovery path.
 - Retrying a blocked tool requires a changed corrective basis: for example current-turn `work-planning`, post-planning `self-verification`, confirmed task id, lifecycle decision, duplicate-worker reuse/shutdown decision, or a completed packet field.
 - Do not retry the same tool, or move sideways to a sibling consequential tool, while the same preflight gap remains.
@@ -258,6 +278,16 @@ Run this before `TaskUpdate` or `TaskStop`.
 - Canonical team-existence evidence is current-session `TeamCreate` success or a live team config backed by session-owned panes. Config files alone, pane attachment without live ownership, task rows, or dispatch success alone are not existence proof.
 - Canonical dispatch-pending evidence is successful `Agent` or assignment-grade `SendMessage`. Canonical worker-start evidence is observed worker activity such as claim/first tool use or worker-originated handoff. `dispatch-pending` is not `worker started`.
 - Routing decision rule: if canonical team-existence evidence is absent, `TeamCreate` is the next consequential action. If canonical team-existence evidence is present and a suitable live or standby worker already exists, prefer assignment-grade `SendMessage` reuse. If canonical team-existence evidence is present and no suitable worker exists, use `Agent`. If dispatch-pending evidence exists without worker-start evidence, monitor or diagnose the pending state instead of reissuing `TeamCreate` or narrating the work as active.
+- Dispatch reception channel:
+  - `dispatch-pending`: `Agent` or assignment-grade `SendMessage` succeeded, but no worker-start evidence exists. Report only pending state.
+  - `ack-late`: no start evidence beyond `DISPATCH_ACK_LATE_SECONDS`. This is late-reception evidence, not ghost proof. Report pending/late state only; do not claim the worker started, do not status-probe the unstarted target as the primary action, and do not ask the user to choose.
+  - `worker-started`: `dispatch-ack`, `lastClaimedWorker` match, first worker tool use, or worker-originated `status|handoff|hold|blocker|completion`.
+  - `unclaimed-dispatch-failure`: no start evidence beyond the applicable failure threshold. Use `PENDING_DISPATCH_STALE_SECONDS` for standard dispatches and `GOVERNANCE_HEAVY_PENDING_DISPATCH_STALE_SECONDS` for governance-heavy dispatches. Recovery is replacement-first on the same `WORK-SURFACE`; do not status-probe the unstarted target as the primary action and do not ask the user to choose.
+  - Governance-heavy dispatch cues: multiple required skills, governance/reference document review, multi-phase workflow, agent-team policy changes, or explicit simulation/verification/revalidation. Use the current dispatch timestamp, `procedure-state.json` `lastPendingSince`, or the pending-dispatch ledger timestamp as timeout evidence.
+  - Pending registry hygiene: stale no-start rows may be retained as `UNCLAIMED_STALE` evidence until `PENDING_DISPATCH_RETENTION_SECONDS`; they are not ordinary fallback claim targets. This preserves recovery evidence without letting old ghost rows steal replacement or parallel worker claims.
+  - `active-stall`: worker-start evidence exists but progress later stalls. Status or partial-result `SendMessage` is valid before replacement.
+  - `idle-no-completion`: `idle_notification` arrives without a completion/handoff report. Treat as handoff failure, distinct from unclaimed dispatch.
+  - Task rows, owner fields, and task status values are auxiliary state only; they never prove worker-start.
 - Speech-before-action rule: before observed `TeamCreate`, `Agent`, or assignment-grade `SendMessage` evidence, user-facing text may report only plan or next action. `Assigned`, `dispatched`, `parallelized`, `underway`, `running`, and equivalent wording are reserved for the corresponding observed state surface.
 - After TeamCreate, every Agent fan-out must be team-bound: include team_name and a stable worker name in the Agent call.
 - Governance analysis or review dispatch must include `GOVERNING-LENS: CLAUDE.md [GOV-MIN]`; downstream defect claims must classify items as real defect, intentional minimal-boundary design, or clarification candidate.
@@ -340,8 +370,9 @@ Rules:
 - Lifecycle backlog means idle workers without an explicit `reuse`, `standby`, `shutdown`, or `hold-for-validation` decision. The target is zero undecided idle workers before additional fan-out, not zero idle workers.
 - Corrective work and bottleneck fixes still obey lifecycle order. When a new fix is needed and idle workers exist, the next action is lifecycle resolution or bounded reuse, not a fresh `Agent` spawn.
 - Reuse-first: when the target lane/name already has a live or standby worker, use bounded `SendMessage` reuse if the context fits. Spawn a replacement only after an explicit lifecycle decision makes the existing worker unsuitable for reuse.
-- State-channel rule: `TaskCreate` keeps shared task state legible, but it is not team-existence proof and it is not worker-start proof. Use it alongside dispatch, not instead of dispatch evidence.
+- State-channel rule: `TaskCreate` and `TaskUpdate` keep shared task state legible, but task owner/status values are not team-existence proof and are not worker-start proof. Use task state alongside dispatch evidence, not instead of it; `in_progress` without worker-start evidence remains dispatch-pending in reports.
 - Task-state mutation preflight is shared by `TaskUpdate` and `TaskStop`: current-turn `work-planning` -> post-planning `self-verification` -> confirm exact task id from `TaskList`, `TaskGet`, or the original `task_assignment` packet -> mutate task state. If the id is stale or absent, do not guess; report administrative task-state unavailable.
+- After `TaskUpdate` or `TaskStop`, resume any active workflow/development cursor that was pending before the administrative mutation. Task-state mutation records completion or coordination state; it does not consume a declared next stage or replace `execute`, `dispatch`, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
 - Runtime teardown preflight is shared by `TeamDelete`, `CronDelete`, and closeout cleanup: current-turn `work-planning` -> post-planning `self-verification` -> confirm closeout/teardown intent -> verify no active worker has unresolved handoff, task-state, or lifecycle decision -> mutate runtime state.
 - When the runtime exposes a task id or `task_assignment` packet, preserve that id across reroute, follow-up task-tool use, completion-grade SendMessage reports, and completion review. Do not reconstruct task identity from worker names, message order, or remembered chronology.
 - Task state is authoritative on the shared task runtime. SendMessage carries communication and handoff content, but does not by itself close a task.

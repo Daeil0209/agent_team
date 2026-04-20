@@ -39,6 +39,7 @@ For executable, user-facing software, build success, API-smoke-only proof, or se
 - If brief, artifact, or environment not credible, return HOLD.
 - For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
   - `tester` -> `PROOF-TARGET`, `ENV-BASIS`, `SCENARIO-SCOPE`, `PROOF-EXPECTATION`, `PROOF-SURFACE`, `TOOL-REQUIREMENT`
+- When the assigned proof surface depends on a promised user launch or usability contract, also require `USER-RUN-PATH` and `BURDEN-CONTRACT`. Use the actual promised run path or `not-applicable`; do not leave the user path implicit.
 - When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
 - For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
 - Do not treat reviewer or tester output alone as implicit final validation ownership.
@@ -175,6 +176,13 @@ Build the full handoff block (fields below) and send via SendMessage to team-lea
   - `SELF-VERIFICATION: converged`
   - `CONVERGENCE-PASS: 1|2|3`
   - `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`
+  - `USER-RUN-PATH: <promised user run path or not-applicable>`
+  - `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
+  - `PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+  - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
   - If any of those procedure states is not true yet, use `MESSAGE-CLASS: hold` and explain the blocked surface in `OPEN-SURFACES` instead of formatting the report as completion-ready.
 - `TEST-STATE` is `ready` when the assigned proof surface has an explicit usable proof classification with decisive evidence, including disproof when that is what execution established, `hold` when framing or expectation basis is too weak for honest proof closure, and `blocked` when required execution could not complete because of environment, access, or runtime blockers.
 - Use the task id from the runtime assignment packet whenever one exists. Do not substitute a worker name, inferred chronology, or remembered topic label.

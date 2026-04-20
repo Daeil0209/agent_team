@@ -92,6 +92,10 @@ Each group below maps to one `Priority 2` group. `Priority 3` supports execution
 
 ### RN-4. Dispatch Reception And Completion Protocol. For RPA-4
 
+On assignment receipt, send a lightweight `MESSAGE-CLASS: dispatch-ack` to team-lead before substantive work when the packet is accepted or rejected; include `TASK-ID`, `WORK-SURFACE`, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loading|loaded`. This is not completion-grade and does not require converged self-verification.
+
+Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
+
 #### Expected Incoming Dispatch Fields
 Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the developer lane, user intent, and safe change boundary are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in write scope, authority, acceptance risk, or completion condition, return `MESSAGE-CLASS: hold` instead of improvising.
 

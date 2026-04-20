@@ -74,7 +74,9 @@ Hard gates verified by team-lead before dispatching any lane. Dispatching before
 
 **Phase advancement evidence rule**: team-lead must not advance on artifact existence alone. Any phase-closing or phase-advancing lane output must arrive as a completion-grade evidence block in a handoff or completion report that makes `PLANNING-BASIS`, `SELF-VERIFICATION`, `CONVERGENCE-PASS`, and lane-specific `EVIDENCE-BASIS` explicit enough for the next lane to proceed without re-derivation. Missing evidence-contract fields are workflow defects and require HOLD or re-handoff before advancement.
 
-For executable, user-facing software deliverables, phase-advancing evidence must also include tester direct proof for the real launch/start path, the core completion path, and an interaction-coverage matrix covering all in-scope user-visible controls. Missing direct proof for any of those surfaces is a workflow defect and a Blocking gap. Reviewer + tester no-gap is necessary but not sufficient for final acceptance; validator PASS is required before workflow completion.
+**Phase cursor consumption rule**: when a gate condition becomes satisfied and the workflow is not complete, the next phase cursor remains active until team-lead consumes it by `execute`, `dispatch`, `HOLD`/re-handoff, explicit blocker, or explicit cancel. Administrative task-state mutation, standby state, or a user-facing "next is ..." status line does not consume the cursor.
+
+For executable, user-facing software deliverables, workflow completion and final acceptance require tester direct proof for the real launch/start path, the core completion path, and an interaction-coverage matrix covering all in-scope user-visible controls. Missing direct proof for any of those surfaces is a Phase 4/5 Blocking gap or final-acceptance blocker; it is not a prerequisite for dispatching Phase 4 from a Phase 3 developer handoff. Reviewer + tester no-gap is necessary but not sufficient for final acceptance; validator PASS is required before workflow completion.
 
 **Evidence supersession rule**: when delivery surface, runtime architecture, or primary interaction model materially changes during the lifecycle, all prior reviewer, tester, and validator acceptance evidence becomes stale and must not be reused for phase advancement or final acceptance. The affected phases must re-run acceptance from the changed surface.
 
@@ -243,6 +245,7 @@ For each DELIVERY requirement:
 4. Are any other end-user-facing operational conditions from the Plan satisfied?
 5. Does the application shut down cleanly when the user closes the window? A separate shutdown script, command, or procedure is a design defect unless technically unavoidable — and if so, the unavoidability must be documented in the design doc with justification.
 6. Minimum user action verification: for each user-facing operation (start, configure, use, stop), count the required user actions. Every step that can be eliminated, automated, or combined without losing functionality is a delivery experience defect. Examples: separate stop script when window-close suffices, manual environment setup that could be bundled, configuration steps that could use sensible defaults.
+7. If a promised single-action or low-touch path fails under real user operation, reopen acceptance as a blocking defect. Do not convert the failed delivery contract into user-side recovery steps (manual deletes, terminal commands, rebuild steps) before self-owned remediation is exhausted.
 
 **Defect signal**: Deliverable requires technical steps, exposes infrastructure, requires a separate shutdown procedure when window-close would suffice, imposes unnecessary intermediate steps on the user, or fails to meet a stated DELIVERY requirement from the Plan.
 

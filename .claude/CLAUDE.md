@@ -70,7 +70,7 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 
 - User-facing output must stay concise, decision-oriented, and evidence-backed.
 - Worker-control messaging, user-facing reporting, and task-state authority are distinct surfaces.
-- Long-running work emits brief progress updates only when a meaningful phase changes or a blocker appears.
+- User-facing long-running work emits brief progress updates only on meaningful phase change or blocker. Worker `MESSAGE-CLASS: status` milestone = internal control signal, not user-facing push.
 
 ## Safety Guardrails
 
@@ -140,6 +140,7 @@ Note on work surface: a work surface is the bounded set of files, concerns, and 
 - Worker messaging must preserve task identity, evidence basis, and requested governing action.
 - Positive completion surfaces are for converged, verified work only.
 - Raise blockers, contradictions, and ambiguity early instead of guessing through them.
+- Worker milestone status uses existing `status` class: internal progress only; not completion evidence, lifecycle request, or wait barrier.
 - Validated behavioral defects and justified user corrections discovered during execution must be surfaced as self-growth signals.
 - Passive output availability and silent turn exhaustion are governance failures.
 - Detailed message classes belong to `skills/task-execution/reference.md`. Runtime continuity rules belong to `skills/session-boot/SKILL.md` and `skills/session-closeout/SKILL.md`.

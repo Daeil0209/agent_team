@@ -93,6 +93,25 @@ emit_packet_warning() {
   printf '[%s] DISPATCH-PROOF WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
 }
 
+emit_deny() {
+  local reason="${1:?reason required}"
+  DENY_REASON="$reason" node <<'NODE'
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    permissionDecision: "deny",
+    permissionDecisionReason: process.env.DENY_REASON || "Dispatch proof contract blocked the assignment."
+  }
+}));
+NODE
+}
+
+dispatch_proof_block() {
+  local detail="${1:?detail required}"
+  local next_step="${2:?next step required}"
+  printf 'BLOCKED: dispatch packet incomplete. Detail: %s. Next: %s.' "$detail" "$next_step"
+}
+
 [[ "$TOOL_NAME" == "Agent" ]] || exit 0
 
 TARGET_LANE="$(resolve_requested_dispatch_name "$AGENT_NAME" "$DESCRIPTION")"
@@ -111,6 +130,20 @@ PROOF_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-OWNER" 2>/dev/
 ACCEPTANCE_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACCEPTANCE-OWNER" 2>/dev/null || true)"
 ACTIVE_WORKFLOW_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACTIVE-WORKFLOW" 2>/dev/null || true)"
 TASK_CLASS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-CLASS" 2>/dev/null || true)"
+PROOF_TARGET_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-TARGET" 2>/dev/null || true)"
+ENV_BASIS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ENV-BASIS" 2>/dev/null || true)"
+SCENARIO_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "SCENARIO-SCOPE" 2>/dev/null || true)"
+PROOF_EXPECTATION_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-EXPECTATION" 2>/dev/null || true)"
+PROOF_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-SURFACE" 2>/dev/null || true)"
+TOOL_REQUIREMENT_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-REQUIREMENT" 2>/dev/null || true)"
+VALIDATION_TARGET_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "VALIDATION-TARGET" 2>/dev/null || true)"
+EXPECTATION_SOURCES_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "EXPECTATION-SOURCES" 2>/dev/null || true)"
+REVIEW_STATE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "REVIEW-STATE" 2>/dev/null || true)"
+TEST_STATE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TEST-STATE" 2>/dev/null || true)"
+DECISION_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "DECISION-SURFACE" 2>/dev/null || true)"
+VALIDATION_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "VALIDATION-SURFACE" 2>/dev/null || true)"
+USER_RUN_PATH_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "USER-RUN-PATH" 2>/dev/null || true)"
+BURDEN_CONTRACT_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "BURDEN-CONTRACT" 2>/dev/null || true)"
 TASK_CLASS_NORM="$(normalize_dispatch_text "$TASK_CLASS_RAW")"
 CHANGE_BOUNDARY_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "CHANGE-BOUNDARY" 2>/dev/null || true)"
 WRITE_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
@@ -124,6 +157,8 @@ REVIEW_OWNER_NORM="$(normalize_dispatch_text "$REVIEW_OWNER_RAW")"
 PROOF_OWNER_NORM="$(normalize_dispatch_text "$PROOF_OWNER_RAW")"
 ACCEPTANCE_OWNER_NORM="$(normalize_dispatch_text "$ACCEPTANCE_OWNER_RAW")"
 ACTIVE_WORKFLOW_NORM="$(normalize_dispatch_text "$ACTIVE_WORKFLOW_RAW")"
+PROOF_SURFACE_NORM="$(normalize_dispatch_text "$PROOF_SURFACE_RAW")"
+VALIDATION_SURFACE_NORM="$(normalize_dispatch_text "$VALIDATION_SURFACE_RAW")"
 
 developer_dispatch_needs_acceptance_chain() {
   local text="${1-}"
@@ -141,6 +176,63 @@ developer_dispatch_needs_acceptance_chain() {
   fi
 
   return 1
+}
+
+field_present() {
+  local value="${1-}"
+  [[ -n "$(printf '%s' "$value" | tr -d '[:space:]')" ]]
+}
+
+tester_or_validator_needs_delivery_contract() {
+  [[ "$TARGET_LANE" == "tester" || "$TARGET_LANE" == "validator" ]] || return 1
+
+  if [[ "$ACTIVE_WORKFLOW_NORM" == "devworkflow" || "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]]; then
+    return 0
+  fi
+
+  if [[ "$PROOF_SURFACE_NORM" == "browserui" || "$PROOF_SURFACE_NORM" == "cli" || "$VALIDATION_SURFACE_NORM" == "browserui" || "$VALIDATION_SURFACE_NORM" == "cli" ]]; then
+    return 0
+  fi
+
+  if developer_dispatch_needs_acceptance_chain "$DESCRIPTION"; then
+    return 0
+  fi
+
+  if printf '%s' "$DESCRIPTION" | grep -qiE '(double[-[:space:]]*click|start[._-]?bat|start[._-]?sh|launcher|launch/start path|delivery experience|user-readiness|interaction coverage)'; then
+    return 0
+  fi
+
+  return 1
+}
+
+lane_packet_missing_fields() {
+  local -a missing=()
+  local field_name=""
+
+  for field_name in "$@"; do
+    case "$field_name" in
+      MESSAGE-CLASS) field_present "$MESSAGE_CLASS_RAW" || missing+=("$field_name") ;;
+      WORK-SURFACE) field_present "$WORK_SURFACE_RAW" || missing+=("$field_name") ;;
+      CURRENT-PHASE) field_present "$CURRENT_PHASE_RAW" || missing+=("$field_name") ;;
+      REQUIRED-SKILLS) field_present "$REQUIRED_SKILLS_RAW" || missing+=("$field_name") ;;
+      PROOF-TARGET) field_present "$PROOF_TARGET_RAW" || missing+=("$field_name") ;;
+      ENV-BASIS) field_present "$ENV_BASIS_RAW" || missing+=("$field_name") ;;
+      SCENARIO-SCOPE) field_present "$SCENARIO_SCOPE_RAW" || missing+=("$field_name") ;;
+      PROOF-EXPECTATION) field_present "$PROOF_EXPECTATION_RAW" || missing+=("$field_name") ;;
+      PROOF-SURFACE) field_present "$PROOF_SURFACE_RAW" || missing+=("$field_name") ;;
+      TOOL-REQUIREMENT) field_present "$TOOL_REQUIREMENT_RAW" || missing+=("$field_name") ;;
+      VALIDATION-TARGET) field_present "$VALIDATION_TARGET_RAW" || missing+=("$field_name") ;;
+      EXPECTATION-SOURCES) field_present "$EXPECTATION_SOURCES_RAW" || missing+=("$field_name") ;;
+      REVIEW-STATE) field_present "$REVIEW_STATE_RAW" || missing+=("$field_name") ;;
+      TEST-STATE) field_present "$TEST_STATE_RAW" || missing+=("$field_name") ;;
+      DECISION-SURFACE) field_present "$DECISION_SURFACE_RAW" || missing+=("$field_name") ;;
+      VALIDATION-SURFACE) field_present "$VALIDATION_SURFACE_RAW" || missing+=("$field_name") ;;
+      USER-RUN-PATH) field_present "$USER_RUN_PATH_RAW" || missing+=("$field_name") ;;
+      BURDEN-CONTRACT) field_present "$BURDEN_CONTRACT_RAW" || missing+=("$field_name") ;;
+    esac
+  done
+
+  printf '%s' "${missing[*]:-}"
 }
 
 is_assignment_dispatch="false"
@@ -180,6 +272,36 @@ fi
 # reconstruction-or-HOLD after receipt, while WP/SV and sizing gates still own
 # procedural and state-safety blocks.
 if [[ "$is_assignment_dispatch" == "true" ]]; then
+  if [[ "$TARGET_LANE" == "tester" ]]; then
+    tester_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS PROOF-TARGET ENV-BASIS SCENARIO-SCOPE PROOF-EXPECTATION PROOF-SURFACE"
+    if [[ "$PROOF_SURFACE_NORM" == "browserui" ]]; then
+      tester_required_fields+=" TOOL-REQUIREMENT"
+    fi
+    if tester_or_validator_needs_delivery_contract; then
+      tester_required_fields+=" USER-RUN-PATH BURDEN-CONTRACT"
+    fi
+    tester_missing_fields="$(lane_packet_missing_fields $tester_required_fields)"
+    if [[ -n "$tester_missing_fields" ]]; then
+      emit_deny "$(dispatch_proof_block "tester dispatch is missing required proof contract fields (${tester_missing_fields})" "add the missing fields to the packet so proof matches the promised delivery surface, then retry Agent")"
+      exit 0
+    fi
+  fi
+
+  if [[ "$TARGET_LANE" == "validator" ]]; then
+    validator_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS VALIDATION-TARGET EXPECTATION-SOURCES REVIEW-STATE TEST-STATE DECISION-SURFACE VALIDATION-SURFACE"
+    if [[ "$VALIDATION_SURFACE_NORM" == "browserui" ]]; then
+      validator_required_fields+=" TOOL-REQUIREMENT"
+    fi
+    if tester_or_validator_needs_delivery_contract; then
+      validator_required_fields+=" USER-RUN-PATH BURDEN-CONTRACT"
+    fi
+    validator_missing_fields="$(lane_packet_missing_fields $validator_required_fields)"
+    if [[ -n "$validator_missing_fields" ]]; then
+      emit_deny "$(dispatch_proof_block "validator dispatch is missing required acceptance contract fields (${validator_missing_fields})" "add the missing fields to the packet so validation can reconcile the promised delivery surface, then retry Agent")"
+      exit 0
+    fi
+  fi
+
   if [[ "$TARGET_LANE" == "developer" ]]; then
     acceptance_warning_needed="false"
     if developer_dispatch_needs_acceptance_chain "$DESCRIPTION"; then

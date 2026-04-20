@@ -106,7 +106,10 @@ set_default_export SELF_GROWTH_DISCIPLINE_LOCK "$LOG_DIR/.self-growth-discipline
 
 set_default_export STALE_WARN_SECONDS "120"
 set_default_export STALE_THRESHOLD_SECONDS "300"
-set_default_export PENDING_DISPATCH_STALE_SECONDS "30"
+set_default_export DISPATCH_ACK_LATE_SECONDS "30"
+set_default_export PENDING_DISPATCH_STALE_SECONDS "120"
+set_default_export GOVERNANCE_HEAVY_PENDING_DISPATCH_STALE_SECONDS "180"
+set_default_export PENDING_DISPATCH_RETENTION_SECONDS "240"
 set_default_export HEALTH_CHECK_WINDOW "600"
 set_default_export HEALTH_CHECK_GHOST_THRESH "1800"
 set_default_export HEALTH_CHECK_SHORT_THRESH "60"

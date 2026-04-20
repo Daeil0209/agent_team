@@ -87,6 +87,10 @@ Each group below maps to one `Priority 2` group. `Priority 3` supports execution
 
 ### RN-4. Dispatch Reception And Completion Protocol. For RPA-4
 
+On assignment receipt, send a lightweight `MESSAGE-CLASS: dispatch-ack` to team-lead before substantive work when the packet is accepted or rejected; include `TASK-ID`, `WORK-SURFACE`, `ACK-STATUS: accepted|rejected:<reason>`, and `PLANNING-BASIS: loading|loaded`. This is not completion-grade and does not require converged self-verification.
+
+Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
+
 #### Expected Incoming Dispatch Fields
 Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the validator lane, validation target, expectation basis, and visible review/test state are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in expectation sources, review/test state, decision surface, or final verdict authority, return `MESSAGE-CLASS: hold` instead of improvising.
 
@@ -101,6 +105,8 @@ Treat these fields as the clean incoming packet target. If the dispatch is incom
 - `DECISION-SURFACE` (required — pass/hold/fail surface; must reconcile delivery experience, user-readiness, and interaction coverage for executable/UI deliverables)
 - `VALIDATION-SURFACE` (required — the specific artifact, interaction surface, or delivery layer to validate)
 - `TOOL-REQUIREMENT` (required when validation requires specific tooling — browser, render tool, or environment)
+- `USER-RUN-PATH` (required when the verdict depends on a promised user launch or operation path — use the actual promised path or `not-applicable`)
+- `BURDEN-CONTRACT` (required when the verdict depends on hands-off/low-touch delivery expectations — `hands-off|low-touch|normal|not-applicable`)
 
 See `skills/validator/SKILL.md §Preconditions` for full specifications.
 
@@ -117,3 +123,11 @@ When sending completion-grade `SendMessage` to team-lead, include ALL of:
 - `SELF-VERIFICATION: converged`
 - `CONVERGENCE-PASS: 1|2|3`
 - `REQUESTED-LIFECYCLE: standby` or `shutdown` or `hold-for-validation`
+- `USER-RUN-PATH: <promised user run path or not-applicable>`
+- `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`
+- `PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable`
+- `RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable`

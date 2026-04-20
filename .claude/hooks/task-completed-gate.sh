@@ -250,8 +250,17 @@ try {
     svResultPresent: Boolean(evidenceState.svResultPresent),
     exactTaskReportPresent: Boolean(latestExactTask),
     explicitTaskIdFieldPresent: latest ? Boolean(latest.taskIdFieldPresent) : false,
+    latestAgentType: latest ? String(latest.agentType || "") : "",
     latestMessageClass: latest ? String(latest.messageClass || "") : "",
     latestTimestamp: latest ? String(latest.timestamp || "") : "",
+    userRunPathValue: String(fieldValues.userRunPath || ""),
+    burdenContractValue: String(fieldValues.burdenContract || ""),
+    proofSurfaceMatchValue: String(fieldValues.proofSurfaceMatch || ""),
+    runPathStatusValue: String(fieldValues.runPathStatus || ""),
+    coreWorkflowStatusValue: String(fieldValues.coreWorkflowStatus || ""),
+    interactionCoverageStatusValue: String(fieldValues.interactionCoverageStatus || ""),
+    burdenStatusValue: String(fieldValues.burdenStatus || ""),
+    acceptanceReconciliationValue: String(fieldValues.acceptanceReconciliation || ""),
     planningBasisValue: String(fieldValues.planningBasis || ""),
     svPlanVerifyValue: String(fieldValues.svPlanVerify || ""),
     selfVerificationValue: String(fieldValues.selfVerification || ""),
@@ -275,8 +284,17 @@ try {
     svResultPresent: false,
     exactTaskReportPresent: false,
     explicitTaskIdFieldPresent: false,
+    latestAgentType: "",
     latestMessageClass: "",
     latestTimestamp: "",
+    userRunPathValue: "",
+    burdenContractValue: "",
+    proofSurfaceMatchValue: "",
+    runPathStatusValue: "",
+    coreWorkflowStatusValue: "",
+    interactionCoverageStatusValue: "",
+    burdenStatusValue: "",
+    acceptanceReconciliationValue: "",
     planningBasisValue: "",
     svPlanVerifyValue: "",
     selfVerificationValue: "",
@@ -311,7 +329,16 @@ const fieldValues = [
   parsed.svResultPresent ? "true" : "false",
   parsed.exactTaskReportPresent ? "true" : "false",
   parsed.explicitTaskIdFieldPresent ? "true" : "false",
+  parsed.latestAgentType || "",
   parsed.latestMessageClass || "",
+  parsed.userRunPathValue || "",
+  parsed.burdenContractValue || "",
+  parsed.proofSurfaceMatchValue || "",
+  parsed.runPathStatusValue || "",
+  parsed.coreWorkflowStatusValue || "",
+  parsed.interactionCoverageStatusValue || "",
+  parsed.burdenStatusValue || "",
+  parsed.acceptanceReconciliationValue || "",
   parsed.planningBasisValue || "",
   parsed.svPlanVerifyValue || "",
   parsed.selfVerificationValue || "",
@@ -337,14 +364,23 @@ SV_PLAN_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
 SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
 EXACT_TASK_REPORT_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
 EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[9]-false}"
-LATEST_CLASS="${TASK_COMPLETED_FIELDS[10]-}"
-PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[11]-}"
-SV_PLAN_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[12]-}"
-SELF_VERIFICATION_VALUE="${TASK_COMPLETED_FIELDS[13]-}"
-CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[14]-}"
-MISSING_FIELDS="${TASK_COMPLETED_FIELDS[15]-}"
-IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[16]-}"
-REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[17]-}"
+LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[10]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+LATEST_CLASS="${TASK_COMPLETED_FIELDS[11]-}"
+USER_RUN_PATH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[12]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+BURDEN_CONTRACT_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[13]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+PROOF_SURFACE_MATCH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[14]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+RUN_PATH_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[15]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+CORE_WORKFLOW_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[16]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+INTERACTION_COVERAGE_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[17]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+BURDEN_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[18]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[19]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[20]-}"
+SV_PLAN_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[21]-}"
+SELF_VERIFICATION_VALUE="${TASK_COMPLETED_FIELDS[22]-}"
+CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[23]-}"
+MISSING_FIELDS="${TASK_COMPLETED_FIELDS[24]-}"
+IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[25]-}"
+REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[26]-}"
 
 FAILURES=()
 
@@ -412,6 +448,90 @@ case "$CONVERGENCE_PASS_VALUE" in
     FAILURES+=("Report must carry CONVERGENCE-PASS: 1|2|3.")
     ;;
 esac
+
+if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]; then
+  if [[ -z "$USER_RUN_PATH_VALUE" ]]; then
+    FAILURES+=("Tester/validator report must carry USER-RUN-PATH.")
+  fi
+
+  case "$BURDEN_CONTRACT_VALUE" in
+    hands-off|low-touch|normal|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable.")
+      ;;
+  esac
+
+  case "$PROOF_SURFACE_MATCH_VALUE" in
+    matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable.")
+      ;;
+  esac
+
+  case "$RUN_PATH_STATUS_VALUE" in
+    matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      ;;
+  esac
+
+  case "$CORE_WORKFLOW_STATUS_VALUE" in
+    matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      ;;
+  esac
+
+  case "$INTERACTION_COVERAGE_STATUS_VALUE" in
+    matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      ;;
+  esac
+
+  case "$BURDEN_STATUS_VALUE" in
+    matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    *)
+      FAILURES+=("Tester/validator report must carry BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      ;;
+  esac
+
+  if [[ "$LATEST_AGENT_TYPE" == "validator" ]]; then
+    case "$ACCEPTANCE_RECONCILIATION_VALUE" in
+      explicit|missing|not-applicable) ;;
+      *)
+        FAILURES+=("Validator report must carry ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable.")
+        ;;
+    esac
+  fi
+
+  if [[ -n "$USER_RUN_PATH_VALUE" && "$(printf '%s' "$USER_RUN_PATH_VALUE" | tr '[:upper:]' '[:lower:]')" != "not-applicable" ]]; then
+    if [[ "$PROOF_SURFACE_MATCH_VALUE" != "matched" ]]; then
+      FAILURES+=("User-run-path proof is not matched. Keep the task open until proof matches the promised delivery surface.")
+    fi
+    if [[ "$RUN_PATH_STATUS_VALUE" != "matched" ]]; then
+      FAILURES+=("User-run-path status is not matched. Keep the task open until the promised run path is directly proven.")
+    fi
+    if [[ "$CORE_WORKFLOW_STATUS_VALUE" != "matched" ]]; then
+      FAILURES+=("Core workflow status is not matched. Keep the task open until the promised user workflow is directly proven.")
+    fi
+    case "$INTERACTION_COVERAGE_STATUS_VALUE" in
+      matched|not-applicable) ;;
+      *)
+        FAILURES+=("Interaction coverage is not matched. Keep the task open until in-scope controls are proven or explicitly not-applicable.")
+        ;;
+    esac
+    case "$BURDEN_STATUS_VALUE" in
+      matched|not-applicable) ;;
+      *)
+        FAILURES+=("Burden status is not matched. Keep the task open until the promised hands-off/low-touch delivery burden is met.")
+        ;;
+    esac
+    if [[ "$LATEST_AGENT_TYPE" == "validator" && "$ACCEPTANCE_RECONCILIATION_VALUE" != "explicit" ]]; then
+      FAILURES+=("Validator must explicitly reconcile delivery experience, user-readiness, and interaction coverage before completion.")
+    fi
+  fi
+fi
 
 if [[ ${#FAILURES[@]} -gt 0 ]]; then
   FAILURE_MSG="TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). ${#FAILURES[@]} issue(s) found:"

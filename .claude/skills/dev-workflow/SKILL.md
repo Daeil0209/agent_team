@@ -152,7 +152,7 @@ Any dispatch whose expected output includes code creation, app scaffolding, data
 
 **Reviewer dispatch**: REVIEW-TARGET: implementation vs design doc; PREREQ-STATE: complete; EVIDENCE-BASIS: design doc at concrete file path + developer handoff changed file list (abstract "included" prohibited — team-lead must supply the actual design doc path or session-state.md section coordinate containing requirements); ACCEPTANCE-SURFACE: blocking defects, gap classification across all check dimensions (structural, functional, contract, delivery experience, user-readiness)
 
-**Tester dispatch**: For executable, user-facing software deliverables, `PROOF-TARGET` is the actual delivery surface and user-operable behavior; `ENV-BASIS` is repo runtime; `SCENARIO-SCOPE` includes the real launch/start path verified from the end-user's OS environment (double-click launcher, not developer terminal), the core completion path, cross-feature workflows, persistence/restart checks, and an interaction-coverage matrix for all user-visible controls within resolved scope; `PROOF-EXPECTATION` is direct proof, disproof, or blocked proof per scenario/control, with exact commands, route/view, user action, expected result, and observed result. For other deliverable types, apply the normal proof surface appropriate to the artifact.
+**Tester dispatch**: For executable, user-facing software deliverables, `PROOF-TARGET` is the actual delivery surface and user-operable behavior; `ENV-BASIS` is repo runtime; `SCENARIO-SCOPE` includes the real launch/start path verified from the end-user's OS environment (double-click launcher, not developer terminal), the core completion path, cross-feature workflows, persistence/restart checks, and an interaction-coverage matrix for all user-visible controls within resolved scope; `PROOF-EXPECTATION` is direct proof, disproof, or blocked proof per scenario/control, with exact commands, route/view, user action, expected result, and observed result. Keep the delivery contract explicit in the packet with `USER-RUN-PATH: <promised user launch/operation path>` and `BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable`. For other deliverable types, apply the normal proof surface appropriate to the artifact.
 **Skill recommendations**: team-lead selects relevant specialist skills for Phase 4 dispatch based on deliverable type per User-Readiness Check in reference.md.
 
 **Deliverable-type verification tool recommendations** (reference for tool selection based on deliverable type):
@@ -165,6 +165,7 @@ Any dispatch whose expected output includes code creation, app scaffolding, data
 | Document/Report | Rendered review (browser/PDF viewer) | — |
 
 Deliverable-type proof follows proof-surface correspondence (see `CLAUDE.md` `§Acceptance Core`): verification evidence must be gathered at the same interaction level the end user actually uses. For web app deliverables, the default and expected tester proof path is Playwright CLI on the browser-level interaction surface, and final acceptance requires Playwright MCP visual inspection. curl/API-only checks are supportive evidence only; they do not replace browser-level proof for UI deliverables. If the browser-level path is blocked, report blocked proof and HOLD rather than silently downgrading the proof surface.
+For promised single-action or low-touch delivery paths, failure on the real user run path reopens acceptance as a blocking defect. Do not shift cleanup commands, manual rebuild steps, or terminal recovery onto the user before self-owned remediation is exhausted.
 
 
 **Phase 4 completeness rule**: For executable, user-facing software deliverables, Phase 4 is incomplete if either the reviewer or tester completion-grade evidence block is missing. Reviewer-only closure, build-only proof, API-smoke-only proof, or tester omission is not sufficient.
@@ -205,6 +206,8 @@ See ## Gap Detection And YAGNI Review below for full iteration protocol detail a
 > For Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, and Incident Response details, see reference.md.
 
 ## Phase Transition Notification
+
+At any satisfied phase boundary, the phase cursor must be resolved in the same execution segment: dispatch or execute the next phase, place the workflow on `HOLD`/re-handoff, record an explicit blocker, or explicitly cancel the next stage. Saying "next is Task #N" or "next phase is ..." without starting it or recording why it cannot start is not a completed phase transition.
 
 When team-lead advances to a new phase, send the structured phase-transition packet individually to each affected worker via `SendMessage(to: "<worker-name>")`:
 
