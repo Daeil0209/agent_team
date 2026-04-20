@@ -85,14 +85,20 @@ Label each axis as one of:
 
 ### B. Material-impact filter
 
-For every axis labeled (3) Underspecified, test against four criteria:
+For every axis labeled (3) Underspecified, apply the criteria in this order. **M4 is the gating criterion; M1/M2/M3 decide only after M4 holds.**
 
-- **M1 (deliverable look):** Would a wrong default make the deliverable look materially different to the user?
-- **M2 (rework cost):** Would a wrong default incur substantial downstream rework if corrected later?
-- **M3 (literal-term departure):** Would any plausible default conflict with the ordinary meaning of a term the user used literally?
-- **M4 (derivability):** Is the axis obvious to ask but non-obvious to derive correctly from context alone?
+- **M4 (derivability) — gate:** Is the axis responsibly derivable from the user's stated constraints, the supplied reference (per `agents/team-lead.md §IR-2 #11` reference-asymmetry rule), or standard engineering practice for the named work type from Q2? If yes (derivable), label **DEFAULT** with the assumed value and rationale recorded — do not proceed to M1/M2/M3 for SURFACE.
+- When M4 is true (axis is genuinely non-derivable), test the impact criteria below; any one triggering is sufficient to label **SURFACE**:
+  - **M1 (deliverable look):** Would a wrong default make the deliverable look materially different to the user?
+  - **M2 (rework cost):** Would a wrong default incur substantial downstream rework if corrected later?
+  - **M3 (literal-term departure):** Would any plausible default conflict with the ordinary meaning of a term the user used literally?
 
-Axes triggering M1, M2, M3, or M4 → label **SURFACE**. Others → label **DEFAULT** with the assumed value explicitly recorded.
+Labeling rule:
+- M4 false (derivable) → **DEFAULT** with rationale, regardless of M1/M2/M3.
+- M4 true AND any of M1/M2/M3 true → **SURFACE**.
+- M4 true AND none of M1/M2/M3 true → **DEFAULT** with rationale (low-impact non-derivable axis).
+
+**Anti-pattern guard.** M2 (rework cost) is structurally true for most infrastructure and tech-stack axes because switching mid-build is always expensive. Using M2 alone — bypassing the M4 derivability gate — to force SURFACE on axes that are actually derivable from reference/standard practice is the exact habit-asking failure the reference-asymmetry rule in `agents/team-lead.md §IR-2 #11` prohibits.
 
 ### C. Surface and commit
 
@@ -106,7 +112,7 @@ Step 2 Scope Freeze cannot proceed while any SURFACE axis remains unasked.
 ### Scope note
 
 - For narrowly scoped tasks bounded by existing context, axis enumeration typically yields few axes and most pass to DEFAULT. The step still runs — its purpose is to force the enumeration habit, not to generate work.
-- **Axis-specific autonomy only.** User autonomy directives waive SURFACE only when they name the specific axis being waived. Generic autonomy directives that do not name an axis do NOT waive axis enumeration (A), the material-impact filter (B), or SURFACE obligations on axes that still trigger M1/M2/M3/M4. Blanket-autonomy interpretation of unnamed directives is the exact failure mode this step exists to prevent.
+- **Axis-specific autonomy only.** User autonomy directives waive SURFACE only when they name the specific axis being waived. Generic autonomy directives that do not name an axis do NOT waive axis enumeration (A), the material-impact filter (B), or SURFACE obligations on axes that still pass the filter (M4 gate true plus any M1/M2/M3 trigger). Blanket-autonomy interpretation of unnamed directives is the exact failure mode this step exists to prevent.
 
 ## Step 2: Scope Freeze
 
