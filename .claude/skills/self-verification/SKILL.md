@@ -37,22 +37,21 @@ However, for final user-facing conclusions, material recommendations, completion
 - residual risk or open surfaces: what remains unverified, blocked, or conditional
 - unverified items: explicit if any remain
 
-This is an outcome summary, not a process dump. The verification output format below remains for internal handoff blocks only.
+This is an outcome summary, not a process dump. The verification output format below remains for internal handoff blocks only. The user-facing surface is layered: direct result first, then the minimum verification outcome needed for that result, then residual risk/next step. Never mirror the full worker handoff ledger into the user-facing response.
 
 Default user-facing final/audit result template:
 
 ```text
 <final result or decision>
-Verification basis:
-  · <claim> — source: <file:line-range | user-turn reference | prior-decision id>
-  · [for classification/judgment claims] considered alternative: <alt>. rejected because: <reason>.
+Verification basis: <1-3 decisive anchors in plain prose. For classification or judgment claims, include the strongest material alternative rejected and why, inline if needed.>
+[Finding digest: <omit unless multiple material findings exist; if used, list only the top 1-3 decisive findings and summarize any remainder as +N additional items>]
 Residual risk/open surfaces: <none | specific remaining conditions>
 Unverified items: <none | explicit list>
 ```
 
-The `source:` slot requires a concrete coordinate (file path with line range, user-turn reference, or prior-decision id) when the claim references existing source material. A paraphrase alone does not satisfy this slot — that path defeats the gate, since head-trace and prior-memory can produce paraphrase without actual re-access. The `considered alternative / rejected because` line materializes Critical Challenge Step 3a output; if 3a was not executed on a classification or judgment, that line is blank and the report is not yet verified.
+The verification basis still requires concrete anchor points when the claim references existing source material: file path with line range, user-turn reference, prior-decision id, or equivalently concrete source coordinate in plain prose. A paraphrase alone does not satisfy this slot — that path defeats the gate, since head-trace and prior-memory can produce paraphrase without actual re-access. For classification or judgment claims, the strongest rejected alternative and the rejection reason materialize Critical Challenge Step 3a output; if 3a was not executed on a material classification or judgment, that conclusion is not yet verified. `Finding digest` is a user-facing compression layer only; it does not weaken the underlying evidence obligation.
 
-Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose. Do not preface routine progress updates with `SV converged`, `Checkpoint ...`, verification labels, or any other verification-packet heading.
+Use natural prose around it when needed, but do not omit these surfaces on final/audit reporting. For routine in-progress updates, report only the current verified decision, next action, or blocker in plain prose. Do not preface routine progress updates with `SV converged`, `Checkpoint ...`, verification labels, or any other verification-packet heading. Do not surface internal handoff labels such as `TASK-ID`, `OUTPUT-SURFACE`, `OPEN-SURFACES`, `REQUESTED-LIFECYCLE`, or packet-style field lists in user-facing responses.
 
 ## Activation Trigger
 
@@ -72,6 +71,8 @@ Note on trigger (1): This trigger fires after work-planning has frozen the reque
 
 **Same-turn carry-forward:** If this skill was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, the existing in-turn verification satisfies the current trigger. A second Skill invocation is not required unless the work since the last SV load introduced material that was not already covered by that verification. Carry-forward holds when the agent synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, file modifications, or consequential dispatch actions (Agent, TaskCreate, assignment-grade SendMessage) are produced after the last SV load. (This mirrors the carry-forward rule in `agents/team-lead.md §RPA-7`.)
 
+Carry-forward reset is mandatory when the new output strengthens the claim class even without new file modification. Treat the following as new consequential conclusions that prior verification does not automatically cover unless the current verification basis explicitly covers them: severity or priority recalibration, phase-close or readiness claims (`complete`, `ready`, `validated`, `no remaining blocker`), worker-state claims (`working`, `completed`, `idle`, `stalled`, `not working`, `message-loss`), and broad scope-closing absence claims (`no issue`, `nothing remains`, `no mismatch found`). These claims require current-turn evidence basis appropriate to the claim type under Step 4.
+
 **Derived-conclusion boundary:** Do not treat prior verification as covering conclusions it did not actually verify. When synthesis, aggregation, classification, or restructuring creates a material conclusion beyond the prior verification basis, that conclusion is not reportable as verified unless the current verification basis covers it. Otherwise narrow it to the verified scope or label it `INFERENCE`/`UNVERIFIED`.
 
 If you are about to state a conclusion, execute a plan, report a completed change, or present consequential status, ask: "Did this survive Critical Challenge?" If not, execute this procedure first.
@@ -86,6 +87,10 @@ If you are about to state a conclusion, execute a plan, report a completed chang
 - If a recommendation, diagnosis, or conclusion departs from the user's stated philosophy or constraints, name the mismatch explicitly and justify it or HOLD.
 - When evaluating an existing rule, mechanism, structure, process, or policy, verify the result addresses both halves of the question: why the current state exists and whether its current cost, friction, or ambiguity remains proportionate.
 - Do not stop at "there was a rationale." Verify whether that rationale is still justified, current, and proportionate to the burden it imposes.
+- When the output justifies compression, reorganization, migration, or cleanup, apply `[PRES-FIRST]` and `[CHANNEL]` as explicit scope checks: verify what information, meaning, or habit-channel had to survive, and fail scope match if the conclusion skips that preservation target.
+- When the output justifies routing, staffing, or dispatch shape, apply `[PARALLEL]` as an explicit scope check: verify whether independent work surfaces were silently serialized or whether the claimed serial path names a real dependency, boundary uncertainty, or merge basis.
+- When the output identifies a valid defect, user correction, or recurrence-worthy miss, apply `[HARDEN]` as an explicit scope check: fail scope match if the conclusion stops at description/apology and leaves corrective hardening, owner, or next action undefined.
+- When the output is a user-facing answer, status, or decision, apply `[AUTO-PROC]` and `[CHANNEL]` as explicit scope checks: the verified answer, decision, or blocker must remain the response lead; process narration must not displace the primary user-facing channel.
 
 ## Step 2: Role-Specific Checklist
 
@@ -159,8 +164,16 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
 
 - Every claim has supporting evidence.
 - Unsupported items labeled UNVERIFIED or removed.
+- Claim-Type Evidence Gate: before hardening a claim, classify the claim type and satisfy its minimum evidence burden:
+  - `FACT`: direct source coordinate, fresh observation, or current-session tool output.
+  - `NEGATIVE` / `NO-ISSUE`: inspected scope, inspection method, and coverage limit.
+  - `RUNTIME-STATE`: communication/state-channel evidence appropriate to the state claimed. Repository artifacts, file mutation, or "nothing changed recently" do not satisfy this burden by themselves.
+  - `CLASSIFICATION` / `JUDGMENT`: applicable rule or constraint plus considered alternative and rejection basis.
+  - `RECOMMENDATION`: problem-solution fit plus basis for rejecting narrower or lower-cost alternatives.
+  If the matching burden is not met, downgrade the claim to `INFERENCE` or `UNVERIFIED` instead of hardening it.
 - A conclusion inherited from a prior-session summary, compacted conversation, or remembered analysis is a claim, not evidence — treat it as UNVERIFIED until re-confirmed by direct source access (file read, tool output, or fresh observation) in the current session.
 - Do not report scope-closing claims as settled from summaries, samples, or incomplete evidence. Claims that assert broad presence, absence, uniqueness, universality, or commonality must be narrowed to the inspected scope or labeled `INFERENCE`/`UNVERIFIED` unless direct evidence supports the full reported scope.
+- Negative, no-issue, or "nothing remains" claims must explicitly name the inspected scope, how that scope was checked, and the remaining coverage limit. Without those three surfaces, the claim is not settled.
 - Assumptions explicitly stated.
 - Verify environment assumptions before using environment-specific evidence paths. If a verification method assumes repository history, git metadata, branch state, or diff surfaces, confirm those surfaces exist first. When the assumption fails, switch to the closest truthful fallback (for example file-based inspection instead of git-based diff) rather than treating the failed assumption itself as a blocker.
 - When the user has stated governing philosophy or operating doctrine, check and state whether the analysis aligns with it, partially aligns, or conflicts with it.
@@ -177,6 +190,12 @@ Critical Challenge is the center of this skill. Convergence without adversarial 
   - change risk stated explicitly — requires all above as inputs
 - If one of those five surfaces is missing or was not derived from its required input, downgrade the conclusion to `INFERENCE`, `clarification candidate`, or `needs rationale confirmation` instead of hardening it into a final recommendation.
 - When reporting or progress text mentions team operation, apply `agents/team-lead.md §RPA-7` state vocabulary. If the strongest evidence is only planning or `NEXT-CONSEQUENTIAL-ACTION`, report only the next action.
+- For `[PRES-FIRST]` and `[CHANNEL]` claims about compression, reorganization, migration, wording cleanup, or rule simplification, require explicit evidence of (a) what meaning, information surface, or habit-channel had to survive and (b) how loss was checked. Without both, downgrade the preservation claim to `INFERENCE`.
+- For `[PARALLEL]` claims about staffing, serial/parallel choice, or packet shape, require explicit evidence of independence, dependency, or merge-owner basis. If the serial path or worker burden is asserted without that basis, downgrade the claim to `INFERENCE` or `needs routing re-check`.
+- For `[HARDEN]` claims, require explicit evidence of the validated defect or miss class plus a concrete corrective owner or next hardening action. If the output only describes the issue, labels it educational, or leaves the correction ownerless, downgrade it to `observation only` instead of treating hardening as complete.
+- For `[AUTO-PROC]` and `[CHANNEL]` claims about answer quality, require explicit evidence that the user-facing channel still leads with the verified answer, decision, or blocker. If the response shape would make process narration or packet detail the primary user-facing payload, fail verification until the output is re-channeled.
+
+`Step 4-lite` means: classify the claim type, confirm the minimum evidence burden for that claim class, and downgrade the claim if any required surface is missing. It is not a full Step 4 pass, but it is mandatory on quick-depth paths when the output hardens consequential claims.
 
 ## Step 5: Convergence Loop
 
@@ -192,8 +211,8 @@ WORK-INTENT invalidation: If Critical Challenge in Step 3 reveals the frozen WOR
 All depth levels still require formal Skill tool loading. The guide below controls depth after loading:
 
 - **Full procedure (Steps 1-6)**: Before handoff, before consequential recommendation, before user-facing report with factual claims, before governance modification, after applying a consequential modification (governance files, production code, architecture changes).
-- **Quick critical challenge (Step 3, all four sub-checks 3a-3d)**: Before intermediate decisions, before dispatch routing (quick depth for standard routing; escalate to full procedure when ACCEPTANCE-RISK is high or critical, or when the dispatch includes governance-sensitive changes), before acknowledging worker status, after applying a trivial modification (typo fix, formatting, non-semantic change). Ask the 4 questions in Step 3; if any answer changes the conclusion, escalate to full procedure.
-- **Minimum**: Never skip Step 3 entirely. Every output must survive at least Step 3d (User-Perspective Criticism).
+- **Quick critical challenge (Step 3, all four sub-checks 3a-3d)**: Before intermediate decisions, before dispatch routing (quick depth for standard routing; escalate to full procedure when ACCEPTANCE-RISK is high or critical, or when the dispatch includes governance-sensitive changes), before acknowledging worker status, after applying a trivial modification (typo fix, formatting, non-semantic change). Ask the 4 questions in Step 3; if any answer changes the conclusion, escalate to full procedure. If the output hardens a factual claim, runtime-state claim, absence/no-issue claim, classification/judgment claim, recommendation, or scope-closing status claim, perform `Step 4-lite` before reporting or acting.
+- **Minimum**: Never skip Step 3 entirely. `Step 3d`-only minimum applies only to non-consequential commentary that does not harden factual, runtime-state, absence/no-issue, classification/judgment, recommendation, or scope-closing claims. If any of those claim classes are present, quick critical challenge plus `Step 4-lite` is the minimum depth.
 
 ### MWEC Phase Depth Mapping
 

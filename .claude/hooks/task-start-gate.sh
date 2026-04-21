@@ -577,10 +577,24 @@ lead_planning_bootstrap_tool_allowed() {
   case "$tool_name" in
     Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch|Bash) return 0 ;;
     Skill)
-      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* ]]
+      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* || "$skill_name" == *task-execution* ]]
       return
       ;;
     *) return 1 ;;
+  esac
+}
+
+lead_runtime_prep_allowed_before_dispatch_gate() {
+  local tool_name="${1:-}"
+
+  case "$tool_name" in
+    TeamCreate)
+      [[ -f "$WP_MARKER" ]]
+      return
+      ;;
+    *)
+      return 1
+      ;;
   esac
 }
 
@@ -636,6 +650,9 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if lead_planning_required "$SESSION_ID"; then
+    if lead_runtime_prep_allowed_before_dispatch_gate "$TOOL_NAME"; then
+      exit 0
+    fi
     case "$TOOL_NAME" in
       Agent|TaskCreate|SendMessage)
         # Dispatch surfaces still require WP+SV, but once WP is observed the

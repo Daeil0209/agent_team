@@ -124,7 +124,7 @@ set_default_export HEALTH_CHECK_HEARTBEAT_FILE "$LOG_DIR/.health-check-heartbeat
 set_default_export HEALTH_CRON_ROTATION_TTL_SECONDS "300"
 set_default_export HOOK_HEALTH_SELF_CHECK_MODE "warn"
 set_default_export HOOK_HEALTH_LOG "$LOG_DIR/hook-health.log"
-set_default_export HOOK_HEALTH_REQUIRED_HOOKS "session-start.sh session-end.sh user-prompt-gate.sh agent-activity-monitor.sh task-start-gate.sh sv-gate.sh validate-task-target.sh runtime-entry-gate.sh dispatch-sizing-gate.sh dispatch-proof-gate.sh compliance-supervisor.sh sv-tracker.sh track-worker-report.sh worker-lifecycle-sync.sh track-runtime-lifecycle.sh task-completed-gate.sh task-created-gate.sh"
+set_default_export HOOK_HEALTH_REQUIRED_HOOKS "session-start.sh session-end.sh user-prompt-gate.sh agent-activity-monitor.sh task-start-gate.sh sv-gate.sh validate-task-target.sh runtime-entry-gate.sh dispatch-sizing-gate.sh dispatch-proof-gate.sh compliance-supervisor.sh sv-tracker.sh track-worker-report.sh worker-lifecycle-sync.sh track-runtime-lifecycle.sh task-completed-gate.sh task-created-gate.sh permission-request-gate.sh"
 set_default_export RUNTIME_AUTOMATION_MODE "single-primary"
 set_default_export RUNTIME_AUTOREAP_ENABLED "1"
 set_default_export RUNTIME_KEEP_WATCHDOG_WHEN_IDLE ""

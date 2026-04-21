@@ -79,11 +79,13 @@ Carry the basis into Step 1 purpose/deliverable analysis, Step 1.5 defaults, and
 - Consume the Step 0 request-fit basis: identify the concrete user-visible deliverable, reference-backed defaults, burden-reduction implications, user-derived quality/proof direction, and material blockers. If no material blocker remains, record derived defaults rather than re-ask them.
 - Analyze the work through the following thinking flow before scope freeze:
   · **Q1 (Purpose)**: What is the user trying to achieve? Extract the real goal, not just the surface task.
-  · **Q2 (Work Types)**: What types of work does this purpose require? Classify explicitly as one or more of: software-development, document-creation, research-analysis, presentation-material, simple-report, governance-edit, question-answer, engineering-calculation, design, data-analysis, or an equivalent named type. Declare the chosen classification explicitly before proceeding to Q3 — this classification is the required input for Q3 and Q5.
+  · **Q2 (Work Types)**: What types of work does this purpose require? Classify explicitly as one or more of: software-development, document-creation, research-analysis, presentation-material, simple-report, governance-edit, question-answer, engineering-calculation, design, data-analysis, or an equivalent named type. When the user supplies or points to an already-authored artifact under review (for example a report, audit, claim set, design proposal, patch rationale, policy text, spec excerpt, or equivalent surface) and asks whether it is correct, grounded, complete, sufficiently supported, or appropriately prioritized, include an explicit review-class work type (`artifact-review`, `governance-review`, or equivalent) instead of collapsing the turn into `research-analysis` alone. Declare the chosen classification explicitly before proceeding to Q3 — this classification is the required input for Q3 and Q5.
   · **Q3 (Channels)**: Based on the Q2 classification, identify the governing workflow or methodology skill for each named work type. Use the Deliverable-Type reference in `task-execution/reference.md` as a guide. If the match is unclear, ask the user before proceeding.
-  · **Q4 (Relationships)**: If multiple work types exist, map their relationships: independent, sequential, or interdependent.
+  · **Q4 (Relationships)**: If multiple work types exist, map their relationships: independent, sequential, or interdependent. When one stream is evidence expansion and another is independent judgment over an already-authored artifact-under-review surface, do not default that pair to sequential by habit; treat it as independent when each lane can read the supplied artifact and supporting surfaces without waiting for the other's interpretation.
   · **Q5 (Supporting Skills)**: Within each stream, identify methodology or domain skills that support the work.
 - Q3 results become the `ACTIVE-WORKFLOW` field in the planning output. Q5 results feed `SKILL-RECOMMENDATIONS` at dispatch time.
+- For `team-lead`, Step 1 must also freeze the staffing-shape basis whenever routing is plausible: whether the turn is evidence sweep, authored-artifact review, mixed review-plus-research, verification, implementation, or another named shape; whether an existing artifact is under review; whether added evidence expansion is meaningful; whether the turn closes consequential judgment (`defect`, `severity`, `priority`, corrective recommendation, or equivalent); and whether independent lane reads are possible. Do not leave these routing drivers implicit.
+- For `team-lead`, staffing-shape basis must size worker count, not just lane mix. Record at minimum `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, `READ-VOLUME`, `CROSS-CHECK-MODE`, and `SHARD-BASIS` before handoff into `task-execution`. The planning duty is to make clear why one worker is enough, why multiple same-lane shards are needed, or why mirrored cross-check is justified.
 - If Q1 cannot determine the purpose, HOLD and ask the user for clarification.
 - If Q2 cannot be classified into one or more named work types, HOLD and ask the user rather than guessing. Q3 and Q5 must not proceed on an unclassified Q2.
 - If Q3 cannot confidently match a workflow, ask the user rather than guessing.
@@ -190,7 +192,10 @@ Team-lead routing pre-signal:
 - Use `ambiguous-route` when the work might still be lead-local but the current evidence does not cleanly satisfy all direct-work conditions from `agents/team-lead.md §RPA-2`.
 - For `team-routing candidate` or `ambiguous-route`, the next consequential skill after post-planning `self-verification` is `task-execution` unless a bounded blocker is explicit; do not let a large or multi-concern request remain implicitly single-worker just because the current plan block omitted staffing details.
 - If the plan already implies delegation, explicit runtime, or worker-owned surfaces, record that implication now instead of leaving it to later interpretation.
+- When the request centers on reviewing an already-authored artifact under review, freeze the staffing basis explicitly: `INTENT-CLASS`, `ARTIFACT-UNDER-REVIEW`, `EVIDENCE-EXPANSION`, `JUDGMENT-CLOSURE`, `INDEPENDENT-READ-POSSIBLE`, `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, `READ-VOLUME`, `CROSS-CHECK-MODE`, `SHARD-BASIS`, and `STAFFING-RATIONALE`. If review and evidence expansion are both present and independent read is possible, prefer parallel `researcher + reviewer` rather than collapsing the turn into research-only or serial-by-habit. If the work is bounded to the supplied artifact and added evidence expansion is not meaningful, prefer `reviewer`-only routing.
+- If authored-artifact review spans 2 or more independent surface groups or judgment axes, do not stop at lane presence alone. Freeze whether cross-check is `lane-separated` or `mirrored-same-surface`, and size each lane so that one worker is not left carrying 3+ independent surfaces by habit.
 - When team routing is implied and 2 or more meaningful work surfaces are already independent or become independent after one named serial prerequisite, freeze the staffing basis now: record both `PARALLEL-GROUPS` and `AGENT-MAP`. If the work will stay sequential for now, record `PARALLEL-GROUPS: none — <serial reason>` with the exact dependency, boundary-uncertainty, or context-cost reason. Do not leave this basis implicit for `task-execution` to rediscover from scratch at dispatch time.
+- When the same work shape includes broad read volume, multiple independent review surfaces, or explicit cross-check pressure, `AGENT-MAP` must reflect the staffing count implied by `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, and `CROSS-CHECK-MODE` instead of flattening the work into one global `researcher` and one global `reviewer`.
 - Positive channel rule: when the plan implies team routing, freeze one explicit `NEXT-CONSEQUENTIAL-ACTION` now. Allowed values are `TeamCreate`, `reuse-via-SendMessage`, `Agent`, or `clear-blocker:<exact blocker>`. Do not leave the runtime move as a vague future intention.
 - If `NEXT-CONSEQUENTIAL-ACTION` is `clear-blocker:<...>`, the blocker must be concrete, bounded, and immediately relevant to runtime activation, worker reuse, or dispatch packet completion. Broad additional inspection is not a valid blocker.
 
@@ -232,7 +237,18 @@ EXCLUDED-SCOPE: <what is out>
 DONE-CONDITION: <observable completion signal>
 ACTIVE-WORKFLOW: <workflow-id(s)|none|pending-user-clarification>
 PHILOSOPHY-CONSTRAINTS: <applicable §Team Philosophy coordinate IDs>
+INTENT-CLASS: <investigation | review | verification | implementation | mixed:<...>>
+ARTIFACT-UNDER-REVIEW: <none | named artifact/report/claim surface + why it matters>
+EVIDENCE-EXPANSION: <none | bounded | broad>
+JUDGMENT-CLOSURE: <none | clarification-only | consequential:defect/severity/priority/recommendation>
+INDEPENDENT-READ-POSSIBLE: <yes | no — exact dependency reason>
+WORK-SURFACE-COUNT: <1 | 2 | 3+ | exact count + note>
+JUDGMENT-AXIS-COUNT: <1 | 2 | 3+ | exact count + note>
+READ-VOLUME: <bounded | broad-single-surface | broad-multi-surface>
+CROSS-CHECK-MODE: <none | lane-separated | mirrored-same-surface>
+SHARD-BASIS: <none | by-surface | by-file-group | by-judgment-axis | mirrored-surface-pairs:<map>>
 ROUTING-SIGNAL: <lead-local candidate | team-routing candidate | ambiguous-route>
+STAFFING-RATIONALE: <why this lane mix and why parallel vs sequential is justified>
 STEPS: <numbered list>
 PARALLEL-GROUPS: which steps run concurrently; use `none — <serial reason>` when team-routing work remains intentionally sequential
 AGENT-MAP: agent to phase assignment (Required for team-lead plans with delegation. Read together with `PARALLEL-GROUPS` as the staffing basis handed into `task-execution`. Optional for workers dispatching sub-tasks. May be omitted for single-worker plans with no downstream delegation.)
@@ -275,8 +291,14 @@ Bad:
 Planning record rules:
 
 - `ROUTING-SIGNAL` is mandatory for `team-lead`. Workers may omit it unless the parent packet explicitly asks for routing input.
+- For `team-lead`, `INTENT-CLASS` and `STAFFING-RATIONALE` are mandatory whenever `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`.
+- If an existing artifact/report/claim surface is under review and `EVIDENCE-EXPANSION` is not `none`, `INDEPENDENT-READ-POSSIBLE` must be recorded explicitly; do not leave review-vs-research parallelism to later inference.
+- If `ROUTING-SIGNAL` is `team-routing candidate` and staffing depends on broad read volume, multiple review surfaces, or explicit cross-check, `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, `READ-VOLUME`, `CROSS-CHECK-MODE`, and `SHARD-BASIS` are mandatory.
+- If `INTENT-CLASS` includes both review and research, `AGENT-MAP` must either include both `researcher` and `reviewer` or `PARALLEL-GROUPS`/`DISPATCH-BLOCKERS` must explain the exact dependency or bounded reason for not doing so.
+- If `INTENT-CLASS` includes both review and research and `CROSS-CHECK-MODE` is `mirrored-same-surface`, `AGENT-MAP` must show a mirrored shard shape or `DISPATCH-BLOCKERS` must name the exact reason same-surface challenge cannot yet be activated.
 - If `ROUTING-SIGNAL` is `team-routing candidate`, `AGENT-MAP` must be present or `DISPATCH-BLOCKERS` must name the exact reason it is not yet present.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and 2 or more meaningful work surfaces are already independent, or become independent after one named serial prerequisite, `PARALLEL-GROUPS` must be present.
+- If `WORK-SURFACE-COUNT` or `JUDGMENT-AXIS-COUNT` is `3+`, a one-worker lane for that same surface set is incomplete unless `STAFFING-RATIONALE` names the exact context-cost, dependency, or overlap reason that kept staffing narrower.
 - If `PARALLEL-GROUPS` is `none`, it must include a one-sentence serial reason grounded in dependency, boundary uncertainty, or context-cost/capacity trade-off. Bare `none` is incomplete.
 - If `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`, `NEXT-CONSEQUENTIAL-ACTION` is mandatory.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and `DISPATCH-BLOCKERS` is `none`, `NEXT-CONSEQUENTIAL-ACTION` must be `TeamCreate`, `reuse-via-SendMessage`, or `Agent` — not `lead-local-none`.

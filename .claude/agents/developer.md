@@ -50,6 +50,8 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 - Follow the Mandatory Worker Execution Cycle: Plan (load work-planning) → Verify Plan (load self-verification) → Execute → Verify Results (load self-verification) → Converge → Report.
 - If the assignment basis is too weak to stay within bounded scope → HOLD and return precise scope feedback instead of improvising.
+- After `dispatch-ack`, classify the packet before execution. If one assignment mixes implementation with review/proof/validation ownership, absorbs orchestration or another lane's acceptance closure, or is too large but naturally split/shardable, return `MESSAGE-CLASS: scope-pressure` plus a concrete reroute or phase-split proposal instead of absorbing the packet into developer execution.
+- If the packet's write boundary, authority surface, or completion contract is materially ambiguous or internally contradictory such that the owned implementation surface cannot be reconstructed truthfully, return `MESSAGE-CLASS: hold` instead of improvising.
 
 ### RPA-2. Change Control. For IR-2
 
@@ -98,6 +100,11 @@ Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PA
 
 #### Expected Incoming Dispatch Fields
 Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the developer lane, user intent, and safe change boundary are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in write scope, authority, acceptance risk, or completion condition, return `MESSAGE-CLASS: hold` instead of improvising.
+
+Normal receipt response by packet class:
+- bounded single-phase implementation packet -> execute
+- mixed-phase or wrong-owner packet -> `MESSAGE-CLASS: scope-pressure` with concrete reroute or split proposal
+- boundary-ambiguous or internally contradictory packet -> `MESSAGE-CLASS: hold`
 
 - `MESSAGE-CLASS` (required)
 - `WORK-SURFACE` (required)

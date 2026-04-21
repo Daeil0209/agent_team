@@ -19,8 +19,9 @@ Load this skill when explicit user-directed session end is detected. The `UserPr
 
 Run this before `TeamDelete`, `CronDelete`, or closeout cleanup that mutates runtime state.
 
-1-2. Prerequisite: Fresh Turn Dispatch Gate must be satisfied.
-3. Confirm explicit closeout or teardown intent and determine whether any live worker still needs action.
+1. Prerequisite: explicit closeout or teardown intent must be active.
+2. This readiness check is owned by the closeout path itself. Once closeout intent is active, `TeamDelete` and `CronDelete` use this readiness path rather than the generic fresh-turn dispatch `work-planning -> self-verification` gate.
+3. Confirm whether any live worker still needs action and whether monitor ownership is already accounted for.
 4. Delete runtime resources only after live worker cleanup and monitor ownership are accounted for. If runtime deletion fails and only non-live residue remains, stop retries and report the exact residual state truthfully instead of improvising teardown repair work.
 
 ## Closeout Sequence

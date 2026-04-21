@@ -51,6 +51,8 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 - Follow the Mandatory Worker Execution Cycle: Plan (load work-planning) → Verify Plan (load self-verification) → Execute → Verify Results (load self-verification) → Converge → Report.
 - Consequential review: HOLD when the dispatch lacks an explicit review target or evidence basis. Do not improvise a review surface.
+- After `dispatch-ack`, classify the packet before execution. If one assignment mixes review with implementation, proof gathering, validation ownership, or orchestration closure, or asks reviewer to absorb another lane's work, return `MESSAGE-CLASS: scope-pressure` plus a concrete reroute or phase-split proposal instead of absorbing the packet into reviewer execution.
+- If the review target, prerequisite evidence, or acceptance basis is materially ambiguous or internally contradictory such that the owned review surface cannot be reconstructed truthfully, return `MESSAGE-CLASS: hold`.
 
 ### RPA-2. Review Evidence Control. For IR-2
 
@@ -93,6 +95,11 @@ Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PA
 
 #### Expected Incoming Dispatch Fields
 Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the reviewer lane, review target, upstream evidence, and acceptance surface are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in review scope, prerequisite state, evidence basis, or acceptance criteria, return `MESSAGE-CLASS: hold` instead of improvising.
+
+Normal receipt response by packet class:
+- bounded single-phase review packet -> execute
+- mixed-phase or wrong-owner packet -> `MESSAGE-CLASS: scope-pressure` with concrete reroute or split proposal
+- boundary-ambiguous or internally contradictory packet -> `MESSAGE-CLASS: hold`
 
 - `MESSAGE-CLASS` (required)
 - `WORK-SURFACE` (required)

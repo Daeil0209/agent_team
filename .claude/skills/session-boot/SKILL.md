@@ -36,12 +36,12 @@ Team governance is still the default even when explicit runtime is not activated
 5. Confirm any runtime-required routing or plugin layer is available before worker fan-out.
    Treat routing-layer availability as conditional on the actual runtime.
 6. Boot Sequence does not register periodic monitoring. Memory pressure is checked internally (threshold: 80%) before worker fan-out. No `CronCreate` or external health-check script is required during boot.
-   During the active boot window, only the minimal boot-infrastructure tool surface is exempt from fresh-turn planning enforcement: continuity reads and runtime-shape discovery (`Read`, `Grep`, `Glob`, `ToolSearch`, `TaskList`, `TaskGet`, `TaskOutput`, `TeamCreate`, `TeamDelete`, `WebFetch`, `WebSearch`) plus read-only path probes (`Bash(pwd)`, `Bash(echo $HOME)`). Consequential production work, worker dispatch, task-state tools, and ordinary execution remain gated until boot finishes and the normal planning path resumes. Loading `session-boot` may clear the reminder state, but it must not close this boot-infrastructure window before the boot-infrastructure tool calls listed above run.
+   During the active boot window, only the minimal boot-infrastructure tool surface is exempt from fresh-turn planning enforcement: continuity reads and runtime-shape discovery (`Read`, `Grep`, `Glob`, `ToolSearch`, `TaskList`, `TaskGet`, `TaskOutput`, `TeamCreate`, `TeamDelete`, `WebFetch`, `WebSearch`) plus read-only path probes (`Bash(pwd)`, `Bash(echo $HOME)`). Those two Bash probes are the canonical boot-window path checks, not a blanket statement of every later bootstrap inspection path the hooks may allow. Treat boot-window Bash as shell-native path and environment fact discovery only. It does not authorize generic repo-context sweeps, git-history inspection, inventory listing, or shell-stitched multi-read output when structured tools already cover the needed fact. Consequential production work, worker dispatch, task-state tools, and ordinary execution remain gated until boot finishes and the normal planning path resumes. Loading `session-boot` may clear the reminder state, but it must not close this boot-infrastructure window before the boot-infrastructure tool calls listed above run.
 
 ### Boot speed requirements
 
 - **Path resolution**: The Read and Glob tools require literal absolute paths — shell variables like `$HOME` are not expanded. Before constructing Read or Glob paths, confirm the actual `$HOME` value from the shell environment context. Prefer the `SessionStart` hook output if it already provided `Home directory: ...`; otherwise use prior Bash results. Never assume a default like `/root/`. Only if `$HOME` is still unknown should you add `echo $HOME` to the parallel Bash calls and defer the path-based calls to the next turn.
-- Prefer the `SessionStart` hook's `Team runtime snapshot: ...` lines as the first source of truth for whether team configs exist and whether any live panes are already attached. Do not re-check that state with Bash when the hook already provided it.
+- Prefer the `SessionStart` hook's `Team runtime snapshot: ...` lines as the first source of truth for whether team configs exist and whether any live panes are already attached. Those lines should stay action-oriented: current-session runtime, carry-over live runtime, or explicit residue warning only. Do not re-check that state with Bash when the hook already provided it.
 - Minimize boot round-trips without widening startup scope. When the `SessionStart` hook already provided both `Home directory: ...` and `Team runtime snapshot: ...`, read the effective continuity file first (`./.claude/session-state.md` preferred; `$HOME/.claude/session-state.md` legacy fallback only when workspace continuity is unavailable). Read `./.claude/state/procedure-state.json` only when active workflow phase, runtime state, compaction/resume recovery, or checkpoint continuity matters to the current request. `ToolSearch` for `TeamCreate` belongs to the explicit team-runtime branch, not the default session-start body.
 - Only if the startup hook did not provide a usable team-runtime snapshot, add a third call: `Glob(<literal-home>/.claude/teams/*/config.json)`. Do not fall back to Bash `ls` for this check.
 - Treat that fallback literally: it is a narrow boot-only existence check, not permission to inspect runtime storage in depth. Do not read inbox JSON, do not parse team/task files ad hoc, and do not continue browsing `$HOME/.claude/teams/**` or `$HOME/.claude/tasks/**` once the boot decision is made.
@@ -68,6 +68,7 @@ Team governance is still the default even when explicit runtime is not activated
 - Do not assume `main`, `master`, or any other branch name exists. Do not inspect current branch or dirty state during startup unless continuity requires it. Treat a missing branch ref as repository topology information, not an operational error.
 - Do not enumerate optional project-local `.claude/skills`, `.claude/hooks`, or `.claude/settings.json` as part of startup unless continuity or the active task explicitly depends on them.
 - Do not emit startup repository summaries, branch reports, or wide tables unless explicitly asked. Default startup completion: a short readiness line or the exact blocking activation step — not a state bulletin or summary framing like 'continuity established'.
+- Do not surface stale carry-over runtime residue as if it were current-session activity. If continuity is stale/diverged and no live runtime corroborates it, suppress the residue summary instead of narrating it as active state.
 - If the user explicitly ends the session while the explicit runtime is only partially booted, do not complete `Boot Sequence` just to tear it down. Enter `Closeout Sequence` directly and dismantle the partial runtime.
 
 
@@ -177,7 +178,7 @@ See `reference.md` `§Runtime Signals (Not Governance States)` for signal defini
 
 ### Supervisor decisions on idle_notification
 
-See `reference.md` `§Supervisor Decisions on idle_notification` for the decision matrix.
+See `reference.md` `§Supervisor Decisions on Turn-Ended Signals` for the decision matrix.
 
 ### Message-first lifecycle rule
 

@@ -46,7 +46,7 @@ is_governance_surface_path() {
   esac
 }
 
-is_high_traffic_governance_surface_path() {
+is_governance_restricted_write_path() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
 
@@ -315,7 +315,133 @@ allowed_git_readonly_subcmd() {
 }
 
 allowed_worker_impl_subcmd() {
-  printf '%s' "$1" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null
+  local sanitized="${1-}"
+  printf '%s' "$sanitized" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null || return 1
+
+  if printf '%s' "$sanitized" | grep -Eiq '^[[:space:]]*(mkdir|touch|cp|chmod)([[:space:]]|$)'; then
+    worker_impl_fs_paths_within_workspace "$sanitized" || return 1
+  fi
+
+  return 0
+}
+
+worker_impl_fs_paths_within_workspace() {
+  local subcmd="${1-}"
+  local workspace_root=""
+  [[ -n "$subcmd" ]] || return 1
+
+  workspace_root="$(resolve_project_root)"
+  COMMAND_TEXT="$subcmd" WORKSPACE_ROOT="$workspace_root" node <<'NODE'
+const path = require("path");
+
+const command = String(process.env.COMMAND_TEXT || "").trim();
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+
+function tokenize(text) {
+  const words = [];
+  let current = "";
+  let quote = "";
+
+  for (let index = 0; index < text.length; index += 1) {
+    const ch = text[index];
+    if (quote) {
+      if (ch === quote) {
+        quote = "";
+      } else if (ch === "\\" && quote === '"' && index + 1 < text.length) {
+        current += text[++index];
+      } else {
+        current += ch;
+      }
+      continue;
+    }
+
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+
+    if (/\s/.test(ch)) {
+      if (current) {
+        words.push(current);
+        current = "";
+      }
+      continue;
+    }
+
+    current += ch;
+  }
+
+  if (quote) return null;
+  if (current) words.push(current);
+  return words;
+}
+
+function insideWorkspace(candidate) {
+  if (!candidate) return false;
+  if (/^[~$]/.test(candidate)) return false;
+  if (/[`|;&<>{}]/.test(candidate)) return false;
+  const resolved = path.resolve(workspaceRoot, candidate);
+  const relative = path.relative(workspaceRoot, resolved).replace(/\\/g, "/");
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+const words = tokenize(command);
+if (!words || words.length < 2) process.exit(1);
+
+const verb = words[0];
+let paths = [];
+
+if (verb === "mkdir" || verb === "touch") {
+  for (let index = 1; index < words.length; index += 1) {
+    const word = words[index];
+    if (word === "--") continue;
+    if (word.startsWith("-")) continue;
+    paths.push(word);
+  }
+  if (!paths.length) process.exit(1);
+} else if (verb === "chmod") {
+  const filtered = [];
+  for (let index = 1; index < words.length; index += 1) {
+    const word = words[index];
+    if (word === "--") continue;
+    if (word.startsWith("-")) continue;
+    filtered.push(word);
+  }
+  if (filtered.length < 2) process.exit(1);
+  paths = filtered.slice(1);
+} else if (verb === "cp") {
+  let targetDirectory = "";
+  const positional = [];
+
+  for (let index = 1; index < words.length; index += 1) {
+    const word = words[index];
+    if (word === "--") continue;
+    if (word === "-t" || word === "--target-directory") {
+      if (index + 1 >= words.length) process.exit(1);
+      targetDirectory = words[++index];
+      continue;
+    }
+    if (word.startsWith("--target-directory=")) {
+      targetDirectory = word.slice("--target-directory=".length);
+      continue;
+    }
+    if (word.startsWith("-")) continue;
+    positional.push(word);
+  }
+
+  if (targetDirectory) {
+    paths = [targetDirectory];
+  } else {
+    if (positional.length < 2) process.exit(1);
+    paths = [positional[positional.length - 1]];
+  }
+} else {
+  process.exit(0);
+}
+
+if (!paths.every(insideWorkspace)) process.exit(1);
+process.exit(0);
+NODE
 }
 
 allowed_lead_operational_subcmd() {
@@ -418,7 +544,7 @@ case "$TOOL_NAME" in
           esac
         fi
 
-        if is_high_traffic_governance_surface_path "$CANONICAL_PATH"; then
+        if is_governance_restricted_write_path "$CANONICAL_PATH"; then
           case "$TOOL_NAME" in
             Write|NotebookEdit)
               emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit, Update, or MultiEdit changes so governance intent remains reviewable."
@@ -495,14 +621,24 @@ case "$TOOL_NAME" in
     # V-06 fix: Allow worker sessions to run diagnostic/test patterns.
     # Developer implementation commands — allowed for worker sessions
     # E-20 fix: moved AFTER destructive command check to prevent compound-command bypass.
-    S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])(git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|(mkdir|touch|cp|chmod)[[:space:]]|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python[[:space:]]|python3[[:space:]]|node[[:space:]]|npx[[:space:]]|tsc[[:space:]]|curl[[:space:]]|make[[:space:]]|cargo[[:space:]]|go[[:space:]]+(build|test|run)|diff[[:space:]]|wc[[:space:]]|sort[[:space:]]|pytest|jest|mocha)([[:space:]]|$)'
+    S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
       if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
         if validate_compound_command "$CLEAN_COMMAND" allowed_worker_impl_subcmd; then
           exit 0
         fi
-      else
         if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
+          emit_deny "Worker implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
+          log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
+          exit 0
+        fi
+      else
+        if allowed_worker_impl_subcmd "$CLEAN_COMMAND"; then
+          exit 0
+        fi
+        if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
+          emit_deny "Worker implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
+          log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
           exit 0
         fi
       fi

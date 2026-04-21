@@ -59,7 +59,7 @@ describe_team_runtime_snapshot() {
   done
 
   if [[ ${#config_files[@]} -eq 0 ]]; then
-    printf '%s\n' "Team runtime snapshot: no team config files under $HOME/.claude/teams."
+    printf '%s\n' "Team runtime snapshot: no live team runtime detected."
     return 0
   fi
 
@@ -73,29 +73,27 @@ describe_team_runtime_snapshot() {
     snapshot_label="Team runtime snapshot: current-session pane-backed team config detected at $live_config (workers may be idle and require SendMessage to act — 'team exists' still ≠ 'actively processing')."
   elif [[ -n "$live_config" ]]; then
     live_lead_session_id="$(team_config_lead_session_id "$live_config" 2>/dev/null || true)"
-    snapshot_label="Team runtime snapshot: pane-backed team config detected at $live_config but owned by session ${live_lead_session_id:-unknown}; treat this as a carry-over runtime hint, not current-session proof."
+    snapshot_label="Team runtime snapshot: carry-over live runtime detected at $live_config (owner session ${live_lead_session_id:-unknown}); corroborate before reuse."
   fi
 
   if [[ -n "$live_config" ]]; then
     printf '%s\n' "$snapshot_label"
-    _member_names="$(CONFIG_FILE="$live_config" node -e "
-      try {
-        const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
-        const names=(c.members||[]).map(m=>m.name).filter(Boolean);
-        if(names.length)process.stdout.write(names.join(', '));
-      } catch {}
-    " 2>/dev/null || true)"
-    if [[ -n "$_member_names" ]]; then
-      printf '%s\n' "Team members: $_member_names"
-    fi
-    if [[ "$summarized" != "$live_config" ]]; then
-      printf '%s\n' "Observed team config files: $summarized"
+    if [[ -n "$current_live_config" ]]; then
+      _member_names="$(CONFIG_FILE="$live_config" node -e "
+        try {
+          const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
+          const names=(c.members||[]).map(m=>m.name).filter(Boolean);
+          if(names.length)process.stdout.write(names.join(', '));
+        } catch {}
+      " 2>/dev/null || true)"
+      if [[ -n "$_member_names" ]]; then
+        printf '%s\n' "Team members: $_member_names"
+      fi
     fi
     return 0
   fi
 
-  printf '%s\n' "Team runtime snapshot: config files exist but no live worker panes were detected."
-  printf '%s\n' "Observed team config files: $summarized"
+  printf '%s\n' "Team runtime snapshot: carry-over config residue only; no live worker panes detected."
 }
 
 describe_procedure_state_team_channel() {
@@ -105,6 +103,11 @@ describe_procedure_state_team_channel() {
   local dispatch_evidence=""
   local pending_worker=""
   local claimed_worker=""
+  local project_continuity_state=""
+  local global_continuity_state=""
+  local mirror_status=""
+  local current_live_config=""
+  local live_config=""
   local meaningful="false"
   local parts=()
 
@@ -114,6 +117,11 @@ describe_procedure_state_team_channel() {
   dispatch_evidence="$(get_procedure_state_field "teamDispatchEvidence" "")"
   pending_worker="$(get_procedure_state_field "lastPendingWorker" "")"
   claimed_worker="$(get_procedure_state_field "lastClaimedWorker" "")"
+  project_continuity_state="$(get_procedure_state_field "projectContinuityState" "")"
+  global_continuity_state="$(get_procedure_state_field "globalContinuityState" "")"
+  mirror_status="$(get_procedure_state_field "continuityMirrorStatus" "")"
+  current_live_config="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null || true)"
+  live_config="$(active_team_config_live 2>/dev/null || true)"
 
   if [[ -n "$runtime_state" && "$runtime_state" != "inactive" ]]; then
     meaningful="true"
@@ -126,6 +134,15 @@ describe_procedure_state_team_channel() {
   fi
 
   [[ "$meaningful" == "true" ]] || return 0
+
+  if [[ -z "$current_live_config" && -z "$live_config" ]]; then
+    if [[ "$project_continuity_state" != "current" && "$global_continuity_state" != "current" ]]; then
+      return 0
+    fi
+    if [[ "$mirror_status" == "diverged" ]]; then
+      return 0
+    fi
+  fi
 
   if [[ -n "$runtime_state" ]] && { [[ "$runtime_state" != "inactive" ]] || [[ -n "$pending_worker" || -n "$claimed_worker" ]] || [[ -n "$dispatch_state" && "$dispatch_state" != "none" ]]; }; then
     parts+=("runtime=${runtime_state}${runtime_evidence:+/${runtime_evidence}}")

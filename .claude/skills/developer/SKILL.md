@@ -22,6 +22,17 @@ Before ANY work:
 
 If ANY fails → return scope feedback. Do NOT execute over-scoped instructions.
 
+On assignment receipt, also classify packet shape before execution:
+- Mixed-phase overload: if one packet combines implementation with review, proof, final acceptance, orchestration closure, or another owner's unresolved lane work, treat it as over-scoped.
+- Wrong-owner absorption: if the packet would make `developer` absorb `reviewer`, `tester`, `validator`, or lead-owned orchestration/synthesis surfaces, do not execute it as implementation.
+- Large-but-shardable surface: if the change is materially too large for one bounded developer pass but can be split by file/module/phase boundary, treat it as `scope-pressure`, not as a reason to silently overrun scope.
+- Boundary ambiguity or internal contradiction: if write scope, authority, or completion contract cannot be reconstructed truthfully, do not replan from inside implementation; return `hold`.
+
+Normal receipt response:
+- bounded single-phase implementation packet -> execute
+- mixed-phase, wrong-owner, or shardable overload packet -> `MESSAGE-CLASS: scope-pressure` with a concrete split/reroute proposal
+- boundary-ambiguous or internally contradictory packet -> `MESSAGE-CLASS: hold`
+
 ### User-Perspective Gate
 
 Apply this gate when the output is user/operator-facing or acceptance depends on real start/use. This is a developer-local completion gate, not review, proof, or final acceptance authority.
@@ -76,6 +87,7 @@ If any answer is `no` or `unverified`, the work is not ready to present as done.
 - If scope exceeded, stop and escalate.
 - For workflow-governed work, also confirm phase legitimacy: "Am I being asked to implement during an implementation-bounded phase?" If the expected output includes runtime code, scaffolding, schema creation, business-rule modules, or executable app structure, and implementation-phase basis is not explicit in the dispatch, stop and escalate. [Rule-Class: mandatory]
 - See §Escalation Triggers for scope conditions that require stopping before any edits begin.
+- If the packet is large but naturally splitable, respond before editing with one concrete split shape such as module/file shards, implementation-vs-proof separation, or owner reroute. Do not begin a broad implementation pass and hope to converge later.
 
 ### 2. Pre-Implementation Discovery
 1. **Existence**: Grep for names/synonyms before creating new items.

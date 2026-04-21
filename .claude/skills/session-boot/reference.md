@@ -111,6 +111,9 @@ The procedure state is written to `./.claude/state/procedure-state.json`. This f
 | `continuityReadPath` | string | Effective read path for continuity (preferred path, not fallback) |
 | `bootSessionId` | string | Session identifier captured at boot |
 | `continuitySeedAction` | string | Action that seeded continuity on this session start (`project-present`, `global-present`, `rebuilt`, etc.) |
+| `continuityWritePath` | string | Absolute path written by session-end for the final workspace-local procedure-state record |
+| `globalContinuityMirrorPath` | string | Absolute path written by session-end for the final global continuity mirror record |
+| `lastSessionEndTimestamp` | ISO 8601 | UTC timestamp of the most recent session-end closeout write |
 | `startupState` | string | Current startup phase (`booting` or `ready`). startupState tracks the current boot phase only. Session termination state is owned by session-closeout; a new session always resets startupState to 'booting'. |
 | `teamRuntimeState` | string | Current-session team-runtime state (`active` or `inactive`) |
 | `teamExistenceEvidence` | string | Evidence class backing `teamRuntimeState` (`team-create`, `live-config`, `worker-activity`, `none`) |

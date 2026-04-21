@@ -22,6 +22,19 @@ Before ANY work:
 
 If ANY fails → return scope feedback. Do NOT execute over-scoped instructions.
 
+On assignment receipt, also classify packet shape before execution:
+- Mixed-phase overload: if one packet combines review with implementation, proof gathering, validation closure, remediation execution, or orchestration work, treat it as over-scoped.
+- Wrong-owner absorption: if the packet would make `reviewer` replace `tester`, `validator`, `developer`, or lead-owned synthesis/orchestration, do not absorb it into review.
+- Large-but-shardable review surface: if the review surface is too large for one bounded pass but can be split by artifact, chapter, file set, or acceptance slice, treat it as `scope-pressure`, not as a reason to execute a swollen review pass.
+- Same-surface challenge overload: if independent challenge is required on the same declared surface groups and one reviewer would still absorb multiple broad surface groups or judgment axes, return `scope-pressure` with a mirrored review shard proposal instead of acting like lane presence alone satisfies cross-check.
+- Boundary ambiguity or internal contradiction: if review target, evidence basis, or acceptance surface cannot be reconstructed truthfully, do not replan from inside review; return `hold`.
+
+Normal receipt response:
+- bounded single-phase review packet -> execute
+- mixed-phase, wrong-owner, or shardable overload packet -> `MESSAGE-CLASS: scope-pressure` with a concrete split/reroute proposal
+- boundary-ambiguous or internally contradictory packet -> `MESSAGE-CLASS: hold`
+- If the packet includes `CROSS-CHECK-MODE: mirrored-same-surface`, keep the split proposal aligned to the declared surface map (`SHARD-BASIS` / `SHARD-BOUNDARY`) rather than inventing a new broad reviewer surface.
+
 ### User-Perspective Gate
 
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator. It is a reviewer-local blocking gate, not tester proof ownership or validator verdict ownership.
@@ -46,6 +59,14 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - For workflow-governed work, missing required upstream phase artifacts, checkpoints, or implementation-phase authority is a review-relevant governance defect, not something to waive because an artifact now exists. [Rule-Class: mandatory]
 
 ## Review Workflow
+
+### 0. Receipt Response
+- After `dispatch-ack`, freeze the packet before evidence inspection.
+- If the packet is over-scoped under the Scope & Quality Gate, stop before review execution and return one concrete replan shape:
+  - keep reviewer on review-only work and route missing proof back to `tester`
+  - keep reviewer on review-only work and route missing implementation/fix work back to `developer`
+  - split a large review surface by artifact, file set, or acceptance slice instead of absorbing it into one pass
+- If the packet is boundary-ambiguous or internally contradictory, return `MESSAGE-CLASS: hold` rather than guessing the review surface.
 
 ### 1. Establish The Review Surface
 - Identify: deliverable, acceptance criteria, request-fit basis, governing rules.

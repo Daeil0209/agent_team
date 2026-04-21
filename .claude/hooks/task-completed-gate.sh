@@ -393,7 +393,7 @@ if [[ -z "$WP_TIMESTAMP" ]]; then
 fi
 
 if [[ "$SV_PLAN_PRESENT" != "true" ]]; then
-  FAILURES+=("No Phase 1 self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and challenge the plan.")
+  FAILURES+=("No post-planning self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and challenge the plan.")
 fi
 
 if [[ "$SV_RESULT_PRESENT" != "true" ]]; then

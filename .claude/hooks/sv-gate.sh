@@ -4,10 +4,10 @@ source "$(dirname "$0")/hook-config.sh"
 
 # PreToolUse hook for SendMessage, Agent, TaskCreate, TaskUpdate, TeamDelete, and CronDelete.
 # Enforces two-phase Mandatory Worker Execution Cycle:
-# Plan -> Verify Plan (Phase 1) -> Execute -> Verify Results (Phase 2) -> Report
+# Plan -> post-planning self-verification -> Execute -> result verification -> Report
 #
-# Agent/TaskCreate (team-lead): blocks fan-out if Phase 1 self-verification load was not observed
-# SendMessage (workers): blocks handoff if Phase 2 self-verification load was not observed
+# Agent/TaskCreate (team-lead): blocks fan-out if post-planning self-verification load was not observed
+# SendMessage (workers): blocks handoff if result-verification self-verification load was not observed
 
 INPUT="$(cat)"
 
@@ -129,7 +129,7 @@ sv_plan_block() {
 sv_verify_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-retry after self-verification}"
-  printf 'BLOCKED: verification preflight incomplete. Detail: %s missing Phase 1 self-verification. Next: %s.' "$tool_name" "$next_step"
+  printf 'BLOCKED: verification preflight incomplete. Detail: %s missing post-planning self-verification. Next: %s.' "$tool_name" "$next_step"
 }
 
 if session_id_is_known_worker "$SESSION_ID"; then
@@ -154,7 +154,7 @@ case "$TOOL_NAME" in
         # Phase-1 SV after work-planning is observed.
         [[ -f "$WP_MARKER" ]] || exit 0
         if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-          printf '[%s] SV-GATE BLOCKED: lead assignment-grade SendMessage without Phase 1 SV (session: %s)\n' \
+          printf '[%s] SV-GATE BLOCKED: lead assignment-grade SendMessage without post-planning SV (session: %s)\n' \
             "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
           emit_deny "$(sv_verify_block "assignment-grade SendMessage" "Skill(self-verification) -> lifecycle/reuse check -> retry SendMessage")"
           exit 0
@@ -181,19 +181,19 @@ case "$TOOL_NAME" in
       exit 0
     fi
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: worker completion-grade SendMessage without Phase 1 self-verification load (session: %s)\n' \
+      printf '[%s] SV-GATE BLOCKED: worker completion-grade SendMessage without post-planning self-verification load (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
       emit_deny "$(sv_verify_block "completion-grade SendMessage" "Skill(self-verification) -> continue work -> retry SendMessage")"
       exit 0
     fi
-    # Phase 2 gate: workers must load self-verification and verify results before handoff.
+    # Result-verification gate: workers must load self-verification and verify results before handoff.
     # PLATFORM NOTE: a PreToolUse deny here prevents PostToolUse (track-worker-report.sh)
     # from firing, leaving a ledger gap — but the platform still delivers the message.
     # Changed to WARN-ONLY: allow the message through so track-worker-report.sh writes the
     # ledger entry. Enforcement is deferred to task-completed-gate.sh, which checks the
     # sv-result marker independently before accepting task completion.
     if [[ ! -f "$SV_RESULT_MARKER" ]]; then
-      printf '[%s] SV-GATE WARN: worker SendMessage without Phase 2 self-verification load (session: %s) -- deferring enforcement to task-completed-gate\n' \
+      printf '[%s] SV-GATE WARN: worker SendMessage without result-verification self-verification load (session: %s) -- deferring enforcement to task-completed-gate\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
     fi
     ;;
@@ -205,20 +205,23 @@ case "$TOOL_NAME" in
     # Missing-WP/fresh-turn dispatch is owned by task-start-gate. This avoids
     # duplicate block messages while preserving the same hard stop.
     [[ -f "$WP_MARKER" ]] || exit 0
-    # Phase 1 gate: team-lead must load self-verification and verify the plan before dispatching.
+    # Post-planning gate: team-lead must load self-verification and verify the plan before dispatching.
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s without Phase 1 self-verification load (session: %s)\n' \
+      printf '[%s] SV-GATE BLOCKED: team-lead %s without post-planning self-verification load (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
       emit_deny "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> lifecycle/reuse check -> retry dispatch")"
       exit 0
     fi
     ;;
   TaskUpdate|TeamDelete|CronDelete)
-    # This branch enforces Phase 1 SV for runtime/state mutation tools only.
+    # This branch enforces post-planning SV for runtime/state mutation tools only.
     # File edits are not hard-blocked by this branch: their fresh-turn planning
     # lock is enforced by task-start-gate, while SV remains a doctrine/procedure
     # obligation under team-lead.md IR-2 #10.
     if runtime_sender_session_is_worker "$SESSION_ID"; then
+      exit 0
+    fi
+    if [[ "$TOOL_NAME" == "TeamDelete" || "$TOOL_NAME" == "CronDelete" ]] && [[ -n "$SESSION_ID" ]] && closeout_intent_is_active "$SESSION_ID"; then
       exit 0
     fi
     if procedure_state_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS" || project_continuity_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS"; then
@@ -229,7 +232,7 @@ case "$TOOL_NAME" in
       exit 0
     fi
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s without Phase 1 self-verification load (session: %s)\n' \
+      printf '[%s] SV-GATE BLOCKED: team-lead %s without post-planning self-verification load (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
       emit_deny "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> retry $TOOL_NAME")"
       exit 0
