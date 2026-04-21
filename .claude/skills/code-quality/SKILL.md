@@ -15,7 +15,6 @@ PRIMARY-OWNER: reviewer
 - PRIMARY-OWNER: reviewer
 - SECONDARY-CONSUMER: developer
 - Do not add new peer top-level sections without explicit governance review.
-- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 
 ## Identity

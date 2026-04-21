@@ -22,6 +22,12 @@ Before ANY work:
 
 If ANY fails → return scope feedback. Do NOT execute over-scoped instructions.
 
+On assignment receipt, also classify the packet before execution:
+- Treat mixed phase-intent packets as overscoped when one assignment combines environment bring-up, proof capture, report convergence, and remediation confirmation without an explicit split basis.
+- Treat large interactive proof surfaces as overscoped when the requested surface plainly needs sharding or a merge owner but none is defined.
+- Treat strict proof contracts as contradictory when `TOOL-REQUIREMENT`, `USER-RUN-PATH`, or `PROOF-EXPECTATION` demands one execution path while fallback text permits a weaker path without truthful downgrade.
+- Normal tester response to overscope or contradiction is: send `dispatch-ack`, then return `MESSAGE-CLASS: scope-pressure` or `hold` with a concrete replan proposal. Do not execute first and explain later.
+
 ### User-Perspective Gate
 
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface. It is a tester-local proof gate, not reviewer defect classification or validator verdict ownership.
@@ -49,6 +55,14 @@ For UI deliverables, fallback evidence must be labeled by observed surface. curl
 
 ## Testing Workflow
 
+### 0. Receipt Response
+- After `dispatch-ack`, freeze the working packet before execution.
+- If the packet is over-scoped or contradictory under the Scope & Quality Gate, stop before `Execute Direct Checks` and return one concrete replan shape:
+  - split phase intent, such as `env-proof-report`
+  - shard large proof surface with explicit merge ownership
+  - narrow the proof target to the smallest credible executable surface
+- Do not silently absorb orchestration work into tester execution.
+
 ### 1. Declare The Test Surface
 - Name: artifact under test, version, environment, scope boundaries.
 
@@ -72,6 +86,8 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 - For code: syntax check, import check, unit tests, integration.
 - For documents: rendering, structure, content spot-checks, and rendered evidence capture when acceptance depends on what a human actually sees.
 - For GUI or web software, record the launch command, route/view, control exercised, user action, expected result, and observed result for each directly tested interaction.
+- Keep the actual execution path explicit against the packet contract. Compare what you truly ran to `TOOL-REQUIREMENT`, `USER-RUN-PATH`, `PROOF-EXPECTATION`, and the assigned interaction scope while the run is in progress, not only at handoff time.
+- If you switch to an adaptive or weaker path, classify that path immediately. Do not continue with `matched` assumptions in working notes once the executed surface has drifted.
 
 
 ### 3A. Interaction Coverage Matrix (for executable, user-facing software)
@@ -152,6 +168,7 @@ All human-facing types:
 - Before rerunning a failed, flaky, or blocked scenario, state what failed and what changed in the corrective basis, environment basis, or scenario framing.
 - Do not exceed 3 materially similar reruns without escalation or `HOLD`, unless the dispatch explicitly authorizes a longer repeat-run pattern.
 - Escalate to team-lead via SendMessage with message-class: hold and the specific retry exhaustion context.
+- If the same hook or runtime blocker appears twice on the same proof surface, stop adjacent retries and send `status` or `hold` with the blocked surface, the exact failing step, and the smallest credible replan. Do not mask repeated blocker friction by quietly switching to a weaker proof path and later claiming equivalence.
 
 ### 7a. Pre-Handoff Self-Check
 1. All scenarios executed or marked blocked.
@@ -160,6 +177,9 @@ All human-facing types:
 4. No validation claims without execution evidence.
 5. For executable, user-facing software, no in-scope user-visible control is left unclassified in the interaction-coverage matrix.
 6. Load `self-verification`, run full procedure including Critical Challenge; include verification output format in handoff block.
+7. `TOOL-REQUIREMENT`, actual execution basis, and `PROOF-SURFACE-MATCH` agree.
+8. `USER-RUN-PATH`, actual launch path, and `RUN-PATH-STATUS` agree.
+9. `INTERACTION-COVERAGE-STATUS` agrees with the recorded interaction matrix; navigation-only or indirect evidence is not labeled `matched` when direct interaction remained required.
 
 ### 7b. Build The Test Handoff
 Build the full handoff block (fields below) and send via SendMessage to team-lead. Do not write to `./.claude/session-state.md` or `$HOME/.claude/session-state.md` directly — team-lead owns all continuity surfaces.
@@ -186,6 +206,11 @@ Build the full handoff block (fields below) and send via SendMessage to team-lea
   - `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
   - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
   - If any of those procedure states is not true yet, use `MESSAGE-CLASS: hold` and explain the blocked surface in `OPEN-SURFACES` instead of formatting the report as completion-ready.
+- `matched` is reserved for true contract alignment on that surface.
+  - If `TOOL-REQUIREMENT` required one tool path and the evidence basis used a different path, do not report `PROOF-SURFACE-MATCH: matched`.
+  - If the promised user run path was not executed end-to-end in the current proof session, do not report `RUN-PATH-STATUS: matched`.
+  - If required direct interactions were not actually executed, do not report `INTERACTION-COVERAGE-STATUS: matched`.
+- When adaptive execution still yields useful evidence, keep the evidence and downgrade the state truthfully to `partial`, `mismatched`, or `blocked`. Do not soften the report into completion-ready `matched` language.
 - `TEST-STATE` is `ready` when the assigned proof surface has an explicit usable proof classification with decisive evidence, including disproof when that is what execution established, `hold` when framing or expectation basis is too weak for honest proof closure, and `blocked` when required execution could not complete because of environment, access, or runtime blockers.
 - Use the task id from the runtime assignment packet whenever one exists. Do not substitute a worker name, inferred chronology, or remembered topic label.
 - Default to `REQUESTED-LIFECYCLE: standby` when preserved proof context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.

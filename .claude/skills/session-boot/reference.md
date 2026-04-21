@@ -10,26 +10,26 @@ auto-inject: false
 
 ## Worker Lifecycle States
 
-- `ACTIVE`: currently executing work — includes the period after turn completion until the governing lane explicitly approves standby, reuse, or shutdown
+- `ACTIVE` / working: assigned and not yet lifecycle-resolved. `dispatch-ack` makes the worker working; turn-ended runtime signals, permission prompts, and missing reports do not make it not-working.
 - `STANDBY`: governing lane has approved the worker to wait with preserved context for future reuse
 - `SHUTDOWN-PENDING`: `shutdown_request` message sent and awaiting worker acknowledgment; worker is expected to complete its current turn and acknowledge gracefully. Transitions to fully removed from teammate population on acknowledgment, or to `FORCE-STOPPED` if the worker is unresponsive after timeout.
 - `FORCE-STOPPED`: explicitly terminated — worker is no longer needed, harmful, stuck, or must be stopped immediately
-- `HOLD-FOR-VALIDATION`: Worker has completed its task and is waiting for the validator lane to review its output before receiving a new assignment. The worker is idle but its output is under active acceptance review. Do not reassign until validator completes or issues a HOLD decision.
+- `HOLD-FOR-VALIDATION`: Worker has completed its task and is waiting for the validator lane to review its output before receiving a new assignment. The worker is not doing new work, but its output is under active acceptance review. Do not reassign until validator completes or issues a HOLD decision.
 
 ## Runtime Signals (Not Governance States)
 
-- `idle_notification`: automatic runtime message indicating a worker's turn has ended. This is a technical signal, not a state transition. The worker remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
-- Receiving `idle_notification` without a preceding completion report from the worker is a **handoff failure** (T2).
+- `idle_notification`: automatic runtime message indicating a worker's response turn has ended. This is a technical signal, not a state transition, not availability evidence, and not proof the worker is not working. The worker remains `ACTIVE` / working until completion-grade output and a governing lifecycle decision prove otherwise.
+- Receiving `idle_notification` without a preceding completion report from a started worker is `working-report-missing`, not proof of non-working state. If a `permission_request` exists, classify the worker as `working-permission-pending` and resolve the permission surface first.
 - Receiving a completion report without an explicit `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation` field is a lifecycle evidence defect (T3).
 
-## Supervisor Decisions on idle_notification
+## Supervisor Decisions on Turn-Ended Signals
 
-When an idle_notification is received with a valid completion report, the governing lane must make one of these decisions:
+When a turn-ended signal is received with a valid completion report, the governing lane must make one of these decisions:
 
 - `Reuse`: more work is immediately available and preserved context is still valuable
 - `Standby Approve`: no immediate work, but near-future reuse is plausible. Current standard control path is an explicit governing-lane message (`MESSAGE-CLASS: standby`) to the concrete worker name; any helper or hook state update exists only to reflect that approved decision, not to replace it.
 - `Shutdown (graceful → force-stop escalation)`: Send shutdown_request first (graceful path); if worker does not respond, escalate to mark-force-stop.sh as fallback. Force-stop is step 2, not an independent decision type. Worker is no longer needed, wrong, harmful, stuck, or must be terminated. Shutdown sequence: first send `SendMessage(to: "<worker-name>", message: {type: "shutdown_request"})` and wait for acknowledgment. If the worker is unresponsive, then use `bash "$HOME/.claude/hooks/mark-force-stop.sh" "<worker-name>"` as emergency fallback. Skipping `shutdown_request` leaves ghost entries in Claude Code's internal tracking.
-- `Hold for Validation`: Worker output requires validator acceptance before reassignment. Send lifecycle control message with LIFECYCLE-DECISION: hold-for-validation. Worker remains idle-but-reserved until validator verdict is received. Do not send shutdown or new assignment until verdict is clear.
+- `Hold for Validation`: Worker output requires validator acceptance before reassignment. Send lifecycle control message with LIFECYCLE-DECISION: hold-for-validation. Worker remains not-working-but-reserved until validator verdict is received. Do not send shutdown or new assignment until verdict is clear.
 
 ## Message-First Lifecycle Rule
 
@@ -37,8 +37,8 @@ When an idle_notification is received with a valid completion report, the govern
 - Treat `TeammateIdle`, ledgers, and health-check output as observation surfaces that inform the next lifecycle message, not as authority to skip that message.
 - Completion is an upward report requesting a governing decision; it does not by itself authorize auto-standby, replacement, or teammate removal.
 - Consequential completion handoff should carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`. This is a worker request, not lifecycle authority.
-- The governing lane owns the lifecycle transitions: dispatch or approved `assignment|reuse` moves a live worker to `ACTIVE`; turn completion without a further governing decision leaves the worker in ACTIVE state awaiting the governing lane's explicit lifecycle decision; explicit `standby` approval moves the worker to `STANDBY`; confirmed shutdown/removal removes the worker from teammate population.
-- Until the governing lane answers with `standby`, `reuse`, or `shutdown`, the worker remains `ACTIVE`.
+- The governing lane owns the lifecycle transitions: dispatch or approved `assignment|reuse` moves a live worker to `ACTIVE` / working; a turn-ended signal without completion-grade output leaves the worker working; completion-grade output creates a lifecycle obligation; explicit `standby` approval moves the worker to `STANDBY`; confirmed shutdown/removal removes the worker from teammate population.
+- Until completion-grade output plus governing `standby`, `reuse`, `hold-for-validation`, or `shutdown` proves otherwise, the worker remains working.
 - Do not ignore a worker lifecycle request without reason. Brief hold is valid only while immediate reuse is being prepared.
 - `assignment` is the generic downward activation packet for bounded work. `reuse` is the specific downward activation packet that reactivates an existing standby worker or reassigns work to an active worker awaiting a lifecycle decision on the same preserved topic/context. Both return the target worker to `ACTIVE`; neither creates a new teammate by itself.
 - Teammate population changes only on worker creation and confirmed shutdown/removal. `standby` and `reuse` are state transitions, not teammate-count changes.
@@ -76,7 +76,7 @@ Lifecycle decision mapping: team-lead 'shutdown' decision = (1) send shutdown_re
 - High-confidence stale: investigate quickly and consider replacement or force-stop.
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan rather than silent hope.
-- Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or a team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support that diagnosis.
+- Treat stale signals and turn-ended runtime signals as observational only. Do not assert a specific tool-phase hang, non-working state, or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support that diagnosis.
 - Repo-local generated-output cleanup may use bounded destructive commands only inside the active repo's approved output roots (`./projects/`, `./outputs/`, `./backups/`). Keep that allowance scoped to generated child contents; it does not authorize deleting the root directories themselves, arbitrary repo deletion, hidden interpreter-based filesystem mutation, or main-thread mutation. A reset followed only by `mkdir -p` scaffold recreation under the same approved generated roots may use the bounded reset-scaffold pattern; do not mix that reset with build/test/git/touch/edit commands.
 
 ## Runtime-Pressure Rule

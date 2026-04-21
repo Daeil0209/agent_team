@@ -48,7 +48,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ## Review Workflow
 
 ### 1. Establish The Review Surface
-- Identify: deliverable, acceptance criteria, request-fit packet, governing rules.
+- Identify: deliverable, acceptance criteria, request-fit basis, governing rules.
 
 ### 1A. Plan Verification
 Load `self-verification` and execute Critical Challenge on the plan (SV Trigger 3: before executing a plan). The plan is unverified until it survives Critical Challenge.

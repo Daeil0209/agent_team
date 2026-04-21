@@ -3,10 +3,10 @@
 # cleanup-terminated-panes.sh, and teammate-quality-gate.sh.
 # EVENT TYPES (both routed here via settings.json hooks):
 #   PostToolUse(SendMessage): worker state sync + planning marker management + pane cleanup
-#   TeammateIdle:            quality gate mirror + idle-pending decisions + pane cleanup
+#   TeammateIdle:            quality gate mirror + turn-ended lifecycle decisions + pane cleanup
 # BRANCHING: EVENT_TYPE detected at runtime (tool_name field presence, lines 13-21).
 #   post-tool-use path: handles assignment/reuse/reroute markers, handoff state, standby/shutdown lifecycle
-#   teammate-idle path: marks idle-pending, mirrors quality gate decisions, triggers pane cleanup
+#   teammate-idle path: records turn-ended lifecycle backlog, mirrors quality gate decisions, triggers pane cleanup
 set -euo pipefail
 
 source "$(dirname "$0")/hook-config.sh"
@@ -78,41 +78,107 @@ if (latest) {
 NODE
 }
 
-worker_idle_classification() {
+latest_worker_permission_request_timestamp() {
+  local worker_name="${1-}"
+
+  [[ -n "$worker_name" ]] || return 1
+
+  WORKER_NAME="$worker_name" HOME_DIR="$HOME" node <<'NODE' 2>/dev/null || true
+const fs = require("fs");
+const path = require("path");
+
+const normalize = (value) => String(value || "").trim().toLowerCase();
+const workerName = normalize(process.env.WORKER_NAME);
+const teamsRoot = path.join(process.env.HOME_DIR || "", ".claude", "teams");
+if (!workerName || !fs.existsSync(teamsRoot)) process.exit(0);
+
+let latest = "";
+for (const entry of fs.readdirSync(teamsRoot, { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue;
+  const inboxPath = path.join(teamsRoot, entry.name, "inboxes", "team-lead.json");
+  if (!fs.existsSync(inboxPath)) continue;
+
+  let rows;
+  try {
+    rows = JSON.parse(fs.readFileSync(inboxPath, "utf8"));
+  } catch {
+    continue;
+  }
+  if (!Array.isArray(rows)) continue;
+
+  for (const row of rows) {
+    if (!row || typeof row !== "object") continue;
+    if (normalize(row.from) !== workerName) continue;
+
+    let payload;
+    try {
+      payload = JSON.parse(String(row.text || ""));
+    } catch {
+      continue;
+    }
+    if (!payload || typeof payload !== "object") continue;
+    if (payload.type !== "permission_request") continue;
+
+    const payloadAgent = normalize(payload.agent_id || payload.agentId || payload.from);
+    if (payloadAgent && payloadAgent !== workerName) continue;
+
+    const timestamp = String(row.timestamp || payload.timestamp || "");
+    if (timestamp && (!latest || timestamp >= latest)) latest = timestamp;
+  }
+}
+
+if (latest) process.stdout.write(latest);
+NODE
+}
+
+worker_turn_end_classification() {
   local worker_name="${1-}"
   local last_message_class=""
   local last_message_timestamp=""
+  local permission_request_timestamp=""
   local parsed=""
   local dispatch_worker=""
   local dispatch_at=""
 
   [[ -n "$worker_name" ]] || {
-    printf 'idle-awaiting-lifecycle'
+    printf 'working-report-missing'
     return 0
   }
 
   if worker_dispatch_ack_required "$worker_name"; then
-    printf 'idle-no-completion'
+    printf 'dispatch-pending-no-ack'
     return 0
   fi
 
   parsed="$(latest_worker_report_class "$worker_name")"
-  mapfile -t _idle_report_fields <<<"$parsed"
-  last_message_class="${_idle_report_fields[0]:-}"
-  last_message_timestamp="${_idle_report_fields[1]:-}"
+  mapfile -t _turn_end_report_fields <<<"$parsed"
+  last_message_class="${_turn_end_report_fields[0]:-}"
+  last_message_timestamp="${_turn_end_report_fields[1]:-}"
   dispatch_worker="$(get_procedure_state_field "lastDispatchWorker" "")"
   dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
+  permission_request_timestamp="$(latest_worker_permission_request_timestamp "$worker_name")"
+
+  if [[ -n "$permission_request_timestamp" ]] \
+    && { [[ -z "$dispatch_worker" || "$dispatch_worker" == "$worker_name" ]]; } \
+    && { [[ -z "$dispatch_at" || "$permission_request_timestamp" == "$dispatch_at" || "$permission_request_timestamp" > "$dispatch_at" ]]; } \
+    && { [[ -z "$last_message_timestamp" || "$permission_request_timestamp" == "$last_message_timestamp" || "$permission_request_timestamp" > "$last_message_timestamp" ]]; }; then
+    printf 'working-permission-pending'
+    return 0
+  fi
 
   case "$last_message_class" in
     handoff|completion|hold)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'idle-no-completion'
+        printf 'working-report-missing'
         return 0
       fi
-      printf 'idle-awaiting-lifecycle'
+      printf 'not-working-awaiting-lifecycle'
+      ;;
+    blocker)
+      printf 'working-blocked'
       ;;
     *)
-      printf 'idle-no-completion'
+      printf 'working-report-missing'
       ;;
   esac
 }
@@ -564,19 +630,19 @@ NODE
     IDLE_REASON="${IDLE_FIELDS[1]:-unknown}"
     COMPLETED_TASK="${IDLE_FIELDS[2]:-none}"
     COMPLETED_STATUS="${IDLE_FIELDS[3]:-none}"
-    IDLE_CLASSIFICATION="$(worker_idle_classification "$TEAMMATE")"
-    IDLE_NOTICE_REASON="$IDLE_REASON"
-    if [[ "$IDLE_CLASSIFICATION" == "idle-no-completion" ]]; then
-      IDLE_NOTICE_REASON="idle-no-completion"
-    fi
+    TURN_END_CLASSIFICATION="$(worker_turn_end_classification "$TEAMMATE")"
+    IDLE_NOTICE_REASON="$TURN_END_CLASSIFICATION"
 
     TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
     printf '%s | TEAMMATE_IDLE | %s | reason:%s | status:%s | task:%s | mode:mirror\n' \
       "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
-      if ! worker_is_standby "$TEAMMATE"; then
+      # Only completion-grade turn endings belong in the lifecycle backlog file.
+      if ! worker_is_standby "$TEAMMATE" && [[ "$TURN_END_CLASSIFICATION" == "not-working-awaiting-lifecycle" ]]; then
         mark_worker_idle_pending "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"
+      else
+        clear_worker_idle_pending "$TEAMMATE"
       fi
     fi
 
@@ -585,14 +651,28 @@ NODE
       exit 0
     fi
 
-    TEAMMATE_VAR="$TEAMMATE" IDLE_REASON_VAR="$IDLE_REASON" COMPLETED_STATUS_VAR="$COMPLETED_STATUS" IDLE_CLASSIFICATION_VAR="$IDLE_CLASSIFICATION" node <<'NODE'
+    TEAMMATE_VAR="$TEAMMATE" IDLE_REASON_VAR="$IDLE_REASON" COMPLETED_STATUS_VAR="$COMPLETED_STATUS" TURN_END_CLASSIFICATION_VAR="$TURN_END_CLASSIFICATION" node <<'NODE'
 const teammate = process.env.TEAMMATE_VAR || "unknown";
 const reason = process.env.IDLE_REASON_VAR || "unknown";
 const status = process.env.COMPLETED_STATUS_VAR || "none";
-const classification = process.env.IDLE_CLASSIFICATION_VAR || "idle-awaiting-lifecycle";
-const ctx = classification === "idle-no-completion"
-  ? `Handoff failure: ${teammate} emitted idle_notification without a completion-grade worker report. State: idle-no-completion. Next: treat this as runtime correction, not a normal turn boundary.`
-  : `Worker idle: ${teammate} (${reason}, ${status}). Next: decide reuse, standby, shutdown, or hold-for-validation before unrelated dispatch.`;
+const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-report-missing";
+let ctx;
+switch (classification) {
+  case "not-working-awaiting-lifecycle":
+    ctx = `Worker not working: ${teammate} has completion-grade output (${reason}, ${status}). Next: decide reuse, standby, shutdown, or hold-for-validation before unrelated dispatch.`;
+    break;
+  case "working-permission-pending":
+    ctx = `Worker still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the worker as not working.`;
+    break;
+  case "dispatch-pending-no-ack":
+    ctx = `Dispatch still pending: ${teammate} has no dispatch-ack yet. Next: apply dispatch reception thresholds; do not status-probe the unstarted target as the primary action.`;
+    break;
+  case "working-blocked":
+    ctx = `Worker still working: ${teammate} reported a blocker before this turn-ended signal. Next: resolve the blocker or request the smallest needed partial result.`;
+    break;
+  default:
+    ctx = `Worker still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
+}
 process.stdout.write(JSON.stringify({ systemMessage: ctx }));
 NODE
 

@@ -17,7 +17,6 @@ PRIMARY-OWNER: developer
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
   5. owner-local structural feedback / self-growth / regression-guard blocks when present
 - Do not add new peer top-level sections without explicit governance review.
-- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 
 ## Identity
@@ -66,7 +65,7 @@ Activate for non-trivial applications, multi-module tools, stateful workflows, i
 
 - Active request source, canonical contract, execution plan
 - Business workflow packet and relevant references/legacy code when present
-- For request-bound work: include request-fit packet and controlling business-workflow packet before freezing state or module boundaries
+- For request-bound work: include the frozen request-fit basis and controlling business-workflow packet before freezing state or module boundaries
 
 ## Outputs
 

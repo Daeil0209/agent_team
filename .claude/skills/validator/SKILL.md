@@ -22,6 +22,12 @@ Before ANY work:
 
 If ANY fails → return scope feedback. Do NOT execute over-scoped instructions.
 
+On assignment receipt, also classify the packet before execution:
+- Treat mixed phase-intent packets as overscoped when one assignment combines final verdict work with proof gathering, remediation confirmation, or missing-owner closure without an explicit split basis.
+- Treat validator packets as contradictory when the requested verdict demands a stronger outcome than the visible `REVIEW-STATE`, `TEST-STATE`, or acceptance reconciliation surface can honestly support.
+- Treat missing owner boundaries as overscoped when the packet implicitly asks validator to replace `tester` proof ownership or `reviewer` review ownership instead of arbitrating their visible outputs.
+- Normal validator response to overscope or contradiction is: send `dispatch-ack`, then return `MESSAGE-CLASS: scope-pressure` or `hold` with a concrete reroute or replan. Do not arbitrate first and explain later.
+
 ### User-Perspective Gate
 
 It is a validator-local PASS gate, not the lead's broader acceptance ownership for routing and lifecycle decisions.
@@ -51,6 +57,14 @@ For UI deliverables, server/API evidence, curl responses, HTML text, build succe
 - Produced outputs, review findings, test evidence
 
 ## Validation Workflow
+
+### 0. Receipt Response
+- After `dispatch-ack`, freeze the working packet before execution.
+- If the packet is over-scoped or contradictory under the Scope & Quality Gate, stop before evidence inspection and return one concrete replan shape:
+  - keep validator on verdict-only work and route missing proof back to `tester`
+  - keep validator on verdict-only work and route missing review closure back to `reviewer`
+  - split remediation confirmation from final acceptance arbitration
+- Do not silently absorb proof gathering, review repair, or orchestration closure into validator execution.
 
 ### 1. Build The Expectation Suite
 - Collect all expectation sources. Mark authoritative vs supplemental.
@@ -82,6 +96,8 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 - Do not overturn upstream blocking findings without factual error proof.
 - If critical-path proof is still missing, route proof generation back to `tester` instead of silently replacing the tester lane inside validation.
 - For workflow-governed work, PASS requires not only output quality and evidence but also the required governing phase basis (including implementation-phase authority when applicable) for materially consequential execution. Strong implementation, review, or test evidence does not erase a missing mandatory plan, design, or approval surface when that surface is part of the active workflow's acceptance basis. If the required authority surface is missing, treat as `HOLD`. [Rule-Class: mandatory]
+- Preserve upstream lane truth monotonically. If `reviewer` or `tester` reported `hold`, `blocked`, `mismatched`, `missing`, or `partial`, validator may not strengthen that state into PASS or `matched` without fresh stronger evidence on that same acceptance surface.
+- Contradictory upstream signals are a `HOLD` surface until the contradiction is explicitly reconciled. Do not resolve contradiction by silently preferring the more convenient or optimistic lane.
 
 ### 7. Requirement-To-Evidence Comparison
 - Each expectation: matched, partially matched, mismatched, blocked, not assessable.
@@ -116,6 +132,7 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 - Before repeating a materially similar validation pass, state what evidence, acceptance condition, or upstream state changed.
 - Do not perform more than 3 materially similar verdict passes without escalation or `HOLD`; unchanged evidence does not justify a stronger verdict.
 - Escalate to team-lead via SendMessage with message-class: hold and the specific retry exhaustion context.
+- If the same unresolved blocker, contradiction, or missing acceptance reconciliation appears twice on the same decision surface, stop adjacent verdict retries and send `status` or `hold` with the blocked acceptance surface and the exact owner/action needed to move the verdict.
 
 ### 9B. Pre-Handoff Self-Check
 1. Every verdict criterion backed by direct evidence, not inference alone.
@@ -124,6 +141,9 @@ When the dispatch packet includes `SKILL-RECOMMENDATIONS`, evaluate each recomme
 4. User-perspective fitness evaluated, not just technical correctness.
 5. Confidence level proportional to evidence strength.
 6. Load `self-verification`, run full procedure including Critical Challenge; include verification output format in handoff block.
+7. `REVIEW-STATE`, `TEST-STATE`, and proposed verdict do not conflict.
+8. `ACCEPTANCE-RECONCILIATION` is explicit whenever executable or user-facing acceptance requires reconciliation across review, proof, and delivery experience.
+9. PASS is not stronger than the strongest decisive evidence on the current acceptance surface.
 
 ### 10. Final Validation Handoff
 Build the full handoff block (fields below) and send via SendMessage to team-lead. Do not write to `./.claude/session-state.md` or `$HOME/.claude/session-state.md` directly — team-lead owns all continuity surfaces.
@@ -151,6 +171,11 @@ Build the full handoff block (fields below) and send via SendMessage to team-lea
   - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
   - `ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable`
   - If any of those procedure states is not true yet, use `MESSAGE-CLASS: hold` and explain the blocked surface in `OPEN-SURFACES` instead of formatting the report as completion-ready.
+- `matched` and `PASS` are reserved for true acceptance alignment on that surface.
+  - If the visible tester proof is `partial`, `mismatched`, `blocked`, or `missing` on the decisive acceptance surface and validator has no stronger fresh evidence on that same surface, do not report `PROOF-SURFACE-MATCH: matched` and do not issue PASS.
+  - If the promised user run path was not actually reconciled into the acceptance basis, do not report `RUN-PATH-STATUS: matched`.
+  - If delivery experience, user-readiness, and interaction coverage were not explicitly reconciled, do not report `ACCEPTANCE-RECONCILIATION: explicit` and do not issue PASS.
+- When the available evidence is still useful but not sufficient for PASS, keep the evidence and downgrade truthfully to `HOLD`, `partial`, `mismatched`, or `blocked`. Do not soften the verdict into PASS-like language.
 - Default to `REQUESTED-LIFECYCLE: standby` when preserved validation context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
 - Use the task id from the runtime assignment packet whenever one exists. Do not substitute a worker name, inferred chronology, or remembered topic label.
 - This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.

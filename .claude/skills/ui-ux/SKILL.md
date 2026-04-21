@@ -15,7 +15,6 @@ PRIMARY-OWNER: developer
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
   5. owner-local structural feedback / self-growth / regression-guard blocks when present
 - Do not add new peer top-level sections without explicit governance review.
-- Keep downstream owner-map restatements local so the skill remains safe to read in isolation.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 
 ## Identity
@@ -128,4 +127,3 @@ Apply the active `Self-Growth Sequence`. On governance or skill patch broadcast,
 ---
 
 > For Workflow Tool Design Patterns, see reference.md
-

@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Activation, Step 1: ENTRY PREREQUISITE, Step 2: DETERMINE TIER, Step 3: EXECUTE PER TIER, Step 4: VERIFY, Intent Framing Method, Request-Fit Freeze And Phase Discipline, Pre-Dispatch Routing Quality Gate, Dispatch Sizing Guard, Pre-Dispatch Scope Check, Dispatch Packet Final Check, Task Decomposition Protocol, Dispatch Packet Compliance, Dispatch Packet And Authority Boundaries, Agent Dispatch Discipline, User-Perspective Acceptance Gate, Checkpoint C: Before Presenting Results
+- Fixed section order: Activation, Step 1: ENTRY PREREQUISITE, Step 2: DETERMINE TIER, Step 3: EXECUTE PER TIER, Step 4: VERIFY, Intent Framing Method, Request-Fit Basis And Phase Discipline, Pre-Dispatch Routing Quality Gate, Dispatch Sizing Guard, Pre-Dispatch Scope Check, Dispatch Packet Final Check Procedure, Task Decomposition Protocol, Dispatch Packet Compliance, Dispatch Packet And Authority Boundaries, Agent Dispatch Discipline, User-Perspective Acceptance Gate, Checkpoint C: Before Presenting Results
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
@@ -66,7 +66,7 @@ Before any fresh-turn `Agent`, `TaskCreate`, or assignment-grade `SendMessage` f
 
 1. Loaded `work-planning` and frozen the current request scope.
 2. Loaded `self-verification` and completed the post-planning SV gate.
-3. Preserved the frozen request-fit packet as the dispatch basis.
+3. Preserved the frozen request-fit basis as the dispatch basis.
 
 If `task-execution` is loaded first to classify tier or inspect workflow fit, stop before dispatch and satisfy the fresh-turn `work-planning` and post-planning `self-verification` markers. `task-execution` may refine the plan; it does not replace those markers.
 
@@ -129,7 +129,7 @@ Prerequisite: fresh-turn `work-planning` and post-planning `self-verification` g
    - Cost-efficiency rule: choose the smallest reliable staffing shape that prevents serial bottlenecks, preserves required separation, and avoids avoidable redispatch or lead-local overflow. Worker-count minimization by itself is not the goal. This rule sizes staffing after routing fit is decided; it does not justify downgrading team-routed work back into lead-local execution.
    - Team-routing commitment: when the plan declares `AGENT-MAP`, team routing, or 2+ worker-owned surfaces, the post-planning SV pass commits the next consequential action to runtime activation or worker dispatch. Additional lead-local inspection after that point must name the concrete dispatch blocker it clears.
    - Workflow cursor rule: a declared next stage remains active until consumed by `execute`, `dispatch`, `HOLD`/re-handoff, explicit blocker, or explicit cancel. Administrative `TaskUpdate`/`TaskStop` records shared state only; it does not consume the workflow or development cursor.
-   - Pipeline-ready-idle rule: if an active workflow is not complete, no active worker remains, a declared next stage exists, its gate/prerequisites are satisfied, and no blocker exists, consume that cursor immediately by lead execution or worker dispatch according to the stage owner unless the user explicitly pauses, cancels, or forbids action in the current turn. For status/current-state turns, run this test before labeling the turn answer-only; if it matches, give only a brief status answer and continue in the same turn through required `work-planning` -> `self-verification` -> execute/dispatch. Missing current-turn WP/SV is the next preflight step, not a deferral reason. If the gate or prerequisite is missing, monitor or `HOLD`; if a blocker exists, `HOLD`/re-handoff instead of dispatching.
+   - Pipeline-ready-idle rule: if an active workflow is not complete, no active worker remains, a declared next stage exists, its gate/prerequisites are satisfied, and no blocker exists, consume that cursor immediately by lead execution or worker dispatch according to the stage owner unless the user explicitly pauses, cancels, or forbids action in the current turn. This label names a ready workflow cursor with zero active workers; it is not a worker lifecycle state and must not be read as standby, shutdown, or not-working evidence for any specific worker. For status/current-state turns, run this test before labeling the turn answer-only; if it matches, give only a brief status answer and continue in the same turn through required `work-planning` -> `self-verification` -> execute/dispatch. Missing current-turn WP/SV is the next preflight step, not a deferral reason. If the gate or prerequisite is missing, monitor or `HOLD`; if a blocker exists, `HOLD`/re-handoff instead of dispatching.
    - Dispatch truth rule: successful `TeamCreate` proves runtime existence only. Successful `Agent` or assignment-grade `SendMessage` proves dispatch-pending only. Describe work as running only after worker-start evidence appears.
    - Speech-before-action rule: before observed `TeamCreate`, `Agent`, or assignment-grade `SendMessage` evidence, user-facing text may name only the next intended action. Do not say `assigned`, `dispatched`, `parallelized`, `underway`, `running`, or equivalent progress wording before the corresponding tool evidence exists.
    - Milestone-status rule: worker `MESSAGE-CLASS: status` = default internal progress for non-trivial/multi-step work; use for explicit status answers; never substitute for `handoff|completion|hold`; never advance workflow, close lifecycle, create wait barriers, or justify redispatch.
@@ -150,24 +150,17 @@ Executing destructive or security-sensitive Precision work without user confirma
 
 ## Intent Framing Method
 
-Before freezing the request-fit packet or a consequential analysis plan, interpret the governing intent, not just the visible task surface:
-- Extract the real requested judgment or action first: what must be evaluated, preserved, changed, decided, or produced?
-- When the user signals an operating philosophy, preservation rule, or design intent, capture that as controlling analysis context rather than treating it as optional commentary.
-- Distinguish actual defects from intentional protective restatement, owner-local readability, or role-required procedure. Do not classify something as a defect merely because it is repeated or conservative; first ask what work the repetition is protecting.
-- For governance/process review, also separate observed runtime failures, observed operational friction, static textual contradictions, and theoretical risks before staffing or severity assignment. Do not let document smell substitute for operational evidence.
-- Identify which evaluative lens is supposed to govern the analysis and which lenses must not dominate. If the user wants philosophy-preserving optimization, do not let architecture-purity, compression, or cleanup reflex outrank that instruction.
-- Encode the result into the request-fit freeze: `REQUEST-INTENT` carries the governing purpose, `CORE-QUESTION` asks the real decision question, `REQUIRED-DELIVERABLE` matches the actual output surface, and `EXCLUDED-SCOPE` blocks non-governing lenses or adjacent but non-decisive material.
-- When the request is review, balance-check, or doctrine analysis, confirm design intent and protected value of the subject under review first, then separate three buckets before planning: real defects, intentional protective overlap, and items that are not defective but should be clarified or sharpened.
-- During synthesis of governance/process review, do not upgrade a bucket into `real defect` solely because multiple shards found similar wording problems. Repetition across documents can still be intentional overlap or documentation debt unless runtime harm or concrete blocking behavior is evidenced.
-- If later user correction changes the governing lens, refreeze the packet before dispatch. Do not keep staffing, plan shape, or defect framing from the stale interpretation.
+Use the `work-planning` Step 0 request-fit basis as the dispatch source. Do not rederive or override it inside `task-execution`. If the basis is missing, stale, or contradicted by a user correction, return to `work-planning` Step 0 before staffing.
 
-## Request-Fit Freeze And Phase Discipline
+For governance/process review dispatches, carry any Step 0 governing lens, protected value, and defect-bucket distinctions into the packet. If those fields are required but absent, HOLD for Step 0 repair instead of inventing them during dispatch.
 
-- Merge ownership is mandatory; full merge completion is not a universal wait barrier. Once the frozen packet and available shards support progress, the merge owner may continue and fold late shards in through explicit follow-up.
-- For request-bound document work, make the active execution phase explicit before dispatch. Use only one of these phase intents per dispatch: `research` (evidence shaping and contradiction mapping only), `draft` (first coherent answer-first artifact from frozen packet and available evidence), or `merge-compress` (integrate shard outputs, remove duplication, preserve the direct answer, and fit the final page/volume target).
+## Request-Fit Basis And Phase Discipline
+
+- Merge ownership is mandatory; full merge completion is not a universal wait barrier. Once the frozen basis and available shards support progress, the merge owner may continue and fold late shards in through explicit follow-up.
+- For request-bound document work, make the active execution phase explicit before dispatch. Use only one of these phase intents per dispatch: `research` (evidence shaping and contradiction mapping only), `draft` (first coherent answer-first artifact from frozen basis and available evidence), or `merge-compress` (integrate shard outputs, remove duplication, preserve the direct answer, and fit the final page/volume target).
 - Treat `review` and `validation` as acceptance phases, not cleanup afterthoughts. Review checks artifact quality, request fit, and defect classification; validation arbitrates final PASS/HOLD/FAIL against the authoritative expectation surfaces after review/test state is visible.
 - Phase separation is semantic, not mandatory worker churn. Do not create extra handoffs just to satisfy the phase model. Reuse the same worker across consecutive phases when scope remains single-purpose, context reuse is valuable, and no independent integration surface justifies a new owner.
-- Do not block draft start on every pending evidence shard. When the frozen packet and available evidence already support partial or answer-first drafting, start immediately and integrate later research through bounded follow-up.
+- Do not block draft start on every pending evidence shard. When the frozen basis and available evidence already support partial or answer-first drafting, start immediately and integrate later research through bounded follow-up.
 - Do not present a consequential user-facing explanation, recommendation, or report as verified unless the active reporting basis keeps `SOURCE-FAMILY`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD` explicit, plus any required `REVIEW-STATE`, `TEST-STATE`, or `DECISION-SURFACE` from the governing acceptance chain. If the packet is weaker than the claim, keep the report on `HOLD`, mark it `UNVERIFIED`, or state it as explicit inference instead of hardening guesswork into fact.
 - For consequential solution work, require the `CLAUDE.md` `§Deliberate Solution Development` doctrine together with the active preservation packet before dispatch. Exact solution-development packet fields remain a runtime-compliance surface: treat the runtime hooks as the enforcement surface. When `PROBLEM-CLASS: structural|systemic`, keep multi-pass review explicit and include rejected alternatives in `REJECTED-OPTIONS`.
 - Do not treat the first plausible remediation, design, or staffing answer as final just because it is workable. For consequential dispatch, run the Pre-Dispatch Routing Quality Gate and Dispatch Sizing Guard; at minimum verify worker-charter fit, scope appropriateness, prior-analysis inclusion, and whether an alternative routing was explicitly rejected.
@@ -221,24 +214,24 @@ Rules:
 - Over-fan-out without explicit boundaries, non-overlap, and merge ownership is also a cost defect.
 - Cost efficiency means highest reliable end-to-end throughput per active context, not the lowest teammate count.
 - In `lead-managed no-runtime`, keep execution lead-local. Any delegated `Agent` dispatch requires explicit team runtime before fan-out, worker lifecycle control, or worker messaging begins.
-- Do not respawn a worker identity that is already live, standby, or idle-pending. Reuse preserved context via `SendMessage`, or make an explicit shutdown decision first.
-- If 2 or more workers are idle without an explicit lifecycle decision, new fan-out is blocked until reuse, standby, or shutdown is decided for that backlog.
+- Do not respawn a worker identity that is already live, standby, or completed-awaiting-lifecycle. Reuse preserved context via `SendMessage`, or make an explicit shutdown decision first.
+- If 2 or more completed workers are awaiting explicit lifecycle decisions, new fan-out is blocked until reuse, standby, shutdown, or hold-for-validation is decided for that backlog.
 - When checks 1 and 6 conflict — independent surfaces exist but workers would largely duplicate context — check 1 governs (fan out) unless the context duplication cost clearly exceeds serial waiting cost. State the trade-off explicitly in the staffing rationale when choosing narrower staffing over fan-out.
 
 ## Pre-Dispatch Scope Check
 
 Run this lead-local checklist before every dispatch. The lead executes this freeze directly.
 
-**Same-turn follow-on dispatch:** When issuing a second or later dispatch in the same turn, and an earlier dispatch in this turn already completed the full Pre-Dispatch Scope Check for a non-overlapping work surface, and scope has not changed since that check, and no new worker outputs have been received since — confirm only: (1) idle-worker backlog resolved? (2) REQUIRED-SKILLS present in this packet? (3) work surface non-overlap with prior same-turn dispatch confirmed? All other checks carry forward from the earlier same-turn dispatch.
+**Same-turn follow-on dispatch:** When issuing a second or later dispatch in the same turn, and an earlier dispatch in this turn already completed the full Pre-Dispatch Scope Check for a non-overlapping work surface, and scope has not changed since that check, and no new worker outputs have been received since — confirm only: (1) lifecycle backlog resolved? (2) REQUIRED-SKILLS present in this packet? (3) work surface non-overlap with prior same-turn dispatch confirmed? All other checks carry forward from the earlier same-turn dispatch.
 
 Tier rule:
-- Lightweight: run `Rapid pre-checks` plus `Fast-path checks` and then `Dispatch Packet Final Check`.
+- Lightweight: run `Rapid pre-checks` plus `Fast-path checks` and then `Dispatch Packet Final Check Procedure`.
 - Standard: run `Rapid pre-checks`, `Fast-path checks`, and only the `Extended checks` that match the actual dispatch surface.
 - Precision: run the full checklist, including all applicable extended checks.
 
 **Rapid pre-checks (always run first):**
 For all check groups below: if prior-turn dispatch already confirmed conditions and scope has not changed, rapid re-confirm (1 sentence each) suffices.
-- Is any worker idle without `reuse`, `standby`, `shutdown`, or `hold-for-validation`? Resolve lifecycle backlog before `Agent`, `TaskCreate`, or assignment-grade `SendMessage`. Corrective urgency and parallelization pressure do not bypass this.
+- Is any completed worker awaiting `reuse`, `standby`, `shutdown`, or `hold-for-validation`? Resolve lifecycle backlog before `Agent`, `TaskCreate`, or assignment-grade `SendMessage`. Corrective urgency and parallelization pressure do not bypass this.
 - Does this dispatch include REQUIRED-SKILLS field with at minimum work-planning(start) and self-verification(plan-verify, handoff)? Dispatch without skill-loading instruction = unverified execution. (Pattern: skillless dispatch)
 - For researcher/developer dispatch: does this dispatch include `SKILL-RECOMMENDATIONS` when applicable skills were identified during Skill Applicability Validation? Dispatch without skill recommendations when applicable skills exist = missed routing opportunity.
 - Are `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` kept semantically separate per `CLAUDE.md` `§Skill Loading Philosophy`? (Pattern: blurred skill channel)
@@ -272,15 +265,15 @@ For all check groups below: if prior-turn dispatch already confirmed conditions 
 | 15 | SendMessage dispatch: All downward `message-class: assignment` messages must include the base packet plus the target-specific packet. Governance-patch, manifest-sync, and solution-development task-classes are exempt from the User-Perspective Acceptance Gate. See `reference.md § Dispatch Packet Templates` for full field specifications per lane. | Apply template |
 
 Execution order by tier:
-- Lightweight: Rapid pre-checks -> Fast-path checks -> Dispatch Packet Final Check -> runtime hook consequential gates
-- Standard: Routing Quality Gate (quick) -> Sizing Guard (quick) -> Rapid pre-checks -> Fast-path checks -> applicable Extended checks -> Dispatch Packet Final Check -> runtime hook consequential gates
-- Precision: Routing Quality Gate (full) -> Sizing Guard (full) -> full Pre-Dispatch Scope Check -> Dispatch Packet Final Check -> runtime hook consequential gates
+- Lightweight: Rapid pre-checks -> Fast-path checks -> Dispatch Packet Final Check Procedure -> runtime hook consequential gates
+- Standard: Routing Quality Gate (quick) -> Sizing Guard (quick) -> Rapid pre-checks -> Fast-path checks -> applicable Extended checks -> Dispatch Packet Final Check Procedure -> runtime hook consequential gates
+- Precision: Routing Quality Gate (full) -> Sizing Guard (full) -> full Pre-Dispatch Scope Check -> Dispatch Packet Final Check Procedure -> runtime hook consequential gates
 
 Failing any check is a dispatch quality defect. Single-worker on 3+ independent topics is a bottleneck defect.
 - **Adherence guard**: Pattern: intent check skipped, causing scope inflation or wrong-question research. Every applicable check is mandatory before dispatch; use fast paths only where doctrine explicitly allows them.
 - **Adherence guard**: Pattern: urgency used to skip scope checks. Urgency never authorizes bypassing the applicable checklist.
 
-## Dispatch Packet Final Check
+## Dispatch Packet Final Check Procedure
 
 This is the last lead-local gate before the actual `Agent` call. It checks the real outgoing packet, not the remembered plan.
 
@@ -292,15 +285,17 @@ This is the last lead-local gate before the actual `Agent` call. It checks the r
    - `REQUIRED-SKILLS`
    - all target-lane required fields
 3. Build the payload from the matching template in `reference.md § Dispatch Packet Templates`; do not draft the packet from memory and then hope the final check catches omissions.
-4. Confirm `REQUIRED-SKILLS` is present in the payload itself, not just in planning prose or a nearby note. (This is a payload-level recheck of Pre-Dispatch rapid pre-check #2; if that check already passed on the current payload, this step is satisfied.)
-5. If the payload includes an explicit output or handoff format, verify that the format remains compatible with every `REQUIRED-SKILL` contract. Packet-specific formatting may add summary fields, ordering, or labels, but must not remove or compress any mandatory skill-owned output surface.
-6. If any required field is missing, or if the packet-local output format conflicts with a required skill contract, stop and fix the payload before dispatching. If the target lane and safe boundary are inferable and the defect is non-material wording drift only, dispatch may proceed with the deficiency treated as a lead quality warning; the receiving worker must reconstruct the working packet explicitly or return `HOLD`.
+4. For `tester` and `validator`, keep every core proof/acceptance contract field in the actual payload as same-line `KEY: value`. Do not leave a required-field header empty and continue on the next line. If expanded bullets are useful, keep a one-line scalar summary on the field line and move the bullets under `DETAILS` or another non-required section.
+5. For `tester` and `validator`, run the exact outgoing payload through `bash .claude/hooks/dispatch-packet-lint.sh --lane <tester|validator>` and require `PASS` before `Agent`.
+6. Confirm `REQUIRED-SKILLS` is present in the payload itself, not just in planning prose or a nearby note. (This is a payload-level recheck of Pre-Dispatch rapid pre-check #2; if that check already passed on the current payload, this step is satisfied.)
+7. If the payload includes an explicit output or handoff format, verify that the format remains compatible with every `REQUIRED-SKILL` contract. Packet-specific formatting may add summary fields, ordering, or labels, but must not remove or compress any mandatory skill-owned output surface.
+8. If any required field is missing, or if the packet-local output format conflicts with a required skill contract, stop and fix the payload before dispatching. If the target lane and safe boundary are inferable and the defect is non-material wording drift only, dispatch may proceed with the deficiency treated as a lead quality warning; the receiving worker must reconstruct the working packet explicitly or return `HOLD`.
 
 Rules:
-- The hook is an advisory backstop for packet shape, not the primary completeness check and not a wall for harmless wording drift.
+- The hook is a backstop for wording drift, but it is a blocking guard for `tester`/`validator` core proof and acceptance contract fields. Lead-local final check owns first-attempt correctness.
 - Plan correctness does not excuse payload incompleteness.
 - Required-skill compatibility is part of payload completeness. A packet that names a skill but overrides that skill's mandatory output contract is incomplete even when ordinary packet fields are present.
-- A dispatch packet that is correct in intent but missing required fields is lower-quality and must be reconstructed by the receiving worker before execution; material ambiguity remains non-compliant and requires `HOLD`.
+- A dispatch packet that is correct in intent but missing non-blocking context is lower-quality and must be reconstructed by the receiving worker after the packet survives hook-level contract validation; missing core contract fields remain non-compliant and must be fixed before dispatch.
 - Preferred lead-local sequence: select lane -> copy base plus lane template -> fill placeholders -> compare against frozen plan -> dispatch once. Use this sequence to avoid first-attempt hook failures, not just to recover after them.
 - For consequential dispatch driven by root-cause, governance, structural, or corrective analysis, use induction to form the candidate explanation or action first, then freeze the derivation basis before dispatch: the key observed facts, the governing rule or constraint, and what remains inference-grade.
 

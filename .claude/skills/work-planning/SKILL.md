@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed section order: Purpose, Activation Trigger, Step 1: Instruction Confirmation And Work Analysis, Step 1.5: Underspecification Axis Audit, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Internal Planning Record, Progress Update Surface, Post-Planning Gate
+- Fixed section order: Purpose, Activation Trigger, Step 0: Request-Fit Intake, Step 1: Instruction Confirmation And Work Analysis, Step 1.5: Underspecification Axis Audit, Step 2: Scope Freeze, Step 3: Approach Planning, Step 4: Verification Criteria, Step 5: Risk Identification, Internal Planning Record, Progress Update Surface, Post-Planning Gate
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
@@ -16,7 +16,7 @@ Use this skill to freeze scope before consequential work begins. The output is a
 
 Quick contract:
 - load at work start
-- apply the request-fit outcome lens before clarifying or defaulting; use explicit `request-intent-fit` only when intent/default inference is non-trivial
+- start with request-fit intake before clarifying, defaulting, or freezing scope
 - ground plan in `CLAUDE.md §Team Philosophy` and user instructions
 - freeze scope before consequential tool use
 - define approach, verification, and hold conditions
@@ -32,6 +32,7 @@ Boundary:
 - `session-boot` still comes first for the main session when boot is required
 - for workflow-governed `team-lead` work, this skill is only a local scope scaffold, not phase authority
 - for `team-lead`, this skill must leave the next owner unambiguous enough that Standard/Precision work reaches `task-execution` without silent lead-local compression
+- for `team-lead`, when team routing is implied this skill freezes the staffing basis (`AGENT-MAP`, `PARALLEL-GROUPS`, serial reason where needed) for handoff into `task-execution`; it does not take over runtime/lifecycle dispatch authority
 - when the task evaluates an existing rule, mechanism, workflow, architecture, or policy, this skill must freeze both the suspected issue and the rationale of the current state under review before defect or optimization conclusions are attempted
 
 ## Activation Trigger
@@ -44,12 +45,38 @@ Load this skill via the Skill tool and execute the full procedure at work start.
 
 Before the first consequential tool call on any new assignment, reuse, or reroute: confirm work-planning is loaded and scope is frozen.
 
+## Step 0: Request-Fit Intake
+
+Before Step 1, freeze the request-fit basis inside this skill.
+
+Record these fields when the request is actionable:
+
+- `REQUEST-INTENT`: the real user goal in operational terms
+- `CONCRETE-DELIVERABLE`: artifact class and user-visible shape
+- `PRIMARY-USER`: operator, reader, decision-maker, or unknown-but-inferable role
+- `REFERENCE-USE`: adopted / adapted / rejected / unresolved reference meaning
+- `BURDEN-REDUCTION-CUES`: cue -> operational implication
+- `QUALITY-PROOF-DIRECTION`: user/reference cue -> quality bar -> expected evidence type
+- `DERIVED-DEFAULTS`: axis -> default -> basis
+- `MATERIAL-BLOCKERS`: none or exact blocker
+
+Full request-fit intake is mandatory before scope freeze when any of these are true:
+
+- a supplied reference, workbook, dataset, screenshot, prior output, or spec drives the deliverable
+- burden-reduction, monitoring, usability, convenience, automation, or delivery-experience cues define the quality bar
+- the task was corrected for over-asking, under-interpreting, or divergent intent
+- multiple decision axes would otherwise be surfaced before deriving defaults
+
+For trivial, fully specified, low-risk tasks with no reference-driven interpretation, record only the minimal basis needed to proceed.
+
+Carry the basis into Step 1 purpose/deliverable analysis, Step 1.5 defaults, and Step 4 verification criteria. If the basis is produced or revised after planning, dispatch, or handoff, reconcile affected downstream surfaces before reporting no practical change: dispatch packets, task rows, handoffs, canonical plan text, and verification criteria or plans.
+
 ## Step 1: Instruction Confirmation And Work Analysis
 
 - Read the user's request.
 - Read the dispatch or assignment instructions.
 - Cross-check scope, purpose, and output target.
-- Before surfacing clarifications or freezing defaults, apply the request-fit outcome lens: identify the concrete user-visible deliverable, reference-backed defaults, burden-reduction implications, and material blockers. Use an explicit `request-intent-fit` load when the inference is non-trivial, multiple axes would otherwise be surfaced, supplied reference or burden-reduction cues drive the deliverable, or the task was corrected for over-asking. If no material blocker remains, record derived defaults rather than re-ask them.
+- Consume the Step 0 request-fit basis: identify the concrete user-visible deliverable, reference-backed defaults, burden-reduction implications, user-derived quality/proof direction, and material blockers. If no material blocker remains, record derived defaults rather than re-ask them.
 - Analyze the work through the following thinking flow before scope freeze:
   · **Q1 (Purpose)**: What is the user trying to achieve? Extract the real goal, not just the surface task.
   · **Q2 (Work Types)**: What types of work does this purpose require? Classify explicitly as one or more of: software-development, document-creation, research-analysis, presentation-material, simple-report, governance-edit, question-answer, engineering-calculation, design, data-analysis, or an equivalent named type. Declare the chosen classification explicitly before proceeding to Q3 — this classification is the required input for Q3 and Q5.
@@ -69,7 +96,7 @@ Execute before Step 2 Scope Freeze. This step operationalizes the Underspecifica
 
 ### A. Enumerate axes
 
-From the user request, any supplied reference, and any `request-intent-fit` packet, list the decision axes the deliverable requires resolution on. Axis families that typically apply (non-exhaustive — add domain-specific axes as needed):
+From the user request, any supplied reference, and the Step 0 request-fit basis, list the decision axes the deliverable requires resolution on. Axis families that typically apply (non-exhaustive — add domain-specific axes as needed):
 
 - artifact shape (what form is the output?)
 - delivery / interaction mode (how does the end user interact with it?)
@@ -82,14 +109,14 @@ From the user request, any supplied reference, and any `request-intent-fit` pack
 Label each axis as one of:
 
 - (1) specified by user — user's words directly resolve it
-- (2) resolved by reference or request-fit — bounded inspection or derived request-fit defaults resolve it
+- (2) resolved by reference or request-fit basis — bounded inspection or derived request-fit defaults resolve it
 - (3) underspecified — neither user, reference, nor request-fit resolves it
 
 ### B. Material-impact filter
 
 For every axis labeled (3) Underspecified, apply the criteria in this order. **M4 is the gating criterion; M1/M2/M3 decide only after M4 holds.**
 
-- **M4 (derivability) — gate:** Is the axis responsibly derivable from the user's stated constraints, the `request-intent-fit` packet (`DERIVED-DEFAULT` or `REVERSIBLE-DEFAULT`), the supplied reference (per `agents/team-lead.md §IR-2 #11` reference-asymmetry rule), or standard engineering practice for the named work type from Q2? If yes, label **DEFAULT** with rationale and do not test M1/M2/M3 for SURFACE. If `request-intent-fit` marks the axis as `MATERIAL-BLOCKER`, treat M4 as true and test the impact criteria.
+- **M4 (derivability) — gate:** Is the axis responsibly derivable from the user's stated constraints, the Step 0 request-fit basis (`DERIVED-DEFAULT` or `REVERSIBLE-DEFAULT`), the supplied reference (per `agents/team-lead.md §IR-2 #11` reference-asymmetry rule), or standard engineering practice for the named work type from Q2? If yes, label **DEFAULT** with rationale and do not test M1/M2/M3 for SURFACE. If Step 0 marks the axis as `MATERIAL-BLOCKER`, treat M4 as true and test the impact criteria.
 - When M4 is true (axis is genuinely non-derivable), test the impact criteria below; any one triggering is sufficient to label **SURFACE**:
   - **M1 (deliverable look):** Would a wrong default make the deliverable look materially different to the user?
   - **M2 (rework cost):** Would a wrong default incur substantial downstream rework if corrected later?
@@ -105,7 +132,7 @@ Labeling rule:
 ### C. Surface and commit
 
 - For SURFACE axes: present a bounded question naming (1) the specific axis, (2) 2–3 candidate defaults considered, (3) why none can be chosen without user input. Do not batch more than the necessary minimum; do not pad with axes that already passed to DEFAULT. Route the question per the agent's normal upward communication channel as defined by its role file.
-- For DEFAULT axes: record `axis → assumed value → rationale` in the internal planning record (`DEFAULTS-RECORDED` in the plan block). Copy `request-intent-fit` `DERIVED-DEFAULT` and `REVERSIBLE-DEFAULT` entries here when present. Downstream sessions and acceptance lanes audit this record to distinguish user-committed decisions from agent-assumed defaults.
+- For DEFAULT axes: record `axis → assumed value → rationale` in the internal planning record (`DEFAULTS-RECORDED` in the plan block). Copy Step 0 `DERIVED-DEFAULT` and `REVERSIBLE-DEFAULT` entries here when present. Downstream sessions and acceptance lanes audit this record to distinguish user-committed decisions from agent-assumed defaults.
 
 ### D. Gate
 
@@ -150,10 +177,11 @@ Break the work into executable steps before acting:
 3. Flag highest-risk steps — steps with irreversible effects, wide blast radius, or low confidence.
 4. For multi-file or multi-concern work: confirm whether steps are parallelizable or must be sequential.
 5. Size each step: if a step exceeds one clear purpose, decompose further.
-6. Treat methodology skills as approach refinement, not scope authority. If a methodology requirement would change `WORK-INTENT`, `EXPECTED-OUTPUT`, or `EXCLUDED-SCOPE`, re-run Step 2 before continuing. If Step 2 re-freezes and the methodology conflict recurs after one cycle, HOLD with the exact conflict rather than looping further.
-7. For each planned step, confirm it derives from a specific user instruction or stated requirement. Steps based solely on agent inference must be labeled as inference and explicitly justified.
-8. Before finalizing the step list, challenge it critically: what is missing? what assumptions does this plan make? what would a critical reviewer identify as insufficient or ungrounded?
-9. When evaluating an existing state under review, verify the approach includes the Step 2 dependency chain (understand → identify protection → classify cost → judge proportionality → assess change risk) before any action classification.
+6. For team-routed work, make each worker-owned step preserve one local phase intent plus its inherited basis (governing workflow phase, upstream handoff, or frozen requirement surface). If a planned step would make one worker re-derive phase scope, absorb adjacent phase work, or absorb lead-owned synthesis/closure, decompose before dispatch.
+7. Treat methodology skills as approach refinement, not scope authority. If a methodology requirement would change `WORK-INTENT`, `EXPECTED-OUTPUT`, or `EXCLUDED-SCOPE`, re-run Step 2 before continuing. If Step 2 re-freezes and the methodology conflict recurs after one cycle, HOLD with the exact conflict rather than looping further.
+8. For each planned step, confirm it derives from a specific user instruction or stated requirement. Steps based solely on agent inference must be labeled as inference and explicitly justified.
+9. Before finalizing the step list, challenge it critically: what is missing? what assumptions does this plan make? what would a critical reviewer identify as insufficient or ungrounded?
+10. When evaluating an existing state under review, verify the approach includes the Step 2 dependency chain (understand → identify protection → classify cost → judge proportionality → assess change risk) before any action classification.
 
 Team-lead routing pre-signal:
 
@@ -162,6 +190,7 @@ Team-lead routing pre-signal:
 - Use `ambiguous-route` when the work might still be lead-local but the current evidence does not cleanly satisfy all direct-work conditions from `agents/team-lead.md §RPA-2`.
 - For `team-routing candidate` or `ambiguous-route`, the next consequential skill after post-planning `self-verification` is `task-execution` unless a bounded blocker is explicit; do not let a large or multi-concern request remain implicitly single-worker just because the current plan block omitted staffing details.
 - If the plan already implies delegation, explicit runtime, or worker-owned surfaces, record that implication now instead of leaving it to later interpretation.
+- When team routing is implied and 2 or more meaningful work surfaces are already independent or become independent after one named serial prerequisite, freeze the staffing basis now: record both `PARALLEL-GROUPS` and `AGENT-MAP`. If the work will stay sequential for now, record `PARALLEL-GROUPS: none — <serial reason>` with the exact dependency, boundary-uncertainty, or context-cost reason. Do not leave this basis implicit for `task-execution` to rediscover from scratch at dispatch time.
 - Positive channel rule: when the plan implies team routing, freeze one explicit `NEXT-CONSEQUENTIAL-ACTION` now. Allowed values are `TeamCreate`, `reuse-via-SendMessage`, `Agent`, or `clear-blocker:<exact blocker>`. Do not leave the runtime move as a vague future intention.
 - If `NEXT-CONSEQUENTIAL-ACTION` is `clear-blocker:<...>`, the blocker must be concrete, bounded, and immediately relevant to runtime activation, worker reuse, or dispatch packet completion. Broad additional inspection is not a valid blocker.
 
@@ -172,6 +201,7 @@ Before beginning execution, define:
 - **Self-check items**: what confirms correctness at each step?
 - **Handoff evidence**: what concrete evidence will be carried upward?
 - **Quality criteria**: what makes the output acceptable from the user's perspective and consistent with the applicable `CLAUDE.md §Team Philosophy` coordinates?
+- **Request-derived proof direction**: which user/reference cues define the quality bar and what evidence type should prove them later; keep this directional unless the active workflow requires a full verification plan.
 - When evaluating an existing state under review, verification criteria must separately answer:
   - was the current-state rationale actually confirmed from owner surfaces?
   - is that rationale still justified and proportionate under current operating conditions?
@@ -196,6 +226,7 @@ After completing Steps 1–5, freeze the internal plan block in agent-local reas
 
 ```
 WORK-INTENT: <one sentence>
+REQUEST-FIT-BASIS: <Step 0 recorded basis, including quality/proof direction when applicable>
 EXPECTED-OUTPUT: <artifact or state>
 EXCLUDED-SCOPE: <what is out>
 DONE-CONDITION: <observable completion signal>
@@ -203,8 +234,8 @@ ACTIVE-WORKFLOW: <workflow-id(s)|none|pending-user-clarification>
 PHILOSOPHY-CONSTRAINTS: <applicable §Team Philosophy coordinate IDs>
 ROUTING-SIGNAL: <lead-local candidate | team-routing candidate | ambiguous-route>
 STEPS: <numbered list>
-PARALLEL-GROUPS: which steps run concurrently
-AGENT-MAP: agent to phase assignment (Required for team-lead plans with delegation. Optional for workers dispatching sub-tasks. May be omitted for single-worker plans with no downstream delegation.)
+PARALLEL-GROUPS: which steps run concurrently; use `none — <serial reason>` when team-routing work remains intentionally sequential
+AGENT-MAP: agent to phase assignment (Required for team-lead plans with delegation. Read together with `PARALLEL-GROUPS` as the staffing basis handed into `task-execution`. Optional for workers dispatching sub-tasks. May be omitted for single-worker plans with no downstream delegation.)
 NEXT-SKILL: <self-verification | task-execution after self-verification | other bounded owner-directed next step>
 NEXT-CONSEQUENTIAL-ACTION: <lead-local-none | TeamCreate | reuse-via-SendMessage | Agent | clear-blocker:<exact blocker>>
 DISPATCH-BLOCKERS: <none or the concrete blocker that prevents immediate TeamCreate/dispatch once routing is confirmed>
@@ -245,10 +276,13 @@ Planning record rules:
 
 - `ROUTING-SIGNAL` is mandatory for `team-lead`. Workers may omit it unless the parent packet explicitly asks for routing input.
 - If `ROUTING-SIGNAL` is `team-routing candidate`, `AGENT-MAP` must be present or `DISPATCH-BLOCKERS` must name the exact reason it is not yet present.
+- If `ROUTING-SIGNAL` is `team-routing candidate` and 2 or more meaningful work surfaces are already independent, or become independent after one named serial prerequisite, `PARALLEL-GROUPS` must be present.
+- If `PARALLEL-GROUPS` is `none`, it must include a one-sentence serial reason grounded in dependency, boundary uncertainty, or context-cost/capacity trade-off. Bare `none` is incomplete.
 - If `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`, `NEXT-CONSEQUENTIAL-ACTION` is mandatory.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and `DISPATCH-BLOCKERS` is `none`, `NEXT-CONSEQUENTIAL-ACTION` must be `TeamCreate`, `reuse-via-SendMessage`, or `Agent` — not `lead-local-none`.
 - Do not use `NEXT-CONSEQUENTIAL-ACTION: clear-blocker:<...>` as a parking spot for broad lead-local analysis. The blocker must be narrow enough that clearing it immediately returns the path to runtime activation or dispatch.
 - If `ROUTING-SIGNAL` is `ambiguous-route`, default `NEXT-SKILL` to `task-execution after self-verification` unless a concrete, bounded reason keeps the work lead-local.
+- Do not use an empty or omitted `PARALLEL-GROUPS` to leave serial-vs-parallel staffing implicit once team routing is chosen.
 - Do not use an empty or omitted `AGENT-MAP` to silently downgrade obviously multi-surface work into single-worker execution.
 
 

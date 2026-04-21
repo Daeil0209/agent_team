@@ -54,6 +54,17 @@
         ]
       }
     ],
+    "PermissionRequest": [
+      {
+        "matcher": "Edit|Update|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/mnt/d/Agent_team/.claude/hooks/permission-request-gate.sh"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",

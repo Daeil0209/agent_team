@@ -32,7 +32,7 @@ Boundary: this is agent-local verification. Independent review still belongs to 
 
 Self-verification is internal process work, not a user-facing deliverable. Do not expose the challenge procedure itself to the user.
 
-However, for final user-facing conclusions, recommendations, completion reports, explicit audit responses, or detailed status reports that the user explicitly asked for, the response must still surface the verification outcome concisely. Ordinary progress commentary does not carry this full verification surface. Minimum user-facing verification surface when that final/audit shape applies:
+However, for final user-facing conclusions, material recommendations, completion reports, explicit audit responses, or detailed status reports that the user explicitly asked for, the response must still surface the verification outcome concisely. Ordinary progress commentary does not carry this full verification surface. Minimum user-facing verification surface when that final/audit shape applies:
 - verification basis: what evidence or checks the conclusion rests on
 - residual risk or open surfaces: what remains unverified, blocked, or conditional
 - unverified items: explicit if any remain
@@ -66,6 +66,8 @@ Load this skill and execute the full procedure at these points:
 
 **Temporal gate principle:** Self-verification is a gate, not a concurrent annotation. The gated action (reporting, execution, dispatch, handoff) must not begin until verification completes and conclusions survive Critical Challenge. Composing a report in the same response as the SV invocation defeats the gate — if Critical Challenge would change the conclusion, the already-composed output cannot reflect the correction. Complete verification first; compose the gated output from verified conclusions only.
 
+Synthesis and self-verification are separate gates. When worker reports were already synthesized under an existing scope, Trigger 5 verifies that synthesized conclusion directly; it does not re-open work-planning unless Critical Challenge invalidates the frozen scope or the next action will execute, dispatch, mutate, or re-plan.
+
 Note on trigger (1): This trigger fires after work-planning has frozen the request scope, not before work-planning loads. The sequence is always work-planning → self-verification (post-planning gate). Trigger (1) is the post-planning verification gate, not a pre-planning check.
 
 **Same-turn carry-forward:** If this skill was loaded and Critical Challenge executed in the current turn with no intervening consequential modifications since that load, the existing in-turn verification satisfies the current trigger. A second Skill invocation is not required unless the work since the last SV load introduced material that was not already covered by that verification. Carry-forward holds when the agent synthesizes, aggregates, classifies, or restructures already-verified upstream evidence for reporting. Carry-forward resets when new independent conclusions, recommendations beyond what verified evidence supports, file modifications, or consequential dispatch actions (Agent, TaskCreate, assignment-grade SendMessage) are produced after the last SV load. (This mirrors the carry-forward rule in `agents/team-lead.md §RPA-7`.)
@@ -96,7 +98,7 @@ Execute the owning role's pre-handoff self-check:
 | reviewer | `skills/reviewer/SKILL.md §Pre-Handoff Self-Check` | severity, classification, retest, evidence |
 | validator | `skills/validator/SKILL.md §Pre-Handoff Self-Check` | verdict evidence, blocking, user fitness |
 | researcher | `skills/researcher/SKILL.md §Pre-Handoff Self-Check` | evidence anchoring, UNVERIFIED, cross-verification |
-| team-lead | agents/team-lead.md §RPA-1 Checkpoint A (Before Every Response) + IR-2 §"Plan before acting, verify at every trigger" section (6 SV activation triggers) | evidence basis for every claim, worker output verified not assumed, self-verification loaded at every applicable trigger boundary |
+| team-lead | agents/team-lead.md §RPA-1 Checkpoint A (Before Every Response) + IR-2 principle 10 (6 SV activation triggers) | evidence basis for every claim, worker output verified not assumed, self-verification loaded at every applicable trigger boundary |
 
 Record each item as pass or fail.
 

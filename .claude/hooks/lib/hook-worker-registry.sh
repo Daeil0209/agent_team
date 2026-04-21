@@ -726,21 +726,31 @@ clear_worker_idle_pending() {
   with_lock_file "$IDLE_DECISION_PENDING_LOCK" _update_idle_pending_locked "clear" "$worker_name"
 }
 
+idle_pending_lifecycle_reason_regex() {
+  printf '^(not-working-awaiting-lifecycle|idle-awaiting-lifecycle|completed-awaiting-lifecycle)$'
+}
+
 worker_is_idle_pending() {
   local worker_name="${1-}"
   local normalized_worker=""
+  local lifecycle_reason_re=""
 
   [[ -n "$worker_name" && -f "$IDLE_DECISION_PENDING_FILE" ]] || return 1
   normalized_worker="$(normalize_lane_id "$worker_name")"
   [[ -n "$normalized_worker" ]] || return 1
+  lifecycle_reason_re="$(idle_pending_lifecycle_reason_regex)"
 
-  awk -F' \\| ' -v worker="$normalized_worker" '
+  awk -F' \\| ' -v worker="$normalized_worker" -v lifecycle_re="$lifecycle_reason_re" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
     }
     {
       name = trim($2)
+      reason = tolower(trim($3))
+      if (reason !~ lifecycle_re) {
+        next
+      }
       if (tolower(name) == worker) {
         found = 1
         exit
@@ -753,14 +763,21 @@ worker_is_idle_pending() {
 }
 
 idle_pending_worker_count() {
-  [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || { printf '0'; return 0; }
+  local lifecycle_reason_re=""
 
-  awk -F' \\| ' '
+  [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || { printf '0'; return 0; }
+  lifecycle_reason_re="$(idle_pending_lifecycle_reason_regex)"
+
+  awk -F' \\| ' -v lifecycle_re="$lifecycle_reason_re" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
     }
     {
+      reason = tolower(trim($3))
+      if (reason !~ lifecycle_re) {
+        next
+      }
       worker = tolower(trim($2))
       if (worker != "" && !seen[worker]) {
         seen[worker] = 1
@@ -774,14 +791,21 @@ idle_pending_worker_count() {
 }
 
 idle_pending_worker_summary() {
-  [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || return 0
+  local lifecycle_reason_re=""
 
-  awk -F' \\| ' '
+  [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || return 0
+  lifecycle_reason_re="$(idle_pending_lifecycle_reason_regex)"
+
+  awk -F' \\| ' -v lifecycle_re="$lifecycle_reason_re" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
     }
     {
+      reason = tolower(trim($3))
+      if (reason !~ lifecycle_re) {
+        next
+      }
       worker = trim($2)
       if (worker == "" || seen[tolower(worker)]) {
         next
@@ -808,12 +832,14 @@ idle_pending_worker_summary() {
 idle_pending_worker_count_for_surface() {
   local target_surface="${1-}"
   local norm_surface=""
+  local lifecycle_reason_re=""
 
   [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || { printf '0'; return 0; }
 
   norm_surface="$(printf '%s' "$target_surface" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  lifecycle_reason_re="$(idle_pending_lifecycle_reason_regex)"
 
-  awk -F' \\| ' -v norm_surf="$norm_surface" -v log_dir="$LOG_DIR" '
+  awk -F' \\| ' -v norm_surf="$norm_surface" -v log_dir="$LOG_DIR" -v lifecycle_re="$lifecycle_reason_re" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
@@ -831,6 +857,10 @@ idle_pending_worker_count_for_surface() {
       return ""
     }
     {
+      reason = tolower(trim($3))
+      if (reason !~ lifecycle_re) {
+        next
+      }
       worker = tolower(trim($2))
       if (worker == "" || seen[worker]) {
         next
@@ -856,12 +886,14 @@ idle_pending_worker_count_for_surface() {
 idle_pending_worker_summary_for_surface() {
   local target_surface="${1-}"
   local norm_surface=""
+  local lifecycle_reason_re=""
 
   [[ -f "$IDLE_DECISION_PENDING_FILE" ]] || return 0
 
   norm_surface="$(printf '%s' "$target_surface" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  lifecycle_reason_re="$(idle_pending_lifecycle_reason_regex)"
 
-  awk -F' \\| ' -v norm_surf="$norm_surface" -v log_dir="$LOG_DIR" '
+  awk -F' \\| ' -v norm_surf="$norm_surface" -v log_dir="$LOG_DIR" -v lifecycle_re="$lifecycle_reason_re" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
@@ -879,6 +911,10 @@ idle_pending_worker_summary_for_surface() {
       return ""
     }
     {
+      reason = tolower(trim($3))
+      if (reason !~ lifecycle_re) {
+        next
+      }
       worker = trim($2)
       if (worker == "" || seen[tolower(worker)]) {
         next

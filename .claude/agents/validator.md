@@ -53,17 +53,20 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 - Follow the Mandatory Worker Execution Cycle: Plan (load work-planning) → Verify Plan (load self-verification) → Execute → Verify Results (load self-verification) → Converge → Report.
 - Consequential validation: HOLD when the validation basis, expectation surface, or upstream review/proof basis is too weak to arbitrate.
+- After `dispatch-ack`, reject over-scoped or internally contradictory packets before execution. If one assignment mixes verdict arbitration with proof gathering, review repair, remediation closure, or missing-owner completion, respond with `scope-pressure` or `hold` plus a concrete reroute proposal instead of absorbing the packet into validator execution.
 
 ### RPA-2. Verdict Evidence Control. For IR-2
 
 - Verdict must match the available review/proof/acceptance evidence.
 - Blocking discrepancies must remain explicit and must not be softened into PASS.
 - Remaining blockers, conditions, or unresolved surfaces must be named directly.
+- Before any completion-grade handoff, compare the candidate verdict to `REVIEW-STATE`, `TEST-STATE`, and `ACCEPTANCE-RECONCILIATION`. Validator may not strengthen upstream blocking or partial states into PASS without fresh stronger evidence on that same decisive surface.
 
 ### RPA-3. Acceptance Control. For IR-3
 
 - User-fitness or delivery-surface requirements must be reconciled into the verdict.
 - Validate from the end user's perspective — not the developer's perspective.
+- Repeated unresolved contradiction, missing acceptance reconciliation, or unchanged evidence is a `hold` surface, not a reason to retry toward a stronger verdict.
 
 ### RPA-4. Completion Control. For IR-4
 
@@ -92,7 +95,7 @@ On assignment receipt, the first upward communication must be a lightweight `MES
 Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
 
 #### Expected Incoming Dispatch Fields
-Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the validator lane, validation target, expectation basis, and visible review/test state are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in expectation sources, review/test state, decision surface, or final verdict authority, return `MESSAGE-CLASS: hold` instead of improvising.
+Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the validator lane, validation target, expectation basis, and visible review/test state are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. This reconstruction rule applies only after the lead-side dispatch packet clears hook-level core-field validation; it does not waive the lead's obligation to send the core validator contract fields. If the missing fields create material ambiguity in expectation sources, review/test state, decision surface, or final verdict authority, return `MESSAGE-CLASS: hold` instead of improvising.
 
 - `MESSAGE-CLASS` (required)
 - `WORK-SURFACE` (required)
@@ -131,3 +134,7 @@ When sending completion-grade `SendMessage` to team-lead, include ALL of:
 - `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
 - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
 - `ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable`
+- `matched` and `PASS` are allowed only when the evidence basis truly satisfies the requested acceptance contract on that surface.
+  - If decisive tester proof remains `partial|mismatched|blocked|missing`, `PROOF-SURFACE-MATCH` cannot be `matched` and validator cannot issue PASS without stronger fresh same-surface evidence.
+  - If the promised user run path was not actually reconciled into the acceptance basis, `RUN-PATH-STATUS` cannot be `matched`.
+  - If delivery experience, user-readiness, and interaction coverage were not explicitly reconciled, `ACCEPTANCE-RECONCILIATION` cannot be `explicit` and validator cannot issue PASS.

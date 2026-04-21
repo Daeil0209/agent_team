@@ -104,7 +104,12 @@ SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 
 emit_deny() {
   local reason="${1:?reason required}"
-  DENY_REASON="$reason" node <<'NODE'
+  local surface_key=""
+  surface_key="${TASK_ID:-}"
+  if [[ -z "$surface_key" ]]; then
+    surface_key="${WORKER_NAME:-${TOOL_NAME:-generic}}"
+  fi
+  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
 process.stdout.write(JSON.stringify({
   hookSpecificOutput: {
     hookEventName: "PreToolUse",

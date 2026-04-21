@@ -102,6 +102,8 @@ set_default_export WORKER_PLANNING_PENDING_FILE "$LOG_DIR/.worker-planning-pendi
 set_default_export WORKER_DISPATCH_ACK_PENDING_FILE "$LOG_DIR/.worker-dispatch-ack-pending"
 set_default_export USER_APPROVED_DELETE_ROOTS_FILE "$LOG_DIR/.user-approved-delete-roots"
 set_default_export PLANNING_DISCIPLINE_LOCK "$LOG_DIR/.planning-discipline.lock"
+set_default_export PRECHECK_REPEAT_STATE_FILE "$LOG_DIR/.precheck-repeat-state"
+set_default_export PRECHECK_REPEAT_STATE_LOCK "$LOG_DIR/.precheck-repeat-state.lock"
 set_default_export SELF_GROWTH_PENDING_FILE "$LOG_DIR/.self-growth-pending"
 set_default_export SELF_GROWTH_SUSPECTED_FILE "$LOG_DIR/.self-growth-suspected"
 set_default_export SELF_GROWTH_DISCIPLINE_LOCK "$LOG_DIR/.self-growth-discipline.lock"

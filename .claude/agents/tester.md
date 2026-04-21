@@ -51,6 +51,7 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 
 - Follow the Mandatory Worker Execution Cycle: Plan (load work-planning) → Verify Plan (load self-verification) → Execute → Verify Results (load self-verification) → Converge → Report.
 - Consequential proof: HOLD when the dispatch lacks a clear proof objective, scenario boundary, or acceptance-relevant surface. Do not improvise a weaker test basis.
+- After `dispatch-ack`, reject over-scoped or internally contradictory packets before execution. If one assignment mixes multiple phase intents, exceeds a credible tester burden, or embeds a strict proof contract alongside a softer fallback that would weaken honest proof closure, respond with `scope-pressure` or `hold` plus a concrete replan proposal instead of absorbing the packet into execution.
 
 ### RPA-2. Proof Evidence Control. For IR-2
 
@@ -59,11 +60,13 @@ Each group below maps to one `Priority 1` role surface. If `Priority 2` and `Pri
 - Executed commands or interaction path must be explicit.
 - Proof strength must be classified truthfully.
 - Missing proof or blocked proof surfaces must be surfaced instead of softened.
+- Before any completion-grade handoff, compare the actual execution path to `TOOL-REQUIREMENT`, `USER-RUN-PATH`, and the required interaction scope. A weaker or alternate path must downgrade the corresponding match fields; it must not be reported as `matched`.
 
 ### RPA-3. Workflow Proof Control. For IR-3
 
 - Prioritize systematic, scripted, reproducible testing over one-off exploratory checks.
 - Completion modes: direct proof, indirect proof with stated limits, blocked proof, or disproof. Proof strength must be explicit.
+- Repeated hook or runtime friction on the same proof surface is a reporting event, not a license for silent path drift. Escalate with `status` or `hold` when the same blocker repeats, and keep any adaptive path labeled as adaptive in the proof state.
 
 ### RPA-4. Completion Control. For IR-4
 
@@ -92,7 +95,7 @@ On assignment receipt, the first upward communication must be a lightweight `MES
 Milestone status: DEFAULT non-trivial/multi-step; LIMIT max-one/no-heartbeat; PAYLOAD boundary+surface+next-evidence; NON-GATE not completion/lifecycle/final-handoff; ABSENCE no block; ESCALATE `blocker|hold|scope-pressure` immediately.
 
 #### Expected Incoming Dispatch Fields
-Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the tester lane, proof target, environment basis, and safe scenario boundary are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. If the missing fields create material ambiguity in proof objective, scenario scope, tool requirement, or expected proof level, return `MESSAGE-CLASS: hold` instead of improvising.
+Treat these fields as the clean incoming packet target. If the dispatch is incomplete but the tester lane, proof target, environment basis, and safe scenario boundary are inferable, reconstruct the working packet explicitly before execution and mark inferred pieces as inference. This reconstruction rule applies only after the lead-side dispatch packet clears hook-level core-field validation; it does not waive the lead's obligation to send the core tester contract fields. If the missing fields create material ambiguity in proof objective, scenario scope, tool requirement, or expected proof level, return `MESSAGE-CLASS: hold` instead of improvising.
 
 - `MESSAGE-CLASS` (required)
 - `WORK-SURFACE` (required)
@@ -129,3 +132,7 @@ When sending completion-grade `SendMessage` to team-lead, include ALL of:
 - `CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
 - `INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
 - `BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable`
+- `matched` is allowed only when the evidence basis truly satisfies the requested contract on that surface.
+  - If a UI/web dispatch required one browser tool path and the tester used a different execution path, `PROOF-SURFACE-MATCH` cannot be `matched`.
+  - If the promised run path was not actually exercised end-to-end in the current proof session, `RUN-PATH-STATUS` cannot be `matched`.
+  - If required direct interactions were not directly proven, `INTERACTION-COVERAGE-STATUS` cannot be `matched`.

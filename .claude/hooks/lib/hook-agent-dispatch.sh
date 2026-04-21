@@ -341,3 +341,84 @@ dispatch_field_raw_value() {
 
   return 0
 }
+
+dispatch_field_declared_empty() {
+  local raw_desc="${1-}"
+  local field=""
+  field="$(normalize_dispatch_text "${2-}")"
+
+  [[ -n "$raw_desc" && -n "$field" ]] || return 1
+
+  printf '%s\n' "$raw_desc" | awk -v field="$field" '
+    BEGIN {
+      IGNORECASE = 1
+      found = 0
+    }
+    {
+      if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*$/, parts)) {
+        key = tolower(parts[1])
+        if (key == field) {
+          found = 1
+          exit
+        }
+      }
+    }
+    END {
+      exit(found ? 0 : 1)
+    }
+  '
+}
+
+dispatch_field_empty_header_has_body() {
+  local raw_desc="${1-}"
+  local field=""
+  field="$(normalize_dispatch_text "${2-}")"
+
+  [[ -n "$raw_desc" && -n "$field" ]] || return 1
+
+  printf '%s\n' "$raw_desc" | awk -v field="$field" '
+    BEGIN {
+      IGNORECASE = 1
+      pending = 0
+      continuation = 0
+    }
+    {
+      if (pending) {
+        if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:/, parts)) {
+          exit
+        }
+        if ($0 ~ /^[[:space:]]*$/) {
+          next
+        }
+        continuation = 1
+        exit
+      }
+
+      if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*$/, parts)) {
+        key = tolower(parts[1])
+        if (key == field) {
+          pending = 1
+        }
+      }
+    }
+    END {
+      exit(continuation ? 0 : 1)
+    }
+  '
+}
+
+dispatch_field_format_hint() {
+  local raw_desc="${1-}"
+  local field_label="${2-}"
+
+  [[ -n "$raw_desc" && -n "$field_label" ]] || return 0
+
+  if dispatch_field_declared_empty "$raw_desc" "$field_label"; then
+    if dispatch_field_empty_header_has_body "$raw_desc" "$field_label"; then
+      printf '%s' "${field_label} is present as an empty header with multiline body. Hook parsing requires same-line 'KEY: value'; keep a one-line summary on the header line and move bullets under DETAILS."
+      return 0
+    fi
+
+    printf '%s' "${field_label} header is present but empty. Hook parsing treats empty headers as missing until the value is placed on the same line."
+  fi
+}

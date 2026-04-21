@@ -93,7 +93,9 @@ SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
 
 emit_deny() {
   local reason="${1:?reason required}"
-  DENY_REASON="$reason" node <<'NODE'
+  local surface_key=""
+  surface_key="${DISPATCH_WORK_SURFACE:-${TARGET_NAME:-${TARGET_LANE:-generic}}}"
+  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
 process.stdout.write(JSON.stringify({
   hookSpecificOutput: {
     hookEventName: "PreToolUse",
@@ -123,6 +125,43 @@ dispatch_target_block() {
   local detail="${1:?detail required}"
   local next_step="${2:?next step required}"
   printf 'BLOCKED: dispatch target invalid. Detail: %s. Next: %s.' "$detail" "$next_step"
+}
+
+phase3_dispatch_scope_tags() {
+  local scope_blob="${1-}"
+  local normalized=""
+  local tags=()
+
+  normalized="$(printf '%s' "$scope_blob" | tr '[:upper:]' '[:lower:]')"
+
+  if printf '%s' "$normalized" | grep -qE '(^|[^a-z])frontend/|frontend/\*\*'; then
+    tags+=("frontend")
+  fi
+  if printf '%s' "$normalized" | grep -qE 'backend/\*\*|backend/modules/|/modules/\*\*|feature-modules'; then
+    tags+=("feature-modules")
+  fi
+  if printf '%s' "$normalized" | grep -qE 'backend/\*\*|backend/core/|/core/\*\*|shared core|alembic|run\.ps1|run\.sh'; then
+    tags+=("shared-core")
+  fi
+
+  if [[ "${#tags[@]}" -eq 0 ]]; then
+    return 0
+  fi
+
+  printf '%s\n' "${tags[@]}" | awk '!seen[$0]++'
+}
+
+phase3_parallel_basis_declared() {
+  local split_basis_norm="${1-}"
+  local parallel_groups_norm="${2-}"
+
+  printf '%s\n%s\n' "$split_basis_norm" "$parallel_groups_norm" | grep -qiE 'parallel|병렬|split|batch|lane'
+}
+
+phase3_has_concrete_serial_blocker() {
+  local blockers_norm="${1-}"
+
+  [[ -n "$blockers_norm" && "$blockers_norm" != "none" ]]
 }
 
 worker_requested_lifecycle_for_idle_guard() {
@@ -292,6 +331,27 @@ NORMALIZED_DESC="$(normalize_dispatch_text "$DESCRIPTION")"
 RESEARCH_MODE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "RESEARCH-MODE" 2>/dev/null || true)")"
 DISPATCH_WORK_SURFACE="$(dispatch_field_raw_value "$DESCRIPTION" "WORK-SURFACE" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
 TARGET_SHARD_BOUNDARY="$(dispatch_field_raw_value "$DESCRIPTION" "SHARD-BOUNDARY" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
+CURRENT_PHASE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "CURRENT-PHASE" 2>/dev/null || true)")"
+ACTIVE_WORKFLOW_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "ACTIVE-WORKFLOW" 2>/dev/null || true)")"
+PARALLEL_GROUPS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "PARALLEL-GROUPS" 2>/dev/null || true)")"
+SPLIT_BASIS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "SPLIT-BASIS" 2>/dev/null || true)")"
+DISPATCH_BLOCKERS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "DISPATCH-BLOCKERS" 2>/dev/null || true)")"
+WRITE_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
+
+if [[ "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]] \
+  && [[ "$CURRENT_PHASE_NORM" == *"phase 3"* ]] \
+  && [[ "$CURRENT_PHASE_NORM" == *"implementation"* ]] \
+  && [[ "$TARGET_LANE" == "developer" ]] \
+  && phase3_parallel_basis_declared "$SPLIT_BASIS_NORM" "$PARALLEL_GROUPS_NORM" \
+  && ! phase3_has_concrete_serial_blocker "$DISPATCH_BLOCKERS_NORM"; then
+  mapfile -t _phase3_scope_tags < <(phase3_dispatch_scope_tags "$WRITE_SCOPE_RAW")
+  if [[ "${#_phase3_scope_tags[@]}" -ge 2 ]]; then
+    _phase3_scope_summary="$(printf '%s, ' "${_phase3_scope_tags[@]}")"
+    _phase3_scope_summary="${_phase3_scope_summary%, }"
+    emit_deny "$(dispatch_sizing_block "Phase 3 implementation packet spans multiple independently ownable lanes (${_phase3_scope_summary}) while dispatch basis already declares a parallel split" "split into lane-bounded developer packets, or record the exact blocker keeping those lanes serial in DISPATCH-BLOCKERS")"
+    exit 0
+  fi
+fi
 
 # Sharded researcher dispatches are intentionally parallel instances, each identified by a
 # unique SHARD-ID. Duplicate-prevention and idle-backlog checks do not apply to them;
@@ -323,7 +383,7 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is idle without lifecycle decision" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
+    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' has completion-grade output awaiting lifecycle decision" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
     exit 0
   fi
 fi
@@ -340,38 +400,38 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "worker '${TARGET_NAME}' is idle without lifecycle decision" "$(idle_pending_recovery_step "$TARGET_NAME")")"
+    emit_deny "$(dispatch_sizing_block "worker '${TARGET_NAME}' has completion-grade output awaiting lifecycle decision" "$(idle_pending_recovery_step "$TARGET_NAME")")"
     exit 0
   fi
 fi
 
 # Lifecycle-control SendMessages (MESSAGE-CLASS: control + LIFECYCLE-DECISION) are
-# exempt from idle-pending enforcement via sv-gate.sh. No equivalent Agent-dispatch
+# exempt from lifecycle-backlog enforcement via sv-gate.sh. No equivalent Agent-dispatch
 # exemption is needed here: lifecycle decisions use SendMessage, not Agent, so
 # MESSAGE-CLASS: control cannot appear in a real Agent dispatch payload.
 
-# Idle-pending enforcement is scoped to the current dispatch's work-surface:
-# workers on a different known surface are excluded, while workers with unknown
-# surfaces remain blocking because non-overlap cannot be proven truthfully.
+# Lifecycle-backlog enforcement is scoped to the current dispatch's work-surface:
+# completed workers on a different known surface are excluded, while workers with
+# unknown surfaces remain blocking because non-overlap cannot be proven truthfully.
 IDLE_PENDING_COUNT="$(idle_pending_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
 if [[ "$IDLE_PENDING_COUNT" =~ ^[0-9]+$ ]] && (( IDLE_PENDING_COUNT >= 1 )); then
   IDLE_PENDING_SUMMARY="$(idle_pending_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
   if [[ -z "$DISPATCH_WORK_SURFACE" ]]; then
-    emit_deny "$(dispatch_sizing_block "dispatch packet omits WORK-SURFACE while undecided idle worker backlog exists (${IDLE_PENDING_SUMMARY:-unknown})" "add explicit WORK-SURFACE, or $(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
+    emit_deny "$(dispatch_sizing_block "dispatch packet omits WORK-SURFACE while completed-worker lifecycle backlog exists (${IDLE_PENDING_SUMMARY:-unknown})" "add explicit WORK-SURFACE, or $(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
     exit 0
   fi
 
   if acceptance_follow_on_can_proceed "$IDLE_PENDING_SUMMARY" "$TARGET_LANE"; then
-    emit_dispatch_warning "allowing '${TARGET_LANE}' acceptance follow-on on work-surface '${DISPATCH_WORK_SURFACE}' despite idle backlog (${IDLE_PENDING_SUMMARY}). Upstream completion-grade handoff exists; lead still owes an explicit lifecycle SendMessage."
+    emit_dispatch_warning "allowing '${TARGET_LANE}' acceptance follow-on on work-surface '${DISPATCH_WORK_SURFACE}' despite completed-worker lifecycle backlog (${IDLE_PENDING_SUMMARY}). Upstream completion-grade handoff exists; lead still owes an explicit lifecycle SendMessage."
     exit 0
   fi
 
   if sharded_researcher_follow_on_can_proceed "$IDLE_PENDING_SUMMARY" "$TARGET_LANE" "$SHARDED_TARGET_NAME" "$TARGET_SHARD_BOUNDARY"; then
-    emit_dispatch_warning "allowing sharded researcher fan-out on work-surface '${DISPATCH_WORK_SURFACE}' despite idle shard backlog (${IDLE_PENDING_SUMMARY}). Distinct SHARD-BOUNDARY values and completion-grade handoff are present; lead still owes an explicit lifecycle SendMessage."
+    emit_dispatch_warning "allowing sharded researcher fan-out on work-surface '${DISPATCH_WORK_SURFACE}' despite shard lifecycle backlog (${IDLE_PENDING_SUMMARY}). Distinct SHARD-BOUNDARY values and completion-grade handoff are present; lead still owes an explicit lifecycle SendMessage."
     exit 0
   fi
 
-  emit_deny "$(dispatch_sizing_block "undecided idle worker(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${IDLE_PENDING_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
+  emit_deny "$(dispatch_sizing_block "completed worker(s) awaiting lifecycle decision already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${IDLE_PENDING_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$IDLE_PENDING_SUMMARY")")"
   exit 0
 fi
 
@@ -395,9 +455,9 @@ case "$TARGET_LANE" in
 
 esac
 
-# Record the dispatched worker's work-surface so future idle-pending checks can scope to
+# Record the dispatched worker's work-surface so future lifecycle-backlog checks can scope to
 # the correct surface. Workers dispatched without a WORK-SURFACE field get no surface file
-# and are treated as global-scope (safe fallback) in future idle-pending checks.
+# and are treated as global-scope (safe fallback) in future lifecycle-backlog checks.
 if [[ -n "$DISPATCH_WORK_SURFACE" ]]; then
   if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
     _dispatch_target="$SHARDED_TARGET_NAME"

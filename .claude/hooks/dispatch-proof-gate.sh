@@ -68,10 +68,10 @@ try {
     toolInput.target_name,
     toolInput.targetName
   );
-  process.stdout.write([toolName, description, agentName].map(encode).join("\n"));
-} catch {
-  process.stdout.write("\n\n\n");
-}
+	  process.stdout.write([toolName, description, agentName, String(input.session_id || "")].map(encode).join("\n"));
+	} catch {
+	  process.stdout.write("\n\n\n\n");
+	}
 NODE
 )"
 
@@ -86,6 +86,8 @@ decode_field() {
 TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
 DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
 AGENT_NAME="$(decode_field "${FIELDS[2]:-}")"
+SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
+SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 emit_packet_warning() {
   local reason="${1:?reason required}"
@@ -95,7 +97,9 @@ emit_packet_warning() {
 
 emit_deny() {
   local reason="${1:?reason required}"
-  DENY_REASON="$reason" node <<'NODE'
+  local surface_key=""
+  surface_key="${WORK_SURFACE_RAW:-${TARGET_NAME:-${TARGET_LANE:-generic}}}"
+  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
 process.stdout.write(JSON.stringify({
   hookSpecificOutput: {
     hookEventName: "PreToolUse",
@@ -183,6 +187,45 @@ field_present() {
   [[ -n "$(printf '%s' "$value" | tr -d '[:space:]')" ]]
 }
 
+normalize_dispatch_enum_token() {
+  local raw="${1-}"
+  printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]_-'
+}
+
+join_notes() {
+  local joined=""
+  local note=""
+
+  for note in "$@"; do
+    [[ -n "$note" ]] || continue
+    if [[ -n "$joined" ]]; then
+      joined="${joined}; ${note}"
+    else
+      joined="$note"
+    fi
+  done
+
+  printf '%s' "$joined"
+}
+
+missing_field_format_notes() {
+  local raw_desc="${1-}"
+  shift || true
+  local field_name=""
+  local hint=""
+  local -a hints=()
+
+  for field_name in "$@"; do
+    hint="$(dispatch_field_format_hint "$raw_desc" "$field_name" 2>/dev/null || true)"
+    [[ -n "$hint" ]] && hints+=("$hint")
+  done
+
+  join_notes "${hints[@]}"
+}
+
+PROOF_SURFACE_TOKEN="$(normalize_dispatch_enum_token "$PROOF_SURFACE_RAW")"
+VALIDATION_SURFACE_TOKEN="$(normalize_dispatch_enum_token "$VALIDATION_SURFACE_RAW")"
+
 tester_or_validator_needs_delivery_contract() {
   [[ "$TARGET_LANE" == "tester" || "$TARGET_LANE" == "validator" ]] || return 1
 
@@ -190,7 +233,7 @@ tester_or_validator_needs_delivery_contract() {
     return 0
   fi
 
-  if [[ "$PROOF_SURFACE_NORM" == "browserui" || "$PROOF_SURFACE_NORM" == "cli" || "$VALIDATION_SURFACE_NORM" == "browserui" || "$VALIDATION_SURFACE_NORM" == "cli" ]]; then
+  if [[ "$PROOF_SURFACE_TOKEN" == "browserui" || "$PROOF_SURFACE_TOKEN" == "cli" || "$VALIDATION_SURFACE_TOKEN" == "browserui" || "$VALIDATION_SURFACE_TOKEN" == "cli" ]]; then
     return 0
   fi
 
@@ -267,14 +310,15 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
   fi
 fi
 
-# This hook only reviews the team-lead's outgoing Agent dispatch packet shape.
-# It warns on incomplete packet wording but does not block dispatch; workers own
-# reconstruction-or-HOLD after receipt, while WP/SV and sizing gates still own
-# procedural and state-safety blocks.
+# This hook reviews the team-lead's outgoing Agent dispatch packet shape.
+# It warns on ordinary wording drift, but it blocks tester/validator packets
+# that omit core proof or acceptance contract fields. Worker-side
+# reconstruction-or-HOLD applies only after the packet survives this lead-local
+# contract gate.
 if [[ "$is_assignment_dispatch" == "true" ]]; then
   if [[ "$TARGET_LANE" == "tester" ]]; then
     tester_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS PROOF-TARGET ENV-BASIS SCENARIO-SCOPE PROOF-EXPECTATION PROOF-SURFACE"
-    if [[ "$PROOF_SURFACE_NORM" == "browserui" ]]; then
+    if [[ "$PROOF_SURFACE_TOKEN" == "browserui" ]]; then
       tester_required_fields+=" TOOL-REQUIREMENT"
     fi
     if tester_or_validator_needs_delivery_contract; then
@@ -282,14 +326,21 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
     fi
     tester_missing_fields="$(lane_packet_missing_fields $tester_required_fields)"
     if [[ -n "$tester_missing_fields" ]]; then
-      emit_deny "$(dispatch_proof_block "tester dispatch is missing required proof contract fields (${tester_missing_fields})" "add the missing fields to the packet so proof matches the promised delivery surface, then retry Agent")"
+      tester_format_notes="$(missing_field_format_notes "$DESCRIPTION" $tester_missing_fields)"
+      tester_detail="tester dispatch is missing required proof contract fields (${tester_missing_fields})"
+      tester_next_step="add the missing fields to the packet so proof matches the promised delivery surface, then retry Agent"
+      if [[ -n "$tester_format_notes" ]]; then
+        tester_detail="${tester_detail}. Format note: ${tester_format_notes}"
+        tester_next_step="rewrite the missing field(s) as same-line KEY: value entries, move expanded bullets under DETAILS, then retry Agent"
+      fi
+      emit_deny "$(dispatch_proof_block "$tester_detail" "$tester_next_step")"
       exit 0
     fi
   fi
 
   if [[ "$TARGET_LANE" == "validator" ]]; then
     validator_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS VALIDATION-TARGET EXPECTATION-SOURCES REVIEW-STATE TEST-STATE DECISION-SURFACE VALIDATION-SURFACE"
-    if [[ "$VALIDATION_SURFACE_NORM" == "browserui" ]]; then
+    if [[ "$VALIDATION_SURFACE_TOKEN" == "browserui" ]]; then
       validator_required_fields+=" TOOL-REQUIREMENT"
     fi
     if tester_or_validator_needs_delivery_contract; then
@@ -297,7 +348,14 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
     fi
     validator_missing_fields="$(lane_packet_missing_fields $validator_required_fields)"
     if [[ -n "$validator_missing_fields" ]]; then
-      emit_deny "$(dispatch_proof_block "validator dispatch is missing required acceptance contract fields (${validator_missing_fields})" "add the missing fields to the packet so validation can reconcile the promised delivery surface, then retry Agent")"
+      validator_format_notes="$(missing_field_format_notes "$DESCRIPTION" $validator_missing_fields)"
+      validator_detail="validator dispatch is missing required acceptance contract fields (${validator_missing_fields})"
+      validator_next_step="add the missing fields to the packet so validation can reconcile the promised delivery surface, then retry Agent"
+      if [[ -n "$validator_format_notes" ]]; then
+        validator_detail="${validator_detail}. Format note: ${validator_format_notes}"
+        validator_next_step="rewrite the missing field(s) as same-line KEY: value entries, move expanded bullets under DETAILS, then retry Agent"
+      fi
+      emit_deny "$(dispatch_proof_block "$validator_detail" "$validator_next_step")"
       exit 0
     fi
   fi

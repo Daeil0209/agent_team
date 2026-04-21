@@ -193,6 +193,27 @@ if [[ "$TOOL_NAME" == "TeamCreate" ]]; then
 	    exit 0
 	  fi
 
+  if [[ -n "$TOOL_AGENT_TEAM_NAME" ]]; then
+    _team_name_safe="$(
+      TEAM_NAME="$TOOL_AGENT_TEAM_NAME" node <<'NODE'
+const name = String(process.env.TEAM_NAME || "");
+if (!name || name.includes("/") || name.includes("\\") || name === "." || name === "..") process.exit(1);
+process.stdout.write(name);
+NODE
+    )" || _team_name_safe=""
+    if [[ -n "$_team_name_safe" ]]; then
+      _requested_team_config="$HOME/.claude/teams/$_team_name_safe/config.json"
+      if [[ -f "$_requested_team_config" ]]; then
+        if _live_cfg="$(active_team_config_live 2>/dev/null || true)" && [[ "$_live_cfg" == "$_requested_team_config" ]]; then
+          emit_deny "BLOCKED: team_name collision with live runtime '${TOOL_AGENT_TEAM_NAME}'. Next: reuse that runtime only if it is current-session owned, otherwise choose a unique session-scoped team_name."
+          exit 0
+        fi
+        emit_deny "BLOCKED: team_name collision: '$TOOL_AGENT_TEAM_NAME' already has config residue. Next: retry TeamCreate with a unique session-scoped team_name; use TeamDelete only after stale-runtime cleanup is explicitly safe."
+        exit 0
+      fi
+    fi
+  fi
+
   run_scan
 
   REAP_OUTPUT=""

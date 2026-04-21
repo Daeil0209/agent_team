@@ -42,6 +42,251 @@ is_system_generated_followup_prompt() {
   return 1
 }
 
+status_runtime_recovery_context() {
+  local prompt="${1-}"
+  [[ -n "$prompt" ]] || return 1
+
+  USER_PROMPT="$prompt" \
+  PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" \
+  WORKER_IDLE_NOTICE_FILE="$WORKER_IDLE_NOTICE_FILE" \
+  WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" \
+  WORKER_DISPATCH_ACK_PENDING_FILE="$WORKER_DISPATCH_ACK_PENDING_FILE" \
+  HOME_DIR="$HOME" \
+  STALE_WARN_SECONDS="${STALE_WARN_SECONDS:-120}" \
+  DISPATCH_ACK_LATE_SECONDS="${DISPATCH_ACK_LATE_SECONDS:-30}" \
+  PENDING_DISPATCH_STALE_SECONDS="${PENDING_DISPATCH_STALE_SECONDS:-120}" \
+  node <<'NODE' 2>/dev/null || true
+const fs = require("fs");
+const path = require("path");
+
+const prompt = String(process.env.USER_PROMPT || "").trim();
+if (!prompt) process.exit(0);
+
+const statusPromptRe =
+  /(?:\bstatus\b|\bprogress\b|\bcurrent state\b|\bwhat remains\b|\bwhat(?:'s| is) left\b|\bwhat are you doing\b|\bwhy (?:did|are) you stop(?:ped)?\b|\bwhat is happening\b|\bwhere are we\b|지금[^.\n]{0,20}(?:뭐|무엇|어디|상태|진행|남|멈)|현재[^.\n]{0,20}(?:상태|진행|남)|뭐하고 있|무엇을 하고 있|어디까지|왜 멈|왜 안|남은 게|뭐가 남았|진행 상황|현재 상태)/iu;
+if (!statusPromptRe.test(prompt)) process.exit(0);
+
+const staleWarnMs = Math.max(1, Number(process.env.STALE_WARN_SECONDS || "120")) * 1000;
+const ackLateMs = Math.max(1, Number(process.env.DISPATCH_ACK_LATE_SECONDS || "30")) * 1000;
+const pendingStaleMs = Math.max(1, Number(process.env.PENDING_DISPATCH_STALE_SECONDS || "120")) * 1000;
+const nowMs = Date.now();
+
+const readJson = (filePath, fallback = {}) => {
+  try {
+    const raw = fs.readFileSync(filePath, "utf8").trim();
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const readLines = (filePath) => {
+  try {
+    return fs.readFileSync(filePath, "utf8").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  } catch {
+    return [];
+  }
+};
+
+const normalize = (value) => String(value || "").trim().toLowerCase();
+
+const parseIso = (value) => {
+  const ts = Date.parse(String(value || "").trim());
+  return Number.isFinite(ts) ? ts : null;
+};
+
+const procedureState = readJson(process.env.PROCEDURE_STATE_FILE || "", {});
+const focusWorkers = [
+  procedureState.lastPendingWorker,
+  procedureState.lastClaimedWorker,
+  procedureState.lastDispatchWorker,
+]
+  .map(normalize)
+  .filter(Boolean);
+
+const idleRows = readLines(process.env.WORKER_IDLE_NOTICE_FILE || "").map((line) => {
+  const [worker = "", reason = "", completedStatus = "", completedTask = ""] = line.split("|");
+  return {
+    worker: normalize(worker),
+    reason: normalize(reason),
+    completedStatus: String(completedStatus || "").trim(),
+    completedTask: String(completedTask || "").trim(),
+  };
+});
+
+const latestReports = new Map();
+for (const line of readLines(process.env.WORKER_REPORT_LEDGER || "")) {
+  let row;
+  try {
+    row = JSON.parse(line);
+  } catch {
+    continue;
+  }
+  const worker = normalize(row.senderName);
+  const timestamp = String(row.timestamp || "");
+  if (!worker || !timestamp) continue;
+  const current = latestReports.get(worker);
+  if (!current || timestamp >= current.timestamp) {
+    latestReports.set(worker, {
+      worker,
+      timestamp,
+      messageClass: normalize(row.messageClass),
+    });
+  }
+}
+
+const pendingAckRows = readLines(process.env.WORKER_DISPATCH_ACK_PENDING_FILE || "").map((line) => {
+  const parts = line.split("|").map((value) => value.trim());
+  if (parts.length >= 2) {
+    return {
+      timestamp: parts[0],
+      worker: normalize(parts[1]),
+    };
+  }
+  return { timestamp: "", worker: normalize(parts[0]) };
+}).filter((row) => row.worker);
+
+const latestPermissionRequest = (() => {
+  const teamsRoot = path.join(process.env.HOME_DIR || "", ".claude", "teams");
+  if (!teamsRoot || !fs.existsSync(teamsRoot)) return null;
+  let latest = null;
+  for (const entry of fs.readdirSync(teamsRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const inboxPath = path.join(teamsRoot, entry.name, "inboxes", "team-lead.json");
+    if (!fs.existsSync(inboxPath)) continue;
+    let rows;
+    try {
+      rows = JSON.parse(fs.readFileSync(inboxPath, "utf8"));
+    } catch {
+      continue;
+    }
+    if (!Array.isArray(rows)) continue;
+    for (const row of rows) {
+      if (!row || typeof row !== "object") continue;
+      let payload;
+      try {
+        payload = JSON.parse(String(row.text || ""));
+      } catch {
+        continue;
+      }
+      if (!payload || payload.type !== "permission_request") continue;
+      const worker = normalize(payload.agent_id || payload.agentId || payload.from || row.from);
+      const timestamp = String(row.timestamp || payload.timestamp || "");
+      if (!worker || !timestamp) continue;
+      if (!latest || timestamp >= latest.timestamp) {
+        latest = { worker, timestamp };
+      }
+    }
+  }
+  return latest;
+})();
+
+const focusWorker = (() => {
+  for (const worker of focusWorkers) {
+    if (worker) return worker;
+  }
+  const pendingWorker = pendingAckRows[0]?.worker;
+  if (pendingWorker) return pendingWorker;
+  const idleWorker = idleRows[0]?.worker;
+  if (idleWorker) return idleWorker;
+  return "";
+})();
+
+const idleByWorker = new Map(idleRows.map((row) => [row.worker, row]));
+const priorityReason = (reason) => {
+  switch (reason) {
+    case "working-permission-pending":
+      return 1;
+    case "not-working-awaiting-lifecycle":
+      return 2;
+    case "working-blocked":
+      return 3;
+    case "working-report-missing":
+      return 4;
+    case "dispatch-pending-no-ack":
+      return 5;
+    default:
+      return 99;
+  }
+};
+
+const selectedIdle = (() => {
+  if (focusWorker && idleByWorker.has(focusWorker)) return idleByWorker.get(focusWorker);
+  return [...idleRows].sort((a, b) => priorityReason(a.reason) - priorityReason(b.reason))[0] || null;
+})();
+
+const emit = (ctx) => {
+  if (ctx) process.stdout.write(ctx);
+};
+
+if (selectedIdle) {
+  const worker = selectedIdle.worker || "worker";
+  switch (selectedIdle.reason) {
+    case "working-permission-pending":
+      emit(`CTX: runtime-recovery. Status-like turn matches working-permission-pending for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the permission surface first, do not status-probe the worker, do not infer completion from files, and do not ask the user to choose.`);
+      process.exit(0);
+    case "not-working-awaiting-lifecycle":
+      emit(`CTX: runtime-recovery. Status-like turn matches completed-awaiting-lifecycle for ${worker}. Briefly answer current state, then treat the turn as correction: send the explicit lifecycle decision before unrelated dispatch; do not call this standby unless the lifecycle control is actually sent.`);
+      process.exit(0);
+    case "working-blocked":
+      emit(`CTX: runtime-recovery. Status-like turn matches working-blocked for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose and do not infer completion from files.`);
+      process.exit(0);
+    case "working-report-missing":
+      emit(`CTX: runtime-recovery. Status-like turn matches working-report-missing for ${worker}. Briefly answer current state, then treat the turn as correction: bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into redispatch, reroute, or replacement, do same-turn work-planning -> self-verification first. File existence may support artifact-change claims only; it is not handoff/completion evidence.`);
+      process.exit(0);
+    case "dispatch-pending-no-ack":
+      // Prefer the pending-state path below because it can distinguish ack-late vs stale.
+      break;
+  }
+}
+
+const pendingWorker = normalize(procedureState.lastPendingWorker || procedureState.lastDispatchWorker || "");
+const pendingAck = pendingAckRows.find((row) => row.worker === pendingWorker) || pendingAckRows[0] || null;
+if (normalize(procedureState.teamDispatchState) === "pending" && pendingAck) {
+  const sinceMs = parseIso(procedureState.lastPendingSince || procedureState.lastDispatchAt || pendingAck.timestamp);
+  const ageMs = sinceMs == null ? null : Math.max(0, nowMs - sinceMs);
+  if (ageMs != null && ageMs >= pendingStaleMs) {
+    emit(`CTX: runtime-recovery. Status-like turn matches unclaimed-dispatch-failure for ${pendingAck.worker}. Briefly answer current state, then treat the turn as correction: same-turn work-planning -> self-verification -> replacement-first on the same WORK-SURFACE. Do not status-probe the unstarted target as the primary action and do not ask the user to choose.`);
+    process.exit(0);
+  }
+  if (ageMs != null && ageMs >= ackLateMs) {
+    emit(`CTX: runtime-recovery. Status-like turn matches ack-late for ${pendingAck.worker}. Briefly answer current state, then keep the turn on correction/monitoring logic: report pending/late state only, do not claim the worker started, do not status-probe the unstarted target as the primary action, and do not ask the user to choose.`);
+    process.exit(0);
+  }
+  emit(`CTX: runtime-recovery. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Briefly answer current state from pending evidence only; do not narrate the work as active and do not status-probe the target as if worker-start evidence already exists.`);
+  process.exit(0);
+}
+
+const claimedWorker = normalize(procedureState.lastClaimedWorker || procedureState.lastDispatchWorker || "");
+const latestReport = claimedWorker ? latestReports.get(claimedWorker) : null;
+if (latestReport) {
+  if (latestReport.messageClass === "blocker") {
+    emit(`CTX: runtime-recovery. Status-like turn sees latest worker report 'blocker' from ${claimedWorker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose.`);
+    process.exit(0);
+  }
+
+  if (latestPermissionRequest && latestPermissionRequest.worker === claimedWorker) {
+    const permissionMs = parseIso(latestPermissionRequest.timestamp);
+    const reportMs = parseIso(latestReport.timestamp);
+    const dispatchMs = parseIso(procedureState.lastDispatchAt);
+    if ((permissionMs != null) && (dispatchMs == null || permissionMs >= dispatchMs) && (reportMs == null || permissionMs >= reportMs)) {
+      emit(`CTX: runtime-recovery. Status-like turn sees working-permission-pending for ${claimedWorker}. Briefly answer current state, then resolve the permission surface first; do not status-probe the worker and do not infer completion from files.`);
+      process.exit(0);
+    }
+  }
+
+  if (["dispatch-ack", "status"].includes(latestReport.messageClass)) {
+    const reportMs = parseIso(latestReport.timestamp);
+    const ageMs = reportMs == null ? null : Math.max(0, nowMs - reportMs);
+    if (ageMs != null && ageMs >= staleWarnMs) {
+      emit(`CTX: runtime-recovery. Status-like turn sees an active-stall candidate on ${claimedWorker}: worker-start evidence exists, but the latest upward report (${latestReport.messageClass}) is stale. Briefly answer current state, then bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into replacement or redispatch, do same-turn work-planning -> self-verification first. File existence is not completion evidence.`);
+      process.exit(0);
+    }
+  }
+}
+NODE
+}
+
 # Worker sessions skip prompt-level lead enforcement. Prefer the session
 # registry; TMUX naming is only a fallback for contexts without a known id.
 if runtime_sender_session_is_worker "$PROMPT_SESSION_ID" || is_worker_session; then
@@ -212,6 +457,7 @@ fi
 CLOSEOUT_CONTEXT=""
 CLOSEOUT_SUPPRESS="false"
 PLANNING_CONTEXT=""
+RECOVERY_CONTEXT=""
 CLOSEOUT_ACTION="$(USER_PROMPT="$USER_PROMPT" \
   EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN="${EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN:-}" \
   CLOSEOUT_CANCEL_PROMPT_JS_PATTERN="${CLOSEOUT_CANCEL_PROMPT_JS_PATTERN:-}" \
@@ -255,7 +501,8 @@ esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-preflight. If this turn introduces a new analysis, classification, recommendation, correction, execution, patch, dispatch, or mutation scope, first freeze scope with Skill('work-planning'), then load Skill('self-verification') before reporting conclusions or using consequential tools. Read-only inspection is evidence gathering only; it does not authorize reporting, dispatch, or mutation. Already-reviewed changes may use work-planning only to freeze the current-turn mutation scope. Before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
+  PLANNING_CONTEXT="CTX: fresh-turn-preflight. First classify whether this is an SV-only audit: if the turn only asks to audit or self-verify an already-frozen synthesized conclusion, the first skill is Skill('self-verification'); do not re-open work-planning unless scope changes or execution resumes. Otherwise, if this turn introduces a new analysis, classification, recommendation, correction, execution, patch, dispatch, or mutation scope, first freeze scope with Skill('work-planning'), then load Skill('self-verification') before reporting conclusions or using consequential tools. Read-only inspection is evidence gathering only; it does not authorize reporting, dispatch, or mutation. Already-reviewed changes may use work-planning only to freeze the current-turn mutation scope. Before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
+  RECOVERY_CONTEXT="$(status_runtime_recovery_context "$USER_PROMPT")"
 fi
 
 # ─── OUTPUT ──────────────────────────────────────────────────────────────────
@@ -265,6 +512,13 @@ if [[ -n "$CLOSEOUT_CONTEXT" ]]; then
     COMBINED_CONTEXT="$COMBINED_CONTEXT $CLOSEOUT_CONTEXT"
   else
     COMBINED_CONTEXT="$CLOSEOUT_CONTEXT"
+  fi
+fi
+if [[ -n "$RECOVERY_CONTEXT" ]]; then
+  if [[ -n "$COMBINED_CONTEXT" ]]; then
+    COMBINED_CONTEXT="$COMBINED_CONTEXT $RECOVERY_CONTEXT"
+  else
+    COMBINED_CONTEXT="$RECOVERY_CONTEXT"
   fi
 fi
 if [[ -n "$PLANNING_CONTEXT" ]]; then
