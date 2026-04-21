@@ -86,6 +86,8 @@ Carry the basis into Step 1 purpose/deliverable analysis, Step 1.5 defaults, and
 - Q3 results become the `ACTIVE-WORKFLOW` field in the planning output. Q5 results feed `SKILL-RECOMMENDATIONS` at dispatch time.
 - For `team-lead`, Step 1 must also freeze the staffing-shape basis whenever routing is plausible: whether the turn is evidence sweep, authored-artifact review, mixed review-plus-research, verification, implementation, or another named shape; whether an existing artifact is under review; whether added evidence expansion is meaningful; whether the turn closes consequential judgment (`defect`, `severity`, `priority`, corrective recommendation, or equivalent); and whether independent lane reads are possible. Do not leave these routing drivers implicit.
 - For `team-lead`, staffing-shape basis must size worker count, not just lane mix. Record at minimum `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, `READ-VOLUME`, `CROSS-CHECK-MODE`, and `SHARD-BASIS` before handoff into `task-execution`. The planning duty is to make clear why one worker is enough, why multiple same-lane shards are needed, or why mirrored cross-check is justified.
+- For workflow-governed discovery (for example a `dev-workflow` Phase 0 that reads one reference source and derives multiple interpretation surfaces), freeze the phase-local discovery sizing basis explicitly instead of leaving it implicit inside `STEPS`. Record `DISCOVERY-SPLIT-SHAPE`, `DISCOVERY-SURFACE-MAP`, and `DISCOVERY-SERIAL-REASON` whenever the first consequential phase is discovery, source extraction, workbook mapping, or another prerequisite evidence-shaping phase.
+- For that workflow-governed discovery shape, one source is not the same as one worker. If the discovery packet mixes mechanical extraction/inventory with 2 or more interpretive surfaces, `DISCOVERY-SPLIT-SHAPE` must be `scout-then-shards` or `immediate-shards`, not `single`. If `single` is recorded anyway, planning is defective and must be corrected before `task-execution`.
 - If Q1 cannot determine the purpose, HOLD and ask the user for clarification.
 - If Q2 cannot be classified into one or more named work types, HOLD and ask the user rather than guessing. Q3 and Q5 must not proceed on an unclassified Q2.
 - If Q3 cannot confidently match a workflow, ask the user rather than guessing.
@@ -227,7 +229,7 @@ Before beginning execution, define:
 
 ## Internal Planning Record
 
-After completing Steps 1–5, freeze the internal plan block in agent-local reasoning before the first execution tool call that follows this skill load. This record is for internal scope control and downstream proof surfaces only. Do not emit it through commentary, progress updates, or any user-facing channel.
+After completing Steps 1–5, freeze the internal plan block in agent-local reasoning before the first execution tool call that follows this skill load. This record is for internal scope control and downstream proof surfaces only. Do not emit it through commentary, progress updates, or any user-facing channel. The agent must not announce that planning was frozen, loaded, or recorded; phrases such as `Planning frozen internally.`, `Internal plan frozen:`, or any equivalent preface are prohibited on the user-facing channel.
 
 ```
 WORK-INTENT: <one sentence>
@@ -247,6 +249,9 @@ JUDGMENT-AXIS-COUNT: <1 | 2 | 3+ | exact count + note>
 READ-VOLUME: <bounded | broad-single-surface | broad-multi-surface>
 CROSS-CHECK-MODE: <none | lane-separated | mirrored-same-surface>
 SHARD-BASIS: <none | by-surface | by-file-group | by-judgment-axis | mirrored-surface-pairs:<map>>
+DISCOVERY-SPLIT-SHAPE: <n/a | single | scout-then-shards | immediate-shards>
+DISCOVERY-SURFACE-MAP: <n/a | surface inventory and intended shard boundaries>
+DISCOVERY-SERIAL-REASON: <n/a | exact reason the discovery phase stays scout-first or otherwise serial>
 ROUTING-SIGNAL: <lead-local candidate | team-routing candidate | ambiguous-route>
 STAFFING-RATIONALE: <why this lane mix and why parallel vs sequential is justified>
 STEPS: <numbered list>
@@ -283,9 +288,11 @@ Good:
 - `패치 범위를 좁혔고, 다음은 reviewer 검증입니다.`
 
 Bad:
+- `Planning frozen internally.`
 - `WORK-INTENT: ...`
 - `EXPECTED-OUTPUT: ...`
 - `AGENT-MAP: ...`
+- `Planning frozen internally.` followed by any plan field or packet field
 - full or partial reproduction of the internal planning record
 
 Planning record rules:
@@ -294,11 +301,14 @@ Planning record rules:
 - For `team-lead`, `INTENT-CLASS` and `STAFFING-RATIONALE` are mandatory whenever `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`.
 - If an existing artifact/report/claim surface is under review and `EVIDENCE-EXPANSION` is not `none`, `INDEPENDENT-READ-POSSIBLE` must be recorded explicitly; do not leave review-vs-research parallelism to later inference.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and staffing depends on broad read volume, multiple review surfaces, or explicit cross-check, `WORK-SURFACE-COUNT`, `JUDGMENT-AXIS-COUNT`, `READ-VOLUME`, `CROSS-CHECK-MODE`, and `SHARD-BASIS` are mandatory.
+- If the first consequential phase is workflow-governed discovery, source extraction, workbook mapping, or another prerequisite evidence-shaping phase, `DISCOVERY-SPLIT-SHAPE`, `DISCOVERY-SURFACE-MAP`, and `DISCOVERY-SERIAL-REASON` are mandatory unless `ACTIVE-WORKFLOW` is `none`.
 - If `INTENT-CLASS` includes both review and research, `AGENT-MAP` must either include both `researcher` and `reviewer` or `PARALLEL-GROUPS`/`DISPATCH-BLOCKERS` must explain the exact dependency or bounded reason for not doing so.
 - If `INTENT-CLASS` includes both review and research and `CROSS-CHECK-MODE` is `mirrored-same-surface`, `AGENT-MAP` must show a mirrored shard shape or `DISPATCH-BLOCKERS` must name the exact reason same-surface challenge cannot yet be activated.
 - If `ROUTING-SIGNAL` is `team-routing candidate`, `AGENT-MAP` must be present or `DISPATCH-BLOCKERS` must name the exact reason it is not yet present.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and 2 or more meaningful work surfaces are already independent, or become independent after one named serial prerequisite, `PARALLEL-GROUPS` must be present.
 - If `WORK-SURFACE-COUNT` or `JUDGMENT-AXIS-COUNT` is `3+`, a one-worker lane for that same surface set is incomplete unless `STAFFING-RATIONALE` names the exact context-cost, dependency, or overlap reason that kept staffing narrower.
+- If `DISCOVERY-SPLIT-SHAPE` is `scout-then-shards` or `immediate-shards`, `AGENT-MAP` must show the planned discovery shard count or `DISPATCH-BLOCKERS` must name the exact runtime or overlap reason it cannot yet be activated.
+- If `DISCOVERY-SPLIT-SHAPE` is `single`, `DISCOVERY-SERIAL-REASON` must explain why the discovery remains one bounded surface. `single` is invalid when the same packet still mixes mechanical extraction/inventory with 2 or more interpretive surfaces.
 - If `PARALLEL-GROUPS` is `none`, it must include a one-sentence serial reason grounded in dependency, boundary uncertainty, or context-cost/capacity trade-off. Bare `none` is incomplete.
 - If `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`, `NEXT-CONSEQUENTIAL-ACTION` is mandatory.
 - If `ROUTING-SIGNAL` is `team-routing candidate` and `DISPATCH-BLOCKERS` is `none`, `NEXT-CONSEQUENTIAL-ACTION` must be `TeamCreate`, `reuse-via-SendMessage`, or `Agent` — not `lead-local-none`.

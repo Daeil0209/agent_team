@@ -149,12 +149,125 @@ command_mutates_governance_surface() {
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
-    if subcommand_targets_governance_surface "$subcmd" && subcommand_is_mutating_shell "$subcmd"; then
-      return 0
+    if subcommand_targets_governance_surface "$subcmd"; then
+      if subcommand_is_git_index_hygiene "$subcmd"; then
+        return 0
+      fi
+      if subcommand_is_mutating_shell "$subcmd"; then
+        return 0
+      fi
     fi
   done < <(split_compound_command "$cmd")
 
   return 1
+}
+
+subcommand_is_git_index_hygiene() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+  printf '%s' "$subcmd" | grep -Eiq '^[[:space:]]*git[[:space:]]+rm([[:space:]]+[^[:space:]]+)*[[:space:]]+--cached([[:space:]]|$)|^[[:space:]]*git[[:space:]]+update-index([[:space:]]+[^[:space:]]+)*[[:space:]]+--(force-remove|remove)([[:space:]]|$)|^[[:space:]]*git[[:space:]]+restore([[:space:]]+[^[:space:]]+)*[[:space:]]+--staged([[:space:]]|$)'
+}
+
+subcommand_targets_repo_test_surface_only() {
+  local subcmd="${1-}"
+  local project_root=""
+  [[ -n "$subcmd" ]] || return 1
+
+  project_root="$(resolve_project_root)"
+  COMMAND_TEXT="$subcmd" PROJECT_ROOT="$project_root" node <<'NODE'
+const path = require("path");
+
+const command = String(process.env.COMMAND_TEXT || "");
+const root = String(process.env.PROJECT_ROOT || process.cwd());
+
+function tokenize(text) {
+  const words = [];
+  let current = "";
+  let quote = "";
+
+  for (let index = 0; index < text.length; index += 1) {
+    const ch = text[index];
+    if (quote) {
+      if (ch === quote) {
+        quote = "";
+      } else if (ch === "\\" && quote === '"' && index + 1 < text.length) {
+        current += text[++index];
+      } else {
+        current += ch;
+      }
+      continue;
+    }
+
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+
+    if (/\s/.test(ch)) {
+      if (current) {
+        words.push(current);
+        current = "";
+      }
+      continue;
+    }
+
+    current += ch;
+  }
+
+  if (quote) return null;
+  if (current) words.push(current);
+  return words;
+}
+
+const words = tokenize(command);
+if (!words || words.length === 0) process.exit(1);
+
+const reserved = new Set([
+  "git",
+  "rm",
+  "update-index",
+  "restore",
+  "HEAD",
+  "--",
+  "--cached",
+  "--staged",
+  "--force-remove",
+  "--remove",
+]);
+
+const candidates = words.filter((word) => {
+  const trimmed = word.replace(/^['"]|['"]$/g, "");
+  if (!trimmed || trimmed.startsWith("-") || reserved.has(trimmed)) return false;
+  return trimmed.includes("/") || trimmed.startsWith("tests");
+});
+
+if (candidates.length === 0) process.exit(1);
+
+const ok = candidates.every((candidate) => {
+  const trimmed = candidate.replace(/^['"]|['"]$/g, "");
+  const resolved = path.resolve(root, trimmed);
+  const relative = path.relative(root, resolved).replace(/\\/g, "/");
+  return relative.startsWith("tests/claude-hooks/");
+});
+
+process.exit(ok ? 0 : 1);
+NODE
+}
+
+command_is_allowed_repo_test_index_hygiene() {
+  local cmd="${1-}"
+  local subcmd=""
+  [[ -n "$cmd" ]] || return 1
+
+  while IFS= read -r subcmd; do
+    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
+    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
+    [[ -z "$subcmd" ]] && continue
+    subcommand_is_git_index_hygiene "$subcmd" || return 1
+    subcommand_targets_repo_test_surface_only "$subcmd" || return 1
+  done < <(split_compound_command "$cmd")
+
+  return 0
 }
 
 command_removes_team_runtime_dir() {
@@ -615,6 +728,9 @@ case "$TOOL_NAME" in
       exit 0
     fi
     if bounded_generated_reset_scaffold_command "$CLEAN_COMMAND"; then
+      exit 0
+    fi
+    if command_is_allowed_repo_test_index_hygiene "$CLEAN_COMMAND"; then
       exit 0
     fi
 
