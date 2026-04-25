@@ -129,7 +129,7 @@ function in_list(item, list,    n, arr, i) {
   epoch = mktime(ts)
   if (epoch <= 0) next
   aid = $3
-  if (aid == "supervisor") next
+  if (aid == "supervisor" || aid == "unknown-agent") next
   if ($2 == "TEAMMATE_IDLE" || $2 == "TEAMMATE_IDLE_DEBUG") next
   if (epoch > last_epoch[aid]) {
     last_epoch[aid] = epoch
@@ -145,7 +145,7 @@ END {
 
   for (a in last_epoch) {
     delta = now - last_epoch[a]
-    if (a == "runtime-monitor") continue
+    if (a == "runtime-monitor" || a == "unknown-agent") continue
     if (in_list(a, standby)) {
       standby_count++
       standby_lines[standby_count] = sprintf("STANDBY: %s | %ds idle | approved", a, delta)
@@ -170,6 +170,7 @@ END {
         printf "GHOST: %s | %ds idle | %s | %s\n", a, delta, label, tool
       } else {
         printf "STALE: %s | %ds idle | %s | %s\n", a, delta, label, tool
+        stale++
       }
     } else {
       active++
@@ -191,9 +192,9 @@ END {
 _REGISTERED_WORKERS=""
 for _fr_cfg in "$HOME/.claude/teams"/*/config.json; do
   [[ -f "$_fr_cfg" ]] || continue
-  _REGISTERED_WORKERS+="$(node -e "
+  _REGISTERED_WORKERS+="$(CONFIG_FILE="$_fr_cfg" node -e "
     try {
-      const c = JSON.parse(require('fs').readFileSync('${_fr_cfg}', 'utf8'));
+      const c = JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE, 'utf8'));
       (c.members || []).forEach(m => { if (m.name) process.stdout.write(m.name + '\n'); });
     } catch(e) {}
   " 2>/dev/null || true)"
@@ -229,46 +230,17 @@ fi
 
 # Auto-shutdown STANDBY workers when memory usage exceeds 80%.
 # Reuses _MEM_TOTAL_KB (total) and SCAN_MEM_KB (available) already computed above.
-_MEM_USED_KB=$(( _MEM_TOTAL_KB > SCAN_MEM_KB ? _MEM_TOTAL_KB - SCAN_MEM_KB : 0 ))
-_MEM_PERCENT=0
-if [[ "$_MEM_TOTAL_KB" -gt 0 ]]; then
-  _MEM_PERCENT=$(( _MEM_USED_KB * 100 / _MEM_TOTAL_KB ))
-fi
+# Memory usage variables removed (unused after B2 library refactor)
 
 # get_worker_pane_id() — now provided by hook-config.sh
 
-if (( _MEM_PERCENT > 80 )) && printf '%s\n' "$RESULT" | grep -q '^STANDBY:'; then
-  NEW_RESULT=""
-  while IFS= read -r line; do
-    if [[ "$line" == STANDBY:* ]]; then
-      worker_part="${line#STANDBY: }"
-      worker_name="${worker_part%% | *}"
-      pane_id="$(get_worker_pane_id "$worker_name" 2>/dev/null || true)"
-      if [[ -n "$pane_id" ]]; then
-        tmux_cmd kill-pane -t "$pane_id" 2>/dev/null || true
-      fi
-      if [[ -f "$STANDBY_FILE" ]]; then
-        tmp_standby="$(grep -v "^${worker_name}$" "$STANDBY_FILE" 2>/dev/null || true)"
-        if [[ -n "$tmp_standby" ]]; then
-          printf '%s\n' "$tmp_standby" > "$STANDBY_FILE"
-        else
-          : > "$STANDBY_FILE"
-        fi
-      fi
-      remove_member_from_config "$worker_name"
-      NEW_RESULT+="AUTO-SHUTDOWN: ${worker_name} | ${pane_id:-no-pane} | memory-pressure (${_MEM_PERCENT}%)"$'\n'
-    else
-      NEW_RESULT+="${line}"$'\n'
-    fi
-  done <<< "$RESULT"
-  RESULT="${NEW_RESULT%$'\n'}"
-fi
+memory_pressure_shutdown_standby
 
 for line in "${CAPACITY_LINES[@]}"; do
   printf '%s\n' "$line"
 done
 
-# Auto force-kill ghost agents (10+ min idle)
+# Auto force-kill ghost agents after the configured ghost threshold.
 while IFS= read -r _ghost_line; do
   [[ "$_ghost_line" == GHOST:* ]] || continue
   _ghost_name="${_ghost_line#GHOST: }"
@@ -291,9 +263,9 @@ echo "$RESULT"
 # This prevents terminated workers from appearing as phantom teammates in the UI.
 for _gc_config_file in "$HOME/.claude/teams"/*/config.json; do
   [[ -f "$_gc_config_file" ]] || continue
-  _gc_ghost_list="$(node -e "
+  _gc_ghost_list="$(CONFIG_FILE="$_gc_config_file" node -e "
     try {
-      const config = JSON.parse(require('fs').readFileSync('${_gc_config_file}', 'utf8'));
+      const config = JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE, 'utf8'));
       (config.members || []).forEach(m => {
         if (m.name && m.name !== 'team-lead') {
           process.stdout.write(m.name + '|' + m.tmuxPaneId + '\n');
@@ -325,3 +297,5 @@ done
 if [[ "$RESULT" == CRON_PAUSE* ]]; then
   : > "$HEALTH_CRON_FLAG"
 fi
+
+exit 0

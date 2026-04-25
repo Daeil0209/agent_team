@@ -64,23 +64,7 @@ When the current runtime is ambiguous, the lead must resolve that ambiguity befo
 
 ## Monitoring Sequence
 
-The `Monitoring Sequence` is continuous during active delegated operation.
-
-### Monitoring responsibilities
-
-- Track lane health, no-progress risk, ownership drift, stalled workers, and merge collisions.
-- Use direct lead oversight and event-driven monitoring as the primary path during explicit team runtime.
-- Add periodic health monitoring only when the active runtime policy or tracked runtime configuration actually enables a health-check cron.
-- In single-primary automation mode, also track runtime pressure: available memory, swap headroom, orphan session workers, and stale tmux socket residue.
-- Treat unattended no-progress lanes as management defects.
-- Keep diagnostic and evidence-gathering work routed to the delegated evidence lane rather than letting the main lead absorb reproduction or root-cause work by convenience.
-- Use bidirectional coordination actively during monitoring: acknowledge worker reports, request clarification or partial results when needed, answer bounded worker questions, and keep control changes explicit rather than assuming silent understanding.
-
-### Worker lifecycle states
-
-- `ACTIVE`: currently executing work — includes the period after turn completion until the governing lane explicitly approves standby, reuse, or shutdown
-- `STANDBY`: governing lane has approved the worker to wait with preserved context for future reuse
-- `FORCE-STOPPED`: explicitly terminated — worker is no longer needed, harmful, stuck, or must be stopped immediately
+The `Monitoring Sequence` general procedure (responsibilities, lane health, runtime-pressure handling, workflow integration) is owned by `session-boot/SKILL.md` § Monitoring Sequence. The canonical worker lifecycle vocabulary (5 states) is owned by `session-boot/reference.md` § Worker Lifecycle States. The subsections below cover lead-side monitoring decisions and lifecycle-message protocol that are not duplicated elsewhere.
 
 ### Runtime signals (not governance states)
 
@@ -98,7 +82,7 @@ The `Monitoring Sequence` is continuous during active delegated operation.
 When an idle_notification is received with a valid completion report, the governing lane must make one of these decisions:
 
 - `Reuse`: more work is immediately available and preserved context is still valuable
-- `Standby Approve`: no immediate work, but near-future reuse is plausible. Current standard control path is an explicit governing-lane message (`MESSAGE-CLASS: standby`) to the concrete worker name; any helper or hook state update exists only to reflect that approved decision, not to replace it.
+- `Standby Approve`: no immediate work, but near-future reuse is plausible. Current standard control path is an explicit governing-lane lifecycle-control message (`MESSAGE-CLASS: lifecycle-control` with `LIFECYCLE-DECISION: standby`, per `.claude/skills/task-execution/reference.md`) to the concrete worker name; any helper or hook state update exists only to reflect that approved decision, not to replace it.
 - `Force Stop`: worker is no longer needed, wrong, harmful, stuck, or must be terminated immediately. Shutdown sequence: first send `SendMessage(to: "<worker-name>", message: {type: "shutdown_request"})` and wait for acknowledgment. If the worker is unresponsive, then use `bash "$HOME/.claude/hooks/mark-force-stop.sh" "<worker-name>"` as emergency fallback. Skipping `shutdown_request` leaves ghost entries in Claude Code's internal tracking.
 
 ### Message-first lifecycle rule
@@ -209,7 +193,7 @@ Before sending a dispatch, verify that all structured fields match the target la
 
 Free-form descriptions in enumerated fields are compliance failures. Use the exact values above.
 
-For governance-sensitive `developer` packets, keep the human-readable packet contract in `skills/team-governance-sequences/SKILL.md`. `team-session-sequences` remains the owner for the shared cross-lane dispatch baseline, while hooks enforce the exact runtime contract.
+For governance-sensitive `developer` packets, keep the human-readable packet contract in `skills/self-growth-sequence/reference.md` § Human-Readable Packet Owners. `team-session-sequences` remains the owner for the shared cross-lane dispatch baseline, while hooks enforce the exact runtime contract.
 
 ### Agent Load Guard
 
@@ -276,14 +260,14 @@ If a dispatch exceeds any bound, decompose it before sending. Exception: researc
 - Task-scoped tools such as `TaskGet`, `TaskUpdate`, `TaskOutput`, and `TaskStop` take the task id from the explicit `task_assignment` packet, not a worker name or `agentId@team`.
 - Agent-scoped communication remains separate: use `SendMessage(to: "<worker-or-agentId>")` for worker control, and do not reuse that worker identifier as a task identifier.
 - Treat worker-to-worker communication as challenger traffic, not shared management. Workers may send bounded peer advice or challenge on a local claim, but any ownership, acceptance, routing, or task-control change must come back through `team-lead`.
-- Keep `SendMessage` direction explicit. Free-form is fine for status, acknowledgment, clarification, or partial-result notes that do not change ownership, lifecycle, routing, or active surface. Downward authoritative control uses `MESSAGE-CLASS: assignment|control|reroute|reuse|standby`, `MESSAGE-PRIORITY: normal|high|critical`, and `WORK-SURFACE: <bounded active surface>`; lifecycle shutdown uses `shutdown_request` / `shutdown_response`; upward authoritative reports use `MESSAGE-CLASS: blocker|handoff|completion|hold|scope-pressure|status`, `MESSAGE-PRIORITY: normal|high|critical`, `WORK-SURFACE: <current surface>`, and `REQUESTED-GOVERNING-ACTION: <decision needed or none>`; peer worker challenge stays on `PEER-MODE` plus `MESSAGE-PRIORITY`.
+- Keep `SendMessage` direction explicit. Free-form is fine for status, acknowledgment, clarification, or partial-result notes that do not change ownership, lifecycle, routing, or active surface. Authoritative downward control packets, upward report `MESSAGE-CLASS` vocabulary, and the structured `shutdown_request` / `shutdown_response` lifecycle path are owned by `.claude/skills/task-execution/reference.md`; consume the canonical schema there rather than restating it locally. Peer worker challenge stays on `PEER-MODE` plus `MESSAGE-PRIORITY`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the worker name by guesswork.
 
 ### Consequential Upward Handoff Block
 
-- For consequential upward `SendMessage` reports from runtime lanes with `MESSAGE-CLASS: handoff|completion|hold`, keep one authoritative handoff block explicit instead of scattering acceptance-critical state across prose.
+- For consequential upward `SendMessage` reports from runtime lanes with `MESSAGE-CLASS: handoff|completion` or `MESSAGE-CLASS: hold|blocker`, keep one authoritative handoff block explicit instead of scattering acceptance-critical state across prose.
 - `status`, `blocker`, and `scope-pressure` may stay lighter, and ordinary conversational notes may remain free-form unless the sender is actually handing off a finished, held, or decision-ready surface.
-- Runtime checks must not bottleneck ordinary chat. Once a lane declares `MESSAGE-CLASS: handoff|completion|hold`, the authoritative handoff block is mandatory and blocking.
+- Runtime checks must not bottleneck ordinary chat. Once a lane declares `MESSAGE-CLASS: handoff|completion` or `MESSAGE-CLASS: hold|blocker`, the authoritative handoff block is mandatory and blocking.
 - Common presence-required fields for consequential upward handoff blocks:
   - `OUTPUT-SURFACE: <artifact, claim, version, or bounded work product>`
   - `EVIDENCE-BASIS: <decisive evidence anchors, checks, commands, or governing basis>`

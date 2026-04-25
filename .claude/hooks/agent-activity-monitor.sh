@@ -67,7 +67,7 @@ _claim_pending_agent_locked() {
     claimed_name="$(_claim_pending_name_file "$PENDING_AGENTS_FILE" "$session_id" "$preferred_name")"
   fi
 
-  if [[ -n "$claimed_name" ]] && ! awk -v sid="$session_id" '$1 == sid {found=1} END {exit found ? 0 : 1}' "$SESSION_AGENT_MAP" 2>/dev/null < "$SESSION_AGENT_MAP"; then
+  if [[ -n "$claimed_name" ]] && ! awk -v sid="$session_id" '$1 == sid {found=1} END {exit found ? 0 : 1}' "$SESSION_AGENT_MAP" 2>/dev/null; then
     printf '%s %s\n' "$session_id" "$claimed_name" >> "$SESSION_AGENT_MAP"
   fi
 
@@ -78,7 +78,7 @@ _claim_pending_agent_locked() {
     claimed_mode="$(_claim_pending_mode_file "$PENDING_AGENT_MODES_FILE" "$session_id" "$mode_target_name")"
   fi
 
-  if [[ -n "$claimed_mode" ]] && ! awk -v sid="$session_id" '$1 == sid {found=1} END {exit found ? 0 : 1}' "$SESSION_AGENT_MODE_MAP" 2>/dev/null < "$SESSION_AGENT_MODE_MAP"; then
+  if [[ -n "$claimed_mode" ]] && ! awk -v sid="$session_id" '$1 == sid {found=1} END {exit found ? 0 : 1}' "$SESSION_AGENT_MODE_MAP" 2>/dev/null; then
     printf '%s %s\n' "$session_id" "$claimed_mode" >> "$SESSION_AGENT_MODE_MAP"
   fi
 
@@ -112,10 +112,19 @@ _claim_pending_name_file() {
         if (preferred != "" && name[NR] == preferred && !preferred_pending) {
           preferred_pending = NR
         }
+      } else if (status[NR] == "UNCLAIMED_STALE") {
+        stale_count++
+        sole_stale = NR
+        if (preferred != "" && name[NR] == preferred && !preferred_stale) {
+          preferred_stale = NR
+        }
       }
     }
     END {
-      chosen = preferred_pending ? preferred_pending : first_pending
+      chosen = preferred_pending ? preferred_pending : (preferred_stale ? preferred_stale : first_pending)
+      if (!chosen && stale_count == 1) {
+        chosen = sole_stale
+      }
       if (chosen) {
         print name[chosen] > meta
       }
@@ -166,10 +175,19 @@ _claim_pending_mode_file() {
         if (target != "" && name[NR] == target && !named_pending) {
           named_pending = NR
         }
+      } else if (status[NR] == "UNCLAIMED_STALE") {
+        stale_count++
+        sole_stale = NR
+        if (target != "" && name[NR] == target && !named_stale) {
+          named_stale = NR
+        }
       }
     }
     END {
-      chosen = named_pending ? named_pending : first_pending
+      chosen = named_pending ? named_pending : (named_stale ? named_stale : first_pending)
+      if (!chosen && stale_count == 1) {
+        chosen = sole_stale
+      }
       if (chosen) {
         print mode[chosen] > meta
       }
@@ -208,11 +226,17 @@ else
     AGENT_TYPE="runtime-monitor"
   elif [[ -z "$(current_runtime_session_id)" && -n "$BOOT_SESSION_ID" && "$SESSION_ID" == "$BOOT_SESSION_ID" ]]; then
     AGENT_TYPE="supervisor"
+  elif has_unclaimed_pending_agent_dispatch; then
+    claim_pending_agent "$AGENT_TYPE"
+    AGENT_TYPE="$(worker_name_for_session_id "$SESSION_ID")"
+  elif runtime_sender_session_is_worker "$SESSION_ID"; then
+    claim_pending_agent "$AGENT_TYPE"
+    AGENT_TYPE="$(worker_name_for_session_id "$SESSION_ID")"
   elif [[ -f "$SESSION_AGENT_MAP" ]] && grep -q "^${SESSION_ID} " "$SESSION_AGENT_MAP" 2>/dev/null; then
     AGENT_TYPE="$(grep "^${SESSION_ID} " "$SESSION_AGENT_MAP" | head -1 | awk '{print $2}')"
   else
-    # Main session (no AGENT_ID) must never claim pending worker slots.
-    # Spawned workers always have AGENT_ID set via --agent-id flag.
+    # Non-runtime main sessions should not claim pending worker slots.
+    # Worker recovery may still succeed through the shared runtime sender resolver.
     AGENT_TYPE="unknown-agent"
   fi
 fi
@@ -228,6 +252,21 @@ fi
 
 CWD_SUFFIX="$(echo "$CWD" | awk -F'/' '{if(NF>=2) print $(NF-1)"/"$NF; else print $NF}')"
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+if [[ "$AGENT_TYPE" == "unknown-agent" ]]; then
+  exit 0
+fi
+
+if runtime_sender_session_is_worker "$SESSION_ID" \
+  && [[ "$TOOL_NAME" != "SendMessage" ]] \
+  && worker_dispatch_ack_required "$AGENT_TYPE"; then
+  exit 0
+fi
+
+if runtime_sender_session_is_worker "$SESSION_ID" && [[ "$TOOL_NAME" != "SendMessage" ]]; then
+  record_team_runtime_state "" "active" "worker-activity"
+  mark_team_dispatch_claimed "" "$AGENT_TYPE" "worker-activity"
+fi
+
 if [[ "$TOOL_NAME" == "Bash" ]]; then
   CMD_SUMMARY="$(printf '%s' "$COMMAND" | head -c 50 | tr '|"\\' '_')"
   printf '%s | %s | %s | %s | Bash:%s\n' "$TIMESTAMP" "$SESSION_ID" "$AGENT_TYPE" "$CWD_SUFFIX" "$CMD_SUMMARY" >> "$ACTIVITY_LEDGER"

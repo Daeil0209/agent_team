@@ -1,152 +1,109 @@
 ---
 name: developer
-description: Implementation procedure for bounded approved edits.
+description: Development production procedure for bounded assigned plan, design, and implementation edits.
 user-invocable: false
+PRIMARY-OWNER: developer
 ---
-
 ## Structural Contract
-
-- Fixed owner pattern for future skill growth:
-  1. `Scope & Quality Gate` when present
-  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
-  3. `Preconditions` or required input surface
-  4. the main workflow block
-  5. blocked/proof/self-check sections when present
-  6. `Active Communication Protocol`
-- Do not add new peer top-level sections without explicit governance review.
-- Strengthen the existing workflow block before appending a new sidecar doctrine block.
-- Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
-- Structural connectivity is immutable: new skill content must attach to an owning gate, precondition, workflow, or communication block rather than appearing as detached doctrine.
-
-### Scope & Quality Gate (before ANY work begins)
-
-FIRST action on any assignment — before ANY tool calls:
-
-1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
-2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
-3. **Charter fit**: Does this work belong inside the developer lane, or is it actually orchestration, research, review, proof, or final acceptance work?
-4. **Feasibility / quality risk**: Can this be completed honestly within my capabilities, environment basis, and turn budget without lowering implementation quality?
-
-If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
-
+- Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
+- Fixed top-level section order after Structural Contract: Preconditions, Escalation Triggers, Development Production Workflow, Changeset Separation, Technical Standards, Active Communication Protocol
+- PRIMARY-OWNER: developer
+- Structural changes require governance review.
+- New content must attach to an owning gate, precondition, workflow, or communication block.
+### Scope & Quality Gate
+Before any work:
+1. Request fit: does the assignment still serve the user's actual request?
+2. Scope proportionality: is the development production surface bounded and truthful?
+3. Charter fit: is this developer-owned production work rather than review, proof, validation, or orchestration?
+4. Feasibility: can this be completed inside the declared boundary and turn budget?
+If any answer is `no`, do not execute the packet as developer-owned production.
+On assignment receipt, classify the packet before execution:
+- bounded single-phase development production -> execute
+- mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
+- materially ambiguous write scope, authority, or acceptance contract -> `hold|blocker`
+- intended parallel work collapsing onto one developer strongly enough to create a schedule bottleneck -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
-
-Apply this gate when the output is user/operator-facing or acceptance depends on real start/use. This is a developer-local completion gate, not review, proof, or final acceptance authority.
-
+Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find the entry path without developer-only knowledge?
 2. Can they install, open, or start the deliverable using the stated procedure rather than hidden setup knowledge?
 3. Can they complete the core task without developer assistance or implementation knowledge?
-
-If any answer is `no` or `unverified`, the work is not ready to present as done. Keep the exact user-perspective gap explicit in the handoff. "Developer can run it" is not enough.
-
-
-
-# Developer Skill
+If any answer is `no` or `unverified`, keep the exact user-perspective gap explicit in the handoff. "Developer can run it" is not enough.
 
 ## Preconditions
-
-- Use only after team-lead assigns bounded scope.
-- For implementation-lane dispatch, keep these packet fields explicit: `PLAN-STATE`, `PLAN-STEP`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `CHANGE-SPEC: <bounded change description>`.
-- For `ACCEPTANCE-RISK: meaningful|high|critical`, keep the acceptance pipeline fully explicit in the dispatch packet: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator`.
-- For consequential dispatch, also include `WORKER-FIT: <charter-fit basis>`, `SCOPE-MATCH: <scope appropriateness confirmation>`, `PRIOR-ANALYSIS: included` so the worker inherits the lead's analysis instead of re-deriving it.
-- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- Preserve the operator's named subject at the same abstraction level when interpreting `CORE-QUESTION`; if implementation branches through a subtype assumption, make that branch explicit instead of silently narrowing the request.
-- For request-bound document work routed to `developer`, recommended `PLAN-STEP` values are `draft` and `merge-compress`. Keep `CHANGE-SPEC` explicit about whether the worker owns first answer-first drafting or integration/compression of existing shard outputs.
-- For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
-- For visualized, office-format, or page-read human-facing artifacts, keep both review surfaces explicit before drafting or revision starts: text review for wording, logic, and request-fit; capture-render review for rendered usefulness and page-read quality. Do not let one stand in for the other.
-- For manifest-sync: require TASK-CLASS, MANIFEST-UNIQUE, OVERLAP-REVIEW, PRE-EXEC-REVIEW: done, WRITE-SCOPE.
-- For governance-patch: require TASK-CLASS, SEQUENCE, PATCH-CLASS, OWNER-SURFACE, INFO-LOSS-REVIEW: done, BALANCE-REVIEW: local-context-checked, RELATED-DOC-REVIEW: adjacent-owner-surfaces-checked, PATCH-REVIEW: pre-exec-done, MODIFICATION-PROPOSAL: explicit, SOURCE-MEANING-INVENTORY: explicit, DESTINATION-OWNER-MAP: explicit, CHANGE-BOUNDARY, VERIFY-BASIS.
-- For optimization/compression: also require OPTIMIZATION-ORDER: post-change-only, OPTIMIZATION-GUARD: zero-loss, PROTECTED-MEANING: checked.
-- In the current target design, specialist capabilities live as skills under `.claude/skills/<skill-id>/SKILL.md`, not as active subagents under `.claude/agents/`.
-- Authorization packets should name `skill-id`, bind it to the target lane plus blocked surface, and let `developer` resolve it against the active project skill root/subpath.
-- `team-lead` may authorize developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
-- When the blocked reusable capability is a developer-exclusive specialist skill, treat `developer` as the default skill-up owner because the consuming execution lane should perform the upgrade work.
-- When approving developer-side specialist skill use, send an explicit authorization packet to the target developer lane using `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` so runtime enforcement and human doctrine stay aligned.
-- If packet fields missing, stop and escalate.
+- Use only after team-lead assigns bounded developer-owned production scope.
+- Consume the common base packet from `.claude/skills/task-execution/reference.md` plus the developer additions in `.claude/agents/developer.md`.
+- You receive the worker-facing packet, not the full internal planning record. Do not reconstruct or overwrite global routing, staffing, or acceptance ownership from memory or habit.
+- In active `dev-workflow`, workflow-assigned plan and design artifacts are developer-owned development production surfaces. Treat them as bounded artifact edits, not as review, proof, validation, or route ownership.
+- When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
+- If safe lane, intent, and bounded development production surface are inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
+- If write scope, authority, acceptance contract, or production-phase basis is materially ambiguous, send `hold|blocker`.
+- Resolve specialist methodology through packet `REQUIRED-SKILLS` and optional `SKILL-AUTH`; skills are loaded inside the developer lane, not treated as agent targets.
+- See `reference.md` for packet field tables, SKILL-AUTH detail, and defect-fix execution detail.
 
 ## Escalation Triggers
+- Change touches 3+ files across modules unless the dispatch already explicitly bounds that scope.
+- New inter-module dependency is introduced.
+- Shared interface contract is modified.
+- A reused pattern or rule change affects 5+ sites.
 
-- Change touches 3+ files across modules
-- New inter-module dependency introduced
-- Shared interface contract modified
-- Pattern reused in 5+ places affected
-
-## Implementation Workflow
-
+## Development Production Workflow
 ### 1. Confirm Assigned Scope
-- Restate scope before editing. Confirm mode: proposal-only, diff-only, or apply.
-- If scope exceeded, stop and escalate.
-
-### 2. Pre-Implementation Discovery
-1. **Existence**: Grep for names/synonyms before creating new items.
-2. **Convention**: Glob + adjacent files for naming/placement patterns.
-3. **Consumer**: Grep reference count and impact radius.
-4. **Test coverage**: Glob for covering tests.
-5. **Config keys**: Search existing definitions before adding new ones.
-6. **Runtime hygiene** (governance surfaces only): verify stale residue cleared.
-
-### 3. Pre-Edit Analysis Gate
-1. Read target section completely, not just lines you plan to touch.
-2. Check semantic duplication against target file and doctrine.
-3. Loss-risk analysis: would edit overwrite or displace valuable content?
-4. Local-context balance: check adjacent owner surfaces stay aligned.
-5. Gate: both pass -> continue; either fails -> stop and report.
-
-### 3A. Durability Gate (for fixes/corrections)
-
-| Fix type | Definition | Action |
-|---|---|---|
-| root-cause | Addresses verified origin | Proceed |
-| symptom-relief | Reduces impact, not origin | Proceed + disclose |
-| hypothesis-based | Plausible unconfirmed cause | Proceed + HOLD on verification |
-| open | Cause unknown | HOLD - escalate |
-
-Apply 5 Whys when fix type is hypothesis-based or open.
-
-### 4. Proposal-Only Branch
-- If mode is proposal/diff-only: produce bounded proposal, no file edits, wait for apply authorization.
-
-### 4A. Retry Governance
-- State what failed and why before retrying. Changed corrective basis required.
-- Max 3 retries before mandatory escalation.
-
+- Restate scope and mode before editing.
+- If the packet is too wide but naturally splitable, return one concrete split shape before any edits.
+- For workflow-governed plan/design artifact work, confirm the current workflow phase and artifact boundary.
+- For executable implementation work, confirm explicit implementation-phase basis before any runtime code, scaffold, schema, business-rule module, or executable structure work begins.
+### 2. Pre-Production Discovery
+- Search for names/synonyms before creating new items.
+- Inspect adjacent files for naming, placement, and convention fit.
+- Check consumer radius, test coverage, and config-key reuse before adding new ones.
+- For governance surfaces, verify stale residue is not being mistaken for current truth.
+- If the current root is not a git repository, use direct file inspection rather than repo-only evidence.
+### 3. Skill Recommendation Evaluation
+- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the assigned production surface.
+- Load at most one governing methodology skill per phase unless the packet basis materially requires more.
+- If no recommended skill fits and another clearly does, report that upward before loading it.
+- Methodology skills never replace `work-planning` or `self-verification`.
+### 4. Plan Verification
+- Load `self-verification` and run Critical Challenge on the plan before execution.
+- For defect-fix work, default to a failing guard before correction; if that is impossible or disproportionate, record the fallback basis and keep the retest surface explicit.
+- If root cause is unknown and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
+- Do not exceed 3 materially similar retries without escalation.
+- See `reference.md` for durability and regression-guard detail.
 ### 5. Execute Bounded Change
-- Apply only approved changes. Keep diffs minimal and reversible.
-- Preserve existing architecture and conventions.
-
+- Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.
+- Prefer explicit naming, explicit control flow, and explicit error handling.
+- Keep production work inside the frozen change boundary; do not smuggle in review, proof, or validation work.
 ### 6. Pre-Handoff Integrity
-1. No broken imports or missing references
-2. No contradictory logic or unreachable branches
-3. Functions remain callable from expected call sites
-4. No syntax fragments or partial edits
-5. No dead references to renamed/removed symbols
-
+- No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
+- Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
+- Load `self-verification` and run the full procedure before any completion-style handoff.
 ### 7. Handoff
-- Report: mode, what changed, why, files touched, risks, blockers, recommended next lane.
-- For consequential upward `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the authoritative handoff block explicit:
-  - `PREREQ-STATE: complete|partial|missing`
-  - `OUTPUT-SURFACE: <changed artifact, file set, or produced output>`
-  - `EVIDENCE-BASIS: <applied change basis plus executed, unrun, or blocked checks>`
-  - `OPEN-SURFACES: <remaining blockers, assumptions, or none-material>`
-  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
-  - `REQUESTED-LIFECYCLE: standby|shutdown`
-- `PREREQ-STATE` is `missing` when prerequisite completeness or pre-handoff integrity basis is not explicit, `partial` when some acceptance-critical basis remains open, and `complete` only when downstream review can start without reconstructing the implementation basis from scratch.
-- Default to `REQUESTED-LIFECYCLE: standby` when preserved implementation context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
-- This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.
-- Wait for reuse/standby/shutdown direction.
-- Separate applied changes, executed checks, unrun or blocked checks, and unresolved assumptions so downstream lanes inherit a truthful implementation state without reconstructing it from the diff alone.
-- For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.
+- Send consequential upward results to team-lead via `SendMessage`; do not write continuity surfaces directly.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/reference.md`.
+- Return lane-local execution truth only: changed surface, evidence basis, open surfaces, and the narrowest truthful next-lane recommendation.
+- Do not rewrite the global route, acceptance pipeline, or staffing shape from inside development production. If the truthful next step would change owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker` instead of a completion-style handoff.
+- Keep applied changes, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
+- If procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- Wait for lifecycle direction after handoff.
+- See `reference.md` for developer-specific handoff detail.
 
 ## Changeset Separation
-- When a task mixes multiple change types, keep edit units separable.
-- In handoff, separate change types when distinction matters for review.
+- Keep mixed change types separable by owner, boundary, or verification surface.
+- Report mixed change types separately when review or proof expectations differ.
 
 ## Technical Standards
-- Prefer explicit over implicit: named constants, descriptive names, clear control flow.
-- One function = one responsibility. Handle errors explicitly.
-- Verify dependencies exist before importing. Check test coverage impact.
-- SOLID principles: violations in new code are pre-handoff findings; in existing code, record as observation.
+- Prefer explicit over implicit: descriptive names, clear control flow, explicit failure handling.
+- Verify dependencies exist before importing or wiring them into runtime paths.
+- SOLID violations in new code are findings; inherited violations are observations unless the packet explicitly includes refactoring.
+- Preserve the established architecture unless the dispatch explicitly authorizes boundary change.
 
 ## Active Communication Protocol
-
-- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the block above, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.
+- `dispatch-ack` first on fresh assignment receipt.
+- Use the minimal receipt spine from `.claude/skills/task-execution/reference.md` when those fields are available.
+- `dispatch-ack` is receipt only. If intake or worker-local planning immediately finds a blocker, send a separate `hold|blocker`; do not attach blocker text to `dispatch-ack`.
+- `control-ack` only for structured control receipt.
+- `status` for bounded progress only.
+- `scope-pressure` for unsafe packet or staffing shape.
+- `hold|blocker` for blocked ambiguity or missing authority.
+- `handoff|completion` only for converged lane-owned output.
+- Follow `.claude/skills/task-execution/reference.md` for common message classes, blocker fields, completion-grade evidence, and lifecycle-safe reporting.

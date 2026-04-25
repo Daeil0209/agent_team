@@ -812,8 +812,8 @@ enforce_self_growth_coordination_dispatch_packet() {
     if ! dispatch_field_value_matches "$DESCRIPTION" "benchmark-mode" "full"; then
       missing+=("BENCHMARK-MODE: full")
     fi
-    if ! dispatch_field_value_matches "$DESCRIPTION" "benchmark-skill" "bench-sim"; then
-      missing+=("BENCHMARK-SKILL: bench-sim")
+    if ! dispatch_field_value_matches "$DESCRIPTION" "benchmark-skill" "benchmark-simulation"; then
+      missing+=("BENCHMARK-SKILL: benchmark-simulation")
     fi
     if ! dispatch_field_present "$DESCRIPTION" "benchmark-baseline"; then
       missing+=("BENCHMARK-BASELINE: <before path or incumbent owner>")

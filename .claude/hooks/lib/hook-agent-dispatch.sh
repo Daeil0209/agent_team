@@ -148,19 +148,41 @@ skill_requires_explicit_approval() {
   specialist_skill_requires_explicit_approval "${1-}"
 }
 
+canonical_dispatch_agent_name() {
+  local raw="${1-}"
+  local canonical_name=""
+
+  if canonical_name="$(canonical_registered_agent_name "$raw" 2>/dev/null)"; then
+    if agent_registry_has_name "$canonical_name"; then
+      printf '%s' "$canonical_name"
+      return 0
+    fi
+  fi
+
+  return 1
+}
+
+dispatch_target_is_dispatchable_agent() {
+  local lane=""
+
+  lane="$(resolve_agent_id "${1-}")"
+  [[ -n "$lane" && "$lane" != "unknown" && "$lane" != "team-lead" ]] || return 1
+  agent_registry_has_name "$lane"
+}
+
 resolve_agent_id() {
   local desc="${1:-}"
   local prefix=""
   local lower_desc=""
   local canonical_name=""
 
-  if canonical_name="$(canonical_registered_role_name "$desc" 2>/dev/null)"; then
+  if canonical_name="$(canonical_dispatch_agent_name "$desc" 2>/dev/null)"; then
     printf '%s' "$canonical_name"
     return
   fi
 
   prefix="$(printf '%s' "$desc" | sed -n 's/^\([a-zA-Z_-]*\):.*/\1/p' | tr '[:upper:]' '[:lower:]')"
-  if canonical_name="$(canonical_registered_role_name "$prefix" 2>/dev/null)"; then
+  if canonical_name="$(canonical_dispatch_agent_name "$prefix" 2>/dev/null)"; then
     printf '%s' "$canonical_name"
     return
   fi
@@ -168,34 +190,16 @@ resolve_agent_id() {
   case "$prefix" in
     team-lead|teamlead|lead) echo "team-lead"; return ;;
     researcher) echo "researcher"; return ;;
-    developer|dev-[a-z]) echo "developer"; return ;;
-    int-op|integration-operator) echo "int-op"; return ;;
+    developer|dev-[a-z]*) echo "developer"; return ;;
     reviewer) echo "reviewer"; return ;;
     tester) echo "tester"; return ;;
     validator|val-ref) echo "validator"; return ;;
-    sw-spec) echo "sw-spec"; return ;;
-    biz-sys) echo "biz-sys"; return ;;
-    ui-ux) echo "ui-ux"; return ;;
-    edu-spec) echo "edu-spec"; return ;;
-    eng-spec) echo "eng-spec"; return ;;
-    math-spec) echo "math-spec"; return ;;
-    doc-auto) echo "doc-auto"; return ;;
-    bench-sim) echo "bench-sim"; return ;;
   esac
 
   lower_desc="$(printf '%s' "$desc" | tr '[:upper:]' '[:lower:]')"
   case "$lower_desc" in
     *team-lead*|*team\ lead*) echo "team-lead"; return ;;
-    *integration?operator*|*int-op*) echo "int-op"; return ;;
     *validate?against?reference*|*validator*|*val-ref*) echo "validator"; return ;;
-    *software?specialist*|*software?spec*|*sw-spec*) echo "sw-spec"; return ;;
-    *business?system*|*biz-sys*) echo "biz-sys"; return ;;
-    *ui?ux?specialist*|*ui-ux*) echo "ui-ux"; return ;;
-    *education?specialist*|*edu-spec*) echo "edu-spec"; return ;;
-    *engineering?specialist*|*eng-spec*) echo "eng-spec"; return ;;
-    *mathematics?specialist*|*math-spec*) echo "math-spec"; return ;;
-    *document?automation*|*doc-auto*) echo "doc-auto"; return ;;
-    *benchmark?simulator*|*bench-sim*) echo "bench-sim"; return ;;
     *researcher*) echo "researcher"; return ;;
     *developer*) echo "developer"; return ;;
     *reviewer*) echo "reviewer"; return ;;
@@ -209,11 +213,11 @@ get_agent_category() {
   local id="${1:-}"
   case "$id" in
     researcher) echo "research" ;;
-    developer|int-op) echo "implementation" ;;
+    developer|external-tool-bridge) echo "implementation" ;;
     reviewer|tester) echo "review" ;;
     validator) echo "validation" ;;
-    sw-spec|biz-sys|ui-ux|edu-spec|eng-spec|math-spec|doc-auto) echo "specialist" ;;
-    bench-sim) echo "meta" ;;
+    software-architecture|business-workflow|visual-composition|instructional-design|engineering-grounding|mathematical-correctness|document-automation) echo "specialist" ;;
+    benchmark-simulation) echo "meta" ;;
     *)
       if skill_registry_has_name "$id"; then
         echo "specialist"
@@ -222,51 +226,6 @@ get_agent_category() {
       fi
       ;;
   esac
-}
-
-check_agent_property() {
-  local id="${1:-}"
-  local prop="${2:-}"
-
-  case "$prop" in
-    requires_mode_auto)
-      case "$id" in
-        developer|int-op) echo "true" ;;
-        *) echo "false" ;;
-      esac
-      ;;
-    requires_plan)
-      case "$id" in
-        developer|sw-spec|int-op) echo "true" ;;
-        *) echo "false" ;;
-      esac
-      ;;
-    plan_exempt)
-      case "$id" in
-        researcher|reviewer|tester|validator|bench-sim|biz-sys|ui-ux|edu-spec|eng-spec|math-spec|doc-auto) echo "true" ;;
-        *) echo "false" ;;
-      esac
-      ;;
-    *)
-      echo "false"
-      ;;
-  esac
-}
-
-is_subagent() {
-  local input="${1:-}"
-  if [[ -z "$input" ]]; then
-    echo "false"
-    return
-  fi
-  INPUT_JSON="$input" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  process.stdout.write(input.agent_id ? "true" : "false");
-} catch {
-  process.stdout.write("false");
-}
-NODE
 }
 
 normalize_dispatch_text() {
@@ -358,51 +317,10 @@ dispatch_populate_field_cache() {
   )
 }
 
-dispatch_is_manifest_sync_request() {
-  local desc=""
-  desc="$(normalize_dispatch_text "${1-}")"
-
-  [[ -n "$desc" ]] || return 1
-
-  if [[ "$desc" == *"task-class: manifest-sync"* ]]; then
-    return 0
-  fi
-
-  # If TASK-CLASS is explicitly set to a different value, respect that classification
-  # Use original text for field lookup: normalize_dispatch_text collapses
-  # newlines to spaces, causing the awk field parser to absorb fields that
-  # started on separate lines into the preceding field value.
-  # Pattern matching (lines below) still uses normalized $desc.
-  if dispatch_field_present "${1-}" "task-class"; then
-    return 1
-  fi
-
-  if printf '%s' "$desc" | grep -Eq "$MANIFEST_SYNC_DISPATCH_VERB_PATTERN" \
-    && printf '%s' "$desc" | grep -Eq "$MANIFEST_SYNC_DISPATCH_SCOPE_PATTERN"; then
-    return 0
-  fi
-
-  return 1
-}
-
 dispatch_field_present() {
   local raw_value=""
   raw_value="$(dispatch_field_raw_value "${1-}" "${2-}" 2>/dev/null || true)"
   [[ -n "$raw_value" ]]
-}
-
-dispatch_field_value_matches() {
-  local raw_value=""
-  local field=""
-  local value_pattern=""
-  field="$(normalize_dispatch_text "${2-}")"
-  value_pattern="${3-}"
-
-  [[ -n "$field" && -n "$value_pattern" ]] || return 1
-  raw_value="$(dispatch_field_raw_value "${1-}" "$field" 2>/dev/null || true)"
-  [[ -n "$raw_value" ]] || return 1
-  raw_value="$(normalize_dispatch_text "$raw_value")"
-  printf '%s' "$raw_value" | grep -Eq "^(${value_pattern})$"
 }
 
 dispatch_field_raw_value() {
@@ -410,7 +328,7 @@ dispatch_field_raw_value() {
   local raw_desc="${1-}"
   field="$(normalize_dispatch_text "${2-}")"
 
-  [[ -n "$raw_desc" && -n "$field" ]] || return 1
+  [[ -n "$raw_desc" && -n "$field" ]] || return 0
 
   if [[ "$DISPATCH_FIELD_CACHE_SOURCE" != "$raw_desc" ]]; then
     dispatch_populate_field_cache "$raw_desc"
@@ -421,25 +339,86 @@ dispatch_field_raw_value() {
     return 0
   fi
 
-  return 1
+  return 0
 }
 
-dispatch_field_pipe_list_matches() {
-  local raw_value=""
-  local allowed_pattern=""
-  local entry=""
-  raw_value="$(dispatch_field_raw_value "${1-}" "${2-}")"
-  allowed_pattern="${3-}"
+dispatch_field_declared_empty() {
+  local raw_desc="${1-}"
+  local field=""
+  field="$(normalize_dispatch_text "${2-}")"
 
-  [[ -n "$raw_value" && -n "$allowed_pattern" ]] || return 1
+  [[ -n "$raw_desc" && -n "$field" ]] || return 1
 
-  IFS='|' read -r -a entries <<< "$raw_value"
-  for entry in "${entries[@]}"; do
-    entry="$(normalize_dispatch_text "$entry")"
-    if [[ -z "$entry" ]] || ! printf '%s' "$entry" | grep -Eq "^(${allowed_pattern})$"; then
-      return 1
+  printf '%s\n' "$raw_desc" | awk -v field="$field" '
+    BEGIN {
+      IGNORECASE = 1
+      found = 0
+    }
+    {
+      if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*$/, parts)) {
+        key = tolower(parts[1])
+        if (key == field) {
+          found = 1
+          exit
+        }
+      }
+    }
+    END {
+      exit(found ? 0 : 1)
+    }
+  '
+}
+
+dispatch_field_empty_header_has_body() {
+  local raw_desc="${1-}"
+  local field=""
+  field="$(normalize_dispatch_text "${2-}")"
+
+  [[ -n "$raw_desc" && -n "$field" ]] || return 1
+
+  printf '%s\n' "$raw_desc" | awk -v field="$field" '
+    BEGIN {
+      IGNORECASE = 1
+      pending = 0
+      continuation = 0
+    }
+    {
+      if (pending) {
+        if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:/, parts)) {
+          exit
+        }
+        if ($0 ~ /^[[:space:]]*$/) {
+          next
+        }
+        continuation = 1
+        exit
+      }
+
+      if (match($0, /^[[:space:]]*([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*$/, parts)) {
+        key = tolower(parts[1])
+        if (key == field) {
+          pending = 1
+        }
+      }
+    }
+    END {
+      exit(continuation ? 0 : 1)
+    }
+  '
+}
+
+dispatch_field_format_hint() {
+  local raw_desc="${1-}"
+  local field_label="${2-}"
+
+  [[ -n "$raw_desc" && -n "$field_label" ]] || return 0
+
+  if dispatch_field_declared_empty "$raw_desc" "$field_label"; then
+    if dispatch_field_empty_header_has_body "$raw_desc" "$field_label"; then
+      printf '%s' "${field_label} is present as an empty header with multiline body. Hook parsing requires same-line 'KEY: value'; keep a one-line summary on the header line and move bullets under DETAILS."
+      return 0
     fi
-  done
 
-  return 0
+    printf '%s' "${field_label} header is present but empty. Hook parsing treats empty headers as missing until the value is placed on the same line."
+  fi
 }

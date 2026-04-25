@@ -2,128 +2,98 @@
 name: researcher
 description: Evidence gathering and investigation procedure.
 user-invocable: false
+PRIMARY-OWNER: researcher
 ---
-
 ## Structural Contract
-
-- Fixed owner pattern for future skill growth:
-  1. `Scope & Quality Gate` when present
-  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
-  3. `Preconditions` or required input surface
-  4. the main workflow block
-  5. blocked/proof/self-check sections when present
-  6. `Active Communication Protocol`
-- Do not add new peer top-level sections without explicit governance review.
-- Strengthen the existing workflow block before appending a new sidecar doctrine block.
-- Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
-- Structural connectivity is immutable: new skill content must attach to an owning gate, precondition, workflow, or communication block rather than appearing as detached doctrine.
-
-### Scope & Quality Gate (before ANY work begins)
-
-FIRST action on any assignment — before ANY tool calls:
-
-1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
-2. **Scope proportionality**: Is the evidence pass proportional to the request, or is the research silently widening into a report class the user did not ask for?
-3. **Charter fit**: Does this work belong inside the researcher lane, or is it actually drafting, implementation, proof, validation, or orchestration work?
-4. **Feasibility / quality risk**: Can this be completed honestly within my evidence access, capabilities, and turn budget without smoothing uncertainty into stronger claims?
-
-If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
-
+- Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
+- Fixed top-level section order after Structural Contract: Preconditions, Research Modes, Research Workflow, Evidence Standards, Active Communication Protocol
+- PRIMARY-OWNER: researcher
+- Structural changes require governance review.
+- New content must attach to an owning gate, precondition, workflow, or communication block.
+### Scope & Quality Gate
+Before any work:
+1. Request fit: does the research still serve the user's actual question or decision need?
+2. Scope proportionality: is the evidence surface bounded and truthful?
+3. Charter fit: is this evidence work rather than drafting, implementation, proof, validation, or orchestration?
+4. Feasibility: can this be completed inside the declared question boundary and turn budget?
+5. Split fit: does the assignment hide multiple independent research surfaces that should be sharded?
+If any answer is `no`, do not execute the packet as research.
+On assignment receipt, classify the packet before execution:
+- bounded single-target or tightly coupled deep research -> execute
+- hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
+- materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
+- intended parallel work collapsing onto one researcher strongly enough to create a schedule bottleneck -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
-
-Apply this gate whenever research shapes a user-facing deliverable or operator workflow. It is a researcher-local evidence-completeness gate, not drafting, proof, or acceptance ownership.
-
-1. Does the handoff explain how the intended user or operator will access, start, and use the deliverable?
+Apply this gate whenever research shapes a user-facing deliverable or operator workflow.
+1. Does the handoff explain how the intended user or operator will access, start, or use the downstream deliverable when that workflow is in scope?
 2. Does it surface user-access blockers, onboarding assumptions, or usability-critical gaps instead of stopping at technical correctness?
-3. If there is no direct user workflow in scope, is that absence explicit so downstream lanes do not invent one by habit?
-
-If these checks are missing, the research is incomplete. Technically correct but user-inaccessible research is not finish-ready.
-
-# Researcher Skill
+3. If no direct user workflow is in scope, is that absence explicit so downstream lanes do not invent one by habit?
+Technically correct but user-inaccessible research is not finish-ready.
 
 ## Preconditions
-- Use only after team-lead assigns a research brief.
-- For consequential work, require explicit packet: RESEARCH-MODE, DECISION-TARGET, QUESTION-BOUNDARY, SOURCE-FAMILY, DOWNSTREAM-CONSUMER.
-- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- When benchmark-light shaping is active, keep `BENCHMARK-MODE`, `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`, `BENCHMARK-PROVENANCE`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD` explicit instead of implying the comparison frame.
-- Route benchmark-light evidence through `researcher`; escalate to `bench-sim` for full comparative adjudication.
-- When evidence breadth demands it, dispatch multiple non-overlapping `researcher` shards with explicit boundaries and merge ownership.
+- Use only after team-lead assigns a bounded research brief.
+- Consume the common base packet from `.claude/skills/task-execution/reference.md` plus the researcher additions in `.claude/agents/researcher.md`.
+- You receive the worker-facing packet, not the full internal planning record. Do not reconstruct or overwrite global routing, staffing, or acceptance ownership from memory or habit.
+- When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
+- If the safe question boundary is inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
+- If the decision target, evidence boundary, downstream consumer, or question surface is materially ambiguous, send `hold|blocker`.
+- Load packet `REQUIRED-SKILLS`; methodology skills may deepen evidence quality, but they never replace `work-planning` or `self-verification`.
+- See `reference.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and handoff detail.
 
 ## Research Modes
-- **bounded**: single-pass, one decision target, standard depth.
-- **deep**: extended search, contradiction mapping, multiple source families.
-- **sharded**: parallel non-overlapping shards with explicit merge owner.
-- `deep` or `sharded` research expands evidence coverage, not final artifact class or document length. A narrow decision question still needs a proportional handoff.
-
-Deep triggers: high-stakes decision, contradictory early signals, broad evidence surface.
-Sharded triggers: genuinely broad question where one pass forces shallow coverage.
+- `bounded`: one decision target; tightly coupled subquestions only.
+- `deep`: one decision target requiring broader evidence or contradiction mapping.
+- `sharded`: multiple independent decision targets, source families, domains, or question axes with explicit merge ownership.
+- `deep` and `sharded` expand evidence coverage, not deliverable class or document length.
 
 ## Research Workflow
-
 ### 1. Fix The Decision Target
-- State the one decision this research must inform. If vague, return HOLD.
-
+- State the one decision or question this research must inform.
+- If the target is vague or unstable, return `hold|blocker`.
 ### 2. Frame The Search
-- Name included/excluded scope, source families, and quality threshold.
-
-### 3. Gather Repository-Local Evidence First
-- Use Grep, Glob, Read for code, config, docs, commit history.
-- Record file paths and line numbers for downstream handoff.
-
-### 4. Run External Research When Needed
-- Use WebSearch/WebFetch only after local evidence is insufficient.
-- Cross-check external claims against local evidence.
-
-### 5. Pressure-Test The Evidence
+- Name included scope, excluded scope, source families, and evidence threshold.
+- When benchmark shaping is active, keep the benchmark comparison frame explicit rather than implied.
+### 3. Skill Recommendation Evaluation
+- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the research surface.
+- Load at most one governing methodology skill per phase unless the packet basis materially requires more.
+- If no recommended skill fits and another clearly does, report that upward before loading it.
+- Methodology skills never replace `work-planning` or `self-verification`.
+### 4. Plan Verification
+- Load `self-verification` and run Critical Challenge on the plan before executing the research.
+- Do not repeat materially similar failed research passes more than 3 times without narrowing the boundary or escalating with `hold|blocker`.
+### 5. Gather Evidence
+- Search repository-local evidence first when it exists.
+- Use external research only when local evidence is insufficient.
+- Keep source anchors explicit enough for downstream lanes to reuse them without rerunning the whole pass.
+### 6. Pressure-Test The Evidence
 - Seek contradictions, counterexamples, and alternative explanations.
-- Classify: confirmed, supported, inferred, unconfirmed, conflicting.
-
-### 5A. Benchmark-Light (when comparison needed)
-- Keep `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`, `BENCHMARK-PROVENANCE`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD` explicit so the comparison frame remains inspectable.
-- State whether packet supports modification proposal or remains HOLD.
-- For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. `researcher` owns benchmark-light shaping for baseline, fairness, axis framing, provenance visibility, and cross-check visibility; use `bench-sim` when the packet escalates to full benchmark form.
-
-### 5B. Evidence Hardening Patterns
-- Use these patterns when a one-pass evidence sweep would leave the active question shallow, weakly supported, or easy to misread.
-- This block governs evidence collection and shaping only. Domain-specific interpretation, threshold setting, or acceptance judgment still belongs to the relevant specialist or downstream owner.
-- **Authoritative-source depth**: When the question depends on formal requirements, authoritative rules, or normative constraints, go beyond source names to the decisive section, clause, threshold, date, scope condition, or enforcement surface. If the controlling detail cannot be found, keep the claim narrow or `UNVERIFIED`.
-- **Quantitative backing**: For major claims or recommendations, actively seek numerical evidence when magnitude, trend, threshold, rate, or scale would materially affect the conclusion. Claims that need numbers but lack them are `evidence-thin`.
-- **Concrete case evidence**: When risk, failure, compliance, adoption, or operational credibility is materially in scope, look for concrete incidents, enforcement actions, case studies, or real deployments. For each material case, keep the anchor explicit: source context, what happened, mechanism or root cause when available, consequence, and why it matters to the current decision. If no such evidence is found after a genuine search, state that explicitly instead of implying the surface was checked.
-- **Cross-source normative references**: When formal constraints matter, check whether standards, specifications, official guidance, or equivalent normative sources materially change the conclusion or expose a contradiction. Do not assume one source family is sufficient by habit.
-- **Evidence density self-check**: Before handoff, verify that each major conclusion is anchored by at least one strong evidence surface such as a decisive source detail, a quantitative data point, a concrete case, or a normative reference. Sections lacking this should be flagged `evidence-thin`.
-- **Requirement-vs-practice gap**: When the topic involves formal requirements, expected process, or declared policy, look for evidence about actual adoption, compliance, enforcement, or operating reality. If that practice-gap surface likely matters but remains unverified, state the gap explicitly and say whether the search was inconclusive rather than implying compliance-by-default.
-- **Secondary-effect tracing**: When the topic involves hazards, failures, dependencies, or chain reactions, investigate material downstream effects rather than stopping at the first-order event. First-order-only research on a plausibly cascading topic is `evidence-thin`.
-- **Specialist-boundary preservation**: Researcher owns evidence gathering and framing. When the conclusion depends on domain-specific interpretation or acceptance thresholds, surface that need to the governing lane and identify the relevant specialist or downstream owner instead of hardening a specialist judgment inside the research lane.
-
-### 6. Research The Validation Path
-- Identify what downstream lanes need to verify findings.
-- If the downstream artifact is visualized, office-format, or page-read for a human reader, make both downstream review needs explicit in the handoff: text review for wording, logic, and request-fit; capture-render review for rendered usefulness. Do not imply that one review mode covers the other.
-
-### 6A. Retry Governance
-- Before repeating a materially similar research pass, state what evidence gap, contradiction, or failed path blocked the prior pass and what new search basis changed.
-- Do not repeat the same ineffective research pattern more than 3 times without narrowing the question boundary or escalating with `HOLD`.
-
-### 7. Build The Handoff
-- Key findings with evidence and source references.
-- Claim strength, uncertainties, competing hypotheses.
-- Recommended next lane and downstream needs.
-- If insufficient: explicit HOLD with smallest unblock step.
-- For request-bound document work, state what downstream drafting can start immediately from current evidence, what remains uncertain, and what additional research is optional versus blocking.
-- Keep the handoff teammate-efficient: include concrete evidence anchors, decision-ready conclusions, and the smallest useful unblock step so the next lane does not re-derive the same research pass.
-- For consequential `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the shared handoff block from `skills/team-session-sequences/SKILL.md` explicit.
-- Include `REQUESTED-LIFECYCLE: standby|shutdown` in that shared block. Default to `standby` unless `shutdown` is the honest request. It is a request, not authority.
-- OUTPUT-SURFACE: <research topic>
-- EVIDENCE-BASIS: <sources examined and cross-check status>
-- OPEN-SURFACES: <unresolved questions or gaps>
-- RECOMMENDED-NEXT-LANE: <suggested next worker>
-- REQUESTED-LIFECYCLE: standby|shutdown
+- Classify claims explicitly: confirmed, supported, inferred, unconfirmed, or conflicting.
+- Keep benchmark-light and operational-reality classifications explicit when the assignment depends on comparison, governance/process critique, or runtime-policy critique.
+### 7. Downstream Verification Readiness
+- State what downstream lanes still need to verify, draft, prove, or validate.
+- For visualized or page-read artifacts, keep both text-review needs and rendered-review needs explicit.
+### 8. Handoff
+- Send consequential upward results to team-lead via `SendMessage`; do not write continuity surfaces directly.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/reference.md`.
+- Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill recommendations, and the narrowest truthful next-lane recommendation.
+- Do not convert evidence work into drafting authority, implementation authority, or final acceptance closure from inside research. If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker` instead of ordinary completion.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- Wait for lifecycle direction after handoff.
+- See `reference.md` for researcher-specific handoff detail.
 
 ## Evidence Standards
-- Separate facts from inferences from assumptions. Mark weak claims UNVERIFIED.
-- Do not convert findings into planning or implementation direction.
-- Do not let a strong evidence pass silently become main-body drafting or merge-compress ownership. Those belong downstream unless the dispatch explicitly narrows the artifact to an evidence-note surface only.
-- Follow the self-growth benchmark-first sequence owned by `agents/team-lead.md` and `skills/team-governance-sequences/SKILL.md`. Keep the benchmark packet fields from `skills/team-session-sequences/SKILL.md` explicit: `BENCHMARK-MODE`, `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`, `BENCHMARK-PROVENANCE`, `CROSS-CHECK-STATUS`, and `HALLUCINATION-GUARD`. Do not let benchmark pressure jump into edits before the full preparation sequence.
+- Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
+- Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
+- Research output is evidence input to downstream owners, not implementation or validation authority.
+- When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol
-
-- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the shared handoff block from `skills/team-session-sequences/SKILL.md`, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.
+- `dispatch-ack` first on fresh assignment receipt.
+- Use the minimal receipt spine from `.claude/skills/task-execution/reference.md` when those fields are available.
+- `dispatch-ack` is receipt only. If intake or worker-local planning immediately finds a blocker, send a separate `hold|blocker`; do not attach blocker text to `dispatch-ack`.
+- `control-ack` only for structured control receipt.
+- `status` for bounded progress only.
+- `scope-pressure` for unsafe packet or staffing shape.
+- `hold|blocker` for blocked evidence path or material ambiguity.
+- `handoff|completion` only for converged lane-owned output.
+- Follow `.claude/skills/task-execution/reference.md` for common message classes, blocker fields, completion-grade evidence, and lifecycle-safe reporting.

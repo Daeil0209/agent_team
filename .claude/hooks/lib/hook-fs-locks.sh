@@ -12,6 +12,14 @@ with_lock_file() {
   ) 9>>"$lock_file"
 }
 
+team_config_hook_lock_file() {
+  local config_file="${1:?config file required}"
+  local safe_name=""
+
+  safe_name="$(printf '%s' "$config_file" | sed 's#[^A-Za-z0-9_.-]#_#g')"
+  printf '%s/.team-config-locks/%s.hook.lock' "$LOG_DIR" "$safe_name"
+}
+
 make_atomic_temp_file() {
   local target_file="${1:?target file required}"
   mkdir -p "$(dirname "$target_file")"

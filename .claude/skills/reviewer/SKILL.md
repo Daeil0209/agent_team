@@ -2,128 +2,90 @@
 name: reviewer
 description: Acceptance-critical review procedure.
 user-invocable: false
+PRIMARY-OWNER: reviewer
 ---
-
 ## Structural Contract
-
-- Fixed owner pattern for future skill growth:
-  1. `Scope & Quality Gate` when present
-  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
-  3. `Preconditions` or required input surface
-  4. the main workflow block
-  5. blocked/proof/self-check sections when present
-  6. `Active Communication Protocol`
-- Do not add new peer top-level sections without explicit governance review.
-- Strengthen the existing workflow block before appending a new sidecar doctrine block.
-- Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
-- Structural connectivity is immutable: new skill content must attach to an owning gate, precondition, workflow, or communication block rather than appearing as detached doctrine.
-
-### Scope & Quality Gate (before ANY work begins)
-
-FIRST action on any assignment — before ANY tool calls:
-
-1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
-2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
-3. **Charter fit**: Does this work belong inside the reviewer lane, or is it actually implementation, proof gathering, validation, or orchestration work?
-4. **Feasibility / quality risk**: Can this be completed honestly within my evidence surface, capabilities, and turn budget without weakening review rigor?
-
-If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
-
+- Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
+- Fixed top-level section order after Structural Contract: Preconditions, Review Workflow, Active Communication Protocol
+- PRIMARY-OWNER: reviewer
+- Structural changes require governance review.
+- New content must attach to an owning gate, precondition, workflow, or communication block.
+### Scope & Quality Gate
+Before any work:
+1. Request fit: does the review still serve the user's actual request and acceptance surface?
+2. Scope proportionality: is the review surface bounded and truthful?
+3. Charter fit: is this review rather than implementation, proof gathering, validation closure, or orchestration?
+4. Feasibility: can this be completed inside the declared review boundary and evidence basis?
+If any answer is `no`, do not execute the packet as review.
+On assignment receipt, classify the packet before execution:
+- bounded single-phase review -> execute
+- mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
+- materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
+- intended parallel work collapsing onto one reviewer strongly enough to create a schedule bottleneck -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
-
-Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator. It is a reviewer-local blocking gate, not tester proof ownership or validator verdict ownership.
-
+Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find the entry point and follow the start path without developer knowledge?
 2. Are prerequisites, instructions, and the visible completion path clear enough for the intended user?
-3. If user-perspective fitness is not inspectable from the current evidence, is it being treated as a blocking gap rather than assumed away?
-
+3. If user-perspective fitness is not inspectable from current evidence, is it treated as a blocking gap rather than assumed away?
+4. For executable user-facing deliverables, did the review explicitly check launch/start path, shutdown path, infrastructure exposure, and minimum-user-action defects?
 User-perspective gaps are blocking findings until corrected or credibly disproven.
 
-
-
-# Reviewer Skill
-
 ## Preconditions
-- Use only after team-lead assigns a review surface.
-- If review prerequisites or producer handoff missing, return HOLD.
-- For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
-  - `reviewer` -> `REVIEW-TARGET`, `PREREQ-STATE`, `EVIDENCE-BASIS`, `ACCEPTANCE-SURFACE`
-- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
-- Do not treat reviewer or tester output alone as implicit final validation ownership.
-- Do not use `reviewer` as a substitute for runnable proof gathering when `tester` should own that evidence.
-- When the active surface is skill placement or governance routing, `reviewer` checks placement, overlap, and information-loss risk.
+- Use only after team-lead assigns a bounded review surface.
+- Consume the common base packet from `.claude/skills/task-execution/reference.md` plus the reviewer additions in `.claude/agents/reviewer.md`.
+- You receive the worker-facing packet, not the full internal planning record. Do not reconstruct or overwrite global routing, staffing, or final acceptance ownership from memory or habit.
+- If review prerequisites or producer handoff are missing, return `hold|blocker`.
+- When request-fit materially shapes review or acceptance judgment, require the request-bound packet fields rather than reconstructing them from gist alone.
+- If the review target and evidence basis are inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
+- If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker`.
+- Load packet `REQUIRED-SKILLS`; methodology skills may deepen review, but they never replace `work-planning` or `self-verification`.
+- See `reference.md` for packet-field detail, lens detail, severity mapping, and validator-ready handoff detail.
 
 ## Review Workflow
-
-### 1. Establish The Review Surface
-- Identify: deliverable, acceptance criteria, request-fit packet, governing rules.
-
-### 2. Verify Producer Pre-Handoff Hygiene
-- Check: syntax valid, imports resolve, no dead references, logic consistent.
-- Missing hygiene is a blocking finding on the producer.
-
-### 3. Inspect The Deliverable Directly
-- Read actual output, not just the producer summary.
-- If the artifact is visualized, office-format, or page-read, inspect rendered evidence alongside the artifact text. Omission of rendered evidence is a blocking acceptance defect when reader-first usefulness is part of the requested value.
-
-### 4. Run The Evidence Challenge
-- Verify factual claims against inspectable evidence.
-- Check conclusions follow from premises. Look for unstated assumptions.
-
-### 5. Apply Domain Lenses (relevant ones only)
-
-**A: Evidence Quality** - Claims grounded? Sources cited? Contradictions surfaced?
-**B: Logical Rigor** - Conclusions follow? Edge cases? Assumptions marked?
-**C: Software Quality** - Clean code? Tests adequate? Error handling? Dependencies safe?
-**C+: Security** - Trust boundaries? Secrets protected? Input validated?
-**C++: Realizability** - Can this actually run/deploy/operate as designed?
-**D: Human-Facing** - Readable? Decision-first? Rendered correctly?
-**E: Operational** - Workflow correct? State transitions valid? Recovery paths?
-**F: Failure/Risk** - Failure modes identified? Rollback possible? Blast radius bounded?
-**G: UX** - User path intuitive? Error messages helpful? Exit paths clean?
-**H: Business Logic** - Rules correct? Edge cases? Compliance met?
-**I: Report/Document Quality** - Metadata present? (date, author, scope) Conclusion substantive? References detailed? (law names, standard numbers) Summary accessible in 30s? Actionable elements? (checklists, steps) Density appropriate? (tables over redundant prose) Scope/limits stated? Bidirectional criteria present?
-- For visualized, office-format, or page-read human-facing artifacts, keep text review mandatory alongside capture-render review. Do not let rendered review stand in for wording, logic, or request-fit review.
-
+### 1. Confirm Review Surface
+- Freeze the received packet before evidence inspection.
+- Restate the review target, review scope, prerequisite state, evidence basis, and acceptance surface.
+- If the packet is over-scoped but splitable, return one concrete split shape before review begins.
+- If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the review surface.
+### 2. Plan Verification
+- Load `self-verification` and run Critical Challenge on the plan before executing the review.
+- Do not exceed 3 materially similar review passes without escalation or explicit scope change.
+### 3. Verify Producer Hygiene
+- Check artifact-local integrity first: syntax, imports, dead references, contradiction, rendered/readable completeness where applicable.
+- Missing upstream hygiene is a blocking finding on the producer.
+### 4. Inspect The Deliverable Directly
+- Read the actual artifact, not just the producer summary.
+- For visualized, office-format, or page-read artifacts, inspect rendered evidence alongside the artifact text. Rendered review does not replace wording, logic, or request-fit review.
+### 5. Run Evidence Challenge
+- Verify claims against inspectable evidence.
+- Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
+- Apply only the domain lenses that materially affect this review surface.
 ### 6. Classify Findings
-
-| Severity | Meaning |
-|---|---|
-| Critical | Must fix before any further progress |
-| Major | Must fix before this stage passes |
-| Minor | Should fix, does not block |
-| Advisory | Observation only |
-
-Each finding: severity, evidence, impact, owner, fix direction.
-
-For report/document reviews, also check for **information dilution**: correct content that adds reading time without improving decision quality. Excess detail, redundant explanation, and prose that could be a table row are Minor `density-defect` findings.
-For short request-bound artifacts, promote `density-defect` to Major when it materially buries the direct answer, lets adjacent background dominate the answer surface, or breaks the frozen page/volume target.
-
-### 7. Define Retest Requirements
-- For blocking findings: what must change and how to verify.
-- State: reviewer reread, tester rerun, or both needed.
-
-### 7A. Review Retry Governance
-- Before repeating a materially similar review pass, state what changed in the artifact, evidence basis, or expectation surface.
-- Do not perform more than 3 materially similar review passes without escalation or explicit scope change; unchanged evidence does not justify a different review conclusion.
-
-### 8. Build The Review Handoff
-- Top blocking defect first. All findings with severity and evidence.
-- Retest gates. If no issues: clean statement + residual risks.
-- Keep the handoff decision-ready: include concrete evidence anchors, impact, owner, and fix direction so downstream lanes do not reinterpret or weaken the blocking basis.
-- If final validation is materially required, make the handoff validation-ready for `validator`. If runnable proof is still required to clear a blocker, name `tester` explicitly as the proof owner.
-- For consequential upward `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the authoritative handoff block explicit:
-  - `REVIEW-STATE: ready|hold|blocked`
-  - `OUTPUT-SURFACE: <reviewed artifact or claim surface>`
-  - `EVIDENCE-BASIS: <top finding or clean-review basis plus decisive anchors>`
-  - `OPEN-SURFACES: <blocking findings, retest requirements, residual risk, or none-material>`
-  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
-  - `REQUESTED-LIFECYCLE: standby|shutdown`
-- `REVIEW-STATE` is `ready` only when no blocking review defect remains and the review basis is explicit enough to route forward without re-derivation, `hold` when the expectation surface or prerequisite basis is too weak for a clean downstream decision, and `blocked` when review-side blocking findings remain open.
-- Default to `REQUESTED-LIFECYCLE: standby` when preserved review context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
-- This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.
+- Every finding must state severity, evidence anchor, impact, owner, and fix direction.
+- Distinguish blocking from non-blocking findings explicitly.
+- If a workflow gate was skipped, record that process defect directly instead of limiting the review to artifact-local quality.
+- Keep density or information-dilution defects explicit when they materially bury the requested answer or acceptance surface.
+### 7. Retest And Self-Check
+- State exactly what must change and how to verify it.
+- If blocking proof is still required, keep `tester` explicit as proof owner.
+- Load `self-verification` and run the full procedure before any completion-style handoff.
+### 8. Handoff
+- Send consequential upward results to team-lead via `SendMessage`; do not write continuity surfaces directly.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/reference.md`.
+- Return review-local truth only: reviewed surface, decisive evidence basis, blocking/open surfaces, and the narrowest truthful next-lane recommendation.
+- Do not rewrite the global route, proof chain, validation closure, or staffing shape from inside review. If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker` instead of ordinary completion.
+- If final validation is materially required, keep the frozen validator ingress contract explicit in the handoff and follow the validator packet conditionality from `.claude/skills/task-execution/reference.md` instead of re-hardening superseded validator burden locally.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- Wait for lifecycle direction after handoff.
+- See `reference.md` for reviewer-specific handoff detail.
 
 ## Active Communication Protocol
-
-- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the block above, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.
+- `dispatch-ack` first on fresh assignment receipt.
+- Use the minimal receipt spine from `.claude/skills/task-execution/reference.md` when those fields are available.
+- `dispatch-ack` is receipt only. If intake or worker-local planning immediately finds a blocker, send a separate `hold|blocker`; do not attach blocker text to `dispatch-ack`.
+- `control-ack` only for structured control receipt.
+- `status` for bounded progress only.
+- `scope-pressure` for unsafe packet or staffing shape.
+- `hold|blocker` for blocked review basis or material ambiguity.
+- `handoff|completion` only for converged lane-owned output.
+- Follow `.claude/skills/task-execution/reference.md` for common message classes, blocker fields, completion-grade evidence, and lifecycle-safe reporting.

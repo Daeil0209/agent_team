@@ -157,18 +157,12 @@ canonical_agent_alias() {
       return 0
       ;;
     integration-operator)
-      printf 'int-op'
+      printf 'external-tool-bridge'
       return 0
       ;;
     val-ref)
       printf 'validator'
       return 0
-      ;;
-    dev-*)
-      if agent_registry_has_name "developer"; then
-        printf 'developer'
-        return 0
-      fi
       ;;
   esac
 

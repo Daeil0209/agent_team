@@ -2,80 +2,69 @@
 name: session-closeout
 description: Closeout procedures for team-lead session teardown and runtime cleanup.
 user-invocable: false
+PRIMARY-OWNER: team-lead
 ---
+## Structural Contract
+- Fixed section order: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence`
+- PRIMARY-OWNER: team-lead
+- This file owns the closeout spine only. State schema, hold conditions, and detailed worker lifecycle requirements belong in `reference.md` or the runtime lifecycle owner.
+- Structural changes require governance review.
 
 ## Activation
+Load this skill when explicit user-directed session end or confirmed teardown intent is active. Hook feedback may surface teardown state, but hook signals alone do not prove session-end intent.
 
-Load this skill when explicit user-directed session end is detected. The sync-closeout-intent-from-prompt.sh hook detects closeout intent and provides the loading trigger.
+## Runtime Teardown Preflight
+Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.
 
-Core monitoring, dispatch, and lifecycle procedures remain in the always-loaded `team-session-sequences` skill.
+### Required order
+1. Confirm explicit closeout or teardown intent.
+2. Determine whether any live worker still needs lifecycle action.
+3. Determine whether monitor ownership and runtime teardown ownership are already accounted for.
+4. Mutate runtime state only after live-worker and monitor readiness are accounted for.
+5. If runtime deletion fails and only non-live residue remains, stop retries and carry that residue into truthful closeout output instead of improvising teardown repair work.
 
 ## Closeout Sequence
+`Closeout Sequence` is mandatory whenever the session is explicitly ending or a confirmed teardown handoff requires runtime shutdown.
 
-The `Closeout Sequence` is mandatory whenever the session is explicitly ending or a confirmed handoff requires runtime teardown.
-Hook feedback alone is not sufficient evidence that the user wants the session to end.
+Closeout is not a recovery project, retrospective audit, or completion theater. Its default purpose is narrow:
+- account for live workers
+- remove live runtime when possible
+- leave a truthful residual state when not
 
-Treat this skill as the procedure owner for closeout sequencing. Closeout `phase` is teardown progress only; clean closeout also requires an explicit governance-completeness vector that covers final validation ownership, authoritative acceptance evidence, and supervisor review state. The persisted runtime fields for that vector live in the hook-owned runtime state surface; this skill remains the human-readable procedure owner.
+### Core law
+- Explicit closeout intent preempts ordinary planning, synthesis, and completion-style reporting.
+- Once closeout owns the path, worker outputs may narrow residual truth only. They must not upgrade the session into ordinary positive completion reporting or stronger deliverable-complete claims.
+- A late worker output after closeout intent may still narrow residual truth even when it does not carry the ordinary completion spine; treat it as residual evidence, not as ordinary completion.
+- Hook-owned closeout state tracks teardown progress, but hook signals alone do not determine user intent.
+- If continuity, runtime state, and teardown evidence disagree, prefer truthful `HOLD` or warning-bearing closeout over repair choreography during teardown.
+- If the explicit runtime is only partially booted, do not finish boot just to tear it down. Closeout takes the path directly.
 
-### Closeout preemption rule
+### Required order
+1. Mark explicit closeout intent before sending session-level `shutdown_request`, deleting monitors, or tearing down runtime.
+2. Integrate worker outputs only enough to disclose unresolved acceptance, blocker, or residual-state truth.
+3. Resolve or explicitly account for remaining live workers through explicit lifecycle messages, using the teardown exception only where closeout doctrine allows it.
+4. Keep continuity handling minimal during teardown. Do not create helper lanes or re-open runtime only to polish continuity.
+5. Remove live-session monitors only after current-runtime workers are fully accounted for.
+6. Tear down explicit runtime only after worker state is drained. Bounded teardown once; no teardown loops or ad hoc runtime surgery.
+7. Let `SessionEnd` finish continuity capture after runtime teardown.
+8. Let `SessionEnd` cleanup clear runtime-owned transient residue after continuity capture.
+9. Run supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or self-growth work is active.
+10. End with concise operator-facing closeout only when blocked, warning-bearing, explicitly requested, or review-triggered; otherwise clean closeout may stay silent or one-line.
 
-- Explicit user-directed session end preempts incomplete boot.
-- If the runtime is active but `Boot Sequence` is incomplete, do not register a new health-check cron or otherwise finish boot solely to satisfy shutdown.
-- Mark explicit closeout intent, shut down workers, remove any already-registered runtime monitors, and tear down the runtime directly.
-- Once explicit closeout intent is active, message-based worker coordination needed to finish teardown may continue even if monitor removal makes boot incomplete again. Do not re-arm the health-check cron just to send teardown or closeout-coordination messages.
-
-### Required actions
-
-1. Mark explicit closeout intent before sending any session-level `shutdown_request`, deleting the tracked health-check cron, or tearing down the explicit team runtime.
-   Current standard: set explicit closeout intent in the session-bound structured closeout state before teardown begins, and clear that state if closeout is later deferred. Do not model closeout as a timeless on/off residue.
-   When the current user prompt itself explicitly requests session end, the `UserPromptSubmit` hook should pre-mark closeout intent before the lead reaches any guarded closeout tool. In that case, do not intentionally trigger `CronDelete`, `TeamDelete`, or `shutdown_request` once just to discover that intent is required.
-   Worker-specific termination remains message-first: after `mark-force-stop.sh` terminates a worker, the cleanup is a worker lifecycle edge, not by itself a session closeout edge.
-2. Integrate worker outputs and disclose unresolved issues.
-   Before monitor teardown or `TeamDelete`, resolve the contract-owned teardown governance prerequisites for this session: final validation ownership and authoritative acceptance evidence.
-   When acceptance risk is meaningful, assign an explicit final validation owner before closeout rather than letting review or testing silently stand in for final validation.
-   When standalone review, test, or validation reports are intentionally suppressed, keep one authoritative acceptance-evidence block in the closeout or continuity state before granting clean closeout.
-   At closeout, do not rely on remembered intent to prove governance completeness. Record the final closeout governance packet explicitly before clean stop, and if governance is still unresolved, prepare a truthful hold rather than compressing the sequence.
-   Current standard: record the final closeout governance packet explicitly in the same structured closeout state, including validation-owner state, acceptance-evidence state, and supervisor-review state.
-   If truthful clean closeout is not yet earned, prepare explicit carry-forward hold state with a concrete reason instead of compressing the sequence or hoping teardown cleanup will infer it.
-3. Release or explicitly account for remaining workers through explicit internal lifecycle messages.
-   Closeout is not the time to invent a new continuity lane. `session-state.md` should already be current from normal work, and remaining live workers must be accounted for before monitor teardown.
-4. Keep continuity handling minimal during teardown.
-   Do not dispatch a new continuity writer or other ad hoc helper lane as part of normal closeout. If continuity is materially stale, refresh it before teardown starts as ordinary session work. Otherwise rely on `SessionEnd` capture for the final timestamp and residual warnings.
-5. Remove periodic session runtime monitors that were registered for the live session only after current-runtime workers have been fully accounted for.
-   Current standard: read the stored job ID, run `CronDelete(id: stored_job_id)`, then clear the tracked health-check job record from runtime state.
-   Do not treat monitor-rotation handling as a substitute for this step. Closeout teardown still requires explicit closeout intent, not rotation intent.
-   Delete the tracked health-check only after the current-runtime workers that still need coordination have been fully accounted for. Do not recreate the monitor just to keep messaging open.
-   If no tracked health-check cron is active, skip this step rather than manufacturing monitor teardown ceremony.
-6. Tear down the explicit team runtime when that runtime was used and the workers are no longer active.
-   `TeamDelete` is not a shortcut for worker cleanup. Normal closeout requires drained current-runtime worker state first; unterminated workers must block teardown.
-7. Let `SessionEnd` finish continuity stamping after runtime teardown.
-   Preserve `.claude/session-state.md` as the continuity owner; do not clear it as part of closeout cleanup. After `CronDelete` or `TeamDelete`, do not dispatch a new `Agent` just to write continuity.
-   If continuity remains stale at that point, do not reopen runtime teardown or start a helper lane just to change the continuity timestamp. Leave the state truthful and let `SessionEnd` capture it as warnings-bearing continuity.
-8. Let `SessionEnd` cleanup clear runtime-owned logs, ledgers, transient closeout residue, and current-project auto memory after continuity capture and session-end logging complete.
-9. Run an explicit supervisor-effectiveness review only when the user asked for team-operation evaluation, a real teardown/management defect occurred, or `Self-Growth Sequence` / `Update/Upgrade Sequence` work is active.
-   If triggered, inspect detection timeliness, reroute quality, checkpoint cleanliness, stalled-lane handling, and whether the user had to surface a problem before the team did. A required supervisor review remains a clean-closeout gate even after runtime teardown.
-10. End with a truthful operator-facing closeout only when step 9 was actually triggered, the closeout is blocked or in truthful hold, restart or handoff guidance is materially needed, or the user explicitly asked for a summary.
-   Clean closeout with no meaningful carry-forward state may be silent or reduced to a one-line acknowledgement; in that case the authoritative detail remains the closeout state plus `SessionEnd` continuity capture rather than a recap message.
+### Fast paths
+- No-runtime fast path: when no explicit team runtime or recurring monitor was created in the current session, closeout reduces to intent mark, exact residual disclosure if needed, `SessionEnd` capture, and short acknowledgement at most.
+- No-acceptance-surface fast path: when the session produced no implementation deliverable or no acceptance surface was created, set validation ownership to `not-needed` and do not manufacture extra closeout ceremony.
 
 ### Closeout constraints
+- Do not infer session-end intent from hook feedback, runtime residue, or repeated warnings alone.
+- Do not dispatch new agents during closeout.
+- Do not treat `TeamDelete` as worker cleanup; drain or account for live workers first.
+- Do not use mutable shell cleanup or ad hoc registry surgery on governed runtime surfaces during closeout.
+- Do not present blocked or partially cleaned closeout as complete success.
+- Clean closeout stays silent or one-line. Warning-bearing closeout stays short: exact residual state, exact hold reason, and next recovery surface only.
 
-- Do not leave orphaned workers or live recurring monitors silently running.
-- Do not treat a force-stopped worker as fully cleaned up until the tmux pane is confirmed terminated or equivalent runtime teardown is complete.
-- Do not manually write runtime marker files to bypass boot or closeout gates. If runtime state is contradictory, hold and clean the residue instead of inventing runtime truth.
-- Do not infer user end-of-session intent from hook feedback, runtime residue, or repeated closeout warnings alone.
-- Do not trust closeout state that belongs to another session. Closeout guards and stop gating must bind to the current runtime session before they authorize teardown.
-- Lifecycle shutdown decisions must remain message-first: hooks may guard or report, but they must not invent shutdown authority in place of the lead's explicit message path.
-- `shutdown_request` is a structured JSON message and cannot be sent via broadcast (`to: "*"`). Send individual `shutdown_request` to each worker by name.
-- Do not dispatch a new continuity helper during normal closeout. The fast path is worker accounting -> `CronDelete` -> `TeamDelete` -> `SessionEnd` capture.
-- Do not dispatch a new `Agent` for continuity capture after `CronDelete` or `TeamDelete`.
-- If stale continuity is the only remaining issue after teardown, stop there and let `SessionEnd` capture it. Do not loop on repeated hook feedback.
-- If closeout is aborted, deferred, or narrowed, clear explicit closeout intent immediately and return control to the `Monitoring Sequence`.
-- Do not present blocked or partially cleaned-up closeout as complete success.
-- Prefer lean closeout: default to silence or one-line acknowledgement; expand only for decisive evidence, blockers, restart requirements, or residual risk.
-- Prefer one authoritative closeout narrative over multiple thin summaries or duplicate status artifacts when a narrative is actually needed.
-- Make unresolved blockers, risks, and follow-up state explicit before closeout.
-- Default clean closeout reporting to silent or one-line acknowledgement. Do not emit recap bullets, file lists, risk lists, or handoff sections when no material carry-forward state exists.
-- Keep clean closeout reporting compact. Do not emit long diagnostic tables or retrospective audits unless the user asked or the teardown actually blocked.
-- Do not replace unfinished teardown with a long retrospective diagnosis. State the concrete residue, keep the state on `HOLD`, and stop.
-- If a full closeout cannot be completed, report the exact residual state explicitly.
-- Do not expect runtime cleanup or `SessionEnd` cleanup to invent missing governance resolution. Those gates now require an explicit clean governance packet or an explicit truthful hold.
+See `reference.md` for:
+- `Closeout State Schema`
+- `not-needed Conditions`
+- `Hold Conditions`
+- `Worker Lifecycle Resolution`

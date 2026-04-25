@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "$(dirname "$0")/hook-config.sh"
+
 INPUT="$(cat)"
 
 INPUT_JSON="$INPUT" CLAUDE_HOME="$HOME/.claude" node <<'NODE'
@@ -275,7 +277,7 @@ try {
     process.exit(0);
   }
 
-  let reason = `${toolName} could not find task id '${taskId}' in the current task store. Use TaskList or the taskId from the task_assignment packet first.`;
+  let reason = `BLOCKED: task-state mutation preflight incomplete. Detail: ${toolName} could not find task id '${taskId}' in the current task store. Next: use TaskList, TaskGet, or the task_assignment packet to confirm the exact task id before retrying. Do not retry before Next is complete.`;
   if (knownTaskIds.length > 0) {
     reason += ` Known task ids: ${knownTaskIds.join(", ")}.`;
   }
@@ -283,7 +285,8 @@ try {
     reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
   }
   deny(reason);
-} catch {
-  process.exit(0);
+} catch (error) {
+  deny(`Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`);
+  process.exit(1);
 }
 NODE

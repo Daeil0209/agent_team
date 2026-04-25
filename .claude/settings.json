@@ -1,41 +1,51 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "agent": "team-lead",
+  "effortLevel": "high",
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
   "permissions": {
     "allow": [
       "Read",
-      "Edit",
-      "Write",
-      "Glob",
       "Grep",
+      "Glob",
+      "LS",
       "Bash",
-      "WebSearch",
       "WebFetch",
-      "Skill",
+      "WebSearch",
+      "Edit",
+      "Update",
+      "MultiEdit",
+      "Write",
+      "NotebookEdit",
       "Agent",
+      "Skill",
+      "ToolSearch",
+      "SendMessage",
       "TaskCreate",
       "TaskUpdate",
       "TaskGet",
       "TaskList",
       "TaskOutput",
       "TaskStop",
-      "SendMessage",
-      "NotebookEdit",
-      "EnterPlanMode",
-      "ExitPlanMode",
+      "TeamCreate",
+      "TeamDelete",
       "EnterWorktree",
       "ExitWorktree",
-      "ToolSearch",
-      "AskUserQuestion",
       "CronCreate",
       "CronDelete",
-      "CronList",
-      "RemoteTrigger",
-      "TeamCreate",
-      "TeamDelete"
+      "CronList"
+    ],
+    "ask": [],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./config/credentials.json)"
     ],
     "defaultMode": "bypassPermissions"
   },
@@ -45,18 +55,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/session-boot-cleanup.sh\"",
-            "timeout": 3
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/refresh-name-registry.sh\"",
-            "timeout": 3
-          },
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/hook-health-self-check.sh\"",
-            "timeout": 3
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh"
           }
         ]
       }
@@ -66,105 +65,47 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/boot-enforcement-guard.sh\"",
-            "timeout": 3
-          },
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/user-prompt-gate.sh"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "Edit|Update|MultiEdit|Write",
+        "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/sync-closeout-intent-from-prompt.sh\"",
-            "timeout": 8
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/permission-request-gate.sh"
           }
         ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/agent-activity-monitor.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/agent-activity-monitor.sh"
           }
         ]
       },
       {
-        "matcher": "Edit|Write|NotebookEdit",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-supervisor-edit.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/task-start-gate.sh"
           }
         ]
       },
       {
-        "matcher": "Read|Grep|Glob",
+        "matcher": "Agent|TaskCreate|SendMessage|Edit|Update|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete|Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/enforce-continuity-root.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-supervisor-bash.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "WebSearch|WebFetch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-supervisor-web.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "TeamCreate|Agent|SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/runtime-entry-gate.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "Agent",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-agent-dispatch.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "SendMessage",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-sendmessage-dispatch.sh\"",
-            "timeout": 2
-          }
-        ]
-      },
-      {
-        "matcher": "Skill",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-skill-authorization.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/sv-gate.sh"
           }
         ]
       },
@@ -173,20 +114,63 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/validate-task-target.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validate-task-target.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskCreate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/task-created-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TeamCreate|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/runtime-entry-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/dispatch-sizing-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/dispatch-proof-gate.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Update|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/compliance-supervisor.sh"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Agent",
+        "matcher": "Skill",
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/track-agent-dispatch.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/sv-tracker.sh"
           }
         ]
       },
@@ -195,65 +179,30 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/compliance-skill-authorization.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/track-worker-report.sh"
           },
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/track-closeout-phase.sh\"",
-            "timeout": 2
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/sync-worker-lifecycle-state.sh\"",
-            "timeout": 2
-          },
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/cleanup-terminated-panes.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/worker-lifecycle-sync.sh"
           }
         ]
       },
       {
-        "matcher": "TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "matcher": "Agent|TeamCreate|TeamDelete|CronCreate|CronDelete",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/track-closeout-phase.sh\"",
-            "timeout": 2
-          },
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/track-runtime-sequence.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/track-runtime-lifecycle.sh"
           }
         ]
       }
     ],
-    "PermissionRequest": [
+    "TaskCompleted": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/suppress-permission-prompts.sh\"",
-            "timeout": 2
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/session-end-capture.sh\"",
-            "timeout": 3
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/session-end-cleanup.sh\"",
-            "timeout": 3
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/task-completed-gate.sh"
           }
         ]
       }
@@ -263,38 +212,20 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/teammate-quality-gate.sh\"",
-            "timeout": 2
-          },
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/worker-lifecycle-sync.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
           {
             "type": "command",
-            "command": "\"$HOME/.claude/hooks/cleanup-terminated-panes.sh\"",
-            "timeout": 2
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-end.sh"
           }
         ]
       }
     ]
-  },
-  "enabledPlugins": {
-    "superpowers@superpowers-dev": false
-  },
-  "extraKnownMarketplaces": {
-    "superpowers-dev": {
-      "source": {
-        "source": "github",
-        "repo": "obra/superpowers"
-      }
-    },
-    "bkit-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "popup-studio-ai/bkit-claude-code"
-      }
-    }
-  },
-  "effortLevel": "high",
-  "agent": "team-lead",
-  "autoMemoryEnabled": false,
-  "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "tmux"
+  }
 }

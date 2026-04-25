@@ -8,7 +8,7 @@ user-invocable: false
 
 Load this skill when doctrine, agents, skills, settings, hooks, or other team-system assets need modification. This includes skill introduction, specialist skill routing, and skill category gates.
 
-Changes executed through this sequence use the normal `Change Sequence` which remains in the always-loaded `team-governance-sequences` skill.
+Changes executed through this sequence use the normal `Change Sequence` owned by `.claude/skills/self-growth-sequence/SKILL.md` § Change Sequence; load that skill on demand when applying the bounded change.
 
 ## Update/Upgrade Sequence
 
@@ -46,7 +46,7 @@ The `Update/Upgrade Sequence` applies when doctrine, agents, skills, settings, h
   - Other impacted lanes are required inspectors, challengers, or reviewers, not co-owners of the direct patch.
   - A patch packet for a common skill must name at minimum: `PRIMARY-OWNER`, `IMPACTED-LANES`, `OVERLAP-REVIEW`, `INFO-LOSS-REVIEW`, and `VERIFY-BASIS`.
 - Current default rule for shared team-operation skills:
-  - `team-session-sequences` and `team-governance-sequences` are `team-lead`-owned common skills unless an explicit governance decision reassigns them.
+  - `team-session-sequences` is a `team-lead`-owned common skill unless an explicit governance decision reassigns it.
   - Impacted lanes may inspect, challenge, and review those skills, but final direct patch execution still belongs to the primary owner.
 - Before introducing a new skill, check whether the need is better handled by:
   - updating an existing skill
@@ -68,8 +68,8 @@ The `Update/Upgrade Sequence` applies when doctrine, agents, skills, settings, h
 - Do not treat a common skill like a developer-exclusive specialist skill by habit.
   - Specialist-skill authorization binds a blocked lane to a bounded specialist aid.
   - Common-skill ownership binds a shared procedure surface to one primary owner plus named impacted lanes.
-- For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. Let `researcher` own the benchmark-light evidence shaping for baseline, fairness, comparison-axis framing, provenance visibility, and cross-check visibility; use `bench-sim` as the supporting specialist when the active packet escalates into the full benchmark form.
-- When multiple specialist skills are active on one blocked surface, keep the controlling order explicit: `biz-sys` -> `sw-spec` -> domain specialists (`edu-spec`, `eng-spec`, `math-spec`) -> `doc-auto` -> `ui-ux`; `bench-sim` and `int-op` support evaluation or integration without overriding earlier controlling contracts.
+- For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. Let `researcher` own the benchmark-light evidence shaping for baseline, fairness, comparison-axis framing, provenance visibility, and cross-check visibility; use `benchmark-simulation` as the supporting specialist when the active packet escalates into the full benchmark form.
+- When multiple specialist skills are active on one blocked surface, keep the controlling order explicit: `business-workflow` -> `software-architecture` -> domain specialists (`instructional-design`, `engineering-grounding`, `mathematical-correctness`) -> `document-automation` -> `visual-composition`; `benchmark-simulation` and `external-tool-bridge` support evaluation or integration without overriding earlier controlling contracts.
 - This controlling order is a lead-side routing discipline for logical flow, not a runtime chaining engine. Authorization hooks may gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
 - When approving developer-side specialist skill use, send an explicit authorization packet to the target developer lane using `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` so runtime enforcement and human doctrine stay aligned.
 - Route specialist skills per the controlling order in the Skill Routing And Specialist Architecture section above. Authorize via `SKILL-AUTH` packet bound to lane, surface, and `skill-id`.

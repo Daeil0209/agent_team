@@ -2,124 +2,119 @@
 name: validator
 description: Final evidence-based validation procedure.
 user-invocable: false
+PRIMARY-OWNER: validator
 ---
-
 ## Structural Contract
-
-- Fixed owner pattern for future skill growth:
-  1. `Scope & Quality Gate` when present
-  2. `User-Perspective Gate` when the lane owns a user-facing completion surface
-  3. `Preconditions` or required input surface
-  4. the main workflow block
-  5. blocked/proof/self-check sections when present
-  6. `Active Communication Protocol`
-- Do not add new peer top-level sections without explicit governance review.
-- Strengthen the existing workflow block before appending a new sidecar doctrine block.
-- Keep dispatch-packet requirements, HOLD/escalation triggers, workflow steps, and communication rules in owner-local form.
-- Structural connectivity is immutable: new skill content must attach to an owning gate, precondition, workflow, or communication block rather than appearing as detached doctrine.
-
-### Scope & Quality Gate (before ANY work begins)
-
-FIRST action on any assignment — before ANY tool calls:
-
-1. **Request fit**: Does this instruction match the user's original request as stated in the dispatch?
-2. **Scope proportionality**: Is the work scope proportional to the request? (Example: a 2-question request should not produce a 10-chapter report)
-3. **Charter fit**: Does this work belong inside the validator lane, or is it actually implementation, review ownership, proof gathering, or orchestration work?
-4. **Feasibility / quality risk**: Can this be completed honestly within the available evidence surface, capabilities, and turn budget without promoting a weaker verdict?
-
-If ANY check fails, return scope feedback as the complete response: failed check, specific evidence, and concrete correction. Do NOT execute over-scoped instructions; silent acceptance is a compliance failure.
-
+- Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
+- Fixed top-level section order after Structural Contract: Preconditions, Validation Inputs, Validation Workflow, Blocked Validation, Active Communication Protocol
+- PRIMARY-OWNER: validator
+- Structural changes require governance review.
+- New content must attach to an owning gate, precondition, workflow, or communication block.
+### Scope & Quality Gate
+Before any work:
+1. Request fit: does the verdict still serve the user's actual request and acceptance surface?
+2. Scope proportionality: is the validation surface bounded and truthful?
+3. Charter fit: is this final verdict work rather than implementation, proof gathering, review ownership, or orchestration?
+4. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
+If any answer is `no`, do not execute the packet as validation.
+On assignment receipt, classify the packet before execution:
+- bounded verdict-only arbitration -> execute
+- mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
+- materially ambiguous expectation sources, review/test state, decision surface, or validation surface -> `hold|blocker`
+- missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
+- intended parallel work collapsing onto one validator strongly enough to create a schedule bottleneck -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
-
-Apply this gate whenever PASS depends on real user or operator fitness. It is a validator-local PASS gate, not the lead's broader acceptance ownership for routing and lifecycle decisions.
-
+This is a validator-local PASS gate, not the lead's broader acceptance ownership for routing and lifecycle decisions.
 1. Is there evidence that the intended user or operator can find, access or install, start, and complete the core workflow?
 2. Does that evidence come from actual review or proof surfaces rather than assumption or producer confidence?
 3. If user-perspective evidence is partial, blocked, or missing, is PASS being withheld?
-
-Developer-runnable or reviewer-plausible is not enough for PASS.
-
-
-
-# Validator Skill
+4. For executable, interactive software, is there tester evidence that every in-scope user-visible control was directly exercised or explicitly classified as blocked, disproven, or out-of-scope by dispatch?
+Developer-runnable, reviewer-plausible, or lower-level support evidence is not enough for PASS on the decisive user-facing acceptance surface.
 
 ## Preconditions
-- Use only after team-lead assigns validation surface.
-- Require: produced outputs, review findings, test evidence as inputs.
-- For consequential lane dispatch, keep the lane packet explicit instead of relying on habit:
-  - `validator` -> `VALIDATION-TARGET`, `EXPECTATION-SOURCES`, `REVIEW-STATE`, `TEST-STATE`, `DECISION-SURFACE`
-- When the assigned artifact is request-bound and depends on question-fit or decision-fit, also include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`.
-- For office-format or page-read artifacts, keep the rendered review chain explicit: `developer/doc-auto` → `tester` render evidence → `reviewer` acceptance → `validator` when risk is meaningful.
-- `validator` is assigned when acceptance risk is meaningful.
+- Use only after team-lead assigns a bounded validation surface.
+- Consume the common base packet from `.claude/skills/task-execution/reference.md` plus the validator additions in `.claude/agents/validator.md`.
+- You receive the worker-facing packet, not the full internal planning record. Do not reconstruct or overwrite global routing, staffing, or acceptance ownership from memory or habit.
+- When request-fit, user workflow, or promised usability materially shapes verdict strength, require the request-bound packet fields plus explicit run-path and burden fields rather than reconstructing them from gist alone.
+- If the safe validation basis is inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
+- If expectation sources, review/test state, decision surface, decisive acceptance surface, or user-facing acceptance basis are materially ambiguous, send `hold|blocker`.
+- Load packet `REQUIRED-SKILLS`; methodology skills may refine validation discipline, but they never replace `work-planning` or `self-verification`.
+- Choose the decisive proof tool from the user-facing acceptance surface, not from source-state alone. For executable interactive web/UI deliverables, treat browser-surface proof as decisive by default: tester evidence must come from a browser-proof path, and validator direct final interaction checks use Playwright MCP or an explicitly frozen equivalent browser-proof path when the acceptance packet requires validator-side browser confirmation.
+- For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, PASS depends on evidence from a native-capable or format-faithful rendered/runtime path when layout, formulas, pagination, interaction, or visible burden are part of acceptance.
+- If the current toolchain cannot truthfully exercise the decisive user surface, do not silently downgrade to source-only evidence. Prefer one bounded discovery/setup path through `external-tool-bridge` or the frozen setup owner when a credible surface-faithful tool is likely available; otherwise hold the verdict.
+- See `reference.md` for packet detail, PASS-prohibition detail, reconciliation detail, and handoff detail.
 
 ## Validation Inputs
-- Requested expectations (user intent, acceptance criteria)
-- Governing expectations (CLAUDE.md, project rules)
-- Material references (specs, prior art)
-- Produced outputs, review findings, test evidence
+- Requested expectations
+- Governing expectations
+- Material references
+- Produced outputs
+- Review findings
+- Test evidence
+Keep authoritative versus supplemental sources explicit.
 
 ## Validation Workflow
-
 ### 1. Build The Expectation Suite
-- Collect all expectation sources. Mark authoritative vs supplemental.
-
-### 2. Inspect Requested Intent
-- Does output answer what was asked? Scope silently changed?
-
-### 3. Inspect Governing Expectations
-- Complies with CLAUDE.md and project rules? Procedures followed?
-
-### 4. Inspect Relevant References
-- Aligns with specs? References used correctly?
-
-### 5. Inspect Produced Outputs
-- Direct examination. Completeness, accuracy, structural quality.
-
-### 6. Incorporate Review And Test Evidence
-- Reviewer findings = review-side truth. Tester proof = test-side truth.
-- Do not overturn upstream blocking findings without factual error proof.
-- If critical-path proof is still missing, route proof generation back to `tester` instead of silently replacing the tester lane inside validation.
-
-### 7. Requirement-To-Evidence Comparison
-- Each expectation: matched, partially matched, mismatched, blocked, not assessable.
-
-### 8. Required Checks
-- Completeness, scope, logic preservation, operability, criteria satisfaction, evidence coverage.
-- For office-format or page-read artifacts, require rendered evidence strong enough to assess first-glance comprehension, page-level repetition, conclusion visibility, and section-order fitness.
-- Keep matched, mismatched, blocked, and not-assessable items explicit rather than flattening weak evidence into a soft pass.
-
-### 9. Final Acceptance Gate
-- PASS: all met, no blocking findings, evidence sufficient.
-- HOLD: ambiguous ownership, missing prerequisites, unresolved defects.
-- FAIL: fundamental mismatch.
-- PASS prohibited while blocking findings remain.
-- For short request-bound artifacts, HOLD or FAIL when the output drifts into chapter-grade background, buries the direct answer under supporting context, or misses the frozen page/volume target without an explicit accepted reason.
-- PASS is also prohibited when a request-bound artifact answers a neighboring question, lets excluded scope crowd out the requested answer, or lacks required rendered evidence for an office-format or page-read acceptance surface.
-- When the rendered result is part of acceptance, do not pass without both text-review evidence and capture-render-review evidence.
-
-### 9A. Verdict Retry Governance
-- Before repeating a materially similar validation pass, state what evidence, acceptance condition, or upstream state changed.
-- Do not perform more than 3 materially similar verdict passes without escalation or `HOLD`; unchanged evidence does not justify a stronger verdict.
-
-### 10. Final Validation Handoff
-- Verdict + strongest reasons. Comparison items. Confidence level.
-- Next-action owner for HOLD/FAIL items.
-- Keep the handoff verdict-driven and reconstructable: make matched, mismatched, blocked, and not-assessable items explicit enough that the lead can see why PASS, HOLD, or FAIL was recommended without re-running the whole arbitration pass.
-- For consequential upward `SendMessage` reports with `MESSAGE-CLASS: handoff|completion|hold`, keep the authoritative handoff block explicit:
-  - `VERDICT: PASS|HOLD|FAIL`
-  - `OUTPUT-SURFACE: <validated delivery or decision surface>`
-  - `EVIDENCE-BASIS: <strongest verdict-driving reasons and decisive anchors>`
-  - `OPEN-SURFACES: <blocked, mismatched, or none-material surfaces>`
-  - `RECOMMENDED-NEXT-LANE: <next owner or none>`
-  - `REQUESTED-LIFECYCLE: standby|shutdown`
-- Default to `REQUESTED-LIFECYCLE: standby` when preserved validation context may still matter; request `shutdown` only when near-term reuse should not be preserved. This is a request, not authority.
-- This block is only for consequential `handoff|completion|hold`. Ordinary continuity or status notes may stay free-form.
+- Freeze the received packet before arbitration.
+- State the validation target, expectation sources, decision surface, validation surface, and upstream review/test states.
+- If the packet is over-scoped but splitable, return one concrete split shape before validation begins.
+- If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the acceptance basis.
+### 2. Plan Verification
+- Load `self-verification` and run Critical Challenge on the plan before executing the verdict pass.
+- Load at most one methodology skill per phase unless the packet basis materially requires more.
+### 3. Inspect Intent And Governing Expectations
+- Check whether the output answers what was asked and whether scope or deliverable shape drifted.
+- Check compliance with AGENTS, project rules, and active workflow requirements.
+### 4. Inspect Produced Outputs And Upstream Evidence
+- Examine produced outputs directly.
+- Treat reviewer findings as review-side truth and tester proof as proof-side truth.
+- When the validator packet includes only a discovery/setup objective rather than a frozen exact tool, keep verdict work bounded to confirming whether the discovered tool path satisfies the decisive acceptance surface; do not widen into general environment management.
+- Preserve upstream lane truth monotonically. If review or proof is `hold`, `blocked`, `mismatched`, `missing`, or `partial`, do not strengthen that into PASS or `matched` without fresh stronger evidence on that same surface.
+- Contradictory upstream signals are a `HOLD` surface until explicitly reconciled.
+### 5. Requirement-To-Evidence Comparison
+- For each decisive expectation, classify it as:
+  - matched
+  - partially matched
+  - mismatched
+  - blocked
+  - not assessable
+- Keep these classes explicit rather than flattening weak evidence into a soft pass.
+### 6. Final Acceptance Gate
+- `PASS`: all decisive expectations met, no blocking findings, evidence sufficient.
+- `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, or missing required workflow basis.
+- `FAIL`: fundamental mismatch on the decisive acceptance surface.
+- If user-facing acceptance depends on launch path, core completion path, interaction coverage, or burden contract, PASS requires those surfaces to be explicitly reconciled, not merely implied.
+- For executable interactive web/UI deliverables, PASS is prohibited without browser-surface proof on the real user interaction inventory. Render-only, API-only, or server-only evidence does not close that gap.
+- For human-consumed documents or runtime-bearing artifacts, PASS is prohibited without decisive evidence on the actual reader/runtime surface when that is where usefulness is experienced.
+### 7. Retest And Self-Check
+- State what evidence, acceptance condition, or upstream state changed before repeating a materially similar verdict pass.
+- Do not exceed 3 materially similar verdict passes without escalation or `hold|blocker`.
+- Load `self-verification` and run the full procedure before any completion-style handoff.
+### 8. Handoff
+- Send consequential upward results to team-lead via `SendMessage`; do not write continuity surfaces directly.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/reference.md`.
+- Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane recommendation.
+- Do not rewrite the global route, proof gathering, review closure, or staffing shape from inside validation. If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker` instead of ordinary completion.
+- Keep validator-specific reconciliation and proof-match fields explicit and truthful; `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.
+- When the verdict depends on an executed user surface, keep the decisive proof method explicit. Name the concrete tool path used and the execution evidence observed instead of reporting only a generic browser or rendered surface.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- Wait for lifecycle direction after handoff.
+- See `reference.md` for validator-specific handoff detail.
 
 ## Blocked Validation
-- Missing review/test evidence: HOLD + request lane.
-- Contradictory upstream: state contradiction + resolution owner.
-- Environmental blocker: report honestly as environmental.
+- Missing review or test evidence: `HOLD` plus exact missing owner.
+- Contradictory upstream evidence: `HOLD` plus exact contradiction and resolution owner.
+- Environmental blocker: report it as environmental, not as soft PASS.
+- Missing decisive evidence: `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
 
 ## Active Communication Protocol
-
-- Use `SendMessage` for mandatory handoff delivery and late-turn continuity reporting. Ordinary continuity or status notes may stay free-form. Consequential `handoff|completion|hold` must use the block above, including `REQUESTED-LIFECYCLE`. Passive output availability and silent turn exhaustion are failures; when turn budget is nearly exhausted, report current progress, preserved state, incomplete surfaces, and successor needs explicitly.
+- `dispatch-ack` first on fresh assignment receipt.
+- Use the minimal receipt spine from `.claude/skills/task-execution/reference.md` when those fields are available.
+- `dispatch-ack` is receipt only. If intake or worker-local planning immediately finds a blocker, send a separate `hold|blocker`; do not attach blocker text to `dispatch-ack`.
+- `control-ack` only for structured control receipt.
+- `status` for bounded progress only.
+- `scope-pressure` for unsafe packet or staffing shape.
+- `hold|blocker` for blocked verdict basis or missing decisive evidence.
+- When emitting the blocked class, use the exact literal `MESSAGE-CLASS: hold|blocker`.
+- `handoff|completion` only for converged lane-owned output.
+- Follow `.claude/skills/task-execution/reference.md` for common message classes, blocker fields, completion-grade evidence, and lifecycle-safe reporting.

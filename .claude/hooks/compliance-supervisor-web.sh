@@ -67,7 +67,7 @@ case "$SENDER_ROLE" in
     emit_deny "Main session must not perform direct web research. Delegate external evidence gathering to researcher so the evidence packet, contradiction work, and cross-check status stay explicit."
     exit 0
     ;;
-  developer|reviewer|tester|validator|int-op|unknown|unknown-agent)
+  developer|reviewer|tester|validator|external-tool-bridge|unknown|unknown-agent)
     emit_deny "This lane must not perform direct web research. Route external evidence gathering through researcher so the evidence packet, contradiction work, and cross-check status stay explicit."
     exit 0
     ;;
