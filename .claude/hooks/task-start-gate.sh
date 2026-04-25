@@ -754,6 +754,66 @@ bash_command_is_read_only_context() {
   [[ "$saw_segment" == "1" ]]
 }
 
+# Carve-out for routine user-authorized git workflow.
+# CLAUDE.md `[CHANNEL]` (lightest truthful channel) + team-lead.md Git Safety
+# Protocol enumerate destructive git as the actual risk surface; routine
+# add/commit/push/pull/fetch is reviewable via diff before push. Forcing
+# work-planning + self-verification preflight on routine git is over-protection
+# (~53KB context) without matching doctrine. Destructive flags and destructive
+# subcommands fall outside this carve-out and remain gated.
+git_segment_is_safe_workflow() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+
+  local stripped
+  stripped="$(printf '%s' "$subcmd" | sed -E "s/'[^']*'/ /g; s/\"[^\"]*\"/ /g")"
+
+  printf '%s' "$stripped" | grep -Eq '^[[:space:]]*git([[:space:]]+-C[[:space:]]+[^[:space:]]+)?[[:space:]]+' || return 1
+
+  if printf '%s' "$stripped" | grep -Eq '(^|[[:space:]])(--force|--force-with-lease|-f|--no-verify|--no-gpg-sign|--interactive|--hard|--mixed|--soft|--amend)([[:space:]]|=|$)'; then
+    return 1
+  fi
+
+  if printf '%s' "$stripped" | grep -Eq '(^|[[:space:]])-i([[:space:]]|$)'; then
+    return 1
+  fi
+
+  if printf '%s' "$stripped" | grep -Eq '(^|[[:space:]])git([[:space:]]+-C[[:space:]]+[^[:space:]]+)?[[:space:]]+(add|commit|push|pull|fetch)([[:space:]]|$)'; then
+    return 0
+  fi
+
+  return 1
+}
+
+bash_command_is_safe_git_workflow() {
+  local command_text="${1-}"
+  local sanitized=""
+  local subcmd=""
+  local saw_safe_git="0"
+
+  [[ -n "$command_text" ]] || return 1
+
+  sanitized="$(printf '%s' "$command_text" | sed '/^[[:space:]]*#/d')"
+  sanitized="$(strip_bash_read_only_null_redirections "$sanitized")"
+  [[ -n "$(printf '%s' "$sanitized" | tr -d '[:space:]')" ]] || return 1
+
+  while IFS= read -r subcmd; do
+    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
+    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
+    [[ -z "$subcmd" ]] && continue
+    if git_segment_is_safe_workflow "$subcmd"; then
+      saw_safe_git="1"
+      continue
+    fi
+    if bootstrap_bash_segment_is_read_only "$subcmd"; then
+      continue
+    fi
+    return 1
+  done < <(split_bootstrap_bash_segments "$sanitized")
+
+  [[ "$saw_safe_git" == "1" ]]
+}
+
 boot_infra_tool_allowed() {
   local tool_name="${1:-}"
   local command="${2:-}"
@@ -867,6 +927,9 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if lead_sendmessage_is_monitoring_probe; then
+    exit 0
+  fi
+  if [[ "$TOOL_NAME" == "Bash" ]] && bash_command_is_safe_git_workflow "$COMMAND"; then
     exit 0
   fi
   if [[ "$TOOL_NAME" == "Bash" ]] && [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]] && ! bash_command_is_read_only_context "$COMMAND"; then
