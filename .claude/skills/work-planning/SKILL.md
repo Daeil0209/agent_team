@@ -116,6 +116,7 @@ Keep explicit:
 - worker-boundary transfer happens later through `task-execution` packet translation, not by forwarding the full internal plan block
 ## Internal Planning Record
 After planning, freeze the internal plan block before the first consequential action after this skill load.
+This block is **internal carry-forward only**. Do NOT emit this block, its fields, or any labelled freeze line (e.g., `PROJECT-TIER:`, `ROUTING-SIGNAL:`, `NEXT-CONSEQUENTIAL-ACTION:`, `LEAD-LOCAL-WORK-ITEMS:`, `AGENT-MAP:`) inside the user-facing assistant message — including in audit reports, completion summaries, or compliance-justification turns. Persist to `.claude/session-state.md` (or the active continuity surface); surface only what `Progress Update Surface` allows.
 ```
 PROJECT-TIER:
 ACTIVE-REQUEST-TIER:
@@ -152,7 +153,8 @@ If a progress update is actually needed before execution:
 - use plain prose only
 - keep it to one or two sentences
 - mention only the current decision, next action, or blocker
-- do not expose planning fields, packet labels, or the internal plan block
+- do not expose planning fields, packet labels, the literal `Internal Planning Record` block, or any labelled freeze line (e.g., `PROJECT-TIER:`, `ROUTING-SIGNAL:`, `NEXT-CONSEQUENTIAL-ACTION:`, `LEAD-LOCAL-WORK-ITEMS:`, `AGENT-MAP:`)
+- exposing the internal plan to defend a procedural decision is itself a procedure violation, not transparency; the user's verification basis is the verified result and concise basis prose, not the raw plan block
 ## Post-Planning Gate
 After planning:
 1. Open exactly one next owner.

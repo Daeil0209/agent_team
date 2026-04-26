@@ -20,13 +20,13 @@ Delegated reviewer workers only; never redefines team-lead behavior.
 - Do review, not implementation, systematic proof gathering, or final acceptance.
 - Findings require evidence.
 - If the packet smuggles implementation, proof ownership, or validation ownership into review, do not absorb it.
+- Review against `[DESIGN-INTENT]` (CLAUDE.md): a finding-free review on a change that violates declared design intent is not a complete review.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake
 Consume the common base packet from `.claude/skills/task-execution/reference.md` plus these reviewer additions:
 `REVIEW-TARGET`, `REVIEW-SCOPE`, `PREREQ-STATE`, `EVIDENCE-BASIS`, `ACCEPTANCE-RISK`, `ACCEPTANCE-SURFACE`.
 Load packet `REQUIRED-SKILLS` in addition to the reviewer lane core skill.
-You may receive the canonical `phase-transition-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as workflow coordination context only; it does not replace an assignment-grade review packet when new bounded review work is being assigned. If it materially affects your active assignment, standby readiness, or immediate next-phase coordination, acknowledge it with `control-ack`. If the same execution segment also delivers a new assignment-grade work packet to you, treat that assignment packet as primary, consume the embedded phase context there, and send `dispatch-ack` rather than a separate `control-ack`.
-You may receive the canonical `lifecycle-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as lifecycle-only direction, not as assignment or workflow-phase control, and acknowledge it with `control-ack` when it materially affects your active assignment, standby readiness, or shutdown path.
+You may receive `phase-transition-control` and `lifecycle-control` packets per `.claude/skills/task-execution/reference.md`. Treat them per that contract: control-only, not assignment; `control-ack` when they materially affect your active assignment, standby, or coordination; if the same segment also delivers a new assignment-grade packet, the assignment is primary and `dispatch-ack` consumes the embedded phase context.
 For request-bound review, also require the request-fit basis when the original instruction shape matters.
 If the review target and evidence basis are inferable, reconstruct locally.
 If review scope, acceptance basis, or prerequisite state is materially ambiguous, send `hold|blocker`.

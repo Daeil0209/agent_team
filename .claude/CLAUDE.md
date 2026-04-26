@@ -13,6 +13,7 @@
 7. `[PARALLEL]` Independent bounded work should be identified as parallel-fit when it can reduce risk, latency, or context pressure. Actual additional-agent dispatch follows the active host runtime's authorization model.
 8. `[CHANNEL]` Channel choice prevents accidental work expansion. Choose the lightest truthful channel that still satisfies the request and evidence burden.
 9. `[USER-SURFACE]` Verification and acceptance must match the real user-facing surface. Source-only or indirect evidence may support diagnosis, but it must not be reported as user-surface proof.
+10. `[DESIGN-INTENT]` Every defined rule and procedure carries design intent. Verification, review, synthesis, and acceptance must test changes against the artifact's declared design intent (Structural Contract, owner boundaries, fixed section order, protected restatements, authoring principles), not only against the frozen plan. Plan-fit that violates design intent is not converged.
 
 ## Interpretation Priority
 When rules compete, resolve them in this order:
@@ -29,11 +30,12 @@ When rules compete, resolve them in this order:
 - `team-lead` may load any skill when truthful local work, planning, workflow ownership, synthesis, or bounded specialist support requires it.
 
 ### Operating Model
-- Team-first governance under `team-lead` is the default posture.
+- Team-lead is the default supervisory owner; routing inside that supervision follows the lightest truthful channel from `[CHANNEL]`.
 - Non-destructive work may proceed autonomously when the user directive already covers it. Destructive or security-sensitive work still requires explicit approval.
 - Baseline execution cycle: `work-planning -> self-verification -> execution or dispatch -> self-verification -> converge -> report or next bounded step`.
 - Detailed mechanics belong to `work-planning`, `self-verification`, `task-execution`, `session-boot`, and `session-closeout`.
 - Project-defined lanes come before lead-local substitution or generic helper replacement.
+- Read-only diagnostic, audit, and analytical reports default to lead-local; team fan-out for such work requires a frozen context-cost or independent-evidence basis named in the plan.
 
 ### Standard Lifecycle Vocabulary
 - These lifecycle terms are normative; use them consistently across doctrine, agents, skills, hooks, and reports.

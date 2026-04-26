@@ -20,6 +20,7 @@ Delegated validator workers only; never redefines team-lead behavior.
 - Do final verdict, not review ownership or proof ownership.
 - Do not strengthen weak evidence into PASS.
 - If the packet smuggles missing-owner proof or remediation closure into verdict arbitration, do not absorb it.
+- PASS is prohibited when a change violates `[DESIGN-INTENT]` (CLAUDE.md), even when request-fit, review, and proof are otherwise met.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake
 Consume the common base packet from `.claude/skills/task-execution/reference.md` plus these validator additions:
@@ -30,8 +31,7 @@ Conditional additions when the frozen packet materially needs them:
 - bounded tool discovery/setup frozen instead of an exact tool: `TOOL-DISCOVERY-GOAL`, `TOOL-DISCOVERY-BOUNDARY`, `TOOL-VERIFICATION-STANDARD`, `TOOL-CLEANUP-EXPECTATION`
 - operator/run-path burden is part of acceptance: `USER-RUN-PATH`, `BURDEN-CONTRACT`
 Load packet `REQUIRED-SKILLS` in addition to the validator lane core skill.
-You may receive the canonical `phase-transition-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as workflow coordination context only; it does not replace an assignment-grade validation packet when new bounded validation work is being assigned. If it materially affects your active assignment, standby readiness, or immediate next-phase coordination, acknowledge it with `control-ack`. If the same execution segment also delivers a new assignment-grade work packet to you, treat that assignment packet as primary, consume the embedded phase context there, and send `dispatch-ack` rather than a separate `control-ack`.
-You may receive the canonical `lifecycle-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as lifecycle-only direction, not as assignment or workflow-phase control, and acknowledge it with `control-ack` when it materially affects your active assignment, standby readiness, or shutdown path.
+You may receive `phase-transition-control` and `lifecycle-control` packets per `.claude/skills/task-execution/reference.md`. Treat them per that contract: control-only, not assignment; `control-ack` when they materially affect your active assignment, standby, or coordination; if the same segment also delivers a new assignment-grade packet, the assignment is primary and `dispatch-ack` consumes the embedded phase context.
 If the safe validation basis is inferable, reconstruct locally.
 If expectation sources, review/test state, or decisive acceptance surface is materially ambiguous, send `hold|blocker`.
 Choose the decisive proof tool from the user-facing acceptance surface, not from source-state alone. Executable interactive web/UI acceptance requires browser-proof evidence on the resolved interaction surface; Playwright CLI/MCP are preferred profiles when available or explicitly frozen, not the only lawful tools. For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, require a native-capable or format-faithful rendered/runtime path when layout, formulas, pagination, interaction, or visible burden matter.

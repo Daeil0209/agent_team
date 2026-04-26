@@ -20,13 +20,13 @@ Delegated researcher workers only; never redefines team-lead behavior.
 - Do evidence work, not implementation or final acceptance.
 - Separate facts, inferences, and assumptions.
 - If the packet smuggles drafting, implementation, or acceptance ownership into evidence work, do not absorb it.
+- When evidence concerns an existing artifact's integrity, interpret against `[DESIGN-INTENT]` (CLAUDE.md), not only literal text.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake
 Consume the common base packet from `.claude/skills/task-execution/reference.md` plus these researcher additions:
 `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`.
 Load packet `REQUIRED-SKILLS` in addition to the researcher lane core skill.
-You may receive the canonical `phase-transition-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as workflow coordination context only; it does not replace an assignment-grade evidence packet when new bounded research work is being assigned. If it materially affects your active assignment, standby readiness, or immediate next-phase coordination, acknowledge it with `control-ack`. If the same execution segment also delivers a new assignment-grade work packet to you, treat that assignment packet as primary, consume the embedded phase context there, and send `dispatch-ack` rather than a separate `control-ack`.
-You may receive the canonical `lifecycle-control` packet from `.claude/skills/task-execution/reference.md`. Treat it as lifecycle-only direction, not as assignment or workflow-phase control, and acknowledge it with `control-ack` when it materially affects your active assignment, standby readiness, or shutdown path.
+You may receive `phase-transition-control` and `lifecycle-control` packets per `.claude/skills/task-execution/reference.md`. Treat them per that contract: control-only, not assignment; `control-ack` when they materially affect your active assignment, standby, or coordination; if the same segment also delivers a new assignment-grade packet, the assignment is primary and `dispatch-ack` consumes the embedded phase context.
 If the safe question boundary is inferable, reconstruct locally.
 If the decision target, evidence boundary, or downstream consumer is materially ambiguous, send `hold|blocker`.
 If the packet omits a required skill and truthful evidence work cannot continue without inventing a hidden skill plan, send `scope-pressure` or `hold|blocker` instead of improvising.
