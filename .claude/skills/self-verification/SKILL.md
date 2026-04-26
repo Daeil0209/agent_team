@@ -146,7 +146,7 @@ For lead-local work:
 - `SV-PLAN` must expose `SKILL-BASIS-STATUS` whenever local or worker-facing skill refinement was in scope
 - `SV-RESULT` must expose `VERIFIED-SURFACE`, `VERIFICATION-BASIS`, and `OPEN-SURFACES`
 ## Verification Output Format
-This template is **internal handoff only**. Do NOT emit this block, its fields, or any line from this format inside the user-facing assistant message. Persist to `.claude/session-state.md` (or the active continuity surface) and surface only the concise verification outcome required by `Reporting Principle` when basis is needed. Displaying this format without an explicit user request to "show the internal verification trace" is a procedure violation, not transparency.
+This template is **internal handoff only**. Do NOT emit this block, its fields, or any line from this format inside the user-facing assistant message. Hold it in internal context for the duration of the current turn — do not write it to a continuity file by habit. Surface only the concise verification outcome required by `Reporting Principle` when basis is needed. Displaying this format without an explicit user request to "show the internal verification trace" is a procedure violation, not transparency.
 ```
 SELF-VERIFICATION:
 MODE: SV-PLAN | SV-RESULT

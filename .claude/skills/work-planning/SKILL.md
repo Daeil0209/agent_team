@@ -116,7 +116,7 @@ Keep explicit:
 - worker-boundary transfer happens later through `task-execution` packet translation, not by forwarding the full internal plan block
 ## Internal Planning Record
 After planning, freeze the internal plan block before the first consequential action after this skill load.
-This block is **internal carry-forward only**. Do NOT emit this block, its fields, or any labelled freeze line (e.g., `PROJECT-TIER:`, `ROUTING-SIGNAL:`, `NEXT-CONSEQUENTIAL-ACTION:`, `LEAD-LOCAL-WORK-ITEMS:`, `AGENT-MAP:`) inside the user-facing assistant message — including in audit reports, completion summaries, or compliance-justification turns. Persist to `.claude/session-state.md` (or the active continuity surface); surface only what `Progress Update Surface` allows.
+This block is **internal carry-forward only**. Do NOT emit this block, its fields, or any labelled freeze line (e.g., `PROJECT-TIER:`, `ROUTING-SIGNAL:`, `NEXT-CONSEQUENTIAL-ACTION:`, `LEAD-LOCAL-WORK-ITEMS:`, `AGENT-MAP:`) inside the user-facing assistant message — including in audit reports, completion summaries, or compliance-justification turns. Hold it in internal context for the duration of the current turn — do not write it to a continuity file by habit. Surface only what `Progress Update Surface` allows.
 ```
 PROJECT-TIER:
 ACTIVE-REQUEST-TIER:

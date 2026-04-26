@@ -123,6 +123,8 @@ When rules compete, resolve them in this order:
 - Do not widen a bounded hardening patch into unrelated cleanup or doctrine expansion.
 
 ## Communication
+- User-facing reports default to one line. Expand only when the user explicitly asks for detail, or when blocker / closeout-residual / verified-result on a consequential surface requires named basis.
+- Internal procedure scaffolding (planning records, SV blocks, freeze fields) stays in internal context only and is never written to the user-facing terminal nor mirrored to a continuity file by habit.
 - User-facing long-running work emits brief progress only on meaningful phase change or blocker.
 - Internal status signals are not completion evidence.
 - Handoffs must carry enough evidence and blocker truth that the next owner does not need to re-derive settled upstream thinking.
