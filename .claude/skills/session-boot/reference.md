@@ -10,7 +10,7 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 - `Boot Sequence` is only for explicit runtime entry.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to decide runtime entry.
 - No production fan-out before boot closes.
-- Prefer current-session authorities first: `./.runtime/procedure-state.json`, `./.claude/session-state.md`, `SessionStart` snapshot lines. Home-runtime continuity is fallback only.
+- Prefer current-session authorities first: `./.runtime/procedure-state.json`, `SessionStart` snapshot lines. Home-runtime continuity is fallback only. Per CLAUDE.md `## Communication`, internal procedure scaffolding stays in internal context and is not mirrored to a continuity file by habit; treat any pre-existing `./.claude/session-state.md` as advisory snapshot only.
 - Fresh-task isolation stays active during startup. Inherited continuity may reveal blockers or residue, but it does not reopen prior goals by habit.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
 
@@ -83,8 +83,7 @@ Rules:
 - Orphan cleanup does not create closeout authority or bypass message-first lifecycle decisions for the current live session.
 
 ## Procedure-State Schema
-Canonical structured runtime truth lives in `./.runtime/procedure-state.json`.
-Continuity mirror lives in `./.claude/session-state.md`.
+Canonical structured runtime truth lives in `./.runtime/procedure-state.json`. Internal procedure scaffolding stays in internal context for the current cycle (per CLAUDE.md `## Communication`); a `./.claude/session-state.md` snapshot, when present, is advisory only.
 
 Minimum fields that must stay semantically stable:
 - `workspaceRoot`

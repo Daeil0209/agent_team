@@ -35,6 +35,12 @@ WORKER_NAME=""
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
+# Session-scoped "WP+SV ever converged" marker. Set once after the first
+# SV-after-WP load in a session; survives reset_planning_markers_for_session
+# (which user-prompt-gate calls every fresh turn). Consumed by task-start-gate
+# H-3 carve-out so continuation Edits across user turns don't pay the
+# fresh WP+SV reload cost. Per CLAUDE.md `[BLOCK-AS-DEFECT]` discipline.
+SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 
 if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
@@ -69,7 +75,12 @@ case "$SKILL_NAME" in
     if [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]]; then
       # First SV after WP = Phase 1 load marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_PLAN_MARKER"
+      # Session-scoped converged marker — set on first SV-after-WP and
+      # persisted across user-prompt-gate's per-turn marker reset, so
+      # subsequent file-edit Edits in the same session don't pay the
+      # reload cost. Idempotent: setting again is a no-op data-wise.
       if [[ -z "$WORKER_NAME" ]]; then
+        date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
         clear_lead_planning_required "$SESSION_ID"
       fi
     elif [[ -f "$WP_MARKER" ]]; then

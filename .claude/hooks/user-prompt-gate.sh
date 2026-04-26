@@ -590,7 +590,7 @@ esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-preflight. First classify whether this is an SV-only audit: if the turn only asks to audit or self-verify an already-frozen synthesized conclusion, the first skill is Skill('self-verification'); do not re-open work-planning unless scope changes or execution resumes. If an SV-only audit later pivots into execution, dispatch, runtime setup, or mutation, pivot immediately to Skill('work-planning') -> Skill('self-verification') before Agent, TaskCreate, assignment-grade SendMessage, or mutable Bash. Skill('task-execution') may load during that pivot for routing/tier classification, but TeamCreate still waits for observed current-turn work-planning; neither replaces the current-turn dispatch gate. Read-only inspection is evidence gathering only; it does not authorize defect classification, severity/priority judgment, closure-grade audit findings, final user-facing diagnosis, reporting, dispatch, or mutation. Already-reviewed changes may use work-planning only to freeze the current-turn mutation scope. Before observed TeamCreate/Agent/assignment evidence, describe only the next action, not dispatch as already done."
+  PLANNING_CONTEXT="CTX: fresh-turn-preflight. Apply Priority 0 → work-planning → SV-PLAN before consequential action; SV-only audit may start with self-verification when scope is unchanged. Full chain: agents/team-lead.md Priority 0 + RPA-1/RPA-4."
   RECOVERY_CONTEXT="$(status_runtime_recovery_context "$USER_PROMPT")"
 fi
 

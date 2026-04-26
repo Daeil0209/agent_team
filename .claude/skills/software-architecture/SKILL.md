@@ -59,10 +59,7 @@ Expert behavior means the software can be built without discovering its core con
 - define failure/recovery semantics on every success-path surface
 - operator-facing tools need first-run shell, resume path, and finish/export destination
 - prefer label-driven or header-driven extraction for sheet-like inputs when that contract is inferable
-- **L-04 Module Regression Prohibition**: Existing clean module separation (e.g., data_loader.py, config.py) must be preserved or explicitly justified. Inlining into a monolith = regression; burden of proof on merger proposal.
-- **L-08 Resource Acquisition as Architecture Contract**: Pre-allocation vs. dynamic acquisition is an architecture contract on paths with timing/ordering/consistency invariants. Unresolved allocation strategy on hard-invariant paths = architecture gap.
-- **L-09 Latency Budget Decomposition**: Explicit latency budget decomposition across module boundaries required when timing is an acceptance criterion. No decomposed budget on timing-critical paths = architecture gap.
-- **L-10 Multi-Dimension Trade-Off Documentation**: Competing metrics must be identified and chosen balance documented. Single-metric optimization with unmeasured acceptance dimensions = defect; deferred measurement requires explicit risk statement.
+- For project recurrence-barrier lessons L-04 (Module Regression Prohibition), L-08 (Resource Acquisition as Architecture Contract), L-09 (Latency Budget Decomposition), and L-10 (Multi-Dimension Trade-Off Documentation), see `reference.md` § Project Lessons (Recurrence-Barrier Catalog).
 > For Dependency-And-Field Architecture Extension, see reference.md
 > For Coupled-Core Architecture Extension, see reference.md
 > For Operational Management Entity Architecture Extension, see reference.md
@@ -85,7 +82,7 @@ Apply the active `Self-Growth Sequence`. On governance or skill patch broadcast,
 - Require one canonical app root, one canonical launcher path, one authoritative state path; shadow app trees or duplicate launch targets = architecture defects.
 - For complex workflow tool modularization, broad single-file UI ownership = `HOLD` until surface boundary split is explicit.
 - Do not treat view copy defending design choices as acceptable behavior; if architecture needs that prose, shell and state model are still weak.
-- **L-05 Launcher Robustness Preservation**: Launcher reliability features are PRESERVED ASSETs. Required contract: (1) readiness check method, (2) port availability verification, (3) browser-open trigger conditions, (4) shutdown/cleanup sequence, (5) error recovery path. Opening browser before server readiness = `launcher_race_condition`.
+- For lesson L-05 (Launcher Robustness Preservation), see `reference.md` § Project Lessons (Recurrence-Barrier Catalog).
 ## HOLD Trigger Summary
 - Architecture not credible, boundaries blurred, or state authority incoherent
 - Derived state treated as free-form editable or lifecycle/ingestion architecture left implicit

@@ -88,6 +88,7 @@ Dispatch law:
 - lifecycle-only `SendMessage` is not assignment and does not replace dispatch
 - worker-facing `REQUIRED-SKILLS` is mandatory on every assignment-grade packet
 - `task-execution` may narrow or phase-specialize `REQUIRED-SKILLS` only when the active workflow owner already resolved that phase-local skill basis; otherwise missing or contradictory skill basis reopens the previous freeze owner
+- bounded partial-parallel-failure carve-out: when N parallel dispatches are attempted and M succeed while K fail at receipt time (Agent spawn failure, ack timeout pre-start, packet rejection), the failed K may be retried or reassigned to surviving M without reopening `work-planning` only when ALL hold: (a) `AGENT-MAP`, `PARALLEL-GROUPS` independence, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof separation are unchanged; (b) the failure happened BEFORE worker-start evidence on the failed K; (c) surviving M can truthfully cover failed K's surface without packet shape change. Otherwise reopen `work-planning` for redistribution per CLAUDE.md `Communication And Reporting Law` single-worker-collapse rule.
 
 For compact routing, treat these as the only valid next actions:
 - `TeamCreate`

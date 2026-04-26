@@ -80,3 +80,14 @@ Use `HOLD` when: phase preconditions missing, derived constraints treated as inp
 - Generate only semantically identical shared blocks from one owner fragment source; commit `SKILL.md` as static directly readable artifact; runtime assembly prohibited
 - Keep authority boundaries, domain defect taxonomies, and role-owned judgment rules owner-local; review generated diff as real contract surface before promotion
 Use `HOLD` when a maintainability refactor hides the reader-facing skill, removes owner-local safety text, or templates away domain-specific judgment.
+
+## Project Lessons (Recurrence-Barrier Catalog)
+Numbered project lessons captured from past incident hardening. Each lesson is a recurrence-barrier installed on the architecture surface; SKILL.md references this catalog by `L-NN` ID.
+
+- **L-04 Module Regression Prohibition**: Existing clean module separation (e.g., `data_loader.py`, `config.py`) must be preserved or explicitly justified. Inlining into a monolith = regression; burden of proof on the merger proposal.
+- **L-05 Launcher Robustness Preservation**: Launcher reliability features are PRESERVED ASSETs. Required contract: (1) readiness check method, (2) port availability verification, (3) browser-open trigger conditions, (4) shutdown/cleanup sequence, (5) error recovery path. Opening browser before server readiness = `launcher_race_condition`.
+- **L-08 Resource Acquisition as Architecture Contract**: Pre-allocation vs. dynamic acquisition is an architecture contract on paths with timing/ordering/consistency invariants. Unresolved allocation strategy on hard-invariant paths = architecture gap.
+- **L-09 Latency Budget Decomposition**: Explicit latency budget decomposition across module boundaries required when timing is an acceptance criterion. No decomposed budget on timing-critical paths = architecture gap.
+- **L-10 Multi-Dimension Trade-Off Documentation**: Competing metrics must be identified and chosen balance documented. Single-metric optimization with unmeasured acceptance dimensions = defect; deferred measurement requires explicit risk statement.
+
+Note: L-07 (Entity ID Stability Contract) lives in the Coupled-Core Architecture Extension above because it is intrinsic to that extension's many-to-many modeling.

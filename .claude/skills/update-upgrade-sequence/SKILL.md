@@ -2,6 +2,7 @@
 name: update-upgrade-sequence
 description: Update and upgrade procedures for doctrine, agents, skills, settings, hooks, and team-system assets.
 user-invocable: false
+PRIMARY-OWNER: team-lead
 ---
 
 ## Activation
@@ -16,23 +17,14 @@ The `Update/Upgrade Sequence` applies when doctrine, agents, skills, settings, h
 
 ### Required checks
 
-1. Confirm the target artifact owner.
-2. Perform semantic overlap review before adding new rules or procedures.
-3. Prefer `replace`, `trim`, or `re-home` over append-only accumulation.
-4. Preserve migration traceability.
-   The source meaning, destination owner, and verification basis must remain inspectable.
-5. Perform zero-information-loss confirmation for moved, merged, compressed, or re-homed operational meaning.
-   The before/after comparison must show where each unique rule meaning now lives.
-6. Where a runtime setting or threshold must remain configurable, keep one owner for the value and make all other documents or prompts reference that owner instead of duplicating the literal value.
-7. When a hook still enforces a contract, keep that contract understandable through owner-document prose and human-readable deny reasons rather than requiring a large central code table.
-8. Treat intentional local restatements of role boundaries, lane contracts, and acceptance gates as protected meaning, not cosmetic duplication.
-   If a rule is repeated so a file remains safe to read in isolation, do not remove it unless an equivalent owner-local contract still exists after the change.
-9. When optimization, compression, rewrite, or self-evolution is the stated reason for the change, explicitly classify each repeated governance sentence as either protected common contract or safely removable duplication before trimming it.
-10. Preserve approved structural hierarchies and connection mappings when the target document already uses them.
-   Role documents must preserve their declared role/procedure/reference hierarchy and keep required mapping lines intact. Skill documents must preserve their fixed structural contract and keep reference detail attached to an owning workflow or sequence block.
-11. New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require explicit governance review before execution.
-12. Run the full `Change Sequence`.
-13. Record any remaining migration gap explicitly rather than assuming the update is complete.
+Update/upgrade work runs the canonical `Change Sequence` from `.claude/skills/self-growth-sequence/SKILL.md` § Change Sequence, which already covers: target-owner confirmation, semantic-overlap review, prefer-replace/trim/re-home over append, migration-traceability and zero-information-loss confirmation, hook-contract human readability, protected local-restatement preservation, and optimization-vs-protected-content classification. Do not duplicate those items here.
+
+Update/upgrade adds these checks specific to its own domain:
+
+1. Where a runtime setting or threshold must remain configurable, keep one owner for the value and make all other documents or prompts reference that owner instead of duplicating the literal value.
+2. Preserve approved structural hierarchies and connection mappings when the target document already uses them. Role documents must preserve their declared role/procedure/reference hierarchy and keep required mapping lines intact. Skill documents must preserve their fixed structural contract and keep reference detail attached to an owning workflow or sequence block.
+3. New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require explicit governance review before execution.
+4. Record any remaining migration gap explicitly rather than assuming the update is complete.
 
 ### Skill Introduction Rules
 

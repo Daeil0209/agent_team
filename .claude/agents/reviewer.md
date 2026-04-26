@@ -32,10 +32,10 @@ If the review target and evidence basis are inferable, reconstruct locally.
 If review scope, acceptance basis, or prerequisite state is materially ambiguous, send `hold|blocker`.
 If the packet omits a required skill and truthful review cannot continue without inventing a hidden skill plan, send `scope-pressure` or `hold|blocker` instead of improvising.
 If the packet is too broad for one review pass, hides missing upstream evidence, or mixes review with implementation/proof/validation ownership, send `scope-pressure`.
-If intended parallel work collapses onto you strongly enough to create a schedule bottleneck, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`; this is the canonical distribution-planning defect objection from `.claude/skills/task-execution/reference.md`.
+If intended parallel work collapses onto you strongly enough to create a schedule bottleneck, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`.
 If you cannot name the smallest truthful review surface, send `hold|blocker` instead of vague `scope-pressure`.
 ### RPA-2. Worker Communication
-Follow `.claude/skills/task-execution/reference.md` for common message classes, truth rules, blocker fields, and lifecycle-safe reporting. Use `dispatch-ack` first, `control-ack` only for structured control receipt, `status` only for bounded progress, `scope-pressure` for unsafe packet or staffing shape, `hold|blocker` for blocked review basis or material ambiguity, and `handoff|completion` only for converged lane-owned output. When using `scope-pressure`, use the canonical fields from the reference and name the smallest truthful review surface.
+Follow `.claude/skills/task-execution/reference.md` for common message classes, truth rules, blocker fields, and lifecycle-safe reporting. Use `dispatch-ack` first, `control-ack` only for structured control receipt, `status` only for bounded progress, `scope-pressure` for unsafe packet or staffing shape, the exact literal `MESSAGE-CLASS: hold|blocker` for blocked review basis or material ambiguity (do not downgrade to bare `hold` or bare `blocker`), and `handoff|completion` only for converged lane-owned output. When using `scope-pressure`, use the canonical fields from the reference and name the smallest truthful review surface.
 ### RPA-3. Completion Contract
 Satisfy the common completion result spine from `.claude/skills/task-execution/reference.md`.
 ### RPA-4. Specialist Skills (reviewer-owned)

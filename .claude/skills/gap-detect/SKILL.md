@@ -27,12 +27,7 @@ This skill is loaded alongside `dev-workflow` when:
 - Phase 4 (Analysis) is active — reviewer and tester need gap detection methodology
 - Phase 5 (Iteration) is active — team-lead needs iteration cycle protocol
 
-team-lead may also direct loading via SKILL-AUTH.
-
-Backup authorization (team-lead directed):
-```
-SKILL-AUTH: lane=team-lead; surface=gap-detection|iteration-protocol|yagni-review; skill=gap-detect
-```
+Loading uses the canonical packet `REQUIRED-SKILLS` mechanism per `.claude/skills/task-execution/reference.md`; specialist skills do not carry parallel authorization fields.
 
 ---
 
@@ -122,32 +117,17 @@ reviewer classifies each gap found:
 
 ---
 
-**Severity escalation rule**: When a gap is classified as Blocking at T0 or T1 severity, escalate immediately to the incident-response workflow for dedicated incident handling. T0/T1 gaps must not be treated as normal iteration candidates — they require the incident-response classification, impact analysis, and fix proposal process before iteration resumes.
+**Severity escalation rule**: When a gap is classified as Blocking at T0 or T1 severity (per `.claude/skills/incident-response/SKILL.md`), escalate immediately to the incident-response workflow for dedicated incident handling. T0/T1 gaps must not be treated as normal iteration candidates — they require the incident-response classification, impact analysis, and fix proposal process before iteration resumes.
 
 ## Iteration Protocol
 
-**Cycle structure** (must be followed in order, no shortcuts):
+`dev-workflow` Phase 5 owns iteration cycle structure, cycle counter, and cycle limits (see `.claude/skills/dev-workflow/SKILL.md` Phase 5 and `.claude/skills/dev-workflow/reference.md`). gap-detect contributes only the gap re-classification step within each cycle and the gap-state input to any cycle-limit escalation; it does not author parallel cycle policy or parallel message vocabulary.
 
-```
-developer fixes → reviewer quick-check (blocking defects only) → tester re-verifies → team-lead assesses
-```
+**Per-cycle gap-detect contribution** (after developer fix, before tester re-verify):
+1. reviewer re-runs the structural / functional / contract checks from `Design-Implementation Gap Detection` scoped to the affected components only.
+2. reviewer re-applies the Gap Classification table from the previous section to remaining or newly-introduced gaps.
+3. Coverage score and blocking-gap count after re-check feed back into `dev-workflow` Phase 5's continue-or-escalate decision; gap-detect does not own that decision.
 
-**Quick-check scope** (reviewer, iteration cycles): blocking defects introduced or unresolved by the fix. Do not run a full review cycle in iteration; save that for Phase 4. The quick-check gate exists to prevent fix-introduced regressions, not to repeat Phase 4 analysis.
+**Iteration-exhaustion escalation input**: when `dev-workflow` Phase 5's cycle limit fires, gap-detect supplies the gap state (remaining blocking gaps with classification, coverage score distribution, optional follow-up classifications). The outbound message uses the canonical `MESSAGE-CLASS: hold|blocker` form per `.claude/skills/task-execution/reference.md`; do not author a parallel message-class format here.
 
-**Re-verify scope** (tester, iteration cycles): affected components only. Full scenario re-run is not required unless the fix scope was broad.
-
-**Cycle counter**: team-lead tracks iteration count. At cycle 4, team-lead proactively flags to the user that one cycle remains before escalation. Do not allow cycle 6 to begin silently.
-
-**Escalation at cycle 5**:
-```
-message-class: hold
-message-priority: high
-work-surface: iteration-exhausted
-ITERATION-STATUS: exhausted (5/5 cycles complete)
-REMAINING-GAPS: [list each blocking gap]
-BLOCKING-COUNT: N
-REQUESTED-GOVERNING-ACTION: user-decision-required
-OPTIONS: reduce-scope | accept-remaining | redesign-component
-```
-
-**No self-certification in iteration**: developer cannot close an iteration cycle without reviewer quick-check. tester cannot declare re-verify complete without running the affected scenarios. team-lead cannot advance to Phase 6 without explicit reports from both reviewer and tester for the final cycle.
+**No self-certification on the gap-classification surface**: a re-classified gap state is not closed by the agent that produced it. reviewer's re-classification feeds tester re-verify and team-lead Phase 5 assessment per the iteration order owned by `dev-workflow` Phase 5.

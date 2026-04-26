@@ -101,7 +101,7 @@ At any satisfied phase boundary, the phase cursor must be resolved in the same e
 
 When team-lead advances to a new phase, send the canonical `phase-transition-control` packet from `.claude/skills/task-execution/reference.md` individually to each affected worker. Affected workers acknowledge with `control-ack`. `phase-transition-control` does not replace assignment-grade work packets or lifecycle control. If the same worker also receives new bounded work in that execution segment, do not send a separate standalone control packet; carry the needed phase context inside the assignment-grade packet and expect the normal `dispatch-ack`.
 
-Record every phase transition in `./.runtime/procedure-state.json` and mirror continuity in `./.claude/session-state.md`. This is bounded checkpoint/continuity state, not production implementation or semantic governance editing.
+Record every phase transition in `./.runtime/procedure-state.json`. This is bounded checkpoint/continuity state, not production implementation or semantic governance editing. Phase-internal procedure scaffolding stays in internal context for the current cycle and is not mirrored to a continuity file by habit (per CLAUDE.md `## Communication`).
 
 ## Related Skills
 - `enterprise-architecture`: Phase 2-4 architecture review when scale or boundary complexity warrants it

@@ -2,8 +2,8 @@
 name: external-tool-bridge
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, and blocked-condition reporting without taking over other roles.
 user-invocable: false
----
 PRIMARY-OWNER: developer
+---
 ## Structural Contract
 - Fixed owner pattern for future skill growth:
   1. `Identity`

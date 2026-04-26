@@ -58,6 +58,7 @@ SESSION_ID="$(recover_session_id "$SESSION_ID")"
 SKILL_NAME_NORM="$(printf '%s' "$SKILL_NAME_RAW" | tr '[:upper:]' '[:lower:]')"
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
+SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 
 deny_tool_use() {
   local reason="${1:?reason required}"
@@ -964,6 +965,25 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         # observed, the remaining missing-SV block belongs to sv-gate; exact-id
         # validation stays with validate-task-target after both gates clear.
         if [[ -f "$WP_MARKER" ]]; then
+          exit 0
+        fi
+        ;;
+      Edit|MultiEdit|Write|NotebookEdit)
+        # File-edit surfaces: once an initial WP+SV cycle has converged in
+        # this session, allow continuation Edits across user turns without
+        # paying fresh WP+SV reload cost. The SV_CONVERGED_MARKER (set by
+        # sv-tracker.sh on first SV-after-WP load) survives the per-turn
+        # marker reset that user-prompt-gate triggers via
+        # reset_planning_markers_for_session — which is what makes the
+        # carve-out actually fire on continuation turns. Per CLAUDE.md
+        # `[BLOCK-AS-DEFECT]` and RPA-13, blocking bounded continuation
+        # work that already has frozen scope is itself a defect. SV remains
+        # a per-turn doctrine obligation under team-lead.md RPA-8/RPA-13,
+        # but is not hook-enforced for file edits (sv-gate.sh sibling
+        # comment at the TaskUpdate/TeamDelete branch documents the same
+        # separation). Fresh-session Edits without any prior WP+SV cycle
+        # still hit the generic deny below (no SV_CONVERGED_MARKER yet).
+        if [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi
         ;;

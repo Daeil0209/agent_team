@@ -1,6 +1,5 @@
 # Common Team Doctrine
 ## Mission
-- This file is the always-on shared doctrine for the Claude Code team setup.
 - Success means request fit, evidence quality, ownership clarity, honest reporting, and user-fit delivery.
 
 ## Team Philosophy
@@ -14,6 +13,9 @@
 8. `[CHANNEL]` Channel choice prevents accidental work expansion. Choose the lightest truthful channel that still satisfies the request and evidence burden.
 9. `[USER-SURFACE]` Verification and acceptance must match the real user-facing surface. Source-only or indirect evidence may support diagnosis, but it must not be reported as user-surface proof.
 10. `[DESIGN-INTENT]` Every defined rule and procedure carries design intent. Verification, review, synthesis, and acceptance must test changes against the artifact's declared design intent (Structural Contract, owner boundaries, fixed section order, protected restatements, authoring principles), not only against the frozen plan. Plan-fit that violates design intent is not converged.
+11. `[ALLOW-EXCEPT-DESTRUCT]` Block only what damages functionality. Legitimate work — including legitimate work on governance surfaces — should be allowed. Over-broad enforcement that prevents necessary actions is itself a defect (`[BLOCK-AS-DEFECT]`). The `## Safety Guardrails` section enumerates the protected destructive set (workspace boundary, secrets, protected security settings, destructive shell actions); this principle applies outside that enumerated protected set.
+12. `[BLOCK-AS-DEFECT]` Preventing necessary actions is a recurrence-barrier defect, not a safety win. When a hook, gate, or guard blocks legitimate work, the first response is to investigate and narrow the blocking mechanism through `Change Sequence` — not to defer the underlying work to the user.
+13. `[EVI-DEFER]` Deferral on doctrine, cleanup, or remediation candidates must be evidence-based. "Could be design intent" or "might be needed later" is speculation, not justification. Apply when evidence supports the change, preserve when evidence supports protection, verify when verification cost is low. Speculative preservation is itself a form of `[BLOCK-AS-DEFECT]`.
 
 ## Interpretation Priority
 When rules compete, resolve them in this order:
@@ -57,7 +59,6 @@ When rules compete, resolve them in this order:
   - `notification-only carry-forward`
   - `bounded local consequential work`
   - `team-routed complex work`
-- Light channels stay light.
 - `correction re-arm` is not a light carry-forward channel. Any correction, mixed notification+instruction turn, new scope, or route-shaping change reopens the owning planning surface.
 - A bounded correction that stays inside the same frozen owner, surface, deliverable, and acceptance chain may continue through fresh verification plus packet correction or bounded carry-forward instead of full planning reopen.
 - That bounded correction exception ends immediately when a hidden consequential step, new owner, new surface, or changed acceptance chain appears.
@@ -105,6 +106,11 @@ When rules compete, resolve them in this order:
 - Only the validator lane issues final `PASS/HOLD/FAIL` acceptance verdicts.
 - Low-risk bounded paths may close through reviewer+tester as `verified result` without validator PASS when the frozen acceptance path does not require formal validator arbitration.
 - This carve-out is unavailable once the path is executable, destructive, security-sensitive, externally committed, or still depends on unresolved reviewer/tester disagreement.
+- Operational definitions for the carve-out exclusions:
+  - `executable` = the change introduces or modifies behavior on a runtime path that production sessions or downstream tools execute (hooks, agent prompts, settings, runtime CLI scripts, dispatch packets). Doctrine prose clarifications, cross-reference additions, comment honesty fixes, and naming consistency edits that do not change behavior remain reviewer-closeable for these surfaces — venue alone is not the trigger; behavior change is.
+  - `destructive` = the change removes, overwrites, or mutates existing meaning without reversible recovery via standard git workflow alone.
+  - `security-sensitive` = the change touches credentials, permission boundaries, sandbox config, hook enforcement layer, or other defense-in-depth surfaces.
+  - `externally committed` = the change has been pushed to a remote, deployed, or otherwise released beyond the current sandbox.
 - Verification and acceptance must stay on the real user-facing surface. Indirect evidence may support diagnosis but not replace user-surface proof.
 - Choose proof tooling from the decisive user surface, not from the source artifact alone.
 - Test and validation assignments stay method-neutral by default: freeze the user surface, expected outcome, and acceptance basis, not a gratuitous tool choice.

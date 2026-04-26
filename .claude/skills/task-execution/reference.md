@@ -210,6 +210,15 @@ Do not compress `real browser interaction`, `rendered/runtime reader proof`, or 
 - If the truthful next step would change owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain, do not disguise that as ordinary completion; raise `scope-pressure` or `hold|blocker`.
 - If any required procedure state for completion-grade reporting is not true yet, use `MESSAGE-CLASS: hold|blocker` instead of formatting the report as completion-ready.
 
+## Worker Compaction Recovery
+A compacted worker has lost the assignment-grade packet context but retains lane-core skill. To resume truthfully:
+
+- Worker emits the exact literal `MESSAGE-CLASS: hold|blocker` with `BLOCKER-TYPE: context-loss-after-compaction`, `BLOCKER-BASIS: prior packet context not in working memory`, `SAFE-NEXT-STEP: re-receive assignment-grade packet for the previously-frozen surface`.
+- Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet (or a corrected version if the underlying scope changed) so the worker can resume.
+- Worker does NOT improvise the lost context; do not reconstruct the assignment from gist or partial memory.
+- Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.
+- If the prior frozen scope is no longer truthful (e.g., upstream change occurred during compaction), team-lead reopens `work-planning` instead of redelivering — that is a fresh planning event, not compaction recovery.
+
 ## Truth Rules
 - `Agent` or assignment-grade `SendMessage` success = `dispatch pending`
 - `dispatch-ack` = receipt only

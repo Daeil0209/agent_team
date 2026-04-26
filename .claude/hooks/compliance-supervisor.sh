@@ -212,6 +212,74 @@ subcommand_is_mutating_shell() {
   printf '%s' "$subcmd" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'
 }
 
+# Carve-out: bounded content-preserving relocation/structure within .claude/.
+# `mv` and `mkdir` preserve content (mv) or only add structure (mkdir); per the operating
+# philosophy "allow everything except system-destruction that damages functionality", they
+# are not destruction even on governance subpaths. Destruction surfaces (rm -rf, mkfs.*,
+# dd if=, etc.) remain blocked by the destructive-shell guard. Content modification via
+# shell (sed -i, > redirect, tee, chmod, etc.) for non-mv/non-mkdir subcommands remains
+# blocked by command_mutates_governance_surface.
+# Rules per sub-command:
+#   - `mv` with optional -n, exactly two non-glob positional args, both containing .claude/
+#     (a) reject path traversal (`..` segments) on either side
+#     (b) destination must live under a TRUSTED archival root —
+#         `\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)/` — agents/ and
+#         top-level governance files (CLAUDE.md, settings*.json) cannot be retired this way
+#     (c) destination parent canonical path (realpath) must still match the archival root,
+#         so a pre-created directory symlink inside the archival root cannot redirect mv
+#         to outside the archival root
+#   - `mkdir` with optional -p, one or more non-glob positional args all containing .claude/
+# Compound delimiters allowed: `&&`, `;`, `&`. Forbidden: `||`, `|`, backticks, `$(...)`.
+command_is_narrow_governance_relocation() {
+  local cmd="${1-}"
+  [[ -n "$cmd" ]] || return 1
+  printf '%s' "$cmd" | grep -qE '\||`|\$\(' && return 1
+  local subcmd
+  while IFS= read -r subcmd; do
+    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
+    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
+    [[ -z "$subcmd" ]] && continue
+    if printf '%s' "$subcmd" | grep -Eq '^mv([[:space:]]+-n)?[[:space:]]+[^[:space:]*?\[]+[[:space:]]+[^[:space:]*?\[]+$'; then
+      local rest src dest
+      rest="$(printf '%s' "$subcmd" | sed -E 's/^mv([[:space:]]+-n)?[[:space:]]+//')"
+      src="${rest% *}"
+      dest="${rest##* }"
+      printf '%s' "$src" | grep -qE '\.claude/' || return 1
+      printf '%s' "$dest" | grep -qE '\.claude/' || return 1
+      # Reject path traversal in either side; prevents `.claude/hooks/legacy/../sv-gate.sh`
+      # style escapes that would otherwise satisfy the archival-segment check below.
+      printf '%s' "$src" | grep -qE '(^|/)\.\.(/|$)' && return 1
+      printf '%s' "$dest" | grep -qE '(^|/)\.\.(/|$)' && return 1
+      # Destination must live under a TRUSTED archival root: hooks/, skills/, or rules/
+      # subdirectories with a legacy|archive|deprecated path segment. agents/ and top-level
+      # governance files (CLAUDE.md, settings*.json) cannot be retired via shell mv — they
+      # require explicit governance review through structured tools.
+      printf '%s' "$dest" | grep -qE '\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)/' || return 1
+      # Symlink-resolution defense: resolve dest parent's canonical path so a pre-created
+      # symlink inside the archival root cannot redirect mv to outside the archival root.
+      # Closes the `ln -s ../../hooks .claude/hooks/legacy/decoy && mv X decoy/sv-gate.sh`
+      # vector; bash mv would otherwise traverse the directory symlink and write to the target.
+      local dest_parent="${dest%/*}"
+      if [[ -e "$dest_parent" ]]; then
+        local canonical
+        canonical="$(realpath -- "$dest_parent" 2>/dev/null)" || return 1
+        printf '%s' "$canonical" | grep -qE '\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)(/|$)' || return 1
+      fi
+      continue
+    fi
+    if printf '%s' "$subcmd" | grep -Eq '^mkdir([[:space:]]+-p)?([[:space:]]+[^[:space:]*?\[]+)+$'; then
+      local rest p
+      rest="$(printf '%s' "$subcmd" | sed -E 's/^mkdir([[:space:]]+-p)?[[:space:]]+//')"
+      for p in $rest; do
+        printf '%s' "$p" | grep -qE '\.claude/' || return 1
+      done
+      continue
+    fi
+    return 1
+  done < <(printf '%s' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
+  return 0
+}
+
 # command_is_governance_restricted_file_rm_with_approval is defined in
 # lib/hook-governance-rm-approval.sh (sourced by hook-config.sh).
 
@@ -933,6 +1001,13 @@ case "$TOOL_NAME" in
     if command_is_governance_file_rm_compound_with_readonly_followup "$CLEAN_COMMAND"; then
       exit 0
     fi
+    # Content-preserving relocation/structure carve-out: mv and mkdir within .claude/ are
+    # not destruction (mv preserves content; mkdir adds structure). Allowed before the broad
+    # mutation block so cleanup operations like `mv .claude/hooks/orphan.sh .claude/hooks/legacy/`
+    # are not falsely classified as governance-mutation requiring structured-tool review.
+    if command_is_narrow_governance_relocation "$CLEAN_COMMAND"; then
+      exit 0
+    fi
     # Governance surface protection is unconditional — runs before any session-type allowlist.
     # This ensures worker sessions cannot bypass governance-surface protection via pattern match.
     # Strip read-only null redirections (>/dev/null, 2>&1, etc.) AND quoted regions (so literal
@@ -1071,6 +1146,10 @@ case "$TOOL_NAME" in
 
     UNQUOTED_SANITIZED="$(strip_quoted_regions "$SANITIZED_COMMAND")"
     if printf '%s' "$UNQUOTED_SANITIZED" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
+      # Content-preserving relocation/structure carve-out: see definition near subcommand_is_mutating_shell.
+      if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
+        exit 0
+      fi
       if command_mutates_governance_surface "$SANITIZED_COMMAND"; then
         emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true

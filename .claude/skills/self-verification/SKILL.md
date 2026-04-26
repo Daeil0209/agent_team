@@ -135,6 +135,7 @@ Only converged work may proceed as verified.
 ## Execution Depth Guide
 - Full procedure: consequential report, completion-grade handoff, synthesized conclusion, post-modification conclusion, closure-grade judgment, or synthesis-driven re-dispatch.
 - Quick gate: bounded pre-execution or pre-dispatch checks where the conclusion is still narrow.
+- Quick gate is also valid for phase-internal iteration cycles in workflow-governed turns (e.g. `dev-workflow` Phase 5) when the iteration stays inside the same frozen owner, surface, deliverable, and acceptance chain — the bounded-correction conditions from CLAUDE.md `### Channel Law`. A full SV-PLAN/SV-RESULT pass is not required when no scope change, owner change, surface change, or stronger-claim shift occurred since the last relevant SV pass.
 - Never skip the challenge entirely.
 ## Step 5: Output The Verified Result
 Output only the verified next state:

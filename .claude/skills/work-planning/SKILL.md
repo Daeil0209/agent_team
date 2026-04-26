@@ -16,7 +16,7 @@ Quick contract:
 - classify purpose, work type, governing workflow, stream relationship, and supporting skills
 - freeze `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, and `TIER-RAISE-REASON` when governance depth is active or already known for the project
 - freeze `ACTIVE-WORKFLOW` when one named workflow owns the path
-- freeze `ACTION-CLASS`, `ROUTING-SIGNAL`, and `NEXT-CONSEQUENTIAL-ACTION`
+- freeze `ROUTING-SIGNAL` and `NEXT-CONSEQUENTIAL-ACTION`
 - freeze `LEAD-LOCAL-WORK-ITEMS` when lead-local execution remains legitimate
 - freeze `LEAD-LOCAL-REQUIRED-SKILLS` when team-lead will execute local consequential work directly
 - freeze `LANE-REQUIRED-SKILLS-MAP` when worker lanes will receive assignment-grade packets
@@ -78,7 +78,6 @@ Keep in the spine:
    - `TIER-RAISE-REASON`
 4. Frozen route ownership:
    - `ACTIVE-WORKFLOW`
-   - `ACTION-CLASS`
    - `ROUTING-SIGNAL`
    - `NEXT-CONSEQUENTIAL-ACTION`
 5. Lead-local execution basis when needed:
@@ -122,7 +121,6 @@ PROJECT-TIER:
 ACTIVE-REQUEST-TIER:
 TIER-RAISE-REASON:
 ACTIVE-WORKFLOW:
-ACTION-CLASS:
 ROUTING-SIGNAL:
 LEAD-LOCAL-WORK-ITEMS:
 LEAD-LOCAL-REQUIRED-SKILLS:

@@ -76,7 +76,9 @@ set_default_export HEALTH_CRON_ROTATION_STATE_FILE "$LOG_DIR/.health-cron-rotati
 set_default_export TEAM_RUNTIME_ACTIVE_FILE "$LOG_DIR/.team-runtime-active"
 set_default_export BOOT_SEQUENCE_COMPLETE_FILE "$LOG_DIR/.boot-sequence-complete"
 # DEPRECATED (BP-1/BP-2): No hook writes to this file after removing dual-semantics bug.
-# Retained only for cleanup in RUNTIME_TRANSIENT_FILES and STARTUP_VOLATILE_FILES.
+# Removed from RUNTIME_TRANSIENT_FILES and STARTUP_VOLATILE_FILES in the cleanup pass; retained
+# as a defensive env-var declaration in case external tooling references it. Safe to delete in
+# a follow-up cleanup pass once no consumer is found.
 set_default_export BOOT_SEQUENCE_ACTIVE_FILE "$LOG_DIR/.boot-sequence-active"
 set_default_export SESSION_BOOT_MARKER_FILE "$LOG_DIR/.session-boot-marker"
 set_default_export SUPERVISOR_SESSION_FILE "$LOG_DIR/.supervisor-session-id"
@@ -206,7 +208,6 @@ RUNTIME_TRANSIENT_FILES=(
   "$HEALTH_CHECK_HEARTBEAT_FILE"
   "$TEAM_RUNTIME_ACTIVE_FILE"
   "$BOOT_SEQUENCE_COMPLETE_FILE"
-  "$BOOT_SEQUENCE_ACTIVE_FILE"
   "$SESSION_BOOT_MARKER_FILE"
   "$SUPERVISOR_SESSION_FILE"
   "$PENDING_AGENTS_FILE"
@@ -234,8 +235,6 @@ SESSION_SCOPED_FILES=(
 
 STARTUP_VOLATILE_FILES=(
   "$BOOT_SEQUENCE_COMPLETE_FILE"
-  # DEPRECATED: No hook writes to this file; retained for backward cleanup compatibility only
-  "$BOOT_SEQUENCE_ACTIVE_FILE"
   "$STOP_BLOCK_FLAG"
   "$CLOSEOUT_STATE_FILE"
   "$LEGACY_CLOSEOUT_INTENT_FILE"
@@ -248,6 +247,12 @@ STARTUP_VOLATILE_FILES=(
   "$IDLE_DECISION_PENDING_FILE"
   "$WORKER_IDLE_NOTICE_FILE"
   "$STANDBY_FILE"
+  # Self-growth markers must be cleared at fresh-session start so that prior-session
+  # correction debt does not leak into a new turn via sessionId reuse (`claude --resume`)
+  # or `recover_session_id` fallback. In-session lifecycle (mark on correction → clear
+  # via Skill(self-growth-sequence) load through sv-tracker.sh) is unchanged.
+  "$SELF_GROWTH_PENDING_FILE"
+  "$SELF_GROWTH_SUSPECTED_FILE"
 )
 
 cleanup_session_files() {

@@ -11,7 +11,7 @@ PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
 
 ## Activation
-Load this skill when boot is incomplete, explicit runtime entry is required, or active delegated runtime still needs monitoring, dispatch-state observation, lifecycle interpretation, or runtime recovery.
+Load this skill at the main session's fresh start, resume, or pause-return so `Session-Start Sequence` runs as the always-on baseline. `Boot Sequence` runs additionally when boot is incomplete, explicit runtime entry is required, or active delegated runtime still needs monitoring, dispatch-state observation, lifecycle interpretation, or runtime recovery.
 
 An explicit `session-boot` load may clear lead-local boot reminders when no explicit team runtime has started yet. That observation is a boot-state marker only. It does not authorize delegated runtime entry by itself.
 
@@ -31,7 +31,7 @@ Complete boot before delegated production work, `task-execution`, or worker fan-
 See `reference.md` `Boot Window And Startup Rules` for tool-surface limits, path resolution, snapshot preference, fallback discovery, and startup constraints.
 
 ## Session-Start Sequence
-`Session-Start Sequence` always runs at fresh start, resume, and pause-return. `Boot Sequence` is the optional explicit-runtime branch on top of it. If both run, the continuity read is shared rather than repeated.
+`Session-Start Sequence` always runs at fresh start, resume, and pause-return whenever this skill is loaded — that is the default for the main session. `Boot Sequence` is the optional explicit-runtime branch on top of it. If both run, the continuity read is shared rather than repeated.
 
 ### Required checks
 1. Establish active context and inherited state with minimal startup scope.

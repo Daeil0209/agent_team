@@ -76,21 +76,12 @@ When an error or regression is detected during or after implementation:
 
 ## Phase Transition Notification
 
-When team-lead advances the development workflow to a new phase, broadcast a structured notification to all active workers:
+Phase transitions during incident-response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/reference.md` § Downward Phase-Transition Control Packet. Do not author a parallel notification format here.
 
-**Broadcast packet (via SendMessage to: "*"):**
-```
-Phase Transition: {previous_phase} → {next_phase}
-Feature: {feature_name}
-Context Anchor: WHY={why} | SCOPE={scope}
-Gate Status: {gate_result}
-Active Workers: {list of workers and their new assignments}
-Blocking Issues: {any unresolved items carried forward}
-```
+incident-response contributes incident-context fields into the canonical packet:
+- severity tier (T0-T3 per `Incident Response Workflow`)
+- blast-radius summary (affected components/services and downstream blocks)
+- root-cause status (proposed / approved / applied / verified)
+- carried-forward blocking issues from the prior phase
 
-**Rules:**
-- Broadcast at every phase transition (Phase 0→1, 1→2, etc.)
-- Include Context Anchor summary so all workers maintain shared understanding
-- List any blocking issues that carry forward into the new phase
-- Workers receiving this broadcast should acknowledge if they have an active assignment in the new phase
-- This uses our structured SendMessage packet — NOT freeform text
+Broadcasting, worker acknowledgment, and structured-vs-freeform discipline all live with the canonical packet contract. Operators consume that contract for the wire format and use this skill only for the incident-context payload it specifies above.
