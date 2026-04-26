@@ -123,12 +123,31 @@ _MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chm
 split_compound_command() {
   local cmd="${1-}"
 
+  # Quote-aware split on `&&`, `||`, `;` — only when separators are outside
+  # single/double quotes, backticks, and `$(...)`. Naive splitting fragmented
+  # valid single commands like `git commit -m "msg with ; inside"` and caused
+  # false-positive mutable-shell denies. Per CLAUDE.md `[BLOCK-AS-DEFECT]`.
   COMMAND_TEXT="$cmd" node <<'NODE'
-const command = String(process.env.COMMAND_TEXT || "");
-for (const part of command.split(/&&|\|\||;/)) {
-  const trimmed = part.trim();
-  if (trimmed) console.log(trimmed);
+const cmd = String(process.env.COMMAND_TEXT || "");
+const parts = [];
+let cur = "", inS = false, inD = false, bt = false, pd = 0, i = 0;
+while (i < cmd.length) {
+  const c = cmd[i], n = cmd[i + 1];
+  const q = inS || inD || bt || pd > 0;
+  if (!q) {
+    if (c === "&" && n === "&") { parts.push(cur); cur = ""; i += 2; continue; }
+    if (c === "|" && n === "|") { parts.push(cur); cur = ""; i += 2; continue; }
+    if (c === ";") { parts.push(cur); cur = ""; i += 1; continue; }
+    if (c === "$" && n === "(") { pd++; cur += c + n; i += 2; continue; }
+  } else if (!inS && !inD && !bt && pd > 0 && c === ")") { pd--; cur += c; i++; continue; }
+  if (!inD && !bt && pd === 0 && c === "'") inS = !inS;
+  else if (!inS && !bt && pd === 0 && c === '"') inD = !inD;
+  else if (!inS && !inD && pd === 0 && c === "`") bt = !bt;
+  cur += c;
+  i++;
 }
+parts.push(cur);
+for (const p of parts) { const t = p.trim(); if (t) console.log(t); }
 NODE
 }
 
@@ -976,6 +995,19 @@ case "$TOOL_NAME" in
 
   Bash)
     CLEAN_COMMAND="$(strip_full_line_shell_comments "$COMMAND" | tr '\n' ' ')"
+    # UNQUOTED_CLEAN strips quoted regions so compound-separator detection
+    # (`&&`, `||`, `;`) does not false-positive on separators that are merely
+    # inside `-m "message body with ; inside"` arguments, HEREDOC-quoted
+    # content, or other quoted regions. Without this guard, a benign single
+    # `git commit -m "...;..."` is misclassified as compound, dispatched
+    # through validate_compound_command (which splits naively on `;`), and
+    # falls through to the generic mutable-shell deny — even though `git
+    # commit` is in LEAD_OPERATIONAL_ALLOWLIST. Per CLAUDE.md
+    # `[BLOCK-AS-DEFECT]` and `[ALLOW-EXCEPT-DESTRUCT]`, the compound trigger
+    # must reflect real shell structure, not quoted text content.
+    # Real compound commands (unquoted `&&`/`||`/`;`) still surface here and
+    # still go through validate_compound_command on the original CLEAN_COMMAND.
+    UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
     if command_is_noisy_touch_probe "$CLEAN_COMMAND"; then
       emit_deny "Bootstrap touch must stay quiet. Do not append ls/cat/wc/stat confirmation to touch; if an existence check is truly needed, run it as a separate read-only step. If touch itself would fail because the parent directory does not exist, create the parent directory first in a separate quiet mkdir -p step."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "noisy-touch-probe" || true
@@ -1024,7 +1056,7 @@ case "$TOOL_NAME" in
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
       exit 0
     fi
-    if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
+    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
         exit 0
       fi
@@ -1036,7 +1068,7 @@ case "$TOOL_NAME" in
     SANITIZED_COMMAND="$(strip_read_only_null_redirections "$CLEAN_COMMAND")"
 
     GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
-    if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
+    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_git_readonly_subcmd; then
         exit 0
       fi
@@ -1054,7 +1086,6 @@ case "$TOOL_NAME" in
     if user_approved_delete_command "$CLEAN_COMMAND"; then
       exit 0
     fi
-    UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
     if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
       emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt explicitly names the approved workspace root and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests must use lifecycle control, not filesystem deletion."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
@@ -1075,7 +1106,7 @@ case "$TOOL_NAME" in
     # E-20 fix: moved AFTER destructive command check to prevent compound-command bypass.
     S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
-      if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
+      if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
         if validate_compound_command "$CLEAN_COMMAND" allowed_worker_impl_subcmd; then
           exit 0
         fi
@@ -1129,7 +1160,7 @@ case "$TOOL_NAME" in
     # cleanup) to coexist with read-only Git inspection and normal lead Git
     # operations without opening general mutable-shell bypasses.
     TRIMMED_LEAD_CMD="${CLEAN_COMMAND#"${CLEAN_COMMAND%%[![:space:]]*}"}"
-    if printf '%s' "$CLEAN_COMMAND" | grep -qE '(&&|\|\||;)'; then
+    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_lead_context_subcmd; then
         exit 0
       fi
