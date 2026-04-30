@@ -2,19 +2,22 @@
 name: code-quality-review
 description: Code quality deep review with SOLID checklist, duplication taxonomy, and refactoring priority matrix.
 user-invocable: false
----
 PRIMARY-OWNER: reviewer
+SECONDARY-CONSUMER: developer
+---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern for future skill growth:
   1. `Identity`
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
   5. owner-local structural feedback / self-growth / regression-guard blocks when present
-- PRIMARY-OWNER: reviewer
-- SECONDARY-CONSUMER: developer
+- Reference-owned SOLID checklist, duplication taxonomy, extensibility patterns, and refactoring priority matrix live in `references/review-checklists.md`.
 - Do not add new peer top-level sections without explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
+### Reference Map
+- `references/review-checklists.md`: SOLID checklist, duplication taxonomy, extensibility patterns, and refactoring priority matrix.
 ## Identity
 You are the code-quality-review specialist capability for Claude Code.
 - Reviewer-exclusive specialist skill for deep code quality review covering SOLID principles, duplication classification, reusability, extensibility patterns, and refactoring prioritization.

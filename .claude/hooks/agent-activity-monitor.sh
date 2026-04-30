@@ -235,17 +235,15 @@ else
   elif [[ -f "$SESSION_AGENT_MAP" ]] && grep -q "^${SESSION_ID} " "$SESSION_AGENT_MAP" 2>/dev/null; then
     AGENT_TYPE="$(grep "^${SESSION_ID} " "$SESSION_AGENT_MAP" | head -1 | awk '{print $2}')"
   else
-    # Non-runtime main sessions should not claim pending worker slots.
-    # Worker recovery may still succeed through the shared runtime sender resolver.
+    # Non-runtime main sessions should not claim pending agent slots.
+    # Agent recovery may still succeed through the shared runtime sender resolver.
     AGENT_TYPE="unknown-agent"
   fi
 fi
 
 if [[ -n "$AGENT_ID" ]] && [[ -f "$KILL_LIST" ]] && awk -F'|' -v name="$AGENT_TYPE" '$2 == name' "$KILL_LIST" 2>/dev/null | grep -q .; then
   if [[ "$TOOL_NAME" != "SendMessage" ]]; then
-    cat <<'EOF'
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"[AGENT-KILL] Agent terminated by supervisor. Tool calls blocked."}}
-EOF
+    hook_emit_pretool_deny "[AGENT-KILL] Agent terminated by supervisor. Tool calls blocked."
     exit 0
   fi
 fi

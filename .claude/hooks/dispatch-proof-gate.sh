@@ -77,16 +77,10 @@ NODE
 
 mapfile -t FIELDS <<<"$PARSED"
 
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
-
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
-AGENT_NAME="$(decode_field "${FIELDS[2]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+DESCRIPTION="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+AGENT_NAME="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[3]:-}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 emit_packet_warning() {
@@ -95,25 +89,18 @@ emit_packet_warning() {
   printf '[%s] DISPATCH-PROOF WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
 }
 
-emit_deny() {
+emit_packet_context_warning() {
   local reason="${1:?reason required}"
-  local surface_key=""
-  surface_key="${WORK_SURFACE_RAW:-${TARGET_NAME:-${TARGET_LANE:-generic}}}"
-  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Dispatch proof contract blocked the assignment."
-  }
-}));
-NODE
+  reason="${reason/BLOCKED: /}"
+  reason="${reason/PROCEDURE WARNING: /}"
+  emit_packet_warning "$reason"
+  hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last dispatch proof warning."
 }
 
 dispatch_proof_block() {
   local detail="${1:?detail required}"
   local next_step="${2:?next step required}"
-  printf 'BLOCKED: dispatch packet incomplete. Detail: %s. Next: %s.' "$detail" "$next_step"
+  printf 'PROCEDURE WARNING: dispatch packet incomplete. Detail: %s. Next: %s.' "$detail" "$next_step"
 }
 
 [[ "$TOOL_NAME" == "Agent" ]] || exit 0
@@ -128,6 +115,7 @@ CURRENT_PHASE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "CURRENT-PHASE" 2>/
 WORK_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WORK-SURFACE" 2>/dev/null || true)"
 MESSAGE_CLASS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "MESSAGE-CLASS" 2>/dev/null || true)"
 REQUIRED_SKILLS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "REQUIRED-SKILLS" 2>/dev/null || true)"
+TASK_ID_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
 ACCEPTANCE_RISK_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ACCEPTANCE-RISK" 2>/dev/null || true)"
 REVIEW_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "REVIEW-OWNER" 2>/dev/null || true)"
 PROOF_OWNER_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-OWNER" 2>/dev/null || true)"
@@ -139,7 +127,13 @@ ENV_BASIS_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "ENV-BASIS" 2>/dev/null
 SCENARIO_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "SCENARIO-SCOPE" 2>/dev/null || true)"
 PROOF_EXPECTATION_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-EXPECTATION" 2>/dev/null || true)"
 PROOF_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "PROOF-SURFACE" 2>/dev/null || true)"
+USER_SURFACE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "USER-SURFACE" 2>/dev/null || true)"
+USER_SURFACE_PROOF_PATH_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "USER-SURFACE-PROOF-PATH" 2>/dev/null || true)"
 TOOL_REQUIREMENT_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-REQUIREMENT" 2>/dev/null || true)"
+TOOL_DISCOVERY_GOAL_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-DISCOVERY-GOAL" 2>/dev/null || true)"
+TOOL_DISCOVERY_BOUNDARY_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-DISCOVERY-BOUNDARY" 2>/dev/null || true)"
+TOOL_VERIFICATION_STANDARD_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-VERIFICATION-STANDARD" 2>/dev/null || true)"
+TOOL_CLEANUP_EXPECTATION_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "TOOL-CLEANUP-EXPECTATION" 2>/dev/null || true)"
 VALIDATION_TARGET_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "VALIDATION-TARGET" 2>/dev/null || true)"
 EXPECTATION_SOURCES_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "EXPECTATION-SOURCES" 2>/dev/null || true)"
 REVIEW_STATE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "REVIEW-STATE" 2>/dev/null || true)"
@@ -185,6 +179,29 @@ developer_dispatch_needs_acceptance_chain() {
 field_present() {
   local value="${1-}"
   [[ -n "$(printf '%s' "$value" | tr -d '[:space:]')" ]]
+}
+
+browser_tool_basis_present() {
+  field_present "$TOOL_REQUIREMENT_RAW" && return 0
+
+  field_present "$TOOL_DISCOVERY_GOAL_RAW" &&
+    field_present "$TOOL_DISCOVERY_BOUNDARY_RAW" &&
+    field_present "$TOOL_VERIFICATION_STANDARD_RAW" &&
+    field_present "$TOOL_CLEANUP_EXPECTATION_RAW"
+}
+
+proof_surface_is_executable() {
+  case "$PROOF_SURFACE_TOKEN" in
+    browserui|cli|runtime|server|app|api)
+      return 0
+      ;;
+  esac
+
+  return 1
+}
+
+task_tracking_context_present() {
+  printf '%s' "$DESCRIPTION" | grep -qiE '(task[ -]?tracking|taskcreate|task-created|assigned[ -]?id|task-id[[:space:]]+(required|active))'
 }
 
 normalize_dispatch_enum_token() {
@@ -258,12 +275,19 @@ lane_packet_missing_fields() {
       WORK-SURFACE) field_present "$WORK_SURFACE_RAW" || missing+=("$field_name") ;;
       CURRENT-PHASE) field_present "$CURRENT_PHASE_RAW" || missing+=("$field_name") ;;
       REQUIRED-SKILLS) field_present "$REQUIRED_SKILLS_RAW" || missing+=("$field_name") ;;
+      TASK-ID) field_present "$TASK_ID_RAW" || missing+=("$field_name") ;;
       PROOF-TARGET) field_present "$PROOF_TARGET_RAW" || missing+=("$field_name") ;;
       ENV-BASIS) field_present "$ENV_BASIS_RAW" || missing+=("$field_name") ;;
       SCENARIO-SCOPE) field_present "$SCENARIO_SCOPE_RAW" || missing+=("$field_name") ;;
       PROOF-EXPECTATION) field_present "$PROOF_EXPECTATION_RAW" || missing+=("$field_name") ;;
       PROOF-SURFACE) field_present "$PROOF_SURFACE_RAW" || missing+=("$field_name") ;;
+      USER-SURFACE) field_present "$USER_SURFACE_RAW" || missing+=("$field_name") ;;
+      USER-SURFACE-PROOF-PATH) field_present "$USER_SURFACE_PROOF_PATH_RAW" || missing+=("$field_name") ;;
       TOOL-REQUIREMENT) field_present "$TOOL_REQUIREMENT_RAW" || missing+=("$field_name") ;;
+      TOOL-DISCOVERY-GOAL) field_present "$TOOL_DISCOVERY_GOAL_RAW" || missing+=("$field_name") ;;
+      TOOL-DISCOVERY-BOUNDARY) field_present "$TOOL_DISCOVERY_BOUNDARY_RAW" || missing+=("$field_name") ;;
+      TOOL-VERIFICATION-STANDARD) field_present "$TOOL_VERIFICATION_STANDARD_RAW" || missing+=("$field_name") ;;
+      TOOL-CLEANUP-EXPECTATION) field_present "$TOOL_CLEANUP_EXPECTATION_RAW" || missing+=("$field_name") ;;
       VALIDATION-TARGET) field_present "$VALIDATION_TARGET_RAW" || missing+=("$field_name") ;;
       EXPECTATION-SOURCES) field_present "$EXPECTATION_SOURCES_RAW" || missing+=("$field_name") ;;
       REVIEW-STATE) field_present "$REVIEW_STATE_RAW" || missing+=("$field_name") ;;
@@ -294,14 +318,17 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
   if [[ -z "$MESSAGE_CLASS_RAW" ]]; then
     packet_warning_needed="true"
   fi
-  if [[ -z "$REQUIRED_SKILLS_NORM" ]] || ! printf '%s' "$REQUIRED_SKILLS_NORM" | grep -qi 'work-planning' || ! printf '%s' "$REQUIRED_SKILLS_NORM" | grep -qi 'self-verification'; then
+  if [[ -z "$REQUIRED_SKILLS_RAW" ]]; then
     packet_warning_needed="true"
   fi
   if [[ -z "$WORK_SURFACE_NORM" || -z "$CURRENT_PHASE_NORM" ]]; then
     packet_warning_needed="true"
   fi
+  if task_tracking_context_present && [[ -z "$TASK_ID_RAW" ]]; then
+    packet_warning_needed="true"
+  fi
   if [[ "$packet_warning_needed" == "true" ]]; then
-    emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS, WORK-SURFACE, and CURRENT-PHASE if known; worker should infer safe scope or HOLD if ambiguity affects ownership, scope, proof, or acceptance."
+    emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS (additional non-lane-core skills or []), WORK-SURFACE, CURRENT-PHASE, and TASK-ID when task tracking is active; agent should infer safe scope or hold|blocker if ambiguity affects ownership, scope, proof, or acceptance."
   fi
 
   # Advisory: check ACTIVE-WORKFLOW presence for workflow-aware dispatch
@@ -311,15 +338,17 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
 fi
 
 # This hook reviews the team-lead's outgoing Agent dispatch packet shape.
-# It warns on ordinary wording drift, but it blocks tester/validator packets
-# that omit core proof or acceptance contract fields. Worker-side
-# reconstruction-or-HOLD applies only after the packet survives this lead-local
-# contract gate.
+# It warns on proof or acceptance packet gaps; the receiving agent owns HOLD
+# or scope-pressure under its lane doctrine. Hooks remain last-resort guards,
+# not the primary controller for required packet behavior.
 if [[ "$is_assignment_dispatch" == "true" ]]; then
   if [[ "$TARGET_LANE" == "tester" ]]; then
-    tester_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS PROOF-TARGET ENV-BASIS SCENARIO-SCOPE PROOF-EXPECTATION PROOF-SURFACE"
+    tester_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS PROOF-TARGET PROOF-EXPECTATION PROOF-SURFACE"
+    if proof_surface_is_executable; then
+      tester_required_fields+=" ENV-BASIS SCENARIO-SCOPE"
+    fi
     if [[ "$PROOF_SURFACE_TOKEN" == "browserui" ]]; then
-      tester_required_fields+=" TOOL-REQUIREMENT"
+      tester_required_fields+=" USER-SURFACE USER-SURFACE-PROOF-PATH"
     fi
     if tester_or_validator_needs_delivery_contract; then
       tester_required_fields+=" USER-RUN-PATH BURDEN-CONTRACT"
@@ -333,15 +362,21 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
         tester_detail="${tester_detail}. Format note: ${tester_format_notes}"
         tester_next_step="rewrite the missing field(s) as same-line KEY: value entries, move expanded bullets under DETAILS, then retry Agent"
       fi
-      emit_deny "$(dispatch_proof_block "$tester_detail" "$tester_next_step")"
+      emit_packet_context_warning "$(dispatch_proof_block "$tester_detail" "$tester_next_step")"
+      exit 0
+    fi
+    if [[ "$PROOF_SURFACE_TOKEN" == "browserui" ]] && ! browser_tool_basis_present; then
+      tester_detail="tester dispatch is missing browser-ui tool basis (add TOOL-REQUIREMENT, or add the complete TOOL-DISCOVERY-GOAL, TOOL-DISCOVERY-BOUNDARY, TOOL-VERIFICATION-STANDARD, TOOL-CLEANUP-EXPECTATION bundle)"
+      tester_next_step="carry the exact frozen tool or the bounded discovery/setup contract, then retry Agent"
+      emit_packet_context_warning "$(dispatch_proof_block "$tester_detail" "$tester_next_step")"
       exit 0
     fi
   fi
 
   if [[ "$TARGET_LANE" == "validator" ]]; then
-    validator_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS VALIDATION-TARGET EXPECTATION-SOURCES REVIEW-STATE TEST-STATE DECISION-SURFACE VALIDATION-SURFACE"
+    validator_required_fields="MESSAGE-CLASS WORK-SURFACE CURRENT-PHASE REQUIRED-SKILLS VALIDATION-TARGET EXPECTATION-SOURCES REVIEW-STATE TEST-STATE VALIDATION-SURFACE"
     if [[ "$VALIDATION_SURFACE_TOKEN" == "browserui" ]]; then
-      validator_required_fields+=" TOOL-REQUIREMENT"
+      validator_required_fields+=" USER-SURFACE USER-SURFACE-PROOF-PATH"
     fi
     if tester_or_validator_needs_delivery_contract; then
       validator_required_fields+=" USER-RUN-PATH BURDEN-CONTRACT"
@@ -355,7 +390,13 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
         validator_detail="${validator_detail}. Format note: ${validator_format_notes}"
         validator_next_step="rewrite the missing field(s) as same-line KEY: value entries, move expanded bullets under DETAILS, then retry Agent"
       fi
-      emit_deny "$(dispatch_proof_block "$validator_detail" "$validator_next_step")"
+      emit_packet_context_warning "$(dispatch_proof_block "$validator_detail" "$validator_next_step")"
+      exit 0
+    fi
+    if [[ "$VALIDATION_SURFACE_TOKEN" == "browserui" ]] && ! browser_tool_basis_present; then
+      validator_detail="validator dispatch is missing browser-ui tool basis (add TOOL-REQUIREMENT, or add the complete TOOL-DISCOVERY-GOAL, TOOL-DISCOVERY-BOUNDARY, TOOL-VERIFICATION-STANDARD, TOOL-CLEANUP-EXPECTATION bundle)"
+      validator_next_step="carry the exact frozen tool or the bounded discovery/setup contract, then retry Agent"
+      emit_packet_context_warning "$(dispatch_proof_block "$validator_detail" "$validator_next_step")"
       exit 0
     fi
   fi
@@ -381,7 +422,7 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
         ;;
     esac
     if [[ "$acceptance_warning_needed" == "true" ]]; then
-      emit_packet_warning "Developer dispatch may have incomplete acceptance ownership. Add acceptance chain if known; worker must HOLD if review, proof, or final acceptance ownership is ambiguous."
+      emit_packet_warning "Developer dispatch may have incomplete acceptance ownership. Add acceptance chain if known; agent must HOLD if review, proof, or final acceptance ownership is ambiguous."
     fi
   fi
 

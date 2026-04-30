@@ -56,6 +56,7 @@ render_minimal_auto_capture() {
 # Session State
 Last updated: $timestamp (auto-captured on session end)
 Session summary: [Auto-captured — previous session ended without explicit handoff]
+Continuity classification: generated startup anchor only; not authoritative runtime, task, cleanup, or acceptance state.
 
 ## Active Work
 - (not captured in auto-capture mode)
@@ -75,16 +76,6 @@ $(render_residual_state "$warnings_text")
 - Treat this file as a startup anchor, not as a repository summary
 - Do not reconstruct branch, commit, or dirty-state context unless the next task requires repository analysis
 EOF
-}
-
-append_residual_state_section() {
-  local target_file="$1"
-  local warnings_text="$2"
-  [ -n "$warnings_text" ] || return 0
-  {
-    printf '\n## Closeout Residual State\n'
-    render_residual_state "$warnings_text"
-  } >> "$target_file"
 }
 
 rewrite_residual_state_section() {

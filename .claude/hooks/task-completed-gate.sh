@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(dirname "$0")/hook-config.sh"
+source "$(dirname "$0")/hook-config-core.sh"
 
 INPUT="$(cat)"
 
@@ -135,7 +135,7 @@ try {
       }
       if (!parsed || typeof parsed !== "object") continue;
       const messageClass = String(parsed.messageClass || "").toLowerCase();
-      if (!["handoff", "completion", "hold"].includes(messageClass)) continue;
+      if (!["handoff", "completion", "hold|blocker", "hold", "blocker"].includes(messageClass)) continue;
 
       const parsedSessionId = trimText(parsed.sessionId || "");
       const parsedSenderName = trimText(parsed.senderName || "");
@@ -146,7 +146,7 @@ try {
       const sameTeam = !teamName || !parsedTeamName || parsedTeamName === teamName;
       // When teammateName is absent (TaskCompleted event provides only session_id+task_id),
       // accept entries that exactly match the task_id — the session/sender filter cannot
-      // resolve a worker identity and would otherwise skip all worker ledger entries.
+      // resolve an agent identity and would otherwise skip all agent report ledger entries.
       // When teammateName IS provided the stricter session+sender guard still applies.
       const taskIdAnchorMatch = !teammateName && taskId && parsedTaskId === taskId;
       if (!sameSession && !(sameTeammate && sameTeam) && !taskIdAnchorMatch) continue;
@@ -174,9 +174,9 @@ try {
 
   latest = latestExactTask || latestFallback;
   // When teammateName is absent and the entry was found via taskIdAnchorMatch,
-  // the matched entry's sessionId is the worker's session — it is not in
+  // the matched entry's sessionId is the agent's session — it is not in
   // candidateSessionIds (which only contains the lead's session from the event).
-  // Include it here so evidenceState resolves to the actual worker session markers
+  // Include it here so evidenceState resolves to the actual agent session markers
   // rather than falling back to the lead's session and rejecting the report as
   // "report-before-planning" due to the lead's WP timestamp post-dating the report.
   const taskIdAnchorSession = (!teammateName && latestExactTask)
@@ -226,11 +226,35 @@ try {
     ["recommendedNextLane", "RECOMMENDED-NEXT-LANE"],
     ["planningBasis", "PLANNING-BASIS"],
     ["svPlanVerify", "SV-PLAN-VERIFY"],
-    ["selfVerification", "SELF-VERIFICATION"],
+    ["svResultVerify", "SV-RESULT-VERIFY"],
+    ["resourceCleanup", "RESOURCE-CLEANUP"],
     ["convergencePass", "CONVERGENCE-PASS"]
   ];
   for (const [key, label] of requiredFieldMap) {
     if (!fields[key]) missingFields.push(label);
+  }
+  const hasSubstantiveValue = value => {
+    const normalized = normalize(value);
+    return Boolean(normalized) && normalized !== "not-applicable";
+  };
+  const latestAgentType = normalize(latest ? latest.agentType : "");
+  const claimsUserSurfaceProof =
+    hasSubstantiveValue(fieldValues.userRunPath) ||
+    hasSubstantiveValue(fieldValues.proofSurfaceMatch) ||
+    hasSubstantiveValue(fieldValues.runPathStatus) ||
+    hasSubstantiveValue(fieldValues.coreWorkflowStatus) ||
+    hasSubstantiveValue(fieldValues.interactionCoverageStatus) ||
+    hasSubstantiveValue(fieldValues.burdenStatus) ||
+    hasSubstantiveValue(fieldValues.acceptanceReconciliation);
+  if (claimsUserSurfaceProof) {
+    const proofFieldMap = [
+      ["userSurfaceProofMethod", "USER-SURFACE-PROOF-METHOD"],
+      ["toolPathUsed", "TOOL-PATH-USED"],
+      ["toolExecutionEvidence", "TOOL-EXECUTION-EVIDENCE"]
+    ];
+    for (const [key, label] of proofFieldMap) {
+      if (!fields[key]) missingFields.push(label);
+    }
   }
   if (!latest || !String(latest.requestedLifecycle || "").trim()) {
     missingFields.push("REQUESTED-LIFECYCLE");
@@ -262,7 +286,11 @@ try {
     acceptanceReconciliationValue: String(fieldValues.acceptanceReconciliation || ""),
     planningBasisValue: String(fieldValues.planningBasis || ""),
     svPlanVerifyValue: String(fieldValues.svPlanVerify || ""),
-    selfVerificationValue: String(fieldValues.selfVerification || ""),
+    svResultVerifyValue: String(fieldValues.svResultVerify || ""),
+    resourceCleanupValue: String(fieldValues.resourceCleanup || ""),
+    userSurfaceProofMethodValue: String(fieldValues.userSurfaceProofMethod || ""),
+    toolPathUsedValue: String(fieldValues.toolPathUsed || ""),
+    toolExecutionEvidenceValue: String(fieldValues.toolExecutionEvidence || ""),
     convergencePassValue: String(fieldValues.convergencePass || ""),
     missingFields,
     identitySummary,
@@ -296,7 +324,11 @@ try {
     acceptanceReconciliationValue: "",
     planningBasisValue: "",
     svPlanVerifyValue: "",
-    selfVerificationValue: "",
+    svResultVerifyValue: "",
+    resourceCleanupValue: "",
+    userSurfaceProofMethodValue: "",
+    toolPathUsedValue: "",
+    toolExecutionEvidenceValue: "",
     convergencePassValue: "",
     missingFields: [],
     identitySummary: "",
@@ -340,7 +372,11 @@ const fieldValues = [
   parsed.acceptanceReconciliationValue || "",
   parsed.planningBasisValue || "",
   parsed.svPlanVerifyValue || "",
-  parsed.selfVerificationValue || "",
+  parsed.svResultVerifyValue || "",
+  parsed.resourceCleanupValue || "",
+  parsed.userSurfaceProofMethodValue || "",
+  parsed.toolPathUsedValue || "",
+  parsed.toolExecutionEvidenceValue || "",
   parsed.convergencePassValue || "",
   Array.isArray(parsed.missingFields) ? parsed.missingFields.join(", ") : "",
   parsed.identitySummary || "",
@@ -366,6 +402,7 @@ EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[9]-false}"
 LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[10]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 LATEST_CLASS="${TASK_COMPLETED_FIELDS[11]-}"
 USER_RUN_PATH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[12]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+USER_RUN_PATH_NORM="$(printf '%s' "$USER_RUN_PATH_VALUE" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 BURDEN_CONTRACT_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[13]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 PROOF_SURFACE_MATCH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[14]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 RUN_PATH_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[15]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
@@ -375,11 +412,15 @@ BURDEN_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[18]-}" | tr '[:upper
 ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[19]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[20]-}"
 SV_PLAN_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[21]-}"
-SELF_VERIFICATION_VALUE="${TASK_COMPLETED_FIELDS[22]-}"
-CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[23]-}"
-MISSING_FIELDS="${TASK_COMPLETED_FIELDS[24]-}"
-IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[25]-}"
-REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[26]-}"
+SV_RESULT_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[22]-}"
+RESOURCE_CLEANUP_VALUE="${TASK_COMPLETED_FIELDS[23]-}"
+USER_SURFACE_PROOF_METHOD_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[24]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+TOOL_PATH_USED_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[25]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+TOOL_EXECUTION_EVIDENCE_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[26]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[27]-}"
+MISSING_FIELDS="${TASK_COMPLETED_FIELDS[28]-}"
+IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[29]-}"
+REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[30]-}"
 
 FAILURES=()
 
@@ -403,15 +444,23 @@ if [[ -z "$LATEST_CLASS" ]]; then
   if [[ "$REPORT_REJECTION_REASON" == "report-before-planning" ]]; then
     FAILURES+=("Latest completion-grade report predates planning evidence (${IDENTITY_SUMMARY}). Send fresh report after verification.")
   else
-    FAILURES+=("No completion-grade report matched worker identity (${IDENTITY_SUMMARY}). Send a report to team-lead via SendMessage.")
+    FAILURES+=("No completion-grade report matched agent identity (${IDENTITY_SUMMARY}). Send a report to team-lead via SendMessage.")
   fi
 fi
 
 case "$LATEST_CLASS" in
-  hold)
-    FAILURES+=("Latest report is HOLD. Task must remain open until governing lane resolves it.")
+  hold\|blocker)
+    FAILURES+=("Latest report is ${LATEST_CLASS}. Task must remain open until governing lane resolves it.")
     ;;
-  handoff|completion|"") ;;
+  hold)
+    FAILURES+=("Latest report uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
+    ;;
+  blocker)
+    FAILURES+=("Latest report uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
+    ;;
+  handoff) ;;
+  completion) ;;
+  "") ;;
   *)
     FAILURES+=("Latest report is '${LATEST_CLASS}', not a completion-grade report.")
     ;;
@@ -437,9 +486,16 @@ if [[ "$SV_PLAN_VERIFY_VALUE" != "done" ]]; then
   FAILURES+=("Report must carry SV-PLAN-VERIFY: done.")
 fi
 
-if [[ "$SELF_VERIFICATION_VALUE" != "converged" ]]; then
-  FAILURES+=("Report must carry SELF-VERIFICATION: converged.")
+if [[ "$SV_RESULT_VERIFY_VALUE" != "converged" ]]; then
+  FAILURES+=("Report must carry SV-RESULT-VERIFY: converged.")
 fi
+
+case "$RESOURCE_CLEANUP_VALUE" in
+  complete*|not-applicable*) ;;
+  *)
+    FAILURES+=("Report must carry RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
+    ;;
+esac
 
 case "$CONVERGENCE_PASS_VALUE" in
   1|2|3) ;;
@@ -449,16 +505,14 @@ case "$CONVERGENCE_PASS_VALUE" in
 esac
 
 if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]; then
-  if [[ -z "$USER_RUN_PATH_VALUE" ]]; then
-    FAILURES+=("Tester/validator report must carry USER-RUN-PATH.")
+  if [[ -n "$BURDEN_CONTRACT_VALUE" ]]; then
+    case "$BURDEN_CONTRACT_VALUE" in
+      hands-off|low-touch|normal|not-applicable) ;;
+      *)
+        FAILURES+=("When present, BURDEN-CONTRACT must be hands-off|low-touch|normal|not-applicable.")
+        ;;
+    esac
   fi
-
-  case "$BURDEN_CONTRACT_VALUE" in
-    hands-off|low-touch|normal|not-applicable) ;;
-    *)
-      FAILURES+=("Tester/validator report must carry BURDEN-CONTRACT: hands-off|low-touch|normal|not-applicable.")
-      ;;
-  esac
 
   case "$PROOF_SURFACE_MATCH_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
@@ -504,7 +558,7 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
     esac
   fi
 
-  if [[ -n "$USER_RUN_PATH_VALUE" && "$(printf '%s' "$USER_RUN_PATH_VALUE" | tr '[:upper:]' '[:lower:]')" != "not-applicable" ]]; then
+  if [[ -n "$USER_RUN_PATH_VALUE" && "$USER_RUN_PATH_NORM" != "not-applicable" ]]; then
     if [[ "$PROOF_SURFACE_MATCH_VALUE" != "matched" ]]; then
       FAILURES+=("User-run-path proof is not matched. Keep the task open until proof matches the promised delivery surface.")
     fi
@@ -533,7 +587,7 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
 fi
 
 if [[ ${#FAILURES[@]} -gt 0 ]]; then
-  FAILURE_MSG="TaskCompleted blocked for ${TEAMMATE_NAME:-worker} (${TASK_ID:-unknown-task}). ${#FAILURES[@]} issue(s) found:"
+  FAILURE_MSG="TaskCompleted blocked for ${TEAMMATE_NAME:-agent} (${TASK_ID:-unknown-task}). ${#FAILURES[@]} issue(s) found:"
   for f in "${FAILURES[@]}"; do
     FAILURE_MSG+=$'\n'"  - $f"
   done

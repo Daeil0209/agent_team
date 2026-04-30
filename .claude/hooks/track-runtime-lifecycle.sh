@@ -157,21 +157,16 @@ try {
   process.stdout.write("\n\n\n\n\n\n");
 }
 NODE
-)"
+    )"
     mapfile -t FIELDS <<<"$PARSED"
-    decode_field() {
-      local encoded="${1-}"
-      [[ -z "$encoded" ]] && { printf ''; return 0; }
-      printf '%s' "$encoded" | base64 -d
-	    }
-	    DESCRIPTION="$(decode_field "${FIELDS[0]:-}")"
-	    AGENT_NAME="$(decode_field "${FIELDS[1]:-}")"
-	    AGENT_LANE_HINT="$(decode_field "${FIELDS[2]:-}")"
-	    MODE="$(decode_field "${FIELDS[3]:-}")"
-	    SESSION_ID="$(recover_session_id "$(decode_field "${FIELDS[4]:-}")")"
-	    SUCCESS_VALUE="$(printf '%s' "$(decode_field "${FIELDS[5]:-}")" | tr '[:upper:]' '[:lower:]')"
-	    IS_ERROR_VALUE="$(printf '%s' "$(decode_field "${FIELDS[6]:-}")" | tr '[:upper:]' '[:lower:]')"
-	    ERROR_VALUE="$(decode_field "${FIELDS[7]:-}")"
+	    DESCRIPTION="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+	    AGENT_NAME="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+	    AGENT_LANE_HINT="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+	    MODE="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+	    SESSION_ID="$(recover_session_id "$(hook_decode_base64_field "${FIELDS[4]:-}")")"
+	    SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[5]:-}")" | tr '[:upper:]' '[:lower:]')"
+	    IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[6]:-}")" | tr '[:upper:]' '[:lower:]')"
+	    ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[7]:-}")"
 
     tool_response_succeeded || exit 0
 
@@ -186,9 +181,8 @@ NODE
 	    agent_registry_has_name "$DISPATCH_AGENT_LANE" || exit 0
 
     if [[ "$DISPATCH_AGENT_LANE" == "researcher" ]]; then
-      RESEARCH_MODE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "RESEARCH-MODE" 2>/dev/null || true)")"
       SHARD_ID_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "SHARD-ID" 2>/dev/null || true)"
-      if [[ "$RESEARCH_MODE_NORM" == "sharded" || -n "$SHARD_ID_RAW" || "$(dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY" 2>/dev/null && printf yes || true)" == "yes" ]]; then
+      if [[ -n "$SHARD_ID_RAW" || "$(dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY" 2>/dev/null && printf yes || true)" == "yes" ]]; then
         SHARD_ID_SAFE="$(printf '%s' "$SHARD_ID_RAW" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9_-]+/-/g; s/^-+//; s/-+$//')"
         if [[ -n "$SHARD_ID_SAFE" ]]; then
           if [[ -z "$AGENT_NAME" ]] || canonical_dispatch_agent_name "$AGENT_NAME" >/dev/null 2>&1; then

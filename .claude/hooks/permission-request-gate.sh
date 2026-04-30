@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-source "$(dirname "$0")/hook-config.sh"
+source "$(dirname "$0")/hook-config-core.sh"
 
 INPUT="$(cat)"
 
@@ -82,7 +82,7 @@ const safeRelativeDocSurface = (relativePath) => {
   if (rel === ".claude/CLAUDE.md") return true;
   if (/^\.claude\/agents\/[^/]+\.md$/.test(rel)) return true;
   if (/^\.claude\/rules\/[^/]+\.md$/.test(rel)) return true;
-  if (/^\.claude\/skills\/[^/]+\/(?:SKILL|reference)\.md$/.test(rel)) return true;
+  if (/^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(rel)) return true;
   return false;
 };
 
@@ -162,15 +162,7 @@ NODE
 
 printf '%s' "$RESULT"
 
-BEHAVIOR="$(RESULT_JSON="$RESULT" node <<'NODE' 2>/dev/null || true
-try {
-  const output = JSON.parse(process.env.RESULT_JSON || "{}");
-  process.stdout.write(String(output.hookSpecificOutput?.decision?.behavior || "null"));
-} catch {}
-NODE
-)"
-
-if [[ "$BEHAVIOR" == "allow" ]]; then
+if [[ "$RESULT" == *'"behavior":"allow"'* ]]; then
   mkdir -p "$(dirname "$PERMISSION_REQUEST_LOG")" 2>/dev/null || true
   printf '[%s] PERMISSION-REQUEST auto-allow: bounded governance or continuity surface edit\n' \
     "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$PERMISSION_REQUEST_LOG" 2>/dev/null || true

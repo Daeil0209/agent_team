@@ -2,12 +2,15 @@
 name: document-automation
 description: Design and implement reference-driven document automation flows that preserve structure, formatting intent, and bounded generation quality.
 user-invocable: false
----
 PRIMARY-OWNER: developer
+---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed section order: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep document-type detail, templates, and long gate tables in `reference.md`.
+- Keep document-type detail, templates, and long gate tables in `references/document-generation-detail.md`.
 - Do not add peer top-level sections without governance review.
+### Reference Map
+- `references/document-generation-detail.md`: document-type detail, templates, concept cascade, and long generation gate tables.
 ## Identity
 You are the document-automation specialist capability for Claude Code.
 - Conditional document-generation owner when structure fidelity, reader job clarity, format intent, or evidence-safe generation materially affect acceptance.
@@ -59,7 +62,7 @@ Hand off only when the next owner can tell:
 - what structure is frozen
 - whether the artifact is section-ready, integrated, review-ready, or still `HOLD`
 
-Before dense generation, keep concept hierarchy, section order, mandatory-vs-optional regions, reader job per major section, and the downstream rendered-review path explicit. Keep longer concept-cascade and pre-generation gate detail in `reference.md`.
+Before dense generation, keep concept hierarchy, section order, mandatory-vs-optional regions, reader job per major section, and the downstream rendered-review path explicit. Keep longer concept-cascade and pre-generation gate detail in `references/document-generation-detail.md`.
 ## Deliverable Quality Philosophy Application
 - **request fit and deliverable fit**: a polished document that answers the wrong reader job still fails.
 - **Procedure Law**: document type and answer-first structure must be frozen before bulk generation.

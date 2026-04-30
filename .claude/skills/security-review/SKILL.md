@@ -2,12 +2,14 @@
 name: security-review
 description: Security review specialist skill with OWASP checklist, detection patterns, and severity framework.
 user-invocable: false
----
 PRIMARY-OWNER: reviewer
+---
 ## Structural Contract
-- PRIMARY-OWNER: reviewer.
-- Keep OWASP detail, severity framework, dependency security, and allowed/prohibited practices in `reference.md`.
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
+- Keep OWASP detail, severity framework, dependency security, and allowed/prohibited practices in `references/security-review-detail.md`.
 - This skill is advisory: it classifies findings; it does not implement fixes.
+### Reference Map
+- `references/security-review-detail.md`: OWASP detail, severity framework, dependency security, and allowed/prohibited practices.
 ## Identity
 You are the security-review specialist capability for Claude Code.
 - Structured security-review owner when security-sensitive code or runtime surfaces materially affect acceptance.

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(dirname "$0")/hook-config.sh"
+source "$(dirname "$0")/hook-config-core.sh"
 
 INPUT="$(cat)"
 

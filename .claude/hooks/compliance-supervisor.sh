@@ -13,15 +13,14 @@ SESSION_ID="$(recover_session_id "$SESSION_ID_RAW" 2>/dev/null || printf '')"
 
 emit_deny() {
   local reason="${1:?reason required}"
-  DENY_REASON="$reason" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Blocked by project compliance policy."
-  }
-}));
-NODE
+  hook_emit_pretool_deny "$reason" "Blocked by project compliance policy."
+}
+
+emit_warning() {
+  local reason="${1:?reason required}"
+  reason="${reason/BLOCKED: /}"
+  reason="${reason/PROCEDURE WARNING: /}"
+  hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last compliance warning."
 }
 
 log_violation() {
@@ -43,9 +42,7 @@ is_governance_surface_path() {
   workspace_root="$(resolve_project_root 2>/dev/null)"
   [[ -n "$workspace_root" ]] || return 1
 
-  # Restrict to the active workspace's .claude/ only. Other absolute
-  # `.claude/` paths (e.g. /home/<user>/.claude/, Claude home runtime)
-  # are not project governance surfaces.
+  # Match only the active workspace's .claude/, not Claude home/runtime paths.
   case "$candidate_path" in
     "$workspace_root"/.claude/*) return 0 ;;
     *) return 1 ;;
@@ -57,13 +54,54 @@ is_governance_restricted_write_path() {
   [[ -n "$candidate_path" ]] || return 1
 
   case "$candidate_path" in
-    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/hooks/*|*/.claude/rules/*)
+    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/skills/*|*/.claude/hooks/*|*/.claude/rules/*|*/.claude/reference/*)
       return 0
       ;;
     *)
       return 1
       ;;
   esac
+}
+
+is_disallowed_generated_output_path() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+  local workspace_root rel
+  workspace_root="$(resolve_project_root 2>/dev/null)"
+  [[ -n "$workspace_root" ]] || return 1
+
+  case "$candidate_path" in
+    "$workspace_root"/outputs|"$workspace_root"/outputs/*|"$workspace_root"/backups|"$workspace_root"/backups/*|"$workspace_root"/.playwright-mcp|"$workspace_root"/.playwright-mcp/*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+is_hook_runtime_artifact_path() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+  local workspace_root rel
+  workspace_root="$(resolve_project_root 2>/dev/null)"
+  [[ -n "$workspace_root" ]] || return 1
+
+  case "$candidate_path" in
+    "$workspace_root"/.claude/hooks/.playwright-mcp/*|"$workspace_root"/.claude/hooks/*.png|"$workspace_root"/.claude/hooks/*.jpg|"$workspace_root"/.claude/hooks/*.jpeg|"$workspace_root"/.claude/hooks/*.webp|"$workspace_root"/.claude/hooks/*.gif|"$workspace_root"/.claude/hooks/*.log|"$workspace_root"/.claude/hooks/*.jsonl|"$workspace_root"/.claude/hooks/*.tmp|"$workspace_root"/.claude/hooks/*.cache)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+is_retired_skill_reference_md_path() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+
+  [[ "$candidate_path" =~ /[.]claude/skills/[^/]+/reference[.]md$ ]]
 }
 
 mutation_payload_exceeds_compact_surface_budget() {
@@ -73,7 +111,9 @@ mutation_payload_exceeds_compact_surface_budget() {
   [[ "$char_count" =~ ^[0-9]+$ ]] || char_count=0
   [[ "$line_count" =~ ^[0-9]+$ ]] || line_count=0
 
-  (( char_count > 2500 || line_count > 40 ))
+  # Hard guard only: catch massive accidental governance dumps without forcing
+  # normal section-grade governance edits into artificial fragments.
+  (( char_count > 8000 || line_count > 150 ))
 }
 
 strip_read_only_null_redirections() {
@@ -86,11 +126,7 @@ strip_read_only_null_redirections() {
   '
 }
 
-# Strip single- and double-quoted regions, replacing them with a single space.
-# Used for substring-scan patterns that should ignore data inside quoted
-# arguments (e.g. literal `rm`/`-rf` text inside test fixtures or grep patterns).
-# Trade-off: simple sed-based stripping does not handle escaped quotes;
-# acceptable for pattern-match purposes only.
+# Strip quoted data for substring scans; suitable for guard heuristics only.
 strip_quoted_regions() {
   printf '%s' "${1-}" | sed -E "s/'[^']*'/ /g; s/\"[^\"]*\"/ /g"
 }
@@ -111,22 +147,15 @@ allowed_package_or_build_command() {
   printf '%s' "$command_text" | grep -Eiq '^[[:space:]]*((npm|pnpm|yarn)[[:space:]]+(install|ci|add|remove|run[[:space:]]+(build|test|lint|typecheck))|(uv|python[0-9.]*[[:space:]]+-m[[:space:]]+pip|pip|pip3)[[:space:]]+(install|uninstall|sync|lock|check|freeze|show|list)|make[[:space:]]+([[:alnum:]_.-]+)|cargo[[:space:]]+(build|test|check)|go[[:space:]]+(build|test)|npm[[:space:]]+run[[:space:]]+build)([[:space:]].*)?$'
 }
 
-# Destructive sub-command pattern — mirrors the destructive check below for
-# per-sub-command validation inside validate_compound_command.
+# Destructive sub-command pattern for compound validation.
 _DESTRUCTIVE_SUBCMD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
 _MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)'
 
-# validate_compound_command: split cmd on &&/||/; and validate each sub-command.
-# denylist-first behavior: fail only when a sub-command is destructive or clearly mutating
-# and not accepted by the specific check_fn. Read-only sub-commands may co-exist inside the
-# compound command without being enumerated in every allowlist.
+# Split cmd on &&/||/; and validate each sub-command denylist-first.
 split_compound_command() {
   local cmd="${1-}"
 
-  # Quote-aware split on `&&`, `||`, `;` — only when separators are outside
-  # single/double quotes, backticks, and `$(...)`. Naive splitting fragmented
-  # valid single commands like `git commit -m "msg with ; inside"` and caused
-  # false-positive mutable-shell denies. Per CLAUDE.md `[BLOCK-AS-DEFECT]`.
+  # Quote-aware split avoids false mutable-shell denies.
   COMMAND_TEXT="$cmd" node <<'NODE'
 const cmd = String(process.env.COMMAND_TEXT || "");
 const parts = [];
@@ -155,7 +184,7 @@ validate_compound_command() {
   local cmd="$1"
   local check_fn="$2"
   local subcmd
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -178,35 +207,22 @@ subcommand_targets_governance_surface() {
   local workspace_root
   workspace_root="$(resolve_project_root 2>/dev/null)"
   [[ -n "$workspace_root" ]] || return 1
-  # Match workspace's .claude/ specifically:
-  # 1. absolute paths starting with $workspace_root/.claude/
-  # 2. cwd-relative paths like .claude/foo or ./.claude/foo (assumed within workspace)
-  # Do NOT match other absolute .claude/ paths (e.g. /home/<user>/.claude/).
+  # Match workspace .claude/ only: absolute workspace paths or cwd-relative paths.
   if printf '%s' "$subcmd" | grep -qF "$workspace_root/.claude/"; then
     return 0
   fi
   printf '%s' "$subcmd" | grep -qE '(^|[[:space:]])(\./)?\.claude/[^[:space:]]'
 }
 
-# Carve-out: narrow rm/rmdir of `.claude/` subpaths that are NOT in the
-# governance-restricted-write-path set. Allows safe orphan/residue cleanup
-# (e.g. `.claude/scripts/abandoned-stub.sh`) while still blocking
-# `.claude/CLAUDE.md`, `.claude/settings*.json`, `.claude/agents/*`,
-# `.claude/hooks/*`, and `.claude/rules/*` from ad-hoc shell rm.
-# Compound commands (e.g. `rm a && rmdir b`) are allowed only when EVERY
-# sub-command is independently a narrow safe rm/rmdir.
-# Rules per sub-command:
-#   - `rm` or `rm -f` (single positional path arg) OR `rmdir` (single positional path arg)
-#   - no recursion (-r/-R/-rf), no globs, no flags-as-paths, no embedded pipes/backticks/subshells
-#   - target path must contain `.claude/` AND must not match the restricted-write subpaths
-# Compound delimiters allowed: `&&`, `;`, `&` (background). Forbidden: `||`, `|`, backticks, `$(...)`.
+# Narrow rm/rmdir carve-out for non-restricted .claude residue only: one path,
+# no recursion/globs/subshells, and every compound segment must qualify.
 command_is_narrow_nonrestricted_claude_file_rm() {
   local cmd="${1-}"
   [[ -n "$cmd" ]] || return 1
   # Whole-command rejections: pipes / or-else / command substitution
   printf '%s' "$cmd" | grep -qE '\||`|\$\(' && return 1
   local subcmd target
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -221,7 +237,7 @@ command_is_narrow_nonrestricted_claude_file_rm() {
     [[ -n "$target" ]] || return 1
     printf '%s' "$target" | grep -qE '\.claude/' || return 1
     printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|hooks/|rules/)' && return 1
-  done < <(printf '%s' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
+  done < <(printf '%s\n' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
   return 0
 }
 
@@ -231,30 +247,14 @@ subcommand_is_mutating_shell() {
   printf '%s' "$subcmd" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'
 }
 
-# Carve-out: bounded content-preserving relocation/structure within .claude/.
-# `mv` and `mkdir` preserve content (mv) or only add structure (mkdir); per the operating
-# philosophy "allow everything except system-destruction that damages functionality", they
-# are not destruction even on governance subpaths. Destruction surfaces (rm -rf, mkfs.*,
-# dd if=, etc.) remain blocked by the destructive-shell guard. Content modification via
-# shell (sed -i, > redirect, tee, chmod, etc.) for non-mv/non-mkdir subcommands remains
-# blocked by command_mutates_governance_surface.
-# Rules per sub-command:
-#   - `mv` with optional -n, exactly two non-glob positional args, both containing .claude/
-#     (a) reject path traversal (`..` segments) on either side
-#     (b) destination must live under a TRUSTED archival root —
-#         `\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)/` — agents/ and
-#         top-level governance files (CLAUDE.md, settings*.json) cannot be retired this way
-#     (c) destination parent canonical path (realpath) must still match the archival root,
-#         so a pre-created directory symlink inside the archival root cannot redirect mv
-#         to outside the archival root
-#   - `mkdir` with optional -p, one or more non-glob positional args all containing .claude/
-# Compound delimiters allowed: `&&`, `;`, `&`. Forbidden: `||`, `|`, backticks, `$(...)`.
+# Bounded .claude relocation/structure carve-out: mv only to trusted archive
+# roots with traversal/symlink defense; mkdir only adds .claude structure.
 command_is_narrow_governance_relocation() {
   local cmd="${1-}"
   [[ -n "$cmd" ]] || return 1
   printf '%s' "$cmd" | grep -qE '\||`|\$\(' && return 1
   local subcmd
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -265,19 +265,12 @@ command_is_narrow_governance_relocation() {
       dest="${rest##* }"
       printf '%s' "$src" | grep -qE '\.claude/' || return 1
       printf '%s' "$dest" | grep -qE '\.claude/' || return 1
-      # Reject path traversal in either side; prevents `.claude/hooks/legacy/../sv-gate.sh`
-      # style escapes that would otherwise satisfy the archival-segment check below.
+      # Reject traversal that could fake an archival segment.
       printf '%s' "$src" | grep -qE '(^|/)\.\.(/|$)' && return 1
       printf '%s' "$dest" | grep -qE '(^|/)\.\.(/|$)' && return 1
-      # Destination must live under a TRUSTED archival root: hooks/, skills/, or rules/
-      # subdirectories with a legacy|archive|deprecated path segment. agents/ and top-level
-      # governance files (CLAUDE.md, settings*.json) cannot be retired via shell mv — they
-      # require explicit governance review through structured tools.
+      # Destination must stay under trusted hooks/skills/rules archive roots.
       printf '%s' "$dest" | grep -qE '\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)/' || return 1
-      # Symlink-resolution defense: resolve dest parent's canonical path so a pre-created
-      # symlink inside the archival root cannot redirect mv to outside the archival root.
-      # Closes the `ln -s ../../hooks .claude/hooks/legacy/decoy && mv X decoy/sv-gate.sh`
-      # vector; bash mv would otherwise traverse the directory symlink and write to the target.
+      # Resolve parent to block archive-root symlink escapes.
       local dest_parent="${dest%/*}"
       if [[ -e "$dest_parent" ]]; then
         local canonical
@@ -286,16 +279,18 @@ command_is_narrow_governance_relocation() {
       fi
       continue
     fi
-    if printf '%s' "$subcmd" | grep -Eq '^mkdir([[:space:]]+-p)?([[:space:]]+[^[:space:]*?\[]+)+$'; then
-      local rest p
-      rest="$(printf '%s' "$subcmd" | sed -E 's/^mkdir([[:space:]]+-p)?[[:space:]]+//')"
-      for p in $rest; do
-        printf '%s' "$p" | grep -qE '\.claude/' || return 1
-      done
-      continue
-    fi
+	    if printf '%s' "$subcmd" | grep -Eq '^mkdir([[:space:]]+-p)?([[:space:]]+[^[:space:]*?\[]+)+$'; then
+	      local rest p
+	      rest="$(printf '%s' "$subcmd" | sed -E 's/^mkdir([[:space:]]+-p)?[[:space:]]+//')"
+	      for p in $rest; do
+	        printf '%s' "$p" | grep -qE '\.claude/' || return 1
+	        printf '%s' "$p" | grep -qE '(^|/)\.claude/hooks/\.playwright-mcp(/|$)' && return 1
+	        printf '%s' "$p" | grep -qE '(^|/)\.claude/skills/[^/]+/reference\.md/?$' && return 1
+	      done
+	      continue
+	    fi
     return 1
-  done < <(printf '%s' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
+  done < <(printf '%s\n' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
   return 0
 }
 
@@ -307,7 +302,7 @@ command_mutates_governance_surface() {
   local subcmd=""
   [[ -n "$cmd" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -421,7 +416,7 @@ command_is_allowed_repo_test_index_hygiene() {
   local subcmd=""
   [[ -n "$cmd" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -447,7 +442,7 @@ command_is_noisy_touch_probe() {
   local subcmd=""
   [[ -n "$cmd" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -507,6 +502,73 @@ bounded_generated_reset_scaffold_command() {
 
   project_root="$(resolve_project_root)"
   COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node "$HOOK_LIB_DIR/generated-command-policy.js" reset-scaffold
+}
+
+command_targets_disallowed_generated_output_root() {
+  local cmd="${1-}"
+  local project_root=""
+  [[ -n "$cmd" ]] || return 1
+
+  project_root="$(resolve_project_root)"
+  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node <<'NODE'
+const path = require("path");
+
+const command = String(process.env.COMMAND_TEXT || "");
+const root = path.resolve(String(process.env.PROJECT_ROOT || process.cwd()));
+if (!/(^|[;\s])(mkdir|touch|cp|mv|install|tee)([;\s]|$)|>{1,2}/.test(command)) {
+  process.exit(1);
+}
+
+function tokenize(text) {
+  const words = [];
+  let current = "";
+  let quote = "";
+  for (let index = 0; index < text.length; index += 1) {
+    const ch = text[index];
+    if (quote) {
+      if (ch === quote) quote = "";
+      else if (ch === "\\" && quote === '"' && index + 1 < text.length) current += text[++index];
+      else current += ch;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (/\s/.test(ch)) {
+      if (current) {
+        words.push(current);
+        current = "";
+      }
+      continue;
+    }
+    current += ch;
+  }
+  if (quote) process.exit(1);
+  if (current) words.push(current);
+  return words;
+}
+
+function isDisallowed(candidate) {
+  if (!candidate || candidate.startsWith("-")) return false;
+  if (/[$`*?\[\]{}<>|;&\n\r]/.test(candidate)) return false;
+  const resolved = path.resolve(root, candidate);
+  const relative = path.relative(root, resolved).replace(/\\/g, "/");
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) return false;
+  return relative === "outputs" ||
+    relative.startsWith("outputs/") ||
+    relative === "backups" ||
+    relative.startsWith("backups/") ||
+    relative === ".playwright-mcp" ||
+    relative.startsWith(".playwright-mcp/");
+}
+
+const words = tokenize(command);
+for (const word of words) {
+  if (isDisallowed(word)) process.exit(0);
+}
+process.exit(1);
+NODE
 }
 
 user_approved_delete_subcommand() {
@@ -619,6 +681,17 @@ subcommand_is_read_only_reporting() {
   return 0
 }
 
+command_is_lead_authorized_apt_install() {
+  # Lead-only system dependency install carve-out; reject destructive companions.
+  local cmd="${1-}"
+  [[ -n "$cmd" ]] || return 1
+  printf '%s' "$cmd" | grep -Eq '(^|[[:space:]]|\|)sudo[[:space:]]+(-S[[:space:]]+)?(apt(-get)?)[[:space:]]+install[[:space:]]+-y[[:space:]]+[A-Za-z0-9._+-]' || return 1
+  if printf '%s' "$cmd" | grep -Eiq '(^|[[:space:]]|;|&&|\|\|)(rm|dd|mkfs|fdisk|shutdown|reboot|poweroff|halt|setcap|setfacl)([[:space:]]|$)|>[[:space:]]*/(etc|bin|usr|sbin|opt|var|root)/|chmod[[:space:]]+(\+s|[0-7]*[2-7][0-7]{3})'; then
+    return 1
+  fi
+  return 0
+}
+
 user_approved_delete_command() {
   local cmd="${1-}"
   local subcmd=""
@@ -627,7 +700,7 @@ user_approved_delete_command() {
   local candidate_root=""
   [[ -n "$cmd" && -s "$USER_APPROVED_DELETE_ROOTS_FILE" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -661,7 +734,7 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
   [[ -n "$cmd" && -s "$USER_APPROVED_DELETE_ROOTS_FILE" ]] || return 1
   printf '%s' "$cmd" | grep -qE '\||`|\$\(' && return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -918,31 +991,57 @@ NODE
 )"
 
 mapfile -t FIELDS <<<"$PARSED"
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
 
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-FILE_PATH="$(decode_field "${FIELDS[1]:-}")"
-COMMAND="$(decode_field "${FIELDS[2]:-}")"
-MUTATION_CONTENT_CHARS="$(decode_field "${FIELDS[3]:-}")"
-MUTATION_CONTENT_LINES="$(decode_field "${FIELDS[4]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+FILE_PATH="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+COMMAND="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+MUTATION_CONTENT_CHARS="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+MUTATION_CONTENT_LINES="$(hook_decode_base64_field "${FIELDS[4]:-}")"
 
 CANONICAL_PATH=""
 if [[ -n "$FILE_PATH" ]]; then
   CANONICAL_PATH="$(realpath -m "$FILE_PATH" 2>/dev/null || printf '%s' "$FILE_PATH")"
 fi
 
-case "$TOOL_NAME" in
-  Edit|Update|MultiEdit|Write|NotebookEdit)
-    if [[ -n "$CANONICAL_PATH" ]]; then
-      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
-      if [[ "$CANONICAL_PATH" == */references/* ]]; then
-        emit_deny "Reference materials under ./references are read-only. Copy them to a working location before modifying them."
-        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-readonly" || true
-        exit 0
+	case "$TOOL_NAME" in
+	  Edit|Update|MultiEdit|Write|NotebookEdit)
+	    if [[ -n "$CANONICAL_PATH" ]]; then
+	      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
+	      if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
+	        emit_deny "Runtime artifacts must not be created under .claude/hooks. Route tool output to projects/<project-folder>/.runtime/<tool>/ or the active project output surface."
+	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
+	        exit 0
+	      fi
+	      if is_disallowed_generated_output_path "$CANONICAL_PATH"; then
+	        emit_deny "Task-created output must use repository-root projects/<project-folder>/...; outputs/, backups/, and .playwright-mcp/ are not approved output roots."
+	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "disallowed-generated-output-root" || true
+	        exit 0
+	      fi
+	      if is_retired_skill_reference_md_path "$CANONICAL_PATH"; then
+	        emit_deny "Retired intermediate skill reference.md must not be created or edited. Use the owning skill's references/*.md files and direct SKILL.md reference map instead."
+	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "retired-skill-reference-md" || true
+	        exit 0
+	      fi
+	      if [[ "$CANONICAL_PATH" == */references/* || "$CANONICAL_PATH" == */.claude/reference/* ]]; then
+	        # Wholesale rewrite tools (Write/NotebookEdit) are never allowed on references/ —
+	        # Update/Upgrade Sequence requires structured Edit/Update/MultiEdit so diff is reviewable.
+        case "$TOOL_NAME" in
+          Write|NotebookEdit)
+            emit_deny "Reference materials under ./references or .claude/reference must not be Write/NotebookEdit (wholesale rewrite). Use structured Edit/Update/MultiEdit only; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+            log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
+            exit 0
+            ;;
+        esac
+        # Structured edit path: only positively-identified lead session is allowed (warn-allow).
+        # Empty SESSION_ID, worker, or any non-runtime-owner sender → fail-secure deny.
+        if [[ -z "$SESSION_ID" ]] || ! session_is_runtime_owner "$SESSION_ID" 2>/dev/null; then
+          emit_deny "Reference materials under ./references or .claude/reference are read-only outside positively-identified lead session governance edits. Lead session must satisfy Update/Upgrade Sequence + SV-PLAN/SV-RESULT before structured Edit/Update/MultiEdit. Indeterminate or non-lead sender → deny."
+          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-non-lead-or-indeterminate" || true
+          exit 0
+        fi
+        emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
+        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-lead-edit-allowed" || true
+        # fall through to allow lead governance maintenance
       fi
 
       case "$BASENAME" in
@@ -978,16 +1077,13 @@ case "$TOOL_NAME" in
         fi
       fi
 
-      # Compact-surface budget applies only to workspace governance surfaces
-      # (where review-per-chunk gives real value). Scratch files outside .claude/
-      # — including /tmp test fixtures and other workspace artifacts — should
-      # not be size-limited just for terminal aesthetics.
+    # Compact-surface budget applies only to workspace governance surfaces.
       if [[ "$CANONICAL_PATH" != */.claude/session-state.md ]] \
         && ! procedure_state_target_exact "$CANONICAL_PATH" \
         && is_governance_surface_path "$CANONICAL_PATH" \
         && mutation_payload_exceeds_compact_surface_budget "$MUTATION_CONTENT_CHARS" "$MUTATION_CONTENT_LINES"; then
-        emit_deny "Large file mutation is blocked to keep the live terminal surface compact. For new artifacts, use quiet touch if needed, then add the body in bounded Edit/Update/MultiEdit chunks; for existing artifacts, split the mutation into smaller bounded edits."
-        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "large-file-mutation" || true
+        emit_warning "Large governance mutation detected. Prefer bounded Edit/Update/MultiEdit chunks so intent remains reviewable; this is advisory unless the command also hits a hard safety boundary."
+        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "large-file-mutation-warning" || true
         exit 0
       fi
     fi
@@ -995,32 +1091,20 @@ case "$TOOL_NAME" in
 
   Bash)
     CLEAN_COMMAND="$(strip_full_line_shell_comments "$COMMAND" | tr '\n' ' ')"
-    # UNQUOTED_CLEAN strips quoted regions so compound-separator detection
-    # (`&&`, `||`, `;`) does not false-positive on separators that are merely
-    # inside `-m "message body with ; inside"` arguments, HEREDOC-quoted
-    # content, or other quoted regions. Without this guard, a benign single
-    # `git commit -m "...;..."` is misclassified as compound, dispatched
-    # through validate_compound_command (which splits naively on `;`), and
-    # falls through to the generic mutable-shell deny — even though `git
-    # commit` is in LEAD_OPERATIONAL_ALLOWLIST. Per CLAUDE.md
-    # `[BLOCK-AS-DEFECT]` and `[ALLOW-EXCEPT-DESTRUCT]`, the compound trigger
-    # must reflect real shell structure, not quoted text content.
-    # Real compound commands (unquoted `&&`/`||`/`;`) still surface here and
-    # still go through validate_compound_command on the original CLEAN_COMMAND.
+    # Ignore quoted separators for compound-command checks; real unquoted
+    # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
     if command_is_noisy_touch_probe "$CLEAN_COMMAND"; then
-      emit_deny "Bootstrap touch must stay quiet. Do not append ls/cat/wc/stat confirmation to touch; if an existence check is truly needed, run it as a separate read-only step. If touch itself would fail because the parent directory does not exist, create the parent directory first in a separate quiet mkdir -p step."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "noisy-touch-probe" || true
+      emit_warning "Bootstrap touch includes a follow-up probe. Prefer quiet touch and separate read-only verification when needed."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "noisy-touch-probe-warning" || true
       exit 0
     fi
     if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
-      emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-worker state first; if only stale residue remains, use TeamDelete or report the exact residual state."
+      emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-agent state first; if only stale residue remains, use TeamDelete or report the exact residual state."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "team-runtime-shell-delete" || true
       exit 0
     fi
-    # Narrow non-restricted .claude orphan-file rm carve-out (single file, no recursion, no globs).
-    # Restricted governance subpaths (CLAUDE.md, settings*.json, agents/, hooks/, rules/) are NOT
-    # eligible. This unblocks bounded residue cleanup without weakening governance protection.
+    # Narrow non-restricted .claude orphan-file rm carve-out.
     if command_is_narrow_nonrestricted_claude_file_rm "$CLEAN_COMMAND"; then
       exit 0
     fi
@@ -1035,30 +1119,31 @@ case "$TOOL_NAME" in
     fi
     # Content-preserving relocation/structure carve-out: mv and mkdir within .claude/ are
     # not destruction (mv preserves content; mkdir adds structure). Allowed before the broad
-    # mutation block so cleanup operations like `mv .claude/hooks/orphan.sh .claude/hooks/legacy/`
+    # mutation block so cleanup operations like `mv .claude/hooks/orphan.sh .claude/hooks/archive/`
     # are not falsely classified as governance-mutation requiring structured-tool review.
     if command_is_narrow_governance_relocation "$CLEAN_COMMAND"; then
       exit 0
     fi
-    # Governance surface protection is unconditional — runs before any session-type allowlist.
-    # This ensures worker sessions cannot bypass governance-surface protection via pattern match.
-    # Strip read-only null redirections (>/dev/null, 2>&1, etc.) AND quoted regions (so literal
-    # `rm`/`-rf`/`>` text inside echo arguments, grep patterns, or test fixtures does not
-    # false-positive against the governance-mutation regex).
+    # Governance protection runs before session allowlists; strip inert redirs/quotes first.
     MUTATION_CHECK_COMMAND="$(strip_quoted_regions "$(strip_read_only_null_redirections "$CLEAN_COMMAND")")"
     if command_mutates_governance_surface "$MUTATION_CHECK_COMMAND"; then
       emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation-early" || true
       exit 0
     fi
-    if command_uses_interpreter_fs_mutation "$CLEAN_COMMAND"; then
-      emit_deny "Interpreter-based filesystem mutation is blocked. Use structured file tools for edits or the bounded generated-output cleanup path for approved cleanup roots."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
-      exit 0
-    fi
-    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
-      if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
-        exit 0
+	    if command_uses_interpreter_fs_mutation "$CLEAN_COMMAND"; then
+	      emit_deny "Interpreter-based filesystem mutation is blocked. Use structured file tools for edits or the bounded generated-output cleanup path for approved cleanup roots."
+	      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
+	      exit 0
+	    fi
+	    if command_targets_disallowed_generated_output_root "$CLEAN_COMMAND"; then
+	      emit_deny "Task-created output must use repository-root projects/<project-folder>/...; outputs/, backups/, and .playwright-mcp/ are not approved output roots."
+	      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "disallowed-generated-output-root" || true
+	      exit 0
+	    fi
+	    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
+	      if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
+	        exit 0
       fi
     else
       if allowed_package_or_build_command "$CLEAN_COMMAND"; then
@@ -1086,11 +1171,6 @@ case "$TOOL_NAME" in
     if user_approved_delete_command "$CLEAN_COMMAND"; then
       exit 0
     fi
-    if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
-      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt explicitly names the approved workspace root and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests must use lifecycle control, not filesystem deletion."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
-      exit 0
-    fi
     if bounded_generated_cleanup_command "$CLEAN_COMMAND"; then
       exit 0
     fi
@@ -1100,10 +1180,18 @@ case "$TOOL_NAME" in
     if command_is_allowed_repo_test_index_hygiene "$CLEAN_COMMAND"; then
       exit 0
     fi
+    if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
+      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt explicitly names the approved workspace root and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests must use lifecycle control, not filesystem deletion."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
+      exit 0
+    fi
+    if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])(rm|rmdir)([[:space:]]|$)'; then
+      emit_deny "File deletion requires explicit approval or a narrow approved cleanup path. Use the approved cleanup route, structured review, or ask for destructive approval before deleting."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-delete" || true
+      exit 0
+    fi
 
-    # V-06 fix: Allow worker sessions to run diagnostic/test patterns.
-    # Developer implementation commands — allowed for worker sessions
-    # E-20 fix: moved AFTER destructive command check to prevent compound-command bypass.
+    # Agent diagnostic/implementation commands are allowed only after destructive checks.
     S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
       if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
@@ -1111,7 +1199,7 @@ case "$TOOL_NAME" in
           exit 0
         fi
         if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
-          emit_deny "Worker implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
+          emit_deny "Agent implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
           log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
           exit 0
         fi
@@ -1120,16 +1208,14 @@ case "$TOOL_NAME" in
           exit 0
         fi
         if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
-          emit_deny "Worker implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
+          emit_deny "Agent implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
           log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
           exit 0
         fi
       fi
     fi
 
-    # E-9: Lead session operational allowlist — basic git and filesystem operations.
-    # Runs AFTER destructive command check and AFTER governance surface mutation check.
-    # Bypasses only the general mutable-Bash block; safety-critical checks above still apply.
+    # Lead operational allowlist runs after destructive and governance checks.
     LEAD_OPERATIONAL_ALLOWLIST=(
         "git commit"
         "git push"
@@ -1152,13 +1238,8 @@ case "$TOOL_NAME" in
         "chmod "
     )
 
-    # Check if this is an allowlisted operational command (prefix match only).
-    # Substring match is intentionally avoided: a compound command such as
-    # "rm /important && git commit" would match "git commit" anywhere in the
-    # string and bypass the mutable-command block below — a compliance bypass.
-    # Allow a narrowly-bounded Git recovery sub-command (stale index lock
-    # cleanup) to coexist with read-only Git inspection and normal lead Git
-    # operations without opening general mutable-shell bypasses.
+    # Prefix-only allowlist; substring matching would let compound mutation bypass.
+    # Narrow stale-index-lock cleanup may coexist with read-only Git inspection.
     TRIMMED_LEAD_CMD="${CLEAN_COMMAND#"${CLEAN_COMMAND%%[![:space:]]*}"}"
     if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_lead_context_subcmd; then
@@ -1177,6 +1258,12 @@ case "$TOOL_NAME" in
 
     UNQUOTED_SANITIZED="$(strip_quoted_regions "$SANITIZED_COMMAND")"
     if printf '%s' "$UNQUOTED_SANITIZED" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
+      # Lead-only approved system dependency install; agents must hold for setup.
+      if [[ -n "$SESSION_ID" ]] && ! runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
+        if command_is_lead_authorized_apt_install "$CLEAN_COMMAND"; then
+          exit 0
+        fi
+      fi
       # Content-preserving relocation/structure carve-out: see definition near subcommand_is_mutating_shell.
       if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
         exit 0
@@ -1186,20 +1273,25 @@ case "$TOOL_NAME" in
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0
       fi
-      emit_deny "Mutable shell command blocked. Read-only Bash discovery is allowed. Reclassify the action: use structured file tools for edits, a bounded generated-output cleanup command for cleanup, or the bounded reset-scaffold pattern for approved generated roots. Worker/developer reroute is not a bypass for the same blocked shell shape."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-shell" || true
+      emit_warning "Mutable shell command detected. Prefer structured file tools for edits and bounded cleanup paths for generated-output cleanup; hook denial is reserved for destructive, governance, runtime, or bypass-risk mutations."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-shell-warning" || true
       exit 0
     fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-delete([[:space:]]|$)|[[:space:]]-exec([[:space:]]|$)|[[:space:]]-execdir([[:space:]]|$))'; then
+    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*[[:space:]]-delete([[:space:]]|$)'; then
       emit_deny "Mutable find actions are blocked. Use find only for read-only discovery."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find" || true
       exit 0
     fi
+    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-exec([[:space:]]|$)|[[:space:]]-execdir([[:space:]]|$)).*(^|[[:space:]])((rm|rmdir|mv|cp|touch|mkdir|chmod|chown|tee)([[:space:]]|$)|sed[[:space:]]+-i|perl[[:space:]]+-i|bash[[:space:]]+-c|sh[[:space:]]+-c|python([0-9.]+)?([[:space:]]|$)|node(js)?([[:space:]]|$))'; then
+      emit_deny "Find -exec with mutating or interpreter execution is blocked. Use read-only find, structured tools, or an approved cleanup path."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-exec" || true
+      exit 0
+    fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -q 'references/'; then
+    if printf '%s' "$SANITIZED_COMMAND" | grep -Eq 'references/|[.]claude/reference/'; then
       if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(cp|mv|rm|install|tee)([[:space:]]|$)|sed[[:space:]]+-i|perl[[:space:]]+-i'; then
-        emit_deny "Reference materials under ./references must not be modified in place."
+        emit_deny "Reference materials under ./references or .claude/reference must not be modified in place."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "references-shell-mutation" || true
         exit 0
       fi

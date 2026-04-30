@@ -80,30 +80,17 @@ NODE
 
 mapfile -t FIELDS <<<"$PARSED"
 
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
-
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
-AGENT_NAME="$(decode_field "${FIELDS[2]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+DESCRIPTION="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+AGENT_NAME="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[3]:-}")"
 
 emit_deny() {
   local reason="${1:?reason required}"
   local surface_key=""
   surface_key="${DISPATCH_WORK_SURFACE:-${TARGET_NAME:-${TARGET_LANE:-generic}}}"
-  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Dispatch sizing guard blocked the assignment."
-  }
-}));
-NODE
+  reason="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")"
+  hook_emit_pretool_deny "$reason" "Dispatch sizing guard blocked the assignment."
 }
 
 emit_dispatch_warning() {
@@ -119,12 +106,6 @@ dispatch_sizing_block() {
   local detail="${1:?detail required}"
   local next_step="${2:?next step required}"
   printf 'BLOCKED: dispatch preflight incomplete. Detail: %s. Next: %s.' "$detail" "$next_step"
-}
-
-dispatch_target_block() {
-  local detail="${1:?detail required}"
-  local next_step="${2:?next step required}"
-  printf 'BLOCKED: dispatch target invalid. Detail: %s. Next: %s.' "$detail" "$next_step"
 }
 
 phase3_dispatch_scope_tags() {
@@ -195,12 +176,12 @@ idle_pending_recovery_step() {
   fi
 
   if [[ -n "$worker_summary" ]]; then
-    printf "treat completed worker(s) (%s) as standby and consult REQUESTED-LIFECYCLE: reuse the fitting worker when reuse is requested or justified, or clean up unneeded workers with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat completed agent(s) (%s) as standby and consult REQUESTED-LIFECYCLE: reuse the fitting agent when reuse is requested or justified, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch" \
       "$worker_summary"
     return 0
   fi
 
-  printf 'reuse the fitting standby worker, or clean up unneeded workers with shutdown_request during explicit teardown -> retry dispatch'
+  printf 'reuse the fitting standby agent, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch'
 }
 
 worker_shard_boundary_for_idle_guard() {
@@ -291,7 +272,6 @@ if [[ "$TARGET_LANE" == "unknown" ]]; then
 fi
 
 NORMALIZED_DESC="$(normalize_dispatch_text "$DESCRIPTION")"
-RESEARCH_MODE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "RESEARCH-MODE" 2>/dev/null || true)")"
 DISPATCH_WORK_SURFACE="$(dispatch_field_raw_value "$DESCRIPTION" "WORK-SURFACE" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
 TARGET_SHARD_BOUNDARY="$(dispatch_field_raw_value "$DESCRIPTION" "SHARD-BOUNDARY" 2>/dev/null | tr -d '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' || true)"
 CURRENT_PHASE_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "CURRENT-PHASE" 2>/dev/null || true)")"
@@ -309,8 +289,7 @@ if phase3_parallel_developer_requires_concrete_name \
   "$SPLIT_BASIS_NORM" \
   "$PARALLEL_GROUPS_NORM" \
   "$DISPATCH_BLOCKERS_NORM"; then
-  emit_deny "$(dispatch_sizing_block "Phase 3 parallel developer dispatch cannot use bare worker name 'developer'; same-capability parallel workers require concrete identities" "choose a concrete developer name from AGENT-MAP (for example dev-frontend-core) or reuse the matching existing developer with assignment-grade SendMessage after WP+SV")"
-  exit 0
+  emit_dispatch_warning "Phase 3 parallel developer dispatch uses bare agent name 'developer' while same-capability parallel work benefits from concrete identities. Prefer a concrete developer name from AGENT-MAP or reuse the matching existing developer with assignment-grade SendMessage after WP+SV."
 fi
 
 if [[ "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]] \
@@ -323,20 +302,17 @@ if [[ "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]] \
   if [[ "${#_phase3_scope_tags[@]}" -ge 2 ]]; then
     _phase3_scope_summary="$(printf '%s, ' "${_phase3_scope_tags[@]}")"
     _phase3_scope_summary="${_phase3_scope_summary%, }"
-    emit_deny "$(dispatch_sizing_block "Phase 3 implementation packet spans multiple independently ownable lanes (${_phase3_scope_summary}) while dispatch basis already declares a parallel split" "split into lane-bounded developer packets, or record the exact blocker keeping those lanes serial in DISPATCH-BLOCKERS")"
-    exit 0
+    emit_dispatch_warning "Phase 3 implementation packet spans multiple independently ownable lanes (${_phase3_scope_summary}) while dispatch basis already declares a parallel split. Prefer lane-bounded developer packets, or record the exact blocker keeping those lanes serial in DISPATCH-BLOCKERS."
   fi
 fi
 
-# Sharded researcher dispatches are intentionally parallel instances, each identified by a
-# unique SHARD-ID. Duplicate-prevention and idle-backlog checks do not apply to them;
-# sharded-field validation (SHARD-ID, SHARD-BOUNDARY, MERGE-OWNER) runs in the case block below.
-# B-5: Also treat as sharded when SHARD-ID or SHARD-BOUNDARY is present even if
-# RESEARCH-MODE is not explicitly "sharded" (the case block will validate required fields).
+# Sharded researcher dispatches are intentionally parallel runtime instances.
+# The hook recognizes them only by explicit shard identity fields because packet
+# mode wording is doctrine context, not a hook-owned behavior controller.
 _is_sharded_researcher=false
 SHARDED_TARGET_NAME=""
 if [[ "$TARGET_LANE" == "researcher" ]]; then
-  if [[ "$RESEARCH_MODE_NORM" == "sharded" ]] || dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
+  if dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
     _is_sharded_researcher=true
     SHARD_ID_FOR_TARGET="$(dispatch_field_raw_value "$DESCRIPTION" "SHARD-ID" 2>/dev/null || true)"
     SHARD_ID_FOR_TARGET="$(printf '%s' "$SHARD_ID_FOR_TARGET" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9_-]+/-/g; s/^-+//; s/-+$//')"
@@ -348,40 +324,40 @@ fi
 
 if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   if target_is_already_active_worker "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' already exists" "choose a unique SHARD-ID for parallel work, or reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV")"
+    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' already exists" "choose a unique SHARD-ID for parallel work, or reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV")"
     exit 0
   fi
 
   if worker_is_standby "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' is already on standby" "reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV, or choose a unique SHARD-ID for a genuinely distinct shard")"
+    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' is already on standby" "reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV, or choose a unique SHARD-ID for a genuinely distinct shard")"
     exit 0
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher worker '${SHARDED_TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
+    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
     exit 0
   fi
 fi
 
 if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   if [[ "$_is_sharded_researcher" != "true" ]] && target_is_already_active_worker "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "live worker '${TARGET_NAME}' already exists" "reuse with assignment-grade SendMessage after WP+SV, or decide shutdown/standby/hold before replacement spawn. For parallel same-capability work, choose a concrete unique worker name from AGENT-MAP instead of repeating a bare lane label. For parallel researcher work, retry as RESEARCH-MODE: sharded with SHARD-ID, SHARD-BOUNDARY, and MERGE-OWNER")"
+    emit_deny "$(dispatch_sizing_block "live agent '${TARGET_NAME}' already exists" "reuse with assignment-grade SendMessage after WP+SV, or decide shutdown/standby/hold before replacement spawn. For parallel same-capability work, choose a concrete unique agent name from AGENT-MAP instead of repeating a bare lane label. For parallel researcher work, provide shard identity fields (SHARD-ID, SHARD-BOUNDARY, MERGE-OWNER) or another concrete unique agent name.")"
     exit 0
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_standby "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "standby worker '${TARGET_NAME}' already exists" "reuse '${TARGET_NAME}' with assignment-grade SendMessage after WP+SV instead of replacement spawn")"
+    emit_deny "$(dispatch_sizing_block "standby agent '${TARGET_NAME}' already exists" "reuse '${TARGET_NAME}' with assignment-grade SendMessage after WP+SV instead of replacement spawn")"
     exit 0
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "worker '${TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$TARGET_NAME")")"
+    emit_deny "$(dispatch_sizing_block "agent '${TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$TARGET_NAME")")"
     exit 0
   fi
 fi
 
 # Standby-overlap enforcement is scoped to the current dispatch's work-surface:
-# standby workers on a different known surface are excluded, while workers with
+# standby agents on a different known surface are excluded, while agents with
 # unknown surfaces remain blocking because non-overlap cannot be proven truthfully.
 STANDBY_COUNT="$(standby_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
 if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
@@ -401,13 +377,13 @@ if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
     exit 0
   fi
 
-  emit_deny "$(dispatch_sizing_block "standby worker(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$STANDBY_SUMMARY")")"
+  emit_deny "$(dispatch_sizing_block "standby agent(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$STANDBY_SUMMARY")")"
   exit 0
 fi
 
 case "$TARGET_LANE" in
   researcher)
-    if [[ "$RESEARCH_MODE_NORM" == "sharded" ]] || dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
+    if dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
       if ! dispatch_field_present "$DESCRIPTION" "SHARD-ID"; then
         emit_deny "Sharded researcher dispatch requires SHARD-ID. Parallel shard work cannot stay legible without an explicit shard identity."
         exit 0
@@ -425,8 +401,8 @@ case "$TARGET_LANE" in
 
 esac
 
-# Record the dispatched worker's work-surface so future lifecycle-backlog checks can scope to
-# the correct surface. Workers dispatched without a WORK-SURFACE field get no surface file
+# Record the dispatched agent's work-surface so future lifecycle-backlog checks can scope to
+# the correct surface. Agents dispatched without a WORK-SURFACE field get no surface file
 # and are treated as global-scope (safe fallback) in future lifecycle-backlog checks.
 if [[ -n "$DISPATCH_WORK_SURFACE" ]]; then
   if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then

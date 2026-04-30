@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(dirname "$0")/hook-config.sh"
+source "$(dirname "$0")/hook-config-core.sh"
+source "$(dirname "$0")/lib/hook-agent-dispatch.sh"
 
 INPUT="$(cat)"
 
@@ -23,32 +24,19 @@ NODE
 )"
 
 mapfile -t FIELDS <<<"$PARSED"
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
 
-TASK_SUBJECT="$(decode_field "${FIELDS[0]:-}")"
-TASK_DESCRIPTION="$(decode_field "${FIELDS[1]:-}")"
-TEAMMATE_NAME="$(decode_field "${FIELDS[2]:-}")"
-TEAM_NAME="$(decode_field "${FIELDS[3]:-}")"
-TOOL_NAME="$(decode_field "${FIELDS[4]:-}")"
+TASK_SUBJECT="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+TASK_DESCRIPTION="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+TEAM_NAME="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[4]:-}")"
 
 deny_task_create() {
   local reason="${1:?reason required}"
   printf '[%s] TASK-CREATED BLOCKED: team=%s teammate=%s subject=%s reason=%s\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "${TEAM_NAME:-unknown}" "${TEAMMATE_NAME:-unknown}" "${TASK_SUBJECT:-<empty>}" "$reason" >> "$VIOLATION_LOG"
   if [[ "$TOOL_NAME" == "TaskCreate" ]]; then
-    DENY_REASON="$reason" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "TaskCreate blocked."
-  }
-}));
-NODE
+    hook_emit_pretool_deny "$reason" "TaskCreate blocked."
     exit 0
   fi
   printf '%s\n' "$reason" >&2
@@ -66,26 +54,6 @@ task_create_error() {
 
 [[ -n "$TASK_SUBJECT" ]] || deny_task_create "$(task_create_error "a non-empty task subject.")"
 [[ -n "$TASK_DESCRIPTION" ]] || deny_task_create "$(task_create_error "a non-empty task description so the shared task list remains a reliable state surface.")"
-
-has_any_dispatch_field() {
-  local field_name=""
-  for field_name in "$@"; do
-    if dispatch_field_present "$TASK_DESCRIPTION" "$field_name" 2>/dev/null; then
-      return 0
-    fi
-  done
-  # Fallback: detect FIELD-NAME: pattern mid-line when semicolons are absent
-  local lower_desc
-  lower_desc="$(printf '%s' "$TASK_DESCRIPTION" | tr '[:upper:]' '[:lower:]')"
-  for field_name in "$@"; do
-    local lower_field
-    lower_field="$(printf '%s' "$field_name" | tr '[:upper:]' '[:lower:]')"
-    if printf '%s' "$lower_desc" | grep -qF "${lower_field}:" 2>/dev/null; then
-      return 0
-    fi
-  done
-  return 1
-}
 
 # Minimal-guidance policy: TaskCreate should block only when the shared task row
 # is effectively unusable as a state surface. Non-empty subject + description are

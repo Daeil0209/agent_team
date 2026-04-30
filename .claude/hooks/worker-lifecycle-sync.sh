@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
-# Consolidated worker lifecycle sync -- merges sync-worker-lifecycle-state.sh,
-# cleanup-terminated-panes.sh, and teammate-quality-gate.sh.
-# EVENT TYPES (both routed here via settings.json hooks):
-#   PostToolUse(SendMessage): worker state sync + planning marker management + pane cleanup
-#   TeammateIdle:            quality gate mirror + turn-ended worker-state sync + pane cleanup
-# BRANCHING: EVENT_TYPE detected at runtime (tool_name field presence, lines 13-21).
-#   post-tool-use path: handles assignment/reuse/reroute markers, handoff state, standby/shutdown handling
-#   teammate-idle path: records turn-ended standby fallback, mirrors quality gate decisions, triggers pane cleanup
+# Consolidated worker lifecycle sync for PostToolUse(SendMessage) and TeammateIdle.
 set -euo pipefail
 
 source "$(dirname "$0")/hook-config.sh"
@@ -167,14 +160,21 @@ worker_turn_end_classification() {
   fi
 
   case "$last_message_class" in
-    handoff|completion|hold)
+    handoff)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
         printf 'working-report-missing'
         return 0
       fi
       printf 'standby'
       ;;
-    blocker)
+    completion)
+      if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
+        printf 'working-report-missing'
+        return 0
+      fi
+      printf 'standby'
+      ;;
+    hold\|blocker|hold|blocker)
       printf 'working-blocked'
       ;;
     *)
@@ -333,7 +333,7 @@ NODE
 
 _update_worker_idle_notice_locked() {
   local action="${1:?action required}"
-  local worker_name="${2:?worker name required}"
+  local worker_name="${2:?agent name required}"
   local idle_reason="${3-}"
   local completed_task="${4-}"
   local completed_status="${5-}"
@@ -407,7 +407,7 @@ mark_worker_idle_notice_if_changed() {
 case "$EVENT_TYPE" in
 
   post-tool-use)
-    # Worker lifecycle sync -- same logic as sync-worker-lifecycle-state.sh
+    # Agent lifecycle sync.
     PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
 const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
 const flattenText = (value) => {
@@ -495,28 +495,19 @@ NODE
     )"
     mapfile -t FIELDS <<<"$PARSED"
 
-    decode_field() {
-      local encoded="${1-}"
-      if [[ -z "$encoded" ]]; then
-        printf ''
-        return 0
-      fi
-      printf '%s' "$encoded" | base64 -d
-    }
-
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-TARGET_NAME="$(decode_field "${FIELDS[1]:-}")"
-TOP_TYPE="$(printf '%s' "$(decode_field "${FIELDS[2]:-}")" | tr '[:upper:]' '[:lower:]')"
-MESSAGE_TYPE="$(printf '%s' "$(decode_field "${FIELDS[3]:-}")" | tr '[:upper:]' '[:lower:]')"
-DESCRIPTION="$(decode_field "${FIELDS[4]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[5]:-}")"
-AGENT_ID="$(decode_field "${FIELDS[6]:-}")"
-AGENT_NAME="$(decode_field "${FIELDS[7]:-}")"
-AGENT_TYPE="$(decode_field "${FIELDS[8]:-}")"
-TEAMMATE_NAME="$(decode_field "${FIELDS[9]:-}")"
-SUCCESS_VALUE="$(printf '%s' "$(decode_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
-IS_ERROR_VALUE="$(printf '%s' "$(decode_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
-ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+TARGET_NAME="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+TOP_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[2]:-}")" | tr '[:upper:]' '[:lower:]')"
+MESSAGE_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[3]:-}")" | tr '[:upper:]' '[:lower:]')"
+DESCRIPTION="$(hook_decode_base64_field "${FIELDS[4]:-}")"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[5]:-}")"
+AGENT_ID="$(hook_decode_base64_field "${FIELDS[6]:-}")"
+AGENT_NAME="$(hook_decode_base64_field "${FIELDS[7]:-}")"
+AGENT_TYPE="$(hook_decode_base64_field "${FIELDS[8]:-}")"
+TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[9]:-}")"
+SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
+IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
+ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
 
     [[ "$TOOL_NAME" == "SendMessage" ]] || { run_pane_cleanup; exit 0; }
     tool_response_succeeded || { run_pane_cleanup; exit 0; }
@@ -558,7 +549,12 @@ ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
             clear_worker_idle_notice "$SENDER_NAME"
             clear_worker_standby "$SENDER_NAME"
             ;;
-          handoff|completion)
+          handoff)
+            clear_worker_idle_pending "$SENDER_NAME"
+            clear_worker_idle_notice "$SENDER_NAME"
+            mark_worker_standby "$SENDER_NAME"
+            ;;
+          completion)
             clear_worker_idle_pending "$SENDER_NAME"
             clear_worker_idle_notice "$SENDER_NAME"
             mark_worker_standby "$SENDER_NAME"
@@ -590,7 +586,7 @@ ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
     ;;
 
   teammate-idle)
-    # Quality gate mirror -- same logic as teammate-quality-gate.sh
+    # Quality gate mirror.
     PARSED_IDLE="$(INPUT_JSON="$INPUT" node <<'NODE'
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -638,19 +634,19 @@ const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-repor
 let ctx;
 switch (classification) {
   case "standby":
-    ctx = `Worker completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the worker as standby from this report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation.`;
+    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as standby from this report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation.`;
     break;
   case "working-permission-pending":
-    ctx = `Worker still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the worker as not working.`;
+    ctx = `Agent still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the agent as not working.`;
     break;
   case "dispatch-pending-no-ack":
     ctx = `Dispatch still pending: ${teammate} has no dispatch-ack yet. Next: apply dispatch reception thresholds; do not status-probe the unstarted target as the primary action.`;
     break;
   case "working-blocked":
-    ctx = `Worker still working: ${teammate} reported a blocker before this turn-ended signal. Next: resolve the blocker or request the smallest needed partial result.`;
+    ctx = `Agent still working: ${teammate} reported a blocker before this turn-ended signal. Next: resolve the blocker or request the smallest needed partial result.`;
     break;
   default:
-    ctx = `Worker still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
+    ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
 }
 process.stdout.write(JSON.stringify({ systemMessage: ctx }));
 NODE

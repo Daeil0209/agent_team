@@ -1,153 +1,125 @@
 ---
 name: self-verification
-description: Convergence-based self-verification procedure.
+description: Verify frozen plans and produced or synthesized results before consequential action, dispatch, reporting, handoff, or redispatch; not for light or receipt/control-only messages.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
-- Fixed section order: Purpose, Reporting Principle, Activation Trigger, Step 0: Choose Verification Mode, Step 1: Scope Match, Step 2: Critical Challenge, Step 3: Evidence Basis, Step 4: Converge Or HOLD, Execution Depth Guide, Step 5: Output The Verified Result, Verification Output Format
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned verification surface, but it must not weaken that floor or the owning role's stop conditions.
+- Fixed section order: Purpose, Reporting Principle, Activation Trigger, Step 0: Choose Verification Mode And Target, Step 1: Scope Match, Step 2: Critical Challenge, Step 3: Evidence Basis, Step 4: Converge Or HOLD, Step 5: Output Verified State, Verification Output Format
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
+- Detailed target profiles, challenge lenses, artifact-change checks, harness/proof checks, synthesis checks, and expanded output fields live in `references/verification-targets-and-gates.md`.
+
 ## Purpose
-Use this skill to verify a frozen plan or a produced result before acting, reporting, handing off, or re-dispatching.
-This remains one skill with two operating modes:
-- `SV-PLAN`
-- `SV-RESULT`
-Quick contract:
-- verify after planning and before consequential action
-- verify produced or synthesized results before consequential reporting or re-dispatch
-- challenge the conclusion, not just the wording
-- match claim strength to evidence strength
-- converge or HOLD
-- hidden local steps do not ride past verification
-- hidden skill-plan drift does not ride past verification
+Verify before acting or reporting. This remains one skill with two modes:
+- `SV-PLAN`: verify a frozen plan before consequential action, dispatch, reuse, or local execution.
+- `SV-RESULT`: verify a produced or synthesized result before reporting, handoff, completion claim, or redispatch.
+
+There is no third analysis mode. Analysis, diagnosis, recommendation, artifact-change, proof, synthesis, and handoff checks are target profiles inside `SV-PLAN` or `SV-RESULT`.
+
 Boundary:
-- this is agent-local verification
-- independent review still belongs to `reviewer`
-- final acceptance still belongs to `validator`
-Chain: Priority 0 (`agents/team-lead.md`) → `work-planning` (when consequential) → `SV-PLAN` (this skill) before consequential action; → `SV-RESULT` before consequential reporting.
+- self-verification may narrow, block, reopen, route, or downgrade a claim
+- it never replaces independent `reviewer`, `tester`, or `validator` ownership when those owners are required
+- materially risky or acceptance-grade same-lane positive closure must route to the required independent owner before closure
+
+### Reference Map
+- Routine `SV-PLAN` route checks stay in this spine.
+- Load `references/verification-targets-and-gates.md` when the target involves non-routine analysis, artifact/governance change, data/state/behavior/design claim, harness or user-surface proof, synthesized outputs, lead-local runtime/proof, acceptance-grade claim, same-lane positive closure risk, partial/conflicting evidence, or any material contrary interpretation.
+- If a triggered reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owning path instead of approving from the compact spine.
+
 ## Reporting Principle
-Self-verification is internal process work. Do not expose the procedure itself to the user.
-When the user-facing output is final, audit-like, consequential, or explicitly asks for basis, the response must still expose the verification outcome briefly **as plain prose**:
-- verification basis
-- residual risk or open surfaces
-- unverified items
-Exposing the *outcome* in prose is required when basis is needed; exposing the *template* (`Verification Output Format`) or its labelled fields is not. Never display the literal `SELF-VERIFICATION:` block, `MODE:` line, `CONVERGED:` field, `ALLOWED-NEXT-ACTION:` line, or any other Verification Output Format line in the user-facing message — even when the user-facing output is audit-like or compliance-defending. Routine progress commentary does not expose this full surface.
+Self-verification is internal process work. User-facing output may expose only concise verification basis, residual risk/open surfaces, or unverified items when the answer is final, audit-like, consequential, or explicitly asks for basis.
+
+Never show internal templates or labelled SV fields to the user unless explicitly requested.
+It is forbidden to imply this skill was used unless it was actually loaded and applied to the current target. Inline reasoning, checklist wording, memory, or "SV-style" language is not `SV-RESULT`.
+
 ## Activation Trigger
-Load this skill and execute the appropriate mode:
-1. After `work-planning` froze a consequential plan.
-2. Before consequential execution, reuse, or dispatch.
-3. Before consequential conclusion, recommendation, report, or handoff.
-4. After a consequential modification.
-5. After synthesizing two or more worker outputs into one conclusion.
-6. Before re-dispatch driven by a synthesized next step.
-Temporal gate rule: verify first, then act or report.
-Carry-forward is allowed only while no new scope, stronger claim, file modification, consequential dispatch/reuse, or phase change has been introduced since the last relevant SV pass.
-## Step 0: Choose Verification Mode
-Choose one mode before verifying.
-### SV-PLAN
-Use after `work-planning`, before:
-- consequential local execution
-- `task-execution`
-- `Agent`
-- assignment-grade `SendMessage`
-- other consequential dispatch/reuse moves
+Load and run the appropriate mode:
+1. after `work-planning` freezes a consequential plan
+2. before consequential execution, reuse, dispatch, conclusion, recommendation, report, or handoff
+3. after consequential modification
+4. after synthesizing multiple outputs into one conclusion
+5. before redispatch driven by a synthesized result
 
-Question:
-- is the frozen plan still the correct path?
+Temporal gate: verify first, then act or report. Carry-forward is valid only while no new scope, stronger claim, file modification, dispatch/reuse, synthesis, or phase change has appeared since the last relevant SV pass.
 
-Minimum effect:
-- proceed local
-- open `task-execution`
-- clear blocker
-- `HOLD`
-- reopen `work-planning`
-Lead-local rule:
-- `proceed-local` is valid only when the frozen local work list is complete and bounded
-- emit the exact first local move and stop point before lead-local execution starts
-- if local execution requires specialist support, `LEAD-LOCAL-REQUIRED-SKILLS` must already cover it; otherwise return `reopen-work-planning`
-### SV-RESULT
-Use before:
-- user-facing consequential conclusion
-- completion claim
-- closure-grade report
-- synthesized conclusion from multiple worker outputs
-- redispatch based on synthesized result
+## Step 0: Choose Verification Mode And Target
+Choose mode and material target profiles before verifying.
 
-Question:
-- is the produced or synthesized result actually verified at the claim strength being used?
+`SV-PLAN` minimum targets:
+- top-level plan route, `NEXT-CONSEQUENTIAL-ACTION`, readiness basis, owner path, and first allowed move
+- lane-local assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop condition
 
-Minimum effect:
-- verified result
-- narrow to verified scope
-- `INFERENCE` / `UNVERIFIED`
-- `HOLD`
-- reopen `work-planning` if the frozen scope itself is invalidated
+`SV-RESULT` minimum targets:
+- exact verified surface
+- claim strength
+- evidence basis
+- open surfaces
+- whether the result is produced, synthesized, inferred, or externally evidenced
+
+Target profiles are listed in `references/verification-targets-and-gates.md`. If profile choice changes owner, surface, deliverable, proof basis, or acceptance chain, reopen `work-planning`. Profile-specific reference-use and citation discipline live in that reference; do not duplicate the detailed trigger list in this compact spine.
+
 ## Step 1: Scope Match
-Check the target against the frozen plan, the top-level interpreted request basis, explicit user instruction, user philosophy, and active constraints.
-When the verification target is a change, edit, or refinement to an existing artifact (doctrine, skill, agent, hook, code, or reference), scope match also covers the artifact's declared design intent: Structural Contract, fixed section order, priority hierarchy, owner boundaries, authoring principles, protected local restatements, and the explicit purpose of the section being modified. A change that fits the frozen plan but violates the artifact's design intent is not a converged scope match.
-Fail when the output silently reopens excluded options, widens the channel, or departs from the frozen deliverable without explicit justification.
-For workflow-governed dispatch, also check any phase-local skill refinement against the frozen skill basis:
-- allowed: narrowing or adding specialist skills inside the same frozen owner, same phase purpose, same deliverable shape, and same acceptance/proof chain
-- not allowed: using phase-local refinement to create a new lane, new independent work surface, new acceptance owner, new proof surface, or hidden multi-step route
-## Step 2: Critical Challenge
-Ask the question that matches the chosen mode:
-- `SV-PLAN`: is the frozen plan still the correct path?
-- `SV-RESULT`: is the produced or synthesized result actually verified at the claim strength being used?
-When the result modifies an existing artifact, additionally challenge:
-- did the change preserve the artifact's declared design intent (Structural Contract, owner boundaries, fixed section order, protected local restatements, intentional duplication-vs-uniqueness contracts)?
-- did it strengthen what was weak without weakening what was already correct?
-- is the WHY of this change explicit in at least one anchor — (a) inline rationale in the modified text, (b) commit message body, (c) session-state Applied Patches record, or (d) the change packet's `PATCH-CLASS` failure-mode tag (per `self-growth-sequence/SKILL.md` Patch Execution Method)? If none carries the WHY, the change leaves the recurrence barrier visible while erasing the rationale — fail.
-A result that passes claim-strength but fails any of these design-intent questions is not converged.
-If the active lane defines a pre-handoff self-check, run it here.
-## Step 3: Evidence Basis
-Keep in the main spine:
-- temporal gate rule
-- carry-forward and reset rule
-- stronger-claim reset
-- converge or `HOLD`
-- verified-output boundary
+Check against the frozen plan, `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, assignment packet fields, explicit user instruction, user philosophy, and active constraints.
 
+Fail when the target:
+- widens scope, drops a stated priority, weakens a user constraint, ignores failure-history cues, or departs from the frozen deliverable
+- treats progress, dispatch, receipt, status, or partial runtime signal as completion
+- uses phase-local skill refinement to create a new lane, work surface, proof surface, acceptance owner, or hidden route
+- changes doctrine, skills, agents, hooks, code, configs, or references without preserving declared design intent
+
+Use the reference for artifact-change design-intent detail.
+
+## Step 2: Critical Challenge
+Ask the mode question:
+- `SV-PLAN`: is the frozen plan still the correct path?
+- `SV-RESULT`: is the result actually verified at the claim strength being used?
+
+Compact challenge that always applies:
+- request-fit: would this satisfy the user's request if read literally?
+- claim/evidence: what exact claim is made, what supports it, what would defeat it, and what remains uncertain?
+- counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
+- owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
+
+`anti-self-certification`:
+- same-lane positive closure starts suspect
+- name the strongest plausible contrary interpretation, evidence gap, or failure mode before convergence
+- materially risky or acceptance-grade surfaces may be narrowed, downgraded, held, reopened, or routed; they may not be self-certified through SV alone
+
+Load the reference when detailed design, data/domain meaning, software mechanism, behavior proof, harness evidence, synthesis, or failure-risk lenses are material.
+
+## Step 3: Evidence Basis
 Rules:
-- use the narrowest truthful runtime term
-- synthesized conclusions do not inherit stronger verification automatically
-- synthesized worker outputs do not inherit verification automatically; verify the synthesized conclusion itself at the claim strength being used
-- positive closure from synthesis is allowed only on one reconciled verified surface
-- if worker outputs conflict, coverage is partial, or the synthesized conclusion outruns that surface, narrow to verified scope, downgrade to `INFERENCE/UNVERIFIED`, or `HOLD`
-- if a synthesized result drives the next dispatch, verify that synthesized result before re-dispatch
-- when the verified target is a change to an existing artifact, the evidence basis must include explicit comparison against the artifact's declared design intent (Structural Contract, owner boundaries, fixed section order, authoring principles, protected restatements), not only against the frozen plan
-- when the modified artifact lacks declared design-intent surface, the evidence basis must include the change packet's substitute design-intent declaration (failure-mode tag + `CHANGE-BOUNDARY` rationale per `self-growth-sequence/SKILL.md` Patch Execution Method); absence of both declared and substitute intent is `HOLD`
-- `SV-PLAN` for lead-local work must keep `ALLOWED-NEXT-ACTION` equal to the frozen first local item or exact blocker-clear move
-- if local execution depends on implied remainder, hidden follow-up steps, or widened route, return `reopen-work-planning`
-- `SV-PLAN` must verify phase-local skill refinement before dispatch or local continuation when a workflow owner narrowed or expanded the current phase's required skill set
-- phase-local skill refinement is valid only when it remains explainable as a refinement of the frozen planning basis rather than a replacement for it
-- if a proposed skill refinement changes lane ownership, creates a new independent surface, changes deliverable shape, changes proof/acceptance ownership, or cannot be justified from the frozen phase purpose, return `reopen-work-planning`
-- if worker-facing `REQUIRED-SKILLS` outruns the frozen basis or lacks a necessary phase-local specialist skill, do not continue on packet intuition; return `HOLD` or `reopen-work-planning`
-- `SV-RESULT` must state the exact verified surface, concise verification basis, and any open surfaces
-- if the final prose strengthens the claim beyond that verified surface, reset `SV-RESULT`
-- if evidence is weaker than the claim, narrow the claim or downgrade it to `INFERENCE` or `UNVERIFIED`
+- use the narrowest truthful runtime and result term
+- synthesized outputs do not inherit stronger verification automatically
+- positive synthesis requires one reconciled verified surface
+- partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
+- `SV-PLAN` rejects missing planning/readiness fields, incoherent packets, lead-only conversation dependence, hidden local steps, unauthorized dispatch, and unfrozen tool/workspace probing
+- `SV-RESULT` states exact verified surface, concise basis, open surfaces, and retained evidence identity when artifacts/logs/screenshots/reports/datasets support the claim
+- if final prose outruns the verified surface, reset `SV-RESULT`
+
+Use the reference for detailed gates, evidence calibration, behavior proof, artifact identity, and output detail.
+
 ## Step 4: Converge Or HOLD
-1. If the challenge changes the plan or conclusion, restart once on the corrected target.
-2. If the frozen scope or route is invalid, reopen `work-planning` immediately.
-3. If the conclusion survives with no material change, it is converged.
-4. Maximum three passes; if still not converged, HOLD.
+1. If the challenge changes the plan or result, restart once on the corrected target.
+2. If frozen scope or route is invalid, reopen `work-planning`.
+3. If the target survives with no material change, it is converged.
+4. Maximum three passes; if still not converged, `HOLD`.
+
 Only converged work may proceed as verified.
-## Execution Depth Guide
-- Full procedure: consequential report, completion-grade handoff, synthesized conclusion, post-modification conclusion, closure-grade judgment, or synthesis-driven re-dispatch.
-- Quick gate: bounded pre-execution or pre-dispatch checks where the conclusion is still narrow.
-- Quick gate is also valid for phase-internal iteration cycles in workflow-governed turns (e.g. `dev-workflow` Phase 5) when the iteration stays inside the same frozen owner, surface, deliverable, and acceptance chain — the bounded-correction conditions from CLAUDE.md `### Channel Law`. A full SV-PLAN/SV-RESULT pass is not required when no scope change, owner change, surface change, or stronger-claim shift occurred since the last relevant SV pass.
-- Never skip the challenge entirely.
-## Step 5: Output The Verified Result
-Output only the verified next state:
+
+## Step 5: Output Verified State
+Output only the next verified state:
 - `SV-PLAN`: `proceed-local`, `open-task-execution`, `clear-blocker`, `reopen-work-planning`, or `HOLD`
 - `SV-RESULT`: `verified-result`, `narrow-to-verified-scope`, `INFERENCE/UNVERIFIED`, `reopen-work-planning`, or `HOLD`
-User-facing output shows the verified result and, when required, only the concise verification outcome surface. It never dumps the verification procedure.
-For lead-local work:
-- `SV-PLAN` must expose `ALLOWED-NEXT-ACTION` and `EXECUTION-BOUNDARY`
-- `SV-PLAN` must expose `SKILL-BASIS-STATUS` whenever local or worker-facing skill refinement was in scope
-- `SV-RESULT` must expose `VERIFIED-SURFACE`, `VERIFICATION-BASIS`, and `OPEN-SURFACES`
+
+User-facing prose reports only the needed verification outcome surface. It never dumps the procedure.
+`SV-RESULT` is current only for the exact target, evidence basis, open surfaces, and claim strength verified in this pass. New synthesis, stronger wording, changed acceptance surface, or an analysis/evaluation/synthesis report draft not checked by this pass voids report-preflight; the report must be re-verified or narrowed before it is shown as verified.
+
 ## Verification Output Format
-This template is **internal handoff only**. Do NOT emit this block, its fields, or any line from this format inside the user-facing assistant message. Hold it in internal context for the duration of the current turn — do not write it to a continuity file by habit. Surface only the concise verification outcome required by `Reporting Principle` when basis is needed. Displaying this format without an explicit user request to "show the internal verification trace" is a procedure violation, not transparency.
+Internal handoff only; hold in current-turn context and do not write a continuity file by habit.
+`SELF-VERIFICATION:` is the internal verification block label only. Completion-grade lane reports use `SV-RESULT-VERIFY: converged` under `task-execution` completion contract; do not substitute this internal label for the completion field.
 ```
 SELF-VERIFICATION:
 MODE: SV-PLAN | SV-RESULT
@@ -155,7 +127,6 @@ CONVERGED:
 RESULT:
 ALLOWED-NEXT-ACTION:
 EXECUTION-BOUNDARY:
-SKILL-BASIS-STATUS:
 VERIFIED-SURFACE:
 VERIFICATION-BASIS:
 OPEN-SURFACES:

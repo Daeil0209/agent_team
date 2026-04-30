@@ -1,0 +1,12 @@
+!skills/*/references/
+!skills/*/references/*.md
+
+# Local verification artifacts; keep governance source and references trackable.
+hooks/.playwright-mcp/
+hooks/*.png
+
+# Volatile tool/runtime outputs belong under projects/<project-folder>/.
+!projects/
+!projects/README.md
+projects/**/.runtime/
+projects/**/.playwright-mcp/

@@ -278,7 +278,7 @@ drop_latest_unclaimed_pending_dispatch() {
 }
 
 _drop_latest_unclaimed_pending_dispatch_locked() {
-  local normalized_worker="${1:?normalized worker required}"
+  local normalized_worker="${1:?normalized agent required}"
 
   _drop_latest_unclaimed_pending_dispatch_from_file_locked "$PENDING_AGENTS_FILE" 3 "$normalized_worker"
   _drop_latest_unclaimed_pending_dispatch_from_file_locked "$PENDING_AGENT_MODES_FILE" 4 "$normalized_worker"
@@ -287,7 +287,7 @@ _drop_latest_unclaimed_pending_dispatch_locked() {
 _drop_latest_unclaimed_pending_dispatch_from_file_locked() {
   local target_file="${1:?target file required}"
   local status_field="${2:?status field required}"
-  local normalized_worker="${3:?normalized worker required}"
+  local normalized_worker="${3:?normalized agent required}"
   local temp_file=""
 
   [[ -f "$target_file" ]] || return 0
@@ -601,7 +601,7 @@ runtime_sender_session_is_worker() {
   session_is_runtime_owner "$session_id" && return 1
   return 0
 }
-# ── Worker config helpers (shared by health-check, agent-activity-monitor) ─
+# ── Agent config helpers (shared by health-check, agent-activity-monitor) ─
 remove_member_from_config() {
   local worker_name="$1"
   [[ -n "$worker_name" ]] || return 1
@@ -921,11 +921,7 @@ idle_pending_worker_summary() {
   ' "$IDLE_DECISION_PENDING_FILE" 2>/dev/null
 }
 
-# Count idle-pending workers scoped to the given work-surface.
-# Workers whose stored surface file matches target_surface are counted.
-# Workers with no surface file (unknown surface) are always counted — safe fallback.
-# Workers on a different known surface are excluded.
-# When target_surface is empty, falls back to global count (all workers counted).
+# Count idle-pending agents by work surface; unknown surface counts as safe fallback.
 idle_pending_worker_count_for_surface() {
   local target_surface="${1-}"
   local norm_surface=""
@@ -978,8 +974,7 @@ idle_pending_worker_count_for_surface() {
   ' "$IDLE_DECISION_PENDING_FILE" 2>/dev/null
 }
 
-# Return comma-separated names of idle-pending workers scoped to the given work-surface.
-# Applies the same surface-matching logic as idle_pending_worker_count_for_surface.
+# Names for the same surface-matching logic as idle_pending_worker_count_for_surface.
 idle_pending_worker_summary_for_surface() {
   local target_surface="${1-}"
   local norm_surface=""
@@ -1266,20 +1261,18 @@ active_team_config_live() {
   return 1
 }
 
-# Memory pressure never bypasses message-first worker-state handling. This helper
-# may log pressure on preserved standby workers, but supervisor-led
-# shutdown_request or explicit reuse still owns the resulting action.
+# Memory pressure never bypasses message-first agent-state handling.
 _memory_pressure_shutdown_standby_locked() {
   local _mem_pct="${1:-0}"
   local _standby_count=0
 
-  # Only act if standby workers exist
+  # Only act if standby agents exist
   [[ -f "$STANDBY_FILE" && -s "$STANDBY_FILE" ]] || return 0
 
   _standby_count="$(grep -cve '^[[:space:]]*$' "$STANDBY_FILE" 2>/dev/null || echo 0)"
   (( _standby_count > 0 )) || return 0
 
-  printf '[%s] MEM-PRESSURE STANDBY HOLD: %d standby worker(s) preserved at mem=%d%%. '\
+  printf '[%s] MEM-PRESSURE STANDBY HOLD: %d standby agent(s) preserved at mem=%d%%. '\
 'Runtime pressure does not bypass message-first shutdown; supervisor must coordinate shutdown_request or explicit reuse.\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "$_standby_count" "$_mem_pct" >> "$VIOLATION_LOG"
 }

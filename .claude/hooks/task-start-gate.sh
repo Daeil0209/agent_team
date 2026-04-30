@@ -59,6 +59,8 @@ SKILL_NAME_NORM="$(printf '%s' "$SKILL_NAME_RAW" | tr '[:upper:]' '[:lower:]')"
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
+# session-boot marker: active runtime requires monitoring before fresh dispatch.
+SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
 deny_tool_use() {
   local reason="${1:?reason required}"
@@ -67,31 +69,32 @@ deny_tool_use() {
   if [[ -z "$surface_key" ]]; then
     surface_key="$(printf '%s' "$TARGET_PATHS" | sed -n '1p')"
   fi
-  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Task start blocked."
-  }
-}));
-NODE
+  reason="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")"
+  hook_emit_pretool_deny "$reason" "Task start blocked."
+}
+
+warn_tool_use() {
+  local reason="${1:?reason required}"
+  reason="${reason/BLOCKED: /}"
+  reason="${reason/PROCEDURE WARNING: /}"
+  printf '[%s] TASK-START WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
+  hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last procedure warning."
 }
 
 planning_preflight_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-Skill(work-planning) -> Skill(self-verification) -> retry}"
-  printf 'BLOCKED: fresh-turn preflight sequence incomplete. Detail: %s cannot run before observed Skill(work-planning) -> Skill(self-verification) in this user turn. Prior analysis may narrow the plan scope, but it does not replace the fresh-turn sequence. If this turn started as answer-only and a worker handoff or blocker changed the next action, reopen an execution segment first. Next first tools: %s.' "$tool_name" "$next_step"
+  printf 'PROCEDURE WARNING: fresh-turn preflight sequence incomplete. Detail: %s should not run before observed Skill(work-planning) -> Skill(self-verification) in this user turn. Prior analysis may narrow the plan scope, but it does not replace the fresh-turn sequence. If this turn started as answer-only and an agent handoff or blocker changed the next action, reopen an execution segment first. Next first tools: %s.' "$tool_name" "$next_step"
 }
 
 verification_preflight_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-Skill(self-verification) -> retry}"
-  printf 'BLOCKED: verification preflight incomplete. Detail: %s cannot run before observed post-planning Skill(self-verification) in this user turn. Read-only inspection may continue when still justified, but mutable Bash must wait for plan verification. Next first tools: %s.' "$tool_name" "$next_step"
+  printf 'PROCEDURE WARNING: verification preflight incomplete. Detail: %s should not run before observed post-planning Skill(self-verification) in this user turn. Read-only inspection may continue when still justified, but mutable Bash should wait for plan verification. Next first tools: %s.' "$tool_name" "$next_step"
 }
 
 self_growth_block() {
-  printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
+  printf 'PROCEDURE WARNING: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
 }
 
 self_growth_gate_applies_to_tool() {
@@ -181,7 +184,7 @@ NODE
 worker_dispatch_ack_block_reason() {
   local tool_name="${1:-tool}"
 
-  printf 'BLOCKED: worker dispatch-ack required. Detail: %s cannot run before the worker sends the assignment receipt signal to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nTASK-ID: <assigned-id|none>\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted|rejected:<reason>\nPLANNING-BASIS: loading|loaded").' "$tool_name"
+  printf 'PROCEDURE WARNING: agent dispatch-ack required. Detail: %s should not run before the agent sends the assignment receipt signal to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted\nPLANNING-BASIS: loading\nTASK-ID: <assigned-id>"). Include TASK-ID only when active task tracking assigned one; otherwise omit TASK-ID rather than writing none.' "$tool_name"
 }
 
 lead_sendmessage_is_worker_cleanup_control() {
@@ -489,12 +492,24 @@ lead_sendmessage_monitoring_target_state() {
       printf 'blocked'
       return 0
       ;;
-    handoff|completion|hold)
+    handoff)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
         printf 'working-report-missing'
         return 0
       fi
       printf 'completed'
+      return 0
+      ;;
+    completion)
+      if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
+        printf 'working-report-missing'
+        return 0
+      fi
+      printf 'completed'
+      return 0
+      ;;
+    hold\|blocker|hold)
+      printf 'blocked'
       return 0
       ;;
   esac
@@ -595,7 +610,13 @@ NODE
 
   case "$message_class" in
     ""|status) ;;
-    assignment|reuse|reroute|dispatch-ack|handoff|completion|hold|scope-pressure|blocker|control)
+    handoff)
+      return 1
+      ;;
+    completion)
+      return 1
+      ;;
+    assignment|reuse|reroute|dispatch-ack|hold|scope-pressure|blocker|control)
       return 1
       ;;
     *)
@@ -694,16 +715,27 @@ bootstrap_bash_segment_is_read_only() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
 
-  # Strip quoted regions for pattern-match purposes only — so literal
-  # `rm`/`-rf`/`<>`/`$(...)` text inside test fixtures, grep patterns, or
-  # echo arguments does not false-positive against the deny regex below.
+  # Strip quoted regions for shell-level deny checks; inspect inline scripts separately below.
   local stripped
   stripped="$(printf '%s' "$subcmd" | sed -E "s/'[^']*'/ /g; s/\"[^\"]*\"/ /g")"
 
-  # DENY: dangerous interpreters / network fetchers.
-  # Note: bare common English words like `go` are intentionally excluded to
-  # avoid false-positives in natural-language strings (e.g. `echo go`).
-  if printf '%s' "$stripped" | grep -Eiq '(^|[[:space:]])(node|nodejs|python([0-9]+([.][0-9]+)?)?|npm|pnpm|yarn|uv|pip|pip3|cargo|make|curl|wget)([[:space:]]|$)'; then
+  # Binary-locator queries are read-only; later mutation/redirect guards still apply.
+  local is_binary_locator=0
+  if printf '%s' "$stripped" | grep -Eq '^[[:space:]]*(which|whereis|type|command[[:space:]]+-[vV])([[:space:]]|$)'; then
+    is_binary_locator=1
+  fi
+
+  # Inline node/python may be read-only only when the script body is inspectably inert.
+  local is_inline_readonly_interpreter=0
+  if printf '%s' "$stripped" | grep -Eq '^[[:space:]]*(node|nodejs|python([0-9]+([.][0-9]+)?)?)([[:space:]]+(-e|-c|<<))'; then
+    # Inspect raw $subcmd because inline script bodies live inside quotes.
+    if ! printf '%s' "$subcmd" | grep -Eq '(fs\.(write|mkdir|rm|rmdir|unlink|append|copyFile|rename|chmod|chown|symlink|truncate|utimes)|child_process|spawn[[:space:]]*\(|exec[[:space:]]*\(|execSync|spawnSync|require[[:space:]]*\([[:space:]]*['\''\"](child_process|http|https|net|dgram|dns|tls|cluster|worker_threads|repl|fs/promises)['\''\"]|import[[:space:]]*\([[:space:]]*['\''\"](child_process|http|https|net|dgram|dns|tls|cluster|worker_threads|repl|fs|fs/promises)['\''\"]|process\.binding[[:space:]]*\(|os\.(open|writeFile|system|popen|remove|unlink|rmdir|mkdir|chmod|chown)|process\.(exit|kill|abort|chdir)|eval[[:space:]]*\(|new[[:space:]]+Function|subprocess|shutil\.(move|copy|rmtree|chmod|chown)|urllib|requests\.|socket\.|http\.client|__import__[[:space:]]*\([[:space:]]*['\''\"](subprocess|os|socket|urllib|requests|http)|open[[:space:]]*\([^)]*['\''\"](w|a|x|wb|ab|xb|w\+|a\+|r\+))'; then
+      is_inline_readonly_interpreter=1
+    fi
+  fi
+
+  # DENY dangerous interpreters/network fetchers except locator/read-only inline forms.
+  if [[ "$is_binary_locator" -eq 0 ]] && [[ "$is_inline_readonly_interpreter" -eq 0 ]] && printf '%s' "$stripped" | grep -Eiq '(^|[[:space:]])(node|nodejs|python([0-9]+([.][0-9]+)?)?|npm|pnpm|yarn|uv|pip|pip3|cargo|make|curl|wget)([[:space:]]|$)'; then
     return 1
   fi
   # DENY: file-mutating commands
@@ -715,13 +747,11 @@ bootstrap_bash_segment_is_read_only() {
   if printf '%s' "$stripped" | grep -qE '>[^&]|>>'; then
     return 1
   fi
-  # DENY: $(...) where the FIRST word inside is a known dangerous command.
-  # `$(echo rm)` is allowed (echo prints data); `$(rm foo)` is denied.
+  # DENY command substitution whose first word is dangerous.
   if printf '%s' "$stripped" | grep -Eiq '[$][(][[:space:]]*(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee|node|nodejs|npm|pnpm|yarn|uv|pip|pip3|cargo|go|make|curl|wget)([[:space:]]|$|\))|[$][(][[:space:]]*(sed|perl)[[:space:]]+-i([[:space:]]|$|\))'; then
     return 1
   fi
-  # DENY: backtick command substitution where the FIRST word inside is dangerous.
-  # `\`echo hello\`` is allowed; `\`rm foo\`` is denied. (Same first-word rule as $(...).)
+  # Same first-word rule for backtick substitution.
   if printf '%s' "$stripped" | grep -Eiq '`[[:space:]]*(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee|node|nodejs|npm|pnpm|yarn|uv|pip|pip3|cargo|go|make|curl|wget)([[:space:]]|$|`)|`[[:space:]]*(sed|perl)[[:space:]]+-i([[:space:]]|$|`)'; then
     return 1
   fi
@@ -742,7 +772,7 @@ bash_command_is_read_only_context() {
   sanitized="$(strip_bash_read_only_null_redirections "$sanitized")"
   [[ -n "$(printf '%s' "$sanitized" | tr -d '[:space:]')" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -755,13 +785,8 @@ bash_command_is_read_only_context() {
   [[ "$saw_segment" == "1" ]]
 }
 
-# Carve-out for routine user-authorized git workflow.
-# CLAUDE.md `[CHANNEL]` (lightest truthful channel) + team-lead.md Git Safety
-# Protocol enumerate destructive git as the actual risk surface; routine
-# add/commit/push/pull/fetch is reviewable via diff before push. Forcing
-# work-planning + self-verification preflight on routine git is over-protection
-# (~53KB context) without matching doctrine. Destructive flags and destructive
-# subcommands fall outside this carve-out and remain gated.
+# Routine git carve-out: allow non-destructive workflow commands; destructive
+# flags/subcommands remain gated.
 git_segment_is_safe_workflow() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
@@ -798,7 +823,7 @@ bash_command_is_safe_git_workflow() {
   sanitized="$(strip_bash_read_only_null_redirections "$sanitized")"
   [[ -n "$(printf '%s' "$sanitized" | tr -d '[:space:]')" ]] || return 1
 
-  while IFS= read -r subcmd; do
+  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
     subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
     subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
     [[ -z "$subcmd" ]] && continue
@@ -906,7 +931,7 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      deny_tool_use "$(worker_dispatch_ack_block_reason "$TOOL_NAME")"
+      warn_tool_use "$(worker_dispatch_ack_block_reason "$TOOL_NAME")"
       exit 0
     fi
   fi
@@ -914,7 +939,7 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       if worker_planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
         exit 0
       fi
-      deny_tool_use "$(planning_preflight_block "$TOOL_NAME" "Skill(work-planning) -> continue current task")"
+      warn_tool_use "$(planning_preflight_block "$TOOL_NAME" "Skill(work-planning) -> continue current task")"
       exit 0
     fi
     exit 0
@@ -934,11 +959,11 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if [[ "$TOOL_NAME" == "Bash" ]] && [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]] && ! bash_command_is_read_only_context "$COMMAND"; then
-    deny_tool_use "$(verification_preflight_block "mutable Bash" "Skill(self-verification) -> retry Bash if the command still belongs in the frozen plan")"
+    warn_tool_use "$(verification_preflight_block "mutable Bash" "Skill(self-verification) -> retry Bash if the command still belongs in the frozen plan")"
     exit 0
   fi
   if self_growth_required "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
-    deny_tool_use "$(self_growth_block)"
+    warn_tool_use "$(self_growth_block)"
     exit 0
   fi
   if procedure_state_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS" || project_continuity_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS"; then
@@ -953,36 +978,54 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     fi
     case "$TOOL_NAME" in
       Agent|TaskCreate|SendMessage)
-        # Dispatch surfaces still require WP+SV, but once WP is observed the
-        # remaining missing-SV block belongs to sv-gate to avoid duplicate
-        # fresh-turn vs verification denials for the same attempt.
+        # Hard guard: active runtime dispatch/reuse must not bypass session-boot.
+        if [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]] \
+            && [[ ! -f "$SB_LOADED_MARKER" ]]; then
+          warn_tool_use "PROCEDURE WARNING: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-handoff agents to accumulate without lifecycle-control release. Next: Skill(session-boot) -> retry $TOOL_NAME."
+          exit 0
+        fi
+        # Hard guard: active team runtime requires addressable team-member Agent dispatch.
+        if [[ "$TOOL_NAME" == "Agent" ]] \
+            && [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]]; then
+          AGENT_PARAMS="$(INPUT_JSON="$INPUT" node -e "
+            try {
+              const input = JSON.parse(process.env.INPUT_JSON || '{}');
+              const ti = input.tool_input || {};
+              const tn = (ti.team_name || '').trim();
+              const nm = (ti.name || '').trim();
+              process.stdout.write(tn + '\n' + nm);
+            } catch { process.stdout.write('\n'); }
+          " 2>/dev/null || printf '\n')"
+          AGENT_TEAM_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '1p')"
+          AGENT_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '2p')"
+          if [[ -z "$AGENT_TEAM_NAME" || -z "$AGENT_NAME" ]]; then
+            deny_tool_use "BLOCKED: team-agent-only mandate per task-execution/SKILL.md Step 2 Dispatch law. Detail: Agent dispatch on active team runtime (procedure-state.json teamRuntimeState=active) MUST include BOTH team_name AND name parameters so the spawned agent joins the team runtime as a member addressable via SendMessage by lane name. Standalone subagent shape (Agent without team_name) or unaddressable shape (Agent without name) bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination — not a valid delegation channel for lane-owned work while team runtime is active. Next: retry Agent with BOTH team_name and name set (e.g., team_name='<active-team>', name='validator')."
+            exit 0
+          fi
+        fi
+        # Once WP is observed, missing-SV belongs to sv-gate.
         if [[ -f "$WP_MARKER" ]]; then
+          exit 0
+        fi
+        # Hook-last carve-out: reuse SendMessage may continue after prior SV convergence.
+        if [[ "$TOOL_NAME" == "SendMessage" ]] && [[ -f "$SV_CONVERGED_MARKER" ]]; then
+          exit 0
+        fi
+        ;;
+      Skill)
+        # Hook-last carve-out: specialist skill consults may continue after prior SV convergence.
+        if [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi
         ;;
       TaskUpdate|TaskStop)
-        # Task-state mutation remains consequential on a fresh turn. Once WP is
-        # observed, the remaining missing-SV block belongs to sv-gate; exact-id
-        # validation stays with validate-task-target after both gates clear.
+        # Task-state mutation remains consequential; exact-id validation is downstream.
         if [[ -f "$WP_MARKER" ]]; then
           exit 0
         fi
         ;;
       Edit|MultiEdit|Write|NotebookEdit)
-        # File-edit surfaces: once an initial WP+SV cycle has converged in
-        # this session, allow continuation Edits across user turns without
-        # paying fresh WP+SV reload cost. The SV_CONVERGED_MARKER (set by
-        # sv-tracker.sh on first SV-after-WP load) survives the per-turn
-        # marker reset that user-prompt-gate triggers via
-        # reset_planning_markers_for_session — which is what makes the
-        # carve-out actually fire on continuation turns. Per CLAUDE.md
-        # `[BLOCK-AS-DEFECT]` and RPA-13, blocking bounded continuation
-        # work that already has frozen scope is itself a defect. SV remains
-        # a per-turn doctrine obligation under team-lead.md RPA-8/RPA-13,
-        # but is not hook-enforced for file edits (sv-gate.sh sibling
-        # comment at the TaskUpdate/TeamDelete branch documents the same
-        # separation). Fresh-session Edits without any prior WP+SV cycle
-        # still hit the generic deny below (no SV_CONVERGED_MARKER yet).
+        # Hook-last carve-out: bounded file-edit continuation may proceed after prior SV convergence.
         if [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi
@@ -992,7 +1035,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         exit 0
         ;;
     esac
-    deny_tool_use "$(lead_preflight_block_reason "$TOOL_NAME")"
+    warn_tool_use "$(lead_preflight_block_reason "$TOOL_NAME")"
     exit 0
   fi
 fi

@@ -3,11 +3,11 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 
 # PreToolUse hook for SendMessage, Agent, TaskCreate, TaskUpdate, TeamDelete, and CronDelete.
-# Enforces two-phase Mandatory Worker Execution Cycle:
+# Enforces two-phase Mandatory Agent Execution Cycle:
 # Plan -> post-planning self-verification -> Execute -> result verification -> Report
 #
 # Agent/TaskCreate (team-lead): blocks fan-out if post-planning self-verification load was not observed
-# SendMessage (workers): blocks handoff if result-verification self-verification load was not observed
+# SendMessage (agents): blocks handoff if result-verification self-verification load was not observed
 
 INPUT="$(cat)"
 
@@ -95,53 +95,43 @@ try {
 NODE
 )"
 mapfile -t FIELDS <<<"$PARSED"
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
 
-SESSION_ID="$(decode_field "${FIELDS[0]:-}")"
-AGENT_ID="$(decode_field "${FIELDS[1]:-}")"
-TOOL_NAME="$(decode_field "${FIELDS[2]:-}")"
-MESSAGE_TEXT="$(decode_field "${FIELDS[3]:-}")"
-TARGET_PATHS="$(decode_field "${FIELDS[4]:-}")"
-TEAMMATE_NAME="$(decode_field "${FIELDS[5]:-}")"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+AGENT_ID="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+MESSAGE_TEXT="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+TARGET_PATHS="$(hook_decode_base64_field "${FIELDS[4]:-}")"
+TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[5]:-}")"
 WORKER_NAME=""
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
+# Session-scoped "WP+SV ever converged" marker (sv-tracker sets on first
+# SV-after-WP, persists across user-prompt-gate per-turn reset). Used as a
+# per-turn-reload-cost carve-out below — parallels the carve-outs in
+# task-start-gate.sh for SendMessage/Skill/Edit.
+SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 
-emit_deny() {
+emit_warning() {
   local reason="${1:?reason required}"
-  local surface_key=""
-  surface_key="${TASK_ID:-}"
-  if [[ -z "$surface_key" ]]; then
-    surface_key="${WORKER_NAME:-${TOOL_NAME:-generic}}"
-  fi
-  DENY_REASON="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "$TOOL_NAME" "${surface_key:-generic}" "$reason")" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Dispatch preflight blocked."
-  }
-}));
-NODE
+  reason="${reason/BLOCKED: /}"
+  reason="${reason/PROCEDURE WARNING: /}"
+  printf '[%s] SV-GATE WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
+  hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last verification warning."
 }
 
 sv_plan_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-retry after work-planning}"
-  printf 'BLOCKED: planning preflight incomplete. Detail: %s missing current-task work-planning. Next: %s.' "$tool_name" "$next_step"
+  printf 'PROCEDURE WARNING: planning preflight incomplete. Detail: %s missing current-task work-planning. Next: %s.' "$tool_name" "$next_step"
 }
 
 sv_verify_block() {
   local tool_name="${1:-tool}"
   local next_step="${2:-retry after self-verification}"
-  printf 'BLOCKED: verification preflight incomplete. Detail: %s missing post-planning self-verification. Next: %s.' "$tool_name" "$next_step"
+  printf 'PROCEDURE WARNING: verification preflight incomplete. Detail: %s missing post-planning self-verification. Next: %s.' "$tool_name" "$next_step"
 }
 
 lead_bounded_iteration_continuation() {
@@ -188,9 +178,9 @@ fi
 
 case "$TOOL_NAME" in
   SendMessage)
-    # Worker gate: enforce Phase 1+2 for worker completion-grade reports.
+    # Agent gate: enforce Phase 1+2 for agent completion-grade reports.
     if ! runtime_sender_session_is_worker "$SESSION_ID"; then
-      # V-01 fix: lead assignment-grade SendMessage must also satisfy WP + SV Phase 1.
+      # Lead assignment messages require WP + SV Phase 1 unless continuing.
       LEAD_MESSAGE_CLASS="$(dispatch_field_raw_value "$MESSAGE_TEXT" "MESSAGE-CLASS" 2>/dev/null || true)"
       LEAD_MESSAGE_CLASS="$(printf '%s' "$LEAD_MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
       if lead_bounded_iteration_continuation; then
@@ -206,10 +196,12 @@ case "$TOOL_NAME" in
         # emitting a second hard block for the same defect; this gate owns
         # Phase-1 SV after work-planning is observed.
         [[ -f "$WP_MARKER" ]] || exit 0
-        if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-          printf '[%s] SV-GATE BLOCKED: lead assignment-grade SendMessage without post-planning SV (session: %s)\n' \
+        # Prior SV-after-WP in this session is enough continuation evidence;
+        # cold assignment still warns and asks for SV.
+        if [[ ! -f "$SV_PLAN_MARKER" ]] && [[ ! -f "$SV_CONVERGED_MARKER" ]]; then
+          printf '[%s] SV-GATE WARN: lead assignment-grade SendMessage without post-planning SV or prior SV-converged (session: %s)\n' \
             "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-          emit_deny "$(sv_verify_block "assignment-grade SendMessage" "Skill(self-verification) -> lifecycle/reuse check -> retry SendMessage")"
+          emit_warning "$(sv_verify_block "assignment-grade SendMessage" "Skill(self-verification) -> lifecycle/reuse check -> retry SendMessage")"
           exit 0
         fi
       fi
@@ -218,51 +210,53 @@ case "$TOOL_NAME" in
     MESSAGE_CLASS="$(dispatch_field_raw_value "$MESSAGE_TEXT" "message-class" 2>/dev/null || true)"
     MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
     case "$MESSAGE_CLASS" in
-      handoff|completion) ;;
+      handoff) ;;
+      completion) ;;
       *) exit 0 ;;
     esac
     if [[ -n "$WORKER_NAME" ]] && worker_planning_required "$WORKER_NAME"; then
-      printf '[%s] SV-GATE BLOCKED: worker completion-grade SendMessage before fresh work-planning (session: %s)\n' \
+      printf '[%s] SV-GATE WARN: agent completion-grade SendMessage before fresh work-planning (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_plan_block "completion-grade SendMessage" "Skill(work-planning) -> continue work -> retry SendMessage")"
+      emit_warning "$(sv_plan_block "completion-grade SendMessage" "Skill(work-planning) -> continue work -> retry SendMessage")"
       exit 0
     fi
     if [[ ! -f "$WP_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: worker completion-grade SendMessage without observed work-planning (session: %s)\n' \
+      printf '[%s] SV-GATE WARN: agent completion-grade SendMessage without observed work-planning (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_plan_block "completion-grade SendMessage" "Skill(work-planning) -> continue work -> retry SendMessage")"
+      emit_warning "$(sv_plan_block "completion-grade SendMessage" "Skill(work-planning) -> continue work -> retry SendMessage")"
       exit 0
     fi
     if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: worker completion-grade SendMessage without post-planning self-verification load (session: %s)\n' \
+      printf '[%s] SV-GATE WARN: agent completion-grade SendMessage without post-planning self-verification load (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_verify_block "completion-grade SendMessage" "Skill(self-verification) -> continue work -> retry SendMessage")"
+      emit_warning "$(sv_verify_block "completion-grade SendMessage" "Skill(self-verification) -> continue work -> retry SendMessage")"
       exit 0
     fi
-    # Result-verification gate: workers must load self-verification and verify results before handoff.
+    # Result-verification gate: agents must load self-verification and verify results before handoff.
     # PLATFORM NOTE: a PreToolUse deny here prevents PostToolUse (track-worker-report.sh)
     # from firing, leaving a ledger gap — but the platform still delivers the message.
     # Changed to WARN-ONLY: allow the message through so track-worker-report.sh writes the
     # ledger entry. Enforcement is deferred to task-completed-gate.sh, which checks the
     # sv-result marker independently before accepting task completion.
     if [[ ! -f "$SV_RESULT_MARKER" ]]; then
-      printf '[%s] SV-GATE WARN: worker SendMessage without result-verification self-verification load (session: %s) -- deferring enforcement to task-completed-gate\n' \
+      printf '[%s] SV-GATE WARN: agent SendMessage without result-verification self-verification load (session: %s) -- deferring enforcement to task-completed-gate\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
     fi
     ;;
   Agent|TaskCreate)
-    # Team-lead gate: only enforce for non-worker sessions.
+    # Team-lead gate: only enforce for non-agent sessions.
     if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     # Missing-WP/fresh-turn dispatch is owned by task-start-gate. This avoids
     # duplicate block messages while preserving the same hard stop.
     [[ -f "$WP_MARKER" ]] || exit 0
-    # Post-planning gate: team-lead must load self-verification and verify the plan before dispatching.
-    if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s without post-planning self-verification load (session: %s)\n' \
+    # Post-planning dispatch gate: prior session SV-after-WP is continuation
+    # evidence; cold-spawn dispatch still warns and asks for SV.
+    if [[ ! -f "$SV_PLAN_MARKER" ]] && [[ ! -f "$SV_CONVERGED_MARKER" ]]; then
+      printf '[%s] SV-GATE WARN: team-lead %s without post-planning self-verification or prior SV-converged (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> lifecycle/reuse check -> retry dispatch")"
+      emit_warning "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> lifecycle/reuse check -> retry dispatch")"
       exit 0
     fi
     ;;
@@ -284,10 +278,11 @@ case "$TOOL_NAME" in
     if [[ ! -f "$WP_MARKER" ]]; then
       exit 0
     fi
-    if [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      printf '[%s] SV-GATE BLOCKED: team-lead %s without post-planning self-verification load (session: %s)\n' \
+    # Same continuation carve-out for state mutation tools after per-turn reset.
+    if [[ ! -f "$SV_PLAN_MARKER" ]] && [[ ! -f "$SV_CONVERGED_MARKER" ]]; then
+      printf '[%s] SV-GATE WARN: team-lead %s without post-planning self-verification or prior SV-converged (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$TOOL_NAME" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_deny "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> retry $TOOL_NAME")"
+      emit_warning "$(sv_verify_block "$TOOL_NAME" "Skill(self-verification) -> retry $TOOL_NAME")"
       exit 0
     fi
     ;;

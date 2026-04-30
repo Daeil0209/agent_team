@@ -166,7 +166,7 @@ worker_dispatch_ack_required() {
 
 _upsert_worker_dispatch_ack_required_locked() {
   local target_file="${1:?target file required}"
-  local worker_name="${2:?worker name required}"
+  local worker_name="${2:?agent name required}"
   local armed_at="${3:?armed_at required}"
   local temp_file=""
 
@@ -209,7 +209,7 @@ _upsert_worker_dispatch_ack_required_locked() {
 
 _clear_worker_dispatch_ack_required_locked() {
   local target_file="${1:?target file required}"
-  local worker_name="${2:?worker name required}"
+  local worker_name="${2:?agent name required}"
   local temp_file=""
 
   [[ -f "$target_file" ]] || return 0

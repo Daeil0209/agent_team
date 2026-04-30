@@ -71,44 +71,20 @@ NODE
 )"
 
 mapfile -t FIELDS <<<"$PARSED"
-decode_field() {
-  local encoded="${1-}"
-  [[ -z "$encoded" ]] && { printf ''; return 0; }
-  printf '%s' "$encoded" | base64 -d
-}
 
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-TOP_TYPE="$(printf '%s' "$(decode_field "${FIELDS[1]:-}")" | tr '[:upper:]' '[:lower:]')"
-MESSAGE_TYPE="$(printf '%s' "$(decode_field "${FIELDS[2]:-}")" | tr '[:upper:]' '[:lower:]')"
-SESSION_ID="$(decode_field "${FIELDS[3]:-}")"
-TOOL_DESCRIPTION="$(decode_field "${FIELDS[4]:-}")"
-TOOL_AGENT_NAME="$(decode_field "${FIELDS[5]:-}")"
-TOOL_AGENT_TEAM_NAME="$(decode_field "${FIELDS[6]:-}")"
-TOOL_RECIPIENT_NAME="$(decode_field "${FIELDS[7]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+TOP_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[1]:-}")" | tr '[:upper:]' '[:lower:]')"
+MESSAGE_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[2]:-}")" | tr '[:upper:]' '[:lower:]')"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+TOOL_DESCRIPTION="$(hook_decode_base64_field "${FIELDS[4]:-}")"
+TOOL_AGENT_NAME="$(hook_decode_base64_field "${FIELDS[5]:-}")"
+TOOL_AGENT_TEAM_NAME="$(hook_decode_base64_field "${FIELDS[6]:-}")"
+TOOL_RECIPIENT_NAME="$(hook_decode_base64_field "${FIELDS[7]:-}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 emit_deny() {
   local reason="${1:?reason required}"
-  DENY_REASON="$reason" node <<'NODE'
-process.stdout.write(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: "PreToolUse",
-    permissionDecision: "deny",
-    permissionDecisionReason: process.env.DENY_REASON || "Runtime entry is blocked."
-  }
-}));
-NODE
-}
-
-emit_runtime_warning() {
-  local detail="${1:?detail required}"
-  printf '[%s] RUNTIME-ENTRY WARN: %s | tool=%s | session=%s | requested=%s | team=%s\n' \
-    "$(date '+%Y-%m-%d %H:%M:%S')" \
-    "$detail" \
-    "${TOOL_NAME:-unknown}" \
-    "${SESSION_ID:0:20}" \
-    "${TOOL_AGENT_NAME:-unknown}" \
-    "${TOOL_AGENT_TEAM_NAME:-unknown}" >> "$VIOLATION_LOG"
+  hook_emit_pretool_deny "$reason" "Runtime entry is blocked."
 }
 
 runtime_inactive_reason() {

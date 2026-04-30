@@ -5,7 +5,9 @@ const path = require("path");
 const command = String(process.env.COMMAND_TEXT || "");
 const root = String(process.env.PROJECT_ROOT || process.cwd());
 const mode = String(process.argv[2] || "");
-const allowedRoots = ["projects", "outputs", "backups"];
+// Generated-output cleanup/reset carve-outs stay inside the repository-root
+// projects/ tree. outputs/ and backups/ are not approved task-output roots.
+const allowedRoots = ["projects"];
 
 function tokenize(text) {
   const words = [];

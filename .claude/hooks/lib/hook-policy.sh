@@ -30,6 +30,62 @@ set_default_export() {
   export "$name"
 }
 
+hook_emit_pretool_deny() {
+  local reason="${1:?reason required}"
+  local default_reason="${2:-Blocked by project hook policy.}"
+  HOOK_REASON="$reason" HOOK_DEFAULT_REASON="$default_reason" node <<'NODE'
+process.stdout.write(JSON.stringify({
+  hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    permissionDecision: "deny",
+    permissionDecisionReason: process.env.HOOK_REASON || process.env.HOOK_DEFAULT_REASON || "Blocked by project hook policy."
+  }
+}));
+NODE
+}
+
+hook_emit_event_context() {
+  local event_name="${1:?event name required}"
+  local context="${2:?context required}"
+  local default_context="${3:-Project hook context.}"
+  local suppress_output="${4:-false}"
+  HOOK_EVENT_NAME="$event_name" \
+  HOOK_CONTEXT="$context" \
+  HOOK_DEFAULT_CONTEXT="$default_context" \
+  HOOK_SUPPRESS_OUTPUT="$suppress_output" node <<'NODE'
+const eventName = process.env.HOOK_EVENT_NAME || "PreToolUse";
+const ctx = process.env.HOOK_CONTEXT || process.env.HOOK_DEFAULT_CONTEXT || "Project hook context.";
+const out = { hookSpecificOutput: { hookEventName: eventName, additionalContext: ctx } };
+if (process.env.HOOK_SUPPRESS_OUTPUT === "true") out.suppressOutput = true;
+process.stdout.write(JSON.stringify(out));
+NODE
+}
+
+hook_emit_pretool_context() {
+  local context="${1:?context required}"
+  local default_context="${2:-Project hook context.}"
+  hook_emit_event_context "PreToolUse" "$context" "$default_context"
+}
+
+hook_emit_posttool_context() {
+  local context="${1:?context required}"
+  local default_context="${2:-Project hook context.}"
+  hook_emit_event_context "PostToolUse" "$context" "$default_context"
+}
+
+hook_emit_user_prompt_context() {
+  local context="${1:?context required}"
+  local default_context="${2:-Project hook context.}"
+  local suppress_output="${3:-false}"
+  hook_emit_event_context "UserPromptSubmit" "$context" "$default_context" "$suppress_output"
+}
+
+hook_decode_base64_field() {
+  local encoded="${1-}"
+  [[ -z "$encoded" ]] && { printf ''; return 0; }
+  printf '%s' "$encoded" | base64 -d
+}
+
 resolve_project_auto_memory_dir() {
   local project_root=""
   local memory_slug=""
@@ -40,7 +96,7 @@ resolve_project_auto_memory_dir() {
 
 is_worker_session() {
   # Fallback heuristic for contexts where hook input has not been parsed yet.
-  # Authoritative worker identity should prefer session registry helpers such as
+  # Authoritative agent identity should prefer session registry helpers such as
   # runtime_sender_session_is_worker when a session_id is available.
   if [[ "${TMUX:-}" == *"claude-swarm"* ]] && [[ -n "${TMUX_PANE:-}" ]]; then
     return 0
@@ -75,10 +131,7 @@ set_default_export HEALTH_CRON_JOB_FILE "$LOG_DIR/.health-cron-job-id"
 set_default_export HEALTH_CRON_ROTATION_STATE_FILE "$LOG_DIR/.health-cron-rotation-state.json"
 set_default_export TEAM_RUNTIME_ACTIVE_FILE "$LOG_DIR/.team-runtime-active"
 set_default_export BOOT_SEQUENCE_COMPLETE_FILE "$LOG_DIR/.boot-sequence-complete"
-# DEPRECATED (BP-1/BP-2): No hook writes to this file after removing dual-semantics bug.
-# Removed from RUNTIME_TRANSIENT_FILES and STARTUP_VOLATILE_FILES in the cleanup pass; retained
-# as a defensive env-var declaration in case external tooling references it. Safe to delete in
-# a follow-up cleanup pass once no consumer is found.
+# Deprecated defensive env var; no hook writes or cleanup list consumes it.
 set_default_export BOOT_SEQUENCE_ACTIVE_FILE "$LOG_DIR/.boot-sequence-active"
 set_default_export SESSION_BOOT_MARKER_FILE "$LOG_DIR/.session-boot-marker"
 set_default_export SUPERVISOR_SESSION_FILE "$LOG_DIR/.supervisor-session-id"
@@ -130,13 +183,8 @@ set_default_export HOOK_HEALTH_REQUIRED_HOOKS "session-start.sh session-end.sh u
 set_default_export RUNTIME_AUTOMATION_MODE "single-primary"
 set_default_export RUNTIME_AUTOREAP_ENABLED "1"
 set_default_export RUNTIME_KEEP_WATCHDOG_WHEN_IDLE ""
-# RUNTIME_MEM_SOFT_KB: available-memory soft-warn threshold (~1.5 GB available).
-# Warn when MemAvailable drops below this value. Rename candidate: RUNTIME_MEM_WARN_AVAIL_KB.
-# NOTE: SOFT > HARD because lower available memory is worse (higher SOFT = earlier warning).
-# Rename deferred: runtime-pressure-scan.sh references these names and is not in the current write-scope.
+# Available-memory thresholds; SOFT > HARD because lower MemAvailable is worse.
 set_default_export RUNTIME_MEM_SOFT_KB "1572864"
-# RUNTIME_MEM_HARD_KB: available-memory hard/critical threshold (~768 MB available).
-# Critical state when MemAvailable drops below this value. Rename candidate: RUNTIME_MEM_CRIT_AVAIL_KB.
 set_default_export RUNTIME_MEM_HARD_KB "786432"
 set_default_export RUNTIME_MEM_EMERGENCY_KB "393216"
 set_default_export RUNTIME_SWAP_HARD_KB "524288"
@@ -173,10 +221,7 @@ set_default_export RUNTIME_REAP_LOCK "$LOG_DIR/.runtime-reap.lock"
 set_default_export RUNTIME_REAP_COOLDOWN_FILE "$LOG_DIR/.runtime-reap-cooldown"
 set_default_export SESSION_STATE_STALE_THRESHOLD "1800"
 set_default_export SESSION_STATE_FRESH_THRESHOLD "900"
-# COUPLING NOTE: "autonomous" mode bypasses specialist runtime enforcement;
-# SKILL-AUTH remains a human-readable routing contract unless enforcement is enabled.
-# "deny"/"warn" modes require SPECIALIST_SKILLS_REQUIRING_APPROVAL to be populated.
-# An empty list with deny/warn mode silently allows all specialist skills.
+# Specialist skill runtime enforcement is opt-in; empty approval list allows all.
 set_default_export SPECIALIST_SKILL_ENFORCEMENT_MODE "autonomous"
 set_default_export SPECIALIST_SKILLS_REQUIRING_APPROVAL ""
 set_default_export SPECIALIST_SKILL_OWNER_ROLE "developer"
@@ -247,10 +292,7 @@ STARTUP_VOLATILE_FILES=(
   "$IDLE_DECISION_PENDING_FILE"
   "$WORKER_IDLE_NOTICE_FILE"
   "$STANDBY_FILE"
-  # Self-growth markers must be cleared at fresh-session start so that prior-session
-  # correction debt does not leak into a new turn via sessionId reuse (`claude --resume`)
-  # or `recover_session_id` fallback. In-session lifecycle (mark on correction → clear
-  # via Skill(self-growth-sequence) load through sv-tracker.sh) is unchanged.
+  # Clear prior-session correction debt; in-session lifecycle is unchanged.
   "$SELF_GROWTH_PENDING_FILE"
   "$SELF_GROWTH_SUSPECTED_FILE"
 )

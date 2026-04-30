@@ -5,11 +5,36 @@ user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
-- Fixed section order: Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
+- Fixed section order: Ultimate Purpose, Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method
 - PRIMARY-OWNER: team-lead
 - Structural changes require governance review.
+## Ultimate Purpose
+This skill exists because repeated team failure must not be treated as ordinary variance or repaired with symptom-only edits. When evidence shows a behavioral or procedural defect, the team first protects the active request's correctness and safety, then explains why the existing operating system failed, and only then converts the defect into a durable recurrence barrier on the narrowest correct owner surface before ordinary execution resumes.
+
+Mandatory path: defect evidence identifies the failure; design-intent review reconstructs the rule or procedure that should have governed; causal analysis explains why it failed in execution; failure classification exposes the recurrence path; ownership adjudication chooses the prevention surface; hardening installs the barrier; verification proves the barrier or assigns bounded follow-up ownership; only then may the team resume from the corrected basis.
+
+Self-growth is not explanation, apology, awareness, intent, or "will remember" language. Those describe a miss; they do not change future behavior. Self-growth is also not broad doctrine accumulation when a narrow owner-local rule, checklist, packet field, hook, skill, reference, role boundary, or settings surface blocks the same failure with less drift.
+
+Every self-growth round must remain reconstructable through this minimum record:
+- `DEFECT-BASIS`
+- `DESIGN-INTENT-BASIS`
+- `CAUSAL-BASIS`
+- `FAILURE-MODE`
+- `RECURRENCE-PATH`
+- `OWNER-SURFACE`
+- `BARRIER-TYPE`
+- `CHANGE-BOUNDARY`
+- `VERIFICATION-BASIS`
+- `CONVERGENCE-STATUS`
+- `SUSPENDED-WORK-SURFACE`
+- `RESUME-OWNER`
+- `RESUME-CONDITION`
+- `RESUME-ACTION`
+- `FOLLOW-ON-OPTIMIZATION`
+If any required record item is unknown, the round stays open as inspection, `HOLD`, or explicit follow-up ownership; it does not close as commentary.
 ## Activation
-Load this skill when a concrete behavioral defect, hook-confirmed process failure, or recurring missed-catch is detected (self-detected, hook-detected, or user-corrected). Trigger sources:
+Load this skill when a concrete behavioral defect, hook-confirmed process failure, or recurring missed-catch is detected (self-detected, hook-detected, or user-corrected). If the trigger is ordinary non-defect asset maintenance, this sequence is not primary; route through `update-upgrade-sequence` instead and use `Change Sequence` from here only as patch-mechanics support (per `Sequence Arbitration Law` in CLAUDE.md). Trigger sources:
 - UserPromptSubmit hook detects correction patterns and injects "SELF-GROWTH TRIGGER" reminder
 - `.claude/agents/team-lead.md` §RPA-11 Self-Growth Ownership contains the lead-owned adjudication and closure boundary
 - Verified runtime/process error signals may raise confirmed self-growth without waiting for direct user instruction once the defect basis is already sufficient to govern behavior.
@@ -18,6 +43,23 @@ Self-growth tiers:
 - Quick hardening: single-line fixes, typo corrections, terminology normalization. Required: identify owner surface → apply fix through Change Sequence (developer self-review sufficient per Step 5) → verify no regression.
 - Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
 - Structural hardening: architecture-level changes, cross-document impact. Requires all steps plus governance review.
+
+### Reference Map
+Load these files directly from `SKILL.md` when their trigger is active. Do not route through an intermediate `reference.md`.
+- `references/self-healing.md`: trigger matrix and closure checklist.
+- `references/retroactive-application.md`: retroactive audit requirements after new/sharpened rules land.
+- `references/causal-analysis.md`: reconstruction questions and causal-basis standard.
+- `references/governance-architecture-map.md`: owner-surface map for doctrine, role, skill, packet, hook, setting, and reference placement.
+- `references/repair-decision-guide.md`: narrowest repair selection and no-duplicate-doctrine guard.
+- `references/capability-gap-fast-path.md`: missing reusable-skill fast path and default rapid-skill routing.
+- `references/skill-introduction.md`: new-skill category gate, reject criteria, and approval packet.
+- `references/benchmark-protocol.md`: benchmark-first preparation and self-growth comparison gates.
+- `references/patch-classification.md`: patch class definitions.
+- `references/failure-mode-response.md`: failure mode matrix and allowed/prohibited responses.
+- `references/human-readable-packet-owners.md`: semantic packet catalogs for governance and solution-development patches.
+- `references/high-traffic-surfaces.md`: high-traffic governance surfaces and protection layers.
+- `references/self-growth-constraints.md`: constraint checklist.
+- `references/change-patch-method.md`: detailed Change Sequence, patch execution method, meaning routing, specialist ordering, file/runtime hygiene, and hook enforcement rules.
 ## Self-Growth Sequence
 The `Self-Growth Sequence` applies when the team hardens its own rules, skills, charters, or capability boundaries.
 - Treat self-growth as a quality-and-capability upgrade path first. Resource or cost optimization is secondary and must not outrun the upgraded quality bar or regress an already-correct path.
@@ -25,27 +67,75 @@ The `Self-Growth Sequence` applies when the team hardens its own rules, skills, 
 - Default cure: harden the failing owner-local path first. Tighten, replace, or re-home the rule, hook, checklist, packet, or reference that failed before adding new doctrine.
 - When self-growth expands a lane's charter or capability, make a bounded follow-on optimization decision before closing. Run the optimization pass when material avoidable cost or redundancy is visible; otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed`. Always preserve the upgraded quality bar and protected meaning.
 ### Self-Healing Algorithm
+The algorithm is expressed by the defect-to-barrier contract, causal repair standard, governance repair orientation, numbered sequence, trigger discipline, ownership adjudication, required order, and closure standard below.
+### Defect-To-Barrier Contract
+Every self-growth round must preserve this chain:
+`DEFECT-BASIS -> DESIGN-INTENT-BASIS -> CAUSAL-BASIS -> FAILURE-MODE -> RECURRENCE-PATH -> OWNER-SURFACE -> BARRIER-TYPE -> CHANGE-BOUNDARY -> VERIFICATION-BASIS -> CONVERGENCE-STATUS -> SUSPENDED-WORK-SURFACE -> RESUME-OWNER -> RESUME-CONDITION -> RESUME-ACTION`.
+If any link is missing, do not close. Either inspect until the link is known, keep the round on `HOLD`, or assign explicit follow-up ownership with boundary and closure basis.
+
+Allowed barrier types:
+- rule hardening
+- owner re-home
+- checklist or packet-field hardening
+- hook or runtime enforcement refinement
+- skill capability update
+- role-boundary correction
+- reference or template repair
+- explicit follow-up ownership when immediate hardening is blocked
+
+The barrier must match the failure mode. `non-compliance` demands adherence hardening, not duplicate doctrine. `capability-gap` demands capability installation or bounded owner update, not ad hoc execution. `wrong-owner` demands re-home or explicit owner correction, not local patching by habit.
+
+### Causal Repair Standard
+Do not patch from the visible symptom alone. Before drafting, explain why the existing rule, procedure, packet, role boundary, hook, reference, or verification gate failed to produce the expected behavior in the actual work path.
+
+A valid causal basis must identify:
+- the intended governing rule or procedure
+- the execution point where it failed to surface, bind, or stop behavior
+- whether the failure came from missing rule, weak wording, wrong owner, weak trigger, weak packet field, weak runtime signal, weak verification, or non-compliance
+- why the proposed edit blocks the recurrence path without creating a broader or conflicting operating model
+
+If causal basis is only a hypothesis, do not present the patch as a completed hardening result. Either gather stronger evidence, mark the basis as hypothesis and install only a bounded reversible guard, or assign follow-up ownership.
+
+### Governance Repair Orientation
+Self-growth does not invent a parallel operating model. It repairs the existing agent-team operating system so its intended doctrine, role boundaries, procedures, packet contracts, hooks, and verification gates work reliably during real execution.
+
+Before choosing a barrier, reconstruct the governing design from the active owner surfaces:
+- top-level doctrine philosophy, priority, ownership, and preservation law
+- team-lead intake, routing, dispatch, synthesis, closeout, and self-growth ownership
+- lane role contracts and lane-core skill boundaries
+- `work-planning`, `self-verification`, `task-execution`, workflow, session, and closeout procedure ownership
+- packet fields, message classes, runtime truth, and handoff contracts
+- hook, settings, and runtime enforcement maturity
+- reference files as lookup surfaces, not hidden always-on doctrine
+
+Then locate the actual break in that design. A patch is valid only when it strengthens the intended operating behavior at the narrowest correct owner surface. Prefer rewriting, tightening, replacing, merging, or re-homing existing wording before adding a new rule. Do not change the operating philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model unless structural evidence proves that design surface itself is the defect.
+
+Use `references/causal-analysis.md`, `references/governance-architecture-map.md`, and `references/repair-decision-guide.md` when the root cause, correct owner surface, or patch direction is not obvious.
+
 When a defect or justified challenge is recognized, run this sequence:
 1. Trigger — confirm the problem basis is real enough to govern behavior now.
-2. Stabilize — protect the active request's correctness and safety basis first.
-3. Classify — decide: missing owner/rule/capability, or non-compliance with an existing one.
-4. Dispatch — open self-growth immediately as a sidecar or nearest-safe-boundary patch path.
-5. Harden — patch the correct owner surface.
-6. Re-verify — gather fresh evidence on the affected path.
-7. Resume corrected state — continue with the strengthened basis, not the pre-correction behavior.
+2. Stabilize — protect the active request's correctness and safety basis first; if active work is interrupted, record the suspended surface, last safe state, current owner, and next resume decision.
+3. Reconstruct — identify the intended rule, owner, procedure, packet, hook, or verification path that should have prevented the failure.
+4. Diagnose — explain why that design failed in execution and classify the failure mode.
+5. Dispatch — open self-growth immediately as a sidecar or nearest-safe-boundary patch path.
+6. Harden — patch the correct owner surface with the smallest meaning-preserving edit.
+7. Re-verify — gather fresh evidence on the affected path.
+8. Iterate — if verification finds a remaining or newly created defect, return to Reconstruct or Diagnose with the new evidence and repair again.
+9. Resume corrected state — continue with the strengthened basis, reopen planning, or assign an explicit blocker owner; never leave the interrupted work ownerless.
 Self-healing is complete only when the recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis. Explanation alone is not self-healing.
 ### Trigger discipline
-- On recognizing a behavioral defect, classify it immediately: missing rule/capability, or non-compliance with an existing one.
-- Dispatch self-growth immediately as a sidecar. Fix first, then continue in the corrected state.
+- On recognizing a behavioral defect, classify it before any unsafe continuation, then complete causal diagnosis before drafting durable hardening.
+- Open self-growth as a sidecar or nearest-safe-boundary patch path. Durable hardening waits for sufficient causal basis; ordinary continuation waits for the corrected state or explicit `HOLD` ownership.
 - Self-growth does not outrank freezing the active request's immediate request-fit, deliverable shape, or correctness/safety basis. If the defect blocks safe or correct handling now, stabilize first, then dispatch at the nearest safe boundary.
 - If write-surface overlap with active production work exists, queue only until the overlap clears. That is write safety, not priority deferral.
-- Classify and Dispatch are atomic. Analysis without dispatch is failure, not action.
+- Classification without an opened self-growth path is not action.
 - If an equivalent rule already exists, treat the defect as non-compliance and harden adherence instead of adding duplicates.
 - While the self-growth entry gate is active, do not keep retrying blocked consequential tools. Pause queued `TaskCreate`, `Agent`, `SendMessage`, `TaskUpdate`, or other consequential retries, load `self-growth-sequence` first, then resume from the corrected state after the gate clears.
+- When self-growth interrupts active work, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
 - A justified user correction is authoritative enough to open self-growth immediately even on first occurrence. Do not wait for repetition before hardening a real, well-supported failure.
 - Self-growth dispatch may be immediate, but governance-sensitive file modification is still execution-gated. Use dispatch to classify, route, inspect, and prepare the bounded patch packet. Only destructive or security-sensitive execution requires explicit user confirmation.
 - When a missing reusable skill blocks execution, authorize skill introduction under `Self-Growth Sequence` with explicit ownership: gap confirmation, target owner, bounded scope, review path, and verification.
-- When more than one lane could plausibly own the growth topic, do not let the most familiar lane win by habit. Open the competitive bid packet and record why the chosen route was better for long-run cumulative team benefit.
+- When more than one lane could plausibly own the growth topic, do not let the most familiar lane win by habit. Record the competing owner candidates, choose the narrowest prevention owner, and state why the rejected owners would duplicate, miss, or weaken the recurrence barrier.
 ### Self-Growth Ownership Adjudication
 - Ownership claims for improvement work must be explicitly adjudicated by the supervisor; approve, reject, merge, reduce, defer, and reassign are all valid outcomes.
 - Ownership of improvement work must be explicit; ownerless gaps are not allowed at round close.
@@ -56,33 +146,40 @@ Prerequisite A. Load the `work-planning` skill. Freeze scope, approach, and veri
 Prerequisite B. Load the `self-verification` skill and execute Critical Challenge on the improvement plan before proceeding to Step 1. This is the MWEC Plan Verification phase.
 Recursion guard: When self-growth triggers during active work-planning or self-verification execution (the defect is detected while those skills are already loaded and running in the current work cycle), the self-growth sidecar inherits the already-active WP/SV context as its prerequisite basis. Do not re-load work-planning or self-verification for the self-growth sidecar if either is the source of the trigger. Dispatch the sidecar at the nearest safe boundary after the triggering WP/SV execution completes in the current work cycle.
 1. Identify the active improvement topic from evidence.
-   Capture at minimum: trigger source, defect class, impacted path, provisional root-cause basis, recurrence path, and likely owner surface.
-2. Require relevant lanes to inspect the topic before ownership is finalized.
+   Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, and likely owner surface.
+2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized. Quick hardening may use owner-local inspection only when owner surface, write scope, and review path are unambiguous.
+   Lane inspection may be local evidence review, routed agent work, or lawful single-thread fallback. Additional-agent dispatch is valid only on a host-authorized active-runtime path and `task-execution` after `SV-PLAN`.
 3. Adjudicate ownership explicitly.
 4. Keep self-growth role-scoped.
    A lane hardens its own charter-bound failures first.
 5. Apply the actual change through the normal `Change Sequence`.
 6. Install the recurrence barrier on the correct owner surface.
    Harden the rule, checklist, packet requirement, hook, capability boundary, or owner-local procedure that will make the same miss less likely next time.
-7. After the quality-raising change lands, make a bounded follow-on optimization decision. Run the optimization pass only when material avoidable cost, runtime burden, or redundancy is now visible; otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed` and close without manufacturing a redundant extra loop.
+6.5. **Retroactive application phase (per CLAUDE.md `[RETRO-APPLY]`)**. Before optimization decision and before close, MUST audit every existing artifact, in-flight agent output, prior verdict, active acceptance state, and live deliverable surface that the new rule would have caught. Produce: (a) explicit list of audited surfaces with audit result (clean / defect found / deferred), (b) defect inventory with proposed fixes, (c) fix dispatches sent in same patch chain OR explicit deferral with named follow-up owner + boundary + closure basis, (d) prior verdicts/PASS/closures that pre-date this rule and would have been rejected under it explicitly invalidated (mark `STALE-PRE-{ROUND}` flag) — those acceptance states require fresh re-verification under the new rule before any downstream work proceeds on their basis. Skipping retroactive application — landing doctrine and moving on with "applies going forward only" — is itself a `[RETRO-APPLY]` defect equivalent to silent-PASS class: the recurrence path the new rule targets is already manifest in existing surfaces; not auditing them recreates the same failure the rule was meant to prevent.
+7. After the quality-raising change lands AND retroactive application completes, make a bounded follow-on optimization decision. Run the optimization pass only when material avoidable cost, runtime burden, or redundancy is now visible; otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed` and close without manufacturing a redundant extra loop.
 8. When the active topic came from recurrence, missed-catch, rejected-challenge evidence, or user-corrected process failure, require a rerun, retest, or equivalent fresh evidence gate before treating the hardening topic as fully closed.
 9. Close only after identified improvements, unresolved missed-catches, and deferred passivity defects are either hardened into the correct parent document or explicitly assigned follow-up ownership.
 ### Closure Standard
 - Self-growth is not closed while the recurrence path remains implicit.
 - If the recurrence path is known but cannot be patched immediately because of write overlap or higher-priority stabilization, keep the topic on `HOLD` with explicit owner, blocked surface, and next safe execution boundary.
+- An acknowledgement, user-facing apology, hook marker, dispatch success, role/skill load, or later `self-verification` load is entry or process evidence only. None proves closure unless recurrence barrier, owner surface, and fresh verification basis are explicit.
+- A failed verification is not a reporting result. It reopens the self-growth round at the smallest invalidated step: Reconstruct when design intent was wrong, Diagnose when causal basis was weak, Adjudicate when owner surface was wrong, Harden when edit operation was wrong, or Re-verify when evidence was insufficient.
+- Each verification attempt still obeys `self-verification` Step 4. If the SV pass reaches `HOLD`, the self-growth round records `CONVERGENCE-STATUS: HOLD`, owner, reason, boundary, and next safe evidence step; it does not claim convergence.
+- If `SUSPENDED-WORK-SURFACE` is not `none`, closure requires `RESUME-OWNER` and a verified `RESUME-ACTION`: continue from the corrected state, reopen `work-planning`, dispatch the next owner, or report `HOLD` with owner and blocker. `assigned-follow-up` for the recurrence barrier does not by itself satisfy the resume duty.
+- Before closure, the minimum self-growth record must be reconstructable from the changed owner surface, active sequence packet, or explicit follow-up assignment. Hidden session memory is not closure evidence.
 - If the issue was real but the owner surface remains uncertain, close only with explicit adjudicated follow-up ownership — never with an ownerless "noted" state.
 ### Capability-Gap Fast Path
 - When a missing reusable skill is the active improvement topic, `team-lead` may authorize a bounded rapid-skill sprint inside the `Self-Growth Sequence`.
 - When that missing skill is a prerequisite for safe, credible, or non-duplicative completion of the active task, stop only the genuinely blocked work surface and complete the skill update or introduction before that surface resumes normal downstream execution. Unrelated or already-safe work should continue instead of being stalled by habit.
-- The fast path still requires all 6 steps. See `reference.md` `§Capability-Gap Fast Path` for the checklist and default routing.
+- The fast path still requires all 6 steps. See `references/capability-gap-fast-path.md` for the checklist and default routing.
 - Fast path means reduced delay, not reduced governance. Do not skip owner fit, overlap review, or information-preservation checks merely because the need is urgent.
 - Do not retroactively create a skill just to justify ad hoc behavior that already bypassed the missing capability.
 ### Skill Introduction Category Gate
-Every proposed new skill must be classified into exactly one primary category before approval. See `reference.md` `§Skill Introduction Category Gate` for categories, reject criteria, and approval packet requirements.
+Every proposed new skill must be classified into exactly one primary category before approval. See `references/skill-introduction.md` for categories, reject criteria, and approval packet requirements.
 ### Self-growth constraints
-See `reference.md` `§Self-Growth Constraints` for the constraint checklist.
+See `references/self-growth-constraints.md` for the constraint checklist.
 ### Benchmark Protocol Detail
-See `reference.md` `§Benchmark Protocol Detail` for full specifications.
+See `references/benchmark-protocol.md` for full specifications.
 ### Readiness And Promotion Handoff
 Readiness, promotion, and adaptation handoff stay under `.claude/agents/team-lead.md` §RPA-11 Self-Growth Ownership for lead adjudication and this skill's sequence gates for execution. This skill does not create a second owner for those judgments. When a round reaches hardening or promotion evaluation, keep the target capability surface, current readiness label, evidence basis, and follow-on optimization closure explicit before treating the round as closed.
 ## Sequence Activation Discipline
@@ -91,108 +188,19 @@ Do not silently switch between Self-Growth Sequence and Change Sequence while ac
 When building a sequencing decision for self-growth work, derive it from the loaded skill procedure rather than memory. If the governing procedure cannot be pointed to cleanly, keep the work on HOLD until the procedure basis is explicit.
 ## Change Sequence
 The `Change Sequence` is the standard controlled path for rule, code, config, hook, agent, and skill changes.
-### Required order
-Prerequisite A. Load the `work-planning` skill. Freeze scope, approach, and verification criteria before proceeding to Step 1.
-Prerequisite B. Load the `self-verification` skill and execute Critical Challenge on the change plan before proceeding to Step 1. This is the MWEC Plan Verification phase.
-1. `Classify + Plan`
-- Classify the change type and scope before editing.
-- At minimum distinguish patch, addition, optimization, or other governance-relevant change classes.
-2. `Analysis`
-- Identify the target document's authoring principles: Structural Contract, fixed section order, priority hierarchy, numbering conventions, mapping chains, and design intent. These are binding constraints on any proposed change.
-- Check viability, structural fit, overlap risk, and whether the target document is the correct owner.
-- Verify that the proposed change complies with the target document's own authoring rules.
-3. `Route + Adjudicate`
-- Confirm placement and ownership using the Single Writer Principle.
-4. `Draft`
-- Produce a bounded proposed change before treating it as accepted execution.
-5. `Content Review`
-- Review the actual changed content rather than only the plan. For non-trivial changes, route to the reviewer lane; developer self-review is sufficient for trivial single-line fixes.
-- Use evidence, not author intent, for acceptance judgment.
-5b. `Execution Gate`
-- For governance-sensitive modifications (CLAUDE.md `### Ownership` and `### Change And Preservation Law`): complete the reviewed change path before Execute. Explicit user approval is required only when the action is destructive or security-sensitive; reviewed non-destructive governance changes proceed autonomously.
-- For non-governance changes: proceed directly to Execute.
-6. `Execute`
-- Apply only the reviewed, bounded, and policy-compliant change.
-7. `Post-Verify`
-- Re-check the resulting diff and governing semantics after execution.
-- When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
-- Load the `self-verification` skill and execute Critical Challenge before declaring the change verified.
-### Change constraints
-- Plan review is not content review.
-- Do not bypass review separation on meaningful governance changes.
-- Do not add doctrine by convenience placement.
-- Do not compress away unique meaning.
-- When a legacy rule label or violation code is retired, preserve the underlying operational contract in the correct owner document or enforcement surface. Identifier removal does not justify rule loss.
-- When adding, deprecating, retiring, or merging rules, record the lifecycle state transition explicitly (`ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`) on the owning governance surface. New rules start as `ACTIVE`.
-- The execution gate in step 5b governs governance-sensitive execution. See step 5b above.
-- Runtime permission bypass, hook approval, or pre-authorized self-growth dispatch does not waive review separation, preservation checks, or the destructive/safety gate.
-- High-traffic governance surfaces named by `CLAUDE.md` `### Ownership` and `### Change And Preservation Law` require session revalidation and baseline anchoring before modification resumes after interruption.
+Use `references/change-patch-method.md` for the detailed step table and constraints.
+Hard surface:
+- `work-planning` and `self-verification` are prerequisite gates unless the recursion guard inherits an already-active WP/SV context.
+- Review the changed content, not just the plan; do not bypass review separation on meaningful governance changes.
+- Execute only the reviewed, bounded, policy-compliant change.
+- Post-verify the resulting diff, owner semantics, live references, and information preservation before claiming convergence.
+- Governance-sensitive execution follows Step 5b: explicit user approval is required only for destructive or security-sensitive action; reviewed non-destructive governance changes proceed through the normal execution gate.
 ## Patch Execution Method
 Use this method when an AI model updates doctrine, agents, skills, settings, hooks, or other team-system assets and the result must remain understandable without hidden session memory.
-### Patch classification map
-See `reference.md` `§Patch Classification Map` for the full classification table.
-### Required operating rules
-- Treat every self-growth patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
-- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, hook, or reference chain. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
-- Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
-- This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
-- Before drafting, freeze the defect basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
-- When the modified artifact has no declared design-intent surface (no Structural Contract, fixed section order, owner boundaries, or authoring principles), the change packet itself must carry the intent: assign a `PATCH-CLASS` failure-mode tag plus a one-sentence rationale in `CHANGE-BOUNDARY`. Add the missing declared-intent surface to the artifact in a follow-on patch when scope allows.
-- Classify the failure mode before choosing text: `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, or `capability-gap`. Use `reference.md` `§Failure Mode Response Matrix` for allowed and prohibited responses.
-- Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`. Append only when no existing owner slot can absorb the meaning cleanly; delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
-- For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY` — enough that another model can reconstruct the patch from repository state alone.
-- Preserve closed boundaries. Do not broaden a role, skill, rule, hook, or packet beyond the defect's proven recurrence path, and do not remove protected local restatements that keep owner files independently readable.
-- When the failure mode is `non-compliance`, do not add duplicate doctrine. Harden adherence only through a clearer trigger, checklist, packet field, hook, or self-verification gate when the existing rule was not sufficiently surfaced.
-- Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
-- Verification must prove both sides of the patch: the recurrence path is blocked or explicitly assigned, and the existing design remains closed with no unique meaning lost, no dead cross-reference, no weakened owner boundary, and no regression on a previously working behavior, acceptance path, or runtime truth surface.
-### Structural Baseline
-- Treat the current target design as the structure baseline.
-  - Legacy or reference material may restore missing meaning, but it does not automatically reclaim file layout, ownership, or runtime structure.
-- Treat structural connectivity as protected meaning.
-  - When a document already declares a fixed hierarchy or explicit mapping chain, preserve that structure and restore its links after any migration, compression, or normalization patch.
-- Preserve zero information loss.
-  - If meaning moves, merges, compresses, or is re-homed, the destination owner and preserved rule meaning must remain inspectable afterward.
-### Meaning Routing
-- Route meaning to the owning surface.
-  - shared doctrine -> `CLAUDE.md`
-  - file-scoped governance overlay with mandatory `paths:` frontmatter -> files under ``.claude/rules/*.md` files`
-  - role identity, boundaries, output contract, completion condition -> matching agent file
-  - repeatable workflow/checklist -> matching `SKILL.md`
-  - runtime enforcement or state -> settings, hooks, or runtime owner file
-- Do not place always-on doctrine in ``.claude/rules/*.md` files`. If the content should load unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
-- Prefer `replace`, `trim`, or `re-home` over append-only accumulation, but never at the cost of protected meaning.
-- When a rule is repeated so a file remains safe to read in isolation, treat that local restatement as protected common contract rather than cosmetic duplication.
-- When a value must stay configurable, keep one literal owner for that value and make all other documents or prompts reference that owner instead of copying the literal value.
-### Specialist And Skill Ordering
-- When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution, but keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
-- Treat the consuming lane as the default skill-up owner. Each specialist skill declares its `PRIMARY-OWNER` (and optional `SECONDARY-CONSUMER`) in its own SKILL.md body. The owning role file enumerates its specialists and the cross-specialist controlling order applicable within that role:
-  - developer-owned specialists and their controlling order: `agents/developer.md` § RPA-4 Specialist Skills.
-  - reviewer-owned specialists: `agents/reviewer.md` § RPA-4 Specialist Skills.
-  - tester-owned specialists: `agents/tester.md` § RPA-4 Specialist Skills.
-- Treat common-skill hardening differently from specialist skill-up.
-  - Common-skill patches still require one primary owner, never diffuse co-ownership.
-  - Inspectors may propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
-  - For current shared team-operation skills, `team-lead` is the default primary owner unless governance explicitly records a different owner.
-### Post-Change Discipline
-- After any self-growth or capability-expansion patch, make a bounded follow-on optimization decision before closing the topic.
-  - Run the optimization pass when material avoidable cost, runtime burden, or redundancy is visible.
-  - Otherwise close with `FOLLOW-ON-OPTIMIZATION: not-needed`.
-  - Any optimization that does run must preserve the improved quality bar and protected meaning.
-### File And Runtime Hygiene
-- Do not create detached runtime artifacts or orphan files inside the target payload.
-  - Any new persistent file must have a clear owner and, when relevant, an explicit runtime or document reference path.
-- Standardize the subpath contract under the owning folder root rather than hardcoding every full path in every document.
-  - For specialist skills, keep one owner for the project skill root and let downstream documents reference the standardized active subpath.
-- Do not keep shadow subagent copies or reference-only shadow folders unless they preserve unique non-operational meaning not already captured by the active owner documents.
-- When normalizing folder structure, update the owning index or doctrine surfaces that explain the layout.
-  - At minimum keep the governing patch method aligned with the real active and reference paths.
-### Hook And Enforcement
-- Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
-- Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-cost, and available from the current tool payload or current session state.
-- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.
-- Do not add new hard-blocks merely to raise apparent coverage or enforcement rate. Protect operator autonomy and ordinary throughput before ceremonial enforcement expansion.
-- When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
-- Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
-- For governance-sensitive patches, require the patch class, owner surfaces, preserved meaning, and verification basis to remain explicit enough that another model can continue safely from repository state alone without relying on a dedicated patch-ledger file.
-### Human-readable packet owners
-See `reference.md` `§Human-Readable Packet Owners` for field catalogs.
+Use `references/change-patch-method.md` for detailed patch mechanics.
+Hard surface:
+- Treat every patch as bounded recurrence-barrier installation, not content accumulation.
+- Prefer `tighten`, `replace`, `re-home`, or `merge` before `append`; delete only when meaning is duplicate, obsolete, or preserved elsewhere.
+- Freeze defect basis, design intent, causal basis, recurrence path, patch class, owner surface, protected meaning, and edit operation before drafting.
+- Preserve structural connectivity, local restatements needed for isolated readability, live references, semantic-family consistency, sibling surfaces, and source-to-destination meaning.
+- Verification must prove recurrence blockage or assigned follow-up plus no owner-boundary, reference, acceptance, runtime-truth, or information-loss regression.

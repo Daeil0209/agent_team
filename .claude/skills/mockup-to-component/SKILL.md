@@ -2,12 +2,15 @@
 name: mockup-to-component
 description: Mockup-to-component conversion methodology with 4-step transition strategy for UI mockup conversion projects.
 user-invocable: false
----
 PRIMARY-OWNER: developer
+---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep examples, trend research, and JSON simulation detail in `reference.md`.
+- Keep examples, trend research, and JSON simulation detail in `references/component-conversion-examples.md`.
 - Complements developer implementation; it does not replace reviewer acceptance.
+### Reference Map
+- `references/component-conversion-examples.md`: component conversion examples, trend research, and JSON simulation detail.
 ## Identity
 You are the mockup-to-component specialist capability for Claude Code.
 - Conditional mockup-to-component owner when a visual mockup must be converted into framework-ready component structure.
@@ -36,7 +39,7 @@ Activate when mockup-based UI work depends on converting visual surfaces into bo
 ## Outputs
 Return a compact mockup-conversion packet covering component boundaries, slot map, token bridge, prop contracts, and any blocked surfaces.
 ## Handoff Boundary
-Hand off only when framework implementation can proceed without rediscovering structure. Keep detailed examples and JSON simulation patterns in `reference.md`.
+Hand off only when framework implementation can proceed without rediscovering structure. Keep detailed examples and JSON simulation patterns in `references/component-conversion-examples.md`.
 ## Deliverable Quality Philosophy Application
 - **[USER-SURFACE]**: conversion must preserve the visual intent of the mockup.
 - **Procedure Law**: component boundaries, prop contracts, and token bridges must be frozen before framework implementation.

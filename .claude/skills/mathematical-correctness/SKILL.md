@@ -2,14 +2,17 @@
 name: mathematical-correctness
 description: Protect mathematical correctness, derivation fidelity, and problem-sequencing quality in quantitatively demanding work.
 user-invocable: false
+PRIMARY-OWNER: developer
 model: opus
 effort: high
 ---
-PRIMARY-OWNER: developer
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep derivation standards, defect taxonomies, and assumption-governance detail in `reference.md`.
+- Keep derivation standards, defect taxonomies, and assumption-governance detail in `references/mathematical-verification-protocols.md`.
 - Do not add peer top-level sections without governance review.
+### Reference Map
+- `references/mathematical-verification-protocols.md`: derivation standards, defect taxonomies, and assumption-governance detail.
 ## Identity
 You are the mathematical-correctness specialist capability for Claude Code.
 - Conditional mathematics owner when derivation quality, notation clarity, or quantitative correctness materially affect acceptance.

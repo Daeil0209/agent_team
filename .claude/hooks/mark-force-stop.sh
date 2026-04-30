@@ -5,13 +5,13 @@ source "$(dirname "$0")/hook-config.sh"
 
 # EMERGENCY FALLBACK ONLY.
 # Normal shutdown: team-lead sends SendMessage(shutdown_request) first.
-# Use this script only when the worker is unresponsive to shutdown_request.
+# Use this script only when the agent is unresponsive to shutdown_request.
 # Direct use skips Claude Code's internal agent registry cleanup,
 # leaving ghost entries in the UI.
 
 WORKER_NAME="${1:-}"
 if [[ -z "$WORKER_NAME" ]]; then
-  echo "Usage: mark-force-stop.sh <worker-name>" >&2
+  echo "Usage: mark-force-stop.sh <agent-name>" >&2
   exit 1
 fi
 
@@ -31,7 +31,7 @@ for _cfg in "$HOME/.claude/teams"/*/config.json; do
   fi
 done
 
-# 2. Remove worker from all registries
+# 2. Remove agent from all registries
 remove_worker_everywhere "$WORKER_NAME" 2>/dev/null || true
 
 # 3. Add to KILL_LIST for audit trail

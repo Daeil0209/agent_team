@@ -2,14 +2,17 @@
 name: business-workflow
 description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery.
 user-invocable: false
+PRIMARY-OWNER: developer
 model: opus
 effort: medium
 ---
-PRIMARY-OWNER: developer
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep domain-specific workflow extensions and detailed rule catalogs in `reference.md`.
+- Keep domain-specific workflow extensions and detailed rule catalogs in `references/domain-rule-catalog.md`.
 - Do not add peer top-level sections without governance review.
+### Reference Map
+- `references/domain-rule-catalog.md`: domain-specific workflow extensions and detailed rule catalogs.
 ## Identity
 You are the business-workflow specialist capability for Claude Code.
 - Conditional business-workflow owner when delivery depends on hidden rules, authority boundaries, state transitions, persistence meaning, or reconciliation semantics.
@@ -57,7 +60,7 @@ Capture only the decisive business packet:
 ## Handoff Boundary
 Hand off only when downstream owners can implement or review without guessing purpose, authority, mutation rules, or reconciliation behavior from the sheet shape alone.
 
-Keep unresolved authority or approval conflicts explicit rather than flattening them into silent defaults. Keep CRUD completeness, destructive action, rollover, import-conflict, and stale-warning catalogs in `reference.md`.
+Keep unresolved authority or approval conflicts explicit rather than flattening them into silent defaults. Keep CRUD completeness, destructive action, rollover, import-conflict, and stale-warning catalogs in `references/domain-rule-catalog.md`.
 ## Deliverable Quality Philosophy Application
 - **request fit and deliverable fit**: extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.
 - **Interpretation Priority**: audience, authority tier, and operational setting are mandatory inputs, not optional enrichment.

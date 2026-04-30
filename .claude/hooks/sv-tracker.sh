@@ -9,7 +9,7 @@ source "$(dirname "$0")/hook-config.sh"
 # the self-growth procedure and downstream verification, not this hook.
 # session-boot load marks lead-local boot procedure entry only. Boot-infra
 # completion is recorded later when runtime setup succeeds or task planning
-# begins; runtime authorization still belongs to TeamCreate and runtime-entry
+# begins; host-authorized runtime entry still belongs to TeamCreate and runtime-entry
 # enforcement.
 # Phase 1 marker (sv-plan) = self-verification load observed after work-planning
 # Phase 2 marker (sv-result) = later self-verification load observed before handoff
@@ -35,12 +35,12 @@ WORKER_NAME=""
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
-# Session-scoped "WP+SV ever converged" marker. Set once after the first
-# SV-after-WP load in a session; survives reset_planning_markers_for_session
-# (which user-prompt-gate calls every fresh turn). Consumed by task-start-gate
-# H-3 carve-out so continuation Edits across user turns don't pay the
-# fresh WP+SV reload cost. Per CLAUDE.md `[BLOCK-AS-DEFECT]` discipline.
+# Session-scoped WP+SV marker; survives per-turn resets so continuation edits
+# do not pay fresh WP+SV reload cost.
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
+# Session-scoped session-boot marker; consumed by dispatch gates when active
+# runtime requires monitoring before fresh consequential dispatch.
+SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
 if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
@@ -56,8 +56,10 @@ case "$SKILL_NAME" in
   *session-boot*)
     if ! runtime_sender_session_is_worker "$SESSION_ID"; then
       mark_procedure_startup_ready "$SESSION_ID"
+      # Idempotent active-runtime monitoring marker.
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SB_LOADED_MARKER"
       # Re-anchor the boot session marker to the confirmed lead session.
-      # A worker's session-start may have overwritten SESSION_BOOT_MARKER_FILE
+      # An agent's session-start may have overwritten SESSION_BOOT_MARKER_FILE
       # between the lead's session-start and the session-boot skill load,
       # causing recover_session_id to resolve the wrong identity in subsequent
       # hook invocations. Writing the raw event session here restores the
@@ -75,10 +77,7 @@ case "$SKILL_NAME" in
     if [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]]; then
       # First SV after WP = Phase 1 load marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_PLAN_MARKER"
-      # Session-scoped converged marker — set on first SV-after-WP and
-      # persisted across user-prompt-gate's per-turn marker reset, so
-      # subsequent file-edit Edits in the same session don't pay the
-      # reload cost. Idempotent: setting again is a no-op data-wise.
+      # Persist through per-turn reset; idempotent.
       if [[ -z "$WORKER_NAME" ]]; then
         date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
         clear_lead_planning_required "$SESSION_ID"

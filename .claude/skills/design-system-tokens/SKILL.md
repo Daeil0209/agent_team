@@ -2,19 +2,21 @@
 name: design-system-tokens
 description: 3-layer design token architecture with cross-platform token management for design system projects.
 user-invocable: false
----
 PRIMARY-OWNER: developer
+SECONDARY-CONSUMER: reviewer
+---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern for future skill growth:
   1. `Identity`
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
   5. owner-local structural feedback / self-growth / regression-guard blocks when present
-- Reference-owned sections: platform tools, implementation examples, and checklist live in `reference.md`; do not duplicate them into `SKILL.md` without documented justification.
-- PRIMARY-OWNER: developer
-- SECONDARY-CONSUMER: reviewer
+- Reference-owned sections: platform tools, implementation examples, and checklist live in `references/platform-implementation.md`; do not duplicate them into `SKILL.md` without documented justification.
 - Platform-specific library installation steps belong in project-local documentation, not this skill.
+### Reference Map
+- `references/platform-implementation.md`: platform tools, implementation examples, and checklist detail.
 ## Identity
 You are the design-system-tokens specialist capability for Claude Code.
 - Conditional design-system token owner when cross-platform consistency, theme control, or component-layer discipline materially affects acceptance.
@@ -43,7 +45,7 @@ Activate when setting up a new design system, standardizing inconsistent tokens,
 ## Outputs
 Return a token-architecture packet covering Layer 1 primitives, Layer 2 core components, Layer 3 composites, consumption rules, and blocked surfaces.
 ## Handoff Boundary
-Hand off only when downstream implementation can consume tokens without rediscovering layer rules. Keep platform tools, examples, and checklist detail in `reference.md`.
+Hand off only when downstream implementation can consume tokens without rediscovering layer rules. Keep platform tools, examples, and checklist detail in `references/platform-implementation.md`.
 ## Deliverable Quality Philosophy Application
 - **Procedure Law**: token architecture layers must be frozen before component authoring begins.
 - **[USER-SURFACE]**: token values must be visually verifiable in a rendered component catalog, not only in source files.

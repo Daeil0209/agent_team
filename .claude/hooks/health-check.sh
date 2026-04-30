@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Periodic worker and runtime capacity check for explicit team-runtime sessions.
+# Periodic agent and runtime capacity check for explicit team-runtime sessions.
 # Usage: bash "$HOME/.claude/hooks/health-check.sh" [window] [short_threshold] [bash_threshold]
 # Output: optional runtime-capacity lines + STALE/STANDBY lines + SUMMARY line
 
@@ -188,7 +188,7 @@ END {
 }
 ' "$ACTIVITY_LEDGER")"
 
-# Filter STALE/GHOST lines for workers not in any team config or agent map
+# Filter STALE/GHOST lines for agents not in any team config or agent map
 _REGISTERED_WORKERS=""
 for _fr_cfg in "$HOME/.claude/teams"/*/config.json; do
   [[ -f "$_fr_cfg" ]] || continue
@@ -228,7 +228,7 @@ fi
 
 # remove_member_from_config() — now provided by hook-config.sh
 
-# Auto-shutdown STANDBY workers when memory usage exceeds 80%.
+# Auto-shutdown STANDBY agents when memory usage exceeds 80%.
 # Reuses _MEM_TOTAL_KB (total) and SCAN_MEM_KB (available) already computed above.
 # Memory usage variables removed (unused after B2 library refactor)
 
@@ -260,7 +260,7 @@ echo "$RESULT"
 
 # ── Ghost member cleanup ──────────────────────────────────────────────
 # Remove config.json entries whose tmux panes no longer exist.
-# This prevents terminated workers from appearing as phantom teammates in the UI.
+# This prevents terminated agents from appearing as phantom teammates in the UI.
 for _gc_config_file in "$HOME/.claude/teams"/*/config.json; do
   [[ -f "$_gc_config_file" ]] || continue
   _gc_ghost_list="$(CONFIG_FILE="$_gc_config_file" node -e "

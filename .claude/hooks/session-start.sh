@@ -77,87 +77,12 @@ describe_team_runtime_snapshot() {
   return 0
 }
 
-describe_procedure_state_team_channel() {
-  local runtime_state=""
-  local runtime_evidence=""
-  local dispatch_state=""
-  local dispatch_evidence=""
-  local pending_worker=""
-  local claimed_worker=""
-  local project_continuity_state=""
-  local global_continuity_state=""
-  local mirror_status=""
-  local current_live_config=""
-  local live_config=""
-  local meaningful="false"
-  local parts=()
-
-  runtime_state="$(get_procedure_state_field "teamRuntimeState" "")"
-  runtime_evidence="$(get_procedure_state_field "teamExistenceEvidence" "")"
-  dispatch_state="$(get_procedure_state_field "teamDispatchState" "")"
-  dispatch_evidence="$(get_procedure_state_field "teamDispatchEvidence" "")"
-  pending_worker="$(get_procedure_state_field "lastPendingWorker" "")"
-  claimed_worker="$(get_procedure_state_field "lastClaimedWorker" "")"
-  project_continuity_state="$(get_procedure_state_field "projectContinuityState" "")"
-  global_continuity_state="$(get_procedure_state_field "globalContinuityState" "")"
-  mirror_status="$(get_procedure_state_field "continuityMirrorStatus" "")"
-  current_live_config="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null || true)"
-  live_config="$(active_team_config_live 2>/dev/null || true)"
-
-  if [[ -n "$runtime_state" && "$runtime_state" != "inactive" ]]; then
-    meaningful="true"
-  fi
-  if [[ -n "$dispatch_state" && "$dispatch_state" != "none" ]]; then
-    meaningful="true"
-  fi
-  if [[ -n "$pending_worker" || -n "$claimed_worker" ]]; then
-    meaningful="true"
-  fi
-
-  [[ "$meaningful" == "true" ]] || return 0
-
-  if [[ -z "$current_live_config" && -z "$live_config" ]]; then
-    if [[ "$project_continuity_state" != "current" && "$global_continuity_state" != "current" ]]; then
-      return 0
-    fi
-    if [[ "$mirror_status" == "diverged" ]]; then
-      return 0
-    fi
-  fi
-
-  if [[ -n "$runtime_state" ]] && { [[ "$runtime_state" != "inactive" ]] || [[ -n "$pending_worker" || -n "$claimed_worker" ]] || [[ -n "$dispatch_state" && "$dispatch_state" != "none" ]]; }; then
-    parts+=("runtime=${runtime_state}${runtime_evidence:+/${runtime_evidence}}")
-  fi
-  if [[ -n "$dispatch_state" ]] && { [[ "$dispatch_state" != "none" ]] || [[ -n "$pending_worker" || -n "$claimed_worker" ]]; }; then
-    parts+=("dispatch=${dispatch_state}${dispatch_evidence:+/${dispatch_evidence}}")
-  fi
-  if [[ -n "$pending_worker" ]]; then
-    parts+=("pending=${pending_worker}")
-  fi
-  if [[ -n "$claimed_worker" ]]; then
-    parts+=("claimed=${claimed_worker}")
-  fi
-
-  if [[ ${#parts[@]} -gt 0 ]]; then
-    printf '%s' "Persisted team state channel (corroborate before dispatch):"
-    local idx=""
-    for idx in "${!parts[@]}"; do
-      if [[ "$idx" == "0" ]]; then
-        printf ' %s' "${parts[$idx]}"
-      else
-        printf '; %s' "${parts[$idx]}"
-      fi
-    done
-    printf '\n'
-  fi
-}
-
 if runtime_sender_session_is_worker "$SESSION_ID" || is_worker_session; then
-  # Worker session — do NOT emit team-lead Boot Sequence
-  printf '%s\n' "Worker session | root: $REPO_ROOT"
+  # Agent session — do NOT emit team-lead Boot Sequence
+  printf '%s\n' "Agent session | root: $REPO_ROOT"
 else
   reset_startup_volatile_state
-  # Reap dead workers from team config at boot to prevent ghost accumulation
+  # Reap dead agents from team config at boot to prevent ghost accumulation
   if command -v tmux &>/dev/null && [ -n "${TMUX:-}" ]; then
     _boot_session="$(tmux display-message -p '#S' 2>/dev/null || echo "")"
     if [ -n "$_boot_session" ]; then

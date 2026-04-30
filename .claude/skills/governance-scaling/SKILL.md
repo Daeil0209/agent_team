@@ -5,9 +5,12 @@ user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep heuristic tables, parameter tables, and metrics detail in `reference.md`.
+- Keep heuristic tables, parameter tables, and metrics detail in `references/scaling-heuristics.md`.
 - This is a team-lead common skill; it supplements, not replaces, the primary operating loop.
+### Reference Map
+- `references/scaling-heuristics.md`: governance-depth heuristics, parameter tables, metrics, and scaling guardrails.
 ## Identity
 You are the governance-scaling specialist capability for Claude Code.
 - Conditional governance-calibration owner when the team must size governance depth to project complexity or request risk.
@@ -41,7 +44,7 @@ Return a compact scaling packet:
 - relevant guardrails
 - any re-confirmation need
 ## Handoff Boundary
-Hand off only when `team-lead` can apply the scaling decision without guessing the project floor, current request tier, raise-or-stay reason, or guardrail trigger. Keep heuristic and parameter tables in `reference.md`.
+Hand off only when `team-lead` can apply the scaling decision without guessing the project floor, current request tier, raise-or-stay reason, or guardrail trigger. Keep heuristic and parameter tables in `references/scaling-heuristics.md`.
 ## Deliverable Quality Philosophy Application
 - **Interpretation Priority**: governance depth must fit the actual project environment, not a template.
 - **[GOV-MIN]**: over-governed light work and under-governed risky work are both calibration failures.

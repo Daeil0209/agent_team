@@ -21,17 +21,8 @@ USER_PROMPT="${SHARED_FIELDS[0]:-}"
 PROMPT_SESSION_ID="${SHARED_FIELDS[1]:-}"
 PROMPT_SESSION_ID="$(recover_session_id "$PROMPT_SESSION_ID")"
 
-# Strip ALL known harness-injected wrapper blocks before correction-pattern
-# detection. Harness wrappers (system-reminder, command-name, command-message,
-# command-args, command-output, local-command-stdout/stderr/caveat,
-# task-notification) carry skill listings, slash-command metadata, doctrine
-# excerpts, and command output that legitimately contain trigger words
-# ("self-growth", "behavioral defect", "재발 방지", etc.) and must never be
-# attributed to the user as correction language. The wrapper list inside the
-# node block is authoritative; extend it there when a new harness wrapper is
-# observed. Block-form, self-closing, and orphan opening/closing tags are all
-# stripped. Other prompt consumers (delete-approval, closeout intent, recovery
-# context) keep using raw USER_PROMPT — that is the author-intended scope.
+# Strip harness wrapper blocks before correction detection so generated metadata
+# is not mistaken for user-authored defect language. Other prompt consumers use raw text.
 sanitize_prompt_for_correction_detection() {
   local raw="${1-}"
   RAW_PROMPT="$raw" node <<'NODE'
@@ -46,6 +37,7 @@ const HARNESS_WRAPPERS = [
   "local-command-stderr",
   "local-command-caveat",
   "task-notification",
+  "teammate-message",
 ];
 let stripped = raw;
 for (const tag of HARNESS_WRAPPERS) {
@@ -69,26 +61,17 @@ is_system_generated_followup_prompt() {
   local prompt="${1-}"
   [[ -n "$prompt" ]] || return 1
 
-  # Skill/content bridge messages are system-generated follow-ups, not real user
-  # turns. If they re-arm planning enforcement, the lead can never reach
-  # TeamCreate/Agent after loading work-planning/self-verification.
+  # Skill/content bridge follow-ups are not fresh user turns.
   if printf '%s' "$prompt" | grep -qE '^(Base directory for this skill:|Tool loaded\.)'; then
     return 0
   fi
 
-  # Task-notification turns carry planning state forward only when they are
-  # notification-only. Mixed turns that retain user text outside the block are
-  # fresh user turns and must re-arm planning.
+  # Pure task notifications carry state; mixed user text re-arms planning.
   if task_notification_only_prompt "$prompt"; then
     return 0
   fi
 
-  # Teammate handoff turns (worker reports routed back to lead via SendMessage)
-  # are not fresh user instructions; if they re-arm planning, every worker
-  # report forces a redundant WP+SV cycle on the lead even though the routing
-  # decision was already frozen. Treat prompts that contain only
-  # <teammate-message> blocks (no user-authored text outside) as
-  # notification-only carry-forward, mirroring task-notification handling.
+  # Pure teammate-message handoffs are notification-only carry-forward.
   if teammate_message_only_prompt "$prompt"; then
     return 0
   fi
@@ -309,13 +292,13 @@ const emit = (ctx) => {
 };
 
 if (selectedIdle) {
-  const worker = selectedIdle.worker || "worker";
+  const worker = selectedIdle.worker || "agent";
   switch (selectedIdle.reason) {
     case "working-permission-pending":
-      emit(`CTX: runtime-recovery. Status-like turn matches working-permission-pending for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the permission surface first, do not status-probe the worker, do not infer completion from files, and do not ask the user to choose.`);
+      emit(`CTX: runtime-recovery. Status-like turn matches working-permission-pending for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the permission surface first, do not status-probe the agent, do not infer completion from files, and do not ask the user to choose.`);
       process.exit(0);
     case "standby":
-      emit(`CTX: runtime-recovery. Status-like turn sees completion-grade output for ${worker}. Briefly answer current state, then treat the worker as standby from that report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation. Keep teardown separate from unrelated dispatch.`);
+      emit(`CTX: runtime-recovery. Status-like turn sees completion-grade output for ${worker}. Briefly answer current state, then treat the agent as standby from that report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation. Keep teardown separate from unrelated dispatch.`);
       process.exit(0);
     case "working-blocked":
       emit(`CTX: runtime-recovery. Status-like turn matches working-blocked for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose and do not infer completion from files.`);
@@ -339,10 +322,10 @@ if (normalize(procedureState.teamDispatchState) === "pending" && pendingAck) {
     process.exit(0);
   }
   if (ageMs != null && ageMs >= ackLateMs) {
-    emit(`CTX: runtime-recovery. Status-like turn matches ack-late for ${pendingAck.worker}. Briefly answer current state, then keep the turn on correction/monitoring logic: report pending/late state only, do not claim the worker started, do not status-probe the unstarted target as the primary action, and do not ask the user to choose.`);
+    emit(`CTX: runtime-recovery. Status-like turn matches ack-late for ${pendingAck.worker}. Briefly answer current state, then keep the turn on correction/monitoring logic: report pending/late state only, do not claim the agent started, do not status-probe the unstarted target as the primary action, and do not ask the user to choose.`);
     process.exit(0);
   }
-  emit(`CTX: runtime-recovery. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Briefly answer current state from pending evidence only; do not narrate the work as active and do not status-probe the target as if worker-start evidence already exists.`);
+  emit(`CTX: runtime-recovery. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Briefly answer current state from pending evidence only; do not narrate the work as active and do not status-probe the target as if agent-start evidence already exists.`);
   process.exit(0);
 }
 
@@ -350,7 +333,7 @@ const claimedWorker = normalize(procedureState.lastClaimedWorker || procedureSta
 const latestReport = claimedWorker ? latestReports.get(claimedWorker) : null;
 if (latestReport) {
   if (latestReport.messageClass === "blocker") {
-    emit(`CTX: runtime-recovery. Status-like turn sees latest worker report 'blocker' from ${claimedWorker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose.`);
+    emit(`CTX: runtime-recovery. Status-like turn sees latest agent report 'blocker' from ${claimedWorker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose.`);
     process.exit(0);
   }
 
@@ -359,7 +342,7 @@ if (latestReport) {
     const reportMs = parseIso(latestReport.timestamp);
     const dispatchMs = parseIso(procedureState.lastDispatchAt);
     if ((permissionMs != null) && (dispatchMs == null || permissionMs >= dispatchMs) && (reportMs == null || permissionMs >= reportMs)) {
-      emit(`CTX: runtime-recovery. Status-like turn sees working-permission-pending for ${claimedWorker}. Briefly answer current state, then resolve the permission surface first; do not status-probe the worker and do not infer completion from files.`);
+      emit(`CTX: runtime-recovery. Status-like turn sees working-permission-pending for ${claimedWorker}. Briefly answer current state, then resolve the permission surface first; do not status-probe the agent and do not infer completion from files.`);
       process.exit(0);
     }
   }
@@ -368,7 +351,7 @@ if (latestReport) {
     const reportMs = parseIso(latestReport.timestamp);
     const ageMs = reportMs == null ? null : Math.max(0, nowMs - reportMs);
     if (ageMs != null && ageMs >= staleWarnMs) {
-      emit(`CTX: runtime-recovery. Status-like turn sees an active-stall candidate on ${claimedWorker}: worker-start evidence exists, but the latest upward report (${latestReport.messageClass}) is stale. Briefly answer current state, then bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into replacement or redispatch, do same-turn work-planning -> self-verification first. File existence is not completion evidence.`);
+      emit(`CTX: runtime-recovery. Status-like turn sees an active-stall candidate on ${claimedWorker}: agent-start evidence exists, but the latest upward report (${latestReport.messageClass}) is stale. Briefly answer current state, then bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into replacement or redispatch, do same-turn work-planning -> self-verification first. File existence is not completion evidence.`);
       process.exit(0);
     }
   }
@@ -376,7 +359,7 @@ if (latestReport) {
 NODE
 }
 
-# Worker sessions skip prompt-level lead enforcement. Prefer the session
+# Agent sessions skip prompt-level lead enforcement. Prefer the session
 # registry; TMUX naming is only a fallback for contexts without a known id.
 if runtime_sender_session_is_worker "$PROMPT_SESSION_ID" || is_worker_session; then
   exit 0
@@ -387,9 +370,7 @@ if is_system_generated_followup_prompt "$USER_PROMPT"; then
   exit 0
 fi
 
-# Real user turns reset destructive cleanup approval. A new approval must name
-# the exact workspace cleanup root for this turn; stop/cancel wording is
-# lifecycle control, not delete approval.
+# Real user turns reset destructive cleanup approval; stop/cancel is lifecycle control.
 : > "$USER_APPROVED_DELETE_ROOTS_FILE"
 
 USER_DELETE_APPROVAL_ROOTS="$(USER_PROMPT="$USER_PROMPT" PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'
@@ -399,7 +380,9 @@ const path = require("path");
 const prompt = String(process.env.USER_PROMPT || "");
 const normalizedPrompt = prompt.replace(/\\/g, "/");
 const promptSearch = normalizedPrompt.toLowerCase();
-const deleteIntent = /(\bdelete\b|\bremove\b|삭제\s*(해|해줘|하라|하자|진행|해도\s*돼)|지워\s*(줘|라|버려)?|날려\s*(줘|라|버려)?|초기화\s*(해|해줘|하라)|리셋\s*(해|해줘|하라)|reset\s+it|remove\s+it)/iu.test(prompt);
+// Korean delete forms include imperative, proposal, compound, and decisive variants.
+// Per-turn reset bounds approval to the current user turn.
+const deleteIntent = /(\bdelete\b|\bremove\b|삭제\s*(해|해줘|하라|하자|진행|해도\s*돼|하고|해버려)|지워\s*(줘|라|버려)?|날려\s*(줘|라|버려)?|초기화\s*(해|해줘|하라)|리셋\s*(해|해줘|하라)|reset\s+it|remove\s+it)/iu.test(prompt);
 if (!deleteIntent) process.exit(0);
 
 const statePath = process.env.PROCEDURE_STATE_FILE || "";
@@ -486,6 +469,70 @@ for (const root of unique(roots)) {
   }
 }
 
+// Generic delete approval may resolve from exactly one active team-runtime
+// project root. Safety: explicit delete intent, workspace child, protected
+// roots excluded, and exactly one candidate; ambiguity grants no approval.
+if (approved.length === 0) {
+  const home = String(process.env.HOME || "");
+  if (home) {
+    const teamsDir = path.join(home, ".claude", "teams");
+    const candidates = [];
+    try {
+      if (fs.existsSync(teamsDir)) {
+        for (const entry of fs.readdirSync(teamsDir, { withFileTypes: true })) {
+          if (!entry.isDirectory()) continue;
+          const configPath = path.join(teamsDir, entry.name, "config.json");
+          if (!fs.existsSync(configPath)) continue;
+          let cfg = {};
+          try { cfg = JSON.parse(fs.readFileSync(configPath, "utf8")); } catch {}
+          let candidate = "";
+          if (cfg && typeof cfg.projectRoot === "string" && cfg.projectRoot.trim()) {
+            candidate = path.resolve(cfg.projectRoot.trim());
+          } else if (cfg && typeof cfg.workspaceRoot === "string" && cfg.workspaceRoot.trim()) {
+            candidate = path.resolve(cfg.workspaceRoot.trim());
+          } else {
+            // Fallback: try suffix-stripped team name first (handles common
+            // `<project>-build|dev|prod|test|staging` convention), then bare
+            // team name (handles custom suffixes / no-suffix naming). Both
+            // require existence to add as candidate.
+            const projectName = entry.name.replace(/-(build|dev|prod|test|staging)$/i, "");
+            const guess = path.resolve(workspaceRoot, projectName);
+            try { if (fs.existsSync(guess)) candidate = guess; } catch {}
+            if (!candidate && projectName !== entry.name) {
+              const guess2 = path.resolve(workspaceRoot, entry.name);
+              try { if (fs.existsSync(guess2)) candidate = guess2; } catch {}
+            }
+          }
+          if (!candidate) continue;
+          // [RISK-MITIGATION-R3] Uniform existence check — without this, a stale
+          // `projectRoot` pointing to a deleted/never-created in-workspace path
+          // would be auto-armed (rm would later fail noisily, but the gate would
+          // have lied about "approved"). Reject non-existent candidates outright.
+          try { if (!fs.existsSync(candidate)) continue; } catch { continue; }
+          // [RISK-MITIGATION-R5] Symlink resolution — `path.resolve` does NOT
+          // follow symlinks, so a `projectRoot` symlink pointing outside the
+          // workspace would silently pass `isWorkspaceChild` (which uses
+          // `path.relative` on the symlink's lexical path). Resolve the real
+          // path before workspace-boundary checks. If realpath fails (broken
+          // link, permission), reject candidate.
+          try {
+            candidate = fs.realpathSync(candidate);
+          } catch { continue; }
+          const relative = path.relative(workspaceRoot, candidate).replace(/\\/g, "/");
+          if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) continue;
+          if (isProtectedRelative(relative)) continue;
+          if (!isWorkspaceChild(candidate)) continue;
+          candidates.push(candidate);
+        }
+      }
+    } catch {}
+    const uniqueCandidates = unique(candidates);
+    if (uniqueCandidates.length === 1) {
+      approved.push(uniqueCandidates[0]);
+    }
+  }
+}
+
 process.stdout.write(unique(approved).join("\n"));
 NODE
 )"
@@ -498,12 +545,12 @@ BOOT_CONTEXT=""
 BOOT_SUPPRESS="false"
 DELIVERY_CONTEXT=""
 
-# E-12 fix: Correction pattern detection runs regardless of boot state so that
-# self-growth markers are always set when corrections arrive, including during boot.
-# Minimal-guidance policy: only explicit self-growth/process-hardening language should
-# arm the hard self-growth gate. Ordinary criticism or correction stays "suspected"
-# until stronger evidence appears elsewhere in the workflow.
-CONFIRMED_CORRECTION_PATTERN="(self[-[:space:]]*growth|self[-[:space:]]*growth[-[:space:]]*sequence|behavior(al)?[[:space:]]+defect|procedural[[:space:]]+defect|process[[:space:]]+failure|self[-[:space:]]*improvement|change[-[:space:]]*sequence|재발[[:space:]]*방지|자기[[:space:]]*성장|셀프[[:space:]]*그로스|행동[[:space:]]*결함|절차[[:space:]]*결함)"
+# Correction detection runs before boot handling. Topic-only governance terms do
+# not arm self-growth; explicit execution or confirmed defect language does.
+SELF_GROWTH_TERM_PATTERN="(self[-[:space:]]*growth|self[-[:space:]]*growth[-[:space:]]*sequence|self[-[:space:]]*improvement|change[-[:space:]]*sequence|재발[[:space:]]*방지|자기[[:space:]]*성장|셀프[[:space:]]*그로스)"
+SELF_GROWTH_EXECUTION_INTENT_PATTERN="(진입|실행|로드|적용|수행|패치|보완|고쳐|수정|하드닝|enter|run|load|apply|execute|patch|harden|fix)"
+SELF_GROWTH_FALSE_POSITIVE_DISCUSSION_PATTERN="(오탐|false[-[:space:]]*positive|topic[-[:space:]]*only|토론[[:space:]]*대상|언급해도|발화|발동|트리거|trigger)"
+CONFIRMED_CORRECTION_PATTERN="((${SELF_GROWTH_TERM_PATTERN})[^.?!]{0,80}${SELF_GROWTH_EXECUTION_INTENT_PATTERN}|(behavior(al)?[[:space:]]+defect|procedural[[:space:]]+defect|process[[:space:]]+failure|행동[[:space:]]*결함|절차[[:space:]]*결함)[^.?!]{0,80}(확정|맞|발생|고쳐|보완|수정|패치|confirmed|actual|fix|harden))"
 CORRECTION_PATTERN="((너|네|니)[[:space:]]*잘못(했|됐|된|한)?|틀렸|틀린|(네|너|니)[[:space:]]*(오류|실수)|왜[[:space:]]*(이런|그런|또)[[:space:]]*(오류|실수)|하지[[:space:]]*말|또[[:space:]]*(같은[[:space:]]*)?(실수|문제|오류)|안[[:space:]]*된다고[[:space:]]*(했|말했|했잖)|그게[[:space:]]*아니|규정[[:space:]]*무시|절차[[:space:]]*무시|규정[[:space:]]*위반|절차[[:space:]]*위반|(네|너|니)[[:space:]]*(오류|실수)|you.*wrong|wrong.*again|your mistake|that.s a mistake|you shouldn.t|not like that|you missed|don.t do|why did you (ignore|skip|miss|forget|not))"
 if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CONFIRMED_CORRECTION_PATTERN" 2>/dev/null; then
   if [[ -n "$PROMPT_SESSION_ID" ]]; then
@@ -515,6 +562,13 @@ elif printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CORRECTION_PATTERN" 2
     mark_self_growth_suspected "$PROMPT_SESSION_ID"
   fi
   BOOT_CONTEXT="CTX: user-challenge-observed. Treat the prompt as evidence to evaluate, not proof of defect. Preserve prior verified conclusions unless direct evidence or governing rules overturn them. If a real behavioral defect is confirmed, then enter self-growth; otherwise answer the current request from verified evidence."
+elif printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_TERM_PATTERN" 2>/dev/null \
+  && printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_FALSE_POSITIVE_DISCUSSION_PATTERN" 2>/dev/null \
+  && ! printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_EXECUTION_INTENT_PATTERN" 2>/dev/null; then
+  if [[ -n "$PROMPT_SESSION_ID" ]]; then
+    clear_self_growth_required "$PROMPT_SESSION_ID"
+    clear_self_growth_suspected "$PROMPT_SESSION_ID"
+  fi
 fi
 
 DELIVERY_INCIDENT_PATTERN="(double[-[:space:]]*click|더블클릭|start[._-]?bat|start[._-]?sh|launcher|아이콘|실행[^.]{0,20}(안[[:space:]]*돼|안돼|안됨|실패)|안[[:space:]]*열리|won.t[[:space:]]+launch|doesn.t[[:space:]]+launch|launch[[:space:]]+fail)"
@@ -631,10 +685,4 @@ SUPPRESS_OUTPUT="false"
 [[ "$BOOT_SUPPRESS" == "true" ]] && SUPPRESS_OUTPUT="true"
 [[ "$CLOSEOUT_SUPPRESS" == "true" ]] && SUPPRESS_OUTPUT="true"
 
-ADDITIONAL_CONTEXT="$COMBINED_CONTEXT" SUPPRESS_OUTPUT="$SUPPRESS_OUTPUT" node -e "
-const ctx = process.env.ADDITIONAL_CONTEXT || '';
-const suppress = process.env.SUPPRESS_OUTPUT === 'true';
-const out = {hookSpecificOutput:{hookEventName:'UserPromptSubmit',additionalContext:ctx}};
-if (suppress) out.suppressOutput = true;
-process.stdout.write(JSON.stringify(out));
-"
+hook_emit_user_prompt_context "$COMBINED_CONTEXT" "User prompt context." "$SUPPRESS_OUTPUT"

@@ -2,12 +2,15 @@
 name: instructional-design
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, and pedagogical clarity.
 user-invocable: false
----
 PRIMARY-OWNER: developer
+---
 ## Structural Contract
+- Inherits `CLAUDE.md`, the active owner role, and the common inheritance floor in `CLAUDE.md` `Priority And Ownership`. This skill may sharpen its owned procedure or specialist surface, but it must not weaken that floor or the owning role's stop conditions.
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Keep pedagogical catalogs, worked-example detail, and domain-specific learning patterns in `reference.md`.
+- Keep pedagogical catalogs, worked-example detail, and domain-specific learning patterns in `references/pedagogy-detail.md`.
 - Do not add peer top-level sections without governance review.
+### Reference Map
+- `references/pedagogy-detail.md`: pedagogical catalogs, worked-example detail, and domain-specific learning patterns.
 ## Identity
 You are the instructional-design specialist capability for Claude Code.
 - Instructional-comprehension owner when the output must teach effectively rather than merely summarize accurately.
@@ -47,7 +50,7 @@ Return an instructional packet covering prerequisite map, concept cascade, confu
 ## Handoff Boundary
 Route unresolved blockers explicitly to `mathematical-correctness`, `visual-composition`, `reviewer`, or `tester`. Learner-facing visual or page-read artifacts still need both text/instruction review and capture-render review.
 
-Before dense fill, keep lesson concept, page or slide role, explanation object, prerequisite map, and reveal order explicit. Keep longer pedagogical catalogs and worked-example detail in `reference.md`.
+Before dense fill, keep lesson concept, page or slide role, explanation object, prerequisite map, and reveal order explicit. Keep longer pedagogical catalogs and worked-example detail in `references/pedagogy-detail.md`.
 ## Deliverable Quality Philosophy Application
 - **user-fit delivery**: learner burden is the primary constraint; over-dense teaching material is a structural defect.
 - **user-fit delivery**: overview, core content, and mastery-level detail must not collapse into one density layer.

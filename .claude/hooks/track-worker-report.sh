@@ -76,28 +76,19 @@ NODE
 
 mapfile -t FIELDS <<<"$PARSED"
 
-decode_field() {
-  local encoded="${1-}"
-  if [[ -z "$encoded" ]]; then
-    printf ''
-    return 0
-  fi
-  printf '%s' "$encoded" | base64 -d
-}
-
-TOOL_NAME="$(decode_field "${FIELDS[0]:-}")"
-SESSION_ID="$(decode_field "${FIELDS[1]:-}")"
-AGENT_ID="$(decode_field "${FIELDS[2]:-}")"
-AGENT_NAME="$(decode_field "${FIELDS[3]:-}")"
-AGENT_TYPE="$(decode_field "${FIELDS[4]:-}")"
-TEAMMATE_NAME="$(decode_field "${FIELDS[5]:-}")"
-TEAM_NAME="$(decode_field "${FIELDS[6]:-}")"
-TASK_ID="$(decode_field "${FIELDS[7]:-}")"
-TASK_SUBJECT="$(decode_field "${FIELDS[8]:-}")"
-DESCRIPTION="$(decode_field "${FIELDS[9]:-}")"
-SUCCESS_VALUE="$(printf '%s' "$(decode_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
-IS_ERROR_VALUE="$(printf '%s' "$(decode_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
-ERROR_VALUE="$(decode_field "${FIELDS[12]:-}")"
+TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
+SESSION_ID="$(hook_decode_base64_field "${FIELDS[1]:-}")"
+AGENT_ID="$(hook_decode_base64_field "${FIELDS[2]:-}")"
+AGENT_NAME="$(hook_decode_base64_field "${FIELDS[3]:-}")"
+AGENT_TYPE="$(hook_decode_base64_field "${FIELDS[4]:-}")"
+TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[5]:-}")"
+TEAM_NAME="$(hook_decode_base64_field "${FIELDS[6]:-}")"
+TASK_ID="$(hook_decode_base64_field "${FIELDS[7]:-}")"
+TASK_SUBJECT="$(hook_decode_base64_field "${FIELDS[8]:-}")"
+DESCRIPTION="$(hook_decode_base64_field "${FIELDS[9]:-}")"
+SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
+IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
+ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
 
 [[ "$TOOL_NAME" == "SendMessage" ]] || exit 0
 tool_response_succeeded || exit 0
@@ -106,7 +97,7 @@ SENDER_NAME="$(resolve_runtime_sender_name "$SESSION_ID" "$AGENT_ID" "$AGENT_NAM
 
 if [[ -z "$SENDER_NAME" ]] && runtime_sender_session_is_worker "$SESSION_ID"; then
   SENDER_NAME="session:${SESSION_ID}"
-  printf '[%s] TRACK-WORKER-REPORT WARN: unresolved worker sender identity; using session fallback (session: %s)\n' \
+  printf '[%s] TRACK-WORKER-REPORT WARN: unresolved agent sender identity; using session fallback (session: %s)\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
 fi
 
@@ -122,7 +113,14 @@ MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/
 MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
 
 case "$MESSAGE_CLASS" in
-  handoff|completion|hold|status|blocker|scope-pressure|dispatch-ack) ;;
+  hold|blocker)
+    printf '[%s] TRACK-WORKER-REPORT WARN: normalized legacy blocked MESSAGE-CLASS "%s" to exact "hold|blocker" for sender %s. Agents must emit MESSAGE-CLASS: hold|blocker.\n' \
+      "$(date '+%Y-%m-%d %H:%M:%S')" "$MESSAGE_CLASS" "$SENDER_NAME" >> "$VIOLATION_LOG"
+    MESSAGE_CLASS="hold|blocker"
+    ;;
+  handoff) ;;
+  completion) ;;
+  hold\|blocker|status|scope-pressure|dispatch-ack) ;;
   *) exit 0 ;;
 esac
 
@@ -151,11 +149,15 @@ REQUESTED_LIFECYCLE="$(dispatch_field_raw_value "$DESCRIPTION" "REQUESTED-LIFECY
 REQUESTED_LIFECYCLE="$(printf '%s' "$REQUESTED_LIFECYCLE" | tr '[:upper:]' '[:lower:]')"
 
 case "$MESSAGE_CLASS" in
-  handoff|completion)
+  handoff)
     mark_worker_standby "$SENDER_NAME"
     clear_worker_idle_pending "$SENDER_NAME"
     ;;
-  hold)
+  completion)
+    mark_worker_standby "$SENDER_NAME"
+    clear_worker_idle_pending "$SENDER_NAME"
+    ;;
+  hold\|blocker)
     clear_worker_idle_pending "$SENDER_NAME"
     ;;
 esac
@@ -178,11 +180,6 @@ field_value() {
   dispatch_field_raw_value "$DESCRIPTION" "$field_name" 2>/dev/null || true
 }
 
-has_field() {
-  local field_name="${1:?field required}"
-  [[ -n "$(printf '%s' "$(field_value "$field_name")" | tr -d '[:space:]')" ]]
-}
-
 OUTPUT_SURFACE_VALUE="$(field_value "OUTPUT-SURFACE")"
 EVIDENCE_BASIS_VALUE="$(field_value "EVIDENCE-BASIS")"
 OPEN_SURFACES_VALUE="$(field_value "OPEN-SURFACES")"
@@ -197,7 +194,11 @@ BURDEN_STATUS_VALUE="$(printf '%s' "$(field_value "BURDEN-STATUS")" | tr '[:uppe
 ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "$(field_value "ACCEPTANCE-RECONCILIATION")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 PLANNING_BASIS_VALUE="$(printf '%s' "$(field_value "PLANNING-BASIS")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 SV_PLAN_VERIFY_VALUE="$(printf '%s' "$(field_value "SV-PLAN-VERIFY")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-SELF_VERIFICATION_VALUE="$(printf '%s' "$(field_value "SELF-VERIFICATION")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+SV_RESULT_VERIFY_VALUE="$(printf '%s' "$(field_value "SV-RESULT-VERIFY")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+RESOURCE_CLEANUP_VALUE="$(printf '%s' "$(field_value "RESOURCE-CLEANUP")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+USER_SURFACE_PROOF_METHOD_VALUE="$(field_value "USER-SURFACE-PROOF-METHOD")"
+TOOL_PATH_USED_VALUE="$(field_value "TOOL-PATH-USED")"
+TOOL_EXECUTION_EVIDENCE_VALUE="$(field_value "TOOL-EXECUTION-EVIDENCE")"
 CONVERGENCE_PASS_VALUE="$(printf '%s' "$(field_value "CONVERGENCE-PASS")" | tr -d '[:space:]')"
 
 OUTPUT_SURFACE="false"
@@ -214,7 +215,11 @@ BURDEN_STATUS="false"
 ACCEPTANCE_RECONCILIATION="false"
 PLANNING_BASIS="false"
 SV_PLAN_VERIFY="false"
-SELF_VERIFICATION="false"
+SV_RESULT_VERIFY="false"
+RESOURCE_CLEANUP="false"
+USER_SURFACE_PROOF_METHOD="false"
+TOOL_PATH_USED="false"
+TOOL_EXECUTION_EVIDENCE="false"
 CONVERGENCE_PASS="false"
 
 [[ -n "$(printf '%s' "$OUTPUT_SURFACE_VALUE" | tr -d '[:space:]')" ]] && OUTPUT_SURFACE="true"
@@ -231,12 +236,16 @@ CONVERGENCE_PASS="false"
 [[ -n "$ACCEPTANCE_RECONCILIATION_VALUE" ]] && ACCEPTANCE_RECONCILIATION="true"
 [[ -n "$PLANNING_BASIS_VALUE" ]] && PLANNING_BASIS="true"
 [[ -n "$SV_PLAN_VERIFY_VALUE" ]] && SV_PLAN_VERIFY="true"
-[[ -n "$SELF_VERIFICATION_VALUE" ]] && SELF_VERIFICATION="true"
+[[ -n "$SV_RESULT_VERIFY_VALUE" ]] && SV_RESULT_VERIFY="true"
+[[ -n "$RESOURCE_CLEANUP_VALUE" ]] && RESOURCE_CLEANUP="true"
+[[ -n "$(printf '%s' "$USER_SURFACE_PROOF_METHOD_VALUE" | tr -d '[:space:]')" ]] && USER_SURFACE_PROOF_METHOD="true"
+[[ -n "$(printf '%s' "$TOOL_PATH_USED_VALUE" | tr -d '[:space:]')" ]] && TOOL_PATH_USED="true"
+[[ -n "$(printf '%s' "$TOOL_EXECUTION_EVIDENCE_VALUE" | tr -d '[:space:]')" ]] && TOOL_EXECUTION_EVIDENCE="true"
 [[ -n "$CONVERGENCE_PASS_VALUE" ]] && CONVERGENCE_PASS="true"
 
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-LEDGER_LINE="$(REPORT_TIMESTAMP="$TIMESTAMP" REPORT_SESSION_ID="$SESSION_ID" REPORT_SENDER_NAME="$SENDER_NAME" REPORT_TEAM_NAME="$TEAM_NAME" REPORT_AGENT_TYPE="$AGENT_TYPE" REPORT_TASK_ID="$TASK_ID" REPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" REPORT_TASK_SUBJECT="$TASK_SUBJECT" REPORT_MESSAGE_CLASS="$MESSAGE_CLASS" REPORT_REQUESTED_LIFECYCLE="$REQUESTED_LIFECYCLE" REPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" REPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" REPORT_OPEN_SURFACES="$OPEN_SURFACES" REPORT_NEXT_LANE="$NEXT_LANE" REPORT_USER_RUN_PATH="$USER_RUN_PATH" REPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" REPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" REPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" REPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" REPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" REPORT_BURDEN_STATUS="$BURDEN_STATUS" REPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" REPORT_PLANNING_BASIS="$PLANNING_BASIS" REPORT_SV_PLAN_VERIFY="$SV_PLAN_VERIFY" REPORT_SELF_VERIFICATION="$SELF_VERIFICATION" REPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" REPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" REPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" REPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" REPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" REPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" REPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" REPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" REPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" REPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" REPORT_SV_PLAN_VERIFY_VALUE="$SV_PLAN_VERIFY_VALUE" REPORT_SELF_VERIFICATION_VALUE="$SELF_VERIFICATION_VALUE" REPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" node <<'NODE'
+LEDGER_LINE="$(REPORT_TIMESTAMP="$TIMESTAMP" REPORT_SESSION_ID="$SESSION_ID" REPORT_SENDER_NAME="$SENDER_NAME" REPORT_TEAM_NAME="$TEAM_NAME" REPORT_AGENT_TYPE="$AGENT_TYPE" REPORT_TASK_ID="$TASK_ID" REPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" REPORT_TASK_SUBJECT="$TASK_SUBJECT" REPORT_MESSAGE_CLASS="$MESSAGE_CLASS" REPORT_REQUESTED_LIFECYCLE="$REQUESTED_LIFECYCLE" REPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" REPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" REPORT_OPEN_SURFACES="$OPEN_SURFACES" REPORT_NEXT_LANE="$NEXT_LANE" REPORT_USER_RUN_PATH="$USER_RUN_PATH" REPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" REPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" REPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" REPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" REPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" REPORT_BURDEN_STATUS="$BURDEN_STATUS" REPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" REPORT_PLANNING_BASIS="$PLANNING_BASIS" REPORT_SV_PLAN_VERIFY="$SV_PLAN_VERIFY" REPORT_SV_RESULT_VERIFY="$SV_RESULT_VERIFY" REPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" REPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" REPORT_TOOL_PATH_USED="$TOOL_PATH_USED" REPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" REPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" REPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" REPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" REPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" REPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" REPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" REPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" REPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" REPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" REPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" REPORT_SV_PLAN_VERIFY_VALUE="$SV_PLAN_VERIFY_VALUE" REPORT_SV_RESULT_VERIFY_VALUE="$SV_RESULT_VERIFY_VALUE" REPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" REPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" REPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" REPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" REPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" node <<'NODE'
 const line = {
   timestamp: process.env.REPORT_TIMESTAMP || "",
   sessionId: process.env.REPORT_SESSION_ID || "",
@@ -263,7 +272,11 @@ const line = {
     acceptanceReconciliation: process.env.REPORT_ACCEPTANCE_RECONCILIATION === "true",
     planningBasis: process.env.REPORT_PLANNING_BASIS === "true",
     svPlanVerify: process.env.REPORT_SV_PLAN_VERIFY === "true",
-    selfVerification: process.env.REPORT_SELF_VERIFICATION === "true",
+    svResultVerify: process.env.REPORT_SV_RESULT_VERIFY === "true",
+    resourceCleanup: process.env.REPORT_RESOURCE_CLEANUP === "true",
+    userSurfaceProofMethod: process.env.REPORT_USER_SURFACE_PROOF_METHOD === "true",
+    toolPathUsed: process.env.REPORT_TOOL_PATH_USED === "true",
+    toolExecutionEvidence: process.env.REPORT_TOOL_EXECUTION_EVIDENCE === "true",
     convergencePass: process.env.REPORT_CONVERGENCE_PASS === "true"
   },
   fieldValues: {
@@ -277,7 +290,11 @@ const line = {
     acceptanceReconciliation: process.env.REPORT_ACCEPTANCE_RECONCILIATION_VALUE || "",
     planningBasis: process.env.REPORT_PLANNING_BASIS_VALUE || "",
     svPlanVerify: process.env.REPORT_SV_PLAN_VERIFY_VALUE || "",
-    selfVerification: process.env.REPORT_SELF_VERIFICATION_VALUE || "",
+    svResultVerify: process.env.REPORT_SV_RESULT_VERIFY_VALUE || "",
+    resourceCleanup: process.env.REPORT_RESOURCE_CLEANUP_VALUE || "",
+    userSurfaceProofMethod: process.env.REPORT_USER_SURFACE_PROOF_METHOD_VALUE || "",
+    toolPathUsed: process.env.REPORT_TOOL_PATH_USED_VALUE || "",
+    toolExecutionEvidence: process.env.REPORT_TOOL_EXECUTION_EVIDENCE_VALUE || "",
     convergencePass: process.env.REPORT_CONVERGENCE_PASS_VALUE || ""
   }
 };
@@ -286,5 +303,65 @@ NODE
 )"
 
 append_line_locked "$WORKER_REPORT_LEDGER_LOCK" "$WORKER_REPORT_LEDGER" "$LEDGER_LINE"
+
+# ─── VALIDATOR SILENT-PASS DETECTION (recovery design Phase 1.1c) ───────
+# CLAUDE.md `[USER-SURFACE]` + `### Role And Acceptance Law` enforcement at
+# hook layer. Detects validator handoff/completion with PASS-grade verdict
+# but weak/missing evidence-vs-claim alignment. Injects system-reminder so
+# team-lead synthesis catches the silent-PASS pattern before treating it
+# as completion-grade.
+#
+# Trigger conditions (ALL must hold to fire):
+#   (a) AGENT_TYPE = validator
+#   (b) MESSAGE_CLASS in {handoff, completion}
+#   (c) DESCRIPTION contains PASS-verdict marker (VERDICT: PASS,
+#       ACCEPTANCE-RECONCILIATION: matched/explicit, decisive verdict basis,
+#       CONVERGENCE-PASS >= 1)
+#   (d) Any evidence-vs-claim mismatch present:
+#       - EVIDENCE-BASIS empty/missing
+#       - USER-RUN-PATH empty/missing
+#       - PROOF-SURFACE-MATCH not 'matched'
+#       - RUN-PATH-STATUS not 'matched'
+#       - BURDEN-STATUS not 'matched'
+#       - ACCEPTANCE-RECONCILIATION value present but neither matched/explicit/convergence
+#
+# Narrow recurrence barrier: validator PASS must carry matched user-surface
+# proof fields; otherwise downstream completion gates hold the claim.
+if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] || [[ "$MESSAGE_CLASS" == "completion" ]]; }; then
+  PASS_VERDICT="false"
+  if printf '%s' "$DESCRIPTION" | grep -Eiq '(VERDICT[[:space:]]*:[[:space:]]*PASS|ACCEPTANCE-RECONCILIATION[[:space:]]*:[[:space:]]*(matched|explicit|full[[:space:]]*convergence)|verdict[[:space:]]+basis[[:space:]]+decisive|CONVERGENCE-PASS[[:space:]]*:[[:space:]]*[1-9])'; then
+    PASS_VERDICT="true"
+  fi
+
+  if [[ "$PASS_VERDICT" == "true" ]]; then
+    SILENT_PASS_MISMATCHES=()
+    [[ "$EVIDENCE_BASIS" == "false" ]] && SILENT_PASS_MISMATCHES+=("EVIDENCE-BASIS field empty/missing")
+    if [[ "$USER_RUN_PATH" == "false" ]] && printf '%s' "$DESCRIPTION" | grep -Eiq '(browser[-[:space:]]*ui|web[-[:space:]]*ui|cli|server|runtime|app|application|executable|run[-[:space:]]*path|launch|operator[ -]facing)'; then
+      SILENT_PASS_MISMATCHES+=("USER-RUN-PATH field empty/missing for executable user-facing PASS claim")
+    fi
+    if [[ -n "$PROOF_SURFACE_MATCH_VALUE" && "$PROOF_SURFACE_MATCH_VALUE" != "matched" ]]; then
+      SILENT_PASS_MISMATCHES+=("PROOF-SURFACE-MATCH=${PROOF_SURFACE_MATCH_VALUE} (not 'matched')")
+    fi
+    if [[ -n "$RUN_PATH_STATUS_VALUE" && "$RUN_PATH_STATUS_VALUE" != "matched" ]]; then
+      SILENT_PASS_MISMATCHES+=("RUN-PATH-STATUS=${RUN_PATH_STATUS_VALUE} (not 'matched')")
+    fi
+    if [[ -n "$BURDEN_STATUS_VALUE" && "$BURDEN_STATUS_VALUE" != "matched" ]]; then
+      SILENT_PASS_MISMATCHES+=("BURDEN-STATUS=${BURDEN_STATUS_VALUE} (not 'matched')")
+    fi
+    if [[ -n "$ACCEPTANCE_RECONCILIATION_VALUE" ]] \
+       && [[ "$ACCEPTANCE_RECONCILIATION_VALUE" != "matched" ]] \
+       && [[ "$ACCEPTANCE_RECONCILIATION_VALUE" != "explicit" ]] \
+       && [[ "$ACCEPTANCE_RECONCILIATION_VALUE" != *"convergence"* ]]; then
+      SILENT_PASS_MISMATCHES+=("ACCEPTANCE-RECONCILIATION=${ACCEPTANCE_RECONCILIATION_VALUE} (PASS-grade requires matched/explicit/convergence)")
+    fi
+
+    if (( ${#SILENT_PASS_MISMATCHES[@]} > 0 )); then
+      WARN_MISMATCH_LIST="$(printf '%s; ' "${SILENT_PASS_MISMATCHES[@]}")"
+      WARN_BODY="VALIDATOR-SILENT-PASS-WARN: validator '${SENDER_NAME}' returned PASS-grade verdict for task '${TASK_ID:-unknown}' but evidence-vs-claim alignment is incomplete. Mismatches: ${WARN_MISMATCH_LIST}Per CLAUDE.md \`[USER-SURFACE]\` + \`### Role And Acceptance Law\`: do not synthesize as completion-grade until evidence reconciles with claim. Run SV-RESULT before treating as verified-result; consider re-dispatch with stronger acceptance basis or narrow the claim to verified scope."
+      hook_emit_posttool_context "$WARN_BODY" "Validator evidence warning."
+    fi
+  fi
+fi
+# ─── END VALIDATOR SILENT-PASS DETECTION ──────────────────────────────────
 
 exit 0
