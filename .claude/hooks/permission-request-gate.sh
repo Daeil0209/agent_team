@@ -91,9 +91,6 @@ const safeRelativeOperationalSurface = (relativePath, toolName) => {
   if (rel === ".runtime/procedure-state.json") {
     return toolName === "Edit" || toolName === "Update" || toolName === "MultiEdit";
   }
-  if (rel === ".claude/session-state.md") {
-    return toolName === "Edit" || toolName === "Update" || toolName === "MultiEdit" || toolName === "Write";
-  }
   return false;
 };
 

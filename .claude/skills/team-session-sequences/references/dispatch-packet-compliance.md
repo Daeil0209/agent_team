@@ -33,9 +33,12 @@ Cross-lane packet schema, common message classes, field format, and packet prefl
 - researcher (benchmark): `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`
 - developer: `PLAN-STEP`, `CHANGE-SPEC`
 - developer (consequential): `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`
-- reviewer: `REVIEW-TARGET-TYPE`, `REVIEW-TARGET`, `REVIEW-SCOPE`, `EVIDENCE-BASIS`, `ACCEPTANCE-RISK`, `ACCEPTANCE-SURFACE`, `PRIOR-ANALYSIS`
-- tester: `PROOF-TARGET`, `PROOF-SURFACE`, `ENV-BASIS`, `SCENARIO-SCOPE`, `PROOF-EXPECTATION`
+- reviewer: `REVIEW-TARGET-TYPE`, `REVIEW-TARGET`, `REVIEW-SCOPE`, `PREREQ-STATE`, `EVIDENCE-BASIS`, `ACCEPTANCE-RISK`, `ACCEPTANCE-SURFACE`, `PRIOR-ANALYSIS`
+- reviewer (completion/contract-fit/current-scope): `EXPECTATION-SOURCES`, `SCOPE-BASELINE`, `ACTIVE-SLICE`
+- tester: `PROOF-TARGET`, `PROOF-SURFACE`, `PROOF-EXPECTATION`
+- tester (executable proof): `ENV-BASIS`, `SCENARIO-SCOPE`
 - validator: `VALIDATION-TARGET-TYPE`, `VALIDATION-TARGET`, `EXPECTATION-SOURCES`, `REVIEW-STATE`, `TEST-STATE`, `VALIDATION-SURFACE`
+- tester/validator (executable user-facing): `USER-RUN-PATH`, `BURDEN-CONTRACT`
 
 Free-form descriptions in controlled-value fields are packet defects. Use the canonical value first, then put explanation in a separate detail or presence field.
 

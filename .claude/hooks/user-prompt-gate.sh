@@ -295,16 +295,16 @@ if (selectedIdle) {
   const worker = selectedIdle.worker || "agent";
   switch (selectedIdle.reason) {
     case "working-permission-pending":
-      emit(`CTX: runtime-recovery. Status-like turn matches working-permission-pending for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the permission surface first, do not status-probe the agent, do not infer completion from files, and do not ask the user to choose.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-permission-pending for ${worker}. Evidence surface: pending permission. Owner cue: permission surface before stronger status or completion claim. File existence is not completion evidence.`);
       process.exit(0);
     case "standby":
-      emit(`CTX: runtime-recovery. Status-like turn sees completion-grade output for ${worker}. Briefly answer current state, then treat the agent as standby from that report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation. Keep teardown separate from unrelated dispatch.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn sees completion-grade output for ${worker}. Evidence surface: lifecycle-decision pending with REQUESTED-LIFECYCLE. Owner cue: lifecycle decision stays separate from unrelated dispatch.`);
       process.exit(0);
     case "working-blocked":
-      emit(`CTX: runtime-recovery. Status-like turn matches working-blocked for ${worker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose and do not infer completion from files.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-blocked for ${worker}. Evidence surface: blocker. Owner cue: blocker resolution or smallest partial-result request. File existence is not completion evidence.`);
       process.exit(0);
     case "working-report-missing":
-      emit(`CTX: runtime-recovery. Status-like turn matches working-report-missing for ${worker}. Briefly answer current state, then treat the turn as correction: bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into redispatch, reroute, or replacement, do same-turn work-planning -> self-verification first. File existence may support artifact-change claims only; it is not handoff/completion evidence.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-report-missing for ${worker}. Evidence surface: missing upward report. Owner cue: bounded status or partial-result request before replacement; redispatch, reroute, or replacement needs work-planning. File existence is artifact-change evidence only, not handoff/completion evidence.`);
       process.exit(0);
     case "dispatch-pending-no-ack":
       // Prefer the pending-state path below because it can distinguish ack-late vs stale.
@@ -318,14 +318,14 @@ if (normalize(procedureState.teamDispatchState) === "pending" && pendingAck) {
   const sinceMs = parseIso(procedureState.lastPendingSince || procedureState.lastDispatchAt || pendingAck.timestamp);
   const ageMs = sinceMs == null ? null : Math.max(0, nowMs - sinceMs);
   if (ageMs != null && ageMs >= pendingStaleMs) {
-    emit(`CTX: runtime-recovery. Status-like turn matches ghost for ${pendingAck.worker}. Briefly answer current state, then treat the turn as correction: same-turn work-planning -> self-verification -> replacement-first on the same WORK-SURFACE. Do not status-probe the unstarted target as the primary action and do not ask the user to choose.`);
+    emit(`CTX: runtime-recovery-evidence. Status-like turn matches ghost for ${pendingAck.worker}. Evidence surface: stale pending dispatch without start proof. Owner cue: work-planning for replacement-first recovery on the same WORK-SURFACE.`);
     process.exit(0);
   }
   if (ageMs != null && ageMs >= ackLateMs) {
-    emit(`CTX: runtime-recovery. Status-like turn matches ack-late for ${pendingAck.worker}. Briefly answer current state, then keep the turn on correction/monitoring logic: report pending/late state only, do not claim the agent started, do not status-probe the unstarted target as the primary action, and do not ask the user to choose.`);
+    emit(`CTX: runtime-recovery-evidence. Status-like turn matches ack-late for ${pendingAck.worker}. Evidence surface: late receipt condition. Owner cue: same-assignment receipt follow-up; no agent-start claim.`);
     process.exit(0);
   }
-  emit(`CTX: runtime-recovery. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Briefly answer current state from pending evidence only; do not narrate the work as active and do not status-probe the target as if agent-start evidence already exists.`);
+  emit(`CTX: runtime-recovery-evidence. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Evidence surface: pending dispatch only. Owner cue: same-assignment receipt follow-up; no active-work claim.`);
   process.exit(0);
 }
 
@@ -333,7 +333,7 @@ const claimedWorker = normalize(procedureState.lastClaimedWorker || procedureSta
 const latestReport = claimedWorker ? latestReports.get(claimedWorker) : null;
 if (latestReport) {
   if (latestReport.messageClass === "blocker") {
-    emit(`CTX: runtime-recovery. Status-like turn sees latest agent report 'blocker' from ${claimedWorker}. Briefly answer current state, then treat the turn as correction: resolve the blocker or request the smallest needed partial result; do not ask the user to choose.`);
+    emit(`CTX: runtime-recovery-evidence. Status-like turn sees latest agent report 'blocker' from ${claimedWorker}. Evidence surface: blocker report. Owner cue: blocker resolution or smallest partial-result request.`);
     process.exit(0);
   }
 
@@ -342,7 +342,7 @@ if (latestReport) {
     const reportMs = parseIso(latestReport.timestamp);
     const dispatchMs = parseIso(procedureState.lastDispatchAt);
     if ((permissionMs != null) && (dispatchMs == null || permissionMs >= dispatchMs) && (reportMs == null || permissionMs >= reportMs)) {
-      emit(`CTX: runtime-recovery. Status-like turn sees working-permission-pending for ${claimedWorker}. Briefly answer current state, then resolve the permission surface first; do not status-probe the agent and do not infer completion from files.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn sees working-permission-pending for ${claimedWorker}. Evidence surface: pending permission after dispatch. Owner cue: permission surface before stronger status or completion claim. File existence is not completion evidence.`);
       process.exit(0);
     }
   }
@@ -351,7 +351,7 @@ if (latestReport) {
     const reportMs = parseIso(latestReport.timestamp);
     const ageMs = reportMs == null ? null : Math.max(0, nowMs - reportMs);
     if (ageMs != null && ageMs >= staleWarnMs) {
-      emit(`CTX: runtime-recovery. Status-like turn sees an active-stall candidate on ${claimedWorker}: agent-start evidence exists, but the latest upward report (${latestReport.messageClass}) is stale. Briefly answer current state, then bounded status/partial-result SendMessage is valid before replacement. If the next move escalates into replacement or redispatch, do same-turn work-planning -> self-verification first. File existence is not completion evidence.`);
+      emit(`CTX: runtime-recovery-evidence. Status-like turn sees active-stall candidate on ${claimedWorker}: agent-start evidence exists, but latest upward report (${latestReport.messageClass}) is stale. Evidence surface: stale report. Owner cue: bounded status or partial-result request before replacement; replacement or redispatch needs work-planning. File existence is not completion evidence.`);
       process.exit(0);
     }
   }
@@ -395,6 +395,11 @@ try {
 }
 
 const unique = (values) => [...new Set(values.filter(Boolean))];
+const activeRuntimeIds = unique([
+  typeof state.runtimeSessionId === "string" ? state.runtimeSessionId.trim() : "",
+  typeof state.sessionId === "string" ? state.sessionId.trim() : "",
+  typeof state.bootSessionId === "string" ? state.bootSessionId.trim() : "",
+]);
 const isWorkspaceChild = (candidate) => {
   const relative = path.relative(workspaceRoot, candidate).replace(/\\/g, "/");
   return Boolean(relative) && !relative.startsWith("..") && !path.isAbsolute(relative);
@@ -444,18 +449,6 @@ for (const rawRelative of explicitRelativeMatches) {
   }
 }
 
-try {
-  for (const entry of fs.readdirSync(workspaceRoot, { withFileTypes: true })) {
-    const name = String(entry.name || "").trim();
-    if (!name) continue;
-    const relative = name.replace(/\\/g, "/");
-    if (isProtectedRelative(relative)) continue;
-    if (promptSearch.includes(relative.toLowerCase())) {
-      roots.push(path.resolve(workspaceRoot, name));
-    }
-  }
-} catch {}
-
 const approved = [];
 for (const root of unique(roots)) {
   const normalizedRoot = root.replace(/\\/g, "/");
@@ -464,7 +457,9 @@ for (const root of unique(roots)) {
   const resolvedRoot = path.resolve(root);
   const relative = path.relative(workspaceRoot, resolvedRoot).replace(/\\/g, "/");
   if (isProtectedRelative(relative)) continue;
-  if (promptSearch.includes(normalizedRoot.toLowerCase()) || promptSearch.includes(base.toLowerCase())) {
+  const explicitToken = normalizedRoot.toLowerCase();
+  const relativeToken = relative.toLowerCase();
+  if (promptSearch.includes(explicitToken) || promptSearch.includes(relativeToken)) {
     approved.push(resolvedRoot);
   }
 }
@@ -485,22 +480,43 @@ if (approved.length === 0) {
           if (!fs.existsSync(configPath)) continue;
           let cfg = {};
           try { cfg = JSON.parse(fs.readFileSync(configPath, "utf8")); } catch {}
+          if (
+            activeRuntimeIds.length > 0 &&
+            typeof cfg.leadSessionId === "string" &&
+            cfg.leadSessionId.trim() &&
+            !activeRuntimeIds.includes(cfg.leadSessionId.trim())
+          ) {
+            continue;
+          }
           let candidate = "";
           if (cfg && typeof cfg.projectRoot === "string" && cfg.projectRoot.trim()) {
             candidate = path.resolve(cfg.projectRoot.trim());
           } else if (cfg && typeof cfg.workspaceRoot === "string" && cfg.workspaceRoot.trim()) {
             candidate = path.resolve(cfg.workspaceRoot.trim());
           } else {
+            const description = cfg && typeof cfg.description === "string"
+              ? cfg.description.replace(/\\/g, "/")
+              : "";
+            // Active team configs often carry the project output root only in
+            // human-readable description text. Use it as a narrow same-runtime
+            // cleanup hint; existence and workspace-boundary checks still apply.
+            const descProject = description.match(/(?:^|[\s`"'(:])((?:\.\/)?projects\/[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*)(?:[\/.。,\s`"')]|$)/i);
+            if (descProject && descProject[1]) {
+              const guessFromDescription = path.resolve(workspaceRoot, descProject[1].replace(/^\.\/+/, "").replace(/\/+$/, ""));
+              try { if (fs.existsSync(guessFromDescription)) candidate = guessFromDescription; } catch {}
+            }
             // Fallback: try suffix-stripped team name first (handles common
             // `<project>-build|dev|prod|test|staging` convention), then bare
             // team name (handles custom suffixes / no-suffix naming). Both
             // require existence to add as candidate.
-            const projectName = entry.name.replace(/-(build|dev|prod|test|staging)$/i, "");
-            const guess = path.resolve(workspaceRoot, projectName);
-            try { if (fs.existsSync(guess)) candidate = guess; } catch {}
-            if (!candidate && projectName !== entry.name) {
-              const guess2 = path.resolve(workspaceRoot, entry.name);
-              try { if (fs.existsSync(guess2)) candidate = guess2; } catch {}
+            if (!candidate) {
+              const projectName = entry.name.replace(/-(build|dev|prod|test|staging)$/i, "");
+              const guess = path.resolve(workspaceRoot, projectName);
+              try { if (fs.existsSync(guess)) candidate = guess; } catch {}
+              if (!candidate && projectName !== entry.name) {
+                const guess2 = path.resolve(workspaceRoot, entry.name);
+                try { if (fs.existsSync(guess2)) candidate = guess2; } catch {}
+              }
             }
           }
           if (!candidate) continue;
@@ -545,45 +561,28 @@ BOOT_CONTEXT=""
 BOOT_SUPPRESS="false"
 DELIVERY_CONTEXT=""
 
-# Correction detection runs before boot handling. Topic-only governance terms do
-# not arm self-growth; explicit execution or confirmed defect language does.
+# Correction detection runs before boot handling. It emits context only; owner
+# skills classify route and hardening need.
 SELF_GROWTH_TERM_PATTERN="(self[-[:space:]]*growth|self[-[:space:]]*growth[-[:space:]]*sequence|self[-[:space:]]*improvement|change[-[:space:]]*sequence|재발[[:space:]]*방지|자기[[:space:]]*성장|셀프[[:space:]]*그로스)"
 SELF_GROWTH_EXECUTION_INTENT_PATTERN="(진입|실행|로드|적용|수행|패치|보완|고쳐|수정|하드닝|enter|run|load|apply|execute|patch|harden|fix)"
-SELF_GROWTH_FALSE_POSITIVE_DISCUSSION_PATTERN="(오탐|false[-[:space:]]*positive|topic[-[:space:]]*only|토론[[:space:]]*대상|언급해도|발화|발동|트리거|trigger)"
 CONFIRMED_CORRECTION_PATTERN="((${SELF_GROWTH_TERM_PATTERN})[^.?!]{0,80}${SELF_GROWTH_EXECUTION_INTENT_PATTERN}|(behavior(al)?[[:space:]]+defect|procedural[[:space:]]+defect|process[[:space:]]+failure|행동[[:space:]]*결함|절차[[:space:]]*결함)[^.?!]{0,80}(확정|맞|발생|고쳐|보완|수정|패치|confirmed|actual|fix|harden))"
 CORRECTION_PATTERN="((너|네|니)[[:space:]]*잘못(했|됐|된|한)?|틀렸|틀린|(네|너|니)[[:space:]]*(오류|실수)|왜[[:space:]]*(이런|그런|또)[[:space:]]*(오류|실수)|하지[[:space:]]*말|또[[:space:]]*(같은[[:space:]]*)?(실수|문제|오류)|안[[:space:]]*된다고[[:space:]]*(했|말했|했잖)|그게[[:space:]]*아니|규정[[:space:]]*무시|절차[[:space:]]*무시|규정[[:space:]]*위반|절차[[:space:]]*위반|(네|너|니)[[:space:]]*(오류|실수)|you.*wrong|wrong.*again|your mistake|that.s a mistake|you shouldn.t|not like that|you missed|don.t do|why did you (ignore|skip|miss|forget|not))"
 if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CONFIRMED_CORRECTION_PATTERN" 2>/dev/null; then
-  if [[ -n "$PROMPT_SESSION_ID" ]]; then
-    mark_self_growth_required "$PROMPT_SESSION_ID"
-  fi
-  BOOT_CONTEXT="CTX: self-growth-required. Next: Skill(self-growth-sequence) before consequential fan-out."
+  BOOT_CONTEXT="CTX: self-growth-evidence. User prompt supplies possible defect evidence. Owner cue: classify owner, recurrence path, and hardening need before consequential fan-out."
 elif printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CORRECTION_PATTERN" 2>/dev/null; then
-  if [[ -n "$PROMPT_SESSION_ID" ]]; then
-    mark_self_growth_suspected "$PROMPT_SESSION_ID"
-  fi
-  BOOT_CONTEXT="CTX: user-challenge-observed. Treat the prompt as evidence to evaluate, not proof of defect. Preserve prior verified conclusions unless direct evidence or governing rules overturn them. If a real behavioral defect is confirmed, then enter self-growth; otherwise answer the current request from verified evidence."
-elif printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_TERM_PATTERN" 2>/dev/null \
-  && printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_FALSE_POSITIVE_DISCUSSION_PATTERN" 2>/dev/null \
-  && ! printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$SELF_GROWTH_EXECUTION_INTENT_PATTERN" 2>/dev/null; then
-  if [[ -n "$PROMPT_SESSION_ID" ]]; then
-    clear_self_growth_required "$PROMPT_SESSION_ID"
-    clear_self_growth_suspected "$PROMPT_SESSION_ID"
-  fi
+  BOOT_CONTEXT="CTX: user-challenge-evidence. User challenge observed. Evidence cue: prompt is not defect proof; prior verified conclusions stand unless direct evidence or governing rules overturn them; confirmed behavioral defect may open self-growth classification."
 fi
 
 DELIVERY_INCIDENT_PATTERN="(double[-[:space:]]*click|더블클릭|start[._-]?bat|start[._-]?sh|launcher|아이콘|실행[^.]{0,20}(안[[:space:]]*돼|안돼|안됨|실패)|안[[:space:]]*열리|won.t[[:space:]]+launch|doesn.t[[:space:]]+launch|launch[[:space:]]+fail)"
 BURDEN_SHIFT_PROMPT_PATTERN="(내[[:space:]]*손이[[:space:]]*가|더블클릭만|hands[-[:space:]]*off|low[-[:space:]]*touch|cmd|powershell|terminal|명령[[:space:]]*(프롬프트|입력)|터미널|삭제[[:space:]]*후|node_modules|\\.next)"
 
 if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null; then
-  DELIVERY_CONTEXT="CTX: delivery-incident-reopen. Treat reported user-run-path failure as an acceptance blocker reopen. Next: verify on the promised user run path, remediate hands-off in the product or launcher, and keep the task open until run-path proof is re-established."
+  DELIVERY_CONTEXT="CTX: delivery-incident-evidence. Reported user-run-path failure may reopen acceptance. Evidence cue: promised user run path, hands-off remediation surface, and run-path proof need owner verification."
 fi
 
 if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null \
   && printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$BURDEN_SHIFT_PROMPT_PATTERN" 2>/dev/null; then
-  if [[ -n "$PROMPT_SESSION_ID" ]]; then
-    mark_self_growth_required "$PROMPT_SESSION_ID"
-  fi
-  DELIVERY_CONTEXT="CTX: self-owned-remediation-required. A promised hands-off delivery path failed and the user is being pulled into recovery steps. Reopen acceptance, keep remediation agent-owned, and enter self-growth before consequential follow-on."
+  DELIVERY_CONTEXT="CTX: delivery-remediation-evidence. A promised hands-off delivery path may have failed and pulled the user into recovery steps. Evidence cue: acceptance reopen, agent-owned remediation, and self-growth classification may be relevant."
 fi
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
@@ -591,7 +590,7 @@ if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; 
   if [[ "$BOOT_STARTUP_STATE" == "ready" ]]; then
     printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
   else
-    BOOT_CONTEXT="CTX: boot-required. Next: Skill(session-boot) before task-level work."
+    BOOT_CONTEXT="CTX: boot-state. Boot sequence is incomplete. Owner cue: session-boot before task-level work."
     BOOT_SUPPRESS="true"
   fi
 fi
@@ -630,21 +629,21 @@ case "$CLOSEOUT_ACTION" in
   set)
     clear_lead_planning_required "$PROMPT_SESSION_ID"
     set_closeout_intent "$USER_PROMPT_CLOSEOUT_INTENT_REASON" "user-prompt" "intent_marked" "$PROMPT_SESSION_ID"
-    CLOSEOUT_CONTEXT="CTX: closeout-active. Next: Skill(session-closeout) first; keep cleanup inside Closeout Sequence."
+    CLOSEOUT_CONTEXT="CTX: closeout-intent-state. Explicit closeout intent marked. Owner cue: session-closeout owns teardown and residual truth."
     CLOSEOUT_SUPPRESS="true"
     ;;
   clear)
     if closeout_intent_is_active "$PROMPT_SESSION_ID"; then
       clear_closeout_intent "user-prompt-closeout-cancelled" "$PROMPT_SESSION_ID"
     fi
-    CLOSEOUT_CONTEXT="CTX: closeout-cleared. Remain in normal monitoring mode until a new explicit end-of-session instruction."
+    CLOSEOUT_CONTEXT="CTX: closeout-intent-state. Explicit closeout cancellation observed. Owner cue: closeout state cleared until a new explicit end-of-session instruction."
     CLOSEOUT_SUPPRESS="true"
     ;;
 esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
-  mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-preflight. Apply Priority 0 → work-planning → SV-PLAN before consequential action; SV-only audit may start with self-verification when scope is unchanged. Full chain: agents/team-lead.md Priority 0 + RPA-1/RPA-4."
+  # A fresh prompt alone is not a planning owner. Priority 0 decides whether a boundary opened.
+  PLANNING_CONTEXT="CTX: fresh-turn-preflight. Fresh prompt observed. Owner cue: Priority 0 classifies channel; work-planning owns consequential boundaries; bounded known-doc governance refresh can stay light/control; SV-only audit stays narrow."
   RECOVERY_CONTEXT="$(status_runtime_recovery_context "$USER_PROMPT")"
 fi
 

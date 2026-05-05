@@ -61,15 +61,13 @@ const parseClaimedPendingRows = (filePath, statusIndex) => {
 const markerStateForSession = (sessionId, logDir) => {
   const resolvedSessionId = trimText(sessionId);
   if (!resolvedSessionId) {
-    return { sessionId: "", wpTimestamp: "", svPlanPresent: false, svResultPresent: false };
+    return { sessionId: "", wpTimestamp: "", svResultPresent: false };
   }
   const wpMarker = path.join(logDir, `.wp-loaded-${resolvedSessionId}`);
-  const svPlanMarker = path.join(logDir, `.sv-plan-loaded-${resolvedSessionId}`);
   const svResultMarker = path.join(logDir, `.sv-result-loaded-${resolvedSessionId}`);
   return {
     sessionId: resolvedSessionId,
     wpTimestamp: readIfExists(wpMarker),
-    svPlanPresent: fs.existsSync(svPlanMarker),
     svResultPresent: fs.existsSync(svResultMarker)
   };
 };
@@ -78,7 +76,6 @@ const markerStateScore = (state) => {
   if (!state) return 0;
   let score = 0;
   if (state.wpTimestamp) score += 1;
-  if (state.svPlanPresent) score += 2;
   if (state.svResultPresent) score += 4;
   return score;
 };
@@ -202,7 +199,7 @@ try {
   const evidenceState =
     markerStates.find((state) => state.sessionId && state.sessionId === preferredEvidenceSessionId) ||
     sortedMarkerStates[0] ||
-    { sessionId: sessionId, wpTimestamp: "", svPlanPresent: false, svResultPresent: false };
+    { sessionId: sessionId, wpTimestamp: "", svResultPresent: false };
 
   if (
     latest &&
@@ -221,12 +218,12 @@ try {
   const missingFields = [];
   const requiredFieldMap = [
     ["outputSurface", "OUTPUT-SURFACE"],
+    ["targetIntentBasis", "TARGET-INTENT-BASIS"],
     ["evidenceBasis", "EVIDENCE-BASIS"],
     ["openSurfaces", "OPEN-SURFACES"],
+    ["frozenContractStatus", "FROZEN-CONTRACT-STATUS"],
     ["recommendedNextLane", "RECOMMENDED-NEXT-LANE"],
     ["planningBasis", "PLANNING-BASIS"],
-    ["svPlanVerify", "SV-PLAN-VERIFY"],
-    ["svResultVerify", "SV-RESULT-VERIFY"],
     ["resourceCleanup", "RESOURCE-CLEANUP"],
     ["convergencePass", "CONVERGENCE-PASS"]
   ];
@@ -269,13 +266,14 @@ try {
     taskSubject,
     evidenceSessionId: trimText(evidenceState.sessionId || ""),
     wpTimestamp: trimText(evidenceState.wpTimestamp || ""),
-    svPlanPresent: Boolean(evidenceState.svPlanPresent),
     svResultPresent: Boolean(evidenceState.svResultPresent),
     exactTaskReportPresent: Boolean(latestExactTask),
     explicitTaskIdFieldPresent: latest ? Boolean(latest.taskIdFieldPresent) : false,
     latestAgentType: latest ? String(latest.agentType || "") : "",
     latestMessageClass: latest ? String(latest.messageClass || "") : "",
     latestTimestamp: latest ? String(latest.timestamp || "") : "",
+    openSurfacesValue: String(fieldValues.openSurfaces || ""),
+    frozenContractStatusValue: String(fieldValues.frozenContractStatus || ""),
     userRunPathValue: String(fieldValues.userRunPath || ""),
     burdenContractValue: String(fieldValues.burdenContract || ""),
     proofSurfaceMatchValue: String(fieldValues.proofSurfaceMatch || ""),
@@ -285,8 +283,6 @@ try {
     burdenStatusValue: String(fieldValues.burdenStatus || ""),
     acceptanceReconciliationValue: String(fieldValues.acceptanceReconciliation || ""),
     planningBasisValue: String(fieldValues.planningBasis || ""),
-    svPlanVerifyValue: String(fieldValues.svPlanVerify || ""),
-    svResultVerifyValue: String(fieldValues.svResultVerify || ""),
     resourceCleanupValue: String(fieldValues.resourceCleanup || ""),
     userSurfaceProofMethodValue: String(fieldValues.userSurfaceProofMethod || ""),
     toolPathUsedValue: String(fieldValues.toolPathUsed || ""),
@@ -307,13 +303,14 @@ try {
     taskSubject: "",
     evidenceSessionId: "",
     wpTimestamp: "",
-    svPlanPresent: false,
     svResultPresent: false,
     exactTaskReportPresent: false,
     explicitTaskIdFieldPresent: false,
     latestAgentType: "",
     latestMessageClass: "",
     latestTimestamp: "",
+    openSurfacesValue: "",
+    frozenContractStatusValue: "",
     userRunPathValue: "",
     burdenContractValue: "",
     proofSurfaceMatchValue: "",
@@ -323,8 +320,6 @@ try {
     burdenStatusValue: "",
     acceptanceReconciliationValue: "",
     planningBasisValue: "",
-    svPlanVerifyValue: "",
-    svResultVerifyValue: "",
     resourceCleanupValue: "",
     userSurfaceProofMethodValue: "",
     toolPathUsedValue: "",
@@ -356,12 +351,13 @@ const fieldValues = [
   parsed.taskSubject || "",
   parsed.evidenceSessionId || "",
   parsed.wpTimestamp || "",
-  parsed.svPlanPresent ? "true" : "false",
   parsed.svResultPresent ? "true" : "false",
   parsed.exactTaskReportPresent ? "true" : "false",
   parsed.explicitTaskIdFieldPresent ? "true" : "false",
   parsed.latestAgentType || "",
   parsed.latestMessageClass || "",
+  parsed.openSurfacesValue || "",
+  parsed.frozenContractStatusValue || "",
   parsed.userRunPathValue || "",
   parsed.burdenContractValue || "",
   parsed.proofSurfaceMatchValue || "",
@@ -371,8 +367,6 @@ const fieldValues = [
   parsed.burdenStatusValue || "",
   parsed.acceptanceReconciliationValue || "",
   parsed.planningBasisValue || "",
-  parsed.svPlanVerifyValue || "",
-  parsed.svResultVerifyValue || "",
   parsed.resourceCleanupValue || "",
   parsed.userSurfaceProofMethodValue || "",
   parsed.toolPathUsedValue || "",
@@ -395,34 +389,42 @@ TASK_ID="${TASK_COMPLETED_FIELDS[2]-}"
 TASK_SUBJECT="${TASK_COMPLETED_FIELDS[3]-}"
 EVIDENCE_SESSION_ID="${TASK_COMPLETED_FIELDS[4]-}"
 WP_TIMESTAMP="${TASK_COMPLETED_FIELDS[5]-}"
-SV_PLAN_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
-SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
-EXACT_TASK_REPORT_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
-EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[9]-false}"
-LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[10]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-LATEST_CLASS="${TASK_COMPLETED_FIELDS[11]-}"
-USER_RUN_PATH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[12]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
+EXACT_TASK_REPORT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
+EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
+LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[9]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+LATEST_CLASS="${TASK_COMPLETED_FIELDS[10]-}"
+OPEN_SURFACES_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[11]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+OPEN_SURFACES_NORM="$(printf '%s' "$OPEN_SURFACES_VALUE" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+FROZEN_CONTRACT_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[12]-}" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+USER_RUN_PATH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[13]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
 USER_RUN_PATH_NORM="$(printf '%s' "$USER_RUN_PATH_VALUE" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-BURDEN_CONTRACT_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[13]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-PROOF_SURFACE_MATCH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[14]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-RUN_PATH_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[15]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-CORE_WORKFLOW_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[16]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-INTERACTION_COVERAGE_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[17]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-BURDEN_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[18]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[19]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
-PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[20]-}"
-SV_PLAN_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[21]-}"
-SV_RESULT_VERIFY_VALUE="${TASK_COMPLETED_FIELDS[22]-}"
-RESOURCE_CLEANUP_VALUE="${TASK_COMPLETED_FIELDS[23]-}"
-USER_SURFACE_PROOF_METHOD_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[24]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-TOOL_PATH_USED_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[25]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-TOOL_EXECUTION_EVIDENCE_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[26]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[27]-}"
-MISSING_FIELDS="${TASK_COMPLETED_FIELDS[28]-}"
-IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[29]-}"
-REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[30]-}"
+BURDEN_CONTRACT_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[14]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+PROOF_SURFACE_MATCH_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[15]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+RUN_PATH_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[16]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+CORE_WORKFLOW_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[17]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+INTERACTION_COVERAGE_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[18]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+BURDEN_STATUS_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[19]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[20]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+PLANNING_BASIS_VALUE="${TASK_COMPLETED_FIELDS[21]-}"
+RESOURCE_CLEANUP_VALUE="${TASK_COMPLETED_FIELDS[22]-}"
+RESOURCE_CLEANUP_NORM="$(printf '%s' "$RESOURCE_CLEANUP_VALUE" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+USER_SURFACE_PROOF_METHOD_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[23]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+TOOL_PATH_USED_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[24]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+TOOL_EXECUTION_EVIDENCE_VALUE="$(printf '%s' "${TASK_COMPLETED_FIELDS[25]-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+TOOL_STATEFUL_EVIDENCE_NORM="$(printf '%s\n%s' "$TOOL_PATH_USED_VALUE" "$TOOL_EXECUTION_EVIDENCE_VALUE" | tr '[:upper:]' '[:lower:]')"
+CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[26]-}"
+MISSING_FIELDS="${TASK_COMPLETED_FIELDS[27]-}"
+IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[28]-}"
+REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[29]-}"
 
 FAILURES=()
+WARNINGS=()
+
+missing_field_present() {
+  local field_name="${1:?field required}"
+  [[ ", ${MISSING_FIELDS}, " == *", ${field_name}, "* ]]
+}
 
 if [[ -z "$SESSION_ID" && -z "$TEAMMATE_NAME" ]]; then
   FAILURES+=("Identity resolution failed. Cannot verify completion requirements.")
@@ -432,12 +434,8 @@ if [[ -z "$WP_TIMESTAMP" ]]; then
   FAILURES+=("No observed work-planning load for session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill first.")
 fi
 
-if [[ "$SV_PLAN_PRESENT" != "true" ]]; then
-  FAILURES+=("No post-planning self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and challenge the plan.")
-fi
-
 if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
-  FAILURES+=("No Phase 2 self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, verify results.")
+  FAILURES+=("No phase/stage-end self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and verify results before completion.")
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then
@@ -475,87 +473,146 @@ if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  FAILURES+=("Missing required fields: ${MISSING_FIELDS}.")
+  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS RECOMMENDED-NEXT-LANE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS REQUESTED-LIFECYCLE USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
+    if missing_field_present "$field_name"; then
+      FAILURES+=("Missing completion-safety field: ${field_name}.")
+    fi
+  done
 fi
 
 if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
   FAILURES+=("Report must carry PLANNING-BASIS: loaded.")
 fi
 
-if [[ "$SV_PLAN_VERIFY_VALUE" != "done" ]]; then
-  FAILURES+=("Report must carry SV-PLAN-VERIFY: done.")
-fi
+case "$FROZEN_CONTRACT_STATUS_VALUE" in
+  matched|partial|drifted|blocked|not-assessable|not-applicable:*) ;;
+  *)
+    FAILURES+=("FROZEN-CONTRACT-STATUS must be matched|partial|drifted|blocked|not-assessable|not-applicable:<basis>.")
+    ;;
+esac
 
-if [[ "$SV_RESULT_VERIFY_VALUE" != "converged" ]]; then
-  FAILURES+=("Report must carry SV-RESULT-VERIFY: converged.")
-fi
+case "$OPEN_SURFACES_NORM" in
+  ""|none|"[]"|"no open surfaces"|not-applicable:*)
+    ;;
+  *deferred*:*|*deferred*basis*|*out-of-scope*:*|*out-of-scope*basis*|*owner-deferred*:*|*owner-deferred*basis*)
+    ;;
+  *)
+    FAILURES+=("OPEN-SURFACES contains unresolved material work without explicit deferred/out-of-scope basis.")
+    ;;
+esac
 
-case "$RESOURCE_CLEANUP_VALUE" in
-  complete*|not-applicable*) ;;
+case "$FROZEN_CONTRACT_STATUS_VALUE" in
+  matched|not-applicable:*) ;;
+  *)
+    FAILURES+=("FROZEN-CONTRACT-STATUS is not closure-ready for TaskCompleted.")
+    ;;
+esac
+
+case "$RESOURCE_CLEANUP_NORM" in
+  complete*)
+    if [[ "$RESOURCE_CLEANUP_NORM" == "complete" ]]; then
+      FAILURES+=("RESOURCE-CLEANUP: complete must enumerate closed stateful resources and post-cleanup probe evidence.")
+    fi
+    case "$RESOURCE_CLEANUP_NORM" in
+      *closed*|*released*|*probe*|*pid*|*port*|*browser*|*server*|*process*|*resource*) ;;
+      *)
+        FAILURES+=("RESOURCE-CLEANUP: complete must name the cleaned resource or release probe.")
+        ;;
+    esac
+    ;;
+  not-applicable*)
+    case "$TOOL_STATEFUL_EVIDENCE_NORM" in
+      *playwright*|*browser*|*server*|*localhost*|*127.0.0.1*|*pid*|*port*|*launch*)
+        FAILURES+=("RESOURCE-CLEANUP: not-applicable is invalid when tool evidence shows browser/server/launch/process work.")
+        ;;
+    esac
+    ;;
   *)
     FAILURES+=("Report must carry RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
     ;;
 esac
 
-case "$CONVERGENCE_PASS_VALUE" in
-  1|2|3) ;;
-  *)
-    FAILURES+=("Report must carry CONVERGENCE-PASS: 1|2|3.")
-    ;;
-esac
+if ! [[ "$CONVERGENCE_PASS_VALUE" =~ ^[1-9][0-9]*$ ]]; then
+  FAILURES+=("Report must carry CONVERGENCE-PASS as a positive integer.")
+fi
 
 if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]; then
   if [[ -n "$BURDEN_CONTRACT_VALUE" ]]; then
     case "$BURDEN_CONTRACT_VALUE" in
       hands-off|low-touch|normal|not-applicable) ;;
       *)
-        FAILURES+=("When present, BURDEN-CONTRACT must be hands-off|low-touch|normal|not-applicable.")
+        WARNINGS+=("When present, BURDEN-CONTRACT should be hands-off|low-touch|normal|not-applicable.")
         ;;
     esac
   fi
 
   case "$PROOF_SURFACE_MATCH_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    "")
+      FAILURES+=("Tester/validator report omitted PROOF-SURFACE-MATCH.")
+      ;;
     *)
-      FAILURES+=("Tester/validator report must carry PROOF-SURFACE-MATCH: matched|mismatched|blocked|missing|partial|not-applicable.")
+      FAILURES+=("Tester/validator report used noncanonical PROOF-SURFACE-MATCH.")
       ;;
   esac
 
   case "$RUN_PATH_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    "")
+      FAILURES+=("Tester/validator report omitted RUN-PATH-STATUS.")
+      ;;
     *)
-      FAILURES+=("Tester/validator report must carry RUN-PATH-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      FAILURES+=("Tester/validator report used noncanonical RUN-PATH-STATUS.")
       ;;
   esac
 
   case "$CORE_WORKFLOW_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    "")
+      FAILURES+=("Tester/validator report omitted CORE-WORKFLOW-STATUS.")
+      ;;
     *)
-      FAILURES+=("Tester/validator report must carry CORE-WORKFLOW-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      FAILURES+=("Tester/validator report used noncanonical CORE-WORKFLOW-STATUS.")
       ;;
   esac
 
   case "$INTERACTION_COVERAGE_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    "")
+      FAILURES+=("Tester/validator report omitted INTERACTION-COVERAGE-STATUS.")
+      ;;
     *)
-      FAILURES+=("Tester/validator report must carry INTERACTION-COVERAGE-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      FAILURES+=("Tester/validator report used noncanonical INTERACTION-COVERAGE-STATUS.")
       ;;
   esac
 
   case "$BURDEN_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
+    "")
+      FAILURES+=("Tester/validator report omitted BURDEN-STATUS.")
+      ;;
     *)
-      FAILURES+=("Tester/validator report must carry BURDEN-STATUS: matched|mismatched|blocked|missing|partial|not-applicable.")
+      FAILURES+=("Tester/validator report used noncanonical BURDEN-STATUS.")
       ;;
   esac
 
   if [[ "$LATEST_AGENT_TYPE" == "validator" ]]; then
     case "$ACCEPTANCE_RECONCILIATION_VALUE" in
       explicit|missing|not-applicable) ;;
+      "")
+        FAILURES+=("Validator report omitted ACCEPTANCE-RECONCILIATION.")
+        ;;
       *)
-        FAILURES+=("Validator report must carry ACCEPTANCE-RECONCILIATION: explicit|missing|not-applicable.")
+        FAILURES+=("Validator report used noncanonical ACCEPTANCE-RECONCILIATION.")
         ;;
     esac
+  fi
+
+  if [[ "$RUN_PATH_STATUS_VALUE" != "not-applicable" && -z "$USER_RUN_PATH_VALUE" ]]; then
+    FAILURES+=("Tester/validator executable or run-path status requires USER-RUN-PATH; use not-applicable only when run-path proof is outside the frozen surface.")
+  fi
+  if [[ "$BURDEN_STATUS_VALUE" != "not-applicable" && -z "$BURDEN_CONTRACT_VALUE" ]]; then
+    FAILURES+=("Tester/validator burden status requires BURDEN-CONTRACT; use not-applicable only when operator burden is outside the frozen surface.")
   fi
 
   if [[ -n "$USER_RUN_PATH_VALUE" && "$USER_RUN_PATH_NORM" != "not-applicable" ]]; then
@@ -592,6 +649,14 @@ if [[ ${#FAILURES[@]} -gt 0 ]]; then
     FAILURE_MSG+=$'\n'"  - $f"
   done
   deny_task_complete "$FAILURE_MSG"
+fi
+
+if [[ ${#WARNINGS[@]} -gt 0 ]]; then
+  WARNING_MSG="TaskCompleted warning for ${TEAMMATE_NAME:-agent} (${TASK_ID:-unknown-task}). ${#WARNINGS[@]} issue(s) found:"
+  for w in "${WARNINGS[@]}"; do
+    WARNING_MSG+=$'\n'"  - $w"
+  done
+  printf '[%s] TASK-COMPLETED WARNING: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$WARNING_MSG" >> "$VIOLATION_LOG"
 fi
 
 exit 0

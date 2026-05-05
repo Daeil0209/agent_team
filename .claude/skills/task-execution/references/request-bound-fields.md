@@ -11,6 +11,26 @@ When truthful lane execution depends on the original request shape, the assignme
 - `PRIMARY-AUDIENCE`
 - `EXCLUDED-SCOPE`
 
+When truthful lane execution depends on why the target artifact exists or what it must preserve, the assignment packet must also carry:
+- `TARGET-INTENT-BASIS`
+
+`TARGET-INTENT-BASIS` names the target artifact's purpose and protected outcome.
+Governance analysis uses governance design intent.
+Program work uses program intent and user-workflow intent.
+Report and document work use reader, question, conclusion, evidence, and action intent.
+Review, proof, validation, and completion work use the target intent that defines fit and closure.
+If this basis is safely inferable from the request, plan, design, Structural Contract, cited artifact, or frozen scope, mark it as `INFERENCE` and proceed.
+If the basis is not safely inferable, use `scope-pressure` or `hold|blocker`.
+`TARGET-INTENT-BASIS` states protected purpose and user outcome.
+Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.
+
+When a frozen plan, MVP, release, or phase scope contains multiple promised features, workflows, surfaces, or controls, completion-critical lane packets must also carry:
+- `SCOPE-BASELINE`
+- `ACTIVE-SLICE`
+- `DEFERRED-SURFACES`
+
+`SCOPE-BASELINE` is the authoritative in-scope list. `ACTIVE-SLICE` is the subset assigned in the current packet. `DEFERRED-SURFACES` is valid only when upstream scope explicitly deferred or excluded those items; an unimplemented baseline item remains open, not out-of-scope by dispatch.
+
 When exact instruction wording materially affects acceptance, decision-fit, or request-fit review, the packet must additionally carry:
 - `USER-INSTRUCTION-VERBATIM`
 - `USER-INSTRUCTION-AMENDMENTS`
@@ -18,7 +38,9 @@ When exact instruction wording materially affects acceptance, decision-fit, or r
 When planning or the active workflow already froze methodology guidance for the lane, the packet must also carry:
 - `SKILL-RECOMMENDATIONS`
 
-`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and advisory only inside the already bounded lane surface. It does not create lane ownership, replace `REQUIRED-SKILLS`, authorize a lane-core skill listing, or change proof/acceptance ownership. If it is missing from the frozen planning/workflow basis, do not invent it during dispatch.
+`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and advisory only inside the already bounded lane surface.
+It never creates lane ownership, authorizes lane-core skill listing, or changes proof/acceptance ownership.
+If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 
 Do not leave these request-fit or methodology fields only in linked-path references when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
 
@@ -27,8 +49,11 @@ When frozen governance depth materially changes staffing, checkpoint, review, pr
 - `ACTIVE-REQUEST-TIER`
 - `TIER-RAISE-REASON`
 
-`PROJECT-TIER` is the floor. `ACTIVE-REQUEST-TIER` may stay at that floor or raise above it for the current request, but the packet must not silently rewrite the project floor.
-Tier may avoid unnecessary over-governance, but it must never be used to downshift decisive user-surface proof or acceptance integrity.
+`PROJECT-TIER` is the floor.
+`ACTIVE-REQUEST-TIER` can stay at that floor or raise above it for the current request.
+The packet must not silently rewrite the project floor.
+Tier can avoid unnecessary over-governance.
+Tier must never downshift decisive user-surface proof or acceptance integrity.
 
 When proof or acceptance depends on the real user-facing surface rather than source-state alone, the packet must also make that surface explicit:
 - `USER-SURFACE`
@@ -36,26 +61,47 @@ When proof or acceptance depends on the real user-facing surface rather than sou
 - `TOOL-REQUIREMENT` when one exact truthful tool is already frozen
 - `SURFACE-EQUIVALENCE-BASIS` when the frozen proof path is not the obvious native/default tool for that surface
 
-`USER-SURFACE` names what the user actually experiences: browser interaction, rendered page-read document, office document, spreadsheet runtime, PDF reader surface, HWP/HWPX reader/editor surface, operator console, or another concrete user-consumed surface. Do not force tester or validator to rediscover that surface from gist.
+`USER-SURFACE` names what the user actually experiences: browser interaction, source-read governance/report/documentation text, rendered page-read document, office document, spreadsheet runtime, PDF reader surface, HWP/HWPX reader/editor surface, operator console, or another concrete user-consumed surface.
+Do not force tester or validator to rediscover that surface from gist.
+When frozen upstream, Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix travel as cited packet basis.
+Packet writers preserve citation identity for those artifacts.
 
-`TOOL-REQUIREMENT` is not a convenience preference field. Keep assignments method-neutral by default and freeze an exact tool only when the user explicitly requires it, the active workflow already froze it for bounded cost/risk reasons, or no equivalent truthful path exists.
-If the exact tool is not yet frozen, the packet may instead freeze a bounded discovery/setup objective:
+`TOOL-REQUIREMENT` is not a convenience preference field. Keep assignments method-neutral by default and freeze an exact tool only when the user explicitly requires it, the active workflow already froze it for bounded burden/risk reasons, or no equivalent truthful path exists.
+If the exact tool is not yet frozen, the packet can instead freeze a bounded discovery/setup objective:
 - `TOOL-DISCOVERY-GOAL`
 - `TOOL-DISCOVERY-BOUNDARY`
 - `TOOL-VERIFICATION-STANDARD`
 - `TOOL-CLEANUP-EXPECTATION`
 
-This keeps the assignment autonomy-preserving without allowing vague or unbounded tool hunting.
+Keep assignment autonomy without vague or unbounded tool hunting.
+When that boundary includes environment/tool setup, carry the setup safety classification from `work-planning`: `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`. `allowed-setup` is not a user confirmation gate; `approval-required` must name the damage-capable/destructive/security/credential/paid/persistent-service/policy reason.
 For browser-ui proof or acceptance, an exact `TOOL-REQUIREMENT` and the full bounded discovery/setup bundle are alternatives at dispatch time. Do not force both unless the workflow truly needs both.
 
+When the frozen proof or acceptance path covers multiple environments, platforms, browsers, or deployment contexts, or when a single-environment proof is claimed cross-environment sufficient, the packet must also carry:
+- `ENV-COVERAGE`: the bounded list of environments, platforms, browsers, or deployment contexts in scope for this proof or acceptance pass
+- `EQUIVALENCE-DECLARATION`: explicit basis for treating the tested environment(s) as equivalent to non-tested environments when cross-environment sufficiency is claimed
+- `PER-ENV-PASS-POLICY`: the per-environment pass criteria — whether each named environment must independently pass, or a representative subset is accepted with stated rationale
+
+`ENV-COVERAGE` is required when 2+ environments are in scope or when single-environment proof is claimed cross-environment sufficient. `EQUIVALENCE-DECLARATION` is required when environments are declared equivalent without independent per-environment proof. `PER-ENV-PASS-POLICY` is required when validator final acceptance must reconcile cross-environment deltas.
+
+When the current request/environment evidence points to Windows as the operator environment, tester and validator packets for executable deliverables must carry:
+- `PRIMARY-OPERATOR-OS: Windows`
+- `WINDOWS-LAUNCH-SURFACE`
+- `WINDOWS-EQUIVALENCE-BASIS` only when proof runs outside Windows but claims Windows sufficiency
+
+WSL/Linux execution does not satisfy Windows launch proof by itself.
+
 `USER-RUN-PATH` and `BURDEN-CONTRACT` are delivery-contract fields scoped by deliverable surface class:
-- **MANDATORY** when target lane is `tester` or `validator` AND the deliverable surface is **executable user-facing** (operator runs the program / launches a server / interacts with a browser-rendered UI / opens a runnable artifact). For these surfaces, launch path materially defines proof and operator burden materially defines acceptance. Omitting these fields is a packet defect that `task-execution`, tester, and validator must not absorb by guesswork. Default for web apps, CLI tools, GUI apps, runnable scripts, and any deliverable with a "the user starts it and uses it" surface.
-- **OPTIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact (PDF/HWP/document/slides where the operator just reads, no run/launch step) and run-path burden plus operator workflow burden are not part of the frozen acceptance surface. Completion gates may treat omitted values as `not-applicable` only in this narrow case.
+- **MANDATORY** when target lane is `tester` or `validator` AND the deliverable surface is **executable user-facing** (operator runs the program / launches a server / interacts with a browser-rendered UI / opens a runnable artifact). Launch path defines proof; operator burden defines acceptance. Omission is a packet defect that `task-execution`, tester, and validator must not absorb by guesswork.
+- **OPTIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
 - **NOT a permission-graded field**. There is no "I prefer to skip these" option for executable user-facing surfaces; the delivery contract treats them as schema floor.
 
 Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 
-`DECISION-SURFACE` is a conditional validator arbitration field. Keep it explicit when the decisive acceptance surface materially differs from the validator execution surface or when the verdict must reconcile more than one candidate acceptance surface. When `VALIDATION-SURFACE` already names the single decisive user-facing acceptance surface for the bounded acceptance path, `DECISION-SURFACE` may inherit from `VALIDATION-SURFACE`.
+`DECISION-SURFACE` is a conditional final-arbitration field.
+Keep it explicit when the decisive acceptance surface materially differs from the validator execution surface.
+Keep it explicit when the verdict must reconcile more than one candidate acceptance surface.
+When `VALIDATION-SURFACE` already names the single decisive user-facing acceptance surface for the bounded acceptance path, `DECISION-SURFACE` can inherit from `VALIDATION-SURFACE`.
 
 `ENV-BASIS` and `SCENARIO-SCOPE` are tester-proof context fields with conditional default but executable-proof-floor enforcement. The narrow `not-applicable (...)` carve-out for genuinely static-render single-surface proof remains valid; default for any executable surface is mandatory.
 

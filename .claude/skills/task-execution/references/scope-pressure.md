@@ -22,7 +22,7 @@ Use `parallel-split-needed` when nominally parallel or independently staffable w
 Use `boundary-too-wide` when the packet already exceeds the smallest truthful lane-owned boundary even before throughput evidence accumulates.
 
 Replanning law:
-- `REPLAN-REQUIRED: yes` when the objection changes owner, phase, work-surface decomposition, staffing shape, acceptance chain, proof surface, or deliverable shape.
-- `REPLAN-REQUIRED: no` only when one bounded packet correction can preserve the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, and parallel grouping.
+- `REPLAN-REQUIRED: yes` when the objection moves any `work-planning` boundary-change axis.
+- `REPLAN-REQUIRED: no` only when one bounded packet correction preserves all `work-planning` boundary-change axes plus same agent boundary.
 - Single-agent overload inside intended parallel work is a serious distribution-planning defect. Represent it as `PRESSURE-TYPE: parallel-split-needed` with `REPLAN-REQUIRED: yes`; do not downgrade it to packet correction.
 - If the agent cannot state a smallest safe boundary, default to `hold|blocker` instead of vague `scope-pressure`.

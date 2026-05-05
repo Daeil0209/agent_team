@@ -69,7 +69,7 @@ session_end_owns_runtime_state() {
   supervisor_session_id="$(current_runtime_session_id)"
 
   if [[ -z "$session_id" ]]; then
-    return 0
+    return 1
   fi
 
   if session_id_is_known_worker "$session_id"; then

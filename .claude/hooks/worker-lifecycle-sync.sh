@@ -1,41 +1,21 @@
 #!/usr/bin/env bash
-# Consolidated worker lifecycle sync for PostToolUse(SendMessage) and TeammateIdle.
+# TeammateIdle lifecycle sync. SendMessage state belongs to track-worker-report.sh.
 set -euo pipefail
 
 source "$(dirname "$0")/hook-config.sh"
 source "$(dirname "$0")/lib/hook-tool-response.sh"
 INPUT="$(cat)"
 
-# Detect event type: PostToolUse has tool_name field; TeammateIdle does not.
+# Detect event type. This hook is wired for TeammateIdle only.
 EVENT_TYPE="$(INPUT_JSON="$INPUT" node <<'NODE'
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  process.stdout.write(Object.prototype.hasOwnProperty.call(input, "tool_name") ? "post-tool-use" : "teammate-idle");
+  process.stdout.write(Object.prototype.hasOwnProperty.call(input, "tool_name") ? "unsupported" : "teammate-idle");
 } catch {
   process.stdout.write("unknown");
 }
 NODE
 )"
-
-# ---------------------------------------------------------------------------
-# Helper: schedule deferred self-pane shutdown (used after shutdown_response)
-# ---------------------------------------------------------------------------
-schedule_current_pane_shutdown() {
-  local tmux_ref="${TMUX:-}"
-  local pane_id="${TMUX_PANE:-}"
-  local socket_path=""
-
-  [[ -n "$tmux_ref" && -n "$pane_id" ]] || return 0
-  command -v tmux >/dev/null 2>&1 || return 0
-
-  socket_path="$(printf '%s' "$tmux_ref" | cut -d',' -f1)"
-  [[ -n "$socket_path" ]] || return 0
-
-  (
-    sleep 1
-    tmux -S "$socket_path" kill-pane -t "$pane_id" >/dev/null 2>&1 || true
-  ) >/dev/null 2>&1 &
-}
 
 latest_worker_report_class() {
   local worker_name="${1-}"
@@ -183,154 +163,6 @@ worker_turn_end_classification() {
   esac
 }
 
-# ---------------------------------------------------------------------------
-# Helper: clean stale pane entries from team config (lock-safe)
-# ---------------------------------------------------------------------------
-_cleanup_terminated_panes_config_impl() {
-  local config_file="${1:?config file required}"
-  local surviving_panes="${2-}"
-  CONFIG_FILE="$config_file" SURVIVING_PANES="$surviving_panes" node <<'NODE'
-try {
-  const fs = require("fs");
-  const configPath = process.env.CONFIG_FILE;
-  const survivingPanes = new Set(
-    (process.env.SURVIVING_PANES || "").split("\n").map(s => s.trim()).filter(Boolean)
-  );
-  const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-  if (!Array.isArray(config.members)) process.exit(0);
-  const before = config.members.length;
-  config.members = config.members.filter(m => {
-    if (m.agentType === "team-lead" || m.name === "team-lead") return true;
-    if (!m.tmuxPaneId) return true;
-    if (survivingPanes.has(m.tmuxPaneId)) return true;
-    return false;
-  });
-  if (config.members.length < before) {
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
-  }
-} catch {}
-NODE
-}
-
-# ---------------------------------------------------------------------------
-# Helper: run pane cleanup (ghost recovery + dead pane cleanup)
-# ---------------------------------------------------------------------------
-run_pane_cleanup() {
-  if ! command -v tmux &>/dev/null || [ -z "${TMUX:-}" ]; then
-    return 0
-  fi
-
-  SESSION="$(tmux_cmd display-message -p '#S' 2>/dev/null || echo "")"
-  [ -z "$SESSION" ] && return 0
-
-  MAIN_PANE="$(tmux_cmd list-panes -t "$SESSION" -F '#{pane_index} #{pane_id}' 2>/dev/null | awk '$1 == "0" {print $2}')"
-
-  CLAUDE_BIN="$(which claude 2>/dev/null || echo "")"
-  [ -z "$CLAUDE_BIN" ] && return 0
-
-  # Find team config and extract recovery data
-  RECOVERY_DATA=""
-  for CONFIG_FILE in "$HOME/.claude/teams"/*/config.json; do
-    [ -f "$CONFIG_FILE" ] || continue
-    RECOVERY_DATA="$(CONFIG_FILE="$CONFIG_FILE" node <<'NODE'
-try {
-  const fs = require("fs");
-  const config = JSON.parse(fs.readFileSync(process.env.CONFIG_FILE, "utf8"));
-  if (!config.members) process.exit(0);
-  const teamName = config.name || "";
-  const parentSessionId = config.leadSessionId || "";
-  // Output: one line per non-lead member with pane
-  // Format: paneId|agentId|name|agentType|model|color|cwd
-  for (const m of config.members) {
-    if (m.name === "team-lead" || m.agentType === "team-lead") continue;
-    if (!m.tmuxPaneId) continue;
-    const fields = [
-      m.tmuxPaneId,
-      m.agentId || "",
-      m.name || "",
-      m.agentType || "",
-      m.model || "sonnet",
-      m.color || "white",
-      m.cwd || process.cwd(),
-      teamName,
-      parentSessionId
-    ];
-    console.log(fields.join("|"));
-  }
-} catch {}
-NODE
-    )"
-    break  # Only process first team config
-  done
-
-  # Process each pane: restore ghosts, kill dead
-  tmux_cmd list-panes -t "$SESSION" -F '#{pane_id} #{pane_pid} #{pane_dead} #{pane_current_command}' 2>/dev/null | while read -r PANE_ID PANE_PID PANE_DEAD PANE_CMD; do
-    [ "$PANE_ID" = "$MAIN_PANE" ] && continue
-
-    IS_DEAD="false"
-    IS_GHOST="false"
-
-    if [ "$PANE_DEAD" = "1" ] || ! kill -0 "$PANE_PID" 2>/dev/null; then
-      IS_DEAD="true"
-    fi
-
-    if [ "$IS_DEAD" = "false" ]; then
-      case "$PANE_CMD" in
-        bash|sh|zsh|fish|dash|tcsh|csh)
-          if ! pgrep -P "$PANE_PID" --list-full 2>/dev/null | grep -q "claude"; then
-            IS_GHOST="true"
-          fi
-          ;;
-      esac
-    fi
-
-    if [ "$IS_GHOST" = "true" ] && [ -n "$RECOVERY_DATA" ]; then
-      MEMBER_LINE="$(echo "$RECOVERY_DATA" | grep "^${PANE_ID}|" | head -1)"
-      if [ -n "$MEMBER_LINE" ]; then
-        IFS='|' read -r _pane AGENT_ID NAME AGENT_TYPE MODEL COLOR CWD TEAM_NAME PARENT_SID <<< "$MEMBER_LINE"
-
-        if [ -n "$NAME" ] && [ -n "$TEAM_NAME" ] && [ -n "$PARENT_SID" ]; then
-          RESTORE_CMD="cd \"${CWD}\" && exec \"${CLAUDE_BIN}\""
-          RESTORE_CMD="${RESTORE_CMD} --agent-id \"${AGENT_ID}\""
-          RESTORE_CMD="${RESTORE_CMD} --agent-name \"${NAME}\""
-          RESTORE_CMD="${RESTORE_CMD} --team-name \"${TEAM_NAME}\""
-          RESTORE_CMD="${RESTORE_CMD} --agent-color \"${COLOR}\""
-          RESTORE_CMD="${RESTORE_CMD} --parent-session-id \"${PARENT_SID}\""
-          RESTORE_CMD="${RESTORE_CMD} --agent-type \"${AGENT_TYPE}\""
-          RESTORE_CMD="${RESTORE_CMD} --model \"${MODEL}\""
-
-          tmux_cmd send-keys -t "$PANE_ID" C-c 2>/dev/null || true
-          sleep 0.1
-          tmux_cmd send-keys -t "$PANE_ID" "$RESTORE_CMD" Enter 2>/dev/null || true
-          continue  # Skip kill -- restored
-        fi
-      fi
-    fi
-
-    # Fallback: kill dead or unrestorable ghost panes
-    if [ "$IS_DEAD" = "true" ] || [ "$IS_GHOST" = "true" ]; then
-      # Sync registry before killing pane so state files don't retain stale entries
-      if [ -n "$RECOVERY_DATA" ]; then
-        _CLEANUP_LINE="$(printf '%s\n' "$RECOVERY_DATA" | grep "^${PANE_ID}|" | head -1)"
-        if [ -n "$_CLEANUP_LINE" ]; then
-          _CLEANUP_NAME="$(printf '%s\n' "$_CLEANUP_LINE" | cut -d'|' -f3)"
-          if [ -n "$_CLEANUP_NAME" ]; then
-            remove_worker_everywhere "$_CLEANUP_NAME"
-          fi
-        fi
-      fi
-      tmux_cmd kill-pane -t "$PANE_ID" 2>/dev/null || true
-    fi
-  done
-
-  # Clean stale members from config (only for truly dead panes, not restored ghosts)
-  for CONFIG_FILE in "$HOME/.claude/teams"/*/config.json; do
-    [ -f "$CONFIG_FILE" ] || continue
-    SURVIVING_PANES="$(tmux_cmd list-panes -t "$SESSION" -F '#{pane_id}' 2>/dev/null || true)"
-    with_lock_file "$(team_config_hook_lock_file "$CONFIG_FILE")" _cleanup_terminated_panes_config_impl "$CONFIG_FILE" "$SURVIVING_PANES"
-  done
-}
-
 _update_worker_idle_notice_locked() {
   local action="${1:?action required}"
   local worker_name="${2:?agent name required}"
@@ -377,12 +209,6 @@ _update_worker_idle_notice_locked() {
   esac
 }
 
-clear_worker_idle_notice() {
-  local worker_name="${1-}"
-  [[ -n "$worker_name" ]] || return 0
-  with_lock_file "$WORKER_IDLE_NOTICE_LOCK" _update_worker_idle_notice_locked "clear" "$worker_name"
-}
-
 mark_worker_idle_notice_if_changed() {
   local worker_name="${1-}"
   local idle_reason="${2-}"
@@ -405,185 +231,6 @@ mark_worker_idle_notice_if_changed() {
 # Route by event type
 # ---------------------------------------------------------------------------
 case "$EVENT_TYPE" in
-
-  post-tool-use)
-    # Agent lifecycle sync.
-    PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const joinUniqueText = (chunks) => {
-  const seen = new Set();
-  return chunks
-    .map((chunk) => String(chunk || "").trim())
-    .filter(Boolean)
-    .filter((chunk) => {
-      if (seen.has(chunk)) return false;
-      seen.add(chunk);
-      return true;
-    })
-    .join("\n");
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
-
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const toolName = String(input.tool_name || "");
-  const toolInput = input.tool_input || {};
-  const toolResponse = input.tool_response || {};
-  const nestedMessage = toolInput.message || {};
-  const description = joinUniqueText(
-    flattenText(toolInput.summary).concat(flattenText(toolInput.message || toolInput.content))
-  );
-  const targetName = firstNonEmptyString(
-    toolInput.to,
-    toolInput.recipient,
-    toolInput.name,
-    toolInput.target_name,
-    toolInput.targetName
-  );
-  const fields = [
-    toolName,
-    targetName,
-    String(toolInput.type || ""),
-    String(nestedMessage.type || ""),
-    description,
-    String(input.session_id || ""),
-    String(input.agent_id || ""),
-    String(input.agent_name || input.agentName || ""),
-    String(input.agent_type || ""),
-    String(input.teammate_name || input.teammateName || toolInput.teammate_name || toolInput.teammateName || ""),
-    toolResponse && Object.prototype.hasOwnProperty.call(toolResponse, "success")
-      ? String(toolResponse.success)
-      : "",
-    toolResponse && Object.prototype.hasOwnProperty.call(toolResponse, "is_error")
-      ? String(toolResponse.is_error)
-      : "",
-    toolResponse && Object.prototype.hasOwnProperty.call(toolResponse, "error")
-      ? String(toolResponse.error || "")
-      : "",
-  ];
-  process.stdout.write(fields.map(encode).join("\n"));
-} catch {
-  process.stdout.write("\n\n\n\n\n\n\n\n\n\n\n");
-}
-NODE
-    )"
-    mapfile -t FIELDS <<<"$PARSED"
-
-TOOL_NAME="$(hook_decode_base64_field "${FIELDS[0]:-}")"
-TARGET_NAME="$(hook_decode_base64_field "${FIELDS[1]:-}")"
-TOP_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[2]:-}")" | tr '[:upper:]' '[:lower:]')"
-MESSAGE_TYPE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[3]:-}")" | tr '[:upper:]' '[:lower:]')"
-DESCRIPTION="$(hook_decode_base64_field "${FIELDS[4]:-}")"
-SESSION_ID="$(hook_decode_base64_field "${FIELDS[5]:-}")"
-AGENT_ID="$(hook_decode_base64_field "${FIELDS[6]:-}")"
-AGENT_NAME="$(hook_decode_base64_field "${FIELDS[7]:-}")"
-AGENT_TYPE="$(hook_decode_base64_field "${FIELDS[8]:-}")"
-TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[9]:-}")"
-SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
-IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
-ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
-
-    [[ "$TOOL_NAME" == "SendMessage" ]] || { run_pane_cleanup; exit 0; }
-    tool_response_succeeded || { run_pane_cleanup; exit 0; }
-
-    SENDER_NAME="$(resolve_runtime_sender_name "$SESSION_ID" "$AGENT_ID" "$AGENT_NAME" "$AGENT_TYPE" "$TEAMMATE_NAME" 2>/dev/null || true)"
-
-    SENDER_IS_WORKER="false"
-    if runtime_sender_session_is_worker "$SESSION_ID"; then
-      SENDER_IS_WORKER="true"
-    fi
-
-    if [[ "$TOP_TYPE" == "shutdown_response" || "$MESSAGE_TYPE" == "shutdown_response" ]]; then
-      if [[ "$SENDER_IS_WORKER" == "true" && -n "$SENDER_NAME" ]]; then
-        clear_worker_idle_notice "$SENDER_NAME"
-        remove_worker_everywhere "$SENDER_NAME"
-        schedule_current_pane_shutdown
-      fi
-      run_pane_cleanup
-      exit 0
-    fi
-
-    if [[ "$TOP_TYPE" == "shutdown_request" || "$MESSAGE_TYPE" == "shutdown_request" ]]; then
-      if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
-        clear_worker_idle_pending "$TARGET_NAME"
-        clear_worker_idle_notice "$TARGET_NAME"
-      fi
-      run_pane_cleanup
-      exit 0
-    fi
-
-    MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/null || true)"
-    MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
-
-    if [[ "$SENDER_IS_WORKER" == "true" ]]; then
-      if [[ -n "$SENDER_NAME" ]]; then
-        case "$MESSAGE_CLASS" in
-          dispatch-ack)
-            clear_worker_idle_pending "$SENDER_NAME"
-            clear_worker_idle_notice "$SENDER_NAME"
-            clear_worker_standby "$SENDER_NAME"
-            ;;
-          handoff)
-            clear_worker_idle_pending "$SENDER_NAME"
-            clear_worker_idle_notice "$SENDER_NAME"
-            mark_worker_standby "$SENDER_NAME"
-            ;;
-          completion)
-            clear_worker_idle_pending "$SENDER_NAME"
-            clear_worker_idle_notice "$SENDER_NAME"
-            mark_worker_standby "$SENDER_NAME"
-            ;;
-        esac
-      fi
-      run_pane_cleanup
-      exit 0
-    fi
-
-    case "$MESSAGE_CLASS" in
-      assignment|reuse|reroute)
-        if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
-          clear_worker_idle_pending "$TARGET_NAME"
-          clear_worker_idle_notice "$TARGET_NAME"
-          clear_worker_standby "$TARGET_NAME"
-          mark_team_dispatch_pending "$SESSION_ID" "$TARGET_NAME" "sendmessage-${MESSAGE_CLASS}"
-          mark_worker_dispatch_ack_required "$TARGET_NAME"
-          # Every new assignment/reuse/reroute starts a fresh task-level planning window.
-          # Reusing a stale WP marker would let a previous task's planning residue mask a
-          # missing plan on the current dispatch.
-          mark_worker_planning_required "$TARGET_NAME"
-        fi
-        ;;
-    esac
-
-    run_pane_cleanup
-    exit 0
-    ;;
 
   teammate-idle)
     # Quality gate mirror.
@@ -613,7 +260,7 @@ NODE
       "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
-      # Only unsynchronized completion-grade turn endings belong in the standby fallback file.
+      # Only unsynchronized completion-grade turn endings belong in the lifecycle-decision-pending fallback file.
       if ! worker_is_standby "$TEAMMATE" && [[ "$TURN_END_CLASSIFICATION" == "standby" ]]; then
         mark_worker_idle_pending "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"
       else
@@ -622,7 +269,6 @@ NODE
     fi
 
     if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"; then
-      run_pane_cleanup
       exit 0
     fi
 
@@ -634,13 +280,13 @@ const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-repor
 let ctx;
 switch (classification) {
   case "standby":
-    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as standby from this report and read REQUESTED-LIFECYCLE before deciding reuse, shutdown, or hold-for-validation.`;
+    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as lifecycle-decision pending and read REQUESTED-LIFECYCLE before deciding reuse, standby, shutdown, or hold-for-validation.`;
     break;
   case "working-permission-pending":
     ctx = `Agent still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the agent as not working.`;
     break;
   case "dispatch-pending-no-ack":
-    ctx = `Dispatch still pending: ${teammate} has no dispatch-ack yet. Next: apply dispatch reception thresholds; do not status-probe the unstarted target as the primary action.`;
+    ctx = `Dispatch still pending: ${teammate} has no dispatch-ack yet after current dispatch check. Next: send one same-assignment receipt follow-up; do not wait silently or status-probe the unstarted target as the primary action.`;
     break;
   case "working-blocked":
     ctx = `Agent still working: ${teammate} reported a blocker before this turn-ended signal. Next: resolve the blocker or request the smallest needed partial result.`;
@@ -651,12 +297,10 @@ switch (classification) {
 process.stdout.write(JSON.stringify({ systemMessage: ctx }));
 NODE
 
-    run_pane_cleanup
     exit 0
     ;;
 
   *)
-    run_pane_cleanup
     exit 0
     ;;
 

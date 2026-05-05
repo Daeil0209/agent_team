@@ -57,8 +57,9 @@ TARGET_PATHS="$(printf '%s\n' "${FIELDS[@]:7}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 SKILL_NAME_NORM="$(printf '%s' "$SKILL_NAME_RAW" | tr '[:upper:]' '[:lower:]')"
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
-SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
+SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
+POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
 # session-boot marker: active runtime requires monitoring before fresh dispatch.
 SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
@@ -81,20 +82,20 @@ warn_tool_use() {
   hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last procedure warning."
 }
 
-planning_preflight_block() {
-  local tool_name="${1:-tool}"
-  local next_step="${2:-Skill(work-planning) -> Skill(self-verification) -> retry}"
-  printf 'PROCEDURE WARNING: fresh-turn preflight sequence incomplete. Detail: %s should not run before observed Skill(work-planning) -> Skill(self-verification) in this user turn. Prior analysis may narrow the plan scope, but it does not replace the fresh-turn sequence. If this turn started as answer-only and an agent handoff or blocker changed the next action, reopen an execution segment first. Next first tools: %s.' "$tool_name" "$next_step"
+mark_post_wp_action_after_planning() {
+  [[ -f "$WP_MARKER" ]] || return 0
+  [[ "$TOOL_NAME" == "Skill" ]] && return 0
+  date -u '+%Y-%m-%dT%H:%M:%SZ' > "$POST_WP_ACTION_MARKER"
 }
 
-verification_preflight_block() {
+planning_preflight_block() {
   local tool_name="${1:-tool}"
-  local next_step="${2:-Skill(self-verification) -> retry}"
-  printf 'PROCEDURE WARNING: verification preflight incomplete. Detail: %s should not run before observed post-planning Skill(self-verification) in this user turn. Read-only inspection may continue when still justified, but mutable Bash should wait for plan verification. Next first tools: %s.' "$tool_name" "$next_step"
+  local next_step="${2:-Skill(work-planning) -> retry}"
+  printf 'PROCEDURE WARNING: fresh-turn preflight sequence incomplete. Detail: %s should not run before observed Skill(work-planning) when the turn opens or changes a consequential boundary. Same-boundary continuation stays with the active workflow owner; hooks do not validate workflow continuation packet fields. Next first tools: %s.' "$tool_name" "$next_step"
 }
 
 self_growth_block() {
-  printf 'PROCEDURE WARNING: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
+  printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
 }
 
 self_growth_gate_applies_to_tool() {
@@ -109,6 +110,47 @@ self_growth_gate_applies_to_tool() {
   esac
 }
 
+self_growth_required_for_session() {
+  local session_id="${1-}"
+  [[ -n "$session_id" ]] || return 1
+  if declare -F self_growth_required >/dev/null 2>&1; then
+    self_growth_required "$session_id"
+    return
+  fi
+  identity_present_in_file "$SELF_GROWTH_PENDING_FILE" "$session_id"
+}
+
+completion_grade_sendmessage_missing_sv_result() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  if ! INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText } = require(process.env.HOOK_JSON_HELPERS);
+const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+const field = (text, name) => {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = text.match(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*:\\s*([^\\n\\r]+)`, "i"));
+  return String(match ? match[1] : "").trim().toLowerCase().replace(/\s+/g, "");
+};
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
+    .join("\n");
+  const messageClass = field(text, "MESSAGE-CLASS");
+  process.exit(messageClass === "handoff" || messageClass === "completion" ? 0 : 1);
+} catch {
+  process.exit(1);
+}
+NODE
+  then
+    return 1
+  fi
+  [[ -f "$SV_RESULT_MARKER" ]] && return 1
+  return 0
+}
+
 sendmessage_is_dispatch_ack_to_lead() {
   [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
 
@@ -116,40 +158,15 @@ sendmessage_is_dispatch_ack_to_lead() {
   local message_class=""
   local target_name=""
 
-  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+  parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
-  const text = flattenText(toolInput.summary)
-    .concat(flattenText(toolInput.message || toolInput.content))
-    .concat(flattenText(toolInput.description))
+  const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const match = text.match(/(?:^|\n)\s*message-class\s*:\s*([^\n\r]+)/i);
   const messageClass = String(match ? match[1] : "").trim().toLowerCase();
@@ -184,7 +201,7 @@ NODE
 worker_dispatch_ack_block_reason() {
   local tool_name="${1:-tool}"
 
-  printf 'PROCEDURE WARNING: agent dispatch-ack required. Detail: %s should not run before the agent sends the assignment receipt signal to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted\nPLANNING-BASIS: loading\nTASK-ID: <assigned-id>"). Include TASK-ID only when active task tracking assigned one; otherwise omit TASK-ID rather than writing none.' "$tool_name"
+  printf 'BLOCKED: agent dispatch-ack required. Detail: %s must not run before the agent sends assignment receipt to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted\nPLANNING-BASIS: loading\nTASK-ID: <assigned-id>"). Include TASK-ID only when active task tracking assigned one.' "$tool_name"
 }
 
 lead_sendmessage_is_worker_cleanup_control() {
@@ -195,45 +212,17 @@ lead_sendmessage_is_worker_cleanup_control() {
   local nested_type=""
 
   parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const field = (text, name) => {
-  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = text.match(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*:\\s*([^\\n\\r]+)`, "i"));
-  return String(match ? match[1] : "").trim().toLowerCase();
-};
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
   const nestedMessage = toolInput.message || {};
-  const text = flattenText(toolInput.summary)
-    .concat(flattenText(toolInput.message || toolInput.content))
-    .concat(flattenText(toolInput.description))
-    .join("\n");
   const fields = [
     String(toolInput.type || "").trim().toLowerCase(),
     String(nestedMessage.type || "").trim().toLowerCase()
   ];
   process.stdout.write(fields.join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n");
+  process.stdout.write("\n\n");
 }
 NODE
 )"
@@ -257,35 +246,12 @@ lead_sendmessage_is_bounded_iteration_continuation() {
   local iteration_owner_lane=""
   local target_name=""
   local has_required_skills=""
+  local has_task_id=""
+  local task_tracking_context=""
 
-  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+  parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
 const field = (text, name) => {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = text.match(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*:\\s*([^\\n\\r]+)`, "i"));
@@ -294,11 +260,13 @@ const field = (text, name) => {
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
-  const text = flattenText(toolInput.summary)
-    .concat(flattenText(toolInput.message || toolInput.content))
-    .concat(flattenText(toolInput.description))
+  const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const hasRequiredSkills = /(?:^|\n)\s*required-skills\s*:/i.test(text) ? "true" : "false";
+  const hasTaskId = /(?:^|\n)\s*task-id\s*:/i.test(text) ? "true" : "false";
+  const taskTrackingContext = /(task[ -]?tracking|taskcreate|task-created|assigned[ -]?id|task-id\s+(required|active))/i.test(text) ? "true" : "false";
   const targetName = firstNonEmptyString(
     toolInput.to,
     toolInput.recipient,
@@ -315,10 +283,12 @@ try {
     field(text, "continuation-class"),
     field(text, "iteration-owner-lane"),
     targetName,
-    hasRequiredSkills
+    hasRequiredSkills,
+    hasTaskId,
+    taskTrackingContext
   ].join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n\n");
+  process.stdout.write("\n\n\n\n\n\n\n");
 }
 NODE
 )"
@@ -328,6 +298,8 @@ NODE
   iteration_owner_lane="${_continuation_fields[2]:-}"
   target_name="$(normalize_lane_id "${_continuation_fields[3]:-}")"
   has_required_skills="${_continuation_fields[4]:-false}"
+  has_task_id="${_continuation_fields[5]:-false}"
+  task_tracking_context="${_continuation_fields[6]:-false}"
 
   case "$message_class" in
     reuse|reroute) ;;
@@ -336,6 +308,10 @@ NODE
 
   [[ "$continuation_class" == "bounded-iteration" ]] || return 1
   [[ "$has_required_skills" == "true" ]] || return 1
+  if [[ "$task_tracking_context" == "true" && "$has_task_id" != "true" ]]; then
+    deny_tool_use "BLOCKED: bounded-iteration assignment missing TASK-ID while task tracking is active. Detail: reuse/reroute is assignment-grade; include the open executable TASK-ID or send scope-pressure/hold|blocker if the id is missing or non-open."
+    return 0
+  fi
 
   case "$iteration_owner_lane" in
     developer|reviewer|tester|validator) ;;
@@ -346,6 +322,7 @@ NODE
   case "$target_name" in
     team-lead|lead|supervisor) return 1 ;;
   esac
+  [[ "$target_name" == "$iteration_owner_lane" ]] || return 1
 
   if target_is_already_active_worker "$target_name"; then
     return 0
@@ -532,34 +509,9 @@ lead_sendmessage_is_monitoring_probe() {
   local has_required_skills=""
   local target_state=""
 
-  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+  parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
 const field = (text, name) => {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = text.match(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*:\\s*([^\\n\\r]+)`, "i"));
@@ -568,9 +520,9 @@ const field = (text, name) => {
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
-  const text = flattenText(toolInput.summary)
-    .concat(flattenText(toolInput.message || toolInput.content))
-    .concat(flattenText(toolInput.description))
+  const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const hasRequiredSkills = /(?:^|\n)\s*required-skills\s*:/i.test(text) ? "true" : "false";
   const targetName = firstNonEmptyString(
@@ -641,16 +593,16 @@ lead_preflight_block_reason() {
 
   case "$tool_name" in
     Agent|TaskCreate|SendMessage)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> Skill(self-verification) -> lifecycle/reuse check -> retry dispatch/reuse"
+      planning_preflight_block "$tool_name" "Skill(work-planning) -> lifecycle/reuse check -> retry dispatch/reuse"
       ;;
     TaskUpdate|TaskStop)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> Skill(self-verification) -> confirm task id from TaskList or task_assignment -> retry task mutation -> resume any pending workflow/development cursor"
+      planning_preflight_block "$tool_name" "Skill(work-planning) -> confirm task id from TaskList or task_assignment -> retry task mutation -> resume any pending workflow/development cursor"
       ;;
     TeamDelete|CronDelete)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> Skill(self-verification) -> confirm closeout/teardown readiness -> retry"
+      planning_preflight_block "$tool_name" "Skill(work-planning) -> confirm closeout/teardown readiness -> retry"
       ;;
     *)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> Skill(self-verification) -> retry with the tool-specific preflight complete"
+      planning_preflight_block "$tool_name" "Skill(work-planning) -> retry with the tool-specific preflight complete"
       ;;
   esac
 }
@@ -859,25 +811,6 @@ boot_infra_tool_allowed() {
   esac
 }
 
-worker_planning_bootstrap_tool_allowed() {
-  local tool_name="${1:-}"
-  local command="${2:-}"
-  local skill_name="${3:-}"
-
-  case "$tool_name" in
-    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
-    Bash)
-      bash_command_is_read_only_context "$command"
-      return
-      ;;
-    Skill)
-      [[ "$skill_name" == *work-planning* ]]
-      return
-      ;;
-    *) return 1 ;;
-  esac
-}
-
 lead_planning_bootstrap_tool_allowed() {
   local tool_name="${1:-}"
   local command="${2:-}"
@@ -890,7 +823,7 @@ lead_planning_bootstrap_tool_allowed() {
       return
       ;;
     Skill)
-      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* || "$skill_name" == *task-execution* ]]
+      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* ]]
       return
       ;;
     *) return 1 ;;
@@ -915,6 +848,8 @@ if [[ -z "$TOOL_NAME" || -z "$SESSION_ID" ]]; then
   exit 0
 fi
 
+mark_post_wp_action_after_planning
+
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && ! session_id_is_known_worker "$SESSION_ID"; then
   if boot_infra_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
     exit 0
@@ -931,18 +866,15 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      warn_tool_use "$(worker_dispatch_ack_block_reason "$TOOL_NAME")"
+      hook_emit_pretool_deny "$(worker_dispatch_ack_block_reason "$TOOL_NAME")" "Agent assignment receipt required before work."
       exit 0
     fi
   fi
-  if [[ -n "$WORKER_NAME" ]] && worker_planning_required "$WORKER_NAME"; then
-      if worker_planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
-        exit 0
-      fi
-      warn_tool_use "$(planning_preflight_block "$TOOL_NAME" "Skill(work-planning) -> continue current task")"
-      exit 0
-    fi
+  if completion_grade_sendmessage_missing_sv_result; then
+    deny_tool_use "BLOCKED: completion-grade SendMessage missing phase/stage-end SV-RESULT marker. Detail: handoff/completion must follow lane-local self-verification result evidence; if the surface is blocked, send MESSAGE-CLASS: hold|blocker instead of completion."
     exit 0
+  fi
+  exit 0
 fi
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
@@ -958,18 +890,18 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   if [[ "$TOOL_NAME" == "Bash" ]] && bash_command_is_safe_git_workflow "$COMMAND"; then
     exit 0
   fi
-  if [[ "$TOOL_NAME" == "Bash" ]] && [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]] && ! bash_command_is_read_only_context "$COMMAND"; then
-    warn_tool_use "$(verification_preflight_block "mutable Bash" "Skill(self-verification) -> retry Bash if the command still belongs in the frozen plan")"
+  if procedure_state_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS"; then
     exit 0
   fi
-  if self_growth_required "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
-    warn_tool_use "$(self_growth_block)"
+  if self_growth_required_for_session "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
+    deny_tool_use "$(self_growth_block)"
     exit 0
   fi
-  if procedure_state_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS" || project_continuity_edit_target_allowed "$TOOL_NAME" "$TARGET_PATHS"; then
-    exit 0
-  fi
-  if lead_planning_required "$SESSION_ID"; then
+	  if lead_planning_required "$SESSION_ID"; then
+	    if [[ "$TOOL_NAME" == "mcp__codex__codex" && ! -f "$WP_MARKER" ]]; then
+	      warn_tool_use "PROCEDURE WARNING: Codex advisory before observed Skill(work-planning). Detail: pre-planning Codex output is non-authoritative discussion only; it cannot satisfy CODEX-ADVISORY-BASIS, freeze route/proof/acceptance, or authorize dispatch, mutation, validation, or reporting. Same-boundary continuation is active-workflow owned; this hook does not parse continuation fields."
+	      exit 0
+	    fi
     if lead_runtime_prep_allowed_before_dispatch_gate "$TOOL_NAME"; then
       exit 0
     fi
@@ -981,7 +913,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         # Hard guard: active runtime dispatch/reuse must not bypass session-boot.
         if [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]] \
             && [[ ! -f "$SB_LOADED_MARKER" ]]; then
-          warn_tool_use "PROCEDURE WARNING: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-handoff agents to accumulate without lifecycle-control release. Next: Skill(session-boot) -> retry $TOOL_NAME."
+          deny_tool_use "BLOCKED: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-handoff agents to accumulate without lifecycle-control release. Next: Skill(session-boot) -> retry $TOOL_NAME."
           exit 0
         fi
         # Hard guard: active team runtime requires addressable team-member Agent dispatch.
@@ -999,21 +931,21 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
           AGENT_TEAM_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '1p')"
           AGENT_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '2p')"
           if [[ -z "$AGENT_TEAM_NAME" || -z "$AGENT_NAME" ]]; then
-            deny_tool_use "BLOCKED: team-agent-only mandate per task-execution/SKILL.md Step 2 Dispatch law. Detail: Agent dispatch on active team runtime (procedure-state.json teamRuntimeState=active) MUST include BOTH team_name AND name parameters so the spawned agent joins the team runtime as a member addressable via SendMessage by lane name. Standalone subagent shape (Agent without team_name) or unaddressable shape (Agent without name) bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination — not a valid delegation channel for lane-owned work while team runtime is active. Next: retry Agent with BOTH team_name and name set (e.g., team_name='<active-team>', name='validator')."
+            deny_tool_use "BLOCKED: team-agent-only mandate per task-execution/SKILL.md Step 2 Dispatch law. Detail: Agent dispatch on active team runtime (procedure-state.json teamRuntimeState=active) must include BOTH team_name AND name parameters so the spawned agent joins the team runtime as a member addressable via SendMessage by lane name. Standalone subagent shape or unaddressable shape bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination."
             exit 0
           fi
         fi
-        # Once WP is observed, missing-SV belongs to sv-gate.
+        # Once WP is observed, dispatch-specific validation moves to its owner.
         if [[ -f "$WP_MARKER" ]]; then
-          exit 0
-        fi
-        # Hook-last carve-out: reuse SendMessage may continue after prior SV convergence.
-        if [[ "$TOOL_NAME" == "SendMessage" ]] && [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi
         ;;
       Skill)
-        # Hook-last carve-out: specialist skill consults may continue after prior SV convergence.
+        # Once WP is observed, skill sequencing belongs to the active owner.
+        if [[ -f "$WP_MARKER" ]]; then
+          exit 0
+        fi
+        # Hook-last carve-out: specialist skill consults may continue after prior result verification.
         if [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi
@@ -1025,7 +957,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         fi
         ;;
       Edit|MultiEdit|Write|NotebookEdit)
-        # Hook-last carve-out: bounded file-edit continuation may proceed after prior SV convergence.
+        # Hook-last carve-out: bounded file-edit continuation may proceed after prior result verification.
         if [[ -f "$SV_CONVERGED_MARKER" ]]; then
           exit 0
         fi

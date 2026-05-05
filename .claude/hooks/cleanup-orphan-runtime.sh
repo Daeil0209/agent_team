@@ -60,10 +60,8 @@ cleanup_orphan_runtime_locked() {
   local -a orphan_pids=()
   local -a stale_sockets=()
   local pid="" path=""
-  local term_count=0
-  local kill_count=0
-  local removed_socket_count=0
-  local limited_count=0
+  local reported_process_count=0
+  local reported_socket_count=0
   local now_iso=""
 
   if ! runtime_automation_single_primary; then
@@ -107,66 +105,23 @@ cleanup_orphan_runtime_locked() {
     IFS='|' read -r -a stale_sockets <<<"$stale_socket_list"
   fi
 
-  limited_count="${#orphan_pids[@]}"
-  if (( limited_count > RUNTIME_REAP_MAX_PROCESSES )); then
-    limited_count="$RUNTIME_REAP_MAX_PROCESSES"
-  fi
-
-  for (( i = 0; i < limited_count; i++ )); do
-    pid="${orphan_pids[$i]}"
-    [[ "$pid" =~ ^[0-9]+$ ]] || continue
-    if kill -0 "$pid" 2>/dev/null; then
-      kill -TERM "$pid" 2>/dev/null || true
-      term_count=$((term_count + 1))
-    fi
-  done
-
-  if (( term_count > 0 )); then
-    sleep "$RUNTIME_REAP_TERM_GRACE_SECONDS"
-  fi
-
-  for (( i = 0; i < limited_count; i++ )); do
-    pid="${orphan_pids[$i]}"
-    [[ "$pid" =~ ^[0-9]+$ ]] || continue
-    if kill -0 "$pid" 2>/dev/null; then
-      kill -KILL "$pid" 2>/dev/null || true
-      kill_count=$((kill_count + 1))
-    fi
-  done
-
-  mapfile -t RESCAN_FIELDS < <("$HOOK_DIR/runtime-pressure-scan.sh" --session-id "$CURRENT_SESSION_ID")
-  stale_socket_list="${RESCAN_FIELDS[10]:-}"
-  if [[ -n "$stale_socket_list" ]]; then
-    IFS='|' read -r -a stale_sockets <<<"$stale_socket_list"
-    for path in "${stale_sockets[@]}"; do
-      [[ -n "$path" ]] || continue
-      if [[ -e "$path" ]]; then
-        rm -f "$path" 2>/dev/null || true
-        removed_socket_count=$((removed_socket_count + 1))
-      fi
-    done
-  fi
-
-  if (( term_count > 0 || kill_count > 0 || removed_socket_count > 0 )); then
-    record_reap_cooldown_locked
-  fi
+  reported_process_count="${#orphan_pids[@]}"
+  reported_socket_count="${#stale_sockets[@]}"
+  record_reap_cooldown_locked
 
   now_iso="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-  printf '%s | session=%s | reason=%s | term=%d | kill=%d | removed_sockets=%d | before=%s\n' \
+  printf '%s | session=%s | reason=%s | reported_processes=%d | reported_sockets=%d | before=%s\n' \
     "$now_iso" \
     "$CURRENT_SESSION_ID" \
     "$REASON" \
-    "$term_count" \
-    "$kill_count" \
-    "$removed_socket_count" \
+    "$reported_process_count" \
+    "$reported_socket_count" \
     "$summary" >> "$RUNTIME_REAP_LOG"
 
-  printf 'REAPED: term=%d | kill=%d | removed_sockets=%d | orphan_sessions=%s | orphan_processes=%s | mem_kb=%s | swap_kb=%s | auto=%s\n' \
-    "$term_count" \
-    "$kill_count" \
-    "$removed_socket_count" \
+  printf 'OBSERVED: orphan_sessions=%s | orphan_processes=%s | stale_sockets=%s | mem_kb=%s | swap_kb=%s | auto=%s\n' \
     "$orphan_session_count" \
     "$orphan_process_count" \
+    "$stale_socket_count" \
     "$mem_available_kb" \
     "$swap_free_kb" \
     "$AUTO_MODE"

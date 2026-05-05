@@ -4,6 +4,22 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Lane-Specific Additions
+## Common Lane-Core Preconditions
+Every lane-core skill inherits these common preconditions:
+- Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
+- Receive the agent-facing packet, not the full internal planning record.
+- Send `dispatch-ack` first for every fresh assignment-grade receipt.
+- Receipt is not permission to execute a defective packet.
+- Then classify in the same turn.
+- Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
+- Do not idle after receipt.
+- Do not reconstruct global routing, staffing, or acceptance ownership from memory.
+- Load lane-core skill only for consequential lane-owned work.
+- Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
+- Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
+- It cannot override `CLAUDE.md`, role boundaries, `task-execution`, `work-planning`, or `self-verification`.
+
+## Lane-Specific Additions
 The common base packet is extended by lane-specific required fields:
 - `developer`: change and acceptance boundary
 - `researcher`: question and evidence boundary
@@ -13,4 +29,4 @@ The common base packet is extended by lane-specific required fields:
 
 Each lane's lane-core skill and lane-detail reference own exact assignment additions and lane-specific completion extras beyond the common result spine. Lane role documents own always-loaded lane identity, boundary, and stop conditions; they are not packet catalogs.
 
-For controlled packet value tables and lane-specific packet discipline, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are the canonical lane-specific packet-discipline lookup. `.claude/skills/team-session-sequences/SKILL.md` owns the session-runtime trigger/spine; this file owns the cross-lane base schema. Hooks may warn or guard runtime integrity, but they are not the primary owner of normal agent behavior.
+For controlled packet value tables and lane-specific packet discipline, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are the canonical lane-specific packet-discipline lookup. `team-session-sequences` owns session-sequence indexes and dispatch-detail lookups. Runtime spine stays with `session-boot`, closeout with `session-closeout`, and packet schema with `task-execution`. Hooks guard runtime integrity as last-resort checks; normal agent behavior stays with the owning procedure.

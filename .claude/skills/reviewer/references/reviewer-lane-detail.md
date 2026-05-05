@@ -18,10 +18,10 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only. It does not replace an assignment-grade reviewer packet when new bounded review work is assigned.
 - If phase context and assignment-grade work arrive in the same execution segment, consume the embedded phase context inside the assignment packet and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge it with `control-ack` only when it materially affects active work, standby readiness, or shutdown path.
+- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Reviewer Packet Detail
-- Consequential reviewer packets should keep these fields explicit:
+- Consequential reviewer packets must carry these fields explicitly:
   - `REVIEW-TARGET-TYPE` (`plan`, `design`, `implementation`, `proof-result`, `report`, `governance`, or another explicit artifact type)
   - `REVIEW-SCOPE`
   - `REVIEW-TARGET`
@@ -29,7 +29,9 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
   - `EVIDENCE-BASIS`
   - `ACCEPTANCE-RISK`
   - `ACCEPTANCE-SURFACE`
+  - `EXPECTATION-SOURCES` when the review judges completion, scope fit, or contract fit
   - `PRIOR-ANALYSIS`
+  - `SCOPE-BASELINE` and `ACTIVE-SLICE` when reviewing current-scope completion or multi-surface implementation
 - For plan review, also keep explicit when material:
   - `PLAN-CLAIM`
   - `ROUTE-BASIS`
@@ -49,6 +51,8 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 If these fields are missing and truthful review would require inventing them, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
 
 If truthful review needs a tool, rendered surface, or setup path unavailable to reviewer, the upward request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`. Do not replace a required rendered or executable review surface with source-only evidence.
+If rendered evidence is available for review, inspect it for visible defects; do not treat capture existence as rendered fitness.
+For contract-fit or rendered review, name the Evidence-Quality Matrix row inspected, or mark the missing row in `OPEN-SURFACES`.
 
 ## Domain Lenses
 - Evidence quality
@@ -71,7 +75,10 @@ Use only the lenses that materially affect the assigned surface.
 - Peer-inspection discipline: verify entry information, inspect the actual work product, record defects, require rework/follow-up evidence for blocking defects.
 - Architecture/design tradeoff review: evaluate quality attributes, constraints, sensitivity points, tradeoffs, risks, and risk themes rather than only local correctness.
 - Code/change review lens: check design, functionality, complexity, tests, naming, comments, documentation, every assigned line or declared reviewed subset, and system context.
+- Scope-baseline lens: compare produced or proven surfaces against `SCOPE-BASELINE`; implemented-subset quality does not close missing, placeholder-only, or unproven baseline rows.
 - Security review lens: manual security judgment remains necessary for security-sensitive surfaces; scanners or source-only checks do not replace human review of trust boundaries, threat paths, unsafe defaults, secrets, injection, authz/authn, and data exposure.
+- Intent-preserving critique: before accepting a proposed defect or fix, apply `TARGET-INTENT-BASIS`, the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`, and the smallest meaning-preserving correction.
+- Feynman clarity lens: when a plan, design, report, governance text, or handoff cannot be explained plainly without invented meaning, treat that as a review finding.
 - Negative-space review: look for required but missing constraints, evidence, edge cases, owner handoffs, user paths, rollback/cleanup paths, and acceptance/proof surfaces.
 - Expert claim challenge: convert each major claim into `claim -> evidence -> impact -> owner -> required change`; do not accept unsupported confidence language.
 
@@ -86,14 +93,21 @@ Use only the lenses that materially affect the assigned surface.
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
 
 ## Specialist Skill Loading
-Specialist skills with `PRIMARY-OWNER: reviewer` load only via packet `REQUIRED-SKILLS`, `SKILL-AUTH`, or verified phase-local refinement:
+Specialist skills with `PRIMARY-OWNER: reviewer` are selected through reviewer lane evaluation of the review surface:
+- `feynman-clarity` - Feynman-style explainability review for plans, designs, reports, governance text, and other clarity-critical deliverables. SECONDARY-CONSUMER: developer.
 - `code-quality-review` - SOLID checklist, duplication taxonomy, refactoring priority. SECONDARY-CONSUMER: developer.
 - `security-review` - OWASP checklist, detection patterns, severity framework.
 
-When both are active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`. They are review lenses; findings use normal severity and may be blocking. Remediation stays with the producing owner.
+When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
+Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.
+These are review lenses; findings use normal severity and may be blocking.
+Remediation stays with the producing owner.
 
 ## Reviewer Handoff Detail
-- Reviewer authoritative handoff blocks (`MESSAGE-CLASS: handoff`, `MESSAGE-CLASS: completion`, or exact `MESSAGE-CLASS: hold|blocker`) must include `REVIEW-STATE: ready|hold|blocked`.
+- Reviewer `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and may add `REVIEW-STATE` only as context.
+- Reviewer handoff must include `TARGET-INTENT-BASIS` through the common completion spine.
+- Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Without that basis, classify the item as preliminary evidence, not a completed review finding.
 - Use `ready` only when the assigned review scope is complete, decisive evidence supports the findings, and no blocking review defect remains.
 - Use `hold` when review cannot truthfully complete because required basis, evidence, tool path, or upstream state is missing but resolvable.
 - Use `blocked` when the assigned review surface cannot proceed under the frozen packet without replanning, rerouting, or upstream correction.
@@ -105,11 +119,12 @@ When both are active on one review surface, run `security-review` first because 
   - `REVIEW-STATE`
   - `TEST-STATE`
   - `VALIDATION-SURFACE`
-- Keep `DECISION-SURFACE` explicit when validator arbitration still needs a distinct decisive surface or multi-surface reconciliation.
+- Keep `DECISION-SURFACE` explicit when final arbitration still needs a distinct decisive surface or multi-surface reconciliation.
 - Keep these validator additions explicit when applicable:
   - exact frozen tool: `TOOL-REQUIREMENT`
   - bounded discovery/setup alternative: `TOOL-DISCOVERY-GOAL`, `TOOL-DISCOVERY-BOUNDARY`, `TOOL-VERIFICATION-STANDARD`, `TOOL-CLEANUP-EXPECTATION`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
 - For request-bound acceptance, keep the request-fit contract explicit in the same handoff rather than rewriting it from memory.
+- For visual/rendered review, name the inspected rendered evidence and any visible defect classes checked or found.
 - If review evidence makes the frozen contract untruthful, set `REVIEW-STATE: hold` or `REVIEW-STATE: blocked` and explain the contradiction in `OPEN-SURFACES`.

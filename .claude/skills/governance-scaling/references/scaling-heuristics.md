@@ -10,6 +10,7 @@ These signals indicate a likely tier. They are suggestions for `team-lead` judgm
 |---|---|
 | `terraform/`, `k8s/`, `docker-compose.yml` present in repo | Precision |
 | Security-sensitive changes, auth systems, secrets management | Precision |
+| MCP server, external advisory tool, credential/session bridge, or external-tool capability promotion | Standard; Precision if credentials, security boundary, blocking authority, or final-acceptance authority changes |
 | API integration, third-party service wiring, multi-file feature | Standard |
 | Structured development project with spec or design doc | Standard |
 | Single page, simple script, isolated config change, typo fix | Lightweight |
@@ -36,11 +37,11 @@ Rules:
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
 | **Recommended team size** | 1–2 agents | 2–3 agents | Precision 5-lane deployment |
 | **Design options** | Optional | Recommended | Required (3 architecture options) |
-| **Interactive checkpoints** | CP4 only (implementation approval) | CP1, CP3, CP4 | All 5 checkpoints (CP1–CP5) |
+| **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
 | **Gap analysis** | Optional | Recommended | Required before acceptance |
-| **Specialist skills** | None by default | `dev-workflow` | `dev-workflow` + `security-review` + `enterprise-architecture` |
+| **Specialist skills** | None by default | `dev-workflow`; add `external-tool-bridge` when external capability is active | `dev-workflow` + `security-review` + `enterprise-architecture`; add `external-tool-bridge` when external capability is active |
 ### Checkpoint Semantics
-Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill governs which checkpoints are required at each governance level, not their content. The "Interactive checkpoints" column lists checkpoints that require user confirmation; dev-workflow mandatory checkpoints (e.g., CP2) still execute at all tiers but may auto-resolve without user interaction when bounded by the user's directive.
+Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input may become relevant; it does not convert checkpoints or phase gates into user-confirmation stops. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
 Acceptance-depth semantics: the table sizes default review and proof depth for project governance. It does not transfer final `PASS/HOLD/FAIL` authority away from the validator lane when a final validation verdict is required by role separation, task risk, or the active workflow.
 ## Quality Metrics Table
 | Metric | Description | Use |

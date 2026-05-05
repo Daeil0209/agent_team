@@ -228,71 +228,23 @@ fi
 
 # remove_member_from_config() — now provided by hook-config.sh
 
-# Auto-shutdown STANDBY agents when memory usage exceeds 80%.
-# Reuses _MEM_TOTAL_KB (total) and SCAN_MEM_KB (available) already computed above.
-# Memory usage variables removed (unused after B2 library refactor)
-
-# get_worker_pane_id() — now provided by hook-config.sh
-
-memory_pressure_shutdown_standby
+# Memory pressure reports standby hold state. It does not terminate agents.
+memory_pressure_report_standby_hold
 
 for line in "${CAPACITY_LINES[@]}"; do
   printf '%s\n' "$line"
 done
 
-# Auto force-kill ghost agents after the configured ghost threshold.
+# Report ghost agents. Do not force-kill from this monitor.
 while IFS= read -r _ghost_line; do
   [[ "$_ghost_line" == GHOST:* ]] || continue
   _ghost_name="${_ghost_line#GHOST: }"
   _ghost_name="${_ghost_name%% | *}"
   if [[ -n "$_ghost_name" ]]; then
-    _ghost_pane="$(get_worker_pane_id "$_ghost_name" 2>/dev/null || true)"
-    if [[ -n "$_ghost_pane" ]] && tmux_cmd display-message -t "$_ghost_pane" -p '' 2>/dev/null; then
-      # pane alive but unresponsive — force-kill
-      "$HOOK_DIR/mark-force-stop.sh" "$_ghost_name" 2>/dev/null || true
-    else
-      # pane already dead — skip, ghost-member-cleanup handles config
-      printf 'GHOST-PANE-DEAD-SKIP: %s | cleanup deferred to ghost-member-cleanup\n' "$_ghost_name"
-    fi
+    printf 'GHOST-REPORTED: %s | cleanup deferred to session-closeout or explicit recovery\n' "$_ghost_name"
   fi
 done <<< "$RESULT"
 echo "$RESULT"
-
-# ── Ghost member cleanup ──────────────────────────────────────────────
-# Remove config.json entries whose tmux panes no longer exist.
-# This prevents terminated agents from appearing as phantom teammates in the UI.
-for _gc_config_file in "$HOME/.claude/teams"/*/config.json; do
-  [[ -f "$_gc_config_file" ]] || continue
-  _gc_ghost_list="$(CONFIG_FILE="$_gc_config_file" node -e "
-    try {
-      const config = JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE, 'utf8'));
-      (config.members || []).forEach(m => {
-        if (m.name && m.name !== 'team-lead') {
-          process.stdout.write(m.name + '|' + m.tmuxPaneId + '\n');
-        }
-      });
-    } catch(e) {}
-  " 2>/dev/null || true)"
-
-  while IFS='|' read -r _gc_name _gc_pane; do
-    [[ -n "$_gc_name" ]] || continue
-    if [[ -z "$_gc_pane" ]]; then
-      remove_worker_everywhere "$_gc_name"
-    else
-      _gc_alive=false
-      for _retry in 1 2 3; do
-        if tmux_cmd display-message -t "$_gc_pane" -p '' 2>/dev/null; then
-          _gc_alive=true
-          break
-        fi
-        sleep 0.5
-      done
-      if [[ "$_gc_alive" == "false" ]]; then
-        remove_worker_everywhere "$_gc_name"
-      fi
-    fi
-  done <<< "$_gc_ghost_list"
-done
 
 if [[ "$RESULT" == CRON_PAUSE* ]]; then
   : > "$HEALTH_CRON_FLAG"

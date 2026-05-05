@@ -12,14 +12,16 @@ Before initiating any external bridge, verify all of the following:
 - **Endpoint reachability**: target host/port/path accessible from execution environment
 - **Quota/rate-limit**: current usage headroom confirmed before bulk operations
 - **Permission scope**: token or credential scope covers required operations and no more
+- **Setup safety**: classify required setup as `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`; do not ask the user about `allowed-setup`
 - **Cleanup path**: explicit procedure exists to close sessions, revoke tokens, and remove residual state on success and on failure
 ### Integration Failure Patterns
 Standard response patterns for external service failures:
-- **Retry policy**: max 2 retries with exponential backoff (1s, 3s). Document retry count in bridge report. Same failure on all retries → stop and report blocked state
+- **Retry policy**: retry only when changed timing, endpoint health, fallback route, or setup state can produce new signal. Use backoff. Document each retry basis in the bridge report. Same failure with no new route -> stop and report blocked state
 - **Timeout**: define explicit timeout per external call. Default 30s for API calls, 60s for file transfers. Timeout without response = blocked state, not silent retry
-- **Circuit breaker**: after 3 consecutive failures to same endpoint, stop attempting and report service-level block. Do not continue with degraded assumptions
+- **Circuit breaker**: repeated consecutive failures to the same endpoint without a changed route stop further attempts. Report service-level block. Do not continue with degraded assumptions
 - **Fallback escalation**: when primary bridge fails, attempt fallback path if defined. If no fallback defined, this is a bridge design defect — report it as such
 All failure states must produce a structured blocked-condition report, not a generic error message.
+Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites may run under a frozen allowed-setup boundary. Docker Desktop-class installers, persistent daemons/services, credential repair, paid/licensed tools, destructive package actions, or security-setting changes are not allowed-setup by default.
 ### Blocked-Condition Report Schema
 Required fields for every blocked-state report:
 - `bridge_step`: which integration step failed (setup, auth, endpoint, quota, data transfer, cleanup)

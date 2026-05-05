@@ -56,62 +56,24 @@ case "$TOOL_NAME" in
 
   # ── Agent: dispatch tracking ──────────────────────────────────────────────
   Agent)
-    PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const joinUniqueText = (chunks) => {
-  const seen = new Set();
-  return chunks
-    .map((chunk) => String(chunk || "").trim())
-    .filter(Boolean)
-    .filter((chunk) => {
-      if (seen.has(chunk)) return false;
-      seen.add(chunk);
-      return true;
-    })
-    .join("\n");
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+    PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { encode, flattenText, joinUniqueText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const AGENT_DISPATCH_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
 const collectAgentDispatchText = (toolInput) => joinUniqueText([
-  ...flattenText(toolInput.description),
-  ...flattenText(toolInput.summary),
-  ...flattenText(toolInput.prompt),
-  ...flattenText(toolInput.task),
-  ...flattenText(toolInput.assignment),
-  ...flattenText(toolInput.message),
-  ...flattenText(toolInput.content),
-  ...flattenText(toolInput.instructions),
-  ...flattenText(toolInput.goal),
-  ...flattenText(toolInput.brief),
-  ...flattenText(toolInput.context),
-  ...flattenText(toolInput.request),
-  ...flattenText(toolInput.note),
-  ...flattenText(toolInput.notes),
+  ...flattenText(toolInput.description, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.summary, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.prompt, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.task, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.assignment, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.message, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.content, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.instructions, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.goal, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.brief, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.context, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.request, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.note, AGENT_DISPATCH_TEXT_KEYS),
+  ...flattenText(toolInput.notes, AGENT_DISPATCH_TEXT_KEYS),
 ]);
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -204,7 +166,6 @@ NODE
 
 	    clear_worker_standby "$AGENT_NAME"
 	    record_pending_agent_dispatch "$TIMESTAMP" "$AGENT_NAME" "$EFFECTIVE_MODE" "$DISPATCH_AGENT_LANE"
-	    mark_worker_planning_required "$AGENT_NAME"
 	    mark_worker_dispatch_ack_required "$AGENT_NAME"
 	    record_permission_provenance "$SESSION_ID" "$RESOLVED_MODE" "$PERMISSION_BASIS" "$PERMISSION_SOURCE" "$MODE" "$AGENT_NAME"
 	    mark_team_dispatch_pending "$SESSION_ID" "$AGENT_NAME" "agent-dispatch"

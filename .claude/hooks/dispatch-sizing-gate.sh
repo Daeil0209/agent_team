@@ -5,47 +5,8 @@ source "$(dirname "$0")/hook-config.sh"
 
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    const preferredKeys = ["description", "summary", "prompt", "task", "assignment", "message", "content", "instructions", "goal", "brief", "context", "request", "note", "notes"];
-    const preferred = preferredKeys
-      .filter((key) => Object.prototype.hasOwnProperty.call(value, key))
-      .flatMap((key) => flattenText(value[key]));
-    if (preferred.length) return preferred;
-    return Object.entries(value).flatMap(([key, nested]) => {
-      const nestedChunks = flattenText(nested);
-      if (!nestedChunks.length) return [String(key)];
-      return nestedChunks.map((chunk) => `${key}: ${chunk}`);
-    });
-  }
-  return [];
-};
-const joinUniqueText = (chunks) => {
-  const seen = new Set();
-  return chunks
-    .map((chunk) => String(chunk || "").trim())
-    .filter(Boolean)
-    .filter((chunk) => {
-      if (seen.has(chunk)) return false;
-      seen.add(chunk);
-      return true;
-    })
-    .join("\n");
-};
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { encode, flattenText, joinUniqueText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
@@ -170,13 +131,13 @@ idle_pending_recovery_step() {
 
   primary_worker="$(printf '%s' "$worker_summary" | awk -F',' '{print $1}' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
   if [[ -n "$primary_worker" && "$worker_summary" != *","* ]]; then
-    printf "treat '%s' as standby from its completion report and read its REQUESTED-LIFECYCLE: reuse it with assignment-grade SendMessage after WP+SV when reuse is requested or justified, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat '%s' as lifecycle-decision pending from its completion report and read its REQUESTED-LIFECYCLE: reuse it with assignment-grade SendMessage after work-planning when reuse is requested or justified, approve standby, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
       "$primary_worker"
     return 0
   fi
 
   if [[ -n "$worker_summary" ]]; then
-    printf "treat completed agent(s) (%s) as standby and consult REQUESTED-LIFECYCLE: reuse the fitting agent when reuse is requested or justified, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat completed agent(s) (%s) as lifecycle-decision pending and consult REQUESTED-LIFECYCLE: reuse the fitting agent when reuse is requested or justified, approve standby, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch" \
       "$worker_summary"
     return 0
   fi
@@ -289,7 +250,7 @@ if phase3_parallel_developer_requires_concrete_name \
   "$SPLIT_BASIS_NORM" \
   "$PARALLEL_GROUPS_NORM" \
   "$DISPATCH_BLOCKERS_NORM"; then
-  emit_dispatch_warning "Phase 3 parallel developer dispatch uses bare agent name 'developer' while same-capability parallel work benefits from concrete identities. Prefer a concrete developer name from AGENT-MAP or reuse the matching existing developer with assignment-grade SendMessage after WP+SV."
+  emit_dispatch_warning "Phase 3 parallel developer dispatch uses bare agent name 'developer' while same-capability parallel work benefits from concrete identities. Prefer a concrete developer name from AGENT-MAP or reuse the matching existing developer with assignment-grade SendMessage after work-planning."
 fi
 
 if [[ "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]] \
@@ -324,46 +285,45 @@ fi
 
 if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   if target_is_already_active_worker "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' already exists" "choose a unique SHARD-ID for parallel work, or reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV")"
+    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' already exists" "choose a unique SHARD-ID for parallel work, or reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after work-planning")"
     exit 0
   fi
 
   if worker_is_standby "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' is already on standby" "reuse '${SHARDED_TARGET_NAME}' with assignment-grade SendMessage after WP+SV, or choose a unique SHARD-ID for a genuinely distinct shard")"
+    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' is already standby; prefer reuse or a unique SHARD-ID."
     exit 0
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$SHARDED_TARGET_NAME")")"
+    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output pending lifecycle decision; prefer lifecycle/reuse recovery."
     exit 0
   fi
 fi
 
 if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   if [[ "$_is_sharded_researcher" != "true" ]] && target_is_already_active_worker "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "live agent '${TARGET_NAME}' already exists" "reuse with assignment-grade SendMessage after WP+SV, or decide shutdown/standby/hold before replacement spawn. For parallel same-capability work, choose a concrete unique agent name from AGENT-MAP instead of repeating a bare lane label. For parallel researcher work, provide shard identity fields (SHARD-ID, SHARD-BOUNDARY, MERGE-OWNER) or another concrete unique agent name.")"
+    emit_deny "$(dispatch_sizing_block "live agent '${TARGET_NAME}' already exists" "reuse with assignment-grade SendMessage after work-planning, or decide shutdown/standby/hold before replacement spawn. For parallel same-capability work, choose a concrete unique agent name from AGENT-MAP instead of repeating a bare lane label. For parallel researcher work, provide shard identity fields (SHARD-ID, SHARD-BOUNDARY, MERGE-OWNER) or another concrete unique agent name")"
     exit 0
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_standby "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "standby agent '${TARGET_NAME}' already exists" "reuse '${TARGET_NAME}' with assignment-grade SendMessage after WP+SV instead of replacement spawn")"
+    emit_dispatch_warning "standby agent '${TARGET_NAME}' already exists; prefer assignment-grade SendMessage reuse when it fits."
     exit 0
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    emit_deny "$(dispatch_sizing_block "agent '${TARGET_NAME}' has completion-grade output that should already classify as standby" "$(idle_pending_recovery_step "$TARGET_NAME")")"
+    emit_dispatch_warning "agent '${TARGET_NAME}' has completion-grade output pending lifecycle decision; prefer lifecycle/reuse recovery."
     exit 0
   fi
 fi
 
-# Standby-overlap enforcement is scoped to the current dispatch's work-surface:
-# standby agents on a different known surface are excluded, while agents with
-# unknown surfaces remain blocking because non-overlap cannot be proven truthfully.
+# Exact live target collisions above stay blocking. Missing WORK-SURFACE
+# is recoverable packet debt, so hook-last policy warns instead of blocking.
 STANDBY_COUNT="$(standby_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
 if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
   STANDBY_SUMMARY="$(standby_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
   if [[ -z "$DISPATCH_WORK_SURFACE" ]]; then
-    emit_deny "$(dispatch_sizing_block "dispatch packet omits WORK-SURFACE while standby overlap exists (${STANDBY_SUMMARY:-unknown})" "add explicit WORK-SURFACE, or $(idle_pending_recovery_step "$STANDBY_SUMMARY")")"
+    emit_dispatch_warning "dispatch packet omits WORK-SURFACE while standby exists (${STANDBY_SUMMARY:-unknown}); recover through packet correction or lane hold|blocker."
     exit 0
   fi
 
@@ -377,7 +337,7 @@ if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
     exit 0
   fi
 
-  emit_deny "$(dispatch_sizing_block "standby agent(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown})" "$(idle_pending_recovery_step "$STANDBY_SUMMARY")")"
+  emit_dispatch_warning "standby agent(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown}); prefer reuse when it fits."
   exit 0
 fi
 
@@ -385,15 +345,15 @@ case "$TARGET_LANE" in
   researcher)
     if dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
       if ! dispatch_field_present "$DESCRIPTION" "SHARD-ID"; then
-        emit_deny "Sharded researcher dispatch requires SHARD-ID. Parallel shard work cannot stay legible without an explicit shard identity."
+        emit_dispatch_warning "sharded researcher dispatch omits SHARD-ID; task-execution should repair the packet with shard identity before dispatch."
         exit 0
       fi
       if ! dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
-        emit_deny "Sharded researcher dispatch requires SHARD-BOUNDARY. Parallel shard work must state the exact non-overlapping boundary."
+        emit_dispatch_warning "sharded researcher dispatch omits SHARD-BOUNDARY; task-execution should repair the packet with non-overlap boundary before dispatch."
         exit 0
       fi
       if ! dispatch_field_present "$DESCRIPTION" "MERGE-OWNER"; then
-        emit_deny "Sharded researcher dispatch requires MERGE-OWNER before full fan-out. Merge responsibility cannot remain implicit."
+        emit_dispatch_warning "sharded researcher dispatch omits MERGE-OWNER; task-execution should repair the packet with merge owner before dispatch."
         exit 0
       fi
     fi

@@ -1,52 +1,14 @@
 "use strict";
 
 const path = require("path");
+const { tokenize } = require("./hook-command-tokenizer.js");
 
 const command = String(process.env.COMMAND_TEXT || "");
 const root = String(process.env.PROJECT_ROOT || process.cwd());
 const mode = String(process.argv[2] || "");
 // Generated-output cleanup/reset carve-outs stay inside the repository-root
-// projects/ tree. outputs/ and backups/ are not approved task-output roots.
+// projects/ tree. outputs/ and backups/ are noncanonical warning surfaces.
 const allowedRoots = ["projects"];
-
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-
-  for (let index = 0; index < text.length; index += 1) {
-    const ch = text[index];
-    if (quote) {
-      if (ch === quote) {
-        quote = "";
-      } else if (ch === "\\" && quote === '"' && index + 1 < text.length) {
-        current += text[++index];
-      } else {
-        current += ch;
-      }
-      continue;
-    }
-
-    if (ch === '"' || ch === "'") {
-      quote = ch;
-      continue;
-    }
-
-    if (/\s/.test(ch)) {
-      if (current) {
-        words.push(current);
-        current = "";
-      }
-      continue;
-    }
-
-    current += ch;
-  }
-
-  if (quote) return null;
-  if (current) words.push(current);
-  return words;
-}
 
 function expandSimpleBrace(candidate) {
   const first = candidate.indexOf("{");
@@ -111,6 +73,35 @@ function isBoundedCleanup(subcommand) {
   return sawRecursive && sawForce && sawPath;
 }
 
+function isBoundedNonRecursiveCleanup(subcommand) {
+  const words = tokenize(subcommand);
+  if (!words || words.length < 2) return false;
+
+  if (words[0] === "rmdir") {
+    return words.length === 2 && pathAllowed(words[1]);
+  }
+
+  if (words[0] !== "rm") return false;
+
+  let sawForce = false;
+  let target = "";
+  for (let index = 1; index < words.length; index += 1) {
+    const word = words[index];
+    if (word === "--") continue;
+
+    if (word.startsWith("-")) {
+      if (!/^-+f+$/.test(word)) return false;
+      sawForce = true;
+      continue;
+    }
+
+    if (target) return false;
+    target = word;
+  }
+
+  return sawForce && pathAllowed(target);
+}
+
 function isGeneratedMkdir(subcommand) {
   const words = tokenize(subcommand);
   if (!words || words.length < 3 || words[0] !== "mkdir") return false;
@@ -135,7 +126,7 @@ function isGeneratedMkdir(subcommand) {
 
 function standaloneCleanupAllowed() {
   if (!command.trim() || /[|;&<>`$]/.test(command)) return false;
-  return isBoundedCleanup(command);
+  return isBoundedCleanup(command) || isBoundedNonRecursiveCleanup(command);
 }
 
 function resetScaffoldAllowed() {

@@ -9,16 +9,16 @@ auto-inject: false
 false — load explicitly when packet detail, PASS-prohibition detail, reconciliation detail, operator-runtime/rendered-quality detail, or handoff detail is needed.
 
 ## Role-Spine Handoff
-`agents/validator.md` owns only the always-loaded validator charter, boundary, receipt trigger, stop rule, PASS prohibition, and verdict-local completion duty. This reference owns detailed validator packet fields, verdict lenses, PASS prohibition detail, reconciliation detail, operator-runtime/rendered-quality protocols, carve-out definitions, and handoff detail.
+`agents/validator.md` owns only the always-loaded validator charter, boundary, receipt trigger, stop rule, PASS prohibition, and verdict-local completion duty. This reference owns detailed validator packet fields, verdict lenses, PASS prohibition detail, reconciliation detail, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, and handoff detail.
 
-When a validator role or skill says "validator additions" or "validator detail", consume this file directly. Do not re-expand `agents/validator.md` into a packet-field catalog. Missing decisive validation detail is `hold|blocker` or `scope-pressure`; weak evidence never becomes `PASS` through reconstruction.
+When a validator role or skill says "validator additions" or "validator detail", consume this file directly. Do not re-expand `agents/validator.md` into a packet-field catalog. Non-derivable missing decisive validation detail is `hold|blocker` or `scope-pressure`; weak evidence never becomes `PASS` through reconstruction.
 
 Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the validator-specific payload and acceptance discipline needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only. It does not replace an assignment-grade validator packet when new bounded verdict work is assigned.
 - If phase context and assignment-grade work arrive in the same execution segment, consume the embedded phase context inside the assignment packet and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge it with `control-ack` only when it materially affects active work, standby readiness, or shutdown path.
+- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Contents
 - Validator Packet Detail
@@ -27,7 +27,8 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - PASS Prohibition Detail
 - Acceptance Reconciliation Detail
 - Operator-Runtime Verification Protocol
-- Acceptance Carve-Out Definitions
+- Final-Arbitration Trigger Definitions
+- Final Acceptance Rejection Packet Detail
 - Validator Handoff Detail
 
 ## Validator Packet Detail
@@ -45,21 +46,28 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
 
-If these fields are missing and truthful validation would require inventing them, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
+If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream handoff.
+Mark every inferred piece.
+If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
+If only part of the basis is derivable, narrow the verdict to the verified surface and report the unverified scope.
 
-If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`. Do not replace decisive user-surface evidence with source-only evidence.
+If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
+Do not replace decisive runtime, rendered, interaction, environment, or operator-burden evidence with source-only evidence.
+When the assigned surface is source-read governance, report, or documentation text, source/read evidence can be decisive.
 
 ## Verdict Lenses
 - Plan/design deliverables: request fit, design intent, owner boundaries, proof chain, acceptance chain, risk/tradeoff handling, and rule compliance.
-- Executable user-facing artifacts: exact launch path, termination path, core workflow, interaction coverage, burden contract, resource cleanup, and proof-surface match.
+- Executable user-facing artifacts: exact launch artifact plus invocation evidence, termination path, `SCOPE-BASELINE` coverage, core workflow, interaction coverage, burden contract, resource cleanup, and proof-surface match.
 - Human-consumed artifacts: native-capable or format-faithful rendering, visible completeness, layout/pagination/formula/media integrity, and reader/operator burden.
 - Proof/review outputs: method, surface match, claim strength, unresolved contradictions, and whether evidence supports the requested verdict.
 - Governance/report outputs: preservation, rule force, owner boundaries, cross-reference integrity, claim truth, and user-facing clarity.
+- Source-read governance/report outputs do not require rendered proof unless layout, packaging, exported format, or visual readability is part of the frozen acceptance surface.
 Use only the lenses that materially affect the assigned validation surface.
 
 ## Applied Validation Techniques
 - Requirements traceability: map every decisive expectation to evidence anchor, acceptance surface, upstream owner, and verdict class.
 - Acceptance oracle challenge: identify the condition that would make the verdict false; if that condition is untested, PASS is unavailable.
+- Scope-baseline challenge: identify whether the verdict claims more than the proven `ACTIVE-SLICE`; unresolved `SCOPE-BASELINE` rows force `HOLD` or narrowed verdict scope.
 - Quality model scan: use functional suitability, performance, compatibility/interoperability, usability/interaction capability, reliability, security, maintainability, portability/adaptability, and stakeholder value as prompts for missing acceptance dimensions when material.
 - User-visible behavior discipline: prefer proof from what the user sees, does, opens, runs, or decides from; implementation-only evidence supports diagnosis but does not prove user acceptance.
 - Complete-process check: for multi-step user workflows, validate the whole process path, not only isolated pages or states.
@@ -86,16 +94,20 @@ PASS is prohibited when any decisive acceptance surface remains:
 Use this section when validation has operator-runtime cross-environment dependency, executable user-facing program burden, exact launch/termination path, or no-operator-labor risk.
 
 ### Operator-Exhaustive Integrity And Rendered Quality
-For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected for integrity, not spot-sampled.
+For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix; partial route, viewport, or state coverage narrows the verdict or forces `HOLD`, not PASS.
+The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
+For receiver-facing reports, decks, lessons, generated artifacts, and rendered documents, the same matrix maps expectation -> receiver surface -> evidence artifact -> inspection method -> inspected defect classes -> verdict class.
 
 Rendered visual quality inspection is mandatory when the user experiences the deliverable visually. DOM, ARIA, source text, or text-substring assertions exercise structure but do not prove font glyph rendering, layout integrity, actual color/contrast appearance, image/icon loading, locale-specific glyph coverage, or pixel-level visible quality.
 
-Capture rendered output through the truthful surface: browser screenshot, document render, slide export, native viewer, or equivalent. Broken font fallback, placeholder glyph boxes, layout collapse, missing icons, invisible controls, and similar pixel-level defects fail user-facing acceptance even when DOM or source checks pass.
+Capture rendered output through the truthful surface: browser screenshot, document render, slide export, native viewer, or equivalent. Full-surface acceptance needs full-page or full design-area capture when the surface scrolls; viewport-only capture supports only viewport-limited claims. Broken font fallback, placeholder glyph boxes, layout collapse, missing icons, invisible controls, and similar pixel-level defects fail user-facing acceptance even when DOM or source checks pass.
 
-When the same proof surface offers multiple cost-vs-fidelity profiles, such as MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run, validator defaults to the highest-fidelity profile available unless the packet freezes a lawful narrower tool.
+Validator must inspect rendered evidence as the acceptance oracle. A screenshot saved but not visually checked for glyph sanity, clipping, overlap, hidden controls, readable hierarchy, and missing media is not rendered-quality evidence.
+
+When the same proof surface offers multiple friction-vs-fidelity profiles, such as MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run, validator defaults to the highest-fidelity profile available unless the packet freezes a lawful narrower tool.
 
 ### R22 - User-Environment E2E Verification
-The launch path and termination path MUST be verified end-to-end in the actual operator-runtime environment: Windows GUI double-click for Windows operators, native app shell for native operators, mobile launcher for mobile operators, or the equivalent concrete operator surface.
+The launch artifact and termination path MUST be verified end-to-end in the actual operator-runtime environment: Windows GUI double-click for Windows operators, native app shell for native operators, mobile launcher for mobile operators, or the equivalent concrete operator surface. Direct server/module start or URL-open proof is not equivalent to launcher proof.
 
 Do not substitute a developer-side simulator when the operator surface differs: WSL Bash exec when the operator is Windows, headless runner when the operator uses GUI, dev-server proxy when the operator runs the production binary, Linux venv when Windows venv is decisive, WSL Bash when `cmd.exe` is decisive, headless when windowed is decisive, dev mode when production build is decisive, or sandbox network when operator network is decisive.
 
@@ -129,23 +141,44 @@ The verifier must observe the launcher's auto-open path actually firing: capture
 
 When the auto-test harness execution context differs structurally from the operator invocation context, such as non-interactive stdin versus interactive console, subshell versus Windows Explorer console group, or PowerShell input-redirection error versus interactive PowerShell, eliminate the difference through re-test in an equivalent context or explicitly flag `UNVERIFIED-IN-OPERATOR-ENV: true` for the affected sub-surface.
 
-Treating an execution-context delta as harmless without re-test or explicit flag is a verification-lane defect equivalent to silent PASS. "Would work in operator interactive flow" is inference, not verified result.
+Treating an execution-context delta as harmless without re-test or explicit flag is a verification-lane defect equivalent to silent PASS. "Would work in operator interactive flow" is inference, not verified result. Cross-environment generalization from a single tested environment requires both `EQUIVALENCE-DECLARATION` (structural basis) and `ENV-COVERAGE` (covered surface) per `.claude/skills/task-execution/references/request-bound-fields.md`; absent either, the cross-environment claim is `INFERENCE/UNVERIFIED` for non-tested environments.
 
 ### Synthesis Discipline
 Team-lead synthesis of an agent PASS verdict must challenge any "testing artifact" or "would work in operator flow" framing in the agent evidence basis. If the agent did not eliminate the execution-context delta, synthesized claim strength cannot exceed `INFERENCE/UNVERIFIED` for the affected sub-surface, regardless of the agent verdict label.
 
 Skipping operator-environment E2E for the launch or termination path, or generalizing developer-side simulator PASS to an operator-environment claim, is itself a verification defect, not a closure event.
 
-## Acceptance Carve-Out Definitions
-Use these definitions when deciding whether a low-risk reviewer+tester closure is still available or whether validator arbitration is required.
+## Final-Arbitration Trigger Definitions
+Use these definitions when deciding whether final arbitration is required.
 
 - `executable` = behavior change on a runtime path used by active team sessions or downstream tools, including hooks, agent prompts, settings, runtime CLI scripts, or dispatch packets. Doctrine prose clarifications, cross-reference additions, comment honesty fixes, and naming consistency edits that do not change behavior remain reviewer-closeable; venue alone is not the trigger.
 - `destructive` = removes, overwrites, or mutates existing meaning without standard git recovery alone.
 - `security-sensitive` = touches credentials, permission boundaries, sandbox config, hook enforcement, or defense-in-depth surfaces.
 - `externally committed` = pushed, deployed, or otherwise released beyond the current sandbox.
 - `unresolved reviewer/tester disagreement` = reviewer and tester truth conflict materially on the same acceptance surface, proof sufficiency, defect severity, or closure readiness, and the conflict has not been reconciled by fresh owner evidence.
+- `explicit final-acceptance request` = the assignment asks for `PASS/HOLD/FAIL`, release acceptance, workflow-completion acceptance, or final arbitration.
+- `non-source completion claim` = completion depends on runtime, rendered, interaction, environment, or operator-burden proof beyond verified source/read evidence.
 
-When any definition applies, reviewer+tester closure cannot be reported as final acceptance. The path requires validator arbitration or a truthful `HOLD`.
+When any definition applies, the path requires final arbitration or a truthful `HOLD`.
+
+## Final Acceptance Rejection Packet Detail
+Use this section when an assignment carries a `FINAL-REJECT` packet after Final Acceptance Review.
+
+Validator writes a correction packet with:
+- `FINAL-REJECT-ID`
+- `REJECTED-VALIDATOR-PASS`
+- `INSTRUCTION-TRACE`
+- `SCOPE-BASELINE-TRACE`
+- `REJECTED-INSTRUCTION-OR-ACCEPTANCE-AXIS`
+- `USER-READY-GAP`
+- `CORRECTION-TARGET`
+- `CORRECTION-REASON`
+- `DEVELOPER-WORK-SURFACE`
+- `REQUIRED-USER-SURFACE-EVIDENCE`
+- `REQUIRED-RETURN-EVIDENCE`
+- `REVALIDATION-TARGET`
+
+Validator sends the correction packet to team-lead for `task-execution` dispatch.
 
 ## Validator Handoff Detail
 - Keep conditional validator-specific fields explicit when they were materially part of the frozen validation surface:
@@ -162,4 +195,6 @@ When any definition applies, reviewer+tester closure cannot be reported as final
 - Use `not-applicable` instead of omission only when a listed status axis was not part of the frozen validation surface.
 - `matched` and `PASS` are reserved for true acceptance alignment on that exact surface.
 - If available evidence is useful but not sufficient for PASS, keep it and downgrade truthfully to `HOLD`, `partial`, `mismatched`, or `blocked` rather than softening into pass-like language.
-- `DECISIVE-EXPECTATION-TRACE` must map expectation -> evidence anchor -> surface -> upstream owner -> verdict class for every decisive expectation.
+- For visual or rendered acceptance, `DECISIVE-EXPECTATION-TRACE` must map expectation -> route/page/screen-state -> viewport/capture scope -> evidence anchor -> inspected defect classes -> upstream owner -> verdict class. Missing trace, partial matrix, or unreadable rendered text blocks PASS for that surface.
+- PASS cites only Evidence-Quality Matrix supported scope.
+- cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments; equivalence claimed without observable basis is a verification defect equivalent to silent PASS, and absent or partial equivalence makes the affected sub-surface `HOLD` or `INFERENCE/UNVERIFIED`, not PASS.

@@ -37,13 +37,16 @@ try {
   const inputTeamName = String(input.team_name || input.teamName || toolInput.team_name || toolInput.teamName || "").trim();
   const claudeHome = process.env.CLAUDE_HOME || path.join(process.env.HOME || "", ".claude");
   const targetedTools = new Set(["TaskGet", "TaskUpdate", "TaskOutput", "TaskStop"]);
+  const taskIdAdvice = (currentToolName) => currentToolName === "TaskGet"
+    ? "Use TaskList or the task_assignment packet to confirm the exact task id before retrying TaskGet."
+    : "Use TaskList, TaskGet with a confirmed existing id, or the task_assignment packet to confirm the exact task id before retrying.";
 
   if (!targetedTools.has(toolName)) {
     process.exit(0);
   }
 
   if (!taskId) {
-    let reason = `${toolName} requires an explicit task id. Use the taskId from the task_assignment packet or inspect TaskList/TaskGet first.`;
+    let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)} Do not infer task ids from phase order, agent role, or the next numeric value.`;
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
@@ -277,7 +280,7 @@ try {
     process.exit(0);
   }
 
-  let reason = `BLOCKED: task-state mutation preflight incomplete. Detail: ${toolName} could not find task id '${taskId}' in the current task store. Next: use TaskList, TaskGet, or the task_assignment packet to confirm the exact task id before retrying. Do not retry before Next is complete.`;
+  let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} could not find task id '${taskId}' in the current task store. Next: ${taskIdAdvice(toolName)} Do not infer task ids from phase order, agent role, or the next numeric value. Do not retry before Next is complete.`;
   if (knownTaskIds.length > 0) {
     reason += ` Known task ids: ${knownTaskIds.join(", ")}.`;
   }

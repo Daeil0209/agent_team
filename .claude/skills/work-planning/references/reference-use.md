@@ -35,7 +35,7 @@ Silent deviation, where the spec contradicts reference without explicit acknowle
 
 ## Verification Gate
 - `task-execution` must reject assignment-grade dispatch whose `REFERENCE-USE` field is empty when trigger conditions fire.
-- `self-verification` SV-PLAN must verify citation specificity matches trigger scope before authorizing dispatch.
+- Citation specificity must match trigger scope before dispatch; use `SV-PLAN` only if the plan's citation basis is disputed.
 - reviewer and validator must verify spec-vs-reference compliance as part of acceptance check.
 
 ## Reference Precedence

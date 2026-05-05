@@ -25,12 +25,10 @@ fi
 
 ensure_procedure_state_surfaces
 clear_stale_team_state_for_new_session "$SESSION_ID"
-CONTINUITY_SEED_ACTION="$(seed_project_continuity_from_global_if_missing)"
 refresh_procedure_state_sensors "$SESSION_ID"
 update_procedure_state_fields \
   "$SESSION_ID" \
   bootSessionId "$SESSION_ID" \
-  continuitySeedAction "$CONTINUITY_SEED_ACTION" \
   startupState "booting"
 
 if [ -n "${TMUX:-}" ]; then
@@ -39,7 +37,6 @@ if [ -n "${TMUX:-}" ]; then
 fi
 
 REPO_ROOT="$(resolve_project_root)"
-CONTINUITY_PATH="$(effective_continuity_file_path)"
 
 describe_team_runtime_snapshot() {
   local config_file=""
@@ -82,33 +79,6 @@ if runtime_sender_session_is_worker "$SESSION_ID" || is_worker_session; then
   printf '%s\n' "Agent session | root: $REPO_ROOT"
 else
   reset_startup_volatile_state
-  # Reap dead agents from team config at boot to prevent ghost accumulation
-  if command -v tmux &>/dev/null && [ -n "${TMUX:-}" ]; then
-    _boot_session="$(tmux display-message -p '#S' 2>/dev/null || echo "")"
-    if [ -n "$_boot_session" ]; then
-      _boot_live_panes="$(tmux list-panes -t "$_boot_session" -F '#{pane_id}' 2>/dev/null || true)"
-      for _boot_cfg in "$HOME/.claude/teams"/*/config.json; do
-        [ -f "$_boot_cfg" ] || continue
-        _boot_pane_ids="$(team_config_pane_ids "$_boot_cfg")"
-        [ -n "$_boot_pane_ids" ] || continue
-        while IFS= read -r _boot_pane; do
-          [ -n "$_boot_pane" ] || continue
-          if ! printf '%s\n' "$_boot_live_panes" | grep -qF "$_boot_pane"; then
-            _boot_worker="$(CONFIG_FILE="$_boot_cfg" PANE_ID="$_boot_pane" node -e "
-              try {
-                const c=JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE,'utf8'));
-                const m=(c.members||[]).find(m=>m.tmuxPaneId===process.env.PANE_ID);
-                if(m&&m.name)process.stdout.write(m.name);
-              } catch {}
-            " 2>/dev/null || true)"
-            if [ -n "$_boot_worker" ]; then
-              remove_worker_everywhere "$_boot_worker" 2>/dev/null || true
-            fi
-          fi
-        done <<< "$_boot_pane_ids"
-      done
-    fi
-  fi
   describe_team_runtime_snapshot
 fi
 

@@ -17,11 +17,11 @@ For consequential solution work, keep the solution-development packet readable h
 Current solution-development packet surface:
 - `PROBLEM-CLASS: instance|structural|systemic`
 - `ROOT-CAUSE-BASIS: confirmed|supported|hypothesis|unknown`
-- `SOLUTION-PASS: 1|2|3`
+- `SOLUTION-PASS: positive integer`
 - `DECISION-BASIS`
 - `REJECTED-OPTIONS`
 - `CHANGE-BOUNDARY`
-- when `SOLUTION-PASS: 2|3`, also keep `PASS-DELTA`
+- when `SOLUTION-PASS` is greater than 1, also keep `PASS-DELTA`
 - when `PROBLEM-CLASS: structural|systemic`, also keep `SELECTED-SCOPE: class-fix|system-fix|staged-class-fix`
 - when `ROOT-CAUSE-BASIS: hypothesis|unknown`, also keep `COMPETING-HYPOTHESES`
 - when `SELECTED-SCOPE: staged-class-fix`, also keep `FOLLOW-UP-OWNER`

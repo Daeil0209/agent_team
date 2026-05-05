@@ -11,7 +11,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `lead-local-plan`: freezes one low-risk local item, required local skills, stop point, and evidence limit.
 - `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, lifecycle/proof/acceptance readiness, and dispatch blockers.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
-- `blocker-clear-plan`: freezes one same-route blocker-clear move that does not change owner, phase, surface, deliverable, proof/acceptance chain, staffing shape, or next action.
+- `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.
 - `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition.
 
 ## Target Selection Rules
@@ -20,8 +20,9 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `route-plan` is mandatory for every consequential top-level `team-lead` plan.
 - `lead-local-plan` is valid only for one named low-risk item with no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
 - `team-dispatch-readiness-plan` is mandatory when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or may enter `task-execution`.
+- If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
-- `blocker-clear-plan` is valid only when the clearing move preserves owner, phase, surface, deliverable, proof/acceptance chain, staffing shape, and next action.
+- `blocker-clear-plan` is valid only when the clearing move preserves every `work-planning` boundary-change axis and next action.
 - `delegated-lane-plan` is for lane-local assignment planning; it never owns top-level route selection.
 
 ## Target-Specific Required Basis
@@ -29,7 +30,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `route-plan`: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`, `ACTION-CLASS`, `ROUTING-SIGNAL`, and `NEXT-CONSEQUENTIAL-ACTION`.
 - `lead-local-plan`: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`, evidence limit, stop condition, and proof/acceptance non-substitution basis.
 - `team-dispatch-readiness-plan`: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`, and `DISPATCH-BLOCKERS`.
-- `workflow-sequence-plan`: selected owner, reason it opens before deeper execution, and what it must hand to `SV-PLAN`.
+- `workflow-sequence-plan`: selected owner, reason it opens before deeper execution, and what it must hand to the next owner.
 - `blocker-clear-plan`: exact blocker, exact clearing move, same-route proof, and boundary that triggers replanning.
 - `delegated-lane-plan`: assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, stop condition, and `scope-pressure`/`hold|blocker` threshold.
 

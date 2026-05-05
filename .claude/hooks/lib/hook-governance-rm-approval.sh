@@ -20,6 +20,7 @@ command_is_governance_restricted_file_rm_with_approval() {
   COMMAND_TEXT="$cmd" \
   APPROVED_ROOTS_FILE="$USER_APPROVED_DELETE_ROOTS_FILE" \
   WORKSPACE_ROOT="$(resolve_project_root)" \
+  HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
   node <<'NODE'
 const fs = require("fs");
 const path = require("path");
@@ -27,30 +28,7 @@ const path = require("path");
 const command = String(process.env.COMMAND_TEXT || "");
 const rootsFile = String(process.env.APPROVED_ROOTS_FILE || "");
 const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
-
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-  for (let i = 0; i < text.length; i += 1) {
-    const ch = text[i];
-    if (quote) {
-      if (ch === quote) quote = "";
-      else if (ch === "\\" && quote === '"' && i + 1 < text.length) current += text[++i];
-      else current += ch;
-      continue;
-    }
-    if (ch === '"' || ch === "'") { quote = ch; continue; }
-    if (/\s/.test(ch)) {
-      if (current) { words.push(current); current = ""; }
-      continue;
-    }
-    current += ch;
-  }
-  if (quote) return null;
-  if (current) words.push(current);
-  return words;
-}
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 
 if (!command.trim() || /[|;&<>`$*?[\]{}]/.test(command)) process.exit(1);
 

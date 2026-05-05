@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 Use this cached source map when checking whether local agent-team governance follows Claude Code's documented configuration and team-operation model.
-This file is not always-loaded context. Refresh from official docs only when behavior may have changed, a source is contradicted, or a decision depends on current product behavior.
+Not always-loaded context. Refresh from official docs only when behavior may have changed, a source is contradicted, or a decision depends on current product behavior.
 
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
@@ -31,7 +31,7 @@ Cached facts:
 - Complex or risky teammate work can require plan approval before implementation; the lead approves or rejects the plan.
 - Strong team-use cases are parallel research/review, new independent modules or features, competing-hypothesis debugging, and cross-layer coordination.
 - Poor team-use cases include sequential work, same-file edits, and dependency-heavy tasks where coordination overhead exceeds parallel value.
-- Agent teams add coordination overhead and use significantly more tokens than a single session; each teammate has its own context window, and token costs scale with teammate count.
+- Agent teams add coordination overhead and context use; each teammate has its own context window, and token use scales with teammate count.
 - Official team runtime resources are stored outside the project governance docs, including team config under `~/.claude/teams/{team-name}/config.json` and task lists under `~/.claude/tasks/{team-name}/`.
 - Team cleanup is lead-owned; active teammates must be drained or shut down first.
 - Current limitations include no nested teams, fixed lead, one team per session, task-status lag, slow shutdown, and in-process teammate resume/rewind gaps.
@@ -42,7 +42,6 @@ Governance implications:
 - Parallel or independent work should be represented as team work when the task shape benefits from multiple perspectives or concurrent execution.
 - Assignment packets must not rely on lead-only conversation history because teammates do not inherit it.
 - Team runtime routing must preserve official limitations instead of hiding them behind local procedure labels.
-- Project-local continuity notes such as `.claude/session-state.md` must not be treated as official agent-team runtime config, task list, mailbox, or cleanup state.
 
 ### Agent Definition Files
 Source: https://code.claude.com/docs/en/sub-agents
@@ -59,7 +58,7 @@ Cached facts:
 
 Governance implications:
 - Keep role files focused because their Markdown body is instruction context for the teammate.
-- Do not preload lane-core skills through agent frontmatter when context cost matters; prefer on-demand lane-core skill loading in role instructions.
+- Do not preload lane-core skills through agent frontmatter when context footprint matters; prefer on-demand lane-core skill loading in role instructions.
 - Tool allowlists and disallowlists belong in agent frontmatter when they define role capability.
 - Do not treat subagent `skills` or `mcpServers` frontmatter as a reliable teammate-runtime contract.
 
@@ -129,7 +128,7 @@ Cached facts:
 
 Governance implications:
 - Keep always-on doctrine concise and move repeatable procedures into skills or scoped rules.
-- Do not claim `@imports` reduce launch context cost; use them for organization, not lazy loading.
+- Do not claim `@imports` reduce launch context footprint; use them for organization, not lazy loading.
 - Do not claim `CLAUDE.md` prose alone hard-enforces a behavior; use settings, permissions, sandbox, or hooks for technical enforcement.
 - Keep project-shared team standards in `.claude/` project scope and machine-specific experimentation in local scope.
 

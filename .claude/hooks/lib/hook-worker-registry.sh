@@ -5,8 +5,7 @@ target_is_already_active_worker() {
   local norm=""
   norm="$(normalize_lane_id "$target_name")"
   [[ -n "$norm" ]] || return 1
-  [[ -f "$SESSION_AGENT_MAP" ]] || return 1
-  awk -v worker="$norm" 'tolower($2) == worker {found=1; exit} END {exit !found}' "$SESSION_AGENT_MAP"
+  worker_has_live_pane "$norm"
 }
 
 worker_is_standby() {
@@ -1153,9 +1152,6 @@ remove_worker_everywhere() {
   done
   drop_worker_rows_from_pending_file "$PENDING_AGENTS_FILE" "$worker_name"
   drop_worker_rows_from_pending_file "$PENDING_AGENT_MODES_FILE" "$worker_name"
-  if declare -F clear_worker_planning_required >/dev/null 2>&1; then
-    clear_worker_planning_required "$worker_name"
-  fi
   if declare -F clear_worker_dispatch_ack_required >/dev/null 2>&1; then
     clear_worker_dispatch_ack_required "$worker_name"
   fi
@@ -1181,6 +1177,54 @@ get_worker_pane_id() {
   return 1
 }
 
+tmux_pane_has_agent_process() {
+  local pane_id="${1-}"
+  local pane_pid=""
+
+  [[ -n "$pane_id" ]] || return 1
+  pane_pid="$(tmux_cmd display-message -t "$pane_id" -p '#{pane_pid}' 2>/dev/null || true)"
+  [[ "$pane_pid" =~ ^[0-9]+$ ]] || return 1
+
+  PANE_PID="$pane_pid" ps -eo pid=,ppid=,comm=,args= 2>/dev/null | awk '
+    {
+      pid=$1
+      ppid=$2
+      comm=$3
+      $1=$2=$3=""
+      parent[pid]=ppid
+      text[pid]=comm " " $0
+    }
+    END {
+      if (ENVIRON["PANE_PID"] == "") exit 1
+      live[ENVIRON["PANE_PID"]]=1
+      changed=1
+      while (changed) {
+        changed=0
+        for (pid in parent) {
+          if (live[parent[pid]] && !live[pid]) {
+            live[pid]=1
+            changed=1
+          }
+        }
+      }
+      for (pid in live) {
+        if (text[pid] ~ /(^|[[:space:]\/])claude([[:space:]\/]|$)/ || text[pid] ~ /claude-code|@anthropic-ai\/claude-code/) exit 0
+      }
+      exit 1
+    }
+  '
+}
+
+worker_has_live_pane() {
+  local worker_name="${1-}"
+  local pane_id=""
+
+  [[ -n "$worker_name" ]] || return 1
+  pane_id="$(get_worker_pane_id "$worker_name" 2>/dev/null || true)"
+  [[ -n "$pane_id" ]] || return 1
+  tmux_pane_has_agent_process "$pane_id"
+}
+
 team_config_pane_ids() {
   local config_file="${1-}"
   [[ -f "$config_file" ]] || return 0
@@ -1196,6 +1240,39 @@ try {
   }
 } catch {}
 NODE
+}
+
+team_config_member_name_pane_pairs() {
+  local config_file="${1-}"
+  [[ -f "$config_file" ]] || return 0
+
+  CONFIG_FILE="$config_file" node <<'NODE' 2>/dev/null || true
+const fs = require("fs");
+try {
+  const config = JSON.parse(fs.readFileSync(process.env.CONFIG_FILE || "", "utf8"));
+  const members = Array.isArray(config.members) ? config.members : [];
+  for (const member of members) {
+    const name = String((member && member.name) || "").trim();
+    const paneId = String((member && member.tmuxPaneId) || "").trim();
+    if (name && paneId) console.log(`${name}\t${paneId}`);
+  }
+} catch {}
+NODE
+}
+
+team_config_live_member_names() {
+  local config_file="${1:?config file required}"
+  local line=""
+  local member_name=""
+  local pane_id=""
+
+  [[ -f "$config_file" ]] || return 0
+  while IFS=$'\t' read -r member_name pane_id; do
+    [[ -n "$member_name" && -n "$pane_id" ]] || continue
+    if tmux_pane_has_agent_process "$pane_id"; then
+      printf '%s\n' "$member_name"
+    fi
+  done < <(team_config_member_name_pane_pairs "$config_file")
 }
 
 team_config_lead_session_id() {
@@ -1219,7 +1296,7 @@ team_config_has_live_pane() {
   [[ -f "$config_file" ]] || return 1
   while IFS= read -r pane_id; do
     [[ -n "$pane_id" ]] || continue
-    if tmux_cmd display-message -t "$pane_id" -p '' >/dev/null 2>&1; then
+    if tmux_pane_has_agent_process "$pane_id"; then
       return 0
     fi
   done < <(team_config_pane_ids "$config_file")
@@ -1262,7 +1339,7 @@ active_team_config_live() {
 }
 
 # Memory pressure never bypasses message-first agent-state handling.
-_memory_pressure_shutdown_standby_locked() {
+_memory_pressure_report_standby_hold_locked() {
   local _mem_pct="${1:-0}"
   local _standby_count=0
 
@@ -1277,7 +1354,7 @@ _memory_pressure_shutdown_standby_locked() {
     "$(date '+%Y-%m-%d %H:%M:%S')" "$_standby_count" "$_mem_pct" >> "$VIOLATION_LOG"
 }
 
-memory_pressure_shutdown_standby() {
+memory_pressure_report_standby_hold() {
   local _meminfo="${RUNTIME_MEMINFO_SOURCE:-/proc/meminfo}"
   local _mem_total _mem_avail _mem_used _mem_pct
 
@@ -1295,5 +1372,5 @@ memory_pressure_shutdown_standby() {
   # Only act at >80% memory usage
   (( _mem_pct > 80 )) || return 0
 
-  with_lock_file "${STANDBY_FILE}.lock" _memory_pressure_shutdown_standby_locked "$_mem_pct"
+  with_lock_file "${STANDBY_FILE}.lock" _memory_pressure_report_standby_hold_locked "$_mem_pct"
 }

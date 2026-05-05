@@ -7,12 +7,12 @@ LOAD-POLICY: on-demand reference only
 # Runtime Footprint And Continuity Reference
 
 ## Purpose
-Use this file only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or cost/latency claims.
-It is not always-loaded doctrine and does not authorize bypassing `CLAUDE.md`, owner skills, settings, hooks, or runtime evidence.
+Use this file only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims.
+Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skills, settings, hooks, or runtime evidence.
 
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
-- Use during governance design review, hook-density review, runtime-cost claims, continuity-file disputes, and context-cost optimization audits.
+- Use during governance design review, hook-density review, runtime-footprint claims, continuity-file disputes, and context-footprint audits.
 - Lane agents receive only packetized facts from this file when the assigned lane needs them.
 
 ## Hook-Last Footprint Review
@@ -26,54 +26,46 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 5. False-positive review: known legitimate actions that might be blocked are listed, exempted, downgraded to warning, or explicitly accepted as risk.
 6. Footprint review: record affected hook event, matcher count, script size trend, and whether the change adds latency to high-frequency tool paths.
 
-If any item is missing, do not expand blocking enforcement. Prefer owner-procedure repair, warning-only feedback, settings deny rules for hard security paths, or a narrower hook.
+If any item is missing, keep blocking enforcement unchanged. Use owner-procedure repair, warning-only feedback, settings deny rules for hard security paths, or a narrower hook.
 
 ## Current Local Hook Posture
 The current `.claude/settings.json` uses multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, SV, runtime-entry, dispatch sizing/proof, and compliance supervision.
 
-This is a high-footprint guardrail posture, not proof of runtime-cost optimization. Treat it as existing runtime guardrail debt unless measured evidence proves otherwise.
+Classify this as high-footprint guardrail debt until measured evidence proves runtime-footprint improvement.
 
 Rules:
-- Do not broaden a blocking hook without the full Hook-Last Footprint Review above.
-- Current active blocking-hook review records live in `.claude/hooks/MANIFEST.md` `Hook-Last Review Ledger`; absence of an itemized record is `UNVERIFIED`, not permission to broaden the hook.
-- Do not describe current hook density as optimized without measured latency, token, or runtime evidence.
-- If a legitimate lane action is blocked by a broad hook, classify that as a `[BLOCK-AS-DEFECT]` candidate and repair the narrowest owner surface before adding more hook logic.
+- Broaden a blocking hook only after the full Hook-Last Footprint Review above.
+- Treat missing itemized ledger records as `UNVERIFIED`.
+- Claim current hook density improvement only from measured latency, context, or runtime evidence.
+- When a broad hook blocks a legitimate lane action, classify `[BLOCK-AS-DEFECT]` and repair the narrowest owner surface before adding hook logic.
+- Reduce footprint by removing, merging, narrowing, or downgrading existing hook work before adding hook work.
 
-## Runtime Cost Claims
-Do not report runtime-cost, token, or latency optimization as verified unless measured on the relevant surface.
+## Runtime Footprint Claims
+Report runtime-footprint improvement as verified only when measured on the relevant surface.
 
 Claim classes:
-- `design-level`: structure should reduce context or coordination cost, but no runtime measurement was taken.
-- `measured`: evidence includes command/run identity, before/after sample, hook path or agent-team path, and measured token/latency/runtime effect.
+- `design-level`: structure should reduce context or coordination footprint, but no runtime measurement was taken.
+- `measured`: evidence includes command/run identity, before/after sample, hook path or agent-team path, and measured context/latency/runtime effect.
 - `UNVERIFIED`: evidence is absent, partial, or only inferred from line counts or file structure.
 
 Minimum measurement record:
 - surface: hook event, tool path, skill load, agent-team dispatch, or report/synthesis path
 - before/after or baseline/current sample
-- metric: latency, token/context size, hook count, script count, matcher count, or agent count
+- metric: latency, context size, hook count, script count, matcher count, or agent count
 - sample count or reason why only one sample is truthful
 - result classification: `measured`, `design-level`, or `UNVERIFIED`
 
 Line counts and file sizes may support diagnosis, but they are not runtime latency or token proof by themselves.
 
-## Continuity Snapshot Law
-`session-state.md` is a generated continuity snapshot and startup anchor.
+Enabled MCP server processes, including `codex mcp-server` and Playwright MCP, are runtime footprint surfaces when they affect a route. Treat their latency, process lifetime, and child-process cleanup claims as `UNVERIFIED` until measured on the active route.
 
-It is not:
-- authoritative runtime state
-- task state
-- mailbox state
-- cleanup state
-- acceptance evidence
-- a replacement for `procedure-state.json`, hook logs, task records, or agent handoffs
-
-Use it only to recover what the next session should inspect first. If it is stale, partial, or auto-captured without explicit handoff, report that limitation instead of treating it as settled state.
+## Continuity Truth Law
+Runtime continuity truth lives in `.runtime/procedure-state.json`, hook logs, task records, and agent handoffs.
+Do not create or rely on legacy continuity snapshot files as continuity surfaces.
 
 ## Scenario Matrix
 | Scenario | Required result |
 | --- | --- |
 | New blocking hook proposed | Reject unless non-hook owner gap, narrow matcher, recovery path, false-positive review, and footprint review are present. |
-| Hook density criticized | Separate official legality from local `[HOOK-LAST]` philosophy fit; measure or label runtime cost as `UNVERIFIED`. |
-| Cost optimization claimed | Classify as `measured`, `design-level`, or `UNVERIFIED`; do not upgrade design structure to measured result. |
-| `session-state.md` exists | Treat as generated continuity snapshot, not runtime/task state. |
-| `session-state.md` is stale | Preserve as startup clue only; reopen the owning runtime/procedure evidence before making a state claim. |
+| Hook density criticized | Separate official legality from local `[HOOK-LAST]` philosophy fit; measure or label runtime footprint as `UNVERIFIED`. |
+| Runtime footprint improvement claimed | Classify as `measured`, `design-level`, or `UNVERIFIED`; keep design structure at `design-level` until measured. |

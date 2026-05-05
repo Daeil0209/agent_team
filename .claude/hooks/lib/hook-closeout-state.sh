@@ -76,15 +76,8 @@ session_has_only_operational_activity() {
   ' "$ACTIVITY_LEDGER"
 }
 
-closeout_continuity_file_path() {
-  effective_continuity_file_path
-}
-
 current_closeout_continuity_state() {
-  local state_file=""
-
-  state_file="$(closeout_continuity_file_path)"
-  continuity_file_state "$state_file"
+  printf 'not-required'
 }
 
 closeout_validation_owner_state() {
@@ -109,7 +102,7 @@ closeout_not_needed_reason() {
 
 closeout_not_needed_reason_allowed() {
   case "${1-}" in
-    operational-only|no-acceptance-surface) return 0 ;;
+    operational-only|no-acceptance-surface|research-only) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -124,22 +117,11 @@ closeout_hold_reason() {
   get_closeout_state_field holdReason "$expected_session_id" ""
 }
 
-# Corroborating continuity evidence only: scan session-state.md for validator
-# PASS hints. This supports hold diagnostics but does not authorize teardown.
-detect_validator_pass_in_session_state() {
-  local session_state_file=""
-  session_state_file="$(closeout_continuity_file_path)"
-  [[ -f "$session_state_file" ]] || return 1
-  # Look for validator PASS pattern in session state handoff blocks
-  grep -qiE '(VERDICT|ACCEPTANCE|VALIDATION)[[:space:]]*:[[:space:]]*(PASS|passed)' "$session_state_file" 2>/dev/null
-}
-
 closeout_teardown_governance_ready() {
   local expected_session_id="${1-}"
   local validation_state=""
   local evidence_state=""
   local not_needed_reason=""
-  local pass_hint="no-validator-pass"
 
   validation_state="$(closeout_validation_owner_state "$expected_session_id")"
   evidence_state="$(closeout_acceptance_evidence_state "$expected_session_id")"
@@ -147,11 +129,8 @@ closeout_teardown_governance_ready() {
 
   if [[ "$validation_state" == "not-needed" || "$evidence_state" == "not-needed" ]]; then
     if ! closeout_not_needed_reason_allowed "$not_needed_reason"; then
-      if detect_validator_pass_in_session_state; then
-        pass_hint="validator-pass-present-use-evidence-present"
-      fi
-      printf '%s | BLOCK | closeout-cross-verify | not-needed without allowed reason | validation=%s | evidence=%s | reason=%s | hint=%s | session=%s\n' \
-        "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$validation_state" "$evidence_state" "${not_needed_reason:-missing}" "$pass_hint" "${expected_session_id:-unknown}" \
+      printf '%s | BLOCK | closeout-cross-verify | not-needed without allowed reason | validation=%s | evidence=%s | reason=%s | session=%s\n' \
+        "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$validation_state" "$evidence_state" "${not_needed_reason:-missing}" "${expected_session_id:-unknown}" \
         >> "${CLOSEOUT_AUDIT_LOG:-$HOME/.claude/logs/closeout-audit.log}" 2>/dev/null || true
       return 1
     fi
@@ -192,7 +171,7 @@ closeout_governance_complete() {
   closeout_clean_pre_sessionend_ready "$expected_session_id" || return 1
 
   continuity_state="$(closeout_continuity_state "$expected_session_id")"
-  [[ "$continuity_state" == "current" || "$continuity_state" == "captured-clean" || "$continuity_state" == "captured-with-warnings" ]]
+  [[ "$continuity_state" == "current" || "$continuity_state" == "captured-clean" || "$continuity_state" == "captured-with-warnings" || "$continuity_state" == "not-required" ]]
 }
 
 closeout_clean_pre_sessionend_ready() {
@@ -227,12 +206,12 @@ closeout_cleanup_eligibility() {
 
   continuity_state="$(closeout_continuity_state "$expected_session_id")"
 
-  if closeout_governance_complete "$expected_session_id" && [[ "$continuity_state" == "captured-clean" || "$continuity_state" == "captured-with-warnings" ]]; then
+  if closeout_governance_complete "$expected_session_id" && [[ "$continuity_state" == "captured-clean" || "$continuity_state" == "captured-with-warnings" || "$continuity_state" == "not-required" ]]; then
     printf 'ready'
     return 0
   fi
 
-  if closeout_hold_pre_stop_ready "$expected_session_id" && [[ "$continuity_state" == "captured-with-warnings" ]]; then
+  if closeout_hold_pre_stop_ready "$expected_session_id" && [[ "$continuity_state" == "captured-with-warnings" || "$continuity_state" == "not-required" ]]; then
     printf 'ready'
     return 0
   fi
@@ -394,7 +373,7 @@ const healthCronRemoved = process.env.HEALTH_CRON_REMOVED_VALUE === "true";
 const runtimeRemoved = process.env.RUNTIME_REMOVED_VALUE === "true";
 const sensedContinuityState = process.env.CONTINUITY_STATE_VALUE || "unknown";
 const previousContinuityState = previous.continuityState || "";
-const stickyContinuityState = ["captured-clean", "captured-with-warnings"].includes(previousContinuityState)
+const stickyContinuityState = ["captured-clean", "captured-with-warnings", "not-required"].includes(previousContinuityState)
   ? previousContinuityState
   : "";
 const continuityState = updates.continuityState || stickyContinuityState || sensedContinuityState || "unknown";
@@ -426,7 +405,7 @@ const governanceComplete =
   runtimeRemoved &&
   teardownGovernanceReady &&
   ["completed", "not-needed"].includes(supervisorReviewState) &&
-  ["current", "captured-clean", "captured-with-warnings"].includes(continuityState);
+  ["current", "captured-clean", "captured-with-warnings", "not-required"].includes(continuityState);
 
 const unresolvedGovernance =
   unjustifiedNotNeeded ||
@@ -442,8 +421,8 @@ const holdPreStopReady =
   Boolean(holdReason);
 
 const cleanupEligibility =
-  (governanceComplete && ["captured-clean", "captured-with-warnings"].includes(continuityState))
-    || (holdPreStopReady && continuityState === "captured-with-warnings")
+  (governanceComplete && ["captured-clean", "captured-with-warnings", "not-required"].includes(continuityState))
+    || (holdPreStopReady && ["captured-with-warnings", "not-required"].includes(continuityState))
     ? "ready"
     : "blocked";
 

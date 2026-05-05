@@ -104,6 +104,13 @@ is_retired_skill_reference_md_path() {
   [[ "$candidate_path" =~ /[.]claude/skills/[^/]+/reference[.]md$ ]]
 }
 
+is_governance_reference_path() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+
+  [[ "$candidate_path" == */.claude/reference/* || "$candidate_path" == */.claude/skills/*/references/* ]]
+}
+
 mutation_payload_exceeds_compact_surface_budget() {
   local char_count="${1-0}"
   local line_count="${2-0}"
@@ -150,8 +157,9 @@ allowed_package_or_build_command() {
 # Destructive sub-command pattern for compound validation.
 _DESTRUCTIVE_SUBCMD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
 _MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)'
+GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
 
-# Split cmd on &&/||/; and validate each sub-command denylist-first.
+# Split cmd on shell command separators and validate each sub-command denylist-first.
 split_compound_command() {
   local cmd="${1-}"
 
@@ -167,6 +175,12 @@ while (i < cmd.length) {
     if (c === "&" && n === "&") { parts.push(cur); cur = ""; i += 2; continue; }
     if (c === "|" && n === "|") { parts.push(cur); cur = ""; i += 2; continue; }
     if (c === ";") { parts.push(cur); cur = ""; i += 1; continue; }
+    if (c === "\r" || c === "\n") {
+      parts.push(cur);
+      cur = "";
+      i += (c === "\r" && n === "\n") ? 2 : 1;
+      continue;
+    }
     if (c === "$" && n === "(") { pd++; cur += c + n; i += 2; continue; }
   } else if (!inS && !inD && !bt && pd > 0 && c === ")") { pd--; cur += c; i++; continue; }
   if (!inD && !bt && pd === 0 && c === "'") inS = !inS;
@@ -236,7 +250,7 @@ command_is_narrow_nonrestricted_claude_file_rm() {
     fi
     [[ -n "$target" ]] || return 1
     printf '%s' "$target" | grep -qE '\.claude/' || return 1
-    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|hooks/|rules/)' && return 1
+    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|hooks/|rules/|reference/|skills/[^/]+/references/)' && return 1
   done < <(printf '%s\n' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
   return 0
 }
@@ -331,51 +345,13 @@ subcommand_targets_repo_test_surface_only() {
   [[ -n "$subcmd" ]] || return 1
 
   project_root="$(resolve_project_root)"
-  COMMAND_TEXT="$subcmd" PROJECT_ROOT="$project_root" node <<'NODE'
+  COMMAND_TEXT="$subcmd" PROJECT_ROOT="$project_root" HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" node <<'NODE'
 const path = require("path");
 
 const command = String(process.env.COMMAND_TEXT || "");
 const root = String(process.env.PROJECT_ROOT || process.cwd());
 
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-
-  for (let index = 0; index < text.length; index += 1) {
-    const ch = text[index];
-    if (quote) {
-      if (ch === quote) {
-        quote = "";
-      } else if (ch === "\\" && quote === '"' && index + 1 < text.length) {
-        current += text[++index];
-      } else {
-        current += ch;
-      }
-      continue;
-    }
-
-    if (ch === '"' || ch === "'") {
-      quote = ch;
-      continue;
-    }
-
-    if (/\s/.test(ch)) {
-      if (current) {
-        words.push(current);
-        current = "";
-      }
-      continue;
-    }
-
-    current += ch;
-  }
-
-  if (quote) return null;
-  if (current) words.push(current);
-  return words;
-}
-
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 const words = tokenize(command);
 if (!words || words.length === 0) process.exit(1);
 
@@ -510,7 +486,7 @@ command_targets_disallowed_generated_output_root() {
   [[ -n "$cmd" ]] || return 1
 
   project_root="$(resolve_project_root)"
-  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node <<'NODE'
+  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" node <<'NODE'
 const path = require("path");
 
 const command = String(process.env.COMMAND_TEXT || "");
@@ -519,36 +495,7 @@ if (!/(^|[;\s])(mkdir|touch|cp|mv|install|tee)([;\s]|$)|>{1,2}/.test(command)) {
   process.exit(1);
 }
 
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-  for (let index = 0; index < text.length; index += 1) {
-    const ch = text[index];
-    if (quote) {
-      if (ch === quote) quote = "";
-      else if (ch === "\\" && quote === '"' && index + 1 < text.length) current += text[++index];
-      else current += ch;
-      continue;
-    }
-    if (ch === '"' || ch === "'") {
-      quote = ch;
-      continue;
-    }
-    if (/\s/.test(ch)) {
-      if (current) {
-        words.push(current);
-        current = "";
-      }
-      continue;
-    }
-    current += ch;
-  }
-  if (quote) process.exit(1);
-  if (current) words.push(current);
-  return words;
-}
-
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 function isDisallowed(candidate) {
   if (!candidate || candidate.startsWith("-")) return false;
   if (/[$`*?\[\]{}<>|;&\n\r]/.test(candidate)) return false;
@@ -573,11 +520,14 @@ NODE
 
 user_approved_delete_subcommand() {
   local cmd="${1-}"
+  local sanitized_cmd=""
   [[ -n "$cmd" && -s "$USER_APPROVED_DELETE_ROOTS_FILE" ]] || return 1
+  sanitized_cmd="$(strip_read_only_null_redirections "$cmd")"
 
-  COMMAND_TEXT="$cmd" \
+  COMMAND_TEXT="$sanitized_cmd" \
   APPROVED_ROOTS_FILE="$USER_APPROVED_DELETE_ROOTS_FILE" \
   WORKSPACE_ROOT="$(resolve_project_root)" \
+  HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
   node <<'NODE'
 const fs = require("fs");
 const path = require("path");
@@ -586,36 +536,7 @@ const command = String(process.env.COMMAND_TEXT || "");
 const rootsFile = String(process.env.APPROVED_ROOTS_FILE || "");
 const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
 
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-  for (let index = 0; index < text.length; index += 1) {
-    const ch = text[index];
-    if (quote) {
-      if (ch === quote) quote = "";
-      else if (ch === "\\" && quote === '"' && index + 1 < text.length) current += text[++index];
-      else current += ch;
-      continue;
-    }
-    if (ch === '"' || ch === "'") {
-      quote = ch;
-      continue;
-    }
-    if (/\s/.test(ch)) {
-      if (current) {
-        words.push(current);
-        current = "";
-      }
-      continue;
-    }
-    current += ch;
-  }
-  if (quote) return null;
-  if (current) words.push(current);
-  return words;
-}
-
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 if (!command.trim() || /[|;&<>`$*?[\]{}]/.test(command)) process.exit(1);
 const words = tokenize(command);
 if (!words || words.length < 3 || words[0] !== "rm") process.exit(1);
@@ -753,8 +674,8 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
 }
 
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
-# GIT_READONLY_PATTERN, S02_IMPLEMENTATION_PATTERN, and LEAD_OPERATIONAL_ALLOWLIST
-# are set in the Bash case block before these wrappers are called.
+# Shared patterns are defined once before these wrappers.
+# S02_IMPLEMENTATION_PATTERN and LEAD_OPERATIONAL_ALLOWLIST remain case-local because they depend on sender context.
 allowed_git_readonly_subcmd() {
   local sanitized
   sanitized="$(strip_read_only_null_redirections "$1")"
@@ -778,51 +699,13 @@ worker_impl_fs_paths_within_workspace() {
   [[ -n "$subcmd" ]] || return 1
 
   workspace_root="$(resolve_project_root)"
-  COMMAND_TEXT="$subcmd" WORKSPACE_ROOT="$workspace_root" node <<'NODE'
+  COMMAND_TEXT="$subcmd" WORKSPACE_ROOT="$workspace_root" HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" node <<'NODE'
 const path = require("path");
 
 const command = String(process.env.COMMAND_TEXT || "").trim();
 const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
 
-function tokenize(text) {
-  const words = [];
-  let current = "";
-  let quote = "";
-
-  for (let index = 0; index < text.length; index += 1) {
-    const ch = text[index];
-    if (quote) {
-      if (ch === quote) {
-        quote = "";
-      } else if (ch === "\\" && quote === '"' && index + 1 < text.length) {
-        current += text[++index];
-      } else {
-        current += ch;
-      }
-      continue;
-    }
-
-    if (ch === '"' || ch === "'") {
-      quote = ch;
-      continue;
-    }
-
-    if (/\s/.test(ch)) {
-      if (current) {
-        words.push(current);
-        current = "";
-      }
-      continue;
-    }
-
-    current += ch;
-  }
-
-  if (quote) return null;
-  if (current) words.push(current);
-  return words;
-}
-
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 function insideWorkspace(candidate) {
   if (!candidate) return false;
   if (/^[~$]/.test(candidate)) return false;
@@ -1012,22 +895,22 @@ fi
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0
 	      fi
-	      if is_disallowed_generated_output_path "$CANONICAL_PATH"; then
-	        emit_deny "Task-created output must use repository-root projects/<project-folder>/...; outputs/, backups/, and .playwright-mcp/ are not approved output roots."
-	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "disallowed-generated-output-root" || true
-	        exit 0
-	      fi
+		      if is_disallowed_generated_output_path "$CANONICAL_PATH"; then
+		        emit_deny "Task-created output must use repository-root projects/<project-folder>/...; outputs/, backups/, and .playwright-mcp/ are not approved output roots."
+		        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "disallowed-generated-output-root" || true
+		        exit 0
+		      fi
 	      if is_retired_skill_reference_md_path "$CANONICAL_PATH"; then
 	        emit_deny "Retired intermediate skill reference.md must not be created or edited. Use the owning skill's references/*.md files and direct SKILL.md reference map instead."
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "retired-skill-reference-md" || true
 	        exit 0
 	      fi
-	      if [[ "$CANONICAL_PATH" == */references/* || "$CANONICAL_PATH" == */.claude/reference/* ]]; then
+		      if is_governance_reference_path "$CANONICAL_PATH"; then
 	        # Wholesale rewrite tools (Write/NotebookEdit) are never allowed on references/ —
 	        # Update/Upgrade Sequence requires structured Edit/Update/MultiEdit so diff is reviewable.
         case "$TOOL_NAME" in
           Write|NotebookEdit)
-            emit_deny "Reference materials under ./references or .claude/reference must not be Write/NotebookEdit (wholesale rewrite). Use structured Edit/Update/MultiEdit only; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+		            emit_deny "Governance reference materials must not be Write/NotebookEdit (wholesale rewrite). Use structured Edit/Update/MultiEdit only; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
             log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
             exit 0
             ;;
@@ -1035,11 +918,11 @@ fi
         # Structured edit path: only positively-identified lead session is allowed (warn-allow).
         # Empty SESSION_ID, worker, or any non-runtime-owner sender → fail-secure deny.
         if [[ -z "$SESSION_ID" ]] || ! session_is_runtime_owner "$SESSION_ID" 2>/dev/null; then
-          emit_deny "Reference materials under ./references or .claude/reference are read-only outside positively-identified lead session governance edits. Lead session must satisfy Update/Upgrade Sequence + SV-PLAN/SV-RESULT before structured Edit/Update/MultiEdit. Indeterminate or non-lead sender → deny."
+		          emit_deny "Governance reference materials are read-only outside positively-identified lead session governance edits. Lead session must satisfy Update/Upgrade Sequence + SV-PLAN/SV-RESULT before structured Edit/Update/MultiEdit. Indeterminate or non-lead sender -> deny."
           log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-non-lead-or-indeterminate" || true
           exit 0
         fi
-        emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
+	        emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
         log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-lead-edit-allowed" || true
         # fall through to allow lead governance maintenance
       fi
@@ -1078,8 +961,7 @@ fi
       fi
 
     # Compact-surface budget applies only to workspace governance surfaces.
-      if [[ "$CANONICAL_PATH" != */.claude/session-state.md ]] \
-        && ! procedure_state_target_exact "$CANONICAL_PATH" \
+      if ! procedure_state_target_exact "$CANONICAL_PATH" \
         && is_governance_surface_path "$CANONICAL_PATH" \
         && mutation_payload_exceeds_compact_surface_budget "$MUTATION_CONTENT_CHARS" "$MUTATION_CONTENT_LINES"; then
         emit_warning "Large governance mutation detected. Prefer bounded Edit/Update/MultiEdit chunks so intent remains reviewable; this is advisory unless the command also hits a hard safety boundary."
@@ -1152,8 +1034,7 @@ fi
     fi
     SANITIZED_COMMAND="$(strip_read_only_null_redirections "$CLEAN_COMMAND")"
 
-    GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
-    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
+	    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_git_readonly_subcmd; then
         exit 0
       fi
@@ -1181,16 +1062,15 @@ fi
       exit 0
     fi
     if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
-      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt explicitly names the approved workspace root and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests must use lifecycle control, not filesystem deletion."
+      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt names the workspace child root or uniquely resolves to the active team project root, and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests use lifecycle control, not filesystem deletion."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
       exit 0
     fi
     if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])(rm|rmdir)([[:space:]]|$)'; then
-      emit_deny "File deletion requires explicit approval or a narrow approved cleanup path. Use the approved cleanup route, structured review, or ask for destructive approval before deleting."
+      emit_deny "Delete command is not approved for this user turn. Use structured edits for file changes, an approved bounded cleanup path, or explicit user approval for the exact delete target."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-delete" || true
       exit 0
     fi
-
     # Agent diagnostic/implementation commands are allowed only after destructive checks.
     S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'
     if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
@@ -1289,9 +1169,9 @@ fi
       exit 0
     fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eq 'references/|[.]claude/reference/'; then
+	    if printf '%s' "$SANITIZED_COMMAND" | grep -Eq '[.]claude/(reference/|skills/[^[:space:];|&]+/references/)'; then
       if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(cp|mv|rm|install|tee)([[:space:]]|$)|sed[[:space:]]+-i|perl[[:space:]]+-i'; then
-        emit_deny "Reference materials under ./references or .claude/reference must not be modified in place."
+	        emit_deny "Governance reference materials must not be modified in place."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "references-shell-mutation" || true
         exit 0
       fi

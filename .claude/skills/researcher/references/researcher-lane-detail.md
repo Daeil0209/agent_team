@@ -18,7 +18,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only. It does not replace an assignment-grade researcher packet when new bounded evidence work is assigned.
 - If phase context and assignment-grade work arrive in the same execution segment, consume the embedded phase context inside the assignment packet and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge it with `control-ack` only when it materially affects active work, standby readiness, or shutdown path.
+- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Researcher Packet Detail
 - Consequential researcher packets should keep these fields explicit:
@@ -88,7 +88,7 @@ Upward assertion must name:
 - Use `.claude/skills/benchmark-simulation/references/observation-protocol.md` when per-modality discipline is needed.
 
 ## Benchmark-Enhanced Search Fields
-Use these fields when benchmark perspective is active, or when `lookup` has widened into `learn` or `investigate` because the evidence surface is broader than direct fact retrieval. Packet mode fields are context only; benchmark evidence discipline is triggered by the decision target, evidence burden, and source-family need.
+Use these fields when benchmark perspective is active, or when `lookup` has widened into `learn` or `investigate` because the evidence surface is broader than direct fact retrieval. Benchmark evidence discipline is triggered by the decision target, evidence burden, and source-family need.
 - `QUERY-LEDGER`: record query, operator, source family, high-value result, miss or failure mode, and next reformulation.
 - `REFORMULATION-OPERATORS`: allowed operators are `broaden`, `narrow`, `synonym/paraphrase`, `entity-shift`, `source-type-shift`, `time-shift`, `anti-pattern-search`, and `citation-snowball`.
 - `SOURCE-FAMILY-TARGETS`: name the intended mix across official or standard sources, primary research, systematic reviews, benchmark or evaluation corpora, practitioner case studies, domain authorities, and lower-tier discovery sources.
@@ -108,5 +108,7 @@ Severity should follow the evidence class. Do not promote static or theoretical 
 ## Researcher Handoff Detail
 - For request-bound document work, state what downstream drafting can start immediately from current evidence, what remains uncertain, and what extra research is optional versus blocking.
 - If packet formatting instructions suppress the mandatory evidence contract, use `hold|blocker` and name the packet-format conflict in `OPEN-SURFACES`.
+- For artifact, governance, program, report, or document critique, include the target intent that made the evidence relevant.
+- If the handoff proposes removal, reduction, simplification, or optimization, satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Keep the handoff teammate-efficient: concrete evidence anchors, decision-ready conclusions, smallest useful unblock step.
 - For benchmark-perspective work, include `COMPARISON-FRAME`, `QUERY-LEDGER-SUMMARY`, `SOURCE-FAMILY-COVERAGE`, `TRIANGULATION-STATUS`, `STOPPING-RULE`, `UNVERIFIED-CLAIMS`, and `DOWNSTREAM-BENCHMARK-NEEDS`.

@@ -8,10 +8,10 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 
 ## Boot Window And Startup Rules
 - `Boot Sequence` is first for lead-session boot; its team-agent runtime branch is only for explicit runtime readiness, recovery, or entry gating.
-- Runtime-entry `TeamCreate`, team-scoped agent launch, and assignment-grade reuse are `task-execution` moves after `work-planning` and `SV-PLAN`. Standalone `Agent` is not team-runtime dispatch.
+- Runtime-entry `TeamCreate`, team-scoped agent launch, and assignment-grade reuse are `task-execution` moves after `work-planning`. Standalone `Agent` is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to decide runtime entry.
 - No production fan-out before boot closes.
-- Prefer current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines. Home-runtime continuity is fallback only. Per CLAUDE.md `## Communication`, internal procedure scaffolding stays in internal context and is not mirrored to a continuity file by habit; treat any pre-existing workspace-root `.claude/session-state.md` as advisory snapshot only.
+- Prefer current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs. Do not use legacy continuity snapshot files as continuity truth.
 - Fresh-task isolation stays active during startup. Inherited continuity may reveal blockers or residue, but it does not reopen prior goals by habit.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
 
@@ -41,11 +41,10 @@ Failure to enter `session-boot` when the condition holds is a procedure violatio
 - `ACTIVE`: agent-start evidence exists and lifecycle is not resolved.
 - `STANDBY`: governing lane approved preserved wait state.
 - `SHUTDOWN-PENDING`: graceful shutdown requested, awaiting acknowledgment or timeout.
-- `FORCE-STOPPED`: explicit forced termination.
 - `HOLD-FOR-VALIDATION`: agent finished lane work and is reserved pending validator outcome.
 
 Canonical rule:
-- `dispatch-ack` is receipt only.
+- `dispatch-ack` is receipt only, not start/progress/work evidence.
 - `dispatch pending` is not `agent started`.
 - `agent started` needs agent-side activity, progress, or other started-work evidence.
 
@@ -65,7 +64,7 @@ After completion-grade output, governing control must pick one:
 
 Rules:
 - standby requires explicit approval; it is not inferred from idleness
-- shutdown is graceful first, force-stop only as fallback
+- shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence
 - hold-for-validation reserves the agent without new assignment until verdict resolves
 
 ## Message-First Lifecycle Rule
@@ -77,22 +76,22 @@ Rules:
 - Teammate population changes only on creation and confirmed shutdown/removal.
 - Closeout exception: session teardown may use the narrow closeout shutdown path from `session-closeout`.
 
-## Cost Rule
-- New dispatch is expensive.
-- Reuse or standby is a cost preference only; it is valid only when ownership fit and context fit remain truthful.
+## Reuse Rule
+- New dispatch rebuilds context.
+- Reuse or standby is valid only when ownership fit and context fit remain truthful.
 
 ## Health-Check Standard
 - Cron-backed health monitoring runs only when a tracked health-check cron is actually active.
 - Team-agent runtime requires tracked health monitoring before team-scoped agent launch when hook policy enforces it.
 - Team existence alone is not team-scoped launch readiness when health monitoring is required by hook policy.
-- Standalone `Agent` calls are synchronous host calls outside team-agent runtime; they do not create team mailbox state, dispatch-ack debt, or health-cron duty and must not replace configured lane dispatch.
+- Standalone `Agent` calls are synchronous host calls outside team-agent runtime; they do not create live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, or health-cron duty. They may support fallback evidence only when the route truth allows non-runtime evidence.
 - Literal cadence and stale thresholds belong to `.claude/hooks/lib/hook-policy.sh`; do not restate numeric values here.
 - Direct oversight remains primary even without cron-backed monitoring.
 - Team existence and team activity are separate questions.
 - Monitor rotation is not session closeout.
 
 ## Stale-Response Rule
-- High-confidence stale -> investigate quickly; replace or force-stop only with evidence.
+- High-confidence stale -> investigate quickly; replacement requires shutdown evidence or an explicit recovery freeze.
 - Low-confidence stale during long-running work -> observe, extend if justified, then escalate.
 - Repeated stale/error loops require reroute, resize, replacement, or re-plan.
 - Observational stale signals do not by themselves prove tool-phase hang, non-working state, or team-infrastructure defect.
@@ -100,10 +99,11 @@ Rules:
 ## Runtime-Pressure Rule
 - Treat non-current `parent-session-id` agents as orphan residue, not live production agents.
 - Hard runtime pressure or unresolved orphan residue blocks new fan-out.
-- Orphan cleanup does not create closeout authority or bypass message-first lifecycle decisions for the current live session.
+- Routine orphan scans report residue. Explicit recovery owns cleanup.
+- Orphan recovery does not create closeout authority or bypass message-first lifecycle decisions for the current live session.
 
 ## Procedure-State Schema
-Canonical structured runtime truth lives in workspace-root `.runtime/procedure-state.json`. Internal procedure scaffolding stays in internal context for the current cycle (per CLAUDE.md `## Communication`); a workspace-root `.claude/session-state.md` snapshot, when present, is advisory only.
+Canonical structured runtime truth lives in workspace-root `.runtime/procedure-state.json`. Internal procedure scaffolding stays in internal context for the current cycle. Legacy continuity snapshot files are not continuity surfaces.
 
 Minimum fields that must stay semantically stable:
 - `workspaceRoot`
@@ -134,7 +134,7 @@ Semantic ownership split:
 - hooks enforce and record it without becoming alternate doctrine owners
 
 Canonical classes:
-- lifecycle state: `ACTIVE`, `STANDBY`, `SHUTDOWN-PENDING`, `FORCE-STOPPED`, `HOLD-FOR-VALIDATION`
+- lifecycle state: `ACTIVE`, `STANDBY`, `SHUTDOWN-PENDING`, `HOLD-FOR-VALIDATION`
 - lifecycle control decision: `reuse`, `standby`, `shutdown`, `hold-for-validation`
 - agent lifecycle request: `standby`, `shutdown`, `hold-for-validation`
 - runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-report-missing`, `working-blocked`, `not-working-awaiting-lifecycle`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
@@ -144,12 +144,15 @@ Canonical classes:
 Canonical evidence mapping:
 - `TeamCreate` success -> current-session team existence proof
 - live config backed by current-session panes -> corroborating existence proof
+- live pane proof must use the active team runtime's pane/session identity, not the default tmux server by habit
+- default tmux-server absence does not prove a named team runtime is dead
+- inbox growth, send success, config residue, and hook-emitted idle notices are not agent-originated progress
 - `dispatch-ack` -> assignment receipt only
 - agent `status`, `handoff`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
 - current-session agent tool activity -> corroborating activity evidence
 - `permission_request` -> active-but-permission-blocked evidence
 - completion-grade output + `REQUESTED-LIFECYCLE` -> lifecycle obligation evidence
-- explicit lifecycle-control message -> authoritative lead decision
+- explicit lifecycle-control message -> authoritative lead decision for non-terminating lifecycle edges; shutdown intent becomes authoritative only through structured `shutdown_request`
 
 ## Hook-Owned Ledger Surfaces
 These are hook-owned mirrors, not alternate semantic owners:
@@ -183,26 +186,33 @@ Downstream-phase prep examples include tester scenario design plus test-infrastr
 
 Rules:
 - Phase boundaries gate execution, not prep.
-- Agents without a defined upcoming role MUST be released through `lifecycle-control` shutdown when their state is reconstructable from preserved artifacts.
-- Preserving an agent just in case without explicit cost basis is a `team-runtime hygiene defect`.
+- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts.
+- Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.
 - Waiting for the user to identify team-composition defects is itself a defect. This includes parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, and agent-charter mismatch.
 
 ## Stall-Without-Progress Rule
-When an agent has sent `dispatch-ack` but no further signal (`status`, `handoff`, `completion`, exact `hold|blocker`, `scope-pressure`, or `idle_notification`) arrives for materially longer than the assigned work would normally stay silent, treat it as `STALL-WITHOUT-PROGRESS`, not deep work by default.
+`assignment-sent-no-ack` is dispatch pending only: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
+`dispatch-ack` with no same-segment agent-start evidence is `dispatch-ack-no-start`: trigger same-assignment execution follow-up immediately in the same monitoring turn.
 
-Operational thresholds:
-- bounded task: dispatch-ack plus 30 minutes of silence
-- multi-track task: dispatch-ack plus 60 minutes of silence
-- re-check window after a status nudge: 5 minutes
-- longer thresholds require explicit basis recorded in planning
+Parallel dispatch is active monitoring, not passive waiting.
+The group cannot be reported as running while any intended target is `assignment-sent-no-ack` or `dispatch-ack-no-start`.
+Recover the affected target and keep unaffected independent targets moving.
+
+After agent-start evidence exists, choose the shortest task-specific re-check interval.
+For quick checks, use same-turn or minute-scale follow-up.
+The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not default waits.
+Longer waits require an explicit planning basis.
 
 Corrective protocol:
 1. Send one bounded status nudge through `lifecycle-control` or explicit status-request `SendMessage`.
-2. If no response arrives within the re-check window, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send `lifecycle-control` shutdown to release runtime.
-3. Report the stall and replacement/shutdown decision in the next user-facing surface as `next action`, not as silent in-flight work.
+2. Do not stack more assignment/correction packets into a silent inbox.
+3. If no response arrives within the re-check window, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+4. Report the stall and replacement/shutdown decision in the next user-facing surface as `next action`, not as silent in-flight work.
 
 Waiting for the user to identify agent stalls is itself a monitoring defect. The thresholds are guidelines; the mandate is proactive detect-and-route-around.
+Non-destructive runtime recovery is team-lead owned.
+Do not ask the user to choose among routine nudge, replacement, redistribution, or shutdown of stalled teammates.
 
 ## Agent Lifecycle Rules
 - Prefer shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.

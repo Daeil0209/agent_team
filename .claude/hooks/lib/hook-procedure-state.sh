@@ -43,134 +43,10 @@ procedure_state_edit_target_allowed() {
   procedure_state_target_exact "$target_paths"
 }
 
-project_continuity_target_exact() {
-  local target_paths="${1-}"
-  local expected_path=""
-  local target_path=""
-  local canonical_target=""
-  local saw_target=1
-
-  [[ -n "$target_paths" ]] || return 1
-
-  expected_path="$(realpath -m "$PROJECT_CONTINUITY_FILE" 2>/dev/null || printf '%s' "$PROJECT_CONTINUITY_FILE")"
-
-  while IFS= read -r target_path; do
-    [[ -n "$target_path" ]] || continue
-    saw_target=0
-    if [[ "$target_path" = /* ]]; then
-      canonical_target="$(realpath -m "$target_path" 2>/dev/null || printf '%s' "$target_path")"
-    else
-      canonical_target="$(realpath -m "$(resolve_project_root)/$target_path" 2>/dev/null || printf '%s/%s' "$(resolve_project_root)" "$target_path")"
-    fi
-    [[ "$canonical_target" == "$expected_path" ]] || return 1
-  done <<< "$target_paths"
-
-  return "$saw_target"
-}
-
-project_continuity_edit_target_allowed() {
-  local tool_name="${1-}"
-  local target_paths="${2-}"
-
-  case "$tool_name" in
-    Edit|Update|MultiEdit|Write) ;;
-    *) return 1 ;;
-  esac
-
-  project_continuity_target_exact "$target_paths"
-}
-
-project_continuity_file_path() {
-  printf '%s' "$PROJECT_CONTINUITY_FILE"
-}
-
-global_continuity_file_path() {
-  printf '%s' "$GLOBAL_CONTINUITY_FILE"
-}
-
 ensure_procedure_state_surfaces() {
   mkdir -p "$(dirname "$PROCEDURE_STATE_FILE")"
-  mkdir -p "$(dirname "$PROJECT_CONTINUITY_FILE")"
-  mkdir -p "$(dirname "$GLOBAL_CONTINUITY_FILE")"
 }
 
-continuity_file_state() {
-  local target_file="${1-}"
-  local state_age=0
-
-  [[ -n "$target_file" ]] || {
-    printf 'missing'
-    return 0
-  }
-
-  if [[ ! -f "$target_file" ]]; then
-    printf 'missing'
-    return 0
-  fi
-
-  state_age=$(( $(date +%s) - $(stat -c %Y "$target_file" 2>/dev/null || echo 0) ))
-  if [[ "$state_age" -gt "$SESSION_STATE_STALE_THRESHOLD" ]]; then
-    printf 'stale'
-  else
-    printf 'current'
-  fi
-}
-
-continuity_mirror_status() {
-  if [[ -f "$PROJECT_CONTINUITY_FILE" && -f "$GLOBAL_CONTINUITY_FILE" ]]; then
-    if cmp -s "$PROJECT_CONTINUITY_FILE" "$GLOBAL_CONTINUITY_FILE" 2>/dev/null; then
-      printf 'mirrored'
-    else
-      printf 'diverged'
-    fi
-    return 0
-  fi
-
-  if [[ -f "$PROJECT_CONTINUITY_FILE" ]]; then
-    printf 'project-only'
-    return 0
-  fi
-
-  if [[ -f "$GLOBAL_CONTINUITY_FILE" ]]; then
-    printf 'global-only'
-    return 0
-  fi
-
-  printf 'missing'
-}
-
-effective_continuity_file_path() {
-  if [[ -f "$PROJECT_CONTINUITY_FILE" ]]; then
-    printf '%s' "$PROJECT_CONTINUITY_FILE"
-  elif [[ -f "$GLOBAL_CONTINUITY_FILE" ]]; then
-    printf '%s' "$GLOBAL_CONTINUITY_FILE"
-  else
-    printf '%s' "$PROJECT_CONTINUITY_FILE"
-  fi
-}
-
-seed_project_continuity_from_global_if_missing() {
-  ensure_procedure_state_surfaces
-
-  if [[ -f "$PROJECT_CONTINUITY_FILE" ]]; then
-    printf 'project-present'
-    return 0
-  fi
-
-  if [[ -f "$GLOBAL_CONTINUITY_FILE" ]]; then
-    cp "$GLOBAL_CONTINUITY_FILE" "$PROJECT_CONTINUITY_FILE"
-    printf 'seeded-from-global'
-    return 0
-  fi
-
-  printf 'missing-both'
-}
-
-mirror_project_continuity_to_global() {
-  ensure_procedure_state_surfaces
-  [[ -f "$PROJECT_CONTINUITY_FILE" ]] || return 0
-  cp "$PROJECT_CONTINUITY_FILE" "$GLOBAL_CONTINUITY_FILE"
-}
 
 get_procedure_state_field() {
   local field="${1:?field required}"
@@ -245,8 +121,6 @@ _update_procedure_state_fields_impl() {
   WORKSPACE_ROOT="$workspace_root" \
   RUNTIME_SESSION_ID="$runtime_session_id" \
   PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" \
-  PROJECT_CONTINUITY_FILE="$PROJECT_CONTINUITY_FILE" \
-  GLOBAL_CONTINUITY_FILE="$GLOBAL_CONTINUITY_FILE" \
   PROCEDURE_STATE_MIGRATION_PHASE="$PROCEDURE_STATE_MIGRATION_PHASE" \
   node <<'NODE'
 const fs = require("fs");
@@ -277,8 +151,8 @@ const next = {
   runtimeSessionId: process.env.RUNTIME_SESSION_ID || "",
   procedureAuthority: "workspace-local",
   migrationPhase: process.env.PROCEDURE_STATE_MIGRATION_PHASE || previous.migrationPhase || "",
-  projectContinuityFile: process.env.PROJECT_CONTINUITY_FILE || previous.projectContinuityFile || "",
-  globalContinuityFile: process.env.GLOBAL_CONTINUITY_FILE || previous.globalContinuityFile || "",
+  projectContinuityFile: "",
+  globalContinuityFile: "",
   lastUpdated: new Date().toISOString(),
   ...updates
 };
@@ -292,10 +166,10 @@ refresh_procedure_state_sensors() {
 
   update_procedure_state_fields \
     "$session_id" \
-    projectContinuityState "$(continuity_file_state "$PROJECT_CONTINUITY_FILE")" \
-    globalContinuityState "$(continuity_file_state "$GLOBAL_CONTINUITY_FILE")" \
-    continuityMirrorStatus "$(continuity_mirror_status)" \
-    continuityReadPath "$(effective_continuity_file_path)"
+    projectContinuityState "not-required" \
+    globalContinuityState "not-required" \
+    continuityMirrorStatus "not-required" \
+    continuityReadPath ""
 }
 
 record_permission_provenance() {

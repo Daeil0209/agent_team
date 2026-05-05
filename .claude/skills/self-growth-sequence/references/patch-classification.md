@@ -9,4 +9,4 @@ auto-inject: false
 - `config-owner standardization patch`: keeps one literal owner for a configurable value and converts all other surfaces into references
 - `skill-up patch`: hardens, expands, or repairs an existing reusable skill under the consuming lane's ownership model
 - `new-skill patch`: introduces a new reusable skill only after category, reuse need, and owner fit are proven
-- `follow-on optimization patch`: removes avoidable cost, runtime burden, or redundancy only after the stronger quality bar is already secured
+- `follow-on optimization patch`: removes avoidable redundancy or runtime burden only after the stronger quality bar is already secured

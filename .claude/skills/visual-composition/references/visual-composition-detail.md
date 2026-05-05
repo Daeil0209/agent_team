@@ -34,10 +34,10 @@ Role-appropriate visual types for research reports, technology surveys, patent l
 - **competitive positioning map** — two-axis scatter placing entities by relevant dimensions; justified when comparative positioning is a primary reader judgment
 - **technology taxonomy diagram** — hierarchical/network diagram of classification relationships; must pass legibility floor when exceeding 12 nodes
 - **comparison matrix table** — feature/criterion comparison; justified when 3+ entities on 4+ dimensions
-**Research Diagram Legibility Floor**: diagrams with 12+ nodes must pass: minimum readable label size at target viewing distance, no overlapping node labels, edge crossings minimized. Failure = `diagram_text_unreadable`; blocks PASS until redesigned or split.
+**Research Diagram Legibility Floor**: diagrams with 12+ nodes must pass: minimum readable label size at target viewing distance, no overlapping node labels, edge crossings minimized. Failure = `diagram_text_unreadable`; blocks visual-ready handoff until redesigned or split.
 **Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy. `confirmed` stays explicit; `conflicting` may render as **contested**; `inferred`/`unconfirmed` may group as **unverified** only when legend maps back to canonical statuses. Use shading, icon, or label — not color alone. Absent status marking in a mixed-confirmation table = `weak_hierarchy`.
 ## Visualization Production Sequence Gate
-Visual insertion must occur after the text content draft is reviewable. Premature visual placement — inserting figures before text draft is complete = `render_contract_mismatch` defect; blocks PASS until sequencing corrected.
+Visual insertion must occur after the text content draft is reviewable. Premature visual placement — inserting figures before text draft is complete = `render_contract_mismatch` defect; blocks visual-ready handoff until sequencing corrected.
 ## Visual Tone for Document-Class Deliverables
 This role owns: layout density, spacing, border weight, visual rhythm for document-class deliverables. Content tone (formality, narrative voice, terminology register) belongs to `document-automation`; structure/class rules (section ordering, element inclusion, generation staging) belong to `document-automation`.
 For event planning and institutional documents: prefer clean table borders and consistent cell padding; maintain generous inter-section spacing; use border weight and shading sparingly to reinforce hierarchy; keep layout density appropriate for print or screen reading context.
@@ -47,7 +47,7 @@ For workflow tools, decks, reports, and other human-facing artifacts:
 - Distinguish master-data maintenance, planning, reconciliation, monitoring, and closeout surfaces visually
 - Expose dependency-critical indicators at the decision point (remaining capacity, budget balance, rollover pressure, constrained-planning signals)
 - Treat section/surface role drift in documents same as tab role drift in apps; pages without defensible reading task should not stay dense and prominent
-Use `HOLD` when promoted surface structure hides critical planning signals or lets low-frequency setup overwhelm primary work.
+Emit a blocking surface-promotion finding when promoted surface structure hides critical planning signals or lets low-frequency setup overwhelm primary work.
 ## Workflow-Product Surface Extension
 For dense workflow tools, protect operator workflow meaning beyond generic layout quality:
 - Home = resume and monitoring console, not decorative landing page; recommend one immediate next action with reason when not at clean done state
@@ -81,12 +81,3 @@ Canonical patterns for desktop apps, workflow tools, and operator-facing program
 - Support bulk import as **first-class path** (spreadsheet/list source format)
 - Reject if tabs/menus/pages don't describe next steps, prerequisite states, or completion states
 - Expose final output path early; destination for generated forms/reports/artifacts must be clear
-### Local Web App Launcher Requirements
-Always apply for local-only web apps (Flask, Node, etc.):
-- **Hide server console**: VBS (`WshShell.Run ..., 0`), `pythonw.exe`, etc.
-- **Only 1 visible window — the browser**: auto-open after server start, hide all others
-- **Auto-terminate server when browser closes**: heartbeat-based watchdog
-- **Provide explicit exit button in UI**
-- **Disable debug/reloader**: `debug=False`
-- **Hide warning messages**: hide technical "development server" warnings
-- **Double-click launch**: single file → environment setup → server start → browser open

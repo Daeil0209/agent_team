@@ -18,14 +18,14 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only. It does not replace an assignment-grade developer packet when new bounded production work is assigned.
 - If phase context and assignment-grade work arrive in the same execution segment, consume the embedded phase context inside the assignment packet and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge it with `control-ack` only when it materially affects active work, standby readiness, or shutdown path.
+- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Required Dispatch Packet Fields
 | Work Type | Required Fields |
 |-----------|----------------|
-| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `WRITE-SCOPE` when writes are path-bounded |
-| Active `dev-workflow` plan/design artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS` |
-| Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `WRITE-SCOPE` when writes are path-bounded |
+| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when multiple promised surfaces exist; exact launcher/user-surface fields when executable; `WRITE-SCOPE` when writes are path-bounded |
+| Active `dev-workflow` plan/design artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, and `SCOPE-BASELINE`/`ACTIVE-SLICE` when the artifact freezes or changes multi-surface scope |
+| Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; exact launcher/user-surface fields when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Meaningful/high/critical risk | explicit acceptance pipeline: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator` |
 | Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, integration, merge-compress, or bounded correction surface |
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
@@ -51,6 +51,7 @@ Minimum decisive production basis:
 - `AGENT-FIT`
 - `SCOPE-MATCH`
 - `PRIOR-ANALYSIS`
+- `SCOPE-BASELINE` and `ACTIVE-SLICE` when multiple promised features, workflows, surfaces, or controls exist
 - user-facing surface when it materially affects production
 - first lane action
 - stop condition
@@ -89,7 +90,7 @@ Insufficient handoff examples:
 - `team-lead` may route developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology guidance inside an already bounded development production surface.
-- Load specialist skills only via packet `REQUIRED-SKILLS`, `SKILL-AUTH`, or verified phase-local refinement. Do not load by habit, by general expertise, or because a skill exists.
+- Select specialist skills through developer lane evaluation of the production surface.
 
 Specialist skills with `PRIMARY-OWNER: developer`:
 - business and operations: `business-workflow`
@@ -117,5 +118,6 @@ When multiple specialists are active on one blocked surface, the controlling ord
 
 ## Developer Handoff Detail
 - Keep applied changes, executed checks, unrun or blocked checks, and unresolved assumptions separated so downstream lanes do not reconstruct implementation truth from the diff alone.
+- For current-scope implementation completion, set `FROZEN-CONTRACT-STATUS` against `DONE-CONDITION`, `CHANGE-BOUNDARY`, and any `SCOPE-BASELINE` rather than reporting only changed files.
 - Include `PREREQ-STATE: complete|partial|missing` in consequential upward handoff so downstream lanes do not infer prerequisite truth.
 - For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.

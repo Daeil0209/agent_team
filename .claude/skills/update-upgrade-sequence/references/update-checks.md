@@ -13,5 +13,17 @@ Update/upgrade adds these domain checks:
 3. Role documents must preserve their declared role, procedure, reference hierarchy, and required mapping lines.
 4. Skill documents must preserve their fixed structural contract, inherited-doctrine line, reference map, and reference detail attached to an owning workflow, sequence, phase, or owner block.
 5. New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require explicit governance review before execution.
-6. Record any remaining migration gap explicitly rather than assuming the update is complete.
-7. When optimizing context cost, prove that moved meaning remains reachable through an owning trigger or direct reference path.
+6. Record any remaining migration, affected-surface, in-flight-output, or prior-verdict gap explicitly rather than assuming the update is complete.
+7. When reducing context footprint, prove that moved meaning remains reachable through an owning trigger or direct reference path.
+8. For MCP or external-tool capability updates, verify asset-set coherence: project-root `.mcp.json` server entry, `.claude/settings.json` `enabledMcpjsonServers`/permission/hook posture, role tool authorization, and owning skill trigger/authority. A mismatch is an update blocker or an explicit deferred owner.
+9. Promotion from advisory/fail-open use to blocking authority, SV-stage use, worker lane use, custom wrapper use, or persistent metric automation requires measured benefit, authority/footprint review, and user-visible rollback or fail-open semantics before activation.
+
+Before classifying a team-system item as defective, name:
+- `TARGET-INTENT-BASIS`
+- protected function
+- user-impact risk
+- removal or weakening risk
+- smallest intent-preserving correction
+
+A literal contradiction, repeated sentence, heavy gate, or hook burden is only defect evidence until this check is complete.
+If the item is intended protection, preserve the protection and reduce only the avoidable burden.

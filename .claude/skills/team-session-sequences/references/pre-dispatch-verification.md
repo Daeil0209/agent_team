@@ -4,19 +4,30 @@ REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
 
-# team-session-sequences: Pre-Dispatch Self-Verification Gate
-Before issuing a consequential dispatch (implementation, multi-agent fan-out, governance modification, or high-acceptance-risk work), the team lead must verify:
+# team-session-sequences: Pre-Dispatch Readiness Index
+This file is an index, not a second enforcement gate.
 
-1. **Goal Alignment** - Does this dispatch directly serve the user's actual request? Am I solving what was asked, not what I assumed?
-2. **Alternative Routing** - Did I consider at least one alternative agent type or scope decomposition? Why is this routing better?
-3. **Agent-Charter Fit** - Is the chosen agent the best charter match? Would a different agent type handle this more effectively?
-4. **Scope Appropriateness** - Is the scope neither too broad (unfocused) nor too narrow (missing context)? Is the boundary explicit?
-5. **Prior-Analysis Handoff** - Have I included my existing analysis, findings, and reasoning in the dispatch? Will the agent be able to continue from where I left off rather than starting from scratch?
-6. **Prerequisite Completeness** - Are all dependencies resolved? Is there something I should verify before dispatching?
-7. **Failure Path** - If this dispatch fails or returns unexpected results, what is the recovery path?
+Canonical owners:
+- Planning readiness: `.claude/skills/work-planning/references/execution-readiness.md`
+- Assignment packet preflight: `.claude/skills/task-execution/references/assignment-packet.md`
+- Runtime target truth: `.claude/skills/task-execution/references/runtime-dispatch-law.md`
+- Dispatch recovery: `.claude/skills/task-execution/references/dispatch-recovery.md`
+- Message classes and handoff fields: `.claude/skills/task-execution/references/message-classes.md`
 
-For low-risk dispatch (simple reads, bounded inspection): items 1 and 5 are sufficient.
-For medium-risk dispatch (implementation, multi-agent): all items are required as a quick self-check.
-For high-risk dispatch (governance changes, architecture, deletion): all items are required with explicit written record in the dispatch packet.
+Dispatch readiness coverage that must be preserved by those owners:
+1. **Goal Alignment** - dispatch directly serves the user's actual request, not an assumed substitute.
+2. **Alternative Routing** - at least one alternate lane, target, or decomposition was considered when material, with basis for the chosen route.
+3. **Agent-Charter Fit** - the selected lane or agent is the best charter match for the work surface.
+4. **Scope Appropriateness** - scope is neither unfocused nor missing needed context, and the boundary is explicit.
+5. **Prior-Analysis Handoff** - settled upstream facts, findings, and reasoning needed by the receiver travel in packet fields, task/workflow state, or cited artifacts.
+6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, deferred with owner, or blocked.
+7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless `HOLD`.
 
-Do not skip this gate for ordinary urgency, operator pressure, or self-imposed speed concerns. Only an explicit safety-critical or runtime-protection emergency defined by the owning runtime policy may abbreviate the gate, and the abbreviated basis must be recorded.
+Risk-tier record rule:
+- Low-risk bounded inspection may satisfy the index through goal alignment plus prior-analysis handoff when no other item is material.
+- Medium-risk dispatch requires all material items to be present in the frozen readiness or packet basis.
+- High-risk dispatch, including governance changes, architecture, deletion, or high-acceptance-risk work, records the readiness basis explicitly in `EXECUTION-READINESS-BASIS`; the dispatch packet may only carry or cite that basis.
+- Runtime-protection emergencies may abbreviate only under the owning runtime policy, and the abbreviated basis must still be recorded.
+
+Do not require a separate seven-question pre-dispatch checklist from `team-session-sequences`.
+If readiness or packet basis is missing, use the canonical owner result: `packet-correction`, `route-replan`, `parallel-continue`, blocker-clear, or `HOLD`.

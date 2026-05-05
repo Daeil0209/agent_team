@@ -11,22 +11,8 @@ reset_planning_markers_for_session() {
 
   rm -f \
     "$LOG_DIR/.wp-loaded-${session_id}" \
-    "$LOG_DIR/.sv-plan-loaded-${session_id}" \
-    "$LOG_DIR/.sv-result-loaded-${session_id}"
-}
-
-reset_planning_markers_for_worker() {
-  local worker_name="${1-}"
-  local session_id=""
-  local worker_session_ids=()
-
-  [[ -n "$worker_name" ]] || return 0
-
-  mapfile -t worker_session_ids < <(session_ids_for_worker_name "$worker_name")
-  for session_id in "${worker_session_ids[@]}"; do
-    [[ -n "$session_id" ]] || continue
-    reset_planning_markers_for_session "$session_id"
-  done
+    "$LOG_DIR/.sv-result-loaded-${session_id}" \
+    "$LOG_DIR/.post-wp-action-${session_id}"
 }
 
 _mark_identity_in_file_locked() {
@@ -88,31 +74,6 @@ lead_planning_required() {
   [[ -n "$session_id" ]] || return 1
 
   identity_present_in_file "$LEAD_PLANNING_PENDING_FILE" "$session_id"
-}
-
-mark_worker_planning_required() {
-  local worker_name=""
-  worker_name="$(normalize_planning_worker_name "${1-}")"
-  [[ -n "$worker_name" ]] || return 0
-
-  reset_planning_markers_for_worker "$worker_name"
-  with_lock_file "$PLANNING_DISCIPLINE_LOCK" _mark_identity_in_file_locked "$WORKER_PLANNING_PENDING_FILE" "$worker_name"
-}
-
-clear_worker_planning_required() {
-  local worker_name=""
-  worker_name="$(normalize_planning_worker_name "${1-}")"
-  [[ -n "$worker_name" ]] || return 0
-
-  with_lock_file "$PLANNING_DISCIPLINE_LOCK" _clear_identity_in_file_locked "$WORKER_PLANNING_PENDING_FILE" "$worker_name"
-}
-
-worker_planning_required() {
-  local worker_name=""
-  worker_name="$(normalize_planning_worker_name "${1-}")"
-  [[ -n "$worker_name" ]] || return 1
-
-  identity_present_in_file "$WORKER_PLANNING_PENDING_FILE" "$worker_name"
 }
 
 mark_worker_dispatch_ack_required() {
@@ -275,7 +236,7 @@ worker_assignment_receipt_observed_since() {
 
   [[ -n "$session_id" && -n "$required_at" ]] || return 1
 
-  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" node <<'NODE' >/dev/null 2>&1
+  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE' >/dev/null 2>&1
 const fs = require("fs");
 const path = require("path");
 
@@ -313,16 +274,7 @@ while (stack.length) {
 
 if (!transcriptPath) process.exit(1);
 
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") {
-    return Object.values(value).flatMap(flattenText);
-  }
-  return [];
-};
+const { flattenValueText: flattenText } = require(process.env.HOOK_JSON_HELPERS);
 
 for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
   if (!line.trim()) continue;
@@ -353,7 +305,7 @@ worker_dispatch_ack_success_observed_since() {
 
   [[ -n "$session_id" && -n "$required_at" ]] || return 1
 
-  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" node <<'NODE' >/dev/null 2>&1
+  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE' >/dev/null 2>&1
 const fs = require("fs");
 const path = require("path");
 
@@ -391,14 +343,7 @@ while (stack.length) {
 
 if (!transcriptPath) process.exit(1);
 
-const flattenText = (value) => {
-  if (value == null) return [];
-  if (typeof value === "string") return value ? [value] : [];
-  if (typeof value === "number" || typeof value === "boolean") return [String(value)];
-  if (Array.isArray(value)) return value.flatMap(flattenText);
-  if (typeof value === "object") return Object.values(value).flatMap(flattenText);
-  return [];
-};
+const { flattenValueText: flattenText } = require(process.env.HOOK_JSON_HELPERS);
 
 for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
   if (!line.trim()) continue;

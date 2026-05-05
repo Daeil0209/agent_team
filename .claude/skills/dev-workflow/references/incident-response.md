@@ -5,13 +5,11 @@ auto-inject: false
 
 Use this reference when T0/T1 severity, implementation regression, unexpected failure, launch-path failure, or incident-related phase transition appears inside `dev-workflow`.
 
-The former top-level `incident-response` skill name is absorbed here. Do not keep a separate top-level skill folder for incident response; consume incident response through `dev-workflow` and this reference only.
-
 ## Activation Boundary
 Load incident detail when:
 - an error, regression, or unexpected failure is detected during or after implementation
 - user-reported first-view or launch-path failure appears
-- incident context changes a dev-workflow phase state and requires phase transition notification
+- incident context changes a dev-workflow phase state and requires incident phase-cursor context
 
 General dev-workflow phase transitions without incident context use `dev-workflow` plus `.claude/skills/task-execution/references/phase-transition-control.md`; they do not load incident-response by ceremony.
 
@@ -44,7 +42,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 - Record what happened, root cause, fix applied, time or cycles to resolution, and whether a recurrence barrier is needed.
 - If prevention was possible and the missed check is recurring or material, open `Self-Growth Sequence` on the narrowest owner surface.
 
-## Phase Transition Notification
+## Incident Phase Cursor Context
 Phase transitions during incident response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/references/phase-transition-control.md`. Do not author a parallel notification format here.
 
 Incident response contributes only incident-context fields:

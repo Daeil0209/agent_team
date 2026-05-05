@@ -87,7 +87,7 @@ Before generation, freeze:
 Between stages 1 and 2: classify venue type (retreat/relaxation, gathering facility, urban facility, outdoor/camping) and cascade into preset adjustments to schedule density, free-time allocation, collective-vs-individual time ratio, and meal operation mode.
 ### Participant Burden Constraints
 - Treat fatigue, concentration rhythm, logistics complexity, transition overhead, and post-meal energy as hard realism constraints.
-- Conservative defaults when thresholds not provided: max 90-min sessions before break, min 15-min transitions, lighter content after meals, progressive intensity reduction across multi-day events.
+- Conservative defaults when thresholds are missing: short focused sessions with breaks, protected transitions, lighter content after meals, and progressive intensity reduction across multi-day events.
 - Schedules violating these constraints: `HOLD`.
 ### Visual Inclusion for Event Documents
 - Candidate types: schedule/timetable tables, process flow diagrams, venue layout maps, role/responsibility matrices, budget allocation charts, participant journey maps.

@@ -10,7 +10,7 @@ Use this guide after causal analysis and owner selection.
 3. If the rule is in the wrong place, re-home the meaning to the correct owner and leave only a narrow pointer where local readability needs it.
 4. If the failure is a missing lookup detail, add it to the owning direct `references/*.md` file and keep the active `SKILL.md` spine small but mandatory.
 5. If the failure is a packet or handoff omission, add or tighten the packet field in the packet owner before adding prose-only reminders.
-6. If deterministic runtime evidence can catch the defect with low false positives, add or refine hook/settings enforcement only after the semantic owner is correct.
+6. If deterministic runtime evidence can catch the defect with low false positives, add or refine hook/settings enforcement only after the semantic owner is correct and non-hook adherence hardening is insufficient. Otherwise keep the barrier in doctrine, checklist, packet, self-verification, or warning posture.
 7. If no existing lane, skill, or reference can handle the recurring work, use Capability-Gap Fast Path; do not create a new skill for a one-off need.
 
 Before closure, verify: no dead cross-reference, no owner-boundary drift, no weakened proof or acceptance path, no duplicate competing procedure, and no hidden always-loaded context increase.

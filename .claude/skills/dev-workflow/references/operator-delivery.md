@@ -3,24 +3,65 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Implements `CLAUDE.md` `[USER-DELIVERY-FIT]` rounds R21 (operator on-ramp completeness), R23 (operator-OS coverage), R27 (termination symmetric pair), and R31 (mental-model alignment). Active during Phase 1 and Phase 2 when deliverable type is executable user-runnable program.
+Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
+Covered rounds: R21 operator on-ramp completeness, R23 operator-OS coverage, R27 termination symmetric pair, and R31 mental-model alignment.
+When `dev-workflow` is active, this contract is active during Phase 1 and Phase 2.
+When `dev-workflow` is not active, `work-planning` consumes this contract directly for user-runnable executables before implementation, proof, or acceptance.
+Consumed again during Phase 4/5/Complete whenever launch, termination, demo data, operator OS, clean re-launch, or mental-model delivery affects proof or acceptance.
+Executable deliverables specialize the Receiver-Surface Contract through a native Consumption Chain.
+The chain covers setup/build, launch/open, operate, readable failure, terminate/cleanup, and clean re-launch.
 
 ## R21 -- Operator On-Ramp Completeness
 For executable user-runnable deliverables, the deliverable MUST ship with:
-- **minimum-effort launch path AND minimum-effort termination path symmetric pair**: single-action operator entry (desktop icon, double-clickable executable, single-step instruction at most) AND single-action operator exit (close window button -> graceful shutdown of all spawned processes via signal trap chain, single-keystroke shortcut equivalent at most). Developer-tier instructions such as "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI guidance, manual environment teardown, or developer-tier shutdown knowledge are operator burden, not delivery.
-- **demonstration-data path covering every visible tab/page/sub-feature** when the deliverable's visible behavior depends on operator-input data. Empty states alone cannot communicate populated visual behavior, so seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
+- **minimum-effort launch path AND minimum-effort termination path symmetric pair**.
+- Single-action operator entry means desktop icon, double-clickable executable, or single-step instruction at most.
+- Single-action operator exit means close window button -> graceful shutdown of all spawned processes via signal trap chain, or single-keystroke shortcut equivalent at most.
+- Native launch/build assets name the shell, encoding, line endings, dependency/setup source, build output path, run input path, and readable failure behavior when those assets are material.
+- Developer-tier instructions are operator burden, not delivery.
+- Examples: "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI guidance, manual environment teardown, or producer-tier shutdown knowledge.
+- **demonstration-data path covering every in-scope visible feature/surface/control** when the deliverable's visible behavior depends on operator-input data.
+- Empty states alone cannot communicate populated visual behavior.
+- Seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
 
-Programs that launch hands-off but require operator developer-knowledge to terminate cleanly are half-delivered. The operator should not need to specifically prompt "how do I run this" or "what does this look like with real data"; both belong to the planner's derivation.
+### Local Web App Launcher Requirements
+Always apply for local-only web apps (Flask, Node, etc.):
+- **Hide server console**: VBS (`WshShell.Run ..., 0`), `pythonw.exe`, etc.
+- **Only 1 visible window — the browser**: auto-open after server start, hide all others
+- **Auto-terminate server when browser closes**: heartbeat-based watchdog
+- **Provide explicit exit button in UI**
+- **Disable debug/reloader**: `debug=False`
+- **Hide warning messages**: hide technical "development server" warnings
+- **Double-click launch**: single file → environment setup → server start → browser open
+
+The named launch artifact itself must be exercised by the operator invocation shape.
+Example: invoking the shipped launcher through the operator's native UI.
+Starting an already-running server does not prove the operator launch path.
+Running a backend module directly does not prove the operator launch path.
+Inheriting a prior PID does not prove the operator launch path.
+Opening only the browser URL does not prove the operator launch path.
+A launcher that flashes and exits before opening the app is a launch failure.
+A launcher that exits without leaving a readable operator error is a launch failure.
+Carry-forward launch evidence is valid only when the original proof exercised the same launch artifact, invocation shape, operator environment, termination, and clean re-launch contract.
+Programs that launch hands-off but require producer-only knowledge to start, diagnose, or terminate cleanly are half-delivered.
+The operator does not need to prompt "how do I run this".
+The operator does not need to prompt "what does this look like with real data".
+Both belong to the planner's derivation.
 
 ## R23 -- Operator-OS Coverage
-Derive operator OS from `PRIMARY-USER` at planning time. Single-OS launch is sufficient only when `PRIMARY-USER` resolves to one OS through a named institutional context, explicit hardware/runtime constraint, or explicit user statement.
+Derive operator OS from `PRIMARY-USER` and current request/environment evidence at planning time.
+If the user works from Windows paths, Windows tooling, or Windows operator language, freeze Windows as the primary operator OS unless contrary evidence exists.
+For Windows primary operators, proof starts from the Windows launch surface.
+WSL/Linux proof is support evidence only unless proven equivalent for the exact operator action.
+Single-OS launch is sufficient only when `PRIMARY-USER` resolves to one OS through a named institutional context, explicit hardware/runtime constraint, explicit user statement, or concrete current-environment evidence.
 
 When operator OS is ambiguous, multi-OS, or unknown (general distribution, multi-team operator base, public release, no OS-narrowing field in the request), the launch path MUST cover every reasonable operator OS through the same single-action entry constraint:
-- Windows: `.bat` / installer
-- macOS: `.command` / `.app`
-- Linux: `.desktop` / executable shell script
+- Windows: native launcher, installer, or shortcut
+- macOS: native launcher or app bundle
+- Linux: desktop entry or executable launcher
 
-Defaulting to one OS by developer convenience when operator OS is not derivable from `PRIMARY-USER` is itself a delivery defect. The operator should not need to translate a Windows-only instruction on macOS, nor learn `chmod +x` for a Linux-only shell script unless that burden was explicitly frozen as acceptable.
+Defaulting to one OS by producer convenience when operator OS is not derivable from `PRIMARY-USER` is itself a delivery defect.
+The operator does not need to translate a Windows-only instruction on macOS.
+The operator does not need to learn `chmod +x` for a Linux-only shell script unless that burden was explicitly frozen as acceptable.
 
 ## R27 -- Termination Path Quality Criteria
 At minimum:
@@ -29,13 +70,51 @@ At minimum:
 - operator does not need to know about WSL, child processes, or subprocess hierarchy to achieve clean exit
 - post-exit state allows immediate re-launch without "previous instance still running" port conflict
 
-Termination-path E2E verification is not optional polish. When verifier cannot directly exercise operator's window-close action, operator-test-checklist MUST include explicit termination test (close button -> verify all ports release -> verify clean re-launch succeeds) with operator-side proof requirement before acceptance closes, subject to validator no-operator-labor rules.
+Termination-path E2E verification is not optional polish.
+When verifier cannot directly exercise the operator's window-close action, document the termination test as operator reference only.
+Acceptance closes from team-side auto-test proof or proven-equivalent interop proof.
+The proof target is: close button -> verify all ports release -> verify clean re-launch succeeds.
+If neither proof path is available, report `HOLD` or `UNVERIFIED-IN-OPERATOR-ENV`.
+Validator no-operator-labor rules still apply.
 
 ## R31 -- Mental-Model Alignment Mandate
-"Minimum-effort termination path" is NOT satisfied by merely providing a working close mechanism. The close mechanism MUST match the operator's intuitive mental model of the deliverable. The operator's mental model is derived from `PRIMARY-USER` perspective plus the program's user-facing surface, not from the developer's implementation knowledge.
+"Minimum-effort termination path" is NOT satisfied by merely providing a working close mechanism.
+The close mechanism MUST match the operator's intuitive mental model of the deliverable.
+The operator's mental model is derived from `PRIMARY-USER` perspective plus the program's user-facing surface.
+It is not derived from producer implementation knowledge.
 
-For browser-based programs, the operator's mental model is "double-click = start, close browser = end". The close mechanism MUST align, for example browser-disconnect heartbeat triggers auto-shutdown, system-tray exit menu, or equivalent, so the operator's intuitive close action actually produces the expected end-state.
+For browser-based programs, the operator's mental model is "double-click = start, close browser = end".
+The close mechanism MUST align.
+Examples: browser-disconnect heartbeat triggers auto-shutdown, system-tray exit menu, or equivalent.
+The operator's intuitive close action must produce the expected end-state.
 
-Visible terminal windows, "close this terminal to stop" instructions requiring operator to know about subprocess relationships, asymmetric close paths (close browser does not close program when operator expects symmetry), and accidental-close fragility are all mental-model-alignment defects regardless of whether the underlying signal cascade works correctly.
+Visible terminal windows are mental-model-alignment defects when they expose implementation burden.
+"Close this terminal to stop" instructions are defects when they require operator knowledge of subprocess relationships.
+Asymmetric close paths are defects when close browser does not close program and the operator expects symmetry.
+Accidental-close fragility is a defect.
+These remain defects even when the underlying signal cascade works correctly.
 
-The doctrine asks not "does a close path exist?" but "does the operator's natural close action produce the expected program end-state without learning about implementation internals?" Failing this mental-model alignment check is a delivery-fit defect even when the underlying close mechanism passes verification.
+The doctrine asks: does the operator's natural close action produce the expected program end-state without learning implementation internals?
+It does not ask only whether a close path exists.
+Failing this mental-model alignment check is a delivery-fit defect even when the underlying close mechanism passes verification.
+
+## Closure Re-entry Law
+Executable user-facing completion is unavailable when any closure item is missing, broken, unverified, or mismatched.
+Closure items:
+- exact launch artifact
+- native setup/build/run chain when material
+- termination
+- clean re-launch
+- access path
+- demo-data preview
+- frozen in-scope feature/surface/control coverage
+- operator-OS fit
+- operator mental-model delivery
+- resource cleanup
+- project-artifact hygiene
+Classify the root cause at the narrowest owner.
+Phase 5 owns implementation or cleanup repair.
+Phase 2 owns delivery-contract or design weakness.
+`work-planning` owns changed deliverable shape, operator OS, proof/acceptance chain, or user requirement.
+Do not close it as advisory residue.
+Do not ask the user to choose whether routine non-damaging cleanup should happen.

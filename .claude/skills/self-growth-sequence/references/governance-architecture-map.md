@@ -19,6 +19,7 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 | Session boot, runtime entry, monitoring, lifecycle interpretation | `.claude/skills/session-boot/SKILL.md` and `.claude/skills/session-boot/references/runtime-state-detail.md` |
 | Closeout teardown and residual truth | `.claude/skills/session-closeout/SKILL.md` and `.claude/skills/session-closeout/references/closeout-state-detail.md` |
 | Repeatable workflow or specialist methodology | owning `.claude/skills/<skill>/SKILL.md`; long lookup detail in that skill's direct `references/*.md` files when present |
+| External advisory or MCP capability wiring | project-root `.mcp.json`, `.claude/settings.json`, owning role tool authorization, and the owning skill/reference that defines trigger, authority, fail-open, and recovery boundary |
 | Technical enforcement, advisory guards, deterministic runtime checks | `.claude/hooks/` or `.claude/settings*.json` |
 | Official-source cache or preservation traceability | `.claude/reference/` |
 

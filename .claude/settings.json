@@ -6,6 +6,7 @@
   "agent": "team-lead",
   "effortLevel": "high",
   "enabledMcpjsonServers": [
+    "codex",
     "playwright"
   ],
   "permissions": {
@@ -85,7 +86,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|mcp__playwright__browser_.*|Agent|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskStop",
         "hooks": [
           {
             "type": "command",
@@ -95,7 +96,7 @@
         ]
       },
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|Agent|SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|mcp__codex__codex|mcp__playwright__browser_.*|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
         "hooks": [
           {
             "type": "command",
@@ -105,7 +106,7 @@
         ]
       },
       {
-        "matcher": "Agent|TaskCreate|SendMessage|Edit|Update|MultiEdit|Write|TaskUpdate|TeamDelete|CronDelete|Bash",
+        "matcher": "mcp__playwright__browser_.*",
         "hooks": [
           {
             "type": "command",
@@ -135,7 +136,7 @@
         ]
       },
       {
-        "matcher": "TeamCreate|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop",
+        "matcher": "TeamCreate|TeamDelete|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop",
         "hooks": [
           {
             "type": "command",
@@ -155,7 +156,7 @@
         ]
       },
       {
-        "matcher": "Agent",
+        "matcher": "Agent|SendMessage",
         "hooks": [
           {
             "type": "command",
@@ -193,11 +194,6 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/track-worker-report.sh",
             "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/worker-lifecycle-sync.sh",
-            "timeout": 20
           }
         ]
       },

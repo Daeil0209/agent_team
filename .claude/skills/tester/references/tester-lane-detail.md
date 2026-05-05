@@ -18,10 +18,10 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only. It does not replace an assignment-grade tester packet when new bounded proof work is assigned.
 - If phase context and assignment-grade work arrive in the same execution segment, consume the embedded phase context inside the assignment packet and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge it with `control-ack` only when it materially affects active work, standby readiness, or shutdown path.
+- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Tester Packet Detail
-- Consequential tester packets should keep these fields explicit:
+- Consequential tester packets must carry these fields explicitly:
   - `PROOF-TARGET`
   - `PROOF-EXPECTATION`
   - `PROOF-SURFACE`
@@ -55,6 +55,7 @@ Missing-information rule:
 
 Rules:
 - A page load, screenshot, DOM existence check, API response, or source inspection does not prove a designed UI feature by itself.
+- Source inspection can prove a source-read artifact when the frozen proof target is the document text itself.
 - Prefer user-facing locators such as role, label, text, placeholder, and test id when test ids are part of the app contract.
 - Prefer web-first assertions that wait for the expected visible state. Avoid fixed sleeps as proof.
 - Use `npx playwright test` for repeatable proof. Add `--headed`, `--project`, `--grep`, or trace options only when they materially improve the assigned proof or debug surface.
@@ -74,28 +75,32 @@ Use only amplifiers that materially strengthen the intent proof matrix. The goal
 If a material amplifier is skipped, classify it as `out-of-scope by dispatch`, `blocked`, or an `OPEN-SURFACES` item. Do not hide it behind generic "tested" language.
 
 ## Tool-Tier Detail
-Browser interaction requires a browser-proof path. Playwright CLI is the preferred tester profile when available or explicitly frozen for repeated dev-loop proof because it is fast and low cost per run. Playwright MCP is lawful when explicitly frozen, but is generally validator-tier for final-acceptance fidelity.
+Browser interaction requires a browser-proof path. Playwright CLI is the preferred tester profile when available or explicitly frozen for repeated dev-loop proof because it is fast and low-friction per run. Playwright MCP is lawful when explicitly frozen, but is generally validator-tier for final-acceptance fidelity.
 
-When the same proof surface offers multiple tool profiles at different cost-vs-fidelity tiers, tester defaults to the lowest-cost profile that still proves the iteration's bounded scope. The higher-fidelity profile belongs to validator final acceptance unless packet `TOOL-REQUIREMENT` freezes it for tester work.
+When the same proof surface offers multiple tool profiles at different friction-vs-fidelity tiers, tester defaults to the smallest truthful profile that still proves the iteration's bounded scope. The higher-fidelity profile belongs to validator final acceptance unless packet `TOOL-REQUIREMENT` freezes it for tester work.
 
 ## Interaction Coverage
-- For executable, user-facing software, keep an interaction-coverage matrix explicit.
-- Each in-scope control must end in exactly one explicit state:
+- For executable, user-facing software, keep an interaction-coverage matrix explicit against `SCOPE-BASELINE` and `ACTIVE-SLICE` when those fields are material.
+- Each in-scope feature/surface/control in the assigned proof slice must end in exactly one explicit state:
   - directly proven
   - disproven
   - blocked
   - out-of-scope by dispatch
 - Navigation-only or indirect evidence does not justify `matched` interaction coverage when direct interaction remained required.
+- `out-of-scope by dispatch` is local proof classification only; it cannot close or defer a frozen `SCOPE-BASELINE` item unless `DEFERRED-SURFACES` carries that upstream decision.
 
 ## Human-Facing Checklist
-- Page image / visual layout captured when rendered usefulness matters
+- Rendered evidence is a defect oracle, not an artifact receipt. Inspect captured output for unreadable glyphs, clipping, overlap, hidden controls, broken hierarchy, missing media, and first-glance failure before claiming user-facing proof.
+- For source-read governance, report, or documentation artifacts, the source/read document can be the decisive proof surface when rendering is not material.
+- For browser/UI or other scrollable visual surfaces, capture the route/page/screen-state x viewport matrix required by the frozen proof surface; use full-page or full design-area capture for whole-surface claims, and label viewport-only captures as viewport-limited; viewport-limited captures cannot support whole-surface `matched`.
+- Run glyph and legibility sanity on representative user-language strings before layout judgment; placeholder glyph boxes, tofu, or unreadable text must block `matched` proof on that surface.
 - First-glance comprehension assessed when reader-first usefulness matters
 - Package validity and openability verified for office-format artifacts
 - Per-page rendered evidence kept separate from text-level proof for page-read artifacts
 - Rendered evidence kept distinct from wording, logic, and request-fit review
 
 ## Specialist Skill Loading
-Specialist skills with `PRIMARY-OWNER: tester` load only via packet `REQUIRED-SKILLS`, `SKILL-AUTH`, or verified phase-local refinement; never by habit:
+Specialist skills with `PRIMARY-OWNER: tester` are selected through tester lane evaluation of the proof surface:
 - `log-based-qa` - log-based QA methodology using structured JSON logging and Docker log monitoring as an alternative to traditional test scripts. It complements tester execution authority and does not replace user-surface proof.
 
 ## Tester Handoff Detail
@@ -108,5 +113,7 @@ Specialist skills with `PRIMARY-OWNER: tester` load only via packet `REQUIRED-SK
   - `CORE-WORKFLOW-STATUS`
   - `INTERACTION-COVERAGE-STATUS`
   - `BURDEN-STATUS`
+  - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`) per `.claude/skills/task-execution/references/request-bound-fields.md` when proof spans multiple environments or claims single-env cross-env sufficiency
 - `matched` is reserved for true contract alignment on that exact surface.
+- For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the handoff or evidence anchor.
 - If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` as appropriate and explain the contradiction in `OPEN-SURFACES` instead of silently mutating the validator basis.

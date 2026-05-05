@@ -30,4 +30,4 @@ LOAD-POLICY: on-demand reference only
 Anti-pattern search is as valuable as positive-pattern search. A benchmark cycle that found five positive patterns but zero anti-patterns is incomplete. Required: at least one anti-pattern search per benchmark cycle on visual / structural decisions.
 
 ## Search Depth Bound
-Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Do not search endlessly; over-searching is also a defect when cost exceeds value.
+Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Do not search endlessly; over-searching is also a defect when burden exceeds value.

@@ -19,14 +19,14 @@ Use this section when `benchmark-simulation` is consumed by researcher for exter
 4. Reformulate with explicit operators: `broaden`, `narrow`, `synonym/paraphrase`, `entity-shift`, `source-type-shift`, `time-shift`, `anti-pattern-search`, and `citation-snowball`.
 5. Snowball backward and forward from strong seed sources when citation networks materially affect confidence.
 6. Triangulate across independent source families and downgrade single-family evidence on consequential claims.
-7. Stop only by explicit rule: branch saturation, citation fixed point, enough convergent evidence for the decision threshold, cost-exceeds-value with downgrade, or `HOLD` with residual miss-risk.
+7. Stop only by explicit rule: branch saturation, citation fixed point, enough convergent evidence for the decision threshold, burden-exceeds-value with downgrade, or `HOLD` with residual miss-risk.
 
 ## Benchmark Evaluation For Research Agents
 - Benchmark core = corpus or source snapshot + information needs or query set + relevance/evidence judgments + scoring rule.
 - Keep development and test sets separated; do not tune prompts, search operators, or source filters on the test set.
 - Score answer correctness separately from evidence coverage.
 - Use claim-level support checks for consequential claims: `supported`, `refuted`, `not-enough-info`, or `unsupported`.
-- Match metrics to purpose: Precision, Recall, P@k, Recall@k, nDCG@k, MAP, R-precision, evidence coverage, citation faithfulness, and search cost.
+- Match metrics to purpose: Precision, Recall, P@k, Recall@k, nDCG@k, MAP, R-precision, evidence coverage, citation faithfulness, and search burden.
 - Include baseline and ablation where possible.
 - Report variance or repeat-run uncertainty for stochastic agent runs instead of treating a single run as durable capability proof.
 

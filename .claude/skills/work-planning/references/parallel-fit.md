@@ -3,7 +3,11 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Independent bounded work must be identified as parallel-fit when it can reduce risk, latency, or context pressure. For 2+ independent implementation surfaces, multi-agent staffing is the default unless a serial reason is explicitly stronger than the parallel benefit.
+Independent bounded work must be identified as parallel-fit when it can reduce risk, latency, or context pressure. For 2+ independent specialist-fit work surfaces, multi-agent staffing is the default unless a serial reason is explicitly stronger than the parallel benefit.
+
+Additional-agent work freezes team-agent runtime.
+
+Standalone `Agent` is not configured lane dispatch.
 
 Use this discrimination:
 - independent -> distinct acceptance contracts and output-to-input independence
@@ -11,10 +15,14 @@ Use this discrimination:
 - interdependent -> coordination surface is shared enough that parallel edits would likely drift without a stronger frozen contract
 - local single-surface -> one bounded surface, no material lane separation or parallelism loss
 
-The Step 1 Q4 discrimination test is `distinct acceptance contracts AND output->input independence`, not `2+ surfaces` alone. Strict sequential output->input dependency, such as DB schema -> backend -> frontend or researcher discovery -> designer -> implementer, keeps the `sequential` classification even when surfaces are distinct.
+The Step 1 Q4 discrimination test is `distinct acceptance contracts AND output->input independence`, not `2+ surfaces` alone. Strict sequential output->input dependency keeps the `sequential` classification even when surfaces are distinct.
 
-Examples of independent implementation surfaces include backend code vs frontend code, or multi-module systems with separate domain ownership. Prior-context reuse, agent setup cost, or coordination convenience alone is not a sufficient serial reason. Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
+Independent specialist-fit work surfaces may be separated by evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner. Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason. Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
 
-`PARALLEL-GROUPS: none` on multi-surface team-routed work without explicit cost basis is a routing defect that must be reopened, not approved. Coordination cost must be explicitly named and demonstrated to exceed the parallel speedup before serializing a genuinely independent surface set.
+Parallel split law: choose semantic boundaries first, then balance expected burden. File count alone is never a sufficient burden basis for document, governance, codebase, or mixed-size corpus work. A valid split names the burden basis: line/byte scale, high-touch or critical surfaces, reference density, proof/review complexity, and expected synthesis burden. If one group remains materially heavier and can be split without breaking owner, surface, proof, acceptance, or merge boundaries, keeping it intact is a distribution-planning defect.
 
-Actual additional-agent dispatch still follows the active host runtime's authorization model. Parallel implementation requires a frozen binding surface before dispatch. At minimum, freeze the API contract, shared data shapes, integration points, ownership boundaries, and acceptance/proof chain needed to prevent parallel drift. A vague binding surface is a design defect and a parallel-drift root cause, not a downstream acceptance surprise.
+Unknown material burden facts make measurement the next planned action, not a pre-planning exception; dispatch-readiness waits for the measured basis.
+
+`PARALLEL-GROUPS: none` on multi-surface team-routed work without explicit dependency or burden basis is a routing defect that must be reopened, not approved. Coordination burden must be explicitly named and demonstrated to exceed the parallel speedup before serializing a genuinely independent surface set.
+
+Actual additional-agent dispatch still follows the active host runtime's authorization model. Parallel production requires a frozen binding surface before dispatch. At minimum, freeze the shared source-of-truth, interface or format contract, dependency boundaries, ownership boundaries, merge owner, and acceptance/proof chain needed to prevent parallel drift. A vague binding surface is a design defect and a parallel-drift root cause, not a downstream acceptance surprise.

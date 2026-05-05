@@ -4,8 +4,8 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 
 ## Change Sequence Required Order
-Prerequisite A. Load the `work-planning` skill. Freeze scope, approach, and verification criteria before proceeding to Step 1.
-Prerequisite B. Load the `self-verification` skill and execute Critical Challenge on the change plan before proceeding to Step 1. This is the MWEC Plan Verification phase.
+Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
+Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only when the change plan is disputed; otherwise reserve `SV-RESULT` for Post-Verify.
 
 1. `Classify + Plan`
 - Classify the change type and scope before editing.
@@ -27,7 +27,10 @@ Prerequisite B. Load the `self-verification` skill and execute Critical Challeng
 - Use evidence, not author intent, for acceptance judgment.
 
 5b. `Execution Gate`
-- For governance-sensitive modifications (CLAUDE.md `### Ownership` and `### Change And Preservation Law`): complete the reviewed change path before Execute. Explicit user approval is required only when the action is destructive or security-sensitive; reviewed non-destructive governance changes proceed autonomously.
+- For governance-sensitive modifications, complete the reviewed change path before Execute.
+  Governance-sensitive surfaces include CLAUDE.md `### Ownership` and `### Change And Preservation Law`.
+  Explicit user approval is required only when the action is destructive or security-sensitive.
+  Reviewed non-destructive governance changes proceed autonomously.
 - For non-governance changes: proceed directly to Execute.
 
 6. `Execute`
@@ -50,27 +53,48 @@ Prerequisite B. Load the `self-verification` skill and execute Critical Challeng
 - High-traffic governance surfaces named by `CLAUDE.md` `### Ownership` and `### Change And Preservation Law` require session revalidation and baseline anchoring before modification resumes after interruption.
 
 ## Patch Execution Method
-Use this method when an AI model updates doctrine, agents, skills, settings, hooks, or other team-system assets and the result must remain understandable without hidden session memory.
+Use this method for team-system asset patches that must remain understandable without hidden session memory. It refines patch mechanics; it does not decide the primary sequence owner.
 
 ### Patch classification map
 See `.claude/skills/self-growth-sequence/references/patch-classification.md` for the full classification table.
 
 ### Required operating rules
-- Treat every self-growth patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
+- For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, hook, or reference chain. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
 - Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
 - Before drafting, freeze the defect basis, design-intent basis, causal basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
 - Before drafting, enumerate affected surfaces beyond the edited file: exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors. Missing this enumeration is a patch-readiness defect, not a post-review nit.
-- When the modified artifact has no declared design-intent surface (no Structural Contract, fixed section order, owner boundaries, or authoring principles), the change packet itself must carry the intent: assign a `PATCH-CLASS` failure-mode tag plus a one-sentence rationale in `CHANGE-BOUNDARY`. Add the missing declared-intent surface to the artifact in a follow-on patch when scope allows.
+- For MCP or external-tool capability changes, the affected surfaces include the asset-set: project-root `.mcp.json`, `.claude/settings.json`, role tool authorization, hook/settings posture, and the owning skill/reference authority boundary.
+- When the modified artifact has no declared design-intent surface, the change packet itself must carry the intent.
+  Missing declared intent includes no Structural Contract, fixed section order, owner boundaries, or authoring principles.
+  Assign a `PATCH-CLASS` failure-mode tag.
+  Add a one-sentence rationale in `CHANGE-BOUNDARY`.
+  Add the missing declared-intent surface in a follow-on patch when scope allows.
 - Classify the failure mode before choosing text: `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, or `capability-gap`. Use `.claude/skills/self-growth-sequence/references/failure-mode-response.md` for allowed and prohibited responses.
-- Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`. Append only when no existing owner slot can absorb the meaning cleanly; delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
+- Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`.
+- Append only when no existing owner slot can absorb the meaning cleanly.
+- Delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
+- Use one rule or action per sentence.
+- Split different ideas into separate sentences or bullets.
+- Line count is not the strength metric.
 - For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY` -- enough that another model can reconstruct the patch from repository state alone.
-- Preserve closed boundaries. Do not broaden a role, skill, rule, hook, or packet beyond the defect's proven recurrence path, and do not remove protected local restatements that keep owner files independently readable.
-- When the failure mode is `non-compliance`, do not add duplicate doctrine. Harden adherence only through a clearer trigger, checklist, packet field, hook, or self-verification gate when the existing rule was not sufficiently surfaced.
+- Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
+- Preserve protected local restatements that keep owner files independently readable.
+- When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, hook, or self-verification gate instead of duplicate doctrine.
 - Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
-- Verification must prove both sides of the patch: the recurrence path is blocked or explicitly assigned, and the existing design remains closed with no unique meaning lost, no dead cross-reference, no weakened owner boundary, and no regression on a previously working behavior, acceptance path, or runtime truth surface.
-- If verification finds a defect in the patch, do not close with partial improvement. Reopen the smallest invalidated step, revise the patch, and run fresh verification again until `CONVERGENCE-STATUS` is `converged`, `HOLD`, or explicit follow-up ownership. Each fresh verification pass remains bounded by `self-verification` Step 4.
+- Verification must prove both sides of the patch.
+  The recurrence path is blocked or explicitly assigned.
+  The existing design remains closed.
+  No unique meaning is lost.
+  No cross-reference is dead.
+  No owner boundary is weakened.
+  No previously working behavior, acceptance path, or runtime truth surface regresses.
+- If verification finds a defect in the patch, do not close with partial improvement.
+  Reopen the smallest invalidated step.
+  Revise the patch.
+  Rerun verification until `CONVERGENCE-STATUS` is `converged`, `HOLD`, or explicit follow-up ownership.
+  Each verification pass remains bounded by `self-verification` Step 4.
 
 ### Structural Baseline
 - Treat the current target design as the structure baseline.
@@ -88,7 +112,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - repeatable workflow/checklist -> matching `SKILL.md`
   - runtime enforcement or state -> settings, hooks, or runtime owner file
 - Do not place always-on doctrine in `.claude/rules/*.md` files. If the content should load unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
-- Prefer `replace`, `trim`, or `re-home` over append-only accumulation, but never at the cost of protected meaning.
+- Prefer `replace`, `trim`, or `re-home` over append-only accumulation, but never by weakening protected meaning.
 - When a rule is repeated so a file remains safe to read in isolation, treat that local restatement as protected common contract rather than cosmetic duplication.
 - When a value must stay configurable, keep one literal owner for that value and make all other documents or prompts reference that owner instead of copying the literal value.
 
@@ -105,7 +129,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 
 ### Post-Change Discipline
 - After any self-growth or capability-expansion patch, make a bounded follow-on optimization decision before closing the topic.
-  - Run the optimization pass when material avoidable cost, runtime burden, or redundancy is visible.
+  - Run the optimization pass when material avoidable redundancy or runtime burden is visible.
   - Otherwise close with `FOLLOW-ON-OPTIMIZATION: not-needed`.
   - Any optimization that does run must preserve the improved quality bar and protected meaning.
 
@@ -122,9 +146,12 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks own governance procedure enforcement.
-- Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-cost, and available from the current tool payload or current session state.
+- Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.
-- Do not add new hard-blocks merely to raise apparent coverage or enforcement rate. Protect operator autonomy and ordinary throughput before ceremonial enforcement expansion.
+- Do not add new hard-blocks merely to raise apparent coverage or enforcement rate.
+- Protect operator autonomy and ordinary throughput.
+- For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.
+- Ask the user only when destructive, security-sensitive, policy-level, or objectively undecidable.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
 - Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
 - For governance-sensitive patches, require the patch class, owner surfaces, preserved meaning, and verification basis to remain explicit enough that another model can continue safely from repository state alone without relying on a dedicated patch-ledger file.

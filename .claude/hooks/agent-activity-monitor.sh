@@ -292,7 +292,7 @@ if [[ "$AGENT_TYPE" == "supervisor" ]]; then
 
   if [[ "$_should_check" == "true" ]]; then
     touch "$_MEM_CHECK_THROTTLE" 2>/dev/null || true
-    memory_pressure_shutdown_standby
+    memory_pressure_report_standby_hold
   fi
 fi
 

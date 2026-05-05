@@ -9,9 +9,11 @@ auto-inject: false
 | 1 Plan | CP1/CP2, gate check | support if gaps remain | write plan surface | -- | -- | -- |
 | 2 Design | CP3, gate check | -- | write design surface | -- | -- | -- |
 | 3 Implementation | CP4, gate check, monitor | -- | implement per design | -- | -- | -- |
-| 4 Analysis | CP5, gap judgment | -- | provide handoff context | review and gap classification | proof and coverage | final acceptance when required |
-| 5 Iteration | cycle tracking, auto-resolution | -- | apply fixes | quick-check | re-verify | final acceptance when still required |
+| 4 Analysis | CP5, gap judgment | -- | provide handoff context | review and gap classification | proof and coverage | validator verdict when required |
+| 5 Iteration | cycle tracking, auto-resolution | -- | apply fixes | quick-check | re-verify | fresh validator verdict when still required |
 
-Acceptance chain:
-- reviewer -> tester -> validator
+Lane evidence chain:
+- reviewer -> tester -> validator PASS
+- validator PASS opens Final Acceptance Review; validator-required workflow `Complete` requires `FINAL-ACCEPT`
 - executable, user-facing software enters validator path by default through task-execution routing
+- executable completion traces every frozen `SCOPE-BASELINE` feature/surface/control and operator launch/termination contract through developer implementation, reviewer conformance, tester proof, and validator verdict

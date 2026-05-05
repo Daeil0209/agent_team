@@ -3,7 +3,7 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 
 # PostToolUse hook for Skill tool.
-# Tracks two-phase self-verification per session and clears the self-growth
+# Tracks phase/stage-end self-verification per session and clears the self-growth
 # entry markers when the self-growth-sequence skill is explicitly loaded.
 # Loading proves sequence entry only; route/patch closure remains governed by
 # the self-growth procedure and downstream verification, not this hook.
@@ -11,9 +11,8 @@ source "$(dirname "$0")/hook-config.sh"
 # completion is recorded later when runtime setup succeeds or task planning
 # begins; host-authorized runtime entry still belongs to TeamCreate and runtime-entry
 # enforcement.
-# Phase 1 marker (sv-plan) = self-verification load observed after work-planning
-# Phase 2 marker (sv-result) = later self-verification load observed before handoff
-# Markers prove skill-load entry only; Critical Challenge remains procedural work.
+# sv-result marker = self-verification load observed after work-planning and at least one post-planning action.
+# Markers prove required sequence shape only; Critical Challenge remains procedural work.
 # wp marker = work-planning loaded (new task, clears both sv phase markers)
 
 INPUT="$(cat)"
@@ -33,10 +32,10 @@ SESSION_ID="$(recover_session_id "$RAW_SESSION_ID")"
 WORKER_NAME=""
 
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
-SV_PLAN_MARKER="$LOG_DIR/.sv-plan-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
-# Session-scoped WP+SV marker; survives per-turn resets so continuation edits
-# do not pay fresh WP+SV reload cost.
+POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
+# Session-scoped planning-plus-result-verification marker; survives per-turn resets so verified
+# continuation edits do not trigger stage-end verification reload.
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 # Session-scoped session-boot marker; consumed by dispatch gates when active
 # runtime requires monitoring before fresh consequential dispatch.
@@ -74,27 +73,23 @@ case "$SKILL_NAME" in
     self_growth_clear_state "$SESSION_ID"
     ;;
   *self-verification*)
-    if [[ -f "$WP_MARKER" ]] && [[ ! -f "$SV_PLAN_MARKER" ]]; then
-      # First SV after WP = Phase 1 load marker.
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_PLAN_MARKER"
-      # Persist through per-turn reset; idempotent.
+    if [[ -f "$WP_MARKER" && -f "$POST_WP_ACTION_MARKER" ]]; then
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
       if [[ -z "$WORKER_NAME" ]]; then
         date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
         clear_lead_planning_required "$SESSION_ID"
       fi
-    elif [[ -f "$WP_MARKER" ]]; then
-      # Subsequent SV = Phase 2 load marker.
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
     fi
     SUPPRESS_DISPLAY=1
     ;;
   *work-planning*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$WP_MARKER"
-    # New task started — clear both SV phase markers to require fresh verification
-    rm -f "$SV_PLAN_MARKER" "$SV_RESULT_MARKER"
-    if [[ -n "$WORKER_NAME" ]]; then
-      clear_worker_planning_required "$WORKER_NAME"
-    else
+    clear_lead_planning_required "$SESSION_ID"
+    # New task started — clear SV markers to require fresh stage-end verification.
+    rm -f "$SV_RESULT_MARKER"
+    rm -f "$SV_CONVERGED_MARKER"
+    rm -f "$POST_WP_ACTION_MARKER"
+    if [[ -z "$WORKER_NAME" ]]; then
       if [[ "$(get_procedure_state_field "startupState" "")" == "ready" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
         printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
       fi

@@ -4,14 +4,14 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # benchmark-simulation: Verification-Methodology Benchmark Extension
-The abstraction-fit-adapt cycle applies recursively to verification methodology: how the team verifies, not just what the team designs. When the verification approach materially affects acceptance quality, benchmark verification patterns the same way.
+The abstraction-fit-adapt cycle applies recursively to verification methodology: how the team verifies, not just what the team designs. When the verification choice is novel, disputed, high-risk, reusable, or lacks an already-frozen proven local default and materially affects acceptance quality, benchmark verification patterns the same way.
 
 ## When Verification Benchmarking Is Mandatory
 - selecting test framework / proof tooling for a new deliverable type
-- selecting coverage strategy (unit-only / integration / E2E / visual regression / contract / property-based)
-- defining correction criteria when iteration is expected
-- selecting acceptance gates
-- when prior session has not already frozen the verification basis from external evidence
+- selecting a new or disputed coverage strategy (unit-only / integration / E2E / visual regression / contract / property-based)
+- defining reusable or disputed correction criteria when iteration is expected
+- selecting new, disputed, or high-risk acceptance gates
+- when no prior frozen basis or already-frozen proven local default exists for a material verification choice that affects acceptance quality
 
 ## Required Search Targets
 - authoritative testing references: Google Testing Blog, MS Engineering Excellence, Martin Fowler, Kent Beck publications, ThoughtWorks Technology Radar

@@ -24,7 +24,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Missing or incorrectly configured TLS.
 - Symmetric encryption keys stored in source code or config files.
 - Missing `secure` / `httpOnly` flags on cookies carrying sensitive data.
-- Hardcoded secrets: search `(api_key|apikey|api-key|password|passwd|secret|token|private_key|auth_token)\s*[=:]\s*["'][^"']{8,}`, `AKIA[0-9A-Z]{16}` (AWS key), `ghp_[A-Za-z0-9]{36}` (GitHub token), `.env` or `secrets.json` committed to VCS.
+- Hardcoded secrets: search `(api_key|apikey|api-key|password|passwd|secret|token|private_key|auth_token)\s*[=:]\s*["'][^"']{8,}`, `AKIA[0-9A-Z]{16}` (AWS key), `ghp_[A-Za-z0-9]{36}` (GitHub token), `.env`, `secrets.json`, `auth.json`, copied `.codex/auth.json`, or `.mcp.json` `env` values committed to VCS.
 **Search hint:** `createHash("md5"|"sha1")`, plaintext password storage, cookies missing `Secure`/`HttpOnly`, base64 strings >40 chars in source.
 **Reviewer action:** Flag any path where sensitive data bypasses encryption at rest or in transit, or where a weak cryptographic primitive is used. Confirmed hardcoded secret: T0 — route to developer for immediate rotation and migration to secrets manager before any other remediation.
 ---
@@ -57,7 +57,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Verbose error messages revealing stack traces, version numbers, or internal paths to clients.
 - Error exposure search: `catch` blocks returning `error.message`/`error.stack` to `res.send()`/`res.json()`; default error handlers not overridden for production; 500 responses including internal path names or version strings.
 - Missing headers search: response config lacking `Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`; `helmet` absent or `default-src 'unsafe-inline'` without documented justification.
-**Search hint:** `morgan("dev")` in production config; unauthenticated `/debug`/`/health` endpoints; `NODE_ENV` not set to `production`.
+**Search hint:** `morgan("dev")` in production config; unauthenticated `/debug`/`/health` endpoints; `NODE_ENV` not set to `production`; MCP server enabled in `.mcp.json`/`enabledMcpjsonServers` without matching role/tool authority and owner-boundary documentation.
 **Reviewer action:** Flag every configuration surface where the default, development, or permissive setting has not been explicitly hardened for production. Error detail exposure: T2. Missing security headers: T2 for complete absence of a header class; T3 for weak but present configuration.
 ---
 ### A06 — Vulnerable and Outdated Components

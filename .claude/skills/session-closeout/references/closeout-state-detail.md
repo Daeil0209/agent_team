@@ -27,4 +27,7 @@ Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-on
 - User explicitly requested validation that was not completed
 ## Agent Lifecycle Resolution
 Before teardown, every agent must have one of: `standby`, `shutdown`, `hold-for-validation`.
-Agents on `standby` may be shut down during teardown without separate SendMessage if session is ending.
+During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
+It does not mean `TeamDelete` may remove registry before process termination evidence.
+Closeout is clean only after every live process-backed teammate has `shutdown_response`/`teammate_terminated` evidence or is explicitly carried as `hold`.
+A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.

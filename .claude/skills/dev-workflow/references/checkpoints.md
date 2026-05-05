@@ -3,12 +3,12 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points. team-lead resolves checkpoints autonomously when the frozen request-fit basis and available evidence are sufficient. Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here; it forces `HOLD` and re-entry through the owning path. CP5 is auto-resolved in normal gap flow; T0/T1 gaps follow Incident Response.
+Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or user-confirmation labels. team-lead resolves checkpoints autonomously when the frozen request-fit basis and available evidence are sufficient. Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here; it forces `HOLD` and re-entry through the owning path. CP5 is auto-resolved in normal gap flow; T0/T1 gaps follow Incident Response.
 
-## CP1 -- Plan Confirmation
+## CP1 -- Plan Basis Freeze
 - **Phase**: Plan, before the canonical plan surface is finalized
 - **Trigger**: problem understanding and request-fit basis are synthesized
-- **Present**: problem, scope boundaries, constraints, delivery experience, acceptance evidence basis, and lightweight verification strategy basis; if a reference exists, also present adopted/adapted/rejected reference fit
+- **Present**: problem, scope boundaries, frozen `SCOPE-BASELINE` for in-scope features/surfaces/controls, constraints, delivery experience, acceptance evidence basis, and lightweight verification strategy basis; if a reference exists, also present adopted/adapted/rejected reference fit
 - **Auto-resolve**: when the request-fit basis and available evidence make the plan basis clear
 - **Reopen/HOLD**: when reference interpretation or core plan basis remains materially ambiguous
 
@@ -22,14 +22,14 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points. tea
 ## CP3 -- Architecture Selection
 - **Phase**: Design
 - **Trigger**: architecture options are produced
-- **Present**: explicit options plus their verification, delivery, and implementation implications
+- **Present**: explicit options plus their `SCOPE-BASELINE` closure, verification, delivery, and implementation implications
 - **Default path**: team-lead auto-resolution, usually from the pragmatic option with bounded supplementation
 - **Reopen/HOLD**: when supplementation would materially change architecture family, risk posture, or implementation scope
 
 ## CP4 -- Implementation Scope Resolution
 - **Phase**: Implementation, before any implementation begins
 - **Trigger**: design is resolved and the implementation scope summary is available
-- **Present**: files to create/modify, out-of-scope items, risk points, delivery experience check, and lane decomposition
+- **Present**: work surfaces to create/modify, out-of-scope items, risk points, `SCOPE-BASELINE` coverage, delivery experience check, specialist-fit lane decomposition, dependency boundaries, surface-to-agent map, and merge ownership
 - **Auto-resolve**: when the scope matches the design doc and the frozen request-fit basis
 - **Reopen/HOLD**: for destructive/security-sensitive actions or material scope expansion beyond the resolved design
 
@@ -38,7 +38,7 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points. tea
 - **Trigger**: reviewer or tester reports blocking defects or significant coverage gaps
 - **Auto-resolve priority**:
   1. design-level gap -> Phase 2
-  2. implementation-level gap -> Phase 5
-  3. no blocking gap and coverage sufficient -> final acceptance or workflow completion
+  2. production-level gap -> Phase 5 with gap-to-correction-surface map
+  3. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
 - **Reuse rule**: original CP3/CP4 remain valid only while the corrected design preserves the selected architecture family and implementation scope
 - **Iteration continuation reuse**: bounded iteration reuse is allowed only while the active workflow phase, owner surface, and acceptance path stay unchanged

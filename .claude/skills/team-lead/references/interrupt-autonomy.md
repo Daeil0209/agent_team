@@ -11,14 +11,20 @@ Interrupt handling preserves original-task ownership. It is never permission to 
 Self-growth, cleanup, defect-fix, hook patch, doctrine sharpening, runtime housekeeping, and any other user-corrective sub-task that interrupts an in-flight original task is a stacked interrupt frame, not route replacement.
 
 Rules:
-- The original task's frozen scope remains the active resume target until it is converged, explicitly cancelled by the user, explicitly redirected by the user to a new top-level task, or blocked on a residual that genuinely requires user input.
+- The original task's frozen scope remains the active resume target until it is converged, explicitly cancelled by the user, explicitly redirected by the user to a new top-level task, or blocked by a proven user-owned blocker.
 - Before entering an interrupt-handling sub-task, capture the interrupted task identity, frozen scope, and last completed step in internal context.
 - Do not write a continuity-file mirror by habit.
-- After the interrupt converges, automatically reopen the interrupted task through fresh `work-planning` -> `self-verification`.
+- After the interrupt converges, resume from the verified resume action.
+- Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
+- If no explicit cancellation, redirect, or proven user-owned blocker exists, `waiting for user` is false.
+- Status/progress questions expose the stall, not a pause right.
+- Answer status briefly.
+- Then execute the resume action.
+- Use `SV-RESULT` only before reporting or handoff.
 - The resumed scope must match the original task, not a new scope.
 - Do not ask permission to resume; the user already requested the original task.
 - Do not silently drop the original task, start unrelated work, or stop after the interrupt as if the original task completed.
-- Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or unresolvable blocker requiring user input.
+- Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or proven user-owned blocker.
 - Each non-resume termination must be reported as the named exception with the resume target preserved or formally released.
 - Multi-level interrupts stack LIFO: deepest clears first, original task resumes last.
 
@@ -40,13 +46,13 @@ Operating discipline:
 - `[DESIGN-INTENT]` is the highest constraint. No autonomy concession overrides Structural Contract, owner boundaries, fixed section order, or protected restatements.
 - Apply `[ALLOW-EXCEPT-DESTRUCT]`, `[BLOCK-AS-DEFECT]`, and `[EVI-DEFER]` from `CLAUDE.md` as the operational decision filter.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
-- High-burden patches with marginal or speculative value require explicit user direction even under autonomy.
+- High-burden patches with marginal or speculative value are deferred unless explicit user direction already exists.
 - Defer only with documented evidence, not speculation.
 - If a hook, gate, or guard blocks legitimate work, first narrow the blocking mechanism through the owning change sequence.
 - Run reviewer separation post-application. If a reviewer surfaces a critical or design-intent finding, revert or improve in the same round.
 - Executable, destructive, security-sensitive, or externally committed paths still require validator PASS where acceptance law requires it.
 - Surface deferred items as active recommendations with explicit options, not passive open questions.
-- Do not stop mid-stabilization before reviewer-verified clean state, explicit blocker requiring user input, or convergence.
+- Do not stop mid-stabilization before reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Do not ask a question whose answer is derivable from active doctrine and evidence.
 
 Re-evaluation under user challenge:

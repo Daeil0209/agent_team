@@ -28,10 +28,10 @@ Use these profiles inside `SV-PLAN` or `SV-RESULT`; do not create a third SV mod
 
 | Profile | Use when | Typical mode |
 |---|---|---|
-| `plan-route` | frozen route, first action, dispatch readiness, lane/skill basis, blocker-clear path, or lead-local permission is being verified | `SV-PLAN` |
-| `analysis-claim` | diagnosis, consistency analysis, risk analysis, recommendation, causal claim, or tradeoff judgment is being verified | `SV-RESULT` unless it authorizes action |
+| `plan-route` | an explicit plan-audit target or disputed frozen route, first action, dispatch readiness, lane/skill basis, blocker-clear path, or lead-local permission is being verified | `SV-PLAN` |
+| `analysis-claim` | diagnosis, consistency analysis, risk analysis, recommendation, causal claim, or tradeoff judgment is being verified | `SV-RESULT`; if it becomes action basis, reopen `work-planning` before action |
 | `synthesis` | two or more agent outputs, evidence families, documents, verdicts, or prior decisions are merged into one conclusion | `SV-RESULT` |
-| `artifact-change` | doctrine, skill, agent, hook, code, config, reference, or produced artifact was modified | `SV-RESULT`, with `SV-PLAN` before modification when consequential |
+| `artifact-change` | doctrine, skill, agent, hook, code, config, reference, or produced artifact was modified | `SV-RESULT`; use `SV-PLAN` only when the change plan itself is disputed |
 | `proof-harness` | behavior, data, state, runtime, user-surface, generated artifact, or retained evidence proves a claim | `SV-RESULT` |
 | `handoff-report` | completion, user-facing report, closure claim, or redispatch basis is being formed | `SV-RESULT` |
 | `anti-self-certification` | same-lane positive closure, acceptance-grade claim, materially risky result, or convenient conclusion needs stronger counter-bias and owner-separation checks | both |
@@ -40,7 +40,7 @@ If more than one profile applies, use all material profiles. If profile choice c
 
 ## Reference Load Triggers
 Load this reference when any condition below is true:
-- routine plan-route `SV-PLAN` is not a load trigger by itself; load for `SV-PLAN` only when the compact spine cannot prove route readiness or a material non-routine trigger below affects the route
+- routine plan-route is not a load trigger; load `SV-PLAN` only for an explicit plan-audit target or disputed frozen-plan readiness
 - analysis, diagnosis, risk assessment, recommendation, or causal reasoning is material to the claim
 - result depends on external reference, code inference, document comparison, artifact inspection, or official/source evidence
 - data, state, behavior, implementation design, domain meaning, or proof harness is part of the claim
@@ -67,13 +67,18 @@ Use every lens that materially applies to the target. Omission of an applicable 
 - Failure/risk lens: what are the most plausible failure modes, missing controls, missing feedback, off-nominal paths, misuse paths, severity, likelihood, detectability, and required mitigations?
 
 ## SV-PLAN Detailed Gate
-Before authorizing consequential action, verify:
+When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
 - if `work-planning` triggered `REFERENCE-USE`, citation presence and specificity were checked in the compact spine before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, or acceptance owner
 - routes that may enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
+- `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
+- consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`
+- `ACTIVE-WORKFLOW: dev-workflow` must show a Codex advisory required-attempt as `triggered:*` or `fail-open:*`, never `skipped:*`
+- Codex advisory risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` also make `skipped:*` invalid; use `triggered:*` or `fail-open:*`
+- `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
 - team-lead workspace discovery, repository search, file reads, runtime probing, or external lookup is the frozen `NEXT-CONSEQUENTIAL-ACTION` or a verified `LEAD-LOCAL-WORK-ITEMS` entry
@@ -90,6 +95,7 @@ Before consequential reporting, handoff, closure claim, synthesis-driven redispa
 - whether the current analysis/evaluation/synthesis report draft or exact outgoing consequential claim is covered by this `SV-RESULT`; prior analysis, memory, checklist language, or inline "SV-style" reasoning does not qualify
 - whether the result matches request fit, detailed mechanism, data/domain meaning, lifecycle/lineage, interface contracts, proof evidence, and unresolved failure modes when those surfaces are part of the claim
 - whether final prose strengthens the claim beyond the verified surface
+- whether final prose exceeds Evidence-Quality Matrix supported scope, `FROZEN-CONTRACT-STATUS`, or retained `OPEN-SURFACES` state when those artifacts are material
 - whether generated artifacts, logs, reports, traces, screenshots, coverage, binaries, images, or datasets have retained identity evidence rather than console-memory-only observation
 
 If evidence is weaker than the claim, narrow the claim, downgrade to `INFERENCE/UNVERIFIED`, or `HOLD`.
@@ -102,7 +108,7 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - mark partial coverage as partial instead of generalizing to the whole system
 - do not treat fluent explanation, internal confidence, or repeated wording as evidence
 - when reference material exists, verify that the conclusion follows the reference rather than a convenient substitute
-- if the analysis becomes the basis for action, run `SV-PLAN` or reopen `work-planning` before action
+- if the analysis becomes the basis for action, reopen `work-planning` before action; use `SV-PLAN` only when the action plan itself is disputed
 
 Analysis is verified only at the strength of its evidence. It may justify `next action`, `HOLD`, or a bounded recommendation without proving final acceptance.
 
@@ -127,8 +133,11 @@ Rules:
 - name the smallest truthful harness level that proves the behavior without losing required realism
 - end-to-end proof is not a substitute for missing unit, integration, state-machine, fixture, or interface-contract proof when those are the sharper evidence path
 - stateful or order-dependent mechanisms require named states, transitions, preconditions, invariants, and a proof strategy that can exercise valid, invalid, and boundary sequences
-- user-facing proof must match the real user surface; source-only or indirect evidence may support diagnosis but not user-surface proof
+- user-facing proof must match the real user surface
+- when the frozen deliverable is a source/read document, source/read inspection is the real surface
+- otherwise, source-only or indirect evidence supports diagnosis only
 - retained evidence must identify artifacts by path, report, log, screenshot, trace, output id, or equivalent stable surface when the claim depends on them
+- visual or rendered user-surface claims require retained evidence identity for capture scope, route/page/screen-state coverage, glyph sanity, and inspected defect classes; screenshot existence, DOM text, or source text alone is not enough
 
 ## Synthesis Verification
 Synthesized conclusions do not inherit verification automatically.
@@ -138,6 +147,7 @@ Before positive synthesis:
 - reconcile conflicts between agent outputs, evidence families, prior decisions, and sibling artifacts
 - preserve open surfaces instead of flattening them into a clean conclusion
 - keep claim strength limited to the weakest material unresolved surface
+- keep final wording inside Evidence-Quality Matrix supported scope when that matrix is material
 - if the synthesis points to redispatch, run `SV-RESULT` on the synthesized result before re-dispatch
 - if synthesis touches existing-artifact integrity, apply design-intent verification before reporting a positive result
 
@@ -155,7 +165,7 @@ When team-lead initiates lead-local verification or a "run-it-myself" check such
 Use the narrowest truthful result:
 - `verified-result` only when the verified surface supports the claim and no material open surface blocks the conclusion
 - `narrow-to-verified-scope` when part of the result is proven but broader wording would overclaim
-- `INFERENCE/UNVERIFIED` when the conclusion is plausible but evidence is indirect, partial, unstored, source-only for a user-surface claim, or weaker than the claim
+- `INFERENCE/UNVERIFIED` when the conclusion is plausible but evidence is indirect, partial, unstored, source-only for a non-source user-surface claim, or weaker than the claim
 - `HOLD` when material evidence, owner, scope, proof, acceptance, or contradiction prevents truthful progress
 - `reopen-work-planning` when scope, route, owner, proof basis, acceptance chain, or next action is invalidated
 

@@ -4,16 +4,8 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
-const firstNonEmptyString = (...values) => {
-  for (const value of values) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed) return trimmed;
-  }
-  return "";
-};
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { encode, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolName = String(input.tool_name || "");
@@ -214,6 +206,17 @@ NODE
   exit 0
 fi
 
+if [[ "$TOOL_NAME" == "TeamDelete" ]]; then
+  if _rtg_live_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
+    _rtg_live_members="$(team_config_live_member_names "$_rtg_live_cfg" | grep -vx 'team-lead' | paste -sd, - 2>/dev/null || true)"
+    if [[ -n "$_rtg_live_members" ]]; then
+      emit_deny "BLOCKED: TeamDelete before teammate termination. Live process-backed teammates: ${_rtg_live_members}. Next: session-closeout auto-drains them with structured shutdown_request, waits for shutdown_response/teammate_terminated evidence, then retries TeamDelete. Roster residue without live process proof is not live teammate evidence."
+      exit 0
+    fi
+  fi
+  exit 0
+fi
+
 if [[ "$TOOL_NAME" != "Agent" ]] && ! runtime_tool_requires_boot_guard "$TOOL_NAME"; then
   exit 0
 fi
@@ -257,23 +260,17 @@ if [[ ! -s "$TEAM_RUNTIME_ACTIVE_FILE" ]]; then
   exit 0
 fi
 
-# Pinpoint must-block: SendMessage to a teammate name that does not appear in the live team
-# config causes silent ghost-dispatch (tool reports success while the message is never delivered).
+# Pinpoint must-block: SendMessage to a teammate name without live pane proof
+# causes silent ghost-dispatch (tool reports success while the message is never delivered).
 # Block this to preserve runtime truth; pass through when config or member list cannot be
 # resolved, and bypass for shutdown_request lifecycle control messages.
 if [[ "$TOOL_NAME" == "SendMessage" && -s "$TEAM_RUNTIME_ACTIVE_FILE" && -n "$TOOL_RECIPIENT_NAME" ]]; then
   if [[ "$TOP_TYPE" != "shutdown_request" && "$MESSAGE_TYPE" != "shutdown_request" ]]; then
     if _rtg_live_cfg="$(active_team_config_live 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
-      _rtg_member_list="$(CONFIG_FILE="$_rtg_live_cfg" node -e "
-        try {
-          const c = JSON.parse(require('fs').readFileSync(process.env.CONFIG_FILE, 'utf8'));
-          const names = (c.members || []).map(m => m && m.name).filter(Boolean);
-          process.stdout.write(names.join(','));
-        } catch {}
-      " 2>/dev/null || true)"
+      _rtg_member_list="$(team_config_live_member_names "$_rtg_live_cfg" | paste -sd, - 2>/dev/null || true)"
       if [[ -n "$_rtg_member_list" ]]; then
         if ! printf '%s' ",${_rtg_member_list}," | grep -qF ",${TOOL_RECIPIENT_NAME},"; then
-          emit_deny "BLOCKED: SendMessage target '${TOOL_RECIPIENT_NAME}' is not a member of the live team. Members: ${_rtg_member_list}. Next: correct the 'to' field to a live team member, or use Agent for non-team dispatch."
+          emit_deny "BLOCKED: SendMessage target '${TOOL_RECIPIENT_NAME}' is not a live process-backed team member. Live members: ${_rtg_member_list}. Next: use an exact live member name, or create a replacement with team-scoped Agent (team_name + name) before messaging it. Do not use config residue as addressability."
           exit 0
         fi
       fi

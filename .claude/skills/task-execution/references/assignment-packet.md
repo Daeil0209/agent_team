@@ -5,11 +5,16 @@ LOAD-POLICY: on-demand reference only
 
 # task-execution: Assignment Packet
 ## Downward Assignment Base Packet
-Assignment-grade means any team-scoped `Agent` launch or `SendMessage` that assigns, reroutes, or reuses bounded work for an agent. Lifecycle control, phase-transition control, and status probes are not assignment-grade. Standalone `Agent` is not a configured lane-work substitute under this governance.
+Assignment-grade means any team-scoped `Agent` launch or `SendMessage` that assigns, reroutes, or reuses bounded work for an agent.
+Lifecycle control, phase-transition control, and status probes are not assignment-grade.
+Standalone `Agent` is not a configured lane-work substitute under this governance.
 
 Runtime shape terms:
-- `standalone Agent` is a synchronous host call outside team-agent runtime. It does not use `TeamCreate`, team mailbox state, `dispatch-ack`, or health-cron monitoring; do not use it for configured lane dispatch.
+- `standalone Agent` is legacy or fallback host evidence outside team-agent runtime.
+- No `TeamCreate`, team mailbox state, `dispatch-ack`, or health-cron monitoring.
+- Not configured lane dispatch.
 - `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and are monitored as team-runtime work.
+- `team member address` is the exact live process-backed roster name. A configured role label is not a `SendMessage.to` address unless the roster contains that exact member with live pane proof.
 - `teammate context` is independent. A teammate loads project context such as `CLAUDE.md`, configured MCP servers, and available skills, and receives the lead's spawn/assignment prompt; it does not inherit the lead's conversation history. Assignment packets must therefore be self-contained enough for the receiving lane to act without reconstructing prior chat.
 
 Every assignment-grade agent packet carries:
@@ -17,36 +22,67 @@ Every assignment-grade agent packet carries:
 - `WORK-SURFACE`
 - `CURRENT-PHASE`
 - `REQUIRED-SKILLS`
-- `TASK-ID` when task tracking is active
+- open executable `TASK-ID` when task tracking is active
 
 ### Tester Executable-Proof Schema Floor
-For tester assignment-grade dispatch where the proof surface is executable (browser-ui, cli, runtime, server, app, api), `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor. This is doctrine-owned packet discipline: `task-execution` must carry it, and tester must raise `scope-pressure` or `hold|blocker` when omission makes truthful proof impossible. Conditional carve-out: only when proof is genuinely static-render with no runtime dependency AND single-surface with no scenario variation, mark `ENV-BASIS: not-applicable (<reason>)` and `SCENARIO-SCOPE: not-applicable (<reason>)` explicitly rather than omitting silently. `PROOF-TARGET`, `PROOF-EXPECTATION`, and `PROOF-SURFACE` alone are not sufficient for executable proof; env and scenario binding must be explicit. See `agents/tester.md` RPA-1 for the lane-side restatement.
+For tester assignment-grade dispatch where the proof surface is executable, `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor.
+Executable surfaces include browser-ui, cli, runtime, server, app, and api.
+`task-execution` carries this doctrine-owned packet discipline.
+Tester must raise `scope-pressure` or `hold|blocker` when omission makes truthful proof impossible.
+Conditional carve-out: proof must be genuinely static-render with no runtime dependency.
+Conditional carve-out also requires a single surface with no scenario variation.
+When the carve-out applies, mark `ENV-BASIS: not-applicable (<reason>)` and `SCENARIO-SCOPE: not-applicable (<reason>)`.
+Do not omit them silently.
+`PROOF-TARGET`, `PROOF-EXPECTATION`, and `PROOF-SURFACE` alone are not sufficient for executable proof.
+Env and scenario binding must be explicit.
+See `agents/tester.md` RPA-1 for the lane-side restatement.
 
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
-- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and `TASK-ID` when task tracking is active
+- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active
+- completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
 - receiving lane additions from the lane-core skill and lane-detail reference
+- target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label
+- concrete requested action must be executable with the receiving lane's allowed tools and output channel
+- do not tell a read-only lane to write files, mutate state, run unavailable tools, or report through a channel it cannot use
+- if the lane cannot produce the requested artifact directly, route the write/mutation to an owner that has the tool or require lane output through `SendMessage`
 - `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, and lane-specific phase context when frozen
-- user-surface, proof, tool/setup/discovery, run-path, burden, decision, validation, environment, and scenario fields when the frozen surface makes them material
-- `EXECUTION-READINESS-BASIS`, lifecycle debt visibility, parallel grouping or serial reason, and proof/acceptance owner
+- user-defined work scope travels as coverage obligations, assigned surfaces, and acceptance basis; finding counts are reported evidence, not dispatch scope
+- user-surface, scope-baseline, active-slice, proof, tool/setup/discovery, run-path, burden, decision, validation, environment, and scenario fields when the frozen surface makes them material
+- Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix citations travel in review, proof, validation, and acceptance packets when material
+- for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections may only populate `ACTIVE-SLICE`, never substitute for `SCOPE-BASELINE`
+- Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
+- Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
+- `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before developer correction.
 
 Preflight outcome names:
-- `packet-correction`: a packet defect whose missing or malformed value already exists in the frozen basis and can be corrected without changing owner, phase, work surface, deliverable, proof/acceptance chain, staffing shape, or parallel grouping. Correct the packet and rerun preflight before sending.
-- `route-replan`: the missing or contradictory basis is absent from the frozen basis, stale, or would change owner, phase, deliverable, work-surface decomposition, staffing shape, proof surface, acceptance chain, or parallel grouping. Reopen `work-planning`.
-- `parallel-continue`: one affected surface is blocked or being corrected, but unrelated independent surfaces remain inside the same frozen parallel route. Continue those unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or user-facing blocker.
+- `packet-correction`: a packet defect whose missing or malformed value already exists in the frozen basis and can be corrected with all `work-planning` boundary-change axes unchanged. Correct the packet and rerun preflight before sending.
+- `route-replan`: the missing or contradictory basis is absent from the frozen basis, stale, or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
+- `parallel-continue`: one affected surface is blocked or being corrected, but unrelated independent surfaces remain inside the same frozen parallel route. Continue those unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 
-Packet preflight does not authorize `task-execution` to invent route facts, tool facts, acceptance facts, or skill openings. It either corrects a bounded packet translation defect, reopens the route owner, or keeps independent unblocked work moving.
+Packet preflight never invents route facts, tool facts, acceptance facts, or skill openings. It corrects a bounded packet translation defect, reopens the route owner, or keeps independent unblocked work moving.
+Target resolution is packet translation only when active team name, live process-backed roster, and exact target already exist in current-runtime evidence.
+If the frozen route already names the missing member, create it through team-scoped `Agent`.
+If member creation would move a `work-planning` boundary-change axis, reopen `work-planning`.
+Never guess that a role label is addressable.
 When the receiving path is team-agent runtime, preflight must also reject packets that rely on lead-only conversation context, unlinked prior reasoning, or implicit upstream decisions. Those facts must be carried as packet fields, task/workflow state, or preserved artifacts before dispatch.
 
 ### Field Format Discipline
-Packet field shape follows a strict line-prefix form compatible with `hooks/lib/hook-agent-dispatch.sh` `dispatch_populate_field_cache`: `^([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*(.*)$`. A field counts as "present" only when this form matches its first line. Fields that look semantically present in prose but fail this format are packet defects; warning hooks may report them as missing, but the primary correction owner is the packet-producing procedure.
+Packet field shape follows a strict line-prefix form compatible with `hooks/lib/hook-agent-dispatch.sh` `dispatch_populate_field_cache`: `^([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*(.*)$`.
+A field counts as "present" only when this form matches its first line.
+Fields that look semantically present in prose but fail this format are packet defects.
+Warning hooks can report them as missing.
+The primary correction owner is the packet-producing procedure.
 
 Required shape for every dispatch field (assignment, validator, reviewer, tester, lifecycle control):
 - field name MUST start the line (no leading prose, indentation, list bullet, or quote prefix)
 - only `[A-Za-z0-9_-]` allowed in the field name
 - `:` MUST come directly after the field name (only whitespace allowed between)
 - NO parenthetical descriptor, type annotation, or natural-language qualifier between key and colon
-- value follows the colon on the same line; multi-line continuation (numbered lists, bullets, nested detail) is allowed on subsequent lines but is NOT what the parser keys against
+- value follows the colon on the same line
+- multi-line continuation is allowed on subsequent lines
+- numbered lists, bullets, and nested detail are continuation content only
+- continuation content is NOT what the parser keys against
 
 | Wrong | Right |
 |---|---|
@@ -54,21 +90,17 @@ Required shape for every dispatch field (assignment, validator, reviewer, tester
 | `**MESSAGE-CLASS**: assignment` (markdown bold prefix) | `MESSAGE-CLASS: assignment` |
 | `- TASK-ID: ...` (list bullet prefix) | `TASK-ID: ...` |
 
-Note on leading whitespace: the compatible packet parser strips leading/trailing whitespace from each segment via `gsub(/^[[:space:]]+|[[:space:]]+$/, "", segment)` before the regex match, so an indented field parses at runtime. Column-0 starts remain the recommended convention for human readability, but indentation alone is not a packet-warning cause.
+Note on leading whitespace: the compatible packet parser strips leading/trailing whitespace from each segment via `gsub(/^[[:space:]]+|[[:space:]]+$/, "", segment)` before the regex match.
+An indented field parses at runtime.
+Column-0 starts remain the readable convention.
+Indentation alone is not a packet-warning cause.
 
-Recovery discipline: when a packet warning flags a "missing field" you have written into the packet, the format is the likely cause. Read the field's first-line shape against the rules above before retrying. Retrying with the same shape is itself a recurrence-barrier defect, not a parser bug.
+Recovery discipline: when a packet warning flags a "missing field" you have written into the packet, the format is the likely cause.
+Read the field's first-line shape against the rules above before retrying.
+Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
-`REQUIRED-SKILLS` is not optional decoration. It is the agent-facing skill-load contract derived from the frozen planning basis or the active workflow owner's phase-local refinement.
-- `team-lead` may load a non-owner skill locally only when a frozen and `SV-PLAN`-verified lead-local path requires it.
-- agent lanes must not preload lane-core skills for receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, or clarification-only messages.
-- assignment-grade lane packets open consequential lane-owned work; the receiving lane must load its lane-core skill as the highest-priority lane-local procedure, then load packet `REQUIRED-SKILLS`.
-- packet `REQUIRED-SKILLS` names additional non-lane-core skills only; do not list the receiving lane-core skill as a packet skill.
-- if no additional non-lane-core skills are required, the packet must still carry `REQUIRED-SKILLS: []`; omission is invalid on assignment-grade packets.
-- lane-core priority does not override shared doctrine, role boundaries, `task-execution`, `work-planning`, or `self-verification`.
-- optional, methodology, specialist, and packet-requested skills refine execution only inside the lane-core boundary and frozen packet basis.
-- if `REQUIRED-SKILLS` is missing, contradictory, or too weak to keep the lane-owned path truthful, do not improvise a hidden skill plan inside the agent; raise `scope-pressure` or `hold|blocker`.
-- active workflow owners may refine `REQUIRED-SKILLS` only inside the already frozen lane map, deliverable shape, and proof/acceptance chain.
-- if a proposed refinement would create a new lane, new independent surface, or changed acceptance/proof owner, it is not packet-local refinement; reopen `work-planning` first.
+Packet skill fields carry recommended skills.
+- Use `REQUIRED-SKILLS: []` when no upstream recommendation exists.
 
 ## Session Cross-Continuity Packet Check
 Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, decisions, contract freezes, lane-charter changes, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.

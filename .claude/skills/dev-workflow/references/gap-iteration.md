@@ -5,8 +5,6 @@ auto-inject: false
 
 Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap detection, Phase 5 iteration protocol, and rendered/user-surface gap feedback.
 
-The former top-level `gap-detect` skill name is absorbed here. Do not keep a separate top-level skill folder for gap detection; consume gap detection through `dev-workflow` and this reference only.
-
 ## YAGNI Scope Review
 Runs in Phase 1 before CP2.
 
@@ -32,6 +30,7 @@ Phase 4 gap detection separates:
 - user-readiness gaps
 
 Blocking gaps are not only missing components. Missing proof on the required user surface is independently blocking.
+Compare against the frozen `SCOPE-BASELINE`, not only the implemented `ACTIVE-SLICE`; missing, stubbed, placeholder-only, or unproven baseline items are blocking unless upstream scope explicitly deferred them.
 
 ## Structural Check
 For each component in the design, verify:
@@ -50,17 +49,17 @@ For each component, verify:
 Defect signal: component exists structurally but does not perform its designed function.
 
 ## Contract Check
-For each interface or API point, verify:
-1. Does server implementation match designed inputs, outputs, and error codes?
-2. Does client consumption match the same contract?
-3. Are data shapes, field names, and types consistent across the boundary?
+For each interface, format, or dependency boundary, verify:
+1. Does the producing surface match designed inputs, outputs, and error states?
+2. Does the consuming surface match the same contract?
+3. Are shared meanings, field names, and data shapes consistent across the boundary?
 
 Defect signal: contract mismatch between design and either producer or consumer.
 
 ## User-Readiness Principle
 Verify:
-- real launch/start path
-- core workflows and all in-scope user-visible controls
+- exact launch artifact plus invocation evidence, stop/cleanup, and clean re-launch path when executable
+- core workflows and all frozen in-scope features/surfaces/controls
 - persistence, restart, and error handling when in scope
 - tester proof surface and validator acceptance surface aligned to the same resolved interaction/control inventory
 
@@ -83,21 +82,22 @@ Reviewer classifies each gap:
 
 | Class | Definition | Iteration required |
 |-------|------------|-------------------|
-| Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Yes, unless user accepts at CP5 |
+| Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Yes; reopen the correction loop unless governing evidence reclassifies the gap |
 | Non-blocking | Minor behavioral gap, cosmetic mismatch, or low-risk deviation | No, but record in report |
 | Deferred | Design decision intentionally not implemented in this iteration | No, but document under follow-up |
 
 When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`. T0/T1 gaps are not normal iteration candidates.
 
 ## Iteration Protocol Detail
-`dev-workflow` Phase 5 owns iteration cycle structure, cycle counter, and cycle limits. Gap detection contributes re-classification only.
+`dev-workflow` Phase 5 owns iteration structure and convergence truth. Gap detection contributes re-classification only.
 
-Per-cycle gap detection contribution after developer fix and before tester re-verify:
+Per-cycle gap detection contribution after authoritative corrected output and before tester re-verify:
 1. Reviewer reruns structural, functional, contract, delivery-experience, and user-readiness checks scoped to affected components.
 2. Reviewer reapplies the gap classification table to remaining or newly introduced gaps.
-3. Coverage score and blocking-gap count feed Phase 5 continue-or-escalate decision.
+3. Coverage score and blocking-gap count feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
 
-Reviewer quick-check stays blocking-only. Tester re-verifies affected surfaces first, then stale interaction rows. The same unresolved blocking gap class after repeated cycles escalates instead of looping.
+Reviewer quick-check stays blocking-only and delta-scoped; unclear delta -> `scope-pressure`, not full-review expansion. Tester re-verifies affected surfaces first, then stale interaction rows. The same unresolved blocking gap class after repeated cycles escalates instead of looping.
+Independent correction surfaces are split by correcting owner and may run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
 
 ## Gap-State Packet
 Whenever gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields:

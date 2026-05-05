@@ -16,11 +16,24 @@ Carry:
 - `LIFECYCLE-DECISION`
 - `DECISION-BASIS`
 
-Agents acknowledge receipt when the lifecycle decision materially affects their active assignment, standby readiness, or shutdown path.
-Team-lead sends lifecycle control explicitly after agent completion, reuse decision, or runtime teardown coordination when the lifecycle edge must be recorded truthfully.
+Agents acknowledge non-terminating lifecycle receipt when the decision materially affects active assignment, reuse, standby readiness, or hold-for-validation.
+Team-lead sends lifecycle control explicitly after agent completion, reuse decision, or runtime coordination when a non-terminating lifecycle edge must be recorded truthfully.
+Shutdown intent is normalized to the structured shutdown protocol below.
 
-Termination form for `LIFECYCLE-DECISION: shutdown` specifically:
-- A free-text lifecycle-control message with `LIFECYCLE-DECISION: shutdown` is a record of the decision; it does NOT actually terminate the agent process. Agents respond to it with `control-ack` and remain alive.
-- To actually terminate the agent, send the structured shutdown protocol via `SendMessage` with `message: {"type": "shutdown_request"}`. The agent replies with `{"type": "shutdown_response", "approve": true|false}`; on approve, the agent process exits and the harness emits a `teammate_terminated` event.
-- Use the free-text `lifecycle-control` form only when the decision is `reuse`, `standby`, or `hold-for-validation`; those do not need protocol-level termination, only a lifecycle-edge record.
-- `TeamDelete` succeeds only after every teammate is confirmed terminated; do not treat `control-ack` of a text shutdown as proof of termination.
+Termination form for shutdown specifically:
+- Any agent-shutdown intent must be normalized to the structured shutdown protocol.
+- Send `SendMessage` with `message: {"type": "shutdown_request"}`.
+- During session closeout, team-lead sends this automatically to every live process-backed teammate before `TeamDelete`.
+- Routine teardown does not ask the user which idle teammate to stop.
+- A free-text lifecycle-control message with `LIFECYCLE-DECISION: shutdown` is a malformed shutdown attempt.
+- It records intent only.
+- It does NOT terminate the agent process.
+- It must be followed immediately by the structured shutdown request.
+- `control-ack` from that text message is not termination evidence.
+- The agent replies with `{"type": "shutdown_response", "approve": true|false}`.
+- On approve, the agent process exits and the harness emits a `teammate_terminated` event.
+- Use the free-text `lifecycle-control` form only when the decision is `reuse`, `standby`, or `hold-for-validation`.
+- Those decisions do not need protocol-level termination.
+- They need only a lifecycle-edge record.
+- `TeamDelete` succeeds only after every live process-backed teammate is confirmed terminated.
+- Do not treat `control-ack` of a text shutdown as proof of termination.

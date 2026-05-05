@@ -11,6 +11,9 @@ Active high-traffic surfaces:
 - runtime hooks under `.claude/hooks/`
 - `.claude/settings.json`
 - `settings.*.json` overlays
+- project-root `.mcp.json` when enabled by `.claude/settings.json`
 - skill files under `.claude/skills/*/`
+- authority-bearing skill references under `.claude/skills/*/references/` when they define live triggers, authority, fail-open, preservation, or runtime boundaries
+- `.claude/reference/` caches when a change depends on official-source evidence or preservation traceability
 
 Runtime hook protection and settings-deny protection are separate layers. Governance-flow protection is enforced through runtime hooks such as `compliance-supervisor.sh` and related hooks. `settings.json` `permissions.deny` is reserved for hard credential and secret paths such as `.env`, `secrets/**`, and `credentials.json`.
