@@ -51,6 +51,8 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
 }
 ```
 ## UI/UX Trend Research
+These sources, tools, and trend labels are examples, not current-practice authority.
+When tool choice, current UI practice, licensing, accessibility, or production adoption is material, ground the choice in current evidence, benchmark research, official docs, or an `external-tool-bridge` path before treating it as a recommendation.
 **Reference Sources**: Dribbble (trends/palettes), Awwwards (web), Mobbin (mobile patterns), Godly (landing pages)
 **Quick Tools**: v0.dev (AI UI generation), Tailwind UI (components), Coolors (palette), Heroicons / Lucide (icons)
 **Pre-Mockup Checklist**:
@@ -58,7 +60,7 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
 - [ ] Color palette decided (Primary / Secondary / Accent)
 - [ ] Typography selected (Heading / Body fonts)
 - [ ] Layout pattern chosen (Bento Grid, standard grid, etc.)
-**2025–2026 Trend Reference** (apply selectively): Bento Grid, Glassmorphism, Dark Mode First, Skeleton Loading, WCAG 2.1.
+**Trend Reference Examples** (apply selectively with current evidence): Bento Grid, Glassmorphism, Dark Mode First, Skeleton Loading, WCAG 2.1.
 ## JSON Data Simulation
 JSON mock files serve dual purpose: power dynamic content in the HTML mockup and define the API schema contract for backend implementation.
 ```javascript

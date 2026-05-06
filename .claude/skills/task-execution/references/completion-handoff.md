@@ -51,7 +51,8 @@ Team-lead must reject completion-grade reports that claim `not-applicable` when 
 Team-lead must reject `complete` without enumeration and post-cleanup probe.
 
 Lane docs may require bounded additions, but they must not weaken or replace this common result spine.
-Handoff names selected non-lane-core skills and work-surface basis.
+Handoff names selected non-lane-core skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
+If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready wording.
 Team-lead reviews that basis against the handed-off work and sends correction to the owning lane when direction drifts.
 When material, `EVIDENCE-BASIS` names the Evidence-Quality Matrix rows supporting the handoff claim.
 `FROZEN-CONTRACT-STATUS` must be one of `matched`, `partial`, `drifted`, `blocked`, `not-assessable`, or `not-applicable:<basis>`. It compares the lane's evidence against the frozen assigned contract, not just the changed artifact or executed route.
@@ -59,6 +60,8 @@ When material, `FROZEN-CONTRACT-STATUS` names the Receiver-Surface Contract, Con
 The common end closure contract reconciles the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md` against this result spine.
 Each material start-contract axis closes through matched evidence, upstream defer basis, `not-applicable:<basis>`, or an `OPEN-SURFACES` item.
 Use `matched` only when the supporting spine fields or lane-specific status fields show the axis outcome.
+When the user-ready delivery chain is material, `matched` requires traceable continuity from instruction through concept/detail, implementation or production surface, verification evidence, and final receiver path.
+Working features with disconnected information, hidden assumptions, orphaned components, or implausible receiver flow are not closed-result evidence.
 `REQUESTED-LIFECYCLE` does not itself clear lifecycle debt.
 Team-lead still owes explicit lifecycle control.
 Team-lead can allow one narrow same-surface follow-on before lifecycle control only when all conditions hold:

@@ -46,7 +46,9 @@ Hard rules:
 - A user-facing question list is prohibited except for destructive/security/policy approval or a proven user-owned blocker after `work-planning` Codex confirmation.
 - Otherwise continue by default, assumption, configurable model, or owner route.
 - Do not expose internal planning fields, packet labels, routing/procedure names, lifecycle internals, or agent-control detail unless the user explicitly asks for internals.
-- Lane proof artifacts such as screenshots, traces, network logs, raw test output, or rendered captures are retained evidence and synthesis input, not user-facing report payload unless the user explicitly asks for them.
+- Lane proof artifacts such as screenshots, traces, network logs, raw test output, or rendered captures are project-retained evidence and synthesis input.
+- When visual, rendered, runtime, or user-surface proof materially supports final acceptance, final rejection, or completion wording, user-facing final prose names the retained evidence anchor, decisive surface, capture/render scope, and inspected defect classes or open-surface state.
+- Show raw artifact payload only when the user explicitly asks for it or when that artifact is the deliverable.
 - Do not turn `dispatch-ack`, `status`, or partial agent signals into started/completed/success language.
 - If basis is needed, include only concise verification basis, material open surfaces, unverified items, and required user action.
 - If the basis cannot support the claim strength, narrow the claim or report `INFERENCE/UNVERIFIED`.

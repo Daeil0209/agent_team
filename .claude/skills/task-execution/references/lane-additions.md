@@ -19,6 +19,13 @@ Every lane-core skill inherits these common preconditions:
 - Load lane-core skill only for consequential lane-owned work.
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
+- Before lane work, run a capability-fit pass against target intent, assigned surface, required/recommended skills, and material tool or rendered/runtime needs.
+- Use fitting skills and tools as execution lenses inside the assigned lane; naming them without applying them to the work surface is not capability fit.
+- When a selected non-lane-core skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.
+- During lane work, a newly discovered skill or tool need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
+- Lane-local refinement applies the skill or tool immediately inside that boundary and records the basis in handoff.
+- A discovered need that changes any boundary above is not local refinement; send `scope-pressure` / `hold|blocker` or require reopened planning.
+- If a required skill, decisive tool, rendered/runtime surface, or domain method is missing, unavailable, or outside the packet boundary, send `scope-pressure` / `hold|blocker` with the smallest correcting owner instead of downgrading quality.
 - It cannot override `CLAUDE.md`, role boundaries, `task-execution`, `work-planning`, or `self-verification`.
 
 ## Lane-Specific Additions

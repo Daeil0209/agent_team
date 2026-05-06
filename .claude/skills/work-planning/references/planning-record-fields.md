@@ -40,15 +40,19 @@ Use this file when field-level semantics, allowed values, the internal planning 
 | trigger flag (set when frozen scope makes it material) | activates owner asset |
 |---|---|
 | visible-surface (rendered acceptance material) | visual-composition for developer-owned design/production; rendered-surface basis for review, proof, and validation lanes |
+| external-visual-benchmark (visual / UX / interaction / layout / design quality benefits from external references, public examples, or best-practice comparison) | benchmark-simulation for developer-owned synthesis; researcher secondary-consumer evidence support when comparative source gathering is assigned |
 | token-system material (cross-platform token / theme / component-layer architecture) | design-system-tokens for developer-owned design/production |
 | learner-facing (audience must learn) | instructional-design for developer-owned content/design; learner-objective basis for review/proof/validation lanes |
 | logs-as-decisive-proof (frozen proof surface names logs) | log-based-qa for tester-owned proof |
 | software-cross-artifact-boundary (module / interface / state boundary) | software-architecture for developer-owned design/production |
 | generated-document-output (report / template / reference-driven document) | document-automation for developer-owned generation/design |
-| receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for reviewer-owned clarity review |
+| receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned producer self-review and reviewer-owned clarity review |
 | executable-on-receiver-runtime (deliverable runs on operator's actual environment) | operator-delivery reference (loaded by dev-workflow at Phase 1/2/4/5) |
 
-`work-planning` records active trigger flags inside the freeze. Add recommended skills to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP` only for the skill's owner lane or lawful lead-local support. Other lanes receive the trigger flag as request-bound basis. Reference activations are loaded by the named owning skill at the listed phases.
+This table is the trigger floor, not the full specialist catalog.
+Specialist trigger scan also checks the receiving lane's lane-detail specialist matrix for material domain, architecture, quality, security, proof, tool, document, visual, or enterprise needs.
+If a material specialist trigger is present but no table row names it, freeze the lane-appropriate specialist recommendation from the lane-detail matrix or record `not-applicable:<basis>`.
+`work-planning` records active trigger flags inside the freeze. Add recommended skills to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP` only for the skill's owner lane, declared `SECONDARY-CONSUMER` lane within the skill's stated boundary, or lawful lead-local support. Other lanes receive the trigger flag as request-bound basis. Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can proceed from the frozen basis without rediscovering material packet, skill, proof, tool/setup, lifecycle, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
 - `CODEX-ADVISORY-BASIS` is mandatory for consequential `team-lead` plans after Codex trigger evaluation. Use `triggered:*` when advisory points were acknowledged, `fail-open:*` when a required or triggered attempt could not complete, and `skipped:*` only when no trigger applies. If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is invalid.
 - For any route that may enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.

@@ -14,6 +14,7 @@ The contract axes are:
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
 - exact user wording when wording controls acceptance
+- user-ready delivery-chain trace from instruction to concept/detail, implementation or production surface, verification evidence, and final receiver path
 - methodology, tier, and lane phase context when already frozen
 - user surface, proof path, tool/setup/discovery boundary, run path, and burden contract
 - decision, validation, environment, scenario, and operator-platform proof context

@@ -5,6 +5,8 @@ LOAD-POLICY: on-demand reference only
 
 # Reference Material
 ## Platform Implementation Tools
+The libraries below are implementation examples, not fixed default choices.
+When library adoption, version behavior, licensing, or platform fit is material, use current official docs, benchmark evidence, or `external-tool-bridge` setup proof before freezing the tool choice.
 | Platform | Recommended Libraries | Token Method |
 |----------|----------------------|--------------|
 | Web (React / Next.js) | shadcn/ui, Radix UI | CSS Variables |

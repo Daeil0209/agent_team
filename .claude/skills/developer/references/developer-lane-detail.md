@@ -100,7 +100,10 @@ Specialist skills with `PRIMARY-OWNER: developer`:
 - UI implementation: `mockup-to-component`, `design-system-tokens`
 - support overlays: `benchmark-simulation`, `external-tool-bridge`
 
-When multiple specialists are active on one blocked surface, the controlling order is: `business-workflow` -> `software-architecture` -> domain specialists (`instructional-design`, `engineering-grounding`, `mathematical-correctness`) -> `enterprise-architecture` -> `document-automation` -> `visual-composition` -> UI implementation specialists (`mockup-to-component`, `design-system-tokens`). `benchmark-simulation` and `external-tool-bridge` are support overlays without controlling-chain position; they may evaluate or integrate without overriding earlier controlling contracts.
+Secondary-consumer specialist support:
+- clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, handoff, governance, or document production when receiver comprehension is decisive
+
+When multiple specialists are active on one blocked surface, the controlling order is: `business-workflow` -> `software-architecture` -> domain specialists (`instructional-design`, `engineering-grounding`, `mathematical-correctness`) -> `enterprise-architecture` -> `document-automation` -> `visual-composition` -> UI implementation specialists (`mockup-to-component`, `design-system-tokens`). `benchmark-simulation` and `external-tool-bridge` are support overlays without controlling-chain position; they may evaluate or integrate without overriding earlier controlling contracts. `feynman-clarity` is a producer self-review lens for developer and does not replace reviewer-owned independent clarity review.
 
 ## Durability Gate
 | Fix type | Definition | Action |

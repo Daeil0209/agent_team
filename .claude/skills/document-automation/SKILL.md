@@ -54,7 +54,9 @@ Capture only the decisive packet:
 - document purpose and answer surface
 - type and length class
 - evidence-safe generation boundary
+- format/tool path and fidelity capability basis
 - mandatory format-preservation requirements
+- rendered/openability review or proof owner when human-visible format matters
 - declared downstream review path and next owner
 ## Handoff Boundary
 Hand off only when the next owner can tell:
@@ -62,6 +64,7 @@ Hand off only when the next owner can tell:
 - what evidence class is allowed
 - what structure is frozen
 - whether the artifact is section-ready, integrated, review-ready, or still blocked
+- whether format/openability fidelity is proven, owner-deferred, or blocked
 
 Before dense generation, keep concept hierarchy explicit.
 Keep section order explicit.

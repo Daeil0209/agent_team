@@ -11,6 +11,14 @@ Windows paths, Windows launch files, Windows UI language, or user-side Windows c
 The user does not need to ask separately for obvious type-fit duties such as "this is a program, test every button" or "this is a report, include tables and figures". Derivation from deliverable class and primary user is the planner's responsibility.
 The default done condition is a normal final artifact for that deliverable class: complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden. A partial draft, implemented subset, placeholder surface, or developer-only run path is not done unless upstream scope explicitly says so.
 
+## User-Ready Delivery Chain
+Every consequential deliverable or active slice follows a named user-ready delivery chain.
+The chain starts from the user's instruction, expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence, then converges into the final user-consumed surface or explicit deferred receiver surface.
+Each stage must carry forward the information needed by the next stage: why the deliverable exists, what is in scope, which internal parts connect, how the receiver uses it, what proves it, and what remains open.
+Implementation is the widest work stage; it may add necessary internal detail or parallel branches, but each branch must trace back to request intent and forward to proof or user use.
+Verification and completion converge the widened work back to the named usable receiver path.
+Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item or reopens the owning design, implementation, proof, or acceptance path.
+
 Use these defaults when the deliverable class is in scope:
 - usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, plus launch and termination burden in the primary operator environment
 - research or analysis report -> all requested questions/sections answered, reader-comprehension structure, decision-surface placement, tables/figures when material, and uncertainty visibility

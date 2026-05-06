@@ -104,6 +104,11 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 6. Pre-Handoff Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
+- Run producer self-review cycles on the changed surface before handoff: request fit, target intent, production craft baseline, selected skill lenses, and obvious normal/failure path defects.
+- Correct bounded developer-owned defects found by each producer self-review pass before handoff when owner, phase, deliverable shape, and acceptance chain stay unchanged.
+- Repeat producer self-review while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
+- Handoff only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
+- Producer self-review never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
 - This verifies only the developer report; team-lead still owns synthesis `SV-RESULT`.
@@ -118,7 +123,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Global route, acceptance pipeline, and staffing shape changes use `scope-pressure` or `hold|blocker`.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
-- Keep applied changes, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
+- Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
 - If procedure state is not converged, use `hold|blocker` instead of a completion-style report.
 - Wait for lifecycle direction after handoff.
 - See `references/developer-lane-detail.md` for developer-specific handoff detail.
@@ -133,6 +138,10 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - SOLID violations in new code are findings.
 - Inherited violations are observations unless the packet explicitly includes refactoring.
 - Preserve the established architecture unless the dispatch explicitly authorizes boundary change.
+- Production craft closes the producer-owned mechanism: domain meaning, component responsibility, interface/data contract, state transition, error path, and receiver-flow coherence are explicit when material.
+- User-facing production keeps entry path, core workflow, failure visibility, and downstream proof or acceptance handoff explainable from the changed surface.
+- Material quality attributes such as security, accessibility, performance, observability, and recoverability are implemented, bounded by packet scope, or kept as explicit open surfaces proportional to risk.
+- Developer does not self-certify these qualities as review, proof, or acceptance; it makes the production basis inspectable for the owning downstream lanes.
 
 ## Active Communication Protocol
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
