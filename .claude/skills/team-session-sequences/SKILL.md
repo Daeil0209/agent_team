@@ -84,11 +84,11 @@ When the current runtime is ambiguous, the lead must resolve that ambiguity befo
 
 ## Boot Sequence
 
-> On-demand: see `session-boot` skill. Loaded at session start via hook trigger.
+> On-demand: see `session-boot` skill. Load when the `session-boot` owner trigger opens; hooks provide observation evidence only.
 
 ## Session-Start Sequence
 
-> On-demand: see `session-boot` skill. Loaded at session start via hook trigger.
+> On-demand: see `session-boot` skill. Load when the `session-boot` owner trigger opens; hooks provide observation evidence only.
 
 ## Monitoring Sequence
 
@@ -189,4 +189,4 @@ Session-closeout authority and message-first lifecycle decisions require current
 
 ## Closeout Sequence
 
-> On-demand: see `session-closeout` skill. Loaded when explicit session end is detected via hook trigger.
+> On-demand: see `session-closeout` skill. Load when the `session-closeout` owner trigger opens; hooks provide observation evidence only.

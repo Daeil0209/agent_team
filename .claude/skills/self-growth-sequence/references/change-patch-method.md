@@ -38,6 +38,9 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 
 7. `Post-Verify`
 - Re-check the resulting diff and governing semantics after execution.
+- Use the post-execution live owner documents as the current governance basis for post-verification, affected-surface audit, and follow-on review.
+- Use the resulting diff as change evidence.
+- Treat pre-execution snapshots and prior verdicts as baseline or preservation evidence only; memory-only recall is not governance evidence.
 - When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
 - Load the `self-verification` skill and execute Critical Challenge before declaring the change verified.
 
@@ -145,7 +148,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
-- Hook/settings edits that broaden runtime enforcement use `update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue advisory or `HOLD`.
+- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue advisory or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks own governance procedure enforcement.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.

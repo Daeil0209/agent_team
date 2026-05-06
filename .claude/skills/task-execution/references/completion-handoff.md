@@ -24,6 +24,8 @@ Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on t
 For team-agent runtime, the report is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
 When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the handoff cites the retained path under `projects/<project-folder>/...`.
+When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained project-owned path.
+`/tmp`, shell scrollback, transient pane output, and deleted scratch files are execution context only, not retained evidence.
 Conversation-only output is valid only when the packet names conversation as the output surface.
 
 `TARGET-INTENT-BASIS` names the governance, program, report, document, review, proof, or validation purpose that controlled the work.

@@ -3,10 +3,12 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-For `developer` governance-modification execution, keep the governance packet readable here as the semantic packet owner; runtime hooks and dispatch gates may enforce adjacent discipline, but this catalog controls semantic completeness.
+For `developer` governance-modification execution, keep the governance packet readable here as the semantic packet owner only after required researcher/reviewer audit or review basis is supplied.
+Runtime hooks and dispatch gates may enforce adjacent discipline, but this catalog controls semantic completeness.
+This catalog does not assign audit, review, proof, validation, routing, or acceptance ownership to developer.
 
 Current governance packet surface:
-- **Standard**: `TASK-CLASS: governance-patch`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`
+- **Standard execution additions**: `TASK-CLASS: governance-patch`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`
 - **Structural** adds: `BASELINE-CLASS: preserved-asset|improvement-target|stability-anchor`, `EDIT-OPERATION: tighten|replace|re-home|merge|append|delete`
 - For meaning migration: `CHANGE-BOUNDARY` must include source-meaning inventory, destination rationale, and cross-reference update list
 - High-traffic surfaces add: `SESSION-REVALIDATION: current-session-repo`, `BASELINE-ANCHOR: captured`

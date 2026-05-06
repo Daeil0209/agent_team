@@ -100,6 +100,8 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 ### 3. Execute Direct Checks
 - Run actual commands.
 - Record exact commands, outputs, exit codes, or observed interaction evidence.
+- When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in handoff.
+- `/tmp` fixture paths are scratch context only and cannot be the retained evidence identity.
 - Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, assigned interaction scope, and `USER-RUN-PATH` only when run-path burden is frozen.
 - When a precise oracle is unavailable or impractical, use property, invariant, round-trip, differential, or metamorphic checks when they fit the assigned proof surface.
 - When the assigned proof surface is browser interaction, prove it on that browser surface.

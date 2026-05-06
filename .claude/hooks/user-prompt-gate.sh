@@ -384,6 +384,7 @@ const promptSearch = normalizedPrompt.toLowerCase();
 // Per-turn reset bounds approval to the current user turn.
 const deleteIntent = /(\bdelete\b|\bremove\b|삭제\s*(해|해줘|하라|하자|진행|해도\s*돼|하고|해버려)|지워\s*(줘|라|버려)?|날려\s*(줘|라|버려)?|초기화\s*(해|해줘|하라)|리셋\s*(해|해줘|하라)|reset\s+it|remove\s+it)/iu.test(prompt);
 if (!deleteIntent) process.exit(0);
+const genericRuntimeDeleteIntent = /(\b(delete|remove|cleanup|clean\s+up)\b[^.?!\n]{0,80}\b(active\s+)?(team\s+)?(runtime\s+)?(project\s+root|project\s+folder|project\s+directory|workspace\s+child|generated\s+(output|project)|output\s+root)\b|프로젝트\s*(루트|폴더|디렉터리|결과|출력)?\s*(삭제|지워|날려|정리)|작업\s*(폴더|디렉터리|루트)\s*(삭제|지워|정리)|결과\s*(폴더|디렉터리|출력)\s*(삭제|지워|정리))/iu.test(prompt);
 
 const statePath = process.env.PROCEDURE_STATE_FILE || "";
 const workspaceRoot = path.resolve(process.env.WORKSPACE_ROOT || process.cwd());
@@ -465,9 +466,10 @@ for (const root of unique(roots)) {
 }
 
 // Generic delete approval may resolve from exactly one active team-runtime
-// project root. Safety: explicit delete intent, workspace child, protected
-// roots excluded, and exactly one candidate; ambiguity grants no approval.
-if (approved.length === 0) {
+// project root only when the prompt names project-root or output cleanup intent.
+// Safety: workspace child, protected roots excluded, and exactly one candidate;
+// ambiguity grants no approval.
+if (approved.length === 0 && genericRuntimeDeleteIntent) {
   const home = String(process.env.HOME || "");
   if (home) {
     const teamsDir = path.join(home, ".claude", "teams");

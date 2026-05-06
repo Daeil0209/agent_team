@@ -27,7 +27,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Failed shutdown is a recovery surface owned by `session-closeout` or explicit runtime recovery. Hooks do not create shutdown authority.
 - Treat `TeammateIdle`, ledgers, and health-check output as observation surfaces that inform the next lifecycle message, not authority to skip it.
 - Completion is an upward report requesting a governing decision; it does not authorize auto-standby, replacement, or teammate removal.
-- Consequential completion handoff should carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is an agent request, not lifecycle authority.
+- Consequential completion handoff must carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is an agent request, not lifecycle authority.
 - Governing lane owns lifecycle transitions: dispatch or approved `assignment|reuse` -> `ACTIVE`; explicit `standby` approval -> `STANDBY`; confirmed shutdown/removal -> removed from teammate population.
 - Until the governing lane answers with `standby`, `reuse`, `shutdown`, or `hold-for-validation`, the agent is lifecycle-decision pending and remains `ACTIVE`.
 - Do not ignore an agent lifecycle request without reason. Brief hold is valid only while immediate reuse is being prepared.

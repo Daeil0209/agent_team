@@ -21,9 +21,9 @@ Every lane-core skill inherits these common preconditions:
 
 ## Lane-Specific Additions
 The common base packet is extended by lane-specific required fields:
-- `developer`: change and acceptance boundary
+- `developer`: change boundary plus downstream review/proof/acceptance-owner context fields
 - `researcher`: question and evidence boundary
-- `reviewer`: review and acceptance boundary
+- `reviewer`: review boundary plus acceptance-evidence surface
 - `tester`: proof and scenario boundary
 - `validator`: verdict and expectation boundary
 

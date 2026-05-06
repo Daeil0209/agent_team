@@ -29,7 +29,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 | Meaningful/high/critical risk | explicit acceptance pipeline: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator` |
 | Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, integration, merge-compress, or bounded correction surface |
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
-| Governance-patch | `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE` |
+| Governance-patch | All `All developer-owned production` fields plus `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`; not a standalone packet. `PRIOR-ANALYSIS` must cite upstream researcher/reviewer evidence when governance audit, review, or defect classification is material. |
 
 ## Handoff Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.

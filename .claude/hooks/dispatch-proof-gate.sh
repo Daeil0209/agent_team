@@ -546,7 +546,7 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
       gov_warning_needed="true"
     fi
     if [[ "$gov_warning_needed" == "true" ]]; then
-      emit_packet_warning "Governance-patch dispatch missing CHANGE-BOUNDARY or WRITE-SCOPE. Both are required guardrails for bounded governance modification."
+      emit_packet_warning "Governance-patch dispatch missing CHANGE-BOUNDARY or WRITE-SCOPE. These are minimum guardrails only; developer governance patches must also satisfy the semantic owner docs, including full developer production basis and material PRIOR-ANALYSIS evidence."
     fi
     # Migration advisory: detect move/migrate/re-home without meaning inventory
     if [[ -n "$CHANGE_BOUNDARY_RAW" ]] && printf '%s' "$CHANGE_BOUNDARY_RAW" | grep -qiE '(move|migrate|re-home|transfer|relocate)'; then

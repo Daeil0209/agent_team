@@ -675,7 +675,8 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
 
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # Shared patterns are defined once before these wrappers.
-# S02_IMPLEMENTATION_PATTERN and LEAD_OPERATIONAL_ALLOWLIST remain case-local because they depend on sender context.
+# S02_IMPLEMENTATION_PATTERN remains case-local because it depends on sender context.
+# Lead context uses exact predicates below; broad operational prefixes must not bypass later mutation checks.
 allowed_git_readonly_subcmd() {
   local sanitized
   sanitized="$(strip_read_only_null_redirections "$1")"
@@ -1095,30 +1096,12 @@ fi
       fi
     fi
 
-    # Lead operational allowlist runs after destructive and governance checks.
-    LEAD_OPERATIONAL_ALLOWLIST=(
-        "git commit"
-        "git push"
-        "git checkout"
-        "git merge"
-        "git add"
-        "git stash"
-        "git pull"
-        "mkdir"
-        "touch "
-        "cp "
-        "mv "
-        "ln "
-        "node "
-        "python "
-        "python3 "
-        "npx "
-        "tsc "
-        "curl "
-        "chmod "
-    )
+    # No broad lead operational prefix allowlist. Exact predicates below handle
+    # read-only git inspection and bounded stale-index-lock recovery; other
+    # mutation-capable commands continue to the normal warning/deny checks.
+    LEAD_OPERATIONAL_ALLOWLIST=()
 
-    # Prefix-only allowlist; substring matching would let compound mutation bypass.
+    # Broad prefix allowlists would let compound mutation bypass.
     # Narrow stale-index-lock cleanup may coexist with read-only Git inspection.
     TRIMMED_LEAD_CMD="${CLEAN_COMMAND#"${CLEAN_COMMAND%%[![:space:]]*}"}"
     if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then

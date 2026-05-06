@@ -6,7 +6,7 @@ INPUT="$(cat)"
 
 # PermissionRequest is the narrow place where Claude Code asks the operator for
 # protected self-edit approval. Keep this hook smaller than the governance
-# doctrine: it only removes repeat prompts for structured edits to document
+# doctrine: it only removes repeat prompts for structured Edit/Update/MultiEdit changes to document
 # surfaces that the normal PreToolUse gates have already allowed.
 RESULT="$(INPUT_JSON="$INPUT" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'
 const fs = require("fs");
@@ -70,10 +70,6 @@ const hasAllowedEditShape = (toolName, toolInput) => {
     return Array.isArray(toolInput.edits) && toolInput.edits.length > 0;
   }
 
-  if (toolName === "Write") {
-    return typeof toolInput.content === "string" || typeof toolInput.text === "string";
-  }
-
   return false;
 };
 
@@ -99,7 +95,7 @@ try {
   const toolName = String(input.tool_name || input.toolName || "");
   const toolInput = input.tool_input || input.toolInput || input.input || {};
 
-  if (!["Edit", "Update", "MultiEdit", "Write"].includes(toolName)) {
+  if (!["Edit", "Update", "MultiEdit"].includes(toolName)) {
     emit(null);
     process.exit(0);
   }

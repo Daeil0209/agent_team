@@ -92,6 +92,9 @@ PASS is prohibited when any decisive acceptance surface remains:
 
 ## Operator-Runtime Verification Protocol
 Use this section when validation has operator-runtime cross-environment dependency, executable user-facing program burden, exact launch/termination path, or no-operator-labor risk.
+For governance hook/settings changes, bounded direct proof of the changed surface, including settings parsing, matcher coverage, or direct hook invocation as applicable, can support only the bounded hook/settings contract it actually exercises.
+Native Claude Code dispatcher/UI E2E is a separate operator-runtime validation surface and is required only when the frozen acceptance claim includes Claude Code client invocation, enforcement, UI, launch, or operator-flow behavior.
+If that broader surface is unavailable, report it in `OPEN-SURFACES` or return `HOLD` for that surface; do not invalidate narrower bounded proof, and do not synthesize that proof into PASS for the unexercised native/client-integrated surface.
 
 ### Operator-Exhaustive Integrity And Rendered Quality
 For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix; partial route, viewport, or state coverage narrows the verdict or forces `HOLD`, not PASS.
