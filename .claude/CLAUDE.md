@@ -58,6 +58,7 @@
 - `[HARDEN]` Correct valid defects at the narrowest owner. Do not add duplicate doctrine when adherence is the real fix.
 - `[PROJECT-OUTPUT-ROOT]` Task-created deliverables, evidence, logs, exports, tool output, and nested outputs stay under `projects/<project-folder>/...`.
 - `[HOOK-LAST]` Hooks are last-resort runtime guards. They are not planning, routing, or judgment owners.
+- Procedure gaps, packet quality, advisory absence, output-root preference, and recoverable handoff defects stay with doctrine, skills, packets, owner reports, or task state unless they directly create a reserved hard-deny danger.
 - Broader hook blocking needs named non-hook failure, narrow matcher, recovery path, and a `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry.
 
 ## Priority And Ownership
@@ -150,7 +151,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Source/governance edits stay on owner files. Generated products/evidence never spill into repo root, `.claude/*`, runtime state, home, temp, or incidental cwd.
 - If the project output folder is unknown before file-producing work, derive and freeze the safest canonical root. User escalation is invalid when a safe canonical root exists.
 - Claude Code boundary: `CLAUDE.md`, rules, and skills shape behavior through context. `settings`, permissions, sandbox, and hooks provide technical enforcement. Do not overclaim prose as client enforcement.
-- Keep governance-flow hooks separate from settings-deny secret protection. Hooks govern procedure/governance surfaces. `settings.json` deny rules protect credential and secret paths.
+- Keep governance-flow hooks separate from settings-deny secret protection. Hooks guard only observable runtime edges that would otherwise produce reserved hard-deny danger. `settings.json` deny rules protect credential and secret paths.
 - External MCP/advisory tools are capabilities, not owners. Codex is owner-scoped advisory only. It cannot block, dispatch, validate, accept, mutate, repair credentials, or replace `self-verification` or owner gates.
 - Agent-team runtime state is runtime-owned.
 - Define roles in `.claude/agents/`. Do not hand-author team config, task, mailbox, or cleanup state as project documents.

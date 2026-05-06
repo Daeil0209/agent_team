@@ -7,8 +7,8 @@ Load after `Skill(work-planning)` is active, draft planning fields exist, and ro
 Pre-`work-planning` Codex output is not planning evidence.
 
 ## Trigger
-Required:
-- `ACTIVE-WORKFLOW: dev-workflow`
+Required trigger evaluation:
+- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate this reference. It does not require a successful Codex call when no material advisory trigger applies or advisory access records `fail-open:*`.
 
 Risk-triggered:
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
@@ -19,14 +19,15 @@ Risk-triggered:
 - team-lead is considering a non-destructive, non-security, non-policy user question instead of a default, parameter, assumption, or owner-evidence route
 
 Skip only for light, receipt/control/status/lifecycle/clarification-only, or no-trigger consequential work.
-For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is invalid.
+For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>` after evaluating this section; advisory tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
 
 ## Authority
 Codex is advisory-only structural review.
 Review route, owner, workflow, parallel-fit, readiness, skill-map, acceptance path, and needless-user-gate defects from the user's usable-result perspective.
 Prefer the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
 
-Codex never blocks, dispatches, validates, accepts, logs in, changes files, replaces `SV-PLAN`/`SV-RESULT`, or satisfies `CODEX-ADVISORY-BASIS`.
+Codex never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
+`CODEX-ADVISORY-BASIS` is the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 team-lead owns the plan, accepted revisions, rejected points, and final route.
 
 ## Tool Discipline
@@ -91,11 +92,11 @@ Parameterizable uncertainty is not a blocker.
 4. Retry one first-use connection miss before final fail-open.
 5. Record `fail-open:<reason>` after exhausted MCP/tool/auth/quota/timeout/parse failure.
 
-Every valid point requires team-lead adjudication before positive freeze.
+Every valid point returned by a successful advisory requires team-lead adjudication before the planning basis is complete.
 - Accept only by changing the affected planning field or blocker basis.
 - Reject only by citing doctrine, user instruction, evidence, or frozen request basis.
 - Generic "noted" rationale is invalid.
-- Missing acknowledgment blocks positive freeze.
+- Unadjudicated valid points leave `work-planning` incomplete.
 
 Freeze one:
 - `CODEX-ADVISORY-BASIS: skipped:<basis>`

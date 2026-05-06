@@ -55,7 +55,6 @@ emit_packet_warning() {
 emit_channel_clarity_warning() {
   local reason="${1:?reason required}"
   emit_packet_warning "$reason"
-  hook_emit_pretool_context "CHANNEL-CLARITY: $reason" "Assignment channel needs a clearer packet."
 }
 
 dispatch_proof_note() {

@@ -40,7 +40,8 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - Does not call Codex.
 - Does not adjudicate Codex points.
 - Does not turn `fail-open:*` into a blocker unless `work-planning` already marked the route blocked.
-- If a team-lead dispatch route lacks required `CODEX-ADVISORY-BASIS` or carries `skipped:*` while `ACTIVE-WORKFLOW: dev-workflow` is present, stop and reopen `work-planning`.
+- If a team-lead dispatch route lacks required `CODEX-ADVISORY-BASIS`, stop and reopen `work-planning`.
+- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-advisory-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.

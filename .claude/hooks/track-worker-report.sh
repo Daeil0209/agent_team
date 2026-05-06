@@ -221,7 +221,6 @@ if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]] \
   DUPLICATE_DISPATCH_ACK="true"
   printf '[%s] TRACK-WORKER-REPORT WARN: duplicate or stale dispatch-ack from %s without pending ack requirement; treating as receipt-only anomaly, not new work.\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" >> "$VIOLATION_LOG"
-  hook_emit_posttool_context "DUPLICATE-DISPATCH-ACK: ${SENDER_NAME} sent dispatch-ack with no pending assignment receipt requirement. Treat it as stale/duplicate receipt only; do not create, reopen, or extend work from this signal." "Duplicate dispatch-ack warning."
 fi
 
 if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
@@ -451,8 +450,8 @@ if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] |
 
     if (( ${#SILENT_PASS_MISMATCHES[@]} > 0 )); then
       WARN_MISMATCH_LIST="$(printf '%s; ' "${SILENT_PASS_MISMATCHES[@]}")"
-      WARN_BODY="VALIDATOR-SILENT-PASS-WARN: validator '${SENDER_NAME}' returned PASS-grade verdict for task '${TASK_ID:-unknown}' but evidence-vs-claim alignment is incomplete. Mismatches: ${WARN_MISMATCH_LIST}Per CLAUDE.md \`[USER-SURFACE]\` + \`### Role And Acceptance Law\`: do not synthesize as completion-grade until evidence reconciles with claim. Team-lead must verify the synthesized result before treating it as verified-result; consider re-dispatch with stronger acceptance basis or narrow the claim to verified scope."
-      hook_emit_posttool_context "$WARN_BODY" "Validator evidence warning."
+      printf '[%s] TRACK-WORKER-REPORT WARN: validator silent-pass evidence mismatch from %s task=%s mismatches=%s\n' \
+        "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" "${TASK_ID:-unknown}" "$WARN_MISMATCH_LIST" >> "$VIOLATION_LOG"
     fi
   fi
 fi

@@ -129,9 +129,9 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Specialist And Skill Ordering
 - When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution, but keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
 - Treat the consuming lane as the default skill-up owner. Each specialist skill declares its `PRIMARY-OWNER` and optional `SECONDARY-CONSUMER` in SKILL.md frontmatter and may restate them in its Structural Contract when local readability requires it. The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
-  - developer-owned specialists and their controlling order: `agents/developer.md` § RPA-4 Specialist Skills.
-  - reviewer-owned specialists: `agents/reviewer.md` § RPA-4 Specialist Skills.
-  - tester-owned specialists: `agents/tester.md` § RPA-4 Specialist Skills.
+  - developer-owned specialists and their controlling order: `skills/developer/references/developer-lane-detail.md` § Specialist Skill Loading.
+  - reviewer-owned specialists: `skills/reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
+  - tester-owned specialists: `skills/tester/references/tester-lane-detail.md` § Specialist Skill Loading.
 - Treat common-skill hardening differently from specialist skill-up.
   - Common-skill patches still require one primary owner, never diffuse co-ownership.
   - Inspectors may propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
@@ -156,7 +156,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
 - Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue advisory or `HOLD`.
-- Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks own governance procedure enforcement.
+- Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks technically guard observable governance procedure edges.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.
 - Do not add new hard-blocks merely to raise apparent coverage or enforcement rate.

@@ -75,11 +75,11 @@ Own the actual execution move:
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
 - run the task-state and packet final check before sending
-- carry recommended non-lane-core skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
+- carry required non-lane-core skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
 - carry `REQUEST-BOUND-PACKET-FIELDS` as exact agent-facing request-fit fields when the receiving lane needs original request shape, exact instruction wording, user surface, burden cue, or acceptance basis
 - carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology guidance for the receiving lane
-- missing or lane-mismatched skill-suggestion entries return to the same frozen owner when all `work-planning` boundary-change axes stay unchanged
-- ownership-changing skill-suggestion entries reopen `work-planning`
+- missing or lane-mismatched skill-basis entries return to the same frozen owner when all `work-planning` boundary-change axes stay unchanged
+- ownership-changing `REQUIRED-SKILLS` or `SKILL-RECOMMENDATIONS` entries reopen `work-planning`
 
 Packet final check:
 - every assignment-grade packet carries `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active

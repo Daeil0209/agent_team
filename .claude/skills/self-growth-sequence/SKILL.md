@@ -127,20 +127,21 @@ When a defect or justified challenge is recognized, run this sequence:
 3. Reconstruct — identify the intended rule, owner, procedure, packet, hook, or verification path that was supposed to prevent the failure.
 4. Diagnose — explain why that design failed in execution.
    Classify the failure mode.
-5. Dispatch — open self-growth immediately as a sidecar or nearest-safe-boundary patch path.
-6. Harden — patch the correct owner surface with the smallest meaning-preserving edit.
+5. Dispatch — open self-growth classification immediately as a sidecar or nearest-safe-boundary path.
+6. Harden — patch the correct owner surface with the smallest meaning-preserving edit only after defect basis, causal basis, and recurrence path are sufficient.
 7. Re-verify — gather fresh evidence on the affected path.
 8. Iterate — if verification finds a remaining or newly created defect, return to Reconstruct or Diagnose.
    Repair again with the new evidence.
 9. Resume corrected state — continue with the strengthened basis, reopen planning, or assign an explicit blocker owner.
    Interrupted work keeps `RESUME-OWNER` and `RESUME-ACTION`.
-Self-healing is complete only when the recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis.
+Self-healing is complete only when a confirmed recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis.
+If classification disproves a durable defect, close only with the active-task correction, no-recurrence basis, and owner truth.
 Explanation alone is not self-healing.
 ### Trigger discipline
 - On recognizing a behavioral defect, classify it before unsafe continuation.
 - Complete causal diagnosis before drafting durable hardening.
-- Open self-growth as a sidecar or nearest-safe-boundary patch path.
-- Durable hardening waits for sufficient causal basis.
+- Open self-growth classification as a sidecar or nearest-safe-boundary path.
+- Durable hardening waits for sufficient causal and recurrence basis.
 - Ordinary continuation waits for the corrected state or explicit `HOLD` ownership.
 - Active request-fit, deliverable shape, and correctness/safety basis outrank self-growth.
 - If the defect blocks safe or correct handling now, stabilize first.

@@ -9,14 +9,8 @@ INPUT_JSON="$INPUT" CLAUDE_HOME="$HOME/.claude" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
 
-const deny = (reason) => {
-  process.stdout.write(JSON.stringify({
-    hookSpecificOutput: {
-      hookEventName: "PreToolUse",
-      permissionDecision: "deny",
-      permissionDecisionReason: reason
-    }
-  }));
+const warn = (reason) => {
+  void reason;
 };
 
 const normalize = (value) => String(value || "").trim().toLowerCase();
@@ -46,11 +40,11 @@ try {
   }
 
   if (!taskId) {
-    let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)}`;
+    let reason = `task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)}`;
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
-    deny(reason);
+    warn(reason);
     process.exit(0);
   }
 
@@ -278,11 +272,11 @@ try {
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
-    deny(reason);
+    warn(reason);
     process.exit(0);
   }
 
-  let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} needs a current open executable task id, and task id '${taskId}' is absent from the current task store.`;
+  let reason = `task-target preflight incomplete. Detail: ${toolName} needs a current open executable task id, and task id '${taskId}' is absent from the current task store.`;
   if (staleTaskEvidence) {
     reason += ` The id is within ${staleTaskEvidence.teamName}'s task highwatermark (${staleTaskEvidence.hwmValue}); use that only as stale allocation evidence and select a current open task instead.`;
   }
@@ -293,9 +287,9 @@ try {
   if (toolName === "TaskOutput") {
     reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
   }
-  deny(reason);
+  warn(reason);
 } catch (error) {
-  deny(`Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`);
+  warn(`Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`);
   process.exit(1);
 }
 NODE

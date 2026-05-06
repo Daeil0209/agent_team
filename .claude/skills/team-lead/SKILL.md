@@ -59,7 +59,7 @@ Hard surface:
 - Lead-local preserves parallel fit.
 - Lead-local reports only local evidence strength.
 - Team-routed or ambiguous paths go through `task-execution`.
-- Agent `REQUIRED-SKILLS` carries recommended non-lane-core skills from frozen lane maps or lawful phase refinement.
+- Agent `REQUIRED-SKILLS` carries required non-lane-core skills from frozen lane maps or lawful phase refinement.
 - Teammates receive packetized, state-backed, or artifact-cited material facts.
 - Material facts must be packetized, state-backed, or artifact-cited before dispatch.
 

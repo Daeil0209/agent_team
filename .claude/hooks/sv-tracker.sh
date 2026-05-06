@@ -11,7 +11,8 @@ source "$(dirname "$0")/hook-config.sh"
 # completion is recorded later when runtime setup succeeds or task planning
 # begins; host-authorized runtime entry still belongs to TeamCreate and runtime-entry
 # enforcement.
-# sv-result marker = self-verification load observed after work-planning and at least one post-planning action.
+# lead sv-result marker = self-verification load observed after work-planning and at least one post-planning action.
+# worker sv-result marker = lane-local self-verification load observed in the worker session; planning basis belongs to the received packet.
 # Markers prove required sequence shape only; Critical Challenge remains procedural work.
 # wp marker = work-planning loaded (new task, clears both sv phase markers)
 
@@ -74,12 +75,12 @@ case "$SKILL_NAME" in
     self_growth_clear_state "$SESSION_ID"
     ;;
   *self-verification*)
-    if [[ -f "$WP_MARKER" && -f "$POST_WP_ACTION_MARKER" ]]; then
+    if [[ -n "$WORKER_NAME" ]]; then
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
-      if [[ -z "$WORKER_NAME" ]]; then
-        date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
-        clear_lead_planning_required "$SESSION_ID"
-      fi
+    elif [[ -f "$WP_MARKER" && -f "$POST_WP_ACTION_MARKER" ]]; then
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
+      clear_lead_planning_required "$SESSION_ID"
     fi
     SUPPRESS_DISPLAY=1
     ;;

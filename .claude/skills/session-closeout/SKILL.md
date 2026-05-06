@@ -42,7 +42,7 @@ Keep closeout narrow:
 - Once closeout owns the path, agent outputs can narrow residual truth only.
 - A late agent output after closeout intent can still narrow residual truth.
 - Treat late output as residual evidence, not ordinary completion.
-- Hook-owned closeout state tracks teardown progress.
+- Hook-maintained closeout state tracks teardown progress.
 - If continuity, runtime state, and teardown evidence disagree, prefer truthful `HOLD` or warning-bearing closeout over repair choreography during teardown.
 - Partially booted explicit runtime follows the direct closeout path.
 

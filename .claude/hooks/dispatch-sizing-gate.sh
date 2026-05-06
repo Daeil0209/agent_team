@@ -269,7 +269,7 @@ fi
 
 # Sharded researcher dispatches are intentionally parallel runtime instances.
 # The hook recognizes them only by explicit shard identity fields because packet
-# mode wording is doctrine context, not a hook-owned behavior controller.
+# mode wording is doctrine context, not a hook behavior controller.
 _is_sharded_researcher=false
 SHARDED_TARGET_NAME=""
 if [[ "$TARGET_LANE" == "researcher" ]]; then

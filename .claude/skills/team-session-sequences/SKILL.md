@@ -48,7 +48,7 @@ Use these procedures when the corresponding sequence is materially in play.
 Load trigger-specific files directly from `SKILL.md`.
 - `references/pre-dispatch-verification.md`: consequential dispatch readiness index and risk-tier record map.
 - `references/task-decomposition.md`: split basis, child packet boundary, done condition, and return-form discipline.
-- `references/dispatch-packet-compliance.md`: session-side controlled-value fields and lane-specific presence-required fields.
+- `references/dispatch-packet-compliance.md`: session-side controlled-value fields and lane-specific presence hints.
 - `references/agent-load-guard.md`: focused dispatch sizing bounds and overload exception.
 - `references/dispatch-execution-contract.md`: background/foreground runtime execution, request-fit ordering, phase intent, and mixed-purpose prompt boundaries.
 - `references/parallel-shard-merge.md`: parent packet freeze, shard fan-out, merge owner, and integrated output routing.

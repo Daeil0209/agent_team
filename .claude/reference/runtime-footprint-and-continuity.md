@@ -23,10 +23,10 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 2. Named failure: identify the exact prohibited action, irreversible side effect, secret boundary, runtime-truth corruption, or dispatch/lifecycle risk the hook protects.
 3. Narrow matcher: the hook triggers only on the smallest event/tool/path/message class that can catch the failure.
 4. Recovery path: a lawful next owner or retry path is stated; a blocked user/agent is not left guessing.
-5. False-positive review: known legitimate actions that might be blocked are listed, exempted, downgraded to warning, or explicitly accepted as risk.
+5. False-positive review: known legitimate actions that might be blocked are listed, exempted, downgraded to silent tracking, or explicitly accepted as risk.
 6. Footprint review: record affected hook event, matcher count, script size trend, and whether the change adds latency to high-frequency tool paths.
 
-If any item is missing, keep blocking enforcement unchanged. Use owner-procedure repair, warning-only feedback, settings deny rules for hard security paths, or a narrower hook.
+If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 
 ## Current Local Hook Posture
 The current `.claude/settings.json` uses multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, SV, runtime-entry, dispatch sizing/proof, and compliance supervision.

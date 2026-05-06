@@ -171,7 +171,6 @@ Keep authoritative versus supplemental sources explicit.
 - Use `not-applicable` instead of omission only when that axis was not part of the frozen validation surface.
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
-- Executed user-surface verdict reports the concrete tool path and observed execution evidence.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
 - Wait for lifecycle direction after handoff.
 - See `references/validator-lane-detail.md` for validator-specific handoff detail.

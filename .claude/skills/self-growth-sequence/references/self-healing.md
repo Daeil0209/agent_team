@@ -6,12 +6,12 @@ auto-inject: false
 ## Self-Healing Trigger Matrix
 | Trigger Type | Default Interpretation | Required Action |
 |---|---|---|
-| justified user correction | authoritative defect signal | open self-growth immediately; stabilize active request; harden recurrence path |
+| justified user correction | authoritative classification signal | open classification immediately; stabilize active request; harden recurrence path only when behavioral/procedural defect basis and recurrence path are confirmed |
 | self-detected behavioral defect | real defect unless disproven by stronger evidence | open self-growth immediately; do not wait for user confirmation |
 | repeated missed-catch / recurrence | capability or boundary weakness | escalate beyond local patch into checklist, routing, hook, or authority hardening |
 | blocked execution due to missing reusable skill | capability gap | use Capability-Gap Fast Path with explicit owner and verification |
 
-First occurrence does not mean "ignore until repeated." Repetition raises the hardening depth, not the existence of the duty.
+First occurrence does not mean "ignore until repeated." It opens classification immediately. Repetition raises hardening depth; durable hardening still requires confirmed defect basis and recurrence path.
 
 ## Self-Healing Closure Checklist
 Before declaring a self-growth round complete, keep all of the following explicit:

@@ -45,7 +45,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/execution-readiness.md`: packet, proof, setup, lifecycle, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/cross-continuity.md`: same-session patches, decisions, contracts, lane changes, and acceptance changes.
-- `references/codex-advisory.md`: Codex MCP advisory trigger, packet, forced acknowledgment, fail-open, and authority/footprint limits.
+- `references/codex-advisory.md`: Codex MCP advisory trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
 
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
@@ -179,14 +179,14 @@ Freeze when material:
 
 Codex advisory law:
 - Load `references/codex-advisory.md` after actual `Skill(work-planning)` load and draft route fields.
-- Required attempt for `ACTIVE-WORKFLOW: dev-workflow`.
+- For `ACTIVE-WORKFLOW: dev-workflow`, evaluate the Codex advisory trigger. Successful Codex output is not required when no material advisory trigger applies or advisory access records `fail-open:*`.
 - Load for the reference risk triggers.
 - Before user-decision escalation that is not destructive, security, or policy, run Codex confirmation review with canonical `doctrine_read_paths`.
 - A configurable unknown routes to best default, parameter, assumption/open question, or owner evidence path.
 - If parameterization preserves data and architecture, use the configurable path.
 - Without a team-lead-verified true blocker from Codex, continue through best default, parameter, assumption/open question, or owner evidence route.
 - Outcomes are accepted/rejected acknowledgment or fail-open.
-- Silent skip reopens planning.
+- Unrecorded required or triggered advisory basis leaves `work-planning` incomplete.
 - Codex returns advice or fail-open; Claude owns block, lane, dispatch, and acceptance decisions.
 
 Hard stops:

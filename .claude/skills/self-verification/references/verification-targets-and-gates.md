@@ -69,7 +69,7 @@ Use every lens that materially applies to the target. Omission of an applicable 
 ## SV-PLAN Detailed Gate
 When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
-- if `work-planning` triggered `REFERENCE-USE`, citation presence and specificity were checked in the compact spine before this detail gate opens
+- if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, or acceptance owner
@@ -78,7 +78,7 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`
 - `ACTIVE-WORKFLOW: dev-workflow` must show a Codex advisory required-attempt as `triggered:*` or `fail-open:*`, never `skipped:*`
 - Codex advisory risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` also make `skipped:*` invalid; use `triggered:*` or `fail-open:*`
-- `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject
+- `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
 - team-lead workspace discovery, repository search, file reads, runtime probing, or external lookup is the frozen `NEXT-CONSEQUENTIAL-ACTION` or a verified `LEAD-LOCAL-WORK-ITEMS` entry

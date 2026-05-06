@@ -18,7 +18,7 @@ The contract axes are:
 - methodology, tier, and lane phase context when already frozen
 - user surface, proof path, tool/setup/discovery boundary, run path, and burden contract
 - decision, validation, environment, scenario, and operator-platform proof context
-- cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities when material
+- cited authoritative references, deviation-from-reference basis, Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities when material
 
 Receiving lanes use this contract to classify receipt as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
 They preserve global routing and acceptance ownership from packet basis instead of memory.
@@ -62,6 +62,7 @@ It never creates lane ownership, authorizes lane-core skill listing, or changes 
 If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 
 Do not leave these request-fit or methodology fields only in linked-path references when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
+When upstream planning froze reference-driven citation or deviation basis, carry it as cited request-bound or artifact basis, not as a standalone `REFERENCE-USE` packet field.
 
 When frozen governance depth materially changes staffing, checkpoint, review, proof, or acceptance burden for the receiving lane, the assignment packet must also carry:
 - `PROJECT-TIER`

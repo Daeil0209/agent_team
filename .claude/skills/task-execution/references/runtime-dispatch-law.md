@@ -47,16 +47,16 @@ Target-resolution preflight is mandatory before the tool call:
 - Before new `Agent`, reuse a fitting live/standby agent when it preserves the frozen surface.
 - Otherwise use the frozen concrete agent identity.
 - Recoverable packet or target gaps route to packet correction, team-scoped creation, route replan, or lane `hold|blocker`.
-- They do not route to hook-owned blocking.
+- They do not route to hook-controlled blocking.
 
 ## SendMessage And Skill Law
 - Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task per `truth-rules.md`.
 - Completed-task correction first needs an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation.
 - Workflow-control `SendMessage` is for canonical `phase-transition-control` only.
 - Lifecycle-only `SendMessage` is not assignment and does not replace dispatch.
-- Agent-facing `REQUIRED-SKILLS` is mandatory on every assignment-grade packet as recommended non-lane-core skills.
-- When no upstream recommendation exists, carry `REQUIRED-SKILLS: []`; omission is invalid and listing the receiving lane-core skill is invalid.
-- `task-execution` can narrow or phase-specialize the recommended skill basis only when the active workflow owner already resolved that phase-local basis.
+- Agent-facing `REQUIRED-SKILLS` is mandatory on every assignment-grade packet as required non-lane-core skills frozen by planning or the active workflow owner.
+- When no upstream required skill exists, carry `REQUIRED-SKILLS: []`; omission is invalid and listing the receiving lane-core skill is invalid.
+- `task-execution` can narrow or phase-specialize the required skill basis only when the active workflow owner already resolved that phase-local basis.
 - Same-owner missing or contradictory skill basis returns to that workflow owner.
 - Any owner, lane, independent surface, proof, acceptance, or staffing change reopens `work-planning`.
 

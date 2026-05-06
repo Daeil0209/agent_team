@@ -99,8 +99,10 @@ Recovery discipline: when a packet warning flags a "missing field" you have writ
 Read the field's first-line shape against the rules above before retrying.
 Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
-Packet skill fields carry recommended skills.
-- Use `REQUIRED-SKILLS: []` when no upstream recommendation exists.
+Packet skill fields separate required skills from advisory recommendations.
+- Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
+- Use `REQUIRED-SKILLS: []` when no upstream required skill exists.
+- Carry `SKILL-RECOMMENDATIONS` only when planning or the active workflow owner froze advisory methodology guidance for the receiving lane.
 
 ## Session Cross-Continuity Packet Check
 Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, decisions, contract freezes, lane-charter changes, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.

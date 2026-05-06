@@ -54,6 +54,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - New inter-module dependency is introduced.
 - Shared interface contract is modified.
 - A reused pattern or rule change affects 5+ sites.
+- If the dispatch already bounds the triggered scope and downstream review, proof, and acceptance owners are explicit, continue inside that boundary and carry the trigger basis in the handoff.
+- Otherwise send `scope-pressure` when a bounded split, replan, or route decision can resolve the trigger; send `hold|blocker` when write authority, shared contract authority, or acceptance ownership is missing.
 
 ## Development Production Workflow
 ### 1. Confirm Assigned Scope
@@ -64,12 +66,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - They open the team-lead resolution loop.
 - They are not task abandonment.
 - Send them immediately to `team-lead` via `SendMessage`.
-- Include exact constraint, attempted or available path, why current execution cannot continue truthfully, and smallest next executable step.
-- Required decisive basis includes `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `REQUIRED-SKILLS`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, and `ACCEPTANCE-OWNER`.
-- It also includes `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, first lane action, and stop condition.
-- For multiple promised surfaces, include `SCOPE-BASELINE`/`ACTIVE-SLICE`.
-- For executable deliverables, include the exact launcher contract.
-- For user-facing surfaces, include the surface and path-bounded `WRITE-SCOPE` when writes are path-bounded.
+  - Include exact constraint, attempted or available path, why current execution cannot continue truthfully, and smallest next executable step.
+  - Use `references/developer-lane-detail.md` as the controlling packet-field catalog for decisive basis, multiple-surface additions, executable launcher contract, user-facing surface, and path-bounded `WRITE-SCOPE`; do not maintain a second field list here.
 - Reconstruct only when safe without changing owner, phase, proof burden, acceptance burden, deliverable shape, or write scope.
 - Mark inferred pieces explicitly.
 - If production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary, stop only the blocked path.

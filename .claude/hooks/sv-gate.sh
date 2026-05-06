@@ -28,11 +28,7 @@ SESSION_ID="$(recover_session_id "$SESSION_ID")"
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 
 emit_warning() {
-  local reason="${1:?reason required}"
-  reason="${reason/BLOCKED: /}"
-  reason="${reason/PROCEDURE WARNING: /}"
-  printf '[%s] SV-GATE WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
-  hook_emit_pretool_context "HOOK-LAST WARNING: $reason" "Hook-last verification warning."
+  return 0
 }
 
 planning_block() {

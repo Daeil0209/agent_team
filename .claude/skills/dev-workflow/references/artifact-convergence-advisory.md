@@ -11,7 +11,8 @@ team-lead owns reconciliation and phase cursor truth.
 The artifact owner owns revision.
 `task-execution` owns assignment-grade correction dispatch.
 
-Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, replaces owner gates, or satisfies `CODEX-ADVISORY-BASIS`.
+Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, or replaces owner gates.
+`CODEX-ADVISORY-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 
 ## Trigger
 Run for:

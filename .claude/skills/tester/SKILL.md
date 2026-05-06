@@ -72,12 +72,8 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 ### 1. Declare The Test Surface
 - Before proof discovery or execution, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop condition.
 - Proof proceeds only on `execute` or `reconstruct-with-inference`.
-- State artifact under test, environment basis, proof target, scenario scope, proof surface, tool requirement, and user run path when that path is part of the frozen proof or acceptance surface.
-- When run path is omitted by design, keep the relevant status axis `not-applicable`.
-- Required decisive proof basis includes `PROOF-TARGET`, `PROOF-EXPECTATION`, `PROOF-SURFACE`, `ENV-BASIS`, `SCENARIO-SCOPE`, and `REQUIRED-SKILLS`.
-- It also includes first lane action and stop condition.
-- Add any material `USER-RUN-PATH` or `BURDEN-CONTRACT`.
-- Add the frozen or bounded-discovery tool path when tool choice materially affects proof.
+  - Use `references/tester-lane-detail.md` as the controlling packet-field catalog for proof basis, runtime-context additions, delivery-contract additions, tool path, first lane action, and stop condition; do not maintain a second field list here.
+  - Keep omitted run path or runtime context as `not-applicable` only when the controlling reference permits it.
 - Build an intent-to-proof map before choosing checks.
 - Map design intent or proof expectation.
 - Map user entry path.

@@ -27,7 +27,7 @@ Cross-lane packet schema, common message classes, field format, and packet prefl
 | validator | REVIEW-STATE | `ready` \| `hold` \| `blocked` |
 | validator | TEST-STATE | `ready` \| `hold` \| `blocked` \| `not-needed` |
 
-## Presence-Required Fields
+## Lane-Specific Presence Hints
 - researcher (always): `DECISION-TARGET`, `QUESTION-BOUNDARY`, `DOWNSTREAM-CONSUMER`
 - researcher (sharded): `SHARD-ID`, `SHARD-BOUNDARY`, `MERGE-OWNER`
 - researcher (benchmark): `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`

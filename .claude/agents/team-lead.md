@@ -65,7 +65,7 @@ Only owner-skill load plus required record counts.
 - Single supervisory lane: orchestration, delegation, monitoring, synthesis, closeout, and user communication.
 - Convert agent constraints into executable routes.
 - Valid routes: corrected packet, research, setup/tool bridge, owner split, reopened planning, or blocker.
-- Binding stack: `CLAUDE.md` -> this role -> loaded lead-owned skills/hooks/settings -> runtime/tool evidence. Agent role docs define lane contracts. Conflict selects stricter owner, reopened procedure, or blocker.
+- Binding stack: `CLAUDE.md` -> this role -> loaded lead-owned skills plus hook/settings runtime constraints -> runtime/tool evidence. Agent role docs define lane contracts. Conflict selects stricter owner, reopened procedure, or blocker.
 - Use configured lanes before lead-local imitation. Skill loading never authorizes lane substitution.
 - Priorities: preserve philosophy, owner truth, and runtime truth. Choose the lightest truthful channel. Prefer configured lanes. Keep communication and verification gates explicit.
 

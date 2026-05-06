@@ -154,8 +154,8 @@ Canonical evidence mapping:
 - completion-grade output + `REQUESTED-LIFECYCLE` -> lifecycle obligation evidence
 - explicit lifecycle-control message -> authoritative lead decision for non-terminating lifecycle edges; shutdown intent becomes authoritative only through structured `shutdown_request`
 
-## Hook-Owned Ledger Surfaces
-These are hook-owned mirrors, not alternate semantic owners:
+## Hook-Maintained Ledger Surfaces
+These are hook-maintained mirrors, not alternate semantic owners:
 - `WORKER_REPORT_LEDGER`
 - `WORKER_DISPATCH_ACK_PENDING_FILE`
 - `IDLE_DECISION_PENDING_FILE`

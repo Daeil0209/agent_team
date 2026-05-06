@@ -93,6 +93,7 @@ try {
   const pendingAgentRows = parseClaimedPendingRows(process.env.PENDING_AGENTS_FILE || "", 2);
   const pendingModeRows = parseClaimedPendingRows(process.env.PENDING_AGENT_MODES_FILE || "", 3);
   const identityRows = sessionMapRows.concat(pendingAgentRows, pendingModeRows);
+  const workerSessionIdLookup = new Set(identityRows.map((row) => trimText(row && row.sessionId)).filter(Boolean));
   const candidateSessionIdsSet = new Set();
   const candidateSenderNamesSet = new Set();
 
@@ -200,6 +201,11 @@ try {
     markerStates.find((state) => state.sessionId && state.sessionId === preferredEvidenceSessionId) ||
     sortedMarkerStates[0] ||
     { sessionId: sessionId, wpTimestamp: "", svResultPresent: false };
+  const evidenceSender = normalize((latest && latest.senderName) || teammateName);
+  const evidenceIsWorker = Boolean(
+    (evidenceState.sessionId && workerSessionIdLookup.has(evidenceState.sessionId)) ||
+    (evidenceSender && evidenceSender !== "team-lead")
+  );
 
   if (
     latest &&
@@ -290,7 +296,8 @@ try {
     convergencePassValue: String(fieldValues.convergencePass || ""),
     missingFields,
     identitySummary,
-    reportRejectionReason
+    reportRejectionReason,
+    evidenceIsWorker
   };
 
   process.stdout.write(JSON.stringify(result));
@@ -328,6 +335,7 @@ try {
     missingFields: [],
     identitySummary: "",
     reportRejectionReason: "",
+    evidenceIsWorker: false,
     parseError: String(error && error.message || error)
   }));
 }
@@ -374,7 +382,8 @@ const fieldValues = [
   parsed.convergencePassValue || "",
   Array.isArray(parsed.missingFields) ? parsed.missingFields.join(", ") : "",
   parsed.identitySummary || "",
-  parsed.reportRejectionReason || ""
+  parsed.reportRejectionReason || "",
+  parsed.evidenceIsWorker ? "true" : "false"
 ];
 
 for (const value of fieldValues) {
@@ -417,6 +426,7 @@ CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[26]-}"
 MISSING_FIELDS="${TASK_COMPLETED_FIELDS[27]-}"
 IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[28]-}"
 REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[29]-}"
+EVIDENCE_IS_WORKER="${TASK_COMPLETED_FIELDS[30]-false}"
 
 FAILURES=()
 WARNINGS=()
@@ -430,7 +440,7 @@ if [[ -z "$SESSION_ID" && -z "$TEAMMATE_NAME" ]]; then
   FAILURES+=("Identity resolution failed. Cannot verify completion requirements.")
 fi
 
-if [[ -z "$WP_TIMESTAMP" ]]; then
+if [[ -z "$WP_TIMESTAMP" && "$EVIDENCE_IS_WORKER" != "true" ]]; then
   FAILURES+=("No observed work-planning load for session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill first.")
 fi
 
