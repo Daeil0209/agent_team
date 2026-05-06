@@ -16,7 +16,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `INSTRUCTION-TRACE`: original user instructions, accepted follow-up instructions, and frozen `SCOPE-BASELINE` rows
 - `CONTRACT`: frozen Receiver-Surface Contract, Consumption Chain, frozen upstream deferrals, frozen out-of-scope rows, requested output root
 - `ARTIFACT-MAP`: final artifact identity, final location, produced output inventory, instruction-to-artifact mapping, artifact hygiene
-- `USER-SURFACE`: target user environment, exact start/open/read/action path, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path when material
+- `USER-SURFACE`: target user environment, exact start/open/read/action path, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
 - `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity
 - `COVERAGE`: every material requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, or frozen deferral/out-of-scope row
 - `BOUNDARIES`: material Boundary Register rows and downstream handoff status
@@ -27,8 +27,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 team-lead starts own-review and Codex advisory in parallel from the same frozen packet.
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.
-team-lead reconciles own-review, Codex findings, or fail-open fallback basis point by point.
-team-lead records `FINAL-ACCEPT` or `FINAL-REJECT`.
+team-lead reconciles own-review, Codex findings, or fail-open fallback basis point by point, then applies reject-first decision order.
 Each available evaluation identifies the governing final-acceptance rules.
 Each available evaluation judges evidence after rule identification.
 Codex applies `feynman-clarity` as an advisory lens.
@@ -142,8 +141,8 @@ Source-read outputs add:
 - claim truth
 
 ## Decision
-`FINAL-REJECT` records each material instruction, baseline row, or acceptance axis requiring retained matched evidence or cited frozen upstream-deferral/out-of-scope basis before workflow `Complete`.
-`FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: a validator `PASS` with no later `FINAL-REJECT` in the acceptance loop, plus team-lead `SV-RESULT` on the `FINAL-ACCEPT` record.
+Reject-first decision order: if any material instruction, baseline row, acceptance axis, or executable user-facing operator-delivery axis lacks retained matched evidence, record `FINAL-REJECT` before `FINAL-ACCEPT` or workflow `Complete`.
+Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `SV-RESULT` on the `FINAL-ACCEPT` record.
 `FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input and opens `task-execution` for assigned-validator rejection analysis.
 Codex unavailable status records `fail-open:<reason>` with fallback final-acceptance inspection basis and conservative `SV-RESULT`; validator `PASS` identity remains the acceptance prerequisite.
 
@@ -156,7 +155,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - Codex status
 - reconciliation result
 - 100% instruction-closure basis
-- user-ready completion basis
+- user-ready completion basis, including operator-delivery closure when executable user-facing
 - final evidence packet identity
 - open-surface state
 
@@ -164,7 +163,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - validator `PASS` identity
 - governing final-acceptance rule set
 - Feynman plain-explanation basis
-- rejected instruction or acceptance axis
+- rejected instruction, acceptance, or operator-delivery axis
 - evidence gap or contradiction
 - user-ready gap
 - team-lead own-review basis
@@ -174,6 +173,6 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.
-task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before developer correction.
-After developer correction, Phase 4/5 review, test, and validation rerun on the corrected artifact.
+task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
+After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.

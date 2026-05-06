@@ -179,7 +179,7 @@ Deliverable-type tool mapping and gap methodology live in `references/phase-surf
 **Execution law**: independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output. Positive completion waits for re-verification
 **Exit law**: blocking gaps are cleared against frozen `SCOPE-BASELINE` and validator PASS opens Final Acceptance Review.
 **Exit law**: otherwise the workflow returns to Phase 4 or Phase 2 until the blocking gap converges, escalates by root cause, or reaches `HOLD`.
-**Exit law**: executable user-facing completion also requires operator-delivery closure before `Complete`.
+**Exit law**: executable user-facing deliverables require operator-delivery closure before `FINAL-ACCEPT` and `Complete`; missing, broken, unverified, or mismatched operator-delivery closure becomes `FINAL-REJECT`.
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
 
 > Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, Incident Response, and Gap Detection And YAGNI Review: see the direct files in `references/` named below.

@@ -7,7 +7,7 @@ Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
 Covered rounds: R21 operator on-ramp completeness, R23 operator-OS coverage, R27 termination symmetric pair, and R31 mental-model alignment.
 When `dev-workflow` is active, this contract is active during Phase 1 and Phase 2.
 When `dev-workflow` is not active, `work-planning` consumes this contract directly for user-runnable executables before implementation, proof, or acceptance.
-Consumed again during Phase 4/5/Complete whenever launch, termination, demo data, operator OS, clean re-launch, or mental-model delivery affects proof or acceptance.
+Consumed again during Phase 4/5/Final Acceptance Review/Complete whenever launch, termination, demo data, operator OS, clean re-launch, or mental-model delivery affects proof or acceptance.
 Executable deliverables specialize the Receiver-Surface Contract through a native Consumption Chain.
 The chain covers setup/build, launch/open, operate, readable failure, terminate/cleanup, and clean re-launch.
 
@@ -99,7 +99,7 @@ It does not ask only whether a close path exists.
 Failing this mental-model alignment check is a delivery-fit defect even when the underlying close mechanism passes verification.
 
 ## Closure Re-entry Law
-Executable user-facing completion is unavailable when any closure item is missing, broken, unverified, or mismatched.
+Any missing, broken, unverified, or mismatched closure item forces `FINAL-REJECT`; executable user-facing `FINAL-ACCEPT` and completion are unavailable.
 Closure items:
 - exact launch artifact
 - native setup/build/run chain when material
