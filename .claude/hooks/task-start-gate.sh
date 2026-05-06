@@ -461,8 +461,12 @@ lead_sendmessage_monitoring_target_state() {
   fi
 
   case "$last_message_class" in
-    dispatch-ack|status|scope-pressure)
+    dispatch-ack|status)
       printf 'working'
+      return 0
+      ;;
+    scope-pressure)
+      printf 'scope-pressure-resolution'
       return 0
       ;;
     blocker)
@@ -579,7 +583,7 @@ NODE
   target_is_already_active_worker "$target_name" || return 1
   target_state="$(lead_sendmessage_monitoring_target_state "$target_name")"
   case "$target_state" in
-    working|working-report-missing|blocked)
+    working|working-report-missing|blocked|scope-pressure-resolution)
       return 0
       ;;
     *)
@@ -592,8 +596,11 @@ lead_preflight_block_reason() {
   local tool_name="${1:-tool}"
 
   case "$tool_name" in
-    Agent|TaskCreate|SendMessage)
+    Agent|SendMessage)
       planning_preflight_block "$tool_name" "Skill(work-planning) -> lifecycle/reuse check -> retry dispatch/reuse"
+      ;;
+    TaskCreate)
+      planning_preflight_block "$tool_name" "Skill(work-planning) -> freeze task purpose, owner, output surface, and acceptance basis -> retry task creation"
       ;;
     TaskUpdate|TaskStop)
       planning_preflight_block "$tool_name" "Skill(work-planning) -> confirm task id from TaskList or task_assignment -> retry task mutation -> resume any pending workflow/development cursor"
@@ -871,7 +878,7 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
     fi
   fi
   if completion_grade_sendmessage_missing_sv_result; then
-    deny_tool_use "BLOCKED: completion-grade SendMessage missing phase/stage-end SV-RESULT marker. Detail: handoff/completion must follow lane-local self-verification result evidence; if the surface is blocked, send MESSAGE-CLASS: hold|blocker instead of completion."
+    deny_tool_use "BLOCKED: completion-grade SendMessage missing observed self-verification sequence marker. Detail: handoff/completion needs lane-local SV-RESULT for the exact outgoing claim and evidence basis. Next: load self-verification, run SV-RESULT on that claim, then retry; if the surface is blocked, send MESSAGE-CLASS: hold|blocker instead."
     exit 0
   fi
   exit 0

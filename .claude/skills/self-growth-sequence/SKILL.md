@@ -291,6 +291,7 @@ Hard surface:
 - Delete only when meaning is duplicate, obsolete, or preserved elsewhere.
 - Improve readability by reducing words and clause chains.
 - Keep compressed lines single-intent and readable.
-- Freeze defect basis, design intent, causal basis, recurrence path, patch class, owner surface, protected meaning, and edit operation before drafting.
+- Freeze defect basis, design intent, causal basis, recurrence path, patch class, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and edit operation before drafting.
+- Warning, block, deny, deletion, restriction, or removal edits are valid only when the positive execution path remains explicit and executable.
 - Preserve structural connectivity, local restatements needed for isolated readability, live references, semantic-family consistency, sibling surfaces, and source-to-destination meaning.
-- Verification must prove recurrence blockage or assigned follow-up plus no owner-boundary, reference, acceptance, runtime-truth, or information-loss regression.
+- Verification must prove recurrence blockage or assigned follow-up, positive execution path preservation, and no owner-boundary, reference, acceptance, runtime-truth, or information-loss regression.

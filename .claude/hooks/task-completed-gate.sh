@@ -435,7 +435,7 @@ if [[ -z "$WP_TIMESTAMP" ]]; then
 fi
 
 if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
-  FAILURES+=("No phase/stage-end self-verification marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification and verify results before completion.")
+  FAILURES+=("No observed self-verification sequence marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, run SV-RESULT against the exact completion claim and evidence basis, then retry completion.")
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then

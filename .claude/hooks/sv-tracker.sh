@@ -3,8 +3,8 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 
 # PostToolUse hook for Skill tool.
-# Tracks phase/stage-end self-verification per session and clears the self-growth
-# entry markers when the self-growth-sequence skill is explicitly loaded.
+# Tracks phase/stage-end self-verification sequence markers per session and
+# clears the self-growth entry markers when the self-growth-sequence skill is explicitly loaded.
 # Loading proves sequence entry only; route/patch closure remains governed by
 # the self-growth procedure and downstream verification, not this hook.
 # session-boot load marks lead-local boot procedure entry only. Boot-infra
@@ -34,8 +34,9 @@ WORKER_NAME=""
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
-# Session-scoped planning-plus-result-verification marker; survives per-turn resets so verified
-# continuation edits do not trigger stage-end verification reload.
+# Session-scoped planning-plus-SV-sequence marker; survives per-turn resets so
+# bounded continuation edits do not reload self-verification only because hook
+# sequence evidence already exists. Exact claim verification remains procedural.
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 # Session-scoped session-boot marker; consumed by dispatch gates when active
 # runtime requires monitoring before fresh consequential dispatch.

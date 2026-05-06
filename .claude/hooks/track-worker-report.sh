@@ -168,6 +168,16 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
       fi
       exit 0
       ;;
+    lifecycle-control)
+      LIFECYCLE_DECISION="$(dispatch_field_raw_value "$DESCRIPTION" "LIFECYCLE-DECISION" 2>/dev/null || true)"
+      LIFECYCLE_DECISION="$(printf '%s' "$LIFECYCLE_DECISION" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+      if [[ "$LIFECYCLE_DECISION" == "standby" && -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
+        mark_worker_standby "$TARGET_NAME"
+        clear_worker_idle_pending "$TARGET_NAME"
+        clear_worker_idle_notice "$TARGET_NAME"
+      fi
+      exit 0
+      ;;
   esac
 fi
 
@@ -231,23 +241,6 @@ if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
   fi
 fi
 
-REQUESTED_LIFECYCLE="$(dispatch_field_raw_value "$DESCRIPTION" "REQUESTED-LIFECYCLE" 2>/dev/null || true)"
-REQUESTED_LIFECYCLE="$(printf '%s' "$REQUESTED_LIFECYCLE" | tr '[:upper:]' '[:lower:]')"
-
-case "$MESSAGE_CLASS" in
-  handoff)
-    mark_worker_standby "$SENDER_NAME"
-    clear_worker_idle_pending "$SENDER_NAME"
-    ;;
-  completion)
-    mark_worker_standby "$SENDER_NAME"
-    clear_worker_idle_pending "$SENDER_NAME"
-    ;;
-  hold\|blocker)
-    clear_worker_idle_pending "$SENDER_NAME"
-    ;;
-esac
-
 TASK_ID_FIELD_PRESENT="false"
 TASK_ID_FROM_MESSAGE="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
 if [[ -n "$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')" ]]; then
@@ -256,6 +249,23 @@ if [[ -n "$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')" ]]; then
 else
   TASK_ID="$(printf '%s' "$TASK_ID" | tr -d '[:space:]')"
 fi
+
+REQUESTED_LIFECYCLE="$(dispatch_field_raw_value "$DESCRIPTION" "REQUESTED-LIFECYCLE" 2>/dev/null || true)"
+REQUESTED_LIFECYCLE="$(printf '%s' "$REQUESTED_LIFECYCLE" | tr '[:upper:]' '[:lower:]')"
+
+case "$MESSAGE_CLASS" in
+  handoff)
+    clear_worker_standby "$SENDER_NAME"
+    mark_worker_idle_pending "$SENDER_NAME" "standby" "${TASK_ID:-none}" "$MESSAGE_CLASS"
+    ;;
+  completion)
+    clear_worker_standby "$SENDER_NAME"
+    mark_worker_idle_pending "$SENDER_NAME" "standby" "${TASK_ID:-none}" "$MESSAGE_CLASS"
+    ;;
+  hold\|blocker)
+    clear_worker_idle_pending "$SENDER_NAME"
+    ;;
+esac
 
 if [[ -z "$TASK_SUBJECT" ]]; then
   TASK_SUBJECT="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-SUBJECT" 2>/dev/null || true)"

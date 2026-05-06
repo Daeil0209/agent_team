@@ -38,15 +38,15 @@ try {
   const claudeHome = process.env.CLAUDE_HOME || path.join(process.env.HOME || "", ".claude");
   const targetedTools = new Set(["TaskGet", "TaskUpdate", "TaskOutput", "TaskStop"]);
   const taskIdAdvice = (currentToolName) => currentToolName === "TaskGet"
-    ? "Use TaskList or the task_assignment packet to confirm the exact task id before retrying TaskGet."
-    : "Use TaskList, TaskGet with a confirmed existing id, or the task_assignment packet to confirm the exact task id before retrying.";
+    ? "Use TaskList or the task_assignment packet to confirm a current open executable task id, then retry TaskGet."
+    : "Use TaskList, TaskGet with a confirmed existing id, a returned task mutation, or the task_assignment packet to confirm a current open executable task id, then retry.";
 
   if (!targetedTools.has(toolName)) {
     process.exit(0);
   }
 
   if (!taskId) {
-    let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)} Do not infer task ids from phase order, agent role, or the next numeric value.`;
+    let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)}`;
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
@@ -89,16 +89,18 @@ try {
     }
   }
 
-  // Highwatermark check: if taskId is numeric and within range, the task
-  // existed previously but was cleaned up by the platform after completion.
+  // Highwatermark is stale-task evidence only. It proves prior allocation, not
+  // current task existence or openness.
   const numericTaskId = /^\d+$/.test(taskId) ? parseInt(taskId, 10) : NaN;
+  let staleTaskEvidence = null;
   if (!isNaN(numericTaskId)) {
     for (const teamName of orderedUnique([inputTeamName, ...taskTeamDirs])) {
       const hwmPath = path.join(taskRoot, teamName, ".highwatermark");
       try {
         const hwmValue = parseInt(fs.readFileSync(hwmPath, "utf8").trim(), 10);
         if (!isNaN(hwmValue) && numericTaskId <= hwmValue) {
-          process.exit(0);
+          staleTaskEvidence = { teamName, hwmValue };
+          break;
         }
       } catch {
         // .highwatermark not readable, skip
@@ -267,7 +269,7 @@ try {
 
   if (agentMatch || assignmentHint) {
     const displayTarget = agentMatch ? taskId : String(assignmentHint && assignmentHint.agentName || taskId);
-    let reason = `${toolName} is task-scoped and cannot target agent reference '${taskId}'.`;
+    let reason = `${toolName} is task-scoped. Use an exact task id instead of agent reference '${taskId}'.`;
     if (assignmentHint && assignmentHint.taskId) {
       reason += ` Latest assigned task id for ${displayTarget} is '${assignmentHint.taskId}'. Use that task id for ${toolName}, or use SendMessage for agent-scoped communication.`;
     } else {
@@ -280,7 +282,11 @@ try {
     process.exit(0);
   }
 
-  let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} could not find task id '${taskId}' in the current task store. Next: ${taskIdAdvice(toolName)} Do not infer task ids from phase order, agent role, or the next numeric value. Do not retry before Next is complete.`;
+  let reason = `BLOCKED: task-target preflight incomplete. Detail: ${toolName} needs a current open executable task id, and task id '${taskId}' is absent from the current task store.`;
+  if (staleTaskEvidence) {
+    reason += ` The id is within ${staleTaskEvidence.teamName}'s task highwatermark (${staleTaskEvidence.hwmValue}); use that only as stale allocation evidence and select a current open task instead.`;
+  }
+  reason += ` Next: ${taskIdAdvice(toolName)}`;
   if (knownTaskIds.length > 0) {
     reason += ` Known task ids: ${knownTaskIds.join(", ")}.`;
   }

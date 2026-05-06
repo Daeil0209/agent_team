@@ -66,7 +66,10 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, hook, or reference chain. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
 - Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
-- Before drafting, freeze the defect basis, design-intent basis, causal basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
+- Before drafting, freeze the defect basis, design-intent basis, causal basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
+- The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
+- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, advisory warning, runtime warning, or hard block.
+- Warning, block, deny, deletion, restriction, or removal edits are valid only when that positive execution path remains explicit and executable.
 - Before drafting, enumerate affected surfaces beyond the edited file: exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors. Missing this enumeration is a patch-readiness defect, not a post-review nit.
 - For MCP or external-tool capability changes, the affected surfaces include the asset-set: project-root `.mcp.json`, `.claude/settings.json`, role tool authorization, hook/settings posture, and the owning skill/reference authority boundary.
 - When the modified artifact has no declared design-intent surface, the change packet itself must carry the intent.
@@ -85,9 +88,10 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
 - Preserve protected local restatements that keep owner files independently readable.
 - When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, hook, or self-verification gate instead of duplicate doctrine.
-- Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
+- Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
 - Verification must prove both sides of the patch.
   The recurrence path is blocked or explicitly assigned.
+  The positive execution path remains visible and executable.
   The existing design remains closed.
   No unique meaning is lost.
   No cross-reference is dead.

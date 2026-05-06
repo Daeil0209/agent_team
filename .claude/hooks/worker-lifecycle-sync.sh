@@ -157,6 +157,9 @@ worker_turn_end_classification() {
     hold\|blocker|hold|blocker)
       printf 'working-blocked'
       ;;
+    scope-pressure)
+      printf 'scope-pressure-resolution'
+      ;;
     *)
       printf 'working-report-missing'
       ;;
@@ -290,6 +293,9 @@ switch (classification) {
     break;
   case "working-blocked":
     ctx = `Agent still working: ${teammate} reported a blocker before this turn-ended signal. Next: resolve the blocker or request the smallest needed partial result.`;
+    break;
+  case "scope-pressure-resolution":
+    ctx = `Agent needs scope resolution: ${teammate} raised scope-pressure. Evidence surface: structured objection. Next: classify packet-correction, route-replan, or parallel-continue and resolve through the smallest lawful owner.`;
     break;
   default:
     ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
