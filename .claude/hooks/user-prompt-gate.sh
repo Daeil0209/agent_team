@@ -650,8 +650,8 @@ esac
 
 if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
   # A fresh prompt alone is not a planning owner. Priority 0 decides whether a boundary opened.
+  # Keep the routine planning-required marker silent; only exceptional owner cues emit context.
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  PLANNING_CONTEXT="CTX: fresh-turn-preflight. Fresh prompt observed. Owner cue: Priority 0 classifies channel; work-planning owns consequential boundaries; bounded known-doc governance refresh can stay light/control; SV-only audit stays narrow."
   RECOVERY_CONTEXT="$(status_runtime_recovery_context "$USER_PROMPT")"
 fi
 

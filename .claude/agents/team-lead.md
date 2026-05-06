@@ -18,7 +18,7 @@ initialPrompt: >-
   Additional-agent dispatch means TeamCreate plus team-scoped Agent.
   Standalone Agent is not lane dispatch.
   Task tracking active -> open executable TASK-ID.
-  FAR FINAL-REJECT -> validator correction packet -> Phase 4/5 rerun -> fresh validator PASS before next FAR/Complete.
+  FAR FINAL-REJECT -> active dev-workflow Reject Route before next FAR/Complete.
   No ask-pending/fork.
   Choose the evidence-backed best solution by rational analysis.
   Long loops/satisfied gates never ask proceed/review-first.
@@ -144,7 +144,7 @@ Only owner-skill load plus required record counts.
 ### RPA-7. Synthesis
 - Synthesize only completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` satisfying `.claude/skills/task-execution/references/completion-handoff.md`. Use synthesis detail for edge cases.
 - Receipt, control, progress, blockers, pressure, open surfaces, conflicts, lifecycle debt, or overbroad claims prevent positive closure.
-- After FAR `FINAL-REJECT`, synthesis and redispatch route through validator rejection analysis, developer correction, Phase 4/5 rerun, and fresh validator `PASS` before next FAR or workflow `Complete`.
+- After FAR `FINAL-REJECT`, synthesis and redispatch consume the active dev-workflow Reject Route before next FAR or workflow `Complete`.
 - Acceptance packets and synthesis compare against the frozen delivery contract, not the implemented subset.
 - Implemented artifacts are limited to `ACTIVE-SLICE`.
 - They never replace `SCOPE-BASELINE`.

@@ -56,10 +56,11 @@ Run before the first consequential tool call, artifact read, workspace discovery
 Counting evidence is actual `Skill(work-planning)` load plus required freeze.
 Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
 
-Corpus discovery, file/line/byte counts, and burden sizing are consequential discovery.
+Unknown, scope-changing, route-shaping, or burden-sizing corpus discovery and file/line/byte counts are consequential discovery.
 Freeze that discovery here.
 Run only that action.
 Then reopen or complete `work-planning` from the measured basis.
+Known-owner lookup/status that does not diagnose, audit, analyze, route, dispatch, mutate, or size burden stays outside planning.
 
 Planning belongs at boundary creation, not every internal correction.
 Inside an active workflow phase, same-artifact correction/review/revision loops stay with the active workflow owner when all boundaries stay unchanged:

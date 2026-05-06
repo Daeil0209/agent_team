@@ -127,7 +127,7 @@ When a defect or justified challenge is recognized, run this sequence:
 3. Reconstruct — identify the intended rule, owner, procedure, packet, hook, or verification path that was supposed to prevent the failure.
 4. Diagnose — explain why that design failed in execution.
    Classify the failure mode.
-5. Dispatch — open self-growth classification immediately as a sidecar or nearest-safe-boundary path.
+5. Open — open self-growth classification immediately as a sidecar or nearest-safe-boundary path.
 6. Harden — patch the correct owner surface with the smallest meaning-preserving edit only after defect basis, causal basis, and recurrence path are sufficient.
 7. Re-verify — gather fresh evidence on the affected path.
 8. Iterate — if verification finds a remaining or newly created defect, return to Reconstruct or Diagnose.
@@ -158,10 +158,10 @@ Explanation alone is not self-healing.
 - When self-growth interrupts active work, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
 - A justified user correction opens classification immediately.
 - A first failure opens hardening when classification confirms a behavioral or procedural defect, missed-catch owner, and recurrence path.
-- Self-growth dispatch can be immediate.
+- Self-growth opening can be immediate.
 - Governance-sensitive file modification is still execution-gated.
-- Use dispatch to classify, route, inspect, and prepare the bounded patch packet.
-- Only destructive or security-sensitive execution requires explicit user confirmation.
+- Use this owner opening to classify, route, inspect, and prepare the bounded patch packet. Assignment-grade `Agent` or `SendMessage` dispatch still belongs to `task-execution`.
+- Only destructive or security-sensitive execution requires explicit user confirmation; hook/settings runtime enforcement expansion still follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
 - When a missing reusable skill blocks execution, authorize skill introduction under `Self-Growth Sequence` with explicit ownership: gap confirmation, target owner, bounded scope, review path, and verification.
 - When more than one lane can own the growth topic, compare owner candidates before choosing.
 - Record competing owner candidates.

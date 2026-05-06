@@ -35,6 +35,7 @@ deny_task_create() {
   local reason="${1:?reason required}"
   printf '[%s] TASK-CREATED NOTE: team=%s teammate=%s subject=%s reason=%s\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "${TEAM_NAME:-unknown}" "${TEAMMATE_NAME:-unknown}" "${TASK_SUBJECT:-<empty>}" "$reason" >> "$VIOLATION_LOG"
+  hook_emit_pretool_deny "$reason" "TaskCreate blocked because the task row would be unusable."
   exit 0
 }
 

@@ -13,6 +13,16 @@ const warn = (reason) => {
   void reason;
 };
 
+const deny = (reason) => {
+  process.stdout.write(JSON.stringify({
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      permissionDecisionReason: reason
+    }
+  }));
+};
+
 const normalize = (value) => String(value || "").trim().toLowerCase();
 
 const tryParseJson = (value) => {
@@ -31,9 +41,18 @@ try {
   const inputTeamName = String(input.team_name || input.teamName || toolInput.team_name || toolInput.teamName || "").trim();
   const claudeHome = process.env.CLAUDE_HOME || path.join(process.env.HOME || "", ".claude");
   const targetedTools = new Set(["TaskGet", "TaskUpdate", "TaskOutput", "TaskStop"]);
+  const mutatingTools = new Set(["TaskUpdate", "TaskStop"]);
   const taskIdAdvice = (currentToolName) => currentToolName === "TaskGet"
     ? "Use TaskList or the task_assignment packet to confirm a current open executable task id, then retry TaskGet."
     : "Use TaskList, TaskGet with a confirmed existing id, a returned task mutation, or the task_assignment packet to confirm a current open executable task id, then retry.";
+  const rejectInvalidTarget = (reason) => {
+    if (mutatingTools.has(toolName)) {
+      deny(reason);
+    } else {
+      warn(reason);
+    }
+    process.exit(0);
+  };
 
   if (!targetedTools.has(toolName)) {
     process.exit(0);
@@ -44,8 +63,7 @@ try {
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
-    warn(reason);
-    process.exit(0);
+    rejectInvalidTarget(reason);
   }
 
   const taskRoot = path.join(claudeHome, "tasks");
@@ -272,8 +290,7 @@ try {
     if (toolName === "TaskOutput") {
       reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
     }
-    warn(reason);
-    process.exit(0);
+    rejectInvalidTarget(reason);
   }
 
   let reason = `task-target preflight incomplete. Detail: ${toolName} needs a current open executable task id, and task id '${taskId}' is absent from the current task store.`;
@@ -287,9 +304,20 @@ try {
   if (toolName === "TaskOutput") {
     reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
   }
-  warn(reason);
+  rejectInvalidTarget(reason);
 } catch (error) {
-  warn(`Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`);
-  process.exit(1);
+  let failedToolName = "";
+  try {
+    failedToolName = String(JSON.parse(process.env.INPUT_JSON || "{}").tool_name || "");
+  } catch {
+    failedToolName = "";
+  }
+  const reason = `Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`;
+  if (["TaskUpdate", "TaskStop"].includes(failedToolName)) {
+    deny(reason);
+  } else {
+    warn(reason);
+  }
+  process.exit(0);
 }
 NODE

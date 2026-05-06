@@ -126,7 +126,7 @@ log_runtime_preflight() {
 
 runtime_tool_requires_boot_guard() {
   case "${1:-}" in
-    SendMessage|TaskCreate|TaskUpdate|TaskGet|TaskList|TaskOutput|TaskStop) return 0 ;;
+    SendMessage) return 0 ;;
     *) return 1 ;;
   esac
 }

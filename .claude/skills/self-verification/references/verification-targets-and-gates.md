@@ -76,8 +76,8 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - routes that may enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
 - consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`
-- `ACTIVE-WORKFLOW: dev-workflow` must show a Codex advisory required-attempt as `triggered:*` or `fail-open:*`, never `skipped:*`
-- Codex advisory risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` also make `skipped:*` invalid; use `triggered:*` or `fail-open:*`
+- `ACTIVE-WORKFLOW: dev-workflow` must show Codex advisory trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`
+- Codex advisory risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
 - `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition

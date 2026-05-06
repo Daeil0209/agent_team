@@ -136,7 +136,7 @@
         ]
       },
       {
-        "matcher": "TeamCreate|TeamDelete|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop",
+        "matcher": "TeamCreate|TeamDelete|Agent|SendMessage",
         "hooks": [
           {
             "type": "command",

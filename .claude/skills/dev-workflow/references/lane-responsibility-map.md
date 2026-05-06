@@ -13,7 +13,7 @@ auto-inject: false
 | 5 Iteration | cycle tracking, auto-resolution | -- | apply fixes | quick-check | re-verify | fresh validator verdict when still required |
 
 Lane evidence chain:
-- reviewer -> tester -> validator PASS
+- reviewer evidence + tester proof -> validator PASS
 - validator PASS opens Final Acceptance Review; validator-required workflow `Complete` requires `FINAL-ACCEPT`
 - executable, user-facing software enters validator path by default through task-execution routing
 - executable completion traces every frozen `SCOPE-BASELINE` feature/surface/control and operator launch/termination contract through developer implementation, reviewer conformance, tester proof, and validator verdict

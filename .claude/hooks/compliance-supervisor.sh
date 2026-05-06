@@ -436,14 +436,16 @@ command_is_noisy_touch_probe() {
 command_uses_interpreter_fs_mutation() {
   local cmd="${1-}"
   local trimmed=""
+  local interpreter_entry=""
   [[ -n "$cmd" ]] || return 1
 
   trimmed="${cmd#"${cmd%%[![:space:]]*}"}"
-  if ! printf '%s' "$trimmed" | grep -Eiq '^([^[:space:]/]+/)?(node|nodejs|python([0-9]+([.][0-9]+)?)?)([[:space:]]|$)'; then
+  interpreter_entry='^((env([[:space:]]+(-[[:alnum:]]+|[[:alpha:]_][[:alnum:]_]*=[^[:space:]]+))*|uv[[:space:]]+run|npm[[:space:]]+exec([[:space:]]+--)?|npx([[:space:]]+-y)?)[[:space:]]+)*([^[:space:]/]+/)?(node|nodejs|python([0-9]+([.][0-9]+)?)?)([[:space:]]|$)'
+  if ! printf '%s' "$trimmed" | grep -Eiq "$interpreter_entry"; then
     return 1
   fi
 
-  if printf '%s' "$cmd" | grep -Eiq "([^[:alnum:]_.]|^)(fs[.])?(rmSync|rm|rmdirSync|rmdir|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync)[[:space:]]*[(]"; then
+  if printf '%s' "$cmd" | grep -Eiq "([^[:alnum:]_.]|^)(fs[.])?(rmSync|rm|rmdirSync|rmdir|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync|write_text|write_bytes|touch|replace|symlink_to|hardlink_to)[[:space:]]*[(]"; then
     return 0
   fi
   if printf '%s' "$cmd" | grep -Eiq "require[[:space:]]*[(][[:space:]]*['\"]fs['\"][[:space:]]*[)][[:space:]]*[.][[:space:]]*(rmSync|rm|rmdirSync|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync)[[:space:]]*[(]"; then
@@ -997,7 +999,7 @@ fi
     fi
     # Content-preserving relocation/structure carve-out: mv and mkdir within .claude/ are
     # not destruction (mv preserves content; mkdir adds structure). Allowed before the broad
-    # mutation block so cleanup operations like `mv .claude/hooks/orphan.sh .claude/hooks/archive/`
+    # mutation block so cleanup operations like relocating one orphan hook file into `.claude/hooks/archive/`
     # are not falsely classified as governance-mutation requiring structured-tool review.
     if command_is_narrow_governance_relocation "$CLEAN_COMMAND"; then
       exit 0

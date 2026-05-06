@@ -30,10 +30,10 @@ PRIMARY-OWNER: team-lead
 Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the current owner transfers control here.
 Activation requires the frozen workflow route.
 
-Activation requires an evaluated Codex advisory attempt.
-`CODEX-ADVISORY-BASIS` records attempt truth, not Codex authority.
-`work-planning` must freeze it as `triggered:*` or `fail-open:*`.
-If it is missing or `skipped:*`, reopen `work-planning`.
+Activation requires evaluated Codex advisory trigger handling.
+`CODEX-ADVISORY-BASIS` records trigger handling, adjudication, or fail-open truth, not Codex authority.
+`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`.
+If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
 Field consumption detail stays with `.claude/skills/team-lead/references/planning-consume.md`.
@@ -113,6 +113,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: CP1 and CP2 are resolved.
 **Exit law**: canonical plan artifact exists with frozen `SCOPE-BASELINE`.
 **Exit law**: unresolved open questions are recorded explicitly.
+**Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
+**Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
 **Exit law**: Phase 1 closes with a completed artifact-convergence-advisory record for the Phase 1 canonical plan artifact.
 **Exit law**: The Phase 1 artifact-convergence record names the canonical plan artifact path, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, and next owner action.
 
@@ -120,14 +122,14 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
 **Owner lane**: developer
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
-**Entry law**: canonical plan surface and CP1/CP2 outputs must already exist
+**Entry law**: current canonical plan surface, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-convergence-advisory for the canonical plan artifact must already exist
 **Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
-**Execution law**: implementation starts after CP3 is resolved.
-**Execution law**: contract freeze opens parallel production lanes.
+**Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
+**Execution law**: contract freeze prepares Phase 3/CP4 production-lane decomposition; it does not authorize implementation dispatch by itself.
 **Execution law**: contract freeze covers shared source-of-truth, interface or format contracts, dependency boundaries, integration points, and error contracts.
-**Execution law**: contract regions driving active parallel dispatch are fully frozen before that dispatch.
-**Execution law**: vague regions outside active parallel dispatch are sequenced before later dependent dispatch.
-**Execution law**: vague regions inside active parallel dispatch are design-time blockers, not downstream reviewer/validator burden.
+**Execution law**: contract regions driving Phase 3 active parallel dispatch are fully frozen before that dispatch.
+**Execution law**: vague regions outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch.
+**Execution law**: vague regions inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden.
 **Execution law**: cross-surface drift after PASS-attempt returns to Phase 2 correction.
 **Execution law**: missed-catch classification selects workflow repair, owner correction, or `Self-Growth Sequence`.
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
@@ -171,7 +173,7 @@ Deliverable-type tool mapping and gap methodology live in `references/phase-surf
 
 ## Phase 5: Iteration
 **Purpose**: Fix bounded gaps found in Phase 4 and re-verify the affected surfaces.
-**Owner lanes**: developer -> reviewer -> tester -> validator when final acceptance is still required
+**Owner lanes**: developer correction -> reviewer evidence + tester proof -> validator when final acceptance is still required
 **Canonical output**: bounded fix cycle evidence with explicit remaining gap state
 **Entry law**: CP5 has already classified the remaining gap as implementation-level
 **Execution law**: independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output. Positive completion waits for re-verification

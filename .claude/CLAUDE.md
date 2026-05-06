@@ -56,7 +56,7 @@
 - `[GOV-MIN]` Before appending, tighten, replace, trim, merge, re-home, or delete duplicate/obsolete owner text without weakening required gates.
 - Keep one sentence to one rule or action.
 - `[HARDEN]` Correct valid defects at the narrowest owner. Do not add duplicate doctrine when adherence is the real fix.
-- `[PROJECT-OUTPUT-ROOT]` Task-created deliverables, evidence, logs, exports, tool output, and nested outputs stay under `projects/<project-folder>/...`.
+- `[PROJECT-OUTPUT-ROOT]` Task-created deliverables, evidence, logs, exports, tool output, and nested outputs stay under `projects/<project-folder>/...` unless user/config names another canonical folder.
 - `[HOOK-LAST]` Hooks are last-resort runtime guards. They are not planning, routing, or judgment owners.
 - Procedure gaps, packet quality, advisory absence, output-root preference, and recoverable handoff defects stay with doctrine, skills, packets, owner reports, or task state unless they directly create a reserved hard-deny danger.
 - Broader hook blocking needs named non-hook failure, narrow matcher, recovery path, and a `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry.
@@ -88,7 +88,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 ### Channel Law
 - Light channels: `answer-only`, `SV-only audit`, `notification-only carry-forward`.
 - Consequential channels: `bounded local consequential work` or `team-routed complex work`.
-- Governance refresh is light/control only when limited to known owner docs.
+- Governance refresh is light/control only when limited to known-owner lookup/status with no diagnostic, audit, analytical, route, dispatch, mutation, or stronger-claim output.
 - Discovery, route, dispatch, mutation, or stronger claim leaves light/control.
 - Analysis, critique, artifact judgment, or correction reopens planning when a `work-planning` boundary-change axis moves.
 - New scope, stronger claim, or route shaping reopens planning.
