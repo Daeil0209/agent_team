@@ -12,16 +12,19 @@ Self-growth, cleanup, defect-fix, hook patch, doctrine sharpening, runtime house
 
 Rules:
 - The original task's frozen scope remains the active resume target until it is converged, explicitly cancelled by the user, explicitly redirected by the user to a new top-level task, or blocked by a proven user-owned blocker.
-- Before entering an interrupt-handling sub-task, capture the interrupted task identity, frozen scope, and last completed step in internal context.
+- Before entering an interrupt-handling sub-task, capture an interrupt frame record with task identity, frozen scope, last completed step, `RESUME-OWNER`, `RESUME-CONDITION`, candidate `RESUME-ACTION`, and `RECOVERY-EVIDENCE`.
+- Keep the record internal during the same reasoning frame when it stays reconstructable without extra artifacts.
+- For compaction, pause-return, handoff, or long interruption risk, make the resume record reconstructable from the active owner record, task/workflow state, dispatch recovery record, current-session runtime authorities, changed owner surface, or explicit `HOLD`/follow-up ownership.
 - Do not write a continuity-file mirror by habit.
-- After the interrupt converges, resume from the verified resume action.
+- After the interrupt converges, verify `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute the `RESUME-ACTION`.
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - If no explicit cancellation, redirect, or proven user-owned blocker exists, `waiting for user` is false.
 - Status/progress questions expose the stall, not a pause right.
 - Answer status briefly.
-- Then execute the resume action.
+- Continue through the same verified `RESUME-ACTION`.
 - Use `SV-RESULT` only before reporting or handoff.
 - The resumed scope must match the original task, not a new scope.
+- Valid `RESUME-ACTION` values are continue from the corrected state, reopen `work-planning`, dispatch the next owner, or report `HOLD` with owner, blocker, and next safe action.
 - Do not ask permission to resume; the user already requested the original task.
 - Do not silently drop the original task, start unrelated work, or stop after the interrupt as if the original task completed.
 - Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or proven user-owned blocker.

@@ -39,6 +39,9 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 7. `Post-Verify`
 - Re-check the resulting diff and governing semantics after execution.
 - Use the post-execution live owner documents as the current governance basis for post-verification, affected-surface audit, and follow-on review.
+- When running simulation, smoke, or review verification, use the post-execution live owner documents, not memory, pre-patch snapshots, stale mirrors, or prior verdicts.
+- Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts.
+- If that basis is absent or unproved, treat the agent result as advisory and verify the live owner documents locally or redispatch with a self-contained packet carrying the existing basis.
 - Use the resulting diff as change evidence.
 - Treat pre-execution snapshots and prior verdicts as baseline or preservation evidence only; memory-only recall is not governance evidence.
 - When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.

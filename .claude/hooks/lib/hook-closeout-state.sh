@@ -386,7 +386,7 @@ const closeoutNotNeededReason = updates.closeoutNotNeededReason !== undefined
 const holdReason = updates.holdReason !== undefined ? updates.holdReason : (previous.holdReason || "");
 const closeoutDisposition = updates.closeoutDisposition || previous.closeoutDisposition || (previous.active === true ? "blocked" : "none");
 
-const allowedNotNeededReasons = new Set(["operational-only", "no-acceptance-surface"]);
+const allowedNotNeededReasons = new Set(["operational-only", "no-acceptance-surface", "research-only"]);
 const notNeededIsJustified = allowedNotNeededReasons.has(closeoutNotNeededReason);
 const validationReady = validationOwnerState === "assigned" ||
   (validationOwnerState === "not-needed" && notNeededIsJustified);
