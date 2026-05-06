@@ -49,7 +49,7 @@ It must include finding class, affected surface, severity, bounded rewrite, and 
 ## Handoff Boundary
 Hand off only when the next owner can tell whether the issue is implementation-level quality debt, architecture debt, or already resolved by bounded rewrite.
 ## Deliverable Quality Philosophy Application
-- **[PLAN-SV]**: code structure must be reviewed at the skeleton level before detail-level review.
+- Code structure must be reviewed at the skeleton level before detail-level review.
 - **Communication And Reporting Law**: code-quality-review findings must be actionable on the actual codebase and runtime path.
 ## Role-Scoped Self-Growth Loop
 - Track repeated SOLID violations and duplication taxonomy misclassifications across sessions.

@@ -46,7 +46,7 @@ It captures exercised flows, decisive log evidence, request IDs, unexpected stat
 Hand off only when downstream owners can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
 Keep long templates and threshold tables in `references/log-qa-patterns.md`.
 ## Deliverable Quality Philosophy Application
-- **[PLAN-SV]**: log findings need corroboration across layers using request ID propagation.
+- Log findings need corroboration across layers using request ID propagation.
 - **Communication And Reporting Law**: the logging path must be usable by tester without developer babysitting.
 ## Role-Scoped Structural Feedback
 - Challenge weak observability, missing request IDs, or unmonitorable runtime behavior.

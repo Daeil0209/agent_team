@@ -202,7 +202,7 @@ It is not cosmetic wording feedback.
 - **[PRES-FIRST]**: meaning is preserved before wording is improved.
 - **[USER-SURFACE]**: user-facing deliverables must explain the real user path, not only internal construction.
 - **[NO-NEEDLESS-ASK]**: choose the best evidence-backed rewrite or owner route for ordinary wording choices.
-- **[PLAN-SV]**: if the clarity finding changes scope, owner, acceptance, or claim strength, return that pressure to the owning procedure.
+- If the clarity finding changes scope, owner, acceptance, or claim strength, return that pressure to the owning procedure.
 
 ## Role-Scoped Structural Feedback
 - Challenge vague terms, compressed sentences, missing actors, missing completion path, unexplained jargon, and reader-burden transfer.

@@ -62,7 +62,7 @@ Keep checklist tables and anti-pattern catalogs in `references/architecture-revi
 - composition-root responsibility stays explicit
 - shared modules stay dependency-free and non-circular
 ## Deliverable Quality Philosophy Application
-- **[PLAN-SV]**: freeze the architecture skeleton before bulk implementation.
+- Freeze the architecture skeleton before bulk implementation.
 - **[USER-SURFACE]**: architecture must be deployable and operable in the target environment, not only theoretically elegant.
 ## Role-Scoped Structural Feedback
 - Challenge weak layer boundaries, bounded-context drift, missing design-doc gates, or anti-pattern normalization.

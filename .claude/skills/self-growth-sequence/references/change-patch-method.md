@@ -29,8 +29,8 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 5b. `Execution Gate`
 - For governance-sensitive modifications, complete the reviewed change path before Execute.
   Governance-sensitive surfaces include CLAUDE.md `### Ownership` and `### Change And Preservation Law`.
-  Explicit user approval is required only when the action is destructive or security-sensitive.
-  Reviewed non-destructive governance changes proceed autonomously.
+  Explicit user approval is required for destructive or security-sensitive action.
+  Reviewed non-destructive governance changes proceed autonomously except hook/settings runtime enforcement expansion, which uses the Hook-Last operator-approval gate.
 - For non-governance changes: proceed directly to Execute.
 
 6. `Execute`
@@ -77,7 +77,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
 - Use one rule or action per sentence.
 - Split different ideas into separate sentences or bullets.
-- Line count is not the strength metric.
+- Line count is not the strength metric; the shortest owner-local edit that preserves stop, owner, evidence, recovery, and protected meaning wins.
 - For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY` -- enough that another model can reconstruct the patch from repository state alone.
 - Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
 - Preserve protected local restatements that keep owner files independently readable.
@@ -145,6 +145,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
+- Hook/settings edits that broaden runtime enforcement use `update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue advisory or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks own governance procedure enforcement.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.

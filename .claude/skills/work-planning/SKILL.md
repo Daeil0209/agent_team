@@ -77,7 +77,7 @@ Keep these outside planning unless they assign, reopen, or change consequential 
 - true `answer-only`
 - narrow `SV-only audit`
 - `notification-only carry-forward`
-- governance relearning limited to known owner docs through `Read`/`Grep`
+- governance relearning limited to known-owner lookup/status through `Read`/`Grep` with no diagnostic, audit, analytical, route, dispatch, mutation, or stronger-claim output
 - receipt-only, control-only, lifecycle-only, phase-transition-only, or clarification-only messages
 
 This exclusion ends when the message assigns, reopens, or changes consequential work.

@@ -23,11 +23,10 @@ Required rules:
 - if a benchmark depends on uncited external comparisons, vague recollection, or non-inspectable examples, return `HOLD` or mark the result simulator-only instead of issuing a clean comparative verdict
 - if the result remains simulator-only or simulator-unconfirmed after comparison, do not let it masquerade as self-growth execution readiness
 
-## Runnable Benchmark Path
-When a concrete benchmark asset is requested, prefer a small repository-local script under:
-- *(scripts/ not yet present - future work)*
+## Runnable Benchmark Asset
+No canonical runnable benchmark path is frozen. When a concrete benchmark asset is requested, freeze the repository-local path before treating it as runnable.
 
-The script should:
+Any script should:
 - read the active project contract when available
 - validate valid and invalid benchmark plans
 - emit a machine-readable result JSON and a markdown matrix

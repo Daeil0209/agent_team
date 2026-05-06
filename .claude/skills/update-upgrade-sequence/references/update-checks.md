@@ -17,6 +17,9 @@ Update/upgrade adds these domain checks:
 7. When reducing context footprint, prove that moved meaning remains reachable through an owning trigger or direct reference path.
 8. For MCP or external-tool capability updates, verify asset-set coherence: project-root `.mcp.json` server entry, `.claude/settings.json` `enabledMcpjsonServers`/permission/hook posture, role tool authorization, and owning skill trigger/authority. A mismatch is an update blocker or an explicit deferred owner.
 9. Promotion from advisory/fail-open use to blocking authority, SV-stage use, worker lane use, custom wrapper use, or persistent metric automation requires measured benefit, authority/footprint review, and user-visible rollback or fail-open semantics before activation.
+10. Hook/settings runtime enforcement expansion requires Hook-Last preflight before execution.
+    Required basis: non-hook failure, non-hook insufficiency, exact matcher or payload condition, recovery path, false-positive/regression check, `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry, and explicit operator approval.
+    Missing basis -> doctrine-only/advisory or `HOLD`; do not edit runtime enforcement.
 
 Before classifying a team-system item as defective, name:
 - `TARGET-INTENT-BASIS`

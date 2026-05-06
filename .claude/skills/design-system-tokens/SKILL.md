@@ -51,7 +51,7 @@ It covers Layer 1 primitives, Layer 2 core components, Layer 3 composites, consu
 Hand off only when downstream implementation can consume tokens without rediscovering layer rules.
 Keep platform tools, examples, and checklist detail in `references/platform-implementation.md`.
 ## Deliverable Quality Philosophy Application
-- **[PLAN-SV]**: token architecture layers must be frozen before component authoring begins.
+- Token architecture layers must be frozen before component authoring begins.
 - **[USER-SURFACE]**: token values must be visually verifiable in a rendered component catalog, not only in source files.
 ## Role-Scoped Self-Growth Loop
 - Track repeated token consistency defects across sessions.

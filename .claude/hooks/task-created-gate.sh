@@ -46,7 +46,7 @@ deny_task_create() {
 task_create_error() {
   local detail="${1:?detail required}"
   if [[ "$TOOL_NAME" == "TaskCreate" ]]; then
-    printf 'BLOCKED: task-create packet incomplete. Detail: %s Next: create the task with a non-empty subject, one bounded-scope coordinate, and one completion coordinate in the description. Do not retry before Next is complete.' "$detail"
+    printf 'BLOCKED: task-create packet incomplete. Detail: %s Next: create the task with a non-empty subject and description. Add bounded-scope and completion coordinates when the active owner requires them or they are available. Do not retry before Next is complete.' "$detail"
   else
     printf 'TaskCreated requires %s' "$detail"
   fi

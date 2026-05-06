@@ -71,7 +71,7 @@ Keep the downstream rendered-review path explicit.
 Keep longer concept-cascade and pre-generation gate detail in `references/document-generation-detail.md`.
 ## Deliverable Quality Philosophy Application
 - **request fit and deliverable fit**: a polished document that answers the wrong reader job still fails.
-- **[PLAN-SV]**: document type and answer-first structure must be frozen before bulk generation.
+- Document type and answer-first structure must be frozen before bulk generation.
 - **Communication And Reporting Law**: generated structure and connective prose report as structure/prose, not outcome proof.
 - **user-fit delivery**: the governing answer must surface early.
 - Buried answers are hierarchy defects.

@@ -125,7 +125,7 @@ Those fields must support merge, reroute, or hold decisions without memory.
 Before sending a dispatch, verify structured fields against the target lane role.
 Verify them against the lane-core skill.
 Verify them against the `task-execution` packet contract.
-Verify them against `references/dispatch-packet-compliance.md`.
+Use `references/dispatch-packet-compliance.md` as the session-side lookup for controlled values and presence hints.
 Cross-lane base schema stays with `.claude/skills/task-execution/references/assignment-packet.md`.
 Common message classes, field format, and packet preflight stay with `.claude/skills/task-execution/references/message-classes.md`.
 Lane-specific packet additions are owned by the target lane-core skill and lane-detail reference.

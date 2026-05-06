@@ -280,8 +280,8 @@ Hard surface:
 - Execute only the reviewed, bounded, policy-compliant change.
 - Post-verify resulting diff, owner semantics, live references, and information preservation before claiming convergence.
 - Governance-sensitive execution follows Step 5b.
-- Explicit user approval is required only for destructive or security-sensitive action.
-- Reviewed non-destructive governance changes proceed through the normal execution gate.
+- Explicit user approval is required for destructive or security-sensitive action.
+- Reviewed non-destructive governance changes proceed through the normal execution gate except hook/settings runtime enforcement expansion, which follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
 ## Patch Execution Method
 Use this method for team-system asset patches that must remain understandable without hidden session memory.
 Use `references/change-patch-method.md` for detailed patch mechanics.

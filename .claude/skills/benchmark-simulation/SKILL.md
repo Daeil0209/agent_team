@@ -248,7 +248,7 @@ Hand off only when the next owner can tell whether the benchmark is:
 Weak comparison frame downgrades or holds benchmark output.
 ## Deliverable Quality Philosophy Application
 - **Evidence and procedure fidelity**: comparative output without a fair baseline or external calibration must stay explicitly low-confidence.
-- **[PLAN-SV]**: benchmark claims need corroboration or at least explicit cross-check status before they are treated as decision-ready.
+- Benchmark claims need corroboration or at least explicit cross-check status before they are treated as decision-ready.
 - **Communication And Reporting Law**: simulated projections report as projections.
 ## Role-Scoped Structural Feedback
 - Challenge weak comparison frames, unfair baselines, or forced conclusions.

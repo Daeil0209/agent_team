@@ -57,7 +57,7 @@ Keep detailed engineering taxonomies in `references/engineering-protocols.md`.
 ## Deliverable Quality Philosophy Application
 - **Communication And Reporting Law**: engineering claims must use verified parameters and explicit evidence class.
 - **[USER-SURFACE]**: engineering diagrams need readable labels, units, and one analytical role each.
-- **[PLAN-SV]**: critical engineering claims need an independent cross-check or standards basis.
+- Critical engineering claims need an independent cross-check or standards basis.
 - **Evidence and procedure fidelity**: engineering proposals benchmark against established standards or proven designs when relevant.
 ## Role-Scoped Structural Feedback
 - Challenge weak units, assumptions, boundary conditions, safety margins, or operating conditions.

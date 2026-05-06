@@ -44,7 +44,7 @@ The handoff must name what class of vulnerability exists.
 The handoff must name what bounded fix path must be re-reviewed.
 Fix implementation requires independent verification.
 ## Deliverable Quality Philosophy Application
-- **[PLAN-SV]**: a single detection signal is not enough.
+- A single detection signal is not enough.
 - Corroborate findings before classification.
 - **request fit and deliverable fit**: surface hidden security constraints before they become production vulnerabilities.
 ## Role-Scoped Structural Feedback

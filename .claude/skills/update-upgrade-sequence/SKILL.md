@@ -46,7 +46,8 @@ Approval requires triggered reference basis or owner reopening.
 Every update/upgrade path must:
 1. Name the target asset and owning surface.
 2. Classify the change type.
-   Use one of: ordinary asset maintenance, recurrence hardening, capability introduction, external-tool/MCP integration, compression, migration, settings/hook change, specialist-routing change.
+   Use one of: ordinary asset maintenance, recurrence hardening, capability introduction, external-tool/MCP integration, compression, migration, settings/hook change, runtime enforcement expansion, specialist-routing change.
+   Hook or settings edits that add or broaden deny behavior, matcher scope, permission-deny scope, blocking path, or runtime enforcement tier are `runtime enforcement expansion`.
 3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
    Full self-growth opens only for confirmed behavioral or procedural defects.
 4. Preserve structural contracts.
@@ -77,10 +78,11 @@ Skill names remain only when a packet, route, or activation path needs them.
 - No new operational rule without a clear owner.
 - Before adding governance text, test tighter owner-local alternatives first.
 - Prefer tightening, replacing, trimming, merging, or re-homing when they preserve force.
-- Append-only expansion requires proof that no shorter owner-local edit carries the same force.
+- Any expansion requires proof that no shorter owner-local edit carries the same force; otherwise replace, trim, merge, or re-home.
 - Shared doctrine weakening requires explicit owner approval.
 - Duplicate ownership requires intentional protected restatement or hierarchy consistency basis.
 - Treat rule, skill, settings, and hook changes as governance-sensitive by default.
+- Runtime enforcement expansion requires `references/update-checks.md` Hook-Last preflight plus explicit operator approval before execution.
 - Destructive, security-sensitive, externally committed, or operator-policy-choice actions require operator approval before modification.
 - Reviewed non-destructive governance changes proceed through `.claude/skills/self-growth-sequence/SKILL.md` `Change Sequence` Step 5b `Execution Gate`.
 - Sandbox filesystem approval is technical permission, not governance approval.

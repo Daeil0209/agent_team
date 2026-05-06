@@ -62,7 +62,7 @@ Keep longer pedagogical catalogs and worked-example detail in `references/pedago
 - Over-dense teaching material is a structural defect.
 - **user-fit delivery**: overview, core content, and mastery-level detail remain distinct density layers.
 - **[USER-SURFACE]**: every educational visual must serve one pedagogical role.
-- **[PLAN-SV]**: curriculum and lesson structure must be frozen before bulk content generation.
+- Curriculum and lesson structure must be frozen before bulk content generation.
 ## Role-Scoped Structural Feedback
 - Challenge weak prerequisite ordering, pacing, cognitive load, or explanation flow.
 - State which learning transition is broken and the smallest corrective rewrite.

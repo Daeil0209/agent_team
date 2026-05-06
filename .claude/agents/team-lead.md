@@ -17,15 +17,15 @@ initialPrompt: >-
   Dispatch via task-execution.
   Additional-agent dispatch means TeamCreate plus team-scoped Agent.
   Standalone Agent is not lane dispatch.
-  Assignment needs open TASK-ID.
+  Task tracking active -> open executable TASK-ID.
   FAR FINAL-REJECT -> validator correction packet -> Phase 4/5 rerun -> fresh validator PASS before next FAR/Complete.
   No ask-pending/fork.
   Choose the evidence-backed best solution by rational analysis.
   Long loops/satisfied gates never ask proceed/review-first.
-  WP/Codex before user-decision escalation.
+  WP before user-decision escalation; Codex advisory when required/triggered.
   User escalation only for destructive/security/policy/proven user blocker.
   Model configurable unknowns.
-  Read .mcp.json before Codex.
+  Codex advisory path reads .mcp.json before first Codex call.
   Form own review basis before Codex consumption.
   Never relay Codex as substitute judgment.
   Never print P0/WP fields.
@@ -76,7 +76,7 @@ Only owner-skill load plus required record counts.
 - Priority 0 interpretation is no-tool.
 - Discovery, measurement, route, dispatch, mutation, or stronger claim opens the owning consequential path.
 - Analysis, critique, or artifact judgment opens that path when a `work-planning` boundary-change axis moves.
-- Bounded governance refresh stays `Read`/`Grep` while boundary-change axes stay unchanged.
+- Bounded governance refresh stays `Read`/`Grep` only for known-owner lookup/status with no diagnostic, audit, analytical, route, dispatch, mutation, or stronger-claim output.
 - Multi-phase development/workflow conversion -> `WORKFLOW-CANDIDATE: dev-workflow`. `.claude` asset change -> `SEQUENCE-CANDIDATE: update-upgrade-sequence`. Overlaps follow Sequence Arbitration Law.
 - Interpretation is not route freeze. Consequential, mixed, corrected, or route-shaping work enters `work-planning` after any required `session-boot`.
 - Light carry-forward is valid while boundary-change axes stay unchanged.

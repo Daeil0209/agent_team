@@ -44,7 +44,7 @@ Hand off only when framework implementation can proceed without rediscovering st
 Keep detailed examples and JSON simulation patterns in `references/component-conversion-examples.md`.
 ## Deliverable Quality Philosophy Application
 - **[USER-SURFACE]**: conversion must preserve the visual intent of the mockup.
-- **[PLAN-SV]**: component boundaries, prop contracts, and token bridges must be frozen before framework implementation.
+- Component boundaries, prop contracts, and token bridges must be frozen before framework implementation.
 ## Role-Scoped Structural Feedback
 - Signal mockup-to-component fidelity gaps, missing token bridges, or weak component boundary definition.
 ## Role-Scoped Self-Growth Loop

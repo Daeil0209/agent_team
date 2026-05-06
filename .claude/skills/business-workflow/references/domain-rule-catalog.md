@@ -64,8 +64,8 @@ After draft generation, validate:
 - **Operator executable?** Can the designated organizer (often a junior staff member or student) understand and execute this plan without expert guidance? Complexity that exceeds operator capability is a sustainability failure.
 Plans that fail repeatability validation must be simplified or restructured before final output.
 ### Hidden-Criteria Question Set
-The following questions must be surfaced before generation begins. Missing answers to critical questions block generation; missing answers to secondary questions trigger explicit assumptions.
-**Critical (generation-blocking):**
+The following questions must be surfaced before generation begins. Missing critical answers block generation only when the non-derivable gap would cause data loss, authority conflict, or unsafe delivery. Otherwise continue with explicit assumptions, parameters, or open questions. Missing secondary answers trigger explicit assumptions.
+**Critical (block when non-derivable):**
 1. What is the primary purpose of this event? (education, cohesion, performance sharing, morale/refresh, networking, other)
 2. What operational elements are considered mandatory by the requester or approver?
 3. Are there decision-maker preferences or sensitivities that constrain style, formality, or specific elements?

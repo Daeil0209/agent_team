@@ -48,7 +48,7 @@ Formula-heavy human-facing outputs still need both math review and rendered revi
 ## Deliverable Quality Philosophy Application
 - **Communication And Reporting Law**: unverified numerical or symbolic results report as unverified.
 - **[USER-SURFACE]**: plots, equation layouts, and math visuals must be readable and correctly labeled.
-- **[PLAN-SV]**: critical calculations need an independent cross-check path.
+- Critical calculations need an independent cross-check path.
 ## Role-Scoped Structural Feedback
 - Challenge weak derivation order, notation, proof assumptions, or equation contracts.
 - State which derivation edge is broken and the smallest corrective rewrite.

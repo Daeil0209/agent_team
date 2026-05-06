@@ -36,7 +36,7 @@ Score each module or function on 5 questions (1 point each):
 | if/else chains for type dispatch | Registry pattern (map of type → handler function) |
 | Hardcoded configuration lists | Config-driven with external source |
 | Switch on enum with inline logic | Plugin or strategy interface |
-When an anti-pattern is detected, return a `HOLD` with the pattern name and the recommended replacement before accepting the work.
+Classify detected anti-patterns through reviewer severity and the refactoring matrix. Return `HOLD` only for acceptance-blocking Major/Critical or RFP-1/RFP-2 cases; otherwise report the pattern and recommended replacement as non-blocking debt.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|

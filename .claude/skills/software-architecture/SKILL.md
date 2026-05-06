@@ -94,7 +94,7 @@ Expert behavior means the software can be built without discovering its core con
 - Bounded intervention preserves explicit cross-file ownership and boundary changes.
 ## Deliverable Quality Philosophy Application
 - **request fit and deliverable fit**: every module boundary and interface contract must be evaluated against declared purpose before freezing.
-- **[PLAN-SV]**: entity/object hierarchy, relationship contracts, usage/data flow, and UI surfaces must freeze in that order.
+- Entity/object hierarchy, relationship contracts, usage/data flow, and UI surfaces must freeze in that order.
 - Skipping to UI before the skeleton is credible is a blocking architecture finding.
 - **[EVI-ASSUM]**: context collection is mandatory architecture input. Missing context analysis remains an architecture gap.
 - **[USER-SURFACE]**: architecture that requires documentation to be usable has an operability defect.
