@@ -4,6 +4,24 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Request-Bound Conditional Packet Fields
+## Common Start Closure Contract
+These conditional fields are the common start closure contract for assignment-grade work.
+Upstream planning or workflow owners freeze the material axes; `task-execution` translates them into agent-facing packet fields.
+A packet is start-ready when every material axis needed for the receiving lane to close its assigned surface is explicit, marked `not-applicable:<basis>` where this reference allows omission, or routed through `packet-correction` / `route-replan` before dispatch.
+
+The contract axes are:
+- original request intent, required deliverable, audience, and excluded scope
+- target intent and protected user outcome
+- scope baseline, active slice, and deferred surfaces
+- exact user wording when wording controls acceptance
+- methodology, tier, and lane phase context when already frozen
+- user surface, proof path, tool/setup/discovery boundary, run path, and burden contract
+- decision, validation, environment, scenario, and operator-platform proof context
+- cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities when material
+
+Receiving lanes use this contract to classify receipt as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
+They preserve global routing and acceptance ownership from packet basis instead of memory.
+
 When truthful lane execution depends on the original request shape, the assignment packet must also carry:
 - `REQUEST-INTENT`
 - `CORE-QUESTION`

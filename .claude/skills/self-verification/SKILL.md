@@ -116,6 +116,7 @@ Rules:
 - `SV-PLAN` rejects fields not produced by actual `work-planning`
 - `SV-PLAN` rejects incoherent packets, lead-only conversation dependence, hidden local steps, unauthorized dispatch, and unfrozen tool/workspace probing
 - `SV-RESULT` states exact verified surface, concise basis, open surfaces, and retained evidence identity
+- `SV-RESULT` reconciles completion-grade or user-facing claims against the common start closure contract and common completion result spine; material start axes are matched, upstream-deferred, blocked, or retained in `OPEN-SURFACES` before closed-result wording
 - retained evidence identity applies when artifacts/logs/screenshots/reports/datasets support the claim
 - if final prose outruns the verified surface, reset `SV-RESULT`
 

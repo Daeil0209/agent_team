@@ -7,13 +7,15 @@ LOAD-POLICY: on-demand reference only
 ## Common Lane-Core Preconditions
 Every lane-core skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
+- Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
 - Send `dispatch-ack` first for every fresh assignment-grade receipt.
 - Receipt is not permission to execute a defective packet.
 - Then classify in the same turn.
 - Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
 - Do not idle after receipt.
-- Do not reconstruct global routing, staffing, or acceptance ownership from memory.
+- Preserve global routing, staffing, and acceptance ownership from packet basis.
+- Reconcile completion-grade handoff against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Load lane-core skill only for consequential lane-owned work.
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.

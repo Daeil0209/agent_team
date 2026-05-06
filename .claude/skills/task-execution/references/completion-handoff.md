@@ -56,6 +56,9 @@ Team-lead reviews that basis against the handed-off work and sends correction to
 When material, `EVIDENCE-BASIS` names the Evidence-Quality Matrix rows supporting the handoff claim.
 `FROZEN-CONTRACT-STATUS` must be one of `matched`, `partial`, `drifted`, `blocked`, `not-assessable`, or `not-applicable:<basis>`. It compares the lane's evidence against the frozen assigned contract, not just the changed artifact or executed route.
 When material, `FROZEN-CONTRACT-STATUS` names the Receiver-Surface Contract, Consumption Chain, or Boundary Register basis that the lane matched, narrowed, or left open.
+The common end closure contract reconciles the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md` against this result spine.
+Each material start-contract axis closes through matched evidence, upstream defer basis, `not-applicable:<basis>`, or an `OPEN-SURFACES` item.
+Use `matched` only when the supporting spine fields or lane-specific status fields show the axis outcome.
 `REQUESTED-LIFECYCLE` does not itself clear lifecycle debt.
 Team-lead still owes explicit lifecycle control.
 Team-lead can allow one narrow same-surface follow-on before lifecycle control only when all conditions hold:

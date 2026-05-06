@@ -103,6 +103,8 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Once loaded, lane-core skill outranks packet skill fields, optional methodology, and specialist skills inside the lane. It cannot override doctrine, roles, or owner gates.
 - Team-lead, Codex advisory, and packet skill fields recommend non-lane-core skills. The assigned lane selects fitting skills from its work surface and hands off the selected-skill basis.
 - Specialist skill descriptions are routing cues; active owner path and assigned work surface govern loading.
+- Specialist and methodology skill outputs enter the active lane as evidence, method, or design deltas unless the frozen packet names a skill-owned artifact as `OUTPUT-SURFACE`.
+- Completion-grade claims close through the owning lane handoff and common completion result spine after those deltas are reconciled.
 - Request-fit fields that materially affect lane execution must travel in packets, task/workflow state, or cited artifacts. Teammates do not inherit lead conversation history.
 
 ## Communication

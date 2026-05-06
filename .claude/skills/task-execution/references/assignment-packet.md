@@ -46,10 +46,9 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - concrete requested action must be executable with the receiving lane's allowed tools and output channel
 - do not tell a read-only lane to write files, mutate state, run unavailable tools, or report through a channel it cannot use
 - if the lane cannot produce the requested artifact directly, route the write/mutation to an owner that has the tool or require lane output through `SendMessage`
-- `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, and lane-specific phase context when frozen
-- user-defined work scope travels as coverage obligations, assigned surfaces, and acceptance basis; finding counts are reported evidence, not dispatch scope
-- user-surface, scope-baseline, active-slice, proof, tool/setup/discovery, run-path, burden, decision, validation, environment, and scenario fields when the frozen surface makes them material
-- Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix citations travel in review, proof, validation, and acceptance packets when material
+- the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`: every material request-bound axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
+- the carried axes include `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane-specific phase context, user-defined coverage obligations, assigned surfaces, acceptance basis, user-surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities
+- finding counts are reported evidence, not dispatch scope
 - for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections may only populate `ACTIVE-SLICE`, never substitute for `SCOPE-BASELINE`
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
 - Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
