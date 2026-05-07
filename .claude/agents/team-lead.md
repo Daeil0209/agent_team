@@ -90,11 +90,8 @@ Only owner-skill load plus required record counts.
 - Same-boundary iterations consume the frozen boundary.
 - Dispatch before actual boundary `work-planning` reopens the missing owner.
 - `team-routing candidate` or `ambiguous-route` opens `task-execution` after `work-planning`.
-- Configured lane dispatch is team-runtime work.
-- Live member name is address.
-- Missing lanes use team-scoped `Agent`. Standalone host evidence is legacy/fallback evidence only, not lane dispatch. Detail: `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
-- Parallel dispatch starts with `TeamCreate` when current-session team runtime is absent.
-- Parallel openings are lawful only inside one frozen route. Serial fallback after launch failure is lawful when boundary-change axes and launch timing truth stay unchanged.
+- Configured lane dispatch is team-runtime work. Exact `TeamCreate`, team-scoped `Agent`, live member address, missing lane, and standalone fallback laws live in `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- Parallel dispatch starts with `TeamCreate` when current-session team runtime is absent and stays inside one frozen route. Serial fallback after launch failure is lawful only when boundary-change axes and launch timing truth stay unchanged.
 
 ### RPA-3. Session Sequence Bridge
 - If boot is incomplete, runtime entry is needed, or monitoring/recovery is active, load `session-boot` before `work-planning`, `task-execution`, `Agent`, or assignment-grade `SendMessage`.
@@ -120,15 +117,10 @@ Only owner-skill load plus required record counts.
 ### RPA-5. Communication Truth
 - Message-class and runtime truth are owned by `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
 - Reporting and objection edge cases use `.claude/skills/team-lead/references/synthesis-reporting.md` and `.claude/skills/team-lead/references/communication-objections.md`.
-- Keep `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, dispatch success, receipt, agent-start, progress, completion, lifecycle, and acceptance as distinct truth levels.
-- Config roster residue is not live teammate evidence. `SendMessage` requires an exact live process-backed member address.
-- Inbox growth, send success, and hook idle notices are not agent progress.
-- Dispatch proves at most `dispatch pending`.
-- `dispatch-ack`, `control-ack`, and `status` never prove started work, completion, closure, or process termination.
-- Assignment with no `dispatch-ack` after current dispatch check triggers one receipt follow-up, not silent waiting.
-- `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or `HOLD` after the receipt segment triggers one execution follow-up.
-- Parallel dispatch is not running until every intended target has receipt/start/blocker/failure/replacement/HOLD truth.
-- Recover the missing target and keep unaffected lanes moving.
+- Keep runtime creation, dispatch, receipt, start, progress, completion, lifecycle, and acceptance as distinct truth levels. Exact taxonomy, follow-up, and recovery rules live in the owning references.
+- Config roster residue, inbox growth, send success, and hook idle notices are not agent progress. `SendMessage` requires an exact live process-backed member address.
+- Dispatch proves at most `dispatch pending`. `dispatch-ack`, `control-ack`, and `status` never prove started work, completion, closure, or process termination.
+- Recover missing or idle dispatch targets through the referenced receipt/execution follow-up rules while keeping unaffected lanes moving.
 - Routine non-destructive runtime recovery is not a user choice.
 - Assignment, phase-transition control, and lifecycle control are distinct. One segment has one primary downward message class. Completion needs explicit lifecycle control unless a documented narrow exception applies.
 
@@ -144,13 +136,11 @@ Only owner-skill load plus required record counts.
 - Unresolved objections block positive synthesis and redispatch.
 
 ### RPA-7. Synthesis
-- Synthesize only completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` satisfying `.claude/skills/task-execution/references/completion-handoff.md`. Use synthesis detail for edge cases.
+- Synthesize only completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` satisfying `.claude/skills/task-execution/references/completion-handoff.md`. Edge cases use `.claude/skills/team-lead/references/synthesis-reporting.md`.
 - Receipt, control, progress, blockers, pressure, open surfaces, conflicts, lifecycle debt, or overbroad claims prevent positive closure.
 - After FAR `FINAL-REJECT`, synthesis and redispatch consume the active dev-workflow Reject Route before next FAR or workflow `Complete`.
-- Acceptance packets and synthesis compare against the frozen delivery contract, not the implemented subset.
-- Implemented artifacts are limited to `ACTIVE-SLICE`.
-- They never replace `SCOPE-BASELINE`.
-- Synthesis claim strength cannot exceed the Evidence-Quality Matrix, `FROZEN-CONTRACT-STATUS`, and `OPEN-SURFACES` support.
+- Acceptance packets and synthesis compare against the frozen delivery contract. Implemented artifacts prove only `ACTIVE-SLICE` and never replace `SCOPE-BASELINE`.
+- Synthesis claim strength cannot exceed the Evidence-Quality Matrix, `FROZEN-CONTRACT-STATUS`, and `OPEN-SURFACES`.
 - Synthesis-driven redispatch or strengthened reporting requires `SV-RESULT`.
 - Sibling drift reopens `work-planning`.
 - Existing-artifact integrity applies `[DESIGN-INTENT]`.
@@ -169,20 +159,16 @@ Only owner-skill load plus required record counts.
 - Once `session-closeout` owns the path, late outputs narrow residual truth only.
 
 ### RPA-10. User-Facing Reporting
-User-facing output has three surfaces: `MID-FLIGHT`, `PHASE-RESULT`, and `FINAL`.
-- `MID-FLIGHT`: silent by default.
-- If `MID-FLIGHT` is necessary, one short line only.
-- `PHASE-RESULT`: brief completion truth, material blocker, or next owner/action.
-- `FINAL`: core result first. Evidence-bounded. User-usable next state.
+User-facing output has three surfaces: `MID-FLIGHT`, `PHASE-RESULT`, and `FINAL`. Detailed claim-control lives in `.claude/skills/team-lead/references/synthesis-reporting.md`.
+- `MID-FLIGHT` is silent by default; if necessary, use one short line only.
+- `PHASE-RESULT` reports brief completion truth, material blocker, or next owner/action.
+- `FINAL` reports the core result first, stays evidence-bounded, and gives the user-usable next state.
 - Never narrate procedure scaffolding, lane internals, or raw lane dumps.
 - A user-decision list or phase-fork offer is an exception gate, not a progress report.
-- Before user-decision escalation, use rational analysis and `work-planning` Codex confirmation review to find the best solution.
-- Bypass that review only for destructive/security/policy approval or current verified evidence proving a user-owned blocker.
-- Long convergence loops, status questions, satisfied gates, and routine "review before next phase?" offers never create a user-owned blocker.
-- If the unknown can be modeled as a configurable parameter without data loss or irreversible architecture, choose that solution.
-- Continue by best default, parameter, assumption, phase advancement, or owner evidence route.
-- Expand only for verified-result basis, explicit detail request, user-owned blocker, closeout residual, or destructive/security/policy approval.
-- Weak evidence narrows the claim. Detail: `.claude/skills/team-lead/references/synthesis-reporting.md`.
+- Before user-decision escalation, use rational analysis and required `work-planning` Codex confirmation review unless the path is destructive, security, policy, or a verified user-owned blocker.
+- Satisfied gates, status questions, long convergence loops, and routine review offers never create a user-owned blocker.
+- Derivable unknowns continue by best default, configurable parameter, marked assumption, phase advancement, or owner evidence route.
+- Expand only for verified-result basis, explicit detail request, user-owned blocker, closeout residual, or destructive/security/policy approval. Weak evidence narrows the claim.
 
 ### RPA-11. Self-Growth Ownership
 - Confirmed self-growth opens only for real behavioral/procedural defect, remediation failure, recurring missed-catch, or capability gap needing recurrence hardening.
