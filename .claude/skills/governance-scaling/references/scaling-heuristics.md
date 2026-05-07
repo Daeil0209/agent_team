@@ -15,6 +15,8 @@ These signals indicate a likely tier. They are suggestions for `team-lead` judgm
 | Structured development project with spec or design doc | Standard |
 | Single page, simple script, isolated config change, typo fix | Lightweight |
 | Single-user local app/tool/dashboard with bounded features, local data, no auth, no multi-tenant deployment, and no infrastructure orchestration | Lightweight by default; Standard if multi-feature business logic or persistence risk is material |
+| Multi-source market, technology, patent, standards, or evidence-bound report automation | Standard; Precision if legal status, safety, regulatory, high-stakes decision, or source freshness materially affects acceptance |
+| Engineering calculation, design, simulation, standards, unit, tolerance, or safety-margin critical path | Standard; Precision if standards compliance, safety, irreversible design choice, or high-stakes numeric output materially affects acceptance |
 Local-app fast-path boundary: delivery-surface proof can never be downshifted by tier. A Lightweight local app may use fewer agents and fewer design options, but if it promises double-click/low-touch/browser UI operation, the real launch path and first usable view remain acceptance-critical.
 ## Freeze And Consume Wiring
 When governance depth is active, freeze and consume these fields explicitly:

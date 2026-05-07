@@ -41,12 +41,16 @@ Use this file when field-level semantics, allowed values, the internal planning 
 | trigger flag (set when frozen scope makes it material) | activates owner asset |
 |---|---|
 | visible-surface (rendered acceptance material) | visual-composition for developer-owned design/production; rendered-surface basis for review, proof, and validation lanes |
+| practical-work-tool-output (personal/team internal tool, dashboard, workflow app, analysis tool, report automation program, calculation/design helper, or spreadsheet/manual-process migration where operator workflow and completion proof matter) | work-tool-patterns for developer-owned product-pattern packet; benchmark-simulation when new, quality-critical, disputed, or external-reference-shaped pattern synthesis is material; pattern proof oracle basis for review, proof, and validation lanes |
 | external-visual-benchmark (visual / UX / interaction / layout / design quality benefits from external references, public examples, or best-practice comparison) | benchmark-simulation for developer-owned synthesis; researcher secondary-consumer evidence support when comparative source gathering is assigned |
 | token-system material (cross-platform token / theme / component-layer architecture) | design-system-tokens for developer-owned design/production |
 | learner-facing (audience must learn) | instructional-design for developer-owned content/design; learner-objective basis for review/proof/validation lanes |
 | logs-as-decisive-proof (frozen proof surface names logs) | log-based-qa for tester-owned proof |
 | software-cross-artifact-boundary (module / interface / state boundary) | software-architecture for developer-owned design/production |
 | generated-document-output (report / template / reference-driven document) | document-automation for developer-owned generation/design |
+| knowledge-analysis-output (market / technology / patent / literature / standards analysis supports a decision, report, or downstream artifact) | researcher for source-family method and evidence packet; document-automation when a reader-facing report or generated document is produced |
+| evidence-bound-generation-program (program ingests sources and generates reports, analyses, or decision artifacts) | researcher evidence schema + document-automation generation contract + software-architecture implementation contract |
+| engineering-calculation-or-design-tool (formula, standard, unit, tolerance, or operating-condition correctness drives acceptance) | engineering-grounding and mathematical-correctness for developer-owned design/production; oracle basis for review, proof, and validation lanes |
 | receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned producer self-review and reviewer-owned clarity review |
 | executable-on-receiver-runtime (deliverable runs on operator's actual environment) | operator-delivery reference (loaded by dev-workflow at Phase 1/2/4/5) |
 

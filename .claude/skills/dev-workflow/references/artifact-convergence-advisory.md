@@ -106,6 +106,7 @@ Stop on `HOLD` when:
 Phase 2 convergence covers implementation-binding:
 - launcher and operator-runtime contract
 - architecture and selected rationale
+- material specialist packets, oracles, and contract deltas that shape implementation, proof, or acceptance
 - ERD, data invariants, and lifecycle
 - API/request/response/error contracts
 - screen specs, first-viewport priority, and user-flow contracts

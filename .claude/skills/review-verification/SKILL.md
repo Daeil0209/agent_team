@@ -38,6 +38,10 @@ This skill does not replace `reviewer`, `tester`, `validator`, `self-verificatio
 ## Purpose
 Use this skill when the user asks for exhaustive review, total inspection, coherence analysis, integrity analysis, balance analysis, design-intent analysis, risk-zero review, toxic-rule detection, duplication removal, meaning-conflict detection, or patch-readiness judgment.
 
+Default review mode is exhaustive across the frozen target corpus.
+Sampling, skim-only review, representative-file review, or finding-count stopping is invalid unless the user explicitly narrows the review scope.
+If exhaustive inspection cannot be completed, report the uninspected surface as `OPEN-SURFACES` and downgrade the claim to `UNVERIFIED` or `HOLD`.
+
 Use it to prevent these failures:
 - starting analysis before the target intent is reconstructed
 - judging risk from one document while ignoring adjacent owner surfaces
@@ -102,12 +106,14 @@ Do not use memory, prior summaries, stale mirrors, or expected wording as live e
 
 ### 2. Freeze Exhaustive Review Contract
 Name target, corpus boundary, exhaustiveness basis, evidence burden, user surface, output form, and parallel-fit basis.
+The frozen corpus must include every user-named target surface and every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness.
 If the corpus boundary is unknown, make bounded discovery the next action before judgment.
 When independent surfaces are material and host-authorized team runtime is available, use parallel agents through the owning dispatch path.
 
 ### 3. Inspect The Whole Target Surface
 Inspect every frozen target surface and material adjacent owner surface.
 No sampling, skim-only review, or finding-count quota satisfies an exhaustive request unless the user explicitly narrowed the scope.
+Inventory proof may establish corpus coverage, but it does not replace content inspection for owner-relevant surfaces.
 Separate primary owner surfaces from references, generated outputs, runtime state, advisory evidence, and stale artifacts.
 
 ### 4. Synthesize Findings

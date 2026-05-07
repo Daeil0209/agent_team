@@ -227,10 +227,9 @@ Phase-internal scaffolding stays in current-cycle internal context.
 Continuity files record only owner-required state.
 
 ## Related Skills
-- Architecture, design, and visible surfaces: `enterprise-architecture`, `design-system-tokens`, `mockup-to-component`, `visual-composition`.
-- Human-consumed generation: `document-automation`, `instructional-design`.
-- Review and proof refinement: `code-quality-review`, `security-review`, `log-based-qa`.
-Related skills refine the current phase without changing lane, proof, or acceptance ownership.
+- Related skill selection is owned by `work-planning` trigger fields, lane-detail specialist matrices, and lawful phase-local refinement.
+- `dev-workflow` consumes material specialist outputs as phase contract inputs; it does not maintain a separate complete skill catalog.
+- Related skills refine the current phase without changing lane, proof, or acceptance ownership.
 
 ## Delivery Spine
 - Freeze the receiver surface before production inherits the contract.

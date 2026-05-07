@@ -9,7 +9,7 @@ Hard gates verified by team-lead before phase advancement or dispatch.
 |---|---|
 | Phase 0 -> Phase 1 | discovery output synthesized and verified enough for CP1 |
 | Phase 1 -> Phase 2 | Phase 1 closure record exists for the canonical plan artifact with frozen `SCOPE-BASELINE`, CP1 + CP2 resolution, explicit open questions, YAGNI scope-review status, artifact-convergence advisory status, reconciliation result, accepted high/medium issue state, and next owner action. |
-| Phase 2 -> Phase 3 | Phase 2 closure record exists for the design artifact or implementation-binding design bundle with decision-bearing `SCOPE-BASELINE`, CP3 resolution, artifact-convergence advisory status, reconciliation result, accepted high/medium issue state, implementation-binding status, and next owner action. |
+| Phase 2 -> Phase 3 | Phase 2 closure record exists for the design artifact or implementation-binding design bundle with decision-bearing `SCOPE-BASELINE`, CP3 resolution, artifact-convergence advisory status, reconciliation result, accepted high/medium issue state, implementation-binding status, material specialist contract status when required specialist output shapes implementation/proof/acceptance, and next owner action. |
 | Phase 3 start | CP4 scope, specialist-fit lane decomposition, dependency boundaries, surface-to-agent map, and merge ownership resolved |
 | Phase 3 -> Phase 4 | developer handoff includes `OUTPUT-SURFACE`, changed surfaces, checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage/stale rows, and `FROZEN-CONTRACT-STATUS`; if parallel production occurred, one authoritative integrated output surface is routed forward from the frozen `MERGE-OWNER`. |
 | Phase 4 -> Phase 2 | CP5 classifies at least one blocking gap as design-level |

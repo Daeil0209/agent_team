@@ -60,7 +60,7 @@ Read frozen planning fields in this order:
 - Lead-local stays legitimate only while execution remains inside the frozen local item list and no new owner, new surface, hidden consequential step, or stronger claim appears.
 - If `lead-local candidate` is frozen, load every skill named in `LEAD-LOCAL-REQUIRED-SKILLS` before bounded local work continues.
 - If `team-routing candidate` or `ambiguous-route` is frozen, do not let `task-execution` invent or omit agent skill loads.
-- Agent-facing `REQUIRED-SKILLS` carries recommended non-lane-core skills from `LANE-REQUIRED-SKILLS-MAP` or lawful phase-local refinement.
+- Agent-facing `REQUIRED-SKILLS` carries required non-lane-core skills from `LANE-REQUIRED-SKILLS-MAP` or lawful phase-local refinement.
 - Lane ownership, not packet skill listing, triggers lane-core loading.
-- Use `REQUIRED-SKILLS: []` when no upstream recommendation exists.
+- Use `REQUIRED-SKILLS: []` when no upstream required-skill basis exists.
 - The full planning basis stays internal. Once work crosses the agent boundary, `task-execution` translates the frozen route into an assignment-grade dispatch packet.

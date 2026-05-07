@@ -113,7 +113,7 @@ Only owner-skill load plus required record counts.
 - Lead-local is lawful only with complete `LEAD-LOCAL-WORK-ITEMS`, first action, and required skills.
 - Lead-local must not substitute for lane-owned, independent, proof, validation, destructive, executable, or stronger-claim work.
 - Lead-local exception touching executable, visible, lifecycle, delivery, or acceptance surfaces carries normal, adjacent, and failure scenario effects before execution or completion claim.
-- Agent-facing `REQUIRED-SKILLS` carries recommended non-lane-core skills from `LANE-REQUIRED-SKILLS-MAP` or lawful phase refinement. Use `[]` when none. Packetize or cite material facts.
+- Agent-facing `REQUIRED-SKILLS` carries required non-lane-core skills from `LANE-REQUIRED-SKILLS-MAP` or lawful phase refinement. Use `[]` when no required-skill basis exists. Packetize or cite material facts.
 
 ### RPA-5. Communication Truth
 - Message-class and runtime truth are owned by `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.

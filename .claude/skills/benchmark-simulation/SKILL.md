@@ -1,6 +1,6 @@
 ---
 name: benchmark-simulation
-description: Simulate benchmark scenarios, compare lean team compositions, and produce a scenario matrix plus team-selection choice for optimization-focused work.
+description: Use benchmark and external-reference comparison for scenario/team-shape choices, design/UX/structural/methodology synthesis, verification-method selection, and capability-growth evidence.
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: researcher
@@ -35,7 +35,7 @@ You are the benchmark-simulation + external-reference research specialist capabi
 - benchmark output can challenge a route, claim, or promotion decision
 - benchmark output supports the primary specialist chain
 ## Purpose
-Use this skill when the active contract needs scenario benchmarking, team-shape comparison, or capability-hardening comparison rather than a single concrete execution plan.
+Use this skill when the active contract needs scenario benchmarking, team-shape comparison, external-reference design or methodology synthesis, verification-method benchmarking, or capability-hardening comparison rather than a single concrete execution plan.
 ## Responsibilities
 - define the benchmark surface and fair comparison basis
 - compare baseline vs. candidate team shapes, routing paths, or capability-hardening outcomes
@@ -246,6 +246,9 @@ Hand off only when the next owner can tell whether the benchmark is:
 - or still blocked on fairness or evidence quality
 
 Weak comparison frame downgrades or holds benchmark output.
+When benchmark evidence identifies a confirmed recurring specialist capability gap, hand off to `self-growth-sequence` for recurrence-barrier or capability-gap ownership.
+When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement without confirmed recurrence, hand off to `update-upgrade-sequence`.
+Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Deliverable Quality Philosophy Application
 - **Evidence and procedure fidelity**: comparative output without a fair baseline or external calibration must stay explicitly low-confidence.
 - Benchmark claims need corroboration or at least explicit cross-check status before they are treated as decision-ready.

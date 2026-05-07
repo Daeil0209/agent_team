@@ -16,10 +16,9 @@ LOAD-POLICY: on-demand reference only
 - Freeze supported question, primary reader, and decision before intake or drafting.
 - Freeze a method-shaped skeleton: question scope, source-family coverage, inclusion/exclusion logic, cross-check state, uncertainty labels, update-trace surfaces.
 - Structure outputs in reader decision order: decision summary → judgment-driving analysis → evidence detail → update-ready trace.
-- Anchor skeleton to a methodology framework (PRISMA for literature, Cochrane for systematic review, WIPO for patent landscape); declare it before prose fill.
-- Classify each cited paper by epistemic role (foundational, review/survey, critical/rebuttal, application/case); imbalance is a literature-character defect.
-- Patent analysis requires: CPC/IPC codes, key applicant filtering, patent-family grouping, legal-status filtering, filing-date windowing; absence is a shallow-analysis defect.
-- Search strategy must be concept-axis decomposition: identify independent axes, expand with synonyms, combine with Boolean logic; keyword-only search is a defect.
+- Consume the `researcher` evidence packet for source-family method, search strategy, patent filters, claim-evidence tiers, and update trace; this section owns reader structure and generation quality, not evidence acquisition.
+- Declare the selected methodology framework (PRISMA for literature, Cochrane for systematic review, WIPO for patent landscape, or equivalent) before prose fill when it shapes reader trust.
+- Show cited-source roles from the evidence packet when material; role imbalance becomes a document-character defect only after the evidence owner supplies or blocks the basis.
 - Required visual palette evaluation: technology taxonomy diagram, comparison matrix, distribution map, competitive positioning map, claim-evidence mapping table.
 - Body = analysis advancing the reader's decision; appendices = supporting detail, raw data, extended methodology; body sections reading as appendix material are a structure defect.
 ### Operational Plans/Schedules

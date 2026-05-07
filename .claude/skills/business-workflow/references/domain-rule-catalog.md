@@ -132,35 +132,9 @@ Schedule generation follows a strict dependency chain: **purpose classification*
 Scale change-management overhead by schedule complexity. **Simple schedules** (single-day, few elements): ensure the final distributed version is unambiguously the latest, with clear date stamp. **Complex schedules** (multi-day, many stakeholders, iterative revisions): require version numbering, revision timestamps, modifier identity, change reason, and impact trace showing which downstream blocks were affected by each change.
 ### Tool and Format Selection
 Select schedule format by comprehension speed for the target audience, not by convention or tool familiarity: **table** (dense parallel tracks, resource allocation), **timeline** (sequential flow, duration visibility), **Gantt** (dependency chains, critical path), **checklist** (execution verification, status tracking). Authoring tool and distribution format may differ -- a Gantt authored in project software may distribute as a simplified table or timeline for participants.
-## Research Report Domain Rules
-When the active task involves automated generation of research reports, technology survey reports, or patent landscape analyses, apply the following domain-specific business rules in addition to the general workflow rules above.
-### Research Report State Machine
-Research report generation follows a strict state sequence. Do not skip or reorder stages.
-1. **Question lock** -- Fix the decision question, primary reader, and supported judgment before any source collection begins. A report without a locked question is a scope failure.
-2. **Search strategy design** -- Decompose the question into independent concept axes, expand each axis with synonyms and domain terms, and produce per-source-type query plans (academic DB, patent DB, market/industry, standards). An unstructured keyword-only search is a strategy defect.
-3. **Systematic search execution** -- Execute queries per the strategy; log database, date range, query string, and hit count for each run. Undocumented searches block audit trail completeness.
-4. **Inclusion/exclusion filtering** -- Apply predefined gates (relevance, date, quality, language, duplication) and record accept/reject decisions with reasons. Missing gate logic is a methodology defect.
-5. **Cross-source analysis** -- Synthesize findings across source families (papers, patents, market, standards) on the locked judgment axis rather than summarizing each family in isolation. Siloed summaries without cross-synthesis are a structural defect.
-6. **Resequence for reader** -- Rebuild the analysis in reader decision order (answer first, supporting synthesis, uncertainty, trace) rather than mirroring the research chronology.
-7. **Layered output generation** -- Produce decision summary, judgment-driving analysis body, evidence detail, and update-ready trace/appendix as distinct layers. A single-density report without layering is a structure defect.
-8. **Compression** -- Remove redundancy, route appendix-grade material out of the body, and fit to volume targets without dropping traceability or uncertainty disclosure.
-### Systematic Research Methodology Rules
-- Anchor the methodology to an established framework: PRISMA-derived for literature surveys, Cochrane-derived for systematic reviews, WIPO-derived for patent landscape studies. Declare the framework before prose fill begins.
-- For patent analysis, require structured search dimensions: CPC/IPC classification codes, key applicant filtering, patent-family grouping, legal-status filtering (active/expired/pending), and filing-date windowing. A patent section without these dimensions is a shallow-analysis defect.
-- Define inclusion/exclusion criteria as explicit gates with binary or scored thresholds. Criteria must cover relevance, publication date range, source quality tier, language, and deduplication. Implicit or unstated filtering is a methodology gap.
-### Multi-Source Evidence Classification
-- Classify each cited paper by epistemic role: **foundational** (establishes core theory or method), **review/survey** (synthesizes existing knowledge), **critical/rebuttal** (challenges or limits prior claims), **application/case** (demonstrates real-world use). Maintain balance across roles; reliance on a single character class is a literature-character defect.
-- Classify patent intelligence across five dimensions: technology classification, applicant landscape, temporal filing trends, geographic distribution, and legal status. A patent section covering fewer than three dimensions is shallow.
-- Cross-source triangulation: when paper claims, patent filings, and market/product signals address the same sub-question, require explicit agreement/conflict/gap annotation. Unacknowledged cross-source contradiction is a synthesis defect.
-- Track claim-evidence-uncertainty linkage: each substantive claim must cite its evidence source(s) and carry an uncertainty tag (confirmed, supported, inferred, unconfirmed, conflicting). Claims without tags are untracked.
-### Audit Trail Requirement
-- Maintain search logs: database, query string, date executed, result count, and filters applied per search run.
-- Maintain source logs: each included source must carry citation, source family, epistemic role or patent dimension, and inclusion reason.
-- Maintain inclusion/exclusion records: rejected sources must carry rejection reason traceable to a predefined gate.
-- Maintain claim-evidence linkage: each body-section claim must map to one or more sources with strength tag. Unlinkable claims are audit failures.
-### Uncertainty Reporting
-- Every research report must include an explicit uncertainty disclosure section or integrated uncertainty markers throughout the body.
-- Use evidence-strength indicators: **confirmed** (multiple independent sources agree), **supported** (credible evidence exists but limited), **inferred** (logically derived from available evidence), **unconfirmed** (plausible but without direct evidence), **conflicting** (sources disagree with no resolution).
-- These evidence-strength indicators are the reference-local uncertainty taxonomy; do not invent a parallel confidence vocabulary for the same claim surface.
-- When sources conflict on a material claim, present both positions with their evidence bases rather than silently choosing one side.
-- Areas where the search strategy could not achieve adequate coverage must be disclosed as known gaps rather than omitted.
+## Research Report Workflow Boundary
+Research evidence method belongs to `researcher` `Source-Family Method Floor`.
+Reader structure and generated-document quality belong to `document-automation`.
+Pipeline software architecture belongs to `software-architecture`.
+Use `business-workflow` only when report automation has workflow states, approval or mutation authority, source-of-truth separation, audit or reconciliation semantics, configurable rule tables, or operator workflow meaning.
+When active, carry the `researcher` evidence packet instead of restating its methodology.

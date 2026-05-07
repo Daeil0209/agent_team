@@ -61,6 +61,15 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Specialist-boundary preservation
 Use only the patterns that materially strengthen the assigned decision target.
 
+## Source-Family Method Floor
+Use this floor when `SOURCE-FAMILY` includes market, technology, patent, academic, standards, regulatory, or mixed evidence for a report, analysis, generated artifact, or downstream program.
+- Before evidence gathering, freeze the question axes, source-family targets, inclusion and exclusion basis, claim-evidence schema, confidence labels, and update-trace surface when they are material to the downstream artifact.
+- Market or technology analysis names the market/practitioner, competitor or product, technical standard, academic or technical literature, and current practice source families that are included or explicitly excluded.
+- Patent analysis names jurisdiction or database, CPC/IPC or equivalent classification, assignee or applicant filter, patent-family grouping, legal-status filter, filing or priority-date window, and claim or technology taxonomy.
+- Academic or standards analysis names database or standards body, search axes, inclusion and exclusion basis, epistemic role, citation or snowballing status, and standard-version identity when material.
+- Evidence-bound generation or automation work hands off reusable source schemas, query or search-log identity, claim-strength tiers, and downstream golden-fixture or oracle needs.
+- Missing material method-floor basis is `hold|blocker` or `scope-pressure`, not low-confidence completion.
+
 ## Handoff Completeness Challenge
 Researcher must challenge decisive evidence basis before research discovery. This is not a demand for every possible source; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 

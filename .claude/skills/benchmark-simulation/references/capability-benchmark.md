@@ -90,6 +90,7 @@ External-reference research targets: authoritative UX research, established desi
 
 ## Workflow-Product Benchmark Extension
 For dense workflow tools, benchmark the product operating model as well as the data model.
+Reusable practical work-tool pattern synthesis hands off to `work-tool-patterns`; this file owns comparison dimensions, not durable product-pattern packets.
 Required benchmark dimensions when relevant:
 - home-as-resume-console quality
 - settings or defaults demotion quality

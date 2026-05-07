@@ -122,6 +122,8 @@ Self-growth repairs and preserves the existing operating model.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
+Consume `review-verification` output when design intent, owner-boundary coherence, integrity, negative risk, or patch-worthiness is material, disputed, or cross-surface.
+Do not require `review-verification` for quick hardening when owner surface, write scope, and meaning-preserving repair are unambiguous.
 
 When a defect or justified challenge is recognized, run this sequence:
 1. Trigger — confirm the problem basis is real enough to govern behavior now.
