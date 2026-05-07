@@ -173,6 +173,8 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.
+`FINAL-REJECT` keeps the active `dev-workflow` acceptance loop open; it is not workflow completion, user-decision wait, or a new top-level task.
 task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
+team-lead classifies the owning correction route from the correction packet and active workflow basis before dispatch: design-level gap -> Phase 2 correction; implementation or operator-delivery gap -> Phase 5 correction; changed scope, owner map, route, proof chain, or acceptance chain -> reopen `work-planning`.
 After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.

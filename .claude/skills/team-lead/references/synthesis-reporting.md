@@ -42,14 +42,14 @@ Hard rules:
 - `FINAL`: summarize the core result first.
 - `FINAL`: include only the highest-impact evidence, remaining blocker if any, and user-usable next state.
 - `FINAL`: do not state completion beyond validator/FAR or Evidence-Quality Matrix supported scope.
-- Avoid raw lane dumps and unexplained procedure jargon.
+- Avoid raw lane dumps, convergence tables, advisory payloads, and unexplained procedure jargon.
 - Expand only on a named trigger: verified-result evidence basis, explicit user request for detail, blocker the user must act on, closeout residual basis, or destructive/security/policy approval where silence is unsafe.
 - A user-facing question list is prohibited except for destructive/security/policy approval or a proven user-owned blocker after `work-planning` Codex confirmation.
 - Otherwise continue by default, assumption, configurable model, or owner route.
 - Do not expose internal planning fields, packet labels, routing/procedure names, lifecycle internals, or agent-control detail unless the user explicitly asks for internals.
 - Lane proof artifacts such as screenshots, traces, network logs, raw test output, or rendered captures are project-retained evidence and synthesis input.
 - When visual, rendered, runtime, or user-surface proof materially supports final acceptance, final rejection, or completion wording, user-facing final prose names the retained evidence anchor, decisive surface, capture/render scope, and inspected defect classes or open-surface state.
-- Show raw artifact payload only when the user explicitly asks for it or when that artifact is the deliverable.
+- Show raw artifact, advisory, proof, or reconciliation payload only when the user explicitly asks for it or when that payload is the deliverable.
 - Do not turn `dispatch-ack`, `status`, or partial agent signals into started/completed/success language.
 - If basis is needed, include only concise verification basis, material open surfaces, unverified items, and required user action.
 - If the basis cannot support the claim strength, narrow the claim or report `INFERENCE/UNVERIFIED`.

@@ -217,6 +217,8 @@ Keep planning fields, packet labels, freeze lines, and internal records internal
 After planning:
 1. Open exactly one next owner/action.
 2. If `ACTIVE-WORKFLOW` or a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
-3. `team-routing candidate` or `ambiguous-route` opens `task-execution`.
-4. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
-5. If the frozen target, route, readiness basis, or next action is missing, vague, or contradicted, reopen `work-planning`.
+3. The named owner must be loaded and consumed before lead-local action, `task-execution`, user reporting, phase movement, or mutation.
+4. Source lookup, remembered procedure text, advisory input, or unchecked owner summary does not satisfy named-owner consumption.
+5. `team-routing candidate` or `ambiguous-route` opens `task-execution`.
+6. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+7. If the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed, reopen `work-planning`.

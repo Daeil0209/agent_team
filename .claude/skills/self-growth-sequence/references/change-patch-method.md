@@ -24,6 +24,7 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 
 5. `Content Review`
 - Review the actual changed content rather than only the plan. For non-trivial changes, route to the reviewer lane; developer self-review is sufficient for trivial single-line fixes.
+- For self-growth patches, consume `review-verification` output when `REVIEW-VERIFICATION-NEED: required`; reviewer/Codex input is not a substitute for that packet.
 - Use evidence, not author intent, for acceptance judgment.
 
 5b. `Execution Gate`

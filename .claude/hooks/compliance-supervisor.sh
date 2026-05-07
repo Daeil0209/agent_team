@@ -1083,15 +1083,82 @@ fi
     if command_is_allowed_repo_test_index_hygiene "$CLEAN_COMMAND"; then
       exit 0
     fi
-    if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])rm([[:space:]]+-[A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*[rf][A-Za-z0-9_-]*|[[:space:]]+-r[[:space:]]+-f|[[:space:]]+-f[[:space:]]+-r)([[:space:]]|$)'; then
-      emit_deny "Recursive delete target is not approved for this user turn. Delete is allowed only when the current user prompt names the workspace child root or uniquely resolves to the active team project root, and the command deletes exactly that root. Read-only reporting subcommands may follow; additional mutation is blocked. Stop/cancel requests use lifecycle control, not filesystem deletion."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-recursive-delete" || true
-      exit 0
-    fi
+    # Pinpoint prohibition for rm/rmdir: deny ONLY when target is outside the
+    # workspace boundary or on a protected workspace path (.claude/, .git/,
+    # references/). Workspace-internal non-protected targets pass by default
+    # per CLAUDE.md `[BLOCK-AS-DEFECT]` and `[ALLOW-EXCEPT-DESTRUCT]`.
+    # Catastrophic system targets (rm -rf /) are caught above. Governance
+    # shell mutation of .claude/ is caught by command_mutates_governance_surface
+    # above. Reserved hard-deny categories (MANIFEST: secrets, .claude shell
+    # mutation, runtime/team-state corruption, read-only reference mutation)
+    # are guarded by their own narrow checks; this block only adds the
+    # outside-workspace and protected-relative pinpoints for shell rm/rmdir.
     if printf '%s' "$UNQUOTED_CLEAN" | grep -Eiq '(^|[[:space:];|&])(rm|rmdir)([[:space:]]|$)'; then
-      emit_deny "Delete command is not approved for this user turn. Use structured edits for file changes, an approved bounded cleanup path, or explicit user approval for the exact delete target."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "unapproved-delete" || true
-      exit 0
+      RM_TARGET_DENY_REASON="$(COMMAND_TEXT="$CLEAN_COMMAND" \
+        WORKSPACE_ROOT="$(resolve_project_root)" \
+        HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+        node <<'NODE' 2>/dev/null
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+if (!command.trim()) { process.stdout.write("empty-command"); process.exit(0); }
+const parts = command.split(/(?:&&|\|\||;)/).map(s => s.trim()).filter(Boolean);
+for (const sub of parts) {
+  const words = tokenize(sub);
+  if (!words || words.length < 2) continue;
+  if (!["rm", "rmdir"].includes(words[0])) continue;
+  // Per-rm-subcommand metacharacter guard: only rm/rmdir's own argv must
+  // be free of dynamic-expansion characters (`, $(), backticks, globs, brace
+  // expansion, regex char-class). I/O redirections (>, <) belong to other
+  // subcommands and never reach this loop because they appear in non-rm
+  // segments of a compound command.
+  if (/[`$(){}*?[\]]/.test(sub)) {
+    process.stdout.write("rm-subcommand-metacharacters-unsafe"); process.exit(0);
+  }
+  for (let i = 1; i < words.length; i++) {
+    const w = words[i];
+    if (w === "--" || w.startsWith("-")) continue;
+    const resolved = path.resolve(workspaceRoot, w);
+    const rel = path.relative(workspaceRoot, resolved).replace(/\\/g, "/");
+    if (!rel || rel.startsWith("..") || path.isAbsolute(rel)) {
+      process.stdout.write("outside-workspace:" + w); process.exit(0);
+    }
+    if (rel === ".claude" || rel.startsWith(".claude/")) {
+      process.stdout.write("protected-claude:" + w); process.exit(0);
+    }
+    if (rel === ".git" || rel.startsWith(".git/")) {
+      process.stdout.write("protected-git:" + w); process.exit(0);
+    }
+    if (rel === "references" || rel.startsWith("references/")) {
+      process.stdout.write("protected-references:" + w); process.exit(0);
+    }
+    if (rel === ".runtime" || rel.startsWith(".runtime/")) {
+      process.stdout.write("protected-runtime:" + w); process.exit(0);
+    }
+    if (rel === "secrets" || rel.startsWith("secrets/")) {
+      process.stdout.write("protected-secrets-dir:" + w); process.exit(0);
+    }
+    // Mirrors the structured-edit secret-file deny pattern at line ~955
+    // (.env|.env.*|credentials.json|*.pem|*.key) and extends to *.p12/*.pfx.
+    // Coherence flag: pattern duplicated across two tool surfaces (Write/Edit
+    // case + Bash rm here); future RE-HOME candidate to a shared helper.
+    const base = require("path").basename(resolved);
+    if (/^\.env(\..*)?$/.test(base) ||
+        base === "credentials.json" ||
+        /\.(pem|key|p12|pfx)$/.test(base)) {
+      process.stdout.write("protected-secret-file:" + w); process.exit(0);
+    }
+  }
+}
+process.stdout.write("");
+NODE
+)"
+      if [[ -n "$RM_TARGET_DENY_REASON" ]]; then
+        emit_deny "Delete target restricted (${RM_TARGET_DENY_REASON}). Allowed by default: any workspace-internal non-protected path. Blocked: outside-workspace targets, .claude/, .git/, references/. Reserved hard-deny categories (secrets, governance shell mutation, runtime/team-state corruption) are guarded separately."
+        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "rm-target-restricted" || true
+        exit 0
+      fi
     fi
     # Agent diagnostic/implementation commands are allowed only after destructive checks.
     S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'

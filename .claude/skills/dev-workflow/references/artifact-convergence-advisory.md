@@ -50,6 +50,8 @@ Missing required path records `fail-open:blocked_by_config`.
 10. Accepted high/medium defects become bounded correction requirements.
 11. Repeat after revision while material convergence value remains.
 
+Artifact-owner or developer self-review is input only.
+It never satisfies team-lead own-review basis.
 The first Codex packet in a pass must not include team-lead findings, verdict, or suggested fixes.
 A reconciliation challenge may include both reviews.
 Correction requires a fresh independent review pass.
@@ -91,6 +93,8 @@ Phase advancement requires:
 - no owner-decidable default or routine phase advance is turned into a user question
 - `SV-RESULT` verifies the reconciled claim
 
+Route-level `CODEX-ADVISORY-BASIS` does not satisfy this artifact-level convergence record.
+Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
 For phase-gate material artifacts, lawful fail-open requires fallback reviewer-style artifact inspection plus conservative `SV-RESULT`.
 If Codex reports non-ready, close only by `resolved-divergence` grounded in doctrine, artifact evidence, or frozen request basis.
 Codex non-ready state is advisory, not veto.
@@ -130,6 +134,9 @@ After upstream convergence, choose exactly one:
 - `HOLD` with exact reason
 
 ## Output Record
+Output record is internal phase evidence.
+User-facing `PHASE-RESULT` reports only convergence state, material blocker, or next owner/action.
+Do not print own-review findings, Codex findings, reconciliation tables, point lists, or raw advisory payloads unless the user explicitly asks for details.
 Record:
 - artifact path and phase
 - team-lead own-review basis status and verdict

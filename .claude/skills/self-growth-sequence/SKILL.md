@@ -122,8 +122,10 @@ Self-growth repairs and preserves the existing operating model.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
-Consume `review-verification` output when design intent, owner-boundary coherence, integrity, negative risk, or patch-worthiness is material, disputed, or cross-surface.
-Do not require `review-verification` for quick hardening when owner surface, write scope, and meaning-preserving repair are unambiguous.
+Before ownership adjudication or patch drafting, classify `REVIEW-VERIFICATION-NEED: required|not-required`.
+Set it to `required` when design intent, owner-boundary coherence, integrity, negative risk, or patch-worthiness is material, disputed, or cross-surface.
+Consume `review-verification` output before adjudication, patch design, or Change Sequence execution when it is required.
+Set it to `not-required` only for quick hardening when owner surface, write scope, and meaning-preserving repair are unambiguous.
 
 When a defect or justified challenge is recognized, run this sequence:
 1. Trigger — confirm the problem basis is real enough to govern behavior now.
@@ -195,9 +197,11 @@ When self-growth triggers during active work-planning or self-verification execu
 The active owner context carries the sidecar when work-planning or self-verification is the trigger source.
 Dispatch the sidecar at the nearest safe boundary after the triggering owner execution completes.
 1. Identify the active improvement topic from evidence.
-   Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, and likely owner surface.
+   Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, review-verification need basis, and likely owner surface.
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
    Quick hardening can use owner-local inspection when owner surface and write scope are unambiguous and the change is meaning-preserving or owner-local.
+   If `REVIEW-VERIFICATION-NEED: required`, consume `review-verification` output before ownership finalization.
+   Lane inspection, reviewer input, or Codex input is evidence only; it is not a substitute for a required `review-verification` packet.
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.
    Additional-agent dispatch is valid only on a host-authorized active-runtime path through `task-execution`.
 3. Adjudicate ownership explicitly.
@@ -281,6 +285,7 @@ Hard surface:
 - `work-planning` is the prerequisite gate only at a fresh or reopened change boundary.
 - `self-verification` closes at Post-Verify.
 - Use `SV-PLAN` only when the change plan is disputed.
+- For self-growth changes, missing required `review-verification` output blocks Draft, Execute, and convergence.
 - Review changed content, not just the plan.
 - Meaningful governance changes preserve review separation.
 - Execute only the reviewed, bounded, policy-compliant change.

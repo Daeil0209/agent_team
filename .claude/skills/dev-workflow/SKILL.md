@@ -56,6 +56,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 2. Phase Boundary Cycle
 - Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> SV-RESULT -> exit law or correct owner`.
+- Before phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, or phase-result reporting, team-lead consumes `references/phase-gates.md` and every mandatory reference named by the active gate.
 - A satisfied phase boundary is consumed in the same execution segment.
 - Valid consumption is bounded execution, dispatch, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
 - Long convergence loops, status questions, and routine user-review offers preserve team-lead gate consumption.
@@ -110,19 +111,19 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: team-lead bridges only already-frozen plan-basis sections into the canonical plan path.
 **Execution law**: developer remains the plan-writing owner.
 **Execution law**: the canonical plan artifact is the plan surface.
-**Exit law**: CP1 and CP2 are resolved.
+**Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
 **Exit law**: canonical plan artifact exists with frozen `SCOPE-BASELINE`.
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
-**Exit law**: Phase 1 closes with a completed artifact-convergence-advisory record for the Phase 1 canonical plan artifact.
-**Exit law**: The Phase 1 artifact-convergence record names the canonical plan artifact path, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, and next owner/action.
+**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, `references/artifact-convergence-advisory.md` must be loaded and completed for that artifact.
+**Exit law**: The Phase 1 artifact-convergence record is artifact-level, not route-level `CODEX-ADVISORY-BASIS`, and names the canonical plan artifact path, team-lead own-review basis, Codex advisory status or lawful fail-open, point-by-point reconciliation result, accepted high/medium issue state, `SV-RESULT` coverage, and next owner/action.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
 **Owner lane**: developer
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
-**Entry law**: current canonical plan surface, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-convergence-advisory for the canonical plan artifact must already exist
+**Entry law**: current canonical plan surface, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
 **Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
 **Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
 **Execution law**: contract freeze prepares Phase 3/CP4 production-lane decomposition; it does not authorize implementation dispatch by itself.
@@ -136,7 +137,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification plan basis is recorded.
 **Exit law**: Phase 2 closes with a completed artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding design bundle.
-**Exit law**: The Phase 2 artifact-convergence record names the design artifact or bundle paths, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, implementation-binding status, material specialist contract status when required specialist output shapes implementation/proof/acceptance, and next owner/action.
+**Exit law**: The Phase 2 artifact-convergence record is artifact-level, not route-level `CODEX-ADVISORY-BASIS`, and names the design artifact or bundle paths, team-lead own-review basis, Codex advisory status or lawful fail-open, point-by-point reconciliation result, accepted high/medium issue state, `SV-RESULT` coverage, implementation-binding status, material specialist contract status when required specialist output shapes implementation/proof/acceptance, and next owner/action.
 
 ## Phase 3: Implementation
 **Purpose**: Implement the feature inside the resolved design boundary.
@@ -208,6 +209,7 @@ Reference trigger rule:
 - Any other listed reference is mandatory when its trigger is active.
 - If a mandatory reference cannot load, `HOLD` or reopen the owning path.
 - Advancement requires loaded owner basis.
+- A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, phase-result reporting, or user review.
 
 ## Phase Cursor Consumption
 At any satisfied phase boundary, resolve the phase cursor in the same execution segment.
