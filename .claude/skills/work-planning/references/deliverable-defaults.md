@@ -3,12 +3,12 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Planner derives type-fit from `CONCRETE-DELIVERABLE` plus `PRIMARY-USER`. Plan, design, implement, and verify from the user's information-delivery perspective on what the deliverable is for them: what they receive, experience, use, or decide from.
+`team-lead` derives type-fit through `work-planning` from `CONCRETE-DELIVERABLE` plus `PRIMARY-USER`. Plan, design, implement, and verify from the user's information-delivery perspective on what the deliverable is for them: what they receive, experience, use, or decide from.
 `DERIVED-DEFAULTS` names the receiver job, consumption path, and decisive proof surface for the deliverable class.
-Planner also derives primary operator environment from request evidence.
+`team-lead` also derives primary operator environment from request evidence.
 Windows paths, Windows launch files, Windows UI language, or user-side Windows context make Windows the primary operator environment unless contrary evidence exists.
 
-The user does not need to ask separately for obvious type-fit duties such as "this is a program, test every button" or "this is a report, include tables and figures". Derivation from deliverable class and primary user is the planner's responsibility.
+The user does not need to ask separately for obvious type-fit duties such as "this is a program, test every button" or "this is a report, include tables and figures". Derivation from deliverable class and primary user is `team-lead` planning responsibility.
 The default done condition is a normal final artifact for that deliverable class: complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden. A partial draft, implemented subset, placeholder surface, or developer-only run path is not done unless upstream scope explicitly says so.
 
 ## User-Ready Delivery Chain

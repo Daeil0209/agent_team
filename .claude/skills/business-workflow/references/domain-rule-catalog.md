@@ -54,8 +54,8 @@ When approved claims conflict during element selection or schedule construction:
 - **Formality vs participant comfort**: maintain the minimum formality level required by institution culture, but do not add formality that creates participant burden without proportional institutional value.
 - **Repeatability vs ambition** (BP-Repeatability vs single-event optimization): prefer repeatable standard structures over ambitious one-off designs that cannot survive the next approval cycle.
 > **Note:** BP- labels are business-workflow domain-local priority identifiers, not CLAUDE.md-level governance IDs or laws.
-**Authority preference vs participant satisfaction**: when a senior authority figure's preference directly conflicts with a participant-satisfaction design principle (e.g., authority figure prefers fully structured time vs free-time recovery need), flag the conflict as an explicit decision point requiring human resolution. Do not silently resolve in favor of either side; document the trade-off and present options to the planning owner.
-When conflicts cannot be resolved by these rules, document the conflict explicitly and escalate to the planning owner for a decision rather than silently favoring one priority.
+**Authority preference vs participant satisfaction**: when a senior authority figure's preference directly conflicts with a participant-satisfaction design principle (e.g., authority figure prefers fully structured time vs free-time recovery need), flag the conflict as an explicit decision point requiring human resolution. Do not silently resolve in favor of either side; document the trade-off and present options to the `team-lead` planning owner.
+When conflicts cannot be resolved by these rules, document the conflict explicitly and escalate to the `team-lead` planning owner for a decision rather than silently favoring one priority.
 ### Repeatability and Sustainability Validation
 After draft generation, validate:
 - **Repeatable?** Could this plan be run again next quarter/year with similar effort and cost? If preparation requires exceptional effort that normal staff cannot sustain, flag it.

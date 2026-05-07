@@ -12,7 +12,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, lifecycle/proof/acceptance readiness, and dispatch blockers.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
 - `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.
-- `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition.
+- `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition without transferring planning ownership.
 
 ## Target Selection Rules
 - Choose one primary target before Q1-Q5. Add a secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
@@ -23,7 +23,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
 - `blocker-clear-plan` is valid only when the clearing move preserves every `work-planning` boundary-change axis and next action.
-- `delegated-lane-plan` is for lane-local assignment planning; it never owns top-level route selection.
+- `delegated-lane-plan` freezes lane-local assignment boundary only; planning ownership stays with `team-lead` through `work-planning`.
 
 ## Target-Specific Required Basis
 - `request-fit-plan`: `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and material request wording or cited artifact anchors.

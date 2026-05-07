@@ -76,7 +76,8 @@ Accepted material findings become correction requirements.
 Rejected Codex and Claude reviewer points require governing doctrine, artifact evidence, or frozen request basis.
 Rubber-stamp acceptance or unexplained rejection is a convergence defect.
 
-After correction, rerun Claude reviewer and Codex advisory on the changed surface.
+After each correction, rerun Claude reviewer and Codex advisory as a new blind dual-review pass.
+Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
 For material review surfaces, lawful fail-open requires Claude reviewer synthesis, fallback review basis, and conservative `SV-RESULT`.
@@ -121,6 +122,8 @@ BOUNDARY-UNCHANGED: yes
 ```
 
 Missing or false continuation values make the result discussion-only.
+Valid continuation preserves boundary only.
+It does not preserve prior reviewer, Codex, or reconciliation output as current-pass convergence.
 Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record

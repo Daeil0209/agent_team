@@ -14,7 +14,7 @@ This rule fires when the planning target involves any of:
 If the trigger fires, reference handling is hard-mandatory planning evidence. Record the result in `REQUEST-FIT-BASIS`; when downstream work depends on it, carry cited identities or deviation basis through `REQUEST-BOUND-PACKET-FIELDS`. If it does not fire, record `REFERENCE-USE: not-applicable (no trigger condition active)` in the planning basis.
 
 ## Reference Discovery
-Planner must first inventory available authoritative references for the active scope, including project discovery notes, canonical plan/design artifacts, external source documents, source data, specifications, and project-named reference files when present.
+`team-lead` must first inventory available authoritative references for the active scope through `work-planning`, including project discovery notes, canonical plan/design artifacts, external source documents, source data, specifications, and project-named reference files when present.
 
 Record the inventory in the reference-use result as a list, even when the result is no reference found in standard locations. Explicit empty inventory is not an implicit skip.
 
@@ -27,7 +27,7 @@ Format:
 Bare "reference exists" or "consulted source material" without specific location citation is a citation-specificity defect and blocks any dispatch that depends on the reference-driven basis.
 
 ## Deviation From Reference
-If the spec the planner writes deviates from the reference, such as simpler categorization, omitted fields, or renamed terminology, the reference-use result must include:
+If the plan/spec written from the team-lead planning basis deviates from the reference, such as simpler categorization, omitted fields, or renamed terminology, the reference-use result must include:
 
 `DEVIATION-FROM-REFERENCE: <reference-citation> | <deviation-description> | <rationale>`
 

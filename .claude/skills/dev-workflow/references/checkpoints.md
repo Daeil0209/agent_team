@@ -29,8 +29,9 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
 ## CP4 -- Implementation Scope Resolution
 - **Phase**: Implementation, before any implementation begins
 - **Trigger**: design is resolved and the implementation scope summary is available
+- **Owner action**: team-lead freezes CP4 by translating the Phase 2 implementation-binding contract into production assignments; developer receives CP4 as implementation basis only
 - **Present**: work surfaces to create/modify, out-of-scope items, risk points, `SCOPE-BASELINE` coverage, delivery experience check, specialist-fit lane decomposition, dependency boundaries, surface-to-agent map, and merge ownership
-- **Auto-resolve**: when the scope matches the design doc and the frozen request-fit basis
+- **Auto-resolve**: when the scope matches the design contract and frozen request-fit basis with no unresolved design-level gap
 - **Reopen/HOLD**: for destructive/security-sensitive actions or material scope expansion beyond the resolved design
 
 ## CP5 -- Gap Resolution Decision

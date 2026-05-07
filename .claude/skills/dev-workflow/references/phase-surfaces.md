@@ -23,10 +23,13 @@ auto-inject: false
   - Acceptance Evidence Basis
   - Verification Strategy Basis
   - explicit Open Questions
-- team-lead can materialize already-frozen bridge sections into the canonical plan path before developer authors the remaining plan body
+- team-lead owns Phase 1 planning design and frozen plan basis.
+- developer writes the canonical plan document from that frozen team-lead/workflow design basis.
 
 ## Phase 2 Design Surface
 - Canonical output path: `docs/02-design/features/{feature}.design.md` unless project config states otherwise
+- team-lead owns selected design direction and implementation-binding contract.
+- developer writes the canonical design document from that frozen team-lead/workflow design basis.
 - Design options count scales by project tier: Lightweight 1, Standard 2, Precision 3
 - Minimum design contents:
   - inherited `USER-INSTRUCTION`
@@ -49,7 +52,7 @@ auto-inject: false
 - For executable, user-facing software deliverables, design must freeze every `SCOPE-BASELINE` feature/surface/control path, the exact launch artifact, operator invocation shape, failure visibility, shutdown/cleanup path, clean re-launch path, infrastructure exposure policy, and the inventory needed for tester first-pass proof and validator final acceptance
 
 ## Phase 3 Implementation Surface
-- Implementation must not start before CP4 is resolved
+- Implementation must not start before team-lead CP4 is resolved from the Phase 2 implementation-binding contract
 - CP4 scope summary must make lane decomposition explicit: parallel-default production surfaces, bounded specialist-fit work surfaces, dependency boundaries, Boundary Register rows, surface-to-agent map, merge ownership
 - If decomposition shows independent specialist-fit work surfaces, serializing them onto one agent is a bottleneck defect
 - Developer handoff must include `OUTPUT-SURFACE`, changed surfaces, executed checks, row-mapped `SCOPE-BASELINE` coverage/delta, and `FROZEN-CONTRACT-STATUS` so downstream proof does not re-derive stale acceptance. If parallel production occurred, phase advancement requires one authoritative integrated output surface routed forward from the frozen `MERGE-OWNER`.

@@ -45,7 +45,7 @@ Carry-forward launch evidence is valid only when the original proof exercised th
 Programs that launch hands-off but require producer-only knowledge to start, diagnose, or terminate cleanly are half-delivered.
 The operator does not need to prompt "how do I run this".
 The operator does not need to prompt "what does this look like with real data".
-Both belong to the planner's derivation.
+Both belong to team-lead planning derivation.
 
 ## R23 -- Operator-OS Coverage
 Derive operator OS from `PRIMARY-USER` and current request/environment evidence at planning time.

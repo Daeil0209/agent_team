@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Use only for consequential developer-owned production assignments, including bounded plan, design, implementation, or governance patch edits. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Use only for consequential developer-owned production assignments, including bounded document production, implementation, or governance patch edits. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -41,8 +41,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Apply common lane-core preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the developer detail contract in `references/developer-lane-detail.md`.
 - `agents/developer.md` is the role spine, not the packet-field catalog.
-- In active `dev-workflow`, workflow-assigned plan and design artifacts are developer-owned production surfaces.
-- Treat them as bounded artifact edits.
+- In active `dev-workflow`, team-lead owns Phase 1 planning design and Phase 2 design direction/contract.
+- Treat workflow-assigned plan/design work as bounded document production from the frozen team-lead/workflow design basis.
 - Review, proof, validation, and route ownership stay with their owning lanes.
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, and bounded development production surface are inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.

@@ -6,9 +6,9 @@ auto-inject: false
 Use only inside active `dev-workflow` after `work-planning` selected the workflow and a canonical artifact exists or was materially revised.
 
 ## Authority
-Codex is advisory-only artifact review.
-team-lead owns reconciliation and phase cursor truth.
-The artifact owner owns revision.
+Codex is advisory-only design-coherence review.
+team-lead owns phase design, Codex advisory consumption, reconciliation, and phase cursor truth.
+The assigned artifact producer owns document writing or revision inside the frozen owner basis.
 `task-execution` owns assignment-grade correction dispatch.
 
 Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, or replaces owner gates.
@@ -38,23 +38,30 @@ A team-lead paraphrase is not doctrine.
 Missing required path records `fail-open:blocked_by_config`.
 
 ## Dual Review
-1. Artifact owner writes or revises the canonical artifact.
+1. Assigned artifact producer writes or revises the canonical artifact from the frozen owner basis.
 2. team-lead reviews independently before seeing or using the new Codex result.
 3. team-lead records own-review basis: inspected surfaces, axes, findings or `none`, and next-phase risk.
 4. team-lead sends a bounded read-only Codex packet.
-5. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
-6. Codex axes must include user-perspective and user-convenience checks.
-7. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
-8. team-lead reconciles team-lead and Codex findings point-by-point.
-9. Accept a point only against artifact evidence, doctrine, or frozen request basis.
-10. Accepted high/medium defects become bounded correction requirements.
-11. Repeat after revision while material convergence value remains.
+5. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
+6. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
+7. Codex axes must include user-perspective and user-convenience checks.
+8. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
+9. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
+10. team-lead reconciles team-lead and Codex findings point-by-point.
+11. Accept a point only against artifact evidence, doctrine, or frozen request basis.
+12. Accepted findings become team-lead redesign inputs across the affected owner basis, not isolated document edits.
+13. team-lead updates the planning/design basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces before document revision.
+14. Assigned artifact producer revises the canonical artifact from the redesigned owner basis.
+15. Classify wording-only correction, typo-only correction, or point-only patching that bypasses owner-basis redesign as non-converged when the accepted finding is design-level.
+16. After each revision, repeat steps 2-15 while material convergence value remains.
 
-Artifact-owner or developer self-review is input only.
+Artifact-producer or developer self-review is input only.
 It never satisfies team-lead own-review basis.
 The first Codex packet in a pass must not include team-lead findings, verdict, or suggested fixes.
 A reconciliation challenge may include both reviews.
 Correction requires a fresh independent review pass.
+The changed artifact is reviewed again before the new Codex result is seen or used.
+Prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording cannot carry forward.
 
 ## Same-Boundary Loop
 Do not reopen `work-planning` between passes while all remain unchanged:
@@ -80,6 +87,8 @@ BOUNDARY-UNCHANGED: yes
 ```
 
 Missing or false continuation values reopen `work-planning` or stop on `HOLD`.
+Valid continuation preserves boundary only.
+It does not preserve prior own-review, Codex review, or reconciliation as current-pass result.
 
 ## Resolution
 Phase advancement requires:

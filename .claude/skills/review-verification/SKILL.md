@@ -1,6 +1,6 @@
 ---
 name: review-verification
-description: Run exhaustive review and verification for design intent, coherence, integrity, and negative risk before consequential analysis, patch selection, or improvement recommendations. Produces review basis, not final validation.
+description: Run exhaustive review and verification for design intent, coherence, integrity, and negative risk before consequential analysis, patch selection, or improvement recommendations. Produces review basis for the owning validation, patch, or reporting path.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -8,21 +8,22 @@ PRIMARY-OWNER: team-lead
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
 - This is a common team-lead skill for review-sequence discipline.
 - New peer top-level sections require explicit governance review.
-- Keep detailed domain checklists in the owning specialist skill, not here.
+- Route detailed domain checklists to the owning specialist skill.
 
 ## Identity
 You are the review-verification capability for Claude Code.
 - Conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
-- Reviewer, developer, tester, validator, and researcher do not run the full workflow from this skill; they consume the packet or named lenses only inside their own lane boundaries.
+- Reviewer, developer, tester, validator, and researcher consume the packet or named lenses inside their own lane boundaries.
 
 ## Authority
 **This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, integrity checks, duplication/conflict detection, negative-risk analysis, and patch-worthiness classification.
 
 **Adjacent owners hold:** planning freeze, independent review findings, test execution, final validation verdict, implementation, governance patch execution, and runtime enforcement.
 
-This skill does not issue `PASS/HOLD/FAIL`.
-This skill does not replace `reviewer`, `tester`, `validator`, `self-verification`, `work-planning`, `update-upgrade-sequence`, or `self-growth-sequence`.
+This skill outputs `review_verification_packet`.
+`validator` owns final `PASS/HOLD/FAIL`.
+`reviewer`, `tester`, `validator`, `self-verification`, `work-planning`, `update-upgrade-sequence`, and `self-growth-sequence` keep their owner gates.
 
 ## Agent Relationships
 - `team-lead` - activates the full lens, freezes review scope, and synthesizes the result.
@@ -39,13 +40,13 @@ This skill does not replace `reviewer`, `tester`, `validator`, `self-verificatio
 Use this skill when the user asks for exhaustive review, total inspection, coherence analysis, integrity analysis, balance analysis, design-intent analysis, risk-zero review, toxic-rule detection, duplication removal, meaning-conflict detection, or patch-readiness judgment.
 
 Default review mode is exhaustive across the frozen target corpus.
-Sampling, skim-only review, representative-file review, or finding-count stopping is invalid unless the user explicitly narrows the review scope.
-If exhaustive inspection cannot be completed, report the uninspected surface as `OPEN-SURFACES` and downgrade the claim to `UNVERIFIED` or `HOLD`.
+User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
+Incomplete exhaustive inspection reports uninspected surfaces as `OPEN-SURFACES` and downgrades the claim to `UNVERIFIED` or `HOLD`.
 
 Use it to prevent these failures:
 - starting analysis before the target intent is reconstructed
 - judging risk from one document while ignoring adjacent owner surfaces
-- calling a design tradeoff a defect without proving negative operating effect
+- classifying a design tradeoff as a defect only with proven negative operating effect
 - adding rules where removal, tightening, replacement, or re-home would be cleaner
 - claiming no risk from partial evidence
 - patching before integrity, coherence, and owner-boundary checks are complete
@@ -59,7 +60,7 @@ Use it to prevent these failures:
 - removal-centered optimization or bottleneck/toxic-rule detection
 - patch-worthiness or improvement-candidate selection
 
-Do not activate for narrow ordinary code review unless the review scope includes cross-surface integrity, design-intent, or risk-balance judgment.
+Activate for ordinary code review only when the review scope includes cross-surface integrity, design-intent, or risk-balance judgment.
 
 ## Inputs
 - exact user request and amendments
@@ -76,6 +77,7 @@ Return a `review_verification_packet`.
 Required fields:
 - `REVIEW-TARGET`
 - `EXHAUSTIVENESS-BASIS`
+- `SEQUENCE-STATUS`
 - `LIVE-SURFACES-INSPECTED`
 - `DESIGN-INTENT-BASIS`
 - `OWNER-BOUNDARY-BASIS`
@@ -90,19 +92,28 @@ Required fields:
 - `VERIFICATION-NEED`
 
 Use `UNVERIFIED` when the live owner surface, design intent, or evidence basis was not inspected.
-Use `no identified negative risk on inspected surfaces` instead of absolute zero-risk language unless the frozen acceptance basis makes absolute closure truthful.
+Use absolute zero-risk language only when the frozen acceptance basis makes absolute closure truthful.
+Otherwise use `no identified negative risk on inspected surfaces`.
 
 ## Reporting Surface
 User-facing reporting follows `CLAUDE.md` Communication and Reporting Law and `team-lead` synthesis-reporting rules.
 The full `review_verification_packet` is internal evidence unless the user explicitly asks for details.
 
 ## Review Workflow
+Run the workflow in numeric order.
+Each step records current evidence in `SEQUENCE-STATUS` before the next step opens.
+The next step opens only when earlier step evidence is current for the same target, corpus, patch design, and diff.
+When target, corpus, findings, patch design, or diff changes, return to the earliest changed step and rerun every downstream step.
+Live patch eligibility begins only after Step 8 records completed integrity evidence.
+If a mutation already exists before eligibility, treat the current diff as the review target, route it through Steps 1-8, and execute only the corrected eligible patch path.
+
 ### 1. Relearn Doctrine And Owner Intent
 Read the live top doctrine and affected owner surfaces before judgment.
 Relearning means compliance refresh: identify the governing rules that control this review and obey them during every later step.
 Reading doctrine without applying it to inspection, risk judgment, patch design, and reporting is non-compliance.
 Reconstruct team philosophy, design intent, protected meaning, owner boundaries, positive execution paths, stop conditions, and acceptance surfaces.
-Do not use memory, prior summaries, stale mirrors, or expected wording as live evidence.
+Use live owner surfaces as evidence.
+Treat memory, prior summaries, stale mirrors, and expected wording as baseline context only.
 
 ### 2. Freeze Exhaustive Review Contract
 Name target, corpus boundary, exhaustiveness basis, evidence burden, user surface, output form, and parallel-fit basis.
@@ -112,26 +123,28 @@ When independent surfaces are material and host-authorized team runtime is avail
 
 ### 3. Inspect The Whole Target Surface
 Inspect every frozen target surface and material adjacent owner surface.
-No sampling, skim-only review, or finding-count quota satisfies an exhaustive request unless the user explicitly narrowed the scope.
-Inventory proof may establish corpus coverage, but it does not replace content inspection for owner-relevant surfaces.
+Exhaustive review is satisfied by full inspected coverage of the frozen corpus or by an explicit user-narrowed scope.
+Inventory proof may establish corpus coverage.
+Content inspection remains required for owner-relevant surfaces.
 Separate primary owner surfaces from references, generated outputs, runtime state, advisory evidence, and stale artifacts.
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
 Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped phase, scope drift, terminology drift, and evidence gap.
-Do not call a design tradeoff a defect without live evidence of protected-function harm.
+Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
 
 ### 5. Design Removal-First Patch
 Design the patch from the smallest owner surface.
 Prefer `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten`.
-Use `append` only when no existing owner sentence or reference can carry the meaning without information loss.
+Append is eligible only when existing owner sentences and references cannot carry the meaning without information loss.
 Every proposed change preserves source meaning, positive execution path, owner boundary, and recovery path.
 
 ### 6. Pre-Patch Negative-Risk Gate
 Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
-Unresolved negative risk blocks live patch; do not carry it as advisory residue.
-Report `no identified negative risk on inspected surfaces`, not absolute risk-zero, unless absolute closure is actually proven.
+Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
+Report absolute risk-zero only when absolute closure is proven.
+Otherwise report `no identified negative risk on inspected surfaces`.
 
 ### 7. Widen Coherence Radius
 After the patch design survives the first risk gate, inspect the surrounding references, sibling skills, lane roles, phase gates, packet fields, and acceptance path that the patch can affect.
@@ -139,16 +152,17 @@ Update the patch design when wider coherence review finds drift, overlap, missin
 
 ### 8. Integrity Gate Before Live Patch
 Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, existing function preservation, and no-regression basis.
-If any item fails, return to patch design instead of executing.
+Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Execute Through The Owning Patch Sequence
-This skill does not own file mutation.
-Execute only the reviewed patch design through `update-upgrade-sequence`, `self-growth-sequence`, or the assigned production owner.
-Do not live-patch an unreviewed, convenience-expanded, or append-first design.
+File mutation stays with the owning patch sequence or assigned production owner.
+Live patch eligibility requires completed Steps 1-8, recorded evidence for each required output field, and a reviewed removal-first patch design.
+Execute the eligible patch through `update-upgrade-sequence`, `self-growth-sequence`, or the assigned production owner.
+Missing eligibility evidence routes to the smallest incomplete review step before mutation.
 
 ### 10. Post-Patch Live Coherence Review
 After live patch execution, re-read the changed live surfaces, resulting diff, surrounding owner surfaces, and affected references.
-Do not limit post-patch coherence review to the edited file.
+Post-patch coherence review covers the edited file, resulting diff, surrounding owner surfaces, and affected references.
 Fix newly found contradiction, dead reference, weakened owner boundary, meaning loss, or procedure drift through the smallest correction path.
 
 ### 11. Classify Findings
@@ -179,7 +193,7 @@ Use `self-verification` before consequential reporting, completion claims, or sy
 ## Handoff Boundary
 Hand off only when the receiver can tell:
 - what was inspected
-- what was not inspected
+- which surfaces remain uninspected or open
 - why the design intent was interpreted that way
 - which findings are confirmed versus hypothetical
 - which owner/action should act next
@@ -190,9 +204,9 @@ Hand off only when the receiver can tell:
 - Challenge any "risk-free" claim that lacks complete inspected-surface basis.
 - Challenge any defect label that lacks negative operating effect or owner-correction path.
 - Challenge any added rule when an existing owner sentence can be tightened.
-- Challenge any removal that does not preserve source meaning and positive execution path.
+- Challenge removals by verifying preserved source meaning and positive execution path.
 
 ## Role-Scoped Self-Growth Loop
 - Repeated misses in coherence, integrity, design-intent, risk classification, or patch-worthiness trigger `self-growth-sequence`.
 - Harden the narrowest failed owner surface.
-- Do not turn this skill into duplicate doctrine for reviewer, validator, or update sequence ownership.
+- Keep this skill scoped to review-sequence discipline while reviewer, validator, and update sequence ownership remain on their owner surfaces.

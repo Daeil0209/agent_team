@@ -6,9 +6,9 @@ auto-inject: false
 | Phase | team-lead | researcher | developer | reviewer | tester | validator |
 |---|---|---|---|---|---|---|
 | 0 Discovery | orchestrate, synthesize | evidence gathering | -- | -- | -- | -- |
-| 1 Plan | CP1/CP2, gate check | support if gaps remain | write plan surface | -- | -- | -- |
-| 2 Design | CP3, gate check | -- | write design surface | -- | -- | -- |
-| 3 Implementation | CP4, gate check, monitor | -- | implement per design | -- | -- | -- |
+| 1 Plan | own planning design, CP1/CP2, gate check, convergence | support if gaps remain | write plan document from frozen team-lead/workflow design basis | -- | -- | -- |
+| 2 Design | own selected design direction, CP3, gate check, convergence | -- | write design document from frozen team-lead/workflow design basis | -- | -- | -- |
+| 3 Implementation | freeze CP4 from Phase 2 contract, gate check, monitor | -- | implement per CP4/design contract | -- | -- | -- |
 | 4 Analysis | CP5, gap judgment | -- | provide handoff context | review and gap classification | proof and coverage | validator verdict when required |
 | 5 Iteration | cycle tracking, auto-resolution | -- | apply fixes | quick-check | re-verify | fresh validator verdict when still required |
 
