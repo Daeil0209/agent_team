@@ -112,6 +112,9 @@ The barrier must match the failure mode.
 
 ### Causal Repair Standard
 Patch from causal basis.
+Defect admission gate:
+- Call a team-system item `confirmed defect` only when live owner evidence proves target-intent conflict, protected function, proven negative operating effect or reserved hard-deny/runtime-truth breach, causal failure mode, recurrence path, and smallest intent-preserving correction.
+- Treat literal contradiction, heavy gate, hook burden, deletion permission, or plausible misuse as defect evidence only until that proof exists.
 Use `references/causal-analysis.md` for the required reconstruction, failure-mode proof, recurrence path, and hypothesis limit.
 
 ### Governance Repair Orientation

@@ -111,6 +111,9 @@ Rules:
 - synthesized outputs require reconciled verification for stronger claims
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
+- Governance audit synthesis treats `CONFIRMED-DEFECT` as a self-growth admission label, not a suspicion label.
+- Do not promote an item to `CONFIRMED-DEFECT` unless the live owner surface proves design-intent conflict, proven negative operating effect or reserved hard-deny/runtime-truth breach, causal failure mode, recurrence path, and narrow correction owner.
+- If that proof is missing, report the item as candidate evidence, risk hypothesis, design tradeoff, non-issue, or `UNVERIFIED` instead of patch authorization.
 - `SV-PLAN` rejects missing planning/readiness fields
 - `SV-PLAN` rejects missing mandatory/material `CODEX-ADVISORY-BASIS`
 - `SV-PLAN` rejects fields not produced by actual `work-planning`

@@ -21,12 +21,7 @@ Update/upgrade adds these domain checks:
     Required basis: non-hook failure, non-hook insufficiency, exact matcher or payload condition, recovery path, false-positive/regression check, `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry, and explicit operator approval.
     Missing basis -> doctrine-only/advisory or `HOLD`; do not edit runtime enforcement.
 
-Before classifying a team-system item as defective, name:
-- `TARGET-INTENT-BASIS`
-- protected function
-- user-impact risk
-- removal or weakening risk
-- smallest intent-preserving correction
-
-A literal contradiction, repeated sentence, heavy gate, or hook burden is only defect evidence until this check is complete.
+Defect admission is owned by `.claude/skills/self-growth-sequence/SKILL.md` `Causal Repair Standard`.
+This update/upgrade check supplies update-local evidence only: `TARGET-INTENT-BASIS`, protected function, user-impact risk, removal or weakening risk, and smallest intent-preserving correction.
+A literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains defect evidence until the self-growth defect admission gate proves `confirmed defect`.
 If the item is intended protection, preserve the protection and reduce only the avoidable burden.

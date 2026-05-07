@@ -66,12 +66,12 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 
 ### Required operating rules
 - For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
-- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, hook, or reference chain. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
+- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain. Hook-Last-approved runtime edges remain under the hook/settings expansion gate. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
 - Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
 - Before drafting, freeze the defect basis, design-intent basis, causal basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
-- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, advisory warning, runtime warning, or hard block.
+- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner advisory warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
 - Warning, block, deny, deletion, restriction, or removal edits are valid only when that positive execution path remains explicit and executable.
 - Before drafting, enumerate affected surfaces beyond the edited file: exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors. Missing this enumeration is a patch-readiness defect, not a post-review nit.
 - For MCP or external-tool capability changes, the affected surfaces include the asset-set: project-root `.mcp.json`, `.claude/settings.json`, role tool authorization, hook/settings posture, and the owning skill/reference authority boundary.
