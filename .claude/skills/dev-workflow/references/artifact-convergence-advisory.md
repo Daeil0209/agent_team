@@ -7,12 +7,17 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 
 ## Authority
 Codex is advisory-only design-coherence review.
-team-lead owns phase design, Codex advisory consumption, reconciliation, and phase cursor truth.
+team-lead owns phase design, Codex advisory consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
+Codex findings return to `team-lead` as redesign input; team-lead adjudicates them and synthesizes one coherent phase basis before artifact-producer dispatch.
 The assigned artifact producer owns document writing or revision inside the frozen owner basis.
 `task-execution` owns assignment-grade correction dispatch.
 
 Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, or replaces owner gates.
 `CODEX-ADVISORY-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
+
+`REDESIGN-PLAN` is valid only when it states redesigned decisions, affected design dimensions, consistency impacts across materially affected scope/risk/user-surface/proof/acceptance/downstream/phase-gate surfaces, then derived producer instructions.
+A section edit list, addendum, framing note, or renamed patch list is not a valid `REDESIGN-PLAN` or producer-dispatch basis.
+Invalid `REDESIGN-PLAN` dispatch stops that producer path; produced output is diagnostic only until valid `REDESIGN-PLAN` redispatch replaces it.
 
 ## Trigger
 Run for:
@@ -49,11 +54,12 @@ Missing required path records `fail-open:blocked_by_config`.
 9. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
 10. team-lead reconciles team-lead and Codex findings point-by-point.
 11. Accept a point only against artifact evidence, doctrine, or frozen request basis.
-12. Accepted findings become team-lead redesign inputs across the affected owner basis, not isolated document edits.
-13. team-lead updates the planning/design basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces before document revision.
-14. Assigned artifact producer revises the canonical artifact from the redesigned owner basis.
-15. Classify wording-only correction, typo-only correction, or point-only patching that bypasses owner-basis redesign as non-converged when the accepted finding is design-level.
-16. After each revision, repeat steps 2-15 while material convergence value remains.
+12. Accepted findings enter team-lead redesign as inputs.
+13. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
+14. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
+15. `task-execution` dispatches the assigned artifact producer from valid `REDESIGN-PLAN` only.
+16. Assigned artifact producer updates the canonical artifact from `REDESIGN-PLAN`.
+17. After each revision, repeat steps 2-16 while material convergence value remains.
 
 Artifact-producer or developer self-review is input only.
 It never satisfies team-lead own-review basis.
@@ -144,13 +150,15 @@ After upstream convergence, choose exactly one:
 
 ## Output Record
 Output record is internal phase evidence.
-User-facing `PHASE-RESULT` reports only convergence state, material blocker, or next owner/action.
+Same-artifact convergence passes do not produce `PHASE-RESULT`; progress reports state one short next-action, dispatch-pending, or blocker line.
+Use `PHASE-RESULT` only when the phase exits, reaches `HOLD`, or reports a completed phase outcome.
 Do not print own-review findings, Codex findings, reconciliation tables, point lists, or raw advisory payloads unless the user explicitly asks for details.
 Record:
 - artifact path and phase
 - team-lead own-review basis status and verdict
 - Codex advisory status: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
 - accepted/rejected/deferred point counts
+- redesign plan validity for accepted findings: `not-needed`, `valid`, `invalid`, or `missing`
 - fallback inspection basis when fail-open is used
 - downstream artifact status: `current`, `stale`, or `hold`
 - next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`

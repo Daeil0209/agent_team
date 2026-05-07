@@ -35,7 +35,8 @@ Load trigger-specific files directly from `SKILL.md`.
 - `references/lifecycle-control.md`: lifecycle-control packet schema and structured shutdown protocol.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Open this skill only when the current path is already frozen for host-authorized additional-agent dispatch.
+Open this skill only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent, stale, or wrong-boundary.
+If already loaded for the same session and current dispatch owner, consume the loaded skill and execute the dispatch move without another `Skill(task-execution)` call.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
 Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, lifecycle-only state, control-only state, and phase-transition-only state stay with their current owner.
@@ -128,7 +129,9 @@ Branch rule:
 - new route, owner, or claim class reopens `work-planning`
 - if a branch requires new route judgment, new work surface decomposition, or changed ownership, reopen `work-planning` first
 ## Step 3: Dispatch Truth
-Keep runtime truth narrow.
+Keep dispatch execution internal and runtime truth narrow.
+User-facing dispatch text, when needed, states only `dispatch pending`, blocker, or next owner/action.
+Keep `TeamCreate`, task creation, packet assembly, skill/reference loads, member addressing, receipt handling, and runtime ladders internal unless the user explicitly asks for runtime internals.
 
 Runtime-only truth ladder:
 - standalone `Agent` success -> synchronous returned result, not team-runtime `dispatch pending`
@@ -141,9 +144,7 @@ Therefore:
 - report `agent started` only from agent-originated progress or first real agent action
 - report `dispatch pending` when only assignment success evidence exists
 - if only planning is frozen, report only the next action
-- if team-agent runtime creation succeeded but no agent dispatch followed yet, report only `team exists` or the next dispatch move
-- present `team exists` as primary truth only when the user explicitly asks for runtime state
-- otherwise translate it to the narrow next action, or to `dispatch pending` only after assignment success
+- if team-agent runtime creation succeeded but no agent dispatch followed yet, keep `team exists` internal and report only the next dispatch move unless the user explicitly asks for runtime state
 - if dispatch succeeded but start evidence is absent, report only `dispatch pending`
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
 - Before monitoring or user-facing progress, reconcile every parallel target to one of those states.

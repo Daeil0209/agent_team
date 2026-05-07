@@ -53,6 +53,7 @@ Packet fields:
 - `prior_session_invariants`
 - `doctrine_read_paths`
 - `user_confirmation_candidate`
+- `return_to: team-lead-only`
 
 Use empty strings, arrays, or objects for unknown non-material fields.
 Do not use `null`.

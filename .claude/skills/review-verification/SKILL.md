@@ -134,9 +134,9 @@ Classify contradiction, owner overlap, harmful duplication, protected restatemen
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
 
 ### 5. Design Removal-First Patch
-Design the patch from the smallest owner surface.
-Prefer `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten`.
-Append is eligible only when existing owner sentences and references cannot carry the meaning without information loss.
+Design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on existing text.
+`REMOVAL-FIRST-PATCH-DESIGN` must state which existing text was removed, tightened, merged, re-homed, replaced, or why none can carry the meaning without loss.
+Append-only or accumulation-first patch designs are invalid when duplicate, obsolete, weaker, or conflicting owner text remains.
 Every proposed change preserves source meaning, positive execution path, owner boundary, and recovery path.
 
 ### 6. Pre-Patch Negative-Risk Gate
