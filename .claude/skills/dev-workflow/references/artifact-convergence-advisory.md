@@ -11,12 +11,14 @@ team-lead owns phase design, Codex advisory consumption, reconciliation, `REDESI
 Codex findings return to `team-lead` as redesign input; team-lead adjudicates them and synthesizes one coherent phase basis before artifact-producer dispatch.
 The assigned artifact producer owns document writing or revision inside the frozen owner basis.
 `task-execution` owns assignment-grade correction dispatch.
+User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
 Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, or replaces owner gates.
 `CODEX-ADVISORY-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 
 `REDESIGN-PLAN` is valid only when it states redesigned decisions, affected design dimensions, consistency impacts across materially affected scope/risk/user-surface/proof/acceptance/downstream/phase-gate surfaces, then derived producer instructions.
 A section edit list, addendum, framing note, or renamed patch list is not a valid `REDESIGN-PLAN` or producer-dispatch basis.
+Producer dispatch names the team-lead `REDESIGN-PLAN` as basis, not Codex findings.
 Invalid `REDESIGN-PLAN` dispatch stops that producer path; produced output is diagnostic only until valid `REDESIGN-PLAN` redispatch replaces it.
 
 ## Trigger
@@ -57,8 +59,8 @@ Missing required path records `fail-open:blocked_by_config`.
 12. Accepted findings enter team-lead redesign as inputs.
 13. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
 14. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
-15. `task-execution` dispatches the assigned artifact producer from valid `REDESIGN-PLAN` only.
-16. Assigned artifact producer updates the canonical artifact from `REDESIGN-PLAN`.
+15. `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only; Codex finding lists stay in the advisory record.
+16. Assigned artifact producer updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
 17. After each revision, repeat steps 2-16 while material convergence value remains.
 
 Artifact-producer or developer self-review is input only.
@@ -150,7 +152,7 @@ After upstream convergence, choose exactly one:
 
 ## Output Record
 Output record is internal phase evidence.
-Same-artifact convergence passes do not produce `PHASE-RESULT`; progress reports state one short next-action, dispatch-pending, or blocker line.
+Same-artifact convergence passes do not produce `PHASE-RESULT`; routine pass detail stays internal.
 Use `PHASE-RESULT` only when the phase exits, reaches `HOLD`, or reports a completed phase outcome.
 Do not print own-review findings, Codex findings, reconciliation tables, point lists, or raw advisory payloads unless the user explicitly asks for details.
 Record:

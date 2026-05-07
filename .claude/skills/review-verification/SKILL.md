@@ -96,6 +96,7 @@ Use absolute zero-risk language only when the frozen acceptance basis makes abso
 Otherwise use `no identified negative risk on inspected surfaces`.
 
 ## Reporting Surface
+Before user-facing output, select one compact primary truth surface from `verified result`, `blocker`, `next action`, or `HOLD`.
 User-facing reporting follows `CLAUDE.md` Communication and Reporting Law and `team-lead` synthesis-reporting rules.
 The full `review_verification_packet` is internal evidence unless the user explicitly asks for details.
 

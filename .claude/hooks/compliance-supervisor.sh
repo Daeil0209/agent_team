@@ -459,6 +459,8 @@ command_uses_interpreter_fs_mutation() {
   local cmd="${1-}"
   local trimmed=""
   local interpreter_entry=""
+  local mutation_detected=0
+  local protected_target_pattern=""
   [[ -n "$cmd" ]] || return 1
 
   trimmed="${cmd#"${cmd%%[![:space:]]*}"}"
@@ -468,15 +470,25 @@ command_uses_interpreter_fs_mutation() {
   fi
 
   if printf '%s' "$cmd" | grep -Eiq "([^[:alnum:]_.]|^)(fs[.])?(rmSync|rm|rmdirSync|rmdir|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync|write_text|write_bytes|touch|replace|symlink_to|hardlink_to)[[:space:]]*[(]"; then
-    return 0
+    mutation_detected=1
   fi
   if printf '%s' "$cmd" | grep -Eiq "require[[:space:]]*[(][[:space:]]*['\"]fs['\"][[:space:]]*[)][[:space:]]*[.][[:space:]]*(rmSync|rm|rmdirSync|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync)[[:space:]]*[(]"; then
-    return 0
+    mutation_detected=1
   fi
   if printf '%s' "$cmd" | grep -Eiq "(child_process|execSync|exec|spawnSync|spawn).*['\"][^'\"]*(^|[^[:alnum:]_])(rm|mv|cp|touch|mkdir|chmod|chown|tee|sed[[:space:]]+-i|perl[[:space:]]+-i|git[[:space:]]+(reset|clean|checkout|restore|push))([^[:alnum:]_]|$)"; then
-    return 0
+    mutation_detected=1
   fi
   if printf '%s' "$cmd" | grep -Eiq "(shutil[.]rmtree|os[.](remove|unlink|rmdir|rename|replace)|Path[(][^)]*[)][.](unlink|rmdir|write_text|write_bytes|rename|replace)|[.]write_text[[:space:]]*[(]|[.]write_bytes[[:space:]]*[(]|open[[:space:]]*[(][^)]*,[[:space:]]*['\"][wa+]|subprocess[.](run|call|Popen|check_call|check_output).*['\"][^'\"]*(^|[^[:alnum:]_])(rm|mv|cp|touch|mkdir|chmod|chown|tee|sed[[:space:]]+-i|perl[[:space:]]+-i|git[[:space:]]+(reset|clean|checkout|restore|push))([^[:alnum:]_]|$))"; then
+    mutation_detected=1
+  fi
+
+  [[ "$mutation_detected" -eq 1 ]] || return 1
+
+  protected_target_pattern='(^|[^[:alnum:]_.-])([.]claude|[.]git|[.]runtime|secrets)(/|$)|(^|[/[:space:]])([.]env([.]|$)|credentials[.]json|[^/[:space:]]+[.](pem|key|p12|pfx))([[:space:]/;|&)]|$)|(^|[[:space:]])(~|[$]HOME|/home/[^/[:space:]]+)/[.]claude/teams(/|[[:space:]]|$)|(^|[[:space:]])/(etc|var|usr|bin|sbin|boot|dev|proc|sys|run)(/|[[:space:]]|$)'
+  if printf '%s' "$cmd" | grep -Eiq "$protected_target_pattern"; then
+    return 0
+  fi
+  if printf '%s' "$cmd" | grep -Eiq "open[[:space:]]*[(][^)]*references/[^)]*,[[:space:]]*['\"][wa+]|Path[(][^)]*references/[^)]*[)][.](unlink|rmdir|write_text|write_bytes|rename|replace)"; then
     return 0
   fi
 
@@ -1038,7 +1050,7 @@ fi
       exit 0
     fi
 	    if command_uses_interpreter_fs_mutation "$CLEAN_COMMAND"; then
-	      emit_deny "Interpreter-based filesystem mutation is blocked. Use structured file tools for edits or the bounded generated-output cleanup path for approved cleanup roots."
+	      emit_deny "Interpreter-based mutation of protected filesystem surfaces is blocked. Use structured file tools for governance/reference edits or keep generated output inside the approved project root."
 	      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
 	      exit 0
 	    fi

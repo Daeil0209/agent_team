@@ -152,7 +152,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Apply `[GOV-MIN]` before calling governance defective.
 
 ## Conditional Rules
-- Operate only inside active workspace, repository, and approved output roots. Do not destructively modify files. Do not expose secrets. Do not alter protected settings. Do not hide filesystem mutation behind interpreter snippets.
+- Operate only inside active workspace, repository, and approved output roots. Do not destructively modify files. Do not expose secrets. Do not alter protected settings. Do not hide protected filesystem mutation behind interpreter snippets.
 - Approved output root is `projects/<project-folder>/...` unless user/config names another canonical folder.
 - Source/governance edits stay on owner files. Generated products/evidence never spill into repo root, `.claude/*`, runtime state, home, temp, or incidental cwd.
 - If the project output folder is unknown before file-producing work, derive and freeze the safest canonical root. User escalation is invalid when a safe canonical root exists.
