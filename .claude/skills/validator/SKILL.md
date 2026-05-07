@@ -57,8 +57,9 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is not e
 - Mark inferred pieces explicitly.
 - Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream handoff.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the assigned validation surface before loading methodology or specialist skills.
-- Select fitting non-lane-core skills for the assigned validation surface.
+- Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned validation surface.
+- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
+- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
 - Methodology skills can refine validation discipline.
 - Choose the decisive proof tool from the user-facing acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.

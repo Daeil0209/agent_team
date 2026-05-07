@@ -73,9 +73,10 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Classify the search as `lookup`, `learn`, `investigate`, or benchmark-perspective.
 - Select benchmark-perspective when external best practice, methodology selection, comparative evidence, capability hardening, or evolving current practice materially affects the decision target.
 - The material trigger overrides packet mode wording.
-### 3. Skill Recommendation Evaluation
-- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the research surface.
-- Select fitting non-lane-core skills for the assigned research surface.
+### 3. Required Skill Consumption And Recommendations
+- Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned research surface.
+- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
+- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark ownership and routing authority stay with their owning lanes.
 ### 4. Retry Guard

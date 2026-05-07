@@ -54,12 +54,14 @@ Hard surface:
 - Repair uses the reopened owner.
 - Named workflow or sequence owners open before local execution, `task-execution`, or reporting.
 - Lead-local requires complete `LEAD-LOCAL-WORK-ITEMS`.
-- Lead-local requires frozen local skills.
+- Lead-local requires frozen local skills and consumes each one before local work or reporting.
+- Lead-local specialist consumption is valid only for a declared `SECONDARY-CONSUMER: team-lead` boundary or another lawful lead-local support basis frozen by `work-planning`.
 - Lead-local preserves lane separation.
 - Lead-local preserves parallel fit.
 - Lead-local reports only local evidence strength.
 - Team-routed or ambiguous paths go through `task-execution`.
 - Agent `REQUIRED-SKILLS` carries required non-lane-core skills from frozen lane maps or lawful phase refinement.
+- Agent `REQUIRED-SKILLS` is a receiver consumption duty, not a label or suggestion.
 - Teammates receive packetized, state-backed, or artifact-cited material facts.
 - Material facts must be packetized, state-backed, or artifact-cited before dispatch.
 

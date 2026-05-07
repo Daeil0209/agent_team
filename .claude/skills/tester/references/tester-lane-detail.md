@@ -100,7 +100,8 @@ When the same proof surface offers multiple tool profiles at different friction-
 - Rendered evidence kept distinct from wording, logic, and request-fit review
 
 ## Specialist Skill Loading
-Specialist skills with `PRIMARY-OWNER: tester` are selected through tester lane evaluation of the proof surface:
+Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
+Tester lane evaluation selects advisory or lane-local specialist skills from the proof surface:
 - `log-based-qa` - log-based QA methodology using structured JSON logging and Docker log monitoring as an alternative to traditional test scripts. It complements tester execution authority and does not replace user-surface proof.
 
 ## Tester Handoff Detail

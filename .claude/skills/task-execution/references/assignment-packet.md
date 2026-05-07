@@ -101,6 +101,7 @@ Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
 Packet skill fields separate required skills from advisory recommendations.
 - Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
+- Receiving lanes must load and apply every `REQUIRED-SKILLS` entry or return `scope-pressure` / `hold|blocker`.
 - Use `REQUIRED-SKILLS: []` when no upstream required skill exists.
 - Carry `SKILL-RECOMMENDATIONS` only when planning or the active workflow owner froze advisory methodology guidance for the receiving lane.
 

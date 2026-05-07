@@ -76,6 +76,7 @@ Own the actual execution move:
 - assemble the real outgoing packet from the frozen plan basis
 - run the task-state and packet final check before sending
 - carry required non-lane-core skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
+- treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not advisory method guidance
 - carry `REQUEST-BOUND-PACKET-FIELDS` as exact agent-facing request-fit fields when the receiving lane needs original request shape, exact instruction wording, user surface, burden cue, or acceptance basis
 - carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology guidance for the receiving lane
 - missing or lane-mismatched skill-basis entries return to the same frozen owner when all `work-planning` boundary-change axes stay unchanged

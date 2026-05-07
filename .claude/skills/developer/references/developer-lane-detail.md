@@ -90,7 +90,8 @@ Insufficient handoff examples:
 - `team-lead` may route developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology guidance inside an already bounded development production surface.
-- Select specialist skills through developer lane evaluation of the production surface.
+- Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
+- Developer lane evaluation selects advisory or lane-local specialist skills for the production surface.
 
 Specialist skills with `PRIMARY-OWNER: developer`:
 - practical work-tool product patterns: `work-tool-patterns`
@@ -103,8 +104,10 @@ Specialist skills with `PRIMARY-OWNER: developer`:
 
 Secondary-consumer specialist support:
 - clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, handoff, governance, or document production when receiver comprehension is decisive
+- bounded code-quality self-review: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before handoff
 
 When multiple specialists are active on one blocked surface, the controlling order is: `business-workflow` -> `work-tool-patterns` -> `software-architecture` -> domain specialists (`instructional-design`, `engineering-grounding`, `mathematical-correctness`) -> `enterprise-architecture` -> `document-automation` -> `visual-composition` -> UI implementation specialists (`mockup-to-component`, `design-system-tokens`). `benchmark-simulation` and `external-tool-bridge` are support overlays without controlling-chain position; they may evaluate or integrate without overriding earlier controlling contracts. `feynman-clarity` is a producer self-review lens for developer and does not replace reviewer-owned independent clarity review.
+`code-quality-review` is a developer self-review lens only; it does not replace reviewer-owned independent code-quality review.
 
 ## Durability Gate
 | Fix type | Definition | Action |

@@ -54,8 +54,9 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Frozen user run path or burden-contract ambiguity is also `hold|blocker`.
 - Include the exact missing information request.
 - Proof work starts from packet, artifact, or marked safe inference.
-- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the assigned proof surface before loading methodology or specialist skills.
-- Select fitting non-lane-core skills for the assigned proof surface.
+- Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned proof surface.
+- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
+- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
 - Methodology skills can improve proof quality.
 - Choose the proof tool from the decisive user surface.
 - Source artifact alone is decisive only when the frozen proof surface is the source/read document itself.

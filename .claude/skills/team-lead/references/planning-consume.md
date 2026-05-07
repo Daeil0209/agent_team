@@ -58,7 +58,9 @@ Read frozen planning fields in this order:
 - Do not start local work from an implied remainder.
 - If local execution reveals a new work item, new surface, lane-owned step, stronger claim, or route ambiguity, stop and reopen `work-planning`.
 - Lead-local stays legitimate only while execution remains inside the frozen local item list and no new owner, new surface, hidden consequential step, or stronger claim appears.
-- If `lead-local candidate` is frozen, load every skill named in `LEAD-LOCAL-REQUIRED-SKILLS` before bounded local work continues.
+- If `lead-local candidate` is frozen, load and apply every skill named in `LEAD-LOCAL-REQUIRED-SKILLS` before bounded local work continues.
+- A lead-local specialist skill must either declare `SECONDARY-CONSUMER: team-lead` or have another lawful lead-local support basis frozen by `work-planning`.
+- If a named local required skill cannot be applied inside the frozen boundary, reopen `work-planning` or report `HOLD`; do not continue with an unconsumed skill.
 - If `team-routing candidate` or `ambiguous-route` is frozen, do not let `task-execution` invent or omit agent skill loads.
 - Agent-facing `REQUIRED-SKILLS` carries required non-lane-core skills from `LANE-REQUIRED-SKILLS-MAP` or lawful phase-local refinement.
 - Lane ownership, not packet skill listing, triggers lane-core loading.

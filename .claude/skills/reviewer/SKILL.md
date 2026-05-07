@@ -49,8 +49,9 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Reconstruct only when the review target and evidence basis are anchored in packet or artifact evidence.
 - Mark inferred pieces explicitly.
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the assigned review surface before loading methodology or specialist skills.
-- Select fitting non-lane-core skills for the assigned review surface.
+- Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned review surface.
+- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
+- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
 - Methodology skills can deepen review.
 - See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready handoff detail.
 

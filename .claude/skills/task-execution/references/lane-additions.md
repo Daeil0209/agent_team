@@ -20,6 +20,8 @@ Every lane-core skill inherits these common preconditions:
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
 - Before lane work, run a capability-fit pass against target intent, assigned surface, required/recommended skills, and material tool or rendered/runtime needs.
+- Every `REQUIRED-SKILLS` entry is mandatory consumption: load and apply it before lane execution or handoff, or return `scope-pressure` / `hold|blocker` with the smallest correcting owner.
+- A required entry that is non-fitting, lane-mismatched, contradictory, or outside the frozen boundary is a packet or route defect, not permission to drop the skill.
 - Use fitting skills and tools as execution lenses inside the assigned lane; naming them without applying them to the work surface is not capability fit.
 - When a selected non-lane-core skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.
 - During lane work, a newly discovered skill or tool need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.

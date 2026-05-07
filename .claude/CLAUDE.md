@@ -106,7 +106,9 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Once loaded, lane-core skill outranks packet skill fields, optional methodology, and specialist skills inside the lane. It cannot override doctrine, roles, or owner gates.
 - Team-lead, Codex advisory, and packet skill fields identify non-lane-core skill basis; required skill fields and advisory recommendation fields stay separate.
 - Required non-lane-core skills freeze through the owning planning, workflow, or phase basis and travel as `REQUIRED-SKILLS`; methodology guidance travels as `SKILL-RECOMMENDATIONS`.
-- The assigned lane selects fitting skills from its work surface and hands off the selected-skill basis.
+- Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties for the receiving lane; load and apply each entry before execution or handoff.
+- If a required entry is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` / `hold|blocker`; do not silently drop it.
+- The assigned lane selects fitting `SKILL-RECOMMENDATIONS` from its work surface and hands off the selected-skill basis.
 - Specialist skill descriptions are routing cues; active owner path and assigned work surface govern loading.
 - Specialist and methodology skill outputs enter the active lane as evidence, method, or design deltas unless the frozen packet names a skill-owned artifact as `OUTPUT-SURFACE`.
 - Completion-grade claims close through the owning lane handoff and common completion result spine after those deltas are reconciled.

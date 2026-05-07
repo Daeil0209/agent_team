@@ -85,9 +85,10 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Check consumer radius, test coverage, and config-key reuse before adding new ones.
 - For governance surfaces, verify stale residue is not being mistaken for current truth.
 - Use direct file inspection when the current root lacks a git repository.
-### 3. Skill Recommendation Evaluation
-- Evaluate packet `REQUIRED-SKILLS` and any `SKILL-RECOMMENDATIONS` against the assigned production surface.
-- Select fitting non-lane-core skills for the assigned production surface.
+### 3. Required Skill Consumption And Recommendations
+- Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned production surface.
+- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
+- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
 ### 4. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
 - If that is impossible or disproportionate, record the fallback basis.

@@ -93,10 +93,14 @@ Use only the lenses that materially affect the assigned surface.
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
 
 ## Specialist Skill Loading
-Specialist skills with `PRIMARY-OWNER: reviewer` are selected through reviewer lane evaluation of the review surface:
+Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
+Reviewer lane evaluation selects advisory or lane-local specialist skills from the review surface:
 - `feynman-clarity` - Feynman-style explainability review for plans, designs, reports, governance text, and other clarity-critical deliverables. SECONDARY-CONSUMER: developer.
 - `code-quality-review` - SOLID checklist, duplication taxonomy, refactoring priority. SECONDARY-CONSUMER: developer.
 - `security-review` - OWASP checklist, detection patterns, severity framework.
+
+Secondary-consumer specialist support:
+- `design-system-tokens` for review of token architecture, layer boundaries, and token-to-component consumption when a design-system token contract materially affects review truth.
 
 When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
 Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.
