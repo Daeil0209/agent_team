@@ -20,10 +20,12 @@ For tightly coupled workflow cores:
 Use `HOLD` when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
 ## Operational Management Entity Architecture Extension
 For operational management systems (project management, resource allocation, personnel tracking, budget control):
-- **Core Entity Set Contract**: Define core entities (project, person, assignment, budget, derived cost) before module boundaries.
-- **Junction-Entity Separation**: Person-to-project requires first-class junction entity (role, rate, period, status). Direct FK without junction = defect.
+- **Core Entity Set Contract**: Define core entities (managed item/project, resource/person, assignment/allocation, budget/capacity, derived cost/summary) before module boundaries.
+- **Junction-Entity Separation**: Resource-to-managed-item relationships require a first-class junction entity with role, rate or unit, period, status, source, and override basis when material. Direct FK without junction = defect.
+- **Period And Rate Invariant Contract**: Period-based allocation, participation, capacity, utilization, or budget-rate calculations require explicit period granularity and unit semantics.
+- **Period And Rate Detail**: Name cap or threshold rules, overlap handling, over-allocation classification, recalculation trigger, lock or post rule, and historical display basis.
 - **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling = `HOLD`.
-Use `HOLD` when module/UI boundaries frozen before core entity set and relationship graph are explicit.
+Use `HOLD` when module/UI boundaries freeze before core entity set and relationship graph are explicit, or when material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts.
 ## Workflow-Product Architecture Extension
 For dense workflow tools:
 - Support inheritance/override resolution: global, project-type, project, period, person, exception scopes

@@ -30,6 +30,8 @@ You are the business-workflow specialist capability for Claude Code.
 Use this skill when sheets, manual operations, approvals, or workflow-heavy tools hide rules that must be extracted before trustworthy implementation or review.
 ## Responsibilities
 - extract entities, lifecycle states, transitions, approvals, overrides, and generated artifacts
+- for allocation, participation, capacity, or period-based workflow systems, extract the rule packet before downstream design
+- allocation rule packet detail includes period basis, rate or unit meaning, overlap rules, over-allocation rules, effective dates, closure and reopen rules, and derived status meaning
 - separate stable business rules from layout accidents, convenience habits, or one-off exceptions
 - freeze source-of-truth meaning for master, transactional, derived, and exported data
 - define mutation authority: who creates, edits, deletes, restores, reopens, or overrides
@@ -55,6 +57,7 @@ Preferred output: `business_workflow_packet`.
 Capture only the decisive business packet:
 - core entities and lifecycle states
 - authority and mutation rules
+- allocation, rate, capacity, period, and derived-status rules when material
 - source-of-truth separation
 - persistence, import/export, and reconciliation semantics
 - dangerous negative checks

@@ -126,8 +126,10 @@ Name the information that changes each decision.
 Use that frame to choose regions, metrics, hierarchy, and interactions.
 Single-domain metrics are acceptable only when the frozen surface is single-domain.
 Claimed integration needs at least one cross-domain relationship per integration axis.
+For operational-management dashboards, derive the decision frame across managed item, resource, allocation, period, status, and exception axes when material.
+Status and warning regions must distinguish source facts, derived metrics, stale or unready data, closed or locked periods, and exception states when those states affect operator decisions.
 Input mutations that affect derived metrics must invalidate, subscribe, or refetch the displayed state before acceptance.
-Verification covers `input -> displayed state reflects` for material derived metrics.
+Verification covers `input -> displayed state reflects` for material derived metrics, warnings, and exception states.
 Stale dashboard data after operator input is a delivery defect.
 
 **R32 — Visual spec discipline**:
