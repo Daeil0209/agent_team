@@ -99,7 +99,7 @@ Allowed barrier types:
 - rule hardening
 - owner re-home
 - checklist or packet-field hardening
-- hook or runtime enforcement refinement
+- Hook-Last-approved runtime enforcement refinement
 - skill capability update
 - role-boundary correction
 - reference or template repair
@@ -203,7 +203,7 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
    A lane hardens its own charter-bound failures first.
 5. Apply the actual change through the normal `Change Sequence`.
 6. Install the recurrence barrier on the correct owner surface.
-   Harden the rule, checklist, packet requirement, hook, capability boundary, or owner-local procedure that blocks recurrence.
+   Harden the rule, checklist, packet requirement, Hook-Last-approved runtime edge, capability boundary, or owner-local procedure that blocks recurrence.
 6.5. **Retroactive application phase (per CLAUDE.md `[RETRO-APPLY]`)**.
    Before optimization decision and before close, audit current-session surfaces the new rule directly governs or contradicts.
    Include artifacts, in-flight agent output, prior verdicts, active acceptance state, and live deliverable surfaces only when directly governed or contradicted.

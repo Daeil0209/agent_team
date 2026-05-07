@@ -90,7 +90,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY` -- enough that another model can reconstruct the patch from repository state alone.
 - Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
 - Preserve protected local restatements that keep owner files independently readable.
-- When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, hook, or self-verification gate instead of duplicate doctrine.
+- When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, self-verification gate, or Hook-Last-approved runtime edge instead of duplicate doctrine.
 - Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
 - Verification must prove both sides of the patch.
   The recurrence path is blocked or explicitly assigned.

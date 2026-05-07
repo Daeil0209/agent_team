@@ -5,6 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: reviewer
 ---
 ## Structural Contract
+- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
 - Keep OWASP detail, severity framework, dependency security, and allowed/blocked practices in `references/security-review-detail.md`.
 - Classifies findings.
 - Fix implementation remains with the owning implementation lane.

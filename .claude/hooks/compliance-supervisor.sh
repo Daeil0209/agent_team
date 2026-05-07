@@ -108,6 +108,28 @@ is_governance_reference_path() {
   [[ "$candidate_path" == */.claude/reference/* || "$candidate_path" == */.claude/skills/*/references/* ]]
 }
 
+governance_reference_structured_edit_actor_allowed() {
+  local session_id="${1-}"
+  local sender_name=""
+  local sender_lane=""
+
+  [[ -n "$session_id" ]] || return 1
+  session_is_runtime_owner "$session_id" 2>/dev/null && return 0
+  runtime_sender_session_is_worker "$session_id" 2>/dev/null || return 1
+
+  sender_name="$(worker_name_for_session_id "$session_id" 2>/dev/null || true)"
+  sender_lane="$(resolve_agent_id "$sender_name")"
+  if [[ "$sender_lane" == "developer" ]]; then
+    return 0
+  fi
+
+  case "$(normalize_lane_id "$sender_name")" in
+    developer|developer-*|dev-*) return 0 ;;
+  esac
+
+  return 1
+}
+
 mutation_payload_exceeds_compact_surface_budget() {
   local char_count="${1-0}"
   local line_count="${2-0}"
@@ -913,16 +935,20 @@ fi
             exit 0
             ;;
         esac
-        # Structured edit path: only positively-identified lead session is allowed (warn-allow).
-        # Empty SESSION_ID, worker, or any non-runtime-owner sender → fail-secure deny.
-        if [[ -z "$SESSION_ID" ]] || ! session_is_runtime_owner "$SESSION_ID" 2>/dev/null; then
-		          emit_deny "Governance reference materials are read-only outside positively-identified lead session governance edits. Lead session must satisfy Update/Upgrade Sequence + SV-PLAN/SV-RESULT before structured Edit/Update/MultiEdit. Indeterminate or non-lead sender -> deny."
+        # Structured edit path stays actor-bound, not packet-owned here.
+        # Developer governance-patch packet completeness remains owned by task-execution/developer docs.
+        if ! governance_reference_structured_edit_actor_allowed "$SESSION_ID"; then
+		          emit_deny "Governance reference materials require a positively identified lead session or developer worker for structured Edit/Update/MultiEdit. Packet completeness remains owner-doc governed. Indeterminate or non-developer sender -> deny."
           log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-non-lead-or-indeterminate" || true
           exit 0
         fi
-	        emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
-        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-lead-edit-allowed" || true
-        # fall through to allow lead governance maintenance
+        if session_is_runtime_owner "$SESSION_ID" 2>/dev/null; then
+	          emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
+          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-lead-edit-allowed" || true
+        else
+          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-developer-structured-edit-allowed" || true
+        fi
+        # fall through to allow structured governance reference maintenance
       fi
 
       case "$BASENAME" in
