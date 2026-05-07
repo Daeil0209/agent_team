@@ -7,7 +7,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 
 ## Target Definitions
 - `request-fit-plan`: freezes intent, deliverable, user, reference use, burden cues, material blockers, and packet-carry fields.
-- `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner.
+- `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner/action.
 - `lead-local-plan`: freezes one low-risk local item, required local skills, stop point, and evidence limit.
 - `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, lifecycle/proof/acceptance readiness, and dispatch blockers.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
@@ -30,7 +30,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `route-plan`: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`, `ACTION-CLASS`, `ROUTING-SIGNAL`, and `NEXT-CONSEQUENTIAL-ACTION`.
 - `lead-local-plan`: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`, evidence limit, stop condition, and proof/acceptance non-substitution basis.
 - `team-dispatch-readiness-plan`: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`, and `DISPATCH-BLOCKERS`.
-- `workflow-sequence-plan`: selected owner, reason it opens before deeper execution, and what it must hand to the next owner.
+- `workflow-sequence-plan`: selected owner, reason it opens before deeper execution, and what it must hand to the next owner/action.
 - `blocker-clear-plan`: exact blocker, exact clearing move, same-route proof, and boundary that triggers replanning.
 - `delegated-lane-plan`: assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, stop condition, and `scope-pressure`/`hold|blocker` threshold.
 

@@ -10,6 +10,6 @@ Within every active phase, use the core procedure stack for new phase boundaries
 4. completion-grade outputs return to team-lead.
 5. team-lead synthesizes the phase surface.
 6. `SV-RESULT` verifies the synthesized phase result.
-7. either the phase exit law clears, or the workflow reopens the correct owner/phase.
+7. either the phase exit law clears, or the workflow reopens the correct owner/action/phase.
 
 `dev-workflow` adds phase order, checkpoint law, and convergence routing. It does not replace the standard planning, verification, dispatch, monitoring, synthesis, or reporting obligations.

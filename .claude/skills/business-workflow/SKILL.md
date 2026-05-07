@@ -61,7 +61,7 @@ Capture only the decisive business packet:
 - source-of-truth separation
 - persistence, import/export, and reconciliation semantics
 - dangerous negative checks
-- unresolved decision points and next owner per surface
+- unresolved decision points and next owner/action per surface
 ## Handoff Boundary
 Hand off only when downstream owners can implement or review without guessing purpose, authority, mutation rules, or reconciliation behavior from the sheet shape alone.
 

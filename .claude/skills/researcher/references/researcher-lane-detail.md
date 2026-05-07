@@ -86,7 +86,7 @@ Upward assertion must name:
 - invalid or missing decisive basis
 - why the current packet cannot be executed as researcher-owned evidence work
 - smallest truthful evidence boundary
-- safe next packet correction or next owner
+- safe next packet correction or next owner/action
 
 ## Surface-Specific Evidence Requirements
 - Visual, structural, interaction, and UX decision targets require rendered or multi-modal evidence. Text-only synthesis is a methodology defect unless the visual surface is explicitly unavailable and the handoff downgrades confidence.

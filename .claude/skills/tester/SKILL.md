@@ -140,7 +140,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
-- Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, open surfaces, and the narrowest truthful next-lane candidate.
+- Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Global route, defect classification, validation closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.

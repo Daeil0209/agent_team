@@ -108,7 +108,7 @@ Whenever gap findings move to `dev-workflow`, reviewer, tester, or team-lead, ca
 - `DEFERRED-GAPS`
 - `COVERAGE-SCORE-DISTRIBUTION`
 - `EVIDENCE-BASIS`
-- `NEXT-OWNER`
+- `NEXT-OWNER-ACTION`
 - `OPEN-SURFACES`
 
 Do not replace reviewer, tester, or validator state with local gap-detection classification. A re-classified gap state is not closed by the agent that produced it.

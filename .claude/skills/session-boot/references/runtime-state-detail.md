@@ -170,7 +170,7 @@ They may corroborate runtime truth, but must not invent competing lifecycle voca
 - `session-boot` observes runtime for active workflows; it does not own workflow progression.
 - `team-lead` plus the active workflow owner still own phase advancement, checkpoint resolution, redistribution, synthesis, and completion claims.
 - Runtime observation may sharpen agent-start evidence, lifecycle evidence, stale/ghost classification, and bottleneck observation.
-- If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner.
+- If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or `HOLD`.
 
 ## Proactive Team-Composition Reassessment
 At every phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` MUST apply `Monitoring Sequence` reassessment before re-dispatch. Synthesis is the reliable trigger because it occurs at every phase transition and agent handoff convergence.

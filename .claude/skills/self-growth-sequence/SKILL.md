@@ -240,7 +240,7 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 - If the SV pass reaches `HOLD`, record `CONVERGENCE-STATUS: HOLD`, owner, reason, boundary, and next safe evidence step.
 - Convergence stays open.
 - If `SUSPENDED-WORK-SURFACE` is not `none`, closure requires `RESUME-OWNER` and a verified `RESUME-ACTION`.
-- Valid resume actions: continue from corrected state, reopen `work-planning`, dispatch next owner, or report `HOLD` with owner and blocker.
+- Valid resume actions: continue from corrected state, reopen `work-planning`, dispatch next owner/action, or report `HOLD` with owner and blocker.
 - Without explicit cancellation, redirect, or proven user-owned blocker, `waiting for user` is false closure.
 - Status/progress questions expose the stall only.
 - Resume duty requires `RESUME-OWNER` and verified `RESUME-ACTION`.

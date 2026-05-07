@@ -62,11 +62,11 @@ Start only after purpose, business-rule packet, and output class are explicit.
 Preferred: `./projects/{project_name}/software_architecture_packet.md` or folded into authoritative plan.
 New directory requires project-root plan surface.
 Capture only the decisive packet.
-It must include major modules, authoritative and derived state, persistence/restore contract, import/export boundary, risky invariants, failure/recovery expectations, and next owner per unresolved surface.
+It must include major modules, authoritative and derived state, persistence/restore contract, import/export boundary, risky invariants, failure/recovery expectations, and next owner/action per unresolved surface.
 ## Handoff Boundary
 Hand off when state/module boundaries, persistence/failure semantics, and risky workflow contracts are explicit.
 Downstream implementation must require no hidden architecture.
-State next owner per surface explicitly.
+State next owner/action per surface explicitly.
 Escalate to `team-lead` when architecture implies different execution shape.
 Escalate to `business-workflow` when blocked by unresolved workflow rules.
 ## Expert Software Design Standard

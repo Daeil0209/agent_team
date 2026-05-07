@@ -137,4 +137,4 @@ Record:
 - accepted/rejected/deferred point counts
 - fallback inspection basis when fail-open is used
 - downstream artifact status: `current`, `stale`, or `hold`
-- next owner: correction dispatch, phase advancement, fallback review, or `HOLD`
+- next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`

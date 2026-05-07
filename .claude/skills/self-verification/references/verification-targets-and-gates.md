@@ -72,7 +72,7 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
-- readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, or acceptance owner
+- readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
 - routes that may enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
 - consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`

@@ -69,7 +69,7 @@ Upward assertion must name:
 - attempted or available execution path
 - why current execution cannot continue truthfully
 - smallest truthful production boundary
-- safe next packet correction, research/setup need, or next owner
+- safe next packet correction, research/setup need, or next owner/action
 
 Tool/setup gap assertion must also name the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md` when production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary.
 

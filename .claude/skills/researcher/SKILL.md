@@ -114,7 +114,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Send consequential upward results to team-lead via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
-- Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane candidate.
+- Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.

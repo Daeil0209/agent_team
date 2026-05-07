@@ -21,7 +21,8 @@ Hard rules:
 - Positive synthesis claims only the scope supported by Evidence-Quality Matrix rows, `FROZEN-CONTRACT-STATUS`, and retained open-surface state when material.
 - Positive synthesis is forbidden while a `[RETRO-APPLY]` affected prior verdict, PASS, handoff, or closure remains stale or unclassified.
 - Multi-lane or Claude+Codex convergence is not closure when all reviewers consumed the same narrowed or convenience-built packet. Before positive synthesis, compare the packet basis itself against the frozen delivery contract; if the packet omitted baseline scope, exact operator launch, cleanup, or defer basis, reopen the packet owner instead of reporting agreement.
-- If synthesis points to a next lane or next consequential step, run `SV-RESULT` on the synthesized result before re-dispatch.
+- Every non-final synthesis resolves to exactly one next executable owner/action, bounded redispatch basis, or `HOLD`.
+- If synthesis points to a next lane or next consequential step, run `SV-RESULT` on both the synthesized result and proposed next owner/action before re-dispatch.
 - When synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]` before declaring positive synthesis.
 - Before consuming parallel-lane handoffs, reconcile outputs against prior same-session decisions, doctrine patch invariants, and sibling-lane outputs. Contradiction is `cross-continuity drift`; reopen `work-planning`.
 - At each handoff/completion synthesis, apply `session-boot` `Monitoring Sequence` proactive team-composition reassessment before re-dispatch. Do not wait for the user to identify parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch.
@@ -37,7 +38,7 @@ Hard rules:
 - `MID-FLIGHT`: stay silent unless a meaningful phase change or blocker needs user awareness.
 - If `MID-FLIGHT` is necessary, use one short line in the user's language.
 - Do not narrate routing, owner-opening, skill loading, receipts, truth labels, lifecycle internals, or other procedure scaffolding.
-- `PHASE-RESULT`: report the phase outcome briefly, with only completion truth, material blocker, or next owner.
+- `PHASE-RESULT`: report the phase outcome briefly, with only completion truth, material blocker, or next owner/action.
 - `FINAL`: summarize the core result first.
 - `FINAL`: include only the highest-impact evidence, remaining blocker if any, and user-usable next state.
 - `FINAL`: do not state completion beyond validator/FAR or Evidence-Quality Matrix supported scope.

@@ -47,7 +47,7 @@ A compacted agent has lost the assignment-grade packet context but retains lane-
 - Agent emits the exact literal `MESSAGE-CLASS: hold|blocker`.
 - It includes `BLOCKER-TYPE: context-loss-after-compaction`.
 - It includes `BLOCKER-BASIS: prior packet context not in working memory`.
-- It includes `SAFE-NEXT-STEP: re-receive assignment-grade packet for the previously-frozen surface`.
+- It includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
 - Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet (or a corrected version if the underlying scope changed) so the agent can resume.
 - Agent does NOT improvise the lost context; do not reconstruct the assignment from gist or partial memory.
 - Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.

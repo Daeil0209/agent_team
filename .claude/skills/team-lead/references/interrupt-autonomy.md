@@ -24,7 +24,7 @@ Rules:
 - Continue through the same verified `RESUME-ACTION`.
 - Use `SV-RESULT` only before reporting or handoff.
 - The resumed scope must match the original task, not a new scope.
-- Valid `RESUME-ACTION` values are continue from the corrected state, reopen `work-planning`, dispatch the next owner, or report `HOLD` with owner, blocker, and next safe action.
+- Valid `RESUME-ACTION` values are continue from the corrected state, reopen `work-planning`, dispatch the next owner/action, or report `HOLD` with owner, blocker, and next safe action.
 - Do not ask permission to resume; the user already requested the original task.
 - Do not silently drop the original task, start unrelated work, or stop after the interrupt as if the original task completed.
 - Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or proven user-owned blocker.

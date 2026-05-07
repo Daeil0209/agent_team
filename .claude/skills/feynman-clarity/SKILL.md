@@ -102,7 +102,7 @@ Activate only for clarity-bearing work.
 - request-fit basis when the deliverable promise matters
 - evidence basis for claims that must remain factual
 - acceptance or completion surface when the output is user-facing
-- owning lane or next owner when the issue is not clarity-only
+- owning lane or next owner/action when the issue is not clarity-only
 
 ## Outputs
 Return a Feynman-clarity review packet.
@@ -156,7 +156,7 @@ When reviewing reports, instructions, or written deliverables, verify that the p
 - the evidence basis
 - the limits of the claim
 - the intended reader action
-- the next owner when the document is not final
+- the next owner/action when the document is not final
 
 If the reader must infer the purpose, conclusion, evidence strength, or next action, flag a clarity defect.
 

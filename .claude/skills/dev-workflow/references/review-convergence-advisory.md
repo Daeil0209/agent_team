@@ -132,5 +132,5 @@ Record:
 - accepted/rejected/deferred point counts
 - fallback review basis when fail-open is used
 - stale artifact/proof status
-- next owner: correction dispatch, tester, validator, phase advancement, fallback review, or `HOLD`
+- next owner/action: correction dispatch, tester, validator, phase advancement, fallback review, or `HOLD`
 - whether `SV-RESULT` covered the synthesized claim

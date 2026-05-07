@@ -41,7 +41,7 @@ Activate for engineering mathematics, derivation-heavy documents, quantitative e
 - request-fit basis when artifact shape materially affects review
 ## Outputs
 Return a mathematical packet.
-It covers derivation accuracy, notation consistency, assumption chain, domain of validity, cross-check basis, rendering blockers, and the next owner per unresolved surface.
+It covers derivation accuracy, notation consistency, assumption chain, domain of validity, cross-check basis, rendering blockers, and the next owner/action per unresolved surface.
 ## Handoff Boundary
 Route unresolved issues explicitly to `engineering-grounding`, `instructional-design`, `reviewer`, or `tester`.
 Formula-heavy human-facing outputs still need both math review and rendered review.

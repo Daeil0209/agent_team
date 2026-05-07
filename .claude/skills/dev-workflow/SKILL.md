@@ -100,7 +100,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
 **Exit law**: user escalation requires `work-planning`, Codex confirmation review, and team-lead-verified evidence of the smallest true user-owned blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
-**Exit law**: user questions become CP1 open questions or a proven user-owned blocker with next owner.
+**Exit law**: user questions become CP1 open questions or a proven user-owned blocker with next owner/action.
 
 ## Phase 1: Plan
 **Purpose**: Produce the canonical feature plan surface.
@@ -116,7 +116,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
 **Exit law**: Phase 1 closes with a completed artifact-convergence-advisory record for the Phase 1 canonical plan artifact.
-**Exit law**: The Phase 1 artifact-convergence record names the canonical plan artifact path, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, and next owner action.
+**Exit law**: The Phase 1 artifact-convergence record names the canonical plan artifact path, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, and next owner/action.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
@@ -136,7 +136,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification plan basis is recorded.
 **Exit law**: Phase 2 closes with a completed artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding design bundle.
-**Exit law**: The Phase 2 artifact-convergence record names the design artifact or bundle paths, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, implementation-binding status, and next owner action.
+**Exit law**: The Phase 2 artifact-convergence record names the design artifact or bundle paths, team-lead own-review basis, Codex advisory status, reconciliation result, accepted high/medium issue state, implementation-binding status, material specialist contract status when required specialist output shapes implementation/proof/acceptance, and next owner/action.
 
 ## Phase 3: Implementation
 **Purpose**: Implement the feature inside the resolved design boundary.
@@ -144,7 +144,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Canonical output**: changed production surfaces plus an explicit developer handoff
 **Entry law**: design artifact exists, CP3 is resolved, and CP4 implementation scope and lane decomposition are resolved
 **Execution law**: CP4 fixes parallel-default production ownership with bounded specialist-fit work surfaces, explicit dependency boundaries, surface-to-agent map, and explicit merge ownership. If decomposition shows independent specialist-fit work surfaces, collapsing them onto one agent is a bottleneck defect.
-**Exit law**: developer handoff names `OUTPUT-SURFACE`, changed surfaces, executed checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage or stale rows, `FROZEN-CONTRACT-STATUS`, unresolved assumptions, and the next owner lane. If parallel production occurred, phase advancement requires one authoritative integrated output surface routed forward from the frozen `MERGE-OWNER`.
+**Exit law**: developer handoff names `OUTPUT-SURFACE`, changed surfaces, executed checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage or stale rows, `FROZEN-CONTRACT-STATUS`, unresolved assumptions, and the next owner/action. If parallel production occurred, phase advancement requires one authoritative integrated output surface routed forward from the frozen `MERGE-OWNER`.
 
 ## Phase 4: Analysis
 **Purpose**: Execute planned review and proof, then classify gaps.

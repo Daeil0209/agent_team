@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-`EXECUTION-READINESS-BASIS` is the planning-level readiness contract. It does not assemble packets or prove results. It records whether the frozen next owner has enough basis to act without re-deriving omitted route, packet, proof, setup, lifecycle, parallel, or acceptance facts.
+`EXECUTION-READINESS-BASIS` is the planning-level readiness contract. It does not assemble packets or prove results. It records whether the frozen next owner can execute the next action without re-deriving omitted route, packet, proof, setup, lifecycle, parallel, or acceptance facts.
 
 For team-routed or dispatch-capable paths, readiness must cover:
 - packet schema floor
@@ -23,7 +23,7 @@ For team-agent runtime paths, readiness must also account for teammate context i
 
 For lead-local consequential paths, readiness must cover the first local item, stop point, required local skills, evidence/proof limit, and whether any independent lane or acceptance owner would be substituted.
 
-A readiness gap that changes owner, phase, deliverable, surface decomposition, staffing shape, proof surface, or acceptance chain is a route problem and reopens `work-planning`. A gap that stays inside the same frozen owner, phase, surface, deliverable, proof/acceptance chain, and staffing shape may be carried as bounded packet-correction or blocker-clear basis for the next owner.
+A readiness gap that changes owner, phase, deliverable, surface decomposition, staffing shape, proof surface, or acceptance chain is a route problem and reopens `work-planning`. A gap that stays inside the same frozen owner, phase, surface, deliverable, proof/acceptance chain, and staffing shape may be carried as bounded packet-correction or blocker-clear basis for the next owner/action.
 
 If an agent tool/evidence-gap request lacks adequate candidate-tool research, freeze a bounded `researcher` tool-selection research step before setup unless the correct tool is already proven or the route is a proven user-owned blocker.
 

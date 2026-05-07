@@ -14,7 +14,9 @@
 ## Core Laws
 ### 1. Procedure And Ownership
 - `[RULE-FORCE]` Governance controls behavior through actionable rules with owner, trigger, stop, evidence, verification, and acceptance truth.
-- `[AUTO-PROC]` Autonomous work stays inside named procedure. If the next owner cannot be named truthfully, stop and reopen the last valid owner.
+- `[AUTO-PROC]` Autonomous work stays inside named procedure and keeps one truthful next owner plus next action until verified completion, explicit cancel/redirect, or `HOLD` with owner and blocker.
+- If the next owner or next action cannot be named truthfully, stop and reopen the last valid owner.
+- Planning, dispatch, benchmark, self-growth, interrupt, status, review, proof, validation, and rejection handling are not terminal states unless they end in verified result, `HOLD`, explicit cancel, explicit redirect, or the next executable owner/action.
 - `[PROC-HABIT]` Procedure outranks habit.
 - `[PLAN-SV]` Consequential boundary flow is `work-planning -> execution/dispatch -> owner synthesis -> SV-RESULT` for phase/stage-end report, completion claim, or synthesis-driven redispatch.
 - Same-boundary iterations consume the frozen boundary.
@@ -93,7 +95,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Analysis, critique, artifact judgment, or correction reopens planning when a `work-planning` boundary-change axis moves.
 - New scope, stronger claim, or route shaping reopens planning.
 - Same-boundary correction stays in the active owner or workflow.
-- Consequential flow opens one truthful next owner at a time. Frozen workflow or primary sequence owners open before deeper execution routing.
+- Consequential flow opens one truthful next owner/action at a time. Frozen workflow or primary sequence owners open before deeper execution routing.
 - Required stages must not be skipped, merged, or reordered for convenience. Hook/runtime signals are observation only. They are not planning, SV, dispatch truth, or handoff.
 - `work-planning` freezes route basis. `self-verification` owns `SV-PLAN`/`SV-RESULT`. `task-execution` owns host-authorized dispatch and packet truth.
 
@@ -102,7 +104,9 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Loaded skills inherit this doctrine, the active owner role, and the common inheritance floor. They sharpen owner behavior only within common-floor items and owner stops.
 - Lane-core skills are lazy-loaded by assignment-grade lane work. Receipt/control/status/lifecycle/phase/clarification messages do not load them unless they assign or reopen work.
 - Once loaded, lane-core skill outranks packet skill fields, optional methodology, and specialist skills inside the lane. It cannot override doctrine, roles, or owner gates.
-- Team-lead, Codex advisory, and packet skill fields recommend non-lane-core skills. The assigned lane selects fitting skills from its work surface and hands off the selected-skill basis.
+- Team-lead, Codex advisory, and packet skill fields identify non-lane-core skill basis; required skill fields and advisory recommendation fields stay separate.
+- Required non-lane-core skills freeze through the owning planning, workflow, or phase basis and travel as `REQUIRED-SKILLS`; methodology guidance travels as `SKILL-RECOMMENDATIONS`.
+- The assigned lane selects fitting skills from its work surface and hands off the selected-skill basis.
 - Specialist skill descriptions are routing cues; active owner path and assigned work surface govern loading.
 - Specialist and methodology skill outputs enter the active lane as evidence, method, or design deltas unless the frozen packet names a skill-owned artifact as `OUTPUT-SURFACE`.
 - Completion-grade claims close through the owning lane handoff and common completion result spine after those deltas are reconciled.
@@ -117,7 +121,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Recover the missing target and keep unaffected lanes moving.
 - Agents raise `scope-pressure` or `hold|blocker` for unsafe packet, hidden prerequisite, owner/phase mix, proof/tool gap, or burden mismatch. `team-lead` resolves through the smallest lawful owner.
 - Tool access is a capability surface. Agents must not install, improvise, or downgrade evidence outside a frozen setup/discovery boundary.
-- Handoffs carry output, evidence, blocker truth, open surfaces, and next owner so receivers do not re-derive settled upstream thinking.
+- Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action so receivers do not re-derive settled upstream thinking.
 
 ## Acceptance
 ### Role And Acceptance Law

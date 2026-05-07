@@ -49,7 +49,7 @@ Activate for engineering tools, calculation programs, engineering education asse
 - request-fit basis when deliverable shape matters
 ## Outputs
 Return an engineering packet.
-It covers verified assumptions, unit path, constraint sources, operating conditions, unresolved blockers, and the next owner per blocked surface.
+It covers verified assumptions, unit path, constraint sources, operating conditions, unresolved blockers, and the next owner/action per blocked surface.
 ## Handoff Boundary
 Route unresolved issues explicitly to `mathematical-correctness`, `software-architecture`, `tester`, or `reviewer`.
 Human-facing technical artifacts still need both domain review and rendered review.

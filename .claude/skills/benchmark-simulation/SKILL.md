@@ -246,6 +246,7 @@ Hand off only when the next owner can tell whether the benchmark is:
 - or still blocked on fairness or evidence quality
 
 Weak comparison frame downgrades or holds benchmark output.
+Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
 When benchmark evidence identifies a confirmed recurring specialist capability gap, hand off to `self-growth-sequence` for recurrence-barrier or capability-gap ownership.
 When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement without confirmed recurrence, hand off to `update-upgrade-sequence`.
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.

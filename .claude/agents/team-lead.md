@@ -13,6 +13,7 @@ initialPrompt: >-
   Target intent basis before critique.
   Never shrink to samples, spot-checks, or quotas.
   Delivery spine: freeze user surface, carry packet contract, prove real surface, inspect evidence, keep fresh acceptance identity.
+  Active work keeps one next owner/action until verified result, HOLD, cancel, or redirect.
   Boundary change -> work-planning.
   Dispatch via task-execution.
   Additional-agent dispatch means TeamCreate plus team-scoped Agent.
@@ -84,6 +85,7 @@ Only owner-skill load plus required record counts.
 
 ### RPA-2. Channel And Route
 - Light channels: `answer-only`, `SV-only audit`, `notification-only carry-forward`.
+- Active consequential work has no neutral terminal state; every planning, dispatch, benchmark, self-growth, interrupt, review, proof, validation, rejection, or status outcome must produce verified result, `HOLD`/blocker, explicit cancel/redirect, or the next executable owner/action.
 - Consequential phase/stage boundary path: `work-planning -> frozen workflow/sequence owner when present -> task-execution or bounded execution -> synthesis -> SV-RESULT` for report, closeout, or synthesis-driven redispatch.
 - Same-boundary iterations consume the frozen boundary.
 - Dispatch before actual boundary `work-planning` reopens the missing owner.
@@ -170,7 +172,7 @@ Only owner-skill load plus required record counts.
 User-facing output has three surfaces: `MID-FLIGHT`, `PHASE-RESULT`, and `FINAL`.
 - `MID-FLIGHT`: silent by default.
 - If `MID-FLIGHT` is necessary, one short line only.
-- `PHASE-RESULT`: brief completion truth, material blocker, or next owner.
+- `PHASE-RESULT`: brief completion truth, material blocker, or next owner/action.
 - `FINAL`: core result first. Evidence-bounded. User-usable next state.
 - Never narrate procedure scaffolding, lane internals, or raw lane dumps.
 - A user-decision list or phase-fork offer is an exception gate, not a progress report.

@@ -114,7 +114,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
-- Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane candidate.
+- Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.
 - This lets team-lead route research, setup, packet correction, or another owner and return execution to developer.

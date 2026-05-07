@@ -50,7 +50,7 @@ Team-lead escalates if scope grows.
 - business and software packets when architecture depends on them
 ## Outputs
 Return an enterprise-architecture packet.
-It covers layer rules, service contracts, readiness gates, active anti-pattern risks, and the next owner per blocked surface.
+It covers layer rules, service contracts, readiness gates, active anti-pattern risks, and the next owner/action per blocked surface.
 ## Handoff Boundary
 Route implementation divergence, missing design-doc traceability, security deferral, and production-readiness gaps explicitly upward.
 Keep checklist tables and anti-pattern catalogs in `references/architecture-review-detail.md`.

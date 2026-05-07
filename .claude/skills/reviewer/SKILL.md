@@ -109,9 +109,9 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
 - Emit `REVIEW-STATE: ready|hold|blocked`.
 - Use `ready` only when the assigned review surface is complete, converged, and no blocking review defect remains.
-- Return review-local truth only: reviewed surface, decisive evidence basis, blocking/open surfaces, and the narrowest truthful next-lane candidate.
+- Return review-local truth only: reviewed surface, decisive evidence basis, blocking/open surfaces, and the narrowest truthful next-lane/action candidate.
 - Global route, proof chain, validation closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
-- A normal next-lane candidate is lawful completion truth.
+- A normal next-lane/action candidate is lawful completion truth.
 - A change to frozen owner map, phase, deliverable shape, staffing shape, proof surface, or acceptance chain is not ordinary completion.
 - Use `scope-pressure` or `hold|blocker` for that change.
 - If final validation is materially required, keep the frozen validator ingress contract explicit in the handoff.

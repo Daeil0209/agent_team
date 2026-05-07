@@ -84,7 +84,7 @@ Keep the packet compact:
 - pattern-level proof oracle and acceptance-surface hints
 - benchmark basis: `adopted`, `trial`, `benchmark-light`, `benchmark-full`, or `inference`
 - rejected pattern notes when a tempting pattern fails destination fit
-- open surfaces and next owner
+- open surfaces and next owner/action
 ## Composition
 - In `dev-workflow` Phase 1, use this skill to freeze the work-tool pattern only when it materially affects request fit, acceptance, or downstream design.
 - In `dev-workflow` Phase 2, convert the packet into implementation-binding product structure without taking over architecture, business rules, evidence method, or visual composition.

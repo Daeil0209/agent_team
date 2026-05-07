@@ -20,7 +20,7 @@ Procedure spine:
 2. Choose one planning target.
 3. Run Q1-Q5.
 4. Freeze only the fields required by the chosen target and route.
-5. Open exactly one next owner.
+5. Open exactly one next owner/action.
 
 Missing, vague, contradicted, or overclaimed basis blocks execution.
 Output `HOLD`, blocker-clear, or reopened owner.
@@ -104,7 +104,7 @@ Freeze these before route judgment:
 Full intake is mandatory when reference use, corrected intent, delivery burden, user-surface proof, or original wording affects execution.
 The user-defined work scope is binding.
 Samples, spot-checks, representative review, or finding-count quotas require explicit scope basis.
-If artifact boundaries are unknown, freeze discovery as a planning fact and next owner before exploration.
+If artifact boundaries are unknown, freeze discovery as a planning fact and next owner/action before exploration.
 
 ## Step 1: Choose Planning Target
 Choose one primary target before Q1-Q5.
@@ -192,7 +192,7 @@ Codex advisory law:
 
 Hard stops:
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
-- Planning opens one next owner before execution, dispatch, or reporting.
+- Planning opens one next owner/action before execution, dispatch, or reporting.
 - Lane-core skills are not listed in packet `REQUIRED-SKILLS`.
 - Lane ownership lazy-loads them.
 - Use `[]` when no additional non-lane-core skill is required.
@@ -205,7 +205,7 @@ Use `references/execution-readiness.md` when packet, proof, setup, lifecycle, pa
 ## Internal Planning Record
 Populate the internal record from `references/planning-record-fields.md`.
 Hold it in current-turn context only.
-Expose only plain next action, blocker, or owner truth.
+Expose only plain next action, blocker, or owner/action truth.
 Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
@@ -215,7 +215,7 @@ Keep planning fields, packet labels, freeze lines, and internal records internal
 
 ## Post-Planning Gate
 After planning:
-1. Open exactly one next owner.
+1. Open exactly one next owner/action.
 2. If `ACTIVE-WORKFLOW` or a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. `team-routing candidate` or `ambiguous-route` opens `task-execution`.
 4. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.

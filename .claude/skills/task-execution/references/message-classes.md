@@ -68,7 +68,7 @@ LOAD-POLICY: on-demand reference only
   - must include:
     - `BLOCKER-TYPE`
     - `BLOCKER-BASIS`
-    - `SAFE-NEXT-STEP`
+    - `SAFE-NEXT-STEP` with owner when the blocker is not lane-local
 
 ### Agent Information Request Consumption
 When an agent sends `MESSAGE-CLASS: hold|blocker` because decisive assignment basis is missing, team-lead must consume it before any re-dispatch, synthesis, completion claim, or user-facing positive report.

@@ -86,7 +86,7 @@ If no project-root path is already defined, report in conversation or fold into 
 Directory choice comes from frozen project root or explicit path.
 Capture only the decisive bridge packet.
 It must include required capability, why local-first was insufficient, verification path, fallback or blocked condition, and rollback or cleanup expectation.
-It must also include bridge status (`verified`, `blocked`, or `fallback-used`), real-tool evidence basis, cleanup outcome, and the exact next owner that can resume truthful work.
+It must also include bridge status (`verified`, `blocked`, or `fallback-used`), real-tool evidence basis, cleanup outcome, and the exact next owner/action that can resume truthful work.
 Bridge status is not review, proof, validation, or final acceptance closure.
 ## Handoff Boundary
 Hand off only when the next owner can tell whether the bridge is ready, blocked, or replaceable by a safer local-first path.

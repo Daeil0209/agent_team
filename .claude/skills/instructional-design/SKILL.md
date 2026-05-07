@@ -46,7 +46,7 @@ Activate when the deliverable is learner-facing: teaching deck, training pack, i
 - request-fit basis when deliverable shape materially affects pedagogy
 ## Outputs
 Return an instructional packet.
-It covers prerequisite map, concept cascade, confusion points, required readability gates, and the next owner per unresolved surface.
+It covers prerequisite map, concept cascade, confusion points, required readability gates, and the next owner/action per unresolved surface.
 ## Handoff Boundary
 Route unresolved blockers explicitly to `mathematical-correctness`, `visual-composition`, `reviewer`, or `tester`.
 Learner-facing visual or rendered page-read artifacts still need both text/instruction review and capture-render review.

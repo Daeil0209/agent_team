@@ -57,7 +57,7 @@ Capture only the decisive packet:
 - format/tool path and fidelity capability basis
 - mandatory format-preservation requirements
 - rendered/openability review or proof owner when human-visible format matters
-- declared downstream review path and next owner
+- declared downstream review path and next owner/action
 ## Handoff Boundary
 Hand off only when the next owner can tell:
 - what the document must answer first

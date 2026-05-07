@@ -83,10 +83,10 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 
 ## Common Lane Handoff Law
 - Every agent handoff is an upward lane report, not a replacement for the frozen global plan.
-- Report only lane-local execution truth: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane recommendation.
+- Report only lane-local execution truth: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Verdict or `PASS` language remains scoped to the reported lane evidence; it does not become wider acceptance, route closure, or broader user-surface proof through handoff formatting.
-- Handoff exposes quality-relevant open surfaces clearly enough that downstream work can continue without rediscovery.
-- `RECOMMENDED-NEXT-LANE` narrows the plausible next owner; it does not freeze routing or collapse independent owners.
+- Handoff exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.
+- `RECOMMENDED-NEXT-LANE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; it does not freeze routing or collapse independent owners.
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.
 - If the truthful next step changes owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain, do not disguise that as ordinary completion.
 - Raise `scope-pressure` or `hold|blocker`.

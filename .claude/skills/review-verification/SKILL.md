@@ -166,7 +166,7 @@ Patch recommendations must state protected function, user-outcome impact, regres
 Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
 
 ### 13. Handoff
-Return the smallest truthful next owner.
+Return the smallest truthful next owner/action.
 Use `reviewer` for independent review.
 Use `researcher` for missing evidence.
 Use `developer` for bounded production.
@@ -182,7 +182,7 @@ Hand off only when the receiver can tell:
 - what was not inspected
 - why the design intent was interpreted that way
 - which findings are confirmed versus hypothetical
-- which owner should act next
+- which owner/action should act next
 - what evidence would verify closure
 
 ## Role-Scoped Structural Feedback

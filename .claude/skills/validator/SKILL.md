@@ -160,9 +160,9 @@ Keep authoritative versus supplemental sources explicit.
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use common completion-grade evidence fields from the active task-execution handoff contract.
-- Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane candidate.
+- Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
 - Global route, proof gathering, review closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
-- A normal next-lane candidate is lawful verdict truth.
+- A normal next-lane/action candidate is lawful verdict truth.
 - A change to frozen owner map, phase, deliverable shape, staffing shape, proof surface, or acceptance chain is not ordinary completion.
 - Use `scope-pressure` or `hold|blocker` for that change.
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.

@@ -21,7 +21,7 @@ Required when material:
 - `PROOF-ORACLE`: observable user-surface outcomes that prove the pattern is operational.
 - `BENCHMARK-BASIS`: `adopted`, `trial`, `benchmark-light`, `benchmark-full`, or `inference`.
 - `REJECTED-PATTERNS`: tempting patterns rejected with destination-fit reason.
-- `OPEN-SURFACES`: unresolved surfaces and next owner.
+- `OPEN-SURFACES`: unresolved surfaces and next owner/action.
 
 ## Benchmark Basis
 - `adopted`: verified stable across two or more destination cycles.
