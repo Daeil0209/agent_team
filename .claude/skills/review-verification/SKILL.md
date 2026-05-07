@@ -135,13 +135,13 @@ Classify contradiction, owner overlap, harmful duplication, protected restatemen
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
 
 ### 5. Design Removal-First Patch
-Design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on existing text.
+Apply removal-first modification policy: design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening text.
 `REMOVAL-FIRST-PATCH-DESIGN` must state which existing text was removed, tightened, merged, re-homed, replaced, or why none can carry the meaning without loss.
-Append-only or accumulation-first patch designs are invalid when duplicate, obsolete, weaker, or conflicting owner text remains.
-Every proposed change preserves source meaning, positive execution path, owner boundary, and recovery path.
+Append-only or accumulation-first patch designs are invalid while duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening owner text can be removed, tightened, merged, re-homed, or replaced without meaning loss.
+Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
 ### 6. Pre-Patch Negative-Risk Gate
-Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
+Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weakened clarity, weakened execution force, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
 Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
 Report absolute risk-zero only when absolute closure is proven.
@@ -152,7 +152,7 @@ After the patch design survives the first risk gate, inspect the surrounding ref
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
 ### 8. Integrity Gate Before Live Patch
-Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, existing function preservation, and no-regression basis.
+Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, clarity, execution force, existing function preservation, and no-regression basis.
 Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Execute Through The Owning Patch Sequence

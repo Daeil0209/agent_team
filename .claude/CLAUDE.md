@@ -39,9 +39,9 @@
 ### 3. Scope, Continuity, And Change
 - `[DESIGN-INTENT]` Consequential work starts from the target artifact's intent: governance intent, program workflow intent, or reader/question/evidence/action intent.
 - Changes also verify Structural Contract, fixed order, owner boundaries, protected restatements, and authoring principles.
-- `[CROSS-CONTINUITY]` Before dispatch and synthesis, check same-session patches, decisions, lane charters, packet requirements, acceptance contracts, and sibling outputs.
+- `[CROSS-CONTINUITY]` Before dispatch, synthesis, phase movement, or consequential user-facing output, apply same-session patches, confirmed corrections, recurrence barriers, lane charters, packet requirements, acceptance contracts, and sibling outputs.
 - Drift reopens `work-planning`.
-- `[PRES-FIRST]` Compression and migration preserve action, stop, handoff, evidence, gate, owner boundary, and reporting truth.
+- `[PRES-FIRST]` Migration, refactoring, and reduction preserve or sharpen clarity, action, stop, handoff, evidence, gate, owner boundary, and reporting truth.
 - `[RETRO-APPLY]` New or sharpened doctrine lands only after current-session artifacts, in-flight outputs, prior verdicts, and active acceptance that the rule directly governs or contradicts are fixed, owner-deferred, or invalidated.
 
 ### 4. Autonomy, Parallelism, And Escalation
@@ -56,7 +56,7 @@
 - `[EVI-DEFER]` Deferral requires evidence.
 
 ### 5. Minimal Governance And Runtime Footprint
-- `[GOV-MIN]` Before appending, tighten, replace, trim, merge, re-home, or delete duplicate/obsolete owner text without weakening required gates.
+- `[GOV-MIN]` Before appending, tighten, replace, trim, merge, re-home, or delete duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening owner text without weakening clarity, execution force, or required gates.
 - Keep one sentence to one rule or action.
 - `[HARDEN]` Correct valid defects at the narrowest owner. Do not add duplicate doctrine when adherence is the real fix.
 - `[PROJECT-OUTPUT-ROOT]` Task-created deliverables, evidence, logs, exports, tool output, and nested outputs stay under `projects/<project-folder>/...` unless user/config names another canonical folder.
@@ -101,15 +101,15 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - `work-planning` freezes route basis. `self-verification` owns `SV-PLAN`/`SV-RESULT`. `task-execution` owns host-authorized dispatch and packet truth.
 
 ## Skill Loading
-- Skills load only when required by active owner path, lane-owned assignment, synthesis, verified local work, or bounded specialist support.
+- Load and apply every deeply relevant skill required by active owner path, lane-owned assignment, synthesis, verified local work, design, implementation, review, proof, validation, or bounded specialist support.
 - Loaded skills inherit this doctrine, the active owner role, and the common inheritance floor. They sharpen owner behavior only within common-floor items and owner stops.
 - Lane-core skills are lazy-loaded by assignment-grade lane work. Receipt/control/status/lifecycle/phase/clarification messages do not load them unless they assign or reopen work.
 - Once loaded, lane-core skill outranks packet skill fields, optional methodology, and specialist skills inside the lane. It cannot override doctrine, roles, or owner gates.
-- Team-lead, Codex advisory, and packet skill fields identify non-lane-core skill basis; required skill fields and advisory recommendation fields stay separate.
+- Team-lead, Codex advisory, and packet skill fields identify non-lane-core skill basis; required skill fields and methodology recommendation fields stay separate.
 - Required non-lane-core skills freeze through the owning planning, workflow, or phase basis and travel as `REQUIRED-SKILLS`; methodology guidance travels as `SKILL-RECOMMENDATIONS`.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties for the receiving lane; load and apply each entry before execution or handoff.
 - If a required entry is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` / `hold|blocker`; do not silently drop it.
-- The assigned lane selects fitting `SKILL-RECOMMENDATIONS` from its work surface and hands off the selected-skill basis.
+- The assigned lane selects, loads, and applies material `SKILL-RECOMMENDATIONS` before lane work and hands off applied or blocked skill basis.
 - Specialist skill descriptions are routing cues; active owner path and assigned work surface govern loading.
 - Specialist and methodology skill outputs enter the active lane as evidence, method, or design deltas unless the frozen packet names a skill-owned artifact as `OUTPUT-SURFACE`.
 - Completion-grade claims close through the owning lane handoff and common completion result spine after those deltas are reconciled.
@@ -145,7 +145,7 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 
 ## Change And Preservation
 ### Change And Preservation Law
-- Compression, migration, refactoring, and redistribution preserve meaning, live references, enforcement strength, Structural Contracts, owner boundaries, and source-to-destination trace.
+- Context reduction, migration, refactoring, and redistribution preserve meaning, live references, enforcement strength, Structural Contracts, owner boundaries, and source-to-destination trace.
 - High-traffic context reduction preserves source-to-destination trace in owner docs or `.claude/reference/context-reduction-preservation-map.md`. Missing destination blocks the change.
 - Duplicate doctrine is allowed only as protected local restatement with named owner. Divergence resolves to the precise owner. Then the weaker duplicate is tightened, re-homed, or removed.
 - Do not move role-specific content into shared doctrine when a more precise owner exists.

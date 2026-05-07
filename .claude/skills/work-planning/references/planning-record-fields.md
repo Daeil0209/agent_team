@@ -35,7 +35,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` may consume the route, record `not-applicable:<basis>` instead of leaving the field blank.
 - Valid `not-applicable` bases are limited to the current route basis. Do not use `not-applicable` to hide missing decomposition or missing readiness.
 - `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route. Every lane entry records non-lane-core skills frozen as required for credible execution; use `[]` when none, do not list the lane-core skill, and keep methodology-only suggestions in `SKILL-RECOMMENDATIONS`.
-- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped advisory methodology guidance map when any configured lane is a candidate receiver for assignment-grade work. It must not list lane-core skills, create skill-loading authority, or override the receiving lane's work-surface selection.
+- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology guidance map when any configured lane is a candidate receiver for assignment-grade work. It must not list lane-core skills or override the receiving lane's work-surface selection; the receiving lane applies material entries under `Skill Loading`.
 - Deliverable trigger-flag analysis drives `LANE-REQUIRED-SKILLS-MAP` and `LEAD-LOCAL-REQUIRED-SKILLS` skill freezes:
 
 | trigger flag (set when frozen scope makes it material) | activates owner asset |

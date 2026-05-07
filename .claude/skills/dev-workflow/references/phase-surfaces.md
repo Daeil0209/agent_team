@@ -19,7 +19,7 @@ auto-inject: false
   - Consumption Chain for material output flow from source or setup through final receiver use
   - Reference Fit Summary when a reference exists
   - Work-Tool Pattern Packet when a practical work-tool pattern materially shapes operator use, persistence, import/export, generated artifacts, or completion proof
-  - Material Specialist Contract Basis when a required specialist skill materially shapes request fit, acceptance, downstream design, proof, or implementation
+  - Material Specialist Contract Basis when a required or phase-owner-consumed specialist skill materially shapes request fit, acceptance, downstream design, proof, or implementation
   - Acceptance Evidence Basis
   - Verification Strategy Basis
   - explicit Open Questions

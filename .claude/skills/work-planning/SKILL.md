@@ -44,7 +44,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
 - `references/execution-readiness.md`: packet, proof, setup, lifecycle, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
-- `references/cross-continuity.md`: same-session patches, decisions, contracts, lane changes, and acceptance changes.
+- `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
 - `references/codex-advisory.md`: Codex MCP advisory trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
 
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.

@@ -90,6 +90,7 @@ Ask the mode question:
 
 Compact challenge that always applies:
 - request-fit: would this satisfy the user's request if read literally?
+- continuity: did same-session corrections, patches, recurrence barriers, and active doctrine govern this claim?
 - claim/evidence: what exact claim is made?
 - claim/evidence: what supports it?
 - claim/evidence: what would defeat it?

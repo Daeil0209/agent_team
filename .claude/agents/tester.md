@@ -10,7 +10,7 @@ maxTurns: 20
 initialPrompt: >-
   Assignment-grade proof sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn proof work.
   Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/tester/SKILL.md` for ordinary frozen assignments.
+  Load `.claude/skills/tester/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first proof work.
   `work-planning` loads only for explicit tester-owned planning or reopened tester boundary.
   Receipt/control/status/lifecycle/phase/clarification does not load them.
   Identify TARGET-INTENT-BASIS before proof work.
@@ -55,7 +55,7 @@ Teammates do not inherit lead conversation history; missing material facts are m
 Executable proof requires explicit `PROOF-TARGET`, `PROOF-EXPECTATION`, `PROOF-SURFACE`, `ENV-BASIS`, and `SCENARIO-SCOPE`.
 If a field is not applicable, cite the tester reference's explicit `not-applicable` reason.
 Do not omit environment, scenario, tool, run-path, or burden fields by habit.
-Before proof discovery or execution, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop.
+Before proof discovery or execution, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied or blocked skill basis, first lane action, and stop.
 Proof is forbidden except on `execute` or `reconstruct-with-inference`.
 Reconstruction must preserve owner, phase, proof burden, acceptance burden, deliverable shape, tool/run-path basis, and scenario boundary.
 Choose proof from the decisive user surface.

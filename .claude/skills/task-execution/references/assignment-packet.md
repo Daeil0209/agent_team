@@ -99,14 +99,14 @@ Recovery discipline: when a packet warning flags a "missing field" you have writ
 Read the field's first-line shape against the rules above before retrying.
 Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
-Packet skill fields separate required skills from advisory recommendations.
+Packet skill fields separate required skills from methodology recommendations.
 - Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
 - Receiving lanes must load and apply every `REQUIRED-SKILLS` entry or return `scope-pressure` / `hold|blocker`.
 - Use `REQUIRED-SKILLS: []` when no upstream required skill exists.
-- Carry `SKILL-RECOMMENDATIONS` only when planning or the active workflow owner froze advisory methodology guidance for the receiving lane.
+- Carry `SKILL-RECOMMENDATIONS` only when planning or the active workflow owner froze methodology guidance for the receiving lane; the receiver selects, loads, and applies material entries before first lane work and records applied or blocked skill basis in handoff.
 
 ## Session Cross-Continuity Packet Check
-Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, decisions, contract freezes, lane-charter changes, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.
+Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, confirmed corrections, recurrence barriers, decisions, contract freezes, lane-charter changes, sibling outputs, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.
 
 If the required prior invariant is missing from the frozen route, stop and reopen `work-planning`. If the packet would contradict a prior invariant, do not dispatch and do not repair by prose inside `task-execution`.
 

@@ -10,7 +10,7 @@ maxTurns: 30
 initialPrompt: >-
   Assignment-grade review sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn review work.
   Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/reviewer/SKILL.md` for ordinary frozen assignments.
+  Load `.claude/skills/reviewer/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first review work.
   `work-planning` loads only for explicit reviewer-owned planning or reopened reviewer boundary.
   Receipt/control/status/lifecycle/phase/clarification does not load them.
   Identify TARGET-INTENT-BASIS before review work.
@@ -51,7 +51,7 @@ Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.c
 Lane ownership, not packet skill listing, triggers `.claude/skills/reviewer/SKILL.md` for assignment-grade reviewer work.
 Treat assignment packet, task/workflow state, and cited artifacts as authoritative.
 Teammates do not inherit lead conversation history; missing material facts are missing, not implied.
-Before review discovery or judgment, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop.
+Before review discovery or judgment, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied or blocked skill basis, first lane action, and stop.
 Review is forbidden except on `execute` or `reconstruct-with-inference`.
 Produced plans and designs are valid review targets.
 Review coherence, owner boundaries, evidence basis, risk/tradeoff handling, proof chain, request fit, and acceptance fit.

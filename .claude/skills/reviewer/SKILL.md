@@ -51,8 +51,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned review surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
-- Methodology skills can deepen review.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
 - See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready handoff detail.
 
 ## Review Workflow

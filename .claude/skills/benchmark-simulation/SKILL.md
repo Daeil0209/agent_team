@@ -165,7 +165,7 @@ Activate materially active sibling phase skills.
 - Findings re-enter the next benchmark cycle as anti-pattern signal or strength-preservation note.
 - **Iteration phase**: `dev-workflow` gap iteration -> `benchmark-simulation` re-cycle with new evidence
 
-When a sibling phase is materially active, name it in `SKILL-RECOMMENDATIONS` or selected-skill basis.
+When a sibling phase is materially active, name it in `SKILL-RECOMMENDATIONS` or applied skill basis.
 When a sibling phase is inactive, omit it.
 Composition requires an explicit owner and phase basis.
 See `references/design-stack-composition.md` for per-recipe detail.

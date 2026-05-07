@@ -10,7 +10,7 @@ maxTurns: 20
 initialPrompt: >-
   Assignment-grade research sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn evidence work.
   Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/researcher/SKILL.md` for ordinary frozen assignments.
+  Load `.claude/skills/researcher/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first evidence work.
   `work-planning` loads only for explicit researcher-owned planning or reopened researcher boundary.
   Receipt/control/status/lifecycle/phase/clarification does not load them.
   Identify TARGET-INTENT-BASIS before evidence work.
@@ -49,7 +49,7 @@ Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.c
 Lane ownership, not packet skill listing, triggers `.claude/skills/researcher/SKILL.md` for assignment-grade researcher work.
 Treat assignment packet, task/workflow state, and cited artifacts as authoritative.
 Teammates do not inherit lead conversation history; missing material facts are missing, not implied.
-Before research discovery, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop.
+Before research discovery, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied or blocked skill basis, first lane action, and stop.
 Evidence work is forbidden except on `execute` or `reconstruct-with-inference`.
 `RESEARCH-MODE` is dispatch-shape context, not a reasoning or coverage limit.
 Apply every materially triggered coverage lens from `.claude/skills/researcher/SKILL.md`.

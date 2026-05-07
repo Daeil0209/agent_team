@@ -46,8 +46,8 @@ Missing required path records `fail-open:blocked_by_config`.
 
 ## Dual Review
 1. Assigned artifact producer writes or revises the canonical artifact from the frozen owner basis.
-2. team-lead reviews independently before seeing or using the new Codex result.
-3. team-lead records own-review basis: inspected surfaces, axes, findings or `none`, and next-phase risk.
+2. team-lead reviews independently and consumes material specialist skills that shape the artifact before seeing or using the new Codex result.
+3. team-lead records own-review basis: inspected surfaces, skill basis, axes, findings or `none`, and next-phase risk.
 4. team-lead sends a bounded read-only Codex packet.
 5. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
 6. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.

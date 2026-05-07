@@ -65,7 +65,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 3. Lane Separation And Parallel Flow
 - Separate phase owner from artifact producer when the workflow names both.
-- Phase owner freezes decisions; assigned artifact producer writes from that frozen basis.
+- Phase owner consumes material specialist skills that shape the surface, freezes decisions, and cites the basis; assigned artifact producer writes from that frozen basis.
 - team-lead owns Phase 1 planning design and Phase 2 design direction/contract freeze.
 - Developer writes Phase 1/2 documents only from frozen team-lead/workflow design basis, then owns Phase 3 implementation.
 - Review, proof, validation, routing, and acceptance stay with their owning lanes.
@@ -110,7 +110,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/01-plan/features/{feature}.plan.md` unless project config names another canonical path
 **Entry law**: Phase 0 output, if activated, must already be synthesized enough for CP1. Otherwise the request-fit basis must be stable
-**Execution law**: team-lead owns Phase 1 planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, and canonical plan artifact direction.
+**Execution law**: team-lead owns Phase 1 planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, and canonical plan artifact direction.
 **Execution law**: developer writes the canonical plan document only from the team-lead Phase 1 design basis.
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical plan document only from valid `REDESIGN-PLAN`.
 **Execution law**: the canonical plan artifact is the plan surface.
@@ -127,7 +127,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead owns and records the decision-level Phase 2 design basis: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance, launch/operator, and implementation-binding contracts.
+**Execution law**: team-lead owns and records the decision-level Phase 2 design basis: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance, launch/operator, implementation-binding contracts, and material specialist skill basis.
 **Execution law**: developer writes the canonical design document by expanding that Phase 2 design basis into the required artifact structure.
 **Execution law**: team-lead decision basis is operator-internal and decision-complete across the listed surfaces; when persisted, keep it producer-facing without user-narrative rewrites, and expose path/status only.
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical design document only from valid `REDESIGN-PLAN`.

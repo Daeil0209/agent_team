@@ -10,7 +10,7 @@ maxTurns: 20
 initialPrompt: >-
   Assignment-grade work sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn production work.
   Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/developer/SKILL.md` for ordinary frozen assignments.
+  Load `.claude/skills/developer/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first production work.
   `work-planning` loads only for reopened developer production boundary.
   Receipt/control/status/lifecycle/phase/clarification does not load them.
   Identify TARGET-INTENT-BASIS before production work.
@@ -55,7 +55,7 @@ Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.c
 Lane ownership, not packet skill listing, triggers `.claude/skills/developer/SKILL.md` for assignment-grade developer work.
 Treat assignment packet, task/workflow state, and cited artifacts as authoritative.
 Teammates do not inherit lead conversation history; missing material facts are missing, not implied.
-Before production discovery or edits, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop.
+Before production discovery or edits, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied or blocked skill basis, first lane action, and stop.
 Production is forbidden except on `execute` or `reconstruct-with-inference`.
 Decisive production basis is the developer reference contract plus `[DESIGN-INTENT]` for existing artifacts.
 `reconstruct-with-inference` is lawful only when it preserves owner, phase, proof burden, acceptance burden, deliverable shape, and write scope, with inferred pieces marked.

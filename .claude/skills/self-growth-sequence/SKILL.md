@@ -300,8 +300,8 @@ Hard surface:
 - For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation.
 - Prefer `tighten`, `replace`, `re-home`, or `merge` before `append`.
 - Delete only when meaning is duplicate, obsolete, or preserved elsewhere.
-- Improve readability by reducing words and clause chains.
-- Keep compressed lines single-intent and readable.
+- Preserve full clarity and execution force; reduce words or clause chains only when the resulting rule remains at least as clear and strong.
+- Keep changed lines single-intent and readable.
 - Freeze defect basis, design intent, causal basis, recurrence path, patch class, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and edit operation before drafting.
 - Warning, block, deny, deletion, restriction, or removal edits are valid only when the positive execution path remains explicit and executable.
 - Preserve structural connectivity, local restatements needed for isolated readability, live references, semantic-family consistency, sibling surfaces, and source-to-destination meaning.

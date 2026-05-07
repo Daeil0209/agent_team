@@ -88,7 +88,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned production surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
 ### 4. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
 - If that is impossible or disproportionate, record the fallback basis.

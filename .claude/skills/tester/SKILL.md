@@ -56,8 +56,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Proof work starts from packet, artifact, or marked safe inference.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned proof surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
-- Methodology skills can improve proof quality.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
 - Choose the proof tool from the decisive user surface.
 - Source artifact alone is decisive only when the frozen proof surface is the source/read document itself.
 - Browser interaction requires a browser-proof path.

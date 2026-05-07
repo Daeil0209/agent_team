@@ -59,8 +59,7 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is not e
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned validation surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
-- Methodology skills can refine validation discipline.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
 - Choose the decisive proof tool from the user-facing acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.

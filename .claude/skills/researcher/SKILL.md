@@ -49,7 +49,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Mark inferred pieces as inference.
 - Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, and evidence boundary.
 - If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, send `hold|blocker`.
-- Methodology skills can deepen evidence quality.
 - Material coverage lenses apply from the decision target.
 - See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and handoff detail.
 
@@ -76,7 +75,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned research surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as advisory methodology; select and apply only fitting entries and record the selected-skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark ownership and routing authority stay with their owning lanes.
 ### 4. Retry Guard
