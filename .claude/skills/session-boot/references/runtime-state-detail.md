@@ -91,7 +91,7 @@ Rules:
 - Monitor rotation is not session closeout.
 
 ## Stale-Response Rule
-- High-confidence stale -> investigate quickly; replacement requires shutdown evidence or an explicit recovery freeze.
+- High-confidence stale -> investigate quickly through runtime truth plus assigned-surface activity/side-effect evidence; replacement requires shutdown evidence or an explicit recovery freeze.
 - Low-confidence stale during long-running work -> observe, extend if justified, then escalate.
 - Repeated stale/error loops require reroute, resize, replacement, or re-plan.
 - Observational stale signals do not by themselves prove tool-phase hang, non-working state, or team-infrastructure defect.
@@ -146,10 +146,10 @@ Canonical evidence mapping:
 - live config backed by current-session panes -> corroborating existence proof
 - live pane proof must use the active team runtime's pane/session identity, not the default tmux server by habit
 - default tmux-server absence does not prove a named team runtime is dead
-- inbox growth, send success, config residue, and hook-emitted idle notices are not agent-originated progress
+- inbox growth, read/unread state, send success, config residue, and hook-emitted idle notices are not agent-originated progress
 - `dispatch-ack` -> assignment receipt only
 - agent `status`, `handoff`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
-- current-session agent tool activity -> corroborating activity evidence
+- current-session agent tool activity or assigned-surface mtime/diff in the dispatch window -> corroborating activity/side-effect evidence
 - `permission_request` -> active-but-permission-blocked evidence
 - completion-grade output + `REQUESTED-LIFECYCLE` -> lifecycle obligation evidence
 - explicit lifecycle-control message -> authoritative lead decision for non-terminating lifecycle edges; shutdown intent becomes authoritative only through structured `shutdown_request`
@@ -194,7 +194,6 @@ Rules:
 ## Stall-Without-Progress Rule
 `assignment-sent-no-ack` is dispatch pending only: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
 `dispatch-ack` with no same-segment agent-start evidence is `dispatch-ack-no-start`: trigger same-assignment execution follow-up immediately in the same monitoring turn.
-
 Parallel dispatch is active monitoring, not passive waiting.
 The group cannot be reported as running while any intended target is `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 Recover the affected target and keep unaffected independent targets moving.
@@ -205,9 +204,9 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. Send one bounded status nudge through `lifecycle-control` or explicit status-request `SendMessage`.
+1. Send one bounded status nudge through `lifecycle-control` or explicit status-request `SendMessage`, then wait for response, permission, blocker, handoff, or assigned-surface activity until the frozen re-check window.
 2. Do not stack more assignment/correction packets into a silent inbox.
-3. If no response arrives within the re-check window, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+3. At the re-check window, inspect current activity/side-effect evidence. Preserve active agents in lane execution; when both response and activity evidence are absent, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
 4. Report the stall and replacement/shutdown decision in the next user-facing surface as `next action`, not as silent in-flight work.
 
 Waiting for the user to identify agent stalls is itself a monitoring defect. The thresholds are guidelines; the mandate is proactive detect-and-route-around.

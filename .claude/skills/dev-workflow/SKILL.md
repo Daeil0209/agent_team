@@ -115,7 +115,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical plan document only from valid `REDESIGN-PLAN`.
 **Execution law**: the canonical plan artifact is the plan surface.
 **Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
-**Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead advances to Phase 2 using it as the design basis.
+**Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning` and uses the Phase 1 artifact as the design basis.
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
@@ -127,8 +127,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead owns selected design direction, implementation-binding contract, CP3, and CP4 preparation.
-**Execution law**: developer writes the canonical design document only from the team-lead Phase 2 design basis.
+**Execution law**: team-lead owns and records the decision-level Phase 2 design basis: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance, launch/operator, and implementation-binding contracts.
+**Execution law**: developer writes the canonical design document by expanding that Phase 2 design basis into the required artifact structure.
+**Execution law**: team-lead decision basis is operator-internal and decision-complete across the listed surfaces; when persisted, keep it producer-facing without user-narrative rewrites, and expose path/status only.
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical design document only from valid `REDESIGN-PLAN`.
 **Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
 **Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.

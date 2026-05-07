@@ -28,10 +28,11 @@ auto-inject: false
 
 ## Phase 2 Design Surface
 - Canonical output path: `docs/02-design/features/{feature}.design.md` unless project config states otherwise
-- team-lead owns selected design direction and implementation-binding contract.
-- developer writes the canonical design document from that frozen team-lead/workflow design basis.
+- team-lead owns the decision-level design basis before developer dispatch: selected design direction, implementation-binding contracts, and the active Phase 2 surfaces below.
+- developer writes the canonical design document from that decision-level team-lead/workflow design basis.
+- team-lead basis records stay decision-complete and producer-facing; canonical design artifacts carry the expanded body.
 - Design options count scales by project tier: Lightweight 1, Standard 2, Precision 3
-- Minimum design contents:
+- Minimum developer-authored design contents from team-lead decisions:
   - inherited `USER-INSTRUCTION`
   - selected option and rationale
   - component and responsibility map

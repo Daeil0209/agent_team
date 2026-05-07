@@ -107,8 +107,11 @@ Phase advancement requires:
 - every point accepted, rejected, or deferred with reason
 - deferred low issues have later phase and owner
 - downstream artifact status is current, intentionally held, or explicitly stale
-- no owner-decidable default or routine phase advance is turned into a user question
+- owner-decidable defaults and routine phase advancement route to the next owner/action
 - `SV-RESULT` verifies the reconciled claim
+
+After `converged` phase-gate artifact resolution, set `next owner/action` to phase advancement, next phase boundary `work-planning`, or the named downstream owner.
+Optional user review offers stay internal unless the user already requested review, explicit approval is required, or a verified user-owned blocker exists.
 
 Route-level `CODEX-ADVISORY-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
@@ -164,3 +167,4 @@ Record:
 - fallback inspection basis when fail-open is used
 - downstream artifact status: `current`, `stale`, or `hold`
 - next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`
+For `converged` phase-gate artifacts, the output record carries an executable next owner/action; it does not end at user direction.

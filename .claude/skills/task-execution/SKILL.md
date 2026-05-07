@@ -97,6 +97,7 @@ Packet final check:
 - if the missing or contradictory value is absent from the frozen basis, stale, or route-changing, reopen `work-planning`
 - if `REQUEST-BOUND-PACKET-FIELDS` is non-empty, every named field must be present in the outgoing packet or the path returns to `work-planning`
 - if `SKILL-RECOMMENDATIONS` is non-empty, each entry must be lane-scoped and bounded to `WORK-SURFACE`
+- workflow-owned plan/design authoring packets cite a decision-level owner basis with resolved decisions; task-execution returns under-specified packets to the workflow owner for basis completion
 - same-owner packet defects return to the same frozen owner
 - any moved `work-planning` boundary-change axis reopens `work-planning`
 - user-surface, proof, tool, run-path, burden, decision, validation, environment, and scenario fields are carried exactly when required by `.claude/skills/task-execution/references/request-bound-fields.md`
@@ -142,13 +143,13 @@ Runtime-only truth ladder:
 
 Therefore:
 - report `agent started` only from agent-originated progress or first real agent action
-- report `dispatch pending` when only assignment success evidence exists
+- report `dispatch pending` once when assignment success first creates that truth
 - if only planning is frozen, report only the next action
 - if team-agent runtime creation succeeded but no agent dispatch followed yet, keep `team exists` internal and report only the next dispatch move unless the user explicitly asks for runtime state
-- if dispatch succeeded but start evidence is absent, report only `dispatch pending`
+- if dispatch succeeded but start evidence is absent after `dispatch pending` was already reported, keep no-change events internal and recover through receipt/execution follow-up
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
-- Before monitoring or user-facing progress, reconcile every parallel target to one of those states.
-- Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot`.
+- Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
+- Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.
 - `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.
 - Keep unaffected independent targets moving while the affected target is recovered.
 ## Step 4: Interrupt / Resume Boundary

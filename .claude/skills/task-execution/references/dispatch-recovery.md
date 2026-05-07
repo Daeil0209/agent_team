@@ -22,17 +22,17 @@ Required recovery record:
 | `before-packet-final-check` | no dispatch side effect | `task-execution`: rerun packet final check; reopen `work-planning` if frozen fields are stale, missing, or contradicted |
 | `packet-ready-not-sent` | packet is assembled only | `task-execution`: verify no send evidence, then send once or return to the same frozen owner if packet basis drifted without changing route |
 | `team-created-no-assignment` | `team exists` only | `session-boot` if runtime readiness is uncertain; otherwise `task-execution` sends the next assignment-grade packet |
-| `assignment-sent-no-ack` | `dispatch pending` only | `session-boot`: send one same-assignment receipt follow-up after current dispatch check. Keep unaffected parallel targets moving. Classify stale only after that follow-up fails or receipt still does not appear. |
-| `dispatch-ack-no-start` | receipt only. ack-only idle is not work. | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify stale only after that follow-up fails or agent-start evidence still does not appear. |
+| `assignment-sent-no-ack` | `dispatch pending` only | `session-boot`: send one same-assignment receipt follow-up after current dispatch check. Keep unaffected parallel targets moving. Classify stale only after that follow-up fails and assigned-surface activity/side-effect evidence is absent. |
+| `dispatch-ack-no-start` | receipt only. ack-only idle is not work. | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify stale only after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
 | `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Do not return to `task-execution` unless replanning freezes a new assignment. |
 | `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Do not convert configured lane work into standalone retry. Do not claim completion. |
 | `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Run `self-verification (SV-RESULT)` before reporting or redispatch. It does not create team-runtime completion. |
 
 Recovery rules:
-- `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, ledger, or explicit absence checked at the current authority.
+- `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
 - Unknown send state is not safe to resend. First check the current dispatch authority; if still unknown, use `HOLD` or `session-boot` recovery rather than duplicate assignment.
 - Do not stack repeated assignment or correction messages into a target with no agent-originated receipt, start, blocker, or progress.
-- After one bounded follow-up, missing response is runtime recovery, not another packet retry.
+- After one bounded follow-up, wait for response, agent-start, blocker, or assigned-surface activity until the `session-boot` re-check window; missing response after that window is runtime recovery, not another packet retry.
 - A parallel group is not "running" while any target remains `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
 - A control packet, lifecycle packet, phase-transition packet, or self-growth sidecar must not erase the suspended dispatch surface.

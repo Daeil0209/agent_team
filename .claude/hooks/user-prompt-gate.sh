@@ -323,7 +323,7 @@ if (normalize(procedureState.teamDispatchState) === "pending" && pendingAck) {
   const sinceMs = parseIso(procedureState.lastPendingSince || procedureState.lastDispatchAt || pendingAck.timestamp);
   const ageMs = sinceMs == null ? null : Math.max(0, nowMs - sinceMs);
   if (ageMs != null && ageMs >= pendingStaleMs) {
-    emit(`CTX: runtime-recovery-evidence. Status-like turn matches ghost for ${pendingAck.worker}. Evidence surface: stale pending dispatch without start proof. Owner cue: work-planning for replacement-first recovery on the same WORK-SURFACE.`);
+    emit(`CTX: runtime-recovery-evidence. Status-like turn matches pending-dispatch-stale-cue for ${pendingAck.worker}. Evidence surface: stale pending dispatch signal, not ghost proof. Owner cue: same-assignment follow-up, wait, and assigned-surface activity/side-effect check; replacement only after both response and activity evidence are absent.`);
     process.exit(0);
   }
   if (ageMs != null && ageMs >= ackLateMs) {

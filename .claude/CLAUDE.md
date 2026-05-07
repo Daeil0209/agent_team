@@ -22,6 +22,7 @@
 - Same-boundary iterations consume the frozen boundary.
 - `SV-PLAN` is exception-only plan audit.
 - `[CHANNEL]` Choose the lightest truthful channel that satisfies evidence burden without accidental expansion.
+- `[WORK-FULL]` User-facing brevity limits emitted content only; internal tool use, evidence gathering, verification depth, and reasoning stay at deliverable-required quality.
 - `[QUALITY-FLOW]` Route objections, missing basis, and evidence gaps to the smallest correcting owner while lawful independent work keeps moving.
 
 ### 2. User Delivery And Evidence
