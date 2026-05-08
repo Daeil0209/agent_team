@@ -196,11 +196,6 @@ if [[ -z "$SENDER_NAME" || "$SENDER_NAME" == "team-lead" ]]; then
 fi
 
 case "$MESSAGE_CLASS" in
-  hold|blocker)
-    printf '[%s] TRACK-WORKER-REPORT WARN: invalid blocked MESSAGE-CLASS "%s" from sender %s. Agents must emit exact MESSAGE-CLASS: hold|blocker.\n' \
-      "$(date '+%Y-%m-%d %H:%M:%S')" "$MESSAGE_CLASS" "$SENDER_NAME" >> "$VIOLATION_LOG"
-    exit 0
-    ;;
   handoff) ;;
   completion) ;;
   hold\|blocker|status|scope-pressure|dispatch-ack) ;;

@@ -20,12 +20,12 @@ Hard rules:
 - Positive closure is forbidden when the synthesized acceptance scope was built from implemented artifacts instead of the frozen request/plan delivery contract. Implemented routes, files, screens, sections, or checks may prove `ACTIVE-SLICE`; they do not define full completion.
 - Positive synthesis claims only the scope supported by Evidence-Quality Matrix rows, `FROZEN-CONTRACT-STATUS`, and retained open-surface state when material.
 - Positive synthesis is forbidden while a `[RETRO-APPLY]` affected prior verdict, PASS, handoff, or closure remains stale or unclassified.
-- Multi-lane or Claude+Codex convergence is not closure when all reviewers consumed the same narrowed or convenience-built packet. Before positive synthesis, compare the packet basis itself against the frozen delivery contract; if the packet omitted baseline scope, exact operator launch, cleanup, or defer basis, reopen the packet owner instead of reporting agreement.
+- Multi-lane or Claude+Codex convergence is not closure when all reviewers consumed the same narrowed or convenience-built packet. Before positive synthesis, compare the packet basis itself against the frozen delivery contract; if the packet omitted any frozen `REQUEST-BOUND-PACKET-FIELDS` baseline (e.g., `SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, `TARGET-INTENT-BASIS`, or operator-delivery axes when the deliverable is executable), reopen the packet owner instead of reporting agreement.
 - Every non-final synthesis resolves to exactly one next executable owner/action, bounded redispatch basis, or `HOLD`.
 - If synthesis points to a next lane or next consequential step, run `SV-RESULT` on both the synthesized result and proposed next owner/action before re-dispatch.
 - When synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]` before declaring positive synthesis.
-- Before consuming parallel-lane handoffs, reconcile outputs against prior same-session decisions, doctrine patch invariants, and sibling-lane outputs. Contradiction is `cross-continuity drift`; reopen `work-planning`.
-- At each handoff/completion synthesis, apply `session-boot` `Monitoring Sequence` proactive team-composition reassessment before re-dispatch. Do not wait for the user to identify parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch.
+- Apply the `references/cross-continuity.md` synthesis-time gate before consuming parallel-lane handoffs.
+- When handoff evidence indicates parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch, open `session-boot` `Monitoring Sequence` proactive team-composition reassessment before re-dispatch; otherwise continue without the extra gate.
 - After FAR `FINAL-REJECT`, the next synthesis consumes the assigned-validator correction packet and team-lead-classified route before the next FAR or workflow `Complete`.
 
 ## Reporting Detail
@@ -39,7 +39,9 @@ Hard rules:
 - `MID-FLIGHT: silent` means emit nothing to the user surface.
 - Receipt, idle, standby, control, no-change runtime events, and "silent" status labels stay internal unless they create a blocker, next owner/action, or first `dispatch pending` truth.
 - If `MID-FLIGHT` output is necessary, use one short line in the user's language.
-- Do not narrate or expose procedure scaffolding or intermediate output to the user — routing, owner-opening, skill loading, receipts, truth labels, lifecycle internals, internal planning fields, packet labels, agent-control detail, raw lane dumps (handoff bodies, dispatch acks, agent message content), convergence tables and per-stream/per-finding/per-artifact recital, count summaries and file-listing recital, advisory payloads, unexplained procedure jargon, internal procedure labels, or sectioned report cards walking team-lead's procedural traversal — unless the user explicitly asks for internals; an `internal:`/`(internal):` disclaim does not authorize disclosure.
+- Do not surface procedure scaffolding to the user (routing, owner-opening, skill loading, receipts, truth labels, lifecycle internals, internal planning fields, packet labels, agent-control detail).
+- Do not surface raw lane dumps (handoff bodies, dispatch-acks, agent message content), convergence tables, per-stream/per-finding/per-artifact recital, file-listing recital, count summaries, advisory payloads, unexplained procedure jargon, or sectioned report cards walking team-lead's procedural traversal.
+- An `internal:` / `(internal):` disclaim does not authorize disclosure; the user must explicitly ask for internals.
 - `PHASE-RESULT`: report the phase outcome briefly, with only completion truth, material blocker, or next owner/action.
 - `FINAL`: summarize the core result first.
 - `FINAL`: include only the highest-impact evidence, remaining blocker if any, and user-usable next state.

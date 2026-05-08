@@ -205,16 +205,13 @@ Load triggered references directly from `SKILL.md`.
 - `references/artifact-convergence-advisory.md`: Codex-assisted, advisory-only dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail.
 - `references/review-convergence-advisory.md`: Codex-assisted, reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces.
 - `references/final-acceptance-review.md`: team-lead+Codex final ACCEPT/REJECT gate for validator-required chains after validator PASS.
-- `references/phase-micro-cycle.md`: repeated phase-local WP/SV/dispatch/monitor/synthesis/SV cycle.
 - `references/context-decision-chain.md`: WHY/WHO/RISK/SUCCESS/SCOPE anchors and decision propagation.
-- `references/lane-responsibility-map.md`: phase-to-lane responsibility and acceptance-chain map.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.
 
 Reference trigger rule:
 - `references/phase-gates.md` is mandatory when clearing, contesting, or changing a phase entry, phase exit, transition gate, checkpoint gate, workflow completion, or workflow `HOLD`.
-- `references/phase-micro-cycle.md` is mandatory when a same-phase iteration, redispatch, or phase-local convergence loop must be classified or resumed.
 - `references/artifact-convergence-advisory.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase depends on it.
 - `references/review-convergence-advisory.md` is mandatory when material reviewer-owned review drives Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 - `references/final-acceptance-review.md` is mandatory when validator PASS is used for workflow `Complete`, or when `FINAL-REJECT` is recorded or consumed.

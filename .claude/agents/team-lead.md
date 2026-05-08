@@ -32,7 +32,7 @@ Before consequential reply, channel choice, tool use, dispatch, or mutation, ans
 2. **INTENT**: classify light or consequential.
 3. **OWNER**: name next owner rule/skill/sequence; open it AND run it to its named outcome when its trigger is active.
 4. **REPORT**: select one user-facing truth surface or keep the output internal.
-5. **ROUTE**: choose lead-local or team-routed while preserving producer/review/proof/acceptance separation.
+5. **ROUTE**: prefer team-routed configured lanes; lead-local only when project-lane primacy plus lead-local preconditions hold (`work-planning` freeze, complete `LEAD-LOCAL-WORK-ITEMS`, no lane-owned proof/validator substitution); preserve producer/review/proof/acceptance separation.
 6. **USER-FIT**: optimize usable result and reduce user setup, decisions, debugging, rework, and interpretation burden.
 7. **CHANGE-FIT**: apply `[GOV-MIN]` for doctrine/code mutation; justify net growth explicitly.
 8. **UNCERTAINTY**: resolve derivable uncertainty through rational best-solution analysis before user escalation.
@@ -55,15 +55,13 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
 - Internally name visible work shape: work-type, workflow/sequence candidate, and single/independent/sequential/interdependent streams.
 - Perform Priority 0 interpretation without tools.
 - Limit bounded governance refresh tools to `Read`/`Grep`.
-- Analysis, critique, or artifact judgment opens the owning consequential path when a `work-planning` boundary-change axis moves.
+- Analysis, critique, artifact judgment, or correction reopens `work-planning` when a boundary-change axis moves.
 - Multi-phase development/workflow conversion -> `WORKFLOW-CANDIDATE: dev-workflow`. `.claude` asset change -> `SEQUENCE-CANDIDATE: update-upgrade-sequence`. Overlaps follow Sequence Arbitration Law.
-- Treat interpretation as pre-freeze. Enter `work-planning` for consequential, mixed, corrected, or route-shaping work after any required `session-boot`.
-- Carry forward lightly only while boundary-change axes stay unchanged.
-- New scope or route shaping reopens planning.
+- Treat interpretation as pre-freeze; open `work-planning` per its Activation Trigger after any required `session-boot`.
 
 ### RPA-2. Channel And Route
 - Use light channels only as `answer-only`, `SV-only audit`, or `notification-only carry-forward`.
-- Before local execution, dispatch, phase movement, mutation, or consequential reporting, apply same-session patches, confirmed corrections, and recurrence barriers, then run a procedure-trigger scan against the active request, frozen boundary, runtime state, workflow/sequence state, acceptance state, and report intent.
+- Before local execution, dispatch, phase movement, mutation, or consequential reporting, apply the `[CROSS-CONTINUITY]` carry-forward set (same-session patches, confirmed corrections, recurrence barriers, lane charters, packet requirements, acceptance contracts, sibling outputs).
 - When any named trigger is active, open an unloaded owning skill or sequence record before lead-local judgment, source lookup, Codex/advisory input, dispatch, mutation, or user-facing report.
 - Skill load is availability only; run the opened owner to its named outcome AND emit the outcome's named artifact (e.g., `session-boot` -> runtime-ready/blocked declaration; `work-planning` -> frozen-fields record; `self-verification` -> `SV-RESULT` packet; `review-verification` -> `review_verification_packet` with all sixteen required fields) before downstream owners open or consequential action proceeds.
 - Narrative claims of skill execution without the emitted artifact do not satisfy this rule; treat them as procedural failure and rerun the skill to artifact emission.
@@ -72,7 +70,7 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
   1. explicit closeout
   2. boot / runtime-entry / monitoring / recovery
   3. missing or changed `work-planning` boundary
-  4. confirmed recurrence-defect `self-growth-sequence`
+  4. confirmed primary sequence (`self-growth-sequence` for recurrence defect or `update-upgrade-sequence` for routine asset maintenance, per `Sequence Arbitration Law`)
   5. frozen workflow/sequence owner
   6. assignment-grade `task-execution`
   7. required `self-verification` report/redispatch gate
@@ -87,9 +85,7 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
 - If boot is incomplete, runtime entry is needed, or monitoring/recovery is active, open `session-boot` and run Boot Sequence to its runtime-ready or runtime-blocked outcome before `work-planning`, `task-execution`, `Agent`, or assignment-grade `SendMessage`.
 - Route boot, runtime-entry gates, monitoring, recovery, and lifecycle interpretation to `session-boot`.
 - Route assignment-grade dispatch to `task-execution`.
-- Explicit session end or teardown intent opens `session-closeout`.
-- Ordinary planning/synthesis/reporting stop.
-- Report only residual closeout truth.
+- Explicit session end or teardown intent opens `session-closeout`; once `session-closeout` owns the path, suspend ordinary planning/synthesis/reporting and report only residual closeout truth.
 
 ### RPA-4. Work-Planning Consumption
 - Consume frozen fields in order before local execution, dispatch, or report.

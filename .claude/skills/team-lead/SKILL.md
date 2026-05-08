@@ -50,88 +50,37 @@ Default session start and ordinary RPA-4 planning consume compact rules when suf
 When this skill is loaded, its rules are decisive detail for the active edge case.
 
 ## Work-Planning Detailed Consume
-Use `references/planning-consume.md` when the compact RPA-4 rule is insufficient.
-Hard surface:
-- Missing, contradictory, stale, blocked, or cross-continuity-failed planning fields reopen `work-planning`.
-- Repair uses the reopened owner.
-- Named workflow or sequence owners open before local execution, `task-execution`, or reporting.
-- Lead-local requires complete `LEAD-LOCAL-WORK-ITEMS`.
-- Lead-local requires frozen local skills and consumes each one before local work or reporting.
-- Lead-local specialist consumption is valid only for a declared `SECONDARY-CONSUMER: team-lead` boundary or another lawful lead-local support basis frozen by `work-planning`.
-- Lead-local preserves lane separation.
-- Lead-local preserves parallel fit.
-- Lead-local reports only local evidence strength.
-- Team-routed or ambiguous paths go through `task-execution`.
-- Agent `REQUIRED-SKILLS` carries required non-lane-core skills from frozen lane maps or lawful phase refinement.
-- Agent `REQUIRED-SKILLS` is a receiver consumption duty, not a label or suggestion.
-- Teammates receive packetized, state-backed, or artifact-cited material facts.
-- Material facts must be packetized, state-backed, or artifact-cited before dispatch.
+- Trigger: RPA-4 missing/contradictory frozen field, FAR `FINAL-REJECT` correction routing, lead-local routing scenarios, Codex same-pass own-review, specialist-skill consumption, Guarded-Local Law.
+- Owner: `references/planning-consume.md`.
 
 ## Communication Detail
-Use `references/communication-objections.md` for message-class and lifecycle edge cases.
-Hard surface:
-- `dispatch-ack`, `control-ack`, and `status` are not completion evidence.
-- Assignment, workflow control, lifecycle control, and completion are distinct.
-- One agent segment has one primary downward class.
-- Lifecycle debt remains visible until an explicit lifecycle decision consumes it.
+- Trigger: assignment vs workflow-control vs lifecycle-control vs completion class distinction, lifecycle-debt visibility, primary-downward-class limit on a single agent segment.
+- Owner: `references/communication-objections.md` plus `task-execution/references/{message-classes.md, truth-rules.md}`.
 
 ## Agent Objection Detailed Consume
-Use `references/communication-objections.md` for blocker and pressure resolution detail.
-Hard surface:
-- `hold|blocker` stops only the unsafe affected path.
-- It resolves through corrected packet, reopened planning, setup/research owner, or proven user-owned blocker.
-- `scope-pressure` is planning-quality evidence.
-- `REPLAN-REQUIRED: yes` reopens `work-planning`.
-- Boundary/owner/phase/parallel/proof/acceptance mismatch reopens `work-planning`.
-- Single-agent parallel collapse reopens `work-planning`.
-- Agent continuation requires explicit design intent, proof/tool/run-path basis, and authority.
-- Unresolved objections block positive synthesis.
-- They block completion-style reporting.
-- They block synthesis-driven redispatch.
+- Trigger: `hold|blocker` / `scope-pressure` arbitration, single-agent parallel collapse, boundary/owner/phase/proof/acceptance mismatch, `REPLAN-REQUIRED: yes`.
+- Owner: `references/communication-objections.md`.
 
 ## Synthesis Detail
-Use `references/synthesis-reporting.md` for synthesis edge cases.
-Hard surface:
-- Synthesize only completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`.
-- The message must satisfy `.claude/skills/task-execution/references/completion-handoff.md`.
-- Receipt, control, status, blocker, pressure, conflict, lifecycle debt, or material open surfaces prevent positive closure.
-- Strengthened synthesis, redispatch, or existing-artifact integrity claims require `SV-RESULT` and `[DESIGN-INTENT]` fit.
+- Trigger: completion-grade `handoff`/`completion` synthesis, strengthened synthesis or redispatch needing `SV-RESULT`+`[DESIGN-INTENT]` fit, FAR `FINAL-REJECT` correction-packet consumption.
+- Owner: `references/synthesis-reporting.md` plus `task-execution/references/completion-handoff.md`.
 
 ## Reporting Detail
-Use `references/synthesis-reporting.md` for reporting edge cases.
-Hard surface:
-- Report one primary surface only: `verified result`, `blocker`, `next action`, `dispatch pending`, or `closeout residual`.
-- Before phase/stage-end reporting of analyzed/evaluated/synthesized consequential content, `SV-RESULT` for that exact report is mandatory.
-- Internal SV wording requires loaded and applied `self-verification`.
-- Planning reports next action only.
-- Dispatch reports at most `dispatch pending`.
-- Weak evidence narrows to `INFERENCE/UNVERIFIED`.
-- Expose internal planning fields, packet labels, lifecycle internals, agent-control detail, or SV templates only on explicit request.
+- Trigger: phase/stage-end reporting requiring `SV-RESULT`, claim-strength narrowing to `INFERENCE/UNVERIFIED`, planning/dispatch/closeout reporting limits, internal-by-default scaffolding exposure on explicit request.
+- Owner: `references/synthesis-reporting.md` (governing surface for RPA-9 and RPA-10 edge cases).
 
 ## Interrupt-Resume Detail
-Use `references/interrupt-autonomy.md` for interrupt stack detail.
-Hard surface:
-- Corrective sub-tasks are stacked interrupt frames, not route replacement.
-- After the interrupt converges, resume from the verified resume action.
-- Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
-- If no explicit cancellation, redirect, or proven user-owned blocker exists, `waiting for user` is false.
-- Status/progress questions expose the stall only.
-- Answer status briefly.
-- Then execute the resume action.
-- The original task remains active until explicit cancellation, explicit redirect, or proven user-owned blocker.
-- Exceptions: explicit cancellation, explicit redirect, or proven user-owned blocker.
+- Trigger: stacked interrupt frame discipline, status-question stall exposure, resume from verified resume action, reopen-`work-planning` only on owner/surface/deliverable/route/staffing/proof/acceptance/user-requirement axis movement.
+- Owner: `references/interrupt-autonomy.md`.
 
 ## Autonomous Judgment Detail
-Use `references/interrupt-autonomy.md` for autonomous judgment detail.
-Hard surface:
-- Autonomy is valid only with philosophy alignment, evidence basis, and net team-operation benefit.
-- `[DESIGN-INTENT]`, owner boundaries, proof, acceptance, safety, and explicit user/security/destructive approval boundaries outrank autonomy.
-- User challenge turns the current conclusion into an unverified draft until re-examined against evidence and net benefit.
+- Trigger: philosophy alignment + evidence basis + net team-operation benefit test, user-challenge re-evaluation, accountability under delegated authority.
+- Owner: `references/interrupt-autonomy.md`.
 
 ## Orchestration Defect Taxonomy
-Use `references/orchestration-defects.md` for the consolidated taxonomy.
-Hard surface:
-- Defect classification is route evidence, not a user-choice prompt.
-- Each class names trigger, owning rule, and smallest correction owner.
-- Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
-- Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
+- Trigger: skipped owner chain, needless user prompt, user-choice loop on repeated same-class gap, missed parallel dispatch, serial-convenience bottleneck, design-decision delegation, Codex relay, premature agent replacement, reporting leak.
+- Owner: `references/orchestration-defects.md`.
+- Hard surface (taxonomy meta-rules, no duplicate of class detail):
+  - Defect classification is route evidence, not a user-choice prompt.
+  - Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
+  - Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.

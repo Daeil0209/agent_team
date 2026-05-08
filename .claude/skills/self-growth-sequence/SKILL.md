@@ -14,15 +14,7 @@ When evidence shows a behavioral or procedural defect, protect the active reques
 Convert the defect into a durable recurrence barrier on the narrowest correct owner surface.
 Resume ordinary execution only from that corrected basis.
 
-Mandatory path:
-1. Defect evidence identifies the failure.
-2. Design-intent review reconstructs the rule or procedure intended to govern.
-3. Causal analysis explains why it failed in execution.
-4. Failure classification exposes the recurrence path.
-5. Ownership adjudication chooses the prevention surface.
-6. Hardening installs the barrier.
-7. Verification proves the barrier or assigns bounded follow-up ownership.
-8. Only then can the team resume from the corrected basis.
+Mandatory path summary: defect evidence -> design-intent review -> causal analysis -> failure classification -> ownership adjudication -> hardening -> verification -> resume from corrected basis. The canonical step-by-step procedure lives in `### Required order` below.
 
 Use the narrowest owner-local surface that blocks recurrence with less drift.
 
@@ -88,7 +80,6 @@ When the team hardens its own rules, skills, charters, or capability boundaries:
 - Run the optimization pass when material avoidable redundancy or runtime burden is visible.
 - Otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed`.
 - Always preserve the upgraded quality bar and protected meaning.
-### Self-Healing Algorithm
 ### Defect-To-Barrier Contract
 Every self-growth round must preserve this chain:
 Required chain part 1: `DEFECT-BASIS -> DESIGN-INTENT-BASIS -> CAUSAL-BASIS -> FAILURE-MODE -> RECURRENCE-PATH -> OWNER-SURFACE -> BARRIER-TYPE -> CHANGE-BOUNDARY`.
@@ -127,20 +118,7 @@ Set it to `required` when design intent, owner-boundary coherence, integrity, ne
 Consume `review-verification` output before adjudication, patch design, or Change Sequence execution when it is required.
 Set it to `not-required` only for quick hardening when owner surface, write scope, and meaning-preserving repair are unambiguous.
 
-When a defect or justified challenge is recognized, run this sequence:
-1. Trigger — confirm the problem basis is real enough to govern behavior now.
-2. Stabilize — protect the active request's correctness and safety basis first.
-   If active work is interrupted, record suspended surface, last safe state, current owner, and next resume decision.
-3. Reconstruct — identify the intended rule, owner, procedure, packet, hook, or verification path that was supposed to prevent the failure.
-4. Diagnose — explain why that design failed in execution.
-   Classify the failure mode.
-5. Open — open self-growth classification immediately as a sidecar or nearest-safe-boundary path.
-6. Harden — patch the correct owner surface with the smallest meaning-preserving edit only after defect basis, causal basis, and recurrence path are sufficient.
-7. Re-verify — gather fresh evidence on the affected path.
-8. Iterate — if verification finds a remaining or newly created defect, return to Reconstruct or Diagnose.
-   Repair again with the new evidence.
-9. Resume corrected state — continue with the strengthened basis, reopen planning, or assign an explicit blocker owner.
-   Interrupted work keeps `RESUME-OWNER` and `RESUME-ACTION`.
+When a defect or justified challenge is recognized, run the canonical `### Required order` below. Phase mapping for trigger detection: Trigger and Stabilize feed Required-order Step 1; Reconstruct and Diagnose feed Step 2; Open feeds Step 3; Harden feeds Steps 5-6; Re-verify and Iterate feed Step 8; Resume-corrected-state feeds Step 9.
 Self-healing is complete only when a confirmed recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis.
 If classification disproves a durable defect, close only with the active-task correction, no-recurrence basis, and owner truth.
 Explanation alone is not self-healing.
@@ -259,8 +237,6 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 - The fast path still requires all 6 steps. See `references/capability-gap-fast-path.md` for the checklist and default routing.
 - Fast path means reduced delay with owner fit, overlap review, and information-preservation checks preserved.
 - Ad hoc bypass evidence routes to non-compliance or capability-gap diagnosis.
-### Skill Introduction Category Gate
-Every proposed new skill must be classified into exactly one primary category before approval. See `references/skill-introduction.md` for categories, reject criteria, and approval packet requirements.
 ### Self-growth constraints
 See `references/self-growth-constraints.md` for the constraint checklist.
 ### Benchmark Protocol Detail

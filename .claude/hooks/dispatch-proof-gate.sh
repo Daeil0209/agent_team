@@ -425,11 +425,6 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
   if [[ "$packet_warning_needed" == "true" ]]; then
     emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS (additional non-lane-core skills or []), WORK-SURFACE, CURRENT-PHASE, and TASK-ID when task tracking is active. task-execution corrects the packet before send; if a deficient packet is delivered, the agent holds on decisive missing-field ambiguity."
   fi
-
-  # Advisory: check ACTIVE-WORKFLOW presence for workflow-aware dispatch
-  if [[ -z "$ACTIVE_WORKFLOW_NORM" ]]; then
-    emit_packet_warning "Dispatch packet missing ACTIVE-WORKFLOW field. Add ACTIVE-WORKFLOW from work-planning Step 1 Q3 result if applicable."
-  fi
 fi
 
 # This hook guards proof or acceptance packet gaps.

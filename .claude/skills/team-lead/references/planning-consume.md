@@ -22,14 +22,8 @@ Read frozen planning fields in this order:
 
 ## Reaction Rules
 - `answer-only` means answer only.
-- If `PROJECT-TIER` is frozen but `ACTIVE-REQUEST-TIER` or `TIER-RAISE-REASON` is missing, contradictory, or weaker than the floor, reopen `work-planning`.
+- If `PROJECT-TIER`/`ACTIVE-REQUEST-TIER`/`TIER-RAISE-REASON` is missing, contradictory, stale, or weaker than the floor, reopen `work-planning` per `governance-scaling/SKILL.md`.
 - Consume the frozen tier basis before staffing, checkpoint, review, proof, or acceptance sizing.
-- `PROJECT-TIER` sets the floor.
-- `ACTIVE-REQUEST-TIER` can raise above it without silently rewriting the floor.
-- `PROJECT-TIER: Lightweight` plus `ACTIVE-REQUEST-TIER: Lightweight` avoids precision-only staffing, gates, and checkpoint burden by habit.
-- Raised `ACTIVE-REQUEST-TIER` carries the stronger request tier into the stronger acceptance path required by the frozen risk basis.
-- Tier can lighten unnecessary governance burden.
-- Tier must not downshift decisive user-surface proof or acceptance integrity.
 - If a Codex advisory trigger applied, missing, stale, invalidly skipped, or pre-`work-planning` `CODEX-ADVISORY-BASIS` reopens `work-planning`.
 - `triggered:*` requires active adjudication.
 - `fail-open:*` means advisory unavailable, not Codex agreement.
@@ -43,7 +37,7 @@ Read frozen planning fields in this order:
   - no meaningful parallelism loss
   - no executable/destructive/security-sensitive acceptance burden
   - no claim stronger than lead-local evidence can verify
-- Read-only diagnostic, audit, and analytical reports default to `lead-local candidate` under those direct-work conditions. Team fan-out for such work requires a frozen context-footprint or independent-evidence basis, not routing habit.
+- Read-only diagnostic, audit, and analytical reports stay `lead-local candidate` only when (a) one bounded surface, (b) no independent-surface separation by evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner, and (c) measured context-footprint shows no fan-out benefit; otherwise apply `[PARALLEL]` and route through `task-execution`.
 - Governance refresh/read-only relearning that uses only `Read`/`Grep` on known, bounded owner docs and produces no Bash/status/listing, corpus discovery/measurement, diagnostic, audit, analytical, route, dispatch, mutation, or stronger-claim output is not `lead-local candidate`; keep it light/control.
 - `lead-local candidate` executes locally only when `LEAD-LOCAL-WORK-ITEMS` is complete.
 - `LEAD-LOCAL-REQUIRED-SKILLS` must be frozen.
@@ -56,8 +50,8 @@ Read frozen planning fields in this order:
 
 ## FAR FINAL-REJECT Correction Routing
 - After validator returns the correction packet, classify route from `ROOT-CAUSE-CLASS`, `CORRECTION-OWNER-SURFACE`, required evidence, and active workflow basis:
-  - design-level -> Phase 2 correction
-  - implementation/operator-delivery -> Phase 5 correction
+  - design-level -> active workflow's design-correction phase (e.g., dev-workflow Phase 2)
+  - implementation/operator-delivery -> active workflow's production-correction phase (e.g., dev-workflow Phase 5)
   - changed scope/owner map/route/proof chain/acceptance chain -> reopen `work-planning`
 - Dispatch that classified owner/action as the next executable route.
 - Keep validator evidence as correction basis and team-lead classification as route freeze.

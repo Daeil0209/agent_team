@@ -37,7 +37,10 @@
 - `[USER-CONVENIENCE]` Prefer the evidence-backed path that reduces user setup, decisions, debugging, rework, and interpretation burden.
 
 ### 3. Scope, Continuity, And Change
-- `[DESIGN-INTENT]` Consequential work MUST start from the target artifact's cited design intent and the cited applicable team-operations philosophy axes from `Core Laws`. For any judgment, preservation, modification, audit, review, validation, or improvement work on an existing artifact, lead-local execution and every assignment-grade dispatch packet MUST carry both (a) cited target design intent and (b) cited applicable `Core Laws` philosophy axes as `TARGET-INTENT-BASIS`. Receiving lane MUST consume both as binding comparison anchor before lane work or raise `scope-pressure`. Original creation work with no existing artifact under judgment uses `TARGET-INTENT-BASIS: not-applicable (<reason>)`. Silent omission, vague phrasing, assignment-intent-only basis, anchor-by-inference, literal-text-only-lens substitution, request-fit-only substitution, or PASS-by-default on existing-artifact work is procedural failure: `route-replan` at dispatcher, `scope-pressure` at lane intake, `hold|blocker` if uncorrected.
+- `[DESIGN-INTENT]` Consequential work starts from the target artifact's cited design intent and the cited applicable `Core Laws` axes.
+- For judgment, preservation, modification, audit, review, validation, or improvement of an existing artifact, lead-local execution and every assignment-grade packet carries both as `TARGET-INTENT-BASIS`; the receiver consumes them as binding comparison anchor before lane work or raises `scope-pressure`.
+- Original creation work with no existing artifact under judgment uses `TARGET-INTENT-BASIS: not-applicable:<reason>`.
+- Silent omission, vague phrasing, assignment-intent-only basis, anchor-by-inference, literal-text-only-lens substitution, request-fit-only substitution, or PASS-by-default routes to `route-replan` at dispatcher, `scope-pressure` at lane intake, or `hold|blocker` if uncorrected.
 - Changes also verify Structural Contract, fixed order, owner boundaries, protected restatements, and authoring principles.
 - `[CROSS-CONTINUITY]` Before dispatch, synthesis, phase movement, or consequential user-facing output, apply same-session patches, confirmed corrections, recurrence barriers, lane charters, packet requirements, acceptance contracts, and sibling outputs.
 - Drift reopens `work-planning`.
@@ -157,9 +160,8 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 
 ## Conditional Rules
 - Operate only inside active workspace, repository, and approved output roots. Do not destructively modify files. Do not expose secrets. Do not alter protected settings. Do not hide protected filesystem mutation behind interpreter snippets.
-- Approved output root is `projects/<project-folder>/...` unless user/config names another canonical folder.
 - Source/governance edits stay on owner files. Generated products/evidence never spill into repo root, `.claude/*`, runtime state, home, temp, or incidental cwd.
-- If the project output folder is unknown before file-producing work, derive and freeze the safest canonical root. User escalation is invalid when a safe canonical root exists.
+- If the project output folder is unknown before file-producing work, derive and freeze the safest canonical root per `[PROJECT-OUTPUT-ROOT]`; user escalation is invalid when a safe canonical root exists.
 - Claude Code boundary: `CLAUDE.md`, rules, and skills shape behavior through context. `settings`, permissions, sandbox, and hooks provide technical enforcement. Do not overclaim prose as client enforcement.
 - Keep governance-flow hooks separate from settings-deny secret protection. Hooks guard only observable runtime edges that would otherwise produce reserved hard-deny danger. `settings.json` deny rules protect credential and secret paths.
 - External MCP/advisory tools are capabilities, not owners. Codex is owner-scoped advisory only. It cannot block, dispatch, validate, accept, mutate, repair credentials, or replace `self-verification` or owner gates.
@@ -169,4 +171,4 @@ Conflict order: 1. request/deliverable fit 2. evidence/procedure fidelity 3. own
 - Always-on doctrine belongs here. Task-, runtime-, owner-, and reference-local detail belongs in its owning skill, agent, hook, settings, or `team-lead` evidence cache.
 
 ## Self-Growth
-- `self-growth-sequence` owns recurrence-barrier hardening per `Sequence Arbitration Law`. Harden the narrowest correct owner after quality, evidence, ownership, and acceptance integrity are secure. See `[HARDEN]`.
+- `self-growth-sequence` owns recurrence-barrier hardening per `Sequence Arbitration Law` and `[HARDEN]`; open it only after quality, evidence, ownership, and acceptance integrity are secure.

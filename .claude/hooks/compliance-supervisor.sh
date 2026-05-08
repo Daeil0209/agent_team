@@ -415,30 +415,6 @@ command_removes_team_runtime_dir() {
   [[ "$cmd" =~ $team_rm_pattern ]]
 }
 
-command_is_noisy_touch_probe() {
-  local cmd="${1-}"
-  local saw_touch=0
-  local subcmd=""
-  [[ -n "$cmd" ]] || return 1
-
-  while IFS= read -r subcmd || [[ -n "$subcmd" ]]; do
-    subcmd="${subcmd#"${subcmd%%[![:space:]]*}"}"
-    subcmd="${subcmd%"${subcmd##*[![:space:]]}"}"
-    [[ -z "$subcmd" ]] && continue
-
-    if printf '%s' "$subcmd" | grep -Eiq '^[[:space:]]*touch([[:space:]]|$)'; then
-      saw_touch=1
-      continue
-    fi
-
-    if [[ "$saw_touch" == "1" ]] && printf '%s' "$subcmd" | grep -Eiq '^[[:space:]]*(ls|cat|wc|stat|sed)([[:space:]]|$)'; then
-      return 0
-    fi
-  done < <(split_compound_command "$cmd")
-
-  return 1
-}
-
 command_uses_interpreter_fs_mutation() {
   local cmd="${1-}"
   local trimmed=""
@@ -991,11 +967,6 @@ fi
     # Ignore quoted separators for compound-command checks; real unquoted
     # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
-    if command_is_noisy_touch_probe "$CLEAN_COMMAND"; then
-      emit_warning "Bootstrap touch includes a follow-up probe. Prefer quiet touch and separate read-only verification when needed."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "noisy-touch-probe-warning" || true
-      exit 0
-    fi
     if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
       emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-agent state first; if only stale residue remains, use TeamDelete or report the exact residual state."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "team-runtime-shell-delete" || true
