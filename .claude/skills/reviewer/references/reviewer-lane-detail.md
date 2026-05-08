@@ -94,13 +94,14 @@ Specialist skill output is not automatically advisory. `security-review` and `co
 
 ## Specialist Skill Loading
 Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
-Reviewer lane evaluation selects advisory or lane-local specialist skills from the review surface:
-- `feynman-clarity` - Feynman-style explainability review for plans, designs, reports, governance text, and other clarity-critical deliverables. SECONDARY-CONSUMER: developer.
-- `code-quality-review` - SOLID checklist, duplication taxonomy, refactoring priority. SECONDARY-CONSUMER: developer.
-- `security-review` - OWASP checklist, detection patterns, severity framework.
-
-Secondary-consumer specialist support:
-- `design-system-tokens` for review of token architecture, layer boundaries, and token-to-component consumption when a design-system token contract materially affects review truth.
+Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
+Before severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.
+Use this surface map:
+- Work-tool, spreadsheet, operations, business-rule, and workflow-state review: `business-workflow`, `work-tool-patterns`.
+- Report, document automation, reader/presenter-facing generation, and explanation-critical artifact review: `document-automation`, `visual-composition`, `feynman-clarity`.
+- Engineering, calculation, units, formulas, quantitative constraints, and data-shape review: `engineering-grounding`, `mathematical-correctness`.
+- UI, browser, visual layout, component conversion, rendered operator surface, and design-system contract review: `visual-composition`, `mockup-to-component`, `design-system-tokens`.
+- Software implementation, maintainability, architecture-coded contract, and security review: `code-quality-review`, `security-review`.
 
 When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
 Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.

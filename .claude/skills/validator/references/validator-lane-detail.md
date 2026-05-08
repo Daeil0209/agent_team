@@ -24,6 +24,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Validator Packet Detail
 - Verdict Lenses
 - Applied Validation Techniques
+- Specialist Skill Loading
 - PASS Prohibition Detail
 - Acceptance Reconciliation Detail
 - Operator-Runtime Verification Protocol
@@ -74,6 +75,19 @@ Use only the lenses that materially affect the assigned validation surface.
 - Contradiction reconciliation: keep review truth, test truth, produced output, and user-surface proof separate until they reconcile on the same decisive surface.
 - Negative-space validation: look for required but absent expectations, users, environments, data states, edge cases, cleanup paths, rollback paths, and burden assumptions.
 - Confidence calibration: downgrade to `HOLD`, `partial`, `mismatched`, `blocked`, `not assessable`, `INFERENCE`, or `UNVERIFIED` before using pass-like language that outruns evidence.
+
+## Specialist Skill Loading
+Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
+Validator selects and applies every materially relevant specialist lens needed to prove or disprove the assigned verdict on the decisive validation surface.
+Consume frozen specialist contracts, oracles, and skill-basis records from Phase 1/2 design, Phase 4 evidence, tester proof, reviewer findings, and handoff packets as expectation sources. If a material oracle is missing and cannot be derived, return `HOLD` or `hold|blocker`; do not convert the verdict to a narrower PASS.
+Use this surface map:
+- Work-tool, spreadsheet, operations, business-rule, and workflow-state acceptance: `business-workflow`, `work-tool-patterns`.
+- Report, document automation, reader/presenter-facing generation, and explanation-critical acceptance: `document-automation`, `visual-composition`, `feynman-clarity`.
+- Engineering, calculation, units, formulas, quantitative constraints, and data-shape acceptance: `engineering-grounding`, `mathematical-correctness`.
+- UI, browser, visual layout, component conversion, rendered operator surface, and design-system acceptance: `visual-composition`, `mockup-to-component`, `design-system-tokens`.
+- Software implementation, maintainability, architecture-coded contract, and security acceptance when verdict scope includes those surfaces: `code-quality-review`, `security-review`.
+
+Specialist output is verdict evidence, not final authority. PASS still requires decisive user-surface evidence, acceptance reconciliation, and this validator lane's PASS prohibition checks.
 
 ## PASS Prohibition Detail
 PASS is prohibited when any decisive acceptance surface remains:
