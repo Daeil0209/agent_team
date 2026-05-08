@@ -107,7 +107,9 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
 - Continue same-route blocker-clear only after verification.
 - Open or change phase/work-surface boundaries through `work-planning`.
 - Consume a frozen `NEXT-CONSEQUENTIAL-ACTION` naming a workflow, sequence, `task-execution`, `self-verification`, or blocker-clear owner before local execution, dispatch, phase movement, or reporting.
-- FAR `FINAL-REJECT` changes acceptance state and follows the dev-workflow Reject Route.
+- FAR `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis before correction dispatch.
+- Codex, reviewer, tester, and team-lead rejection evidence travels to that validator assignment as evidence.
+- The validator-authored correction packet is the route basis for Phase 2, Phase 5, tester, developer, or `work-planning` dispatch.
 - Codex-assisted planning/artifact/review paths require active team-lead judgment before positive freeze or convergence.
 - Every Codex pass requires same-pass team-lead own-review basis before Codex consumption.
 - Treat every same-boundary correction pass as a new Codex pass for own-review duty.
@@ -145,7 +147,7 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
 - Preserve `SCOPE-BASELINE` as the completion baseline.
 - Synthesis-driven redispatch, strengthened reporting, or existing-artifact integrity claim requires `SV-RESULT`.
 - Sibling drift reopens `work-planning`.
-- After FAR `FINAL-REJECT`, consume the active dev-workflow Reject Route before next FAR or workflow `Complete`.
+- After FAR `FINAL-REJECT`, the next synthesis consumes the assigned-validator correction packet and its named route before the next FAR or workflow `Complete`.
 - Use `.claude/skills/team-lead/references/synthesis-reporting.md` for synthesis edge cases.
 
 ### RPA-8. SV Consume Rule

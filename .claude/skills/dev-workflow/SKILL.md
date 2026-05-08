@@ -185,9 +185,9 @@ Deliverable-type tool mapping and gap methodology live in `references/phase-surf
 
 ## Phase 5: Iteration
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
-**Owner lanes**: developer correction -> reviewer evidence + tester proof -> validator when final acceptance is still required
+**Owner lanes**: correcting owner named by CP5 or validator-authored `FINAL-REJECT` packet -> reviewer/tester re-evidence as required -> validator when final acceptance is still required
 **Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict input, and explicit remaining gap state
-**Entry law**: CP5 has classified the remaining gap as implementation-level against the frozen Phase 2 correction-readiness basis, or Final Acceptance Review has returned an implementation or operator-delivery `FINAL-REJECT` correction route inside the unchanged workflow boundary.
+**Entry law**: CP5 has classified the remaining gap as implementation-level against the frozen Phase 2 correction-readiness basis, or the validator-authored `FINAL-REJECT` correction packet names an implementation or operator-delivery route inside the unchanged workflow boundary.
 **Execution law**: independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output. Positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
 **Exit law**: when CP5-contracted blocking gaps are cleared against frozen `SCOPE-BASELINE` with required user-surface evidence, validator PASS immediately opens Final Acceptance Review.
 **Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by root cause until the gap converges, escalates, or reaches `HOLD`.

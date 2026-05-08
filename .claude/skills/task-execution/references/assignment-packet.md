@@ -52,7 +52,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections may only populate `ACTIVE-SLICE`, never substitute for `SCOPE-BASELINE`
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
 - Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
-- `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before developer correction.
+- `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction dispatch.
 
 Preflight outcome names:
 - `packet-correction`: a packet defect whose missing or malformed value already exists in the frozen basis and can be corrected with all `work-planning` boundary-change axes unchanged. Correct the packet and rerun preflight before sending.

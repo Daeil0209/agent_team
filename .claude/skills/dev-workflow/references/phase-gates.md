@@ -34,4 +34,4 @@ Additional gate law:
 - Validator PASS opens Final Acceptance Review for validator-required chains.
 - Final Acceptance Review uses `final-acceptance-review.md`.
 - `FINAL-ACCEPT` opens workflow `Complete`.
-- `FINAL-REJECT` opens `task-execution` for validator rejection analysis.
+- `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
