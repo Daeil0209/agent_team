@@ -34,6 +34,10 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Keep these delivery-contract additions explicit when applicable:
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
+  - `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE`, and `ENV-COVERAGE` for Windows primary operator proof
+  - `WINDOWS-EQUIVALENCE-BASIS` only when proof runs outside Windows but claims Windows sufficiency
+- Tester proves the Windows launch surface through the frozen Windows path or a proven-equivalent interop path.
+- WSL/Linux execution is support evidence; it leaves Windows launch, termination, and clean re-launch as blocked proof unless `WINDOWS-EQUIVALENCE-BASIS` proves the exact operator action.
 
 ## UI Intent Proof Matrix
 For UI/browser proof, build the proof around the designed behavior, not around page availability.
@@ -114,7 +118,8 @@ Tester lane evaluation selects advisory or lane-local specialist skills from the
   - `CORE-WORKFLOW-STATUS`
   - `INTERACTION-COVERAGE-STATUS`
   - `BURDEN-STATUS`
-  - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`) per `.claude/skills/task-execution/references/request-bound-fields.md` when proof spans multiple environments or claims single-env cross-env sufficiency
+  - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `WINDOWS-EQUIVALENCE-BASIS`) per `.claude/skills/task-execution/references/request-bound-fields.md` when proof spans multiple environments or claims single-env cross-env sufficiency
 - `matched` is reserved for true contract alignment on that exact surface.
+- For a Windows primary operator surface, handoff names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
 - For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the handoff or evidence anchor.
 - If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` as appropriate and explain the contradiction in `OPEN-SURFACES` instead of silently mutating the validator basis.

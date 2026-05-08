@@ -23,9 +23,9 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Required Dispatch Packet Fields
 | Work Type | Required Fields |
 |-----------|----------------|
-| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when multiple promised surfaces exist; exact launcher/user-surface fields when executable; `WRITE-SCOPE` when writes are path-bounded |
+| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when multiple promised surfaces exist; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Active `dev-workflow` plan/design artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, and `SCOPE-BASELINE`/`ACTIVE-SLICE` when the artifact freezes or changes multi-surface scope |
-| Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; exact launcher/user-surface fields when executable; `WRITE-SCOPE` when writes are path-bounded |
+| Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Meaningful/high/critical risk | explicit acceptance pipeline: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator` |
 | Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, integration, merge-compress, or bounded correction surface |
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
@@ -52,7 +52,7 @@ Minimum decisive production basis:
 - `SCOPE-MATCH`
 - `PRIOR-ANALYSIS`
 - `SCOPE-BASELINE` and `ACTIVE-SLICE` when multiple promised features, workflows, surfaces, or controls exist
-- user-facing surface when it materially affects production
+- user-facing surface when it materially affects production; for executable surfaces, include launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start, shutdown/cleanup, and clean-relaunch production basis
 - first lane action
 - stop condition
 
@@ -126,5 +126,6 @@ When multiple specialists are active on one blocked surface, the controlling ord
 ## Developer Handoff Detail
 - Keep applied changes, executed checks, unrun or blocked checks, and unresolved assumptions separated so downstream lanes do not reconstruct implementation truth from the diff alone.
 - For current-scope implementation completion, set `FROZEN-CONTRACT-STATUS` against `DONE-CONDITION`, `CHANGE-BOUNDARY`, and any `SCOPE-BASELINE` rather than reporting only changed files.
+- For executable user-facing implementation, `FROZEN-CONTRACT-STATUS` also compares the produced launcher, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, and clean re-launch implementation against the Phase 2 operator-delivery contract; WSL-only developer execution cannot close a Windows-primary implementation contract unless the packet carries `WINDOWS-EQUIVALENCE-BASIS`.
 - Include `PREREQ-STATE: complete|partial|missing` in consequential upward handoff so downstream lanes do not infer prerequisite truth.
 - For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.
