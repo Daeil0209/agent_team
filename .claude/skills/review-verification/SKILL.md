@@ -156,16 +156,14 @@ Update the patch design when wider coherence review finds drift, overlap, missin
 Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, procedure-adherence signal, automatic next-owner drive, clarity, execution force, user-use readiness, existing function preservation, and no-regression basis.
 Any failed integrity item returns the work to patch design with the failed item named.
 
-### 9. Execute Through The Owning Patch Sequence
-File mutation stays with the owning patch sequence or assigned production owner.
-Live patch eligibility requires completed Steps 1-8, recorded evidence for each required output field, and a reviewed removal-first patch design.
-Execute the eligible patch through `update-upgrade-sequence`, `self-growth-sequence`, or the assigned production owner.
-Missing eligibility evidence routes to the smallest incomplete review step before mutation.
+### 9. Hand Off To The Owning Patch Sequence
+File mutation is owned by the named patch sequence or production owner, not by review-verification.
+After Steps 1-8 record completed evidence and the `review_verification_packet` is emitted with all sixteen required fields, hand off the eligible patch to `update-upgrade-sequence` (routine asset maintenance), `self-growth-sequence` (recurrence-barrier hardening), or the assigned production owner.
+Missing eligibility evidence routes to the smallest incomplete review step before any handoff.
 
-### 10. Post-Patch Live Coherence Review
-After live patch execution, re-read the changed live surfaces, resulting diff, surrounding owner surfaces, and affected references.
-Post-patch coherence review covers the edited file, resulting diff, surrounding owner surfaces, and affected references.
-Fix newly found contradiction, dead reference, weakened owner boundary, meaning loss, or procedure drift through the smallest correction path.
+### 10. Post-Patch Coherence Re-engagement
+Post-patch coherence review is owned by the executing patch sequence's Post-Verify step (e.g., `self-growth-sequence/references/change-patch-method.md` Post-Verify); re-engage `review-verification` only when that sequence escalates a coherence concern back to this lens.
+When re-engaged, re-read the changed live surfaces, resulting diff, surrounding owner surfaces, and affected references; fix newly found contradiction, dead reference, weakened owner boundary, meaning loss, or procedure drift through the smallest correction path.
 
 ### 11. Classify Findings
 Use these classes:

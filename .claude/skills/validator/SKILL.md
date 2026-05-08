@@ -64,7 +64,7 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is not e
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
 - Tester evidence must come from a browser-proof path.
-- Validator direct final interaction checks use Playwright MCP or explicitly frozen equivalent browser-proof path when the acceptance packet requires validator-side browser confirmation.
+- For browser/UI final acceptance, available Playwright MCP is the default validation profile; absence of MCP use blocks PASS unless the packet freezes a narrower lawful tool or proves MCP unavailable.
 - For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, PASS depends on native-capable or format-faithful rendered/runtime evidence.
 - This applies when layout, formulas, pagination, interaction, or visible burden are part of acceptance.
 - Missing decisive user-surface tooling routes to `hold|blocker` or `scope-pressure`.
