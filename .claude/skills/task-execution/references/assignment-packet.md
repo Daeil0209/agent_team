@@ -23,6 +23,7 @@ Every assignment-grade agent packet carries:
 - `CURRENT-PHASE`
 - `REQUIRED-SKILLS`
 - open executable `TASK-ID` when task tracking is active
+- `TARGET-INTENT-BASIS` per `CLAUDE.md` `[DESIGN-INTENT]`.
 
 ### Tester Executable-Proof Schema Floor
 For tester assignment-grade dispatch where the proof surface is executable, `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor.

@@ -44,7 +44,7 @@ Resume only from corrected packet, researched method, setup path, or reopened ro
 - Treat workflow-assigned plan/design authoring as document production only.
 - Keep plan/design ownership with `team-lead`.
 - Do not widen change boundary, deliverable shape, or acceptance ownership.
-- Preserve and implement the artifact's `[DESIGN-INTENT]`. Missing design intent needed for safe production is `hold|blocker`.
+- Preserve and implement the cited intent and axes carried in packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 - If the packet smuggles another lane's ownership, do not absorb it.
 - A constraint is a resolution trigger, not a stopping excuse.
 - Report enough detail for `team-lead` to route research, setup, packet correction, or another owner.

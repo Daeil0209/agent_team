@@ -34,6 +34,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Keep these delivery-contract additions explicit when applicable:
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
+  - `FIRST-USE-STATE` and sufficient `DATA-CONTENT-STATE` when visible behavior depends on operator data
   - `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE`, and `ENV-COVERAGE` for Windows primary operator proof
   - `WINDOWS-EQUIVALENCE-BASIS` only when proof runs outside Windows but claims Windows sufficiency
 - Tester proves the Windows launch surface through the frozen Windows path or a proven-equivalent interop path.
@@ -59,6 +60,7 @@ Missing-information rule:
 
 Rules:
 - A page load, screenshot, DOM existence check, API response, or source inspection does not prove a designed UI feature by itself.
+- A successful API response does not prove UI consumption; UI proof must exercise the consumer path, expected populated or empty data state, visible postcondition, and browser console/runtime-error surface.
 - Source inspection can prove a source-read artifact when the frozen proof target is the document text itself.
 - Prefer user-facing locators such as role, label, text, placeholder, and test id when test ids are part of the app contract.
 - Prefer web-first assertions that wait for the expected visible state. Avoid fixed sleeps as proof.
@@ -79,7 +81,7 @@ Use only amplifiers that materially strengthen the intent proof matrix. The goal
 If a material amplifier is skipped, classify it as `out-of-scope by dispatch`, `blocked`, or an `OPEN-SURFACES` item. Do not hide it behind generic "tested" language.
 
 ## Tool-Tier Detail
-Browser interaction requires a browser-proof path. Playwright CLI is the preferred tester profile when available or explicitly frozen for repeated dev-loop proof because it is fast and low-friction per run. Playwright MCP is lawful when explicitly frozen, but is generally validator-tier for final-acceptance fidelity.
+Browser interaction requires a browser-proof path. Playwright CLI is the default tester profile when available for repeated dev-loop proof because it is fast and low-friction per run; unavailable CLI requires explicit blocked/fallback evidence. Playwright MCP is lawful when explicitly frozen, but is generally validator-tier for final-acceptance fidelity.
 
 When the same proof surface offers multiple tool profiles at different friction-vs-fidelity tiers, tester defaults to the smallest truthful profile that still proves the iteration's bounded scope. The higher-fidelity profile belongs to validator final acceptance unless packet `TOOL-REQUIREMENT` freezes it for tester work.
 
@@ -94,7 +96,7 @@ When the same proof surface offers multiple tool profiles at different friction-
 - `out-of-scope by dispatch` is local proof classification only; it cannot close or defer a frozen `SCOPE-BASELINE` item unless `DEFERRED-SURFACES` carries that upstream decision.
 
 ## Human-Facing Checklist
-- Rendered evidence is a defect oracle, not an artifact receipt. Inspect captured output for unreadable glyphs, clipping, overlap, hidden controls, broken hierarchy, missing media, and first-glance failure before claiming user-facing proof.
+- Rendered evidence is a defect oracle, not an artifact receipt. Inspect captured output for unreadable glyphs, clipping, overlap, hidden controls, broken hierarchy, missing media, blank/crashed screens, unexpected empty states, and first-glance failure before claiming user-facing proof.
 - For source-read governance, report, or documentation artifacts, the source/read document can be the decisive proof surface when rendering is not material.
 - For browser/UI or other scrollable visual surfaces, capture the route/page/screen-state x viewport matrix required by the frozen proof surface; use full-page or full design-area capture for whole-surface claims, and label viewport-only captures as viewport-limited; viewport-limited captures cannot support whole-surface `matched`.
 - Run glyph and legibility sanity on representative user-language strings before layout judgment; placeholder glyph boxes, tofu, or unreadable text must block `matched` proof on that surface.
@@ -115,6 +117,8 @@ Tester lane evaluation selects advisory or lane-local specialist skills from the
   - `BURDEN-CONTRACT`
   - `PROOF-SURFACE-MATCH`
   - `RUN-PATH-STATUS`
+  - `FIRST-USE-STATE-STATUS`
+  - `DATA-CONTENT-STATE-STATUS`
   - `CORE-WORKFLOW-STATUS`
   - `INTERACTION-COVERAGE-STATUS`
   - `BURDEN-STATUS`

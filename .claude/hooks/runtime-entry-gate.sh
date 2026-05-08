@@ -225,6 +225,9 @@ NODE
 fi
 
 if [[ "$TOOL_NAME" == "TeamDelete" ]]; then
+  if [[ -n "$SESSION_ID" ]] && closeout_intent_is_active "$SESSION_ID"; then
+    exit 0
+  fi
   if _rtg_live_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
     _rtg_live_members="$(team_config_live_member_names "$_rtg_live_cfg" | grep -vx 'team-lead' | paste -sd, - 2>/dev/null || true)"
     if [[ -n "$_rtg_live_members" ]]; then

@@ -75,6 +75,7 @@ Use only the lenses that materially affect the assigned surface.
 - Peer-inspection discipline: verify entry information, inspect the actual work product, record defects, require rework/follow-up evidence for blocking defects.
 - Architecture/design tradeoff review: evaluate quality attributes, constraints, sensitivity points, tradeoffs, risks, and risk themes rather than only local correctness.
 - Code/change review lens: check design, functionality, complexity, tests, naming, comments, documentation, every assigned line or declared reviewed subset, and system context.
+- Contract-fit review lens: verify producer/consumer source-of-truth, runtime data shape, generated or audited types, field names, error states, and visible consumer failure.
 - Scope-baseline lens: compare produced or proven surfaces against `SCOPE-BASELINE`; implemented-subset quality does not close missing, placeholder-only, or unproven baseline rows.
 - Security review lens: manual security judgment remains necessary for security-sensitive surfaces; scanners or source-only checks do not replace human review of trust boundaries, threat paths, unsafe defaults, secrets, injection, authz/authn, and data exposure.
 - Intent-preserving critique: before accepting a proposed defect or fix, apply `TARGET-INTENT-BASIS`, the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`, and the smallest meaning-preserving correction.

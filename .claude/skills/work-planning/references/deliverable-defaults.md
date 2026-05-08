@@ -14,18 +14,18 @@ The default done condition is a normal final artifact for that deliverable class
 ## User-Ready Delivery Chain
 Every consequential deliverable or active slice follows a named user-ready delivery chain.
 The chain starts from the user's instruction, expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence, then converges into the final user-consumed surface or explicit deferred receiver surface.
-Each stage must carry forward the information needed by the next stage: why the deliverable exists, what is in scope, which internal parts connect, how the receiver uses it, what proves it, and what remains open.
+Each stage must carry forward the information needed by the next stage: why the deliverable exists, what is in scope, which internal parts connect, what data/example/method makes it usable, what proves it, and what remains open.
 Implementation is the widest work stage; it may add necessary internal detail or parallel branches, but each branch must trace back to request intent and forward to proof or user use.
 Verification and completion converge the widened work back to the named usable receiver path.
 Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item or reopens the owning design, implementation, proof, or acceptance path.
 
 Use these defaults when the deliverable class is in scope:
-- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, plus launch and termination burden in the primary operator environment
-- research or analysis report -> all requested questions/sections answered, reader-comprehension structure, decision-surface placement, tables/figures when material, and uncertainty visibility
+- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment
+- research or analysis report -> all requested questions/sections answered, reader-comprehension structure, decision-surface placement, source-data/example/application method when material, tables/figures when material, and uncertainty visibility
 - reference or source/read document -> direct readability of the changed source/read surface, cross-reference integrity, navigability, and update-safe structure
 - API or library -> contract completeness and integration proof against a real or representative consumer
 - slides -> layout, legibility, visual hierarchy, and narrative flow
-- data export -> bit-fidelity, schema fidelity, or conversion correctness as appropriate to the user-visible use
+- data export -> bit-fidelity, schema fidelity, example row/use note when material, or conversion correctness as appropriate to the user-visible use
 - doctrine or governance patch -> reliable trigger, owner, stop condition, WHY anchor, evidence burden, verification gate, cumulative coherence, and source/read clarity; hook/settings contract claims also need direct bounded proof of the changed hook/settings surface, such as settings parsing, matcher coverage, or direct hook invocation; native Claude Code dispatcher/UI E2E or other operator-runtime E2E is required only when the frozen claim includes Claude Code client invocation, enforcement, UI, launch, or operator-flow behavior
 
 `work-planning` Step 0 must classify deliverable type and user-information-delivery shape, then bake them into `DERIVED-DEFAULTS`. Failing to derive type-fit from the user-perspective lens is a planning defect.

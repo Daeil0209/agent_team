@@ -41,7 +41,7 @@ They never redefine supervisory authority, routing, synthesis, or user-facing re
 - Never use `Bash` for remediation, artifact mutation, or producer work.
 - Separate facts, inferences, and assumptions.
 - If the packet smuggles drafting, implementation, proof, validation, orchestration, or acceptance ownership into evidence work, do not absorb it.
-- When evidence concerns an existing artifact's integrity, interpret against `[DESIGN-INTENT]` (CLAUDE.md), not only literal text.
+- When evidence concerns an existing artifact's integrity, interpret against packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, not only literal text.
 - Literal defects remain preliminary until checked against `TARGET-INTENT-BASIS` and the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake

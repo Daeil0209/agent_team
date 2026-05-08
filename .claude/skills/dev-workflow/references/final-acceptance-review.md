@@ -16,7 +16,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `INSTRUCTION-TRACE`: original user instructions, accepted follow-up instructions, and frozen `SCOPE-BASELINE` rows
 - `CONTRACT`: frozen Receiver-Surface Contract, Consumption Chain, frozen upstream deferrals, frozen out-of-scope rows, requested output root
 - `ARTIFACT-MAP`: final artifact identity, final location, produced output inventory, instruction-to-artifact mapping, artifact hygiene
-- `USER-SURFACE`: target user environment, exact start/open/read/action path, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
+- `USER-SURFACE`: target user environment, exact start/open/read/action path, material first-use/data-content/demo/import state, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
 - `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity
 - `COVERAGE`: every material requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, or frozen deferral/out-of-scope row
 - `BOUNDARIES`: material Boundary Register rows and downstream handoff status
@@ -77,9 +77,9 @@ Material requested axes:
 - audience, reader, learner, operator, or decision-surface fit
 - proof-surface match
 - minimum-effort start, open, read, or action path
-- minimum-effort read, use, operate, or regenerate path when material
+- minimum-effort read, use, operate, regenerate, data/example application, or method-reuse path when material
 - minimum-effort stop, close, cleanup, and re-entry path when material
-- every requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, and workflow path
+- every requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, and use-guidance path
 - visual-material purpose, evidence/source basis, readability, placement, and reader/learner value when material
 - environment coverage or equivalence declaration
 - error-channel visibility
@@ -93,14 +93,14 @@ Executable or runtime deliverables add:
 - termination
 - cleanup
 - clean relaunch
-- visible data state when material
+- sufficient first-use visible data state, including empty/demo/seed/imported coverage, representative workflow/calculation/validation evidence, and reset/reload path when visible behavior depends on operator data
 - operator environment fit
 
 Reader-, decision-, or learning-facing deliverables add:
 - answered-question or learning-objective closure
 - audience/job fit
 - section or slide sequence
-- evidence or explanation trace
+- evidence, source-data, example-application, use-method, or explanation trace
 - navigability
 - reader/learner burden
 
@@ -175,6 +175,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 Assigned validator writes the correction packet using active validator-lane-detail reference.
 `FINAL-REJECT` keeps the active `dev-workflow` acceptance loop open; it is not workflow completion, user-decision wait, or a new top-level task.
 task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
-team-lead classifies the owning correction route from the correction packet and active workflow basis before dispatch: design-level gap -> Phase 2 correction; implementation or operator-delivery gap -> Phase 5 correction; changed scope, owner map, route, proof chain, or acceptance chain -> reopen `work-planning`.
+Validator correction packet names root-cause class, correction owner surface, required evidence, and revalidation target; it is evidence for route classification, not route freeze.
+team-lead classifies the owning correction route from the correction packet and active workflow basis before dispatch: design-level gap -> Phase 2 correction; implementation or operator-delivery gap inside unchanged Phase 1/2 contract -> Phase 5 correction; changed scope, owner map, route, proof chain, or acceptance chain -> reopen `work-planning`.
 After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.

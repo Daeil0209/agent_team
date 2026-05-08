@@ -26,8 +26,7 @@ Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-on
 - Implementation deliverable was produced but not validated
 - User explicitly requested validation that was not completed
 ## Agent Lifecycle Resolution
-Before teardown, every agent must have one of: `standby`, `shutdown`, `hold-for-validation`.
+Before closeout completion, each teammate must be resolved as `shutdown`, `terminated`, `hold-for-validation`, or non-live residue.
 During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
-It does not mean `TeamDelete` may remove registry before process termination evidence.
-Closeout is clean only after every live process-backed teammate has `shutdown_response`/`teammate_terminated` evidence or is explicitly carried as `hold`.
+During active closeout, `TeamDelete` may proceed without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
 A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.

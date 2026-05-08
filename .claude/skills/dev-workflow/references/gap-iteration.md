@@ -52,7 +52,7 @@ Defect signal: component exists structurally but does not perform its designed f
 For each interface, format, or dependency boundary, verify:
 1. Does the producing surface match designed inputs, outputs, and error states?
 2. Does the consuming surface match the same contract?
-3. Are shared meanings, field names, and data shapes consistent across the boundary?
+3. Are shared meanings, field names, runtime data shapes, and generated or audited type sources consistent across the boundary?
 
 Defect signal: contract mismatch between design and either producer or consumer.
 
@@ -96,12 +96,13 @@ Per-cycle gap detection contribution after authoritative corrected output and be
 2. Reviewer reapplies the gap classification table to remaining or newly introduced gaps.
 3. Coverage score, blocking-gap count, required return evidence, and acceptance-entry condition feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
 
-Reviewer quick-check stays blocking-only and delta-scoped; unclear delta -> `scope-pressure`, not full-review expansion. Tester re-verifies affected surfaces first, then stale interaction rows. The same unresolved blocking gap class after repeated cycles escalates instead of looping.
+Reviewer quick-check stays blocking-only and delta-scoped; unclear delta -> `scope-pressure`, not full-review expansion. Tester re-verifies affected surfaces first, then stale interaction rows. Repeated same-class blocking gaps, even on different surfaces, escalate to root-cause classification instead of looping or user-choice prompting.
 Independent correction surfaces are split by correcting owner and may run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
 
 ## Gap-State Packet
 Whenever blocking or significant gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields needed to drive correction to acceptance:
 - `GAP-STATE`
+- `ROOT-CAUSE-CLASS`
 - `FROZEN-DESIGN-EXPECTATION`
 - `CHECKED-SURFACE`
 - `DECISIVE-USER-SURFACE`

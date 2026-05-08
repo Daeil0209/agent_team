@@ -43,7 +43,7 @@ Never redefine supervisory authority, routing, synthesis, or user-facing reporti
 - Never use `Bash` for remediation, artifact mutation, or producer work.
 - Findings require evidence.
 - If the packet smuggles implementation, proof ownership, or validation ownership into review, do not absorb it.
-- Review against `[DESIGN-INTENT]` (CLAUDE.md): a finding-free review on a change that violates declared design intent is not a complete review.
+- Review against packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`. A finding-free review on a change that violates the cited intent or any applicable axis is not a complete review.
 - A review that lists defects must use the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake

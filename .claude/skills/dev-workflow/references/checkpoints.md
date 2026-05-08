@@ -38,8 +38,9 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
 - **Phase**: Analysis
 - **Trigger**: reviewer or tester reports blocking defects or significant coverage gaps
 - **Auto-resolve priority**:
-  1. design-level gap -> Phase 2
-  2. production-level gap -> Phase 5 with Phase-2-derived acceptance-grade gap-to-correction-surface map
-  3. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
+  1. design-level gap, missing/untrue Phase 2 source-of-truth, or repeated same-class cross-surface contract gap caused by weak design contract -> Phase 2 correction
+  2. implementation or operator-delivery gap inside unchanged Phase 1/2 contract, including repeated same-class implementation drift with adequate design contract -> Phase 5 systemic correction with Phase-2-derived acceptance-grade gap-to-correction-surface map
+  3. changed scope, owner map, route, proof chain, or acceptance chain -> `work-planning`
+  4. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
 - **Reuse rule**: original CP3/CP4 remain valid only while the corrected design preserves the selected architecture family and implementation scope
 - **Iteration continuation reuse**: bounded iteration reuse is allowed only while the active workflow phase, owner surface, and acceptance path stay unchanged

@@ -43,14 +43,14 @@ Compression is lawful only when the short surface remains stronger or equally st
 - Completion synthesis, open-surface rejection, sibling-output reconciliation, redispatch proof, and artifact integrity remain in `RPA-7`; detailed synthesis/reporting lives in `.claude/skills/team-lead/references/synthesis-reporting.md`; verification gates live in `.claude/skills/self-verification/SKILL.md`.
 - SV-PLAN and SV-RESULT ownership remains in `RPA-8`; full challenge lenses and output formats live in `.claude/skills/self-verification/SKILL.md`.
 - Output truth and user-facing reporting remain in `RPA-9` and `RPA-10`; detailed communication expansions live in `.claude/skills/team-lead/references/synthesis-reporting.md`.
-- Self-growth, interrupt/resume, and autonomous judgment remain in `RPA-11`, `RPA-12`, and `RPA-13`; detailed recurrence-barrier handling lives in `.claude/skills/self-growth-sequence/SKILL.md` and interrupt/autonomy detail in `.claude/skills/team-lead/references/interrupt-autonomy.md`.
+- Self-growth remains in `RPA-11`; interrupt-resume and autonomous judgment merged into `RPA-12. Interrupt-Resume And Autonomous Judgment` (former RPA-13 absorbed). Detailed recurrence-barrier handling lives in `.claude/skills/self-growth-sequence/SKILL.md` and interrupt/autonomy detail in `.claude/skills/team-lead/references/interrupt-autonomy.md`.
 
 ## 2026-05-01 CLAUDE-Team-Lead Rehome Map
 This pass reduces always-loaded density by re-homing detail, not deleting meaning. The source surfaces remain hard-law spines; the destinations below own detail.
 
 CLAUDE.md source -> destination:
 - `[USER-SURFACE]` and `[USER-DELIVERY-FIT]` long explanatory detail -> `.claude/skills/work-planning/references/deliverable-defaults.md`, `.claude/skills/dev-workflow/references/operator-delivery.md`, `.claude/skills/tester/references/tester-lane-detail.md`, and `.claude/skills/validator/references/validator-lane-detail.md`.
-- `[NO-NEEDLESS-ASK]`, `[ALLOW-EXCEPT-DESTRUCT]`, and `[BLOCK-AS-DEFECT]` detailed ask/setup behavior -> `.claude/agents/team-lead.md` Priority 0/RPA-11/RPA-13 plus `.claude/skills/team-lead/references/interrupt-autonomy.md`.
+- `[NO-NEEDLESS-ASK]`, `[ALLOW-EXCEPT-DESTRUCT]`, and `[BLOCK-AS-DEFECT]` detailed ask/setup behavior -> `.claude/agents/team-lead.md` Priority 0 / RPA-11 / RPA-12 plus `.claude/skills/team-lead/references/interrupt-autonomy.md`.
 - `[GOV-MIN]`, `[PRES-FIRST]`, `[HARDEN]`, and top-doctrine patch discipline -> `.claude/skills/self-growth-sequence/SKILL.md` `Patch Execution Method` and this preservation map's audit rule.
 - `[PROJECT-OUTPUT-ROOT]` detailed output-root prohibitions -> `.claude/hooks/MANIFEST.md`, `.claude/hooks/compliance-supervisor.sh`, and `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md`.
 - Hook/settings/runtime-footprint details -> `.claude/hooks/MANIFEST.md`, `.claude/reference/runtime-footprint-and-continuity.md`, and `.claude/settings.json`.
@@ -62,7 +62,7 @@ team-lead.md source -> destination:
 - RPA-2 team-runtime address and standalone fallback detail -> `.claude/skills/task-execution/SKILL.md`, `.claude/skills/task-execution/references/runtime-dispatch-law.md`, and `.claude/skills/task-execution/references/assignment-packet.md`.
 - RPA-4 same-phase boundary law and Codex adjudication detail -> `.claude/skills/dev-workflow/SKILL.md`, `.claude/skills/dev-workflow/references/artifact-convergence-advisory.md`, `.claude/skills/dev-workflow/references/review-convergence-advisory.md`, `.claude/skills/work-planning/references/codex-advisory.md`, and `.claude/skills/team-lead/references/planning-consume.md`.
 - RPA-10 mid-flight/final reporting detail -> `.claude/skills/team-lead/references/synthesis-reporting.md`.
-- RPA-11/RPA-12/RPA-13 self-growth, interrupt-resume, and autonomy detail -> `.claude/skills/self-growth-sequence/SKILL.md`, `.claude/skills/team-lead/SKILL.md`, and `.claude/skills/team-lead/references/interrupt-autonomy.md`.
+- RPA-11 self-growth detail -> `.claude/skills/self-growth-sequence/SKILL.md`. RPA-12 interrupt-resume + autonomous judgment detail (combined; former RPA-13 absorbed) -> `.claude/skills/team-lead/SKILL.md` and `.claude/skills/team-lead/references/interrupt-autonomy.md`.
 
 Convergence criterion: after this pass, `CLAUDE.md` and `agents/team-lead.md` must be stronger first-read spines. If a removed detail cannot be reconstructed from the listed destination, restore it or move it to the correct owner before closing context reduction.
 

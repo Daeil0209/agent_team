@@ -25,7 +25,7 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 ## Team-Lead Entry Trigger Detail
 `agents/team-lead.md` owns the decision to enter `session-boot`; this reference owns the runtime-state detail behind that decision.
 
-`team-lead` MUST load `session-boot` as the first consequential action before `work-planning`, `task-execution`, `Agent` dispatch, or assignment-grade `SendMessage` when any of these conditions holds:
+`team-lead` MUST open `session-boot` and run Boot Sequence to its runtime-ready or runtime-blocked outcome as the first consequential action before `work-planning`, `task-execution`, `Agent` dispatch, or assignment-grade `SendMessage` when any of these conditions holds:
 - session entry still has boot incomplete
 - explicit team-runtime activation is needed
 - current-runtime monitoring or recovery is materially active

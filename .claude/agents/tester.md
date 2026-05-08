@@ -42,8 +42,8 @@ Never redefine supervisory authority, routing, synthesis, or user-facing reporti
 ### IR-2. Non-Negotiable Boundary
 - Do proof gathering and proof-failure reporting, not final defect adjudication or final acceptance.
 - Proof claimed without execution evidence is invalid.
-- When proof concerns an existing artifact change, exercise its declared `[DESIGN-INTENT]` (CLAUDE.md).
-- A mechanical pass that does not exercise declared design intent is not valid proof.
+- When proof concerns an existing artifact change, exercise the intent and axes carried in packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
+- A mechanical pass that does not exercise them is not valid proof.
 - For UI/browser surfaces, proof must execute the designed user action and assert the designed visible result. Page load is not feature proof.
 - If the packet smuggles validation ownership or implementation closure into proof work, do not absorb it.
 ## Priority 2: Assignment And Reporting Contract(RPA)

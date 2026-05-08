@@ -22,11 +22,11 @@ Product-delivery closeout for executable deliverables belongs to `dev-workflow` 
 ## Runtime Teardown Preflight
 Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.
 
-### Required order
+### Required invariants
 1. Confirm explicit closeout or teardown intent.
-2. Determine whether any live agent still needs lifecycle action.
-3. Determine whether monitor ownership and runtime teardown ownership are already accounted for.
-4. Mutate runtime state only after live-agent and monitor readiness are accounted for.
+2. Preserve the closeout truth that would be harder to recover after runtime mutation: acceptance state, unresolved blockers, live-agent output, and residual state.
+3. Account for each live process-backed teammate as terminated, shutdown, held, or still live.
+4. Mutate runtime state only when it will not erase closeout truth that has not yet been preserved or carried forward.
 5. If runtime deletion fails and only non-live residue remains, stop retries and carry that residue into truthful closeout output instead of improvising teardown repair work.
 
 ## Closeout Sequence
@@ -46,23 +46,18 @@ Keep closeout narrow:
 - If continuity, runtime state, and teardown evidence disagree, prefer truthful `HOLD` or warning-bearing closeout over repair choreography during teardown.
 - Partially booted explicit runtime follows the direct closeout path.
 
-### Required order
-1. Mark explicit closeout intent before sending session-level `shutdown_request`, deleting monitors, or tearing down runtime.
-2. Integrate agent outputs only enough to disclose unresolved acceptance, blocker, or residual-state truth.
-3. Auto-drain every live process-backed teammate with structured `shutdown_request`.
-4. Wait for `shutdown_response`/`teammate_terminated` evidence for every live process-backed teammate.
-5. If a teammate has no live agent process, treat the roster entry as residue.
-6. If any live process-backed teammate remains, report warning-bearing closeout or `HOLD`; `TeamDelete` waits.
-7. Keep continuity handling minimal during teardown.
-8. Remove live-session monitors only after current-runtime agents are fully terminated, proven non-live residue, or explicitly held.
-9. Run `TeamDelete` only after no live process-backed teammate remains.
-10. Bounded teardown only while new runtime evidence changes the result.
-11. No repeated teardown on the same evidence and no ad hoc runtime surgery.
-12. Let `SessionEnd` finish continuity capture after runtime teardown.
-13. Let `SessionEnd` cleanup clear runtime-owned transient residue after continuity capture.
-14. Run team-lead-owned supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or self-growth work is active.
-15. End with concise operator-facing closeout only when blocked, warning-bearing, explicitly requested, or review-triggered.
-16. Otherwise clean closeout stays silent or one-line.
+### Required invariants
+1. Load `session-closeout`; its hook state marks explicit closeout intent before session-level `shutdown_request`, monitor deletion, or runtime teardown.
+2. Integrate agent outputs only enough to preserve unresolved acceptance, blocker, handoff, or residual-state truth.
+3. Shutdown, hold, or residue-account live teammates; shutdown and `TeamDelete` order is incidental once required closeout truth is preserved or carried forward.
+4. If any live process-backed teammate still has unresolved output or blocker truth after runtime deletion, report warning-bearing closeout or `HOLD`.
+5. Keep continuity handling minimal during teardown.
+6. Bounded teardown only while new runtime evidence changes the result.
+7. No repeated teardown on the same evidence and no ad hoc runtime surgery.
+8. Let `SessionEnd` finish continuity capture and clear runtime-owned transient residue.
+9. Run team-lead-owned supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or self-growth work is active.
+10. End with concise operator-facing closeout only when blocked, warning-bearing, explicitly requested, or review-triggered.
+11. Otherwise clean closeout stays silent or one-line.
 
 ### Fast paths
 - No-runtime fast path: when no explicit team runtime or recurring monitor was created in the current session, closeout reduces to intent mark, exact residual disclosure if needed, and `SessionEnd` capture.
@@ -72,8 +67,7 @@ Keep closeout narrow:
 ### Closeout constraints
 - Session-end intent comes from explicit closeout or teardown basis.
 - New agent dispatch stays outside closeout.
-- `TeamDelete` runs after live-agent cleanup.
-- Drain or account for live agents first.
+- During active closeout, `TeamDelete` is allowed without a shutdown-order error; unresolved live-agent truth is carried as warning, hold, or residue.
 - Runtime cleanup is lead-owned.
 - Teammates report lifecycle state; team cleanup stays lead-owned.
 - Claude Code team config, task list, mailbox, and cleanup state stay runtime-owned.

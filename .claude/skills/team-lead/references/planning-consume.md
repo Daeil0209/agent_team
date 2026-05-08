@@ -54,6 +54,28 @@ Read frozen planning fields in this order:
 - Before opening `task-execution` for independent or parallel work, confirm the frozen route applied same-session prior patches, decisions, contract freezes, lane-charter changes, and acceptance-contract changes. Missing or contradictory cross-continuity basis reopens `work-planning`.
 - Before opening `task-execution` for team-agent runtime, confirm the receiving lanes do not depend on lead-only conversation history. Material facts must be packetized, stored in task/workflow state, or cited as artifacts before dispatch.
 
+## FAR FINAL-REJECT Correction Routing
+- After validator returns the correction packet, classify route from `ROOT-CAUSE-CLASS`, `CORRECTION-OWNER-SURFACE`, required evidence, and active workflow basis:
+  - design-level -> Phase 2 correction
+  - implementation/operator-delivery -> Phase 5 correction
+  - changed scope/owner map/route/proof chain/acceptance chain -> reopen `work-planning`
+- Dispatch that classified owner/action as the next executable route.
+- Keep validator evidence as correction basis and team-lead classification as route freeze.
+
+## Codex Own-Review Discipline
+- Treat every same-boundary correction pass as a new Codex pass for own-review duty.
+- Satisfy own-review basis with same-pass team-lead review, not prior-pass carry-forward.
+- Team-lead plan/design/redesign, own-review, and Codex reconciliation consume material specialist skills as evidence/method before basis freeze, convergence acceptance, or redispatch.
+- Treat prior own-review carry-forward, landing confirmation, spot-check, Codex-result relay, and consensus wording as advisory context only.
+- Apply lawful fail-open only when the owning reference explicitly names it.
+- Rubber-stamp acceptance, unexplained rejection, Codex-led relay, consensus treatment, or pre-owner carry-forward is a defect (see `orchestration-defects.md` Codex Relay).
+
+## Lead-Local Routing Rules
+- Keep lead-local inside complete `LEAD-LOCAL-WORK-ITEMS`.
+- Route lane-owned, independent, proof, validation, destructive, executable, and stronger-claim work through their owner path.
+- Lead-local exception touching executable, visible, lifecycle, delivery, or acceptance surfaces carries normal, adjacent, and failure scenario effects before execution or completion claim.
+- Continue same-route blocker-clear only after verification by the active owner.
+
 ## Guarded-Local Law
 - Do not start local work from an implied remainder.
 - If local execution reveals a new work item, new surface, lane-owned step, stronger claim, or route ambiguity, stop and reopen `work-planning`.

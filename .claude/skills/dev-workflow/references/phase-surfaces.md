@@ -54,10 +54,10 @@ auto-inject: false
   - material specialist packets, oracles, and contract deltas selected by Phase 1, `LANE-REQUIRED-SKILLS-MAP`, `LEAD-LOCAL-REQUIRED-SKILLS`, or lawful phase-local refinement; each must be folded into implementation-binding detail, cited as a linked contract, or marked `deferred`/`blocked` with owner before Phase 3
   - ERD/data invariants/lifecycle when persistence or imported data matters
   - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure drives acceptance
-  - interface/format/error contracts when production surfaces interact
+  - verifiable interface, runtime data-shape, format, and error contracts when production surfaces interact; when drift would break user-visible behavior, name the shared source-of-truth, generated or audited type path, producer-consumer field/shape mapping, and runtime validation/proof oracle
   - screen/user-flow/first-viewport contracts when visible UX drives acceptance
   - import/export mapping and validation error model when data migration or file I/O matters
-  - reader/report/deck/lesson flow when read, decide, learn, or present surfaces drive acceptance
+  - reader/report/deck/lesson flow, including source-data/example/application contract when read, decide, learn, present, or reuse surfaces drive acceptance
   - evidence-method oracle, source-family schema, claim-strength tiers, and update-trace contract when market, technology, patent, literature, standards, or research evidence drives output or automation
   - engineering oracle: governing equations, standard or specification citations, unit path, tolerance policy, valid range, and reference test vectors when engineering design or calculation drives acceptance
   - proof path, feature/surface/control closure map, and CP4 implementation decomposition when dispatch, review, test, or validation depends on them
@@ -73,23 +73,24 @@ auto-inject: false
 
 ## Phase 4 Analysis And Acceptance
 - Reviewer and tester are both mandatory analysis owners for executable, user-facing software
-- Reviewer packet must evaluate design conformance, blocking defect classification, delivery experience, and user-readiness on the declared acceptance surface
-- Tester packet must execute the planned proof surface, not a narrowed substitute
+- Reviewer packet must evaluate design conformance, producer-consumer contract fit, blocking defect classification, delivery experience, and user-readiness on the declared acceptance surface
+- Tester packet must execute the planned proof surface and data state, not a narrowed substitute
 - Review, proof, and validation must reconcile delivered `ACTIVE-SLICE` against the frozen `SCOPE-BASELINE`; high quality inside one slice does not close unimplemented, stubbed, placeholder, or unproven baseline surfaces.
 - Evidence-Quality Matrix rows connect each material expectation to the receiver surface, evidence artifact, inspection method, inspected defect classes, claim strength, and open surface.
-- Acceptance packets are built from the frozen plan/design delivery contract first. Current implemented routes, files, screens, or working demos are evidence rows for `ACTIVE-SLICE`, not the authority for what counts as complete. A Phase 4/5 packet that starts from "what exists" instead of "what was promised" is invalid even when reviewer, tester, Codex, and validator later agree inside that narrowed frame.
+- Acceptance packets are built from the frozen plan/design delivery contract first, including frozen `FIRST-USE-STATE` and `DATA-CONTENT-STATE` when they affect usefulness. Current implemented routes, files, screens, working demos, or empty states are evidence rows for `ACTIVE-SLICE`, not the authority for what counts as complete. A Phase 4/5 packet that starts from "what exists" instead of "what was promised" is invalid even when reviewer, tester, Codex, and validator later agree inside that narrowed frame.
 - Practical work-tool deliverables must be reviewed and proven against the frozen work-tool pattern packet when that packet materially shaped plan or design; a working subset, pretty dashboard, or source-level implementation cannot substitute for operator workflow, persistence, import/export, generated-artifact, or proof-oracle coverage.
 - Knowledge-analysis, report-automation, and engineering-calculation deliverables must be reviewed and proven against the frozen evidence-method or engineering oracle; source, rendered, or executable proof cannot substitute for claim-evidence, formula, unit, tolerance, or standards-conformance proof when those are material.
 - For web/UI deliverables:
-  - tester proof path = frozen browser-proof path on the browser interaction surface; Playwright CLI is the preferred fast profile when available or explicitly frozen
-  - validator final acceptance path = browser-proof confirmation on the same resolved interaction/control inventory; Playwright MCP is the preferred precise profile when available or explicitly frozen
-  - rendered proof covers the route/page/screen-state x viewport matrix required by the acceptance surface
-  - whole-surface claims need full-page or full design-area capture plus glyph sanity and visual defect inspection
+  - tester proof path = frozen browser-proof path on the browser interaction surface; Playwright CLI is the default repeatable proof profile when available, and unavailable CLI requires explicit blocked/fallback evidence
+  - validator final acceptance path = browser-proof confirmation on the same resolved interaction/control inventory; Playwright MCP is the default final browser/UI acceptance profile when available to the validator lane, and unused available MCP blocks PASS/FAR until justified by unavailable evidence or a frozen narrower tool contract
+  - rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface
+  - whole-surface claims need full-page or full design-area capture, browser console/runtime-error check, glyph sanity, and visual defect inspection
+  - expected populated states must prove non-empty user-meaningful DOM; expected empty states must trace why they are empty rather than treating emptiness as proof
   - when multiple environments are in scope, cross-environment conditional fields per `.claude/skills/task-execution/references/request-bound-fields.md` accompany handoff
 - Reviewer + tester no-gap is necessary but not sufficient when validator-governed acceptance is required
 
 ## Phase 5 Iteration Discipline
-- Phase 5 consumes the CP5 acceptance-grade correction contract; raw review/test findings are evidence inputs, not dispatch scope
+- Phase 5 consumes the CP5 acceptance-grade correction contract with root-cause classification; raw review/test findings are evidence inputs, not dispatch scope
 - Independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output
 - No self-certification inside iteration
 - Convergence is the goal.

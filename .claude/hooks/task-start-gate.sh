@@ -965,7 +965,14 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
           exit 0
         fi
         ;;
-      TeamDelete|CronDelete)
+      TeamDelete)
+        if [[ -n "$SESSION_ID" ]] && closeout_intent_is_active "$SESSION_ID"; then
+          exit 0
+        fi
+        deny_tool_use "$(runtime_teardown_intent_block_reason "$TOOL_NAME")"
+        exit 0
+        ;;
+      CronDelete)
         deny_tool_use "$(runtime_teardown_intent_block_reason "$TOOL_NAME")"
         exit 0
         ;;

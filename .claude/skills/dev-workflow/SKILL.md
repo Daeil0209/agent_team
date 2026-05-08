@@ -174,12 +174,13 @@ Deliverable-type tool mapping and gap methodology live in `references/phase-surf
 **Execution law**: acceptance closes through rendered/runtime surface when layout, pagination, formulas, interaction, or visible burden matter.
 **Execution law**: missing decisive user-surface tooling freezes bounded setup through the appropriate owner or stops on `hold|blocker`.
 **Execution law**: parallel production requires explicit cross-surface contextual coherence review.
-**Execution law**: coherence review covers API fit, shared data shape, integration points, error handling, and computed-surface semantics.
+**Execution law**: coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, and computed-surface semantics.
 **Execution law**: per-surface quality without cross-surface coherence is incomplete review.
 **Execution law**: validator includes cross-surface integration verification before PASS.
 **Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification.
 **Execution law**: confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
-**Exit law**: CP5 selects exactly one next path: Phase 2 design correction, Phase 5 implementation iteration, validator ingress or Final Acceptance Review, low-risk verified-result closure, or `HOLD`; correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
+**Exit law**: CP5 classifies root cause and selects exactly one next path: design-level gap -> Phase 2 design correction; implementation or operator-delivery gap inside unchanged Phase 1/2 contract -> Phase 5 correction; acceptance/verdict-ready surface -> validator ingress or Final Acceptance Review; low-risk bounded non-executable closure -> verified-result; changed scope, owner map, proof chain, or acceptance chain -> `work-planning`; unresolved unsafe state -> `HOLD`.
+**Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.
 **Exit law**: non-validator closure is limited to low-risk bounded non-executable paths and reports only `verified result`.
 
@@ -187,10 +188,10 @@ Deliverable-type tool mapping and gap methodology live in `references/phase-surf
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
 **Owner lanes**: correcting owner named by CP5 or validator-authored `FINAL-REJECT` packet -> reviewer/tester re-evidence as required -> validator when final acceptance is still required
 **Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict input, and explicit remaining gap state
-**Entry law**: CP5 has classified the remaining gap as implementation-level against the frozen Phase 2 correction-readiness basis, or the validator-authored `FINAL-REJECT` correction packet names an implementation or operator-delivery route inside the unchanged workflow boundary.
+**Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract; design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
 **Execution law**: independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output. Positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
 **Exit law**: when CP5-contracted blocking gaps are cleared against frozen `SCOPE-BASELINE` with required user-surface evidence, validator PASS immediately opens Final Acceptance Review.
-**Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by root cause until the gap converges, escalates, or reaches `HOLD`.
+**Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by current root-cause classification and active workflow basis until the gap converges, escalates, or reaches `HOLD`.
 **Exit law**: executable user-facing deliverables require operator-delivery closure before `FINAL-ACCEPT` and `Complete`; missing, broken, unverified, or mismatched operator-delivery closure becomes `FINAL-REJECT`.
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
 

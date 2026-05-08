@@ -46,6 +46,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
   - bounded discovery/setup alternative: `TOOL-DISCOVERY-GOAL`, `TOOL-DISCOVERY-BOUNDARY`, `TOOL-VERIFICATION-STANDARD`, `TOOL-CLEANUP-EXPECTATION`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
+  - `FIRST-USE-STATE` and sufficient `DATA-CONTENT-STATE` when visible behavior depends on operator data
 
 If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream handoff.
 Mark every inferred piece.
@@ -58,7 +59,7 @@ When the assigned surface is source-read governance, report, or documentation te
 
 ## Verdict Lenses
 - Plan/design deliverables: request fit, design intent, owner boundaries, proof chain, acceptance chain, risk/tradeoff handling, and rule compliance.
-- Executable user-facing artifacts: exact launch artifact plus invocation evidence, termination path, `SCOPE-BASELINE` coverage, core workflow, interaction coverage, burden contract, resource cleanup, and proof-surface match.
+- Executable user-facing artifacts: exact launch artifact plus invocation evidence, first-use/data-content state, termination path, `SCOPE-BASELINE` coverage, core workflow, interaction coverage, burden contract, resource cleanup, and proof-surface match.
 - Human-consumed artifacts: native-capable or format-faithful rendering, visible completeness, layout/pagination/formula/media integrity, and reader/operator burden.
 - Proof/review outputs: method, surface match, claim strength, unresolved contradictions, and whether evidence supports the requested verdict.
 - Governance/report outputs: preservation, rule force, owner boundaries, cross-reference integrity, claim truth, and user-facing clarity.
@@ -98,6 +99,7 @@ PASS is prohibited when any decisive acceptance surface remains:
 - unreconciled across review and test
 - unsupported by required workflow authority
 - unsupported by required user-facing launch, interaction, or burden evidence
+- unsupported by required first-use or data-content evidence
 
 ## Acceptance Reconciliation Detail
 - `ACCEPTANCE-RECONCILIATION` is explicit only when review truth, proof truth, user-facing acceptance, and burden/run-path evidence have been reconciled on the same decisive surface.
@@ -117,11 +119,11 @@ For receiver-facing reports, decks, lessons, generated artifacts, and rendered d
 
 Rendered visual quality inspection is mandatory when the user experiences the deliverable visually. DOM, ARIA, source text, or text-substring assertions exercise structure but do not prove font glyph rendering, layout integrity, actual color/contrast appearance, image/icon loading, locale-specific glyph coverage, or pixel-level visible quality.
 
-Capture rendered output through the truthful surface: browser screenshot, document render, slide export, native viewer, or equivalent. Full-surface acceptance needs full-page or full design-area capture when the surface scrolls; viewport-only capture supports only viewport-limited claims. Broken font fallback, placeholder glyph boxes, layout collapse, missing icons, invisible controls, and similar pixel-level defects fail user-facing acceptance even when DOM or source checks pass.
+Capture rendered output through the truthful surface: browser screenshot, document render, slide export, native viewer, or equivalent. Full-surface acceptance needs full-page or full design-area capture when the surface scrolls; viewport-only capture supports only viewport-limited claims. Broken font fallback, placeholder glyph boxes, layout collapse, missing icons, invisible controls, blank/crashed screens, unexpected empty states, console/runtime errors, and similar user-visible defects fail user-facing acceptance even when DOM, API, or source checks pass.
 
 Validator must inspect rendered evidence as the acceptance oracle. A screenshot saved but not visually checked for glyph sanity, clipping, overlap, hidden controls, readable hierarchy, and missing media is not rendered-quality evidence.
 
-When the same proof surface offers multiple friction-vs-fidelity profiles, such as MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run, validator defaults to the highest-fidelity profile available unless the packet freezes a lawful narrower tool.
+When the same proof surface offers multiple friction-vs-fidelity profiles, such as MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run, validator defaults to the highest-fidelity profile available unless the packet freezes a lawful narrower tool. For browser/UI final acceptance, available Playwright MCP is the default validation profile; unused available MCP blocks PASS unless unavailable evidence or a frozen narrower tool contract is explicit.
 
 ### R22 - User-Environment E2E Verification
 The launch artifact and termination path MUST be verified end-to-end in the actual operator-runtime environment: Windows GUI double-click for Windows operators, native app shell for native operators, mobile launcher for mobile operators, or the equivalent concrete operator surface. Direct server/module start or URL-open proof is not equivalent to launcher proof.
@@ -188,14 +190,15 @@ Validator writes a correction packet with:
 - `SCOPE-BASELINE-TRACE`
 - `REJECTED-INSTRUCTION-OR-ACCEPTANCE-AXIS`
 - `USER-READY-GAP`
+- `ROOT-CAUSE-CLASS` (`design-level`, `implementation`, `operator-delivery`, `proof/acceptance-chain`, `scope/boundary`, or `undetermined:<basis>`)
 - `CORRECTION-TARGET`
 - `CORRECTION-REASON`
-- `DEVELOPER-WORK-SURFACE`
+- `CORRECTION-OWNER-SURFACE`
 - `REQUIRED-USER-SURFACE-EVIDENCE`
 - `REQUIRED-RETURN-EVIDENCE`
 - `REVALIDATION-TARGET`
 
-Validator sends the correction packet to team-lead for `task-execution` dispatch.
+Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
 ## Validator Handoff Detail
 - Keep conditional validator-specific fields explicit when they were materially part of the frozen validation surface:
@@ -204,6 +207,8 @@ Validator sends the correction packet to team-lead for `task-execution` dispatch
 - Keep these validator-specific status and reconciliation fields explicit in completion-grade handoff:
   - `PROOF-SURFACE-MATCH`
   - `RUN-PATH-STATUS`
+  - `FIRST-USE-STATE-STATUS`
+  - `DATA-CONTENT-STATE-STATUS`
   - `CORE-WORKFLOW-STATUS`
   - `INTERACTION-COVERAGE-STATUS`
   - `BURDEN-STATUS`

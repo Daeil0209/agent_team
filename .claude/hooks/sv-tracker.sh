@@ -74,6 +74,13 @@ case "$SKILL_NAME" in
     # Entry was observed. Do not treat this as proof that hardening is complete.
     self_growth_clear_state "$SESSION_ID"
     ;;
+  *session-closeout*)
+    if ! runtime_sender_session_is_worker "$SESSION_ID"; then
+      clear_lead_planning_required "$SESSION_ID"
+      set_closeout_intent "session-closeout-skill-loaded" "session-closeout-skill" "teardown_readiness" "$SESSION_ID"
+    fi
+    SUPPRESS_DISPLAY=1
+    ;;
   *self-verification*)
     if [[ -n "$WORKER_NAME" ]]; then
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"

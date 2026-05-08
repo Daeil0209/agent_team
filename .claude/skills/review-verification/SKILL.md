@@ -48,7 +48,7 @@ Use it to prevent these failures:
 - judging risk from one document while ignoring adjacent owner surfaces
 - classifying a design tradeoff as a defect only with proven negative operating effect
 - adding rules where removal, tightening, replacement, or re-home would be cleaner
-- claiming no risk from partial evidence
+- claiming no risk or closure from partial evidence, including an uninspected user-use, reuse, example, data, or application path
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
@@ -106,7 +106,7 @@ Run the workflow in numeric order.
 Each step records current evidence in `SEQUENCE-STATUS` before the next step opens.
 The next step opens only when earlier step evidence is current for the same target, corpus, patch design, and diff.
 When target, corpus, findings, patch design, or diff changes, return to the earliest changed step and rerun every downstream step.
-Live patch eligibility begins only after Step 8 records completed integrity evidence.
+Live patch eligibility begins only after Step 8 records completed integrity evidence AND the `review_verification_packet` is emitted with all sixteen required fields populated (use `UNVERIFIED` for fields whose live surface, design intent, or evidence basis was not inspected). Narrative claims of completed steps without the emitted packet do not satisfy this gate; treat such claims as procedural failure and rerun from the earliest skipped step.
 If a mutation already exists before eligibility, treat the current diff as the review target, route it through Steps 1-8, and execute only the corrected eligible patch path.
 
 ### 1. Relearn Doctrine And Owner Intent
@@ -132,7 +132,7 @@ Separate primary owner surfaces from references, generated outputs, runtime stat
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
-Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, scope drift, terminology drift, and evidence gap.
+Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, user-use readiness gap, scope drift, terminology drift, and evidence gap.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
 
 ### 5. Design Removal-First Patch
@@ -142,7 +142,7 @@ Append-only or accumulation-first patch designs are invalid while duplicate, obs
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
 ### 6. Pre-Patch Negative-Risk Gate
-Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weaker procedure-adherence signal, weakened clarity, weakened execution force, weaker automatic next-owner drive, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
+Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weaker procedure-adherence signal, weakened clarity, weakened execution force, weaker automatic next-owner drive, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, weakened user-use readiness, and acceptance regression.
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
 Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
 Report absolute risk-zero only when absolute closure is proven.
@@ -153,7 +153,7 @@ After the patch design survives the first risk gate, inspect the surrounding ref
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
 ### 8. Integrity Gate Before Live Patch
-Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, procedure-adherence signal, automatic next-owner drive, clarity, execution force, existing function preservation, and no-regression basis.
+Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, procedure-adherence signal, automatic next-owner drive, clarity, execution force, user-use readiness, existing function preservation, and no-regression basis.
 Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Execute Through The Owning Patch Sequence

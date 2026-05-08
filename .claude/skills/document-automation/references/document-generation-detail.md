@@ -15,7 +15,7 @@ LOAD-POLICY: on-demand reference only
 ### Research/Survey Reports
 - Freeze supported question, primary reader, and decision before intake or drafting.
 - Freeze a method-shaped skeleton: question scope, source-family coverage, inclusion/exclusion logic, cross-check state, uncertainty labels, update-trace surfaces.
-- Structure outputs in reader decision order: decision summary → judgment-driving analysis → evidence detail → update-ready trace.
+- Structure outputs in reader decision order: decision summary → judgment-driving analysis → source-data/example/application method when reuse or decision value depends on it → evidence detail → update-ready trace.
 - Consume the `researcher` evidence packet for source-family method, search strategy, patent filters, claim-evidence tiers, and update trace; this section owns reader structure and generation quality, not evidence acquisition.
 - Declare the selected methodology framework (PRISMA for literature, Cochrane for systematic review, WIPO for patent landscape, or equivalent) before prose fill when it shapes reader trust.
 - Show cited-source roles from the evidence packet when material; role imbalance becomes a document-character defect only after the evidence owner supplies or blocks the basis.

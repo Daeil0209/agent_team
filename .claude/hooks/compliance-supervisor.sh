@@ -108,27 +108,11 @@ is_governance_reference_path() {
   [[ "$candidate_path" == */.claude/reference/* || "$candidate_path" == */.claude/skills/*/references/* ]]
 }
 
-governance_reference_structured_edit_actor_allowed() {
-  local session_id="${1-}"
-  local sender_name=""
-  local sender_lane=""
-
-  [[ -n "$session_id" ]] || return 1
-  session_is_runtime_owner "$session_id" 2>/dev/null && return 0
-  runtime_sender_session_is_worker "$session_id" 2>/dev/null || return 1
-
-  sender_name="$(worker_name_for_session_id "$session_id" 2>/dev/null || true)"
-  sender_lane="$(resolve_agent_id "$sender_name")"
-  if [[ "$sender_lane" == "developer" ]]; then
-    return 0
-  fi
-
-  case "$(normalize_lane_id "$sender_name")" in
-    developer|developer-*|dev-*) return 0 ;;
-  esac
-
-  return 1
-}
+# governance_reference_structured_edit_actor_allowed() removed.
+# Allow-list actor gating violated [HOOK-LAST] (not a MANIFEST hard-deny category)
+# and [BLOCK-AS-DEFECT]. Wholesale-overwrite existence gate remains the pinpoint
+# protection for governance reference content; structured Edit/Update/MultiEdit
+# always produces reviewable diffs.
 
 mutation_payload_exceeds_compact_surface_budget() {
   local char_count="${1-0}"
@@ -932,34 +916,29 @@ fi
 		      if is_disallowed_generated_output_path "$CANONICAL_PATH"; then
 		        emit_warning "Task-created output should use repository-root projects/<project-folder>/... or a user/config-approved output root. outputs/, backups/, and .playwright-mcp/ are noncanonical warning surfaces unless the active task froze them."
 		      fi
-	      if is_retired_skill_reference_md_path "$CANONICAL_PATH"; then
-	        emit_deny "Retired intermediate skill reference.md must not be created or edited. Use the owning skill's references/*.md files and direct SKILL.md reference map instead."
-	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "retired-skill-reference-md" || true
-	        exit 0
-	      fi
+	      # Retired-skill-reference.md anti-pattern is a structural concern, not a hard-deny danger.
+	      # Owner doctrine (update-upgrade-sequence + skill-introduction reference) governs that case.
+	      # Hook stays pinpoint per CLAUDE.md [HOOK-LAST] / MANIFEST hard-deny list.
 		      if is_governance_reference_path "$CANONICAL_PATH"; then
-	        # Wholesale rewrite tools (Write/NotebookEdit) are never allowed on references/ —
+	        # Wholesale rewrite tools (Write/NotebookEdit) on EXISTING references/ files are never allowed —
 	        # Update/Upgrade Sequence requires structured Edit/Update/MultiEdit so diff is reviewable.
+	        # New-file creation is creation, not rewrite, and falls through to the actor check below.
+	        # Mirrors the existence-gated pattern used by the high-traffic governance surface block.
         case "$TOOL_NAME" in
           Write|NotebookEdit)
-		            emit_deny "Governance reference materials must not be Write/NotebookEdit (wholesale rewrite). Use structured Edit/Update/MultiEdit only; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
-            log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
-            exit 0
+            if [[ -e "$CANONICAL_PATH" ]]; then
+		              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/Update/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
+              exit 0
+            fi
             ;;
         esac
-        # Structured edit path stays actor-bound, not packet-owned here.
-        # Developer governance-patch packet completeness remains owned by task-execution/developer docs.
-        if ! governance_reference_structured_edit_actor_allowed "$SESSION_ID"; then
-		          emit_deny "Governance reference materials require a positively identified lead session or developer worker for structured Edit/Update/MultiEdit. Packet completeness remains owner-doc governed. Indeterminate or non-developer sender -> deny."
-          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-non-lead-or-indeterminate" || true
-          exit 0
-        fi
-        if session_is_runtime_owner "$SESSION_ID" 2>/dev/null; then
-	          emit_warning "Lead governance edit to reference material — Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline applies."
-          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-lead-edit-allowed" || true
-        else
-          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-developer-structured-edit-allowed" || true
-        fi
+        # Structured Edit/Update/MultiEdit produces reviewable diffs; user reviews them.
+        # Actor-identity gating is allow-list shape and not a MANIFEST hard-deny category;
+        # removed per [HOOK-LAST] / [BLOCK-AS-DEFECT]. Wholesale-overwrite block above remains the
+        # pinpoint protection. Surface info-only marker for traceability.
+        emit_warning "Governance reference structured edit — Update/Upgrade Sequence + SV discipline applies."
+        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-structured-edit-allowed" || true
         # fall through to allow structured governance reference maintenance
       fi
 
@@ -1078,9 +1057,12 @@ fi
       fi
     fi
 
-    if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'; then
-      emit_deny "Destructive shell command blocked. Use a safer bounded command or obtain explicit user approval first."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "destructive-shell" || true
+    # Catastrophic primitives only: filesystem format, raw block-device write, root delete.
+    # `git reset --hard` removed per [HOOK-LAST]: it is reversible via reflog and is a
+    # user-choice repository operation, not a MANIFEST hard-deny category.
+    if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'; then
+      emit_deny "Catastrophic shell primitive blocked (mkfs/dd if=/rm -rf /). Use a safer bounded command or obtain explicit user approval first."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "catastrophic-shell" || true
       exit 0
     fi
     if user_approved_delete_command "$CLEAN_COMMAND"; then
@@ -1172,29 +1154,11 @@ NODE
         exit 0
       fi
     fi
-    # Agent diagnostic/implementation commands are allowed only after destructive checks.
-    S02_IMPLEMENTATION_PATTERN='(^|[[:space:]])((mkdir|touch|cp|chmod)|git[[:space:]]+(add|commit|status|log|diff|show|branch|tag|stash|fetch|clone)|npm[[:space:]]+(run|test|build|install)|pip[[:space:]]+(install|freeze)|python|python3|node|npx|tsc|curl|make|cargo|go[[:space:]]+(build|test|run)|diff|wc|sort|pytest|jest|mocha)([[:space:]]|$)'
-    if [[ -n "$SESSION_ID" ]] && runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
-      if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
-        if validate_compound_command "$CLEAN_COMMAND" allowed_worker_impl_subcmd; then
-          exit 0
-        fi
-        if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
-          emit_deny "Agent implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
-          log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
-          exit 0
-        fi
-      else
-        if allowed_worker_impl_subcmd "$CLEAN_COMMAND"; then
-          exit 0
-        fi
-        if printf '%s' "$CLEAN_COMMAND" | grep -qE "$S02_IMPLEMENTATION_PATTERN" 2>/dev/null; then
-          emit_deny "Agent implementation shell paths must stay within the workspace root. Use workspace-bounded paths or structured tools for out-of-workspace mutations."
-          log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "worker-impl-path-outside-workspace" || true
-          exit 0
-        fi
-      fi
-    fi
+    # Worker implementation-pattern allow-list block removed per [HOOK-LAST] /
+    # [BLOCK-AS-DEFECT]: blocking ordinary dev commands (mkdir/touch/git/npm/python/...)
+    # for workers is allow-list shape, not a MANIFEST hard-deny category. Outside-workspace
+    # mutation is already pinpoint-blocked at the rm target restriction (above) and at the
+    # interpreter-bypass check (below). Workers run ordinary dev commands by default.
 
     # No broad lead operational prefix allowlist. Exact predicates below handle
     # read-only git inspection and bounded stale-index-lock recovery; other

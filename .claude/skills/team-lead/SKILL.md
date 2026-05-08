@@ -7,7 +7,7 @@ PRIMARY-OWNER: team-lead
 ## Structural Contract
 - Inherits `CLAUDE.md` `Priority And Ownership` floor and `agents/team-lead.md`.
 - Sharpens only active edge-case detail.
-- Fixed section order: Purpose, Activation, Work-Planning Detailed Consume, Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail
+- Fixed section order: Purpose, Activation, Work-Planning Detailed Consume, Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail, Orchestration Defect Taxonomy
 - PRIMARY-OWNER: team-lead
 - Binding detail for active team-lead edge cases.
 
@@ -31,10 +31,11 @@ Load only when the compact team-lead role rules require detail for:
 
 ### Reference Map
 Load trigger-specific files directly from `SKILL.md`.
-- `references/planning-consume.md`: frozen planning field order, route reaction rules, and guarded-local law.
+- `references/planning-consume.md`: frozen planning field order, route reaction rules, FAR `FINAL-REJECT` correction routing, Codex own-review discipline, lead-local routing rules, and guarded-local law.
 - `references/communication-objections.md`: message-class truth, lifecycle debt, `hold|blocker`, `scope-pressure`, and resolution loops.
-- `references/synthesis-reporting.md`: completion-grade synthesis limits, reporting truth, and user-facing claim control.
+- `references/synthesis-reporting.md`: completion-grade synthesis limits, delivery-contract comparison, FAR `FINAL-REJECT` correction-packet consumption, reporting surfaces, lead-artifact exposure, routine-gate continuation, and dispatch/closeout narrowing.
 - `references/interrupt-autonomy.md`: interrupt-resume stack discipline, autonomous judgment, user-challenge re-evaluation, and accountability.
+- `references/orchestration-defects.md`: consolidated orchestration defect taxonomy with trigger, owning rule, and correction owner per class.
 
 ## Activation
 Load only when one of these named edge cases is active:
@@ -42,6 +43,7 @@ Load only when one of these named edge cases is active:
 - an agent objection cannot be resolved from the compact rule alone
 - interrupt nesting or autonomy judgment creates a material edge case
 - self-verification needs the detailed basis behind a compact team-lead rule
+- an orchestration defect signal appears (skipped owner chain, needless user prompt, user-choice loop on repeated same-class gap, missed parallel dispatch, serial-convenience bottleneck, design-decision delegation, Codex relay, premature agent replacement, or reporting leak)
 
 Default session start and ordinary RPA-4 planning consume compact rules when sufficient.
 
@@ -125,3 +127,11 @@ Hard surface:
 - Autonomy is valid only with philosophy alignment, evidence basis, and net team-operation benefit.
 - `[DESIGN-INTENT]`, owner boundaries, proof, acceptance, safety, and explicit user/security/destructive approval boundaries outrank autonomy.
 - User challenge turns the current conclusion into an unverified draft until re-examined against evidence and net benefit.
+
+## Orchestration Defect Taxonomy
+Use `references/orchestration-defects.md` for the consolidated taxonomy.
+Hard surface:
+- Defect classification is route evidence, not a user-choice prompt.
+- Each class names trigger, owning rule, and smallest correction owner.
+- Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
+- Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.

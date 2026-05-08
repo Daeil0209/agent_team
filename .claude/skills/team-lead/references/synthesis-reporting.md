@@ -26,6 +26,7 @@ Hard rules:
 - When synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]` before declaring positive synthesis.
 - Before consuming parallel-lane handoffs, reconcile outputs against prior same-session decisions, doctrine patch invariants, and sibling-lane outputs. Contradiction is `cross-continuity drift`; reopen `work-planning`.
 - At each handoff/completion synthesis, apply `session-boot` `Monitoring Sequence` proactive team-composition reassessment before re-dispatch. Do not wait for the user to identify parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch.
+- After FAR `FINAL-REJECT`, the next synthesis consumes the assigned-validator correction packet and team-lead-classified route before the next FAR or workflow `Complete`.
 
 ## Reporting Detail
 User-facing reporting is a claim-control surface.
@@ -35,18 +36,16 @@ Hard rules:
 - If only planning exists, report the next action only. If only dispatch exists, report at most `dispatch pending`.
 - Phase/stage-end reporting of analyzed, evaluated, or synthesized consequential content uses current `SV-RESULT` covering the exact outgoing report.
 - Prior analysis, memory, checklist language, and inline "SV-style" wording are process notes, not `SV-RESULT`.
-- `MID-FLIGHT`: stay silent unless a meaningful phase change or blocker needs user awareness.
-- If `MID-FLIGHT` is necessary, use one short line in the user's language.
-- Do not narrate routing, owner-opening, skill loading, receipts, truth labels, lifecycle internals, or other procedure scaffolding.
+- `MID-FLIGHT: silent` means emit nothing to the user surface.
+- Receipt, idle, standby, control, no-change runtime events, and "silent" status labels stay internal unless they create a blocker, next owner/action, or first `dispatch pending` truth.
+- If `MID-FLIGHT` output is necessary, use one short line in the user's language.
+- Do not narrate or expose procedure scaffolding or intermediate output to the user — routing, owner-opening, skill loading, receipts, truth labels, lifecycle internals, internal planning fields, packet labels, agent-control detail, raw lane dumps (handoff bodies, dispatch acks, agent message content), convergence tables and per-stream/per-finding/per-artifact recital, count summaries and file-listing recital, advisory payloads, unexplained procedure jargon, internal procedure labels, or sectioned report cards walking team-lead's procedural traversal — unless the user explicitly asks for internals; an `internal:`/`(internal):` disclaim does not authorize disclosure.
 - `PHASE-RESULT`: report the phase outcome briefly, with only completion truth, material blocker, or next owner/action.
 - `FINAL`: summarize the core result first.
 - `FINAL`: include only the highest-impact evidence, remaining blocker if any, and user-usable next state.
 - `FINAL`: do not state completion beyond validator/FAR or Evidence-Quality Matrix supported scope.
-- Avoid raw lane dumps, convergence tables, advisory payloads, and unexplained procedure jargon.
 - Expand only on a named trigger: verified-result evidence basis, explicit user request for detail, blocker the user must act on, closeout residual basis, or destructive/security/policy approval where silence is unsafe.
-- A user-facing question list is prohibited except for destructive/security/policy approval or a proven user-owned blocker after `work-planning` Codex confirmation.
-- Otherwise continue by default, assumption, configurable model, or owner route.
-- Do not expose internal planning fields, packet labels, routing/procedure names, lifecycle internals, or agent-control detail unless the user explicitly asks for internals.
+- User-facing question lists, numbered/bulleted option menus, and "pick one" prompts are prohibited except for destructive/security/policy approval or a proven user-owned blocker after `work-planning` Codex confirmation; otherwise continue by default, assumption, configurable model, or owner route.
 - Lane proof artifacts such as screenshots, traces, network logs, raw test output, or rendered captures are project-retained evidence and synthesis input.
 - When visual, rendered, runtime, or user-surface proof materially supports final acceptance, final rejection, or completion wording, user-facing final prose names the retained evidence anchor, decisive surface, capture/render scope, and inspected defect classes or open-surface state.
 - Show raw artifact, advisory, proof, or reconciliation payload only when the user explicitly asks for it or when that payload is the deliverable.
@@ -55,3 +54,6 @@ Hard rules:
 - If the basis cannot support the claim strength, narrow the claim or report `INFERENCE/UNVERIFIED`.
 - Clean closeout stays silent or one-line. Warning-bearing closeout stays short: exact residual state, exact hold reason, and next recovery surface only.
 - Internal templates named `Verification Output Format`, `Internal Planning Record`, and `Progress Update Surface` are internal handoff only; do not surface them unless explicitly asked.
+- For lead-owned internal basis artifacts, expose path/status only; use decision-complete records or dispatch packets focused on producer use.
+- Satisfied gates, phase transitions, status questions, long convergence loops, interrupt returns, rejection routes, and routine review offers execute or continue through the next owner/action; user-facing review/proceed prompts stay internal unless the user requested review, explicit approval is required, or a verified user-owned blocker exists.
+- Use three user-facing surfaces only: `MID-FLIGHT`, `PHASE-RESULT`, `FINAL`. Boot, planning, workflow-entry, and phase-transition reports state only next owner/action or blocker. Dispatch reports at most `dispatch pending`; `task-execution` entry, `TeamCreate`, packet assembly, receipt, and runtime detail stay internal. Once `session-closeout` owns the path, late outputs narrow residual truth only.

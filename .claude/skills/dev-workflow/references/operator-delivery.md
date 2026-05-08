@@ -19,7 +19,7 @@ For executable user-runnable deliverables, the deliverable MUST ship with:
 - Native launch/build assets name the shell, encoding, line endings, dependency/setup source, build output path, run input path, and readable failure behavior when those assets are material.
 - Developer-tier instructions are operator burden, not delivery.
 - Examples: "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI guidance, manual environment teardown, or producer-tier shutdown knowledge.
-- **demonstration-data path covering every in-scope visible feature/surface/control** when the deliverable's visible behavior depends on operator-input data.
+- **sufficient representative demonstration-data path covering every in-scope visible feature/surface/control** when the deliverable's visible behavior depends on operator-input data; it must exercise the visible workflows, calculations, validation states, persistence, reload, and reset/import paths needed to prove the user can understand and trust the delivered tool.
 - Empty states alone cannot communicate populated visual behavior.
 - Seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
 

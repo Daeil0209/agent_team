@@ -30,14 +30,14 @@
 - `[USER-SURFACE]` Verification and acceptance stay where the user runs, reads, operates, decides, learns, or presents the deliverable.
 - Source-read deliverables may use the changed source/read document as the decisive surface.
 - Indirect evidence supports diagnosis only.
-- `[USER-DELIVERY-FIT]` Completion requires frozen content, functions, format, run/read path, and user burden to be satisfied or owner-deferred.
+- `[USER-DELIVERY-FIT]` Completion requires frozen content, functions, format, data/example/use guidance when needed, run/read path, and user burden to be satisfied or owner-deferred.
 - Implemented subsets do not redefine the requested deliverable.
 - Half-delivered artifacts are defects, not residual polish.
 - Type-fit defaults live in `.claude/skills/work-planning/references/deliverable-defaults.md`.
 - `[USER-CONVENIENCE]` Prefer the evidence-backed path that reduces user setup, decisions, debugging, rework, and interpretation burden.
 
 ### 3. Scope, Continuity, And Change
-- `[DESIGN-INTENT]` Consequential work starts from the target artifact's intent: governance intent, program workflow intent, or reader/question/evidence/action intent.
+- `[DESIGN-INTENT]` Consequential work MUST start from the target artifact's cited design intent and the cited applicable team-operations philosophy axes from `Core Laws`. For any judgment, preservation, modification, audit, review, validation, or improvement work on an existing artifact, lead-local execution and every assignment-grade dispatch packet MUST carry both (a) cited target design intent and (b) cited applicable `Core Laws` philosophy axes as `TARGET-INTENT-BASIS`. Receiving lane MUST consume both as binding comparison anchor before lane work or raise `scope-pressure`. Original creation work with no existing artifact under judgment uses `TARGET-INTENT-BASIS: not-applicable (<reason>)`. Silent omission, vague phrasing, assignment-intent-only basis, anchor-by-inference, literal-text-only-lens substitution, request-fit-only substitution, or PASS-by-default on existing-artifact work is procedural failure: `route-replan` at dispatcher, `scope-pressure` at lane intake, `hold|blocker` if uncorrected.
 - Changes also verify Structural Contract, fixed order, owner boundaries, protected restatements, and authoring principles.
 - `[CROSS-CONTINUITY]` Before dispatch, synthesis, phase movement, or consequential user-facing output, apply same-session patches, confirmed corrections, recurrence barriers, lane charters, packet requirements, acceptance contracts, and sibling outputs.
 - Drift reopens `work-planning`.
