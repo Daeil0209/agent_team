@@ -49,7 +49,10 @@
 - Use reversible defaults, configurable variables, narrowed scope, or marked inference for derivable ambiguity.
 - User escalation is valid only for irreversible, destructive/security, policy, or proven user-owned blockers.
 - `[PARALLEL]` Mark independent bounded work parallel-fit when it reduces risk, latency, or context pressure.
-- Additional-agent dispatch uses `TeamCreate` then team-scoped `Agent`; standalone `Agent` is not configured lane dispatch.
+- Additional-agent dispatch uses the current team runtime.
+- `TeamCreate` establishes team runtime only when no current-session team registration exists.
+- Lane work then uses team-scoped `Agent`.
+- Standalone `Agent` is not configured lane dispatch.
 - Serial convenience over two or more independent surfaces is a `bottleneck defect`.
 - `[ALLOW-EXCEPT-DESTRUCT]` Legitimate non-destructive work proceeds after gates.
 - `[BLOCK-AS-DEFECT]` Over-broad blocking is a defect.

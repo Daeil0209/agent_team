@@ -30,6 +30,7 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 - explicit team-runtime activation is needed
 - current-runtime monitoring or recovery is materially active
 - compaction recovery must reconstruct open work, team channel, roster, lifecycle truth, or dispatch state before consequential work resumes
+- current-session team registration without live panes is compaction recovery; reuse the existing team name and reattach needed lanes instead of creating a second team
 
 Current-runtime monitoring or recovery is materially active when workspace-root `.runtime/procedure-state.json` has `teamRuntimeState: active` and any agent has live, standby, hold, stale, unresolved startup, stale dispatch, recovery, or monitoring state that could affect the next consequential step.
 
@@ -204,10 +205,11 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. Send one bounded status nudge through `lifecycle-control` or explicit status-request `SendMessage`, then wait for response, permission, blocker, handoff, or assigned-surface activity until the frozen re-check window.
-2. Do not stack more assignment/correction packets into a silent inbox.
-3. At the re-check window, inspect current activity/side-effect evidence. Preserve active agents in lane execution; when both response and activity evidence are absent, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
-4. Report the stall and replacement/shutdown decision in the next user-facing surface as `next action`, not as silent in-flight work.
+1. For `assignment-sent-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, handoff, or assigned-surface activity until the frozen re-check window.
+2. Use free-text `lifecycle-control` only for lifecycle-only reuse, standby, or hold-for-validation; use structured `shutdown_request` for shutdown decisions.
+3. Do not stack more assignment/correction packets into a silent inbox.
+4. At the re-check window, inspect current activity/side-effect evidence. Preserve active agents in lane execution; when both response and activity evidence are absent, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+5. Report the stall and replacement/shutdown decision in the next user-facing surface as `next action`, not as silent in-flight work.
 
 Waiting for the user to identify agent stalls is itself a monitoring defect. The thresholds are guidelines; the mandate is proactive detect-and-route-around.
 Non-destructive runtime recovery is team-lead owned.

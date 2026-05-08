@@ -11,7 +11,7 @@ Every downstream phase artifact and packet must preserve:
 - `SUCCESS`
 - `SCOPE`
 
-These anchors prevent downstream re-derivation and phase drift. If a downstream artifact cannot be traced back to WHY and SCOPE, the context anchor is broken and phase advancement should HOLD.
+These anchors prevent downstream re-derivation and phase drift. If a downstream artifact cannot be traced back to WHY and SCOPE, the context anchor is broken; team-lead records `HOLD` or reopens the owning phase before advancement.
 
 ## Decision Record Chain
 Decisions propagate forward:
@@ -24,4 +24,4 @@ At minimum, downstream artifacts must preserve:
 - CP5 gap-resolution direction when relevant
 - reference adoption/adaptation decisions when a reference informed planning
 
-Downstream silent override of an upstream decision is prohibited.
+A downstream change to an upstream decision routes to the owning phase correction, or to `work-planning` when a boundary changes; the changed artifact is not advancement evidence until the chain is reconciled.

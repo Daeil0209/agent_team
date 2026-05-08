@@ -73,6 +73,7 @@ TOOL_AGENT_NAME="$(hook_decode_base64_field "${FIELDS[5]:-}")"
 TOOL_AGENT_TEAM_NAME="$(hook_decode_base64_field "${FIELDS[6]:-}")"
 TOOL_RECIPIENT_NAME="$(hook_decode_base64_field "${FIELDS[7]:-}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
+SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
 emit_deny() {
   local reason="${1:?reason required}"
@@ -81,6 +82,17 @@ emit_deny() {
 
 runtime_inactive_reason() {
   local tool_name="${1:-tool}"
+  local owned_cfg=""
+  local owned_team=""
+  if owned_cfg="$(current_session_owned_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$owned_cfg" ]]; then
+    owned_team="$(basename "$(dirname "$owned_cfg")")"
+    if [[ "$tool_name" == "SendMessage" ]]; then
+      printf "BLOCKED: runtime marker missing and SendMessage has no live roster proof for current-session team '%s'. Next: session-boot runtime recovery -> create or recover the exact live member, then retry SendMessage." "$owned_team"
+      return
+    fi
+    printf "BLOCKED: runtime marker missing but current session already owns team '%s'. Next: Skill(session-boot) -> retry team-scoped Agent with team_name '%s'." "$owned_team" "$owned_team"
+    return
+  fi
   if [[ "$tool_name" == "Agent" ]]; then
     printf 'BLOCKED: runtime inactive. Next: TeamCreate -> retry Agent.'
     return
@@ -160,6 +172,12 @@ if [[ "$TOOL_NAME" == "TeamCreate" ]]; then
 	    emit_deny "BLOCKED: runtime already active. Next: reuse current runtime; no TeamCreate needed."
 	    exit 0
 	  fi
+
+  if _rtg_owned_cfg="$(current_session_owned_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$_rtg_owned_cfg" ]]; then
+    _rtg_owned_team="$(basename "$(dirname "$_rtg_owned_cfg")")"
+    emit_deny "BLOCKED: current session already owns team '${_rtg_owned_team}' but no live teammate pane is proven. Next: session-boot runtime recovery -> retry team-scoped Agent with team_name '${_rtg_owned_team}' for needed lanes; do not TeamCreate a second team."
+    exit 0
+  fi
 
   if [[ -n "$TOOL_AGENT_TEAM_NAME" ]]; then
     _team_name_safe="$(
@@ -243,6 +261,18 @@ if [[ ! -s "$TEAM_RUNTIME_ACTIVE_FILE" ]]; then
     cleanup_denied_agent_dispatch_residue
     emit_deny "BLOCKED: runtime inactive during closeout. Next: finish closeout continuity path; do not dispatch Agent after teardown."
     exit 0
+  fi
+
+  if _rtg_owned_cfg="$(current_session_owned_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$_rtg_owned_cfg" ]]; then
+    _rtg_owned_team="$(basename "$(dirname "$_rtg_owned_cfg")")"
+    if [[ "$TOOL_NAME" == "Agent" && -n "$TOOL_AGENT_TEAM_NAME" && "$TOOL_AGENT_TEAM_NAME" == "$_rtg_owned_team" ]]; then
+      if [[ ! -f "$SB_LOADED_MARKER" ]]; then
+        cleanup_denied_agent_dispatch_residue
+        emit_deny "BLOCKED: compaction recovery requires Skill(session-boot) before team-scoped Agent reattach. Next: Skill(session-boot) -> retry Agent with team_name '${_rtg_owned_team}' and name."
+        exit 0
+      fi
+      exit 0
+    fi
   fi
 
   if [[ "$TOOL_NAME" == "Agent" ]]; then

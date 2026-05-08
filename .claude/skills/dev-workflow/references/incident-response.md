@@ -29,7 +29,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 3. Fix proposal
 - Developer proposes root cause, bounded file/surface change, fix risk, and verification plan.
 - Team-lead reviews the proposal before routing execution.
-- User-facing escalation is required for T0/T1 severity.
+- T0/T1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
 - Explicit user approval before modification is required only when the proposed action is destructive, security-sensitive, externally committed, or a policy choice.
 
 4. Apply and verify

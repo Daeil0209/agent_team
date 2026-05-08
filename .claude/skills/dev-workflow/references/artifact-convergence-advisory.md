@@ -24,7 +24,7 @@ Invalid `REDESIGN-PLAN` dispatch stops that producer path; produced output is di
 ## Trigger
 Run for:
 - Phase 1 canonical plan artifact
-- Phase 2 design artifact or implementation-binding design bundle
+- Phase 2 design artifact or implementation-binding internal detail bundle
 - first artifact that freezes data model, API, UX, proof, import/export lineage, exact operator launch/termination path, module decomposition, or acceptance basis
 
 Do not run for receipt/status/control-only messages, typo-only edits, already-converged artifacts without material upstream change, or light answer-only work.
@@ -110,8 +110,8 @@ Phase advancement requires:
 - owner-decidable defaults and routine phase advancement route to the next owner/action
 - `SV-RESULT` verifies the reconciled claim
 
-After `converged` phase-gate artifact resolution, set `next owner/action` to phase advancement, next phase boundary `work-planning`, or the named downstream owner.
-Optional user review offers stay internal unless the user already requested review, explicit approval is required, or a verified user-owned blocker exists.
+After `converged` or `resolved-divergence` phase-gate artifact resolution satisfies Phase advancement requirements, execute `next owner/action` as phase advancement, next phase boundary `work-planning`, or the named downstream owner.
+User-facing review/proceed prompts are valid only when the user already requested review, explicit approval is required, or a verified user-owned blocker exists; otherwise keep review offers internal and execute the next owner/action.
 
 Route-level `CODEX-ADVISORY-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
@@ -134,6 +134,7 @@ Phase 2 convergence covers implementation-binding:
 - ERD, data invariants, and lifecycle
 - API/request/response/error contracts
 - screen specs, first-viewport priority, and user-flow contracts
+- real-use contract fields for material user-facing surfaces
 - import/export mapping and validation error model
 - service/module responsibility map
 - proof plan and user-surface acceptance path
@@ -167,4 +168,4 @@ Record:
 - fallback inspection basis when fail-open is used
 - downstream artifact status: `current`, `stale`, or `hold`
 - next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`
-For `converged` phase-gate artifacts, the output record carries an executable next owner/action; it does not end at user direction.
+For `converged` or `resolved-divergence` phase-gate artifacts that satisfy Phase advancement requirements, the output record carries an executable next owner/action; it does not end at user direction.

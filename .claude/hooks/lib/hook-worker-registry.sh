@@ -1326,6 +1326,25 @@ current_session_live_team_config() {
   return 1
 }
 
+current_session_owned_team_config() {
+  local session_id="${1-}"
+  local config_file=""
+  local lead_session_id=""
+
+  [[ -n "$session_id" ]] || return 1
+
+  for config_file in "$HOME/.claude/teams"/*/config.json; do
+    [[ -f "$config_file" ]] || continue
+    lead_session_id="$(team_config_lead_session_id "$config_file")"
+    if [[ -n "$lead_session_id" && "$lead_session_id" == "$session_id" ]]; then
+      printf '%s' "$config_file"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
 active_team_config_live() {
   local config_file=""
   for config_file in "$HOME/.claude/teams"/*/config.json; do

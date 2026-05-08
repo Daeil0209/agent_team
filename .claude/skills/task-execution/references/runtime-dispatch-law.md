@@ -8,12 +8,14 @@ LOAD-POLICY: on-demand reference only
 Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 
 ## Team Runtime Shape
-- `TeamCreate` is used only for team-agent runtime. It is not standalone `Agent` dispatch.
-- `TeamCreate` is required for configured lane additional-agent dispatch.
-- `TeamCreate` is required when the frozen route names any additional lane, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, lifecycle monitoring, or continuity beyond lead-local work.
+- `TeamCreate` establishes team-agent runtime only when no current-session team registration exists.
+- Frozen routes naming additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, lifecycle monitoring, or continuity beyond lead-local work require team-agent runtime, not repeated `TeamCreate`.
 - Standalone `Agent` is not configured lane dispatch.
-- If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent, `TeamCreate` is the next execution move.
-- MUST sequence: when team runtime is needed, `TeamCreate` must succeed before any team-scoped `Agent` dispatch. `Agent` before `TeamCreate` is a procedure violation, not a dispatch shape.
+- If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
+- If current-session team registration exists without live panes, recover through `session-boot` and reattach needed lanes with team-scoped `Agent` on the existing team.
+- For new team runtime, `TeamCreate` must succeed before any team-scoped `Agent` dispatch.
+- For current-session recovery, `session-boot` must precede team-scoped reattach.
+- `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
 
 ## Team-Agent-Only Lane Dispatch
 - When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), every delegated lane dispatch via `Agent` must include `team_name` and `name` so the spawned agent joins the team runtime as a member addressable by `SendMessage`.
@@ -33,13 +35,13 @@ Target-resolution preflight is mandatory before the tool call:
 ## Parallel And Reuse Law
 - Configured project lanes come first.
 - Additional-agent dispatch uses team-agent runtime.
-- If current-session team runtime is absent, `TeamCreate` is the next move before any `Agent`.
+- If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or user-facing progress beyond `dispatch pending`.
 - A parallel execution segment then reconciles every intended target before it moves out.
 - Valid target states are `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
-- A target with no receipt or no start evidence is a recovery target, not a wait state.
+- A target with no receipt or no start evidence enters `dispatch-recovery`; replacement or shutdown follows only after the required follow-up, frozen re-check wait, and absent response/activity evidence.
 - Reuse a live or standby agent before unnecessary new spawn only when reuse preserves the frozen parallel shape, lane separation, and acceptance/proof separation.
 - Do not reuse one agent when that would collapse independent frozen shards into a single-agent critical path.
 - Lane-owned work must stay on the configured lane, not a generic helper path.

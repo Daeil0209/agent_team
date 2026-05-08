@@ -96,7 +96,8 @@ Exact wording may differ.
 Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
 Codex disagreement is advisory, not veto.
-`SV-RESULT` verifies synthesis before reporting, redispatch, or phase advancement.
+`SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-driven redispatch.
+In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop; team-lead executes the output-record next owner/action without user-facing review/proceed prompts unless explicit approval or a verified user-owned blocker exists.
 
 ## Same-Boundary Loop
 Do not reopen `work-planning` between passes while all remain unchanged:

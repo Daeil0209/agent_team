@@ -10,7 +10,7 @@ Runs in Phase 1 before CP2.
 
 Procedure:
 1. List proposed features, components, and scope items from the plan.
-2. For each item ask whether it is essential for the core problem or nice-to-have.
+2. Judge from frozen purpose and evidence whether each item is essential for the core problem or nice-to-have.
 3. Classify each item as:
    - MUST: blocks core value and remains in current scope
    - SHOULD: improves the result but is not essential
@@ -89,25 +89,31 @@ Reviewer classifies each gap:
 When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`. T0/T1 gaps are not normal iteration candidates.
 
 ## Iteration Protocol Detail
-`dev-workflow` Phase 5 owns iteration structure and convergence truth. Gap detection contributes re-classification only.
+`dev-workflow` Phase 5 owns iteration structure and convergence truth. Gap detection contributes Phase-2-derived acceptance-grade correction contract fields, not local closure.
 
 Per-cycle gap detection contribution after authoritative corrected output and before tester re-verify:
 1. Reviewer reruns structural, functional, contract, delivery-experience, and user-readiness checks scoped to affected components.
 2. Reviewer reapplies the gap classification table to remaining or newly introduced gaps.
-3. Coverage score and blocking-gap count feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
+3. Coverage score, blocking-gap count, required return evidence, and acceptance-entry condition feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
 
 Reviewer quick-check stays blocking-only and delta-scoped; unclear delta -> `scope-pressure`, not full-review expansion. Tester re-verifies affected surfaces first, then stale interaction rows. The same unresolved blocking gap class after repeated cycles escalates instead of looping.
 Independent correction surfaces are split by correcting owner and may run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
 
 ## Gap-State Packet
-Whenever gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields:
+Whenever blocking or significant gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields needed to drive correction to acceptance:
 - `GAP-STATE`
+- `FROZEN-DESIGN-EXPECTATION`
 - `CHECKED-SURFACE`
+- `DECISIVE-USER-SURFACE`
 - `BLOCKING-GAPS`
 - `NON-BLOCKING-GAPS`
 - `DEFERRED-GAPS`
 - `COVERAGE-SCORE-DISTRIBUTION`
 - `EVIDENCE-BASIS`
+- `CORRECTION-OWNER-SURFACE`
+- `REQUIRED-RETURN-EVIDENCE`
+- `REVERIFY-OWNER-ACTION`
+- `ACCEPTANCE-ENTRY-CONDITION`
 - `NEXT-OWNER-ACTION`
 - `OPEN-SURFACES`
 

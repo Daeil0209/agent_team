@@ -103,7 +103,7 @@ Required team runtime stands despite runtime friction.
 
 The first team-scoped agent launch or shared-runtime assignment message is the runtime escalation boundary.
 Satisfy the runtime-entry gate before that boundary if the work no longer remains lead-local or standalone.
-If current-session team runtime is absent, `task-execution` owns the resulting `TeamCreate` move.
+If runtime is needed and no current-session team registration exists, `task-execution` owns the resulting `TeamCreate` move.
 
 ## Monitoring Sequence
 `Monitoring Sequence` is continuous during active delegated operation.

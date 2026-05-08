@@ -1,6 +1,6 @@
 ---
 name: review-verification
-description: Run exhaustive review and verification for design intent, coherence, integrity, and negative risk before consequential analysis, patch selection, or improvement recommendations. Produces review basis for the owning validation, patch, or reporting path.
+description: Run exhaustive review and verification for design intent, coherence, integrity, procedure adherence, execution force, and negative risk before consequential analysis, patch selection, or improvement recommendations. Produces review basis for the owning validation, patch, or reporting path.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -17,7 +17,7 @@ You are the review-verification capability for Claude Code.
 - Reviewer, developer, tester, validator, and researcher consume the packet or named lenses inside their own lane boundaries.
 
 ## Authority
-**This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, integrity checks, duplication/conflict detection, negative-risk analysis, and patch-worthiness classification.
+**This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure-adherence and execution-force checks, integrity checks, duplication/conflict detection, negative-risk analysis, and patch-worthiness classification.
 
 **Adjacent owners hold:** planning freeze, independent review findings, test execution, final validation verdict, implementation, governance patch execution, and runtime enforcement.
 
@@ -37,7 +37,7 @@ This skill outputs `review_verification_packet`.
 - `update-upgrade-sequence` and `self-growth-sequence` - own governance asset changes after this review identifies a patchable basis.
 
 ## Purpose
-Use this skill when the user asks for exhaustive review, total inspection, coherence analysis, integrity analysis, balance analysis, design-intent analysis, risk-zero review, toxic-rule detection, duplication removal, meaning-conflict detection, or patch-readiness judgment.
+Use this skill when the user asks for exhaustive review, total inspection, coherence analysis, integrity analysis, procedure-adherence analysis, execution-force analysis, balance analysis, design-intent analysis, risk-zero review, toxic-rule detection, duplication removal, meaning-conflict detection, or patch-readiness judgment.
 
 Default review mode is exhaustive across the frozen target corpus.
 User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
@@ -54,7 +54,7 @@ Use it to prevent these failures:
 ## Activation
 `team-lead` activates this skill when any material request includes one or more of:
 - exhaustive inspection, full review, whole-folder review, or all-surface analysis
-- coherence, consistency, integrity, or contradiction judgment
+- coherence, consistency, integrity, procedure-adherence, execution-force, or contradiction judgment
 - design intent, team philosophy, or owner-boundary judgment
 - negative-risk, no-regression, or safety judgment
 - removal-centered optimization or bottleneck/toxic-rule detection
@@ -81,6 +81,7 @@ Required fields:
 - `LIVE-SURFACES-INSPECTED`
 - `DESIGN-INTENT-BASIS`
 - `OWNER-BOUNDARY-BASIS`
+- `PROCEDURE-EXECUTION-RESULT`
 - `COHERENCE-RESULT`
 - `INTEGRITY-RESULT`
 - `NEGATIVE-RISK-RESULT`
@@ -131,7 +132,7 @@ Separate primary owner surfaces from references, generated outputs, runtime stat
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
-Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped phase, scope drift, terminology drift, and evidence gap.
+Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, scope drift, terminology drift, and evidence gap.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
 
 ### 5. Design Removal-First Patch
@@ -141,7 +142,7 @@ Append-only or accumulation-first patch designs are invalid while duplicate, obs
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
 ### 6. Pre-Patch Negative-Risk Gate
-Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weakened clarity, weakened execution force, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
+Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weaker procedure-adherence signal, weakened clarity, weakened execution force, weaker automatic next-owner drive, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, and acceptance regression.
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
 Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
 Report absolute risk-zero only when absolute closure is proven.
@@ -152,7 +153,7 @@ After the patch design survives the first risk gate, inspect the surrounding ref
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
 ### 8. Integrity Gate Before Live Patch
-Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, clarity, execution force, existing function preservation, and no-regression basis.
+Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, procedure-adherence signal, automatic next-owner drive, clarity, execution force, existing function preservation, and no-regression basis.
 Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Execute Through The Owning Patch Sequence
@@ -201,13 +202,13 @@ Hand off only when the receiver can tell:
 - what evidence would verify closure
 
 ## Role-Scoped Structural Feedback
-- Challenge any analysis that starts from a desired patch instead of live design intent.
+- Challenge any analysis that starts from a desired patch, cites rules without testing actual adherence/execution path, or ignores live design intent.
 - Challenge any "risk-free" claim that lacks complete inspected-surface basis.
 - Challenge any defect label that lacks negative operating effect or owner-correction path.
 - Challenge any added rule when an existing owner sentence can be tightened.
 - Challenge removals by verifying preserved source meaning and positive execution path.
 
 ## Role-Scoped Self-Growth Loop
-- Repeated misses in coherence, integrity, design-intent, risk classification, or patch-worthiness trigger `self-growth-sequence`.
+- Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `self-growth-sequence`.
 - Harden the narrowest failed owner surface.
 - Keep this skill scoped to review-sequence discipline while reviewer, validator, and update sequence ownership remain on their owner surfaces.
