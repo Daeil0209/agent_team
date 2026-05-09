@@ -3,7 +3,7 @@ doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
-topology-updated: 2026-04-29
+topology-updated: 2026-05-08
 ---
 # Context Reduction Preservation Map
 
@@ -95,6 +95,126 @@ This migration is converged only if the same lane assignment still reaches the s
 - The former top-level `incident-response` skill name is retired. Binding incident detail lives in `.claude/skills/dev-workflow/references/incident-response.md`; callers must route incident work through `dev-workflow` rather than packetizing `incident-response` as a separate skill.
 - The former top-level `gap-detect` skill name is retired. Binding YAGNI, gap detection, coverage scoring, gap-state packet, and iteration contribution detail lives in `.claude/skills/dev-workflow/references/gap-iteration.md`; benchmark feedback loops must point to that reference rather than a separate skill.
 - This split preserves meaning while removing duplicate skill discovery surfaces. Only directly routable sequences or standalone reusable procedures remain top-level skills; absorbed workflow details live under the owning workflow's `references/` folder.
+
+## 2026-05-08 Comprehensive Audit Reduction Map
+This pass executes the user-directed exhaustive audit-and-patch sweep across the .claude governance corpus (147 review-verification findings across 7 shards). It removes toxic rules, harmful duplication, meaning-conflict, action-force-weakening, and design-intent-unrelated bottlenecks via removal-first patches; substantive meaning is migrated to canonical owners via explicit citation, not deleted.
+
+CLAUDE.md source -> destination:
+- `[DESIGN-INTENT]` multi-clause sentence -> 4 atomic rules in `CLAUDE.md` `Core Laws 3` (target-intent + Core-Laws axes carry rule, packet-receiver consumption rule, original-creation `not-applicable:<reason>` rule, anti-pattern routed-failure mapping). Source-to-destination: same file, same section, restructured for one-rule-per-sentence executable force per `[GOV-MIN]` and `[RULE-FORCE]`.
+- Conditional Rules output-root duplicate -> collapsed; canonical owner stays `CLAUDE.md` `[PROJECT-OUTPUT-ROOT]` in `Core Laws 5`. Spillover containment + unknown-folder derivation preserved as one tightened sentence in `Conditional Rules` citing `[PROJECT-OUTPUT-ROOT]`.
+- `## Self-Growth` paragraph -> tightened to one sentence; canonical recurrence-barrier hardening lives in `Sequence Arbitration Law` + `[HARDEN]` + `.claude/skills/self-growth-sequence/SKILL.md`.
+
+agents/team-lead.md source -> destination:
+- RPA-1 line 58 analysis-routing -> aligned with parent `CLAUDE.md` `Channel Law` line ("reopens `work-planning` when a boundary-change axis moves"); identical force, no narrower override.
+- RPA-1 lines 60-62 carry-forward / reopen sentences -> trimmed; canonical owner stays `.claude/skills/work-planning/SKILL.md` Activation Trigger + boundary-change axes (Step 1).
+- RPA-2 line 66 cross-continuity carry-forward -> restored full 7-item set citing `[CROSS-CONTINUITY]`; redundant procedure-trigger scan removed (trigger order list at lines 71-78 already governs trigger consumption).
+- RPA-2 trigger order item 4 -> generalized to "confirmed primary sequence (`self-growth-sequence` for recurrence defect or `update-upgrade-sequence` for routine asset maintenance, per `Sequence Arbitration Law`)" so both primary sequences carry equal salience.
+- RPA-2 (new rule, recurrence barrier from round-3 self-growth): "intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; status questions are stall-exposure cues only and continue through the same resume action." Canonical defect class lives in `.claude/skills/team-lead/references/orchestration-defects.md` `Routine Status Stop` (newly added; trigger / owning rule / correction owner all named).
+- RPA-3 closeout 3-sentence series -> merged to one sentence with explicit scope ("once `session-closeout` owns the path, suspend ordinary planning/synthesis/reporting and report only residual closeout truth").
+- Priority 0 step 5 ROUTE -> tightened to project-lane primacy default ("prefer team-routed configured lanes; lead-local only when project-lane primacy plus lead-local preconditions hold (`work-planning` freeze, complete `LEAD-LOCAL-WORK-ITEMS`, no lane-owned proof/validator substitution)"); aligns with `CLAUDE.md` `### Ownership` line "Project lanes outrank lead-local substitution."
+- All 5 lane initialPrompt blocks (developer/researcher/reviewer/tester/validator) -> shared 5-clause boilerplate (work-planning-loading scope, receipt/control exclusion, infer-safely, classify-4-states, only-material-unsafe-defects) re-homed to `.claude/skills/task-execution/references/lane-additions.md` `Common Lane-Core Preconditions`. Each lane initialPrompt now carries the protected receipt spine (dispatch-ack first, no idle), the Lane Receipt Spine pointer, `TARGET-INTENT-BASIS` identification, and the lane-specific delta only (~50% per-spawn boilerplate reduction).
+
+skills/team-lead/SKILL.md source -> destination:
+- 8 Detail-section Hard-Surface restatements (~70 lines: Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail, Orchestration Defect Taxonomy, Work-Planning Detailed Consume) -> collapsed to trigger+owner pointers; canonical detail rules live unchanged in `.claude/skills/team-lead/references/{communication-objections.md, synthesis-reporting.md, interrupt-autonomy.md, orchestration-defects.md, planning-consume.md}` plus `task-execution/references/{message-classes.md, truth-rules.md, completion-handoff.md}`.
+
+skills/team-lead/references/synthesis-reporting.md source -> destination:
+- "At each handoff/completion synthesis apply session-boot Monitoring Sequence" universal gate (toxic bottleneck per `[PARALLEL]` + `[CHANNEL]`) -> conditional gate ("only on parallel-collapse / idle-preservation / missed-parallel-fit / missed-downstream-prep / agent-charter-mismatch evidence"); Monitoring Sequence canonical owner stays `session-boot/SKILL.md`.
+- Packet-basis comparison "exact operator launch, cleanup, or defer basis" over-specified example -> generalized to "any frozen `REQUEST-BOUND-PACKET-FIELDS` baseline (`SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, `TARGET-INTENT-BASIS`, or operator-delivery axes when the deliverable is executable)".
+- Cross-continuity duplicate sentence -> one-line cite at `references/cross-continuity.md` synthesis-time gate.
+- Long no-narration sentence (~10 prohibitions) -> 3 imperative bullets (procedure scaffolding ban; raw lane dump / convergence table / advisory payload ban; `internal:` / `(internal):` disclaim does not authorize disclosure).
+- (round-3 self-growth recurrence barrier) "intermediate commit/push/build/infrastructure milestone is not a phase boundary; multi-round/multi-batch deliverables continue through next round in same segment without `PHASE-RESULT` emission, status prose, or `next action: continue X` announcement; only verified `FINAL`, true `blocker`, or explicit `closeout residual` may surface."
+
+skills/team-lead/references/planning-consume.md source -> destination:
+- Tier-floor mechanics (`PROJECT-TIER`/`ACTIVE-REQUEST-TIER`/`TIER-RAISE-REASON` semantics) -> canonical owner stays `governance-scaling/SKILL.md` per `planning-record-fields.md:8`; planning-consume keeps the one-line trigger pointer ("reopen `work-planning` per `governance-scaling/SKILL.md`").
+- Read-only-audit lead-local default rule (toxic, anti-`[PARALLEL]`) -> replaced with independence-test gate citing `references/parallel-fit.md`'s independent-surface basis (evidence family / decision target / document section / production surface / source-of-truth / interface-format boundary / proof burden / correction owner); audits route through `task-execution` whenever the test fails.
+- FAR `FINAL-REJECT` route classification dev-workflow Phase vocabulary -> generalized to "active workflow's design-correction phase / production-correction phase / `work-planning` reopen" so non-dev-workflow rejections classify cleanly.
+
+skills/dev-workflow/SKILL.md source -> destination:
+- Phase 1/2 artifact-convergence record schema (own-review basis, Codex advisory status, reconciliation result, accepted/rejected counts, `SV-RESULT` coverage, internal detail bundle status, specialist contract status, next owner/action) -> canonical owner stays `references/artifact-convergence-advisory.md` `## Output Record`; SKILL.md Phase 1 + Phase 2 Exit-laws now point there.
+- Phase 4 Exit-law CP5 routing branches (design-level / implementation / operator-delivery / scope / route / HOLD) -> canonical owner stays `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority; SKILL.md Phase 4 + `final-acceptance-review.md` Reject Route both point there.
+- Phase 4 Execution-law (17 bullets) -> 5 bullets that point at `references/phase-surfaces.md` Phase 4 + `agents/tester.md` smallest-truthful-proof default + `agents/validator.md` highest-fidelity-proof default; coherence-review item set + missed-catch process failure rule + Self-Growth trigger preserved verbatim.
+- Phase 0 Execution law (3 bullets) -> 1 pointer at `references/phase-surfaces.md` Phase 0 Discovery Basis (single / lead-skim-then-shards / immediate-shards canonical).
+- Phase 5 Execution law (independent-correction parallel rule) -> pointer at `references/gap-iteration.md` `Iteration Protocol Detail`.
+- Workflow Core Law section 5 (Phase 4/5 closure) -> trimmed; canonical `CLAUDE.md` `[USER-DELIVERY-FIT]` + `references/final-acceptance-review.md` own validator-PASS / FAR / low-risk closure rules.
+- Workflow Core Law section 1 checkpoint preamble -> pointer at `references/checkpoints.md`.
+- Reference Map entries for `phase-micro-cycle.md`, `lane-responsibility-map.md`, `context-decision-chain.md` -> removed (files deprecated; substantive content lives at canonical owners).
+
+skills/dev-workflow/references/ source -> destination:
+- `phase-micro-cycle.md` body -> deprecated stub. Phase-local cycle is fully owned by `CLAUDE.md` `[PLAN-SV]` + `dev-workflow/SKILL.md` Workflow Core Law section 2.
+- `lane-responsibility-map.md` body -> deprecated stub. Phase-to-lane responsibility owned by `dev-workflow/SKILL.md` per-phase Execution-law + `references/phase-surfaces.md`; lane evidence chain owned by `CLAUDE.md` `Role And Acceptance Law` + `references/phase-gates.md`.
+- `context-decision-chain.md` body -> deprecated stub. Phase 1 context anchor owned by `references/phase-surfaces.md` `Receiver-Surface Contract` (canonical fields WHY/PRIMARY-RECEIVER/RECEIVER-JOB/CONSUMPTION-ENVIRONMENT/RISK/SUCCESS/SCOPE/DELIVERY); decision propagation owned by `references/checkpoints.md` CP5 + `artifact-convergence-advisory.md` Stale Downstream.
+- `operator-delivery.md` Local Web App Launcher tech-stack-specific recipe (Flask/Node/VBS/pythonw) -> contract-level rule (single-action launch / hidden non-browser surfaces / browser-close-triggered termination / explicit exit affordance / production-only flags); tech-stack patterns belong to developer/researcher implementation guidance.
+- `gap-iteration.md` Coverage Score Per File table (0/20/40/60/80/100 source-file-shaped) -> deliverable-class-neutral coverage signals statement pointing at `references/phase-surfaces.md`.
+- `artifact-convergence-advisory.md` Dual Review serial framing -> parallel framing ("team-lead own-review and Codex advisory may run in parallel; team-lead own-review basis is recorded before any Codex output is read or used; first Codex packet must not include team-lead findings"); preserves design intent (own-review basis frozen before Codex consumption) without the bottleneck.
+- `review-convergence-advisory.md` Output Record schema -> shared with `artifact-convergence-advisory.md` Output Record canonical schema; review-convergence keeps only deltas (review target identity, Claude reviewer state, SV-RESULT coverage).
+- `final-acceptance-review.md` Acceptance Criteria -> deliverable-type sub-bundle selection rationale rule added (apply only sub-bundles materially named in `SCOPE-BASELINE`; mark non-applicable sub-bundles `not-applicable:<basis>`; FAR records selection rationale before reject-first decision); prevents 35-axis rubber-stamp drift.
+- `final-acceptance-review.md` Reject Route route classification -> pointer at `references/checkpoints.md` CP5 Auto-resolve priority.
+
+skills/self-growth-sequence/SKILL.md source -> destination:
+- Triple-numbered procedure conflict (Mandatory path / Causal Repair "When defect..." / Required order) -> single canonical `### Required order` (most operational, includes Step 6.5 retroactive); Mandatory path collapsed to purpose summary; Causal Repair "When defect..." collapsed to phase mapping that names the same nine Required-order steps.
+- Orphan H3 `### Self-Healing Algorithm` (no body) -> deleted (Defect-To-Barrier Contract follows immediately).
+- Dead H3 `### Skill Introduction Category Gate` -> deleted; Reference Map entry for `references/skill-introduction.md` already carries the trigger.
+- `## Patch Execution Method` body (~13 lines duplicating change-patch-method.md) -> pointer at `references/change-patch-method.md` plus the one self-growth-specific rule (recurrence-barrier installation, not content accumulation).
+- Step 6.5 Retroactive application (12-line body) -> 3 lines that cite `references/retroactive-application.md` plus the `[RETRO-APPLY]` defect rule.
+- `### Closure Standard` non-closure-evidence taxonomy (Acknowledgement, apology, hook marker, dispatch success, role/skill load, later self-verification load) -> pointer at `task-execution/references/truth-rules.md` (canonical truth-evidence taxonomy owner).
+
+skills/self-growth-sequence/references/ source -> destination:
+- `repair-decision-guide.md` items 1-3 (non-compliance / weak-owner / wrong-owner failure-mode-specific allowed-vs-prohibited responses) -> canonical owner stays `references/failure-mode-response.md` matrix; repair-decision-guide keeps a one-line pointer to it plus the unique items (lookup detail, packet/handoff omission, hook/settings choice, capability-gap fast path).
+
+skills/self-verification/SKILL.md source -> destination:
+- Step 3 `CONFIRMED-DEFECT` admission gate (3 bullets duplicating self-growth-sequence) -> pointer at `self-growth-sequence/SKILL.md` `Causal Repair Standard` defect admission gate (canonical owner).
+- Step 3 SV-PLAN reject conditions (4 bullets) + SV-RESULT detail (2 bullets) -> pointer at `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and `## SV-RESULT Detailed Gate`.
+
+skills/review-verification/SKILL.md source -> destination:
+- Step 9 "Execute Through The Owning Patch Sequence" -> "Hand Off To The Owning Patch Sequence". File mutation is owned by named patch sequence (`update-upgrade-sequence` / `self-growth-sequence` / assigned production owner), not by review-verification; eligibility precondition (Steps 1-8 complete + sixteen-field packet emitted) preserved.
+- Step 10 Post-Patch coherence -> re-homed to executing patch sequence's Post-Verify (`change-patch-method.md` Post-Verify); review-verification re-engages only when escalated.
+- Step 11 finding-class taxonomy (confirmed-defect / risk-hypothesis / design-tradeoff / duplication / protected-restatement / non-issue / unverified) -> canonical owner moved to `task-execution/references/completion-handoff.md` `Common finding basis`; review-verification points there. Reviewer SKILL.md Step 7 already cites completion-handoff.md, so reviewer / review-verification / validator-input findings now share one taxonomy.
+- Step 8 Integrity Gate -> trimmed to structural-baseline items not covered by Step 6 negative-risk gate (structural contract / fixed order / protected restatement / source-to-destination / positive execution path / existing function preservation / no-regression); items already on Step 6 (clarity, execution force, owner conflict, broken reference, automatic next-owner drive, user-use readiness) no longer double-tested.
+- Output field rename `VERIFICATION-NEED` -> `DOWNSTREAM-VERIFICATION-NEED` to remove name-collision with self-growth-sequence's `REVIEW-VERIFICATION-NEED` (whether review-verification must be loaded for this round).
+- `## Activation` -> tightened with explicit non-overlap clause (activate only when review work is held lead-local for cross-surface integrity / design-intent / risk-balance synthesis OR when packetizing review basis for downstream lanes; bounded reviewer-owned acceptance review routes to reviewer lane + reviewer SKILL).
+
+skills/validator/SKILL.md source -> destination:
+- MCP rule line 67 -> aligned with `references/validator-lane-detail.md` stricter default-blocks-PASS rule ("for browser/UI final acceptance, available Playwright MCP is the default validation profile; absence of MCP use blocks PASS unless the packet freezes a narrower lawful tool or proves MCP unavailable").
+
+skills/security-review/references/security-review-detail.md + skills/log-based-qa/references/log-qa-patterns.md severity-framework source -> destination:
+- T0–T3 in security-review reframed as deployment-block escalation tier (not parallel finding severity) with explicit cross-walk to canonical reviewer Critical / Major / Minor / Advisory in `reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
+- T0–T3 in log-based-qa reuses security-review's deployment-block tier; finding severity follows canonical reviewer mapping. Removes the "(used locally)" parallel-scale drift.
+
+skills/task-execution/SKILL.md source -> destination:
+- Step 2 Packet final check (18 bullets duplicating assignment-packet.md) -> 2-line gate pointing at `references/assignment-packet.md` preflight ("Run packet preflight against frozen planning/workflow basis before send; do not send while a frozen route axis remains stale, missing, or contradicted").
+- Step 3 Dispatch Truth runtime ladder (5 bullets) -> canonical owner stays `references/truth-rules.md`; SKILL.md Step 3 keeps reporting-consequence rules + recovery-reconciliation rules only.
+
+skills/task-execution/references/completion-handoff.md source -> destination:
+- `Common finding basis` -> finding-class taxonomy added inline (canonical owner).
+- `RESOURCE-CLEANUP` over-broad ceremony floor -> narrowed to long-running spawned resources (Playwright MCP / dev servers / daemons / dev-runners / port-bound or session-bound processes); transient invocations may report `not-applicable (no long-running resource opened)` truthfully without enumeration + post-cleanup probe; team-lead still rejects misuse.
+
+skills/team-session-sequences/SKILL.md source -> destination:
+- Mode Split body (~25 lines duplicating session-boot/SKILL.md) -> single citation pointer at `session-boot/SKILL.md` `Mode Split`.
+- Monitoring Sequence body + 9 sub-sections (~96 lines duplicating session-boot + monitoring-lifecycle-detail + task-execution refs + work-planning execution-readiness) -> thin lead-side index with one-line owner pointers per concern (pre-dispatch readiness / task decomposition / dispatch packet compliance / agent load guard / dispatch execution contract / parallel shard and merge / task identity / consequential upward handoff / health-check, stale-response, runtime-pressure).
+- Sequence Activation Discipline body -> citation at `session-boot/SKILL.md` (canonical owner).
+
+skills/work-planning/SKILL.md source -> destination:
+- Step 2 Parallel law (5 bullets duplicating CLAUDE.md `[PARALLEL]` + `references/parallel-fit.md`) -> 2 lines pointing at `references/parallel-fit.md` (independence/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, serial-basis evidence) + CLAUDE.md `[PARALLEL]` (Standalone Agent prohibition, additional-agent-dispatch freezes team-agent runtime).
+- Step 3 Codex advisory law (10 bullets duplicating `references/codex-advisory.md`) -> 2 lines pointing at the reference (which owns adjudication, fail-open, accepted/rejected acknowledgment, continuation-without-blocker rules).
+
+skills/work-planning/references/planning-targets.md source -> destination:
+- Resolved the "route-plan is mandatory + only one primary target" contradiction: route-plan is the default primary target on consequential top-level plans; the matching alternative target replaces primary only for delegated / lane-local / blocker-clear / workflow routes.
+
+17 specialist SKILL.md files source -> destination:
+- "## Deliverable Quality Philosophy Application" sections (2-7 lines each restating CLAUDE.md axes via bold-prefix labels) -> renamed "## Operational Discipline" + bold-prefix axis labels removed; substantive per-skill operational sentences preserved verbatim. CLAUDE.md axes remain inherited canonical doctrine.
+- "## Role-Scoped Self-Growth Loop" sections in most specialists (universally restating "if my domain recurs, escalate to self-growth") -> deleted; canonical owner stays CLAUDE.md `[HARDEN]` + `self-growth-sequence/SKILL.md`.
+- "## Structural Feedback To Upstream" heading in 2 files (code-quality-review, design-system-tokens) -> renamed "## Role-Scoped Structural Feedback" matching the canonical sibling pattern.
+
+agents/reviewer.md source -> destination:
+- Cycle line "lane-local convergence" -> "lane-local convergence (load self-verification and run lane-local SV-RESULT per reviewer/SKILL.md Step 8)" — explicit cross-reference removes the F-A-4 SV-anchor mismatch between role spine and lane-core skill.
+
+hooks source -> destination:
+- `compliance-supervisor.sh` `is_disallowed_generated_output_path` + `command_targets_disallowed_generated_output_root` (~57 lines including 35-line node body) + `command_is_noisy_touch_probe` (~22 lines) + `emit_warning` no-op + 3 remaining callers -> deleted. Hardcoded outputs/backups/.playwright-mcp deny-list contradicted CLAUDE.md `[PROJECT-OUTPUT-ROOT]` ("unless user/config names another canonical folder"); style critique on touch+ls compounds was outside MANIFEST hard-deny categories; emit_warning was no-op so every call was dead policy. log_violation entries preserved for traceability.
+- `dispatch-proof-gate.sh` ACTIVE-WORKFLOW absence advisory warn -> deleted; advisory field is optional per its own "if applicable" qualifier.
+- `track-worker-report.sh` legacy MESSAGE-CLASS warn arm (`hold|blocker` literal-match) -> deleted; canonical owner stays `task-completed-gate.sh` MESSAGE-CLASS hard-fail + lane role hold|blocker doctrine.
+- `dispatch-sizing-gate.sh` Phase-3 dev-workflow advisory branch (`phase3_parallel_developer_requires_concrete_name` + `phase3_dispatch_scope_tags` + `phase3_parallel_basis_declared` + `phase3_has_concrete_serial_blocker` helpers and both invocation sites, ~78 lines) -> deleted; workflow-doctrine concerns belong in work-planning + dev-workflow + task-execution packet preflight, not in a hook gate; MANIFEST hook ledger row already restricts dispatch-sizing-gate to corruption-class checks.
+
+Convergence criterion: every reduction above migrates substantive meaning to a named canonical owner with explicit citation, preserves the same procedural outcome on the Same-Outcome Scenario Matrix, and either sharpens executable force at the canonical owner or removes a contradicting/dead surface. No source-to-destination trace gap; no enforcement-strength loss; no live-reference break.
 
 ## Preservation Audit Rule
 Before or after any high-traffic context reduction, verify:
