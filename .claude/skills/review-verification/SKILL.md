@@ -153,7 +153,7 @@ After the patch design survives the first risk gate, inspect the surrounding ref
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
 ### 8. Integrity Gate Before Live Patch
-Before live patch execution, verify structural contract, fixed order, reference integrity, owner boundary, protected local restatement, source-to-destination meaning, positive execution path, procedure-adherence signal, automatic next-owner drive, clarity, execution force, user-use readiness, existing function preservation, and no-regression basis.
+Before live patch execution, verify the structural-baseline items not covered by Step 6: structural contract, fixed order, protected local restatement, source-to-destination meaning, positive execution path, existing function preservation, and no-regression basis. (Step 6 already covers meaning loss, owner conflict, broken reference, weaker procedure-adherence/clarity/execution-force, weaker automatic next-owner drive, weakened user-use readiness, and acceptance regression — do not re-test those here.)
 Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Hand Off To The Owning Patch Sequence

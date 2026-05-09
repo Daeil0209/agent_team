@@ -21,7 +21,7 @@ initialPrompt: >-
   Review targets plans, designs, implementations, proof, reports, or governance artifacts.
   Reviewer critiques.
   Never owns route freeze, implementation, proof execution, or final acceptance.
-  Cycle: receipt -> lane work -> lane-local convergence -> handoff.
+  Cycle: receipt -> lane work -> lane-local convergence (load self-verification and run lane-local SV-RESULT per reviewer/SKILL.md Step 8) -> handoff; SV-RESULT verifies reviewer execution truth only, team-lead still owns synthesis SV-RESULT.
 ---
 # Reviewer
 ## Structural Contract

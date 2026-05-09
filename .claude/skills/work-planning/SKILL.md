@@ -148,12 +148,8 @@ Before scope freeze, answer:
 Hold when purpose, work type, owner, workflow/sequence, surface count, or skill basis cannot be named truthfully.
 
 Parallel law:
-- Count only bounded outputs independent of another counted surface.
-- Ordinary substeps are not independent surfaces.
-- 2+ independent bounded surfaces are parallel-fit.
-- Serial convenience over independent specialist-fit work surfaces is a bottleneck defect unless `references/parallel-fit.md` proves stronger serial basis.
-- Additional-agent dispatch freezes team-agent runtime; absent runtime means later `task-execution` starts with `TeamCreate`.
-- Standalone `Agent` is not lane dispatch.
+- See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
+- Additional-agent dispatch freezes team-agent runtime; absent runtime means later `task-execution` starts with `TeamCreate` per CLAUDE.md `[PARALLEL]`.
 
 User-surface law:
 - If truthful proof or acceptance needs a missing user-facing surface or tool path, freeze a bounded discovery/setup owner or blocker.
@@ -179,16 +175,8 @@ Freeze when material:
 - Codex advisory: `CODEX-ADVISORY-BASIS`
 
 Codex advisory law:
-- Load `references/codex-advisory.md` after actual `Skill(work-planning)` load and draft route fields.
-- For `ACTIVE-WORKFLOW: dev-workflow`, evaluate the Codex advisory trigger. Successful Codex output is not required when no material advisory trigger applies or advisory access records `fail-open:*`.
-- Load for the reference risk triggers.
-- Before user-decision escalation that is not destructive, security, or policy, run Codex confirmation review with canonical `doctrine_read_paths`.
-- A configurable unknown routes to best default, parameter, assumption/open question, or owner evidence path.
-- If parameterization preserves data and architecture, use the configurable path.
-- Without a team-lead-verified true blocker from Codex, continue through best default, parameter, assumption/open question, or owner evidence route.
-- Outcomes are accepted/rejected acknowledgment or fail-open.
-- Unrecorded required or triggered advisory basis leaves `work-planning` incomplete.
-- Codex returns advice or fail-open; Claude owns block, lane, dispatch, and acceptance decisions.
+- Apply `references/codex-advisory.md` after draft route fields exist when an advisory trigger fires (including `ACTIVE-WORKFLOW: dev-workflow`, reference-risk triggers, and pre-escalation confirmation review for non-destructive/security/policy unknowns).
+- The reference owns adjudication, fail-open, accepted/rejected acknowledgment, and continuation-without-blocker rules; unrecorded required or triggered advisory basis leaves `work-planning` incomplete.
 
 Hard stops:
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.

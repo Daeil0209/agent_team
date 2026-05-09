@@ -189,17 +189,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 6. Install the recurrence barrier on the correct owner surface.
    Harden the rule, checklist, packet requirement, Hook-Last-approved runtime edge, capability boundary, or owner-local procedure that blocks recurrence.
 6.5. **Retroactive application phase (per CLAUDE.md `[RETRO-APPLY]`)**.
-   Before optimization decision and before close, audit current-session surfaces the new rule directly governs or contradicts.
-   Include artifacts, in-flight agent output, prior verdicts, active acceptance state, and live deliverable surfaces only when directly governed or contradicted.
-   Produce an explicit list of audited surfaces with result: not affected, fixed, owner-deferred, or invalidated.
-   Produce a defect inventory with proposed fixes.
-   Send fixes in the same patch chain.
-   Or defer with named follow-up owner, boundary, and closure basis.
-   Invalidate current-session prior verdicts, PASS states, or closures that pre-date this rule and conflict with it.
-   Mark those states `STALE-PRE-{ROUND}`.
-   Those states require fresh re-verification before downstream work proceeds on their basis.
+   Before optimization decision and before close, audit current-session surfaces directly governed or contradicted by the new rule per `references/retroactive-application.md`.
    Skipping retroactive application is a `[RETRO-APPLY]` defect.
-   Landing doctrine while bypassing directly governed current-session surfaces recreates the same failure.
 7. After the quality-raising change lands and retroactive application completes, make a bounded follow-on optimization decision.
    Run the optimization pass only when material avoidable redundancy or runtime burden is visible.
    Otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed`.
@@ -208,10 +199,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 9. Close only after identified improvements, unresolved missed-catches, and deferred passivity defects are hardened into the correct parent document or assigned follow-up ownership.
 ### Closure Standard
 - Self-growth is not closed while the recurrence path remains implicit.
-- If the recurrence path is known but cannot be patched immediately, keep the topic on `HOLD`.
-- `HOLD` must name owner, blocked surface, and next safe execution boundary.
-- Acknowledgement, apology, hook marker, dispatch success, role/skill load, and later `self-verification` load are entry or process evidence only.
-- None proves closure without recurrence barrier, owner surface, and current verification basis.
+- If the recurrence path is known but cannot be patched immediately, keep the topic on `HOLD` with owner, blocked surface, and next safe execution boundary.
+- Self-growth closure requires recurrence-barrier basis, owner surface, and current verification basis; receipt/dispatch/load/status are non-closure evidence per `task-execution/references/truth-rules.md`.
 - Failed verification reopens the self-growth round at the smallest invalidated step.
 - Reconstruct when design intent was wrong.
 - Diagnose when causal basis was weak.
@@ -270,15 +259,4 @@ Hard surface:
 - Explicit user approval is required for destructive or security-sensitive action.
 - Reviewed non-destructive governance changes proceed through the normal execution gate except hook/settings runtime enforcement expansion, which follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
 ## Patch Execution Method
-Use this method for team-system asset patches that must remain understandable without hidden session memory.
-Use `references/change-patch-method.md` for detailed patch mechanics.
-Hard surface:
-- For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation.
-- Prefer `tighten`, `replace`, `re-home`, or `merge` before `append`.
-- Delete only when meaning is duplicate, obsolete, or preserved elsewhere.
-- Preserve full clarity and execution force; reduce words or clause chains only when the resulting rule remains at least as clear and strong.
-- Keep changed lines single-intent and readable.
-- Freeze defect basis, design intent, causal basis, recurrence path, patch class, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and edit operation before drafting.
-- Warning, block, deny, deletion, restriction, or removal edits are valid only when the positive execution path remains explicit and executable.
-- Preserve structural connectivity, local restatements needed for isolated readability, live references, semantic-family consistency, sibling surfaces, and source-to-destination meaning.
-- Verification must prove recurrence blockage or assigned follow-up, positive execution path preservation, and no owner-boundary, reference, acceptance, runtime-truth, or information-loss regression.
+Detailed patch mechanics — operating rules, edit-operation ordering, freeze list before drafting, structural-connectivity preservation, and post-verify obligations — are owned by `references/change-patch-method.md`. The self-growth spine adds only one rule: confirmed self-growth patches install a bounded recurrence barrier, not content accumulation.

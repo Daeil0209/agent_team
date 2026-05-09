@@ -112,17 +112,9 @@ Rules:
 - synthesized outputs require reconciled verification for stronger claims
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
-- Governance audit synthesis treats `CONFIRMED-DEFECT` as a self-growth admission label, not a suspicion label.
-- Do not promote an item to `CONFIRMED-DEFECT` unless the live owner surface proves design-intent conflict, proven negative operating effect or reserved hard-deny/runtime-truth breach, causal failure mode, recurrence path, and narrow correction owner.
-- If that proof is missing, report the item as candidate evidence, risk hypothesis, design tradeoff, non-issue, or `UNVERIFIED` instead of patch authorization.
-- `SV-PLAN` rejects missing planning/readiness fields
-- `SV-PLAN` rejects missing mandatory/material `CODEX-ADVISORY-BASIS`
-- `SV-PLAN` rejects fields not produced by actual `work-planning`
-- `SV-PLAN` rejects incoherent packets, lead-only conversation dependence, hidden local steps, unauthorized dispatch, and unfrozen tool/workspace probing
-- `SV-RESULT` states exact verified surface, concise basis, open surfaces, and retained evidence identity
-- `SV-RESULT` reconciles completion-grade or user-facing claims against the common start closure contract and common completion result spine; material start axes are matched, upstream-deferred, blocked, or retained in `OPEN-SURFACES` before closed-result wording
-- retained evidence identity applies when artifacts/logs/screenshots/reports/datasets support the claim
-- if final prose outruns the verified surface, reset `SV-RESULT`
+- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` defect admission gate before promoting any item to `CONFIRMED-DEFECT`; if proof is missing, report the item as candidate evidence, risk hypothesis, design tradeoff, non-issue, or `UNVERIFIED` instead of patch authorization.
+- Apply detailed SV-PLAN reject conditions per `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and detailed SV-RESULT verification per `## SV-RESULT Detailed Gate`.
+- If final prose outruns the verified surface, reset `SV-RESULT`.
 
 Use the reference for detailed gates, evidence calibration, behavior proof, artifact identity, and output detail.
 

@@ -84,24 +84,8 @@ Own the actual execution move:
 - ownership-changing `REQUIRED-SKILLS` or `SKILL-RECOMMENDATIONS` entries reopen `work-planning`
 
 Packet final check:
-- every assignment-grade packet carries `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active
-- completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
-- every assignment-grade packet is self-contained for teammate context isolation
-- packet facts come from packet fields, state, or artifact citations
-- before any team-runtime `SendMessage` or `Agent`, resolve target in this order: active team name -> live process-backed roster -> target role -> exact member address -> tool shape -> truth label
-- absent exact member resolves to team-scoped `Agent` creation
-- create the member with team-scoped `Agent`; standalone returned-result evidence is only a fallback classification when such evidence already exists
-- packet preflight reconciles the outgoing packet against `EXECUTION-READINESS-BASIS`
-- correct a missing packet value inside `task-execution` only when the value already exists in the frozen basis
-- correction requires all `work-planning` boundary-change axes to stay unchanged
-- if the missing or contradictory value is absent from the frozen basis, stale, or route-changing, reopen `work-planning`
-- if `REQUEST-BOUND-PACKET-FIELDS` is non-empty, every named field must be present in the outgoing packet or the path returns to `work-planning`
-- if `SKILL-RECOMMENDATIONS` is non-empty, each entry must be lane-scoped and bounded to `WORK-SURFACE`
-- workflow-owned plan/design authoring packets cite a decision-level owner basis with resolved decisions; task-execution returns under-specified packets to the workflow owner for basis completion
-- same-owner packet defects return to the same frozen owner
-- any moved `work-planning` boundary-change axis reopens `work-planning`
-- user-surface, proof, tool, run-path, burden, decision, validation, environment, and scenario fields are carried exactly when required by `.claude/skills/task-execution/references/request-bound-fields.md`
-- packets carry translated assignment fields rather than the full internal planning block
+- Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
+- Do not send while a frozen route axis remains stale, missing, or contradicted; same-owner packet defects return to the same frozen owner, any moved `work-planning` boundary-change axis reopens `work-planning`.
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, `parallel-agent-dispatch`, or reuse-via-`SendMessage` move.
