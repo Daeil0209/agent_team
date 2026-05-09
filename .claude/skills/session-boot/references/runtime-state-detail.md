@@ -156,16 +156,19 @@ Canonical evidence mapping:
 - explicit lifecycle-control message -> authoritative lead decision for non-terminating lifecycle edges; shutdown intent becomes authoritative only through structured `shutdown_request`
 
 ## Hook-Maintained Ledger Surfaces
-These are hook-maintained mirrors, not alternate semantic owners:
-- `WORKER_REPORT_LEDGER`
-- `WORKER_DISPATCH_ACK_PENDING_FILE`
-- `IDLE_DECISION_PENDING_FILE`
-- `WORKER_IDLE_NOTICE_FILE`
-- `STANDBY_FILE`
-- `TEAM_RUNTIME_ACTIVE_FILE`
-- `KILL_LIST`
+These are hook-maintained mirrors, not alternate semantic owners. They may corroborate the runtime-truth ladder above; they must not invent competing lifecycle vocabulary, and absence of a ledger entry is not evidence by itself.
 
-They may corroborate runtime truth, but must not invent competing lifecycle vocabulary.
+| Ledger surface | Corroborates which truth-ladder row | Absence behavior |
+|---|---|---|
+| `WORKER_REPORT_LEDGER` | agent-originated progress, handoff/completion-grade message receipt | absence is not handoff/completion absence; consult message body and lane evidence |
+| `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `task-execution/references/dispatch-recovery.md`, not silent stale classification |
+| `IDLE_DECISION_PENDING_FILE` | `TeammateIdle` awaiting governing lifecycle-control decision | absence does not clear lifecycle obligation; explicit `lifecycle-control` message remains authority |
+| `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | absence is not active evidence; do not infer activity from missing idle marker |
+| `STANDBY_FILE` | acknowledged `standby` lifecycle decision | absence is not authority to skip standby decision |
+| `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence requires `TeamCreate` per `task-execution/references/runtime-dispatch-law.md` before team-scoped dispatch |
+| `KILL_LIST` | observed teardown intent on listed agents | absence is not agent-still-live evidence; consult live process-backed roster |
+
+The canonical hook-policy ownership for these ledger surfaces lives in `.claude/hooks/MANIFEST.md`.
 
 ## Workflow Continuity Bridge
 - `session-boot` observes runtime for active workflows; it does not own workflow progression.

@@ -216,6 +216,23 @@ hooks source -> destination:
 
 Convergence criterion: every reduction above migrates substantive meaning to a named canonical owner with explicit citation, preserves the same procedural outcome on the Same-Outcome Scenario Matrix, and either sharpens executable force at the canonical owner or removes a contradicting/dead surface. No source-to-destination trace gap; no enforcement-strength loss; no live-reference break.
 
+Round-11 recurrence-barrier strengthening (after second `Routine Status Stop` recurrence — `FINAL` surface listed residual queue): `orchestration-defects.md` `Routine Status Stop` trigger expanded with subclause (d) (a `FINAL` listing residual / queued / remaining items is itself recurrence proof of non-convergence); `synthesis-reporting.md` Reporting Detail adds the explicit zero-residual `FINAL` rule. Source-to-destination: same files, sharpened wording.
+
+Round-12 residual cleanup:
+- `hooks/task-start-gate.sh` dead `warn_tool_use` no-op + 6 callers (PROCEDURE WARNING strings built and discarded) -> deleted; control-flow exits preserved per F-G-1.
+- `hooks/sv-gate.sh` dead `emit_warning` no-op + caller -> deleted; printf VIOLATION_LOG entry preserved per F-G-1.
+- `software-architecture/references/architecture-extensions.md` Project Lessons catalog renumbered L-04/L-05/L-08/L-09/L-10 -> L-01/L-02/L-04/L-05/L-06; L-07 (in Coupled-Core) -> L-03; SKILL.md cross-refs updated per F-F-7.
+- `business-workflow/SKILL.md` description amended to declare verticals covered (event planning, R&D proposal, result report, schedule planning) so loaders can scope to material vertical only per F-F-13.
+- `session-boot/SKILL.md` Monitoring responsibilities Proactive Team-Composition Reassessment trigger restatement -> single pointer at `references/runtime-state-detail.md` `## Proactive Team-Composition Reassessment` (canonical owner of trigger + question set + release rule + bottleneck-defect rule + non-reactive monitoring requirement) per F-C-12.
+- `session-boot/references/runtime-state-detail.md` `## Hook-Maintained Ledger Surfaces` upgraded from a flat enumeration to a `<ledger-surface>` -> `<truth-ladder row corroborated>` -> `<absence behavior>` table that explicitly binds each ledger to its canonical truth-ladder row and forbids absence-as-evidence inference; canonical hook-policy ownership cite added (`.claude/hooks/MANIFEST.md`) per F-C-22.
+
+Owner-deferred residual (with explicit follow-up basis, not silent drop):
+- F-G-3 settings.json `PreToolUse` matcher narrowing for agent-activity-monitor + task-start-gate (drop tools whose only consequence was the now-removed `warn_tool_use` no-op). Deferred to a separate runtime-tested round because matcher reduction touches every-tool-call enforcement scope; verify-and-narrow needs end-to-end test of agent activity ledger + lead-planning gate signal coverage. Owner: developer-lane next round.
+- F-G-9 `user-prompt-gate.sh` `status_runtime_recovery_context` 250-line diagnostic + correction-detection heuristic patterns. Deferred because trim must preserve the procedure-state CTX signal that team-lead currently consumes for lead-side recovery. Owner: developer-lane + team-lead next round.
+- F-G-10 `HOOK_HEALTH_REQUIRED_HOOKS` triple source of truth (env var in hook-policy.sh + settings.json hooks block + MANIFEST.md Active Hooks list). Deferred because consolidating to settings.json single source requires JSON parsing changes in `session-start.sh` health-check path. Owner: developer-lane next round.
+
+These three are owner-deferred with explicit follow-up assignment basis per `Routine Status Stop` correction-owner rule (queue empty when every item is patched, owner-deferred with explicit follow-up assignment, or proven out-of-scope). They are not silent drops.
+
 ## Preservation Audit Rule
 Before or after any high-traffic context reduction, verify:
 1. every old cross-reference anchor still exists or every caller has been updated;

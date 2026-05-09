@@ -27,22 +27,11 @@ SESSION_ID="$(recover_session_id "$SESSION_ID")"
 
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 
-emit_warning() {
-  return 0
-}
-
-planning_block() {
-  local tool_name="${1:-tool}"
-  local next_step="${2:-retry after work-planning}"
-  printf 'PROCEDURE WARNING: planning preflight incomplete. Detail: %s missing current-task work-planning. Next: %s.' "$tool_name" "$next_step"
-}
-
 case "$TOOL_NAME" in
   mcp__playwright__browser_*)
     if [[ ! -f "$WP_MARKER" ]]; then
       printf '[%s] SV-GATE WARN: Playwright user-surface tool before observed work-planning (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
-      emit_warning "$(planning_block "Playwright user-surface tool" "Skill(work-planning) -> continue work -> retry Playwright only if it remains the frozen proof path")"
       exit 0
     fi
     ;;

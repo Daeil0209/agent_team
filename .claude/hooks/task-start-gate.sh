@@ -74,10 +74,6 @@ deny_tool_use() {
   hook_emit_pretool_deny "$reason" "Task start blocked."
 }
 
-warn_tool_use() {
-  return 0
-}
-
 mark_post_wp_action_after_planning() {
   [[ -f "$WP_MARKER" ]] || return 0
   [[ "$TOOL_NAME" == "Skill" ]] && return 0
@@ -305,7 +301,6 @@ NODE
   [[ "$continuation_class" == "bounded-iteration" ]] || return 1
   [[ "$has_required_skills" == "true" ]] || return 1
   if [[ "$task_tracking_context" == "true" && "$has_task_id" != "true" ]]; then
-    warn_tool_use "PROCEDURE WARNING: bounded-iteration assignment missing TASK-ID while task tracking is active. Detail: reuse/reroute is assignment-grade; include the open executable TASK-ID or send scope-pressure/hold|blocker if the id is missing or non-open."
     return 0
   fi
 
@@ -869,12 +864,10 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      warn_tool_use "$(worker_dispatch_ack_block_reason "$TOOL_NAME")"
       exit 0
     fi
   fi
   if completion_grade_sendmessage_missing_sv_result; then
-    warn_tool_use "PROCEDURE WARNING: completion-grade SendMessage missing observed self-verification sequence marker. Detail: handoff/completion needs lane-local SV-RESULT for the exact outgoing claim and evidence basis."
     exit 0
   fi
   exit 0
@@ -897,12 +890,10 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if self_growth_required_for_session "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
-    warn_tool_use "$(self_growth_block)"
     exit 0
   fi
 	  if lead_planning_required "$SESSION_ID"; then
 	    if [[ "$TOOL_NAME" == "mcp__codex__codex" && ! -f "$WP_MARKER" ]]; then
-	      warn_tool_use "PROCEDURE WARNING: Codex advisory before observed Skill(work-planning). Detail: pre-planning Codex output is non-authoritative discussion only; it cannot satisfy CODEX-ADVISORY-BASIS, freeze route/proof/acceptance, or authorize dispatch, mutation, validation, or reporting. Same-boundary continuation is active-workflow owned; this hook does not parse continuation fields."
 	      exit 0
 	    fi
     if lead_runtime_prep_allowed_before_dispatch_gate "$TOOL_NAME"; then
@@ -977,7 +968,6 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         exit 0
         ;;
     esac
-    warn_tool_use "$(lead_preflight_block_reason "$TOOL_NAME")"
     exit 0
   fi
 fi

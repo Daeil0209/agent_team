@@ -1,6 +1,6 @@
 ---
 name: business-workflow
-description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery.
+description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery. Verticals covered in `references/domain-rule-catalog.md`: event planning, R&D proposal, result report, schedule planning. Project-local rule catalogs may extend the pattern; load only the vertical materially required by the assigned surface.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus

@@ -76,7 +76,7 @@ Expert behavior means the software can be built without discovering its core con
 - operator-facing tools need first-run shell, resume path, and finish/export destination
 - prefer label-driven or header-driven extraction for sheet-like inputs when that contract is inferable
 - For project recurrence-barrier lessons, see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog).
-- Covered lessons: L-04 Module Regression Prohibition, L-08 Resource Acquisition as Architecture Contract, L-09 Latency Budget Decomposition, and L-10 Multi-Dimension Trade-Off Documentation.
+- Covered lessons: L-01 Module Regression Prohibition, L-04 Resource Acquisition as Architecture Contract, L-05 Latency Budget Decomposition, and L-06 Multi-Dimension Trade-Off Documentation.
 > For Dependency-And-Field Architecture Extension, see `references/architecture-extensions.md`
 > For Coupled-Core Architecture Extension, see `references/architecture-extensions.md`
 > For Operational Management Entity Architecture Extension, see `references/architecture-extensions.md`
@@ -105,7 +105,7 @@ Expert behavior means the software can be built without discovering its core con
 - For complex workflow tool modularization, broad single-file UI ownership is blocking until surface boundary split is explicit.
 - View copy defending design choices is a finding.
 - If architecture needs that prose, shell and state model are still weak.
-- For lesson L-05 (Launcher Robustness Preservation), see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog).
+- For lesson L-02 (Launcher Robustness Preservation), see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog).
 ## Blocker Trigger Summary
 - Architecture not credible, boundaries blurred, or state authority incoherent
 - Derived state treated as free-form editable or lifecycle/ingestion architecture left implicit

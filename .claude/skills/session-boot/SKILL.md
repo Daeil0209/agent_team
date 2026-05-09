@@ -125,8 +125,7 @@ If runtime is needed and no current-session team registration exists, `task-exec
 - If monitoring exposes bottleneck collapse, owner vacuum, repeated runtime churn, missing agent-start evidence, or stalled phase consumption, surface workflow continuity pressure.
 - Return corrective ownership to `team-lead` plus the active workflow owner.
 - If nominal parallel work collapses onto one agent strongly enough to create a schedule bottleneck, classify it as a distribution-planning defect and return corrective ownership to `team-lead -> work-planning reopen`.
-- At every phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, reassess team composition and downstream-prep parallel fit.
-- Use `references/runtime-state-detail.md` `Proactive Team-Composition Reassessment` for full question set, release rule, bottleneck-defect rule, and non-reactive monitoring requirement.
+- Apply Proactive Team-Composition Reassessment per `references/runtime-state-detail.md` `## Proactive Team-Composition Reassessment` (canonical trigger, full question set, release rule, bottleneck-defect rule, and non-reactive monitoring requirement).
 - Use bidirectional coordination actively during monitoring.
 - Keep diagnostic/evidence work on the delegated evidence lane instead of absorbing it into lead-local convenience work.
 - Detect stall-without-progress proactively.
