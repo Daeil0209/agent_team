@@ -16,10 +16,6 @@ emit_deny() {
   hook_emit_pretool_deny "$reason" "Blocked by project compliance policy."
 }
 
-emit_warning() {
-  return 0
-}
-
 log_violation() {
   local tool="${1:-unknown}" path_hint="${2:-}" reason="${3:-}"
   local log_dir="${LOG_DIR:-${HOME}/.claude/logs}"
@@ -855,7 +851,6 @@ fi
         # Actor-identity gating is allow-list shape and not a MANIFEST hard-deny category;
         # removed per [HOOK-LAST] / [BLOCK-AS-DEFECT]. Wholesale-overwrite block above remains the
         # pinpoint protection. Surface info-only marker for traceability.
-        emit_warning "Governance reference structured edit — Update/Upgrade Sequence + SV discipline applies."
         log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-structured-edit-allowed" || true
         # fall through to allow structured governance reference maintenance
       fi
@@ -897,7 +892,6 @@ fi
       if ! procedure_state_target_exact "$CANONICAL_PATH" \
         && is_governance_surface_path "$CANONICAL_PATH" \
         && mutation_payload_exceeds_compact_surface_budget "$MUTATION_CONTENT_CHARS" "$MUTATION_CONTENT_LINES"; then
-        emit_warning "Large governance mutation detected. Prefer bounded Edit/Update/MultiEdit chunks so intent remains reviewable; this is advisory unless the command also hits a hard safety boundary."
         log_violation "$TOOL_NAME" "$CANONICAL_PATH" "large-file-mutation-warning" || true
         exit 0
       fi
@@ -1110,7 +1104,6 @@ NODE
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0
       fi
-      emit_warning "Mutable shell command detected. Prefer structured file tools for edits and bounded cleanup paths for generated-output cleanup; hook denial is reserved for destructive, governance, runtime, or bypass-risk mutations."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-shell-warning" || true
       exit 0
     fi

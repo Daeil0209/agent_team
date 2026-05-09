@@ -187,7 +187,6 @@ Load triggered references directly from `SKILL.md`.
 - `references/artifact-convergence-advisory.md`: Codex-assisted, advisory-only dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail.
 - `references/review-convergence-advisory.md`: Codex-assisted, reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces.
 - `references/final-acceptance-review.md`: team-lead+Codex final ACCEPT/REJECT gate for validator-required chains after validator PASS.
-- `references/context-decision-chain.md`: WHY/WHO/RISK/SUCCESS/SCOPE anchors and decision propagation.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.

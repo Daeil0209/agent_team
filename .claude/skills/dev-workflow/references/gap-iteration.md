@@ -63,19 +63,8 @@ Verify:
 - persistence, restart, and error handling when in scope
 - tester proof surface and validator acceptance surface aligned to the same resolved interaction/control inventory
 
-## Coverage Score Per File
-Coverage scores are signals for team-lead judgment, not automatic thresholds.
-
-| Score | Meaning |
-|-------|---------|
-| 0 | Not started or empty |
-| 20 | Skeleton only: stubs, no logic |
-| 40 | Basic structure: partial logic, key paths incomplete |
-| 60 | Real logic present: key paths work, some requirements missing |
-| 80 | Most requirements implemented: minor gaps only |
-| 100 | Fully implements designed behavior |
-
-A single blocking defect at score 90 still blocks advancement. Full coverage at score 100 still requires reviewer and tester sign-off on the acceptance chain.
+## Coverage Signals
+Implementation-completeness signals are scaled by deliverable type per `references/phase-surfaces.md` and remain team-lead judgment inputs, not automatic thresholds. A single blocking defect blocks advancement regardless of completeness signal; full coverage still requires reviewer and tester sign-off on the acceptance chain.
 
 ## Gap Classification
 Reviewer classifies each gap:
