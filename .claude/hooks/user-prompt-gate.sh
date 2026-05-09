@@ -119,16 +119,8 @@ status_runtime_recovery_context() {
 
   USER_PROMPT="$prompt" \
   PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" \
-  WORKER_IDLE_NOTICE_FILE="$WORKER_IDLE_NOTICE_FILE" \
-  WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" \
-  WORKER_DISPATCH_ACK_PENDING_FILE="$WORKER_DISPATCH_ACK_PENDING_FILE" \
-  HOME_DIR="$HOME" \
-  STALE_WARN_SECONDS="${STALE_WARN_SECONDS:-120}" \
-  DISPATCH_ACK_LATE_SECONDS="${DISPATCH_ACK_LATE_SECONDS:-30}" \
-  PENDING_DISPATCH_STALE_SECONDS="${PENDING_DISPATCH_STALE_SECONDS:-120}" \
   node <<'NODE' 2>/dev/null || true
 const fs = require("fs");
-const path = require("path");
 
 const prompt = String(process.env.USER_PROMPT || "").trim();
 if (!prompt) process.exit(0);
@@ -137,229 +129,18 @@ const statusPromptRe =
   /(?:\bstatus\b|\bprogress\b|\bcurrent state\b|\bwhat remains\b|\bwhat(?:'s| is) left\b|\bwhat are you doing\b|\bwhy (?:did|are) you stop(?:ped)?\b|\bwhat is happening\b|\bwhere are we\b|지금[^.\n]{0,20}(?:뭐|무엇|어디|상태|진행|남|멈)|현재[^.\n]{0,20}(?:상태|진행|남)|뭐하고 있|무엇을 하고 있|어디까지|왜 멈|왜 안|남은 게|뭐가 남았|진행 상황|현재 상태)/iu;
 if (!statusPromptRe.test(prompt)) process.exit(0);
 
-const staleWarnMs = Math.max(1, Number(process.env.STALE_WARN_SECONDS || "120")) * 1000;
-const ackLateMs = Math.max(1, Number(process.env.DISPATCH_ACK_LATE_SECONDS || "30")) * 1000;
-const pendingStaleMs = Math.max(1, Number(process.env.PENDING_DISPATCH_STALE_SECONDS || "120")) * 1000;
-const nowMs = Date.now();
+// Per [HOOK-LAST]: hook is observation-only. Detailed runtime-state diagnosis is
+// owned by team-lead via session-boot Monitoring Sequence + agents/team-lead.md
+// RPA-3/RPA-9. Emit a single bare cue and let the lead read procedure-state +
+// classify the runtime situation against the canonical truth-rules.md ladder.
+const stateFile = String(process.env.PROCEDURE_STATE_FILE || "");
+let stateExists = false;
+try { stateExists = fs.statSync(stateFile).isFile(); } catch {}
 
-const readJson = (filePath, fallback = {}) => {
-  try {
-    const raw = fs.readFileSync(filePath, "utf8").trim();
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
-const readLines = (filePath) => {
-  try {
-    return fs.readFileSync(filePath, "utf8").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-  } catch {
-    return [];
-  }
-};
-
-const normalize = (value) => String(value || "").trim().toLowerCase();
-
-const parseIso = (value) => {
-  const ts = Date.parse(String(value || "").trim());
-  return Number.isFinite(ts) ? ts : null;
-};
-
-const procedureState = readJson(process.env.PROCEDURE_STATE_FILE || "", {});
-const focusWorkers = [
-  procedureState.lastPendingWorker,
-  procedureState.lastClaimedWorker,
-  procedureState.lastDispatchWorker,
-]
-  .map(normalize)
-  .filter(Boolean);
-
-const idleRows = readLines(process.env.WORKER_IDLE_NOTICE_FILE || "").map((line) => {
-  const [worker = "", reason = "", completedStatus = "", completedTask = ""] = line.split("|");
-  return {
-    worker: normalize(worker),
-    reason: normalize(reason),
-    completedStatus: String(completedStatus || "").trim(),
-    completedTask: String(completedTask || "").trim(),
-  };
-});
-
-const latestReports = new Map();
-for (const line of readLines(process.env.WORKER_REPORT_LEDGER || "")) {
-  let row;
-  try {
-    row = JSON.parse(line);
-  } catch {
-    continue;
-  }
-  const worker = normalize(row.senderName);
-  const timestamp = String(row.timestamp || "");
-  if (!worker || !timestamp) continue;
-  const current = latestReports.get(worker);
-  if (!current || timestamp >= current.timestamp) {
-    latestReports.set(worker, {
-      worker,
-      timestamp,
-      messageClass: normalize(row.messageClass),
-    });
-  }
-}
-
-const pendingAckRows = readLines(process.env.WORKER_DISPATCH_ACK_PENDING_FILE || "").map((line) => {
-  const parts = line.split("|").map((value) => value.trim());
-  if (parts.length >= 2) {
-    return {
-      timestamp: parts[0],
-      worker: normalize(parts[1]),
-    };
-  }
-  return { timestamp: "", worker: normalize(parts[0]) };
-}).filter((row) => row.worker);
-
-const latestPermissionRequest = (() => {
-  const runtimeHomeRoot = String(process.env.RUNTIME_HOME_ROOT || path.dirname(process.env.LOG_DIR || "")).trim();
-  const teamsRoot = path.join(runtimeHomeRoot, "teams");
-  if (!teamsRoot || !fs.existsSync(teamsRoot)) return null;
-  let latest = null;
-  for (const entry of fs.readdirSync(teamsRoot, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
-    const inboxPath = path.join(teamsRoot, entry.name, "inboxes", "team-lead.json");
-    if (!fs.existsSync(inboxPath)) continue;
-    let rows;
-    try {
-      rows = JSON.parse(fs.readFileSync(inboxPath, "utf8"));
-    } catch {
-      continue;
-    }
-    if (!Array.isArray(rows)) continue;
-    for (const row of rows) {
-      if (!row || typeof row !== "object") continue;
-      let payload;
-      try {
-        payload = JSON.parse(String(row.text || ""));
-      } catch {
-        continue;
-      }
-      if (!payload || payload.type !== "permission_request") continue;
-      const worker = normalize(payload.agent_id || payload.agentId || payload.from || row.from);
-      const timestamp = String(row.timestamp || payload.timestamp || "");
-      if (!worker || !timestamp) continue;
-      if (!latest || timestamp >= latest.timestamp) {
-        latest = { worker, timestamp };
-      }
-    }
-  }
-  return latest;
-})();
-
-const focusWorker = (() => {
-  for (const worker of focusWorkers) {
-    if (worker) return worker;
-  }
-  const pendingWorker = pendingAckRows[0]?.worker;
-  if (pendingWorker) return pendingWorker;
-  const idleWorker = idleRows[0]?.worker;
-  if (idleWorker) return idleWorker;
-  return "";
-})();
-
-const idleByWorker = new Map(idleRows.map((row) => [row.worker, row]));
-const priorityReason = (reason) => {
-  switch (reason) {
-    case "working-permission-pending":
-      return 1;
-    case "standby":
-      return 2;
-    case "working-blocked":
-      return 3;
-    case "scope-pressure-resolution":
-      return 4;
-    case "working-report-missing":
-      return 5;
-    case "dispatch-pending-no-ack":
-      return 6;
-    default:
-      return 99;
-  }
-};
-
-const selectedIdle = (() => {
-  if (focusWorker && idleByWorker.has(focusWorker)) return idleByWorker.get(focusWorker);
-  return [...idleRows].sort((a, b) => priorityReason(a.reason) - priorityReason(b.reason))[0] || null;
-})();
-
-const emit = (ctx) => {
-  if (ctx) process.stdout.write(ctx);
-};
-
-if (selectedIdle) {
-  const worker = selectedIdle.worker || "agent";
-  switch (selectedIdle.reason) {
-    case "working-permission-pending":
-      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-permission-pending for ${worker}. Evidence surface: pending permission. Owner cue: permission surface before stronger status or completion claim. File existence is not completion evidence.`);
-      process.exit(0);
-    case "standby":
-      emit(`CTX: runtime-recovery-evidence. Status-like turn sees completion-grade output for ${worker}. Evidence surface: lifecycle-decision pending with REQUESTED-LIFECYCLE. Owner cue: lifecycle decision stays separate from unrelated dispatch.`);
-      process.exit(0);
-    case "working-blocked":
-      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-blocked for ${worker}. Evidence surface: blocker. Owner cue: blocker resolution or smallest partial-result request. File existence is not completion evidence.`);
-      process.exit(0);
-    case "scope-pressure-resolution":
-      emit(`CTX: runtime-recovery-evidence. Status-like turn matches scope-pressure-resolution for ${worker}. Evidence surface: structured objection. Owner cue: classify packet-correction, route-replan, or parallel-continue and resolve through the smallest lawful owner.`);
-      process.exit(0);
-    case "working-report-missing":
-      emit(`CTX: runtime-recovery-evidence. Status-like turn matches working-report-missing for ${worker}. Evidence surface: missing upward report. Owner cue: bounded status or partial-result request before replacement; redispatch, reroute, or replacement needs work-planning. File existence is artifact-change evidence only, not handoff/completion evidence.`);
-      process.exit(0);
-    case "dispatch-pending-no-ack":
-      // Prefer the pending-state path below because it can distinguish ack-late vs stale.
-      break;
-  }
-}
-
-const pendingWorker = normalize(procedureState.lastPendingWorker || procedureState.lastDispatchWorker || "");
-const pendingAck = pendingAckRows.find((row) => row.worker === pendingWorker) || pendingAckRows[0] || null;
-if (normalize(procedureState.teamDispatchState) === "pending" && pendingAck) {
-  const sinceMs = parseIso(procedureState.lastPendingSince || procedureState.lastDispatchAt || pendingAck.timestamp);
-  const ageMs = sinceMs == null ? null : Math.max(0, nowMs - sinceMs);
-  if (ageMs != null && ageMs >= pendingStaleMs) {
-    emit(`CTX: runtime-recovery-evidence. Status-like turn matches pending-dispatch-stale-cue for ${pendingAck.worker}. Evidence surface: stale pending dispatch signal, not ghost proof. Owner cue: same-assignment follow-up, wait, and assigned-surface activity/side-effect check; replacement only after both response and activity evidence are absent.`);
-    process.exit(0);
-  }
-  if (ageMs != null && ageMs >= ackLateMs) {
-    emit(`CTX: runtime-recovery-evidence. Status-like turn matches ack-late for ${pendingAck.worker}. Evidence surface: late receipt condition. Owner cue: same-assignment receipt follow-up; no agent-start claim.`);
-    process.exit(0);
-  }
-  emit(`CTX: runtime-recovery-evidence. Status-like turn sees dispatch-pending for ${pendingAck.worker}. Evidence surface: pending dispatch only. Owner cue: same-assignment receipt follow-up; no active-work claim.`);
-  process.exit(0);
-}
-
-const claimedWorker = normalize(procedureState.lastClaimedWorker || procedureState.lastDispatchWorker || "");
-const latestReport = claimedWorker ? latestReports.get(claimedWorker) : null;
-if (latestReport) {
-  if (latestReport.messageClass === "blocker") {
-    emit(`CTX: runtime-recovery-evidence. Status-like turn sees latest agent report 'blocker' from ${claimedWorker}. Evidence surface: blocker report. Owner cue: blocker resolution or smallest partial-result request.`);
-    process.exit(0);
-  }
-
-  if (latestPermissionRequest && latestPermissionRequest.worker === claimedWorker) {
-    const permissionMs = parseIso(latestPermissionRequest.timestamp);
-    const reportMs = parseIso(latestReport.timestamp);
-    const dispatchMs = parseIso(procedureState.lastDispatchAt);
-    if ((permissionMs != null) && (dispatchMs == null || permissionMs >= dispatchMs) && (reportMs == null || permissionMs >= reportMs)) {
-      emit(`CTX: runtime-recovery-evidence. Status-like turn sees working-permission-pending for ${claimedWorker}. Evidence surface: pending permission after dispatch. Owner cue: permission surface before stronger status or completion claim. File existence is not completion evidence.`);
-      process.exit(0);
-    }
-  }
-
-  if (["dispatch-ack", "status"].includes(latestReport.messageClass)) {
-    const reportMs = parseIso(latestReport.timestamp);
-    const ageMs = reportMs == null ? null : Math.max(0, nowMs - reportMs);
-    if (ageMs != null && ageMs >= staleWarnMs) {
-      emit(`CTX: runtime-recovery-evidence. Status-like turn sees active-stall candidate on ${claimedWorker}: agent-start evidence exists, but latest upward report (${latestReport.messageClass}) is stale. Evidence surface: stale report. Owner cue: bounded status or partial-result request before replacement; replacement or redispatch needs work-planning. File existence is not completion evidence.`);
-      process.exit(0);
-    }
-  }
+if (stateExists) {
+  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then surface one primary truth per RPA-9 (verified result / blocker / next action / dispatch pending / closeout residual). Hook ledgers are observation only per task-execution/references/truth-rules.md.");
+} else {
+  process.stdout.write("CTX: status-like prompt. Owner cue: no procedure-state present; report only verified next action or blocker per agents/team-lead.md RPA-9 single-primary-surface rule.");
 }
 NODE
 }
