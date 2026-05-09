@@ -24,7 +24,7 @@ Hard rules:
 - Every non-final synthesis resolves to exactly one next executable owner/action, bounded redispatch basis, or `HOLD`.
 - If synthesis points to a next lane or next consequential step, run `SV-RESULT` on both the synthesized result and proposed next owner/action before re-dispatch.
 - When synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]` before declaring positive synthesis.
-- Apply the `references/cross-continuity.md` synthesis-time gate before consuming parallel-lane handoffs.
+- Apply the `.claude/skills/work-planning/references/cross-continuity.md` synthesis-time gate before consuming parallel-lane handoffs.
 - When handoff evidence indicates parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch, open `session-boot` `Monitoring Sequence` proactive team-composition reassessment before re-dispatch; otherwise continue without the extra gate.
 - After FAR `FINAL-REJECT`, the next synthesis consumes the assigned-validator correction packet and team-lead-classified route before the next FAR or workflow `Complete`.
 
@@ -57,6 +57,7 @@ Hard rules:
 - Clean closeout stays silent or one-line. Warning-bearing closeout stays short: exact residual state, exact hold reason, and next recovery surface only.
 - Internal templates named `Verification Output Format`, `Internal Planning Record`, and `Progress Update Surface` are internal handoff only; do not surface them unless explicitly asked.
 - For lead-owned internal basis artifacts, expose path/status only; use decision-complete records or dispatch packets focused on producer use.
+### Routine-Gate Continuation
 - Satisfied gates, phase transitions, status questions, long convergence loops, interrupt returns, rejection routes, and routine review offers execute or continue through the next owner/action; user-facing review/proceed prompts stay internal unless the user requested review, explicit approval is required, or a verified user-owned blocker exists.
 - Intermediate commit, push, build, or other infrastructure milestone is not a phase boundary; multi-round/multi-batch deliverables continue through the next round in the same segment without `PHASE-RESULT` emission, status prose, or `next action: continue X` announcement; the only user-facing surface change inside such a sweep is a verified deliverable-completion `FINAL`, a true `blocker`, or an explicit `closeout residual`.
 - `FINAL` is valid only on zero-residual deliverable convergence: every queued / remaining / residual item is patched, owner-deferred with explicit follow-up assignment, or proven out-of-scope with cited basis. A `FINAL` surface that itself lists residual / queued / remaining-items is recurrence-proof of non-convergence and is forbidden; continue execution until the queue is empty before any `FINAL`.

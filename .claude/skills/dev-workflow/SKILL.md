@@ -10,9 +10,8 @@ PRIMARY-OWNER: team-lead
   1. `Activation Criteria`
   2. `Workflow Core Law`
   3. Phase sections (Phase 0-5) in order
-  4. Reference-owned workflow sections:
-     - `Checkpoints`, `Phase Transition Gates`, `Artifact Convergence Advisory`, `Review Convergence Advisory`, `Final Acceptance Review`
-     - `Context Anchor`, `Decision Record Chain`, `Lane Responsibility Map`, `Incident Response`, `Gap Detection And YAGNI Review`
+  4. Reference-owned workflow sections (active references in `references/`):
+     - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Advisory`, `Review Convergence Advisory`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
      - `Phase Cursor Consumption`, `Related Skills`, `Delivery Spine`, `Self-Growth And Structural Feedback`
 - New top-level phase definitions require governance review.
@@ -174,8 +173,6 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by current root-cause classification and active workflow basis until the gap converges, escalates, or reaches `HOLD`.
 **Exit law**: executable user-facing deliverables require operator-delivery closure before `FINAL-ACCEPT` and `Complete`; missing, broken, unverified, or mismatched operator-delivery closure becomes `FINAL-REJECT`.
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
-
-> Checkpoints, Phase Transition Gates, Context Anchor, Decision Record Chain, Lane Responsibility Map, Incident Response, and Gap Detection And YAGNI Review: see the direct files in `references/` named below.
 
 ## Reference-Owned Workflow Sections
 Load triggered references directly from `SKILL.md`.

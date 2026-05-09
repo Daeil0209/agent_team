@@ -96,11 +96,12 @@ Hand off when downstream owners can see what kind of tool is being built, how th
 
 Do not hand off a generic feature list as a pattern packet.
 Do not use this skill to override stronger business, evidence, architecture, document, engineering, math, visual, proof, or validation contracts.
+## Operational Discipline
+- Freeze pattern-family fit and benchmark basis before pattern adoption; ad-hoc family selection without benchmark or destination-fit basis is a defect.
+- Tighten an existing pattern family before authoring a new family.
+- Operator-surface contract (single-action launch, hidden non-operator surfaces, symmetric termination, explicit exit affordance) is verdict-critical when the deliverable runs locally for the operator.
+- Persistence, import, and export contracts must be explicit in the pattern packet; hidden state, missing resume path, missing import/export path, or completion without artifact is a tool-pattern defect, not a polish item.
+- Proof-oracle fitness is acceptance-critical: every pattern packet names the oracle that closes the in-scope visible workflow / calculation / validation against the frozen `SCOPE-BASELINE`.
 ## Role-Scoped Structural Feedback
 - Challenge sheet-shaped UI, disconnected report generation, hidden state, missing resume path, missing import/export path, completion without artifact, and demo-only proof when the user asked for an operational tool.
 - State the broken tool pattern, why it harms operator use or proof, and the smallest corrective pattern rewrite.
-## Role-Scoped Self-Growth Loop
-- Confirmed repeated work-tool pattern misses, capability gaps, or proof-oracle failures route to `self-growth-sequence` for recurrence-barrier ownership.
-- Ordinary benchmark-backed pattern maintenance or family expansion without confirmed recurrence routes through `update-upgrade-sequence`.
-- Repeated misses become pattern-family additions only after benchmark basis, destination fit, and proof-oracle value are verified.
-- Prefer tightening an existing pattern family before adding another family.

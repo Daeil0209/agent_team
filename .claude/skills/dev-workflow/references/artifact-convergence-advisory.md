@@ -46,22 +46,20 @@ Missing required path records `fail-open:blocked_by_config`.
 
 ## Dual Review
 1. Assigned artifact producer writes or revises the canonical artifact from the frozen owner basis.
-2. team-lead own-review and Codex advisory may run in parallel, but team-lead own-review basis (inspected surfaces, skill basis, axes, findings or `none`, next-phase risk) must be recorded before any Codex output is read or used; the first Codex packet in a pass must not include team-lead findings, verdict, or suggested fixes.
-3. team-lead reviews independently and consumes material specialist skills that shape the artifact.
-4. team-lead sends a bounded read-only Codex packet.
-5. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
-6. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
-7. Codex axes must include user-perspective and user-convenience checks.
-8. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
-9. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
-10. team-lead reconciles team-lead and Codex findings point-by-point.
-11. Accept a point only against artifact evidence, doctrine, or frozen request basis.
-12. Accepted findings enter team-lead redesign as inputs.
-13. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
-14. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
-15. `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only; Codex finding lists stay in the advisory record.
-16. Assigned artifact producer updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
-17. After each revision, repeat steps 2-16 while material convergence value remains.
+2. team-lead own-review and Codex advisory run in parallel, with three discipline rules: (a) team-lead own-review basis (inspected surfaces, material specialist skills consumed that shape the artifact, axes, findings or `none`, next-phase risk) is recorded before any Codex output is read or used; (b) the first Codex packet in a pass uses canonical paths per `Packet` section above and must not include team-lead findings, verdict, or suggested fixes; (c) artifact-producer or developer self-review is input only and never satisfies team-lead own-review basis.
+3. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
+4. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
+5. Codex axes must include user-perspective and user-convenience checks.
+6. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
+7. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
+8. team-lead reconciles team-lead and Codex findings point-by-point.
+9. Accept a point only against artifact evidence, doctrine, or frozen request basis.
+10. Accepted findings enter team-lead redesign as inputs.
+11. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
+12. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
+13. `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only; Codex finding lists stay in the advisory record.
+14. Assigned artifact producer updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
+15. After each revision, repeat steps 2-14 while material convergence value remains.
 
 Artifact-producer or developer self-review is input only.
 It never satisfies team-lead own-review basis.

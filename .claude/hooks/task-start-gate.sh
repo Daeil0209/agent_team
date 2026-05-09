@@ -80,16 +80,6 @@ mark_post_wp_action_after_planning() {
   date -u '+%Y-%m-%dT%H:%M:%SZ' > "$POST_WP_ACTION_MARKER"
 }
 
-planning_preflight_block() {
-  local tool_name="${1:-tool}"
-  local next_step="${2:-Skill(work-planning) -> retry}"
-  printf 'PROCEDURE WARNING: fresh-turn preflight sequence incomplete. Detail: %s should not run before observed Skill(work-planning) when the turn opens or changes a consequential boundary. Same-boundary continuation stays with the active workflow owner; hooks do not validate workflow continuation packet fields. Next first tools: %s.' "$tool_name" "$next_step"
-}
-
-self_growth_block() {
-  printf 'BLOCKED: self-growth entry required. Detail: current session has confirmed or escalated correction debt. Next: Skill(self-growth-sequence) -> stabilize the request basis -> continue consequential work.'
-}
-
 self_growth_gate_applies_to_tool() {
   local tool_name="${1:-}"
   case "$tool_name" in
@@ -188,12 +178,6 @@ NODE
     team-lead|lead|supervisor) return 0 ;;
     *) return 1 ;;
   esac
-}
-
-worker_dispatch_ack_block_reason() {
-  local tool_name="${1:-tool}"
-
-  printf 'BLOCKED: agent dispatch-ack required. Detail: %s must not run before the agent sends assignment receipt to team-lead. Next: SendMessage(to: "team-lead", message: "MESSAGE-CLASS: dispatch-ack\nWORK-SURFACE: <assignment surface>\nACK-STATUS: accepted\nPLANNING-BASIS: loading\nTASK-ID: <assigned-id>"). Include TASK-ID only when active task tracking assigned one.' "$tool_name"
 }
 
 lead_sendmessage_is_worker_cleanup_control() {
@@ -579,28 +563,6 @@ NODE
       ;;
     *)
       return 1
-      ;;
-  esac
-}
-
-lead_preflight_block_reason() {
-  local tool_name="${1:-tool}"
-
-  case "$tool_name" in
-    Agent|SendMessage)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> lifecycle/reuse check -> retry dispatch/reuse"
-      ;;
-    TaskCreate)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> freeze task purpose, owner, output surface, and acceptance basis -> retry task creation"
-      ;;
-    TaskUpdate|TaskStop)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> confirm task id from TaskList or task_assignment -> retry task mutation -> resume any pending workflow/development cursor"
-      ;;
-    TeamDelete|CronDelete)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> confirm closeout/teardown readiness -> retry"
-      ;;
-    *)
-      planning_preflight_block "$tool_name" "Skill(work-planning) -> retry with the tool-specific preflight complete"
       ;;
   esac
 }
