@@ -37,19 +37,10 @@ Common finding basis:
 - Only `patch-worthiness: must-fix|narrow-fix` is patch-dispatch basis; `observe|no-patch` stays retained context.
 - Common finding-class taxonomy (used by reviewer, review-verification, and validator-input findings): `confirmed-defect` (live evidence proves design-intent conflict, negative operating effect, causal path, correction owner), `risk-hypothesis` (plausible risk lacks enough proof for patch dispatch), `design-tradeoff` (intentional protection with a cost), `duplication` (repeated meaning without protected local-restatement basis), `protected-restatement` (repeated meaning needed for isolated owner readability), `non-issue` (evidence disproves the concern), `unverified` (evidence basis incomplete).
 
-`RESOURCE-CLEANUP` reports whether stateful tool sessions opened during lane work were closed at handoff.
-Stateful sessions include Playwright MCP browser sessions, dev servers, proof background processes, temporary fixture files, locked resources, and equivalent runtime state.
-Use `RESOURCE-CLEANUP: complete` only with a brief enumeration of what was closed.
-Use `RESOURCE-CLEANUP: not-applicable (no stateful resource opened)` only when the lane truly invoked no stateful spawn.
-Leaving an MCP browser session, dev server, or other stateful tool open at handoff is a `RESOURCE-CLEANUP` defect.
-`complete` requires explicit enumeration of every spawned long-running process actually killed.
-For processes, enumerate server PID plus port, daemon PID, or dev-runner PID.
-`complete` also requires a post-cleanup verification that ports and resources are released.
-Bare `complete` without enumeration and post-cleanup probe is a `RESOURCE-CLEANUP` defect.
-If the lane ran any launch script, dev server, test harness, or browser session, `not-applicable` is forbidden.
-Leaving a long-running server process bound to an operator-facing port is an operator-surface launch risk.
-Team-lead must reject completion-grade reports that claim `not-applicable` when verification or smoke-test work required process spawning.
-Team-lead must reject `complete` without enumeration and post-cleanup probe.
+`RESOURCE-CLEANUP` reports whether long-running spawned resources opened during lane work were closed at handoff. Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes. Transient short-lived invocations (one-off linter, single-pass test harness, fixture file already removed) are not long-running resources for this field.
+- `RESOURCE-CLEANUP: complete` requires explicit enumeration of every long-running resource actually killed (server PID + port, daemon PID, or dev-runner PID) plus a post-cleanup verification that ports and resources are released.
+- `RESOURCE-CLEANUP: not-applicable (no long-running resource opened)` is allowed only when the lane invoked no long-running spawn; transient invocations may report `not-applicable` truthfully.
+- Leaving any long-running spawned process at handoff is a `RESOURCE-CLEANUP` defect; team-lead rejects completion-grade reports that misuse `not-applicable` to cover an unkilled long-running resource or a bare `complete` without enumeration and post-cleanup probe.
 
 Lane docs may require bounded additions, but they must not weaken or replace this common result spine.
 Handoff names selected non-lane-core skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.

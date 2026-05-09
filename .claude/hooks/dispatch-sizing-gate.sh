@@ -69,62 +69,6 @@ dispatch_sizing_block() {
   printf 'BLOCKED: dispatch preflight incomplete. Detail: %s. Next: %s.' "$detail" "$next_step"
 }
 
-phase3_dispatch_scope_tags() {
-  local scope_blob="${1-}"
-  local normalized=""
-  local tags=()
-
-  normalized="$(printf '%s' "$scope_blob" | tr '[:upper:]' '[:lower:]')"
-
-  if printf '%s' "$normalized" | grep -qE '(^|[^a-z])frontend/|frontend/\*\*'; then
-    tags+=("frontend")
-  fi
-  if printf '%s' "$normalized" | grep -qE 'backend/\*\*|backend/modules/|/modules/\*\*|feature-modules'; then
-    tags+=("feature-modules")
-  fi
-  if printf '%s' "$normalized" | grep -qE 'backend/\*\*|backend/core/|/core/\*\*|shared core|alembic|run\.ps1|run\.sh'; then
-    tags+=("shared-core")
-  fi
-
-  if [[ "${#tags[@]}" -eq 0 ]]; then
-    return 0
-  fi
-
-  printf '%s\n' "${tags[@]}" | awk '!seen[$0]++'
-}
-
-phase3_parallel_basis_declared() {
-  local split_basis_norm="${1-}"
-  local parallel_groups_norm="${2-}"
-
-  printf '%s\n%s\n' "$split_basis_norm" "$parallel_groups_norm" | grep -qiE 'parallel|병렬|split|batch|lane'
-}
-
-phase3_has_concrete_serial_blocker() {
-  local blockers_norm="${1-}"
-
-  [[ -n "$blockers_norm" && "$blockers_norm" != "none" ]]
-}
-
-phase3_parallel_developer_requires_concrete_name() {
-  local active_workflow_norm="${1-}"
-  local current_phase_norm="${2-}"
-  local target_lane="${3-}"
-  local target_name="${4-}"
-  local split_basis_norm="${5-}"
-  local parallel_groups_norm="${6-}"
-  local dispatch_blockers_norm="${7-}"
-
-  [[ "$active_workflow_norm" == "dev-workflow" ]] || return 1
-  [[ "$current_phase_norm" == *"phase 3"* ]] || return 1
-  [[ "$current_phase_norm" == *"implementation"* ]] || return 1
-  [[ "$target_lane" == "developer" ]] || return 1
-  [[ "$target_name" == "developer" ]] || return 1
-  phase3_parallel_basis_declared "$split_basis_norm" "$parallel_groups_norm" || return 1
-  phase3_has_concrete_serial_blocker "$dispatch_blockers_norm" && return 1
-  return 0
-}
-
 idle_pending_recovery_step() {
   local worker_summary="${1-}"
   local primary_worker=""
@@ -242,30 +186,9 @@ SPLIT_BASIS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRI
 DISPATCH_BLOCKERS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "DISPATCH-BLOCKERS" 2>/dev/null || true)")"
 WRITE_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
 
-if phase3_parallel_developer_requires_concrete_name \
-  "$ACTIVE_WORKFLOW_NORM" \
-  "$CURRENT_PHASE_NORM" \
-  "$TARGET_LANE" \
-  "$TARGET_NAME" \
-  "$SPLIT_BASIS_NORM" \
-  "$PARALLEL_GROUPS_NORM" \
-  "$DISPATCH_BLOCKERS_NORM"; then
-  emit_dispatch_warning "Phase 3 parallel developer dispatch uses bare agent name 'developer' while same-capability parallel work benefits from concrete identities. Prefer a concrete developer name from AGENT-MAP or reuse the matching existing developer with assignment-grade SendMessage after work-planning."
-fi
-
-if [[ "$ACTIVE_WORKFLOW_NORM" == "dev-workflow" ]] \
-  && [[ "$CURRENT_PHASE_NORM" == *"phase 3"* ]] \
-  && [[ "$CURRENT_PHASE_NORM" == *"implementation"* ]] \
-  && [[ "$TARGET_LANE" == "developer" ]] \
-  && phase3_parallel_basis_declared "$SPLIT_BASIS_NORM" "$PARALLEL_GROUPS_NORM" \
-  && ! phase3_has_concrete_serial_blocker "$DISPATCH_BLOCKERS_NORM"; then
-  mapfile -t _phase3_scope_tags < <(phase3_dispatch_scope_tags "$WRITE_SCOPE_RAW")
-  if [[ "${#_phase3_scope_tags[@]}" -ge 2 ]]; then
-    _phase3_scope_summary="$(printf '%s, ' "${_phase3_scope_tags[@]}")"
-    _phase3_scope_summary="${_phase3_scope_summary%, }"
-    emit_dispatch_warning "Phase 3 implementation packet spans multiple independently ownable lanes (${_phase3_scope_summary}) while dispatch basis already declares a parallel split. Prefer lane-bounded developer packets, or record the exact blocker keeping those lanes serial in DISPATCH-BLOCKERS."
-  fi
-fi
+# Phase-3 / dev-workflow-specific dispatch advisory removed per F-G-7 — workflow doctrine
+# (work-planning + dev-workflow + task-execution packet preflight) owns those concerns.
+# Hook stays pinpoint per CLAUDE.md [HOOK-LAST] / MANIFEST hard-deny ledger.
 
 # Sharded researcher dispatches are intentionally parallel runtime instances.
 # The hook recognizes them only by explicit shard identity fields because packet
