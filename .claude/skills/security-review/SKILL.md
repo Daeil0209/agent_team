@@ -44,13 +44,10 @@ Hand off only when the next owner can tell whether the surface is blocked.
 The handoff must name what class of vulnerability exists.
 The handoff must name what bounded fix path must be re-reviewed.
 Fix implementation requires independent verification.
-## Deliverable Quality Philosophy Application
-- A single detection signal is not enough.
-- Corroborate findings before classification.
-- **request fit and deliverable fit**: surface hidden security constraints before they become production vulnerabilities.
+## Operational Discipline
+- A single detection signal is not enough; corroborate findings before classification.
+- Surface hidden security constraints before they become production vulnerabilities.
 ## Role-Scoped Structural Feedback
 - Challenge weak auth, validation, secret handling, or dependency hygiene.
 - State which security surface is weak and the smallest corrective rewrite.
 - Silence when the security review frame is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-- Repeated auth, input-validation, or secret-handling misses harden the security review checklist and routing rules.

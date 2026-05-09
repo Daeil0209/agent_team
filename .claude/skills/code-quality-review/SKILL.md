@@ -48,11 +48,8 @@ Return a code-quality-review packet.
 It must include finding class, affected surface, severity, bounded rewrite, and escalation target when architecture ownership is needed.
 ## Handoff Boundary
 Hand off only when the next owner can tell whether the issue is implementation-level quality debt, architecture debt, or already resolved by bounded rewrite.
-## Deliverable Quality Philosophy Application
-- Code structure must be reviewed at the skeleton level before detail-level review.
-- **Communication And Reporting Law**: code-quality-review findings must be actionable on the actual codebase and runtime path.
-## Role-Scoped Self-Growth Loop
-- Track repeated SOLID violations and duplication taxonomy misclassifications across sessions.
-- When the same defect class recurs, escalate to `team-lead` as a capability-gap signal for checklist or boundary hardening.
-## Structural Feedback To Upstream
+## Operational Discipline
+- Review code structure at the skeleton level before detail-level review.
+- Findings must be actionable on the actual codebase and runtime path.
+## Role-Scoped Structural Feedback
 - Signal to `team-lead` when structural debt signals suggest upstream design or scope-freeze gaps.

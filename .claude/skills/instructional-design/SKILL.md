@@ -57,16 +57,12 @@ Keep explanation object explicit.
 Keep prerequisite map explicit.
 Keep reveal order explicit.
 Keep longer pedagogical catalogs and worked-example detail in `references/pedagogy-detail.md`.
-## Deliverable Quality Philosophy Application
-- **user-fit delivery**: learner burden is the primary constraint.
-- Over-dense teaching material is a structural defect.
-- **user-fit delivery**: overview, core content, and mastery-level detail remain distinct density layers.
-- **[USER-SURFACE]**: every educational visual must serve one pedagogical role.
-- Curriculum and lesson structure must be frozen before bulk content generation.
+## Operational Discipline
+- Learner burden is the primary constraint; over-dense teaching material is a structural defect.
+- Overview, core content, and mastery-level detail remain distinct density layers.
+- Every educational visual serves one pedagogical role.
+- Freeze curriculum and lesson structure before bulk content generation.
 ## Role-Scoped Structural Feedback
 - Challenge weak prerequisite ordering, pacing, cognitive load, or explanation flow.
 - State which learning transition is broken and the smallest corrective rewrite.
 - Silence when pedagogical sequencing is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-Apply the active `Self-Growth Sequence`.
-- Repeated prerequisite-order, pacing, or worked-example failures harden instructional gates for this role.

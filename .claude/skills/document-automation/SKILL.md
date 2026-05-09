@@ -72,15 +72,12 @@ Keep mandatory-vs-optional regions explicit.
 Keep reader job per major section explicit.
 Keep the downstream rendered-review path explicit.
 Keep longer concept-cascade and pre-generation gate detail in `references/document-generation-detail.md`.
-## Deliverable Quality Philosophy Application
-- **request fit and deliverable fit**: a polished document that answers the wrong reader job still fails.
-- Document type and answer-first structure must be frozen before bulk generation.
-- **Communication And Reporting Law**: generated structure and connective prose report as structure/prose, not outcome proof.
-- **user-fit delivery**: the governing answer must surface early.
-- Buried answers are hierarchy defects.
+## Operational Discipline
+- A polished document that answers the wrong reader job still fails.
+- Freeze document type and answer-first structure before bulk generation.
+- Generated structure and connective prose report as structure/prose, not outcome proof.
+- The governing answer surfaces early; buried answers are hierarchy defects.
 ## Role-Scoped Structural Feedback
 - Challenge weak structure, weak evidence boundaries, or reader-job drift.
 - State which document contract is broken and the smallest corrective rewrite.
 - Silence when document structure is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-- Repeated structure drift, evidence-fabrication risk, or concept-skeleton misses harden the pre-generation gate.

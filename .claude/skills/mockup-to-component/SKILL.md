@@ -42,10 +42,8 @@ It covers component boundaries, slot map, token bridge, prop contracts, and any 
 ## Handoff Boundary
 Hand off only when framework implementation can proceed without rediscovering structure.
 Keep detailed examples and JSON simulation patterns in `references/component-conversion-examples.md`.
-## Deliverable Quality Philosophy Application
-- **[USER-SURFACE]**: conversion must preserve the visual intent of the mockup.
-- Component boundaries, prop contracts, and token bridges must be frozen before framework implementation.
+## Operational Discipline
+- Conversion preserves the visual intent of the mockup.
+- Freeze component boundaries, prop contracts, and token bridges before framework implementation.
 ## Role-Scoped Structural Feedback
 - Signal mockup-to-component fidelity gaps, missing token bridges, or weak component boundary definition.
-## Role-Scoped Self-Growth Loop
-- Repeated boundary, slot, or prop-contract drift hardens conversion checklists and bridge rules.

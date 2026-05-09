@@ -76,6 +76,7 @@ Treat source lookup, memory, Codex/reviewer input, and internal judgment as evid
   7. required `self-verification` report/redispatch gate
 - Missing triggered-owner consumption is a procedural defect; redundant reload of an already-loaded current owner is procedure bloat.
 - Drive every active consequential planning, dispatch, benchmark, self-growth, interrupt, review, proof, validation, rejection, or status outcome to verified result, `HOLD`/blocker, explicit cancel/redirect, or the next executable owner/action.
+- Intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; continue to the next round/owner/action in the same segment without user-facing checkpoint, status prose, or `next action: continue X` emission. Status questions from the user are stall-exposure cues only and continue through the same resume action.
 - Follow consequential phase/stage boundary path: `work-planning -> frozen workflow/sequence owner when present -> task-execution or bounded execution -> synthesis -> SV-RESULT` for report, closeout, or synthesis-driven redispatch.
 - Dispatch before actual boundary `work-planning` reopens the missing owner.
 - `team-routing candidate` or `ambiguous-route` opens `task-execution` after `work-planning`.

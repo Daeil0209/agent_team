@@ -197,18 +197,14 @@ If the answer fails, Codex reports a clarity gap.
 The gap is a planning, review, implementation, proof, or validation risk according to owner path.
 It is not cosmetic wording feedback.
 
-## Deliverable Quality Philosophy Application
-- **[GOV-MIN]**: clarity work reduces ambiguity, duplication, or hidden burden while avoiding ornamental procedure.
-- **[PRES-FIRST]**: meaning is preserved before wording is improved.
-- **[USER-SURFACE]**: user-facing deliverables must explain the real user path, not only internal construction.
-- **[NO-NEEDLESS-ASK]**: choose the best evidence-backed rewrite or owner route for ordinary wording choices.
+## Operational Discipline
+- Clarity work reduces ambiguity, duplication, or hidden burden while avoiding ornamental procedure.
+- Meaning is preserved before wording is improved.
+- User-facing deliverables explain the real user path, not only internal construction.
+- Choose the best evidence-backed rewrite or owner route for ordinary wording choices.
 - If the clarity finding changes scope, owner, acceptance, or claim strength, return that pressure to the owning procedure.
 
 ## Role-Scoped Structural Feedback
 - Challenge vague terms, compressed sentences, missing actors, missing completion path, unexplained jargon, and reader-burden transfer.
 - State the smallest rewrite or owner route that preserves meaning.
 - Silence when explanation failure hides a real delivery or review gap is a lane failure.
-
-## Role-Scoped Self-Growth Loop
-Apply the active `Self-Growth Sequence`.
-- Repeated unclear-rule, half-delivered-scope, hidden-assumption, or dense-sentence failures harden the narrowest owner surface.

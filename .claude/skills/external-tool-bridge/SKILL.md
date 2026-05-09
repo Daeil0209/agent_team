@@ -117,15 +117,10 @@ Required rules:
 - Name the smallest corrective rewrite.
 - Avoidable local-first tasks stay local-first.
 - Silence when the external bridge contract is structurally weak is a lane failure.
-## Deliverable Quality Philosophy Application
-Role-specific application:
-- **[USER-SURFACE]**: integration must serve the end-user workflow, not just connect technical endpoints.
-- User-visible integration must be designed from user perspective first.
-- **request fit and deliverable fit**: surface hidden integration constraints before bridge design, not after failure.
-- Hidden constraints include rate limits, timeout behaviors, retry policies, and user-visible error clarity.
-- **Communication And Reporting Law**: integration test results must reflect actual execution.
-- Mocked simulations report as simulations only.
-- Simulation-only evidence exits as blocked or `UNVERIFIED` per `CLAUDE.md` `### Role And Acceptance Law`.
+## Operational Discipline
+- Integration serves the end-user workflow, not just technical endpoints; user-visible integration is designed from user perspective first.
+- Surface hidden integration constraints (rate limits, timeout behaviors, retry policies, user-visible error clarity) before bridge design, not after failure.
+- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or `UNVERIFIED` per `CLAUDE.md` `### Role And Acceptance Law`.
 ## Role-Scoped Self-Growth Loop
 - Repeated bridge failure without adequate fallback → strengthen fallback requirement rules and pre-verification gates
 - External dependency chosen when local-first path was credible → strengthen local-first decision gate and add specific bypass justification requirements

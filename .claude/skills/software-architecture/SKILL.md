@@ -92,12 +92,11 @@ Expert behavior means the software can be built without discovering its core con
 - Silence when software design structure is weak is a lane failure.
 - `peer advice` is allowed for bounded interface/contract alignment.
 - Bounded intervention preserves explicit cross-file ownership and boundary changes.
-## Deliverable Quality Philosophy Application
-- **request fit and deliverable fit**: every module boundary and interface contract must be evaluated against declared purpose before freezing.
-- Entity/object hierarchy, relationship contracts, usage/data flow, and UI surfaces must freeze in that order.
-- Skipping to UI before the skeleton is credible is a blocking architecture finding.
-- **[EVI-ASSUM]**: context collection is mandatory architecture input. Missing context analysis remains an architecture gap.
-- **[USER-SURFACE]**: architecture that requires documentation to be usable has an operability defect.
+## Operational Discipline
+- Every module boundary and interface contract must be evaluated against declared purpose before freezing.
+- Entity/object hierarchy, relationship contracts, usage/data flow, and UI surfaces must freeze in that order; skipping to UI before the skeleton is credible is a blocking architecture finding.
+- Context collection is mandatory architecture input; missing context analysis remains an architecture gap.
+- Architecture that requires documentation to be usable has an operability defect.
 ## Operator-Workflow Regression Guard
 - Require one canonical app root.
 - Require one canonical launcher path.

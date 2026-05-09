@@ -71,14 +71,12 @@ Parameterizable ambiguity is different.
 When all observed cases can be represented without data loss, asking is a defect.
 Record a configurable rule or assumption and continue.
 Keep CRUD completeness, destructive action, rollover, import-conflict, and stale-warning catalogs in `references/domain-rule-catalog.md`.
-## Deliverable Quality Philosophy Application
-- **request fit and deliverable fit**: extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.
-- **[USER-DELIVERY-FIT]**: audience, authority tier, and operational setting are mandatory inputs, not optional enrichment.
-- **request fit and deliverable fit**: freeze the workflow purpose before screen or element enumeration.
-- **user-fit delivery**: when multiple audiences exist, their density and privilege differences must stay explicit.
+## Operational Discipline
+- Extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.
+- Audience, authority tier, and operational setting are mandatory inputs, not optional enrichment.
+- Freeze the workflow purpose before screen or element enumeration.
+- When multiple audiences exist, their density and privilege differences stay explicit.
 ## Role-Scoped Structural Feedback
 - Challenge weak workflow states, approval paths, mutation rules, or authority boundaries.
 - State which rule or transition is broken, the operational failure it causes, and the smallest corrective rewrite.
 - Silence when the business contract is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-- Repeated workflow-state, CRUD, or authority misses harden business-rule extraction gates and blocker rules.

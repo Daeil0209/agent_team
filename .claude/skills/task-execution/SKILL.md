@@ -134,19 +134,16 @@ Keep dispatch execution internal and runtime truth narrow.
 User-facing dispatch text, when needed, states only `dispatch pending`, blocker, or next owner/action.
 Keep `TeamCreate`, task creation, packet assembly, skill/reference loads, member addressing, receipt handling, and runtime ladders internal unless the user explicitly asks for runtime internals.
 
-Runtime-only truth ladder:
-- standalone `Agent` success -> synchronous returned result, not team-runtime `dispatch pending`
-- `TeamCreate` success -> `team exists`
-- team-scoped `Agent` or assignment-grade `SendMessage` success with open executable task state when tracking is active -> `dispatch pending`
-- `dispatch-ack` -> receipt only
-- agent-originated progress or first real agent action -> `agent started`
+The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
-Therefore:
+Reporting consequences:
 - report `agent started` only from agent-originated progress or first real agent action
 - report `dispatch pending` once when assignment success first creates that truth
 - if only planning is frozen, report only the next action
 - if team-agent runtime creation succeeded but no agent dispatch followed yet, keep `team exists` internal and report only the next dispatch move unless the user explicitly asks for runtime state
 - if dispatch succeeded but start evidence is absent after `dispatch pending` was already reported, keep no-change events internal and recover through receipt/execution follow-up
+
+Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.

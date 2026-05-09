@@ -45,14 +45,11 @@ It covers derivation accuracy, notation consistency, assumption chain, domain of
 ## Handoff Boundary
 Route unresolved issues explicitly to `engineering-grounding`, `instructional-design`, `reviewer`, or `tester`.
 Formula-heavy human-facing outputs still need both math review and rendered review.
-## Deliverable Quality Philosophy Application
-- **Communication And Reporting Law**: unverified numerical or symbolic results report as unverified.
-- **[USER-SURFACE]**: plots, equation layouts, and math visuals must be readable and correctly labeled.
+## Operational Discipline
+- Unverified numerical or symbolic results report as unverified.
+- Plots, equation layouts, and math visuals must be readable and correctly labeled.
 - Critical calculations need an independent cross-check path.
 ## Role-Scoped Structural Feedback
 - Challenge weak derivation order, notation, proof assumptions, or equation contracts.
 - State which derivation edge is broken and the smallest corrective rewrite.
 - Silence when mathematical structure is weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-Apply the active `Self-Growth Sequence`.
-- Repeated notation ambiguity, skipped derivations, or weak assumption handling harden derivation and proof gates.

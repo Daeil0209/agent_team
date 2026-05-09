@@ -147,15 +147,11 @@ Omitted material spec items stay `OPEN-SURFACES` until corrected or owner-deferr
 - Name why the operator will struggle.
 - Name the smallest corrective rewrite.
 - Silence when operator-facing composition is structurally weak is a lane failure.
-## Deliverable Quality Philosophy Application
-- **request fit and deliverable fit**: visual composition must serve the operator's actual task, decision, or reading job.
-- Attractive layout obscuring the active job remains a purpose failure.
-- **[USER-DELIVERY-FIT]**: rendered surfaces must adapt to workflow context, viewport constraints, and usage density.
-- Ignoring real operator context remains a context defect.
-- **[USER-SURFACE]**: every visual treatment must convey state, hierarchy, comparison, or action meaning.
-- Decoration without operational information is visual noise.
-- **user-fit delivery**: layout must make scan path and priority obvious at first glance.
-- Equal visual weight across unequal states, actions, or evidence is a hierarchy defect.
+## Operational Discipline
+- Visual composition serves the operator's actual task, decision, or reading job; attractive layout obscuring the active job remains a purpose failure.
+- Rendered surfaces adapt to workflow context, viewport constraints, and usage density; ignoring real operator context remains a context defect.
+- Every visual treatment conveys state, hierarchy, comparison, or action meaning; decoration without operational information is visual noise.
+- Layout makes scan path and priority obvious at first glance; equal visual weight across unequal states, actions, or evidence is a hierarchy defect.
 ## Operator-Workflow Regression Guard
 - Reject `design_rationale_leakage`: live UI copy must guide current task/state/warning/next step, not explain why the designer created the screen.
 - Treat `render_contract_mismatch` as structural blocker: if class names, render hooks, or style targets no longer align, surface is not visually shippable.

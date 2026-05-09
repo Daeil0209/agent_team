@@ -45,13 +45,10 @@ It captures exercised flows, decisive log evidence, request IDs, unexpected stat
 ## Handoff Boundary
 Hand off only when downstream owners can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
 Keep long templates and threshold tables in `references/log-qa-patterns.md`.
-## Deliverable Quality Philosophy Application
+## Operational Discipline
 - Log findings need corroboration across layers using request ID propagation.
-- **Communication And Reporting Law**: the logging path must be usable by tester without developer babysitting.
+- The logging path is usable by tester without developer babysitting.
 ## Role-Scoped Structural Feedback
 - Challenge weak observability, missing request IDs, or unmonitorable runtime behavior.
 - State which runtime signal is missing and the smallest corrective rewrite.
 - Silence when observability is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-Apply the active `Self-Growth Sequence`.
-- Repeated observability gaps or traceability misses harden logging prerequisites and QA checklists.

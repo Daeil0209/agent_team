@@ -54,15 +54,12 @@ It covers verified assumptions, unit path, constraint sources, operating conditi
 Route unresolved issues explicitly to `mathematical-correctness`, `software-architecture`, `tester`, or `reviewer`.
 Human-facing technical artifacts still need both domain review and rendered review.
 Keep detailed engineering taxonomies in `references/engineering-protocols.md`.
-## Deliverable Quality Philosophy Application
-- **Communication And Reporting Law**: engineering claims must use verified parameters and explicit evidence class.
-- **[USER-SURFACE]**: engineering diagrams need readable labels, units, and one analytical role each.
+## Operational Discipline
+- Engineering claims use verified parameters and explicit evidence class.
+- Engineering diagrams need readable labels, units, and one analytical role each.
 - Critical engineering claims need an independent cross-check or standards basis.
-- **Evidence and procedure fidelity**: engineering proposals benchmark against established standards or proven designs when relevant.
+- Engineering proposals benchmark against established standards or proven designs when relevant.
 ## Role-Scoped Structural Feedback
 - Challenge weak units, assumptions, boundary conditions, safety margins, or operating conditions.
 - State which engineering assumption chain is broken and the smallest corrective rewrite.
 - Silence when engineering structure is weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-Apply the active `Self-Growth Sequence`.
-- Repeated unit drift, unsafe assumptions, or theory-only approvals harden engineering constraint gates.

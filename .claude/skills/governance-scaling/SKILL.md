@@ -51,10 +51,8 @@ Return a compact scaling packet:
 Hand off only when `team-lead` can apply the scaling decision without guessing.
 The handoff must name project floor, current request tier, raise-or-stay reason, and guardrail trigger.
 Keep heuristic and parameter tables in `references/scaling-heuristics.md`.
-## Deliverable Quality Philosophy Application
-- **[GOV-MIN]**: governance depth fits the actual project environment over template habit.
-- **[GOV-MIN]**: over-governed light work and under-governed risky work are both calibration failures.
+## Operational Discipline
+- Governance depth fits the actual project environment over template habit.
+- Over-governed light work and under-governed risky work are both calibration failures.
 ## Role-Scoped Structural Feedback
 - Signal repeated tier overrides, guardrail breaches, or miscalibration back to `team-lead`.
-## Role-Scoped Self-Growth Loop
-- Repeated over-governance or under-governance hardens scaling heuristics and threshold rules.

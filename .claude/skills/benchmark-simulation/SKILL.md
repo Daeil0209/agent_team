@@ -250,13 +250,11 @@ Unless the user requested a benchmark report as the final deliverable, benchmark
 When benchmark evidence identifies a confirmed recurring specialist capability gap, hand off to `self-growth-sequence` for recurrence-barrier or capability-gap ownership.
 When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement without confirmed recurrence, hand off to `update-upgrade-sequence`.
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
-## Deliverable Quality Philosophy Application
-- **Evidence and procedure fidelity**: comparative output without a fair baseline or external calibration must stay explicitly low-confidence.
-- Benchmark claims need corroboration or at least explicit cross-check status before they are treated as decision-ready.
-- **Communication And Reporting Law**: simulated projections report as projections.
+## Operational Discipline
+- Comparative output without a fair baseline or external calibration stays explicitly low-confidence.
+- Benchmark claims need corroboration or explicit cross-check status before being decision-ready.
+- Simulated projections report as projections.
 ## Role-Scoped Structural Feedback
 - Challenge weak comparison frames, unfair baselines, or forced conclusions.
 - State which scenario, metric, or fairness condition is broken and the smallest corrective rewrite.
 - Silence when benchmark framing is structurally weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-- Repeated unfair comparisons or uncorroborated benchmark claims harden benchmark gating and fairness rules.

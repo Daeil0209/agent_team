@@ -52,3 +52,9 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Trigger: emitting P0/WP/SV fields, skill loads, runtime, lane internals, convergence tables, advisory payloads, or internal artifact bodies/diffs to the user without explicit user request.
 - Owning rule: `agents/team-lead.md` RPA-9 and RPA-10.
 - Correction owner: collapse to one truth surface and keep procedure scaffolding internal.
+
+### Routine Status Stop
+- Trigger: emitting user-facing PHASE-RESULT, status prose, "next action: continue X" message, or routine progress claim during in-flight multi-round/multi-batch work where the next action is the same-segment continuation of the same deliverable, and treating that emission as a checkpoint that pauses execution.
+- Specifically: intermediate commit, push, or git milestone is not a phase boundary; status questions ("are you done?", "what's the status?") are stall-exposure cues only, not resume-permission gates; naming `next action` instead of executing it when the executor is the same owner is `[AUTO-PROC]` non-compliance.
+- Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 (drive every active outcome to verified result/HOLD/cancel/next-executable), RPA-9 (no new or changed primary surface means internal turn), RPA-10 (MID-FLIGHT silent), RPA-12 (resume from interrupt without permission); `references/synthesis-reporting.md` Routine-Gate Continuation.
+- Correction owner: continue execution through the named next action in the same segment; suspend user-facing prose until the deliverable converges, a true blocker emerges, or the user explicitly cancels/redirects.

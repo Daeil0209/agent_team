@@ -50,11 +50,8 @@ It covers Layer 1 primitives, Layer 2 core components, Layer 3 composites, consu
 ## Handoff Boundary
 Hand off only when downstream implementation can consume tokens without rediscovering layer rules.
 Keep platform tools, examples, and checklist detail in `references/platform-implementation.md`.
-## Deliverable Quality Philosophy Application
-- Token architecture layers must be frozen before component authoring begins.
-- **[USER-SURFACE]**: token values must be visually verifiable in a rendered component catalog, not only in source files.
-## Role-Scoped Self-Growth Loop
-- Track repeated token consistency defects across sessions.
-- When the same defect class recurs, escalate to `team-lead` as a capability-gap signal for checklist or boundary hardening.
-## Structural Feedback To Upstream
+## Operational Discipline
+- Freeze token architecture layers before component authoring begins.
+- Token values must be visually verifiable in a rendered component catalog, not only in source files.
+## Role-Scoped Structural Feedback
 - Signal to `team-lead` when cross-platform token gaps or component-layer violations suggest upstream design-system scope or tooling gaps.

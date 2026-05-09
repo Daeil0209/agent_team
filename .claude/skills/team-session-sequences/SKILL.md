@@ -36,12 +36,7 @@ Use these procedures when the corresponding sequence is materially in play.
 
 ## Sequence Activation Discipline
 
-- When a session sequence is materially active, name that sequence explicitly in control updates.
-- Keep the current phase, checkpoint, or blocking step visible enough that the next update can be interpreted against the same active sequence.
-- Active sequence switches require an explicit sequence transition.
-- Defined session procedures follow the owning rule for optionality.
-- Build plans, owner maps, and sequencing decisions from loaded doctrine and owner-local procedure files.
-- If the governing procedure cannot be pointed to cleanly, keep the lane on `HOLD` until the procedure basis is explicit.
+Canonical Sequence Activation Discipline is owned by `.claude/skills/session-boot/SKILL.md`.
 
 ### Reference Map
 
@@ -59,27 +54,7 @@ Load trigger-specific files directly from `SKILL.md`.
 
 Canonical runtime decision rules live in `.claude/skills/session-boot/SKILL.md` `Mode Split`.
 Closeout state rules live in `.claude/skills/session-closeout/SKILL.md`.
-
-There are two operating cases:
-
-1. Lead-managed session without explicit team runtime
-- Use lead-local work only when the frozen route allows it.
-- Treat standalone `Agent` results, if already present, as fallback evidence rather than lane dispatch.
-- Configured lane team-runtime delegation requires explicit team runtime.
-- Skip `TeamCreate` only for a frozen lead-local route with no additional-agent work.
-- Skip session cron registration only when no active team runtime exists.
-
-2. Explicit team-runtime session
-- Use the full `Boot Sequence`.
-- Team lifecycle, `SendMessage`, monitoring rules, and closeout cleanup all apply.
-- Recurring health-check registration is conditional on the active runtime policy or tracked runtime configuration.
-
-Use explicit team runtime when active runtime policy, existing live runtime, or frozen route needs shared team coordination.
-The lead-managed no-runtime case remains lawful when no shared team runtime is needed.
-Standalone-agent results remain fallback evidence only; they are not configured lane dispatch.
-Neither case is valid when team mailbox, shared task state, lifecycle monitoring, or sustained teammate coordination is required.
-
-When the current runtime is ambiguous, the lead must resolve that ambiguity before production fan-out.
+When the current runtime is ambiguous, the lead resolves that ambiguity per session-boot `Mode Split` before production fan-out.
 
 
 ## Boot Sequence
@@ -94,98 +69,21 @@ When the current runtime is ambiguous, the lead must resolve that ambiguity befo
 
 The `Monitoring Sequence` general procedure is owned by `.claude/skills/session-boot/SKILL.md`.
 Canonical lifecycle vocabulary is owned by `.claude/skills/session-boot/references/runtime-state-detail.md`.
-Use `references/monitoring-lifecycle-detail.md` for lead-side runtime-signal, lifecycle, manifest, health-check, stale-response, runtime-pressure, and task-identity detail.
+Lead-side runtime-signal, lifecycle, manifest, health-check, stale-response, runtime-pressure, and task-identity detail are owned by `references/monitoring-lifecycle-detail.md`.
 
-Hard surface:
-- Runtime signals are observation evidence, not governance state or completion proof.
-- Agent lifecycle is message-first.
-- Completion requests a governing decision.
-- Auto-standby, replacement, or removal requires a governing decision.
-- Reuse is preferred only when workload, availability, context fit, owner safety, and frozen parallel shape support it.
-- Manifest-dependent execution needs pre-dispatch manifest review and explicit write scope before fan-out.
+### Lead-Side Dispatch Index
 
-### Pre-Dispatch Readiness Pointer
+This file is an index, not a second enforcement gate. Each entry below names a dispatch concern and points at its canonical owner.
 
-Do not run a separate readiness gate from this surface.
-Planning-level readiness stays with `.claude/skills/work-planning/references/execution-readiness.md`.
-Assignment packet preflight stays with `.claude/skills/task-execution/references/assignment-packet.md`.
-Use `references/pre-dispatch-verification.md` only as a non-authoritative index to those owners.
-The dispatch readiness index preserves goal alignment, alternative routing, agent-charter fit, scope boundary, prior-analysis handoff, prerequisite completeness, and failure path coverage as required readiness meaning.
-
-### Task Decomposition Protocol
-
-When work spans a broad file set, decompose before dispatch using `references/task-decomposition.md`.
-Also decompose when work needs both investigation and judgment.
-Also decompose when work crosses multiple categories or otherwise risks overload.
-Every child dispatch must carry split basis, child boundary, excluded boundary, done condition, and return form.
-Those fields must support merge, reroute, or hold decisions without memory.
-
-### Dispatch Packet Compliance
-
-Before sending a dispatch, verify structured fields against the target lane role.
-Verify them against the lane-core skill.
-Verify them against the `task-execution` packet contract.
-Use `references/dispatch-packet-compliance.md` as the session-side lookup for controlled values and presence hints.
-Cross-lane base schema stays with `.claude/skills/task-execution/references/assignment-packet.md`.
-Common message classes, field format, and packet preflight stay with `.claude/skills/task-execution/references/message-classes.md`.
-Lane-specific packet additions are owned by the target lane-core skill and lane-detail reference.
-Lane role documents remain always-loaded identity, boundary, and stop-condition spines.
-Hooks can warn or guard runtime integrity.
-Hooks are not the primary owner of normal packet behavior.
-
-### Agent Load Guard
-
-Each dispatch must stay focused and single-purpose.
-Each dispatch must stay within the sizing bounds in `references/agent-load-guard.md`.
-If a dispatch exceeds those bounds, decompose before sending.
-Single-agent critical path requires frozen serial basis.
-
-### Dispatch execution contract
-
-Apply `references/dispatch-execution-contract.md` before assignment-grade dispatch or reuse.
-Keep request-fit packet -> deliverable shape -> phase intent -> staffing choice in that order.
-Mixed-purpose prompts split by owner.
-Split research, main-body draft, merge-compress, final acceptance, review, and validation verdict into their owning prompts.
-Preserve downstream review/proof/validation ownership explicitly in developer or implementation packets.
-
-### Parallel Shard And Merge Protocol
-
-When one parent task is split across multiple agents, freeze the parent packet before full fan-out.
-Freeze one explicit `MERGE-OWNER` before full fan-out.
-Apply `references/parallel-shard-merge.md`.
-Shards must be non-overlapping at the active work surface.
-Merge is its own phase-intent.
-Route one authoritative integrated output forward.
-Acceptance lanes receive the authoritative integrated output.
-
-### Task identity rule
-Use `references/monitoring-lifecycle-detail.md` for task identity, agent communication, and peer challenge detail.
-Hard rule: task ids, agent names, and agent-scoped communication are distinct.
-Task identity comes from task evidence, not guessed agent identity.
-
-### Consequential Upward Handoff Block
-
-For consequential upward runtime-lane reports, `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` must satisfy `.claude/skills/task-execution/references/completion-handoff.md` first.
-`references/upward-handoff.md` adds the session-readable lane block and monotonic state rules.
-Exact `MESSAGE-CLASS: hold|blocker` uses the blocker-native fields in `.claude/skills/task-execution/references/message-classes.md`.
-Include enough context for team-lead to correct, replan, continue independent lanes, or report a true blocker.
-Missing required fields block synthesis.
-Preserve lane-owned state monotonically.
-Strengthened state requires a fresh explicit owning-lane report or stronger evidence on the same lane surface.
-
-### Health-check standard
-Use `references/monitoring-lifecycle-detail.md` for health-check and cron detail.
-`hook-config.sh` owns literal cadence/threshold values.
-Monitoring text references configured values instead of copying them.
-
-### Stale-response rule
-Use `references/monitoring-lifecycle-detail.md` for stale-response detail.
-Stale signals are observational only.
-Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan rather than silent hope.
-
-### Runtime-pressure rule
-Use `references/monitoring-lifecycle-detail.md` for runtime-pressure detail.
-Session-closeout authority and message-first lifecycle decisions require current live-agent basis.
+- Pre-dispatch readiness — `.claude/skills/work-planning/references/execution-readiness.md` (planning-level readiness) and `.claude/skills/task-execution/references/assignment-packet.md` (packet preflight); `references/pre-dispatch-verification.md` is a non-authoritative index of goal alignment, alternative routing, agent-charter fit, scope boundary, prior-analysis handoff, prerequisite completeness, and failure-path coverage.
+- Task decomposition — `references/task-decomposition.md` for split basis, child boundary, excluded boundary, done condition, and return form.
+- Dispatch packet compliance — `.claude/skills/task-execution/references/{assignment-packet.md, message-classes.md}` (cross-lane schema and packet preflight); lane-specific additions are owned by the target lane-core skill and lane-detail reference; `references/dispatch-packet-compliance.md` provides session-side controlled-value lookup.
+- Agent load guard — `references/agent-load-guard.md` for sizing bounds and serial-basis requirement.
+- Dispatch execution contract — `references/dispatch-execution-contract.md` for request-fit-packet → deliverable-shape → phase-intent → staffing-choice ordering and mixed-purpose split discipline.
+- Parallel shard and merge — `references/parallel-shard-merge.md` for parent-packet freeze, MERGE-OWNER, shard non-overlap, and integrated-output routing.
+- Task identity — `references/monitoring-lifecycle-detail.md`; task ids, agent names, and agent-scoped communication are distinct, and task identity comes from task evidence, not guessed agent identity.
+- Consequential upward handoff — `.claude/skills/task-execution/references/completion-handoff.md` (handoff/completion contract) and `.claude/skills/task-execution/references/message-classes.md` (blocker-native fields); `references/upward-handoff.md` adds session-readable lane block and monotonic-state rules.
+- Health-check, stale-response, and runtime-pressure — `references/monitoring-lifecycle-detail.md`; `hook-config.sh` owns literal cadence/threshold values.
 
 ## Closeout Sequence
 

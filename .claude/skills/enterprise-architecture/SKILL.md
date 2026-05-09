@@ -61,12 +61,10 @@ Keep checklist tables and anti-pattern catalogs in `references/architecture-revi
 - repository interfaces stay abstract and inward-facing
 - composition-root responsibility stays explicit
 - shared modules stay dependency-free and non-circular
-## Deliverable Quality Philosophy Application
+## Operational Discipline
 - Freeze the architecture skeleton before bulk implementation.
-- **[USER-SURFACE]**: architecture must be deployable and operable in the target environment, not only theoretically elegant.
+- Architecture must be deployable and operable in the target environment, not only theoretically elegant.
 ## Role-Scoped Structural Feedback
 - Challenge weak layer boundaries, bounded-context drift, missing design-doc gates, or anti-pattern normalization.
 - State which boundary or readiness gate is broken and the smallest corrective rewrite.
 - Silence when enterprise architecture structure is weak is a lane failure.
-## Role-Scoped Self-Growth Loop
-- Repeated layer leakage, skipped design-doc gates, or anti-pattern normalization harden architecture checklists or readiness gates.

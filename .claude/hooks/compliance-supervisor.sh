@@ -60,23 +60,6 @@ is_governance_restricted_write_path() {
   esac
 }
 
-is_disallowed_generated_output_path() {
-  local candidate_path="${1-}"
-  [[ -n "$candidate_path" ]] || return 1
-  local workspace_root rel
-  workspace_root="$(resolve_project_root 2>/dev/null)"
-  [[ -n "$workspace_root" ]] || return 1
-
-  case "$candidate_path" in
-    "$workspace_root"/outputs|"$workspace_root"/outputs/*|"$workspace_root"/backups|"$workspace_root"/backups/*|"$workspace_root"/.playwright-mcp|"$workspace_root"/.playwright-mcp/*)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
 is_hook_runtime_artifact_path() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
@@ -473,44 +456,6 @@ bounded_generated_reset_scaffold_command() {
   COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" node "$HOOK_LIB_DIR/generated-command-policy.js" reset-scaffold
 }
 
-command_targets_disallowed_generated_output_root() {
-  local cmd="${1-}"
-  local project_root=""
-  [[ -n "$cmd" ]] || return 1
-
-  project_root="$(resolve_project_root)"
-  COMMAND_TEXT="$cmd" PROJECT_ROOT="$project_root" HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" node <<'NODE'
-const path = require("path");
-
-const command = String(process.env.COMMAND_TEXT || "");
-const root = path.resolve(String(process.env.PROJECT_ROOT || process.cwd()));
-if (!/(^|[;\s])(mkdir|touch|cp|mv|install|tee)([;\s]|$)|>{1,2}/.test(command)) {
-  process.exit(1);
-}
-
-const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
-function isDisallowed(candidate) {
-  if (!candidate || candidate.startsWith("-")) return false;
-  if (/[$`*?\[\]{}<>|;&\n\r]/.test(candidate)) return false;
-  const resolved = path.resolve(root, candidate);
-  const relative = path.relative(root, resolved).replace(/\\/g, "/");
-  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) return false;
-  return relative === "outputs" ||
-    relative.startsWith("outputs/") ||
-    relative === "backups" ||
-    relative.startsWith("backups/") ||
-    relative === ".playwright-mcp" ||
-    relative.startsWith(".playwright-mcp/");
-}
-
-const words = tokenize(command);
-for (const word of words) {
-  if (isDisallowed(word)) process.exit(0);
-}
-process.exit(1);
-NODE
-}
-
 user_approved_delete_subcommand() {
   local cmd="${1-}"
   local sanitized_cmd=""
@@ -889,9 +834,6 @@ fi
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0
 	      fi
-		      if is_disallowed_generated_output_path "$CANONICAL_PATH"; then
-		        emit_warning "Task-created output should use repository-root projects/<project-folder>/... or a user/config-approved output root. outputs/, backups/, and .playwright-mcp/ are noncanonical warning surfaces unless the active task froze them."
-		      fi
 	      # Retired-skill-reference.md anti-pattern is a structural concern, not a hard-deny danger.
 	      # Owner doctrine (update-upgrade-sequence + skill-introduction reference) governs that case.
 	      # Hook stays pinpoint per CLAUDE.md [HOOK-LAST] / MANIFEST hard-deny list.
@@ -1003,9 +945,6 @@ fi
 	      emit_deny "Interpreter-based mutation of protected filesystem surfaces is blocked. Use structured file tools for governance/reference edits or keep generated output inside the approved project root."
 	      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "interpreter-fs-mutation" || true
 	      exit 0
-	    fi
-	    if command_targets_disallowed_generated_output_root "$CLEAN_COMMAND"; then
-	      emit_warning "Task-created output should use repository-root projects/<project-folder>/... or a user/config-approved output root. outputs/, backups/, and .playwright-mcp/ are noncanonical warning surfaces unless the active task froze them."
 	    fi
 	    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
 	      if validate_compound_command "$CLEAN_COMMAND" allowed_package_or_build_command; then
