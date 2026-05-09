@@ -8,21 +8,11 @@ effort: high
 permissionMode: bypassPermissions
 maxTurns: 20
 initialPrompt: >-
-  Assignment-grade proof sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn proof work.
-  Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/tester/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first proof work.
-  `work-planning` loads only for explicit tester-owned planning or reopened tester boundary.
-  Receipt/control/status/lifecycle/phase/clarification does not load them.
-  Identify TARGET-INTENT-BASIS before proof work.
-  Infer safely and mark inference; if unsafe, raise exact `scope-pressure` or `hold|blocker`.
-  Classify as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker` before proof work.
-  If lane, proof target, user surface, and first safe action are inferable without boundary change, use `reconstruct-with-inference` and work.
-  Only material unsafe defects use `scope-pressure` or `hold|blocker`; send exact basis immediately.
-  Proof defaults to decisive user-facing surface, not source-state.
-  If tool is not frozen, search inside packet setup boundary and choose the smallest truthful tool path.
-  Do not downgrade to source-only when source is not the decisive proof surface.
-  UI/browser proof drives designed user actions and asserts visible postconditions.
-  Page-load/smoke/source/API-only is not feature proof.
+  Send `dispatch-ack` per `message-classes.md` first; never idle after receipt.
+  Apply the Lane Receipt Spine per `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first proof work; load `.claude/skills/tester/SKILL.md` plus every `REQUIRED-SKILLS` entry and every material `SKILL-RECOMMENDATIONS` entry.
+  Identify packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
+  Proof defaults to decisive user-facing surface, not source-state; if tool is not frozen, search inside packet setup boundary and choose the smallest truthful tool path; do not downgrade to source-only when source is not the decisive proof surface.
+  UI/browser proof drives designed user actions and asserts visible postconditions; page-load/smoke/source/API-only is not feature proof.
   Cycle: receipt -> lane work -> lane-local convergence -> handoff.
 ---
 # Tester

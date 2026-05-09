@@ -47,11 +47,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ## Workflow Core Law
 ### 1. Cursor And Owner Truth
-- Phase authority follows the frozen owner map.
-- team-lead owns the workflow cursor from activation until complete, explicit cancel, `HOLD`, or closeout transfer.
+- Phase authority follows the frozen owner map; team-lead owns the workflow cursor from activation until complete, explicit cancel, `HOLD`, or closeout transfer.
 - A phase advances only through team-lead synthesis of the current phase surface.
-- Checkpoints are checkpoint surfaces, not default stop points.
-- team-lead auto-resolves checkpoints when the frozen basis is sufficient.
+- Checkpoints follow `references/checkpoints.md`.
 - Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change forces `HOLD` and owner re-entry.
 
 ### 2. Phase Boundary Cycle
@@ -82,12 +80,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Re-review returns to the same convergence loop after correction.
 
 ### 5. User-Surface Closure And Acceptance
-- Executable user-facing software requires reviewer plus tester in Phase 4.
-- Phase 4/5 evidence must close the whole frozen deliverable contract, not only the parts that already work.
-- Half-delivered software is a blocking defect under `CLAUDE.md` `[USER-DELIVERY-FIT]`.
-- Validator PASS opens Final Acceptance Review for validator-required chains.
-- Low-risk bounded non-executable paths may report `verified result` only through the frozen acceptance path.
-- Formal `PASS/HOLD/FAIL` requires validator.
+- Executable user-facing software requires reviewer plus tester in Phase 4; Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
+- Validator-required chains close through `references/final-acceptance-review.md`; low-risk bounded non-executable paths report only `verified result` through the frozen acceptance path.
 
 ## Phase 0: Discovery (Optional)
 **Purpose**: Resolve missing requirements or reference-fit ambiguity before plan writing begins.
@@ -120,7 +114,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
 **Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, `references/artifact-convergence-advisory.md` must be loaded and completed for that artifact.
-**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`, and names the canonical plan artifact path, team-lead own-review basis, Codex advisory status or lawful fail-open, point-by-point reconciliation result, accepted high/medium issue state, `SV-RESULT` coverage, and next owner/action.
+**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`; field schema is owned by `references/artifact-convergence-advisory.md` Output Record.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
@@ -145,7 +139,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
 **Exit law**: Phase 2 closes only when the artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete; once satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning` and uses the Phase 2 internal detail bundle as the CP4 basis.
-**Exit law**: The Phase 2 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`, and names the design artifact or bundle paths, team-lead own-review basis, Codex advisory status or lawful fail-open, point-by-point reconciliation result, accepted high/medium issue state, `SV-RESULT` coverage, internal detail bundle status, material specialist contract status when required specialist output shapes implementation/proof/acceptance, and executable next owner/action.
+**Exit law**: The Phase 2 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`; field schema (including internal detail bundle status and material specialist contract status when required specialist output shapes implementation/proof/acceptance) is owned by `references/artifact-convergence-advisory.md` Output Record.
 
 ## Phase 3: Implementation
 **Purpose**: Implement the feature inside the resolved design boundary.
@@ -162,24 +156,12 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Purpose**: Execute planned review/proof and map gaps onto the Phase-2-derived correction contract needed for final user-surface acceptance.
 **Owner lanes**: reviewer + tester. Validator joins for verdict arbitration when required
 **Canonical output**: reviewer and tester completion-grade evidence blocks, then validator verdict when the acceptance path requires it
-**Entry law**: implementation handoff and the current plan/design surfaces carry explicit acceptance basis for reviewer and tester
-**Execution law**: planned proof comes first, exploratory expansion second.
-Reviewer and tester remain separate.
-Deliverable-type tool mapping and gap methodology live in `references/phase-surfaces.md` and `references/gap-iteration.md`.
-**Execution law**: proof tooling follows the decisive user surface, not the source artifact alone.
-**Execution law**: executable web/UI proof uses the resolved browser interaction/control inventory through a frozen browser-proof path.
-**Execution law**: tester applies `agents/tester.md` RPA-1 smallest truthful proof default.
-**Execution law**: validator applies `agents/validator.md` RPA-1 highest-fidelity proof default.
-**Execution law**: human-consumed artifacts require actual reader/operator surface proof through native-capable or format-faithful rendered/runtime path.
-**Execution law**: acceptance closes through rendered/runtime surface when layout, pagination, formulas, interaction, or visible burden matter.
-**Execution law**: missing decisive user-surface tooling freezes bounded setup through the appropriate owner or stops on `hold|blocker`.
-**Execution law**: parallel production requires explicit cross-surface contextual coherence review.
-**Execution law**: coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, and computed-surface semantics.
-**Execution law**: per-surface quality without cross-surface coherence is incomplete review.
-**Execution law**: validator includes cross-surface integration verification before PASS.
-**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification.
-**Execution law**: confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
-**Exit law**: CP5 classifies root cause and selects exactly one next path: design-level gap -> Phase 2 design correction; implementation or operator-delivery gap inside unchanged Phase 1/2 contract -> Phase 5 correction; acceptance/verdict-ready surface -> validator ingress or Final Acceptance Review; low-risk bounded non-executable closure -> verified-result; changed scope, owner map, proof chain, or acceptance chain -> `work-planning`; unresolved unsafe state -> `HOLD`.
+**Entry law**: implementation handoff and the current plan/design surfaces carry explicit acceptance basis for reviewer and tester.
+**Execution law**: reviewer and tester remain separate; planned proof comes first, exploratory expansion second.
+**Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4 (tester applies smallest truthful proof default per `agents/tester.md`; validator applies highest-fidelity proof default per `agents/validator.md`); missing decisive user-surface tooling freezes bounded setup or stops on `hold|blocker`.
+**Execution law**: parallel production requires explicit cross-surface contextual coherence review (API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics) and validator cross-surface integration verification before PASS; per-surface quality without cross-surface coherence is incomplete review.
+**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
+**Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.
 **Exit law**: non-validator closure is limited to low-risk bounded non-executable paths and reports only `verified result`.

@@ -8,17 +8,10 @@ effort: high
 permissionMode: bypassPermissions
 maxTurns: 20
 initialPrompt: >-
-  Assignment-grade research sends `dispatch-ack` per `message-classes.md`, then immediately starts same-turn evidence work.
-  Never idle or wait for more team-lead instruction after receipt.
-  Load `.claude/skills/researcher/SKILL.md`, load/apply every `REQUIRED-SKILLS` entry, and select/load/apply every material `SKILL-RECOMMENDATIONS` entry before first evidence work.
-  `work-planning` loads only for explicit researcher-owned planning or reopened researcher boundary.
-  Receipt/control/status/lifecycle/phase/clarification does not load them.
-  Identify TARGET-INTENT-BASIS before evidence work.
-  Infer safely and mark inference; if unsafe, raise exact `scope-pressure` or `hold|blocker`.
-  Evidence-only: classify as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
-  If lane, intent, evidence surface, and first safe action are inferable without boundary change, use `reconstruct-with-inference` and work.
-  Only material unsafe defects use `scope-pressure` or `hold|blocker`; send exact basis immediately.
-  Never absorb drafting, implementation, proof, validation, orchestration, or acceptance.
+  Send `dispatch-ack` per `message-classes.md` first; never idle after receipt.
+  Apply the Lane Receipt Spine per `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first evidence work; load `.claude/skills/researcher/SKILL.md` plus every `REQUIRED-SKILLS` entry and every material `SKILL-RECOMMENDATIONS` entry.
+  Identify packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
+  Evidence-only: never absorb drafting, implementation, proof, validation, orchestration, or acceptance.
   Cycle: receipt -> lane work -> lane-local convergence -> handoff.
 ---
 # Researcher
