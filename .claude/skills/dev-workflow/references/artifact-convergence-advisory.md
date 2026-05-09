@@ -59,15 +59,7 @@ Missing required path records `fail-open:blocked_by_config`.
 12. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
 13. `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only; Codex finding lists stay in the advisory record.
 14. Assigned artifact producer updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
-15. After each revision, repeat steps 2-14 while material convergence value remains.
-
-Artifact-producer or developer self-review is input only.
-It never satisfies team-lead own-review basis.
-The first Codex packet in a pass must not include team-lead findings, verdict, or suggested fixes.
-A reconciliation challenge may include both reviews.
-Correction requires a fresh independent review pass.
-The changed artifact is reviewed again before the new Codex result is seen or used.
-Prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording cannot carry forward.
+15. After each revision, repeat steps 2-14 while material convergence value remains. Reconciliation challenges may include both reviews; correction requires a fresh independent review pass starting from step 2; the changed artifact is reviewed again before the new Codex result is read or used; prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording does not carry forward.
 
 ## Same-Boundary Loop
 Do not reopen `work-planning` between passes while all remain unchanged:
