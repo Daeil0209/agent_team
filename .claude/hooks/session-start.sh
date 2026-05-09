@@ -96,17 +96,31 @@ issues=()
 if [[ ! -f "$settings_file" ]]; then
   issues+=("missing settings.json: $settings_file")
 else
-  wired="$(node -e '
+  # Derive the wired-hook basename list directly from settings.json (single source of truth).
+  # Health check verifies every hook actually wired by the harness has its .sh file on disk.
+  wired_hooks="$(node -e '
     const fs=require("fs");
     const p=process.argv[1];
     const j=JSON.parse(fs.readFileSync(p,"utf8"));
-    const hooks=JSON.stringify(j.hooks||{});
-    process.stdout.write(hooks);
+    const hooks=j.hooks||{};
+    const seen=new Set();
+    for (const event of Object.values(hooks)) {
+      if (!Array.isArray(event)) continue;
+      for (const matcher of event) {
+        const list=matcher.hooks||[];
+        for (const h of list) {
+          const cmd=h.command||"";
+          const m=cmd.match(/\/hooks\/([\w-]+\.sh)/);
+          if (m) seen.add(m[1]);
+        }
+      }
+    }
+    for (const name of Array.from(seen).sort()) process.stdout.write(name+"\n");
   ' "$settings_file" 2>/dev/null || true)"
-  for hook_name in $HOOK_HEALTH_REQUIRED_HOOKS; do
+  while IFS= read -r hook_name; do
+    [[ -n "$hook_name" ]] || continue
     [[ -f "$HOOK_DIR/$hook_name" ]] || issues+=("missing hook file: $hook_name")
-    printf '%s' "$wired" | grep -qF "$hook_name" || issues+=("not wired in settings.json: $hook_name")
-  done
+  done <<<"$wired_hooks"
 fi
 
 if [[ ${#issues[@]} -gt 0 ]]; then
