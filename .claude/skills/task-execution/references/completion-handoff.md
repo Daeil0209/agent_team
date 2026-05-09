@@ -35,6 +35,7 @@ Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, and regression risk.
 - Only `patch-worthiness: must-fix|narrow-fix` is patch-dispatch basis; `observe|no-patch` stays retained context.
+- Common finding-class taxonomy (used by reviewer, review-verification, and validator-input findings): `confirmed-defect` (live evidence proves design-intent conflict, negative operating effect, causal path, correction owner), `risk-hypothesis` (plausible risk lacks enough proof for patch dispatch), `design-tradeoff` (intentional protection with a cost), `duplication` (repeated meaning without protected local-restatement basis), `protected-restatement` (repeated meaning needed for isolated owner readability), `non-issue` (evidence disproves the concern), `unverified` (evidence basis incomplete).
 
 `RESOURCE-CLEANUP` reports whether stateful tool sessions opened during lane work were closed at handoff.
 Stateful sessions include Playwright MCP browser sessions, dev servers, proof background processes, temporary fixture files, locked resources, and equivalent runtime state.

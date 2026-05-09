@@ -166,14 +166,7 @@ Post-patch coherence review is owned by the executing patch sequence's Post-Veri
 When re-engaged, re-read the changed live surfaces, resulting diff, surrounding owner surfaces, and affected references; fix newly found contradiction, dead reference, weakened owner boundary, meaning loss, or procedure drift through the smallest correction path.
 
 ### 11. Classify Findings
-Use these classes:
-- `confirmed-defect`: live evidence proves design-intent conflict, negative operating effect, causal path, and correction owner
-- `risk-hypothesis`: plausible risk lacks enough proof for patch dispatch
-- `design-tradeoff`: intentional protection with a cost
-- `duplication`: repeated meaning without protected local-restatement need
-- `protected-restatement`: repeated meaning needed for isolated owner readability
-- `non-issue`: evidence disproves the concern
-- `unverified`: evidence basis is incomplete
+Use the common finding-class taxonomy defined in `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` (`confirmed-defect`, `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, `unverified`).
 
 ### 12. Decide Patch Worthiness
 Patch recommendations must state protected function, user-outcome impact, regression risk, smallest owner, and operation type.

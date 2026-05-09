@@ -110,12 +110,12 @@ Run each item against the identified security-sensitive surfaces. Record finding
 **Reviewer action:** Flag every outbound network call or URL-consuming operation where the target URL is fully or partially controlled by user input without strict allowlist enforcement. Redirect leaving application domain: T1. Intra-app redirect without path validation: T2.
 ---
 ## 3. Security Severity Framework
-Map all findings to the T0–T3 severity framework defined below.
-| Severity | Label | Action Required |
+Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Advisory mapping in `.claude/skills/reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`. Security findings additionally carry a deployment-block escalation tier T0–T3 to gate release activity:
+| Tier | Reviewer Severity | Action Required |
 |---|---|---|
-| **T0** | System halt | Block deployment immediately; fix required before any further release activity |
-| **T1** | Governance block | Fix before release; blocks the current release gate |
-| **T2** | Quality gate | Fix in current sprint; blocks stage acceptance if 3 or more T2 findings accumulate |
+| **T0** | Critical | Block deployment immediately; fix required before any further release activity |
+| **T1** | Critical / Major | Fix before release; blocks the current release gate |
+| **T2** | Major / Minor | Fix in current sprint; blocks stage acceptance if 3 or more T2 findings accumulate |
 | **T3** | Advisory | Record and schedule; does not block current release |
 **Gate rule:** Any T0 or T1 finding is individually blocking. Three or more T2 findings collectively constitute a blocking condition equivalent to T1.
 ---

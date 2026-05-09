@@ -24,14 +24,14 @@ For executable user-runnable deliverables, the deliverable MUST ship with:
 - Seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
 
 ### Local Web App Launcher Requirements
-Always apply for local-only web apps (Flask, Node, etc.):
-- **Hide server console**: VBS (`WshShell.Run ..., 0`), `pythonw.exe`, etc.
-- **Only 1 visible window — the browser**: auto-open after server start, hide all others
-- **Auto-terminate server when browser closes**: heartbeat-based watchdog
-- **Provide explicit exit button in UI**
-- **Disable debug/reloader**: `debug=False`
-- **Hide warning messages**: hide technical "development server" warnings
-- **Double-click launch**: single file → environment setup → server start → browser open
+Local-only web apps must satisfy this contract regardless of stack:
+- single-action operator launch (e.g., double-click) chains environment setup, server start, and browser open as one operation;
+- only the browser surface is visible to the operator (server console, dev banner, and reloader/debug surfaces are hidden);
+- closing the browser triggers symmetric server termination (heartbeat-based watchdog or equivalent);
+- the UI provides an explicit operator exit affordance;
+- production-only flags are set (debug/reloader off; technical "development server" warnings suppressed).
+
+Tech-stack-specific patterns (Flask + VBS + `pythonw.exe`, Node + nw.js, Tauri, Bun, Electron, etc.) are implementation guidance owned by the developer/researcher lane, not governance.
 
 The named launch artifact itself must be exercised by the operator invocation shape.
 Example: invoking the shipped launcher through the operator's native UI.

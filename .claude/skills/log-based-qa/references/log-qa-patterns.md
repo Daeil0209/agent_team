@@ -57,7 +57,7 @@ Client → API Gateway → Backend → Database
 | `duration_ms > 1000` | **T2** — quality gate | Warning: performance degradation |
 | Missing required log fields | **T3** — advisory | Note for logging infrastructure |
 | `request_id` not propagated across layers | **T3** — advisory | Note for traceability gap |
-> **Severity framework** (used locally): T0=system halt, T1=governance block, T2=quality gate, T3=advisory.
+> **Severity framework**: log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 
 If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps are `blocked proof`, not advisory, until another truthful proof surface is frozen.
 ---

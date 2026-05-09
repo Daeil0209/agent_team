@@ -62,6 +62,8 @@ Every original instruction, accepted follow-up instruction, and frozen `SCOPE-BA
 - real user-surface proof
 - matched, frozen upstream-deferred, or frozen out-of-scope status
 
+Apply only the deliverable-type sub-bundles materially named in `SCOPE-BASELINE` and the frozen Receiver-Surface Contract; mark non-applicable sub-bundles `not-applicable:<basis>`. FAR records sub-bundle selection rationale before reject-first decision so the cumulative axis count fits the actual deliverable rather than rubber-stamping every sub-bundle.
+
 Every material requested axis carries one of:
 - retained matched evidence on the real user surface with Evidence-Quality Matrix support
 - cited frozen upstream-deferral basis
