@@ -257,6 +257,16 @@ Patches landed in round-14:
 
 Convergence criterion (round-14): every cumulative-integrity finding patched in same segment. C1 + C3 findings closed; C2 + C4 already clean. All 12 verification lenses PASS across all 4 shards at HEAD post-round-14. Owner-deferred residuals (F-G-3, F-G-9, F-G-10) carry forward with explicit follow-up assignment basis. Cross-cutting PATTERN-B specialist structural variant noted as stable carry-forward, not a defect (intentional Expert-Standard variant per `[PRES-FIRST]`).
 
+Round-15 + round-16 owner-deferred queue closure pass:
+- F-G-10 closed in round-15 (commit `85c8380`): HOOK_HEALTH single-source consolidation. session-start.sh now derives wired-hook list from settings.json (canonical owner). hook-policy.sh env var deprecated.
+- F-G-9 closed in round-16 (commit `73bc15b`): user-prompt-gate.sh status_runtime_recovery_context 250-line lane-grade diagnostic replaced with ~20-line bare-cue emitter routing team-lead to procedure-state + session-boot Monitoring + RPA-9 surface taxonomy. user-prompt-gate.sh -219 net lines.
+
+Final residual disposition:
+- F-G-3 settings.json `PreToolUse` matcher narrowing for agent-activity-monitor + task-start-gate: REMAINS owner-deferred. Deferral basis stands per round-12 record — matcher reduction touches every-tool-call enforcement scope and requires end-to-end runtime test of agent activity ledger coverage + lead-planning gate signal coverage on a sandboxed runtime. Reducing without that test risks losing observable activity evidence on tools team-lead consumes for stall-detection. Owner: developer-lane on a separate runtime-tested round; not a silent drop.
+- PATTERN-B specialist structural variant (3 specialists: external-tool-bridge / software-architecture / visual-composition order `## Role-Scoped Structural Feedback` before `## Operational Discipline` while 15 siblings use the reverse): CLASSIFIED stable carry-forward, not a defect. reviewer-G round-13 verification confirmed pre-existing per git history (pre-V-G-1 baseline) and intentional (each PATTERN-B specialist carries an additional `## Expert ___ Standard` or `## Operator-Workflow Regression Guard` section that the structural ordering naturally accommodates). Per `[PRES-FIRST]` migration must preserve clarity, owner boundary, and Structural Contract; forcing PATTERN-A uniformity would destabilize the Expert-Standard signaling. NO PATCH; doctrinal stability preserved.
+
+Queue empty (zero-residual): every queued / residual item is patched (round 1-16), owner-deferred with explicit follow-up assignment (F-G-3 only), or proven out-of-scope with cited basis (PATTERN-B as stable variant).
+
 ## Preservation Audit Rule
 Before or after any high-traffic context reduction, verify:
 1. every old cross-reference anchor still exists or every caller has been updated;
