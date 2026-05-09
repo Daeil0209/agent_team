@@ -52,7 +52,9 @@ Use it to prevent these failures:
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
-`team-lead` activates this skill when any material request includes one or more of:
+`team-lead` activates this skill only when review work is held lead-local for cross-surface integrity / design-intent / risk-balance synthesis OR when packetizing review basis for downstream lanes. When the assignment is a bounded reviewer-owned acceptance review, route to the reviewer lane and reviewer SKILL instead.
+
+Activation triggers when the request materially includes one or more of:
 - exhaustive inspection, full review, whole-folder review, or all-surface analysis
 - coherence, consistency, integrity, procedure-adherence, execution-force, or contradiction judgment
 - design intent, team philosophy, or owner-boundary judgment
@@ -90,7 +92,7 @@ Required fields:
 - `PATCH-WORTHINESS`
 - `RECOMMENDED-OWNER`
 - `OPEN-SURFACES`
-- `VERIFICATION-NEED`
+- `DOWNSTREAM-VERIFICATION-NEED`
 
 Use `UNVERIFIED` when the live owner surface, design intent, or evidence basis was not inspected.
 Use absolute zero-risk language only when the frozen acceptance basis makes absolute closure truthful.

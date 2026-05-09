@@ -88,9 +88,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: researcher
 **Canonical output**: evidence-backed requirements summary for team-lead CP1 synthesis
 **Entry law**: activate only when the request, reference, target users, constraints, or success criteria are still materially unclear
-**Execution law**: discovery shape must be explicit: `single`, `lead-skim-then-shards`, or `immediate-shards`.
-**Execution law**: lead skim stays boundary-only.
-**Execution law**: once shard boundaries are explicit, dispatch shards immediately.
+**Execution law**: discovery shape per `references/phase-surfaces.md` Phase 0 Discovery Basis (`single` / `lead-skim-then-shards` / `immediate-shards`).
 **Exit law**: only verified findings or labeled inferences enter CP1.
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its owning phase.
@@ -171,7 +169,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lanes**: correcting owner named by CP5 or validator-authored `FINAL-REJECT` packet -> reviewer/tester re-evidence as required -> validator when final acceptance is still required
 **Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict input, and explicit remaining gap state
 **Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract; design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
-**Execution law**: independent correction surfaces are split by correcting owner and run in parallel when lawful; integrated quick-check and re-verification follow the authoritative corrected output. Positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
+**Execution law**: Phase 5 iteration protocol per `references/gap-iteration.md` `Iteration Protocol Detail`; positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
 **Exit law**: when CP5-contracted blocking gaps are cleared against frozen `SCOPE-BASELINE` with required user-surface evidence, validator PASS immediately opens Final Acceptance Review.
 **Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by current root-cause classification and active workflow basis until the gap converges, escalates, or reaches `HOLD`.
 **Exit law**: executable user-facing deliverables require operator-delivery closure before `FINAL-ACCEPT` and `Complete`; missing, broken, unverified, or mismatched operator-delivery closure becomes `FINAL-REJECT`.

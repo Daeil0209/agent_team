@@ -128,13 +128,6 @@ It does not preserve prior reviewer, Codex, or reconciliation output as current-
 Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record
-Record:
-- trigger basis: `triggered:<basis>` or `not-triggered:<basis>`
-- phase and review target
-- Claude reviewer state: `ready|hold|blocked`
-- Codex advisory state: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
-- accepted/rejected/deferred point counts
-- fallback review basis when fail-open is used
-- stale artifact/proof status
-- next owner/action: correction dispatch, tester, validator, phase advancement, fallback review, or `HOLD`
+Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-convergence-advisory.md` Output Record (artifact path/phase, Codex advisory state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
+- review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
