@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/mockup-to-component/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -71,3 +73,7 @@ const products = await fetch('./data/products.json').then(r => r.json());
 // data/products.json → API schema bridge
 { "data": [{ "id": 1, "name": "...", "price": 10000, "image": "..." }], "pagination": { "page": 1, "limit": 10, "total": 50 } }
 ```
+
+## Next-Action Drive
+- Return mockup structure, component boundaries, data schema, and production-evidence gaps to the active mockup-to-component workflow.
+- If current UI practice, licensing, accessibility, or backend contract affects implementation, refresh evidence or route the gap before conversion continues.

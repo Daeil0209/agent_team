@@ -1,5 +1,7 @@
 # self-growth-sequence: Self-Healing
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -23,3 +25,11 @@ Before declaring a self-growth round complete, keep all of the following explici
 6. the active task resumed under corrected behavior, not pre-correction habit
 
 If one of these remains false, the self-growth round is not closed cleanly.
+
+## Next-Action Drive
+- Justified user correction opens immediate classification.
+- Self-detected behavioral defect opens self-growth classification.
+- Repeated missed-catch opens deeper hardening route.
+- Missing reusable skill opens Capability-Gap Fast Path.
+- Complete closure checklist returns to active task resume.
+- Incomplete closure checklist keeps self-growth open or opens bounded follow-up ownership.

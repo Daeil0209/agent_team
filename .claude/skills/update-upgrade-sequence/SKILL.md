@@ -7,7 +7,7 @@ PRIMARY-OWNER: team-lead
 
 ## Structural Contract
 - Sharpens only its owned sequence surface.
-- Fixed section order: Purpose, Activation, Reference Map, Update/Upgrade Sequence, Skill And Specialist Changes, Constraints
+- Fixed section order: Purpose, Activation, Reference Map, Update/Upgrade Sequence, Skill And Specialist Changes, Constraints, Next-Action Drive
 - PRIMARY-OWNER: team-lead
 - Owns team-system asset update routing.
 - Consumes `self-growth-sequence` `Change Sequence` for patch mechanics.
@@ -86,3 +86,11 @@ Skill names remain only when a packet, route, or activation path needs them.
 - Destructive, security-sensitive, externally committed, or operator-policy-choice actions require operator approval before modification.
 - Reviewed non-destructive governance changes proceed through `.claude/skills/self-growth-sequence/SKILL.md` `Change Sequence` Step 5b `Execution Gate`.
 - Sandbox filesystem approval is technical permission, not governance approval.
+
+## Next-Action Drive
+- Ordinary asset maintenance opens `Update/Upgrade Sequence`.
+- Confirmed recurrence defects open `self-growth-sequence`.
+- Patch mechanics open `self-growth-sequence` `Change Sequence`.
+- Missing triggered reference basis opens blocker-clear, owner reopening, or `HOLD`.
+- Failed post-verify opens the smallest owner correction.
+- Verified asset update opens `SV-RESULT` before consequential reporting.

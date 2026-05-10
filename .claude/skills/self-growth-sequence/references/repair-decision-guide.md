@@ -1,5 +1,7 @@
 # self-growth-sequence: Repair Decision Guide
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -13,3 +15,11 @@ For failure-mode-specific allowed/prohibited responses (non-compliance, weak-own
 4. If no existing lane, skill, or reference can handle the recurring work, use Capability-Gap Fast Path; do not create a new skill for a one-off need.
 
 Before closure, verify: no dead cross-reference, no owner-boundary drift, no weakened proof or acceptance path, no duplicate competing procedure, and no hidden always-loaded context increase.
+
+## Next-Action Drive
+- Missing lookup detail opens owning direct reference update.
+- Packet or handoff omission opens packet owner correction.
+- Low-false-positive deterministic runtime evidence opens hook/settings preflight after semantic owner correction.
+- One-off need returns to owner-surface advisory or packet correction.
+- Reusable capability gap opens Capability-Gap Fast Path.
+- Failed closure verification returns to patch design.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -31,3 +33,7 @@ When deliverable type triggers design-stack composition, follow the phase-aligne
 - skipping a sibling whose phase is materially active = composition defect
 - invoking a sibling whose phase is not active = composition noise
 - letting agents improvise composition by habit = composition drift; the dispatching owner must name composition explicitly
+
+## Next-Action Drive
+- Return the selected skill stack, phase recipe, sibling-owner requirements, and composition defects to the active benchmark-simulation workflow.
+- If composition changes implementation, proof, or iteration ownership, carry the named stack into the next planning, dispatch, or lane packet.

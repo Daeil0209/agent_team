@@ -35,7 +35,7 @@ Activation requires evaluated Codex advisory trigger handling.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
-Field consumption detail stays with `.claude/skills/team-lead/references/planning-consume.md`.
+Field consumption detail stays with `.claude/skills/team-lead/references/planning-field-consume.md`.
 
 `work-planning` selects this workflow when:
 - a development request spans meaningful plan, design, implementation, and analysis phases
@@ -54,16 +54,15 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 ### 2. Phase Boundary Cycle
 - Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> SV-RESULT -> exit law or correct owner`.
 - Before phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, or phase-result reporting, team-lead consumes `references/phase-gates.md` and every mandatory reference named by the active gate.
-- A satisfied phase boundary is consumed in the same execution segment by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
-- Long convergence loops, status questions, interrupts, rejection routes, and routine user-review offers preserve the active cursor and continue through the next owner/action.
+- Consume a satisfied phase boundary in the same turn by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel. Resume on stall recognition (including user status questions) by tool-call execution.
+- Convergence loops, status questions, interrupts, rejection routes, and routine review offers continue through the next owner/action by tool-call execution.
 - If a verified phase handoff or convergence record fixes the next phase boundary, team-lead bridges directly without user confirmation.
 - Reopen `work-planning` only when a boundary changes or becomes untrue.
 
 ### 3. Lane Separation And Parallel Flow
-- Separate phase owner from artifact producer when the workflow names both.
-- Phase owner consumes material specialist skills that shape the surface, freezes decisions, and cites the basis; assigned artifact producer writes from that frozen basis.
-- team-lead owns Phase 1 planning design and Phase 2 design direction/contract freeze.
-- Developer writes Phase 1/2 documents only from frozen team-lead/workflow design basis, then owns Phase 3 implementation.
+- For Phase 1 (Plan) and Phase 2 (Design), team-lead solely owns planning, design, and canonical plan/design document authoring.
+- Where the workflow names a separate phase owner and artifact producer (Phase 3+ implementation, sub-artifact production), keep them separate: phase owner consumes material specialist skills, freezes decisions, and cites basis; assigned artifact producer writes from that frozen basis.
+- Developer's dev-workflow lane begins at Phase 3 implementation.
 - Review, proof, validation, routing, and acceptance stay with their owning lanes.
 - Phase-local skill refinement stays inside the frozen lane map, deliverable shape, and proof/acceptance chain.
 - Reopen `work-planning` when phase pressure creates a new lane, independent work surface, deliverable shape, or proof/acceptance owner.
@@ -75,19 +74,19 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Same-artifact convergence stays inside `artifact-convergence-advisory` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
 - Same-review-surface convergence stays inside `review-convergence-advisory` under the same unchanged-boundary rule.
 - `task-execution` owns correction dispatch or reuse when another lane must revise.
-- The phase owner owns integrated redesign planning and decision correction; the assigned artifact producer updates the document from that redesign plan or reports a blocker.
+- The phase owner owns integrated redesign planning and decision correction. For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document. For Phase 3+ surfaces with a separate assigned producer, the producer updates the document from the redesign plan or reports a blocker.
 - Re-review returns to the same convergence loop after correction.
 
 ### 5. User-Surface Closure And Acceptance
 - Executable user-facing software requires reviewer plus tester in Phase 4; Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
-- Validator-required chains close through `references/final-acceptance-review.md`; low-risk bounded non-executable paths report only `verified result` through the frozen acceptance path.
+- Validator-required chains close through `references/final-acceptance-review.md`; bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
 
 ## Phase 0: Discovery (Optional)
 **Purpose**: Resolve missing requirements or reference-fit ambiguity before plan writing begins.
 **Owner lane**: researcher
 **Canonical output**: evidence-backed requirements summary for team-lead CP1 synthesis
 **Entry law**: activate only when the request, reference, target users, constraints, or success criteria are still materially unclear
-**Execution law**: discovery shape per `references/phase-surfaces.md` Phase 0 Discovery Basis (`single` / `lead-skim-then-shards` / `immediate-shards`).
+**Execution law**: discovery shape per `references/phase-surfaces.md` Phase 0 Discovery Basis (`single` / `lead-boundary-read-then-shards` / `immediate-shards`).
 **Exit law**: only verified findings or labeled inferences enter CP1.
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its owning phase.
@@ -101,9 +100,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/01-plan/features/{feature}.plan.md` unless project config names another canonical path
 **Entry law**: Phase 0 output, if activated, must already be synthesized enough for CP1. Otherwise the request-fit basis must be stable
-**Execution law**: team-lead owns Phase 1 planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, and canonical plan artifact direction.
-**Execution law**: developer writes the canonical plan document only from the team-lead Phase 1 design basis.
-**Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical plan document only from valid `REDESIGN-PLAN`.
+**Execution law**: team-lead owns Phase 1 planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, canonical plan artifact direction, AND canonical plan document authoring.
+**Execution law**: team-lead authors the canonical plan document directly from the frozen Phase 1 design basis.
+**Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical plan document.
 **Execution law**: the canonical plan artifact is the plan surface.
 **Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
 **Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning` and uses the Phase 1 artifact as the design basis.
@@ -118,10 +117,10 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead owns and records the decision-level Phase 2 design basis: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance/correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis.
-**Execution law**: developer writes the canonical design document by expanding that Phase 2 design basis into the required artifact structure.
-**Execution law**: team-lead decision basis is operator-internal and decision-complete across the listed surfaces; when persisted, keep it producer-facing without user-narrative rewrites, and expose path/status only.
-**Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; developer updates the canonical design document only from valid `REDESIGN-PLAN`.
+**Execution law**: team-lead owns and records the decision-level Phase 2 design basis AND canonical design document authoring: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance/correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis.
+**Execution law**: team-lead authors the canonical design document directly by expanding the frozen Phase 2 design basis into the required artifact structure.
+**Execution law**: team-lead decision basis is operator-internal and decision-complete across the listed surfaces; canonical design artifact carries the expanded body authored by team-lead.
+**Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical design document.
 **Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
 **Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
 **Execution law**: the internal detail bundle stays inside Phase 2 as implementation-binding detail and becomes CP4 translation input.
@@ -156,12 +155,12 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Entry law**: implementation handoff and the current plan/design surfaces carry explicit acceptance basis for reviewer and tester.
 **Execution law**: reviewer and tester remain separate; planned proof comes first, exploratory expansion second.
 **Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4 (tester applies smallest truthful proof default per `agents/tester.md`; validator applies highest-fidelity proof default per `agents/validator.md`); missing decisive user-surface tooling freezes bounded setup or stops on `hold|blocker`.
-**Execution law**: parallel production requires explicit cross-surface contextual coherence review (API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics) and validator cross-surface integration verification before PASS; per-surface quality without cross-surface coherence is incomplete review.
+**Execution law**: parallel production requires explicit cross-surface contextual coherence review (API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, `CORE-WORKFLOW-CLOSURE` end-to-end coverage) and validator cross-surface integration verification before PASS; per-surface quality without cross-surface coherence is incomplete review.
 **Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.
-**Exit law**: non-validator closure is limited to low-risk bounded non-executable paths and reports only `verified result`.
+**Exit law**: non-validator closure is limited to bounded non-executable paths with no final-arbitration trigger and reports only `verified result`.
 
 ## Phase 5: Iteration
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
@@ -197,8 +196,7 @@ Reference trigger rule:
 - A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, phase-result reporting, or user review.
 
 ## Phase Cursor Consumption
-At any satisfied phase boundary, resolve the phase cursor in the same execution segment.
-Valid resolution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
+Resolve the phase cursor in the same turn by tool-call execution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
 Completed transition starts the next phase or records the exact blocker.
 
 A satisfied non-destructive/non-security/non-policy phase gate is consumed by team-lead, not user confirmation.

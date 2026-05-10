@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -52,3 +54,13 @@ A compacted agent has lost the assignment-grade packet context but retains lane-
 - Agent does NOT improvise the lost context; do not reconstruct the assignment from gist or partial memory.
 - Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.
 - If the prior frozen scope is no longer truthful, team-lead reopens `work-planning` instead of redelivering. That is a fresh planning event, not compaction recovery.
+
+## Next-Action Drive
+- Completed recovery record opens the named `RESUME-OWNER` and `RESUME-ACTION`.
+- `REPLAN-REQUIRED: yes` opens `work-planning`.
+- Uncertain runtime readiness opens `session-boot`.
+- Missing send-state evidence opens current dispatch-authority inspection.
+- Duplicate-send risk opens `HOLD` or `session-boot` recovery.
+- Agent compaction opens assignment-packet reissue from the frozen route.
+- Route-changing recovery opens `work-planning`.
+- Self-growth-triggering recovery defect opens `self-growth-sequence` before suspended dispatch closure.

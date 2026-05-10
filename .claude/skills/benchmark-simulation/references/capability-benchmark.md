@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -99,3 +101,7 @@ Required benchmark dimensions when relevant:
 - input-semantics clarity
 - output-surface justification and gating quality
 Treat sheet-shaped surface promotion or opaque input semantics as benchmark losses when a stronger operator-facing structure exists.
+
+## Next-Action Drive
+- Return capability axes, benchmark dimensions, product-operating-model losses, and proof-method implications to the active benchmark-simulation workflow.
+- If benchmark evidence changes product structure, verification method, or user-surface proof, carry that delta to the owning planning or validation packet.

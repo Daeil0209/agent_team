@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -30,3 +32,9 @@ The abstraction-fit-adapt cycle applies recursively to verification methodology:
 - benchmark-simulation -> tester -> validator
 - `dev-workflow` gap-iteration (`.claude/skills/dev-workflow/references/gap-iteration.md`) operates on result-level test outcome vs expected acceptance
 - if the verification approach is itself a learning surface, schedule a retrospective benchmark cycle after first use to refine
+
+## Next-Action Drive
+- Mandatory verification benchmarking opens `benchmark-simulation`.
+- Benchmarked verification method opens tester proof design.
+- Acceptance-grade proof method opens validator acceptance basis.
+- Learning-surface verification opens retrospective benchmark after first use.

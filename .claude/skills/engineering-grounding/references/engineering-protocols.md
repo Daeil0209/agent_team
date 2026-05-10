@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/engineering-grounding/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -49,3 +51,7 @@ Before endorsing any engineering claim:
 - Physical plausibility confirmed (order-of-magnitude sanity check)
 - Operating conditions stated (temperature, pressure, frequency, load)
 Claims failing any of the above are `HOLD` until corrected.
+
+## Next-Action Drive
+- Return verified units, constraints, plausibility checks, and operating conditions to the active engineering-grounding workflow.
+- If an engineering claim changes architecture, mathematical correctness, safety, or acceptance basis, route that delta to the owning skill or lane before endorsement continues.

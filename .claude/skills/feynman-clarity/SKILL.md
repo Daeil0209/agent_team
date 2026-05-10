@@ -92,6 +92,7 @@ Common triggers:
 - program-design review where user workflow, data flow, screen/API fit, launch path, or completion path must be easy to explain
 - review of dense rules, prompts, procedures, or instructions
 - review of a deliverable that passed technical checks but still feels hard to understand, trust, implement, or use
+- rendered user-facing UI: labels, controls, data displays, dashboards, gauges, charts, tables — comprehension for a first-time operator who lacks prior specification, design, or domain context
 - repeated failure caused by vague wording, hidden assumptions, or compressed multi-meaning sentences
 
 Activate only for clarity-bearing work.

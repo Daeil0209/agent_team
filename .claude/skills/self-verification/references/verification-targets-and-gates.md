@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-verification/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -191,3 +193,12 @@ OWNER-SEPARATION-STATUS:
 ```
 
 This detail block is internal handoff only. Do not expose it to the user unless the user explicitly requests the internal verification trace.
+
+## Next-Action Drive
+- `verified-result` returns to the requesting owner for truthful reporting or next action.
+- `narrow-to-verified-scope` returns narrowed claim wording to the requesting owner.
+- `INFERENCE/UNVERIFIED` opens evidence gathering, claim narrowing, or truthful report by active owner.
+- `HOLD` opens blocker reporting with owner and blocker.
+- `reopen-work-planning` opens `work-planning`.
+- Synthesis verification gap opens conflict reconciliation before reporting or redispatch.
+- Lead-local verification resource debt opens cleanup or explicit blocker before closure.

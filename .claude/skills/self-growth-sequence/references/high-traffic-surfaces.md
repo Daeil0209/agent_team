@@ -1,5 +1,7 @@
 # self-growth-sequence: High-Traffic Governance Surfaces
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -17,3 +19,8 @@ Active high-traffic surfaces:
 - `.claude/reference/` caches when a change depends on official-source evidence or preservation traceability
 
 Runtime hook protection and settings-deny protection are separate layers. Governance-flow protection is enforced through runtime hooks such as `compliance-supervisor.sh` and related hooks. `settings.json` `permissions.deny` is reserved for hard credential and secret paths such as `.env`, `secrets/**`, and `credentials.json`.
+
+## Next-Action Drive
+- High-traffic surface mutation opens session revalidation and baseline anchoring.
+- Authority-bearing reference mutation opens bounded change scope before edit.
+- Runtime hook or settings-deny change opens the owning runtime/settings protection path.

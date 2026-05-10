@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -65,3 +67,7 @@ The reference families converge on three meta-strengthenings integrated into `SK
 - Google SMURF size-vs-scope and hermeticity-vs-fidelity can deepen verification-methodology synthesis.
 - NN/g diversity-not-N can strengthen multi-source corroboration with same-source-family discounting.
 - ThoughtWorks cadence can inspire "every Nth benchmark-simulation invocation triggers stale-pattern review"; N is a doctrine-design decision, not evidence-driven.
+
+## Next-Action Drive
+- Return accepted source families, rejected local details, abstracted principles, and open evidence surfaces to the active benchmark-simulation workflow.
+- If a cached principle affects doctrine, verification method, or acceptance strength, route the cited delta through the owning change path before promotion.

@@ -1,5 +1,7 @@
 # self-growth-sequence: Capability-Gap Fast Path
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -18,3 +20,9 @@ When the fast path applies, all six steps remain required:
 - `developer` creates or updates the skill assets
 - `reviewer` checks placement, overlap, and information-loss risk
 - `validator` is assigned when acceptance risk is meaningful
+
+## Next-Action Drive
+- Confirmed reusable capability gap opens the rapid-skill routing chain.
+- Existing-owner overlap opens existing-owner update.
+- Missing post-adoption proof keeps the fast path open.
+- Meaningful acceptance risk opens validator assignment.

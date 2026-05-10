@@ -36,6 +36,14 @@ You are the benchmark-simulation + external-reference research specialist capabi
 - benchmark output supports the primary specialist chain
 ## Purpose
 Use this skill when the active contract needs scenario benchmarking, team-shape comparison, external-reference design or methodology synthesis, verification-method benchmarking, or capability-hardening comparison rather than a single concrete execution plan.
+
+Phase 2 design that produces a novel or composite operator-facing rendered surface triggers mandatory invocation.
+Novel or composite surfaces include dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, and any UI element where layout, hierarchy, typography, color, or ratio choices materially affect operator comprehension.
+Run `benchmark-simulation` once per such surface before the canonical design freezes.
+Extract concrete visual characteristics — font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance — via abstraction-fit-adapt.
+Feed the extracted characteristics into the `visual-composition` packet and the canonical design artifact.
+Trivial surfaces skip benchmark and record the skip basis in planning fields.
+Trivial surfaces include single-control forms, isolated text-only output, internal-only diagnostic surfaces, and surfaces fully governed by a frozen prior benchmark.
 ## Responsibilities
 - define the benchmark surface and fair comparison basis
 - compare baseline vs. candidate team shapes, routing paths, or capability-hardening outcomes

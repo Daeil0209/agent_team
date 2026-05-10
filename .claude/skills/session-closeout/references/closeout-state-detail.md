@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/session-closeout/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -30,3 +32,11 @@ Before closeout completion, each teammate must be resolved as `shutdown`, `termi
 During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
 During active closeout, `TeamDelete` may proceed without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
 A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.
+
+## Next-Action Drive
+- Clean closeout state returns to session-closeout completion.
+- Hold closeout state reports `HOLD` with residual owner and blocker.
+- Partial closeout state reports warning-bearing closeout.
+- Live teammate residue opens lifecycle resolution or warning-bearing closeout.
+- Validation debt returns to the owning validation or acceptance path.
+- Runtime cleanup debt returns to session-closeout teardown.

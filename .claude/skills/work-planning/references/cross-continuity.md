@@ -1,5 +1,7 @@
 # Work-Planning Cross-Continuity Gates
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -25,3 +27,11 @@ At synthesis-time, parallel outputs must be reconciled against prior session inv
 At phase-movement and report-time, apply same-session confirmed corrections, recurrence barriers, and doctrine patches before positive transition or user-facing consequential output. If applying them changes the owner/action, continue through the corrected owner/action instead of reporting the stale state.
 
 Skipping cross-continuity creates `twist`: a silent contradiction that surfaces only at integration and tends to create infinite-loop iteration or longer fix time than an honest reopen.
+
+## Next-Action Drive
+- Incorporated prior invariants return to the active planning freeze.
+- Prior-invariant contradiction reopens `work-planning`.
+- Synthesis-time drift reopens the owning planning path.
+- Phase-movement drift opens the corrected owner/action.
+- Report-time drift continues through the corrected owner/action before user-facing output.
+- Unresolved invariant conflict opens the smallest truthful blocker.

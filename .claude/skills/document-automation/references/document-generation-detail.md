@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/document-automation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -117,3 +119,7 @@ Use when generating a result report from a plan, proposal, or project reference.
 - State the issue in document-automation language: which template region, mapping rule, generation stage, reader-job contract, or fidelity constraint is weak, and the smallest corrective rewrite.
 - Do not silently automate a document path whose structure is too vague to preserve operator-facing quality; silence is a lane failure.
 - **Challenge routing:** structure disputes → `team-lead`; evidence boundary disputes → `validator`; visual composition disputes → `visual-composition`; domain rule disputes → `business-workflow`
+
+## Next-Action Drive
+- Return selected template, mapping, generation-depth, fidelity, and reader-job decisions to the active document-automation workflow.
+- If source-to-output mapping, evidence boundary, or formatting preservation is under-specified, route the named gap to the smallest owning lane before generation continues.

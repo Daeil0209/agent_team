@@ -20,6 +20,7 @@ PRIMARY-OWNER: team-lead
 - Keep long packet tables, sizing rules, shard/merge detail, and handoff field catalogs in direct files under `references/`.
 - Keep the mandatory trigger, owner, and stop rule in this spine.
 - PRIMARY-OWNER: team-lead
+- Fixed close section: `Next-Action Drive`
 
 # Team Session Sequences
 
@@ -88,3 +89,12 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 ## Closeout Sequence
 
 > On-demand: see `session-closeout` skill. Load when the `session-closeout` owner trigger opens; hooks provide observation evidence only.
+
+## Next-Action Drive
+- A boot trigger opens `session-boot`.
+- A session-start trigger opens `session-boot`.
+- A monitoring trigger opens `session-boot` Monitoring Sequence or its direct monitoring reference.
+- A dispatch concern opens the canonical dispatch owner named in Lead-Side Dispatch Index.
+- Ambiguous runtime mode opens `session-boot` Mode Split.
+- A closeout trigger opens `session-closeout`.
+- Missing canonical owner mapping opens `work-planning` or `HOLD`.

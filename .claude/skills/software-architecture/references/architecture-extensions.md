@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/software-architecture/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -98,3 +100,7 @@ Numbered project lessons captured from past incident hardening. Each lesson is a
 - **L-06 Multi-Dimension Trade-Off Documentation**: Competing metrics must be identified and chosen balance documented. Single-metric optimization with unmeasured acceptance dimensions = defect; deferred measurement requires explicit risk statement.
 
 Note: L-03 (Entity ID Stability Contract) lives in the Coupled-Core Architecture Extension above because it is intrinsic to that extension's many-to-many modeling.
+
+## Next-Action Drive
+- Return selected architecture extension, invariant, project lesson, and unresolved trade-off to the active software-architecture workflow.
+- If an architecture extension changes module boundaries, persistence, latency, identity, or acceptance, carry the delta into the owning design or implementation packet.

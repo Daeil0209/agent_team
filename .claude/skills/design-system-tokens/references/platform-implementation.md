@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/design-system-tokens/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -135,3 +137,8 @@ CSS variables (web), `.dart` constants (Flutter), `.swift` enums (iOS), `.kt` ob
 - [ ] Style Dictionary or equivalent conversion configured (if multi-platform)
 - [ ] Dark mode overrides verified on all target platforms
 - [ ] Component catalog / usage guidelines documented
+
+## Next-Action Drive
+- Selected implementation pattern returns token implementation basis to the consuming owner.
+- Material tool, version, license, or platform uncertainty opens official-doc, benchmark, or setup proof.
+- Completed checklist opens implementation or review on the target platform.

@@ -1,6 +1,8 @@
 ---
 name: tester-reference
 PRIMARY-OWNER: tester
+SOURCE-ANCHOR: .claude/skills/tester/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -60,7 +62,10 @@ Missing-information rule:
 
 Rules:
 - A page load, screenshot, DOM existence check, API response, or source inspection does not prove a designed UI feature by itself.
+- Static rendered evidence proves only the pre-action visual state.
+- Edit-save, recompute/reactivity, navigation, entity-link, create-delete, import/export, and workflow-state rows require the user action plus postcondition assertion on the user surface.
 - A successful API response does not prove UI consumption; UI proof must exercise the consumer path, expected populated or empty data state, visible postcondition, and browser console/runtime-error surface.
+- Practical work-tool or business-workflow proof must consume the frozen pattern or workflow oracle; without that oracle, report `blocked` or `out-of-scope by dispatch`, not `matches-expectation`.
 - Source inspection can prove a source-read artifact when the frozen proof target is the document text itself.
 - Prefer user-facing locators such as role, label, text, placeholder, and test id when test ids are part of the app contract.
 - Prefer web-first assertions that wait for the expected visible state. Avoid fixed sleeps as proof.
@@ -107,8 +112,10 @@ When the same proof surface offers multiple tool profiles at different friction-
 
 ## Specialist Skill Loading
 Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
-Tester lane evaluation selects advisory or lane-local specialist skills from the proof surface:
-- `log-based-qa` - log-based QA methodology using structured JSON logging and Docker log monitoring as an alternative to traditional test scripts. It complements tester execution authority and does not replace user-surface proof.
+Tester lane evaluation selects and applies materially relevant specialist lenses from the proof surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
+- Work-tool, spreadsheet, operations, business-rule, and workflow-state proof: `business-workflow`, `work-tool-patterns`.
+- Log and runtime-observation proof support: `log-based-qa`.
+Specialist lenses complement tester execution authority and do not replace user-surface proof.
 
 ## Tester Handoff Detail
 - In completion-grade handoff, keep these tester-specific fields explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface:
@@ -127,3 +134,13 @@ Tester lane evaluation selects advisory or lane-local specialist skills from the
 - For a Windows primary operator surface, handoff names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
 - For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the handoff or evidence anchor.
 - If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` as appropriate and explain the contradiction in `OPEN-SURFACES` instead of silently mutating the validator basis.
+
+## Next-Action Drive
+- `execute` opens tester-owned proof work.
+- `reconstruct-with-inference` opens tester-owned proof work with marked inference.
+- Directly proven surface opens tester handoff.
+- Disproven surface opens proof-failure handoff.
+- Blocked proof surface opens `scope-pressure` or `hold|blocker`.
+- Missing decisive tool path opens bounded tool discovery or setup route through team-lead.
+- Untruthful validator contract opens `TEST-STATE: hold` or `TEST-STATE: blocked`.
+- Completed proof handoff opens reviewer, validator, correction owner, or team-lead synthesis by frozen route.

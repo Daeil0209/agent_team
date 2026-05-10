@@ -1,6 +1,8 @@
 ---
 name: reviewer-reference
 PRIMARY-OWNER: reviewer
+SOURCE-ANCHOR: .claude/skills/reviewer/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -134,3 +136,13 @@ Remediation stays with the producing owner.
 - For request-bound acceptance, keep the request-fit contract explicit in the same handoff rather than rewriting it from memory.
 - For visual/rendered review, name the inspected rendered evidence and any visible defect classes checked or found.
 - If review evidence makes the frozen contract untruthful, set `REVIEW-STATE: hold` or `REVIEW-STATE: blocked` and explain the contradiction in `OPEN-SURFACES`.
+
+## Next-Action Drive
+- `execute` opens reviewer-owned review work.
+- `reconstruct-with-inference` opens reviewer-owned review work with marked inference.
+- Blocking review finding opens producer correction through team-lead.
+- `REVIEW-STATE: ready` opens reviewer handoff.
+- `REVIEW-STATE: hold` opens team-lead basis, evidence, tool, or upstream-state correction.
+- `REVIEW-STATE: blocked` opens team-lead replanning, rerouting, or upstream correction.
+- Runnable proof need opens tester routing.
+- Final validation need opens validator ingress.

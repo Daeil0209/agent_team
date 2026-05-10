@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Use only for consequential developer-owned production assignments, including bounded document production, implementation, or governance patch edits. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Use only for consequential developer-owned production assignments — Phase 3+ implementation production, governance patch edits, and bounded supporting document production. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -41,8 +41,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Apply common lane-core preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the developer detail contract in `references/developer-lane-detail.md`.
 - `agents/developer.md` is the role spine, not the packet-field catalog.
-- In active `dev-workflow`, team-lead owns Phase 1 planning design and Phase 2 design direction/contract.
-- Treat workflow-assigned plan/design work as bounded document production from the frozen team-lead/workflow design basis.
+- In active `dev-workflow`, team-lead owns Phase 1 planning design and canonical plan document authoring; Phase 2 design direction/contract and canonical design document authoring.
+- Developer's dev-workflow lane begins at Phase 3 implementation production from the frozen Phase 2 design basis.
 - Review, proof, validation, and route ownership stay with their owning lanes.
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, and bounded development production surface are inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
@@ -88,7 +88,10 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned production surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Classify every carried recommendation as applied, not-material, or blocked.
+- Load and apply material recommendations before lane work.
+- Record recommendation classification basis.
 ### 4. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
 - If that is impossible or disproportionate, record the fallback basis.
@@ -103,7 +106,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 6. Pre-Handoff Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
-- Run producer self-review cycles on the changed surface before handoff: request fit, target intent, production craft baseline, selected skill lenses, and obvious normal/failure path defects.
+- Run producer self-review cycles on the changed surface immediately on production completion: request fit, target intent, production craft baseline, selected skill lenses, and obvious normal/failure path defects. Self-review is producer's own duty.
 - Correct bounded developer-owned defects found by each producer self-review pass before handoff when owner, phase, deliverable shape, and acceptance chain stay unchanged.
 - Repeat producer self-review while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
 - Handoff only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
@@ -114,7 +117,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ### 7. Handoff
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
-- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`. Carry `PRODUCER-SELF-REVIEW-PASS` (lenses applied, defects found and fixed in-pass, final-pass convergence) and `LANE-LOCAL-SV-RESULT` (mode, verified surface, verification basis, claim strength, allowed next action) as named blocks.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.

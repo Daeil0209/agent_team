@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -27,3 +29,12 @@ LOAD-POLICY: on-demand reference only
   - make any unresolved contradiction, missing shard, or weak-evidence area explicit rather than flattening it into a false clean merge
 - If shard outputs expand the volume beyond the intended artifact class, optimize at merge time by demoting or trimming locally correct but non-decisive material before acceptance routing. Merge does not owe every shard full local preservation in the final reader-facing body.
 - After merge, route one authoritative integrated output forward. Do not send multiple shard bodies downstream as if acceptance lanes should perform the merge implicitly.
+
+## Next-Action Drive
+- Valid shard decomposition opens parallel shard dispatch.
+- Overlapping shard boundary opens resize, resequence, or single-owner routing.
+- Missing `MERGE-OWNER` blocks full fan-out until named.
+- Useful partial shard set opens bounded merge work.
+- Late shard arrival opens follow-up merge work.
+- Unresolved shard contradiction opens merge-owner clarification, correction, or `HOLD`.
+- Authoritative integrated output opens downstream review, proof, validation, or synthesis routing.

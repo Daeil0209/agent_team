@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned procedure surface.
-- Fixed section order: Purpose, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Internal Planning Record, Progress Update Surface, Post-Planning Gate.
+- Fixed top-level section order after Structural Contract: Purpose, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Internal Planning Record, Progress Update Surface, Post-Planning Gate, Next-Action Drive.
+- Reference Map stays inside Purpose.
 - Step names: Request-Fit Intake, Choose Planning Target, Q1-Q5 Work Analysis, Freeze Scope And Route.
 - PRIMARY-OWNER: team-lead
 
@@ -210,3 +211,11 @@ After planning:
 5. `team-routing candidate` or `ambiguous-route` opens `task-execution`.
 6. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
 7. If the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed, reopen `work-planning`.
+
+## Next-Action Drive
+- A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
+- A workflow or sequence freeze opens the named workflow or sequence owner.
+- A team-routed or ambiguous route opens `task-execution`.
+- A missing freeze field reopens `work-planning`.
+- A blocker-clear plan opens the named blocker-clear move.
+- `HOLD` records planning owner, blocker, and next safe evidence step.

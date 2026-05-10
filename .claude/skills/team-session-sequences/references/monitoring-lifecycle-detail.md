@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -57,11 +59,15 @@ When an idle_notification is received with a valid completion report, the govern
 - Shard only when each shard's write scope is explicit and disjoint before the first developer dispatch.
 
 ## Task Identity And Communication
-- Task-scoped tools such as `TaskGet`, `TaskUpdate`, `TaskOutput`, and `TaskStop` take the task id from the explicit `task_assignment` packet, not an agent name or `agentId@team`.
-- Agent-scoped communication remains separate: use `SendMessage(to: "<exact-live-member-name>")` for agent control, and do not reuse that agent identifier as a task identifier. A configured role label is not a message address unless it is also the live member name.
-- Treat agent-to-agent communication as challenger traffic, not shared management.
-- Any ownership, acceptance, routing, or task-control change must come back through `team-lead`.
-- Free-form `SendMessage` is fine for status, acknowledgment, clarification, or partial-result notes that do not change ownership, lifecycle, routing, or active surface.
+- Task-scoped tools such as `TaskGet`, `TaskUpdate`, `TaskOutput`, and `TaskStop` take the task id from the explicit `task_assignment` packet.
+- Agent names and `agentId@team` values are agent identifiers only.
+- Agent-scoped communication uses `SendMessage(to: "<exact-live-member-name>")` for agent control.
+- Keep agent identifiers separate from task identifiers.
+- A configured role label becomes a message address only when the roster contains that exact live member name.
+- Treat direct user-to-teammate messages as user instructions to the receiving teammate inside that teammate's current authority and active surface.
+- Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
+- Route ownership, acceptance, routing, lifecycle, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
+- Use free-form `SendMessage` for status, acknowledgment, clarification, or partial-result notes inside unchanged ownership, lifecycle, routing, and active surface.
 - Authoritative downward control packets, upward report `MESSAGE-CLASS` vocabulary, and structured lifecycle paths are owned by `.claude/skills/task-execution/references/phase-transition-control.md`, `.claude/skills/task-execution/references/lifecycle-control.md`, and `.claude/skills/task-execution/references/message-classes.md`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
@@ -86,3 +92,13 @@ When an idle_notification is received with a valid completion report, the govern
 - Routine orphan scans report residue; they do not kill processes or rewrite team lifecycle truth.
 - Runtime-pressure handling must not invent session closeout authority or bypass message-first lifecycle decisions for current live agents.
 - If orphan historical agents are detected from a previous session, do not send `shutdown_request` to those remembered agent names from the new session. Route explicit orphan-runtime recovery instead.
+
+## Next-Action Drive
+- Healthy active lane returns to monitoring.
+- Reuse-fit live lane opens bounded reuse.
+- Standby decision opens lifecycle control.
+- Shutdown decision opens structured `shutdown_request`.
+- Stale response opens investigate, wait-extension, reroute, resize, replacement, or replan.
+- Manifest overlap opens pre-execution manifest correction.
+- Runtime pressure opens explicit recovery before new fan-out.
+- Orphan historical residue opens orphan-runtime recovery.

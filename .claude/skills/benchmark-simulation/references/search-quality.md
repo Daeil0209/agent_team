@@ -1,11 +1,13 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
 # benchmark-simulation: Search Strategy And Source Quality Ladder
 ## Search Query Design
-- specific patterns over generic terms: search "data table column pinning UX" not "table design"
+- specific patterns over generic terms: prefer "data table column pinning UX" over "table design"
 - comparative terms: "X vs Y", "alternatives to X", "X best practices", "X common mistakes"
 - industry filter when relevant: "healthcare dashboard regulatory alert", "financial compliance UI"
 - anti-pattern search: "common mistakes in X", "X failure case studies", "why X went wrong"
@@ -17,17 +19,22 @@ LOAD-POLICY: on-demand reference only
 3. **Domain-specific authoritative**: regulatory body publications, academic UX journals, industry consortium standards
 4. **Reputable case studies**: well-known design agencies' published work and enterprise product blog posts
 5. **Practitioner blogs / Medium / dev.to**: useful but lower confidence; require corroboration from higher tier
-6. **Forum / Reddit / Stack Overflow**: pattern discovery only; never primary evidence
-7. **Anonymous / undated content**: discovery only; not admissible as evidence
+6. **Forum / Reddit / Stack Overflow**: pattern discovery only; use higher-tier sources as primary evidence
+7. **Anonymous / undated content**: discovery only; exclude from evidence basis
 
 ## Multi-Source Corroboration
 - high confidence: 3+ authoritative sources agree
 - medium confidence: 1-2 authoritative sources OR 3+ practitioner sources
 - low confidence: single source from any tier OR multiple low-tier sources
-- speculation: model prior knowledge with no external corroboration; label `INFERENCE`, not `evidence`
+- speculation: label model prior knowledge with no external corroboration as `INFERENCE`
 
 ## Negative-Search Discipline
 Anti-pattern search is as valuable as positive-pattern search. A benchmark cycle that found five positive patterns but zero anti-patterns is incomplete. Required: at least one anti-pattern search per benchmark cycle on visual / structural decisions.
 
 ## Search Depth Bound
-Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Do not search endlessly; over-searching is also a defect when burden exceeds value.
+Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Stop search when added burden exceeds added decision value.
+
+## Next-Action Drive
+- Grounded benchmark evidence returns to the consuming owner.
+- Low-confidence or speculative evidence opens additional search or marked inference.
+- Saturated search opens benchmark synthesis.

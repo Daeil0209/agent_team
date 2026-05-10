@@ -1,5 +1,7 @@
 # work-tool-patterns: Pattern Packet
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/work-tool-patterns/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -52,3 +54,7 @@ It does not prove an operator-facing work tool when runnable or rendered proof i
 - Carry the `PROOF-ORACLE` into reviewer, tester, and validator packets when pattern behavior affects acceptance.
 - If an adjacent owner owns a field more precisely, cite that owner packet instead of restating detail.
 - Missing adjacent-owner basis is `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`; do not fill it with pattern assumptions.
+
+## Next-Action Drive
+- Return selected pattern packet, adjacent-owner basis, proof oracle, and open surfaces to the active work-tool-patterns workflow.
+- If the proof oracle affects design, implementation, reviewer, tester, or validator scope, carry it into the next owning packet before work continues.

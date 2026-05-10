@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned runtime surface.
-- Fixed section order: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence`
+- Fixed top-level section order after Structural Contract: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence` -> `Next-Action Drive`.
+- Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
 - State tables, lifecycle mappings, boot-window detail, compaction recovery detail, and schema detail belong in `references/runtime-state-detail.md`.
@@ -145,3 +146,12 @@ See `references/runtime-state-detail.md` for:
 - `Runtime-Pressure Rule`
 - `Procedure-State Schema`
 - `Workflow Continuity Bridge`
+
+## Next-Action Drive
+- Runtime-ready returns to the frozen next owner/action.
+- Team-agent runtime creation opens `task-execution`.
+- Monitoring risk opens `team-lead` plus the active workflow owner.
+- Bottleneck collapse opens `work-planning`.
+- Lifecycle obligation opens lifecycle control.
+- Closeout intent opens `session-closeout`.
+- Runtime-blocked reports `HOLD` with owner, blocker, and next safe evidence step.

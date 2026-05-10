@@ -64,7 +64,7 @@ Hand off only when the next owner can tell:
 - what evidence class is allowed
 - what structure is frozen
 - whether the artifact is section-ready, integrated, review-ready, or still blocked
-- whether format/openability fidelity is proven, owner-deferred, or blocked
+- whether format/openability fidelity is proven, deferred by the owning upstream record, or blocked
 
 Before dense generation, keep concept hierarchy explicit.
 Keep section order explicit.

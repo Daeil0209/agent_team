@@ -1,5 +1,7 @@
 # update-upgrade-sequence: Update Checks
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/update-upgrade-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -25,3 +27,12 @@ Defect admission is owned by `.claude/skills/self-growth-sequence/SKILL.md` `Cau
 This update/upgrade check supplies update-local evidence only: `TARGET-INTENT-BASIS`, protected function, user-impact risk, removal or weakening risk, and smallest intent-preserving correction.
 A literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains defect evidence until the self-growth defect admission gate proves `confirmed defect`.
 If the item is intended protection, preserve the protection and reduce only the avoidable burden.
+
+## Next-Action Drive
+- Completed update checks return evidence to `update-upgrade-sequence`.
+- Missing structural preservation opens update patch redesign.
+- Broken mapping chain opens owner/reference correction.
+- Runtime setting or threshold owner conflict opens single-owner correction.
+- Hook/settings expansion without Hook-Last basis opens doctrine-only/advisory path or `HOLD`.
+- Confirmed recurrence-barrier defect opens `self-growth-sequence`.
+- Intended protection with avoidable burden opens burden-reduction patch design.

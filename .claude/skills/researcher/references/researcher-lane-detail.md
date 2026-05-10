@@ -1,6 +1,8 @@
 ---
 name: researcher-reference
 PRIMARY-OWNER: researcher
+SOURCE-ANCHOR: .claude/skills/researcher/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -121,3 +123,12 @@ Severity should follow the evidence class. Do not promote static or theoretical 
 - If the handoff proposes removal, reduction, simplification, or optimization, satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Keep the handoff teammate-efficient: concrete evidence anchors, decision-ready conclusions, smallest useful unblock step.
 - For benchmark-perspective work, include `COMPARISON-FRAME`, `QUERY-LEDGER-SUMMARY`, `SOURCE-FAMILY-COVERAGE`, `TRIANGULATION-STATUS`, `STOPPING-RULE`, `UNVERIFIED-CLAIMS`, and `DOWNSTREAM-BENCHMARK-NEEDS`.
+
+## Next-Action Drive
+- `execute` opens researcher-owned evidence work.
+- `reconstruct-with-inference` opens researcher-owned evidence work with marked inference.
+- `scope-pressure` opens team-lead packet correction, tool-selection research routing, owner split, or replanning.
+- `hold|blocker` opens team-lead blocker resolution.
+- Completed evidence work opens researcher handoff.
+- Downstream benchmark need opens the named benchmark, review, proof, or validation owner.
+- Unverified consequential claim narrows the handoff or opens the needed evidence route.

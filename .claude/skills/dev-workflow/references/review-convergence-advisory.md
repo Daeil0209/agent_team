@@ -1,5 +1,7 @@
 # dev-workflow: Review Convergence Advisory
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -57,7 +59,7 @@ Missing decisive reviewer-facing fields are not guessed.
 5. After both outputs exist, team-lead reconciles both point-by-point.
 
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
-Axes must include user-perspective and avoidable-user-burden checks.
+Axes must include user-perspective and avoidable-user-burden checks. When the reviewed surface is operator-facing rendered UI, Codex axes also include: operator-naive comprehension (per AC-supporting element verdict — clear / partially-clear / unclear), image-inspection coverage (each cited screenshot or full-page capture supporting an AC verdict or finding opened via multimodal `Read` and matched against design-stated expectation; cite-path-only acceptance flagged as procedural failure), and visual benchmark consumption (when novel/composite UI, `benchmark-simulation` characteristics actually reflected in the rendered surface).
 Plan, design, specification, report, governance, and implementation-binding review surfaces require Feynman clarity.
 
 Codex reviews missed negative space, evidence overreach, owner-action gaps, stale proof/artifact authority, user-surface weakness, and needless-user-gate risk.
@@ -131,3 +133,12 @@ Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-convergence-advisory.md` Output Record (artifact path/phase, Codex advisory state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
 - review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
+
+## Next-Action Drive
+- Accepted material findings open correction requirements.
+- Resolved review convergence opens the output-record next owner/action.
+- Missing or false continuation values make the result discussion-only and reopen the review convergence route.
+- Lawful `fail-open` opens Claude reviewer synthesis plus conservative `SV-RESULT`.
+- Stale artifact or proof result opens stale-surface correction before advancement.
+- Boundary-changing review result reopens `work-planning`.
+- Repeated unresolved disagreement opens `HOLD`.

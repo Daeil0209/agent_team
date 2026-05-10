@@ -1,5 +1,7 @@
 # Work-Planning Record Fields
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -34,14 +36,21 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when additional-agent routing is host-authorized.
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` may consume the route, record `not-applicable:<basis>` instead of leaving the field blank.
 - Valid `not-applicable` bases are limited to the current route basis. Do not use `not-applicable` to hide missing decomposition or missing readiness.
-- `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route. Every lane entry records non-lane-core skills frozen as required for credible execution; use `[]` when none, do not list the lane-core skill, and keep methodology-only suggestions in `SKILL-RECOMMENDATIONS`.
-- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology guidance map when any configured lane is a candidate receiver for assignment-grade work. It must not list lane-core skills or override the receiving lane's work-surface selection; the receiving lane applies material entries under `Skill Loading`.
+- `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route.
+- Every lane entry records non-lane-core skills frozen as required for credible execution.
+- Use `[]` to record absence of required non-lane-core skills.
+- Lane ownership triggers lane-core skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
+- Methodology-only suggestions go to `SKILL-RECOMMENDATIONS`.
+- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology guidance map when any configured lane is a candidate receiver for assignment-grade work.
+- `SKILL-RECOMMENDATIONS` carries methodology guidance only.
+- `SKILL-RECOMMENDATIONS` preserves the receiving lane's work-surface selection.
+- The receiving lane classifies each carried recommendation as applied, not-material, or blocked under `Skill Loading`.
 - Deliverable trigger-flag analysis drives `LANE-REQUIRED-SKILLS-MAP` and `LEAD-LOCAL-REQUIRED-SKILLS` skill freezes:
 
 | trigger flag (set when frozen scope makes it material) | activates owner asset |
 |---|---|
 | visible-surface (rendered acceptance material) | visual-composition for developer-owned design/production; rendered-surface basis for review, proof, and validation lanes |
-| practical-work-tool-output (personal/team internal tool, dashboard, workflow app, analysis tool, report automation program, calculation/design helper, or spreadsheet/manual-process migration where operator workflow and completion proof matter) | work-tool-patterns for developer-owned product-pattern packet; benchmark-simulation when new, quality-critical, disputed, or external-reference-shaped pattern synthesis is material; pattern proof oracle basis for review, proof, and validation lanes |
+| practical-work-tool-output (personal/team internal tool, dashboard, workflow app, analysis tool, report automation program, calculation/design helper, or spreadsheet/manual-process migration where operator workflow and completion proof matter) | work-tool-patterns for developer-owned product-pattern packet; business-workflow when spreadsheet meaning, operational state, mutation authority, allocation, participation, period, reconciliation, or workflow semantics are material; benchmark-simulation when new, quality-critical, disputed, or external-reference-shaped pattern synthesis is material; pattern and workflow oracle basis for review, proof, and validation lanes |
 | external-visual-benchmark (visual / UX / interaction / layout / design quality benefits from external references, public examples, or best-practice comparison) | benchmark-simulation for developer-owned synthesis; researcher secondary-consumer evidence support when comparative source gathering is assigned |
 | token-system material (cross-platform token / theme / component-layer architecture) | design-system-tokens for developer-owned design/production; token contract basis for reviewer-owned design-system consistency review |
 | learner-facing (audience must learn) | instructional-design for developer-owned content/design; learner-objective basis for review/proof/validation lanes |
@@ -54,10 +63,19 @@ Use this file when field-level semantics, allowed values, the internal planning 
 | receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned producer self-review and reviewer-owned clarity review |
 | executable-on-receiver-runtime (deliverable runs on operator's actual environment) | operator-delivery reference (loaded by dev-workflow at Phase 1/2/4/5) |
 
-This table is the trigger floor, not the full specialist catalog.
+This table is the trigger floor.
+The receiving lane's lane-detail specialist matrix supplies additional specialist candidates.
 Specialist trigger scan also checks the receiving lane's lane-detail specialist matrix for material domain, architecture, quality, security, proof, tool, document, visual, or enterprise needs.
-If a material specialist trigger is present but no table row names it, freeze the lane-appropriate required skill or advisory recommendation from the lane-detail matrix, or record `not-applicable:<basis>`.
-`work-planning` records active trigger flags inside the freeze. Add non-lane-core skills to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP` only when credible execution depends on the skill and only for the skill's owner lane, declared `SECONDARY-CONSUMER` lane within the skill's stated boundary, or lawful lead-local support. Put methodology-only guidance in `SKILL-RECOMMENDATIONS`. Other lanes receive the trigger flag as request-bound basis. Reference activations are loaded by the named owning skill at the listed phases.
+For material specialist triggers outside this table, freeze the lane-appropriate required skill or advisory recommendation from the lane-detail matrix, or record `not-applicable:<basis>`.
+`work-planning` records active trigger flags inside the freeze.
+Skill-freeze eligibility requires credible execution dependency.
+Skill-freeze target defaults to the skill's owner lane.
+Skill-freeze target for a declared `SECONDARY-CONSUMER` lane requires the skill boundary.
+Skill-freeze target for lead-local requires lawful lead-local support.
+Required non-lane-core skills go to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP`.
+Methodology guidance goes to `SKILL-RECOMMENDATIONS`.
+Other lanes receive the trigger flag as request-bound basis.
+Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, lifecycle, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
 - `CODEX-ADVISORY-BASIS` is mandatory for consequential `team-lead` plans after Codex trigger evaluation. It records team-lead trigger handling, adjudication, or fail-open truth, not Codex authority. Use `triggered:*` when advisory points were adjudicated, `fail-open:*` when a required or triggered attempt could not complete, and `skipped:*` only when no trigger applies. If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>`; advisory access failure is `fail-open:*` and is not a blocker by itself.
 - For any route that may enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
@@ -94,3 +112,14 @@ CODEX-ADVISORY-BASIS:
 NEXT-CONSEQUENTIAL-ACTION:
 DISPATCH-BLOCKERS:
 ```
+
+## Next-Action Drive
+- Complete planning record opens `NEXT-CONSEQUENTIAL-ACTION`.
+- `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner.
+- Team-routed ready basis opens `task-execution`.
+- Frozen workflow or sequence basis opens the named owner before deeper execution.
+- `EXECUTION-READINESS-BASIS: blocked:<owner-and-basis>` opens blocker-clear or `HOLD`.
+- Missing mandatory field keeps `work-planning` open.
+- Invalid `not-applicable` basis reopens `work-planning`.
+- Boundary-changing execution discovery reopens `work-planning`.
+- Bounded same-boundary correction returns to the same frozen owner.

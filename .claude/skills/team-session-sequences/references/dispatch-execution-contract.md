@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -25,3 +27,12 @@ LOAD-POLICY: on-demand reference only
   - `ACCEPTANCE-OWNER: reviewer|validator`
 - For request-bound document work routed to `developer`, recommended `PLAN-STEP` values are `draft` and `merge-compress`. Keep `CHANGE-SPEC` explicit about whether the agent owns first answer-first drafting or integration/compression of existing shard outputs.
 - For `ACCEPTANCE-RISK: meaningful|high|critical`, preserve the full downstream gate map explicitly: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator`.
+
+## Next-Action Drive
+- Valid dispatch execution contract returns to `task-execution`.
+- Mixed-purpose prompt opens decomposition or route correction before dispatch.
+- Missing phase intent opens packet correction.
+- Missing downstream gate map opens packet correction before developer dispatch.
+- Uncertain independence opens scout-first bounded dispatch.
+- Explicit non-overlap opens immediate parallel fan-out.
+- Late shard update opens bounded follow-up dispatch to the designated owner.

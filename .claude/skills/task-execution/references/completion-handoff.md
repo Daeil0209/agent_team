@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -17,6 +19,10 @@ Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: 
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
 - `REQUESTED-LIFECYCLE`
+- `PRODUCER-SELF-REVIEW-PASS` — lenses applied, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer runs self-review on production completion under their own authority.
+- `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
+
+Team-lead accepts completion-grade messages that carry both blocks; messages missing either return to the producer via packet-correction.
 
 Lane handoff reports lane-local convergence only and claims no team-lead `SV-RESULT`.
 Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
@@ -24,13 +30,13 @@ Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on t
 For team-agent runtime, the report is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
 When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the handoff cites the retained path under `projects/<project-folder>/...`.
-When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained project-owned path.
+When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained project-owned path. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
 `/tmp`, shell scrollback, transient pane output, and deleted scratch files are execution context only, not retained evidence.
 Conversation-only output is valid only when the packet names conversation as the output surface.
 
 `TARGET-INTENT-BASIS` names the governance, program, report, document, review, proof, or validation purpose that controlled the work.
 Use `INFERENCE` when reconstructed safely from request, plan, design, Structural Contract, cited artifact, or frozen scope.
-Do not use generic text such as "follow the task" or "review the artifact".
+Use concrete task, artifact, expectation, evidence, and next-owner wording.
 Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, and regression risk.
@@ -42,7 +48,7 @@ Common finding basis:
 - `RESOURCE-CLEANUP: not-applicable (no long-running resource opened)` is allowed only when the lane invoked no long-running spawn; transient invocations may report `not-applicable` truthfully.
 - Leaving any long-running spawned process at handoff is a `RESOURCE-CLEANUP` defect; team-lead rejects completion-grade reports that misuse `not-applicable` to cover an unkilled long-running resource or a bare `complete` without enumeration and post-cleanup probe.
 
-Lane docs may require bounded additions, but they must not weaken or replace this common result spine.
+Lane docs may require bounded additions that preserve this common result spine.
 Handoff names selected non-lane-core skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
 If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready wording.
 Team-lead reviews that basis against the handed-off work and sends correction to the owning lane when direction drifts.
@@ -54,8 +60,15 @@ Each material start-contract axis closes through matched evidence, upstream defe
 Use `matched` only when the supporting spine fields or lane-specific status fields show the axis outcome.
 When the user-ready delivery chain is material, `matched` requires traceable continuity from instruction through concept/detail, implementation or production surface, verification evidence, and final receiver path.
 Working features with disconnected information, hidden assumptions, orphaned components, or implausible receiver flow are not closed-result evidence.
-`REQUESTED-LIFECYCLE` does not itself clear lifecycle debt.
-Team-lead still owes explicit lifecycle control.
+`REQUESTED-LIFECYCLE` is the producer's request.
+Lifecycle debt clears only through explicit lifecycle control.
+Team-lead executes explicit lifecycle control on each completion-grade handoff in the same turn.
+Production-lane agents (developer/researcher) on a surface still inside the active validation chain (review → test → validate) hold `standby` or `hold-for-validation` until the chain converges to ACCEPT.
+FAR/HOLD branches re-dispatch the same producer for correction.
+Issue `shutdown_request` only when validation ACCEPT is recorded for the producer's surface, the surface is proven out of the frozen plan, or closeout owns the path.
+Send `reuse` for agents picked up for the next assignment in the active route.
+Wait for confirmed termination evidence on shutdowns.
+Standby and reuse continue at lane.
 Team-lead can allow one narrow same-surface follow-on before lifecycle control only when all conditions hold:
 - prior completion already made a non-reuse requested lifecycle explicit
 - next dispatch targets a distinct concrete agent
@@ -66,20 +79,45 @@ When the lane claims user-surface proof or user-surface acceptance on an execute
 - `USER-SURFACE-PROOF-METHOD`
 - `TOOL-PATH-USED`
 - `TOOL-EXECUTION-EVIDENCE`
+- `OPERATOR-NAIVE-COMPREHENSION-AUDIT` for any handoff whose surface includes rendered UI.
+  Report a first-time-user walkthrough verdict per AC-supporting surface element (labels, controls, data displays, charts, gauges that bear acceptance weight).
+  Each verdict is `clear`, `partially-clear:<reason>`, or `unclear:<reason>`.
+  Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner.
+  Minor non-AC labels report as a single `routine: clear` summary unless a defect is observed.
+- `IMAGE-INSPECTION-RECORD` for any handoff whose surface includes rendered UI.
+  List each screenshot or full-page image cited in support of an AC verdict, FAR claim, or visual-conformance assertion.
+  Cite the design-stated expectation each image proves.
+  State the per-image visual verdict after opening the image directly via the multimodal `Read` tool.
+  Each verdict is `matches-expectation`, `deviates:<concrete deviation>`, or `inconclusive:<reason>`.
+  `matches-expectation` requires per-axis inspection of all 7 axes per `dev-workflow/references/final-acceptance-review.md` §PROOF (font size, spacing, ratio, alignment, color, label clarity, glyph rendering); surface-level "visible/clean" verdict without coordinate/proportion/alignment inspection is silent-PASS defect.
+  `matches-expectation` proves only the captured visual state.
+  Dynamic behavior still requires the relevant Evidence-Quality Matrix row plus executed user action and retained postcondition evidence.
+  Cite-path-only or capture-without-open on AC-supporting evidence is procedural failure.
+  Deviation entries block PASS or route to `OPEN-SURFACES`.
+  Routine baseline captures that neither support a verdict nor evidence a defect cite path-only without per-image verdict.
 
-Do not compress `real browser interaction`, `rendered/runtime reader proof`, or other decisive user-surface work into vague surface claims without naming the concrete proof method and execution evidence actually used.
-Do not report any requested deliverable as complete while requested content, functions, format, user-facing path, reader/operator burden, or acceptance surface remains missing, partial, placeholder-only, unrendered, unrun, or unverified unless upstream scope explicitly narrowed or deferred it.
-Do not report an executable deliverable as complete without the exact operator launch artifact plus invocation evidence, stop/cleanup path, clean re-launch basis, access URL/port when applicable, and project-artifact hygiene status.
-Do not widen `ACTIVE-SLICE` evidence into phase, MVP, release, or workflow completion without reconciling it against `SCOPE-BASELINE`.
+Report decisive user-surface work with the concrete proof method and execution evidence actually used.
+Completion reporting requires requested content, functions, format, user-facing path, reader/operator burden, `CORE-WORKFLOW-CLOSURE` coverage, and acceptance surface to be matched, verified, frozen-narrowed, or frozen-deferred.
+Anchoring on the implemented subset instead of the frozen `CORE-WORKFLOW-CLOSURE` coverage is procedural failure.
+Executable completion reporting requires the exact operator launch artifact plus invocation evidence, stop/cleanup path, clean re-launch basis, access URL/port when applicable, and project-artifact hygiene status.
+`ACTIVE-SLICE` evidence becomes phase, MVP, release, or workflow completion only after reconciliation against `SCOPE-BASELINE`.
 Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPEN-SURFACES`.
 
 ## Common Lane Handoff Law
 - Every agent handoff is an upward lane report, not a replacement for the frozen global plan.
 - Report only lane-local execution truth: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
-- Verdict or `PASS` language remains scoped to the reported lane evidence; it does not become wider acceptance, route closure, or broader user-surface proof through handoff formatting.
+- Verdict or `PASS` language remains scoped to the reported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Handoff exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.
-- `RECOMMENDED-NEXT-LANE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; it does not freeze routing or collapse independent owners.
+- `RECOMMENDED-NEXT-LANE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.
-- If the truthful next step changes owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain, do not disguise that as ordinary completion.
-- Raise `scope-pressure` or `hold|blocker`.
-- If any required procedure state for completion-grade reporting is not true yet, use `MESSAGE-CLASS: hold|blocker` instead of formatting the report as completion-ready.
+- Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain routes to `scope-pressure` or `hold|blocker`.
+- Pending required procedure state routes to `MESSAGE-CLASS: hold|blocker`.
+
+## Next-Action Drive
+- Converged completion-grade handoff opens team-lead synthesis.
+- Open surfaces route to corrected lane packet, proof owner, validation owner, lifecycle owner, or `work-planning` when boundary axes move.
+- Missing common result spine opens same-lane handoff correction.
+- Missing user-surface proof opens tester or proof-owner routing.
+- Missing final acceptance basis opens validator routing.
+- Lifecycle debt opens lifecycle control.
+- Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain opens `scope-pressure` or `hold|blocker`.

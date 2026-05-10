@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -28,3 +30,8 @@ When a material cue is not selected, record the deferral basis:
 - `BENCHMARK-DEFERRED: prior-session-already-grounded` with citation
 - `BENCHMARK-DEFERRED: burden-exceeds-value` with burden basis
 Silent skip when a material cue applies is a planning-evidence defect, not legitimate scope reduction.
+
+## Next-Action Drive
+- Applied material cue opens `benchmark-simulation`.
+- Valid deferral returns cited deferral basis to the consuming owner.
+- Silent skip opens planning-evidence correction.

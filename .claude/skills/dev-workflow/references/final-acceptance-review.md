@@ -1,5 +1,7 @@
 # dev-workflow: Final Acceptance Review
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -17,7 +19,12 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `CONTRACT`: frozen Receiver-Surface Contract, Consumption Chain, frozen upstream deferrals, frozen out-of-scope rows, requested output root
 - `ARTIFACT-MAP`: final artifact identity, final location, produced output inventory, instruction-to-artifact mapping, artifact hygiene
 - `USER-SURFACE`: target user environment, exact start/open/read/action path, material first-use/data-content/demo/import state, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
-- `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity
+- `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity.
+  For user-facing rendered surfaces, `PROOF` includes per-feature/per-state screenshot and full-page capture paths.
+  `PROOF` includes an `IMAGE-INSPECTION-RECORD` confirming each cited image was opened directly via the multimodal `Read` tool and matched against the design-stated expectation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering).
+  Cite-path-only or capture-without-open is procedurally invalid for `FINAL-ACCEPT`.
+  When external visual benchmarks materially raise the quality ceiling on operator-facing UI, dashboards, reports, or decks, `benchmark-simulation` runs at `FINAL-EVIDENCE-PACKET` freeze time.
+  Its abstraction-fit-adapt synthesis joins the `PROOF` basis.
 - `COVERAGE`: every material requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, or frozen deferral/out-of-scope row
 - `BOUNDARIES`: material Boundary Register rows and downstream handoff status
 - `ENVIRONMENT`: covered environment, equivalence declaration, or frozen environment deferral
@@ -53,6 +60,7 @@ Codex packet carries:
 - active feynman-clarity skill
 - active operator-delivery reference when operator-delivery fit is material
 - final evidence packet paths
+- original instruction-trace plus frozen plan/design acceptance rows as scope-defining input (validator's `PASS-SCOPE-EXCLUSIONS` or narrowed claims travel as evidence rows for inspection, not as Codex's scope)
 
 ## Acceptance Criteria
 Final ACCEPT answers one closure question.
@@ -60,14 +68,14 @@ Every original instruction, accepted follow-up instruction, and frozen `SCOPE-BA
 - final artifact or behavior
 - retained evidence
 - real user-surface proof
-- matched, frozen upstream-deferred, or frozen out-of-scope status
+- matched, user-authorized-deferred (with frozen-record passage citation), or original-plan/design-out-of-scope (with frozen-record passage citation) status
 
-Apply only the deliverable-type sub-bundles materially named in `SCOPE-BASELINE` and the frozen Receiver-Surface Contract; mark non-applicable sub-bundles `not-applicable:<basis>`. FAR records sub-bundle selection rationale before reject-first decision so the cumulative axis count fits the actual deliverable rather than rubber-stamping every sub-bundle.
+Apply only the deliverable-type sub-bundles explicitly listed in `SCOPE-BASELINE` and the frozen Receiver-Surface Contract; mark non-applicable sub-bundles `not-applicable:<frozen-record-passage>`. FAR records sub-bundle selection rationale citing the frozen-record passage before reject-first decision; self-defined narrowing without frozen-record citation is silent-PASS defect.
 
 Every material requested axis carries one of:
 - retained matched evidence on the real user surface with Evidence-Quality Matrix support
 - cited frozen upstream-deferral basis
-- cited frozen out-of-scope basis
+- cited original-plan/design-out-of-scope basis (with frozen-record passage citation)
 
 Material requested axes:
 - original instruction trace
@@ -143,7 +151,9 @@ Source-read outputs add:
 - claim truth
 
 ## Decision
-Reject-first decision order: if any material instruction, baseline row, acceptance axis, or executable user-facing operator-delivery axis lacks retained matched evidence, record `FINAL-REJECT` before `FINAL-ACCEPT` or workflow `Complete`.
+Reject-first decision order: if any material instruction, baseline row, acceptance axis, `CORE-WORKFLOW-CLOSURE` row, or executable user-facing operator-delivery axis lacks retained matched evidence, record `FINAL-REJECT` before `FINAL-ACCEPT` or workflow `Complete`.
+Subset-anchor own-review (anchoring on implemented routes/templates instead of the design's `CORE-WORKFLOW-CLOSURE` rows) is automatic FINAL-REJECT.
+FAR own-review compares retained matched-evidence axes against original instruction-trace and frozen plan/design acceptance rows directly; validator-narrowed PASS-scope without frozen-record passage citation is automatic FINAL-REJECT-CANDIDATE on the excluded axis.
 Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `SV-RESULT` on the `FINAL-ACCEPT` record.
 `FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input and opens `task-execution` for assigned-validator rejection analysis.
 Codex unavailable status records `fail-open:<reason>` with fallback final-acceptance inspection basis and conservative `SV-RESULT`; validator `PASS` identity remains the acceptance prerequisite.
@@ -171,13 +181,26 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - team-lead own-review basis
 - Codex status
 - reconciliation result
-- validator return instruction.
+- validator return instruction
+- `IMAGE-EVIDENCE` for every visual / rendered defect — each entry names the captured screenshot or full-page image path, the design-stated expectation it should match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, or other measurable visual delta), and the multimodal `Read` confirmation that the receiving lane opened the image directly. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
 
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.
 `FINAL-REJECT` keeps the active `dev-workflow` acceptance loop open; it is not workflow completion, user-decision wait, or a new top-level task.
 task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
+team-lead direct execution of production, test, or validation correction work without validator-authored correction packet routing through task-execution is lane-bypass; treat as procedural failure equivalent to silent self-certification.
 Validator correction packet names root-cause class, correction owner surface, required evidence, and revalidation target; it is evidence for route classification, not route freeze.
 team-lead classifies the owning correction route per `references/checkpoints.md` CP5 Auto-resolve priority before dispatch.
 After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.
+
+## Next-Action Drive
+- Reject-first gap opens `FINAL-REJECT`.
+- `FINAL-REJECT` opens assigned-validator rejection analysis through `task-execution`.
+- Validator correction packet opens CP5 route classification.
+- CP5 design-level classification opens Phase 2 correction.
+- CP5 implementation or operator-delivery classification opens Phase 5 correction.
+- Corrected artifact opens applicable Phase 4/5 review, proof, validation, and operator-delivery rerun.
+- Fresh validator `PASS` opens a new Final Acceptance Review entry.
+- Clean reject-first result opens `FINAL-ACCEPT` after current `SV-RESULT`.
+- `FINAL-ACCEPT` opens workflow `Complete`.

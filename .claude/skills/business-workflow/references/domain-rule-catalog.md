@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -138,3 +140,7 @@ Reader structure and generated-document quality belong to `document-automation`.
 Pipeline software architecture belongs to `software-architecture`.
 Use `business-workflow` only when report automation has workflow states, approval or mutation authority, source-of-truth separation, audit or reconciliation semantics, configurable rule tables, or operator workflow meaning.
 When active, carry the `researcher` evidence packet instead of restating its methodology.
+
+## Next-Action Drive
+- Return extracted workflow states, rule catalogs, reconciliation findings, and domain-fit gaps to the active parent workflow as business-rule evidence.
+- If this reference changes mutation authority, data linkage, acceptance, or operator workflow shape, reopen the owning planning or lane packet before implementation continues.

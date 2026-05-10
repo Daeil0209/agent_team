@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned dispatch surface.
-- Fixed section order: Purpose, Activation, Entry Contract, Step 1: Activate Frozen Route, Step 2: Dispatch / Reuse, Step 3: Dispatch Truth, Step 4: Interrupt / Resume Boundary, Step 5: Next Owner, Move-Out Boundary
+- Fixed top-level section order after Structural Contract: Purpose, Activation, Entry Contract, Step 1: Activate Frozen Route, Step 2: Dispatch / Reuse, Step 3: Dispatch Truth, Step 4: Interrupt / Resume Boundary, Step 5: Next Owner, Move-Out Boundary.
+- Reference Map stays inside Purpose.
 - PRIMARY-OWNER: team-lead
 ## Purpose
 Own host-authorized additional-agent execution after planning is complete.
@@ -25,7 +26,7 @@ Load trigger-specific files directly from `SKILL.md`.
 - `references/assignment-packet.md`: assignment-grade packet floor, packet preflight, field format, skill loading, and cross-continuity packet checks.
 - `references/dispatch-entry-contract.md`: consumed planning fields, concrete-vs-not-applicable rules, execution readiness entry checks, and information movement rule.
 - `references/request-bound-fields.md`: request-intent, exact user wording, governance tier, user-surface, proof/tool/setup, run-path, burden, decision, validation, environment, and scenario fields.
-- `references/message-classes.md`: common message law, upward message classes, receipt spine, information-request consumption, and blocker/pressure routing.
+- `references/message-classes.md`: common message law, canonical channel registry, upward message classes, receipt spine, information-request consumption, and blocker/pressure routing.
 - `references/scope-pressure.md`: canonical `scope-pressure` values, required fields, and replan vs packet-correction boundary.
 - `references/truth-rules.md`: runtime truth ladder and user-facing claim limits.
 - `references/runtime-dispatch-law.md`: team-runtime lane dispatch, TeamCreate sequencing, parallel/reuse law, SendMessage class boundaries, required-skill dispatch law, and partial-parallel-failure recovery.
@@ -85,7 +86,7 @@ Own the actual execution move:
 
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
-- Do not send while a frozen route axis remains stale, missing, or contradicted; same-owner packet defects return to the same frozen owner, any moved `work-planning` boundary-change axis reopens `work-planning`.
+- Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, `parallel-agent-dispatch`, or reuse-via-`SendMessage` move.
@@ -98,8 +99,11 @@ Dispatch law:
 - If the role is absent, create the member with team-scoped `Agent`.
 - Standalone host evidence remains fallback classification only.
 - Configured lanes, frozen `PARALLEL-GROUPS`, lane separation, proof/acceptance separation, and packet skill-field law outrank reuse or dispatch convenience.
-- Assignment-grade `SendMessage`, workflow-control `SendMessage`, and lifecycle-only `SendMessage` are distinct message classes.
-- Match each message to its class.
+- Assignment-grade `SendMessage` uses `MESSAGE-CLASS: assignment`.
+- Phase-transition control `SendMessage` uses `MESSAGE-CLASS: phase-transition-control`.
+- Non-terminating lifecycle control `SendMessage` uses `MESSAGE-CLASS: lifecycle-control`.
+- Terminating lifecycle control uses structured `shutdown_request`.
+- Match each `SendMessage` to the exact class or structured payload owned by its reference.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.
 

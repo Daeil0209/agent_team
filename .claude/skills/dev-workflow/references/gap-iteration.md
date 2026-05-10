@@ -1,5 +1,7 @@
 # dev-workflow: Gap Detection And Iteration
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -30,7 +32,7 @@ Phase 4 gap detection separates:
 - user-readiness gaps
 
 Blocking gaps are not only missing components. Missing proof on the required user surface is independently blocking.
-Compare against the frozen `SCOPE-BASELINE`, not only the implemented `ACTIVE-SLICE`; missing, stubbed, placeholder-only, or unproven baseline items are blocking unless upstream scope explicitly deferred them.
+Compare against the frozen `SCOPE-BASELINE`, not only the implemented `ACTIVE-SLICE`; missing, stubbed, placeholder-only, or unproven baseline items are blocking unless original frozen request/plan/design explicitly deferred them.
 
 ## Structural Check
 For each component in the design, verify:
@@ -72,7 +74,7 @@ Reviewer classifies each gap:
 | Class | Definition | Iteration required |
 |-------|------------|-------------------|
 | Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Yes; reopen the correction loop unless governing evidence reclassifies the gap |
-| Non-blocking | Minor behavioral gap, cosmetic mismatch, or low-risk deviation | No, but record in report |
+| Non-blocking | Minor behavioral gap, cosmetic mismatch, or deviation with no user-surface, acceptance, data, security, or workflow impact | No, but record in report |
 | Deferred | Design decision intentionally not implemented in this iteration | No, but document under follow-up |
 
 When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`. T0/T1 gaps are not normal iteration candidates.
@@ -111,3 +113,12 @@ Do not replace reviewer, tester, or validator state with local gap-detection cla
 
 ## Gap Detection Self-Growth
 Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repeated phase drift, repeated bottlenecking after decomposition, or repeated source-only substitution appears.
+
+## Next-Action Drive
+- Blocking gap opens CP5 route classification.
+- T0/T1 gap opens `incident-response`.
+- Phase 5 gap contribution opens correction owner with required return evidence.
+- Corrected output opens reviewer quick-check and tester re-verification.
+- Cleared blocking gaps open validator ingress or Final Acceptance Review by acceptance path.
+- Repeated same-class blocking gap opens root-cause classification.
+- Repeated missed-gap pattern opens `self-growth-sequence`.

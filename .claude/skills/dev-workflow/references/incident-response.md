@@ -1,5 +1,7 @@
 # dev-workflow: Incident Response
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -52,3 +54,13 @@ Incident response contributes only incident-context fields:
 - carried-forward blocking issues from the prior phase
 
 Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live with the canonical packet contract.
+
+## Next-Action Drive
+- T0/T1 detection opens incident classification and user-facing blocker truth.
+- Approved bounded fix opens developer correction.
+- Applied fix opens tester proof on the decisive proof surface.
+- Verified fix opens reviewer regression check.
+- Failed fix returns to fix proposal.
+- Three failed attempts open escalation instead of iteration.
+- Recurring or material missed prevention opens `self-growth-sequence`.
+- Verified incident resolution returns to the active dev-workflow phase cursor.

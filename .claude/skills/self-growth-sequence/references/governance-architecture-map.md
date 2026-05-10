@@ -1,5 +1,7 @@
 # self-growth-sequence: Governance Architecture Map
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -24,3 +26,11 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 | Official-source cache or preservation traceability | `.claude/reference/` |
 
 Reference files are lookup surfaces, not hidden always-on doctrine. A `SKILL.md` spine must keep the activation trigger, owner, stop rule, and instruction to load the direct reference file when the detailed lookup is required.
+
+## Next-Action Drive
+- Selected owner surface opens patch design on that surface.
+- Lookup-only detail opens owning reference update.
+- Always-on doctrine need opens `CLAUDE.md`.
+- Lane-specific behavior opens the owning agent, lane skill, or lane-detail reference.
+- Runtime enforcement need opens hook/settings owner after semantic owner correction.
+- Ambiguous owner selection returns to causal analysis.

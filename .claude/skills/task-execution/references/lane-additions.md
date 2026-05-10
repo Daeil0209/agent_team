@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -13,7 +15,7 @@ Every lane-core skill inherits these common preconditions:
 - Receipt is not permission to execute a defective packet.
 - Then classify in the same turn.
 - Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
-- Do not idle after receipt.
+- Continue into lane work after receipt.
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - Reconcile completion-grade handoff against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Load lane-core skill only for consequential lane-owned work.
@@ -22,6 +24,7 @@ Every lane-core skill inherits these common preconditions:
 - Before lane work, run a capability-fit pass against target intent, assigned surface, required/recommended skills, and material tool or rendered/runtime needs.
 - Every `REQUIRED-SKILLS` entry is mandatory consumption: load and apply it before lane execution or handoff, or return `scope-pressure` / `hold|blocker` with the smallest correcting owner.
 - A required entry that is non-fitting, lane-mismatched, contradictory, or outside the frozen boundary is a packet or route defect, not permission to drop the skill.
+- Every carried `SKILL-RECOMMENDATIONS` entry is classified as applied, not-material, or blocked before handoff.
 - Use fitting skills and tools as execution lenses inside the assigned lane; naming them without applying them to the work surface is not capability fit.
 - When a selected non-lane-core skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.
 - During lane work, a newly discovered skill or tool need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
@@ -41,3 +44,11 @@ The common base packet is extended by lane-specific required fields:
 Each lane's lane-core skill and lane-detail reference own exact assignment additions and lane-specific completion extras beyond the common result spine. Lane role documents own always-loaded lane identity, boundary, and stop conditions; they are not packet catalogs.
 
 For session-side controlled packet value tables and lane-specific presence hints, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are lookup indexes. `team-session-sequences` owns session-sequence indexes and dispatch-detail lookups, not packet schema or lane-core additions. Runtime spine stays with `session-boot`, closeout with `session-closeout`, and packet schema with `task-execution`. Hooks guard runtime integrity as last-resort checks; normal agent behavior stays with the owning procedure.
+
+## Next-Action Drive
+- Satisfied common preconditions open lane-owned work.
+- Defective receipt opens `scope-pressure` or `hold|blocker`.
+- Missing lane-specific additions return to packet correction before dispatch.
+- Missing required skill consumption opens lane skill consumption or `scope-pressure`.
+- Boundary-changing discovered skill or tool need opens `scope-pressure`, `hold|blocker`, or `work-planning`.
+- Completion-grade lane output opens `completion-handoff` reconciliation.

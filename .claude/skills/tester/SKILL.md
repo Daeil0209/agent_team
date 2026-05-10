@@ -35,11 +35,11 @@ Apply this gate whenever the task claims a user workflow, operator workflow, or 
 2. Has proof executed the core completion path?
 3. Has proof executed stop/cleanup and clean re-launch when executable?
 4. Are results based on executed workflow evidence rather than smoke checks, extracted text, or render-only impressions?
-5. If the full workflow cannot be proven, is the result classified as blocked or partial proof instead of softened into pass-like language?
+5. Does blocked or partial proof status replace pass-like language when full workflow proof is unavailable?
 6. For executable user-facing software, does proof cover every frozen `SCOPE-BASELINE` feature/surface/control in the assigned `ACTIVE-SLICE`?
 7. Are uncovered baseline items classified as blocked or upstream-deferred?
-8. Is any untested implemented subset reported as proof slice only, not full deliverable completion?
-Page loads, opens, renders, server-only proof, or API-only proof are not enough when the assigned surface includes user-facing interaction.
+8. Does reporting classify each untested implemented subset as a proof slice and withhold full deliverable completion?
+Assigned user-facing interaction requires executed interaction proof and observed post-action state.
 
 ## Preconditions
 - Use only after team-lead assigns a bounded test surface.
@@ -56,7 +56,10 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Proof work starts from packet, artifact, or marked safe inference.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned proof surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Classify every carried recommendation as applied, not-material, or blocked.
+- Load and apply material recommendations before lane work.
+- Record recommendation classification basis.
 - Choose the proof tool from the decisive user surface.
 - Source artifact alone is decisive only when the frozen proof surface is the source/read document itself.
 - Browser interaction requires a browser-proof path.
@@ -72,7 +75,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 ### 1. Declare The Test Surface
 - Before proof discovery or execution, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop condition.
 - Proof proceeds only on `execute` or `reconstruct-with-inference`.
-  - Use `references/tester-lane-detail.md` as the controlling packet-field catalog for proof basis, runtime-context additions, delivery-contract additions, tool path, first lane action, and stop condition; do not maintain a second field list here.
+  - Use `references/tester-lane-detail.md` as the sole controlling packet-field catalog for proof basis, runtime-context additions, delivery-contract additions, tool path, first lane action, and stop condition.
   - Keep omitted run path or runtime context as `not-applicable` only when the controlling reference permits it.
 - Build an intent-to-proof map before choosing checks.
 - Map design intent or proof expectation.
@@ -82,7 +85,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Map state or persistence check.
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
-- If the map cannot be built from the packet and safe inference, stop.
+- Missing packet-backed or safe-inference-backed map stops proof work.
 - Request missing design intent, expected result, user path, state expectation, or tool path through `MESSAGE-CLASS: hold|blocker`.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
 - If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
@@ -97,7 +100,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Run actual commands.
 - Record exact commands, outputs, exit codes, or observed interaction evidence.
 - When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in handoff.
-- `/tmp` fixture paths are scratch context only and cannot be the retained evidence identity.
+- Retained evidence identity requires project-owned retained paths; `/tmp` fixture paths are scratch context only.
 - Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, assigned interaction scope, and `USER-RUN-PATH` only when run-path burden is frozen.
 - When a precise oracle is unavailable or impractical, use property, invariant, round-trip, differential, or metamorphic checks when they fit the assigned proof surface.
 - When the assigned proof surface is browser interaction, prove it on that browser surface.
@@ -109,7 +112,7 @@ Page loads, opens, renders, server-only proof, or API-only proof are not enough 
 - Choose the smallest truthful tool path.
 - Keep the choice bounded by the packet's discovery/setup objective.
 - Environment work stays bounded to the packet's discovery/setup objective.
-- If that narrow search cannot identify a truthful executable path inside the frozen boundary, stop proof work and send the tool/evidence-gap request to `team-lead` via `SendMessage`.
+- Failed narrow search for a truthful executable path inside the frozen boundary stops proof work and sends the tool/evidence-gap request to `team-lead` via `SendMessage`.
 - If execution drifts to a weaker path, downgrade the proof state immediately instead of continuing with `matched` assumptions.
 ### 4. Cover Human-Facing Surfaces
 - For documents, page-read, or office-format artifacts, keep rendered evidence explicit when human-visible acceptance depends on it.

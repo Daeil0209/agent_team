@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned verification surface.
-- Fixed section order: Purpose, Reporting Principle, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Step 4, Step 5, Verification Output Format.
+- Fixed top-level section order after Structural Contract: Purpose, Reporting Principle, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Step 4, Step 5, Verification Output Format, Next-Action Drive.
+- Reference Map stays inside Purpose.
 - Step names: Choose Verification Mode And Target, Scope Match, Critical Challenge, Evidence Basis, Converge Or HOLD, Output Verified State.
 - PRIMARY-OWNER: team-lead
 - Detailed target profiles, challenge lenses, artifact-change checks, harness/proof checks, synthesis checks, and expanded output fields live in `references/verification-targets-and-gates.md`.
@@ -158,3 +159,13 @@ OPEN-SURFACES:
 UNVERIFIED-ITEMS:
 HOLD-REASON:
 ```
+
+## Next-Action Drive
+- `SV-PLAN: proceed-local` opens the frozen local action.
+- `SV-PLAN: open-task-execution` opens `task-execution`.
+- `SV-PLAN: clear-blocker` opens the named blocker-clear move.
+- `SV-RESULT: verified-result` permits only the verified claim surface.
+- `SV-RESULT: narrow-to-verified-scope` opens claim narrowing.
+- `INFERENCE/UNVERIFIED` opens claim downgrade or evidence correction.
+- `reopen-work-planning` opens `work-planning`.
+- `HOLD` records verification owner, blocker, and next safe evidence step.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -103,8 +105,11 @@ Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 Packet skill fields separate required skills from methodology recommendations.
 - Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
 - Receiving lanes must load and apply every `REQUIRED-SKILLS` entry or return `scope-pressure` / `hold|blocker`.
-- Use `REQUIRED-SKILLS: []` when no upstream required skill exists.
-- Carry `SKILL-RECOMMENDATIONS` only when planning or the active workflow owner froze methodology guidance for the receiving lane; the receiver selects, loads, and applies material entries before first lane work and records applied or blocked skill basis in handoff.
+- Use `REQUIRED-SKILLS: []` to record absence of upstream required skills.
+- Carry `SKILL-RECOMMENDATIONS` when planning or the active workflow owner froze methodology guidance for the receiving lane.
+- The receiver classifies each carried recommendation as applied, not-material, or blocked.
+- The receiver loads and applies material recommendations before first lane work.
+- The receiver records recommendation classification basis in handoff.
 
 ## Session Cross-Continuity Packet Check
 Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, confirmed corrections, recurrence barriers, decisions, contract freezes, lane-charter changes, sibling outputs, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.
@@ -117,3 +122,13 @@ Use assignment-grade packets for:
 - bounded reuse
 
 If an agent is receiving new bounded work in the same execution segment, carry any needed workflow phase context inside the assignment packet instead of sending a separate standalone control packet.
+
+## Next-Action Drive
+- Passing packet preflight opens `task-execution` dispatch or reuse.
+- `packet-correction` opens same-owner packet correction and reruns packet preflight.
+- `route-replan` opens `work-planning`.
+- `parallel-continue` keeps unaffected lanes moving while the blocked surface resolves.
+- Missing target-resolution evidence opens runtime target resolution before dispatch.
+- Missing field format truth opens correction in the packet-producing procedure.
+- Missing lane-required additions opens lane-addition correction before dispatch.
+- Packets relying on lead-only conversation context open packet fact transfer before dispatch.

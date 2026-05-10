@@ -32,15 +32,10 @@ On assignment-grade work receipt, classify the packet before execution:
 - explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
 Validator-local PASS gate only; team-lead still owns routing and lifecycle acceptance decisions.
-1. Is there evidence that the intended user or operator can find the deliverable?
-2. Is there evidence that the user can access or install it?
-3. Is there evidence that the user can start it?
-4. Is there evidence that the user can complete the core workflow?
-5. Does that evidence come from actual review or proof surfaces rather than assumption or producer confidence?
-6. If user-perspective evidence is partial, blocked, or missing, is PASS withheld?
-7. For executable interactive software, is every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope covered by tester evidence?
-8. Was each such item directly exercised or classified as blocked, disproven, or upstream-deferred?
-Developer-runnable, reviewer-plausible, or lower-level support evidence is not enough for PASS on the decisive user-facing acceptance surface.
+PASS requires retained evidence that the intended user/operator can find, access/install, start, and complete the core workflow on the deliverable, sourced from actual review or proof surfaces (not assumption or producer confidence).
+For executable interactive software, every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope must be directly exercised by tester evidence or classified as blocked, disproven, or upstream-deferred with frozen-record citation.
+Partial, blocked, or missing user-perspective evidence withholds PASS.
+Developer-runnable, reviewer-plausible, or lower-level support evidence is rejected as PASS evidence on the decisive user-facing acceptance surface.
 
 ## Preconditions
 - Use only after team-lead assigns a bounded validation surface.
@@ -59,7 +54,10 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is not e
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned validation surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Classify every carried recommendation as applied, not-material, or blocked.
+- Load and apply material recommendations before lane work.
+- Record recommendation classification basis.
 - Choose the decisive proof tool from the user-facing acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
@@ -130,7 +128,6 @@ Keep authoritative versus supplemental sources explicit.
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, or missing required workflow basis.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface.
 - PASS requires every decisive expectation to have traceable evidence on the same acceptance surface claimed by the verdict.
-- PASS scope is inherited from frozen request, plan, design, or upstream defer record.
 - Requested deliverable remains the acceptance baseline.
 - If user-facing acceptance depends on exact launch artifact, PASS requires explicit reconciliation.
 - If user-facing acceptance depends on core completion path, PASS requires explicit reconciliation.
@@ -138,6 +135,9 @@ Keep authoritative versus supplemental sources explicit.
 - If user-facing acceptance depends on burden contract, PASS requires explicit reconciliation.
 - Executable workflow-completion PASS requires exact launch artifact execution closure.
 - PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
+- PASS requires every `CORE-WORKFLOW-CLOSURE` row matched or upstream-deferred by the owning upstream record.
+- Blocked or unproven `CORE-WORKFLOW-CLOSURE` rows withhold PASS.
+- Subset-anchor PASS is procedurally invalid.
 - PASS requires stop/cleanup closure.
 - PASS requires clean re-launch closure.
 - PASS requires access path closure.
@@ -146,7 +146,7 @@ Keep authoritative versus supplemental sources explicit.
 - PASS requires operator-OS fit closure.
 - PASS requires project-artifact hygiene closure.
 - If decisive coverage is incomplete, issue `HOLD` or a non-PASS verified-scope report instead of calling workflow complete.
-- Do not issue PASS for a subset unless that subset was already frozen by request, plan, design, or upstream defer record.
+- Subset acceptance is PASS-eligible only when the subset was already frozen by request, plan, design, or upstream defer record.
 - Executable interactive web/UI deliverables require browser-surface proof on the real user interaction inventory for PASS.
 - Browser-surface gap closes through browser-surface proof.
 - Rendered documents or runtime-bearing artifacts require decisive evidence on the actual reader/runtime surface for PASS when that is where usefulness is experienced.
@@ -177,7 +177,7 @@ Keep authoritative versus supplemental sources explicit.
 
 ## Blocked Validation
 - Use `MESSAGE-CLASS: hold|blocker` when decisive assignment basis is missing before truthful validation can continue.
-- Use `VERDICT: HOLD` only after bounded validation ran far enough to arbitrate acceptance cannot pass.
+- Use `VERDICT: HOLD` only after bounded validation establishes blocked acceptance.
 - Valid HOLD causes: missing, contradictory, blocked, or insufficient evidence.
 - Missing review or test evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact missing owner.
 - Contradictory upstream evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact contradiction and resolution owner.

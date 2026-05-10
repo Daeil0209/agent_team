@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/visual-composition/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -73,6 +75,10 @@ For operational management systems (project dashboards, resource allocation UIs,
 ### Decorative Clutter Anti-Pattern
 Icons, gradients, animations, hover effects, or badges not conveying operational status or priority = `decorative_noise`. Removal test: if removing causes zero operational information loss, it should not exist. Upgrading spartan but functional UI requires before/after scannability measurement; if extracting same operational data requires scanning more elements = regression regardless of aesthetic improvement.
 Expert tool UI: button visual weight proportional to interaction frequency; rare destructive actions visually demoted (icon only, show on hover); status indicators must never be styled as buttons; page divisions correspond to workflow boundaries, not database table boundaries.
+
+## Next-Action Drive
+- Return visual defect records, operator-surface rules, composition requirements, and proof needs to the active visual-composition workflow.
+- If visual composition changes workflow design, implementation, testing, or validation, carry the named visual requirement to that owner before completion continues.
 ## Workflow Tool Design Patterns
 Canonical patterns for desktop apps, workflow tools, and operator-facing programs.
 ### Core Design Principles

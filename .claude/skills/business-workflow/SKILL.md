@@ -1,6 +1,6 @@
 ---
 name: business-workflow
-description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery. Verticals covered in `references/domain-rule-catalog.md`: event planning, R&D proposal, result report, schedule planning. Project-local rule catalogs may extend the pattern; load only the vertical materially required by the assigned surface.
+description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, and validation logic for software delivery. Covered references include event planning, R&D proposal, result report, schedule planning, and budget/allocation/participation workflows. Project-local rule catalogs may extend the pattern; load only the vertical materially required by the assigned surface.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
@@ -12,6 +12,7 @@ effort: medium
 - Keep domain-specific workflow extensions and detailed rule catalogs in `references/domain-rule-catalog.md`.
 ### Reference Map
 - `references/domain-rule-catalog.md`: domain-specific workflow extensions and detailed rule catalogs.
+- `references/allocation-participation-workflow.md`: budget, personnel, participation, allocation, period, reconciliation, and spreadsheet-migration workflow oracle.
 ## Identity
 You are the business-workflow specialist capability for Claude Code.
 - Conditional business-workflow lens when delivery depends on hidden rules, authority boundaries, state transitions, persistence meaning, or reconciliation semantics.
@@ -32,6 +33,7 @@ Use this skill when sheets, manual operations, approvals, or workflow-heavy tool
 - extract entities, lifecycle states, transitions, approvals, overrides, and generated artifacts
 - for allocation, participation, capacity, or period-based workflow systems, extract the rule packet before downstream design
 - allocation rule packet detail includes period basis, rate or unit meaning, overlap rules, over-allocation rules, effective dates, closure and reopen rules, and derived status meaning
+- budget, personnel, participation, or allocation tools consume `references/allocation-participation-workflow.md` before downstream design
 - separate stable business rules from layout accidents, convenience habits, or one-off exceptions
 - freeze source-of-truth meaning for master, transactional, derived, and exported data
 - define mutation authority: who creates, edits, deletes, restores, reopens, or overrides

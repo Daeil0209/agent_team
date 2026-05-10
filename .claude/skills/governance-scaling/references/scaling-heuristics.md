@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/governance-scaling/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -74,3 +76,7 @@ A composite score that gives team-lead a quantitative view of project quality tr
 - Team-lead uses score alongside direct evidence and user feedback
 - Score calculation happens at phase transitions, not continuously
 - If score and direct evidence disagree, direct evidence wins
+
+## Next-Action Drive
+- Return governance tier signals, scoring trend, direct-evidence conflicts, and oversight recommendations to the active governance-scaling workflow.
+- If scaling changes phase gates, checkpoint frequency, lane use, or review depth, reopen the owning planning path before execution continues.

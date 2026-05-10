@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/external-tool-bridge/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -41,3 +43,12 @@ When the external bridge involves batch data transfer, streaming ingest, or pipe
 - **Idempotency proof**: define the condition under which re-running the bridge step produces identical results without side effects (duplicate records, double charges, duplicate notifications)
 - **Checkpoint/resume**: for operations that may be interrupted, define the minimum recoverable state and the resume entry point that avoids full restart
 - **Batch vs streaming**: declare the transfer pattern upfront (batch pull, streaming push, polling, webhook) and justify the choice relative to delivery latency and quota constraints; switching patterns mid-bridge without re-verification = bridge design defect
+
+## Next-Action Drive
+- Passing pre-verification opens bounded external bridge execution.
+- Failed credential, endpoint, quota, permission, setup, or cleanup check opens blocked-condition report.
+- Allowed setup opens bounded setup execution.
+- Approval-required setup opens explicit approval or deferral path.
+- Retryable failure opens one retry path with changed timing, endpoint health, fallback route, or setup state.
+- Repeated unchanged failure opens blocked-condition report.
+- Successful bridge execution returns evidence to the consuming owner.

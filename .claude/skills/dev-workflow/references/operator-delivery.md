@@ -1,5 +1,7 @@
 # dev-workflow: Operator On-Ramp And Termination Discipline
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -49,7 +51,7 @@ Both belong to team-lead planning derivation.
 
 ## R23 -- Operator-OS Coverage
 Derive operator OS from `PRIMARY-USER` and current request/environment evidence at planning time.
-If the user works from Windows paths, Windows tooling, or Windows operator language, freeze Windows as the primary operator OS unless contrary evidence exists.
+If the user works from Windows paths, Windows tooling, or Windows operator language, freeze Windows as the primary operator OS unless the user explicitly states a contrary preference.
 For Windows primary operators, proof starts from the Windows launch surface.
 WSL/Linux proof is support evidence only unless proven equivalent for the exact operator action.
 Single-OS launch is sufficient only when `PRIMARY-USER` resolves to one OS through a named institutional context, explicit hardware/runtime constraint, explicit user statement, or concrete current-environment evidence.
@@ -119,3 +121,12 @@ Phase 2 owns delivery-contract or design weakness.
 Do not close it as advisory residue.
 When the frozen operator surface is still satisfiable, team-lead routes directly to Phase 5 operator-proof or repair and attempts non-destructive team-side proof before user escalation.
 Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required, or the user explicitly redirects scope.
+
+## Next-Action Drive
+- Complete operator-delivery closure returns to Phase 4/5 acceptance or Final Acceptance Review.
+- Missing implementation or cleanup closure opens Phase 5 repair.
+- Missing delivery-contract or design closure opens Phase 2 correction.
+- Changed deliverable shape, operator OS, proof chain, acceptance chain, or user requirement opens `work-planning`.
+- Unavailable team-side proof path opens bounded setup/tool proof path or `HOLD`.
+- Proven infeasible team-side proof with user-owned condition opens user-owned blocker.
+- Operator-delivery `FINAL-REJECT` returns to CP5 route classification.

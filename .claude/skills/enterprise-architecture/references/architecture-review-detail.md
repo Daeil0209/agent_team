@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/enterprise-architecture/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -106,3 +108,7 @@ For all infrastructure changes (database schema, message queue topology, network
 4. **Staging verification** — apply to staging environment, run affected integration tests, confirm monitoring shows expected behavior
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
 **HOLD condition:** infrastructure change applied to production without a tested rollback plan is a T1 governance block.
+
+## Next-Action Drive
+- Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.
+- If a finding affects dependency mapping, production readiness, or lane acceptance, route that requirement to the owning design, implementation, or validation path.

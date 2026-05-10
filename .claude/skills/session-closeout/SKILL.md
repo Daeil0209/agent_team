@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned closeout surface.
-- Fixed section order: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence`
+- Fixed top-level section order after Structural Contract: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence` -> `Next-Action Drive`.
+- Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the closeout spine only.
 - State schema, hold conditions, and detailed agent lifecycle requirements belong in `references/closeout-state-detail.md` or the runtime lifecycle owner.
@@ -81,3 +82,10 @@ See `references/closeout-state-detail.md` for:
 - `not-needed Conditions`
 - `Hold Conditions`
 - `Agent Lifecycle Resolution`
+
+## Next-Action Drive
+- Clean closeout exits silently or with one line.
+- Warning-bearing closeout reports exact residual state, hold reason, and next recovery surface.
+- Unresolved live-agent truth reports warning-bearing closeout or `HOLD`.
+- Product-delivery residuals return to the owning delivery or acceptance path before teardown completion.
+- Runtime residue carries forward as residual truth when teardown repair would erase closeout truth.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -31,3 +33,12 @@ Risk-tier record rule:
 
 Do not require a separate seven-question pre-dispatch checklist from `team-session-sequences`.
 If readiness or packet basis is missing, use the canonical owner result: `packet-correction`, `route-replan`, `parallel-continue`, blocker-clear, or `HOLD`.
+
+## Next-Action Drive
+- Complete readiness index returns to `task-execution` packet preflight or dispatch.
+- Missing planning readiness opens `work-planning`.
+- Missing packet basis opens `packet-correction`.
+- Missing runtime target truth opens runtime target resolution.
+- Missing recovery path opens dispatch recovery basis.
+- Independent unaffected lanes continue through `parallel-continue`.
+- Unclear blocker opens blocker-clear or `HOLD`.

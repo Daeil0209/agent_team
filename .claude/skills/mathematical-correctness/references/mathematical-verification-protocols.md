@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/mathematical-correctness/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -49,3 +51,7 @@ Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations
 - **Major**: smoothness/continuity requirements, parameter ranges, independence conditions, linearity approximations — document with source; if unresolved and materially relevant to correctness or verification, treat them as blocking
 - **Minor**: notation conventions, variable naming, coordinate system choice — may proceed only when explicitly disclosed and kept proportionate to their impact
+
+## Next-Action Drive
+- Return checked derivation steps, assumption class, defect class, and retest conditions to the active mathematical-correctness workflow.
+- If a mathematical finding affects engineering grounding, implementation logic, or acceptance, route the named finding to that owner before dependent work continues.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: tester
+SOURCE-ANCHOR: .claude/skills/log-based-qa/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -59,7 +61,7 @@ Client → API Gateway → Backend → Database
 | `request_id` not propagated across layers | **T3** — advisory | Note for traceability gap |
 > **Severity framework**: log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 
-If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps are `blocked proof`, not advisory, until another truthful proof surface is frozen.
+If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps classify as `blocked proof` until another truthful proof surface is frozen.
 ---
 ### Issue Documentation Template
 ```markdown
@@ -103,3 +105,9 @@ If logs are the frozen decisive proof surface, missing required log fields or re
 ### Next Cycle Focus
 - {what to retest or add coverage for}
 ```
+
+## Next-Action Drive
+- Ready log QA workflow opens tester proof execution.
+- Missing required log fields opens logging infrastructure correction.
+- Frozen decisive log proof with propagation gap opens blocked proof or alternate proof-surface freeze.
+- Completed QA cycle opens retest focus or validation handoff.

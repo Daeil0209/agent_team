@@ -1,5 +1,7 @@
 # work-tool-patterns: Pattern Families
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/work-tool-patterns/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -95,3 +97,7 @@ Anti-patterns:
 - hidden import mapping
 - no reconciliation between source totals and converted records
 - no representative import failure proof
+
+## Next-Action Drive
+- Return selected pattern family, operator workflow requirements, anti-pattern findings, and proof-oracle candidates to the active work-tool-patterns workflow.
+- If a pattern family changes product structure, domain workflow, or acceptance proof, carry the named requirement to the owning planning or lane packet.

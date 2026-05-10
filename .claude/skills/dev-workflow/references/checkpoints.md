@@ -1,5 +1,7 @@
 # dev-workflow: Checkpoints
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -41,6 +43,17 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
   1. design-level gap, missing/untrue Phase 2 source-of-truth, or repeated same-class cross-surface contract gap caused by weak design contract -> Phase 2 correction
   2. implementation or operator-delivery gap inside unchanged Phase 1/2 contract, including repeated same-class implementation drift with adequate design contract -> Phase 5 systemic correction with Phase-2-derived acceptance-grade gap-to-correction-surface map
   3. changed scope, owner map, route, proof chain, or acceptance chain -> `work-planning`
-  4. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
+  4. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls and every `CORE-WORKFLOW-CLOSURE` row covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
 - **Reuse rule**: original CP3/CP4 remain valid only while the corrected design preserves the selected architecture family and implementation scope
 - **Iteration continuation reuse**: bounded iteration reuse is allowed only while the active workflow phase, owner surface, and acceptance path stay unchanged
+
+## Next-Action Drive
+- CP1 resolved opens Phase 1 plan finalization.
+- CP2 resolved opens Phase 2 boundary when Phase 1 exit law is satisfied.
+- CP3 resolved opens Phase 2 design closure.
+- CP4 resolved opens Phase 3 implementation dispatch.
+- CP5 design-level result opens Phase 2 correction.
+- CP5 implementation or operator-delivery result opens Phase 5 correction.
+- CP5 route-changing result opens `work-planning`.
+- CP5 no-blocking-gap result opens Final Acceptance Review or bounded verified-result closure by acceptance path.
+- T0/T1 gap opens `incident-response`.

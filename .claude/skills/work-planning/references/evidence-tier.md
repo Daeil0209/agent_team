@@ -1,5 +1,7 @@
 # Work-Planning Evidence Tier
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -13,4 +15,10 @@ When a higher-tier source is feasible and materially relevant, use it or explici
 
 This rule is especially strict for design, visual, UX, interaction, structural, methodology, and governance-hardening decisions where external practice can move faster than model prior knowledge. If the planning basis stays inside model prior knowledge when current external practice is materially relevant and feasible, the failure mode is "frog-in-well" reasoning: quality becomes bounded by the model's prior state.
 
-The canonical escalation path is `researcher` lane + `benchmark-simulation` skill + WebSearch/WebFetch or equivalent authoritative external-reference research. Failing to invoke that path when materially relevant is a planning-evidence defect, not just an unused option.
+The canonical escalation path is `researcher` lane + `benchmark-simulation` skill + WebSearch/WebFetch or equivalent authoritative external-reference research.
+Missing that path when materially relevant is a planning-evidence defect.
+
+## Next-Action Drive
+- Higher-tier evidence need opens the canonical escalation path.
+- Feasible lower-tier-only planning records the deferral basis.
+- Missing material escalation reopens `work-planning`.

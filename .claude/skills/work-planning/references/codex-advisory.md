@@ -1,5 +1,7 @@
 # Work-Planning Codex Advisory
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -77,6 +79,9 @@ Valid point types:
 - `USER_PERSPECTIVE_GAP`
 - `USER_CONVENIENCE_GAP`
 - `FEYNMAN_CLARITY_GAP`
+- `VISUAL_BENCHMARK_GAP` (Phase 2 design produces novel/composite operator-facing rendered UI yet `benchmark-simulation` invocation, visual-reference packet, or extracted visual characteristics are missing from planning fields)
+- `IMAGE_EVIDENCE_GAP` (planning produces user-facing rendered surface yet the proof/acceptance path lacks per-AC image capture + multimodal `Read` inspection mandate)
+- `OPERATOR_NAIVE_COMPREHENSION_GAP` (planning produces user-facing rendered surface yet comprehension audit at first-time-user perspective is absent from review/proof/acceptance basis)
 - `OBSERVATION`
 
 Point fields: `id`, `type`, `severity`, `field`, `observation`, `suggested_fix`.
@@ -105,3 +110,11 @@ Freeze one:
 - `CODEX-ADVISORY-BASIS: fail-open:<reason>`
 
 Post-route-freeze Codex expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
+
+## Next-Action Drive
+- Accepted advisory points update the affected planning field or blocker basis.
+- Rejected advisory points record cited doctrine, user instruction, evidence, or frozen request basis.
+- Exhausted advisory attempt records `CODEX-ADVISORY-BASIS: fail-open:<reason>`.
+- No-trigger advisory path records `CODEX-ADVISORY-BASIS: skipped:<basis>`.
+- Unadjudicated valid points keep `work-planning` open.
+- Post-route-freeze advisory expansion opens the owning governance change path.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -48,7 +50,7 @@ When a frozen plan, MVP, release, or phase scope contains multiple promised feat
 - `ACTIVE-SLICE`
 - `DEFERRED-SURFACES`
 
-`SCOPE-BASELINE` is the authoritative in-scope list. `ACTIVE-SLICE` is the subset assigned in the current packet. `DEFERRED-SURFACES` is valid only when upstream scope explicitly deferred or excluded those items; an unimplemented baseline item remains open, not out-of-scope by dispatch.
+`SCOPE-BASELINE` is the authoritative in-scope list. `ACTIVE-SLICE` is the subset assigned in the current packet. `DEFERRED-SURFACES` is valid only when original frozen request/plan/design explicitly deferred or excluded those items; an unimplemented baseline item remains open, not out-of-scope by dispatch.
 
 When exact instruction wording materially affects acceptance, decision-fit, or request-fit review, the packet must additionally carry:
 - `USER-INSTRUCTION-VERBATIM`
@@ -129,3 +131,12 @@ When the assigned surface is office-format, page-read, or other rendered human-f
 - `developer/document-automation -> tester -> reviewer -> validator` when risk is meaningful
 - rendered evidence supports human-visible usefulness only; it does not replace wording, logic, request-fit, proof, or verdict ownership
 - if the current toolchain cannot truthfully exercise the decisive user surface, freeze one bounded next step only: explicit tool discovery/acquisition/setup via `external-tool-bridge` or the appropriate setup owner, or `hold|blocker`. Do not quietly downgrade to source-only checking.
+
+## Next-Action Drive
+- Complete start closure contract opens assignment packet preflight.
+- Missing packet field with same-boundary source basis opens `packet-correction`.
+- Missing packet field that changes owner, phase, staffing, proof, acceptance, or deliverable shape opens `route-replan`.
+- Missing decisive user surface opens packet correction or validation/proof route correction.
+- Missing executable run path or burden contract opens packet correction before tester or validator dispatch.
+- Missing truthful tool path opens bounded tool discovery, `external-tool-bridge`, or `hold|blocker`.
+- Rendered human-facing usefulness opens the rendered delivery chain named in this reference.

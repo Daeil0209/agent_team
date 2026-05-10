@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: reviewer
+SOURCE-ANCHOR: .claude/skills/security-review/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -144,3 +146,7 @@ Run or request a dependency audit when the dispatch scope includes dependency ma
 - [ ] Flag packages with <1,000 weekly downloads as T3; escalate to T2 and recommend alternative if on critical path.
 - [ ] Flag absent lock file (`package-lock.json`, `yarn.lock`, `poetry.lock`, `Gemfile.lock`) as T2.
 ---
+
+## Next-Action Drive
+- Return threat findings, severity class, required remediation, dependency-audit result, and residual risk to the active security-review workflow.
+- If security findings affect implementation, deployment, or final acceptance, route the named remediation to that owner before release claims continue.

@@ -1,6 +1,8 @@
 ---
 doc-type: reference-cache
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/CLAUDE.md
+SOURCE-RULES: "Minimal Governance And Runtime Footprint; Conditional Rules; Reference Binding"
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
 ---
@@ -9,6 +11,12 @@ LOAD-POLICY: on-demand reference only
 ## Purpose
 Use this file only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims.
 Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skills, settings, hooks, or runtime evidence.
+
+## Next-Action Drive
+- Failed Hook-Last review opens owner-procedure repair, hook narrowing, or hook removal.
+- Missing runtime-footprint measurement opens measurement or downgrades the claim to `UNVERIFIED`.
+- Legitimate lane-action blocking opens `[BLOCK-AS-DEFECT]` correction.
+- A remaining reserved hard-deny danger opens the narrowest runtime guardrail owner.
 
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.

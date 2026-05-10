@@ -1,5 +1,7 @@
 # dev-workflow: Phase Transition Gates
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -14,7 +16,7 @@ Hard gates verified by team-lead before phase advancement or dispatch.
 | Phase 3 -> Phase 4 | developer handoff includes `OUTPUT-SURFACE`, changed surfaces, checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage/stale rows, and `FROZEN-CONTRACT-STATUS`; executable handoff also carries the produced launcher, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and blocked or unrun operator-delivery checks; if parallel production occurred, one authoritative integrated output surface is routed forward from the frozen `MERGE-OWNER`. |
 | Phase 4/FAR reject -> Phase 2 | CP5 or validator-authored correction packet classifies at least one blocking gap as design-level under unchanged scope |
 | Phase 4/FAR reject -> Phase 5 | CP5 or validator-authored correction packet classifies a blocking or significant gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract |
-| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control, including executable operator-delivery axes when applicable, is implemented, proven, or explicitly deferred by upstream scope. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
+| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control and every `CORE-WORKFLOW-CLOSURE` row, including executable operator-delivery axes when applicable, is implemented, proven, or explicitly deferred by original frozen request/plan/design. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
 
 Additional gate law:
 - Phase advancement requires completion-grade evidence, not artifact existence alone
@@ -29,9 +31,19 @@ Additional gate law:
 - When a verified handoff already fixes the next phase boundary, team-lead is the default bridge owner
 - A satisfied non-destructive/non-security/non-policy phase gate executes its frozen next owner/action in the same execution segment; user-facing "proceed?" or "review first?" prompts are cursor-stall defects
 - Material scope, owner-map, deliverable-shape, route, proof-chain, acceptance-chain, or delivery-surface change reopens `work-planning` and supersedes prior reviewer/tester/validator acceptance evidence for affected surfaces
-- New or sharpened doctrine targeting the active acceptance chain makes affected carry-forward PASS, handoff, or closure evidence stale until `[RETRO-APPLY]` marks it not affected, fixed, owner-deferred, or invalidated.
+- New or sharpened doctrine targeting the active acceptance chain makes affected carry-forward PASS, handoff, or closure evidence stale until `[RETRO-APPLY]` marks it not affected, fixed, invalidated, or deferred by the owning upstream record.
 - A visible user-surface contradiction, unreadable rendered text, partial rendered coverage, missing baseline feature/surface/control, or missing launch/stop path invalidates the affected PASS scope and reopens the smallest correction/acceptance loop; do not ask the user to choose whether to fix it
 - Validator PASS opens Final Acceptance Review for validator-required chains.
 - Final Acceptance Review uses `final-acceptance-review.md`.
 - `FINAL-ACCEPT` opens workflow `Complete`.
 - `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
+
+## Next-Action Drive
+- Satisfied phase gate executes the frozen next owner/action in the same execution segment.
+- Missing gate evidence keeps the phase cursor active.
+- Missing artifact convergence opens `artifact-convergence-advisory`.
+- Missing review convergence opens `review-convergence-advisory`.
+- Validator `PASS` opens Final Acceptance Review for validator-required chains.
+- `FINAL-ACCEPT` opens workflow `Complete`.
+- `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
+- Boundary-changing gate evidence reopens `work-planning`.

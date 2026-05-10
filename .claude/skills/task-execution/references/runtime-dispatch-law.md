@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -71,3 +73,13 @@ The failed K may be retried or reassigned to surviving M without reopening `work
 - Surviving M can truthfully cover failed K's surface without packet shape change.
 
 Otherwise reopen `work-planning` for redistribution per `CLAUDE.md` Communication And Reporting Law single-agent-collapse rule.
+
+## Next-Action Drive
+- Valid runtime creation, lane dispatch, or reuse returns to `task-execution` Step 3 Dispatch Truth.
+- Required new team runtime opens `TeamCreate` through `task-execution`.
+- Current-session runtime recovery opens `session-boot`.
+- Missing live roster evidence opens target-resolution recovery before dispatch.
+- Missing or contradictory packet skill basis returns to the same frozen owner when boundary axes stay unchanged.
+- Changed owner, lane, independent surface, proof, acceptance, or staffing opens `work-planning`.
+- Partial parallel failure follows `Partial Parallel Failure Recovery` or opens `work-planning`.
+- Fallback standalone evidence returns to `team-lead` as bounded evidence only.

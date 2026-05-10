@@ -6,7 +6,8 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned self-growth and change surface.
-- Fixed section order: Ultimate Purpose, Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method
+- Fixed top-level section order after Structural Contract: Ultimate Purpose, Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method.
+- Reference Map stays inside Activation.
 - PRIMARY-OWNER: team-lead
 ## Ultimate Purpose
 Repair repeated failure from causal basis, not symptom-only edits.
@@ -43,7 +44,7 @@ Routine asset maintenance routes through `update-upgrade-sequence`.
 Use `Change Sequence` from here only as patch-mechanics support per `Sequence Arbitration Law` in CLAUDE.md.
 Trigger sources:
 - UserPromptSubmit hook emits `self-growth-evidence` as owner cue when a prompt supplies possible defect evidence
-- `.claude/agents/team-lead.md` §RPA-11 Self-Growth Ownership contains the lead-owned adjudication and closure boundary
+- `.claude/agents/team-lead.md` §RPA-9 Self-Growth And Governance Change contains the lead-owned adjudication and closure boundary
 - Verified runtime/process error signals can raise confirmed self-growth once the defect basis is sufficient to govern behavior.
 - Sufficient confirmed defect basis opens self-growth hardening without direct user instruction.
 Self-growth tiers:
@@ -113,10 +114,9 @@ Self-growth repairs and preserves the existing operating model.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
-Before ownership adjudication or patch drafting, classify `REVIEW-VERIFICATION-NEED: required|not-required`.
-Set it to `required` when design intent, owner-boundary coherence, integrity, negative risk, or patch-worthiness is material, disputed, or cross-surface.
-Consume `review-verification` output before adjudication, patch design, or Change Sequence execution when it is required.
-Set it to `not-required` only for quick hardening when owner surface, write scope, and meaning-preserving repair are unambiguous.
+Before patch drafting on doctrine, role, skill, spine, hook, or reference surfaces, run `review-verification` and consume its emitted `review_verification_packet`. Cross-surface, multi-file, behavior-changing, structural, recurrence-barrier, and gate-altering patches always run review-verification.
+Skip review-verification only for single-file wording fixes (typo, terminology normalization, dead-text removal) where owner surface, write scope, and meaning-preservation are unambiguous; record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
+Lane inspection, reviewer input, Codex input, and team-lead self-classify are evidence; the emitted `review_verification_packet` is the gate.
 
 When a defect or justified challenge is recognized, run the canonical `### Required order` below. Phase mapping for trigger detection: Trigger and Stabilize feed Required-order Step 1; Reconstruct and Diagnose feed Step 2; Open feeds Step 3; Harden feeds Steps 5-6; Re-verify and Iterate feed Step 8; Resume-corrected-state feeds Step 9.
 Self-healing is complete only when a confirmed recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis.
@@ -178,8 +178,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
    Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, review-verification need basis, and likely owner surface.
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
    Quick hardening can use owner-local inspection when owner surface and write scope are unambiguous and the change is meaning-preserving or owner-local.
-   If `REVIEW-VERIFICATION-NEED: required`, consume `review-verification` output before ownership finalization.
-   Lane inspection, reviewer input, or Codex input is evidence only; it is not a substitute for a required `review-verification` packet.
+   Consume the emitted `review_verification_packet` before ownership finalization (default for all patch surfaces above; the narrow single-file-wording-fix exception still records owner-surface citation).
+   Lane inspection, reviewer input, or Codex input is evidence; the emitted `review_verification_packet` is the gate.
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.
    Additional-agent dispatch is valid only on a host-authorized active-runtime path through `task-execution`.
 3. Adjudicate ownership explicitly.
@@ -231,7 +231,7 @@ See `references/self-growth-constraints.md` for the constraint checklist.
 ### Benchmark Protocol Detail
 See `references/benchmark-protocol.md` for full specifications.
 ### Readiness And Promotion Handoff
-Readiness, promotion, and adaptation handoff stay under `.claude/agents/team-lead.md` §RPA-11 Self-Growth Ownership for lead adjudication.
+Readiness, promotion, and adaptation handoff stay under `.claude/agents/team-lead.md` §RPA-9 Self-Growth And Governance Change for lead adjudication.
 When a round reaches hardening or promotion evaluation, keep the target capability surface explicit.
 Keep the current readiness label explicit.
 Keep the evidence basis explicit.

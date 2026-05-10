@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: reviewer
+SOURCE-ANCHOR: .claude/skills/code-quality-review/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -46,3 +48,7 @@ Classify detected anti-patterns through reviewer severity and the refactoring ma
 | Low | Style inconsistencies, minor naming issues | Record for future cleanup |
 Apply this matrix during review. RFP-1 and RFP-2 triggers require explicit owner assignment and resolution path before merge approval.
 > **Note:** RFP labels are code-quality-review-local refactoring priorities. They do not map to the T0-T3 severity framework used by `.claude/skills/security-review/references/security-review-detail.md`.
+
+## Next-Action Drive
+- Return checklist findings, refactoring priority, blocking status, and owner assignment to the active code-quality-review workflow.
+- If code quality findings affect merge approval, test scope, architecture, or security, route the named requirement to that owner before approval continues.

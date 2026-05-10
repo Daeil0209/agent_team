@@ -1,7 +1,9 @@
 ---
 doc-type: reference-cache
 PRIMARY-OWNER: team-lead
-captured: 2026-04-29
+SOURCE-ANCHOR: .claude/CLAUDE.md
+SOURCE-RULES: "Reference Binding; Conditional Rules; Skill Loading"
+captured: 2026-05-10
 LOAD-POLICY: on-demand reference only
 ---
 # Official Claude Code Reference Cache
@@ -9,6 +11,12 @@ LOAD-POLICY: on-demand reference only
 ## Purpose
 Use this cached source map when checking whether local agent-team governance follows Claude Code's documented configuration and team-operation model.
 Not always-loaded context. Refresh from official docs only when behavior may have changed, a source is contradicted, or a decision depends on current product behavior.
+
+## Next-Action Drive
+- A current-product-behavior dependency opens official-document refresh.
+- A contradicted cached fact opens official-document refresh.
+- An unavailable current source downgrades the claim to `UNVERIFIED` or opens `HOLD`.
+- A lane needing official-source facts receives packetized relevant facts from `team-lead`.
 
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
@@ -52,6 +60,8 @@ Cached facts:
 - Supported fields include `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, `isolation`, and `color`.
 - Project-level definitions live under `.claude/agents/`.
 - Definitions from supported scopes are available to agent teams; when spawning a teammate, the teammate uses configured tools/model and receives the definition body as additional instructions.
+- `initialPrompt` is auto-submitted when an agent runs as the main session through `--agent` or the `agent` setting.
+- Agent-team teammate startup instructions must live in the definition body or spawn/assignment prompt.
 - The `skills` frontmatter field preloads full skill content into the agent context at startup.
 - When a subagent definition is used as a teammate, `skills` and `mcpServers` frontmatter do not apply to that teammate path; teammates load skills and MCP servers from project/user settings like a normal session.
 - Team coordination tools remain available to teammates even when the subagent definition restricts ordinary tools.

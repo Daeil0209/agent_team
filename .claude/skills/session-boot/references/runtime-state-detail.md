@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/session-boot/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -190,7 +192,8 @@ Downstream-phase prep examples include tester scenario design plus test-infrastr
 
 Rules:
 - Phase boundaries gate execution, not prep.
-- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts.
+- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the lifecycle gate from `task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
+- Producer-lane agents on a surface still inside the active validation chain (review → test → validate) hold via `standby` or `hold-for-validation` until the chain reaches ACCEPT.
 - Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.
 - Waiting for the user to identify team-composition defects is itself a defect. This includes parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, and agent-charter mismatch.
@@ -223,3 +226,13 @@ Do not ask the user to choose among routine nudge, replacement, redistribution, 
 - Prefer standby when near-term reuse is concrete and context reuse is still valuable.
 - Do not bypass runtime-capacity or overlap guards by forcing new fan-out while pressure or orphan residue remains unresolved.
 - Historical continuity artifacts are not automatic shutdown targets.
+
+## Next-Action Drive
+- Runtime-ready state returns to the frozen next owner/action.
+- Team-runtime creation need opens `task-execution`.
+- Runtime recovery need opens `session-boot` recovery.
+- Missing receipt or start evidence opens one bounded follow-up and re-check.
+- Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or `HOLD`.
+- Bottleneck or missed downstream-prep parallel-fit opens `work-planning`.
+- Lifecycle resolution need opens lifecycle control or `session-closeout`.
+- Hard runtime pressure opens explicit recovery before new fan-out.

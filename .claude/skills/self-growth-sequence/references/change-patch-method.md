@@ -1,5 +1,7 @@
 # self-growth-sequence: Change And Patch Method Detail
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -24,7 +26,7 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 
 5. `Content Review`
 - Review the actual changed content rather than only the plan. For non-trivial changes, route to the reviewer lane; developer self-review is sufficient for trivial single-line fixes.
-- For self-growth patches, consume `review-verification` output when `REVIEW-VERIFICATION-NEED: required`; reviewer/Codex input is not a substitute for that packet.
+- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute. The narrow single-file-wording-fix exception records owner-surface citation. Reviewer/Codex input is evidence; the emitted packet is the gate.
 - Use evidence, not author intent, for acceptance judgment.
 
 5b. `Execution Gate`
@@ -170,3 +172,12 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 
 ### Human-readable packet owners
 See `.claude/skills/self-growth-sequence/references/human-readable-packet-owners.md` for field catalogs.
+
+## Next-Action Drive
+- Completed patch design opens the owning patch execution path.
+- Missing owner surface opens governance architecture mapping.
+- Semantic overlap opens replace, trim, re-home, or protected restatement decision.
+- Missing skill blocks only the affected downstream surface and opens skill update or introduction.
+- Hook/settings enforcement expansion opens `update-upgrade-sequence` Hook-Last preflight.
+- Post-change material redundancy opens bounded optimization.
+- Preserved patch basis returns to self-growth sequence verification.

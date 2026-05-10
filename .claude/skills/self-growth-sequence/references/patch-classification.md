@@ -1,5 +1,7 @@
 # self-growth-sequence: Patch Classification Map
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -10,3 +12,8 @@ auto-inject: false
 - `skill-up patch`: hardens, expands, or repairs an existing reusable skill under the consuming lane's ownership model
 - `new-skill patch`: introduces a new reusable skill only after category, reuse need, and owner fit are proven
 - `follow-on optimization patch`: removes avoidable redundancy or runtime burden only after the stronger quality bar is already secured
+
+## Next-Action Drive
+- Selected patch class opens the owning change path for that class.
+- Unclassifiable patch reopens self-growth causal analysis.
+- `follow-on optimization patch` waits until the stronger quality bar is secured.

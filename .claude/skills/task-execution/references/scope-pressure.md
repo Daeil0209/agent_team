@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -26,3 +28,11 @@ Replanning law:
 - `REPLAN-REQUIRED: no` only when one bounded packet correction preserves all `work-planning` boundary-change axes plus same agent boundary.
 - Single-agent overload inside intended parallel work is a serious distribution-planning defect. Represent it as `PRESSURE-TYPE: parallel-split-needed` with `REPLAN-REQUIRED: yes`; do not downgrade it to packet correction.
 - If the agent cannot state a smallest safe boundary, default to `hold|blocker` instead of vague `scope-pressure`.
+
+## Next-Action Drive
+- `REPLAN-REQUIRED: yes` opens `work-planning`.
+- `REPLAN-REQUIRED: no` opens bounded packet correction.
+- `parallel-split-needed` opens distribution replanning.
+- Missing smallest safe boundary opens `hold|blocker`.
+- Resolved pressure returns corrected executable path to the affected lane.
+- Unrelated independent lanes continue inside the frozen route when their boundaries remain executable.

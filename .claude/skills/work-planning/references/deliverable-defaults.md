@@ -1,15 +1,17 @@
 # Work-Planning Deliverable Defaults
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
 `team-lead` derives type-fit through `work-planning` from `CONCRETE-DELIVERABLE` plus `PRIMARY-USER`. Plan, design, implement, and verify from the user's information-delivery perspective on what the deliverable is for them: what they receive, experience, use, or decide from.
 `DERIVED-DEFAULTS` names the receiver job, consumption path, and decisive proof surface for the deliverable class.
-`team-lead` also derives primary operator environment from request evidence.
-Windows paths, Windows launch files, Windows UI language, or user-side Windows context make Windows the primary operator environment unless contrary evidence exists.
+`team-lead` derives primary operator environment from request evidence (Windows paths/launch files/UI language signals → Windows; explicit user statement overrides). Full derivation rule: `.claude/skills/dev-workflow/references/operator-delivery.md` R23.
 
-The user does not need to ask separately for obvious type-fit duties such as "this is a program, test every button" or "this is a report, include tables and figures". Derivation from deliverable class and primary user is `team-lead` planning responsibility.
-The default done condition is a normal final artifact for that deliverable class: complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden. A partial draft, implemented subset, placeholder surface, or developer-only run path is not done unless upstream scope explicitly says so.
+`team-lead` derives obvious type-fit duties from deliverable class and primary user, including duties such as "this is a program, test every button" or "this is a report, include tables and figures".
+The default done condition is a normal final artifact for that deliverable class: complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden.
+Partial draft, implemented subset, placeholder surface, or developer-only run path reaches done only when original frozen request/plan/design explicitly says so.
 
 ## User-Ready Delivery Chain
 Every consequential deliverable or active slice follows a named user-ready delivery chain.
@@ -20,7 +22,7 @@ Verification and completion converge the widened work back to the named usable r
 Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item or reopens the owning design, implementation, proof, or acceptance path.
 
 Use these defaults when the deliverable class is in scope:
-- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment
+- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, every `CORE-WORKFLOW-CLOSURE` row closed end-to-end on the user surface (create↔delete, edit↔save+reload-persist, input→dependent-recompute/reactivity, UI-element→navigation-destination, entity↔related-entity link), UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment
 - research or analysis report -> all requested questions/sections answered, reader-comprehension structure, decision-surface placement, source-data/example/application method when material, tables/figures when material, and uncertainty visibility
 - reference or source/read document -> direct readability of the changed source/read surface, cross-reference integrity, navigability, and update-safe structure
 - API or library -> contract completeness and integration proof against a real or representative consumer
@@ -38,3 +40,12 @@ Type-specific procedure detail remains with the triggering owner surface:
 - Dashboard, monitoring, at-a-glance UI design, operator-decision-frame analysis, cross-domain integration, data-freshness invalidation, and visual/spec checklist discipline -> `visual-composition` plus downstream proof/acceptance lanes.
 
 Skipping the relevant procedure owner when its trigger fires is a planning-design-verification defect.
+
+## Next-Action Drive
+- Derived type-fit defaults return to `DERIVED-DEFAULTS`.
+- User-ready delivery chain returns to `REQUEST-BOUND-PACKET-FIELDS`.
+- Usable-program defaults open `SCOPE-BASELINE` and `CORE-WORKFLOW-CLOSURE` coverage basis.
+- Operator-environment defaults open `operator-delivery` or validator runtime-path basis.
+- Visual, structural, or interaction defaults open benchmark or authoritative-reference basis.
+- Triggered type-specific procedure opens the named owner surface.
+- Missing type-fit derivation reopens `work-planning`.

@@ -1,5 +1,7 @@
 # Work-Planning Reference Use
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -40,3 +42,12 @@ Silent deviation, where the spec contradicts reference without explicit acknowle
 
 ## Reference Precedence
 External authoritative references are high-weight evidence and may be binding when they are law, standard, safety, policy, contract, or frozen project source of truth. Explicit user direction may authorize a safe and lawful deviation only with recorded rationale. If a material conflict cannot be resolved from doctrine, active plan, reference authority, or explicit safe user direction, surface the conflict as the smallest truthful blocker instead of forcing routine user escalation.
+
+## Next-Action Drive
+- Active reference trigger opens authoritative reference inventory.
+- Completed inventory opens citation-specific planning basis.
+- Safe deviation opens recorded `DEVIATION-FROM-REFERENCE` basis.
+- Missing material citation opens planning correction before dispatch.
+- Missing downstream reference basis opens packet correction before assignment.
+- Unresolved material conflict opens the smallest truthful blocker.
+- Completed reference-use basis returns to `REQUEST-FIT-BASIS` and `REQUEST-BOUND-PACKET-FIELDS`.

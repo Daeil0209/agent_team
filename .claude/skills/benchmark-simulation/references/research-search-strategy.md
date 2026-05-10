@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -47,3 +49,7 @@ Use this section when `benchmark-simulation` is consumed by researcher for exter
 - RAGChecker: https://arxiv.org/abs/2408.08067
 - GAIA benchmark: https://arxiv.org/abs/2311.12983
 - BrowseComp: https://openai.com/index/browsecomp/
+
+## Next-Action Drive
+- Return query strategy, source-family coverage, evidence quality, and benchmark uncertainty to the active benchmark-simulation workflow.
+- If search coverage or current-practice evidence changes the design basis, reopen synthesis or the owning lane packet before recommendation continues.

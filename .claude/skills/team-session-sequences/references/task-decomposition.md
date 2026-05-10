@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -20,3 +22,11 @@ Decomposition is mandatory for broad file sets, mixed investigation plus judgmen
 When decomposition produces multiple child tasks inside one parent objective, keep the parent objective and split basis readable in every child packet so later merge, reroute, or continuation decisions do not depend on remembered context.
 
 For decomposed child packets, the recommended minimum readable fields are: `PARENT-OBJECTIVE`, `SPLIT-BASIS`, `CHILD-BOUNDARY`, `EXCLUDED-BOUNDARY`, `DONE-CONDITION`, and `RETURN-FORM`. These do not replace lane-specific compliance fields; they make the decomposition itself legible.
+
+## Next-Action Drive
+- Valid decomposition opens child packet construction.
+- Independent child tasks open parallel dispatch when host-authorized.
+- Sequential child tasks open ordered dispatch.
+- Mixed or oversized child boundary opens further decomposition.
+- Missing chain-forward context opens packet correction.
+- Completed child results open merge, continuation, reroute, or `HOLD` by parent objective.

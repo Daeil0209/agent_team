@@ -504,7 +504,7 @@ esac
 case "$OPEN_SURFACES_NORM" in
   ""|none|"[]"|"no open surfaces"|not-applicable:*)
     ;;
-  *deferred*:*|*deferred*basis*|*out-of-scope*:*|*out-of-scope*basis*|*owner-deferred*:*|*owner-deferred*basis*)
+  *deferred*:*|*deferred*basis*|*out-of-scope*:*|*out-of-scope*basis*)
     ;;
   *)
     FAILURES+=("OPEN-SURFACES contains unresolved material work without explicit deferred/out-of-scope basis.")

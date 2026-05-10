@@ -1,5 +1,7 @@
 # Work-Planning Execution Readiness
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -30,3 +32,13 @@ If an agent tool/evidence-gap request lacks adequate candidate-tool research, fr
 Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites may proceed inside that boundary when needed. Heavyweight installers, persistent services/daemons, credential repair, paid/licensed tools, destructive package actions, or security-setting changes require explicit approval or deferral.
 
 If a later local parallel launch mechanism fails, serial carry-forward is lawful only when the failure happens before agent-boundary commitment and the fallback stays inside the same frozen owner, surface set, deliverable, acceptance chain, and material burden/timing meaning. If losing the planned parallel path changes staffing truth, independent-surface separation, burden, schedule, or closure risk, reopen `work-planning` instead of silently collapsing to serial continuation.
+
+## Next-Action Drive
+- Ready basis opens the frozen next owner/action.
+- Team-routed ready basis opens `task-execution`.
+- Blocked basis opens the named blocker-clear owner or `HOLD`.
+- Unknown material readiness category opens blocker-clear or route correction before dispatch.
+- Route-changing readiness gap reopens `work-planning`.
+- Same-boundary readiness gap opens bounded packet correction or blocker-clear.
+- Setup approval need opens explicit approval or deferral path.
+- Proven allowed setup opens the setup owner inside the frozen boundary.

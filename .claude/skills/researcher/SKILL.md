@@ -75,7 +75,10 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned research surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance; select, load, and apply every material entry before lane work, and record applied or blocked skill basis.
+- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Classify every carried recommendation as applied, not-material, or blocked.
+- Load and apply material recommendations before lane work.
+- Record recommendation classification basis.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark ownership and routing authority stay with their owning lanes.
 ### 4. Retry Guard

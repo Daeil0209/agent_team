@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/instructional-design/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -31,3 +33,7 @@ This role owns the following visual/instructional defect types per the shared ta
 - `feature_missing` — geometry, feature state, or handoff context absent from a process or CAD slide, forcing the learner to imagine missing information
 Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 On recurrence of any owned defect type, add or strengthen the corresponding gate in this SKILL.md before the next run.
+
+## Next-Action Drive
+- Return pedagogy structure, worked-example requirements, learner-risk findings, and defect records to the active instructional-design workflow.
+- If instructional findings change visual composition, mathematical correctness, or acceptance proof, route the named requirement to that owner before delivery continues.

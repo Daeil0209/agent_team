@@ -1,6 +1,8 @@
 ---
 name: validator-reference
 PRIMARY-OWNER: validator
+SOURCE-ANCHOR: .claude/skills/validator/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
@@ -69,7 +71,9 @@ Use only the lenses that materially affect the assigned validation surface.
 ## Applied Validation Techniques
 - Requirements traceability: map every decisive expectation to evidence anchor, acceptance surface, upstream owner, and verdict class.
 - Acceptance oracle challenge: identify the condition that would make the verdict false; if that condition is untested, PASS is unavailable.
-- Scope-baseline challenge: identify whether the verdict claims more than the proven `ACTIVE-SLICE`; unresolved `SCOPE-BASELINE` rows force `HOLD` or narrowed verdict scope.
+- Scope-baseline challenge: identify whether the verdict claims more than the proven `ACTIVE-SLICE`.
+- Unresolved `SCOPE-BASELINE` rows force `HOLD` or a non-PASS verified-scope report.
+- PASS for narrowed scope is allowed only when that subset was frozen or deferred by the owning upstream record.
 - Quality model scan: use functional suitability, performance, compatibility/interoperability, usability/interaction capability, reliability, security, maintainability, portability/adaptability, and stakeholder value as prompts for missing acceptance dimensions when material.
 - User-visible behavior discipline: prefer proof from what the user sees, does, opens, runs, or decides from; implementation-only evidence supports diagnosis but does not prove user acceptance.
 - Complete-process check: for multi-step user workflows, validate the whole process path, not only isolated pages or states.
@@ -113,8 +117,11 @@ Native Claude Code dispatcher/UI E2E is a separate operator-runtime validation s
 If that broader surface is unavailable, report it in `OPEN-SURFACES` or return `HOLD` for that surface; do not invalidate narrower bounded proof, and do not synthesize that proof into PASS for the unexercised native/client-integrated surface.
 
 ### Operator-Exhaustive Integrity And Rendered Quality
-For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix; partial route, viewport, or state coverage narrows the verdict or forces `HOLD`, not PASS.
+For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix that also enumerates every `CORE-WORKFLOW-CLOSURE` row and traces each row to retained tester evidence; partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows the verdict or forces `HOLD`, not PASS.
 The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
+Static screenshot or initial-render evidence cannot satisfy dynamic rows.
+For edit-save, recompute/reactivity, navigation, entity-link, create-delete, import/export, or workflow-state rows, validator checks the executed user action and the retained postcondition evidence.
+For practical work-tool or business-workflow rows, validator checks the frozen pattern or workflow oracle against the retained user-surface evidence.
 For receiver-facing reports, decks, lessons, generated artifacts, and rendered documents, the same matrix maps expectation -> receiver surface -> evidence artifact -> inspection method -> inspected defect classes -> verdict class.
 
 Rendered visual quality inspection is mandatory when the user experiences the deliverable visually. DOM, ARIA, source text, or text-substring assertions exercise structure but do not prove font glyph rendering, layout integrity, actual color/contrast appearance, image/icon loading, locale-specific glyph coverage, or pixel-level visible quality.
@@ -197,6 +204,7 @@ Validator writes a correction packet with:
 - `REQUIRED-USER-SURFACE-EVIDENCE`
 - `REQUIRED-RETURN-EVIDENCE`
 - `REVALIDATION-TARGET`
+- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it should match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
 
 Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
@@ -220,3 +228,13 @@ Validator states route-relevant evidence without freezing route. team-lead class
 - For visual or rendered acceptance, `DECISIVE-EXPECTATION-TRACE` must map expectation -> route/page/screen-state -> viewport/capture scope -> evidence anchor -> inspected defect classes -> upstream owner -> verdict class. Missing trace, partial matrix, or unreadable rendered text blocks PASS for that surface.
 - PASS cites only Evidence-Quality Matrix supported scope.
 - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments; equivalence claimed without observable basis is a verification defect equivalent to silent PASS, and absent or partial equivalence makes the affected sub-surface `HOLD` or `INFERENCE/UNVERIFIED`, not PASS.
+
+## Next-Action Drive
+- `PASS` opens team-lead acceptance synthesis or Final Acceptance Review by frozen route.
+- `HOLD` opens team-lead blocker or evidence-basis correction.
+- `FAIL` opens team-lead correction routing.
+- `FINAL-REJECT` packet opens team-lead CP5 route classification and `task-execution` correction dispatch.
+- Missing decisive validation basis opens `hold|blocker`.
+- Missing user-surface proof opens tester or proof-owner routing.
+- Missing operator-runtime proof opens validator runtime-path discipline or setup route.
+- Visual or rendered acceptance gap blocks PASS and opens correction owner routing.

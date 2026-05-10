@@ -1,5 +1,7 @@
 # self-growth-sequence: Causal Analysis Guide
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -14,3 +16,11 @@ Required reconstruction:
 6. Name the smallest barrier that blocks that recurrence path without creating a parallel operating model.
 
 If the causal basis remains only a hypothesis, the patch must stay reversible, narrowly scoped, and explicitly marked as hypothesis-supported. If the causal basis cannot identify a prevention point, keep the round on `HOLD` or assign bounded follow-up ownership.
+
+## Next-Action Drive
+- Confirmed causal basis opens owner-surface selection.
+- Confirmed failure mode opens `failure-mode-response`.
+- Identified recurrence path opens barrier design.
+- Hypothesis-supported basis opens reversible narrow patch design.
+- Missing prevention point opens bounded follow-up ownership or `HOLD`.
+- Owner-surface uncertainty opens governance architecture mapping.

@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -51,7 +53,21 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
 - agent -> `team-lead` uses message-class reports (`dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, exact `hold|blocker`).
-- In team-agent runtime this is official only through `SendMessage`.
-- Plain-text output is not official delivery.
-- Do not send the full internal planning block to agents.
-- Translate only the bounded fields needed for the agent's owned surface.
+- agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, lifecycle, routing, and active surface.
+- user -> teammate uses Claude Code teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
+- shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`; task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence, not an agent name.
+- Agent-originated team-runtime message traffic is official only through `SendMessage`.
+- Official delivery uses the required message channel.
+- Keep the full internal planning block in `team-lead/task-execution` carry-forward.
+- Send only the bounded fields needed for the agent's owned surface.
+
+## Next-Action Drive
+- Passing entry contract opens `task-execution` Step 1 Activate Frozen Route.
+- Missing `work-planning` opens `work-planning`.
+- Missing frozen workflow or sequence owner opens that owner.
+- Missing host-authorized runtime path opens `session-boot` or route correction before dispatch.
+- Missing, contradictory, stale, or invalid route fields reopen `work-planning`.
+- Dispatch-owned blocker-clear readiness returns to `task-execution`.
+- Plain-text delivery attempts open official message-channel correction before dispatch truth.
+- Missing task-state identity opens `TaskList`, `TaskGet`, `task_assignment`, or returned-mutation evidence recovery before task mutation.
+- Available background task output path opens `Read` instead of `TaskOutput`.

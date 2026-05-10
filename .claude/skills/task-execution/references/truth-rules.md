@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: task-execution
+SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -14,3 +16,13 @@ LOAD-POLICY: on-demand reference only
 - `agent started` requires agent-side action or agent-originated progress beyond receipt
 - if team-agent operation is frozen and canonical team-existence evidence is absent, the next consequential action is `TeamCreate`; only after team existence is proven may team-scoped `Agent` launch or assignment-grade message create dispatch-pending state
 - user-facing output may report only the narrowest proven state
+
+## Next-Action Drive
+- `team exists` opens team-scoped dispatch or assignment messaging.
+- `dispatch pending` opens receipt reconciliation through `session-boot`.
+- `dispatch-ack` opens lane work or receipt recovery.
+- `agent started` opens lane execution monitoring.
+- Fallback standalone evidence opens team-lead bounded-evidence synthesis only.
+- Missing team-existence evidence opens `TeamCreate` through `task-execution`.
+- Unknown task state opens task-state verification before dispatch truth.
+- Narrow proven state governs user-facing reporting.

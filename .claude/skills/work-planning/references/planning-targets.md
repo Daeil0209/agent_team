@@ -1,5 +1,7 @@
 # work-planning: Planning Targets
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
@@ -8,7 +10,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 ## Target Definitions
 - `request-fit-plan`: freezes intent, deliverable, user, reference use, burden cues, material blockers, and packet-carry fields.
 - `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner/action.
-- `lead-local-plan`: freezes one low-risk local item, required local skills, stop point, and evidence limit.
+- `lead-local-plan`: freezes one local item with no final-arbitration trigger, required local skills, stop point, and evidence limit.
 - `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, lifecycle/proof/acceptance readiness, and dispatch blockers.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
 - `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.
@@ -18,7 +20,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - Choose one primary target before Q1-Q5. Add a secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
 - On consequential top-level plans, `route-plan` is the default primary target; the matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear (then `lead-local-plan`/`delegated-lane-plan`/`blocker-clear-plan`/`workflow-sequence-plan` becomes primary). Lower-level lane plans use the matching target as primary.
 - `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-driven, burden-sensitive, or dependent on user-surface proof or original wording.
-- `lead-local-plan` is valid only for one named low-risk item with no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
+- `lead-local-plan` is valid only for one named item with no final-arbitration trigger, no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
 - `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or may enter `task-execution`.
 - If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
@@ -40,3 +42,12 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - If target switching changes route owner, lane owner, proof surface, acceptance owner, work surface, or dispatch shape, reopen the planning pass instead of extending it by habit.
 - Do not use `team-dispatch-readiness-plan` to invent a route. Route must already be frozen by `route-plan` or workflow/sequence owner.
 - Do not use `lead-local-plan` to bypass a configured lane, independent review/proof/validation separation, or user-surface proof need.
+
+## Next-Action Drive
+- Selected primary target opens the Q1-Q5 planning pass.
+- Valid secondary target joins the same planning pass.
+- Target switching after freeze reopens `work-planning`.
+- `team-dispatch-readiness-plan` returns dispatch readiness fields to the planning record.
+- `workflow-sequence-plan` opens the selected workflow or sequence owner before deeper execution.
+- `blocker-clear-plan` opens the exact blocker-clear move.
+- Invalid target use reopens `work-planning`.

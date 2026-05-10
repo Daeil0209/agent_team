@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: developer
+SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 ---
 
@@ -67,3 +69,7 @@ Quantitative observation from images:
 - when available, prefer cited specs from design system docs over visual estimation
 
 Subjective observation discipline: "feels clean", "looks professional", and "appears balanced" are valid first impressions, not acceptable evidence. Subjective observations must be backed by measurable criteria before they enter synthesis.
+
+## Next-Action Drive
+- Return observation matrices, multimodal evidence, blocked-image records, and confidence limits to the active benchmark-simulation workflow.
+- If observation coverage lacks a material modality, reopen observation for that modality before downstream synthesis continues.

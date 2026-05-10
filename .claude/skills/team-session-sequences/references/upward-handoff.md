@@ -1,5 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
+SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
 ---
@@ -18,3 +20,12 @@ LOAD-POLICY: on-demand reference only
   - `validator` -> `VERDICT: PASS|HOLD|FAIL`
 - Preserve lane-owned state monotonically across reroute and re-dispatch. `team-lead` may summarize or route from these fields, but must not silently strengthen an agent-owned state without a fresh explicit report from the owning lane or stronger evidence on that same lane surface.
 - `tester` does not emit `TEST-STATE: not-needed`; that remains a lead-side validation-ingress decision when the acceptance design truthfully does not require tester proof.
+
+## Next-Action Drive
+- Valid completion-grade handoff opens `completion-handoff` reconciliation.
+- Missing authoritative handoff block opens corrected report request or blocker/open-surface routing.
+- `hold|blocker` opens blocker resolution through team-lead.
+- `status` returns to monitoring or active owner.
+- `scope-pressure` opens packet correction, route replan, parallel continue, or blocker classification.
+- Validator `VERDICT` opens acceptance synthesis or correction routing.
+- Monotonic lane-owned state conflict opens fresh owner evidence request.
