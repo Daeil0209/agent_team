@@ -6,6 +6,11 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Assignment Packet
+## Contents
+- Downward Assignment Base Packet
+- Session Cross-Continuity Packet Check
+- Next-Action Drive
+
 ## Downward Assignment Base Packet
 Assignment-grade means any team-scoped `Agent` launch or `SendMessage` that assigns, reroutes, or reuses bounded work for an agent.
 Lifecycle control, phase-transition control, and status probes are not assignment-grade.

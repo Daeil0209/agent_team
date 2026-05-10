@@ -1,6 +1,6 @@
 ---
 name: team-session-sequences
-description: Session-sequence index and lead-side dispatch/detail lookup for the Claude team runtime. Boot and closeout runtime spines belong to session-boot and session-closeout.
+description: Provide session-sequence index and lead-side dispatch/detail lookup for the Claude team runtime. Use when packet readiness, dispatch sequencing, lifecycle monitoring, upward handoff, or parallel shard merge discipline is active.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

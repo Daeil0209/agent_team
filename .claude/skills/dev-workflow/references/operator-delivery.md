@@ -13,6 +13,14 @@ Consumed again during Phase 4/5/Final Acceptance Review/Complete whenever launch
 Executable deliverables specialize the Receiver-Surface Contract through a native Consumption Chain.
 The chain covers setup/build, launch/open, operate, readable failure, terminate/cleanup, and clean re-launch.
 
+## Contents
+- R21 -- Operator On-Ramp Completeness
+- R23 -- Operator-OS Coverage
+- R27 -- Termination Path Quality Criteria
+- R31 -- Mental-Model Alignment Mandate
+- Closure Re-entry Law
+- Next-Action Drive
+
 ## R21 -- Operator On-Ramp Completeness
 For executable user-runnable deliverables, the deliverable MUST ship with:
 - **minimum-effort launch path AND minimum-effort termination path symmetric pair**.

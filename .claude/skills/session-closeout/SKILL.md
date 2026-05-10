@@ -1,6 +1,6 @@
 ---
 name: session-closeout
-description: Closeout procedures for team-lead session teardown and runtime cleanup.
+description: Close team-lead sessions with teardown truth, runtime cleanup, residual disclosure, and continuity preservation. Use when explicit closeout, session ending, runtime shutdown, or residual state handoff is active.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

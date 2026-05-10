@@ -1,6 +1,6 @@
 ---
 name: engineering-grounding
-description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, and applied reasoning quality.
+description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, operating conditions, and applied reasoning quality. Use when engineering realism, unit paths, constraints, standards, or applied domain plausibility materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
@@ -8,7 +8,7 @@ effort: medium
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Do not add peer top-level sections without governance review.
+- Add peer top-level sections only after governance review.
 - Keep engineering-taxonomy detail, severity tables, and domain extensions in `references/engineering-protocols.md`.
 ### Reference Map
 - `references/engineering-protocols.md`: engineering taxonomies, severity tables, domain extensions, and applied-grounding protocols.
@@ -35,7 +35,7 @@ Use this skill when applied engineering realism, units, or operating constraints
 - keep spec-anchored assumptions explicit
 - keep timing budgets explicit when timing matters
 - keep trade-off documentation explicit when competing metrics are in play
-- send `hold|blocker` when assumptions, operating conditions, constraints, or evidence are too weak for credible applied use
+- send `hold|blocker` when credible assumptions, operating conditions, constraints, or evidence are absent
 ## Boundary
 - mathematical correctness checking stays with its owner
 - engineering requirements require evidence

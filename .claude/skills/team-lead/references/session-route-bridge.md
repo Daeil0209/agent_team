@@ -72,7 +72,6 @@ Once `session-closeout` owns the path, report only closeout residual truth.
 Consume frozen planning fields through `.claude/skills/team-lead/references/planning-field-consume.md`.
 Open or change phase/work-surface boundaries through `work-planning`.
 Consume `NEXT-CONSEQUENTIAL-ACTION` before local execution, dispatch, phase movement, or reporting.
-Repeated same-class blocking gaps are root-cause route evidence.
 Classify repeated same-class blocking gaps as root-cause route evidence.
 
 ## Lead-Local Bridge

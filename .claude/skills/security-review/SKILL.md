@@ -1,6 +1,6 @@
 ---
 name: security-review
-description: Security review specialist skill with OWASP checklist, detection patterns, and severity framework.
+description: Review security risk with OWASP checklist, detection patterns, dependency risk, and severity framework. Use when authentication, authorization, secrets, input handling, dependency security, exposure, or security-sensitive behavior materially affects implementation or review.
 user-invocable: false
 PRIMARY-OWNER: reviewer
 ---
@@ -40,7 +40,7 @@ Load when security-sensitive surfaces are in scope for the active review task.
 Return a structured security-findings packet.
 It must include file path, line, OWASP category, defect description, bounded fix, and explicit gate decision.
 ## Handoff Boundary
-Hand off only when the next owner can tell whether the surface is blocked.
+Hand off after the next owner can tell whether the surface is blocked.
 The handoff must name what class of vulnerability exists.
 The handoff must name what bounded fix path must be re-reviewed.
 Fix implementation requires independent verification.

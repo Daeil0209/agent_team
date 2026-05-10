@@ -1,16 +1,16 @@
 ---
 name: work-tool-patterns
-description: Turn benchmark-backed practical work-tool patterns into reusable product structure, operator-surface contracts, persistence/import/export expectations, and proof oracles for personal or team internal tools.
+description: Turn benchmark-backed practical work-tool patterns into reusable product structure, operator-surface contracts, persistence/import/export expectations, and proof oracles. Use when personal or team internal tools, dashboards, workflow apps, analysis tools, report automation, calculation helpers, or spreadsheet migrations need operational product-pattern structure.
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: team-lead
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Do not add peer top-level sections without governance review.
+- Add peer top-level sections only after governance review.
 - Keep pattern packet fields, tool-family patterns, anti-patterns, and proof-oracle detail in direct files under `references/`.
 - Owns practical work-tool product-pattern synthesis only.
-- Does not own business rules, evidence acquisition, architecture boundaries, document generation, rendered composition, proof execution, or final acceptance.
+- Adjacent owners retain business rules, evidence acquisition, architecture boundaries, document generation, rendered composition, proof execution, and final acceptance.
 ### Reference Map
 - `references/pattern-packet.md`: required pattern-packet fields, benchmark basis, proof-oracle shape, and handoff rules.
 - `references/pattern-families.md`: reusable tool-family patterns for dashboard management, research or patent analysis, report automation, engineering calculation or design, and spreadsheet migration.
@@ -19,7 +19,8 @@ You are the practical work-tool product-pattern specialist capability for Claude
 - Conditional developer-owned lens when the user asks for a personal or team internal tool, dashboard, workflow app, analysis tool, report automation program, calculation/design helper, or spreadsheet/manual-process migration.
 - This skill raises the starting product structure before implementation by selecting a fit-tested tool family and producing a compact `work_tool_pattern_packet`.
 - It converts benchmark-backed patterns into destination-fit structure.
-- It does not copy external products, force a large app shell, or add process gates.
+- It selects the smallest product shell that preserves operator use and proof.
+- It keeps process gates on their owning workflow surfaces.
 - It supports `dev-workflow` Phase 1/2 planning and design, then supplies proof-oracle basis for Phase 4/5 review, test, and validation.
 ## Authority
 **This lens covers:** tool-family selection, operator workflow shape, page/tab/panel topology, primary entity-surface mapping, import/export/storage expectations, default/settings placement, and pattern-level proof oracle.
@@ -43,16 +44,17 @@ You are the practical work-tool product-pattern specialist capability for Claude
 - `validator` — compares final evidence against the frozen delivery contract and pattern-level oracle when applicable.
 ## Purpose
 Use this skill to prevent practical work tools from collapsing into naive CRUD, sheet-shaped screens, disconnected reports, hidden setup flows, or unprovable demos.
-It exists to make common work-tool families easier to design and verify, not to enlarge governance burden.
+It makes common work-tool families easier to design and verify.
+It keeps governance burden proportional to product-pattern proof.
 ## Responsibilities
 - classify the requested tool family and operator job
 - select the smallest destination-fit pattern that covers the user's workflow
-- require benchmark-simulation only when the pattern is new, quality-critical, disputed, or based on external examples
+- load benchmark-simulation when the pattern is new, quality-critical, disputed, or based on external examples
 - produce or update a compact `work_tool_pattern_packet`
 - make first-run, resume, save/load, import/export, generated-output, and completion artifacts explicit when material
 - define the pattern-level proof oracle so review, test, and validation do not infer completion from the implemented subset
 - reject patterns that fit the source example but not the destination user, scale, constraints, or domain
-- send `hold|blocker` when no credible tool family, operator surface, or pattern-level proof oracle can be selected without guessing
+- send `hold|blocker` when credible tool family, operator surface, or pattern-level proof oracle is unavailable from evidence
 ## Activation
 Activate when the frozen scope materially includes any of:
 - practical personal or team internal software tool
@@ -87,21 +89,37 @@ Keep the packet compact:
 - open surfaces and next owner/action
 ## Composition
 - In `dev-workflow` Phase 1, use this skill to freeze the work-tool pattern only when it materially affects request fit, acceptance, or downstream design.
-- In `dev-workflow` Phase 2, convert the packet into implementation-binding product structure without taking over architecture, business rules, evidence method, or visual composition.
+- In `dev-workflow` Phase 2, convert the packet into implementation-binding product structure.
+- Keep architecture, business rules, evidence method, and visual composition on adjacent owner surfaces.
 - In Phase 4/5, review and proof compare the delivered result against the frozen pattern packet plus adjacent-owner contracts.
-- When `benchmark-simulation` is active, consume its abstraction-fit-adapt synthesis; do not paste raw benchmark observations into this skill's output.
+- When `benchmark-simulation` is active, consume its abstraction-fit-adapt synthesis.
+- Convert benchmark observations into destination-fit pattern decisions.
 - When no benchmark is required, mark the basis as `adopted`, `trial`, or `inference` and keep the confidence honest.
 ## Handoff Boundary
 Hand off when downstream owners can see what kind of tool is being built, how the operator uses it, what data or artifacts persist or leave the system, and how completion will be proven.
 
-Do not hand off a generic feature list as a pattern packet.
-Do not use this skill to override stronger business, evidence, architecture, document, engineering, math, visual, proof, or validation contracts.
+Handoff format is the named `work_tool_pattern_packet` with required fields.
+Stronger business, evidence, architecture, document, engineering, math, visual, proof, and validation contracts govern over this packet.
 ## Operational Discipline
-- Freeze pattern-family fit and benchmark basis before pattern adoption; ad-hoc family selection without benchmark or destination-fit basis is a defect.
+- Freeze pattern-family fit and benchmark basis before pattern adoption.
+- Treat ad-hoc family selection that lacks benchmark or destination-fit basis as a defect.
 - Tighten an existing pattern family before authoring a new family.
 - Operator-surface contract (single-action launch, hidden non-operator surfaces, symmetric termination, explicit exit affordance) is verdict-critical when the deliverable runs locally for the operator.
-- Persistence, import, and export contracts must be explicit in the pattern packet; hidden state, missing resume path, missing import/export path, or completion without artifact is a tool-pattern defect, not a polish item.
-- Proof-oracle fitness is acceptance-critical: every pattern packet names the oracle that closes the in-scope visible workflow / calculation / validation against the frozen `SCOPE-BASELINE`.
+- Persistence contract is explicit in the pattern packet.
+- Import contract is explicit in the pattern packet.
+- Export contract is explicit in the pattern packet.
+- Hidden state is a tool-pattern defect.
+- Missing resume path is a tool-pattern defect.
+- Missing import/export path is a tool-pattern defect.
+- Completion that lacks an artifact is a tool-pattern defect.
+- Proof-oracle fitness is acceptance-critical.
+- Every pattern packet names the oracle that closes the in-scope visible workflow, calculation, or validation against the frozen `SCOPE-BASELINE`.
 ## Role-Scoped Structural Feedback
-- Challenge sheet-shaped UI, disconnected report generation, hidden state, missing resume path, missing import/export path, completion without artifact, and demo-only proof when the user asked for an operational tool.
+- Challenge sheet-shaped UI when the user asked for an operational tool.
+- Challenge disconnected report generation when the user asked for an operational tool.
+- Challenge hidden state when the user asked for an operational tool.
+- Challenge missing resume path when the user asked for an operational tool.
+- Challenge missing import/export path when the user asked for an operational tool.
+- Challenge completion that lacks an artifact when the user asked for an operational tool.
+- Challenge demo-only proof when the user asked for an operational tool.
 - State the broken tool pattern, why it harms operator use or proof, and the smallest corrective pattern rewrite.

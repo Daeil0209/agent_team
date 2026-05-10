@@ -103,7 +103,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - For benchmark-perspective work, triangulate across independent source families when feasible.
 - Grade confidence per claim.
 - Separate answer correctness from evidence coverage.
-- Single-source or single-family evidence cannot support a high-confidence consequential benchmark claim.
+- High-confidence consequential benchmark claims require multi-source or multi-family evidence.
 ### 7. Downstream Verification Readiness
 - State what downstream lanes still need to verify, draft, prove, or validate.
 - For visualized or rendered page-read artifacts, keep both text-review needs and rendered-review needs explicit.
@@ -138,3 +138,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Completion uses `handoff` or `completion` only for converged researcher-owned evidence.
+
+## Next-Action Drive
+- Converged researcher-owned evidence opens team-lead synthesis through the completion-grade handoff path.
+- Researcher-owned open surfaces open downstream research, proof, review, planning, or blocker routing through the named next owner/action.

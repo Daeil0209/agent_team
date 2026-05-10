@@ -7,6 +7,17 @@ auto-inject: false
 
 Use only inside active `dev-workflow` when reviewer-owned review materially drives Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 
+## Contents
+- Authority
+- Trigger
+- Packet
+- Blind Dual Review
+- Reconciliation
+- Convergence
+- Same-Boundary Loop
+- Output Record
+- Next-Action Drive
+
 ## Authority
 Codex is reviewer-grade advisory only.
 team-lead owns reconciliation and workflow cursor truth.

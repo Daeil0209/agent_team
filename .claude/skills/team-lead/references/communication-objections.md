@@ -7,6 +7,13 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
 
 # team-lead: Communication And Objection Detail
 
+## Contents
+- Message-Class Truth
+- Communication Hard Rules
+- Next-Action Drive
+- hold|blocker
+- scope-pressure
+
 ## Message-Class Truth
 - Treat `phase-transition-control` as workflow control.
 - Treat `lifecycle-control` as lifecycle control.

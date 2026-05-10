@@ -5,6 +5,15 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
+## Contents
+- Phase 0 Discovery Basis
+- Phase 1 Canonical Plan Surface
+- Phase 2 Design Surface
+- Phase 3 Implementation Surface
+- Phase 4 Analysis And Acceptance
+- Phase 5 Iteration Discipline
+- Next-Action Drive
+
 ## Phase 0 Discovery Basis
 - Discovery shape must be explicit: `single`, `lead-boundary-read-then-shards`, or `immediate-shards`
 - `lead-boundary-read-then-shards` exists only to identify shard boundaries from consumed evidence; once shard boundaries are explicit, dispatch interpretive shards immediately

@@ -1,6 +1,6 @@
 ---
 name: mockup-to-component
-description: Mockup-to-component conversion methodology with 4-step transition strategy for UI mockup conversion projects.
+description: Convert UI mockups into framework-ready component boundaries, slots, props, token bridges, and data/interface contracts. Use when mockup-based UI work needs implementation-ready component structure.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -22,7 +22,7 @@ You are the mockup-to-component specialist capability for Claude Code.
 - `design-system-tokens` — token architecture owner when the conversion grows into a real design-system surface
 - `visual-composition` — rendered-composition owner after structural conversion is credible
 ## Purpose
-Use this skill when a UI mockup exists and the task is to convert it into framework-ready component structure without rediscovering layout intent during implementation.
+Use this skill when a UI mockup exists and implementation needs frozen layout intent.
 ## Responsibilities
 - mark stable component and slot boundaries first
 - separate CSS by component and keep token bridges explicit
@@ -40,7 +40,7 @@ Activate when mockup-based UI work depends on converting visual surfaces into bo
 Return a compact mockup-conversion packet.
 It covers component boundaries, slot map, token bridge, prop contracts, and any blocked surfaces.
 ## Handoff Boundary
-Hand off only when framework implementation can proceed without rediscovering structure.
+Hand off after framework implementation can proceed from frozen structure.
 Keep detailed examples and JSON simulation patterns in `references/component-conversion-examples.md`.
 ## Operational Discipline
 - Conversion preserves the visual intent of the mockup.

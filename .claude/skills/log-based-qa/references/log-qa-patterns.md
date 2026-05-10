@@ -6,6 +6,17 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # Reference Material
+## Contents
+- JSON Log Format Standard
+- Request ID Propagation
+- Logging Implementation Patterns
+- Docker-Based QA Workflow
+- Issue Detection Thresholds
+- Issue Documentation Template
+- Implementation Checklists
+- Cycle Documentation Template
+- Next-Action Drive
+
 ## JSON Log Format Standard
 ### Required Fields
 ```json
@@ -25,7 +36,7 @@ LOAD-POLICY: on-demand reference only
 | service | string | Service name (api, web, job, nginx, etc.) |
 | request_id | string | Request tracking ID |
 | message | string | Human-readable log message |
-| data | object | Additional context (optional) |
+| data | object | Additional context when material |
 ### Log Level Policy
 | Environment | Minimum Level | Purpose |
 |-------------|---------------|---------|
@@ -58,7 +69,7 @@ Client → API Gateway → Backend → Database
 | `status: 401` or `403` unexpectedly | **T2** — quality gate | Warning: auth/permission investigation |
 | `duration_ms > 1000` | **T2** — quality gate | Warning: performance degradation |
 | Missing required log fields | **T3** — advisory | Note for logging infrastructure |
-| `request_id` not propagated across layers | **T3** — advisory | Note for traceability gap |
+| request_id propagation gap across layers | **T3** — advisory | Note for traceability gap |
 > **Severity framework**: log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 
 If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps classify as `blocked proof` until another truthful proof surface is frozen.

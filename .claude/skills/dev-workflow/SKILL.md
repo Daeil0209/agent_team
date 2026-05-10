@@ -1,6 +1,6 @@
 ---
 name: dev-workflow
-description: Structured development workflow with phase gates, checkpoint resolution, iterative quality convergence, gap detection, and YAGNI review for development project orchestration.
+description: Run structured development workflow with phase gates, checkpoint resolution, iterative quality convergence, gap detection, and YAGNI review. Use when a development project needs phase-based orchestration from discovery through acceptance and iteration.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -213,7 +213,7 @@ Continuity files record only owner-required state.
 
 ## Related Skills
 - Related skill selection is owned by `work-planning` trigger fields, lane-detail specialist matrices, and lawful phase-local refinement.
-- `dev-workflow` consumes material specialist outputs as phase contract inputs; it does not maintain a separate complete skill catalog.
+- `dev-workflow` consumes material specialist outputs as phase contract inputs; complete skill catalog ownership stays with the owning skill surfaces.
 - Related skills refine the current phase without changing lane, proof, or acceptance ownership.
 
 ## Delivery Spine

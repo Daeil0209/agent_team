@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, and hard logic paths.
+description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, state models, interfaces, and hard logic paths. Use when software structure, module contracts, persistence boundaries, or architecture decisions materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus

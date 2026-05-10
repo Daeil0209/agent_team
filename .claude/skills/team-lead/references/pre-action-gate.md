@@ -6,6 +6,16 @@ SOURCE-RULES: "Priority 0: Pre-Action Gate; Reference Binding; Procedure And Own
 ---
 # team-lead: Pre-Action Gate
 
+## Contents
+- Purpose
+- Consume When
+- Required Output
+- Stop
+- Next-Action Drive
+- Same-Segment Reuse
+- Gate Fields
+- Evidence Boundary
+
 ## Purpose
 Use this reference before each consequential action segment.
 The gate prevents team-lead from reporting, dispatching, or patching before owner, evidence, and user-fit are named.

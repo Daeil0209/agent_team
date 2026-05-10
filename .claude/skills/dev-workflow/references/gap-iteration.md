@@ -7,6 +7,20 @@ auto-inject: false
 
 Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap detection, Phase 5 iteration protocol, and rendered/user-surface gap feedback.
 
+## Contents
+- YAGNI Scope Review
+- Gap Detection Dimensions
+- Structural Check
+- Functional Check
+- Contract Check
+- User-Readiness Principle
+- Coverage Signals
+- Gap Classification
+- Iteration Protocol Detail
+- Gap-State Packet
+- Gap Detection Self-Growth
+- Next-Action Drive
+
 ## YAGNI Scope Review
 Runs in Phase 1 before CP2.
 
@@ -15,13 +29,14 @@ Procedure:
 2. Judge from frozen purpose and evidence whether each item is essential for the core problem or nice-to-have.
 3. Classify each item as:
    - MUST: blocks core value and remains in current scope
-   - SHOULD: improves the result but is not essential
+   - SHOULD: improves the result while remaining outside core-blocking scope
    - COULD: nice-to-have
    - WON'T: out of current scope
 4. Remove COULD and WON'T items from current plan scope.
 5. Record removed items as future consideration.
 
-Do not advance to CP2 with unreviewed scope inflation. Scope inflation in the plan compounds in design, implementation, review, proof, and validation.
+Advance to CP2 only after scope inflation review is complete.
+Treat unreviewed scope inflation as compounding risk across design, implementation, review, proof, and validation.
 
 ## Gap Detection Dimensions
 Phase 4 gap detection separates:
@@ -31,24 +46,28 @@ Phase 4 gap detection separates:
 - delivery-experience gaps
 - user-readiness gaps
 
-Blocking gaps are not only missing components. Missing proof on the required user surface is independently blocking.
-Compare against the frozen `SCOPE-BASELINE`, not only the implemented `ACTIVE-SLICE`; missing, stubbed, placeholder-only, or unproven baseline items are blocking unless original frozen request/plan/design explicitly deferred them.
+Blocking gaps include missing components.
+Missing proof on the required user surface is independently blocking.
+Compare against the frozen `SCOPE-BASELINE`.
+Treat implemented `ACTIVE-SLICE` as insufficient baseline evidence.
+Treat missing, stubbed, placeholder-only, or unproven baseline items as blocking.
+Honor explicit deferrals from the original frozen request, plan, or design.
 
 ## Structural Check
 For each component in the design, verify:
 1. Does the file or module exist?
 2. Does the class, function, or namespace match the designed structure?
-3. Are all sub-components present, not only the parent?
+3. Are the parent component and all sub-components present?
 
-Defect signal: component defined in design has no corresponding implementation artifact.
+Defect signal: design-defined component missing corresponding implementation artifact.
 
 ## Functional Check
 For each component, verify:
 1. Does implementation cover the primary use case described in design?
 2. Are error paths and edge cases from design present in code?
-3. Does observable behavior match designed behavior, not just source presence?
+3. Does observable behavior beyond source presence match designed behavior?
 
-Defect signal: component exists structurally but does not perform its designed function.
+Defect signal: component exists structurally and fails its designed function.
 
 ## Contract Check
 For each interface, format, or dependency boundary, verify:
@@ -66,28 +85,37 @@ Verify:
 - tester proof surface and validator acceptance surface aligned to the same resolved interaction/control inventory
 
 ## Coverage Signals
-Implementation-completeness signals are scaled by deliverable type per `references/phase-surfaces.md` and remain team-lead judgment inputs, not automatic thresholds. A single blocking defect blocks advancement regardless of completeness signal; full coverage still requires reviewer and tester sign-off on the acceptance chain.
+Scale implementation-completeness signals by deliverable type per `references/phase-surfaces.md`.
+Use implementation-completeness signals as team-lead judgment inputs.
+A single blocking defect blocks advancement regardless of completeness signal.
+Full coverage still requires reviewer and tester sign-off on the acceptance chain.
 
 ## Gap Classification
 Reviewer classifies each gap:
 
 | Class | Definition | Iteration required |
 |-------|------------|-------------------|
-| Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Yes; reopen the correction loop unless governing evidence reclassifies the gap |
-| Non-blocking | Minor behavioral gap, cosmetic mismatch, or deviation with no user-surface, acceptance, data, security, or workflow impact | No, but record in report |
-| Deferred | Design decision intentionally not implemented in this iteration | No, but document under follow-up |
+| Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Reopen the correction loop until governing evidence reclassifies the gap |
+| Non-blocking | Minor behavioral gap, cosmetic mismatch, or deviation without user-surface, acceptance, data, security, or workflow impact | Record in report |
+| Deferred | Design decision intentionally outside this iteration | Record under follow-up |
 
-When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`. T0/T1 gaps are not normal iteration candidates.
+When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`.
+Classify T0/T1 gaps as incident-response candidates.
 
 ## Iteration Protocol Detail
-`dev-workflow` Phase 5 owns iteration structure and convergence truth. Gap detection contributes Phase-2-derived acceptance-grade correction contract fields, not local closure.
+`dev-workflow` Phase 5 owns iteration structure and convergence truth.
+Gap detection contributes Phase-2-derived acceptance-grade correction contract fields as contribution evidence.
 
 Per-cycle gap detection contribution after authoritative corrected output and before tester re-verify:
 1. Reviewer reruns structural, functional, contract, delivery-experience, and user-readiness checks scoped to affected components.
 2. Reviewer reapplies the gap classification table to remaining or newly introduced gaps.
 3. Coverage score, blocking-gap count, required return evidence, and acceptance-entry condition feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
 
-Reviewer quick-check stays blocking-only and delta-scoped; unclear delta -> `scope-pressure`, not full-review expansion. Tester re-verifies affected surfaces first, then stale interaction rows. Repeated same-class blocking gaps, even on different surfaces, escalate to root-cause classification instead of looping or user-choice prompting.
+Reviewer quick-check stays blocking-only and delta-scoped.
+Unclear delta raises `scope-pressure` and preserves delta scope.
+Tester re-verifies affected surfaces before stale interaction rows.
+Same-class blocking gaps on different surfaces count as repeated same-class blocking gaps.
+Repeated same-class blocking gaps escalate to root-cause classification.
 Independent correction surfaces are split by correcting owner and may run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
 
 ## Gap-State Packet
@@ -109,7 +137,9 @@ Whenever blocking or significant gap findings move to `dev-workflow`, reviewer, 
 - `NEXT-OWNER-ACTION`
 - `OPEN-SURFACES`
 
-Do not replace reviewer, tester, or validator state with local gap-detection classification. A re-classified gap state is not closed by the agent that produced it.
+Preserve reviewer, tester, and validator state as the owning state.
+Treat local gap-detection classification as contribution evidence.
+Close a re-classified gap state only through the owning downstream agent.
 
 ## Gap Detection Self-Growth
 Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repeated phase drift, repeated bottlenecking after decomposition, or repeated source-only substitution appears.

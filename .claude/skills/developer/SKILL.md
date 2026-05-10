@@ -60,7 +60,11 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ## Development Production Workflow
 ### 1. Confirm Assigned Scope
 - Restate scope and mode before editing.
-- Before production discovery or edits, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop condition.
+- Before production discovery or edits, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and `SKILL-RECOMMENDATIONS`.
+- Classify each `REQUIRED-SKILLS` entry as applied or blocked before first lane action.
+- Classify each `SKILL-RECOMMENDATIONS` entry as applied, not-material, or blocked before first lane action.
+- Name the first lane action.
+- Name the stop condition.
 - Production proceeds only on `execute` or `reconstruct-with-inference`.
 - `scope-pressure` and `hold|blocker` stop only the unsafe current path.
 - They open the team-lead resolution loop.
@@ -149,3 +153,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
 - Completion uses `handoff` or `completion` only for converged developer-owned output.
+
+## Next-Action Drive
+- Converged developer-owned output opens team-lead synthesis through the completion-grade handoff path.
+- Developer-owned open surfaces open correction, blocker routing, proof routing, or review routing through the named next owner/action.

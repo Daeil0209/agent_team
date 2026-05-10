@@ -1,6 +1,6 @@
 ---
 name: session-boot
-description: "Lead-session boot, runtime-entry gates, monitoring, lifecycle interpretation, and recovery for team-lead. Assignment-grade dispatch belongs to task-execution."
+description: "Run lead-session boot, runtime-entry gates, monitoring, lifecycle interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime lifecycle truth is active."
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

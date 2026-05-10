@@ -196,3 +196,7 @@ Keep authoritative versus supplemental sources explicit.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked verdict.
 - Completion uses `handoff` or `completion` only for converged validator-owned verdict work.
 - Final acceptance rejection analysis uses `handoff` with `OUTPUT-SURFACE: validator correction packet`.
+
+## Next-Action Drive
+- `PASS`, `HOLD`, or `FAIL` opens team-lead synthesis, correction routing, closeout, or continuation by the frozen route.
+- Missing decisive validation basis opens the named blocker owner/action before verdict work continues.

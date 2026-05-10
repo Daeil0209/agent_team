@@ -7,6 +7,20 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
 # Tester Reference
+## Contents
+- Auto-inject
+- Role-Spine Handoff
+- Control Packet Discipline
+- Tester Packet Detail
+- UI Intent Proof Matrix
+- Defect Detection Amplifiers
+- Tool-Tier Detail
+- Interaction Coverage
+- Human-Facing Checklist
+- Specialist Skill Loading
+- Tester Handoff Detail
+- Next-Action Drive
+
 ## Auto-inject
 false - load explicitly when packet detail, UI intent proof detail, interaction coverage, human-facing checklist detail, or handoff detail is needed.
 
@@ -103,7 +117,7 @@ When the same proof surface offers multiple tool profiles at different friction-
 ## Human-Facing Checklist
 - Rendered evidence is a defect oracle, not an artifact receipt. Inspect captured output for unreadable glyphs, clipping, overlap, hidden controls, broken hierarchy, missing media, blank/crashed screens, unexpected empty states, and first-glance failure before claiming user-facing proof.
 - For source-read governance, report, or documentation artifacts, the source/read document can be the decisive proof surface when rendering is not material.
-- For browser/UI or other scrollable visual surfaces, capture the route/page/screen-state x viewport matrix required by the frozen proof surface; use full-page or full design-area capture for whole-surface claims, and label viewport-only captures as viewport-limited; viewport-limited captures cannot support whole-surface `matched`.
+- For browser/UI or other scrollable visual surfaces, capture the route/page/screen-state x viewport matrix required by the frozen proof surface; use full-page or full design-area capture for whole-surface claims, and label viewport-only captures as viewport-limited; whole-surface `matched` requires whole-surface capture.
 - Run glyph and legibility sanity on representative user-language strings before layout judgment; placeholder glyph boxes, tofu, or unreadable text must block `matched` proof on that surface.
 - First-glance comprehension assessed when reader-first usefulness matters
 - Package validity and openability verified for office-format artifacts

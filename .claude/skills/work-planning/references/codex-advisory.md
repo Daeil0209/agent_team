@@ -8,6 +8,15 @@ auto-inject: false
 Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs required or risk-triggered Codex critique.
 Pre-`work-planning` Codex output is not planning evidence.
 
+## Contents
+- Trigger
+- Authority
+- Tool Discipline
+- Packet
+- Review Criteria
+- Handling
+- Next-Action Drive
+
 ## Trigger
 Required trigger evaluation:
 - `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate this reference. It does not require a successful Codex call when no material advisory trigger applies or advisory access records `fail-open:*`.
@@ -62,6 +71,7 @@ Do not use `null`.
 `doctrine_read_paths` must include `.claude/CLAUDE.md` plus owner paths needed for doctrine-specific judgment.
 Codex must read canonical files directly before doctrine judgment.
 Add `.claude/skills/feynman-clarity/SKILL.md` when the deliverable is a plan, design, report, governance/document artifact, specification, or user-facing delivery path.
+Add `.claude/skills/benchmark-simulation/SKILL.md` when external visual benchmark, methodology benchmark, verification-method benchmark, or capability-growth benchmark materially affects the planning basis.
 Populate `user_confirmation_candidate` only to challenge a proposed user question.
 
 ## Review Criteria

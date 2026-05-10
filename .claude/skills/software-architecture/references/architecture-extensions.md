@@ -6,6 +6,16 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # Reference Material
+## Contents
+- Dependency-And-Field Architecture Extension
+- Coupled-Core Architecture Extension
+- Operational Management Entity Architecture Extension
+- Workflow-Product Architecture Extension
+- Constraint-Satisfaction Document Generator Architecture Extension
+- Specialist Skill Maintainability Extension
+- Project Lessons (Recurrence-Barrier Catalog)
+- Next-Action Drive
+
 ## Dependency-And-Field Architecture Extension
 For operator-facing workflow tools and document-backed systems:
 - Cross-surface dependency graph: facts that unlock/recalculate views, summaries, exports, downstream records

@@ -1,6 +1,6 @@
 ---
 name: log-based-qa
-description: Log-based QA methodology using structured JSON logging and Docker log monitoring as an alternative to traditional test scripts.
+description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use when logs are the frozen decisive proof surface, executable test scripts are absent or impractical, or runtime signal materially supports tester proof.
 user-invocable: false
 PRIMARY-OWNER: tester
 ---
@@ -25,7 +25,7 @@ You are the log-based-qa specialist capability for Claude Code.
 ## Purpose
 Use this skill when executable assertions are absent or impractical and runtime logs are the decisive proof surface.
 When user-facing interaction is the assigned proof surface, logs can corroborate.
-Logs replace direct tester proof only when the frozen packet names logs as the decisive proof surface.
+Logs serve as direct tester proof when the frozen packet names logs as the decisive proof surface.
 ## Responsibilities
 - prefer log-based QA when runtime signal is more decisive than writing a new harness
 - require success-path logging, structured payloads, and end-to-end request IDs
@@ -43,11 +43,11 @@ Activate when executable test scripts are absent or impractical, the environment
 Return a log-QA packet.
 It captures exercised flows, decisive log evidence, request IDs, unexpected statuses, latency anomalies, and blocked observability gaps.
 ## Handoff Boundary
-Hand off only when downstream owners can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
+Hand off after downstream owners can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
 Keep long templates and threshold tables in `references/log-qa-patterns.md`.
 ## Operational Discipline
 - Log findings need corroboration across layers using request ID propagation.
-- The logging path is usable by tester without developer babysitting.
+- The logging path is directly usable by tester.
 ## Role-Scoped Structural Feedback
 - Challenge weak observability, missing request IDs, or unmonitorable runtime behavior.
 - State which runtime signal is missing and the smallest corrective rewrite.

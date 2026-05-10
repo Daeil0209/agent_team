@@ -1,6 +1,6 @@
 ---
 name: enterprise-architecture
-description: Enterprise architecture specialist skill with Clean Architecture, review checklists, and anti-pattern detection for enterprise-scale projects.
+description: Review enterprise-scale architecture with Clean Architecture boundaries, bounded contexts, service contracts, production-readiness gates, and anti-pattern detection. Use when multi-service boundaries, externally committed deployment readiness, or enterprise design traceability materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
@@ -41,7 +41,7 @@ Condition 2: bounded-context boundary review across services is the active deliv
 Condition 3: a production-readiness gate fires before externally-committed deploy.
 Single-application architecture review belongs to `software-architecture`.
 Examples: intra-app boundaries, modular separation, persistence contracts, internal layer discipline.
-If activation criteria are not clearly met, default to `software-architecture`.
+When activation criteria remain unclear, default to `software-architecture`.
 Team-lead escalates if scope grows.
 ## Inputs
 - active request source
@@ -63,7 +63,7 @@ Keep checklist tables and anti-pattern catalogs in `references/architecture-revi
 - shared modules stay dependency-free and non-circular
 ## Operational Discipline
 - Freeze the architecture skeleton before bulk implementation.
-- Architecture must be deployable and operable in the target environment, not only theoretically elegant.
+- Architecture must be deployable and operable in the target environment.
 ## Role-Scoped Structural Feedback
 - Challenge weak layer boundaries, bounded-context drift, missing design-doc gates, or anti-pattern normalization.
 - State which boundary or readiness gate is broken and the smallest corrective rewrite.

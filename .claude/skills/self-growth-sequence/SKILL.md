@@ -1,6 +1,6 @@
 ---
 name: self-growth-sequence
-description: Self-growth procedures for team capability hardening and behavioral defect correction.
+description: Install recurrence barriers for confirmed behavioral, procedural, or capability defects through causal analysis, narrow-owner patching, retroactive application, and verification. Use when a confirmed defect requires team capability hardening.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

@@ -1,6 +1,6 @@
 ---
 name: design-system-tokens
-description: 3-layer design token architecture with cross-platform token management for design system projects.
+description: Define 3-layer design token architecture, token naming, layer consumption, and cross-platform token management. Use when design-system consistency, theme control, component-layer discipline, or cross-platform UI tokens materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: reviewer
@@ -15,7 +15,7 @@ SECONDARY-CONSUMER: reviewer
 - Reference-owned sections live in `references/platform-implementation.md`.
 - Those sections include platform tools, implementation examples, and checklist detail.
 - Reference duplication into `SKILL.md` requires documented justification.
-- Platform-specific library installation steps belong in project-local documentation, not this skill.
+- Platform-specific library installation steps belong in project-local documentation.
 ### Reference Map
 - `references/platform-implementation.md`: platform tools, implementation examples, and checklist detail.
 ## Identity
@@ -29,14 +29,14 @@ You are the design-system-tokens specialist capability for Claude Code.
 - `reviewer` — downstream design-system consistency review owner
 - `mockup-to-component` — upstream conversion owner when the starting point is a visual mockup
 ## Purpose
-Use this skill when a design system needs a stable token architecture rather than ad hoc style literals.
+Use this skill when a design system needs a stable token architecture.
 ## Responsibilities
 - freeze a 3-layer architecture: Layer 1 primitives -> Layer 2 core components -> Layer 3 composites
 - keep the token vocabulary as the single source of truth for color, typography, spacing, radius, and shadow primitives
-- prevent core components from embedding composite logic
-- prevent composites from importing raw tokens directly
+- keep core components free of composite logic
+- make composites consume Layer 2 component contracts instead of raw tokens
 - import Layer 1 primitives from `mockup-to-component` CSS variables when that upstream packet already exists
-- send `hold|blocker` when token boundaries or layer-consumption rules are not credible
+- send `hold|blocker` when credible token boundaries or layer-consumption rules are absent
 ## Activation
 Activate when setting up a new design system, standardizing inconsistent tokens, or needing cross-platform token consistency.
 ## Inputs
@@ -48,10 +48,10 @@ Activate when setting up a new design system, standardizing inconsistent tokens,
 Return a token-architecture packet.
 It covers Layer 1 primitives, Layer 2 core components, Layer 3 composites, consumption rules, and blocked surfaces.
 ## Handoff Boundary
-Hand off only when downstream implementation can consume tokens without rediscovering layer rules.
+Hand off after downstream implementation can consume tokens from the packet-defined layer rules.
 Keep platform tools, examples, and checklist detail in `references/platform-implementation.md`.
 ## Operational Discipline
 - Freeze token architecture layers before component authoring begins.
-- Token values must be visually verifiable in a rendered component catalog, not only in source files.
+- Token values require rendered component-catalog verification.
 ## Role-Scoped Structural Feedback
 - Signal to `team-lead` when cross-platform token gaps or component-layer violations suggest upstream design-system scope or tooling gaps.

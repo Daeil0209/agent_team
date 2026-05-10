@@ -6,8 +6,19 @@ SOURCE-RULES: "RPA-7 report shape and evidence inclusion; Communication And Repo
 ---
 # team-lead: Reporting Surface Rules
 
+## Contents
+- Purpose
+- Consume When
+- Required Output
+- Stop
+- Next-Action Drive
+- Primary Report Surface
+- Output Shape
+- Internal Content
+- Evidence Basis
+
 ## Purpose
-Use this reference to shape user-facing team-lead reports without leaking internal procedure or overstating evidence.
+Use this reference to keep user-facing team-lead reports compact, evidence-bounded, and free of internal procedure.
 Terminal-visible team-lead prose uses this same report shape.
 Pane-visible team-lead prose uses this same report shape.
 
@@ -31,8 +42,9 @@ Record:
 ## Stop
 Stop before reporting when `SV-RESULT` is required and missing.
 Stop before `FINAL` when residual work remains.
-Stop before basis expansion unless the user requested detail.
-Stop before basis expansion unless a blocker requires detail.
+Stop before basis expansion by default.
+Basis expansion is allowed for explicit user detail request.
+Basis expansion is allowed for blocker-required detail.
 
 ## Next-Action Drive
 - A stopped reporting route opens `SV-RESULT`.
@@ -47,7 +59,7 @@ Pick one:
 - `dispatch pending`
 - `closeout residual`
 
-`next action` is reported only when the lead-owned execution path is blocked.
+`next action` report requires a blocked lead-owned execution path.
 Blocked path means proven user-owned decision, awaited runtime gate from another lane, or explicit upstream `HOLD`.
 On any open lead-owned path, execute via tool calls in the same turn.
 
@@ -55,14 +67,14 @@ On any open lead-owned path, execute via tool calls in the same turn.
 - `PHASE-RESULT` carries phase outcome plus next owner/action plus canonical artifact path.
 - `PHASE-RESULT` runs one or two sentences.
 - `FINAL` summarizes the core result first.
-- `FINAL` includes only highest-impact evidence, remaining blocker if any, and user-usable next state.
-- `FINAL` states completion within validator/FAR supported scope.
-- `FINAL` states completion within Evidence-Quality Matrix supported scope.
+- `FINAL` evidence inclusion is limited to highest-impact evidence, remaining blocker if any, and user-usable next state.
+- `FINAL` completion scope stays within validator/FAR supported scope.
+- `FINAL` completion scope stays within Evidence-Quality Matrix supported scope.
 - Clean closeout report shape is silence or one line.
 - Warning-bearing closeout names exact residual state, exact hold reason, and next recovery surface.
 
 ## Internal Content
-Keep internal unless explicitly requested:
+Default to internal for:
 - procedure scaffolding
 - routing internals
 - owner-opening detail
@@ -87,7 +99,7 @@ Treat `internal:` labels as internal-content labels.
 Treat `(internal):` labels as internal-content labels.
 
 ## Evidence Basis
-If basis is needed, include only concise verification basis, material open surfaces, unverified items, and required user action.
+When basis is needed, include concise verification basis, material open surfaces, unverified items, and required user action.
 If claim strength outruns evidence, narrow the claim or report `INFERENCE/UNVERIFIED`.
 Visual proof in final wording names retained evidence anchor.
 Visual proof in final wording names decisive surface.

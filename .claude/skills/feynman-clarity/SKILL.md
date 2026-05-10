@@ -1,6 +1,6 @@
 ---
 name: feynman-clarity
-description: Apply Feynman-style explainability review to plans, designs, reports, specifications, governance text, and other deliverables where clear understanding affects quality.
+description: Apply Feynman-style explainability review to plans, designs, reports, specifications, governance text, and other deliverables. Use when clear understanding, receiver comprehension, explanation quality, or simplification without meaning loss materially affects implementation or review.
 user-invocable: false
 PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer

@@ -8,6 +8,27 @@ auto-inject: false
 # Session-Boot Reference
 Load only when runtime-state detail, lifecycle mapping, or recovery classification is needed.
 
+## Contents
+- Boot Window And Startup Rules
+- Session-Start Recovery
+- Team-Lead Entry Trigger Detail
+- Agent Lifecycle States
+- Runtime Signals (Not Governance States)
+- Supervisor Decisions On Turn-Ended Signals
+- Message-First Lifecycle Rule
+- Reuse Rule
+- Health-Check Standard
+- Stale-Response Rule
+- Runtime-Pressure Rule
+- Procedure-State Schema
+- Canonical Runtime-State Model
+- Hook-Maintained Ledger Surfaces
+- Workflow Continuity Bridge
+- Proactive Team-Composition Reassessment
+- Stall-Without-Progress Rule
+- Agent Lifecycle Rules
+- Next-Action Drive
+
 ## Boot Window And Startup Rules
 - `Boot Sequence` is first for lead-session boot; its team-agent runtime branch is only for explicit runtime readiness, recovery, or entry gating.
 - Runtime-entry `TeamCreate`, team-scoped agent launch, and assignment-grade reuse are `task-execution` moves after `work-planning`. Standalone `Agent` is not team-runtime dispatch.

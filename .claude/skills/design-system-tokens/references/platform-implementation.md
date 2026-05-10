@@ -6,8 +6,16 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # Reference Material
+## Contents
+- Platform Implementation Tools
+- CSS Variables Token Definitions
+- Tailwind Config Integration
+- Cross-Platform Token JSON
+- Design System Checklist
+- Next-Action Drive
+
 ## Platform Implementation Tools
-The libraries below are implementation examples, not fixed default choices.
+The library table provides implementation examples.
 When library adoption, version behavior, licensing, or platform fit is material, use current official docs, benchmark evidence, or `external-tool-bridge` setup proof before freezing the tool choice.
 | Platform | Recommended Libraries | Token Method |
 |----------|----------------------|--------------|

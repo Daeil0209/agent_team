@@ -9,6 +9,11 @@ Use this file when field-level semantics, allowed values, the internal planning 
 
 `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, and `TIER-RAISE-REASON` field semantics are produced by `.claude/skills/governance-scaling/SKILL.md` and consumed here.
 
+## Contents
+- Allowed Values
+- Internal Planning Record Template
+- Next-Action Drive
+
 ## Allowed Values
 - `ACTION-CLASS` must be one of `lead-local`, `team-routed`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
 - `ROUTING-SIGNAL` must be one of `lead-local candidate`, `team-routing candidate`, `ambiguous-route`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
@@ -21,7 +26,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - When the frozen request, plan, MVP, release, or phase contains multiple promised features, workflows, surfaces, or controls, `REQUEST-BOUND-PACKET-FIELDS` must include `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES`; implemented artifacts cannot be used later to invent the completion scope.
 - When `DERIVED-DEFAULTS` names a receiver job, consumption path, or decisive proof surface for downstream review, proof, validation, or acceptance, `REQUEST-BOUND-PACKET-FIELDS` must include `TARGET-INTENT-BASIS`, `USER-SURFACE`, and `USER-SURFACE-PROOF-PATH`.
 - When plan, design, or workflow state freezes Receiver-Surface Contract, Consumption Chain, Boundary Register, or Evidence-Quality Matrix, `REQUEST-BOUND-PACKET-FIELDS` must preserve their cited identities for `task-execution` packet basis.
-- When reference-use triggers and downstream lanes depend on it, `REQUEST-BOUND-PACKET-FIELDS` must preserve cited reference identities or `DEVIATION-FROM-REFERENCE` basis. Do not create a standalone downstream `REFERENCE-USE` packet field.
+- When reference-use triggers and downstream lanes depend on it, `REQUEST-BOUND-PACKET-FIELDS` must preserve cited reference identities or `DEVIATION-FROM-REFERENCE` basis. Downstream reference-use identity belongs inside `REQUEST-BOUND-PACKET-FIELDS`.
 - `PROJECT-TIER` is mandatory when the project has already been tiered or the current plan explicitly sizes governance depth.
 - `ACTIVE-REQUEST-TIER` is mandatory whenever `PROJECT-TIER` is present on a consequential `team-lead` plan.
 - `TIER-RAISE-REASON` is mandatory whenever `PROJECT-TIER` is present; record `stay` explicitly when no material raise signal exists.

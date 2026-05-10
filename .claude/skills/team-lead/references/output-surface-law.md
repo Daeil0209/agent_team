@@ -6,6 +6,19 @@ SOURCE-RULES: "RPA-7 Output Surface; Communication And Reporting Law; Reference 
 ---
 # team-lead: Output Surface Law
 
+## Contents
+- Purpose
+- Consume When
+- Required Output
+- Stop
+- Next-Action Drive
+- MID-FLIGHT
+- PHASE-RESULT
+- FINAL
+- Internal-By-Default Content
+- Claim Control
+- Evidence Naming
+
 ## Purpose
 Use this reference before any user-facing team-lead output.
 It prevents internal procedure, runtime noise, and partial state from being reported as completion.
@@ -35,7 +48,7 @@ Then select exactly one output surface:
 - `FINAL`
 
 ## Stop
-Stop before user-facing prose when no new or changed primary truth surface exists.
+User-facing prose requires a new or changed primary truth surface.
 Stop before `FINAL` when any queued, remaining, residual, unpatched, undeferred, or unproven item remains.
 Stop before `verified result` when `SV-RESULT` is missing, stale, or narrower than the outgoing claim.
 
@@ -46,10 +59,10 @@ Stop before `verified result` when `SV-RESULT` is missing, stale, or narrower th
 
 ## MID-FLIGHT
 `MID-FLIGHT` emits tool calls only.
-No prose leaves a mid-flight turn.
-No status text leaves a mid-flight turn.
-No procedure narration leaves a mid-flight turn.
-No progress claim leaves a mid-flight turn.
+`MID-FLIGHT` keeps prose internal.
+`MID-FLIGHT` keeps status text internal.
+`MID-FLIGHT` keeps procedure narration internal.
+`MID-FLIGHT` keeps progress claims internal.
 Terminal-visible prose follows the same limit.
 Pane-visible prose follows the same limit.
 
@@ -62,12 +75,12 @@ Pane-visible prose follows the same limit.
 `FINAL` is valid only on zero-residual deliverable convergence.
 Every queued item is patched, deferred by owning upstream record, or proven out-of-scope with cited basis.
 `FINAL` summarizes the core result first.
-`FINAL` includes only the highest-impact evidence and remaining blocker if any.
-`FINAL` claims only validator/FAR supported scope.
-`FINAL` claims only Evidence-Quality Matrix supported scope.
+`FINAL` evidence inclusion is limited to the highest-impact evidence and remaining blocker if any.
+`FINAL` claim scope stays within validator/FAR supported scope.
+`FINAL` claim scope stays within Evidence-Quality Matrix supported scope.
 
 ## Internal-By-Default Content
-Keep internal unless explicitly requested:
+Default to internal for:
 - owner-opening procedure
 - skill-loading details
 - runtime internals

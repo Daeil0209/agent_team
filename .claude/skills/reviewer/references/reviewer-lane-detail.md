@@ -7,6 +7,18 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
 # Reviewer Reference
+## Contents
+- Auto-inject
+- Role-Spine Handoff
+- Control Packet Discipline
+- Reviewer Packet Detail
+- Domain Lenses
+- Applied Review Techniques
+- Severity Mapping
+- Specialist Skill Loading
+- Reviewer Handoff Detail
+- Next-Action Drive
+
 ## Auto-inject
 false — load explicitly when packet detail, lens detail, severity mapping, or handoff detail is needed.
 
@@ -107,7 +119,10 @@ Use this surface map:
 - Software implementation, maintainability, architecture-coded contract, and security review: `code-quality-review`, `security-review`.
 
 When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
-Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.
+Run `feynman-clarity` when target intent materially affects review truth.
+Run `feynman-clarity` when protected function materially affects review truth.
+Run `feynman-clarity` when reader action materially affects review truth.
+Run `feynman-clarity` when explanation failure materially affects review truth.
 These are review lenses; findings use normal severity and may be blocking.
 Remediation stays with the producing owner.
 

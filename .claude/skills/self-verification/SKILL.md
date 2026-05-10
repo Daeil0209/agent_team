@@ -1,6 +1,6 @@
 ---
 name: self-verification
-description: Verify disputed frozen plans and phase/stage-end consequential results before analyzed-result reporting, completion claim, or redispatch. Excludes light, receipt/control/status, routine progress, and in-phase convergence loops.
+description: Verify disputed frozen plans and phase/stage-end consequential results before analyzed-result reporting, completion claim, or redispatch. Use when SV-PLAN or SV-RESULT is triggered for consequential planning, reporting, completion, or synthesis-driven redispatch.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

@@ -8,15 +8,15 @@ LOAD-POLICY: on-demand reference only
 # Reference Material
 ## Responsibilities: Reference Detail
 ### Engineering Defect Severity Classification
-Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `### Role And Acceptance Law` and `### Communication And Reporting Law`. The table below is an engineering-local impact classification used to describe defect character and escalation examples; it does not replace the shared governance contract.
+Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `### Role And Acceptance Law` and `### Communication And Reporting Law`. The table below is an engineering-local impact classification used to describe defect character and escalation examples. The shared governance contract remains controlling.
 | Impact Class | Engineering Context | Examples |
 |---|---|---|
 | **Critical** | Safety margin violated, unit error, spec contradiction | Safety factor below minimum, unit mismatch in calculation, design exceeds rated limits, unguarded hardware errata |
-| **Major** | Spec not referenced, important constraint missing | Assumption without datasheet citation, missing operating condition bound, thermal budget unverified, timing budget exceeded |
+| **Major** | Spec not referenced, important constraint missing | Assumption lacking datasheet citation, missing operating condition bound, thermal budget unverified, timing budget exceeded |
 | **Minor** | Style/convention issue not affecting function | Unit notation style, significant figures convention, diagram labeling preference |
 Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Engineering Assumption Governance
-Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `### Role And Acceptance Law`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid; they do not replace the shared blocking rule.
+Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `### Role And Acceptance Law`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation; unresolved critical assumptions are blocking
 - **Major**: environmental conditions, load profiles, duty cycles, component tolerances beyond datasheet — document with source; if unresolved and they materially affect core logic, deliverables, or verification, treat them as blocking
 - **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters — may proceed only when explicitly disclosed and kept proportionate to their impact
@@ -42,7 +42,7 @@ Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md
   - Steady-state limit (t→∞) must be physically meaningful
 - Parameter sensitivity: identify which physical parameters most strongly affect the solution behavior
 ### Execution-Model Awareness
-- **Execution-Model Fidelity:** between source code and actual execution, transformation layers (compiler optimization, JIT compilation, runtime scheduling, ORM query generation, CSS cascade resolution) can silently break correctness assumptions. Designs must identify which transformation layers are in the execution path and account for their constraints. Assumptions about execution fidelity without verification against the actual execution model are ungrounded and require explicit validation
+- **Execution-Model Fidelity:** between source code and actual execution, transformation layers (compiler optimization, JIT compilation, runtime scheduling, ORM query generation, CSS cascade resolution) can silently break correctness assumptions. Designs must identify which transformation layers are in the execution path and account for their constraints. Unverified execution-fidelity assumptions are ungrounded and require explicit validation
 - Escalate to `software-architecture` when the primary concern shifts from execution-layer correctness to software architecture decisions, module boundary design, or system-level state modeling.
 ### Engineering Evidence Minimum
 Before endorsing any engineering claim:

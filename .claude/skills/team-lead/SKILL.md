@@ -1,6 +1,6 @@
 ---
 name: team-lead
-description: On-demand binding team-lead role detail for planning consumption, message-class/lifecycle edge cases, agent objections, synthesis/reporting truth, interrupt-resume, and autonomous judgment.
+description: Provide on-demand binding team-lead role detail for planning consumption, message-class/lifecycle edge cases, agent objections, synthesis/reporting truth, interrupt-resume, and autonomous judgment. Use when active team-lead ownership needs explicit lead-side procedure detail.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -96,3 +96,7 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
   - Use defect classification as route evidence.
   - Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
   - Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
+
+## Next-Action Drive
+- Resolved lead-side detail opens the next owner/action named by planning, dispatch, synthesis, reporting, interrupt-resume, or closeout.
+- Unresolved lead-side detail opens `work-planning`, `task-execution`, `self-verification`, `session-boot`, `session-closeout`, or `hold|blocker` by the governing owner surface.

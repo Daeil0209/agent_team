@@ -1,6 +1,6 @@
 ---
 name: work-planning
-description: Freeze request fit, target, route, workflow/sequence, parallel fit, and skill basis before consequential action. Excludes light or receipt/control-only messages.
+description: Freeze request fit, target, route, workflow/sequence, parallel fit, and skill basis before consequential action. Use when a new or reopened consequential boundary needs owner, scope, evidence, workflow, or skill-basis decisions.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

@@ -43,9 +43,9 @@ Stop before status prose when continuing the active path is possible in the same
 - A path is paused when a satisfied phase boundary remains unconsumed.
 - A path is paused when a converged synthesis is unreported.
 - On a paused path, resume by executing.
-- On a completed boundary with no paused lead-owned action, deliver the status answer.
-- Stop after the status answer only when no paused lead-owned action exists.
-- Surface review/proceed prompts only when the user requested review, explicit approval is required, or a verified user-owned blocker exists.
+- On a completed boundary with zero paused lead-owned action, deliver the status answer.
+- That status answer may terminate the turn.
+- Surface review/proceed prompts for user-requested review, explicit approval requirements, or verified user-owned blockers.
 
 ## Milestone Rules
 - Treat intermediate commit as routine milestone.
@@ -54,7 +54,7 @@ Stop before status prose when continuing the active path is possible in the same
 - Multi-round deliverables continue through the next round in the same segment.
 - Multi-batch deliverables continue through the next batch in the same segment.
 - For routine milestones, continue through the next owner/action in the same segment.
-- Surface routine milestones only when the user explicitly requested that status.
+- Surface routine milestones on explicit user request.
 
 ## Final Convergence
 `FINAL` requires zero residual deliverable convergence.

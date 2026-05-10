@@ -6,6 +6,16 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # Reference Material
+## Contents
+- Clean Architecture Layer Diagram
+- Layer Violation Detection
+- Architecture Review Checklist
+- Pre-Production Checklist
+- Anti-Pattern Detection
+- Inter-Service Communication Patterns
+- Infrastructure Change Protocol
+- Next-Action Drive
+
 ## Clean Architecture Layer Diagram
 ```
 ┌─────────────────────────────────────────────┐
@@ -54,7 +64,7 @@ Run this checklist before accepting any enterprise architecture work. All items 
 - [ ] Security documentation current: auth flow documented, RBAC model explicit, secret management policy stated
 - [ ] Configuration externalized: no hardcoded environment-specific values in code
 - [ ] Inter-service communication patterns documented: sync vs async decision explicit, retry and timeout policies stated
-**Failing 1 or more items:** return `HOLD` with the failed items listed and corrective actions specified. Do not approve architecture with unresolved layer violations.
+**Failing 1 or more items:** return `HOLD` with the failed items listed and corrective actions specified. Architecture approval requires resolved layer violations.
 ## Pre-Production Checklist
 Before declaring enterprise work production-ready, all items must pass or carry an explicit `HOLD` with owner and timeline.
 - [ ] All quality checks pass: code review complete, security scan clean, architecture compliance verified
@@ -69,11 +79,11 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 ## Anti-Pattern Detection
 | Anti-Pattern | Symptoms | Correction |
 |---|---|---|
-| **Blind Trust** | AI output used without review or tests | Require code review and test coverage for all AI-generated code before merge |
+| **Blind Trust** | AI output used before review or test evidence | Require code review and test coverage for all AI-generated code before merge |
 | **Verbal Instructions** | Requirements exist only in conversation or memory | Write requirements in `docs/00-requirements/` before implementation begins |
 | **Skipping Design** | Jump from idea directly to code | Require design doc in `docs/02-design/` with architecture options and trade-off rationale |
 | **Context Fragmentation** | Different team members operate from different understandings | Use Context Anchor pattern: WHY / WHO / RISK / SUCCESS / SCOPE — shared and visible |
-| **Outdated Docs** | Code evolved without updating design or API docs | Update `docs/02-design/` and API contracts as part of the implementation task, not after |
+| **Outdated Docs** | Code evolved while design or API docs stayed stale | Update `docs/02-design/` and API contracts inside the implementation task |
 | **Layer Leakage** | Business logic accumulates in API controllers or infrastructure adapters | Enforce Clean Architecture layer rules; return `HOLD` on PR with misplaced logic |
 | **God Service** | One application service handles unrelated responsibilities | Decompose by bounded context; each service owns one responsibility domain |
 | **Hardcoded Configuration** | Environment-specific values embedded in source code | Externalize all configuration; fail architecture review if any hardcoded env value is found |
@@ -89,17 +99,17 @@ Use when: **the caller needs the result before it can proceed.**
 | Timeout policy | Required; timeout values explicit in configuration, not hardcoded |
 | Retry policy | Idempotency required before retry; exponential backoff with jitter |
 ### Asynchronous Communication
-Use when: **the caller does not need the result to proceed.**
+Use when: **the caller can proceed before the result arrives.**
 | Concern | Requirement |
 |---|---|
 | Transport | Message queue or event bus (technology is a project decision, not a skill mandate) |
 | Pattern | Topic-based pub/sub for event-driven flows |
 | Event naming | Domain-prefixed verb-noun: `user.created`, `order.completed`, `payment.failed` |
 | Consumer idempotency | All consumers must handle duplicate message delivery safely |
-| Dead letter queue | Required; unprocessable messages must not be silently dropped |
+| Dead letter queue | Required; unprocessable messages route to the dead letter queue |
 | Schema versioning | Event schemas versioned; breaking changes require coordination window |
 ### Selection Rule
-Default to async for operations that do not need an immediate response. Use sync only when the caller genuinely cannot proceed without the result. Undocumented sync calls where async is sufficient are an architecture review flag.
+Default to async for operations whose caller can proceed before the result arrives. Use sync when the caller genuinely needs the result before continuing. Undocumented sync calls where async is sufficient are an architecture review flag.
 ## Infrastructure Change Protocol
 For all infrastructure changes (database schema, message queue topology, network configuration, secret rotation, service mesh rules):
 1. **Documentation first** — update `docs/02-design/` with: what changes, why it changes, impact assessment on dependent services
@@ -107,7 +117,7 @@ For all infrastructure changes (database schema, message queue topology, network
 3. **Change plan with rollback** — document the forward change steps and the rollback procedure; rollback must be tested before production
 4. **Staging verification** — apply to staging environment, run affected integration tests, confirm monitoring shows expected behavior
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
-**HOLD condition:** infrastructure change applied to production without a tested rollback plan is a T1 governance block.
+**HOLD condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 governance block.
 
 ## Next-Action Drive
 - Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.

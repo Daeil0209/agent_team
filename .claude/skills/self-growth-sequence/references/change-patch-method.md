@@ -5,6 +5,12 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
+## Contents
+- Change Sequence Required Order
+- Change Constraints
+- Patch Execution Method
+- Next-Action Drive
+
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only when the change plan is disputed; otherwise reserve `SV-RESULT` for Post-Verify.
@@ -147,7 +153,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - Any optimization that does run must preserve the improved quality bar and protected meaning.
 
 ### File And Runtime Hygiene
-- Do not create detached runtime artifacts or orphan files inside the target payload.
+- Keep the target payload free of detached runtime artifacts and orphan files.
   - Any new persistent file must have a clear owner and, when relevant, an explicit runtime or document reference path.
 - Standardize the subpath contract under the owning folder root rather than hardcoding every full path in every document.
   - For specialist skills, keep one owner for the project skill root and let downstream documents reference the standardized active subpath.

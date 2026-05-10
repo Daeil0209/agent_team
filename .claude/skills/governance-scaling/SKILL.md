@@ -1,6 +1,6 @@
 ---
 name: governance-scaling
-description: Project complexity classification and governance parameter scaling for calibrating governance depth at project start or when project complexity changes.
+description: Classify project/request complexity and calibrate governance depth, tier floors, active request tiers, and guardrails. Use at project start, material scope expansion, or repeated over-governance/under-governance signals.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -26,10 +26,10 @@ Use this skill when a new project starts, scope expands materially, or the activ
 ## Responsibilities
 - classify the project into `Lightweight`, `Standard`, or `Precision`
 - keep explicit that `PROJECT-TIER` is the project floor and `ACTIVE-REQUEST-TIER` is the current request tier
-- keep explicit that request-specific risk can raise the active tier without silently rewriting the project floor
+- keep explicit that request-specific risk can raise the active tier while preserving the project floor
 - surface guardrails for blast radius, retry depth, stale work, concurrent writes, and scope creep
-- keep task-level tier suggestions heuristic, not automatic
-- send `hold|blocker` when the project cannot be truthfully tiered from current evidence
+- keep task-level tier suggestions heuristic and team-lead judged
+- send `hold|blocker` when truthful tier evidence is absent
 ## Activation
 Load this skill at project start.
 Also load it at material scope expansion.
@@ -48,7 +48,7 @@ Return a compact scaling packet:
 - relevant guardrails
 - any re-confirmation need
 ## Handoff Boundary
-Hand off only when `team-lead` can apply the scaling decision without guessing.
+Hand off after `team-lead` can apply the scaling decision from explicit tier evidence.
 The handoff must name project floor, current request tier, raise-or-stay reason, and guardrail trigger.
 Keep heuristic and parameter tables in `references/scaling-heuristics.md`.
 ## Operational Discipline

@@ -1,6 +1,6 @@
 ---
 name: visual-composition
-description: Own presentation visual composition, rendered legibility, and operator-facing clarity for decks, visual reports, and UI-bearing deliverables.
+description: Own presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -50,7 +50,7 @@ You are the visual-composition specialist capability for Claude Code.
 - require stress-state and viewport-proof checks for UI-bearing work
 - prevent overlap, awkward wrapping, unreadable density, decorative noise, and top-heavy composition
 - protect table, form, deck, and dashboard readability under realistic density
-- emit a blocking visual finding when the rendered surface cannot support confident operator use even if the underlying content is individually correct
+- emit a blocking visual finding when the rendered surface lacks enough clarity for confident operator use even if the underlying content is individually correct
 ## Activation, Boundary, Inputs, and Outputs
 Activate for operator-facing UIs, workflow tools, decks, dashboards, visual reports, or any work where rendered usability is a real acceptance condition.
 Activate only after surface role and target reader/operator are explicit.

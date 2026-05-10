@@ -7,6 +7,18 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
 # Developer Reference
+## Contents
+- Auto-inject
+- Role-Spine Handoff
+- Control Packet Discipline
+- Required Dispatch Packet Fields
+- Handoff Completeness Challenge
+- Specialist Skill Loading
+- Durability Gate
+- Regression Guard
+- Developer Handoff Detail
+- Next-Action Drive
+
 ## Auto-inject
 false — load explicitly when packet detail, defect-fix detail, or handoff detail is needed.
 
@@ -108,8 +120,23 @@ Secondary-consumer specialist support:
 - clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, handoff, governance, or document production when receiver comprehension is decisive
 - bounded code-quality self-review: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before handoff
 
-When multiple specialists are active on one blocked surface, the controlling order is: `business-workflow` -> `work-tool-patterns` -> `software-architecture` -> domain specialists (`instructional-design`, `engineering-grounding`, `mathematical-correctness`) -> `enterprise-architecture` -> `document-automation` -> `visual-composition` -> UI implementation specialists (`mockup-to-component`, `design-system-tokens`). `benchmark-simulation` and `external-tool-bridge` are support overlays without controlling-chain position; they may evaluate or integrate without overriding earlier controlling contracts. `feynman-clarity` is a producer self-review lens for developer and does not replace reviewer-owned independent clarity review.
-`code-quality-review` is a developer self-review lens only; it does not replace reviewer-owned independent code-quality review.
+Use this controlling order when multiple controlling specialists are active on one blocked surface:
+- `business-workflow`
+- `work-tool-patterns`
+- `software-architecture`
+- domain specialists: `instructional-design`, `engineering-grounding`, `mathematical-correctness`
+- `enterprise-architecture`
+- `document-automation`
+- `visual-composition`
+- UI implementation specialists: `mockup-to-component`, `design-system-tokens`
+
+`benchmark-simulation` is a support overlay.
+`external-tool-bridge` is a support overlay.
+Support overlays defer to earlier controlling contracts.
+`feynman-clarity` is a developer producer self-review lens.
+`feynman-clarity` leaves reviewer-owned independent clarity review intact.
+`code-quality-review` is a developer self-review lens only.
+`code-quality-review` leaves reviewer-owned independent code-quality review intact.
 
 ## Durability Gate
 | Fix type | Definition | Action |

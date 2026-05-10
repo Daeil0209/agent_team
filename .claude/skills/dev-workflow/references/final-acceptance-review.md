@@ -9,6 +9,14 @@ Final Acceptance Review is the final ACCEPT/REJECT workflow gate after validator
 Validator owns `PASS/HOLD/FAIL`.
 team-lead owns `FINAL-ACCEPT/FINAL-REJECT`.
 
+## Contents
+- Entry
+- Parallel Evaluation
+- Acceptance Criteria
+- Decision
+- Reject Route
+- Next-Action Drive
+
 ## Entry
 Validator `PASS` opens Final Acceptance Review.
 team-lead freezes one `FINAL-EVIDENCE-PACKET`.
@@ -23,8 +31,10 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
   For user-facing rendered surfaces, `PROOF` includes per-feature/per-state screenshot and full-page capture paths.
   `PROOF` includes an `IMAGE-INSPECTION-RECORD` confirming each cited image was opened directly via the multimodal `Read` tool and matched against the design-stated expectation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering).
   Cite-path-only or capture-without-open is procedurally invalid for `FINAL-ACCEPT`.
-  When external visual benchmarks materially raise the quality ceiling on operator-facing UI, dashboards, reports, or decks, `benchmark-simulation` runs at `FINAL-EVIDENCE-PACKET` freeze time.
-  Its abstraction-fit-adapt synthesis joins the `PROOF` basis.
+  When external visual benchmarks materially shaped operator-facing UI, dashboards, reports, or decks, `FINAL-EVIDENCE-PACKET` carries the frozen benchmark-synthesis identity.
+  Final Acceptance Review compares rendered proof against the frozen benchmark-synthesis characteristics.
+  Missing required design-time benchmark synthesis is an acceptance gap.
+  Final Acceptance Review does not create first-time design-shaping benchmark synthesis as a proof substitute.
 - `COVERAGE`: every material requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, or frozen deferral/out-of-scope row
 - `BOUNDARIES`: material Boundary Register rows and downstream handoff status
 - `ENVIRONMENT`: covered environment, equivalence declaration, or frozen environment deferral
@@ -58,6 +68,7 @@ Codex packet carries:
 - active validator-lane-detail reference
 - active task-execution completion handoff contract
 - active feynman-clarity skill
+- active benchmark-simulation skill when benchmark synthesis is material
 - active operator-delivery reference when operator-delivery fit is material
 - final evidence packet paths
 - original instruction-trace plus frozen plan/design acceptance rows as scope-defining input (validator's `PASS-SCOPE-EXCLUSIONS` or narrowed claims travel as evidence rows for inspection, not as Codex's scope)

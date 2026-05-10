@@ -6,10 +6,16 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Message Classes
+## Contents
+- Common Message Law
+- Canonical Channel Registry
+- Upward Message Classes
+- Next-Action Drive
+
 ## Common Message Law
 - `work-planning` produces the full frozen plan internally.
 - `task-execution` translates that frozen basis into agent-facing packets.
-- Agents receive bounded agent-facing packets instead of the full internal planning record.
+- Agents receive bounded agent-facing packets derived from the frozen internal planning basis.
 - One agent, one execution segment, one primary downward message class.
 - In team-agent runtime, official upward delivery requires `SendMessage` with a valid `MESSAGE-CLASS`.
 - Treat plain-text output, pane output, and agent final prose as observation evidence only.
@@ -17,7 +23,7 @@ LOAD-POLICY: on-demand reference only
 - `status` is progress only.
 - `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` is positive-state reporting only.
 - `scope-pressure` is the structured objection path when the packet is directionally valid but unsafe as written.
-- `hold|blocker` is the blocked path when truthful execution cannot continue even with a narrow packet correction.
+- `hold|blocker` is the blocked path when truthful execution remains blocked after the narrow packet-correction route is exhausted.
 
 ## Canonical Channel Registry
 The team-runtime data path has five channel families.
@@ -82,16 +88,15 @@ Plain text in a pane is evidence only until resent through the required channel.
   - synthesis-ready only when the lane report satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
 - `hold|blocker`
   - required when ambiguity, missing authority, blocked environment, or missing decisive basis prevents truthful execution
-  - use as a separate blocked message class after receipt or intake when the lane cannot continue truthfully
+  - use as a separate blocked message class after receipt or intake when truthful lane execution is blocked
   - when emitting the blocked class, use the exact literal `MESSAGE-CLASS: hold|blocker`
-  - emit the exact literal instead of bare `hold` or bare `blocker`
-  - use this instead of downgrading to source-only or code-only checks when the decisive user surface cannot be truthfully exercised
+  - route unavailable decisive user-surface exercise through `MESSAGE-CLASS: hold|blocker`
   - if the blocker is an information request, team-lead must answer it through a corrected packet, reopened planning, or proven user-owned blocker
   - resolution requires blocker handling through a truthful next owner/action
   - must include:
     - `BLOCKER-TYPE`
     - `BLOCKER-BASIS`
-    - `SAFE-NEXT-STEP` with owner when the blocker is not lane-local
+    - `SAFE-NEXT-STEP` with owner when the blocker is outside lane-local control
 
 ### Agent Information Request Consumption
 When an agent sends `MESSAGE-CLASS: hold|blocker` because decisive assignment basis is missing, team-lead must consume it before any re-dispatch, synthesis, completion claim, or user-facing positive report.
@@ -108,7 +113,7 @@ Before any re-dispatch, synthesis, or positive report, team-lead must classify t
   - reopen `work-planning`
 - `parallel-continue`: the affected lane is blocked or being corrected, but unrelated independent lanes remain executable inside the same frozen route
   - keep those lanes moving while the affected lane is resolved
-- proven user-owned blocker: team-lead cannot truthfully supply the requested basis after corrected packet, reopened planning, owner routing, setup/research routing, default, parameter, and assumption routes are exhausted
+- proven user-owned blocker: team-lead exhausts corrected packet, reopened planning, owner routing, setup/research routing, default, parameter, and assumption routes while the requested basis remains unavailable
 
 Tool/evidence-gap consumption:
 - If the agent names a missing evidence surface, required tool, setup owner, or current-toolchain gap, team-lead resolves it through tool/setup research, setup owner routing, packet correction, or route replan.
@@ -119,10 +124,10 @@ Tool/evidence-gap consumption:
 - Otherwise reopen `work-planning` to freeze `external-tool-bridge`, the exact setup owner, or a proven user-owned blocker.
 
 The corrected packet must name the original blocker, the supplied field or correction, the unchanged boundary, and the open executable `TASK-ID` when task tracking is active.
-If those cannot be named, `packet-correction` handling is forbidden.
+`packet-correction` handling requires those names.
 If one missing basis affects multiple assignments, correct the shared basis once.
 Then send bounded corrected packets to every affected agent.
-If only one lane is blocked, keep unrelated independent lanes moving inside the frozen route instead of waiting by habit.
+When one lane is blocked, keep unrelated independent lanes moving inside the frozen route.
 For developer constraints, the expected outcome is resumed execution.
 Valid resume routes are method research, setup/tool bridge, packet correction, or owner split.
 Then return the corrected executable path to developer.
@@ -138,4 +143,4 @@ Treat the constraint report as a resume-route trigger until a genuine impossible
 - `status` returns to monitoring or the active owner as progress evidence only.
 - Missing `TaskCreate` subject or description opens task packet correction.
 - Missing or stale task identity opens `TaskList`, `TaskGet`, `task_assignment`, or returned-mutation evidence recovery before task mutation.
-- Available background task output path opens `Read` instead of `TaskOutput`.
+- Available background task output path opens `Read` as the preferred output-read channel.

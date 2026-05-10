@@ -129,3 +129,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Reviewer-specific blocker: missing plan, design, target, constraint, tradeoff, owner, proof, acceptance, prerequisite, or evidence basis.
 - Inference requires explicit marking and safe reconstruction basis.
 - Completion uses `handoff` or `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
+
+## Next-Action Drive
+- `REVIEW-STATE: ready` opens proof, validation, correction, or team-lead synthesis by the frozen route.
+- `REVIEW-STATE: hold|blocked` opens the named blocker owner/action before acceptance continues.

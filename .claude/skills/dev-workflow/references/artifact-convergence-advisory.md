@@ -7,6 +7,18 @@ auto-inject: false
 
 Use only inside active `dev-workflow` after `work-planning` selected the workflow and a canonical artifact exists or was materially revised.
 
+## Contents
+- Authority
+- Trigger
+- Packet
+- Dual Review
+- Same-Boundary Loop
+- Resolution
+- Phase 2 Binding Surfaces
+- Stale Downstream
+- Output Record
+- Next-Action Drive
+
 ## Authority
 Codex is advisory-only design-coherence review.
 team-lead owns phase design, Codex advisory consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
@@ -39,6 +51,7 @@ Every packet includes:
 - `.claude/skills/dev-workflow/references/phase-gates.md`
 - `.claude/skills/dev-workflow/references/phase-surfaces.md`
 - `.claude/skills/feynman-clarity/SKILL.md` when Feynman clarity applies
+- `.claude/skills/benchmark-simulation/SKILL.md` when visual-reference benchmark coverage is material
 - current canonical artifact path
 - downstream artifact paths that may be stale
 
@@ -51,17 +64,35 @@ Missing required path records `fail-open:blocked_by_config`.
 2. team-lead own-review and Codex advisory run in parallel, with three discipline rules: (a) team-lead own-review basis (inspected surfaces, material specialist skills consumed that shape the artifact, axes, findings or `none`, next-phase risk) is recorded before any Codex output is read or used; (b) the first Codex packet in a pass uses canonical paths per `Packet` section above and must not include team-lead findings, verdict, or suggested fixes; (c) artifact-producer or developer self-review is input only and never satisfies team-lead own-review basis.
 3. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
 4. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
-5. Codex axes must include user-perspective and user-convenience checks. When the artifact specifies operator-facing rendered UI (dashboards, gauges, charts, dense tables, multi-step forms, decks, reports), Codex axes also include: operator-naive comprehension (each label, control, data display, gauge, chart self-explanatory at first glance to a first-time user with no prior specification, design, or domain context), visual-reference benchmark coverage (`benchmark-simulation` invoked for novel/composite surfaces with concrete visual characteristics — font size, spacing, ratio, hierarchy, color contrast — extracted via abstraction-fit-adapt), and acceptance image-evidence path (per-AC capture cited and openable via multimodal `Read`).
-6. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
-7. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
-8. team-lead reconciles team-lead and Codex findings point-by-point.
-9. Accept a point only against artifact evidence, doctrine, or frozen request basis.
-10. Accepted findings enter team-lead redesign as inputs.
-11. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
-12. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
-13. For Phase 3+ separate-producer artifacts, `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only; Codex finding lists stay in the advisory record. For Phase 1/2 canonical artifacts, team-lead self-applies the `REDESIGN-PLAN` directly.
-14. The artifact authoring owner (team-lead for Phase 1/2 canonical; assigned producer for Phase 3+) updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
-15. After each revision, repeat steps 2-14 while material convergence value remains. Reconciliation challenges may include both reviews; correction requires a fresh independent review pass starting from step 2; the changed artifact is reviewed again before the new Codex result is read or used; prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording does not carry forward.
+5. Codex axes include user-perspective checks.
+6. Codex axes include user-convenience checks.
+7. Operator-facing rendered UI includes dashboards, gauges, charts, dense tables, multi-step forms, decks, and reports.
+8. Operator-facing rendered UI axes include operator-naive comprehension.
+9. Operator-naive comprehension checks each label, control, data display, gauge, and chart at first glance for a first-time user with no prior specification, design, or domain context.
+10. Novel or composite operator-facing rendered UI axes include visual-reference benchmark coverage.
+11. Visual-reference benchmark coverage checks `benchmark-simulation` invocation.
+12. Visual-reference benchmark coverage checks extracted concrete visual characteristics: font size, spacing, ratio, hierarchy, and color contrast.
+13. Visual-reference benchmark coverage checks abstraction-fit-adapt synthesis.
+14. Operator-facing rendered UI axes include acceptance image-evidence path.
+15. Acceptance image-evidence path checks per-AC capture cited and openable via multimodal `Read`.
+16. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
+17. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
+18. team-lead reconciles team-lead and Codex findings point-by-point.
+19. Accept a point only against artifact evidence, doctrine, or frozen request basis.
+20. Accepted findings enter team-lead redesign as inputs.
+21. team-lead synthesizes one coherent phase basis across affected scope, risk, user-surface, proof, acceptance, downstream artifact, and phase-gate surfaces.
+22. team-lead records review evidence in the reconciliation record and records valid `REDESIGN-PLAN`.
+23. For Phase 3+ separate-producer artifacts, `task-execution` dispatches the assigned artifact producer from valid team-lead `REDESIGN-PLAN` only.
+24. Codex finding lists stay in the advisory record.
+25. For Phase 1/2 canonical artifacts, team-lead self-applies the `REDESIGN-PLAN` directly.
+26. The artifact authoring owner updates the canonical artifact from the team-lead `REDESIGN-PLAN`.
+27. team-lead is the artifact authoring owner for Phase 1/2 canonical artifacts.
+28. The assigned producer is the artifact authoring owner for Phase 3+ separate-producer artifacts.
+29. After each revision, repeat steps 2-28 while material convergence value remains.
+30. Reconciliation challenges may include both reviews.
+31. Correction requires a fresh independent review pass starting from step 2.
+32. The changed artifact is reviewed again before the new Codex result is read or used.
+33. Prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording does not carry forward.
 
 ## Same-Boundary Loop
 Do not reopen `work-planning` between passes while all remain unchanged:

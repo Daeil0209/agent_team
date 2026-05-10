@@ -6,6 +6,10 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Request-Bound Conditional Packet Fields
+## Contents
+- Common Start Closure Contract
+- Next-Action Drive
+
 ## Common Start Closure Contract
 These conditional fields are the common start closure contract for assignment-grade work.
 Upstream planning or workflow owners freeze the material axes; `task-execution` translates them into agent-facing packet fields.

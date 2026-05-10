@@ -7,6 +7,20 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 ---
 # Researcher Reference
+## Contents
+- Auto-inject
+- Role-Spine Handoff
+- Control Packet Discipline
+- Researcher Packet Detail
+- Evidence Hardening Patterns
+- Source-Family Method Floor
+- Handoff Completeness Challenge
+- Surface-Specific Evidence Requirements
+- Benchmark-Enhanced Search Fields
+- Operational Reality Classification
+- Researcher Handoff Detail
+- Next-Action Drive
+
 ## Auto-inject
 false — load explicitly when packet detail, benchmark detail, evidence-hardening detail, or handoff detail is needed.
 

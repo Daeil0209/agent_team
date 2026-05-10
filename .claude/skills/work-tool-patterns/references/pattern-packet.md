@@ -30,11 +30,11 @@ Required when material:
 - `trial`: synthesized and applied once with feedback captured.
 - `benchmark-light`: comparison used for pattern choice but not durable promotion.
 - `benchmark-full`: routing, durable pattern adoption, or capability-growth claim depends on the benchmark.
-- `inference`: local reasoning without sufficient benchmark basis; keep confidence narrow and do not promote as a durable pattern.
+- `inference`: local reasoning with insufficient benchmark basis; keep confidence narrow and keep durable promotion unavailable.
 
 When external references materially shape the packet, consume `benchmark-simulation` output.
 Use abstraction-fit-adapt synthesis only.
-Do not paste raw external product structure into the destination packet.
+Convert external product observations into destination-fit packet decisions.
 
 ## Proof Oracle Shape
 The proof oracle names observable outcomes, not implementation intentions.
@@ -47,13 +47,14 @@ Examples:
 - spreadsheet migration imports representative sheets, reports validation failures, reconciles totals, and exports the required handoff artifact
 
 Source inspection can support diagnosis.
-It does not prove an operator-facing work tool when runnable or rendered proof is feasible.
+Runnable or rendered proof proves an operator-facing work tool when that proof is feasible.
 
 ## Handoff Rules
 - Carry the packet into `dev-workflow` Phase 1/2 when it materially shapes plan or design.
 - Carry the `PROOF-ORACLE` into reviewer, tester, and validator packets when pattern behavior affects acceptance.
 - If an adjacent owner owns a field more precisely, cite that owner packet instead of restating detail.
-- Missing adjacent-owner basis is `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`; do not fill it with pattern assumptions.
+- Missing adjacent-owner basis is `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
+- Leave missing adjacent-owner basis unresolved until the owning surface supplies evidence.
 
 ## Next-Action Drive
 - Return selected pattern packet, adjacent-owner basis, proof oracle, and open surfaces to the active work-tool-patterns workflow.

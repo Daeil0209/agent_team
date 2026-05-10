@@ -1,12 +1,12 @@
 ---
 name: instructional-design
-description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, and pedagogical clarity.
+description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, scaffolding, and pedagogical clarity. Use when teaching, training, onboarding, learner-facing explanation, worked examples, or instructional readability materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Do not add peer top-level sections without governance review.
+- Add peer top-level sections only after governance review.
 - Keep pedagogical catalogs, worked-example detail, and domain-specific learning patterns in `references/pedagogy-detail.md`.
 ### Reference Map
 - `references/pedagogy-detail.md`: pedagogical catalogs, worked-example detail, and domain-specific learning patterns.
@@ -30,12 +30,12 @@ Use this skill when the output must teach, train, or onboard effectively rather 
 - structure learning flow for comprehension and retention
 - balance expert expectations with learner readiness
 - define teaching clarity, pacing, scaffolding, and explanation-object boundaries
-- require readable equations, diagrams, legends, annotations, and stepwise worked examples when needed
-- identify likely confusion points where the learner cannot infer missing geometry, state, workflow, or causal relations from text alone
-- send `hold|blocker` when learner comprehension is not supportable because sequencing, diagrams, equations, or step logic remain unreadable
+- require readable equations, diagrams, legends, annotations, and stepwise worked examples when material
+- identify likely confusion points where the learner needs visible geometry, state, workflow, or causal relations beyond text alone
+- send `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remain unreadable
 ## Boundary
 - Own learning structure.
-- activate on text-first reports only when they are explicitly learner-facing
+- activate on text-first reports when they are explicitly learner-facing
 - learner profile and prerequisite floor require basis when material
 ## Activation
 Activate when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, onboarding workflow, or explanation artifact where learner comprehension materially affects acceptance.

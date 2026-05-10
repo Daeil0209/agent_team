@@ -39,18 +39,18 @@ Note: The exactness test and integrating factor decision tree below are exemplar
 - General solution must include arbitrary constant(s) with physical/mathematical interpretation
 - Particular solutions require explicit statement of which initial/boundary condition determines the constant
 ### Mathematical Defect Severity Classification
-Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `### Role And Acceptance Law` and `### Communication And Reporting Law`. The table below is a mathematical local impact classification used to describe defect character and escalation examples; it does not replace the shared governance contract.
+Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `### Role And Acceptance Law` and `### Communication And Reporting Law`. The table below is a mathematical local impact classification used to describe defect character and escalation examples. The shared governance contract remains controlling.
 | Impact Class | Mathematical Context | Examples |
 |---|---|---|
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
-| **Minor** | Presentation/notation issue not affecting correctness | Notation inconsistency, conventional symbol choice, formatting of equation |
+| **Minor** | Presentation/notation issue with correctness preserved | Notation inconsistency, conventional symbol choice, formatting of equation |
 Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Mathematical Assumption Governance
-Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `### Role And Acceptance Law`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid; they do not replace the shared blocking rule.
+Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `### Role And Acceptance Law`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations
 - **Major**: smoothness/continuity requirements, parameter ranges, independence conditions, linearity approximations — document with source; if unresolved and materially relevant to correctness or verification, treat them as blocking
-- **Minor**: notation conventions, variable naming, coordinate system choice — may proceed only when explicitly disclosed and kept proportionate to their impact
+- **Minor**: notation conventions, variable naming, coordinate system choice — may proceed after explicit disclosure and proportionate impact control
 
 ## Next-Action Drive
 - Return checked derivation steps, assumption class, defect class, and retest conditions to the active mathematical-correctness workflow.

@@ -1,6 +1,6 @@
 ---
 name: review-verification
-description: Run exhaustive review and verification for design intent, coherence, integrity, procedure adherence, execution force, and negative risk before consequential analysis, patch selection, or improvement recommendations. Produces review basis for the owning validation, patch, or reporting path.
+description: Run exhaustive review and verification for design intent, coherence, integrity, procedure adherence, execution force, and negative risk before consequential analysis, patch selection, or improvement recommendations. Use when cross-surface review, risk balance, patch-worthiness, or no-regression evidence materially affects the owning validation, patch, or reporting path.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -186,7 +186,7 @@ Use `self-growth-sequence` for confirmed recurrence-barrier hardening.
 Use `self-verification` before consequential reporting, completion claims, or synthesis-driven redispatch.
 
 ## Handoff Boundary
-Hand off only when the receiver can tell:
+Hand off after the receiver can tell:
 - what was inspected
 - which surfaces remain uninspected or open
 - why the design intent was interpreted that way

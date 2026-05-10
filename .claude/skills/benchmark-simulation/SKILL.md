@@ -7,7 +7,7 @@ SECONDARY-CONSUMER: researcher
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Do not add peer top-level sections without governance review.
+- Add peer top-level sections only after governance review.
 - Keep benchmark method detail, scoring tables, comparison templates, search protocols, and captured evidence caches in direct files under `references/`.
 - Spine-trigger anchors remain in body as owner-required triggers, not detail.
 - Spine-trigger anchors include External-Reference Methodology, Multi-Modal Observation Discipline, Owner-Initiated Benchmark Cues, and Composition with Design Capability Stack.
@@ -65,7 +65,8 @@ Load trigger-specific files directly from `SKILL.md`.
 - `references/cited-evidence-cache.md`: captured external reference families, source classifications, synthesis, and open surfaces.
 
 ## External-Reference Methodology
-When benchmarking against external references, the methodology MUST be **abstraction-fit-adapt**, NOT direct copy.
+When benchmarking against external references, the methodology MUST be **abstraction-fit-adapt**.
+Direct copy is invalid benchmark synthesis.
 External references include web research, public examples, reference UIs, industry best practices, and standards.
 Direct copy transplants source-context defaults into destination context.
 Destination context often differs in user, scale, constraint, or domain.
@@ -83,7 +84,7 @@ Required cycle for each external reference:
    The output is a design synthesis informed by external evidence.
 4. **Reject misfits**: explicitly record patterns considered but rejected with fit-failure reason. Silence on rejection invites later reintroduction by drift.
 
-Use this skill only when the abstraction-fit-adapt cycle is needed.
+Use this skill when the abstraction-fit-adapt cycle is needed.
 External evidence is useful only after destination fit-judgment.
 
 ### Reference-Class Discrimination
@@ -209,7 +210,7 @@ Benchmark-full is required when routing, promotion, or sustainable team shape ma
 ## Capability-Evolution Loop
 Every benchmark cycle produces the decision packet.
 Capability-growth cycles also deposit durable artifacts into the team's evolving design or methodology vocabulary.
-Do not create capability-catalog placeholder fields for ordinary benchmark cycles.
+Capability-catalog fields belong to durable capability benchmark cycles.
 Durable artifacts include positive pattern catalog, anti-pattern catalog, strength preservation memory, confidence-rated synthesis claims, and reference provenance ledger.
 Catalog entries require cited evidence, destination fit, and lifecycle state.
 Lifecycle states are `Assess`, `Trial`, `Adopt`, and `Hold`.
@@ -248,7 +249,7 @@ Capture only the decisive benchmark packet:
 - lean-team choice or explicit `hold|blocker`
 - immediate downstream owner and next action class
 ## Handoff Boundary
-Hand off only when the next owner can tell whether the benchmark is:
+Hand off after the next owner can tell whether the benchmark is:
 - decision-ready
 - proposal-ready
 - or still blocked on fairness or evidence quality
@@ -256,10 +257,10 @@ Hand off only when the next owner can tell whether the benchmark is:
 Weak comparison frame downgrades or holds benchmark output.
 Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
 When benchmark evidence identifies a confirmed recurring specialist capability gap, hand off to `self-growth-sequence` for recurrence-barrier or capability-gap ownership.
-When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement without confirmed recurrence, hand off to `update-upgrade-sequence`.
+When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence, hand off to `update-upgrade-sequence`.
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Operational Discipline
-- Comparative output without a fair baseline or external calibration stays explicitly low-confidence.
+- Comparative output with no fair baseline or external calibration stays explicitly low-confidence.
 - Benchmark claims need corroboration or explicit cross-check status before being decision-ready.
 - Simulated projections report as projections.
 ## Role-Scoped Structural Feedback

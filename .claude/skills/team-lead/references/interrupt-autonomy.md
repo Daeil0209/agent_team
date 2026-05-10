@@ -20,14 +20,15 @@ Runtime housekeeping interrupt uses a stacked interrupt frame.
 User-corrective interrupt uses a stacked interrupt frame.
 
 Rules:
-- The original task's frozen scope remains the active resume target until it is converged, explicitly cancelled by the user, explicitly redirected by the user to a new top-level task, or blocked by a proven user-owned blocker.
+- The original task's frozen scope remains the active resume target.
+- The resume target stays active until convergence, explicit user cancellation, explicit user redirect to a new top-level task, or proven user-owned blocker.
 - Before entering an interrupt-handling sub-task, capture an interrupt frame record with task identity, frozen scope, last completed step, `RESUME-OWNER`, `RESUME-CONDITION`, candidate `RESUME-ACTION`, and `RECOVERY-EVIDENCE`.
 - Keep the record internal during the same reasoning frame when it stays reconstructable without extra artifacts.
 - For compaction, pause-return, handoff, or long interruption risk, make the resume record reconstructable from the active owner record, task/workflow state, dispatch recovery record, current-session runtime authorities, changed owner surface, or explicit `HOLD`/follow-up ownership.
 - Keep continuity records on the active owner record, task/workflow state, changed owner surface, or explicit `HOLD`/follow-up ownership.
 - After the interrupt converges, verify `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute the `RESUME-ACTION`.
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
-- If no explicit cancellation, redirect, or proven user-owned blocker exists, `waiting for user` is false.
+- Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Status questions expose the stall.
 - Progress questions expose the stall.
 - Answer status briefly.
@@ -38,7 +39,6 @@ Rules:
 - Resume after interrupt convergence because the user already requested the original task.
 - Preserve the original task after interrupt convergence.
 - Start unrelated work only after explicit redirect.
-- Stop after interrupt only on explicit cancel, explicit redirect, or proven user-owned blocker.
 - Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or proven user-owned blocker.
 - Each non-resume termination must be reported as the named exception with the resume target preserved or formally released.
 - Multi-level interrupts stack LIFO: deepest clears first, original task resumes last.
@@ -59,10 +59,12 @@ Activation:
 - sustained-autonomy framing
 
 Operating discipline:
-- `[DESIGN-INTENT]` is the highest constraint. No autonomy concession overrides Structural Contract, owner boundaries, fixed section order, or protected restatements.
+- `[DESIGN-INTENT]` is the highest constraint.
+- Autonomy stays inside Structural Contract, owner boundaries, fixed section order, and protected restatements.
 - Apply `[ALLOW-EXCEPT-DESTRUCT]`, `[BLOCK-AS-DEFECT]`, and `[EVI-DEFER]` from `CLAUDE.md` as the operational decision filter.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
-- High-burden patches with marginal or speculative value are deferred unless explicit user direction already exists.
+- Defer high-burden patches with marginal or speculative value.
+- Apply high-burden patches with marginal or speculative value only under explicit user direction.
 - Defer with documented evidence.
 - If a hook, gate, or guard blocks legitimate work, first narrow the blocking mechanism through the owning change sequence.
 - Run reviewer separation post-application. If a reviewer surfaces a critical or design-intent finding, revert or improve in the same round.

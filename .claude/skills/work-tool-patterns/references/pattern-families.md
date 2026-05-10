@@ -5,6 +5,15 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
+## Contents
+- Dashboard Management Tool
+- Research Analysis Tool
+- Patent Analysis Tool
+- Report Automation Tool
+- Engineering Calculation Or Design Tool
+- Spreadsheet Migration Tool
+- Next-Action Drive
+
 Use this file to select the smallest credible practical work-tool family.
 These are product patterns, not full app templates.
 
@@ -22,7 +31,7 @@ Anti-patterns:
 - a dashboard that only displays vanity totals
 - every field promoted into one giant sheet-like surface
 - settings mixed into repeated daily operation
-- completion claim without save, reload, and representative workflow proof
+- completion claim that lacks save, reload, and representative workflow proof
 
 ## Research Analysis Tool
 Use when the tool supports market, technology, literature, standards, or mixed-source analysis.
@@ -34,7 +43,7 @@ Pattern:
 - stale-source or missing-source states are visible
 
 Anti-patterns:
-- polished report output without inspectable evidence basis
+- polished report output that lacks inspectable evidence basis
 - search results treated as final analysis
 - confidence hidden inside prose
 - source refresh or update trace left implicit
@@ -50,7 +59,7 @@ Pattern:
 
 Anti-patterns:
 - single-keyword search treated as complete patent analysis
-- patent count charts without family, date, classification, or legal-status basis
+- patent count charts that lack family, date, classification, or legal-status basis
 - legal-risk language unsupported by qualified evidence
 
 ## Report Automation Tool
@@ -63,10 +72,10 @@ Pattern:
 - export format and post-generation review path are acceptance surfaces
 
 Anti-patterns:
-- one-shot generation without rerun or correction path
+- one-shot generation that lacks rerun or correction path
 - template styling treated as evidence quality
 - generated prose that cannot be traced to source, data, or rule basis
-- final report accepted without rendered/readable export proof when the user reads the export
+- final report accepted before rendered/readable export proof when the user reads the export
 
 ## Engineering Calculation Or Design Tool
 Use when equations, standards, units, tolerances, simulation assumptions, operating ranges, or numeric output quality drives acceptance.
@@ -80,8 +89,8 @@ Pattern:
 Anti-patterns:
 - formula hidden in UI event code
 - unit conversion inferred from labels only
-- pretty plots without numeric oracle
-- acceptance based on "runs without error" while calculation correctness is material
+- pretty plots that lack numeric oracle
+- acceptance based only on error-free execution while calculation correctness is material
 
 ## Spreadsheet Migration Tool
 Use when a workbook, manual sheet process, or repeated spreadsheet operation becomes software.
@@ -93,7 +102,7 @@ Pattern:
 - sheet layout is evidence, not the product structure
 
 Anti-patterns:
-- recreating every sheet as a tab without workflow design
+- recreating every sheet as a tab while workflow design is absent
 - hidden import mapping
 - no reconciliation between source totals and converted records
 - no representative import failure proof

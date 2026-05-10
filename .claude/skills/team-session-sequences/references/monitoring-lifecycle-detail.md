@@ -8,6 +8,19 @@ LOAD-POLICY: on-demand reference only
 
 # team-session-sequences: Monitoring Lifecycle Detail
 
+## Contents
+- Runtime Signals
+- Agent Identity Rule
+- Supervisor Decisions On idle_notification
+- Message-First Lifecycle Rule
+- Reuse Rule
+- Manifest Review Gate
+- Task Identity And Communication
+- Health-Check Standard
+- Stale Response
+- Runtime Pressure
+- Next-Action Drive
+
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition. The agent remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
 - Receiving `idle_notification` without a preceding completion report from the agent is a handoff failure (T2).

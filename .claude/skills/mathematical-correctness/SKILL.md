@@ -1,6 +1,6 @@
 ---
 name: mathematical-correctness
-description: Protect mathematical correctness, derivation fidelity, and problem-sequencing quality in quantitatively demanding work.
+description: Protect mathematical correctness, derivation fidelity, notation clarity, assumptions, and problem-sequencing quality. Use when derivations, formulas, quantitative explanations, numerical results, or math-sensitive automation materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
@@ -8,7 +8,7 @@ effort: high
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Do not add peer top-level sections without governance review.
+- Add peer top-level sections only after governance review.
 - Keep derivation standards, defect taxonomies, and assumption-governance detail in `references/mathematical-verification-protocols.md`.
 ### Reference Map
 - `references/mathematical-verification-protocols.md`: derivation standards, defect taxonomies, and assumption-governance detail.
@@ -28,7 +28,7 @@ Use this skill when derivation quality, notation clarity, or quantitative correc
 - verify mathematical logic, notation, and derivation flow
 - detect hidden errors in formulas, worked examples, or quantitative explanations
 - define mathematical acceptance criteria
-- send `hold|blocker` when a derivation is not defensible step-by-step, notation is ambiguous, or a critical assumption chain is unverified
+- send `hold|blocker` when step-by-step derivation defense is absent, notation is ambiguous, or a critical assumption chain is unverified
 ## Boundary
 - general pedagogy and visual design stay with their owners
 - correctness stays intact across presentation flow

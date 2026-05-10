@@ -6,6 +6,17 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # benchmark-simulation: Capability And Product Benchmark Extensions
+## Contents
+- Capability-Benchmark Standard
+- Runnable Benchmark Asset
+- Team Selection Protocol
+- Workflow-Structure Benchmark Extension
+- Coupled-Core Benchmark Extension
+- External-Reference Benchmark Extension
+- Visual / UX / Design Benchmark Extension
+- Workflow-Product Benchmark Extension
+- Next-Action Drive
+
 ## Capability-Benchmark Standard
 When used for self-evolution capability hardening, do more than compare team shapes.
 Required rules:

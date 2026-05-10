@@ -6,6 +6,11 @@ LOAD-POLICY: on-demand reference only
 ---
 
 # task-execution: Completion And Handoff
+## Contents
+- Common Completion Result Spine
+- Common Lane Handoff Law
+- Next-Action Drive
+
 ## Common Completion Result Spine
 Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` must include:
 - `TASK-ID`

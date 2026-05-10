@@ -53,7 +53,8 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
 }
 ```
 ## UI/UX Trend Research
-These sources, tools, and trend labels are examples, not current-practice authority.
+These sources, tools, and trend labels are examples.
+Current-practice authority requires current evidence.
 When tool choice, current UI practice, licensing, accessibility, or production adoption is material, ground the choice in current evidence, benchmark research, official docs, or an `external-tool-bridge` path before treating it as a recommendation.
 **Reference Sources**: Dribbble (trends/palettes), Awwwards (web), Mobbin (mobile patterns), Godly (landing pages)
 **Quick Tools**: v0.dev (AI UI generation), Tailwind UI (components), Coolors (palette), Heroicons / Lucide (icons)
