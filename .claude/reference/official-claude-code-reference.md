@@ -96,17 +96,6 @@ Governance implications:
 - Use `user-invocable: false` for governance skills that should be model-invoked rather than user-facing commands.
 - Do not treat absence of `.claude/commands/` as a defect when the project uses equivalent skills.
 
-### Plugins
-Source: https://code.claude.com/docs/en/plugins
-
-Cached facts:
-- Plugins package and share Claude Code extensions such as skills, agents, commands, hooks, settings, and MCP servers.
-- Plugins are useful for reusable or distributed extension bundles.
-
-Governance implications:
-- Plugin packaging is an optional distribution/reuse mechanism, not a required single-project governance structure.
-- Treat plugin absence as a future packaging option unless the deliverable explicitly requires reuse across projects or users.
-
 ### Hooks
 Source: https://code.claude.com/docs/en/hooks
 

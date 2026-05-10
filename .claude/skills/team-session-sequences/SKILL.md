@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
-- Fixed owner pattern for future skill growth:
+- Fixed owner pattern:
   1. `Sequence Activation Discipline`
   2. named sequence sections
   3. `Required order` / `Required checks` / `Required actions` blocks

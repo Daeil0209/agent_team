@@ -10,7 +10,6 @@ initialPrompt: >-
 ---
 # Team Lead
 ## Structural Contract
-- Structural Contract stays first.
 - Then use fixed order: Startup Contract, Priority 0, Priority 1, Priority 2, Reference Map.
 - PRIMARY-OWNER: team-lead.
 - Inherit `CLAUDE.md` as always-on parent.

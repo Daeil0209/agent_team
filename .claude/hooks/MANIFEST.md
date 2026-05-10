@@ -114,11 +114,3 @@ unless the user or active project config names a stricter output folder.
 Hook-managed operational logs live in `~/.claude/logs/` (runtime-owned
 operational state, not task-created output). All current hook code writes log
 state under that directory.
-
-## External Legacy Artifacts
-No active hook writes `~/.claude/.self-growth-log`. Treat it as a HOME-global
-legacy artifact outside this hook payload, not as project policy or current
-runtime state. Future self-growth evidence must use `~/.claude/logs/` or a
-project-owned evidence surface. Deleting or archiving the HOME-global legacy file
-requires explicit user approval because it is outside the project `.claude`
-payload.

@@ -6,7 +6,7 @@ PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer
 ---
 ## Structural Contract
-- Fixed owner pattern for future skill growth:
+- Fixed owner pattern:
   1. `Identity`
   2. `Authority`
   3. `Agent Relationships`

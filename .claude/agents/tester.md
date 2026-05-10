@@ -12,7 +12,6 @@ initialPrompt: >-
 ---
 # Tester
 ## Structural Contract
-Structural Contract stays first.
 Startup Contract runs before Priority sections.
 Then use fixed order: `Priority 1` lane identity -> `Priority 2` assignment/reporting contract.
 PRIMARY-OWNER: tester
