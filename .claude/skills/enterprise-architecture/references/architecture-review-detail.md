@@ -53,7 +53,7 @@ LOAD-POLICY: on-demand reference only
 | Framework leak into domain | Domain entity extends framework base class | T2 — gate |
 | Infrastructure detail in API contract | DB column name exposed in response DTO | T2 — gate |
 ## Architecture Review Checklist
-Run this checklist before accepting any enterprise architecture work. All items must pass or carry an explicit `HOLD` with a corrective path.
+Run this checklist before accepting any enterprise architecture work. All items must pass or carry explicit blocked-state evidence with a corrective path.
 - [ ] Clean Architecture layer separation maintained — no layer imports from an outer layer
 - [ ] Domain layer has zero external dependencies (no ORM, HTTP, or framework imports)
 - [ ] Repository interfaces defined in Domain layer; concrete implementations in Infrastructure layer
@@ -64,9 +64,9 @@ Run this checklist before accepting any enterprise architecture work. All items 
 - [ ] Security documentation current: auth flow documented, RBAC model explicit, secret management policy stated
 - [ ] Configuration externalized: no hardcoded environment-specific values in code
 - [ ] Inter-service communication patterns documented: sync vs async decision explicit, retry and timeout policies stated
-**Failing 1 or more items:** return `HOLD` with the failed items listed and corrective actions specified. Architecture approval requires resolved layer violations.
+**Failing 1 or more items:** return blocked architecture evidence with the failed items listed and corrective actions specified. Architecture approval requires resolved layer violations.
 ## Pre-Production Checklist
-Before declaring enterprise work production-ready, all items must pass or carry an explicit `HOLD` with owner and timeline.
+Before declaring enterprise work production-ready, all items must pass or carry explicit blocked-state evidence with owner and timeline.
 - [ ] All quality checks pass: code review complete, security scan clean, architecture compliance verified
 - [ ] Performance benchmarks meet requirements: response time and throughput targets confirmed with measured values
 - [ ] Monitoring and alerting configured: health checks active, error rate alerts defined, dashboard available
@@ -75,7 +75,7 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 - [ ] Security scan completed: dependency audit run, secret detection clean, no known critical CVEs unaddressed
 - [ ] Load testing completed if applicable: baseline and peak load results recorded
 - [ ] Documentation updated: API docs current, architecture diagrams match implementation, runbooks exist
-**Failing 1 or more items:** production declaration is `HOLD`. Each failing item requires an owner, corrective action, and completion target before the `HOLD` lifts.
+**Failing 1 or more items:** production readiness is blocked. Each failing item requires an owner, corrective action, and completion target before the production-ready claim resumes.
 ## Anti-Pattern Detection
 | Anti-Pattern | Symptoms | Correction |
 |---|---|---|
@@ -84,7 +84,7 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 | **Skipping Design** | Jump from idea directly to code | Require design doc in `docs/02-design/` with architecture options and trade-off rationale |
 | **Context Fragmentation** | Different team members operate from different understandings | Use Context Anchor pattern: WHY / WHO / RISK / SUCCESS / SCOPE — shared and visible |
 | **Outdated Docs** | Code evolved while design or API docs stayed stale | Update `docs/02-design/` and API contracts inside the implementation task |
-| **Layer Leakage** | Business logic accumulates in API controllers or infrastructure adapters | Enforce Clean Architecture layer rules; return `HOLD` on PR with misplaced logic |
+| **Layer Leakage** | Business logic accumulates in API controllers or infrastructure adapters | Enforce Clean Architecture layer rules; return blocked architecture evidence on PR with misplaced logic |
 | **God Service** | One application service handles unrelated responsibilities | Decompose by bounded context; each service owns one responsibility domain |
 | **Hardcoded Configuration** | Environment-specific values embedded in source code | Externalize all configuration; fail architecture review if any hardcoded env value is found |
 **Code quality deep review** (SOLID checklist, duplication taxonomy, reusability assessment, extensibility patterns, refactoring priority matrix) → see `.claude/skills/code-quality-review/SKILL.md`.
@@ -117,7 +117,7 @@ For all infrastructure changes (database schema, message queue topology, network
 3. **Change plan with rollback** — document the forward change steps and the rollback procedure; rollback must be tested before production
 4. **Staging verification** — apply to staging environment, run affected integration tests, confirm monitoring shows expected behavior
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
-**HOLD condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 governance block.
+**Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 governance block.
 
 ## Next-Action Drive
 - Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.

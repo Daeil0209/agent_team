@@ -42,6 +42,7 @@ Record:
 ## Stop
 Stop before reporting when `SV-RESULT` is required and missing.
 Stop before `FINAL` when residual work remains.
+Stop before `FINAL` when required shard outputs, required corpus surfaces, or material open surfaces are missing, late, unintegrated, or not explicitly deferred/out-of-scope.
 Stop before basis expansion by default.
 Basis expansion is allowed for explicit user detail request.
 Basis expansion is allowed for blocker-required detail.
@@ -49,6 +50,7 @@ Basis expansion is allowed for blocker-required detail.
 ## Next-Action Drive
 - A stopped reporting route opens `SV-RESULT`.
 - A stopped `FINAL` route opens residual work processing.
+- A stopped shard/corpus `FINAL` route opens merge-owner integration, explicit owner deferral, or out-of-scope classification.
 - A stopped basis-expansion route emits the compact report shape.
 
 ## Primary Report Surface
@@ -61,39 +63,24 @@ Pick one:
 
 `next action` report requires a blocked lead-owned execution path.
 Blocked path means proven user-owned decision, awaited runtime gate from another lane, or explicit upstream `HOLD`.
-On any open lead-owned path, execute via tool calls in the same turn.
+On any open lead-owned path, execute silently in the same turn.
+Agent acknowledgments, partial outputs, lane counts, and waiting states are internal while monitoring, merge, recovery, or synthesis can continue.
 
 ## Output Shape
 - `PHASE-RESULT` carries phase outcome plus next owner/action plus canonical artifact path.
 - `PHASE-RESULT` runs one or two sentences.
 - `FINAL` summarizes the core result first.
-- `FINAL` evidence inclusion is limited to highest-impact evidence, remaining blocker if any, and user-usable next state.
+- `FINAL` evidence inclusion is limited to highest-impact evidence and verified user-usable next state.
 - `FINAL` completion scope stays within validator/FAR supported scope.
 - `FINAL` completion scope stays within Evidence-Quality Matrix supported scope.
+- `FINAL` audit or synthesis scope stays within integrated shard outputs, inspected corpus, and explicitly owner-deferred or out-of-scope surfaces.
+- Do not use `FINAL`, full-corpus, exhaustive, or confirmed-defect wording for partial shard drafts, incomplete corpus inspection, or unclassified findings.
 - Clean closeout report shape is silence or one line.
 - Warning-bearing closeout names exact residual state, exact hold reason, and next recovery surface.
 
 ## Internal Content
-Default to internal for:
-- procedure scaffolding
-- routing internals
-- owner-opening detail
-- skill loading
-- receipts
-- truth labels
-- lifecycle internals
-- internal planning fields
-- packet labels
-- agent-control detail
-- raw lane dumps
-- convergence tables
-- per-stream recitals
-- per-finding recitals
-- per-artifact recitals
-- count summaries
-- advisory payloads
-- unexplained procedure jargon
-- sectioned report cards walking procedural traversal
+Internal content is procedure, route, runtime, lifecycle, packet, lane-traffic, advisory, and traversal detail.
+Report only the selected primary truth surface in the compact output shape.
 
 Treat `internal:` labels as internal-content labels.
 Treat `(internal):` labels as internal-content labels.
@@ -101,20 +88,5 @@ Treat `(internal):` labels as internal-content labels.
 ## Evidence Basis
 When basis is needed, include concise verification basis, material open surfaces, unverified items, and required user action.
 If claim strength outruns evidence, narrow the claim or report `INFERENCE/UNVERIFIED`.
-Visual proof in final wording names retained evidence anchor.
-Visual proof in final wording names decisive surface.
-Visual proof in final wording names capture scope.
-Visual proof in final wording names inspected defect classes or open-surface state.
-Rendered proof in final wording names retained evidence anchor.
-Rendered proof in final wording names decisive surface.
-Rendered proof in final wording names render scope.
-Rendered proof in final wording names inspected defect classes or open-surface state.
-Runtime proof in final wording names retained evidence anchor.
-Runtime proof in final wording names decisive surface.
-Runtime proof in final wording names capture scope.
-Runtime proof in final wording names inspected defect classes or open-surface state.
-User-surface proof in final wording names retained evidence anchor.
-User-surface proof in final wording names decisive surface.
-User-surface proof in final wording names inspected user action.
-User-surface proof in final wording names inspected defect classes or open-surface state.
+Visual, rendered, runtime, or user-surface proof in final wording names retained evidence anchor, decisive surface, inspected scope/action, and defect/open-surface state.
 Raw artifacts are shown only when explicitly requested or when the artifact is the deliverable.

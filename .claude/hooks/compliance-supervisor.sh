@@ -89,7 +89,7 @@ is_governance_reference_path() {
 
 # governance_reference_structured_edit_actor_allowed() removed.
 # Allow-list actor gating violated [HOOK-LAST] (not a MANIFEST hard-deny category)
-# and [BLOCK-AS-DEFECT]. Wholesale-overwrite existence gate remains the pinpoint
+# and the over-broad-blocking rule. Wholesale-overwrite existence gate remains the pinpoint
 # protection for governance reference content; structured Edit/Update/MultiEdit
 # always produces reviewable diffs.
 
@@ -383,6 +383,109 @@ command_is_allowed_repo_test_index_hygiene() {
   done < <(split_compound_command "$cmd")
 
   return 0
+}
+
+mutable_find_target_deny_reason() {
+  local cmd="${1-}"
+  [[ -n "$cmd" ]] || return 1
+
+  COMMAND_TEXT="$cmd" \
+    WORKSPACE_ROOT="$(resolve_project_root)" \
+    HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+    node <<'NODE'
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+
+const mutatingExec = new Set([
+  "rm", "rmdir", "mv", "cp", "touch", "mkdir", "chmod", "chown", "tee",
+  "bash", "sh", "python", "python3", "node", "nodejs",
+]);
+
+function clean(word) {
+  return String(word || "").replace(/^['"]|['"]$/g, "");
+}
+
+function base(word) {
+  return path.basename(clean(word)).replace(/[;{}]+$/g, "");
+}
+
+function hasMutableFindAction(words, findIndex) {
+  for (let i = findIndex + 1; i < words.length; i++) {
+    const word = clean(words[i]);
+    if (word === "-delete") return true;
+    if (word === "-exec" || word === "-execdir") {
+      const execWord = base(words[i + 1] || "");
+      if (mutatingExec.has(execWord) || /^python[0-9.]*$/.test(execWord)) return true;
+    }
+  }
+  return false;
+}
+
+function findTargets(words, findIndex) {
+  const targets = [];
+  let i = findIndex + 1;
+  while (i < words.length) {
+    const word = clean(words[i]);
+    if (word === "-H" || word === "-L" || word === "-P") {
+      i += 1;
+      continue;
+    }
+    if (word === "-D") {
+      i += 2;
+      continue;
+    }
+    if (/^-O[0-9]?$/.test(word)) {
+      i += 1;
+      continue;
+    }
+    break;
+  }
+  for (; i < words.length; i++) {
+    const word = clean(words[i]);
+    if (word === "--") continue;
+    if (!word || word === "(" || word === ")" || word === "!" || word.startsWith("-")) break;
+    targets.push(word);
+  }
+  return targets.length > 0 ? targets : ["."];
+}
+
+function restrictedReason(target) {
+  if (/[`$(){}*?[\]]/.test(target)) return "find-target-metacharacters-unsafe:" + target;
+  const resolved = path.resolve(workspaceRoot, target);
+  const rel = path.relative(workspaceRoot, resolved).replace(/\\/g, "/");
+  if (!rel || rel === ".") return "workspace-root-traversal:" + target;
+  if (rel.startsWith("..") || path.isAbsolute(rel)) return "outside-workspace:" + target;
+  for (const prefix of [".claude", ".git", ".runtime", "references", "secrets"]) {
+    if (rel === prefix || rel.startsWith(prefix + "/")) return "protected-" + prefix.replace(".", "") + ":" + target;
+  }
+  const filename = path.basename(resolved);
+  if (/^\.env(\..*)?$/.test(filename) ||
+      filename === "credentials.json" ||
+      /\.(pem|key|p12|pfx)$/.test(filename)) {
+    return "protected-secret-file:" + target;
+  }
+  return "";
+}
+
+for (const sub of command.split(/(?:&&|\|\||;)/).map((s) => s.trim()).filter(Boolean)) {
+  const words = tokenize(sub);
+  if (!words || words.length === 0) continue;
+  for (let i = 0; i < words.length; i++) {
+    if (base(words[i]) !== "find") continue;
+    if (!hasMutableFindAction(words, i)) continue;
+    for (const target of findTargets(words, i)) {
+      const reason = restrictedReason(target);
+      if (reason) {
+        process.stdout.write(reason);
+        process.exit(0);
+      }
+    }
+  }
+}
+process.stdout.write("");
+NODE
 }
 
 command_removes_team_runtime_dir() {
@@ -849,7 +952,7 @@ fi
         esac
         # Structured Edit/Update/MultiEdit produces reviewable diffs; user reviews them.
         # Actor-identity gating is allow-list shape and not a MANIFEST hard-deny category;
-        # removed per [HOOK-LAST] / [BLOCK-AS-DEFECT]. Wholesale-overwrite block above remains the
+        # removed per [HOOK-LAST] / over-broad-blocking rule. Wholesale-overwrite block above remains the
         # pinpoint protection. Surface info-only marker for traceability.
         log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-structured-edit-allowed" || true
         # fall through to allow structured governance reference maintenance
@@ -984,7 +1087,7 @@ fi
     # Pinpoint prohibition for rm/rmdir: deny ONLY when target is outside the
     # workspace boundary or on a protected workspace path (.claude/, .git/,
     # references/). Workspace-internal non-protected targets pass by default
-    # per CLAUDE.md `[BLOCK-AS-DEFECT]` and `[ALLOW-EXCEPT-DESTRUCT]`.
+    # per CLAUDE.md over-broad-blocking and escalation rules.
     # Catastrophic system targets (rm -rf /) are caught above. Governance
     # shell mutation of .claude/ is caught by command_mutates_governance_surface
     # above. Reserved hard-deny categories (MANIFEST: secrets, .claude shell
@@ -1059,7 +1162,7 @@ NODE
       fi
     fi
     # Worker implementation-pattern allow-list block removed per [HOOK-LAST] /
-    # [BLOCK-AS-DEFECT]: blocking ordinary dev commands (mkdir/touch/git/npm/python/...)
+    # over-broad-blocking rule: blocking ordinary dev commands (mkdir/touch/git/npm/python/...)
     # for workers is allow-list shape, not a MANIFEST hard-deny category. Outside-workspace
     # mutation is already pinpoint-blocked at the rm target restriction (above) and at the
     # interpreter-bypass check (below). Workers run ordinary dev commands by default.
@@ -1108,14 +1211,14 @@ NODE
       exit 0
     fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*[[:space:]]-delete([[:space:]]|$)'; then
-      emit_deny "Mutable find actions are blocked. Use find only for read-only discovery."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find" || true
-      exit 0
-    fi
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-exec([[:space:]]|$)|[[:space:]]-execdir([[:space:]]|$)).*(^|[[:space:]])((rm|rmdir|mv|cp|touch|mkdir|chmod|chown|tee)([[:space:]]|$)|sed[[:space:]]+-i|perl[[:space:]]+-i|bash[[:space:]]+-c|sh[[:space:]]+-c|python([0-9.]+)?([[:space:]]|$)|node(js)?([[:space:]]|$))'; then
-      emit_deny "Find -exec with mutating or interpreter execution is blocked. Use read-only find, structured tools, or an approved cleanup path."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-exec" || true
+    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-delete([[:space:]]|$)|[[:space:]]-exec(dir)?([[:space:]]|$))'; then
+      FIND_TARGET_DENY_REASON="$(mutable_find_target_deny_reason "$CLEAN_COMMAND" 2>/dev/null)"
+      if [[ -n "$FIND_TARGET_DENY_REASON" ]]; then
+        emit_deny "Mutable find target restricted (${FIND_TARGET_DENY_REASON}). Narrow the find target to a workspace-internal non-protected path."
+        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-target-restricted" || true
+        exit 0
+      fi
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-warning" || true
       exit 0
     fi
 

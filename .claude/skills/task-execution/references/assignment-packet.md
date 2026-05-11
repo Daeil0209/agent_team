@@ -30,7 +30,9 @@ Every assignment-grade agent packet carries:
 - `CURRENT-PHASE`
 - `REQUIRED-SKILLS`
 - open executable `TASK-ID` when task tracking is active
+- `SEMANTIC-INTENT-BASIS` from the frozen planning/request-bound basis.
 - `TARGET-INTENT-BASIS` per `CLAUDE.md` `[DESIGN-INTENT]`.
+- `CLAIM-CEILING` for analysis, critique, governance judgment, review, validation, or patch-worthiness packets. Allowed values are `evidence-only candidates`, `review findings`, `validation verdict input`, and `patch-worthiness classification`. Missing claim ceiling means returned items stay evidence-only until reviewer/review-verification/team-lead synthesis lawfully classifies them.
 
 ### Tester Executable-Proof Schema Floor
 For tester assignment-grade dispatch where the proof surface is executable, `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor.
@@ -48,6 +50,7 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active
+- analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver may return evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
 - receiving lane additions from the lane-core skill and lane-detail reference
 - target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label

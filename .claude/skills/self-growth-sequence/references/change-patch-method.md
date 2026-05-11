@@ -32,7 +32,7 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 
 5. `Content Review`
 - Review the actual changed content rather than only the plan. For non-trivial changes, route to the reviewer lane; developer self-review is sufficient for trivial single-line fixes.
-- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute. The narrow single-file-wording-fix exception records owner-surface citation. Reviewer/Codex input is evidence; the emitted packet is the gate.
+- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute. The narrow single-file quick-hardening wording-fix exception defined by the parent skill records owner-surface citation. Reviewer/Codex input is evidence; the emitted packet is the gate.
 - Use evidence, not author intent, for acceptance judgment.
 
 5b. `Execution Gate`
@@ -171,7 +171,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Do not add new hard-blocks merely to raise apparent coverage or enforcement rate.
 - Protect operator autonomy and ordinary throughput.
 - For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.
-- Ask the user only when destructive, security-sensitive, policy-level, or objectively undecidable.
+- Ask the user only when destructive, security-sensitive, operator-policy-choice, or objectively undecidable.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
 - Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
 - For governance-sensitive patches, require the patch class, owner surfaces, preserved meaning, and verification basis to remain explicit enough that another model can continue safely from repository state alone without relying on a dedicated patch-ledger file.

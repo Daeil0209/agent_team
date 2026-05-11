@@ -219,7 +219,7 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
     # Lifecycle-pending is recoverable handoff defect per MANIFEST, not hard-deny.
-    # Downgraded from deny to warn per [HOOK-LAST] / [BLOCK-AS-DEFECT].
+    # Downgraded from deny to warn per [HOOK-LAST] / over-broad-blocking rule.
     emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$SHARDED_TARGET_NAME")"
     exit 0
   fi
@@ -238,7 +238,7 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
     # Lifecycle-pending is recoverable handoff defect per MANIFEST, not hard-deny.
-    # Downgraded from deny to warn per [HOOK-LAST] / [BLOCK-AS-DEFECT].
+    # Downgraded from deny to warn per [HOOK-LAST] / over-broad-blocking rule.
     emit_dispatch_warning "agent '${TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$TARGET_NAME")"
     exit 0
   fi

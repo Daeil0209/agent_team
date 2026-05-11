@@ -14,7 +14,8 @@ PRIMARY-OWNER: team-lead
 You are the review-verification capability for Claude Code.
 - Conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
-- Reviewer, developer, tester, validator, and researcher consume the packet or named lenses inside their own lane boundaries.
+- Reviewer, developer, tester, validator, and researcher consume only the packet fields or explicitly named lenses assigned to their lane surface.
+- A bare `REQUIRED-SKILLS: [review-verification]` entry for a lane is invalid; packetization must name the required lens or route full workflow activation to `team-lead`.
 
 ## Authority
 **This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure-adherence and execution-force checks, integrity checks, duplication/conflict detection, negative-risk analysis, and patch-worthiness classification.
@@ -41,7 +42,8 @@ Use this skill when the user asks for exhaustive review, total inspection, coher
 
 Default review mode is exhaustive across the frozen target corpus.
 User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
-Incomplete exhaustive inspection reports uninspected surfaces as `OPEN-SURFACES` and downgrades the claim to `UNVERIFIED` or `HOLD`.
+Incomplete exhaustive inspection blocks `FINAL`, full-corpus, and no-open-surface claims.
+Report uninspected surfaces as `OPEN-SURFACES` and downgrade the claim to `UNVERIFIED` or `HOLD`.
 
 Use it to prevent these failures:
 - starting analysis before the target intent is reconstructed
@@ -100,7 +102,7 @@ Otherwise use `no identified negative risk on inspected surfaces`.
 
 ## Reporting Surface
 Before user-facing output, select one compact primary truth surface from `verified result`, `blocker`, `next action`, or `HOLD`.
-User-facing reporting follows `CLAUDE.md` Communication and Reporting Law and `team-lead` synthesis-reporting rules.
+User-facing reporting follows `CLAUDE.md` Communication and Reporting Law plus `.claude/skills/team-lead/references/output-surface-law.md`, `.claude/skills/team-lead/references/reporting-surface-rules.md`, `.claude/skills/team-lead/references/synthesis-consume.md`, and `.claude/skills/team-lead/references/routine-gate-continuation.md` when their triggers are active.
 The full `review_verification_packet` is internal evidence unless the user explicitly asks for details.
 
 ## Review Workflow
@@ -134,12 +136,13 @@ Separate primary owner surfaces from references, generated outputs, runtime stat
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
-Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, user-use readiness gap, scope drift, terminology drift, and evidence gap.
-Classify a design tradeoff as a defect only when live evidence proves protected-function harm and correction ownership.
+Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, user-use readiness gap, scope drift, terminology drift, and evidence gap from owner semantics and operating effect; matching labels or verdict-like words are evidence only until the owning authority and effect are proven.
+Classify a design tradeoff as a defect only when live evidence proves protected-function harm, correction ownership, and no stronger protected-function loss from the proposed correction.
+Classify heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence until negative operating effect, causal path, recurrence path, smallest correction owner, and proof that correction will not remove a stronger protected function are proven.
 
 ### 5. Design Removal-First Patch
-Apply removal-first modification policy: design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening text.
-`REMOVAL-FIRST-PATCH-DESIGN` must state which existing text was removed, tightened, merged, re-homed, replaced, or why none can carry the meaning without loss.
+Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation: design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening text.
+`REMOVAL-FIRST-PATCH-DESIGN` must state which existing text was removed, tightened, merged, re-homed, replaced, or why none can carry the meaning without loss, including the protected function that would be lost by rejected removals.
 Append-only or accumulation-first patch designs are invalid while duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening owner text can be removed, tightened, merged, re-homed, or replaced without meaning loss.
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
@@ -171,7 +174,7 @@ When re-engaged, re-read the changed live surfaces, resulting diff, surrounding 
 Use the common finding-class taxonomy defined in `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` (`confirmed-defect`, `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, `unverified`).
 
 ### 12. Decide Patch Worthiness
-Patch recommendations must state protected function, user-outcome impact, regression risk, smallest owner, and operation type.
+Patch recommendations must state protected function, user-outcome impact, regression risk, smallest owner, operation type, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
 
 ### 13. Handoff
@@ -197,9 +200,9 @@ Hand off after the receiver can tell:
 ## Role-Scoped Structural Feedback
 - Challenge any analysis that starts from a desired patch, cites rules without testing actual adherence/execution path, or ignores live design intent.
 - Challenge any "risk-free" claim that lacks complete inspected-surface basis.
-- Challenge any defect label that lacks negative operating effect or owner-correction path.
+- Challenge any defect label that lacks negative operating effect, owner-correction path, or proof that correction will not remove a stronger protected function.
 - Challenge any added rule when an existing owner sentence can be tightened.
-- Challenge removals by verifying preserved source meaning and positive execution path.
+- Challenge removals by verifying preserved source meaning, positive execution path, and no loss of intended quality, independence, owner-boundary, safety, or user-intent protection.
 
 ## Role-Scoped Self-Growth Loop
 - Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `self-growth-sequence`.

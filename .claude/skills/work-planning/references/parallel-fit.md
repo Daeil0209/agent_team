@@ -23,7 +23,7 @@ Independent specialist-fit work surfaces may be separated by evidence family, de
 
 Parallel split law: choose semantic boundaries first, then balance expected burden. File count alone is never a sufficient burden basis for document, governance, codebase, or mixed-size corpus work. A valid split names the burden basis: line/byte scale, high-touch or critical surfaces, reference density, proof/review complexity, and expected synthesis burden. If one group remains materially heavier and can be split without breaking owner, surface, proof, acceptance, or merge boundaries, keeping it intact is a distribution-planning defect.
 
-Unknown material burden facts make measurement the next planned action, not a pre-planning exception; dispatch-readiness waits for the measured basis.
+Unknown material burden facts make measurement the next planned action, not a pre-planning exception. Dispatch-readiness is forbidden until measured basis exists.
 
 `PARALLEL-GROUPS: none` on multi-surface team-routed work without explicit dependency or burden basis is a routing defect that must be reopened, not approved. Coordination burden must be explicitly named and demonstrated to exceed the parallel speedup before serializing a genuinely independent surface set.
 

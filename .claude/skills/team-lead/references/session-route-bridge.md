@@ -20,6 +20,7 @@ It keeps team-lead from treating setup, boot, planning, or dispatch as completio
 ## Required Output
 Record:
 - `REQUEST-INTENT`
+- `SEMANTIC-INTENT-BASIS`
 - `WORK-SHAPE`
 - `WORKFLOW-CANDIDATE`
 - `SEQUENCE-CANDIDATE`
@@ -35,6 +36,7 @@ Stop before local execution when `work-planning` boundary is missing, stale, con
 Stop before team dispatch when task-execution packet preflight is missing.
 Stop before correction dispatch after FAR `FINAL-REJECT` until the assigned-validator correction packet is consumed.
 Stop before route execution when loaded owner documents lack applied-rule mapping.
+Stop before route execution on governance, analysis, critique, review, validation, or patch work when `SEMANTIC-INTENT-BASIS` is missing or contradicts the user correction, team-operation philosophy, or target governance/design intent.
 
 ## Next-Action Drive
 - A stopped dispatch route opens boot or runtime-entry.
@@ -46,12 +48,15 @@ Stop before route execution when loaded owner documents lack applied-rule mappin
 ## Fresh Instruction Interpretation
 Name the thin request basis:
 - intent
+- user concern signal and anti-goal
 - concrete deliverable
 - primary user
 - reference use
 - burden cues
 - quality cues
 - material blockers
+- governing team-operation philosophy or target governance/design intent
+- priority order when the user makes quality, evidence, autonomy, silence, speed, removal-first, or acceptance integrity material
 
 Name the visible work shape:
 - work type

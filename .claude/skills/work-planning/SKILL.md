@@ -58,9 +58,11 @@ Counting evidence is actual `Skill(work-planning)` load plus required freeze.
 Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
 
 Unknown, scope-changing, route-shaping, or burden-sizing corpus discovery and file/line/byte counts are consequential discovery.
-Freeze that discovery here.
-Run only that action.
+For exhaustive, full-corpus, whole-folder, governance audit/review, or unknown-corpus work, freeze bounded corpus measurement as the first action before route, staffing, or dispatch-readiness freeze.
+Measurement basis must include file count, line or byte scale, semantic surface inventory, and high-touch or critical-surface notes sufficient to judge burden and parallel fit.
+Run only that measurement action.
 Then reopen or complete `work-planning` from the measured basis.
+Do not freeze `team-dispatch-readiness-plan`, `AGENT-MAP`, `PARALLEL-GROUPS`, or dispatch-ready `NEXT-CONSEQUENTIAL-ACTION` from unmeasured material burden.
 Known-owner lookup/status that does not diagnose, audit, analyze, route, dispatch, mutate, or size burden stays outside planning.
 
 Planning belongs at boundary creation, not every internal correction.
@@ -89,6 +91,7 @@ Artifact judgment or analysis result ends the exclusion when it moves a boundary
 ## Step 0: Request-Fit Intake
 Freeze these before route judgment:
 - intent
+- `SEMANTIC-INTENT-BASIS`
 - deliverable
 - coverage and exhaustiveness
 - primary user
@@ -102,7 +105,7 @@ Freeze these before route judgment:
 `CONCRETE-DELIVERABLE` and `PRIMARY-USER` drive deliverable type, delivery shape, defaults, and type triggers.
 `DERIVED-DEFAULTS` drives receiver job, consumption path, decisive proof surface, and request-bound packet fields.
 
-Full intake is mandatory when reference use, corrected intent, delivery burden, user-surface proof, or original wording affects execution.
+Full intake is mandatory when semantic intent, reference use, corrected intent, delivery burden, user-surface proof, or original wording affects execution.
 The user-defined work scope is binding.
 Samples, spot-checks, representative review, or finding-count quotas require explicit scope basis.
 If artifact boundaries are unknown, freeze discovery as a planning fact and next owner/action before exploration.
@@ -140,13 +143,13 @@ It updates only through reopened `work-planning` or owner-local correction that 
 
 ## Step 2: Q1-Q5 Work Analysis
 Before scope freeze, answer:
-1. What is the real purpose?
+1. What is the real purpose, including the user concern signal and anti-goal when expressed?
 2. What work type or types are present?
 3. What governing workflow, sequence, or methodology owns each type?
 4. Are streams local single-surface, independent, sequential, or interdependent?
 5. Which supporting skills are needed inside each stream?
 
-Hold when purpose, work type, owner, workflow/sequence, surface count, or skill basis cannot be named truthfully.
+Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence, surface count, or skill basis cannot be named truthfully.
 
 Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
@@ -162,6 +165,7 @@ See `references/planning-record-fields.md` for field values, conditional fields,
 
 Always freeze:
 - `REQUEST-FIT-BASIS`
+- `SEMANTIC-INTENT-BASIS`
 - `REQUEST-BOUND-PACKET-FIELDS`
 - `ACTION-CLASS`
 - `ROUTING-SIGNAL`
@@ -171,17 +175,21 @@ Always freeze:
 Freeze when material:
 - governance depth: `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, `TIER-RAISE-REASON`
 - workflow/sequence: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`
+- analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`
 - team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`
 - Codex advisory: `CODEX-ADVISORY-BASIS`
 
 Codex advisory law:
-- Apply `references/codex-advisory.md` after draft route fields exist when an advisory trigger fires (including `ACTIVE-WORKFLOW: dev-workflow`, reference-risk triggers, and pre-escalation confirmation review for non-destructive/security/policy unknowns).
+- Apply `references/codex-advisory.md` after draft route fields exist when an advisory trigger fires (including `ACTIVE-WORKFLOW: dev-workflow`, reference-risk triggers, and pre-escalation confirmation review for non-destructive, non-security, non-operator-policy-choice user-question candidates).
 - The reference owns adjudication, fail-open, accepted/rejected acknowledgment, and continuation-without-blocker rules; unrecorded required or triggered advisory basis leaves `work-planning` incomplete.
 
 Hard stops:
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
 - Planning opens one next owner/action before execution, dispatch, or reporting.
+- Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
+- Required measurement missing from exhaustive, full-corpus, whole-folder, governance audit/review, or unknown-corpus work blocks `team-dispatch-readiness-plan`, `AGENT-MAP`, `PARALLEL-GROUPS`, and dispatch-ready `NEXT-CONSEQUENTIAL-ACTION`.
+- `PARALLEL-GROUPS: none` is invalid for multi-surface or unmeasured material corpus work unless a measured dependency or serial-burden basis proves serial stronger than parallel.
 - Lane-core skills are not listed in packet `REQUIRED-SKILLS`.
 - Lane ownership lazy-loads them.
 - Use `[]` when no additional non-lane-core skill is required.
@@ -199,8 +207,10 @@ Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
-Progress text, when needed, says only current decision, next action, or blocker in plain prose.
-Keep planning fields, packet labels, freeze lines, and internal records internal.
+Follow `team-lead/references/output-surface-law.md`.
+Planning progress is silent while the next owner/action can run in the same segment.
+If execution is stopped, emit one plain line naming blocker, required user action, explicit status answer, or next owner/action.
+Keep the planning record internal.
 
 ## Post-Planning Gate
 After planning:

@@ -27,7 +27,7 @@ Risk-triggered:
 - planning target is `team-dispatch-readiness-plan`
 - parallel fit affects correctness, bottleneck risk, runtime footprint, or staffing
 - workflow, sequence, acceptance path, packet readiness, proof path, tool/setup, lifecycle, or parallel grouping is material
-- team-lead is considering a non-destructive, non-security, non-policy user question instead of a default, parameter, assumption, or owner-evidence route
+- team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or owner-evidence route
 
 Skip only for light, receipt/control/status/lifecycle/clarification-only, or no-trigger consequential work.
 For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>` after evaluating this section; advisory tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.

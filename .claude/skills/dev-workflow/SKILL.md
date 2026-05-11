@@ -199,7 +199,7 @@ Reference trigger rule:
 Resolve the phase cursor in the same turn by tool-call execution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
 Completed transition starts the next phase or records the exact blocker.
 
-A satisfied non-destructive/non-security/non-policy phase gate is consumed by team-lead, not user confirmation.
+A satisfied non-destructive/non-security/non-operator-policy-choice phase gate is consumed by team-lead, not user confirmation.
 
 When team-lead advances to a new phase, send the canonical `phase-transition-control` packet from `.claude/skills/task-execution/references/phase-transition-control.md` to each affected agent.
 Affected agents acknowledge with `control-ack`.

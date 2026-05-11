@@ -92,11 +92,13 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner handoffs that are required but missing.
 - Check whether each apparent defect is a true defect or an intended protection for the target intent.
+- Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS`; a technically supported conclusion that misses the user concern signal, anti-goal, team-operation philosophy, governance/design intent, or priority order is a review finding.
 - Removal, reduction, simplification, or optimization recommendations require the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
 - Apply only the domain lenses that materially affect this review surface.
 ### 7. Classify Findings
 - Every finding states severity, evidence anchor, impact, owner, and fix direction.
+- Findings that lack the common finding basis are preliminary evidence, not blocking, patchable, or confirmed defects.
 - Distinguish blocking from non-blocking findings explicitly.
 - Blocking findings include contract breach, missing decisive evidence, user/reader/operator-surface failure, skipped required gate, or unsupported acceptance claim.
 - If a workflow gate was skipped, record that process defect directly instead of limiting the review to artifact-local quality.

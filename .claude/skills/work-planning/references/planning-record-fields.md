@@ -22,6 +22,8 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `CODEX-ADVISORY-BASIS` must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
 - `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the Step 0 request-fit record enough to reconstruct request intent, deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
+- `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, team-operation philosophy, target governance/design intent, and material priority order when those affect route, analysis, critique, review, validation, or patch truth.
+- `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - `REQUEST-BOUND-PACKET-FIELDS` is mandatory as `[]` or the exact request-bound fields that `task-execution` must carry into downstream assignment packets.
 - When the frozen request, plan, MVP, release, or phase contains multiple promised features, workflows, surfaces, or controls, `REQUEST-BOUND-PACKET-FIELDS` must include `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES`; implemented artifacts cannot be used later to invent the completion scope.
 - When `DERIVED-DEFAULTS` names a receiver job, consumption path, or decisive proof surface for downstream review, proof, validation, or acceptance, `REQUEST-BOUND-PACKET-FIELDS` must include `TARGET-INTENT-BASIS`, `USER-SURFACE`, and `USER-SURFACE-PROOF-PATH`.
@@ -98,6 +100,8 @@ Hold this record in current-turn context only. Do not print it to the user, mirr
 
 ```
 REQUEST-FIT-BASIS:
+SEMANTIC-INTENT-BASIS:
+CLAIM-CEILING:
 REQUEST-BOUND-PACKET-FIELDS:
 PROJECT-TIER:
 ACTIVE-REQUEST-TIER:

@@ -61,7 +61,7 @@ Activation:
 Operating discipline:
 - `[DESIGN-INTENT]` is the highest constraint.
 - Autonomy stays inside Structural Contract, owner boundaries, fixed section order, and protected restatements.
-- Apply `[ALLOW-EXCEPT-DESTRUCT]`, `[BLOCK-AS-DEFECT]`, and `[EVI-DEFER]` from `CLAUDE.md` as the operational decision filter.
+- Apply `CLAUDE.md` autonomy and escalation rules: choose evidence-backed reversible defaults, limit user escalation to irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis, treat over-broad blocking as a defect, and require evidence for deferral.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
 - Defer high-burden patches with marginal or speculative value.
 - Apply high-burden patches with marginal or speculative value only under explicit user direction.
@@ -74,6 +74,8 @@ Operating discipline:
 - Continue mid-stabilization until proven user-owned blocker.
 - Continue mid-stabilization until convergence.
 - Resolve derivable answers through active doctrine and evidence.
+- Route, staffing, parallelism, and dispatch choices are derivable unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
+- User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
 
 ## Next-Action Drive
 - An interrupt frame opens the deepest active resume action.

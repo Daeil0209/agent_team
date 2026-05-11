@@ -47,6 +47,9 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.
+- If the frozen route lacks measured burden basis required by `work-planning` or `parallel-fit`, stop before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`, and reopen `work-planning`.
+- If `PARALLEL-GROUPS: none` serializes multi-surface work without a measured dependency or serial-burden basis, stop and reopen `work-planning`.
+- If the next move asks the user to choose route, staffing, parallelism, or dispatch options that doctrine and evidence can settle, stop and reopen `work-planning` or continue with the evidence-backed route.
 - If a field required by the frozen route is missing, contradictory, or marked `not-applicable` without an allowed basis, stop and reopen `work-planning`.
 
 ## Information Movement Rule

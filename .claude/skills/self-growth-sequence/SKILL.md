@@ -48,8 +48,8 @@ Trigger sources:
 - Verified runtime/process error signals can raise confirmed self-growth once the defect basis is sufficient to govern behavior.
 - Sufficient confirmed defect basis opens self-growth hardening without direct user instruction.
 Self-growth tiers:
-- Quick hardening applies when owner surface and write scope are unambiguous and the change is meaning-preserving or owner-local.
-- Quick hardening covers typo corrections, terminology normalization, dead-text removal, and same-owner wording clarification.
+- Quick hardening applies only when owner surface, write scope, and meaning preservation are unambiguous.
+- Quick hardening covers typo corrections, terminology normalization, dead-text removal, and same-owner wording clarification that changes no rule force, owner boundary, trigger, stop, evidence, acceptance, or runtime effect.
 - Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
 - Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
@@ -106,7 +106,7 @@ The barrier must match the failure mode.
 Patch from causal basis.
 Defect admission gate:
 - Call a team-system item `confirmed defect` only when live owner evidence proves target-intent conflict, protected function, proven negative operating effect or reserved hard-deny/runtime-truth breach, causal failure mode, recurrence path, and smallest intent-preserving correction.
-- Treat literal contradiction, heavy gate, hook burden, deletion permission, or plausible misuse as defect evidence only until that proof exists.
+- Treat literal token match, apparent contradiction, heavy gate, hook burden, deletion permission, or plausible misuse as defect evidence only until that proof exists.
 Use `references/causal-analysis.md` for the required reconstruction, failure-mode proof, recurrence path, and hypothesis limit.
 
 ### Governance Repair Orientation
@@ -115,7 +115,7 @@ Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
 Before patch drafting on doctrine, role, skill, spine, hook, or reference surfaces, run `review-verification` and consume its emitted `review_verification_packet`. Cross-surface, multi-file, behavior-changing, structural, recurrence-barrier, and gate-altering patches always run review-verification.
-Skip review-verification only for single-file wording fixes (typo, terminology normalization, dead-text removal) where owner surface, write scope, and meaning-preservation are unambiguous; record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
+Skip review-verification only for single-file quick-hardening wording fixes listed in Activation where owner surface, write scope, and meaning-preservation are unambiguous; record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
 Lane inspection, reviewer input, Codex input, and team-lead self-classify are evidence; the emitted `review_verification_packet` is the gate.
 
 When a defect or justified challenge is recognized, run the canonical `### Required order` below. Phase mapping for trigger detection: Trigger and Stabilize feed Required-order Step 1; Reconstruct and Diagnose feed Step 2; Open feeds Step 3; Harden feeds Steps 5-6; Re-verify and Iterate feed Step 8; Resume-corrected-state feeds Step 9.
@@ -146,7 +146,7 @@ Explanation alone is not self-healing.
 - Self-growth opening can be immediate.
 - Governance-sensitive file modification is still execution-gated.
 - Use this owner opening to classify, route, inspect, and prepare the bounded patch packet. Assignment-grade `Agent` or `SendMessage` dispatch still belongs to `task-execution`.
-- Only destructive or security-sensitive execution requires explicit user confirmation; hook/settings runtime enforcement expansion still follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
+- Only destructive, security-sensitive, or operator-policy-choice execution requires explicit user confirmation; hook/settings runtime enforcement expansion still follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
 - When a missing reusable skill blocks execution, authorize skill introduction under `Self-Growth Sequence` with explicit ownership: gap confirmation, target owner, bounded scope, review path, and verification.
 - When more than one lane can own the growth topic, compare owner candidates before choosing.
 - Record competing owner candidates.
@@ -156,7 +156,7 @@ Explanation alone is not self-healing.
 - The supervisor must adjudicate owner and barrier path directly.
 - Allowed decisions: approve, reject, merge, reduce, defer, or reassign.
 - Codex/reviewer input is evidence; supervisor owns the decision.
-- User confirmation is allowed only for destructive, security-sensitive, policy-level, or objectively undecidable barrier choices.
+- User confirmation is allowed only for destructive, security-sensitive, operator-policy-choice, or objectively undecidable barrier choices.
 - Ownership of improvement work must be explicit.
 - Ownerless gaps are not allowed at round close.
 - The supervisor remains the staffing, mediation, adjudication, and merge-governance owner for self-growth rounds; production ownership stays explicit.
@@ -177,8 +177,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 1. Identify the active improvement topic from evidence.
    Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, review-verification need basis, and likely owner surface.
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
-   Quick hardening can use owner-local inspection when owner surface and write scope are unambiguous and the change is meaning-preserving or owner-local.
-   Consume the emitted `review_verification_packet` before ownership finalization (default for all patch surfaces above; the narrow single-file-wording-fix exception still records owner-surface citation).
+   Quick hardening can use owner-local inspection only when owner surface, write scope, and meaning preservation are unambiguous.
+   Consume the emitted `review_verification_packet` before ownership finalization (default for all patch surfaces above; the narrow single-file quick-hardening wording-fix exception defined in Activation still records owner-surface citation).
    Lane inspection, reviewer input, or Codex input is evidence; the emitted `review_verification_packet` is the gate.
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.
    Additional-agent dispatch is valid only on a host-authorized active-runtime path through `task-execution`.

@@ -97,6 +97,7 @@ Compact challenge that always applies:
 - claim/evidence: what would defeat it?
 - claim/evidence: what remains uncertain?
 - counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
+- defect-label: if the claim names a defect or patch recommendation, which owner had authority to classify it, what protected function would correction or removal lose, and why are `protected-restatement`, `design-tradeoff`, and `non-issue` classifications rejected?
 - owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
 
 `anti-self-certification`:
@@ -113,7 +114,8 @@ Rules:
 - synthesized outputs require reconciled verification for stronger claims
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
-- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` defect admission gate before promoting any item to `CONFIRMED-DEFECT`; if proof is missing, report the item as candidate evidence, risk hypothesis, design tradeoff, non-issue, or `UNVERIFIED` instead of patch authorization.
+- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` and `completion-handoff.md` common finding basis before promoting any item to `confirmed-defect`; if proof that correction will not remove a stronger protected function is missing, report the item as candidate evidence, `risk-hypothesis`, `design-tradeoff`, `protected-restatement`, `non-issue`, or `UNVERIFIED` instead of patch authorization.
+- Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.
 - Apply detailed SV-PLAN reject conditions per `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and detailed SV-RESULT verification per `## SV-RESULT Detailed Gate`.
 - If final prose outruns the verified surface, reset `SV-RESULT`.
 

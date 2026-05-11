@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [CROSS-CONTINUITY], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Self-Growth"
+SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Self-Growth"
 LOAD-POLICY: on-demand reference only
 ---
 # Common Doctrine Reference: Scope, Continuity, And Change

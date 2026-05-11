@@ -200,7 +200,8 @@ The canonical hook-policy ownership for these ledger surfaces lives in `.claude/
 - If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or `HOLD`.
 
 ## Proactive Team-Composition Reassessment
-At every phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` MUST apply `Monitoring Sequence` reassessment before re-dispatch. Synthesis is the reliable trigger because it occurs at every phase transition and agent handoff convergence.
+At phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work may reuse, release, redistribute, or reassign active or standby agents.
+Synthesis is a trigger test for material team-composition risk, not automatic reassessment ceremony.
 
 Required reassessment questions:
 - does each active or standby agent have a defined upcoming role in the remaining frozen work?

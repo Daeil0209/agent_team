@@ -118,12 +118,12 @@ Visual-failing surfaces exit as blocking visual findings.
 > For Workflow-Product Surface Extension, see `references/visual-composition-detail.md`
 > For Operational Management UI Composition Rules, see `references/visual-composition-detail.md`
 ## Dashboard Design + Spec Authoring Discipline
-> Implements `CLAUDE.md` `[USER-DELIVERY-FIT]` rounds R25 (dashboard design discipline) + R32 (spec authoring discipline checklist).
+> Implements `CLAUDE.md` `[USER-DELIVERY-FIT]` dashboard design discipline and visual spec discipline.
 > Procedure detail moved here per CLAUDE.md `## Conditional Rules`.
 > Owner-local detail belongs in owning skill.
 > Active when this skill is loaded for any visual / UI / chart / dashboard deliverable design or spec authoring.
 
-**R25 — Dashboard / monitoring / at-a-glance UI discipline**:
+**Dashboard / monitoring / at-a-glance UI discipline**:
 For integrated dashboard, monitoring, status console, command center, or executive-summary surfaces, derive the operator-decision frame before layout or handoff.
 Name 5-10 operator decisions the surface must support unless the frozen scope is narrower.
 Name the information that changes each decision.
@@ -136,7 +136,7 @@ Input mutations that affect derived metrics must invalidate, subscribe, or refet
 Verification covers `input -> displayed state reflects` for material derived metrics, warnings, and exception states.
 Stale dashboard data after operator input is a delivery defect.
 
-**R32 — Visual spec discipline**:
+**Visual spec discipline**:
 Visual / UI / chart / dashboard specs name fixed containers, responsive distribution, invariant reference points, edge cases, typography stability, and accessibility basics.
 Responsive distribution covers `N=0`, typical, and high-load states.
 Invariant reference points keep axis domains, thresholds, scale anchors, and reference lines stable across data volume.

@@ -61,7 +61,7 @@ Use every lens that materially applies to the target. Omission of an applicable 
 - Request-fit lens: what did the user actually ask for, forbid, de-prioritize, or emphasize; what burden or failure history shaped the request; what acceptance surface matters; would the current plan/result still satisfy the request if read literally?
 - Claim/evidence lens: what is the exact claim, what evidence supports it, what evidence would defeat it, and what residual uncertainty remains?
 - Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, or acceptance downgrade would a skeptical independent lane raise?
-- Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, and what breaks if it is removed?
+- Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, what breaks if it is removed, and whether `protected-restatement`, `design-tradeoff`, or `non-issue` classification defeats a defect label.
 - Detailed-design/mechanism lens: which lower-level unit, input, output, state transition, data flow, control flow, algorithm, interface, dependency, timing constraint, and error path make the intended behavior happen?
 - Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, optionality, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
 - Software development lens: are module boundaries cohesive, coupling controlled, contracts explicit, configuration and concurrency/idempotency risks handled, and errors observable and recoverable?
@@ -107,6 +107,7 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - separate observation, inference, judgment, and recommendation
 - cite or name the evidence surface that supports each controlling claim
 - identify the strongest contrary interpretation or evidence that would defeat the conclusion
+- for defect labels or patch recommendations, verify the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications before positive wording
 - mark partial coverage as partial instead of generalizing to the whole system
 - do not treat fluent explanation, internal confidence, or repeated wording as evidence
 - when reference material exists, verify that the conclusion follows the reference rather than a convenient substitute
@@ -147,6 +148,7 @@ Synthesized conclusions do not inherit verification automatically.
 Before positive synthesis:
 - consume only completion-grade or otherwise evidence-bearing surfaces, not receipt/status/progress signals
 - reconcile conflicts between agent outputs, evidence families, prior decisions, and sibling artifacts
+- preserve common finding classes and do not promote `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified` findings to `confirmed-defect` during synthesis
 - preserve open surfaces instead of flattening them into a clean conclusion
 - keep claim strength limited to the weakest material unresolved surface
 - keep final wording inside Evidence-Quality Matrix supported scope when that matrix is material

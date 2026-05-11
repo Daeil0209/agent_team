@@ -29,7 +29,7 @@ Additional gate law:
 - For material Phase 4/5 review surfaces, review-convergence trigger status must be explicit. Silent non-trigger, discussion-only Codex output, or unspined Codex calls do not satisfy the gate.
 - Phase cursor remains active until consumed by execute, dispatch, HOLD/re-handoff, explicit blocker, or explicit cancel
 - When a verified handoff already fixes the next phase boundary, team-lead is the default bridge owner
-- A satisfied non-destructive/non-security/non-policy phase gate executes its frozen next owner/action in the same execution segment; user-facing "proceed?" or "review first?" prompts are cursor-stall defects
+- A satisfied non-destructive/non-security/non-operator-policy-choice phase gate executes its frozen next owner/action in the same execution segment; user-facing "proceed?" or "review first?" prompts are cursor-stall defects
 - Material scope, owner-map, deliverable-shape, route, proof-chain, acceptance-chain, or delivery-surface change reopens `work-planning` and supersedes prior reviewer/tester/validator acceptance evidence for affected surfaces
 - New or sharpened doctrine targeting the active acceptance chain makes affected carry-forward PASS, handoff, or closure evidence stale until `[RETRO-APPLY]` marks it not affected, fixed, invalidated, or deferred by the owning upstream record.
 - A visible user-surface contradiction, unreadable rendered text, partial rendered coverage, missing baseline feature/surface/control, or missing launch/stop path invalidates the affected PASS scope and reopens the smallest correction/acceptance loop; do not ask the user to choose whether to fix it

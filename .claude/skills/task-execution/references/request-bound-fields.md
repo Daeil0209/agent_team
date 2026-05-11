@@ -17,6 +17,7 @@ A packet is start-ready when every material axis needed for the receiving lane t
 
 The contract axes are:
 - original request intent, required deliverable, audience, and excluded scope
+- semantic intent bridge across user concern, anti-goal, team-operation philosophy, target design intent, and material priority order
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
 - exact user wording when wording controls acceptance
@@ -32,9 +33,15 @@ They preserve global routing and acceptance ownership from packet basis instead 
 When truthful lane execution depends on the original request shape, the assignment packet must also carry:
 - `REQUEST-INTENT`
 - `CORE-QUESTION`
+- `SEMANTIC-INTENT-BASIS`
 - `REQUIRED-DELIVERABLE`
 - `PRIMARY-AUDIENCE`
 - `EXCLUDED-SCOPE`
+
+`SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
+It names the user concern signal, anti-goal, governing team-operation philosophy or target governance/design intent, and material priority order.
+Do not replace it with literal task wording or target purpose alone.
+If the carried semantic basis conflicts with the user instruction, cited artifact intent, or governing design philosophy, the receiving lane returns `scope-pressure` or `hold|blocker`.
 
 When truthful lane execution depends on why the target artifact exists or what it must preserve, the assignment packet must also carry:
 - `TARGET-INTENT-BASIS`

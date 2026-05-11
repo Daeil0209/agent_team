@@ -22,22 +22,22 @@ For operator-facing workflow tools and document-backed systems:
 - Explicit separation: manual inputs, imported seeds, editable overrides, derived calculations, locked summaries, exported outputs
 - Lifecycle-safe architecture: delete, archive, restore, period rollover, history access
 - Automation-ingestion pipelines as first-class contracts for repeated source files
-Use `HOLD` when artifact treats derived state as free-form editable or leaves lifecycle/ingestion architecture implicit.
+Send `hold|blocker` with architecture basis when artifact treats derived state as free-form editable or leaves lifecycle/ingestion architecture implicit.
 ## Coupled-Core Architecture Extension
 For tightly coupled workflow cores:
 - Model many-to-many relationships explicitly; separate source facts, derived values, posted/closed results, reconciliation evidence into distinct write paths
 - Make recalculation, reposting, reopen, adjustment, idempotent rerun boundaries explicit
 - Isolate project-type/funding-mode variation in a visible rule path
 - **L-03 Entity ID Stability Contract**: Persistent entities require stable immutable identifiers. Array-position-based addressing = defect; ID recycling = defect. Required: UUID or monotonically increasing ID, FK using stable IDs, referential integrity rules (cascade delete/nullify/restrict).
-Use `HOLD` when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
+Send `hold|blocker` with architecture basis when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
 ## Operational Management Entity Architecture Extension
 For operational management systems (project management, resource allocation, personnel tracking, budget control):
 - **Core Entity Set Contract**: Define core entities (managed item/project, resource/person, assignment/allocation, budget/capacity, derived cost/summary) before module boundaries.
 - **Junction-Entity Separation**: Resource-to-managed-item relationships require a first-class junction entity with role, rate or unit, period, status, source, and override basis when material. Direct FK without junction = defect.
 - **Period And Rate Invariant Contract**: Period-based allocation, participation, capacity, utilization, or budget-rate calculations require explicit period granularity and unit semantics.
 - **Period And Rate Detail**: Name cap or threshold rules, overlap handling, over-allocation classification, recalculation trigger, lock or post rule, and historical display basis.
-- **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling = `HOLD`.
-Use `HOLD` when module/UI boundaries freeze before core entity set and relationship graph are explicit, or when material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts.
+- **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling sends `hold|blocker` with architecture basis.
+Send `hold|blocker` with architecture basis when module/UI boundaries freeze before core entity set and relationship graph are explicit, or when material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts.
 ## Workflow-Product Architecture Extension
 For dense workflow tools:
 - Support inheritance/override resolution: global, project-type, project, period, person, exception scopes
@@ -78,7 +78,7 @@ First-class gates before final delivery:
 - **Burden audit**: computed participant burden within tolerance; flag exceedances
 - **Autonomous sub-plan detection**: autonomous modules (own data model, constraint set, rendering) must not be flattened into parent structure
 - **Volume-target compliance**: non-compliance loops to compression, never to earlier phases
-Use `HOLD` when: phase preconditions missing, derived constraints treated as inputs, pre-generation loop absent, or output validation lacks semantic dedup/repeatability gates.
+Send `hold|blocker` with architecture basis when phase preconditions are missing, derived constraints are treated as inputs, pre-generation loop is absent, or output validation lacks semantic dedup/repeatability gates.
 ### Research Report Architecture Extensions
 - **Search Strategy Engine**: phase between input collection and purpose resolution; decomposes question into concept axes with synonyms; produces per-source-type query plans (academic DB, patent DB, market, standards); outputs structured search spec with inclusion/exclusion filter gate and logged decisions.
 - **Multi-Source Pipeline**: each source family (academic paper, patent, market report, technical standard) uses own ingestion schema (metadata, epistemic-role tags, quality-tier); shared normalization → unified claim-evidence records; source-type distinctions preserved through cross-analysis phase.
@@ -98,7 +98,7 @@ Use `HOLD` when: phase preconditions missing, derived constraints treated as inp
 ## Specialist Skill Maintainability Extension
 - Generate only semantically identical shared blocks from one owner fragment source; commit `SKILL.md` as static directly readable artifact; runtime assembly prohibited
 - Keep authority boundaries, domain defect taxonomies, and role-owned judgment rules owner-local; review generated diff as real contract surface before promotion
-Use `HOLD` when a maintainability refactor hides the reader-facing skill, removes owner-local safety text, or templates away domain-specific judgment.
+Send `hold|blocker` with architecture basis when a maintainability refactor hides the reader-facing skill, removes owner-local safety text, or templates away domain-specific judgment.
 
 ## Project Lessons (Recurrence-Barrier Catalog)
 Numbered project lessons captured from past incident hardening. Each lesson is a recurrence-barrier installed on the architecture surface; SKILL.md references this catalog by `L-NN` ID.

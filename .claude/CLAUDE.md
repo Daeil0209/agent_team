@@ -58,7 +58,8 @@
 ### 4. Autonomy, Parallelism, And Escalation
 - `[NO-NEEDLESS-ASK]` Choose the evidence-backed best solution.
 - Derivable ambiguity uses reversible defaults.
-- User escalation requires irreversible, destructive, security-sensitive, policy, or proven user-owned blocker basis.
+- User escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
+- Operator-policy-choice means selecting or weakening team operating policy, approval posture, runtime enforcement tier, or user-owned governance preference when doctrine and evidence cannot determine one best reversible path.
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
 - Additional-agent dispatch uses the current Claude Code agent-team runtime.
 - Serial convenience over independent surfaces is a `bottleneck defect`.
@@ -108,11 +109,12 @@
 - Unconsumed trigger-bound reference is a completion blocker.
 
 ## Control Sequences
-- `session-boot` owns boot, monitoring, and runtime-entry readiness.
+- `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
 - `update-upgrade-sequence` owns routine `.claude` asset maintenance.
 - `self-growth-sequence` owns recurrence-barrier hardening.
+### Sequence Arbitration Law
 - Sequence arbitration chooses one primary sequence by purpose.
 
 ## Channel And Procedure
@@ -191,7 +193,6 @@
 - Team cleanup follows Claude Code lead-owned cleanup behavior.
 
 ## Self-Growth
-- `self-growth-sequence` owns recurrence-barrier hardening.
 - Sequence Arbitration Law governs self-growth routing.
 - `[HARDEN]` governs self-growth correction scope.
 - Open `self-growth-sequence` after quality, evidence, ownership, and acceptance integrity are secure.

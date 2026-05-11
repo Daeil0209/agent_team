@@ -56,8 +56,9 @@ When an idle_notification is received with a valid completion report, the govern
 
 ## Reuse Rule
 - New dispatch rebuilds context.
-- Reusing or keeping a suitable agent on standby is preferred when it preserves correct ownership and execution continuity.
-- Reuse is preferred when workload, availability, context fit, and ownership safety all support it.
+- Reuse or standby is valid only when ownership fit and context fit remain truthful per `session-boot/references/runtime-state-detail.md`.
+- Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
+- Choose `standby` when near-future reuse is concrete and the valid live agent remains the correct owner/context.
 
 ## Manifest Review Gate
 - When execution depends on a user-provided file list, copy set, or overwrite manifest, complete review before fan-out: collapse duplicates, verify final unique write set, and make pre-execution review explicit.

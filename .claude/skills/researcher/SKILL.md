@@ -129,9 +129,12 @@ Technically correct but user-inaccessible research is not finish-ready.
 ## Evidence Standards
 - Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
 - Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
-- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent and protected function it may affect.
+- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it may affect.
+- When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against the user concern signal, anti-goal, team-operation philosophy, governance/design intent, and priority order it carries.
+- If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - A removal, reduction, simplification, optimization, or burden-cut proposal is incomplete until the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md` is satisfied.
-- Research output is evidence input to downstream owners, not implementation or validation authority.
+- Research output is evidence input to downstream owners, not implementation, patch-worthiness, validation, or confirmed-defect authority.
+- Use `candidate`, `evidence-only`, `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction`; stronger classification belongs to downstream reviewer/review-verification/team-lead synthesis under the common finding basis.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol

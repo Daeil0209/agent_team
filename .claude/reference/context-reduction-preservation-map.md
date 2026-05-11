@@ -14,6 +14,8 @@ Preserves source-to-destination traceability for context reduction, re-home, spl
 Reference cache only; not a skill, runtime state file, or always-loaded context.
 
 ## Next-Action Drive
+- This drive applies only after this cache is explicitly loaded for a preservation audit.
+- It corrects cache traceability or opens live owner inspection; it does not create task execution, mutation, lifecycle, or reporting authority.
 - Missing source-to-destination trace opens preservation-map correction.
 - Stale source-to-destination trace opens live owner-surface inspection.
 - Broken reference binding opens the owning reference correction.
@@ -60,7 +62,7 @@ This pass reduces always-loaded density by re-homing detail, not deleting meanin
 
 CLAUDE.md source -> destination:
 - `[USER-SURFACE]` and `[USER-DELIVERY-FIT]` long explanatory detail -> `.claude/skills/work-planning/references/deliverable-defaults.md`, `.claude/skills/dev-workflow/references/operator-delivery.md`, `.claude/skills/tester/references/tester-lane-detail.md`, and `.claude/skills/validator/references/validator-lane-detail.md`.
-- `[NO-NEEDLESS-ASK]`, `[ALLOW-EXCEPT-DESTRUCT]`, and `[BLOCK-AS-DEFECT]` detailed ask/setup behavior -> `.claude/agents/team-lead.md` Priority 0 / RPA-9 / RPA-10 plus `.claude/skills/team-lead/references/interrupt-autonomy.md`.
+- `[NO-NEEDLESS-ASK]`, user-escalation limits, over-broad-blocking correction, and evidence-required deferral detail -> `.claude/agents/team-lead.md` Priority 0 / RPA-9 / RPA-10 plus `.claude/skills/team-lead/references/interrupt-autonomy.md`.
 - `[GOV-MIN]`, `[PRES-FIRST]`, `[HARDEN]`, and top-doctrine patch discipline -> `.claude/skills/self-growth-sequence/SKILL.md` `Patch Execution Method` and this preservation map's audit rule.
 - `[PROJECT-OUTPUT-ROOT]` detailed output-root prohibitions -> `.claude/hooks/MANIFEST.md`, `.claude/hooks/compliance-supervisor.sh`, and `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md`.
 - Hook/settings/runtime-footprint details -> `.claude/hooks/MANIFEST.md`, `.claude/reference/runtime-footprint-and-continuity.md`, and `.claude/settings.json`.
@@ -117,7 +119,7 @@ CLAUDE.md source -> destination:
 agents/team-lead.md source -> destination:
 - RPA-1 line 58 analysis-routing -> aligned with parent `CLAUDE.md` `Channel Law` line ("reopens `work-planning` when a boundary-change axis moves"); identical force, no narrower override.
 - RPA-1 lines 60-62 carry-forward / reopen sentences -> trimmed; canonical owner stays `.claude/skills/work-planning/SKILL.md` Activation Trigger + boundary-change axes (Step 1).
-- RPA-2 line 66 cross-continuity carry-forward -> restored full 7-item set citing `[CROSS-CONTINUITY]`; redundant procedure-trigger scan removed (trigger order list at lines 71-78 already governs trigger consumption).
+- RPA-2 line 66 cross-continuity carry-forward -> restored full 7-item set citing `CLAUDE.md` Scope, Continuity, And Change; redundant procedure-trigger scan removed (trigger order list at lines 71-78 already governs trigger consumption).
 - RPA-2 trigger order item 4 -> generalized to "confirmed primary sequence (`self-growth-sequence` for recurrence defect or `update-upgrade-sequence` for routine asset maintenance, per `Sequence Arbitration Law`)" so both primary sequences carry equal salience.
 - RPA-2 (new rule, recurrence barrier from round-3 self-growth): "intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; status questions are stall-exposure cues only and continue through the same resume action." Canonical defect class lives in `.claude/skills/team-lead/references/orchestration-defects.md` `Routine Status Stop` (newly added; trigger / owning rule / correction owner all named).
 - RPA-3 closeout 3-sentence series -> merged to one sentence with explicit scope ("once `session-closeout` owns the path, suspend ordinary planning/synthesis/reporting and report only residual closeout truth").
@@ -128,7 +130,7 @@ skills/team-lead/SKILL.md source -> destination:
 - 8 Detail-section Hard-Surface restatements (~70 lines: Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail, Orchestration Defect Taxonomy, Work-Planning Detailed Consume) -> collapsed to trigger+owner pointers; canonical detail rules now live in direct child references: `.claude/skills/team-lead/references/communication-objections.md`, `.claude/skills/team-lead/references/synthesis-consume.md`, `.claude/skills/team-lead/references/reporting-surface-rules.md`, `.claude/skills/team-lead/references/routine-gate-continuation.md`, `.claude/skills/team-lead/references/interrupt-autonomy.md`, `.claude/skills/team-lead/references/orchestration-defects.md`, `.claude/skills/team-lead/references/planning-field-consume.md`, `.claude/skills/team-lead/references/far-reject-routing.md`, `.claude/skills/team-lead/references/codex-own-review.md`, and `.claude/skills/team-lead/references/lead-local-guarded-law.md`.
 
 deleted skills/team-lead/references/synthesis-reporting.md source trace -> destination:
-- "At each handoff/completion synthesis apply session-boot Monitoring Sequence" universal gate (toxic bottleneck per `[PARALLEL]` + `[CHANNEL]`) -> conditional gate ("only on parallel-collapse / idle-preservation / missed-parallel-fit / missed-downstream-prep / agent-charter-mismatch evidence"); Monitoring Sequence canonical owner stays `session-boot/SKILL.md`.
+- "At each handoff/completion synthesis apply session-boot Monitoring Sequence" universal gate (toxic bottleneck per `[PARALLEL]` + `CLAUDE.md` Channel And Procedure) -> conditional gate ("only on parallel-collapse / idle-preservation / missed-parallel-fit / missed-downstream-prep / agent-charter-mismatch evidence"); Monitoring Sequence canonical owner stays `session-boot/SKILL.md`.
 - Packet-basis comparison "exact operator launch, cleanup, or defer basis" over-specified example -> generalized to "any frozen `REQUEST-BOUND-PACKET-FIELDS` baseline (`SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, `TARGET-INTENT-BASIS`, or operator-delivery axes when the deliverable is executable)".
 - Cross-continuity duplicate sentence -> one-line cite at `.claude/skills/work-planning/references/cross-continuity.md` synthesis-time gate (full cross-skill path; the bare `references/...` form was corrected during post-patch V2 verification because `team-lead/references/cross-continuity.md` does not exist).
 - Long no-narration sentence (~10 prohibitions) -> 3 imperative bullets (procedure scaffolding ban; raw lane dump / convergence table / advisory payload ban; `internal:` / `(internal):` disclaim does not authorize disclosure).

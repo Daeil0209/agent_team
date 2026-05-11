@@ -100,7 +100,7 @@ Keep authoritative versus supplemental sources explicit.
 - Also validate every frozen `SCOPE-BASELINE` feature/surface/control path, core workflow, interaction coverage, burden contract, resource cleanup, and proof-surface match.
 - Human-consumed artifacts: validate format-faithful rendered/runtime evidence, visible completeness, layout/pagination/formula/media integrity, and reader/operator burden.
 - Proof/review outputs: validate method, surface match, claim strength, unresolved contradictions, and whether evidence supports the requested verdict.
-- Governance/report outputs: validate preservation, rule force, owner boundaries, cross-reference integrity, claim truth, and user-facing clarity.
+- Governance/report outputs: validate preservation, rule force, owner boundaries, cross-reference integrity, claim truth, `SEMANTIC-INTENT-BASIS` alignment, and user-facing clarity.
 - Apply only lenses material to the assigned validation surface.
 - Unassigned ownership returns to `team-lead`.
 ### 3. Inspect Intent And Governing Expectations

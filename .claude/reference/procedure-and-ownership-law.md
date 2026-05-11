@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 1 [RULE-FORCE], [AUTO-PROC], [PROC-HABIT], [PLAN-SV], [CHANNEL], [QUALITY-FLOW]; Priority And Ownership; Channel And Procedure; Communication"
+SOURCE-RULES: "Core Laws 1 [RULE-FORCE], [AUTO-PROC], [PROC-HABIT], [PLAN-SV]; Priority And Ownership; Channel And Procedure; Communication"
 LOAD-POLICY: on-demand reference only
 ---
 # Common Doctrine Reference: Procedure And Ownership

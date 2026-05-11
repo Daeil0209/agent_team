@@ -15,7 +15,7 @@ Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skil
 ## Next-Action Drive
 - Failed Hook-Last review opens owner-procedure repair, hook narrowing, or hook removal.
 - Missing runtime-footprint measurement opens measurement or downgrades the claim to `UNVERIFIED`.
-- Legitimate lane-action blocking opens `[BLOCK-AS-DEFECT]` correction.
+- Legitimate lane-action blocking opens over-broad-blocking correction.
 - A remaining reserved hard-deny danger opens the narrowest runtime guardrail owner.
 
 ## Consumer And Ownership
@@ -45,7 +45,7 @@ Rules:
 - Broaden a blocking hook only after the full Hook-Last Footprint Review above.
 - Treat missing itemized ledger records as `UNVERIFIED`.
 - Claim current hook density improvement only from measured latency, context, or runtime evidence.
-- When a broad hook blocks a legitimate lane action, classify `[BLOCK-AS-DEFECT]` and repair the narrowest owner surface before adding hook logic.
+- When a broad hook blocks a legitimate lane action, classify over-broad blocking as a defect and repair the narrowest owner surface before adding hook logic.
 - Reduce footprint by removing, merging, narrowing, or downgrading existing hook work before adding hook work.
 
 ## Runtime Footprint Claims

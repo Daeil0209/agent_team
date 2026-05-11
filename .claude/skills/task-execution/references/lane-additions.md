@@ -21,7 +21,8 @@ Every lane-core skill inherits these common preconditions:
 - Load lane-core skill only for consequential lane-owned work.
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
-- Before lane work, run a capability-fit pass against target intent, assigned surface, required/recommended skills, and material tool or rendered/runtime needs.
+- Before lane work, run a capability-fit pass against `SEMANTIC-INTENT-BASIS`, target intent, assigned surface, `CLAIM-CEILING`, required/recommended skills, and material tool or rendered/runtime needs.
+- If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
 - Every `REQUIRED-SKILLS` entry is mandatory consumption: load and apply it before lane execution or handoff, or return `scope-pressure` / `hold|blocker` with the smallest correcting owner.
 - A required entry that is non-fitting, lane-mismatched, contradictory, or outside the frozen boundary is a packet or route defect, not permission to drop the skill.
 - Every carried `SKILL-RECOMMENDATIONS` entry is classified as applied, not-material, or blocked before handoff.

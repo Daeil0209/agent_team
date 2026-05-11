@@ -63,6 +63,7 @@ Stop before mutation until `[GOV-MIN]` is applied.
 ### WORK
 Name the exact requested deliverable.
 Name the requested coverage.
+Name `SEMANTIC-INTENT-BASIS` when user concern, anti-goal, team-operation philosophy, governance/design intent, or priority order affects the next action.
 Name `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 
 ### INTENT
@@ -113,7 +114,7 @@ Justify net growth only when no existing owner text can carry the meaning.
 
 ### UNCERTAINTY
 Resolve derivable uncertainty through evidence-backed default, configurable parameter, narrowed scope, or marked inference.
-Escalate to the user only for irreversible, destructive/security, policy, or proven user-owned blockers.
+Escalate to the user only for irreversible, destructive/security, operator-policy-choice, or proven user-owned blockers.
 
 ## Evidence Boundary
 Source lookup, memory, advisory input, and internal judgment are evidence only.

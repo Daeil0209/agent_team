@@ -28,6 +28,8 @@ An explicit `session-boot` load can clear lead-local boot reminders when no expl
 Treat that observation as a boot-state marker only.
 Delegated runtime entry still returns to `task-execution`.
 Return only runtime-ready, runtime-blocked, monitoring-required, or lifecycle-control-needed.
+Runtime-ready and clean boot outcomes are internal move-out facts unless they create a blocker, required user action, or explicit status answer.
+Do not emit boot summaries before opening the next owner/action that can run in the same segment.
 
 ## Boot Sequence
 `Boot Sequence` is the bounded entry path for lead-session boot and explicit team-agent runtime readiness.

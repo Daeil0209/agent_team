@@ -50,6 +50,9 @@ Hard surface:
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` enters only for a dispatch-owned blocker-clear move.
 - Missing, contradictory, stale, or route-unfit `not-applicable` route fields reopen `work-planning`.
+- Missing measured burden basis required by `work-planning` or `parallel-fit` reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
+- `PARALLEL-GROUPS: none` on multi-surface work is dispatch-invalid unless the frozen basis proves dependency or serial burden stronger than parallel.
+- Route, staffing, parallelism, or dispatch option prompts to the user are not dispatch actions unless a proven user-owned blocker is frozen.
 - Packet repair inside `task-execution` is limited to values already frozen by the owning path.
 - Agents receive bounded assignment packets derived from the freeze; the full internal planning block stays internal.
 - Same-boundary packet correction, receipt follow-up, execution follow-up, and bounded reuse consume the frozen boundary.
@@ -118,18 +121,16 @@ Branch rule:
 - new route, owner, or claim class reopens `work-planning`
 - if a branch requires new route judgment, new work surface decomposition, or changed ownership, reopen `work-planning` first
 ## Step 3: Dispatch Truth
-Keep dispatch execution internal and runtime truth narrow.
-User-facing dispatch text, when needed, states only `dispatch pending`, blocker, or next owner/action.
-Keep `TeamCreate`, task creation, packet assembly, skill/reference loads, member addressing, receipt handling, and runtime ladders internal unless the user explicitly asks for runtime internals.
+Follow `team-lead/references/output-surface-law.md`.
+Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
+Report only blocker, required user action, explicit status answer, next owner/action when blocked, or first `dispatch pending`.
+Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
-- report `agent started` only from agent-originated progress or first real agent action
-- report `dispatch pending` once when assignment success first creates that truth
-- if only planning is frozen, report only the next action
-- if team-agent runtime creation succeeded but no agent dispatch followed yet, keep `team exists` internal and report only the next dispatch move unless the user explicitly asks for runtime state
-- if dispatch succeeded but start evidence is absent after `dispatch pending` was already reported, keep no-change events internal and recover through receipt/execution follow-up
+- `dispatch pending` is reported once at first assignment success when a report is needed.
+- No-change dispatch, ack, lane-count, waiting, and idle events stay internal.
 
 Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
