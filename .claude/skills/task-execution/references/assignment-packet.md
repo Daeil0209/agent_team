@@ -49,6 +49,7 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
+- tool-envelope validity per `message-classes.md` before packet-body checks
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver may return evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation

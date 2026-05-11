@@ -58,13 +58,12 @@ Pick one:
 - `verified result`
 - `blocker`
 - `next action`
-- `dispatch pending`
 - `closeout residual`
 
 `next action` report requires a blocked lead-owned execution path.
 Blocked path means proven user-owned decision, awaited runtime gate from another lane, or explicit upstream `HOLD`.
 On any open lead-owned path, execute silently in the same turn.
-Agent acknowledgments, partial outputs, lane counts, and waiting states are internal while monitoring, merge, recovery, or synthesis can continue.
+Agent acknowledgments, partial outputs, lane counts, dispatch state, and waiting states are internal while monitoring, merge, recovery, or synthesis can continue.
 
 ## Output Shape
 - `PHASE-RESULT` carries phase outcome plus next owner/action plus canonical artifact path.

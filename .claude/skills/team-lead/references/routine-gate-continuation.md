@@ -75,6 +75,6 @@ Use three user-facing surfaces only:
 
 Clean boot, planning, workflow-entry, and phase-transition readiness stay internal when they only confirm satisfied gates or routine next action.
 Boot, planning, workflow-entry, and phase-transition reports surface only a blocker, required user action, or materially changed next owner/action that cannot be executed in the same segment.
-Dispatch reports at most `dispatch pending`.
+Dispatch state is internal unless an explicit status answer reports only the user-relevant waiting condition.
 `task-execution`, `TeamCreate`, packet assembly, receipt, and runtime detail stay internal.
 After `session-closeout` owns the path, late outputs narrow residual truth only.

@@ -138,12 +138,7 @@
 - Acceptance facts travel in packets or cited artifacts.
 
 ## Communication
-- User-facing output is concise, decision-oriented, and evidence-backed.
-- Expose one primary truth surface.
-- Planning is nonterminal evidence.
-- Dispatch success is nonterminal evidence.
-- Receipt is nonterminal evidence.
-- Progress is nonterminal evidence.
+- User-facing prose reports only a verified result, blocker, explicit status answer, or user-relevant action/residual needed to proceed; all internal orchestration stays silent.
 - Completion-grade messages require convergence.
 - Completion-grade messages require verification.
 - Agents raise `scope-pressure` for unsafe packets.

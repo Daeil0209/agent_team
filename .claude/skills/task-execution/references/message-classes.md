@@ -28,10 +28,11 @@ LOAD-POLICY: on-demand reference only
 ## Canonical Channel Registry
 The team-runtime data path has five channel families.
 Each family names its tool surface, payload shape, owner reference, and next-action rule.
+Tool envelope fields are actual top-level tool parameters only; governance packet fields live inside the tool's `prompt`, `message`, or `description` body, never as XML-style pseudo-parameters or packet lines inside another envelope field.
 
 | Family | Tool surface | Payload shape | Owner reference | Next-action rule |
 |---|---|---|---|---|
-| Runtime topology | `TeamCreate`, team-scoped `Agent(team_name,name)`, `TeamDelete` | runtime creation, member launch with `MESSAGE-CLASS: assignment` packet, runtime deletion | `runtime-dispatch-law.md`; `lifecycle-control.md` | dispatch truth, receipt monitoring, or closeout residual truth |
+| Runtime topology | `TeamCreate`, team-scoped `Agent`, `TeamDelete` | runtime creation, member launch with top-level `description`, `prompt`, `team_name`, and `name`; runtime deletion | `runtime-dispatch-law.md`; `lifecycle-control.md` | dispatch truth, receipt monitoring, or closeout residual truth |
 | Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, lifecycle-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; `lifecycle-control.md` | first upward outcome, `control-ack`, or shutdown evidence |
 | Agent-to-lead reports | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, handoff, completion, or blocked report | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
 | Direct teammate interaction | Claude Code teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, lifecycle, task-control, acceptance, or active-surface changes route to `team-lead` |
@@ -40,7 +41,7 @@ Each family names its tool surface, payload shape, owner reference, and next-act
 Task tools are task-state channels.
 Agent communication uses `SendMessage` or Claude Code teammate UI.
 Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
-`TaskCreate` requires non-empty subject and description.
+`TaskCreate` requires top-level non-empty `subject` and `description`.
 Prefer `Read` on the background task output path when the runtime provides that path.
 Blocked reports use exact literal `MESSAGE-CLASS: hold|blocker`.
 Hooks and ledgers observe, gate, or record channel truth.

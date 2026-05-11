@@ -39,7 +39,6 @@ Select exactly one primary truth surface:
 - `verified result`
 - `blocker`
 - `next action`
-- `dispatch pending`
 - `closeout residual`
 
 Then select exactly one output surface:
@@ -51,7 +50,7 @@ Then select exactly one output surface:
 User-facing prose requires stopped execution or a user-requested status answer.
 If same-segment execution can continue, say nothing.
 Client-visible tool/runtime UI may remain visible; do not add explanatory prose for it.
-Allowed mid-flight prose is one line for blocker, required user action, explicit status answer, or first `dispatch pending`.
+Allowed user-facing prose reports only a verified result, blocker, explicit status answer, or user-relevant action/residual needed to proceed; all internal orchestration stays silent.
 Stop before `FINAL` when any queued, remaining, residual, unpatched, undeferred, or unproven item remains.
 Stop before `verified result` when `SV-RESULT` is missing, stale, or narrower than the outgoing claim.
 
@@ -63,7 +62,7 @@ Stop before `verified result` when `SV-RESULT` is missing, stale, or narrower th
 ## MID-FLIGHT
 `MID-FLIGHT` is silent by default.
 `MID-FLIGHT` emits tool calls only unless `Stop` allows one concise prose line.
-`MID-FLIGHT` never narrates internal procedure, runtime setup, corpus/route/staffing, or team-state changes.
+`MID-FLIGHT` follows the user-facing prose rule without exception.
 Terminal-visible prose, pane-visible prose, and visible task-plan/todo/checklist UI follow the same limit.
 
 ## PHASE-RESULT
@@ -80,11 +79,11 @@ Every queued item is patched, deferred by owning upstream record, or proven out-
 `FINAL` claim scope stays within Evidence-Quality Matrix supported scope.
 
 ## Internal-By-Default Content
-Internal means all procedure, planning, dispatch, runtime, lane-traffic, advisory, packet, and verification-record detail.
-Expose only the selected primary truth surface, and only when `Stop` allows prose.
+Internal orchestration means all procedure, planning, dispatch, runtime, lane-traffic, advisory, packet, progress, receipt, ack, measurement, route, staffing, and verification-record detail.
+It stays silent unless the user explicitly asks for status or the detail is necessary to report a blocker or required user action.
 
 ## Claim Control
-Dispatch is at most `dispatch pending`.
+Dispatch is internal unless an explicit status answer reports only the user-relevant waiting condition.
 Runtime, receipt, status, control, hook, and partial-lane signals are evidence only, not reportable results.
 When basis is weaker than claim strength, narrow the claim.
 When basis is insufficient for a claim, report `INFERENCE/UNVERIFIED`.

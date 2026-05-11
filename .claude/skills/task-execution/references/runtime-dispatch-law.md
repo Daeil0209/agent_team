@@ -30,7 +30,7 @@ Target-resolution preflight is mandatory before the tool call:
 2. read the live process-backed roster, not config residue
 3. map the frozen target role to an exact live process-backed member name
 4. choose `SendMessage` only on exact live-process roster match
-5. choose team-scoped `Agent(team_name, name)` when the lane is absent but team-runtime delegation remains the route
+5. choose team-scoped `Agent` with top-level `team_name` and `name` when the lane is absent but team-runtime delegation remains the route
 6. treat standalone host evidence only as legacy/fallback evidence, not dispatch
 7. label the resulting truth before reporting: `dispatch pending`, fallback evidence, or `HOLD`
 
