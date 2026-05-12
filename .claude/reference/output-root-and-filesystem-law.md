@@ -21,7 +21,7 @@ Use this reference when work creates files.
 Use this reference when work edits source files.
 Use this reference when work edits governance files.
 Use this reference when work names an output root.
-Use this reference when work may write outside the approved output root.
+Use this reference when work targets a path outside the approved output root.
 It keeps user deliverables in the task project folder.
 It keeps governance edits on owner files.
 
@@ -34,11 +34,11 @@ It keeps governance edits on owner files.
 - A source file will be edited.
 - A governance file will be edited.
 - The project output folder is unknown.
-- A command may write outside the task project folder.
-- Work may touch runtime state.
-- Work may touch protected settings.
-- Work may touch secrets.
-- Work may touch incidental roots.
+- A command targets a path outside the task project folder.
+- Work targets runtime state.
+- Work targets protected settings.
+- Work targets secrets.
+- Work targets incidental roots.
 
 ## Required Output
 The consuming owner records:
@@ -57,7 +57,7 @@ Stop before destructive mutation unless the user explicitly requested it.
 Stop before destructive mutation unless the approval path is lawful.
 Stop before hiding protected filesystem mutation behind interpreter snippets.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped output route opens canonical output-root derivation.
 - A stopped settings route opens the owning update path.
 - A stopped destructive route opens explicit user approval.

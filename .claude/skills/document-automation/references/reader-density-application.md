@@ -24,10 +24,10 @@ Use when the document must support fast executive reading, practical field reuse
 
 ## Practical Application Tools
 - Include judgment-column checklists when the reader will reuse the document as an execution or field-check tool.
-- Short memos may use a compact condition table instead.
+- Short memos use a compact condition table instead when that preserves reader clarity.
 - Conclusion includes a numbered implementation sequence when the reader needs an execution path.
 - Operational condition tables include a `Practical judgment` column.
-- Short memos may use a concise interpretation note instead.
+- Short memos use a concise interpretation note instead when that preserves reader clarity.
 - Tier recommendations by risk level.
 - Untiered recommendations in risk-differentiated contexts are a usability defect.
 
@@ -39,6 +39,6 @@ Use when the document must support fast executive reading, practical field reuse
 - Structure key reference tables so one axis represents the reader's self-identified category.
 - Missing self-selection axis forces linear reading and is a usability defect.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return density layer, practical tool choice, reader-preparation requirement, and usability defects to the active document-automation workflow.
 - If reader reuse or fast comprehension affects review/proof, carry the named requirement to reviewer, tester, or validator packets.

@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned closeout surface.
-- Fixed top-level section order after Structural Contract: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence` -> `Next-Action Drive`.
+- Fixed top-level section order after Structural Contract: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence` -> `Resolve Next Owner And Action`.
 - Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the closeout spine only.
@@ -63,7 +63,8 @@ Keep closeout narrow:
 ### Fast paths
 - No-runtime fast path: when no explicit team runtime or recurring monitor was created in the current session, closeout reduces to intent mark, exact residual disclosure if needed, and `SessionEnd` capture.
 - User-facing output is a short acknowledgement at most.
-- No-acceptance-surface fast path: when the session produced no implementation deliverable or no acceptance surface was created, set validation ownership to `not-needed` and close without extra ceremony.
+- No-acceptance-surface fast path applies to research, Q&A, read-only analysis, and sessions with zero implementation deliverable.
+- Implementation deliverables route to `HOLD` until validation ownership and acceptance evidence are resolved.
 
 ### Closeout constraints
 - Session-end intent comes from explicit closeout or teardown basis.
@@ -83,7 +84,7 @@ See `references/closeout-state-detail.md` for:
 - `Hold Conditions`
 - `Agent Lifecycle Resolution`
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Clean closeout exits silently or with one line.
 - Warning-bearing closeout reports exact residual state, hold reason, and next recovery surface.
 - Unresolved live-agent truth reports warning-bearing closeout or `HOLD`.

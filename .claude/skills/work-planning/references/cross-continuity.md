@@ -28,7 +28,7 @@ At phase-movement and report-time, apply same-session confirmed corrections, rec
 
 Skipping cross-continuity creates `twist`: a silent contradiction that surfaces only at integration and tends to create infinite-loop iteration or longer fix time than an honest reopen.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Incorporated prior invariants return to the active planning freeze.
 - Prior-invariant contradiction reopens `work-planning`.
 - Synthesis-time drift reopens the owning planning path.

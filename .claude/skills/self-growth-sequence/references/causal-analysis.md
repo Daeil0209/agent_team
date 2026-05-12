@@ -17,7 +17,7 @@ Required reconstruction:
 
 If the causal basis remains only a hypothesis, the patch must stay reversible, narrowly scoped, and explicitly marked as hypothesis-supported. If the causal basis cannot identify a prevention point, keep the round on `HOLD` or assign bounded follow-up ownership.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Confirmed causal basis opens owner-surface selection.
 - Confirmed failure mode opens `failure-mode-response`.
 - Identified recurrence path opens barrier design.

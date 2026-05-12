@@ -25,7 +25,7 @@ Keep detailed vertical rules in their own reference files.
 - Research report automation boundary decisions load `references/research-report-workflow-boundary.md`.
 - Budget, personnel, participation, allocation, period, reconciliation, and spreadsheet-migration workflows load `references/allocation-participation-workflow.md`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Matched domain vertical opens the listed reference.
 - Missing listed reference opens blocker-clear or owner correction.
 - Multiple matched verticals open each matched reference with a named reason.

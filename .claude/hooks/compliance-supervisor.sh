@@ -87,6 +87,29 @@ is_governance_reference_path() {
   [[ "$candidate_path" == */.claude/reference/* || "$candidate_path" == */.claude/skills/*/references/* ]]
 }
 
+is_secret_or_credential_path() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+  local workspace_root basename
+  workspace_root="$(resolve_project_root 2>/dev/null || printf '')"
+  basename="$(basename "$candidate_path" 2>/dev/null || printf '%s' "$candidate_path")"
+
+  case "$basename" in
+    .env|.env.*|credentials.json|*.pem|*.key|*.p12|*.pfx)
+      return 0
+      ;;
+  esac
+
+  [[ -n "$workspace_root" ]] || return 1
+  case "$candidate_path" in
+    "$workspace_root"/secrets|"$workspace_root"/secrets/*|*/secrets|*/secrets/*)
+      return 0
+      ;;
+  esac
+
+  return 1
+}
+
 # governance_reference_structured_edit_actor_allowed() removed.
 # Allow-list actor gating violated [HOOK-LAST] (not a MANIFEST hard-deny category)
 # and the over-broad-blocking rule. Wholesale-overwrite existence gate remains the pinpoint
@@ -537,6 +560,100 @@ command_uses_interpreter_fs_mutation() {
   return 1
 }
 
+bash_secret_read_deny_reason() {
+  local cmd="${1-}"
+  [[ -n "$cmd" ]] || return 1
+
+  COMMAND_TEXT="$cmd" \
+  WORKSPACE_ROOT="$(resolve_project_root)" \
+  HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+  node <<'NODE'
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+
+const readers = new Set(["cat", "head", "tail", "nl", "less", "more", "strings", "xxd", "od", "base64"]);
+const patternReaders = new Set(["grep", "egrep", "fgrep", "rg", "sed", "awk"]);
+const valueOptions = new Set([
+  "-A", "-B", "-C", "-m", "-n", "-e", "-f", "-E", "-F", "-P",
+  "--after-context", "--before-context", "--context", "--max-count",
+  "--regexp", "--file", "--encoding", "--type", "--glob"
+]);
+
+const clean = (word) => String(word || "").replace(/^['"]|['"]$/g, "");
+const base = (word) => path.basename(clean(word));
+const commandName = (word) => path.basename(clean(word)).toLowerCase();
+const isSecretTarget = (word) => {
+  const target = clean(word);
+  if (!target || target === "--") return "";
+  const normalized = target.replace(/\\/g, "/");
+  const resolved = path.resolve(workspaceRoot, normalized);
+  const rel = path.relative(workspaceRoot, resolved).replace(/\\/g, "/");
+  if (rel === "secrets" || rel.startsWith("secrets/")) return "protected-secrets-dir:" + target;
+  const filename = base(target);
+  if (/^\.env(\..*)?$/.test(filename) ||
+      filename === "credentials.json" ||
+      /\.(pem|key|p12|pfx)$/i.test(filename)) {
+    return "protected-secret-file:" + target;
+  }
+  return "";
+};
+
+const optionTakesValue = (cmd, word) => {
+  if (valueOptions.has(word)) return true;
+  if ((cmd === "head" || cmd === "tail") && /^-[cnqv]$/.test(word)) return true;
+  return false;
+};
+
+const parts = command.split(/(?:&&|\|\||;)/).map((part) => part.trim()).filter(Boolean);
+for (const part of parts) {
+  const words = tokenize(part);
+  if (!words || words.length < 2) continue;
+  const cmd = commandName(words[0]);
+  if (!readers.has(cmd) && !patternReaders.has(cmd)) continue;
+
+  let skipNext = false;
+  let skippedPattern = false;
+  let afterDoubleDash = false;
+  for (let index = 1; index < words.length; index += 1) {
+    const raw = words[index];
+    const word = clean(raw);
+    if (!word) continue;
+    if (skipNext) {
+      skipNext = false;
+      continue;
+    }
+    if (!afterDoubleDash && word === "--") {
+      afterDoubleDash = true;
+      continue;
+    }
+    if (!afterDoubleDash && word.startsWith("-")) {
+      if (optionTakesValue(cmd, word)) {
+        const optionValueReason = isSecretTarget(words[index + 1]);
+        if (optionValueReason) {
+          process.stdout.write(optionValueReason);
+          process.exit(0);
+        }
+        skipNext = true;
+      }
+      continue;
+    }
+    if (patternReaders.has(cmd) && !skippedPattern) {
+      skippedPattern = true;
+      continue;
+    }
+    const reason = isSecretTarget(word);
+    if (reason) {
+      process.stdout.write(reason);
+      process.exit(0);
+    }
+  }
+}
+process.exit(1);
+NODE
+}
+
 bounded_generated_cleanup_command() {
   local cmd="${1-}"
   local project_root=""
@@ -958,13 +1075,11 @@ fi
         # fall through to allow structured governance reference maintenance
       fi
 
-      case "$BASENAME" in
-        .env|.env.*|credentials.json|*.pem|*.key)
-          emit_deny "Direct edits to credential or secret files are blocked in this project."
-          log_violation "$TOOL_NAME" "$CANONICAL_PATH" "credential-file" || true
-          exit 0
-          ;;
-      esac
+      if is_secret_or_credential_path "$CANONICAL_PATH"; then
+        emit_deny "Direct edits to credential or secret files are blocked in this project."
+        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "credential-file" || true
+        exit 0
+      fi
 
       if procedure_state_target_exact "$CANONICAL_PATH"; then
         case "$TOOL_NAME" in
@@ -1053,6 +1168,12 @@ fi
       fi
     fi
     SANITIZED_COMMAND="$(strip_read_only_null_redirections "$CLEAN_COMMAND")"
+    SECRET_READ_DENY_REASON="$(bash_secret_read_deny_reason "$SANITIZED_COMMAND" 2>/dev/null || true)"
+    if [[ -n "$SECRET_READ_DENY_REASON" ]]; then
+      emit_deny "Secret read target restricted (${SECRET_READ_DENY_REASON}). Use non-secret evidence or a redacted artifact."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "secret-read-target" || true
+      exit 0
+    fi
 
 	    if printf '%s' "$UNQUOTED_CLEAN" | grep -qE '(&&|\|\||;)'; then
       if validate_compound_command "$CLEAN_COMMAND" allowed_git_readonly_subcmd; then
@@ -1140,10 +1261,7 @@ for (const sub of parts) {
     if (rel === "secrets" || rel.startsWith("secrets/")) {
       process.stdout.write("protected-secrets-dir:" + w); process.exit(0);
     }
-    // Mirrors the structured-edit secret-file deny pattern at line ~955
-    // (.env|.env.*|credentials.json|*.pem|*.key) and extends to *.p12/*.pfx.
-    // Coherence flag: pattern duplicated across two tool surfaces (Write/Edit
-    // case + Bash rm here); future RE-HOME candidate to a shared helper.
+    // Mirrors the shared structured-edit secret-file deny pattern.
     const base = require("path").basename(resolved);
     if (/^\.env(\..*)?$/.test(base) ||
         base === "credentials.json" ||

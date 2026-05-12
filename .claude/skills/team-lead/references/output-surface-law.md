@@ -11,7 +11,7 @@ SOURCE-RULES: "RPA-7 Output Surface; Communication And Reporting Law; Reference 
 - Consume When
 - Required Output
 - Stop
-- Next-Action Drive
+- Resolve Next Owner And Action
 - MID-FLIGHT
 - PHASE-RESULT
 - FINAL
@@ -48,13 +48,13 @@ Then select exactly one output surface:
 
 ## Stop
 User-facing prose requires stopped execution or a user-requested status answer.
-If same-segment execution can continue, say nothing.
-Client-visible tool/runtime UI may remain visible; do not add explanatory prose for it.
+If same-segment execution can continue and the user did not request status, say nothing.
+Client-visible tool/runtime UI can remain visible; do not add explanatory prose for it.
 Allowed user-facing prose reports only a verified result, blocker, explicit status answer, or user-relevant action/residual needed to proceed; all internal orchestration stays silent.
 Stop before `FINAL` when any queued, remaining, residual, unpatched, undeferred, or unproven item remains.
 Stop before `verified result` when `SV-RESULT` is missing, stale, or narrower than the outgoing claim.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped output prose route continues internal execution.
 - A stopped output `FINAL` route opens residual queue processing.
 - A stopped `verified result` route opens `SV-RESULT`.

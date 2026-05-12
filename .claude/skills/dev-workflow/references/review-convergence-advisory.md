@@ -5,7 +5,7 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Use only inside active `dev-workflow` when reviewer-owned review materially drives Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
+Use only inside active `dev-workflow` when reviewer-owned review materially determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 
 ## Contents
 - Authority
@@ -16,7 +16,7 @@ Use only inside active `dev-workflow` when reviewer-owned review materially driv
 - Convergence
 - Same-Boundary Loop
 - Output Record
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Authority
 Codex is reviewer-grade advisory only.
@@ -39,7 +39,7 @@ Default surfaces:
 - Phase 4 review before tester/validator closure
 - Phase 5 quick-check after blocking or high-risk fix
 - cross-surface coherence review after parallel production
-- governance, proof, report, or design-implementation review that drives acceptance or redispatch
+- governance, proof, report, or design-implementation review that determines acceptance or redispatch
 
 Do not run for receipt/status/control-only messages, typo-only/cosmetic-only review, already-adjudicated findings without material artifact change, or light answer-only work.
 If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
@@ -105,11 +105,11 @@ Review convergence requires:
 - tester and validator ingress surfaces remain truthful
 - no stale artifact or proof result is used as current evidence
 
-Exact wording may differ.
+Exact wording can differ.
 Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
 Codex disagreement is advisory, not veto.
-`SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-driven redispatch.
+`SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop; team-lead executes the output-record next owner/action without user-facing review/proceed prompts unless explicit approval or a verified user-owned blocker exists.
 
 ## Same-Boundary Loop
@@ -145,7 +145,7 @@ Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-conv
 - review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Accepted material findings open correction requirements.
 - Resolved review convergence opens the output-record next owner/action.
 - Missing or false continuation values make the result discussion-only and reopen the review convergence route.

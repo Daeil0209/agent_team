@@ -29,7 +29,7 @@ Stop before convergence until same-pass team-lead own-review is present.
 Stop before accepting Codex agreement when the governing reference only permits fail-open.
 Stop before relay until team-lead adjudicates the output.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped freeze route opens same-pass team-lead own-review.
 - A stopped convergence route opens same-pass team-lead own-review.
 - A stopped Codex-agreement route opens governing-reference check.

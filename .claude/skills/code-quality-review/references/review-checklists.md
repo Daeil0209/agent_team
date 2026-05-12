@@ -36,9 +36,9 @@ Score each module or function on 5 questions (1 point each):
 | Anti-Pattern | Good Pattern |
 |---|---|
 | if/else chains for type dispatch | Registry pattern (map of type → handler function) |
-| Hardcoded configuration lists | Config-driven with external source |
+| Hardcoded configuration lists | Config-backed with external source |
 | Switch on enum with inline logic | Plugin or strategy interface |
-Classify detected anti-patterns through reviewer severity and the refactoring matrix. For acceptance-blocking Major/Critical or RFP-1/RFP-2 cases, report reviewer blocking evidence with `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker`; otherwise report the pattern and recommended replacement as non-blocking debt.
+Classify detected anti-patterns through reviewer severity and the refactoring matrix. For acceptance-blocking Major/Critical or RFP-1/RFP-2 cases, report reviewer blocking evidence with `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker`; otherwise report the pattern and replacement candidate as non-blocking debt.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|
@@ -49,6 +49,6 @@ Classify detected anti-patterns through reviewer severity and the refactoring ma
 Apply this matrix during review. RFP-1 and RFP-2 triggers require explicit owner assignment and resolution path before merge approval.
 > **Note:** RFP labels are code-quality-review-local refactoring priorities. They do not map to the T0-T3 severity framework used by `.claude/skills/security-review/references/security-review-detail.md`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return checklist findings, refactoring priority, blocking status, and owner assignment to the active code-quality-review workflow.
 - If code quality findings affect merge approval, test scope, architecture, or security, route the named requirement to that owner before approval continues.

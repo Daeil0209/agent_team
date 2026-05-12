@@ -24,7 +24,7 @@ Record:
 - contradictions
 - frozen delivery contract comparison
 - next executable owner/action or `HOLD`
-- `SV-RESULT` status when synthesis drives reporting or redispatch
+- `SV-RESULT` status when synthesis controls reporting or redispatch
 
 ## Stop
 Stop positive synthesis until the input is completion-grade.
@@ -33,12 +33,12 @@ Stop positive synthesis when agent outputs conflict.
 Stop positive synthesis when the conclusion outruns the reconciled verified surface.
 Stop positive synthesis when required shard outputs are missing, late, unintegrated, or not explicitly deferred/out-of-scope.
 Stop positive synthesis when audit findings are labeled as defects without the common finding-class basis and tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
-Stop positive synthesis when raw finding counts, candidate lists, or multi-lane convergence are used as severity, priority, patch-worthiness, or confirmed-defect proof.
+Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign severity, priority, patch-worthiness, or confirmed-defect status through the common finding basis.
 Stop positive synthesis when quality, evidence, independent review, proof, validation, Codex-advisory, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis.
 Stop positive synthesis when an agent conclusion uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`.
 Stop positive synthesis while `[RETRO-APPLY]` affected prior evidence remains stale or unclassified.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped input route opens completion-grade input recovery.
 - A stopped open-surface route opens the smallest correcting owner.
 - A stopped conflict route opens owner synthesis reconciliation.
@@ -50,22 +50,18 @@ Stop positive synthesis while `[RETRO-APPLY]` affected prior evidence remains st
 
 ## Allowed Inputs
 Synthesis is allowed only from `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`.
-Consume only the agent's returned:
-- `TASK-ID`
-- `OUTPUT-SURFACE`
-- `EVIDENCE-BASIS`
-- `OPEN-SURFACES`
-- `RECOMMENDED-NEXT-LANE`
+Consume the completion-handoff common spine and any lane-specific fields needed for the synthesized claim.
+For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and common finding basis items.
 
 ## Hard Rules
 - Apply `CLAUDE.md` Communication message-class truth before synthesis.
 - `hold|blocker` stops positive synthesis.
 - `scope-pressure` stops positive synthesis.
-- Implemented routes may prove `ACTIVE-SLICE`.
-- Implemented files may prove `ACTIVE-SLICE`.
-- Implemented screens may prove `ACTIVE-SLICE`.
-- Implemented sections may prove `ACTIVE-SLICE`.
-- Implemented checks may prove `ACTIVE-SLICE`.
+- Implemented routes prove `ACTIVE-SLICE` only within their covered surface.
+- Implemented files prove `ACTIVE-SLICE` only within their covered surface.
+- Implemented screens prove `ACTIVE-SLICE` only within their covered surface.
+- Implemented sections prove `ACTIVE-SLICE` only within their covered surface.
+- Implemented checks prove `ACTIVE-SLICE` only within their covered surface.
 - Compare implemented artifacts against the frozen delivery contract.
 - Positive closure compares against the frozen request/plan delivery contract.
 - Positive synthesis claims only the scope supported by Evidence-Quality Matrix rows, `FROZEN-CONTRACT-STATUS`, and retained open-surface state.

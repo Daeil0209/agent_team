@@ -12,12 +12,12 @@ LOAD-POLICY: on-demand reference only
 - Tailwind Config Integration
 - Cross-Platform Token JSON
 - Design System Checklist
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Platform Implementation Tools
 The library table provides implementation examples.
 When library adoption, version behavior, licensing, or platform fit is material, use current official docs, benchmark evidence, or `external-tool-bridge` setup proof before freezing the tool choice.
-| Platform | Recommended Libraries | Token Method |
+| Platform | Library Baseline | Token Method |
 |----------|----------------------|--------------|
 | Web (React / Next.js) | shadcn/ui, Radix UI | CSS Variables |
 | Web (Vue) | Vuetify, PrimeVue | CSS Variables |
@@ -146,7 +146,7 @@ CSS variables (web), `.dart` constants (Flutter), `.swift` enums (iOS), `.kt` ob
 - [ ] Dark mode overrides verified on all target platforms
 - [ ] Component catalog / usage guidelines documented
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Selected implementation pattern returns token implementation basis to the consuming owner.
 - Material tool, version, license, or platform uncertainty opens official-doc, benchmark, or setup proof.
 - Completed checklist opens implementation or review on the target platform.

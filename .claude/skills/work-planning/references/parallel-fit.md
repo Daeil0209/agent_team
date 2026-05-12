@@ -19,7 +19,7 @@ Use this discrimination:
 
 The Step 1 Q4 discrimination test is `distinct acceptance contracts AND output->input independence`, not `2+ surfaces` alone. Strict sequential output->input dependency keeps the `sequential` classification even when surfaces are distinct.
 
-Independent specialist-fit work surfaces may be separated by evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner. Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason. Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
+Independent specialist-fit work surfaces separate by evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner. Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason. Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
 
 Parallel split law: choose semantic boundaries first, then balance expected burden. File count alone is never a sufficient burden basis for document, governance, codebase, or mixed-size corpus work. A valid split names the burden basis: line/byte scale, high-touch or critical surfaces, reference density, proof/review complexity, and expected synthesis burden. If one group remains materially heavier and can be split without breaking owner, surface, proof, acceptance, or merge boundaries, keeping it intact is a distribution-planning defect.
 
@@ -29,7 +29,7 @@ Unknown material burden facts make measurement the next planned action, not a pr
 
 Actual additional-agent dispatch still follows the active host runtime's authorization model. Parallel production requires a frozen binding surface before dispatch. At minimum, freeze the shared source-of-truth, interface or format contract, dependency boundaries, ownership boundaries, merge owner, and acceptance/proof chain needed to prevent parallel drift. A vague binding surface is a design defect and a parallel-drift root cause, not a downstream acceptance surprise.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Independent specialist-fit surfaces open team-routed parallel planning.
 - Unknown material burden opens route-local measurement.
 - Valid serial reason records `PARALLEL-GROUPS: none`.

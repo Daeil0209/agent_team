@@ -148,7 +148,7 @@ Required attempts before declaring the operator environment unreachable:
 - Reverse interop via `wsl.exe` from Windows or `powershell.exe -Command` from WSL for Windows-API-level checks.
 - Any other available tool bridge that can exercise the operator-runtime surface without requiring operator labor.
 
-Only when all such auto-test paths are tested and proven infeasible may the lane fall back to documenting an operator-test checklist. That checklist is operator reference documentation, not an acceptance gate that requires operator-side labor before PASS.
+Only when all such auto-test paths are tested and proven infeasible does the lane fall back to documenting an operator-test checklist. That checklist is operator reference documentation, not an acceptance gate that requires operator-side labor before PASS.
 
 Asking the operator to "double-click and report results" as a closure precondition is a verification-lane design defect. The operator is the deliverable recipient, not the team's co-tester.
 
@@ -204,7 +204,7 @@ Validator writes a correction packet with:
 - `REQUIRED-USER-SURFACE-EVIDENCE`
 - `REQUIRED-RETURN-EVIDENCE`
 - `REVALIDATION-TARGET`
-- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it should match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
+- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
 
 Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
@@ -229,7 +229,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
 - PASS cites only Evidence-Quality Matrix supported scope.
 - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments; equivalence claimed without observable basis is a verification defect equivalent to silent PASS, and absent or partial equivalence makes the affected sub-surface `HOLD` or `INFERENCE/UNVERIFIED`, not PASS.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `PASS` opens team-lead acceptance synthesis or Final Acceptance Review by frozen route.
 - `HOLD` opens team-lead blocker or evidence-basis correction.
 - `FAIL` opens team-lead correction routing.

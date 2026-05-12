@@ -38,7 +38,7 @@ Additional gate law:
 - `FINAL-ACCEPT` opens workflow `Complete`.
 - `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Satisfied phase gate executes the frozen next owner/action in the same execution segment.
 - Missing gate evidence keeps the phase cursor active.
 - Missing artifact convergence opens `artifact-convergence-advisory`.

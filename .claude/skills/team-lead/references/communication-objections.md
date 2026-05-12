@@ -10,7 +10,7 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
 ## Contents
 - Message-Class Truth
 - Communication Hard Rules
-- Next-Action Drive
+- Resolve Next Owner And Action
 - hold|blocker
 - scope-pressure
 
@@ -26,7 +26,8 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
 
 ## Communication Hard Rules
 - Assignment-grade dispatch proves receipt-level dispatch state.
-- Agent completion requires one explicit lifecycle control message.
+- Agent completion requires a lifecycle decision.
+- Same-segment assignment-grade work satisfies the decision under lifecycle-control.
 - Lifecycle debt stays visible until consumed.
 - Report lifecycle debt resolution only after lifecycle control consumes it.
 - Same-surface follow-on before lifecycle control requires narrow scope.
@@ -37,7 +38,7 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
 - Use one primary downward message class per agent per segment.
 - Send assignment-grade work and standalone `phase-transition-control` in separate execution segments.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A `hold|blocker` opens corrected packet, reopened `work-planning`, setup/tool owner, or proven user-owned blocker classification.
 - A `scope-pressure` opens packet correction or `work-planning` by `REPLAN-REQUIRED`.
 - A lifecycle debt signal opens lifecycle control.
@@ -82,7 +83,7 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
   - `PRESSURE-TYPE`
   - `WHY-CURRENT-PACKET-FAILS`
   - `SMALLEST-SAFE-BOUNDARY`
-  - `RECOMMENDED-NEXT-LANE`
+  - `LANE-NEXT-CANDIDATE`
   - `REPLAN-REQUIRED`
 - Reopen `work-planning` immediately when `REPLAN-REQUIRED: yes`.
 - Reopen `work-planning` when the canonical pressure type shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
@@ -98,7 +99,7 @@ SOURCE-RULES: "RPA-5 Communication And Objections; Communication And Reporting L
 - Packet correction requires the same parallel grouping.
 - Packet correction requires the required verification gate.
 - Treat multiple aligned objections as stronger planning evidence.
-- Unresolved objections block positive completion, synthesis-driven redispatch, and completion-style reporting.
+- Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style reporting.
 - Unresolved objections keep the blocked lane on a concrete resolution path.
 - Unrelated independent lanes keep moving when lawful.
 - Map changed evidence/proof surface to `proof-surface-mismatch`.

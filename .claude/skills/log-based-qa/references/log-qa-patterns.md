@@ -15,7 +15,7 @@ LOAD-POLICY: on-demand reference only
 - Issue Documentation Template
 - Implementation Checklists
 - Cycle Documentation Template
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## JSON Log Format Standard
 ### Required Fields
@@ -85,7 +85,7 @@ If logs are the frozen decisive proof surface, missing required log fields or re
   {"level":"ERROR","request_id":"req_xxxxxx","message":"...","data":{...}}
   ```
 - **Root cause**: {description}
-- **Recommended fix**: {action}
+- **Correction**: {action}
 ```
 ## Implementation Checklists
 ### Logging Infrastructure
@@ -117,7 +117,7 @@ If logs are the frozen decisive proof surface, missing required log fields or re
 - {what to retest or add coverage for}
 ```
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Ready log QA workflow opens tester proof execution.
 - Missing required log fields opens logging infrastructure correction.
 - Frozen decisive log proof with propagation gap opens blocked proof or alternate proof-surface freeze.

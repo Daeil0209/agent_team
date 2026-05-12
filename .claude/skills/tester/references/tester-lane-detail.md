@@ -19,7 +19,7 @@ auto-inject: false
 - Human-Facing Checklist
 - Specialist Skill Loading
 - Tester Handoff Detail
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Auto-inject
 false - load explicitly when packet detail, UI intent proof detail, interaction coverage, human-facing checklist detail, or handoff detail is needed.
@@ -84,13 +84,13 @@ Rules:
 - Prefer user-facing locators such as role, label, text, placeholder, and test id when test ids are part of the app contract.
 - Prefer web-first assertions that wait for the expected visible state. Avoid fixed sleeps as proof.
 - Use `npx playwright test` for repeatable proof. Add `--headed`, `--project`, `--grep`, or trace options only when they materially improve the assigned proof or debug surface.
-- If the UI intent cannot be driven through Playwright CLI or the frozen equivalent path, classify the proof as blocked instead of substituting weaker evidence.
+- If the UI intent cannot be exercised through Playwright CLI or the frozen equivalent path, classify the proof as blocked instead of substituting weaker evidence.
 
 ## Defect Detection Amplifiers
 Use only amplifiers that materially strengthen the intent proof matrix. The goal is higher fault discovery per check, not larger reports.
 - Data and rule surfaces: use equivalence partitions, boundary values, decision tables, and invalid/empty/duplicate/extreme data probes.
 - Stateful or workflow surfaces: use state-transition probes, repeat/undo/retry/order-change paths, interruption paths, and post-action state checks.
-- Multi-parameter surfaces: use pairwise or small t-way combinations before exhaustive matrices when combinations drive risk.
+- Multi-parameter surfaces: use pairwise or small t-way combinations before exhaustive matrices when combinations determine risk.
 - Structure-aware surfaces: target changed branches, error handlers, configuration paths, serialization/deserialization edges, and resource cleanup. Treat coverage as a gap finder, not proof by itself.
 - User-interaction surfaces: exercise visible controls directly, verify user-visible postconditions, and keep browser/runtime/reader evidence distinct from source evidence.
 - Weak-oracle surfaces: use properties, invariants, round trips, differential/reference checks, metamorphic relations, and stateful generated sequences when exact expected output is hard to know.
@@ -147,9 +147,9 @@ Specialist lenses complement tester execution authority and do not replace user-
 - `matched` is reserved for true contract alignment on that exact surface.
 - For a Windows primary operator surface, handoff names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
 - For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the handoff or evidence anchor.
-- If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` as appropriate and explain the contradiction in `OPEN-SURFACES` instead of silently mutating the validator basis.
+- If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` according to the contradiction and explain it in `OPEN-SURFACES` instead of silently mutating the validator basis.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `execute` opens tester-owned proof work.
 - `reconstruct-with-inference` opens tester-owned proof work with marked inference.
 - Directly proven surface opens tester handoff.

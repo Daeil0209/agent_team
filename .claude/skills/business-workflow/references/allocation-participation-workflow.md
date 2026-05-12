@@ -75,7 +75,7 @@ The business workflow packet records:
 - Populated-state proof uses representative data for every material workflow path.
 
 ## Proof Oracle
-- Proof uses representative workbook or seeded data when spreadsheet meaning drives acceptance.
+- Proof uses representative workbook or seeded data when spreadsheet meaning determines acceptance.
 - Proof covers create-delete for in-scope master entities.
 - Proof covers edit-save-reload for in-scope mutable rows.
 - Proof covers input-to-recompute for participation, labor cost, budget total, balance, warning, and status fields.
@@ -84,7 +84,7 @@ The business workflow packet records:
 - Proof covers import, reconciliation, export, and reload when they are in scope.
 - Proof records each uncovered oracle row as blocked, deferred by upstream record, or out-of-scope by frozen basis.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Missing workflow meaning opens business-workflow packet correction.
 - Missing source-of-truth mapping opens design correction.
 - Missing linked workflow surface opens design correction.

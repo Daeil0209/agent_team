@@ -12,7 +12,7 @@ auto-inject: false
 - Protected local restatements remain when they keep owner files safe to read in isolation.
 - Reusable ownership changes protect average-capability and prevent lane hollowing.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Satisfied constraints open the selected change path.
 - Missing trace, scope, or hardening evidence reopens self-growth analysis.
 - Existing-owner fit opens owner-local update instead of new-skill introduction.

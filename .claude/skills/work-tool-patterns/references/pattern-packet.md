@@ -8,7 +8,7 @@ auto-inject: false
 Use this file when a practical work-tool request needs a reusable product-pattern packet before implementation, review, proof, or validation.
 
 ## Packet Fields
-`work_tool_pattern_packet` should be as small as possible while preserving downstream execution truth.
+`work_tool_pattern_packet` stays as small as possible while preserving downstream execution truth.
 
 Required when material:
 - `TOOL-FAMILY`: dashboard-management, research-analysis, patent-analysis, report-automation, engineering-calculation-design, spreadsheet-migration, or custom-with-basis.
@@ -56,6 +56,6 @@ Runnable or rendered proof proves an operator-facing work tool when that proof i
 - Missing adjacent-owner basis is `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Leave missing adjacent-owner basis unresolved until the owning surface supplies evidence.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return selected pattern packet, adjacent-owner basis, proof oracle, and open surfaces to the active work-tool-patterns workflow.
 - If the proof oracle affects design, implementation, reviewer, tester, or validator scope, carry it into the next owning packet before work continues.

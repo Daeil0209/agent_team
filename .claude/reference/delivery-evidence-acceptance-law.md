@@ -52,7 +52,7 @@ Stop positive completion when the decisive user surface remains unproven.
 Stop final acceptance when validator rules require a verdict.
 Stop final acceptance when final-arbitration trigger rules require a verdict.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped delivery route opens missing-deliverable correction.
 - A stopped user-surface route opens decisive-surface proof.
 - A stopped final-acceptance route opens validator routing.
@@ -83,7 +83,7 @@ Stop final acceptance when final-arbitration trigger rules require a verdict.
 ## Delivery-Fit Rules
 - Completion requires the frozen requested deliverable.
 - Completion requires user burden to be satisfied.
-- Completion may use owner deferral only through the owning upstream record.
+- Completion uses owner deferral only through the owning upstream record.
 - Owner deferral names deferred item.
 - Owner deferral names owner.
 - Owner deferral names reason.
@@ -123,7 +123,7 @@ Prove user-surface behavior on the user surface.
 - Tester evidence feeds validation.
 - Validator issues final acceptance.
 - `validator` issues final `PASS/HOLD/FAIL`.
-- Local closure may report only `verified result`.
+- Local closure reports only `verified result`.
 - Local closure is valid only when no final-arbitration trigger applies.
 - Final-arbitration trigger definitions live in `.claude/skills/validator/references/validator-lane-detail.md`.
 - Acceptance compares against the frozen delivery contract.

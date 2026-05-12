@@ -55,7 +55,7 @@ A compacted agent has lost the assignment-grade packet context but retains lane-
 - Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.
 - If the prior frozen scope is no longer truthful, team-lead reopens `work-planning` instead of redelivering. That is a fresh planning event, not compaction recovery.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Completed recovery record opens the named `RESUME-OWNER` and `RESUME-ACTION`.
 - `REPLAN-REQUIRED: yes` opens `work-planning`.
 - Uncertain runtime readiness opens `session-boot`.

@@ -25,15 +25,15 @@ For team-agent runtime paths, readiness must also account for teammate context i
 
 For lead-local consequential paths, readiness must cover the first local item, stop point, required local skills, evidence/proof limit, and whether any independent lane or acceptance owner would be substituted.
 
-A readiness gap that changes owner, phase, deliverable, surface decomposition, staffing shape, proof surface, or acceptance chain is a route problem and reopens `work-planning`. A gap that stays inside the same frozen owner, phase, surface, deliverable, proof/acceptance chain, and staffing shape may be carried as bounded packet-correction or blocker-clear basis for the next owner/action.
+A readiness gap that changes owner, phase, deliverable, surface decomposition, staffing shape, proof surface, or acceptance chain is a route problem and reopens `work-planning`. A gap that stays inside the same frozen owner, phase, surface, deliverable, proof/acceptance chain, and staffing shape is carried as bounded packet-correction or blocker-clear basis for the next owner/action.
 
 If an agent tool/evidence-gap request lacks adequate candidate-tool research, freeze a bounded `researcher` tool-selection research step before setup unless the correct tool is already proven or the route is a proven user-owned blocker.
 
-Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites may proceed inside that boundary when needed. Heavyweight installers, persistent services/daemons, credential repair, paid/licensed tools, destructive package actions, or security-setting changes require explicit approval or deferral.
+Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites proceed inside that boundary when needed. Heavyweight installers, persistent services/daemons, credential repair, paid/licensed tools, destructive package actions, or security-setting changes require explicit approval or deferral.
 
 If a later local parallel launch mechanism fails, serial carry-forward is lawful only when the failure happens before agent-boundary commitment and the fallback stays inside the same frozen owner, surface set, deliverable, acceptance chain, and material burden/timing meaning. If losing the planned parallel path changes staffing truth, independent-surface separation, burden, schedule, or closure risk, reopen `work-planning` instead of silently collapsing to serial continuation.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Ready basis opens the frozen next owner/action.
 - Team-routed ready basis opens `task-execution`.
 - Blocked basis opens the named blocker-clear owner or `HOLD`.

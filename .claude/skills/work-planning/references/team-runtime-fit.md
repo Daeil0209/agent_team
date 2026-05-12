@@ -17,7 +17,7 @@ Classify route from the full request-visible deliverable.
 
 Team-agent runtime preserves route freeze, owner separation, proof ownership, and acceptance ownership.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Team-fit work opens team-routed `work-planning`.
 - Non-team-fit work opens lead-local or single-lane routing.
 - Route ambiguity opens evidence gathering inside `work-planning`.

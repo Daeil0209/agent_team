@@ -7,7 +7,7 @@ LOAD-POLICY: on-demand reference only
 
 # Reference Material
 ## Detection Heuristics Table
-These signals indicate a likely tier. They are suggestions for `team-lead` judgment. Project-tier authority comes from the frozen project floor. Project-level governance parameters apply after the project floor is frozen and consumed explicitly. Per-request handling may still be raised autonomously when direct risk signals require a stricter task tier.
+These signals indicate a likely tier. They inform `team-lead` judgment. Project-tier authority comes from the frozen project floor. Project-level governance parameters apply after the project floor is frozen and consumed explicitly. Per-request handling raises autonomously when direct risk signals require a stricter task tier.
 | Signal | Likely Tier |
 |---|---|
 | `terraform/`, `k8s/`, `docker-compose.yml` present in repo | Precision |
@@ -19,7 +19,7 @@ These signals indicate a likely tier. They are suggestions for `team-lead` judgm
 | Single-user local app/tool/dashboard with bounded features, local data, no auth, no multi-tenant deployment, and no infrastructure orchestration | Lightweight by default; Standard if multi-feature business logic or persistence risk is material |
 | Multi-source market, technology, patent, standards, or evidence-bound report automation | Standard; Precision if legal status, safety, regulatory, high-stakes decision, or source freshness materially affects acceptance |
 | Engineering calculation, design, simulation, standards, unit, tolerance, or safety-margin critical path | Standard; Precision if standards compliance, safety, irreversible design choice, or high-stakes numeric output materially affects acceptance |
-Local-app fast-path boundary: delivery-surface proof remains acceptance-critical at every tier. A Lightweight local app may use fewer agents and fewer design options, but if it promises double-click/low-touch/browser UI operation, the real launch path and first usable view remain acceptance-critical.
+Local-app fast-path boundary: delivery-surface proof remains acceptance-critical at every tier. A Lightweight local app uses fewer agents and fewer design options only inside that proof floor. If it promises double-click/low-touch/browser UI operation, the real launch path and first usable view remain acceptance-critical.
 ## Freeze And Consume Wiring
 When governance depth is active, freeze and consume these fields explicitly:
 - `PROJECT-TIER`
@@ -28,10 +28,10 @@ When governance depth is active, freeze and consume these fields explicitly:
 
 Rules:
 - `PROJECT-TIER` is the project floor.
-- `ACTIVE-REQUEST-TIER` is the current request tier and may stay at the floor or raise above it.
+- `ACTIVE-REQUEST-TIER` is the current request tier and stays at the floor or raises above it.
 - `TIER-RAISE-REASON` must name `stay` or `raise`; do not leave the request tier implicit.
 - A request raise strengthens the active route, proof, and acceptance path while preserving the project floor.
-- Tier may reduce unnecessary governance burden.
+- Tier reduces unnecessary governance burden only inside the preserved proof and acceptance floor.
 - Decisive user-surface proof remains fixed by the promised delivery surface.
 ## Governance Parameters Per Tier Table
 | Parameter | Lightweight | Standard | Precision |
@@ -40,13 +40,13 @@ Rules:
 | **Review scope** | Code quality | + architecture consistency | + security (`security-review`) + infrastructure |
 | **Testing requirements** | Basic verification | Structured testing | E2E + security + performance |
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
-| **Recommended team size** | 1–2 agents | 2–3 agents | Precision 5-lane deployment |
-| **Design options** | Optional | Recommended | Required (3 architecture options) |
+| **Default team size** | 1–2 agents | 2–3 agents | Precision 5-lane deployment |
+| **Design options** | Conditional | Default | Required (3 architecture options) |
 | **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
-| **Gap analysis** | Optional | Recommended | Required before acceptance |
+| **Gap analysis** | Conditional | Default | Required before acceptance |
 | **Specialist skills** | None by default | `dev-workflow`; add `external-tool-bridge` when external capability is active | `dev-workflow` + `security-review` + `enterprise-architecture`; add `external-tool-bridge` when external capability is active |
 ### Checkpoint Semantics
-Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input may become relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
+Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input becomes relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
 Acceptance-depth semantics: the table sizes default review and proof depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
 ## Quality Metrics Table
 | Metric | Description | Use |
@@ -66,7 +66,7 @@ A composite score gives team-lead a quantitative view of project quality trends.
 **Score Interpretation (advisory only):**
 | Range | Signal | Team-Lead Action |
 |---|---|---|
-| 86-100 | Strong execution | Consider lighter oversight for routine work |
+| 86-100 | Strong execution | Reduce oversight only after direct evidence confirms routine low-risk work |
 | 71-85 | Healthy | Standard governance appropriate |
 | 51-70 | Needs attention | Increase checkpoint frequency, review depth |
 | 31-50 | Concerning | Full governance pipeline for all work, root cause analysis |
@@ -78,6 +78,6 @@ A composite score gives team-lead a quantitative view of project quality trends.
 - Score calculation happens at phase transitions, not continuously
 - If score and direct evidence disagree, direct evidence wins
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return governance tier signals, scoring trend, direct-evidence conflicts, and oversight recommendations to the active governance-scaling workflow.
 - If scaling changes phase gates, checkpoint frequency, lane use, or review depth, reopen the owning planning path before execution continues.

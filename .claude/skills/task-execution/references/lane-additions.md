@@ -21,7 +21,7 @@ Every lane-core skill inherits these common preconditions:
 - Load lane-core skill only for consequential lane-owned work.
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
-- Before lane work, run a capability-fit pass against `SEMANTIC-INTENT-BASIS`, target intent, assigned surface, `CLAIM-CEILING`, required/recommended skills, and material tool or rendered/runtime needs.
+- Run capability fit through `SEMANTIC-INTENT-BASIS`, target intent, assigned surface, `CLAIM-CEILING`, common finding basis for critique/removal/patch-worthiness, skill basis, and material tool or rendered/runtime needs.
 - If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
 - Every `REQUIRED-SKILLS` entry is mandatory consumption: load and apply it before lane execution or handoff, or return `scope-pressure` / `hold|blocker` with the smallest correcting owner.
 - A required entry that is non-fitting, lane-mismatched, contradictory, or outside the frozen boundary is a packet or route defect, not permission to drop the skill.
@@ -46,7 +46,7 @@ Each lane's lane-core skill and lane-detail reference own exact assignment addit
 
 For session-side controlled packet value tables and lane-specific presence hints, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are lookup indexes. `team-session-sequences` owns session-sequence indexes and dispatch-detail lookups, not packet schema or lane-core additions. Runtime spine stays with `session-boot`, closeout with `session-closeout`, and packet schema with `task-execution`. Hooks guard runtime integrity as last-resort checks; normal agent behavior stays with the owning procedure.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Satisfied common preconditions open lane-owned work.
 - Defective receipt opens `scope-pressure` or `hold|blocker`.
 - Missing lane-specific additions return to packet correction before dispatch.

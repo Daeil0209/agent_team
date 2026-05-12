@@ -60,6 +60,6 @@ Use when document mode is institutional event planning, including retreats, work
 - Finalization checks operational complexity against practitioner capacity.
 - Failed finalization check opens simplification or execution-guidance revision.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return pre-generation gate state, element decisions, venue cascade, participant-burden constraints, visual inclusion basis, and finalization check to the active document-automation workflow.
 - If event element rules or institutional norms are missing, route to `business-workflow` before event document generation continues.

@@ -41,7 +41,7 @@ Unresolved conflicts block final schedule output.
 
 ## Fatigue And Rhythm
 Early-morning peak favors high-concentration tasks.
-Post-lunch dip avoids demanding cognitive work from 13:00 to 14:30 when possible.
+Post-lunch dip keeps demanding cognitive work outside 13:00 to 14:30 unless a hard schedule constraint blocks it.
 Post-transit recovery uses light activity after significant movement.
 Long sessions require a break or format change after 90 continuous minutes when material.
 
@@ -72,9 +72,9 @@ Table format fits dense parallel tracks and resource allocation.
 Timeline format fits sequential flow and duration visibility.
 Gantt format fits dependency chains and critical path.
 Checklist format fits execution verification and status tracking.
-Authoring format and distribution format may differ.
+Authoring format and distribution format can differ.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete schedule rule packet opens document-automation or implementation design.
 - Failed conflict detection opens schedule correction.
 - Missing hidden-time or buffer basis opens schedule correction.

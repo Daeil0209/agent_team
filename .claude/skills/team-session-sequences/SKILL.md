@@ -20,7 +20,7 @@ PRIMARY-OWNER: team-lead
 - Keep long packet tables, sizing rules, shard/merge detail, and handoff field catalogs in direct files under `references/`.
 - Keep the mandatory trigger, owner, and stop rule in this spine.
 - PRIMARY-OWNER: team-lead
-- Fixed close section: `Next-Action Drive`
+- Fixed close section: `Resolve Next Owner And Action`
 
 # Team Session Sequences
 
@@ -84,13 +84,13 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 - Parallel shard and merge — `references/parallel-shard-merge.md` for parent-packet freeze, MERGE-OWNER, shard non-overlap, and integrated-output routing.
 - Task identity — `references/monitoring-lifecycle-detail.md`; task ids, agent names, and agent-scoped communication are distinct, and task identity comes from task evidence, not guessed agent identity.
 - Consequential upward handoff — `.claude/skills/task-execution/references/completion-handoff.md` (handoff/completion contract) and `.claude/skills/task-execution/references/message-classes.md` (blocker-native fields); `references/upward-handoff.md` adds session-readable lane block and monotonic-state rules.
-- Health-check, stale-response, and runtime-pressure — `references/monitoring-lifecycle-detail.md`; `hook-config.sh` owns literal cadence/threshold values.
+- Health-check, stale-response, and runtime-pressure — `references/monitoring-lifecycle-detail.md`; `hook-policy.sh` owns literal cadence/threshold values.
 
 ## Closeout Sequence
 
 > On-demand: see `session-closeout` skill. Load when the `session-closeout` owner trigger opens; hooks provide observation evidence only.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A boot trigger opens `session-boot`.
 - A session-start trigger opens `session-boot`.
 - A monitoring trigger opens `session-boot` Monitoring Sequence or its direct monitoring reference.

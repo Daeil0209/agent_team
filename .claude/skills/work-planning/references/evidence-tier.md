@@ -18,7 +18,7 @@ This rule is especially strict for design, visual, UX, interaction, structural, 
 The canonical escalation path is `researcher` lane + `benchmark-simulation` skill + WebSearch/WebFetch or equivalent authoritative external-reference research.
 Missing that path when materially relevant is a planning-evidence defect.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Higher-tier evidence need opens the canonical escalation path.
 - Feasible lower-tier-only planning records the deferral basis.
 - Missing material escalation reopens `work-planning`.

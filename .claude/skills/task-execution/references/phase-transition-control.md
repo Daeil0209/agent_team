@@ -26,9 +26,9 @@ Carry:
 - `BLOCKING-ISSUES`
 
 Agents acknowledge receipt when their active assignment, standby readiness, or immediate next-phase coordination is affected.
-Team-lead or the active workflow owner may send this control packet only after the workflow phase cursor is truthfully advanced.
+Team-lead or the active workflow owner sends this control packet only after the workflow phase cursor is truthfully advanced.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Valid phase movement sends `MESSAGE-CLASS: phase-transition-control` to each affected agent.
 - New bounded work opens assignment-grade dispatch.
 - Missing truthful phase cursor reopens the workflow owner.

@@ -18,7 +18,7 @@ Estimated evaluator intent identifies what the evaluator is likely optimizing fo
 Each requirement class remains separately labeled.
 
 ## Organizational Strategy Parameters
-Proposal-driven generation captures organizational strategy inputs before generation.
+Proposal-based generation captures organizational strategy inputs before generation.
 Required fields are purpose, focus item, emphasis axis, and roadmap position.
 Purpose states why the organization pursues the call.
 Focus item names the technology, product, or capability being proposed.
@@ -56,7 +56,7 @@ Valid proposal stance examples are "will develop", "targets X metric by Y milest
 Completion-oriented assertions require fact-class evidence.
 Future certainty must not be written as past accomplishment.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete proposal rule packet opens document-automation for proposal generation.
 - Missing announcement decomposition opens business-workflow packet correction.
 - Missing fact-class evidence downgrades the claim or opens researcher evidence work.

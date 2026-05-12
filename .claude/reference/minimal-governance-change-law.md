@@ -34,7 +34,7 @@ It prevents doctrine accumulation from being mistaken for stronger enforcement.
 - A rule is proposed for re-home.
 - A rule is proposed for split.
 - A defect is blamed on governance wording.
-- A recurrence barrier may be installed.
+- A recurrence barrier is installed only for a confirmed recurrence path.
 - A high-traffic owner surface is reduced or redistributed.
 
 ## Required Output
@@ -59,7 +59,7 @@ Stop before mutation when source-to-destination meaning remains unreconstructed.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
 Stop before closure when a moved rule lacks an explicit destination owner.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped append route opens edit-operation selection.
 - A stopped mutation route opens source-to-destination reconstruction.
 - A stopped defect claim opens `[GOV-MIN]` inspection.
@@ -82,7 +82,9 @@ Stop before closure when a moved rule lacks an explicit destination owner.
 - Governance edits preserve or sharpen execution force.
 - Governance edits preserve or sharpen owner boundary.
 - Governance edits preserve or sharpen required gates.
-- Governance edits keep one sentence to one rule or action.
+- Each governance sentence carries one rule or one action.
+- Split bundled sentences before duplicate review.
+- Split bundled sentences before removal review.
 
 ## Change Rules
 - Shared doctrine stays in `CLAUDE.md`.
@@ -97,7 +99,7 @@ Stop before closure when a moved rule lacks an explicit destination owner.
 - Keep `CLAUDE.md` high-adherence.
 - Move repeatable procedure detail to trigger-bound skills or references.
 - Preserve moved meaning through source-to-destination trace.
-- A protected local restatement may remain when the local file must be safe to read in isolation.
+- A protected local restatement remains only when the local file must be safe to read in isolation.
 - Divergent duplicates resolve to the precise owner.
 - Governance-change review tightens weaker duplicate doctrine when tightening preserves meaning.
 - Governance-change review re-homes weaker duplicate doctrine when another owner is precise.

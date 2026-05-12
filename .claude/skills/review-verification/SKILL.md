@@ -1,6 +1,6 @@
 ---
 name: review-verification
-description: Run exhaustive review and verification for design intent, coherence, integrity, procedure adherence, execution force, and negative risk before consequential analysis, patch selection, or improvement recommendations. Use when cross-surface review, risk balance, patch-worthiness, or no-regression evidence materially affects the owning validation, patch, or reporting path.
+description: Review live design intent, coherence, procedure adherence, execution force, negative risk, and patch-worthiness before consequential governance judgment.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -18,7 +18,7 @@ You are the review-verification capability for Claude Code.
 - A bare `REQUIRED-SKILLS: [review-verification]` entry for a lane is invalid; packetization must name the required lens or route full workflow activation to `team-lead`.
 
 ## Authority
-**This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure-adherence and execution-force checks, integrity checks, duplication/conflict detection, negative-risk analysis, and patch-worthiness classification.
+**This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure adherence, execution force, integrity, negative risk, and patch-worthiness.
 
 **Adjacent owners hold:** planning freeze, independent review findings, test execution, final validation verdict, implementation, governance patch execution, and runtime enforcement.
 
@@ -38,7 +38,7 @@ This skill outputs `review_verification_packet`.
 - `update-upgrade-sequence` and `self-growth-sequence` - own governance asset changes after this review identifies a patchable basis.
 
 ## Purpose
-Use this skill when the user asks for exhaustive review, total inspection, coherence analysis, integrity analysis, procedure-adherence analysis, execution-force analysis, balance analysis, design-intent analysis, risk-zero review, toxic-rule detection, duplication removal, meaning-conflict detection, or patch-readiness judgment.
+Use this skill for exhaustive review, design-intent analysis, coherence analysis, toxic-rule judgment, removal judgment, or patch-readiness judgment.
 
 Default review mode is exhaustive across the frozen target corpus.
 User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
@@ -48,13 +48,15 @@ Report uninspected surfaces as `OPEN-SURFACES` and downgrade the claim to `UNVER
 Use it to prevent these failures:
 - starting analysis before the target intent is reconstructed
 - judging risk from one document while ignoring adjacent owner surfaces
-- classifying a design tradeoff as a defect only with proven negative operating effect
+- upgrading evidence into a defect before the common finding basis proves `confirmed-defect`
 - adding rules where removal, tightening, replacement, or re-home would be cleaner
 - claiming no risk or closure from partial evidence, including an uninspected user-use, reuse, example, data, or application path
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
-`team-lead` activates this skill only when review work is held lead-local for cross-surface integrity / design-intent / risk-balance synthesis OR when packetizing review basis for downstream lanes. When the assignment is a bounded reviewer-owned acceptance review, route to the reviewer lane and reviewer SKILL instead.
+`team-lead` activates this skill only for lead-local cross-surface review synthesis.
+`team-lead` also activates this skill when packetizing review basis for downstream lanes.
+Bounded reviewer-owned acceptance review routes to the reviewer lane.
 
 Activation triggers when the request materially includes one or more of:
 - exhaustive inspection, full review, whole-folder review, or all-surface analysis
@@ -92,7 +94,7 @@ Required fields:
 - `DUPLICATION-CONFLICT-RESULT`
 - `REMOVAL-FIRST-PATCH-DESIGN`
 - `PATCH-WORTHINESS`
-- `RECOMMENDED-OWNER`
+- `NEXT-OWNER-CANDIDATE`
 - `OPEN-SURFACES`
 - `DOWNSTREAM-VERIFICATION-NEED`
 
@@ -102,7 +104,8 @@ Otherwise use `no identified negative risk on inspected surfaces`.
 
 ## Reporting Surface
 Before user-facing output, select one compact primary truth surface from `verified result`, `blocker`, `next action`, or `HOLD`.
-User-facing reporting follows `CLAUDE.md` Communication and Reporting Law plus `.claude/skills/team-lead/references/output-surface-law.md`, `.claude/skills/team-lead/references/reporting-surface-rules.md`, `.claude/skills/team-lead/references/synthesis-consume.md`, and `.claude/skills/team-lead/references/routine-gate-continuation.md` when their triggers are active.
+User-facing reporting follows `CLAUDE.md` Communication.
+User-facing reporting consumes triggered team-lead reporting references.
 The full `review_verification_packet` is internal evidence unless the user explicitly asks for details.
 
 ## Review Workflow
@@ -110,7 +113,12 @@ Run the workflow in numeric order.
 Each step records current evidence in `SEQUENCE-STATUS` before the next step opens.
 The next step opens only when earlier step evidence is current for the same target, corpus, patch design, and diff.
 When target, corpus, findings, patch design, or diff changes, return to the earliest changed step and rerun every downstream step.
-Live patch eligibility begins only after Step 8 records completed integrity evidence AND the `review_verification_packet` is emitted with all sixteen required fields populated (use `UNVERIFIED` for fields whose live surface, design intent, or evidence basis was not inspected). Narrative claims of completed steps without the emitted packet do not satisfy this gate; treat such claims as procedural failure and rerun from the earliest skipped step.
+Live patch eligibility begins only after Step 8 records completed integrity evidence.
+Live patch eligibility requires the emitted `review_verification_packet`.
+Populate all sixteen packet fields.
+Use `UNVERIFIED` for fields whose live surface, design intent, or evidence basis was not inspected.
+Narrative claims of completed steps do not satisfy this gate.
+Rerun from the earliest skipped step after a procedural failure.
 If a mutation already exists before eligibility, treat the current diff as the review target, route it through Steps 1-8, and execute only the corrected eligible patch path.
 
 ### 1. Relearn Doctrine And Owner Intent
@@ -123,31 +131,55 @@ Treat memory, prior summaries, stale mirrors, and expected wording as baseline c
 
 ### 2. Freeze Exhaustive Review Contract
 Name target, corpus boundary, exhaustiveness basis, evidence burden, user surface, output form, and parallel-fit basis.
-The frozen corpus must include every user-named target surface and every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness.
+The frozen corpus must include every user-named target surface.
+The frozen corpus must include every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness.
+Governance defect review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
+Governance removal review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
+Preservation review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 If the corpus boundary is unknown, make bounded discovery the next action before judgment.
-When independent surfaces are material and host-authorized team runtime is available, use parallel agents through the owning dispatch path.
+When independent surfaces are material, dispatch parallel shards if host-authorized team runtime is available.
+Shard packets carry `SEMANTIC-INTENT-BASIS`.
+Shard packets carry `TARGET-INTENT-BASIS`.
+Shard packets carry common finding basis for each defect, removal, or patch-worthiness claim.
 
 ### 3. Inspect The Whole Target Surface
 Inspect every frozen target surface and material adjacent owner surface.
 Exhaustive review is satisfied by full inspected coverage of the frozen corpus or by an explicit user-narrowed scope.
-Inventory proof may establish corpus coverage.
+Inventory proof establishes corpus coverage only.
 Content inspection remains required for owner-relevant surfaces.
 Separate primary owner surfaces from references, generated outputs, runtime state, advisory evidence, and stale artifacts.
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
-Classify contradiction, owner overlap, harmful duplication, protected restatement, missing handoff, stale reference, skipped or reordered owner, weak execution drive, stale or overbroad claim, user-use readiness gap, scope drift, terminology drift, and evidence gap from owner semantics and operating effect; matching labels or verdict-like words are evidence only until the owning authority and effect are proven.
+Promote shard labels only after verifying design-intent conflict, negative operating effect, correction owner, and protected-function preservation.
+Classify findings from owner semantics and operating effect.
+Treat matching labels or verdict-like words as evidence until owning authority and effect are proven.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm, correction ownership, and no stronger protected-function loss from the proposed correction.
-Classify heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence until negative operating effect, causal path, recurrence path, smallest correction owner, and proof that correction will not remove a stronger protected function are proven.
+Classify deletion, non-enforcement, hook silence, runtime omission, heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence.
+Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
 
 ### 5. Design Removal-First Patch
-Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation: design the patch from the smallest owner surface by first trying `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` on duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening text.
-`REMOVAL-FIRST-PATCH-DESIGN` must state which existing text was removed, tightened, merged, re-homed, replaced, or why none can carry the meaning without loss, including the protected function that would be lost by rejected removals.
-Append-only or accumulation-first patch designs are invalid while duplicate, obsolete, unnecessary, weaker, conflicting, or behavior-weakening owner text can be removed, tightened, merged, re-homed, or replaced without meaning loss.
+Split bundled governance sentences before patch design.
+Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation.
+Design the patch from the smallest owner surface.
+Try `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` before adding text.
+`REMOVAL-FIRST-PATCH-DESIGN` must state the selected existing-text operation.
+`REMOVAL-FIRST-PATCH-DESIGN` must state why rejected removals would lose protected function.
+Append-only patch designs are invalid while owner text can carry the correction without meaning loss.
+Accumulation-first patch designs are invalid while owner text can carry the correction without meaning loss.
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
 ### 6. Pre-Patch Negative-Risk Gate
-Against the live governance documents, test the proposed patch for meaning loss, owner conflict, weaker procedure, weaker procedure-adherence signal, weakened clarity, weakened execution force, weaker automatic next-owner drive, broken reference, added bottleneck, over-blocking, under-specification, user-burden increase, weakened user-use readiness, and acceptance regression.
+Against live governance documents, test the proposed patch for meaning loss.
+Test the proposed patch for owner conflict.
+Test the proposed patch for weaker procedure.
+Test the proposed patch for weaker clarity.
+Test the proposed patch for weaker execution force.
+Test the proposed patch for weaker next-owner/action resolution.
+Test the proposed patch for broken references.
+Test the proposed patch for added burden.
+Test the proposed patch for weaker user-use readiness.
+Test the proposed patch for acceptance regression.
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
 Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
 Report absolute risk-zero only when absolute closure is proven.
@@ -158,23 +190,40 @@ After the patch design survives the first risk gate, inspect the surrounding ref
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
 ### 8. Integrity Gate Before Live Patch
-Before live patch execution, verify the structural-baseline items not covered by Step 6: structural contract, fixed order, protected local restatement, source-to-destination meaning, positive execution path, existing function preservation, and no-regression basis. (Step 6 already covers meaning loss, owner conflict, broken reference, weaker procedure-adherence/clarity/execution-force, weaker automatic next-owner drive, weakened user-use readiness, and acceptance regression — do not re-test those here.)
+Before live patch execution, verify the structural contract.
+Verify fixed order.
+Verify protected local restatement.
+Verify source-to-destination meaning.
+Verify positive execution path.
+Verify existing function preservation.
+Verify no-regression basis.
+Do not re-test Step 6 axes here.
 Any failed integrity item returns the work to patch design with the failed item named.
 
 ### 9. Hand Off To The Owning Patch Sequence
 File mutation is owned by the named patch sequence or production owner, not by review-verification.
-After Steps 1-8 record completed evidence and the `review_verification_packet` is emitted with all sixteen required fields, hand off the eligible patch to `update-upgrade-sequence` (routine asset maintenance), `self-growth-sequence` (recurrence-barrier hardening), or the assigned production owner.
+After Steps 1-8 record completed evidence, emit the `review_verification_packet`.
+Hand off the eligible patch to the owning patch sequence or assigned production owner.
 Missing eligibility evidence routes to the smallest incomplete review step before any handoff.
 
 ### 10. Post-Patch Coherence Re-engagement
-Post-patch coherence review is owned by the executing patch sequence's Post-Verify step (e.g., `self-growth-sequence/references/change-patch-method.md` Post-Verify); re-engage `review-verification` only when that sequence escalates a coherence concern back to this lens.
-When re-engaged, re-read the changed live surfaces, resulting diff, surrounding owner surfaces, and affected references; fix newly found contradiction, dead reference, weakened owner boundary, meaning loss, or procedure drift through the smallest correction path.
+Post-patch coherence review is owned by the executing patch sequence's Post-Verify step.
+Re-engage `review-verification` only when that sequence escalates a coherence concern back to this lens.
+When re-engaged, re-read the changed live surfaces.
+Re-read the resulting diff.
+Re-read surrounding owner surfaces and affected references.
+Fix newly found defects through the smallest correction path.
 
 ### 11. Classify Findings
-Use the common finding-class taxonomy defined in `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` (`confirmed-defect`, `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, `unverified`).
+Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 
 ### 12. Decide Patch Worthiness
-Patch recommendations must state protected function, user-outcome impact, regression risk, smallest owner, operation type, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
+Patch recommendations must state protected function.
+Patch recommendations must state user-outcome impact.
+Patch recommendations must state regression risk.
+Patch recommendations must state smallest owner.
+Patch recommendations must state operation type.
+Patch recommendations must state the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`.
 Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
 
 ### 13. Handoff
@@ -186,7 +235,7 @@ Use `tester` for proof.
 Use `validator` for final verdict.
 Use `update-upgrade-sequence` for ordinary governance asset update.
 Use `self-growth-sequence` for confirmed recurrence-barrier hardening.
-Use `self-verification` before consequential reporting, completion claims, or synthesis-driven redispatch.
+Use `self-verification` before consequential reporting, completion claims, or synthesis-triggered redispatch.
 
 ## Handoff Boundary
 Hand off after the receiver can tell:
@@ -194,8 +243,16 @@ Hand off after the receiver can tell:
 - which surfaces remain uninspected or open
 - why the design intent was interpreted that way
 - which findings are confirmed versus hypothetical
-- which owner/action should act next
+- which owner/action acts next
 - what evidence would verify closure
+
+## Resolve Next Owner And Action
+- Completed review packet opens the named downstream owner/action from Step 13.
+- Missing corpus, design-intent, owner-boundary, or evidence basis keeps `review-verification` open.
+- Unresolved negative risk opens patch redesign, evidence gathering, or `HOLD`.
+- Ordinary governance asset update opens `update-upgrade-sequence`.
+- Confirmed recurrence-barrier hardening opens `self-growth-sequence`.
+- Consequential reporting opens `self-verification`.
 
 ## Role-Scoped Structural Feedback
 - Challenge any analysis that starts from a desired patch, cites rules without testing actual adherence/execution path, or ignores live design intent.

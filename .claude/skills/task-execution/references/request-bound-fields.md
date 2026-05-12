@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 # task-execution: Request-Bound Conditional Packet Fields
 ## Contents
 - Common Start Closure Contract
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Common Start Closure Contract
 These conditional fields are the common start closure contract for assignment-grade work.
@@ -75,7 +75,7 @@ It never creates lane ownership, authorizes lane-core skill listing, or changes 
 If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 
 Do not leave these request-fit or methodology fields only in linked-path references when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
-When upstream planning froze reference-driven citation or deviation basis, carry it as cited request-bound or artifact basis, not as a standalone `REFERENCE-USE` packet field.
+When upstream planning froze reference-based citation or deviation basis, carry it as cited request-bound or artifact basis, not as a standalone `REFERENCE-USE` packet field.
 
 When frozen governance depth materially changes staffing, checkpoint, review, proof, or acceptance burden for the receiving lane, the assignment packet must also carry:
 - `PROJECT-TIER`
@@ -126,8 +126,8 @@ WSL/Linux execution does not satisfy Windows launch proof by itself.
 
 `USER-RUN-PATH` and `BURDEN-CONTRACT` are delivery-contract fields scoped by deliverable surface class:
 - **MANDATORY** when target lane is `tester` or `validator` AND the deliverable surface is **executable user-facing** (operator runs the program / launches a server / interacts with a browser-rendered UI / opens a runnable artifact). Launch path defines proof; operator burden defines acceptance. Omission is a packet defect that `task-execution`, tester, and validator must not absorb by guesswork.
-- **OPTIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
-- **NOT a permission-graded field**. There is no "I prefer to skip these" option for executable user-facing surfaces; the delivery contract treats them as schema floor.
+- **CONDITIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
+- **NOT a permission-graded field**. Executable user-facing surfaces cannot skip these fields; the delivery contract treats them as schema floor.
 
 Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 
@@ -143,7 +143,7 @@ When the assigned surface is office-format, page-read, or other rendered human-f
 - rendered evidence supports human-visible usefulness only; it does not replace wording, logic, request-fit, proof, or verdict ownership
 - if the current toolchain cannot truthfully exercise the decisive user surface, freeze one bounded next step only: explicit tool discovery/acquisition/setup via `external-tool-bridge` or the appropriate setup owner, or `hold|blocker`. Do not quietly downgrade to source-only checking.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete start closure contract opens assignment packet preflight.
 - Missing packet field with same-boundary source basis opens `packet-correction`.
 - Missing packet field that changes owner, phase, staffing, proof, acceptance, or deliverable shape opens `route-replan`.

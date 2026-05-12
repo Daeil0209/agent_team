@@ -129,7 +129,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 ## Evidence Standards
 - Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
 - Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
-- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it may affect.
+- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it affects.
 - When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against the user concern signal, anti-goal, team-operation philosophy, governance/design intent, and priority order it carries.
 - If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - A removal, reduction, simplification, optimization, or burden-cut proposal is incomplete until the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md` is satisfied.
@@ -142,6 +142,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Completion uses `handoff` or `completion` only for converged researcher-owned evidence.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Converged researcher-owned evidence opens team-lead synthesis through the completion-grade handoff path.
 - Researcher-owned open surfaces open downstream research, proof, review, planning, or blocker routing through the named next owner/action.

@@ -1,12 +1,12 @@
 ---
 name: self-growth-sequence
-description: Install recurrence barriers for confirmed behavioral, procedural, or capability defects through causal analysis, narrow-owner patching, retroactive application, and verification. Use when a confirmed defect requires team capability hardening.
+description: Install recurrence barriers for confirmed behavioral, procedural, or capability defects.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned self-growth and change surface.
-- Fixed top-level section order after Structural Contract: Ultimate Purpose, Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method.
+- Fixed top-level section order after Structural Contract: Ultimate Purpose, Activation, Self-Growth Sequence, Sequence Activation Discipline, Change Sequence, Patch Execution Method, Resolve Next Owner And Action.
 - Reference Map stays inside Activation.
 - PRIMARY-OWNER: team-lead
 ## Ultimate Purpose
@@ -15,7 +15,15 @@ When evidence shows a behavioral or procedural defect, protect the active reques
 Convert the defect into a durable recurrence barrier on the narrowest correct owner surface.
 Resume ordinary execution only from that corrected basis.
 
-Mandatory path summary: defect evidence -> design-intent review -> causal analysis -> failure classification -> ownership adjudication -> hardening -> verification -> resume from corrected basis. The canonical step-by-step procedure lives in `### Required order` below.
+Mandatory path summary starts from defect evidence.
+Mandatory path then runs design-intent review.
+Mandatory path then runs causal analysis.
+Mandatory path then runs failure classification.
+Mandatory path then runs ownership adjudication.
+Mandatory path then runs hardening.
+Mandatory path then runs verification.
+Mandatory path then resumes from corrected basis.
+The canonical step-by-step procedure lives in `### Required order` below.
 
 Use the narrowest owner-local surface that blocks recurrence with less drift.
 
@@ -38,7 +46,7 @@ Every self-growth round must remain reconstructable through this minimum record:
 If any required record item is unknown, the round stays open as inspection, `HOLD`, or explicit follow-up ownership.
 ## Activation
 Load this skill when evidence confirms a behavioral or procedural defect requiring recurrence-barrier hardening.
-Load this skill to classify a justified user correction, hook signal, runtime/process error, or recurring missed-catch that may indicate process failure.
+Load this skill to classify a justified user correction, hook signal, runtime/process error, or recurring missed-catch that indicates possible process failure.
 Classification selects self-growth hardening, active workflow repair, `update-upgrade-sequence`, `HOLD`, or explicit follow-up ownership.
 Routine asset maintenance routes through `update-upgrade-sequence`.
 Use `Change Sequence` from here only as patch-mechanics support per `Sequence Arbitration Law` in CLAUDE.md.
@@ -49,7 +57,17 @@ Trigger sources:
 - Sufficient confirmed defect basis opens self-growth hardening without direct user instruction.
 Self-growth tiers:
 - Quick hardening applies only when owner surface, write scope, and meaning preservation are unambiguous.
-- Quick hardening covers typo corrections, terminology normalization, dead-text removal, and same-owner wording clarification that changes no rule force, owner boundary, trigger, stop, evidence, acceptance, or runtime effect.
+- Quick hardening covers typo fixes.
+- Quick hardening covers terminology normalization.
+- Quick hardening covers dead-text removal.
+- Quick hardening covers same-owner wording clarification.
+- Quick hardening must not change rule force.
+- Quick hardening must not change owner boundary.
+- Quick hardening must not change trigger.
+- Quick hardening must not change stop.
+- Quick hardening must not change evidence.
+- Quick hardening must not change acceptance.
+- Quick hardening must not change runtime effect.
 - Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
 - Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
@@ -105,7 +123,14 @@ The barrier must match the failure mode.
 ### Causal Repair Standard
 Patch from causal basis.
 Defect admission gate:
-- Call a team-system item `confirmed defect` only when live owner evidence proves target-intent conflict, protected function, proven negative operating effect or reserved hard-deny/runtime-truth breach, causal failure mode, recurrence path, and smallest intent-preserving correction.
+- Confirmed defect requires proven target-intent conflict.
+- Confirmed defect requires proven protected function.
+- Confirmed defect requires proven negative operating effect.
+- Reserved hard-deny breach can satisfy negative-effect proof.
+- Reserved runtime-truth breach can satisfy negative-effect proof.
+- Confirmed defect requires proven causal failure mode.
+- Confirmed defect requires proven recurrence path.
+- Confirmed defect requires the smallest intent-preserving correction.
 - Treat literal token match, apparent contradiction, heavy gate, hook burden, deletion permission, or plausible misuse as defect evidence only until that proof exists.
 Use `references/causal-analysis.md` for the required reconstruction, failure-mode proof, recurrence path, and hypothesis limit.
 
@@ -114,11 +139,40 @@ Self-growth repairs and preserves the existing operating model.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
-Before patch drafting on doctrine, role, skill, spine, hook, or reference surfaces, run `review-verification` and consume its emitted `review_verification_packet`. Cross-surface, multi-file, behavior-changing, structural, recurrence-barrier, and gate-altering patches always run review-verification.
-Skip review-verification only for single-file quick-hardening wording fixes listed in Activation where owner surface, write scope, and meaning-preservation are unambiguous; record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
-Lane inspection, reviewer input, Codex input, and team-lead self-classify are evidence; the emitted `review_verification_packet` is the gate.
+Doctrine patch drafting requires `review-verification`.
+Role patch drafting requires `review-verification`.
+Skill patch drafting requires `review-verification`.
+Spine patch drafting requires `review-verification`.
+Hook patch drafting requires `review-verification`.
+Reference patch drafting requires `review-verification`.
+Consume the emitted `review_verification_packet` before patch drafting.
+Cross-surface patches always run `review-verification`.
+Multi-file patches always run `review-verification`.
+Behavior-changing patches always run `review-verification`.
+Structural patches always run `review-verification`.
+Recurrence-barrier patches always run `review-verification`.
+Gate-altering patches always run `review-verification`.
+Single-file quick-hardening wording fix is the only skip path.
+The skip path requires unambiguous owner surface.
+The skip path requires unambiguous write scope.
+The skip path requires unambiguous meaning preservation.
+Record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
+Lane inspection is evidence.
+Reviewer input is evidence.
+Codex input is evidence.
+Team-lead self-classify is evidence.
+The emitted `review_verification_packet` is the gate.
 
-When a defect or justified challenge is recognized, run the canonical `### Required order` below. Phase mapping for trigger detection: Trigger and Stabilize feed Required-order Step 1; Reconstruct and Diagnose feed Step 2; Open feeds Step 3; Harden feeds Steps 5-6; Re-verify and Iterate feed Step 8; Resume-corrected-state feeds Step 9.
+When a defect or justified challenge is recognized, run the canonical `### Required order` below.
+Trigger feeds Required-order Step 1.
+Stabilize feeds Required-order Step 1.
+Reconstruct feeds Required-order Step 2.
+Diagnose feeds Required-order Step 2.
+Open feeds Required-order Step 3.
+Harden feeds Required-order Steps 5 and 6.
+Re-verify feeds Required-order Step 8.
+Iterate feeds Required-order Step 8.
+Resume-corrected-state feeds Required-order Step 9.
 Self-healing is complete only when a confirmed recurrence path is hardened or explicitly assigned with owner, boundary, and closure basis.
 If classification disproves a durable defect, close only with the active-task correction, no-recurrence basis, and owner truth.
 Explanation alone is not self-healing.
@@ -134,7 +188,8 @@ Explanation alone is not self-healing.
 - If write-surface overlap with active production work exists, queue only until the overlap clears. That is write safety, not priority deferral.
 - Classification without an opened self-growth path is not action.
 - If an equivalent rule already exists, treat the defect as non-compliance.
-- Harden adherence instead of adding duplicates.
+- Treat append-biased repair as non-compliance when a removal-first owner exists.
+- Harden the existing owner path instead of adding duplicates.
 - While the self-growth entry gate is active, pause consequential retries on the affected unsafe surface.
 - Independent surfaces continue when owner, write surface, proof, and acceptance chain remain unchanged.
 - Pause queued `TaskCreate`, `Agent`, `SendMessage`, `TaskUpdate`, and other consequential retries only on the affected surface.
@@ -146,7 +201,12 @@ Explanation alone is not self-healing.
 - Self-growth opening can be immediate.
 - Governance-sensitive file modification is still execution-gated.
 - Use this owner opening to classify, route, inspect, and prepare the bounded patch packet. Assignment-grade `Agent` or `SendMessage` dispatch still belongs to `task-execution`.
-- Only destructive, security-sensitive, or operator-policy-choice execution requires explicit user confirmation; hook/settings runtime enforcement expansion still follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
+- Destructive execution requires explicit user confirmation.
+- Security-sensitive execution requires explicit user confirmation.
+- Operator-policy-choice execution requires explicit user confirmation.
+- Hook runtime enforcement expansion follows `update-upgrade-sequence` Hook-Last preflight.
+- Settings runtime enforcement expansion follows `update-upgrade-sequence` Hook-Last preflight.
+- Runtime enforcement expansion requires explicit operator approval.
 - When a missing reusable skill blocks execution, authorize skill introduction under `Self-Growth Sequence` with explicit ownership: gap confirmation, target owner, bounded scope, review path, and verification.
 - When more than one lane can own the growth topic, compare owner candidates before choosing.
 - Record competing owner candidates.
@@ -175,10 +235,19 @@ When self-growth triggers during active work-planning or self-verification execu
 The active owner context carries the sidecar when work-planning or self-verification is the trigger source.
 Dispatch the sidecar at the nearest safe boundary after the triggering owner execution completes.
 1. Identify the active improvement topic from evidence.
-   Capture at minimum: trigger source, defect class, impacted path, intended governing design, causal basis, recurrence path, review-verification need basis, and likely owner surface.
+   Capture trigger source.
+   Capture defect class.
+   Capture impacted path.
+   Capture intended governing design.
+   Capture causal basis.
+   Capture recurrence path.
+   Capture review-verification need basis.
+   Capture likely owner surface.
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
    Quick hardening can use owner-local inspection only when owner surface, write scope, and meaning preservation are unambiguous.
-   Consume the emitted `review_verification_packet` before ownership finalization (default for all patch surfaces above; the narrow single-file quick-hardening wording-fix exception defined in Activation still records owner-surface citation).
+   Consume the emitted `review_verification_packet` before ownership finalization.
+   This is the default for all patch surfaces above.
+   The narrow single-file quick-hardening wording-fix exception still records owner-surface citation.
    Lane inspection, reviewer input, or Codex input is evidence; the emitted `review_verification_packet` is the gate.
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.
    Additional-agent dispatch is valid only on a host-authorized active-runtime path through `task-execution`.
@@ -240,7 +309,7 @@ Keep follow-on optimization closure explicit before treating the round as closed
 When Self-Growth Sequence or Change Sequence is materially active, name it in progress updates.
 Keep current phase, step, or blocker visible enough for successor interpretation.
 Sequence switches require explicit transition while active runtime depends on one of them.
-Optionality must come from the owning rule, not habit or convenience.
+Omission allowance must come from the owning rule, not habit or convenience.
 Build sequencing decisions from the loaded skill procedure, not memory.
 If the governing procedure cannot be pointed to cleanly, keep the work on HOLD until the basis is explicit.
 ## Change Sequence
@@ -257,6 +326,26 @@ Hard surface:
 - Post-verify resulting diff, owner semantics, live references, and information preservation before claiming convergence.
 - Governance-sensitive execution follows Step 5b.
 - Explicit user approval is required for destructive or security-sensitive action.
-- Reviewed non-destructive governance changes proceed through the normal execution gate except hook/settings runtime enforcement expansion, which follows `update-upgrade-sequence` Hook-Last preflight and explicit operator approval.
+- Reviewed non-destructive governance changes proceed through the normal execution gate.
+- Hook runtime enforcement expansion follows `update-upgrade-sequence` Hook-Last preflight.
+- Settings runtime enforcement expansion follows `update-upgrade-sequence` Hook-Last preflight.
+- Runtime enforcement expansion requires explicit operator approval.
 ## Patch Execution Method
-Detailed patch mechanics — operating rules, edit-operation ordering, freeze list before drafting, structural-connectivity preservation, and post-verify obligations — are owned by `references/change-patch-method.md`. The self-growth spine adds only one rule: confirmed self-growth patches install a bounded recurrence barrier, not content accumulation.
+Detailed patch mechanics are owned by `references/change-patch-method.md`.
+Patch mechanics include operating rules.
+Patch mechanics include edit-operation ordering.
+Patch mechanics include the freeze list before drafting.
+Patch mechanics include structural-connectivity preservation.
+Patch mechanics include post-verify obligations.
+The self-growth spine adds one rule.
+Confirmed self-growth patches install a bounded recurrence barrier.
+Confirmed self-growth patches do not install content accumulation.
+
+## Resolve Next Owner And Action
+- Confirmed recurrence defect opens the Required order.
+- Routine asset maintenance opens `update-upgrade-sequence`.
+- Missing required review-verification packet opens `review-verification`.
+- Patch execution opens the `Change Sequence`.
+- Failed verification reopens the smallest invalidated self-growth step.
+- Converged recurrence barrier opens `RESUME-ACTION`.
+- Blocked hardening records `HOLD` with owner, blocker, boundary, and next safe evidence step.

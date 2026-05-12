@@ -17,7 +17,7 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 - Phase 2 Binding Surfaces
 - Stale Downstream
 - Output Record
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Authority
 Codex is advisory-only design-coherence review.
@@ -53,7 +53,7 @@ Every packet includes:
 - `.claude/skills/feynman-clarity/SKILL.md` when Feynman clarity applies
 - `.claude/skills/benchmark-simulation/SKILL.md` when visual-reference benchmark coverage is material
 - current canonical artifact path
-- downstream artifact paths that may be stale
+- potentially stale downstream artifact paths
 
 Codex must read canonical paths directly.
 A team-lead paraphrase is not doctrine.
@@ -89,7 +89,7 @@ Missing required path records `fail-open:blocked_by_config`.
 27. team-lead is the artifact authoring owner for Phase 1/2 canonical artifacts.
 28. The assigned producer is the artifact authoring owner for Phase 3+ separate-producer artifacts.
 29. After each revision, repeat steps 2-28 while material convergence value remains.
-30. Reconciliation challenges may include both reviews.
+30. Reconciliation challenges include both reviews when both reviews are material.
 31. Correction requires a fresh independent review pass starting from step 2.
 32. The changed artifact is reviewed again before the new Codex result is read or used.
 33. Prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording does not carry forward.
@@ -170,7 +170,7 @@ If later sub-artifacts become implementation contracts, converge on affected pat
 ## Stale Downstream
 Accepted high/medium upstream changes make dependent downstream artifacts stale when they affect user-fit, data/domain meaning, API, UX, operator-delivery path, proof, validation, or acceptance basis.
 Stale artifacts support diagnosis only.
-They must not drive implementation, review, testing, validation, or acceptance.
+They must not control implementation, review, testing, validation, or acceptance.
 
 After upstream convergence, choose exactly one:
 - revise downstream artifacts
@@ -193,7 +193,7 @@ Record:
 - next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`
 For `converged` or `resolved-divergence` phase-gate artifacts that satisfy Phase advancement requirements, the output record carries an executable next owner/action; it does not end at user direction.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Accepted findings open artifact owner redesign or correction.
 - Valid `REDESIGN-PLAN` opens artifact mutation by the owning producer.
 - Missing output record blocks phase advancement and next-phase dispatch.

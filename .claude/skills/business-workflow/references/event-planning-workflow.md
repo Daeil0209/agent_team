@@ -18,7 +18,7 @@ LOAD-POLICY: on-demand reference only
 - Repeatability And Sustainability
 - Hidden-Criteria Question Set
 - Overlap Discipline
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Purpose
 Use this reference for automated event-planning document generation, institutional events, team retreats, and operational gatherings.
@@ -127,7 +127,7 @@ Secondary questions:
 instructional-design owns pedagogical design when education is a component.
 business-workflow owns education weight and necessity within the event workflow.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete event rule packet opens document-automation or software-architecture when those owners are needed.
 - Missing critical event criteria opens blocker-clear or explicit assumption only under the Hidden-Criteria Question Set.
 - Failed feasibility, necessity, or repeatability opens event rule correction before generation continues.

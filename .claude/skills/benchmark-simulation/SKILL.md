@@ -106,7 +106,7 @@ Citing a standard-class reference as if it were a principle is the opposite defe
 That mistake invites re-interpretation of a numeric threshold.
 
 When a source claims research-grounding without linking to the underlying study, sample, or findings, downgrade from `evidence` to `assertion`.
-Examples of research-grounding claims: "rigorous research", "user-driven", "evidence-based".
+Examples of research-grounding claims: "rigorous research", "user-led", "evidence-based".
 Lower one tier on the source quality ladder.
 Research-artifact accessibility is the discriminator between research-class and principle-class.
 
@@ -222,7 +222,7 @@ Each durable pattern catalog entry carries exactly one lifecycle state:
 - `Assess` - observed in external evidence, not yet synthesized into local doctrine or practice.
 - `Trial` - synthesized and applied to at least one destination with feedback captured.
 - `Adopt` - verified stable across two or more destinations and iteration cycles.
-- `Hold` - actively recommended against after fit failure or regression evidence.
+- `Hold` - active rejection after fit failure or regression evidence.
 
 `Hold` is an active warning, not silent removal.
 Stale `Assess` or `Trial` entries require promote, demote, hold, or defer-with-basis on the next capability-growth cycle.

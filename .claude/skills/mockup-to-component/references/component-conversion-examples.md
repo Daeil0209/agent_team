@@ -75,6 +75,6 @@ const products = await fetch('./data/products.json').then(r => r.json());
 { "data": [{ "id": 1, "name": "...", "price": 10000, "image": "..." }], "pagination": { "page": 1, "limit": 10, "total": 50 } }
 ```
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return mockup structure, component boundaries, data schema, and production-evidence gaps to the active mockup-to-component workflow.
 - If current UI practice, licensing, accessibility, or backend contract affects implementation, refresh evidence or route the gap before conversion continues.

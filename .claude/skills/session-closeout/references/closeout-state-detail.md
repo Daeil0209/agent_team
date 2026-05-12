@@ -20,7 +20,7 @@ false — load explicitly when detailed closeout state is needed.
 ## not-needed Conditions
 `validation_ownership: not-needed` is valid when:
 - Session performed only research, Q&A, or read-only analysis
-- No implementation deliverable was produced or accepted
+- Session produced zero implementation deliverable
 Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-only`.
 ## Hold Conditions
 `closeout_state: hold` when:
@@ -30,10 +30,10 @@ Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-on
 ## Agent Lifecycle Resolution
 Before closeout completion, each teammate must be resolved as `shutdown`, `terminated`, `hold-for-validation`, or non-live residue.
 During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
-During active closeout, `TeamDelete` may proceed without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
+During active closeout, `TeamDelete` proceeds without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
 A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Clean closeout state returns to session-closeout completion.
 - Hold closeout state reports `HOLD` with residual owner and blocker.
 - Partial closeout state reports warning-bearing closeout.

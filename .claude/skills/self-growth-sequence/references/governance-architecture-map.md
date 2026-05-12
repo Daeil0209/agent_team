@@ -27,7 +27,7 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 
 Reference files are lookup surfaces, not hidden always-on doctrine. A `SKILL.md` spine must keep the activation trigger, owner, stop rule, and instruction to load the direct reference file when the detailed lookup is required.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Selected owner surface opens patch design on that surface.
 - Lookup-only detail opens owning reference update.
 - Always-on doctrine need opens `CLAUDE.md`.

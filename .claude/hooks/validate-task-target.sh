@@ -9,10 +9,6 @@ INPUT_JSON="$INPUT" CLAUDE_HOME="$HOME/.claude" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
 
-const warn = (reason) => {
-  void reason;
-};
-
 const deny = (reason) => {
   process.stdout.write(JSON.stringify({
     hookSpecificOutput: {
@@ -40,29 +36,20 @@ try {
   const taskId = String(toolInput.task_id || toolInput.taskId || toolInput.id || "").trim();
   const inputTeamName = String(input.team_name || input.teamName || toolInput.team_name || toolInput.teamName || "").trim();
   const claudeHome = process.env.CLAUDE_HOME || path.join(process.env.HOME || "", ".claude");
-  const targetedTools = new Set(["TaskGet", "TaskUpdate", "TaskOutput", "TaskStop"]);
   const mutatingTools = new Set(["TaskUpdate", "TaskStop"]);
-  const taskIdAdvice = (currentToolName) => currentToolName === "TaskGet"
-    ? "Use TaskList or the task_assignment packet to confirm a current open executable task id, then retry TaskGet."
-    : "Use TaskList, TaskGet with a confirmed existing id, a returned task mutation, or the task_assignment packet to confirm a current open executable task id, then retry.";
+  const taskIdAdvice = "Use TaskList, TaskGet with a confirmed existing id, a returned task mutation, or the task_assignment packet to confirm a current open executable task id, then retry.";
   const rejectInvalidTarget = (reason) => {
-    if (mutatingTools.has(toolName)) {
-      deny(reason);
-    } else {
-      warn(reason);
-    }
+    deny(reason);
     process.exit(0);
   };
 
-  if (!targetedTools.has(toolName)) {
+  if (!mutatingTools.has(toolName)) {
     process.exit(0);
   }
 
   if (!taskId) {
-    let reason = `task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice(toolName)}`;
-    if (toolName === "TaskOutput") {
-      reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
-    }
+    let reason = `task-target preflight incomplete. Detail: ${toolName} requires an explicit task id. Next: ${taskIdAdvice}`;
+
     rejectInvalidTarget(reason);
   }
 
@@ -287,9 +274,6 @@ try {
     } else {
       reason += " Use a task id from the task_assignment packet or TaskList. Use SendMessage for agent-scoped communication.";
     }
-    if (toolName === "TaskOutput") {
-      reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
-    }
     rejectInvalidTarget(reason);
   }
 
@@ -297,27 +281,15 @@ try {
   if (staleTaskEvidence) {
     reason += ` The id is within ${staleTaskEvidence.teamName}'s task highwatermark (${staleTaskEvidence.hwmValue}); use that only as stale allocation evidence and select a current open task instead.`;
   }
-  reason += ` Next: ${taskIdAdvice(toolName)}`;
+  reason += ` Next: ${taskIdAdvice}`;
   if (knownTaskIds.length > 0) {
     reason += ` Known task ids: ${knownTaskIds.join(", ")}.`;
   }
-  if (toolName === "TaskOutput") {
-    reason += " TaskOutput is deprecated upstream; prefer Read on the background task output path when the runtime provides it.";
-  }
+
   rejectInvalidTarget(reason);
 } catch (error) {
-  let failedToolName = "";
-  try {
-    failedToolName = String(JSON.parse(process.env.INPUT_JSON || "{}").tool_name || "");
-  } catch {
-    failedToolName = "";
-  }
   const reason = `Task validation failed: internal error during validation. Error: ${error && error.message || String(error)}`;
-  if (["TaskUpdate", "TaskStop"].includes(failedToolName)) {
-    deny(reason);
-  } else {
-    warn(reason);
-  }
+  deny(reason);
   process.exit(0);
 }
 NODE

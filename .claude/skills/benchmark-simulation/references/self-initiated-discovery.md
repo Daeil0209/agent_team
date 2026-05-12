@@ -31,7 +31,7 @@ When a material cue is not selected, record the deferral basis:
 - `BENCHMARK-DEFERRED: burden-exceeds-value` with burden basis
 Silent skip when a material cue applies is a planning-evidence defect, not legitimate scope reduction.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Applied material cue opens `benchmark-simulation`.
 - Valid deferral returns cited deferral basis to the consuming owner.
 - Silent skip opens planning-evidence correction.

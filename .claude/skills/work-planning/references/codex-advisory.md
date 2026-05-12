@@ -15,7 +15,7 @@ Pre-`work-planning` Codex output is not planning evidence.
 - Packet
 - Review Criteria
 - Handling
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Trigger
 Required trigger evaluation:
@@ -35,7 +35,7 @@ For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-ma
 ## Authority
 Codex is advisory-only structural review.
 Review route, owner, workflow, parallel-fit, readiness, skill-map, acceptance path, and needless-user-gate defects from the user's usable-result perspective.
-Prefer the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
+Choose the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
 
 Codex never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
 `CODEX-ADVISORY-BASIS` is the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
@@ -121,7 +121,7 @@ Freeze one:
 
 Post-route-freeze Codex expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Accepted advisory points update the affected planning field or blocker basis.
 - Rejected advisory points record cited doctrine, user instruction, evidence, or frozen request basis.
 - Exhausted advisory attempt records `CODEX-ADVISORY-BASIS: fail-open:<reason>`.

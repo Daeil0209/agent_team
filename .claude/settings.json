@@ -116,7 +116,7 @@
         ]
       },
       {
-        "matcher": "TaskGet|TaskUpdate|TaskOutput|TaskStop",
+        "matcher": "TaskUpdate|TaskStop",
         "hooks": [
           {
             "type": "command",

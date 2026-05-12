@@ -38,7 +38,7 @@ Termination form for shutdown specifically:
 - `TeamDelete` succeeds only after every live process-backed teammate is confirmed terminated.
 - Termination proof requires `teammate_terminated` evidence rather than text `control-ack`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Reuse, standby, or hold-for-validation sends `MESSAGE-CLASS: lifecycle-control`.
 - Shutdown intent sends structured `shutdown_request`.
 - Missing termination evidence keeps closeout open.

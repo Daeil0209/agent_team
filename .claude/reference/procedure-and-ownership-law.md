@@ -53,7 +53,7 @@ Stop before local substitution when a configured lane owns the next implementati
 Stop before local substitution when a configured lane owns the next acceptance function.
 Stop before dispatch when the packet would rely on lead-only conversation history.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped completion route opens outcome classification.
 - A stopped local-substitution route opens the configured lane owner.
 - A stopped dispatch route opens packet correction.

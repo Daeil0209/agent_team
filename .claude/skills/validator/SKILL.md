@@ -23,7 +23,7 @@ If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before val
 On assignment-grade work receipt, classify the packet before execution:
 - bounded verdict-only arbitration -> execute
 - assignment-grade `FINAL-REJECT` packet -> execute rejection analysis
-- safely inferable missing detail may use `reconstruct-with-inference` only when core boundaries remain unchanged.
+- safely inferable missing detail uses `reconstruct-with-inference` only when core boundaries remain unchanged.
 - Core boundaries are owner, phase, proof burden, acceptance burden, deliverable shape, validation target, validation surface, tool basis, and verdict burden.
 - Materially required decision surface must also remain unchanged.
 - mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
@@ -197,6 +197,6 @@ Keep authoritative versus supplemental sources explicit.
 - Completion uses `handoff` or `completion` only for converged validator-owned verdict work.
 - Final acceptance rejection analysis uses `handoff` with `OUTPUT-SURFACE: validator correction packet`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `PASS`, `HOLD`, or `FAIL` opens team-lead synthesis, correction routing, closeout, or continuation by the frozen route.
 - Missing decisive validation basis opens the named blocker owner/action before verdict work continues.

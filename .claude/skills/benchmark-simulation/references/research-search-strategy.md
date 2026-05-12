@@ -50,6 +50,6 @@ Use this section when `benchmark-simulation` is consumed by researcher for exter
 - GAIA benchmark: https://arxiv.org/abs/2311.12983
 - BrowseComp: https://openai.com/index/browsecomp/
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return query strategy, source-family coverage, evidence quality, and benchmark uncertainty to the active benchmark-simulation workflow.
 - If search coverage or current-practice evidence changes the design basis, reopen synthesis or the owning lane packet before recommendation continues.

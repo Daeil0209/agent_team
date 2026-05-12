@@ -34,6 +34,6 @@ When deliverable type triggers design-stack composition, follow the phase-aligne
 - invoking a sibling whose phase is not active = composition noise
 - letting agents improvise composition by habit = composition drift; the dispatching owner must name composition explicitly
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return the selected skill stack, phase recipe, sibling-owner requirements, and composition defects to the active benchmark-simulation workflow.
 - If composition changes implementation, proof, or iteration ownership, carry the named stack into the next planning, dispatch, or lane packet.

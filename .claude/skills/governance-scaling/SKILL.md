@@ -28,7 +28,7 @@ Use this skill when a new project starts, scope expands materially, or the activ
 - keep explicit that `PROJECT-TIER` is the project floor and `ACTIVE-REQUEST-TIER` is the current request tier
 - keep explicit that request-specific risk can raise the active tier while preserving the project floor
 - surface guardrails for blast radius, retry depth, stale work, concurrent writes, and scope creep
-- keep task-level tier suggestions heuristic and team-lead judged
+- keep task-level tier signals heuristic and team-lead judged
 - send `hold|blocker` when truthful tier evidence is absent
 ## Activation
 Load this skill at project start.

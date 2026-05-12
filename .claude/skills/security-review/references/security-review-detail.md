@@ -11,7 +11,7 @@ LOAD-POLICY: on-demand reference only
 - 3. Security Severity Framework
 - 5. Allowed and Prohibited Practices
 - 6. Dependency Security
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## 2. OWASP Top 10 (2021) Checklist
 Run each item against the identified security-sensitive surfaces. Record findings with file path, line number, and severity.
@@ -23,7 +23,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Privilege escalation paths: role or scope checks missing on elevated actions.
 - IDOR search: `findById(req.params.id)` or equivalent without `where: {userId: req.user.id}` ownership filter.
 - Auth gap search: route definitions lacking auth middleware or decorator; compare route list against authenticated endpoint inventory; admin routes without role-check middleware.
-**Search hint:** Route handlers using `req.params.id` without ownership check; `Access-Control-Allow-Origin: *` with `Allow-Credentials: true`; admin routes without role middleware.
+**Search pattern:** Route handlers using `req.params.id` without ownership check; `Access-Control-Allow-Origin: *` with `Allow-Credentials: true`; admin routes without role middleware.
 **Reviewer action:** Flag every data access path where user-controlled input selects a resource record without an explicit ownership or permission check. IDOR: T1. Missing auth on sensitive routes (user data, financial, admin, system config): T1; low-sensitivity reads without auth: T2.
 ---
 ### A02 — Cryptographic Failures
@@ -34,7 +34,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Symmetric encryption keys stored in source code or config files.
 - Missing `secure` / `httpOnly` flags on cookies carrying sensitive data.
 - Hardcoded secrets: search `(api_key|apikey|api-key|password|passwd|secret|token|private_key|auth_token)\s*[=:]\s*["'][^"']{8,}`, `AKIA[0-9A-Z]{16}` (AWS key), `ghp_[A-Za-z0-9]{36}` (GitHub token), `.env`, `secrets.json`, `auth.json`, copied `.codex/auth.json`, or `.mcp.json` `env` values committed to VCS.
-**Search hint:** `createHash("md5"|"sha1")`, plaintext password storage, cookies missing `Secure`/`HttpOnly`, base64 strings >40 chars in source.
+**Search pattern:** `createHash("md5"|"sha1")`, plaintext password storage, cookies missing `Secure`/`HttpOnly`, base64 strings >40 chars in source.
 **Reviewer action:** Flag any path where sensitive data bypasses encryption at rest or in transit, or where a weak cryptographic primitive is used. Confirmed hardcoded secret: T0 — route to developer for immediate rotation and migration to secrets manager before any other remediation.
 ---
 ### A03 — Injection
@@ -45,7 +45,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - LDAP injection: user input concatenated into LDAP filter strings.
 - Template injection: user input interpreted by a server-side template engine.
 - Search: `req.body.*`, `req.query.*`, `req.params.*` flowing directly into DB query strings, ORM raw methods, file path construction (`path.join`, `fs.readFile`, `open`), shell commands (`exec`, `spawn`, `system`, `subprocess`), or HTML rendering without encoding.
-**Search hint:** SQL string concatenation with `req.*`; `exec`/`spawn` with user input; `res.send` rendering unescaped `req.*`.
+**Search pattern:** SQL string concatenation with `req.*`; `exec`/`spawn` with user input; `res.send` rendering unescaped `req.*`.
 **Reviewer action:** Flag every location where external input reaches an interpreter (database, shell, HTML renderer, template engine) without strict parameterization or encoding. T1 if input reaches an interpreter sink without validation; T2 if validation exists but is incomplete or bypassable.
 ---
 ### A04 — Insecure Design
@@ -54,7 +54,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Business logic flaws: workflows that can be abused by skipping steps or replaying requests.
 - Absence of rate limiting on sensitive operations (login, password reset, OTP).
 - Missing data-minimization controls: collecting or returning more data than necessary.
-**Search hint:** Password-reset/OTP endpoints without token expiry or single-use enforcement; login/registration differential response enabling account enumeration; no rate-limit middleware on auth endpoints.
+**Search pattern:** Password-reset/OTP endpoints without token expiry or single-use enforcement; login/registration differential response enabling account enumeration; no rate-limit middleware on auth endpoints.
 **Reviewer action:** Flag design-level gaps that no amount of implementation hardening can fully compensate for, and note where security requirements are absent or unverifiable.
 ---
 ### A05 — Security Misconfiguration
@@ -66,7 +66,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Verbose error messages revealing stack traces, version numbers, or internal paths to clients.
 - Error exposure search: `catch` blocks returning `error.message`/`error.stack` to `res.send()`/`res.json()`; default error handlers not overridden for production; 500 responses including internal path names or version strings.
 - Missing headers search: response config lacking `Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`; `helmet` absent or `default-src 'unsafe-inline'` without documented justification.
-**Search hint:** `morgan("dev")` in production config; unauthenticated `/debug`/`/health` endpoints; `NODE_ENV` not set to `production`; MCP server enabled in `.mcp.json`/`enabledMcpjsonServers` without matching role/tool authority and owner-boundary documentation.
+**Search pattern:** `morgan("dev")` in production config; unauthenticated `/debug`/`/health` endpoints; `NODE_ENV` not set to `production`; MCP server enabled in `.mcp.json`/`enabledMcpjsonServers` without matching role/tool authority and owner-boundary documentation.
 **Reviewer action:** Flag every configuration surface where the default, development, or permissive setting has not been explicitly hardened for production. Error detail exposure: T2. Missing security headers: T2 for complete absence of a header class; T3 for weak but present configuration.
 ---
 ### A06 — Vulnerable and Outdated Components
@@ -75,7 +75,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Unmaintained packages: no releases in over one year.
 - Packages with very low adoption (<1,000 weekly downloads): supply-chain risk.
 - Transitive dependency chains that include vulnerable versions.
-**Search hint:** Run `npm audit`, `pip-audit`, or `trivy`; check `package.json`/`requirements.txt` against advisory databases; verify lock file present.
+**Search pattern:** Run `npm audit`, `pip-audit`, or `trivy`; check `package.json`/`requirements.txt` against advisory databases; verify lock file present.
 **Reviewer action:** Run or request a dependency audit. Flag components with active CVEs as T1+. Flag unmaintained or low-adoption packages as T2–T3 depending on attack surface.
 ---
 ### A07 — Identification and Authentication Failures
@@ -86,7 +86,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Session tokens with excessive lifetime or no absolute expiry.
 - Credential stuffing protection absent (no account lockout, no anomaly detection).
 - JWT with `alg: none` accepted, or symmetric secret weak or hardcoded.
-**Search hint:** `session.regenerate` not called after login; short or hardcoded JWT secret; session cookies without `maxAge`; no lockout counter after repeated login failures.
+**Search pattern:** `session.regenerate` not called after login; short or hardcoded JWT secret; session cookies without `maxAge`; no lockout counter after repeated login failures.
 **Reviewer action:** Flag every authentication and session management surface where hardening controls are absent or insufficient.
 ---
 ### A08 — Software and Data Integrity Failures
@@ -95,7 +95,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Insecure CI/CD pipelines: untrusted code executed in privileged build context.
 - Insecure deserialization: user-controlled data deserialized into objects without integrity checks.
 - Auto-update mechanisms that do not verify package signatures.
-**Search hint:** `pickle.loads`/`unserialize` on user data; `curl | bash` in CI pipelines; dynamic `require()`/`import()` with user-controlled module paths; npm `postinstall` scripts from third-party packages.
+**Search pattern:** `pickle.loads`/`unserialize` on user data; `curl | bash` in CI pipelines; dynamic `require()`/`import()` with user-controlled module paths; npm `postinstall` scripts from third-party packages.
 **Reviewer action:** Flag every path where external or user-supplied data is executed, deserialized into objects, or used to control code loading without integrity verification.
 ---
 ### A09 — Security Logging and Monitoring Failures
@@ -105,7 +105,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - No alerting on repeated failures, suspicious access patterns, or privilege escalation.
 - Log files writable by the application process (tampering risk).
 - Logs not centralized or retained for a sufficient period.
-**Search hint:** Login success/failure not logged; `console.log(req.headers.authorization)` or similar credential logging; no structured logging framework; no SIEM integration.
+**Search pattern:** Login success/failure not logged; `console.log(req.headers.authorization)` or similar credential logging; no structured logging framework; no SIEM integration.
 **Reviewer action:** Flag authentication, authorization, and sensitive-data paths that lack audit logging. Flag any log statement that writes credential or PII data.
 ---
 ### A10 — Server-Side Request Forgery (SSRF)
@@ -115,7 +115,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 - Cloud metadata endpoints (169.254.169.254, fd00:ec2::254) reachable from the application.
 - Missing scheme, host, and path validation before outbound HTTP calls.
 - Redirect search: `res.redirect(req.query.url)`, `res.redirect(req.body.next)`, `Location` headers constructed from user input; `returnTo`/`next` redirect parameter not validated against domain allowlist.
-**Search hint:** `fetch(req.query.url)`, `axios.get(req.body.*)`, file read with user-controlled `file://` URLs, redirect with unvalidated `next` parameter.
+**Search pattern:** `fetch(req.query.url)`, `axios.get(req.body.*)`, file read with user-controlled `file://` URLs, redirect with unvalidated `next` parameter.
 **Reviewer action:** Flag every outbound network call or URL-consuming operation where the target URL is fully or partially controlled by user input without strict allowlist enforcement. Redirect leaving application domain: T1. Intra-app redirect without path validation: T2.
 ---
 ## 3. Security Severity Framework
@@ -154,6 +154,6 @@ Run or request a dependency audit when the dispatch scope includes dependency ma
 - [ ] Flag absent lock file (`package-lock.json`, `yarn.lock`, `poetry.lock`, `Gemfile.lock`) as T2.
 ---
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return threat findings, severity class, required remediation, dependency-audit result, and residual risk to the active security-review workflow.
 - If security findings affect implementation, deployment, or final acceptance, route the named remediation to that owner before release claims continue.

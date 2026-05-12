@@ -33,7 +33,7 @@ The abstraction-fit-adapt cycle applies recursively to verification methodology:
 - `dev-workflow` gap-iteration (`.claude/skills/dev-workflow/references/gap-iteration.md`) operates on result-level test outcome vs expected acceptance
 - if the verification approach is itself a learning surface, schedule a retrospective benchmark cycle after first use to refine
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Mandatory verification benchmarking opens `benchmark-simulation`.
 - Benchmarked verification method opens tester proof design.
 - Acceptance-grade proof method opens validator acceptance basis.

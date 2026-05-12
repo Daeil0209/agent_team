@@ -14,7 +14,7 @@ LOAD-POLICY: on-demand reference only
 - Constraint-Satisfaction Document Generator Architecture Extension
 - Specialist Skill Maintainability Extension
 - Project Lessons (Recurrence-Barrier Catalog)
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Dependency-And-Field Architecture Extension
 For operator-facing workflow tools and document-backed systems:
@@ -111,6 +111,6 @@ Numbered project lessons captured from past incident hardening. Each lesson is a
 
 Note: L-03 (Entity ID Stability Contract) lives in the Coupled-Core Architecture Extension above because it is intrinsic to that extension's many-to-many modeling.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return selected architecture extension, invariant, project lesson, and unresolved trade-off to the active software-architecture workflow.
 - If an architecture extension changes module boundaries, persistence, latency, identity, or acceptance, carry the delta into the owning design or implementation packet.

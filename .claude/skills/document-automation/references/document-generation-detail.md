@@ -23,6 +23,6 @@ Use this file to select the narrowest document-generation reference before gener
 - Load multiple direct references only when the frozen document has multiple material document jobs.
 - Keep evidence acquisition, domain validation, visual composition, and final acceptance on their adjacent owner surfaces.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return selected reference path, document job, reader job, evidence boundary, and open surfaces to the active document-automation workflow.
 - If the selected reference changes generation, review, proof, or validation scope, carry the named requirement into the next owning packet before work continues.

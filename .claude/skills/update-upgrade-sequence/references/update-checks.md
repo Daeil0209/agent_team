@@ -28,7 +28,7 @@ This update/upgrade check supplies update-local evidence only: `TARGET-INTENT-BA
 A literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains defect evidence until the self-growth defect admission gate proves `confirmed defect`.
 If the item is intended protection, preserve the protection and reduce only the avoidable burden.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Completed update checks return evidence to `update-upgrade-sequence`.
 - Missing structural preservation opens update patch redesign.
 - Broken mapping chain opens owner/reference correction.

@@ -58,24 +58,28 @@ When a trigger fires, using only the compact spine is insufficient for positive 
 ## Challenge Lens Catalog
 Use every lens that materially applies to the target. Omission of an applicable triggered lens is verification failure.
 
-- Request-fit lens: what did the user actually ask for, forbid, de-prioritize, or emphasize; what burden or failure history shaped the request; what acceptance surface matters; would the current plan/result still satisfy the request if read literally?
+- Request-fit lens: what did the user actually ask for, forbid, de-prioritize, or emphasize?
+- Semantic-fit lens: what user concern, anti-goal, failure history, team-operation philosophy, target intent, or priority order shaped the request?
+- Acceptance-fit lens: what acceptance surface matters?
+- Result-fit lens: does the current plan/result satisfy the explicit request, frozen semantic intent, material target intent, and acceptance surface?
 - Claim/evidence lens: what is the exact claim, what evidence supports it, what evidence would defeat it, and what residual uncertainty remains?
 - Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, or acceptance downgrade would a skeptical independent lane raise?
 - Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, what breaks if it is removed, and whether `protected-restatement`, `design-tradeoff`, or `non-issue` classification defeats a defect label.
 - Detailed-design/mechanism lens: which lower-level unit, input, output, state transition, data flow, control flow, algorithm, interface, dependency, timing constraint, and error path make the intended behavior happen?
-- Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, optionality, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
+- Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, required/omitted state, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
 - Software development lens: are module boundaries cohesive, coupling controlled, contracts explicit, configuration and concurrency/idempotency risks handled, and errors observable and recoverable?
 - Harness/proof lens: what replaceable dependency boundary, driver, stub, fake, fixture, seed data, simulator, instrumentation, oracle, report, retained CI artifact, telemetry field, or user-surface exercise proves the mechanism across normal, edge, and failure paths?
 - Failure/risk lens: what are the most plausible failure modes, missing controls, missing feedback, off-nominal paths, misuse paths, severity, likelihood, detectability, and required mitigations?
 
 ## SV-PLAN Detailed Gate
 When exception-only `SV-PLAN` is loaded before consequential action, verify:
-- `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
+- `REQUEST-FIT-BASIS`, `SEMANTIC-INTENT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
+- material `TARGET-INTENT-BASIS` is present before existing-artifact, governance, artifact-change, review, proof, validation, or patch-worthiness claims
 - if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
-- routes that may enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
+- routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
 - consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`
 - `ACTIVE-WORKFLOW: dev-workflow` must show Codex advisory trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`
@@ -89,13 +93,13 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 Reject and reopen when a plan hides a route-replan condition as packet correction, serializes unaffected independent surfaces by convenience, tries unauthorized additional-agent dispatch, treats progress/task-plan UI/skill-name/skill-read as completed planning, or depends on implied remainder.
 
 ## SV-RESULT Detailed Gate
-Before consequential reporting, handoff, closure claim, synthesis-driven redispatch, or completion-style language, verify:
+Before consequential reporting, handoff, closure claim, synthesis-triggered redispatch, or completion-style language, verify:
 - the exact verified surface
 - concise verification basis
 - open surfaces and unverified items
 - whether the result is produced, synthesized, inferred, or externally evidenced
 - whether the current analysis/evaluation/synthesis report draft or exact outgoing consequential claim is covered by this `SV-RESULT`; prior analysis, memory, checklist language, or inline "SV-style" reasoning does not qualify
-- whether the result matches request fit, detailed mechanism, data/domain meaning, lifecycle/lineage, interface contracts, proof evidence, and unresolved failure modes when those surfaces are part of the claim
+- whether the result matches request fit, semantic intent, material target intent, detailed mechanism, data/domain meaning, lifecycle/lineage, interface contracts, proof evidence, and unresolved failure modes when those surfaces are part of the claim
 - whether final prose strengthens the claim beyond the verified surface
 - whether final prose exceeds Evidence-Quality Matrix supported scope, `FROZEN-CONTRACT-STATUS`, or retained `OPEN-SURFACES` state when those artifacts are material
 - whether generated artifacts, logs, reports, traces, screenshots, coverage, binaries, images, or datasets have retained identity evidence rather than console-memory-only observation
@@ -113,7 +117,7 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - when reference material exists, verify that the conclusion follows the reference rather than a convenient substitute
 - if the analysis becomes the basis for action, reopen `work-planning` before action; use `SV-PLAN` only when the action plan itself is disputed
 
-Analysis is verified only at the strength of its evidence. It may justify `next action`, `HOLD`, or a bounded recommendation without proving final acceptance.
+Analysis is verified only at the strength of its evidence. It justifies `next action`, `HOLD`, or a bounded recommendation without proving final acceptance.
 
 ## Artifact Change Verification
 For changes to doctrine, skills, agents, hooks, code, configs, references, or produced artifacts, verify:
@@ -196,7 +200,7 @@ OWNER-SEPARATION-STATUS:
 
 This detail block is internal handoff only. Do not expose it to the user unless the user explicitly requests the internal verification trace.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `verified-result` returns to the requesting owner for truthful reporting or next action.
 - `narrow-to-verified-scope` returns narrowed claim wording to the requesting owner.
 - `INFERENCE/UNVERIFIED` opens evidence gathering, claim narrowing, or truthful report by active owner.

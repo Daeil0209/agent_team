@@ -23,7 +23,7 @@ Standard response patterns for external service failures:
 - **Circuit breaker**: repeated consecutive failures to the same endpoint with unchanged route stop further attempts. Report service-level block.
 - **Fallback escalation**: when primary bridge fails, attempt fallback path if defined. If no fallback defined, this is a bridge design defect — report it as such
 All failure states must produce a structured blocked-condition report, not a generic error message.
-Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites may run under a frozen allowed-setup boundary. Docker Desktop-class installers, persistent daemons/services, credential repair, paid/licensed tools, destructive package actions, and security-setting changes are approval-required or blocked by default.
+Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites run under a frozen allowed-setup boundary. Docker Desktop-class installers, persistent daemons/services, credential repair, paid/licensed tools, destructive package actions, and security-setting changes are approval-required or blocked by default.
 ### Blocked-Condition Report Schema
 Required fields for every blocked-state report:
 - `bridge_step`: which integration step failed (setup, auth, endpoint, quota, data transfer, cleanup)
@@ -41,10 +41,10 @@ Required fields for every blocked-state report:
 ### Data Pipeline Bridge Rules
 When the external bridge involves batch data transfer, streaming ingest, or pipeline synchronization:
 - **Idempotency proof**: define the condition under which re-running the bridge step produces identical results with no side effects (duplicate records, double charges, duplicate notifications)
-- **Checkpoint/resume**: for operations that may be interrupted, define the minimum recoverable state and the resume entry point that avoids full restart
+- **Checkpoint/resume**: for interruptible operations, define the minimum recoverable state and the resume entry point that avoids full restart
 - **Batch vs streaming**: declare the transfer pattern upfront (batch pull, streaming push, polling, webhook) and justify the choice relative to delivery latency and quota constraints; switching patterns mid-bridge requires re-verification
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Passing pre-verification opens bounded external bridge execution.
 - Failed credential, endpoint, quota, permission, setup, or cleanup check opens blocked-condition report.
 - Allowed setup opens bounded setup execution.

@@ -15,7 +15,7 @@ Before a governance-hardening round closes, audit current-session artifacts, in-
 
 For rounds hardening dashboard, verification, launcher, monitoring, governance migration, or similar recurring surfaces, the same retroactive audit is mandatory. Closing without it is a `[RETRO-APPLY]` defect because the recurrence path already exists in the surfaces the new rule targets.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Completed retroactive audit opens governance closeout.
 - Affected current-session surface opens fix, invalidation, or deferred-by-owner record.
 - Stale prior verdict opens fresh re-verification before downstream use.

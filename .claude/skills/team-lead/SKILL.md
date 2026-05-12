@@ -97,6 +97,6 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
   - Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
   - Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Resolved lead-side detail opens the next owner/action named by planning, dispatch, synthesis, reporting, interrupt-resume, or closeout.
 - Unresolved lead-side detail opens `work-planning`, `task-execution`, `self-verification`, `session-boot`, `session-closeout`, or `hold|blocker` by the governing owner surface.

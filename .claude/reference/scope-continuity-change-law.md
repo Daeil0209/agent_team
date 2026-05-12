@@ -23,15 +23,15 @@ Use it when reporting on an existing artifact.
 - Work modifies hook text.
 - Work modifies setting text.
 - Work modifies runtime-adjacent text.
-- A packet may drift from original request.
-- A handoff may drift from original request.
-- A synthesis may drift from original request.
-- A packet may drift from the plan.
-- A handoff may drift from the plan.
-- A synthesis may drift from the plan.
-- A packet may drift from design.
-- A handoff may drift from design.
-- A synthesis may drift from design.
+- Packet drift from original request is possible.
+- Handoff drift from original request is possible.
+- Synthesis drift from original request is possible.
+- Packet drift from the plan is possible.
+- Handoff drift from the plan is possible.
+- Synthesis drift from the plan is possible.
+- Packet drift from design is possible.
+- Handoff drift from design is possible.
+- Synthesis drift from design is possible.
 - New doctrine affects current-session artifacts.
 - New doctrine affects in-flight outputs.
 - New doctrine affects prior verdicts.
@@ -61,7 +61,7 @@ Stop before positive synthesis until sibling outputs are carried forward.
 Stop before positive synthesis until acceptance contracts are carried forward.
 Stop before removal until source-to-destination meaning is reconstructed.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped judgment route opens live-owner-surface inspection.
 - A stopped mutation route opens target-intent reconstruction.
 - A stopped synthesis route opens cross-continuity carry-forward.
@@ -73,7 +73,7 @@ Stop before removal until source-to-destination meaning is reconstructed.
 - Existing-artifact judgment carries both as `TARGET-INTENT-BASIS`.
 - Receivers consume `TARGET-INTENT-BASIS` before lane work.
 - Receivers raise `scope-pressure` when `TARGET-INTENT-BASIS` is missing or unsafe.
-- Original creation may use `TARGET-INTENT-BASIS: not-applicable:<reason>` when no existing artifact exists.
+- Original creation uses `TARGET-INTENT-BASIS: not-applicable:<reason>` only when no existing artifact exists.
 
 ## Scope-Abuse Rules
 Route to correction when any appears:

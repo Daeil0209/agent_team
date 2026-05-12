@@ -33,10 +33,10 @@ It keeps runtime guardrails narrow and prevents runtime signals from replacing o
 - A tool signal might be treated as validation.
 - A tool signal might be treated as acceptance.
 - A claim depends on hook, settings, sandbox, or runtime-footprint behavior.
-- External MCP may influence a route.
-- Advisory tooling may influence a route.
-- Codex output may influence a route.
-- Codex output may influence a verdict.
+- External MCP influence affects a route.
+- Advisory tooling influence affects a route.
+- Codex output influence affects a route.
+- Codex output influence affects a verdict.
 - A runtime state file or team-runtime artifact is involved.
 
 ## Required Output
@@ -70,7 +70,7 @@ Stop before treating advisory output as a mutator.
 Stop before treating advisory output as validator.
 Stop before treating advisory output as acceptance owner.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped hook route opens the smallest non-runtime correction owner.
 - A stopped runtime-footprint claim opens measurement or narrows the claim to `UNVERIFIED`.
 - A stopped tool-signal route opens the owner procedure that actually owns the claim.

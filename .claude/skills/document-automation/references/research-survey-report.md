@@ -28,6 +28,6 @@ Use when the document is a research report, survey report, literature review, pa
 - Appendices hold supporting detail, raw data, and extended methodology.
 - Body sections that read as appendix material are structure defects.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return supported question, reader decision, method skeleton, evidence-packet dependency, visual-palette decision, and appendix/body boundary to the active document-automation workflow.
 - If evidence method or source basis is missing, route to `researcher` before generation claims source-backed quality.

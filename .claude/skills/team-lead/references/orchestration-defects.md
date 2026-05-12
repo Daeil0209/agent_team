@@ -92,7 +92,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Correction owner: stop on explicit user cancellation.
 - Correction owner: stop on explicit user redirect.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A defect trigger opens its named correction owner.
 - A correction owner executes the named correction action.
 - A recurring defect opens self-growth classification after `[HARDEN]` confirms recurrence.

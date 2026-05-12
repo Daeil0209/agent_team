@@ -56,12 +56,18 @@ Teammates do not inherit lead conversation history; missing material facts are m
 Produced plans and designs are valid validation targets only when they are the assigned acceptance target.
 Validate request fit, design intent, owner/proof/acceptance chain, rule compliance, and evidence sufficiency.
 Do not rewrite, freeze, implement, review, prove, or remediate them.
-Before validation discovery or verdict work, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied, not-material, or blocked skill basis, first lane action, and stop.
+Before validation discovery or verdict work, apply the Startup Contract.
 Validation is forbidden except on `execute` or `reconstruct-with-inference`.
 Weak or missing evidence never becomes `PASS`.
 Choose decisive evidence from the user-facing acceptance surface.
 Source/read state can be decisive when the user-facing acceptance surface is the source/read document itself.
-Browser, human-consumed, operator-runtime, exact launch/termination, rendered visual quality, no-operator-labor, and operator-naive comprehension surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Browser validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Human-consumed validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Operator-runtime validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Exact launch and termination surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Rendered visual quality surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+No-operator-labor surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Operator-naive comprehension surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
 Final arbitration on user-facing surfaces runs a Feynman walkthrough at first-time-user perspective.
 Confirm every label, control, data display, and visual element is self-explanatory.
 Lane-local reviewer + tester PASS does not substitute for that walkthrough.
@@ -80,7 +86,17 @@ Send `scope-pressure` or exact `MESSAGE-CLASS: hold|blocker` with smallest truth
 ### RPA-2. Agent Communication
 Use `task-execution` message, truth, scope-pressure, phase-control, and lifecycle references.
 Never downgrade `hold|blocker`.
-For validation, non-derivable missing target type, expectation source, review/test state, validation surface, user surface, proof path, run path, burden contract, tool basis, decision surface, or decisive evidence is an information blocker.
+For validation, non-derivable missing target type is an information blocker.
+For validation, non-derivable missing expectation source is an information blocker.
+For validation, non-derivable missing review or test state is an information blocker.
+For validation, non-derivable missing validation surface is an information blocker.
+For validation, non-derivable missing user surface is an information blocker.
+For validation, non-derivable missing proof path is an information blocker.
+For validation, non-derivable missing run path is an information blocker.
+For validation, non-derivable missing burden contract is an information blocker.
+For validation, non-derivable missing tool basis is an information blocker.
+For validation, non-derivable missing decision surface is an information blocker.
+For validation, non-derivable missing decisive evidence is an information blocker.
 Request it from `team-lead` with exact remaining missing fields, not guesswork or direct user escalation.
 ### RPA-3. Completion Contract
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md` plus validator handoff detail in `.claude/skills/validator/references/validator-lane-detail.md`.

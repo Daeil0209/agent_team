@@ -13,7 +13,7 @@ PRIMARY-OWNER: team-lead
   4. Reference-owned workflow sections (active references in `references/`):
      - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Advisory`, `Review Convergence Advisory`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
-     - `Phase Cursor Consumption`, `Related Skills`, `Delivery Spine`, `Self-Growth And Structural Feedback`
+     - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Self-Growth And Structural Feedback`
 - New top-level phase definitions require governance review.
 - Keep exact phase names stable when referenced by doctrine or dispatch packets.
 - Phase sections own only phase charter, owner, canonical output, and entry/exit law.
@@ -61,7 +61,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 3. Lane Separation And Parallel Flow
 - For Phase 1 (Plan) and Phase 2 (Design), team-lead solely owns planning, design, and canonical plan/design document authoring.
-- Where the workflow names a separate phase owner and artifact producer (Phase 3+ implementation, sub-artifact production), keep them separate: phase owner consumes material specialist skills, freezes decisions, and cites basis; assigned artifact producer writes from that frozen basis.
+- Where the workflow names a separate phase owner and artifact producer, keep them separate.
+- Phase owner consumes material specialist skills, freezes decisions, and cites basis.
+- Assigned artifact producer writes from that frozen basis.
 - Developer's dev-workflow lane begins at Phase 3 implementation.
 - Review, proof, validation, routing, and acceptance stay with their owning lanes.
 - Phase-local skill refinement stays inside the frozen lane map, deliverable shape, and proof/acceptance chain.
@@ -74,14 +76,16 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Same-artifact convergence stays inside `artifact-convergence-advisory` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
 - Same-review-surface convergence stays inside `review-convergence-advisory` under the same unchanged-boundary rule.
 - `task-execution` owns correction dispatch or reuse when another lane must revise.
-- The phase owner owns integrated redesign planning and decision correction. For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document. For Phase 3+ surfaces with a separate assigned producer, the producer updates the document from the redesign plan or reports a blocker.
+- The phase owner owns integrated redesign planning and decision correction.
+- For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document.
+- For Phase 3+ surfaces with a separate assigned producer, the producer updates the document from the redesign plan or reports a blocker.
 - Re-review returns to the same convergence loop after correction.
 
 ### 5. User-Surface Closure And Acceptance
 - Executable user-facing software requires reviewer plus tester in Phase 4; Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
 - Validator-required chains close through `references/final-acceptance-review.md`; bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
 
-## Phase 0: Discovery (Optional)
+## Phase 0: Discovery (Conditional)
 **Purpose**: Resolve missing requirements or reference-fit ambiguity before plan writing begins.
 **Owner lane**: researcher
 **Canonical output**: evidence-backed requirements summary for team-lead CP1 synthesis
@@ -117,7 +121,10 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead owns and records the decision-level Phase 2 design basis AND canonical design document authoring: selected direction, ER/data, interface/API/format, UI/user-flow, proof/acceptance/correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis.
+**Execution law**: team-lead owns and records the decision-level Phase 2 design basis.
+**Execution law**: team-lead owns canonical design document authoring.
+**Execution law**: the design basis covers selected direction, ER/data, interface/API/format, and UI/user-flow.
+**Execution law**: the design basis covers proof, acceptance, correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis.
 **Execution law**: team-lead authors the canonical design document directly by expanding the frozen Phase 2 design basis into the required artifact structure.
 **Execution law**: team-lead decision basis is operator-internal and decision-complete across the listed surfaces; canonical design artifact carries the expanded body authored by team-lead.
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical design document.
@@ -125,7 +132,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
 **Execution law**: the internal detail bundle stays inside Phase 2 as implementation-binding detail and becomes CP4 translation input.
 **Execution law**: internal detail bundle freeze prepares Phase 3/CP4 production-lane decomposition; implementation dispatch waits for Phase 2 exit plus CP4 resolution.
-**Execution law**: internal detail bundle freeze covers real-use contracts, lane/surface responsibility, shared source-of-truth, interface or format contracts, dependency boundaries, integration points, error contracts, proof hooks, and return-evidence expectations.
+**Execution law**: internal detail bundle freeze covers real-use contracts, lane/surface responsibility, and shared source-of-truth.
+**Execution law**: internal detail bundle freeze covers interface or format contracts, dependency boundaries, and integration points.
+**Execution law**: internal detail bundle freeze covers error contracts, proof hooks, and return-evidence expectations.
 **Execution law**: internal detail bundle regions driving Phase 3 active parallel dispatch are fully frozen before that dispatch.
 **Execution law**: vague regions outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch.
 **Execution law**: vague regions inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden.
@@ -134,8 +143,13 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
-**Exit law**: Phase 2 closes only when the artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete; once satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning` and uses the Phase 2 internal detail bundle as the CP4 basis.
-**Exit law**: The Phase 2 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`; field schema (including internal detail bundle status and material specialist contract status when required specialist output shapes implementation/proof/acceptance) is owned by `references/artifact-convergence-advisory.md` Output Record.
+**Exit law**: Phase 2 closes only when the artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete.
+**Exit law**: once Phase 2 closure is satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning`.
+**Exit law**: the Phase 2 internal detail bundle is the CP4 basis.
+**Exit law**: the Phase 2 artifact-convergence record is design-coherence level.
+**Exit law**: it is not wording-review level or route-level `CODEX-ADVISORY-BASIS`.
+**Exit law**: field schema is owned by `references/artifact-convergence-advisory.md` Output Record.
+**Exit law**: field schema includes internal detail bundle status and material specialist contract status when specialist output shapes implementation, proof, or acceptance.
 
 ## Phase 3: Implementation
 **Purpose**: Implement the feature inside the resolved design boundary.
@@ -145,7 +159,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: team-lead CP4 fixes parallel-default production ownership with bounded specialist-fit work surfaces, explicit dependency boundaries, surface-to-agent map, and explicit merge ownership.
 **Execution law**: every independent, nonblocked CP4 surface whose needed input is already present in the Phase 2 implementation-binding internal detail bundle enters the first parallel dispatch segment.
 **Execution law**: later dispatch segments are valid only for surfaces classified sequential or interdependent by the frozen parallel-fit basis, with exact dependency or interdependence recorded.
-**Exit law**: developer handoff names `OUTPUT-SURFACE`, changed surfaces, executed checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage or stale rows, `FROZEN-CONTRACT-STATUS`, unresolved assumptions, and the next owner/action; if parallel production occurred, one authoritative integrated output surface from the frozen `MERGE-OWNER` is required before advancement.
+**Exit law**: developer handoff names `OUTPUT-SURFACE`, changed surfaces, executed checks, `ACTIVE-SLICE`, and `SCOPE-BASELINE` coverage or stale rows.
+**Exit law**: developer handoff names `FROZEN-CONTRACT-STATUS`, unresolved assumptions, and the next owner/action.
+**Exit law**: if parallel production occurred, one authoritative integrated output surface from the frozen `MERGE-OWNER` is required before advancement.
 **Exit law**: once the Phase 3 gate is satisfied, team-lead immediately opens the Phase 4 boundary through `work-planning` and routes reviewer, tester, and validator ingress from the frozen acceptance path.
 
 ## Phase 4: Analysis
@@ -154,8 +170,14 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Canonical output**: reviewer and tester completion-grade evidence blocks, then validator verdict when the acceptance path requires it
 **Entry law**: implementation handoff and the current plan/design surfaces carry explicit acceptance basis for reviewer and tester.
 **Execution law**: reviewer and tester remain separate; planned proof comes first, exploratory expansion second.
-**Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4 (tester applies smallest truthful proof default per `agents/tester.md`; validator applies highest-fidelity proof default per `agents/validator.md`); missing decisive user-surface tooling freezes bounded setup or stops on `hold|blocker`.
-**Execution law**: parallel production requires explicit cross-surface contextual coherence review (API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, `CORE-WORKFLOW-CLOSURE` end-to-end coverage) and validator cross-surface integration verification before PASS; per-surface quality without cross-surface coherence is incomplete review.
+**Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4.
+**Execution law**: tester applies smallest truthful proof default per `agents/tester.md`.
+**Execution law**: validator applies highest-fidelity proof default per `agents/validator.md`.
+**Execution law**: missing decisive user-surface tooling freezes bounded setup or stops on `hold|blocker`.
+**Execution law**: parallel production requires explicit cross-surface contextual coherence review.
+**Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
+**Execution law**: validator cross-surface integration verification is required before PASS.
+**Execution law**: per-surface quality without cross-surface coherence is incomplete review.
 **Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
@@ -166,10 +188,14 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
 **Owner lanes**: correcting owner named by CP5 or validator-authored `FINAL-REJECT` packet -> reviewer/tester re-evidence as required -> validator when final acceptance is still required
 **Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict input, and explicit remaining gap state
-**Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract; design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
+**Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery.
+**Entry law**: that classification must stay inside the unchanged Phase 1/2 delivery contract.
+**Entry law**: design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
 **Execution law**: Phase 5 iteration protocol per `references/gap-iteration.md` `Iteration Protocol Detail`; positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
 **Exit law**: when CP5-contracted blocking gaps are cleared against frozen `SCOPE-BASELINE` with required user-surface evidence, validator PASS immediately opens Final Acceptance Review.
-**Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning` by current root-cause classification and active workflow basis until the gap converges, escalates, or reaches `HOLD`.
+**Exit law**: when blocking gaps remain, team-lead immediately returns the workflow to the current root-cause owner.
+**Exit law**: valid return owners are Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning`.
+**Exit law**: the gap remains active until it converges, escalates, or reaches `HOLD`.
 **Exit law**: executable user-facing deliverables require operator-delivery closure before `FINAL-ACCEPT` and `Complete`; missing, broken, unverified, or mismatched operator-delivery closure becomes `FINAL-REJECT`.
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
 
@@ -188,14 +214,14 @@ Load triggered references directly from `SKILL.md`.
 Reference trigger rule:
 - `references/phase-gates.md` is mandatory when clearing, contesting, or changing a phase entry, phase exit, transition gate, checkpoint gate, workflow completion, or workflow `HOLD`.
 - `references/artifact-convergence-advisory.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase depends on it.
-- `references/review-convergence-advisory.md` is mandatory when material reviewer-owned review drives Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
+- `references/review-convergence-advisory.md` is mandatory when material reviewer-owned review determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 - `references/final-acceptance-review.md` is mandatory when validator PASS is used for workflow `Complete`, or when `FINAL-REJECT` is recorded or consumed.
 - Any other listed reference is mandatory when its trigger is active.
 - If a mandatory reference cannot load, `HOLD` or reopen the owning path.
 - Advancement requires loaded owner basis.
 - A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, phase-result reporting, or user review.
 
-## Phase Cursor Consumption
+## Resolve Next Owner And Action
 Resolve the phase cursor in the same turn by tool-call execution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
 Completed transition starts the next phase or records the exact blocker.
 

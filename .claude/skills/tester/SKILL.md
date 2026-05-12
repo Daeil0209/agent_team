@@ -168,6 +168,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked proof.
 - Completion uses `handoff` or `completion` only for converged tester-owned proof.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `TEST-STATE: ready` opens validator, reviewer, correction owner, or team-lead synthesis by the frozen route.
 - `TEST-STATE: hold|blocked` opens the named proof blocker owner/action before validation continues.

@@ -14,9 +14,9 @@ auto-inject: false
 | `weak-enforcement` | Doctrine exists, but runtime or packet surfaces lack reliable obligation exposure. | Add or refine packet fields or advisory guidance first; add or refine hook logic only as a Hook-Last-approved runtime edge. | Semantic judgment becomes a hard block only after fields or low-friction evidence exist. |
 | `capability-gap` | No reusable skill, reference, or lane procedure can handle the recurring work credibly. | Use Capability-Gap Fast Path; update an existing owner when sufficient, create a new skill only after the category gate. | Reserve new skills for reusable capability gaps. |
 
-Use this matrix before drafting. A patch may involve more than one failure mode, but one primary mode must govern the edit operation and owner choice.
+Use this matrix before drafting. A patch can involve more than one failure mode, but one primary mode must govern the edit operation and owner choice.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Selected failure mode opens the required response in this matrix.
 - Multiple failure modes choose one primary mode before drafting.
 - Missing primary mode reopens self-growth causal analysis.

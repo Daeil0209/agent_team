@@ -9,12 +9,12 @@ LOAD-POLICY: on-demand reference only
 ## Document-Class Visualization Discipline
 For document deliverables (plan, report, schedule, proposal), apply document-class rules in addition to general visual standards. Visual type taxonomy ownership: `document-automation` defines domain-specific type selection; `visual-composition` owns render composition evaluation for all types.
 ### Format, Structure, and Role Rules
-**Format Class Gate**: before finalizing layout, declare class — **management-type** (operational control, assignment tracking, logistics) or **explanation-type** (narrative reasoning, instructional exposition). Using explanation-type format for operational control = `format_class_mismatch`. Route format-class disputes to `document-automation` for content-tone aspects; this role owns the layout consequence. Audience-variant rule: when a schedule serves multiple audiences, visual format type (not just density) may differ per audience — unchanged operator-density schedule to participants = candidate `format_class_mismatch`.
+**Format Class Gate**: before finalizing layout, declare class — **management-type** (operational control, assignment tracking, logistics) or **explanation-type** (narrative reasoning, instructional exposition). Using explanation-type format for operational control = `format_class_mismatch`. Route format-class disputes to `document-automation` for content-tone aspects; this role owns the layout consequence. Audience-variant rule: when a schedule serves multiple audiences, visual format type differs per audience when reader job differs — unchanged operator-density schedule to participants = candidate `format_class_mismatch`.
 **Word/HWP Image Constraints**: single image must not exceed ~one-third of page area; every figure requires descriptive caption; placement must not break surrounding text flow. Violations: `poor_proportion` (oversized) or `weak_hierarchy` (missing caption/broken flow).
 **Visual Role Separation**: each visual element must serve exactly one purpose. A table simultaneously acting as schedule, role matrix, and status tracker = role separation violation; split or redesign to single reading task.
 ### Visual-Type Taxonomy and Composition Standards
 **General Visual-Type Role Taxonomy**: **table** = comparison/structured lookup; **graph/chart** = trend, magnitude, or change; **diagram/image** = process flow, structural relationship, or spatial arrangement; **timeline** = continuous-flow or parallel-overlap temporal sequencing; **Gantt chart** = dependency-chain and phased-sequencing schedule. When type doesn't match stated purpose, re-type or remove. Schedule-class decision rule: parallel tracks or dependencies require timeline/Gantt evaluation — table alone fails the justification gate.
-**Page Gaze-Path Rule**: no page should contain competing visual elements of equal weight fighting for primary attention. When two or more equal-weight elements appear on the same page, one must be promoted or the other demoted = `weak_hierarchy` defect at page level.
+**Page Gaze-Path Rule**: no page contains competing visual elements of equal weight fighting for primary attention. When two or more equal-weight elements appear on the same page, one must be promoted or the other demoted = `weak_hierarchy` defect at page level.
 **Semantic Deduplication Gate**: before finalizing any visual, verify it does not restate information already conveyed by adjacent text or another visual on the same surface. A restatement visual = `decorative_noise` or `narrative_redundancy`.
 **Density Standards**: short documents (2-3 pages) lean heavier on visuals; medium (~10 pages) target ~5:5 or 6:4 text-to-visual ratio. When benchmark/reference proposals are available, extract concrete density targets (visuals per page, text-to-visual ratio per section type, whitespace budget) and use as calibration inputs overriding defaults; a visual included only to hit density still fails the justification gate.
 ### Event Planning Document Visual Types
@@ -37,7 +37,7 @@ Role-appropriate visual types for research reports, technology surveys, patent l
 - **technology taxonomy diagram** — hierarchical/network diagram of classification relationships; must pass legibility floor when exceeding 12 nodes
 - **comparison matrix table** — feature/criterion comparison; justified when 3+ entities on 4+ dimensions
 **Research Diagram Legibility Floor**: diagrams with 12+ nodes must pass: minimum readable label size at target viewing distance, no overlapping node labels, edge crossings minimized. Failure = `diagram_text_unreadable`; blocks visual-ready handoff until redesigned or split.
-**Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy. `confirmed` stays explicit; `conflicting` may render as **contested**; `inferred`/`unconfirmed` may group as **unverified** only when legend maps back to canonical statuses. Use shading, icon, or label — not color alone. Absent status marking in a mixed-confirmation table = `weak_hierarchy`.
+**Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy. `confirmed` stays explicit; `conflicting` renders as **contested** when a shorter label is needed; `inferred`/`unconfirmed` group as **unverified** only when legend maps back to canonical statuses. Use shading, icon, or label — not color alone. Absent status marking in a mixed-confirmation table = `weak_hierarchy`.
 ## Visualization Production Sequence Gate
 Visual insertion must occur after the text content draft is reviewable. Premature visual placement — inserting figures before text draft is complete = `render_contract_mismatch` defect; blocks visual-ready handoff until sequencing corrected.
 ## Visual Tone for Document-Class Deliverables
@@ -48,7 +48,7 @@ For workflow tools, decks, reports, and other human-facing artifacts:
 - Promote only task-worthy surfaces to full tabs, pages, or primary regions; demote low-frequency defaults and support settings
 - Distinguish master-data maintenance, planning, reconciliation, monitoring, and closeout surfaces visually
 - Expose dependency-critical indicators at the decision point (remaining capacity, budget balance, rollover pressure, constrained-planning signals)
-- Treat section/surface role drift in documents same as tab role drift in apps; pages without defensible reading task should not stay dense and prominent
+- Treat section/surface role drift in documents same as tab role drift in apps; pages without defensible reading task must not stay dense and prominent
 Emit a blocking surface-promotion finding when promoted surface structure hides critical planning signals or lets low-frequency setup overwhelm primary work.
 ## Workflow-Product Surface Extension
 For dense workflow tools, protect operator workflow meaning beyond generic layout quality:
@@ -73,10 +73,10 @@ For operational management systems (project dashboards, resource allocation UIs,
 - **Responsive Reflow Principle**: responsive means vertical restructure, not shrink. Force-shrinking below readability = blocking. Core information must never be hidden, only repositioned.
 - **Merged-Cell Layout Prohibition**: spreadsheet merged-cell layouts in web UI = blocking. Mobile-first designs degrading desktop efficiency (excessive whitespace, single-column on wide screens, hidden controls) = blocking.
 ### Decorative Clutter Anti-Pattern
-Icons, gradients, animations, hover effects, or badges not conveying operational status or priority = `decorative_noise`. Removal test: if removing causes zero operational information loss, it should not exist. Upgrading spartan but functional UI requires before/after scannability measurement; if extracting same operational data requires scanning more elements = regression regardless of aesthetic improvement.
+Icons, gradients, animations, hover effects, or badges not conveying operational status or priority = `decorative_noise`. Removal test: if removing causes zero operational information loss, remove it. Upgrading spartan but functional UI requires before/after scannability measurement; if extracting same operational data requires scanning more elements = regression regardless of aesthetic improvement.
 Expert tool UI: button visual weight proportional to interaction frequency; rare destructive actions visually demoted (icon only, show on hover); status indicators must never be styled as buttons; page divisions correspond to workflow boundaries, not database table boundaries.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return visual defect records, operator-surface rules, composition requirements, and proof needs to the active visual-composition workflow.
 - If visual composition changes workflow design, implementation, testing, or validation, carry the named visual requirement to that owner before completion continues.
 ## Workflow Tool Design Patterns

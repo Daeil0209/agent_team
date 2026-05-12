@@ -34,7 +34,7 @@ Anti-pattern search is as valuable as positive-pattern search. A benchmark cycle
 ## Search Depth Bound
 Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Stop search when added burden exceeds added decision value.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Grounded benchmark evidence returns to the consuming owner.
 - Low-confidence or speculative evidence opens additional search or marked inference.
 - Saturated search opens benchmark synthesis.

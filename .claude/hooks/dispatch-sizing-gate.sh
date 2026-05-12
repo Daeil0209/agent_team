@@ -213,7 +213,7 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_standby "$SHARDED_TARGET_NAME"; then
-    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' is already standby; prefer reuse or a unique SHARD-ID."
+    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' is already standby; reuse it when the frozen shard boundary still fits, or choose a unique SHARD-ID."
     exit 0
   fi
 
@@ -232,7 +232,7 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_standby "$TARGET_NAME"; then
-    emit_dispatch_warning "standby agent '${TARGET_NAME}' already exists; prefer assignment-grade SendMessage reuse when it fits."
+    emit_dispatch_warning "standby agent '${TARGET_NAME}' already exists; use assignment-grade SendMessage reuse when it fits."
     exit 0
   fi
 
@@ -264,7 +264,7 @@ if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
     exit 0
   fi
 
-  emit_dispatch_warning "standby agent(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown}); prefer reuse when it fits."
+  emit_dispatch_warning "standby agent(s) already exist on work-surface '${DISPATCH_WORK_SURFACE}' (${STANDBY_SUMMARY:-unknown}); reuse them when the frozen work surface still fits."
   exit 0
 fi
 

@@ -21,6 +21,6 @@ Use when the document mode is proposal, plan, grant, or execution-control.
 - Retrospective-result voice is a proposal/plan defect.
 - Treat fatigue, concentration rhythm, and post-transition performance drops as realism inputs for schedules.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return proposal or plan document type, evaluation-intent basis, strategy-capture gaps, generation order, and execution-control surfaces to the active document-automation workflow.
 - If requirements, evaluation intent, or strategy capture is under-specified, route the named gap to the smallest owning lane before drafting continues.

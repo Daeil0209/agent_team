@@ -6,7 +6,16 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned dispatch surface.
-- Fixed top-level section order after Structural Contract: Purpose, Activation, Entry Contract, Step 1: Activate Frozen Route, Step 2: Dispatch / Reuse, Step 3: Dispatch Truth, Step 4: Interrupt / Resume Boundary, Step 5: Next Owner, Move-Out Boundary.
+- Fixed top-level section order starts after Structural Contract.
+- Section 1 is Purpose.
+- Section 2 is Activation.
+- Section 3 is Entry Contract.
+- Section 4 is Step 1: Activate Frozen Route.
+- Section 5 is Step 2: Dispatch / Reuse.
+- Section 6 is Step 3: Dispatch Truth.
+- Section 7 is Step 4: Interrupt / Resume Boundary.
+- Section 8 is Resolve Next Owner And Action.
+- Section 9 is Move-Out Boundary.
 - Reference Map stays inside Purpose.
 - PRIMARY-OWNER: team-lead
 ## Purpose
@@ -164,15 +173,15 @@ Rules:
 - if a behavioral or procedural defect meets the `self-growth-sequence` entry gate, open `self-growth-sequence`
 - the suspended dispatch surface still requires `RESUME-OWNER` and verified `RESUME-ACTION` before closure or return
 - partial dispatch maps to recovery or resume truth only
-## Step 5: Next Owner
+## Resolve Next Owner And Action
 After the execution move:
 - fallback standalone returned results, if already present, go to `team-lead` synthesis as bounded evidence only
-- then `self-verification (SV-RESULT)` runs before phase/stage-end reporting or synthesis-driven redispatch
+- then `self-verification (SV-RESULT)` runs before phase/stage-end reporting or synthesis-triggered redispatch
 - fallback standalone results stay outside team-runtime monitoring
 - `session-boot` owns monitoring and agent-state interpretation
 - agent lanes own execution and handoff/completion packets
 - `team-lead` owns synthesis after agent outputs arrive
-- `self-verification` reopens as `SV-RESULT` before phase/stage-end consequential reporting, completion claim, or synthesis-driven re-dispatch
+- `self-verification` reopens as `SV-RESULT` before phase/stage-end consequential reporting, completion claim, or synthesis-triggered re-dispatch
 
 Canonical sequence:
 1. `work-planning`

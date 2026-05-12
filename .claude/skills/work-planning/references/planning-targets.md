@@ -19,9 +19,9 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 ## Target Selection Rules
 - Choose one primary target before Q1-Q5. Add a secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
 - On consequential top-level plans, `route-plan` is the default primary target; the matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear (then `lead-local-plan`/`delegated-lane-plan`/`blocker-clear-plan`/`workflow-sequence-plan` becomes primary). Lower-level lane plans use the matching target as primary.
-- `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-driven, burden-sensitive, or dependent on user-surface proof or original wording.
+- `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-based, burden-sensitive, or dependent on user-surface proof or original wording.
 - `lead-local-plan` is valid only for one named item with no final-arbitration trigger, no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
-- `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or may enter `task-execution`.
+- `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`.
 - If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
 - `blocker-clear-plan` is valid only when the clearing move preserves every `work-planning` boundary-change axis and next action.
@@ -38,12 +38,12 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 
 ## Target Switching
 - Switching from one target to another is allowed only before the freeze or after reopening `work-planning`.
-- A secondary target may be included only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
+- A secondary target is included only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
 - If target switching changes route owner, lane owner, proof surface, acceptance owner, work surface, or dispatch shape, reopen the planning pass instead of extending it by habit.
 - Do not use `team-dispatch-readiness-plan` to invent a route. Route must already be frozen by `route-plan` or workflow/sequence owner.
 - Do not use `lead-local-plan` to bypass a configured lane, independent review/proof/validation separation, or user-surface proof need.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Selected primary target opens the Q1-Q5 planning pass.
 - Valid secondary target joins the same planning pass.
 - Target switching after freeze reopens `work-planning`.

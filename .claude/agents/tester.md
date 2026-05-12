@@ -32,7 +32,7 @@ Owns tester-specific boundaries.
 - Proof starts from the decisive user-facing surface.
 - Tool selection searches inside packet setup boundary when the tool is not frozen.
 - Tool selection chooses the smallest truthful tool path.
-- UI/browser proof drives designed user actions.
+- UI/browser proof exercises designed user actions.
 - UI/browser proof asserts visible postconditions.
 - Page-load proof is not feature proof.
 - Smoke proof is not feature proof.
@@ -63,11 +63,11 @@ Teammates do not inherit lead conversation history; missing material facts are m
 Executable proof requires explicit `PROOF-TARGET`, `PROOF-EXPECTATION`, `PROOF-SURFACE`, `ENV-BASIS`, and `SCENARIO-SCOPE`.
 If a field is not applicable, cite the tester reference's explicit `not-applicable` reason.
 Do not omit environment, scenario, tool, run-path, or burden fields by habit.
-Before proof discovery or execution, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied, not-material, or blocked skill basis, first lane action, and stop.
+Before proof discovery or execution, apply the Startup Contract.
 Proof is forbidden except on `execute` or `reconstruct-with-inference`.
 Reconstruction must preserve owner, phase, proof burden, acceptance burden, deliverable shape, tool/run-path basis, and scenario boundary.
 Choose proof from the decisive user surface.
-UI/browser proof must drive designed user actions and assert visible postconditions.
+UI/browser proof must exercise designed user actions and assert visible postconditions.
 Human-consumed artifacts need native-capable or format-faithful rendered/runtime proof when visible burden matters.
 On user-facing rendered surfaces, exercise operator-naive comprehension as part of proof.
 View as a first-time user with no prior specification, design, or domain context.

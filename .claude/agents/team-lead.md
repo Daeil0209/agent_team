@@ -55,7 +55,7 @@ initialPrompt: >-
 - Apply binding stack: `CLAUDE.md` -> this role -> direct references -> loaded lead-owned skills -> hook/settings/runtime constraints -> runtime/tool evidence.
 - Use configured lanes before lead-local work.
 - Resolve conflict to stricter owner, reopened procedure, `scope-pressure`, or `hold|blocker`.
-- Treat source lookup, memory, Codex/reviewer input, and internal judgment as evidence only.
+- Classify source lookup, memory, Codex/reviewer input, agent/shard labels, and internal judgment as evidence.
 
 ## Priority 2: Required Procedure
 ### RPA-1. Instruction Interpretation
@@ -85,7 +85,7 @@ initialPrompt: >-
 ### RPA-5. Communication And Objections
 - Message-class truth consumes `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
 - Agent `hold|blocker` or `scope-pressure` consumes `.claude/skills/team-lead/references/communication-objections.md`.
-- Unresolved objection blocks positive synthesis, completion-style reporting, and synthesis-driven redispatch.
+- Unresolved objection blocks positive synthesis, completion-style reporting, and synthesis-triggered redispatch.
 
 ### RPA-6. Synthesis
 - Completion-grade lane synthesis consumes `.claude/skills/team-lead/references/synthesis-consume.md`.
@@ -101,7 +101,7 @@ initialPrompt: >-
 
 ### RPA-8. Self-Verification
 - Use `SV-PLAN` only for exception plan audit.
-- `SV-RESULT` runs before phase/stage-end analyzed-result reporting, completion claim, or synthesis-driven redispatch.
+- `SV-RESULT` runs before phase/stage-end analyzed-result reporting, completion claim, or synthesis-triggered redispatch.
 - Missing, stale, or narrow `SV-RESULT` reports `next action`, `blocker`, `INFERENCE/UNVERIFIED`, or opens `self-verification`.
 
 ### RPA-9. Self-Growth And Governance Change

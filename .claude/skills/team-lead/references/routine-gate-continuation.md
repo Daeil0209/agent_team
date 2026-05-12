@@ -26,12 +26,12 @@ Record:
 ## Stop
 Stop before `FINAL` when residual queue is non-empty.
 Stop before asking to proceed when the next owner/action is lead-owned and non-destructive.
-Stop before status prose when continuing the active path is possible in the same segment.
+Stop before unsolicited status prose when continuing the active path is possible in the same segment.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped routine `FINAL` route opens residual queue processing.
 - A stopped proceed-prompt route executes the lead-owned next owner/action.
-- A stopped status-prose route continues the active path in the same segment.
+- A stopped unsolicited status-prose route continues the active path in the same segment.
 
 ## Continuation Rules
 - Resume satisfied gates by executing the next owner/action.
@@ -44,7 +44,7 @@ Stop before status prose when continuing the active path is possible in the same
 - A path is paused when a converged synthesis is unreported.
 - On a paused path, resume by executing.
 - On a completed boundary with zero paused lead-owned action, deliver the status answer.
-- That status answer may terminate the turn.
+- That status answer terminates the turn only when no same-segment execution remains open.
 - Surface review/proceed prompts for user-requested review, explicit approval requirements, or verified user-owned blockers.
 
 ## Milestone Rules

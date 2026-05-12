@@ -77,7 +77,7 @@ Operating discipline:
 - Route, staffing, parallelism, and dispatch choices are derivable unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
 - User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - An interrupt frame opens the deepest active resume action.
 - A status challenge opens stall exposure and same-turn continuation.
 - A user challenge opens re-evaluation.

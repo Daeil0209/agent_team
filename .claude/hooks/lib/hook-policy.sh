@@ -96,7 +96,7 @@ resolve_project_auto_memory_dir() {
 
 is_worker_session() {
   # Fallback heuristic for contexts where hook input has not been parsed yet.
-  # Authoritative agent identity should prefer session registry helpers such as
+  # Authoritative agent identity uses session registry helpers such as
   # runtime_sender_session_is_worker when a session_id is available.
   if [[ "${TMUX:-}" == *"claude-swarm"* ]] && [[ -n "${TMUX_PANE:-}" ]]; then
     return 0
@@ -129,8 +129,6 @@ set_default_export HEALTH_CRON_JOB_FILE "$LOG_DIR/.health-cron-job-id"
 set_default_export HEALTH_CRON_ROTATION_STATE_FILE "$LOG_DIR/.health-cron-rotation-state.json"
 set_default_export TEAM_RUNTIME_ACTIVE_FILE "$LOG_DIR/.team-runtime-active"
 set_default_export BOOT_SEQUENCE_COMPLETE_FILE "$LOG_DIR/.boot-sequence-complete"
-# Deprecated defensive env var; no hook writes or cleanup list consumes it.
-set_default_export BOOT_SEQUENCE_ACTIVE_FILE "$LOG_DIR/.boot-sequence-active"
 set_default_export SESSION_BOOT_MARKER_FILE "$LOG_DIR/.session-boot-marker"
 set_default_export SUPERVISOR_SESSION_FILE "$LOG_DIR/.supervisor-session-id"
 set_default_export PENDING_AGENTS_FILE "$LOG_DIR/.pending-agents"

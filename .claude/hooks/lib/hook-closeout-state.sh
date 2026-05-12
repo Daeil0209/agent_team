@@ -467,7 +467,7 @@ set_closeout_intent() {
 
   _write_closeout_state "true" "$session_id" "$source" "${reason:-explicit-closeout-intent}" "$phase"
   if session_has_only_operational_activity "$session_id"; then
-    mark_closeout_governance_packet "not-needed" "not-needed" "not-used" "$session_id" "operational-only"
+    mark_closeout_governance_packet "not-needed" "not-needed" "not-needed" "$session_id" "operational-only"
   fi
   update_closeout_state_fields "$session_id"
 }

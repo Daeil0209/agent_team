@@ -14,10 +14,10 @@ LOAD-POLICY: on-demand reference only
 - `control-ack` = control receipt only
 - Task-scoped tools require exact task id and current task state from `TaskList`, `TaskGet` on a confirmed existing id, a returned `TaskCreate` or `TaskUpdate` result, the `task_assignment` packet, or the task file itself; never infer task id or openness from phase order, agent role, next numeric value, or same-batch tool intent.
 - `agent started` requires agent-side action or agent-originated progress beyond receipt
-- if team-agent operation is frozen and canonical team-existence evidence is absent, the next consequential action is `TeamCreate`; only after team existence is proven may team-scoped `Agent` launch or assignment-grade message create dispatch-pending state
-- user-facing output may report only the narrowest proven state
+- if team-agent operation is frozen and canonical team-existence evidence is absent, the next consequential action is `TeamCreate`; team-scoped `Agent` launch or assignment-grade message creates dispatch-pending state only after team existence is proven
+- user-facing output reports only the narrowest proven state
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `team exists` opens team-scoped dispatch or assignment messaging.
 - `dispatch pending` opens receipt reconciliation through `session-boot`.
 - `dispatch-ack` opens lane work or receipt recovery.

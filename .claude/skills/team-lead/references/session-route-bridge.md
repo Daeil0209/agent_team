@@ -12,7 +12,7 @@ It keeps team-lead from treating setup, boot, planning, or dispatch as completio
 
 ## Consume When
 - A fresh instruction arrives.
-- Boot, monitoring, recovery, or teardown may be active.
+- Boot, monitoring, recovery, or teardown can be active.
 - A route could be lead-local, team-routed, workflow-owned, or sequence-owned.
 - A frozen `NEXT-CONSEQUENTIAL-ACTION` must be consumed.
 - FAR `FINAL-REJECT` requires correction routing.
@@ -38,7 +38,7 @@ Stop before correction dispatch after FAR `FINAL-REJECT` until the assigned-vali
 Stop before route execution when loaded owner documents lack applied-rule mapping.
 Stop before route execution on governance, analysis, critique, review, validation, or patch work when `SEMANTIC-INTENT-BASIS` is missing or contradicts the user correction, team-operation philosophy, or target governance/design intent.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped dispatch route opens boot or runtime-entry.
 - A stopped local-execution route opens `work-planning`.
 - A stopped team-dispatch route opens task-execution packet preflight.

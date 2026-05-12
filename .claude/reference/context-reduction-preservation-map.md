@@ -13,8 +13,8 @@ topology-updated: 2026-05-10
 Preserves source-to-destination traceability for context reduction, re-home, split, merge, and reference-binding changes on high-traffic governance surfaces.
 Reference cache only; not a skill, runtime state file, or always-loaded context.
 
-## Next-Action Drive
-- This drive applies only after this cache is explicitly loaded for a preservation audit.
+## Resolve Next Owner And Action
+- This procedure applies only after this cache is explicitly loaded for a preservation audit.
 - It corrects cache traceability or opens live owner inspection; it does not create task execution, mutation, lifecycle, or reporting authority.
 - Missing source-to-destination trace opens preservation-map correction.
 - Stale source-to-destination trace opens live owner-surface inspection.
@@ -23,7 +23,7 @@ Reference cache only; not a skill, runtime state file, or always-loaded context.
 
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
-- Use only for context-reduction preservation audits, user challenges about compression safety, duplicate-overlap checks, and source-to-destination traceability reviews.
+- Use only for context-reduction preservation audits, user challenges about compression safety, governance correction checks, duplicate-overlap checks, live-surface-porting checks, and source-to-destination traceability reviews.
 - `CLAUDE.md` indexes the obligation to preserve traceability; it does not absorb this file as always-on doctrine.
 - Lane agents do not load this file by default. They receive only the specific traceability facts packetized by `team-lead` when needed.
 
@@ -33,13 +33,13 @@ Compression is lawful only when the short surface remains stronger or equally st
 - 2026-05-11 official-memory alignment: `CLAUDE.md` authoring rules about line budget, concise/specific/structured instructions, repeatable-detail migration, and source-to-destination trace moved to `.claude/reference/minimal-governance-change-law.md` `## Change Rules`. Official evidence remains in `.claude/reference/official-claude-code-reference.md` `Memory, Rules, And Settings`.
 - 2026-05-11 top-doctrine slimming: `CLAUDE.md` retains only shared agent-team execution anchors. Procedure detail remains in `.claude/reference/procedure-and-ownership-law.md`. Delivery and acceptance detail remains in `.claude/reference/delivery-evidence-acceptance-law.md`. Scope and preservation detail remains in `.claude/reference/scope-continuity-change-law.md`. Skill and reference consumption detail remains in `.claude/reference/skill-loading-and-reference-binding.md`. Runtime and filesystem detail remains in `.claude/reference/runtime-boundary-law.md` and `.claude/reference/output-root-and-filesystem-law.md`.
 - Core governance force, procedure-over-habit, evidence-over-assumption, user-surface proof, channel restraint, parallel-fit, quality-flow, preservation, design-intent, hardening, destructive-action limits, and hook-last rules remain in `CLAUDE.md` `## Core Laws`.
-- Rule priority, top-level lane ownership, direct lead-local limits, and owner-surface separation remain in `CLAUDE.md` `### Ownership`.
+- Rule priority, top-level lane ownership, direct lead-local limits, and owner-surface separation remain in `CLAUDE.md` `## Priority And Ownership`.
 - Boot, session start, monitoring, closeout, update/upgrade, self-growth, and sequence arbitration remain indexed in `CLAUDE.md` `## Control Sequences`; detailed boot/recovery lives in `.claude/skills/session-boot/SKILL.md` and `.claude/skills/session-boot/references/runtime-state-detail.md`; teardown detail lives in `.claude/skills/session-closeout/SKILL.md` and `.claude/skills/session-closeout/references/closeout-state-detail.md`.
-- Channel names, correction reopening, one-owner-at-a-time flow, workflow/sequence precedence, and required stage ordering remain in `CLAUDE.md` `### Channel Law`; detailed planning fields live in `.claude/skills/work-planning/SKILL.md`; verification gates live in `.claude/skills/self-verification/SKILL.md`.
+- Channel names, correction reopening, one-owner-at-a-time flow, workflow/sequence precedence, and required stage ordering remain in `CLAUDE.md` `## Channel And Procedure`; detailed planning fields live in `.claude/skills/work-planning/SKILL.md`; verification gates live in `.claude/skills/self-verification/SKILL.md`.
 - Skill lazy-loading, lane-core priority, packet `REQUIRED-SKILLS`, frontmatter non-default loading, and teammate context isolation remain in `CLAUDE.md` `## Skill Loading`; lane-local details live in each `.claude/agents/*.md` role file and matching lane-core skill.
-- Runtime truth, dispatch/receipt/progress/completion distinction, agent objections, tool-surface discipline, and handoff sufficiency remain in `CLAUDE.md` `### Communication And Reporting Law`; exact message classes, packet fields, lifecycle proof, and completion spine live in `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/request-bound-fields.md`, `.claude/skills/task-execution/references/truth-rules.md`, and `.claude/skills/task-execution/references/completion-handoff.md`.
-- Role separation, validator-only final PASS/HOLD/FAIL, verified-result local closure, user-surface acceptance, and test/validation surface freeze remain in `CLAUDE.md` `### Role And Acceptance Law`; final-arbitration trigger definitions live in `.claude/skills/validator/references/validator-lane-detail.md`; lane execution detail remains in reviewer/tester/validator role files and lane-core skills.
-- Meaning preservation, live-reference preservation, owner-boundary protection, update/upgrade route, compression blocker rule, and duplicate-overlap repair remain in `CLAUDE.md` `### Change And Preservation Law`; defect recurrence barriers live in `.claude/skills/self-growth-sequence/SKILL.md`.
+- Runtime truth, dispatch/receipt/progress/completion distinction, agent objections, tool-surface discipline, and handoff sufficiency remain in `CLAUDE.md` `## Communication`; exact message classes, packet fields, lifecycle proof, and completion spine live in `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/request-bound-fields.md`, `.claude/skills/task-execution/references/truth-rules.md`, and `.claude/skills/task-execution/references/completion-handoff.md`.
+- Role separation, validator-only final PASS/HOLD/FAIL, verified-result local closure, user-surface acceptance, and test/validation surface freeze remain in `CLAUDE.md` `## Acceptance`; final-arbitration trigger definitions live in `.claude/skills/validator/references/validator-lane-detail.md`; lane execution detail remains in reviewer/tester/validator role files and lane-core skills.
+- Meaning preservation, live-reference preservation, owner-boundary protection, update/upgrade route, compression blocker rule, and duplicate-overlap repair remain in `CLAUDE.md` `## Change And Preservation`; defect recurrence barriers live in `.claude/skills/self-growth-sequence/SKILL.md`.
 - Safety, Claude Code prose-vs-technical enforcement boundary, hook-vs-settings enforcement split, runtime-state ownership, runtime/output-root boundary, runtime-footprint claim limits, and owner-local detail placement remain in `CLAUDE.md` `## Conditional Rules`; runtime detail lives in `.claude/reference/runtime-boundary-law.md`; output-root detail lives in `.claude/reference/output-root-and-filesystem-law.md`; official Claude Code evidence is cached in `.claude/reference/official-claude-code-reference.md`; hook footprint detail lives in `.claude/reference/runtime-footprint-and-continuity.md`.
 - Codex owner-scoped advisory trace: always-on authority anchor lives in `CLAUDE.md` `## Conditional Rules`. Route-freeze trigger, packet, acknowledgment, fail-open, and generic capability-promotion precondition live in `.claude/skills/work-planning/references/codex-advisory.md`; field semantics live in `.claude/skills/work-planning/references/planning-record-fields.md`; consumption gates live in `.claude/agents/team-lead.md`, `.claude/skills/team-lead/references/planning-field-consume.md`, `.claude/skills/team-lead/references/codex-own-review.md`, `.claude/skills/self-verification/SKILL.md`, `.claude/skills/self-verification/references/verification-targets-and-gates.md`, and `.claude/skills/task-execution/references/dispatch-entry-contract.md`.
 - Codex artifact/review/final-acceptance trace: `dev-workflow` trigger and authority boundary live in `.claude/skills/dev-workflow/references/artifact-convergence-advisory.md`, `.claude/skills/dev-workflow/references/review-convergence-advisory.md`, and `.claude/skills/dev-workflow/references/final-acceptance-review.md`; phase entry/exit pointers live in `.claude/skills/dev-workflow/SKILL.md`; transition enforcement lives in `.claude/skills/dev-workflow/references/phase-gates.md`; pre-planning hook posture lives in `.claude/hooks/MANIFEST.md` and `.claude/hooks/task-start-gate.sh`.
@@ -100,7 +100,7 @@ This migration is converged only if the same lane assignment still reaches the s
 - `.claude/skills/team-session-sequences/SKILL.md` keeps the session-sequence index and lead-side dispatch-detail spine: mandatory triggers, owner boundaries, stop rules, and the rule that oversized or mixed dispatch must be decomposed before sending. Runtime spine stays with `.claude/skills/session-boot/SKILL.md`, closeout spine stays with `.claude/skills/session-closeout/SKILL.md`, and packet schema stays with `.claude/skills/task-execution/SKILL.md`.
 - `.claude/skills/team-session-sequences/references/*.md` owns the detailed lookup content moved out of the active spine: pre-dispatch readiness detail, task decomposition detail, dispatch packet compliance controlled-value and presence-field tables, agent load guard sizing, dispatch execution contract detail, parallel shard/merge detail, and consequential upward handoff field catalog.
 - `.claude/skills/task-execution/references/lane-additions.md` points to those `team-session-sequences/references/*.md` lookups for lane-specific packet discipline while retaining cross-lane base schema, common message classes, field format, lifecycle proof, and packet preflight ownership.
-- Reduces context footprint only. Does not delete procedure, relax dispatch gates, weaken upward handoff requirements, or make packet discipline optional.
+- Reduces context footprint only. Does not delete procedure, relax dispatch gates, weaken upward handoff requirements, or make packet discipline non-binding.
 
 ## Skill Wrapper Optimization Map
 - `.claude/skills/update-upgrade-sequence/SKILL.md` remains the directly routable `ACTIVE-SEQUENCE: update-upgrade-sequence` spine for `.claude` asset updates. Detailed update checks, skill introduction gates, and specialist routing rules moved to `.claude/skills/update-upgrade-sequence/references/*.md`.
@@ -123,7 +123,7 @@ agents/team-lead.md source -> destination:
 - RPA-2 trigger order item 4 -> generalized to "confirmed primary sequence (`self-growth-sequence` for recurrence defect or `update-upgrade-sequence` for routine asset maintenance, per `Sequence Arbitration Law`)" so both primary sequences carry equal salience.
 - RPA-2 (new rule, recurrence barrier from round-3 self-growth): "intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; status questions are stall-exposure cues only and continue through the same resume action." Canonical defect class lives in `.claude/skills/team-lead/references/orchestration-defects.md` `Routine Status Stop` (newly added; trigger / owning rule / correction owner all named).
 - RPA-3 closeout 3-sentence series -> merged to one sentence with explicit scope ("once `session-closeout` owns the path, suspend ordinary planning/synthesis/reporting and report only residual closeout truth").
-- Priority 0 step 5 ROUTE -> tightened to project-lane primacy default ("prefer team-routed configured lanes; lead-local only when project-lane primacy plus lead-local preconditions hold (`work-planning` freeze, complete `LEAD-LOCAL-WORK-ITEMS`, no lane-owned proof/validator substitution)"); aligns with `CLAUDE.md` `### Ownership` line "Project lanes outrank lead-local substitution."
+- Priority 0 step 5 ROUTE -> tightened to project-lane primacy default ("prefer team-routed configured lanes; lead-local only when project-lane primacy plus lead-local preconditions hold (`work-planning` freeze, complete `LEAD-LOCAL-WORK-ITEMS`, no lane-owned proof/validator substitution)"); aligns with `CLAUDE.md` `## Priority And Ownership` line "Project lanes outrank lead-local substitution."
 - All 5 lane initialPrompt blocks (developer/researcher/reviewer/tester/validator) -> shared 5-clause boilerplate (work-planning-loading scope, receipt/control exclusion, infer-safely, classify-4-states, only-material-unsafe-defects) re-homed to `.claude/skills/task-execution/references/lane-additions.md` `Common Lane-Core Preconditions`. Each lane initialPrompt now carries the protected receipt spine (dispatch-ack first, no idle), the Lane Receipt Spine pointer, `TARGET-INTENT-BASIS` identification, and the lane-specific delta only (~50% per-spawn boilerplate reduction).
 
 skills/team-lead/SKILL.md source -> destination:
@@ -134,7 +134,7 @@ deleted skills/team-lead/references/synthesis-reporting.md source trace -> desti
 - Packet-basis comparison "exact operator launch, cleanup, or defer basis" over-specified example -> generalized to "any frozen `REQUEST-BOUND-PACKET-FIELDS` baseline (`SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, `TARGET-INTENT-BASIS`, or operator-delivery axes when the deliverable is executable)".
 - Cross-continuity duplicate sentence -> one-line cite at `.claude/skills/work-planning/references/cross-continuity.md` synthesis-time gate (full cross-skill path; the bare `references/...` form was corrected during post-patch V2 verification because `team-lead/references/cross-continuity.md` does not exist).
 - Long no-narration sentence (~10 prohibitions) -> 3 imperative bullets (procedure scaffolding ban; raw lane dump / convergence table / advisory payload ban; `internal:` / `(internal):` disclaim does not authorize disclosure).
-- (round-3 self-growth recurrence barrier) "intermediate commit/push/build/infrastructure milestone is not a phase boundary; multi-round/multi-batch deliverables continue through next round in same segment without `PHASE-RESULT` emission, status prose, or `next action: continue X` announcement; only verified `FINAL`, true `blocker`, or explicit `closeout residual` may surface."
+- (round-3 self-growth recurrence barrier) "intermediate commit/push/build/infrastructure milestone is not a phase boundary; multi-round/multi-batch deliverables continue through next round in same segment without `PHASE-RESULT` emission, status prose, or `next action: continue X` announcement; only verified `FINAL`, true `blocker`, or explicit `closeout residual` surfaces."
 
 deleted skills/team-lead/references/planning-consume.md source trace -> destination:
 - Tier-floor mechanics (`PROJECT-TIER`/`ACTIVE-REQUEST-TIER`/`TIER-RAISE-REASON` semantics) -> canonical owner stays `governance-scaling/SKILL.md` per `planning-record-fields.md:8`; stale or missing planning-field handling stays in `.claude/skills/team-lead/references/planning-field-consume.md`.
@@ -157,10 +157,10 @@ skills/dev-workflow/references/ source -> destination:
 - `context-decision-chain.md` -> deleted deprecated stub. Phase 1 context anchor owned by `references/phase-surfaces.md` `Receiver-Surface Contract` (canonical fields WHY/PRIMARY-RECEIVER/RECEIVER-JOB/CONSUMPTION-ENVIRONMENT/RISK/SUCCESS/SCOPE/DELIVERY); decision propagation owned by `references/checkpoints.md` CP5 + `artifact-convergence-advisory.md` Stale Downstream.
 - `operator-delivery.md` Local Web App Launcher tech-stack-specific recipe (Flask/Node/VBS/pythonw) -> contract-level rule (single-action launch / hidden non-browser surfaces / browser-close-triggered termination / explicit exit affordance / production-only flags); tech-stack patterns belong to developer/researcher implementation guidance.
 - `gap-iteration.md` Coverage Score Per File table (0/20/40/60/80/100 source-file-shaped) -> deliverable-class-neutral coverage signals statement pointing at `references/phase-surfaces.md`.
-- `artifact-convergence-advisory.md` Dual Review serial framing -> parallel framing ("team-lead own-review and Codex advisory may run in parallel; team-lead own-review basis is recorded before any Codex output is read or used; first Codex packet must not include team-lead findings"); preserves design intent (own-review basis frozen before Codex consumption) without the bottleneck.
+- `artifact-convergence-advisory.md` Dual Review serial framing -> parallel framing ("team-lead own-review and Codex advisory run in parallel when independence holds; team-lead own-review basis is recorded before any Codex output is read or used; first Codex packet must not include team-lead findings"); preserves design intent (own-review basis frozen before Codex consumption) without the bottleneck.
 - `review-convergence-advisory.md` Output Record schema -> shared with `artifact-convergence-advisory.md` Output Record canonical schema; review-convergence keeps only deltas (review target identity, Claude reviewer state, SV-RESULT coverage).
 - `final-acceptance-review.md` Acceptance Criteria -> deliverable-type sub-bundle selection rationale rule added (apply only sub-bundles materially named in `SCOPE-BASELINE`; mark non-applicable sub-bundles `not-applicable:<basis>`; FAR records selection rationale before reject-first decision); prevents 35-axis rubber-stamp drift.
-- `final-acceptance-review.md` Reject Route route classification -> pointer at `references/checkpoints.md` CP5 Auto-resolve priority.
+- `final-acceptance-review.md` Reject Route classification -> pointer at `references/checkpoints.md` CP5 Auto-resolve priority.
 
 skills/self-growth-sequence/SKILL.md source -> destination:
 - Triple-numbered procedure conflict (Mandatory path / Causal Repair "When defect..." / Required order) -> single canonical `### Required order` (most operational, includes Step 6.5 retroactive); Mandatory path collapsed to purpose summary; Causal Repair "When defect..." collapsed to phase mapping that names the same nine Required-order steps.
@@ -181,7 +181,10 @@ skills/review-verification/SKILL.md source -> destination:
 - Step 9 "Execute Through The Owning Patch Sequence" -> "Hand Off To The Owning Patch Sequence". File mutation is owned by named patch sequence (`update-upgrade-sequence` / `self-growth-sequence` / assigned production owner), not by review-verification; eligibility precondition (Steps 1-8 complete + sixteen-field packet emitted) preserved.
 - Step 10 Post-Patch coherence -> re-homed to executing patch sequence's Post-Verify (`change-patch-method.md` Post-Verify); review-verification re-engages only when escalated.
 - Step 11 finding-class taxonomy (confirmed-defect / risk-hypothesis / design-tradeoff / duplication / protected-restatement / non-issue / unverified) -> canonical owner moved to `task-execution/references/completion-handoff.md` `Common finding basis`; review-verification points there. Reviewer SKILL.md Step 7 already cites completion-handoff.md, so reviewer / review-verification / validator-input findings now share one taxonomy.
-- Step 8 Integrity Gate -> trimmed to structural-baseline items not covered by Step 6 negative-risk gate (structural contract / fixed order / protected restatement / source-to-destination / positive execution path / existing function preservation / no-regression); items already on Step 6 (clarity, execution force, owner conflict, broken reference, automatic next-owner drive, user-use readiness) no longer double-tested.
+- Step 8 Integrity Gate -> trimmed to structural-baseline items not covered by Step 6 negative-risk gate.
+  Structural-baseline items remain structural contract, fixed order, protected restatement, source-to-destination, positive execution path, existing function preservation, and no-regression.
+  Step 6 already covers clarity, execution force, owner conflict, broken reference, automatic next-owner/action resolution, user-use readiness.
+  Duplicate Step 8 checks were removed.
 - Output field rename `VERIFICATION-NEED` -> `DOWNSTREAM-VERIFICATION-NEED` to remove name-collision with self-growth-sequence's `REVIEW-VERIFICATION-NEED` (whether review-verification must be loaded for this round).
 - `## Activation` -> tightened with explicit non-overlap clause (activate only when review work is held lead-local for cross-surface integrity / design-intent / risk-balance synthesis OR when packetizing review basis for downstream lanes; bounded reviewer-owned acceptance review routes to reviewer lane + reviewer SKILL).
 
@@ -198,7 +201,7 @@ skills/task-execution/SKILL.md source -> destination:
 
 skills/task-execution/references/completion-handoff.md source -> destination:
 - `Common finding basis` -> finding-class taxonomy added inline (canonical owner).
-- `RESOURCE-CLEANUP` over-broad ceremony floor -> narrowed to long-running spawned resources (Playwright MCP / dev servers / daemons / dev-runners / port-bound or session-bound processes); transient invocations may report `not-applicable (no long-running resource opened)` truthfully without enumeration + post-cleanup probe; team-lead still rejects misuse.
+- `RESOURCE-CLEANUP` over-broad ceremony floor -> narrowed to long-running spawned resources (Playwright MCP / dev servers / daemons / dev-runners / port-bound or session-bound processes); transient invocations report `not-applicable (no long-running resource opened)` truthfully without enumeration + post-cleanup probe; team-lead still rejects misuse.
 
 skills/team-session-sequences/SKILL.md source -> destination:
 - Mode Split body (~25 lines duplicating session-boot/SKILL.md) -> single citation pointer at `session-boot/SKILL.md` `Mode Split`.
@@ -222,7 +225,7 @@ agents/reviewer.md source -> destination:
 
 hooks source -> destination:
 - `compliance-supervisor.sh` `is_disallowed_generated_output_path` + `command_targets_disallowed_generated_output_root` (~57 lines including 35-line node body) + `command_is_noisy_touch_probe` (~22 lines) + `emit_warning` no-op + 3 remaining callers -> deleted. Hardcoded outputs/backups/.playwright-mcp deny-list contradicted CLAUDE.md `[PROJECT-OUTPUT-ROOT]` ("unless user/config names another canonical folder"); style critique on touch+ls compounds was outside MANIFEST hard-deny categories; emit_warning was no-op so every call was dead policy. log_violation entries preserved for traceability.
-- `dispatch-proof-gate.sh` ACTIVE-WORKFLOW absence advisory warn -> deleted; advisory field is optional per its own "if applicable" qualifier.
+- `dispatch-proof-gate.sh` ACTIVE-WORKFLOW absence advisory warn -> deleted; advisory field is non-mandatory per its own "if applicable" qualifier.
 - `track-worker-report.sh` legacy MESSAGE-CLASS warn arm (`hold|blocker` literal-match) -> deleted; canonical owner stays `task-completed-gate.sh` MESSAGE-CLASS hard-fail + lane role hold|blocker doctrine.
 - `dispatch-sizing-gate.sh` Phase-3 dev-workflow advisory branch (`phase3_parallel_developer_requires_concrete_name` + `phase3_dispatch_scope_tags` + `phase3_parallel_basis_declared` + `phase3_has_concrete_serial_blocker` helpers and both invocation sites, ~78 lines) -> deleted; workflow-doctrine concerns belong in work-planning + dev-workflow + task-execution packet preflight, not in a hook gate; MANIFEST hook ledger row already restricts dispatch-sizing-gate to corruption-class checks.
 
@@ -282,7 +285,7 @@ Queue empty (zero-residual): every queued / residual item is patched (round 1-16
 ## 2026-05-10 Doctrine Spine And Direct Reference Split Map
 This pass reviews the current doctrine-spine and team-lead reference-split patch under `.claude/skills/review-verification/SKILL.md`.
 The design intent is not compression for brevity.
-The design intent is strong always-on trigger, owner, stop, and next-action drive in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through directly bound independent references.
+The design intent is strong always-on trigger, owner, stop, and next-action resolution in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through directly bound independent references.
 
 CLAUDE.md source -> destination:
 - Procedure, owner separation, channel, communication, and escalation detail -> `.claude/reference/procedure-and-ownership-law.md`.
@@ -299,10 +302,15 @@ agents/team-lead.md source -> destination:
 - Instruction/session/route/FAR bridge -> `.claude/skills/team-lead/references/session-route-bridge.md`.
 - Planning-consume detail -> `.claude/skills/team-lead/references/planning-field-consume.md`, `.claude/skills/team-lead/references/far-reject-routing.md`, `.claude/skills/team-lead/references/codex-own-review.md`, and `.claude/skills/team-lead/references/lead-local-guarded-law.md`.
 - Synthesis/reporting detail -> `.claude/skills/team-lead/references/synthesis-consume.md`, `.claude/skills/team-lead/references/output-surface-law.md`, `.claude/skills/team-lead/references/reporting-surface-rules.md`, and `.claude/skills/team-lead/references/routine-gate-continuation.md`.
-- Removed index-only routers after direct child references became active targets: `.claude/skills/team-lead/references/planning-consume.md`, `.claude/skills/team-lead/references/synthesis-reporting.md`.
+- Removed index-only routers after direct child references became active targets: deleted `skills/team-lead/references/planning-consume.md` and deleted `skills/team-lead/references/synthesis-reporting.md`.
 - Deleted routers carried no canonical procedure after child references were bound to `.claude/agents/team-lead.md`.
 
-Convergence criterion: every moved detail remains reachable from a direct top or role reference, every new reference names its `SOURCE-ANCHOR`, no old mixed reference remains as an active target, no deleted index-only file remains on an active load path, and every triggered reference drives to one next owner/action, verified result, explicit cancel/redirect, or `HOLD` with owner and blocker.
+Convergence criterion:
+- Every moved detail remains reachable from a direct top or role reference.
+- Every new reference names its `SOURCE-ANCHOR`.
+- No old mixed reference remains as an active target.
+- No deleted index-only file remains on an active load path.
+- Every triggered reference resolves to one next owner/action, verified result, explicit cancel/redirect, or `HOLD` with owner and blocker.
 
 ## Preservation Audit Rule
 Before or after any high-traffic context reduction, verify:
@@ -310,7 +318,7 @@ Before or after any high-traffic context reduction, verify:
 2. every removed rule has a named owner destination or is explicitly removed as duplicate under `[GOV-MIN]`;
 3. shortened wording remains imperative and testable, not descriptive only;
 4. detailed procedure is reachable by trigger, not always-loaded by habit;
-5. skill and lane ownership remain lazy-loaded and packet-driven;
+5. skill and lane ownership remain lazy-loaded and packet-routed;
 6. duplicate restatements are protected local anchors, not competing procedures; any divergence is resolved by naming the precise owner and tightening, re-homing, or removing the weaker duplicate;
 7. the compressed surface does not claim hard technical enforcement where Claude Code official docs only support context/procedure influence.
 

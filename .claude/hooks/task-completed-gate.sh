@@ -228,10 +228,12 @@ try {
     ["evidenceBasis", "EVIDENCE-BASIS"],
     ["openSurfaces", "OPEN-SURFACES"],
     ["frozenContractStatus", "FROZEN-CONTRACT-STATUS"],
-    ["recommendedNextLane", "RECOMMENDED-NEXT-LANE"],
+    ["laneNextCandidate", "LANE-NEXT-CANDIDATE"],
     ["planningBasis", "PLANNING-BASIS"],
     ["resourceCleanup", "RESOURCE-CLEANUP"],
-    ["convergencePass", "CONVERGENCE-PASS"]
+    ["convergencePass", "CONVERGENCE-PASS"],
+    ["producerSelfReviewPass", "PRODUCER-SELF-REVIEW-PASS"],
+    ["laneLocalSvResult", "LANE-LOCAL-SV-RESULT"]
   ];
   for (const [key, label] of requiredFieldMap) {
     if (!fields[key]) missingFields.push(label);
@@ -483,7 +485,7 @@ if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS RECOMMENDED-NEXT-LANE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS REQUESTED-LIFECYCLE USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
+  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS REQUESTED-LIFECYCLE PRODUCER-SELF-REVIEW-PASS LANE-LOCAL-SV-RESULT USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
     if missing_field_present "$field_name"; then
       FAILURES+=("Missing completion-safety field: ${field_name}.")
     fi

@@ -30,7 +30,7 @@ Stop before lead-local execution unless all direct work conditions hold.
 Stop when local execution reveals new owner, new surface, hidden consequential step, or stronger claim.
 Stop when a lane-owned proof, validation, review, implementation, or acceptance function appears.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped lead-local route opens `work-planning`.
 - A new owner opens that owner.
 - A new surface opens `work-planning`.

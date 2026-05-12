@@ -12,7 +12,7 @@ Use this file when specialist skill routing, `SKILL-AUTH`, owner matrices, or co
 - Agent role files under `.claude/agents/` stay role identity, boundary, and stop-condition surfaces.
 - Authorization packets name `skill-id` and bind it to the target lane plus blocked surface.
 - `developer` resolves `skill-id` against the current project skill root and active specialist subpath.
-- `team-lead` may authorize developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
+- `team-lead` authorizes developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Specialist-skill authorization binds a blocked lane to bounded specialist aid.
 - Common-skill ownership binds a shared procedure surface to one primary owner plus named impacted lanes.
 
@@ -20,7 +20,7 @@ For self-growth and consequential quality-hardening claims, default to benchmark
 
 When multiple specialist skills are active on one blocked surface, use the owning role's specialist matrix and controlling order as the source of truth. For developer-owned specialists, consume `.claude/skills/developer/references/developer-lane-detail.md` `Specialist Skill Loading` instead of restating the literal order here. `benchmark-simulation` and `external-tool-bridge` remain support overlays without controlling-chain position.
 
-This controlling order is a lead-side routing discipline for logical flow. Runtime chaining remains outside this reference. Authorization hooks may gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
+This controlling order is a lead-side routing discipline for logical flow. Runtime chaining remains outside this reference. Authorization hooks can gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
 
 When approving developer-side specialist skill use, send:
 
@@ -30,7 +30,7 @@ SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id
 
 Route specialist skills per the source-of-truth owner reference. Authorize via `SKILL-AUTH` packet bound to lane, surface, and `skill-id`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Valid developer-side specialist authorization opens a `SKILL-AUTH` packet to the target lane.
 - Common-skill routing opens the common skill's primary owner.
 - Routing conflict opens the source-of-truth owner reference before authorization.

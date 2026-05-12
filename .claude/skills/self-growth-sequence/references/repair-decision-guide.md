@@ -16,7 +16,7 @@ For failure-mode-specific allowed/prohibited responses (non-compliance, weak-own
 
 Before closure, verify: no dead cross-reference, no owner-boundary drift, no weakened proof or acceptance path, no duplicate competing procedure, and no hidden always-loaded context increase.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Missing lookup detail opens owning direct reference update.
 - Packet or handoff omission opens packet owner correction.
 - Low-false-positive deterministic runtime evidence opens hook/settings preflight after semantic owner correction.

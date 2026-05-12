@@ -1,13 +1,13 @@
 ---
 name: update-upgrade-sequence
-description: Update and upgrade sequence for doctrine, agents, skills, settings, hooks, and team-system assets. Use for .claude asset modifications, skill introduction, and specialist routing changes.
+description: Update and upgrade sequence for doctrine, agents, skills, settings, hooks, and team-system assets.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 
 ## Structural Contract
 - Sharpens only its owned sequence surface.
-- Fixed section order: Purpose, Activation, Reference Map, Update/Upgrade Sequence, Skill And Specialist Changes, Constraints, Next-Action Drive
+- Fixed section order: Purpose, Activation, Reference Map, Update/Upgrade Sequence, Skill And Specialist Changes, Constraints, Resolve Next Owner And Action
 - PRIMARY-OWNER: team-lead
 - Owns team-system asset update routing.
 - Consumes `self-growth-sequence` `Change Sequence` for patch mechanics.
@@ -24,7 +24,9 @@ Adjacent owners:
 - agent dispatch or packet truth -> `task-execution`
 
 ## Activation
-Load when doctrine, agents, skills, settings, hooks, project-root `.mcp.json` enabled by `.claude/settings.json`, or other team-system assets need modification.
+Load when doctrine, agents, skills, settings, hooks, or project-root `.mcp.json` enabled by `.claude/settings.json` need modification.
+Load when live-surface mirrors need modification.
+Load when other team-system assets need modification.
 Also load for introduction, upgrade, migration, compression, or ownership/routing correction of those assets.
 
 If the trigger is a confirmed behavioral or procedural defect, open `self-growth-sequence` as the primary sequence.
@@ -46,8 +48,26 @@ Approval requires triggered reference basis or owner reopening.
 Every update/upgrade path must:
 1. Name the target asset and owning surface.
 2. Classify the change type.
-   Use one of: ordinary asset maintenance, recurrence hardening, capability introduction, external-tool/MCP integration, compression, migration, settings/hook change, runtime enforcement expansion, specialist-routing change.
-   Hook or settings edits that add or broaden deny behavior, matcher scope, permission-deny scope, blocking path, or runtime enforcement tier are `runtime enforcement expansion`.
+   Use `ordinary asset maintenance` for routine asset updates.
+   Use `recurrence hardening` for confirmed recurrence barriers.
+   Use `capability introduction` for new capability surfaces.
+   Use `external-tool/MCP integration` for external tool integration.
+   Use `compression` for context or document reduction.
+   Use `migration` for source-to-destination moves.
+   Use `settings/hook change` for settings or hook edits.
+   Use `runtime enforcement expansion` for broader runtime blocking or enforcement.
+   Use `specialist-routing change` for specialist routing changes.
+   Live-surface synchronization is migration.
+   Hook edits that add deny behavior are `runtime enforcement expansion`.
+   Hook edits that broaden deny behavior are `runtime enforcement expansion`.
+   Hook edits that broaden matcher scope are `runtime enforcement expansion`.
+   Hook edits that broaden permission-deny scope are `runtime enforcement expansion`.
+   Hook edits that broaden blocking path are `runtime enforcement expansion`.
+   Hook edits that broaden runtime enforcement tier are `runtime enforcement expansion`.
+   Settings edits that add deny behavior are `runtime enforcement expansion`.
+   Settings edits that broaden deny behavior are `runtime enforcement expansion`.
+   Settings edits that broaden permission-deny scope are `runtime enforcement expansion`.
+   Settings edits that broaden runtime enforcement tier are `runtime enforcement expansion`.
 3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
    Full self-growth opens only for confirmed behavioral or procedural defects.
 4. Preserve structural contracts.
@@ -55,7 +75,18 @@ Every update/upgrade path must:
 6. Preserve live references.
 7. Preserve protected local restatements.
 8. Preserve source-to-destination meaning.
-9. Post-verify the diff, references, owner semantics, information preservation, affected surfaces, in-flight outputs, and prior verdict impact before reporting the change as verified.
+9. Preserve current trigger behavior for live-surface synchronization.
+10. Preserve current owner behavior for live-surface synchronization.
+11. Preserve current stop behavior for live-surface synchronization.
+12. Preserve current evidence behavior for live-surface synchronization.
+13. Preserve current design-intent behavior for live-surface synchronization.
+14. Post-verify the diff before reporting the change as verified.
+15. Post-verify references before reporting the change as verified.
+16. Post-verify owner semantics before reporting the change as verified.
+17. Post-verify information preservation before reporting the change as verified.
+18. Post-verify affected surfaces before reporting the change as verified.
+19. Post-verify in-flight outputs before reporting the change as verified.
+20. Post-verify prior verdict impact before reporting the change as verified.
 
 Use `references/update-checks.md` for the update-specific checks that are not already owned by `Change Sequence`.
 
@@ -77,7 +108,7 @@ Skill names remain only when a packet, route, or activation path needs them.
 ## Constraints
 - No new operational rule without a clear owner.
 - Before adding governance text, test tighter owner-local alternatives first.
-- Prefer tightening, replacing, trimming, merging, or re-homing when they preserve force.
+- Apply tightening, replacing, trimming, merging, or re-homing when they preserve force.
 - Any expansion requires proof that no shorter owner-local edit carries the same force; otherwise replace, trim, merge, or re-home.
 - Shared doctrine weakening requires explicit owner approval.
 - Duplicate ownership requires intentional protected restatement or hierarchy consistency basis.
@@ -87,7 +118,7 @@ Skill names remain only when a packet, route, or activation path needs them.
 - Reviewed non-destructive governance changes proceed through `.claude/skills/self-growth-sequence/SKILL.md` `Change Sequence` Step 5b `Execution Gate`.
 - Sandbox filesystem approval is technical permission, not governance approval.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Ordinary asset maintenance opens `Update/Upgrade Sequence`.
 - Confirmed recurrence defects open `self-growth-sequence`.
 - Patch mechanics open `self-growth-sequence` `Change Sequence`.

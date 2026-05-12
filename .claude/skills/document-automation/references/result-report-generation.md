@@ -38,6 +38,6 @@ Use when generating a result report from a plan, proposal, or project reference.
 - Page-count mismatch is a defect.
 - Resolve page-count mismatch through text-visualize-compress cycle.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return generation level, voice/evidence boundary, visual ratio, page-count state, and completion-condition gaps to the active document-automation workflow.
 - If evidence-safe bounds or page-count target is unresolved, route the named gap before result report generation continues.

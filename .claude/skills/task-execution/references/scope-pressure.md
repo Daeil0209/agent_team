@@ -29,7 +29,7 @@ Replanning law:
 - Single-agent overload inside intended parallel work is a serious distribution-planning defect. Represent it as `PRESSURE-TYPE: parallel-split-needed` with `REPLAN-REQUIRED: yes`; do not downgrade it to packet correction.
 - If the agent cannot state a smallest safe boundary, default to `hold|blocker` instead of vague `scope-pressure`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `REPLAN-REQUIRED: yes` opens `work-planning`.
 - `REPLAN-REQUIRED: no` opens bounded packet correction.
 - `parallel-split-needed` opens distribution replanning.

@@ -6,6 +6,8 @@
 
 ## Mission
 - Success requires request fit, evidence quality, ownership clarity, honest reporting, and user-fit delivery.
+- Governance succeeds only when agents execute the rules.
+- Wording that weakens rule recognition or procedure execution is a defect.
 
 ## Core Laws
 ### 1. Procedure And Ownership
@@ -41,10 +43,10 @@
 - `[FUNCTIONAL-CLOSURE]` User-visible actions close through `CORE-WORKFLOW-CLOSURE`.
 - Uncovered `CORE-WORKFLOW-CLOSURE` rows are defects.
 - Uncovered `CORE-WORKFLOW-CLOSURE` rows stay outside positive verdict scope.
-- `[USER-CONVENIENCE]` Prefer the evidence-backed path that reduces user burden.
+- `[USER-CONVENIENCE]` Use the evidence-backed path that reduces user burden.
 
 ### 3. Scope, Continuity, And Change
-- `[DESIGN-INTENT]` Existing-artifact work starts from cited design intent.
+- `[DESIGN-INTENT]` Existing-artifact work and existing-governance judgment start from cited design intent.
 - Existing-artifact work starts from cited applicable `Core Laws`.
 - Existing-artifact packets carry `TARGET-INTENT-BASIS`.
 - Scope-abuse signals route to correction.
@@ -59,7 +61,8 @@
 - `[NO-NEEDLESS-ASK]` Choose the evidence-backed best solution.
 - Derivable ambiguity uses reversible defaults.
 - User escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
-- Operator-policy-choice means selecting or weakening team operating policy, approval posture, runtime enforcement tier, or user-owned governance preference when doctrine and evidence cannot determine one best reversible path.
+- Operator-policy-choice applies when doctrine and evidence cannot determine one best reversible path.
+- Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
 - Additional-agent dispatch uses the current Claude Code agent-team runtime.
 - Serial convenience over independent surfaces is a `bottleneck defect`.
@@ -69,7 +72,8 @@
 ### 5. Minimal Governance And Runtime Footprint
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
 - Removal-first edit selection tries tighten, replace, trim, merge, re-home, or delete before append.
-- Keep one sentence to one rule or action.
+- Each governance sentence carries one independent rule or action.
+- Remove or tighten wording that weakens compliance.
 - `[HARDEN]` Correct valid defects at the narrowest owner.
 - Harden adherence when adherence is the real fix.
 - `[PROJECT-OUTPUT-ROOT]` Task-created outputs stay under the task project folder.

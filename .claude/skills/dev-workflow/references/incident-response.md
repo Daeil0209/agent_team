@@ -55,7 +55,7 @@ Incident response contributes only incident-context fields:
 
 Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live with the canonical packet contract.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - T0/T1 detection opens incident classification and user-facing blocker truth.
 - Approved bounded fix opens developer correction.
 - Applied fix opens tester proof on the decisive proof surface.

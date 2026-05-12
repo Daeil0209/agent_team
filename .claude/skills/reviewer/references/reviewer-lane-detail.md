@@ -17,7 +17,7 @@ auto-inject: false
 - Severity Mapping
 - Specialist Skill Loading
 - Reviewer Handoff Detail
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Auto-inject
 false — load explicitly when packet detail, lens detail, severity mapping, or handoff detail is needed.
@@ -102,7 +102,7 @@ Use only the lenses that materially affect the assigned surface.
 |---|---|
 | Critical | Must fix before further progress; escalate immediately when the defect implies system halt, data loss, credential exposure, destructive or irreversible damage, or unacceptable user harm risk |
 | Major | Must fix before this stage passes |
-| Minor | Should fix, does not block |
+| Minor | Fix after blocking findings; does not block |
 | Advisory | Observation only |
 
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
@@ -123,11 +123,11 @@ Run `feynman-clarity` when target intent materially affects review truth.
 Run `feynman-clarity` when protected function materially affects review truth.
 Run `feynman-clarity` when reader action materially affects review truth.
 Run `feynman-clarity` when explanation failure materially affects review truth.
-These are review lenses; findings use normal severity and may be blocking.
+These are review lenses; findings use normal severity and are blocking when severity warrants it.
 Remediation stays with the producing owner.
 
 ## Reviewer Handoff Detail
-- Reviewer `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and may add `REVIEW-STATE` only as context.
+- Reviewer `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and adds `REVIEW-STATE` only as context.
 - Reviewer handoff must include `TARGET-INTENT-BASIS` through the common completion spine.
 - Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Without that basis, classify the item as preliminary evidence, not a completed review finding.
@@ -152,7 +152,7 @@ Remediation stays with the producing owner.
 - For visual/rendered review, name the inspected rendered evidence and any visible defect classes checked or found.
 - If review evidence makes the frozen contract untruthful, set `REVIEW-STATE: hold` or `REVIEW-STATE: blocked` and explain the contradiction in `OPEN-SURFACES`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `execute` opens reviewer-owned review work.
 - `reconstruct-with-inference` opens reviewer-owned review work with marked inference.
 - Blocking review finding opens producer correction through team-lead.

@@ -54,7 +54,7 @@ For every external reference inspected during benchmarking, capture evidence per
 A reference observation is incomplete if it documents only one modality on a multi-modal decision. Re-open observation with the missing modalities before downstream synthesis.
 
 ## Image-Aware Evidence Handling
-`WebFetch` and `WebSearch` may return image references, screenshots, or visual content. Multi-modal observation requires inspecting these, not skipping them.
+`WebFetch` and `WebSearch` can return image references, screenshots, or visual content. Multi-modal observation requires inspecting these, not skipping them.
 
 Required image-handling rules:
 - when a reference URL is known to contain visual evidence, use `WebFetch` and parse for image references
@@ -70,6 +70,6 @@ Quantitative observation from images:
 
 Subjective observation discipline: "feels clean", "looks professional", and "appears balanced" are valid first impressions, not acceptable evidence. Subjective observations must be backed by measurable criteria before they enter synthesis.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return observation matrices, multimodal evidence, blocked-image records, and confidence limits to the active benchmark-simulation workflow.
 - If observation coverage lacks a material modality, reopen observation for that modality before downstream synthesis continues.

@@ -154,6 +154,6 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
 - Completion uses `handoff` or `completion` only for converged developer-owned output.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Converged developer-owned output opens team-lead synthesis through the completion-grade handoff path.
 - Developer-owned open surfaces open correction, blocker routing, proof routing, or review routing through the named next owner/action.

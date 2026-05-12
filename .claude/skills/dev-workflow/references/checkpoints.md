@@ -25,7 +25,7 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
 - **Phase**: Design
 - **Trigger**: architecture options are produced
 - **Present**: explicit options plus their `SCOPE-BASELINE` closure, verification, delivery, and implementation implications
-- **Default path**: team-lead auto-resolution, usually from the pragmatic option with bounded supplementation
+- **Default path**: team-lead auto-resolution from the pragmatic option with bounded supplementation
 - **Reopen/HOLD**: when supplementation would materially change architecture family, risk posture, or implementation scope
 
 ## CP4 -- Implementation Scope Resolution
@@ -47,7 +47,7 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
 - **Reuse rule**: original CP3/CP4 remain valid only while the corrected design preserves the selected architecture family and implementation scope
 - **Iteration continuation reuse**: bounded iteration reuse is allowed only while the active workflow phase, owner surface, and acceptance path stay unchanged
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - CP1 resolved opens Phase 1 plan finalization.
 - CP2 resolved opens Phase 2 boundary when Phase 1 exit law is satisfied.
 - CP3 resolved opens Phase 2 design closure.

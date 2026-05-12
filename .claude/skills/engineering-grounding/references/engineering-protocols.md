@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 # Reference Material
 ## Responsibilities: Reference Detail
 ### Engineering Defect Severity Classification
-Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `### Role And Acceptance Law` and `### Communication And Reporting Law`. The table below is an engineering-local impact classification used to describe defect character and escalation examples. The shared governance contract remains controlling.
+Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `## Acceptance` and `## Communication`. The table below is an engineering-local impact classification used to describe defect character and escalation examples. The shared governance contract remains controlling.
 | Impact Class | Engineering Context | Examples |
 |---|---|---|
 | **Critical** | Safety margin violated, unit error, spec contradiction | Safety factor below minimum, unit mismatch in calculation, design exceeds rated limits, unguarded hardware errata |
@@ -16,10 +16,10 @@ Defect handling still uses the shared blocking, acceptance, and reporting contra
 | **Minor** | Style/convention issue not affecting function | Unit notation style, significant figures convention, diagram labeling preference |
 Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Engineering Assumption Governance
-Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `### Role And Acceptance Law`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
+Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation; unresolved critical assumptions are blocking
 - **Major**: environmental conditions, load profiles, duty cycles, component tolerances beyond datasheet — document with source; if unresolved and they materially affect core logic, deliverables, or verification, treat them as blocking
-- **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters — may proceed only when explicitly disclosed and kept proportionate to their impact
+- **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters — proceeds only when explicitly disclosed and kept proportionate to their impact
 ### Thermal System Modeling
 - Every thermal analysis must start with explicit energy balance equation:
   - Transient: Q_in - Q_out = ΔE_stored (= mc·dT/dt for lumped systems)
@@ -52,6 +52,6 @@ Before endorsing any engineering claim:
 - Operating conditions stated (temperature, pressure, frequency, load)
 Claims failing any of the above are `HOLD` until corrected.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return verified units, constraints, plausibility checks, and operating conditions to the active engineering-grounding workflow.
 - If an engineering claim changes architecture, mathematical correctness, safety, or acceptance basis, route that delta to the owning skill or lane before endorsement continues.

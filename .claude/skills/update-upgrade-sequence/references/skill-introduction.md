@@ -43,7 +43,7 @@ Approval packet for a new skill must name category, expected reuse pattern, exis
 
 A failed category gate routes to the correct existing owner update.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Approved skill introduction opens `update-upgrade-sequence` asset mutation.
 - Failed category gate opens the existing-owner update path named by the overlap check.
 - Missing category or owner evidence opens `HOLD` with the missing basis and next evidence owner.

@@ -13,7 +13,7 @@ auto-inject: false
 - `new-skill patch`: introduces a new reusable skill only after category, reuse need, and owner fit are proven
 - `follow-on optimization patch`: removes avoidable redundancy or runtime burden only after the stronger quality bar is already secured
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Selected patch class opens the owning change path for that class.
 - Unclassifiable patch reopens self-growth causal analysis.
 - `follow-on optimization patch` waits until the stronger quality bar is secured.

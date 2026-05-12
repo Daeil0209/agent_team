@@ -12,7 +12,7 @@ auto-inject: false
 - Phase 3 Implementation Surface
 - Phase 4 Analysis And Acceptance
 - Phase 5 Iteration Discipline
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Phase 0 Discovery Basis
 - Discovery shape must be explicit: `single`, `lead-boundary-read-then-shards`, or `immediate-shards`
@@ -57,11 +57,11 @@ auto-inject: false
     - `FIRST-USE-STATE`: initial visible state, empty/demo/imported state, and minimum useful information before user configuration
     - `CORE-WORKFLOW-CLOSURE`: enumerate every user-visible action and its mandatory paired completion.
       Required pair types:
-      - create↔delete: every entity create has a delete control on the same surface.
+      - create→disposition: every entity create has an allowed disposition path: delete, archive, void, deactivate, restrict, or no-delete basis.
       - edit↔save+reload-persist: every edit control has a save whose result persists across page reload.
       - input→dependent-recompute/reactivity: every editable value feeding a sum, total, badge, or status triggers recompute on the user surface.
       - UI-element→navigation-destination: every clickable card, row, icon, or button names its arrival surface.
-      - entity↔related-entity link: every foreign-key relation surfaces as bidirectional UI links.
+      - entity→related-entity trace: every material relation surfaces as an authority-fit navigation or trace path.
       Each row names trigger surface, paired completion surface, and persistence/recompute basis.
       Phase 3 entry for a user-visible action requires a `CORE-WORKFLOW-CLOSURE` row.
       The design must add the row or explicitly defer it via frozen-record citation.
@@ -71,16 +71,16 @@ auto-inject: false
     - `VISUAL-RENDERED-QUALITY`: required route/page/document/viewport states, readability, no clipping, no overlap, and visible hierarchy
     - `EVIDENCE-RETURN-CONTRACT`: tester/validator actions, retained proof artifacts, PASS blockers, and Phase 5 return evidence
   - material specialist packets, oracles, and contract deltas selected by Phase 1, `LANE-REQUIRED-SKILLS-MAP`, `LEAD-LOCAL-REQUIRED-SKILLS`, or lawful phase-local refinement; each must be folded into implementation-binding detail, cited as a linked contract, or marked `deferred`/`blocked` with owner before Phase 3
-  - business workflow packet: source-of-truth meaning, operator workflow meaning, mutation authority, period basis, allocation or participation semantics, reconciliation behavior, and proof oracle when spreadsheet or operations workflow meaning drives acceptance
+  - business workflow packet: source-of-truth meaning, operator workflow meaning, mutation authority, period basis, allocation or participation semantics, reconciliation behavior, and proof oracle when spreadsheet or operations workflow meaning determines acceptance
   - ERD/data invariants/lifecycle when persistence or imported data matters
-  - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure drives acceptance
+  - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure determines acceptance
   - visual-reference benchmark packet: when the design produces a novel or composite operator-facing rendered surface (dashboard, gauge, chart, dense table, multi-step form, deck, report, or any UI where layout / hierarchy / typography / color / ratio choices materially affect operator comprehension), `benchmark-simulation` runs for external visual-reference comparison and feeds concrete visual characteristics (font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance) into the canonical design artifact via abstraction-fit-adapt; trivial surfaces (single-control forms, isolated text-only output, surfaces fully governed by a frozen prior benchmark) skip with recorded basis
   - verifiable interface, runtime data-shape, format, and error contracts when production surfaces interact; when drift would break user-visible behavior, name the shared source-of-truth, generated or audited type path, producer-consumer field/shape mapping, and runtime validation/proof oracle
-  - screen/user-flow/first-viewport contracts when visible UX drives acceptance
+  - screen/user-flow/first-viewport contracts when visible UX determines acceptance
   - import/export mapping and validation error model when data migration or file I/O matters
-  - reader/report/deck/lesson flow, including source-data/example/application contract when read, decide, learn, present, or reuse surfaces drive acceptance
-  - evidence-method oracle, source-family schema, claim-strength tiers, and update-trace contract when market, technology, patent, literature, standards, or research evidence drives output or automation
-  - engineering oracle: governing equations, standard or specification citations, unit path, tolerance policy, valid range, and reference test vectors when engineering design or calculation drives acceptance
+  - reader/report/deck/lesson flow, including source-data/example/application contract when read, decide, learn, present, or reuse surfaces determine acceptance
+  - evidence-method oracle, source-family schema, claim-strength tiers, and update-trace contract when market, technology, patent, literature, standards, or research evidence determines output or automation
+  - engineering oracle: governing equations, standard or specification citations, unit path, tolerance policy, valid range, and reference test vectors when engineering design or calculation determines acceptance
   - proof path, feature/surface/control closure map, and CP4 implementation decomposition when dispatch, review, test, or validation depends on them
 - The bundle reduces Phase 2 burden by splitting detail by lane or surface while team-lead retains design ownership and CP4/Phase 3 consume it as implementation input.
 - For executable, user-facing software deliverables, design must freeze every `SCOPE-BASELINE` feature/surface/control path plus the operator-delivery implementation contract: exact launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, launch surface such as `WINDOWS-LAUNCH-SURFACE` when Windows is primary, operator invocation shape, setup/build path, hidden/visible process policy, failure visibility, shutdown/cleanup path, clean re-launch path, infrastructure exposure policy, and the inventory needed for tester first-pass proof, Phase 5 return evidence, and validator final acceptance.
@@ -108,7 +108,7 @@ auto-inject: false
 - For web/UI deliverables:
   - tester proof path = frozen browser-proof path on the browser interaction surface; Playwright CLI is the default repeatable proof profile when available, and unavailable CLI requires explicit blocked/fallback evidence
   - validator final acceptance path = browser-proof confirmation on the same resolved interaction/control inventory; Playwright MCP is the default final browser/UI acceptance profile when available to the validator lane, and unused available MCP blocks PASS/FAR until justified by unavailable evidence or a frozen narrower tool contract
-  - rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface; capture an image per acceptance-relevant feature/state and compare it against the design-stated expectation for that AC, named element, or behavior — image-based verification is mandatory, not optional, on every user-facing rendered surface
+  - rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface; capture an image per acceptance-relevant feature/state and compare it against the design-stated expectation for that AC, named element, or behavior; image-based verification is mandatory on every user-facing rendered surface
   - whole-surface claims need full-page or full design-area capture, browser console/runtime-error check, glyph sanity, and visual defect inspection. Reviewer + tester + validator + team-lead synthesis each open the captured image files cited in support of an AC verdict, FAR claim, or visual-conformance assertion directly via the multimodal `Read` tool and inspect the rendered surface; this axis is satisfied only by direct image opening and rendered-surface inspection.
   - expected populated states must prove non-empty user-meaningful DOM; expected empty states must trace why they are empty rather than treating emptiness as proof
   - operator-naive comprehension proof required: view each rendered surface as a first-time user with no prior specification or domain context and confirm every label, control, data display, gauge, and chart communicates its meaning self-explanatorily; this axis is satisfied by per-element rendered comprehension evidence. Tester reports the per-element walkthrough verdict; validator final-arbitration repeats the walkthrough independently.
@@ -126,7 +126,7 @@ auto-inject: false
 - Cross-environment gaps stay in the same acceptance stream.
 - Env-coverage substitution closes visual, launch, or interaction deltas only inside the frozen Phase 4 surface or explicit replan.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete Phase 1 surface opens Phase 2 boundary through `work-planning`.
 - Complete Phase 2 implementation-binding detail opens CP4 and Phase 3 boundary through `work-planning`.
 - Missing Phase 2 implementation-binding detail opens Phase 2 correction.

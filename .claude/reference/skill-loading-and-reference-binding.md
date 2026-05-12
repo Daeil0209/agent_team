@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loading and reference consumption.
-Use it to make loaded documents and references mandatory execution surfaces instead of optional reading.
+Use it to make loaded documents and references mandatory execution surfaces instead of non-binding reading.
 
 ## Consume When
 - An owner document is loaded in the active owner context.
@@ -39,12 +39,12 @@ Stop before execution when a loaded document lacks applied-rule mapping.
 Stop before completion when a trigger-required reference remains unconsumed.
 Stop before handoff when applied or blocked skill/reference basis is missing.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped required-skill route opens skill availability correction.
 - A stopped required-reference route opens reference consumption.
 - A stopped applied-rule route opens loaded-document consumption.
 - A stopped handoff route opens applied-basis recording.
-- Procedure-bearing reference missing local `Next-Action Drive` opens reference correction.
+- Procedure-bearing reference missing a local `Resolve Next Owner And Action` section opens reference correction.
 - A method-detail reference returns applied method basis to the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
 
@@ -98,14 +98,14 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - A trigger-bound reference carries `SOURCE-ANCHOR`.
 - A trigger-bound reference carries `SOURCE-RULES`.
-- A procedure-bearing reference carries local `Next-Action Drive`.
+- A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
 - A method-detail reference returns applied method basis through the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
 - Procedure-bearing classification covers sequence, dispatch, lifecycle, mutation, review, proof, validation, acceptance, stop, gate, and route behavior.
 - Method-detail classification covers skill-owned methods, checklists, field schemas, matrices, protocols, and examples inside an already opened owner path.
 - Lookup-only classification covers terms, lists, source facts, and controlled values inside an already opened owner path.
 - A method-detail reference that opens independent owner/path behavior is procedure-bearing.
-- Procedure-bearing reference completion requires local `Next-Action Drive`.
+- Procedure-bearing reference completion requires a local `Resolve Next Owner And Action` section.
 - Treat an unconsumed trigger-required reference as completion blocker.
 - Treat missing applied-rule mapping as execution blocker.
 - Reference consumption must be visible in the owner-local packet, handoff, proof, verdict, or `SV-RESULT` when material.

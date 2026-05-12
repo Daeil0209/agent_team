@@ -19,7 +19,7 @@ The chain covers setup/build, launch/open, operate, readable failure, terminate/
 - R27 -- Termination Path Quality Criteria
 - R31 -- Mental-Model Alignment Mandate
 - Closure Re-entry Law
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## R21 -- Operator On-Ramp Completeness
 For executable user-runnable deliverables, the deliverable MUST ship with:
@@ -80,7 +80,7 @@ At minimum:
 - operator does not need to know about WSL, child processes, or subprocess hierarchy to achieve clean exit
 - post-exit state allows immediate re-launch without "previous instance still running" port conflict
 
-Termination-path E2E verification is not optional polish.
+Termination-path E2E verification is required closure evidence.
 When verifier cannot directly exercise the operator's window-close action, document the termination test as operator reference only.
 Acceptance closes from team-side auto-test proof or proven-equivalent interop proof.
 The proof target is: close button -> verify all ports release -> verify clean re-launch succeeds.
@@ -130,7 +130,7 @@ Do not close it as advisory residue.
 When the frozen operator surface is still satisfiable, team-lead routes directly to Phase 5 operator-proof or repair and attempts non-destructive team-side proof before user escalation.
 Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required, or the user explicitly redirects scope.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete operator-delivery closure returns to Phase 4/5 acceptance or Final Acceptance Review.
 - Missing implementation or cleanup closure opens Phase 5 repair.
 - Missing delivery-contract or design closure opens Phase 2 correction.

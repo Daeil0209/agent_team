@@ -12,7 +12,7 @@ LOAD-POLICY: on-demand reference only
 Use this file only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims.
 Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skills, settings, hooks, or runtime evidence.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Failed Hook-Last review opens owner-procedure repair, hook narrowing, or hook removal.
 - Missing runtime-footprint measurement opens measurement or downgrades the claim to `UNVERIFIED`.
 - Legitimate lane-action blocking opens over-broad-blocking correction.
@@ -52,7 +52,7 @@ Rules:
 Report runtime-footprint improvement as verified only when measured on the relevant surface.
 
 Claim classes:
-- `design-level`: structure should reduce context or coordination footprint, but no runtime measurement was taken.
+- `design-level`: structure reduces context or coordination footprint, but no runtime measurement was taken.
 - `measured`: evidence includes command/run identity, before/after sample, hook path or agent-team path, and measured context/latency/runtime effect.
 - `UNVERIFIED`: evidence is absent, partial, or only inferred from line counts or file structure.
 
@@ -63,7 +63,7 @@ Minimum measurement record:
 - sample count or reason why only one sample is truthful
 - result classification: `measured`, `design-level`, or `UNVERIFIED`
 
-Line counts and file sizes may support diagnosis, but they are not runtime latency or token proof by themselves.
+Line counts and file sizes support diagnosis only as non-proof evidence.
 
 Enabled MCP server processes, including `codex mcp-server` and Playwright MCP, are runtime footprint surfaces when they affect a route. Treat their latency, process lifetime, and child-process cleanup claims as `UNVERIFIED` until measured on the active route.
 

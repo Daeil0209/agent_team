@@ -17,7 +17,7 @@ auto-inject: false
 - Durability Gate
 - Regression Guard
 - Developer Handoff Detail
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Auto-inject
 false — load explicitly when packet detail, defect-fix detail, or handoff detail is needed.
@@ -89,7 +89,7 @@ Tool/setup gap assertion must also name the common tool/evidence-gap fields from
 
 Resolution loop:
 - Developer reports constraints immediately instead of waiting, guessing, or abandoning the task.
-- `team-lead` consumes the report, routes researcher/tool/setup/packet correction as needed, and returns a corrected executable path.
+- `team-lead` consumes the report, routes researcher/tool/setup/packet correction when needed, and returns a corrected executable path.
 - Developer resumes execution from the corrected path and repeats the loop until the user instruction is completed or a genuine impossible/unsafe condition is proven.
 
 Insufficient handoff examples:
@@ -101,7 +101,7 @@ Insufficient handoff examples:
 ## Specialist Skill Loading
 - Specialist capabilities live under the active skill root as a `skill-id` directory with its own `SKILL.md`; they do not live as active agent role files under `.claude/agents/`.
 - `SKILL-AUTH` packets bind `skill-id` to the target lane plus blocked surface; developer resolves that against the active project skill root.
-- `team-lead` may route developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
+- `team-lead` routes developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology guidance inside an already bounded development production surface.
 - Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
@@ -159,7 +159,7 @@ Support overlays defer to earlier controlling contracts.
 - Include `PREREQ-STATE: complete|partial|missing` in consequential upward handoff so downstream lanes do not infer prerequisite truth.
 - For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `execute` opens developer-owned production work.
 - `reconstruct-with-inference` opens developer-owned production work with marked inference.
 - `scope-pressure` opens team-lead packet correction, setup/research routing, owner split, or replanning.

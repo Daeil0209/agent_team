@@ -9,7 +9,7 @@ LOAD-POLICY: on-demand reference only
 ## Contents
 - Downward Assignment Base Packet
 - Session Cross-Continuity Packet Check
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Downward Assignment Base Packet
 Assignment-grade means any team-scoped `Agent` launch or `SendMessage` that assigns, reroutes, or reuses bounded work for an agent.
@@ -50,8 +50,8 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - tool-envelope validity per `message-classes.md` before packet-body checks
-- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and an open executable `TASK-ID` when task tracking is active
-- analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver may return evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
+- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` when task tracking is active
+- analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
 - receiving lane additions from the lane-core skill and lane-detail reference
 - target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label
@@ -61,7 +61,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`: every material request-bound axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane-specific phase context, user-defined coverage obligations, assigned surfaces, acceptance basis, user-surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities
 - finding counts are reported evidence, not dispatch scope
-- for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections may only populate `ACTIVE-SLICE`, never substitute for `SCOPE-BASELINE`
+- for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections populate `ACTIVE-SLICE` only, never substitute for `SCOPE-BASELINE`
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
 - Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
 - `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction dispatch.
@@ -87,7 +87,7 @@ Warning hooks can report them as missing.
 The primary correction owner is the packet-producing procedure.
 
 Required shape for every dispatch field (assignment, validator, reviewer, tester, lifecycle control):
-- field name MUST start the line (no leading prose, indentation, list bullet, or quote prefix)
+- field name MUST start the field segment (no leading prose, list bullet, or quote prefix)
 - only `[A-Za-z0-9_-]` allowed in the field name
 - `:` MUST come directly after the field name (only whitespace allowed between)
 - NO parenthetical descriptor, type annotation, or natural-language qualifier between key and colon
@@ -132,7 +132,7 @@ Use assignment-grade packets for:
 
 If an agent is receiving new bounded work in the same execution segment, carry any needed workflow phase context inside the assignment packet instead of sending a separate standalone control packet.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Passing packet preflight opens `task-execution` dispatch or reuse.
 - `packet-correction` opens same-owner packet correction and reruns packet preflight.
 - `route-replan` opens `work-planning`.

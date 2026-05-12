@@ -15,7 +15,7 @@ LOAD-POLICY: on-demand reference only
 - External-Reference Benchmark Extension
 - Visual / UX / Design Benchmark Extension
 - Workflow-Product Benchmark Extension
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Capability-Benchmark Standard
 When used for self-evolution capability hardening, do more than compare team shapes.
@@ -39,7 +39,7 @@ Required rules:
 ## Runnable Benchmark Asset
 No canonical runnable benchmark path is frozen. When a concrete benchmark asset is requested, freeze the repository-local path before treating it as runnable.
 
-Any script should:
+Any script must:
 - read the active project contract when available
 - validate valid and invalid benchmark plans
 - emit a machine-readable result JSON and a markdown matrix
@@ -113,6 +113,6 @@ Required benchmark dimensions when relevant:
 - output-surface justification and gating quality
 Treat sheet-shaped surface promotion or opaque input semantics as benchmark losses when a stronger operator-facing structure exists.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return capability axes, benchmark dimensions, product-operating-model losses, and proof-method implications to the active benchmark-simulation workflow.
 - If benchmark evidence changes product structure, verification method, or user-surface proof, carry that delta to the owning planning or validation packet.

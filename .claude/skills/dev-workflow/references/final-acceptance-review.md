@@ -15,7 +15,7 @@ team-lead owns `FINAL-ACCEPT/FINAL-REJECT`.
 - Acceptance Criteria
 - Decision
 - Reject Route
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Entry
 Validator `PASS` opens Final Acceptance Review.
@@ -193,7 +193,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - Codex status
 - reconciliation result
 - validator return instruction
-- `IMAGE-EVIDENCE` for every visual / rendered defect — each entry names the captured screenshot or full-page image path, the design-stated expectation it should match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, or other measurable visual delta), and the multimodal `Read` confirmation that the receiving lane opened the image directly. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
+- `IMAGE-EVIDENCE` for every visual / rendered defect — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, or other measurable visual delta), and the multimodal `Read` confirmation that the receiving lane opened the image directly. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
 
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.
@@ -205,7 +205,7 @@ team-lead classifies the owning correction route per `references/checkpoints.md`
 After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Reject-first gap opens `FINAL-REJECT`.
 - `FINAL-REJECT` opens assigned-validator rejection analysis through `task-execution`.
 - Validator correction packet opens CP5 route classification.

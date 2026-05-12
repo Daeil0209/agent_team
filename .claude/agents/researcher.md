@@ -50,7 +50,7 @@ Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.c
 Lane ownership, not packet skill listing, triggers `.claude/skills/researcher/SKILL.md` for assignment-grade researcher work.
 Treat assignment packet, task/workflow state, and cited artifacts as authoritative.
 Teammates do not inherit lead conversation history; missing material facts are missing, not implied.
-Before research discovery, classify the packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, applied, not-material, or blocked skill basis, first lane action, and stop.
+Before research discovery, apply the Startup Contract.
 Evidence work is forbidden except on `execute` or `reconstruct-with-inference`.
 `RESEARCH-MODE` is dispatch-shape context, not a reasoning or coverage limit.
 Apply every materially triggered coverage lens from `.claude/skills/researcher/SKILL.md`.
@@ -64,7 +64,7 @@ Use `task-execution` message, truth, scope-pressure, phase-control, and lifecycl
 Never downgrade `hold|blocker`.
 ### RPA-3. Completion Contract
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md` plus researcher handoff detail in `.claude/skills/researcher/references/researcher-lane-detail.md`.
-Report evidence-local truth only: `OUTPUT-SURFACE`, `EVIDENCE-BASIS`, `OPEN-SURFACES`, and `RECOMMENDED-NEXT-LANE`.
+Report evidence-local truth only: `OUTPUT-SURFACE`, `EVIDENCE-BASIS`, `OPEN-SURFACES`, and `LANE-NEXT-CANDIDATE`.
 Do not report `PASS`, final acceptance, implementation-ready closure, or proof/validation completion from inside the researcher lane.
 When research shapes a user-facing deliverable or operator workflow, surface user-access, startup, onboarding, and usability-critical blockers.
 If no direct user workflow is in scope, say so in the handoff so downstream lanes do not invent one.

@@ -33,7 +33,7 @@ Stop before owner execution credit until loaded owner text has applied-rule mapp
 Stop before reporting when the required artifact is stale or only described narratively.
 Stop before dispatch when `work-planning` or primary sequence owner is required but missing.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped lower-trigger route opens the higher trigger owner.
 - A stopped owner-execution-credit route opens loaded-document consumption.
 - A stopped reporting route opens artifact refresh.

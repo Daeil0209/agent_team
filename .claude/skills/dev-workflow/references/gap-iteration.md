@@ -19,7 +19,7 @@ Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap d
 - Iteration Protocol Detail
 - Gap-State Packet
 - Gap Detection Self-Growth
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## YAGNI Scope Review
 Runs in Phase 1 before CP2.
@@ -29,11 +29,11 @@ Procedure:
 2. Judge from frozen purpose and evidence whether each item is essential for the core problem or nice-to-have.
 3. Classify each item as:
    - MUST: blocks core value and remains in current scope
-   - SHOULD: improves the result while remaining outside core-blocking scope
-   - COULD: nice-to-have
-   - WON'T: out of current scope
-4. Remove COULD and WON'T items from current plan scope.
-5. Record removed items as future consideration.
+   - IMPROVE: improves the result while remaining outside core-blocking scope
+   - DEFER: nice-to-have
+   - OUT: out of current scope
+4. Remove DEFER and OUT items from current plan scope.
+5. Record removed items as future backlog.
 
 Advance to CP2 only after scope inflation review is complete.
 Treat unreviewed scope inflation as compounding risk across design, implementation, review, proof, and validation.
@@ -116,10 +116,10 @@ Unclear delta raises `scope-pressure` and preserves delta scope.
 Tester re-verifies affected surfaces before stale interaction rows.
 Same-class blocking gaps on different surfaces count as repeated same-class blocking gaps.
 Repeated same-class blocking gaps escalate to root-cause classification.
-Independent correction surfaces are split by correcting owner and may run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
+Independent correction surfaces are split by correcting owner and run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
 
 ## Gap-State Packet
-Whenever blocking or significant gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields needed to drive correction to acceptance:
+Whenever blocking or significant gap findings move to `dev-workflow`, reviewer, tester, or team-lead, carry only decisive fields needed to route correction to acceptance:
 - `GAP-STATE`
 - `ROOT-CAUSE-CLASS`
 - `FROZEN-DESIGN-EXPECTATION`
@@ -144,7 +144,7 @@ Close a re-classified gap state only through the owning downstream agent.
 ## Gap Detection Self-Growth
 Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repeated phase drift, repeated bottlenecking after decomposition, or repeated source-only substitution appears.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Blocking gap opens CP5 route classification.
 - T0/T1 gap opens `incident-response`.
 - Phase 5 gap contribution opens correction owner with required return evidence.

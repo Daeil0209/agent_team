@@ -34,6 +34,6 @@ This role owns the following visual/instructional defect types per the shared ta
 Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 On recurrence of any owned defect type, add or strengthen the corresponding gate in this SKILL.md before the next run.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return pedagogy structure, worked-example requirements, learner-risk findings, and defect records to the active instructional-design workflow.
 - If instructional findings change visual composition, mathematical correctness, or acceptance proof, route the named requirement to that owner before delivery continues.

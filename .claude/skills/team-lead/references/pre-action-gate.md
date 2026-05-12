@@ -11,7 +11,7 @@ SOURCE-RULES: "Priority 0: Pre-Action Gate; Reference Binding; Procedure And Own
 - Consume When
 - Required Output
 - Stop
-- Next-Action Drive
+- Resolve Next Owner And Action
 - Same-Segment Reuse
 - Gate Fields
 - Evidence Boundary
@@ -47,7 +47,7 @@ Stop before reusing the gate when work, owner, route, report, mutation boundary,
 Stop before user-facing prose until the selected report surface is new or changed.
 Stop before mutation until `[GOV-MIN]` is applied.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped action route opens the missing gate field.
 - A stopped applied-rule route opens loaded-document consumption.
 - A stopped stale-gate route reopens this gate.
@@ -109,7 +109,7 @@ Resolve derivable decisions through evidence and doctrine.
 
 ### CHANGE-FIT
 Apply `[GOV-MIN]` before doctrine or code mutation.
-Prefer tighten, replace, trim, merge, re-home, or delete before appending.
+Apply tighten, replace, trim, merge, re-home, or delete before appending.
 Justify net growth only when no existing owner text can carry the meaning.
 
 ### UNCERTAINTY

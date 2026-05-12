@@ -18,20 +18,27 @@ Before this skill acts, the lead must already have:
 
 ## Consumed Frozen Fields
 Consume dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
-1. `ROUTING-SIGNAL`
-2. `NEXT-CONSEQUENTIAL-ACTION`
-3. `DISPATCH-BLOCKERS`
-4. `CODEX-ADVISORY-BASIS`
-5. `EXECUTION-READINESS-BASIS`
-6. `AGENT-MAP`
-7. `PARALLEL-GROUPS`
-8. `LANE-REQUIRED-SKILLS-MAP`
-9. `REQUEST-BOUND-PACKET-FIELDS`
-10. `SKILL-RECOMMENDATIONS`
-11. `ACTIVE-WORKFLOW` when present
-12. `ACTIVE-SEQUENCE` when present
+1. `REQUEST-FIT-BASIS`
+2. `SEMANTIC-INTENT-BASIS`
+3. `REQUEST-BOUND-PACKET-FIELDS`
+4. `CLAIM-CEILING` when material
+5. `ROUTING-SIGNAL`
+6. `NEXT-CONSEQUENTIAL-ACTION`
+7. `DISPATCH-BLOCKERS`
+8. `CODEX-ADVISORY-BASIS`
+9. `EXECUTION-READINESS-BASIS`
+10. `AGENT-MAP`
+11. `PARALLEL-GROUPS`
+12. `LANE-REQUIRED-SKILLS-MAP`
+13. `SKILL-RECOMMENDATIONS`
+14. `ACTIVE-WORKFLOW` when present
+15. `ACTIVE-SEQUENCE` when present
 
 ## Field Rules
+- Missing, stale, or contradictory request-fit basis reopens `work-planning`.
+- Missing or contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
+- Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
+- Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` must be concrete when additional-agent routing is host-authorized.
 - If they are not mandatory but `task-execution` can consume the route, each must carry explicit `not-applicable:<basis>`.
 - Valid `not-applicable` bases are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route that `work-planning` kept dispatch-owned without authorizing an agent dispatch move yet.
@@ -64,7 +71,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Passing entry contract opens `task-execution` Step 1 Activate Frozen Route.
 - Missing `work-planning` opens `work-planning`.
 - Missing frozen workflow or sequence owner opens that owner.

@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned runtime surface.
-- Fixed top-level section order after Structural Contract: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence` -> `Next-Action Drive`.
+- Fixed top-level section order after Structural Contract: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence` -> `Resolve Next Owner And Action`.
 - Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
@@ -61,7 +61,7 @@ See `references/runtime-state-detail.md` `Boot Window And Startup Rules` for too
 ## Session-Start Sequence
 `Session-Start Sequence` always runs at fresh start, resume, and pause-return when this skill is loaded.
 That is the default for the main session.
-`Boot Sequence` is the optional explicit-runtime branch on top.
+`Boot Sequence` is the conditional explicit-runtime branch on top.
 If both run, share the continuity read instead of repeating it.
 
 ### Required checks
@@ -149,7 +149,7 @@ See `references/runtime-state-detail.md` for:
 - `Procedure-State Schema`
 - `Workflow Continuity Bridge`
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Runtime-ready returns to the frozen next owner/action.
 - Team-agent runtime creation opens `task-execution`.
 - Monitoring risk opens `team-lead` plus the active workflow owner.

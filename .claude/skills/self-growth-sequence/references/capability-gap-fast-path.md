@@ -21,7 +21,7 @@ When the fast path applies, all six steps remain required:
 - `reviewer` checks placement, overlap, and information-loss risk
 - `validator` is assigned when acceptance risk is meaningful
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Confirmed reusable capability gap opens the rapid-skill routing chain.
 - Existing-owner overlap opens existing-owner update.
 - Missing post-adoption proof keeps the fast path open.

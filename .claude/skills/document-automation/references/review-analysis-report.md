@@ -17,7 +17,7 @@ Use when the document is a risk analysis, condition evaluation, go/no-go report,
 - Stage 2 `So What` dedicates a named section to why the target environment amplifies identified risks.
 - Generic restatement is a defect.
 - Stage 3 `Now What` tiers recommendations by risk level.
-- Short answer-first artifacts with one dominant decision path may use a single standard path plus bounded exceptions.
+- Short answer-first artifacts with one dominant decision path use a single standard path plus bounded exceptions.
 - Include case studies when materially available, decision-changing, or explicitly requested.
 - Bidirectional framing presents both prohibited actions and required conditions.
 - Unidirectional framing is a completeness defect.
@@ -40,6 +40,6 @@ Use when the document is a risk analysis, condition evaluation, go/no-go report,
 - Optimal length test: removing anything loses a critical argument.
 - Apply impact-per-page test before finalizing.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return analysis structure, decision criterion, risk-tier logic, bidirectional framing, and conclusion test results to the active document-automation workflow.
 - If evidence boundary, risk tiering, or decision criterion is under-specified, route the named gap before final prose generation continues.

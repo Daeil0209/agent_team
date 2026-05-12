@@ -106,7 +106,7 @@ Required rules:
 - use the smallest path and record fallback/cleanup truth
 - prefer a quieter or safer local-first path when it becomes credible
 - if the bridge opens a console, helper process, client session, or proxy, define and verify cleanup after the decisive check
-- `CLAUDE.md` `### Role And Acceptance Law` still applies: simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` or blocked
+- `CLAUDE.md` `## Acceptance` still applies: simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` or blocked
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or setup requests when external capability need is unclear or unjustified.
 - Also challenge unclear or unjustified bridge scope, fallback behavior, verification method, or rollback discipline.
@@ -120,4 +120,4 @@ Required rules:
 - Integration serves the end-user workflow and technical endpoint path.
 - User-visible integration is designed from user perspective first.
 - Surface hidden integration constraints (rate limits, timeout behaviors, retry policies, user-visible error clarity) before bridge design, not after failure.
-- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or `UNVERIFIED` per `CLAUDE.md` `### Role And Acceptance Law`.
+- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or `UNVERIFIED` per `CLAUDE.md` `## Acceptance`.

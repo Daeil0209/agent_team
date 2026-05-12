@@ -38,9 +38,9 @@ Quantitative experiment results require evidence.
 Test measurements require evidence.
 Benchmark numbers require evidence.
 Result images or screenshots that imply real system output require evidence.
-Development process narrative may be inferred within the selected adaptive level.
-Conceptual diagrams may be generated when they are explanatory.
-Expected effects may be generated when grounded in market context and technical rationale.
+Development process narrative is inferred only within the selected adaptive level.
+Conceptual diagrams are generated only when they are explanatory.
+Expected effects are generated only when grounded in market context and technical rationale.
 Content that could be mistaken for empirical evidence must be marked as projected or illustrative.
 
 ## Expected Effects
@@ -62,7 +62,7 @@ Effects and significance sections use persuasive-emphasis tone grounded in achie
 Projected impact uses qualified persuasion.
 Proposal stance must not describe work the report claims is finished.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete result-report rule packet opens document-automation for report generation.
 - Missing evidence for empirical claims opens researcher evidence work or claim downgrade.
 - Missing visualization basis opens visual-composition or document-automation correction.

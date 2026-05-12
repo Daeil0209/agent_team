@@ -1,12 +1,22 @@
 ---
 name: work-planning
-description: Freeze request fit, target, route, workflow/sequence, parallel fit, and skill basis before consequential action. Use when a new or reopened consequential boundary needs owner, scope, evidence, workflow, or skill-basis decisions.
+description: Freeze request fit, route, workflow, parallel fit, and skill basis before consequential action.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned procedure surface.
-- Fixed top-level section order after Structural Contract: Purpose, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Internal Planning Record, Progress Update Surface, Post-Planning Gate, Next-Action Drive.
+- Fixed top-level section order starts after Structural Contract.
+- Section 1 is Purpose.
+- Section 2 is Activation Trigger.
+- Section 3 is Step 0.
+- Section 4 is Step 1.
+- Section 5 is Step 2.
+- Section 6 is Step 3.
+- Section 7 is Internal Planning Record.
+- Section 8 is Progress Update Surface.
+- Section 9 is Post-Planning Gate.
+- Section 10 is Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
 - Step names: Request-Fit Intake, Choose Planning Target, Q1-Q5 Work Analysis, Freeze Scope And Route.
 - PRIMARY-OWNER: team-lead
@@ -38,7 +48,8 @@ Boundary:
 Load only the reference whose trigger is active.
 Triggered references are mandatory before positive route freeze.
 - `references/planning-targets.md`: target definitions, required basis, and target-switch rules.
-- `references/reference-use.md`: reference-driven planning and source-deviation risk.
+- `references/boundary-gates.md`: activation scope, corpus measurement, boundary axes, hard stops, and post-planning gates.
+- `references/reference-use.md`: reference-based planning and source-deviation risk.
 - `references/evidence-tier.md`: authority, benchmarks, and model-prior downgrade risk.
 - `references/deliverable-defaults.md`: proof, review, validation, user burden, and acceptance defaults by deliverable type.
 - `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, and serial basis.
@@ -57,36 +68,15 @@ Run before the first consequential tool call, artifact read, workspace discovery
 Counting evidence is actual `Skill(work-planning)` load plus required freeze.
 Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
 
-Unknown, scope-changing, route-shaping, or burden-sizing corpus discovery and file/line/byte counts are consequential discovery.
-For exhaustive, full-corpus, whole-folder, governance audit/review, or unknown-corpus work, freeze bounded corpus measurement as the first action before route, staffing, or dispatch-readiness freeze.
-Measurement basis must include file count, line or byte scale, semantic surface inventory, and high-touch or critical-surface notes sufficient to judge burden and parallel fit.
-Run only that measurement action.
-Then reopen or complete `work-planning` from the measured basis.
-Do not freeze `team-dispatch-readiness-plan`, `AGENT-MAP`, `PARALLEL-GROUPS`, or dispatch-ready `NEXT-CONSEQUENTIAL-ACTION` from unmeasured material burden.
-Known-owner lookup/status that does not diagnose, audit, analyze, route, dispatch, mutate, or size burden stays outside planning.
-
-Planning belongs at boundary creation, not every internal correction.
-Inside an active workflow phase, same-artifact correction/review/revision loops stay with the active workflow owner when all boundaries stay unchanged:
-- phase
-- canonical artifact
-- frozen owner map
-- deliverable shape
-- staffing shape
-- proof/acceptance chain
-- user requirement
-
-The active workflow owner governs that iteration.
-
-Keep these outside planning unless they assign, reopen, or change consequential work:
-- true `answer-only`
-- narrow `SV-only audit`
-- `notification-only carry-forward`
-- governance relearning limited to known-owner lookup/status through `Read`/`Grep` with no diagnostic, audit, analytical, route, dispatch, mutation, or stronger-claim output
-- receipt-only, control-only, lifecycle-only, phase-transition-only, or clarification-only messages
-
-This exclusion ends when the message assigns, reopens, or changes consequential work.
-It also ends when the work needs Bash/status/listing, discovery/measurement, route, dispatch, mutation, or a stronger claim.
-Artifact judgment or analysis result ends the exclusion when it moves a boundary-change axis.
+Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
+For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
+Governance audit/review uses the bounded corpus measurement rule.
+Governance defect judgment routes through `review-verification`.
+Governance removal judgment routes through `review-verification`.
+Preservation analysis routes through `review-verification`.
+Unmeasured material burden blocks dispatch-ready planning.
+Same-boundary correction stays with the active owner.
+A moved boundary-change axis reopens `work-planning`.
 
 ## Step 0: Request-Fit Intake
 Freeze these before route judgment:
@@ -102,8 +92,8 @@ Freeze these before route judgment:
 - blockers
 - request-bound packet fields
 
-`CONCRETE-DELIVERABLE` and `PRIMARY-USER` drive deliverable type, delivery shape, defaults, and type triggers.
-`DERIVED-DEFAULTS` drives receiver job, consumption path, decisive proof surface, and request-bound packet fields.
+`CONCRETE-DELIVERABLE` and `PRIMARY-USER` determine deliverable type, delivery shape, defaults, and type triggers.
+`DERIVED-DEFAULTS` determine receiver job, consumption path, decisive proof surface, and request-bound packet fields.
 
 Full intake is mandatory when semantic intent, reference use, corrected intent, delivery burden, user-surface proof, or original wording affects execution.
 The user-defined work scope is binding.
@@ -125,21 +115,11 @@ Also load it for material:
 - blocker-clear scope
 - delegated-lane boundary scope
 
-Boundary-change axes: owner/phase, surface/artifact, deliverable, proof/acceptance chain, route/dispatch shape, staffing/parallel shape, skill basis, user requirement.
-An axis moves when the next lawful action needs a different frozen value for that axis than the current boundary.
-Movement test:
-- owner/phase: owner lane, workflow phase, or sequence owner changes.
-- surface/artifact: target artifact, user surface, or consumed source changes.
-- deliverable: output kind, content contract, or scope baseline changes.
-- proof/acceptance chain: proof burden, acceptance owner, or verdict identity changes.
-- route/dispatch shape: lead-local, workflow, task-execution, team-runtime, or agent path changes.
-- staffing/parallel shape: lane split, agent count, merge owner, or parallel grouping changes.
-- skill basis: material non-lane-core skill basis changes.
-- user requirement: explicit user constraint, priority, burden, or scope changes.
-Same-boundary correction is valid only when every axis cites the current frozen value.
+Use `references/boundary-gates.md` for boundary-change axes.
 A moved axis reopens planning at that boundary.
-Frozen boundary means the current binding values for these axes plus the selected planning target and required basis.
-It updates only through reopened `work-planning` or owner-local correction that preserves every axis.
+Frozen boundary means the current binding values for every axis plus the selected planning target and required basis.
+Frozen boundary updates only through reopened `work-planning`.
+Frozen boundary also updates through owner-local correction that preserves every axis.
 
 ## Step 2: Q1-Q5 Work Analysis
 Before scope freeze, answer:
@@ -180,22 +160,10 @@ Freeze when material:
 - team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`
 - Codex advisory: `CODEX-ADVISORY-BASIS`
 
-Codex advisory law:
-- Apply `references/codex-advisory.md` after draft route fields exist when an advisory trigger fires (including `ACTIVE-WORKFLOW: dev-workflow`, reference-risk triggers, and pre-escalation confirmation review for non-destructive, non-security, non-operator-policy-choice user-question candidates).
-- The reference owns adjudication, fail-open, accepted/rejected acknowledgment, and continuation-without-blocker rules; unrecorded required or triggered advisory basis leaves `work-planning` incomplete.
-
-Hard stops:
-- `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
-- Planning opens one next owner/action before execution, dispatch, or reporting.
-- Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
-- Required measurement missing from exhaustive, full-corpus, whole-folder, governance audit/review, or unknown-corpus work blocks `team-dispatch-readiness-plan`, `AGENT-MAP`, `PARALLEL-GROUPS`, and dispatch-ready `NEXT-CONSEQUENTIAL-ACTION`.
-- `PARALLEL-GROUPS: none` is invalid for multi-surface or unmeasured material corpus work unless a measured dependency or serial-burden basis proves serial stronger than parallel.
-- Lane-core skills are not listed in packet `REQUIRED-SKILLS`.
-- Lane ownership lazy-loads them.
-- Use `[]` when no additional non-lane-core skill is required.
-- Agent-boundary transfer uses `task-execution` packet translation, not this internal record.
-- New consequential item, surface, owner map, hidden step, route ambiguity, or stronger claim reopens `work-planning` only when it changes the frozen boundary.
-- A same-phase same-artifact workflow iteration is not new when every boundary named in Activation Trigger remains unchanged.
+Codex advisory detail stays in `references/codex-advisory.md`.
+Hard-stop detail stays in `references/boundary-gates.md`.
+Planning opens one next owner/action before execution, dispatch, or reporting.
+Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, lifecycle, parallel, or acceptance readiness is at risk.
 
@@ -213,16 +181,11 @@ If execution is stopped, emit one plain line naming blocker, required user actio
 Keep the planning record internal.
 
 ## Post-Planning Gate
-After planning:
-1. Open exactly one next owner/action.
-2. If `ACTIVE-WORKFLOW` or a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
-3. The named owner must be loaded and run to its named outcome when absent/stale/wrong-boundary, or consumed (and rerun to outcome if stale) when current, before lead-local action, `task-execution`, user reporting, phase movement, or mutation.
-4. Source lookup, remembered procedure text, advisory input, or unchecked owner summary does not satisfy named-owner consumption.
-5. `team-routing candidate` or `ambiguous-route` opens `task-execution`.
-6. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
-7. If the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed, reopen `work-planning`.
+After planning, apply `references/boundary-gates.md` Post-Planning Gate.
+Open exactly one next owner/action.
+Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
 - A team-routed or ambiguous route opens `task-execution`.

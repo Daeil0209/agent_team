@@ -12,7 +12,7 @@ auto-inject: false
 - Report Automation Tool
 - Engineering Calculation Or Design Tool
 - Spreadsheet Migration Tool
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 Use this file to select the smallest credible practical work-tool family.
 These are product patterns, not full app templates.
@@ -78,7 +78,7 @@ Anti-patterns:
 - final report accepted before rendered/readable export proof when the user reads the export
 
 ## Engineering Calculation Or Design Tool
-Use when equations, standards, units, tolerances, simulation assumptions, operating ranges, or numeric output quality drives acceptance.
+Use when equations, standards, units, tolerances, simulation assumptions, operating ranges, or numeric output quality determines acceptance.
 
 Pattern:
 - engineering-grounding and mathematical-correctness freeze equations, assumptions, unit path, standards, valid ranges, tolerances, and reference vectors
@@ -107,6 +107,6 @@ Anti-patterns:
 - no reconciliation between source totals and converted records
 - no representative import failure proof
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return selected pattern family, operator workflow requirements, anti-pattern findings, and proof-oracle candidates to the active work-tool-patterns workflow.
 - If a pattern family changes product structure, domain workflow, or acceptance proof, carry the named requirement to the owning planning or lane packet.

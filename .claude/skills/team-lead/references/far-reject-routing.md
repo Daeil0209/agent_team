@@ -31,7 +31,7 @@ Stop before correction dispatch when root cause changes proof chain.
 Stop before correction dispatch when root cause changes acceptance chain.
 Stop before the next FAR until the assigned owner consumes correction evidence.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A missing correction packet opens validator correction-packet retrieval.
 - A changed-scope route opens `work-planning`.
 - A changed-owner-map route opens `work-planning`.

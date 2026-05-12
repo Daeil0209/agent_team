@@ -19,7 +19,7 @@ LOAD-POLICY: on-demand reference only
 - Health-Check Standard
 - Stale Response
 - Runtime Pressure
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition. The agent remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
@@ -27,7 +27,7 @@ LOAD-POLICY: on-demand reference only
 - Receiving a completion report without canonical `REQUESTED-LIFECYCLE` is a lifecycle-request defect (T3).
 
 ## Agent Identity Rule
-- If multiple agents of the same capability may exist concurrently, assign unique agent names at dispatch time.
+- If multiple agents of the same capability can exist concurrently, assign unique agent names at dispatch time.
 - Standby, shutdown, stale tracking, and reuse decisions must refer to those concrete agent names rather than to the generic capability label alone.
 
 ## Supervisor Decisions On idle_notification
@@ -48,7 +48,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Do not ignore an agent lifecycle request without reason. Brief hold is valid only while immediate reuse is being prepared.
 - `assignment` activates bounded work. `reuse` reactivates a standby agent or reassigns work to an active agent awaiting lifecycle decision on the same preserved topic/context. Neither creates a new teammate by itself.
 - Teammate population changes only on agent creation and confirmed shutdown/removal. `standby` and `reuse` are state transitions, not teammate-count changes.
-- Hook feedback may record or guard a lifecycle edge, but it does not create authority to infer session end or agent shutdown.
+- Hook feedback can record or guard a lifecycle edge, but it does not create authority to infer session end or agent shutdown.
 - Runtime task lists, mailbox state, and team config are Claude Code runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
 - An agent-targeted `shutdown_request` is agent lifecycle cleanup, not evidence that the whole session is entering `Closeout Sequence`.
 - If a stale current-runtime agent must be replaced outside closeout, send `shutdown_request`, wait for shutdown evidence or classify recovery explicitly, then dispatch the replacement. Do not skip directly to replacement unless the agent is confirmed terminated or the replacement route has been frozen as recovery.
@@ -86,9 +86,9 @@ When an idle_notification is received with a valid completion report, the govern
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
-- For explicit team-runtime sessions, recurring health monitoring runs at the cadence configured in `hook-config.sh` only when a tracked health-check cron is actually active.
-- The configured cron cadence and stale thresholds are defined in `hook-config.sh`; treat that file as the single literal owner.
-- Direct oversight, event-driven agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
+- For explicit team-runtime sessions, recurring health monitoring runs at the cadence configured through `hook-config.sh` from `hook-policy.sh` only when a tracked health-check cron is actually active.
+- The configured cron cadence and stale thresholds are defined in `hook-policy.sh`; treat that file as the single literal owner.
+- Direct oversight, event-triggered agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all agents are standby.
 - Replacing the tracked health-check cron is not session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, then perform `CronDelete` and replacement `CronCreate`.
 - If no tracked health-check cron is active, do not create, rotate, or narrate one by ceremony.
@@ -98,7 +98,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
-- Repo-local generated-output cleanup may use bounded destructive commands only inside the active repo's approved output root (`./projects/`).
+- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's approved output root (`./projects/`).
 
 ## Runtime Pressure
 - In single-primary automation mode, treat non-current `parent-session-id` agent processes as orphan runtime residue rather than valid parallel production sessions.
@@ -107,7 +107,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Runtime-pressure handling must not invent session closeout authority or bypass message-first lifecycle decisions for current live agents.
 - If orphan historical agents are detected from a previous session, do not send `shutdown_request` to those remembered agent names from the new session. Route explicit orphan-runtime recovery instead.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Healthy active lane returns to monitoring.
 - Reuse-fit live lane opens bounded reuse.
 - Standby decision opens lifecycle control.

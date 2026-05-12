@@ -14,7 +14,7 @@ LOAD-POLICY: on-demand reference only
 - Anti-Pattern Detection
 - Inter-Service Communication Patterns
 - Infrastructure Change Protocol
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Clean Architecture Layer Diagram
 ```
@@ -103,7 +103,7 @@ Use when: **the caller can proceed before the result arrives.**
 | Concern | Requirement |
 |---|---|
 | Transport | Message queue or event bus (technology is a project decision, not a skill mandate) |
-| Pattern | Topic-based pub/sub for event-driven flows |
+| Pattern | Topic-based pub/sub for event-triggered flows |
 | Event naming | Domain-prefixed verb-noun: `user.created`, `order.completed`, `payment.failed` |
 | Consumer idempotency | All consumers must handle duplicate message delivery safely |
 | Dead letter queue | Required; unprocessable messages route to the dead letter queue |
@@ -119,6 +119,6 @@ For all infrastructure changes (database schema, message queue topology, network
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
 **Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 governance block.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.
 - If a finding affects dependency mapping, production readiness, or lane acceptance, route that requirement to the owning design, implementation, or validation path.

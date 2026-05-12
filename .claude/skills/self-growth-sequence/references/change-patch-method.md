@@ -9,7 +9,7 @@ auto-inject: false
 - Change Sequence Required Order
 - Change Constraints
 - Patch Execution Method
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
@@ -31,13 +31,18 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 - Produce a bounded proposed change before treating it as accepted execution.
 
 5. `Content Review`
-- Review the actual changed content rather than only the plan. For non-trivial changes, route to the reviewer lane; developer self-review is sufficient for trivial single-line fixes.
-- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute. The narrow single-file quick-hardening wording-fix exception defined by the parent skill records owner-surface citation. Reviewer/Codex input is evidence; the emitted packet is the gate.
+- Review the actual changed content rather than only the plan.
+- For non-trivial changes, route to the reviewer lane.
+- Developer self-review is sufficient for trivial single-line fixes.
+- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute.
+- The narrow single-file quick-hardening wording-fix exception defined by the parent skill records owner-surface citation.
+- Reviewer/Codex input is evidence.
+- The emitted packet is the gate.
 - Use evidence, not author intent, for acceptance judgment.
 
 5b. `Execution Gate`
 - For governance-sensitive modifications, complete the reviewed change path before Execute.
-  Governance-sensitive surfaces include CLAUDE.md `### Ownership` and `### Change And Preservation Law`.
+  Governance-sensitive surfaces include CLAUDE.md `## Priority And Ownership` and `## Change And Preservation`.
   Explicit user approval is required for destructive or security-sensitive action.
   Reviewed non-destructive governance changes proceed autonomously except hook/settings runtime enforcement expansion, which uses the Hook-Last operator-approval gate.
 - For non-governance changes: proceed directly to Execute.
@@ -61,11 +66,14 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 - Do not bypass review separation on meaningful governance changes.
 - Do not add doctrine by convenience placement.
 - Do not compress away unique meaning.
-- When a legacy rule label or violation code is retired, preserve the underlying operational contract in the correct owner document or enforcement surface. Identifier removal does not justify rule loss.
-- When adding, deprecating, retiring, or merging rules, record the lifecycle state transition explicitly (`ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`) on the owning governance surface. New rules start as `ACTIVE`.
+- When a legacy rule label or violation code is retired, preserve the underlying operational contract in the correct owner document or enforcement surface.
+- Identifier removal does not justify rule loss.
+- When adding, deprecating, retiring, or merging rules, record the lifecycle state transition explicitly on the owning governance surface.
+- Lifecycle state order is `ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`.
+- New rules start as `ACTIVE`.
 - The execution gate in step 5b governs governance-sensitive execution. See step 5b above.
 - Runtime permission bypass, hook approval, or pre-authorized self-growth dispatch does not waive review separation, preservation checks, or the destructive/safety gate.
-- High-traffic governance surfaces named by `CLAUDE.md` `### Ownership` and `### Change And Preservation Law` require session revalidation and baseline anchoring before modification resumes after interruption.
+- High-traffic governance surfaces named by `CLAUDE.md` `## Priority And Ownership` and `## Change And Preservation` require session revalidation and baseline anchoring before modification resumes after interruption.
 
 ## Patch Execution Method
 Use this method for team-system asset patches that must remain understandable without hidden session memory. It refines patch mechanics; it does not decide the primary sequence owner.
@@ -75,32 +83,48 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 
 ### Required operating rules
 - For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
-- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain. Hook-Last-approved runtime edges remain under the hook/settings expansion gate. Prefer `tighten`, `replace`, or `re-home` before `append`, and do not weaken an already-correct path just to land the hardening.
+- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
+- Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
+- Apply `tighten`, `replace`, or `re-home` before `append`.
+- Do not weaken an already-correct path just to land the hardening.
 - Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
-- Before drafting, freeze the defect basis, design-intent basis, causal basis, recurrence path, `PATCH-CLASS`, `BASELINE-CLASS`, owner surface, positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation. If any item is unclear, inspect or hold instead of editing by intuition.
+- Before drafting, freeze the defect basis, design-intent basis, causal basis, and recurrence path.
+- Before drafting, freeze `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface.
+- Before drafting, freeze positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation.
+- If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
 - The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner advisory warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
 - Warning, block, deny, deletion, restriction, or removal edits are valid only when that positive execution path remains explicit and executable.
-- Before drafting, enumerate affected surfaces beyond the edited file: exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors. Missing this enumeration is a patch-readiness defect, not a post-review nit.
-- For MCP or external-tool capability changes, the affected surfaces include the asset-set: project-root `.mcp.json`, `.claude/settings.json`, role tool authorization, hook/settings posture, and the owning skill/reference authority boundary.
+- Before drafting, enumerate affected surfaces beyond the edited file.
+- Affected surfaces include exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors.
+- Missing this enumeration is a patch-readiness defect, not a post-review nit.
+- For MCP or external-tool capability changes, affected surfaces include project-root `.mcp.json`.
+- For MCP or external-tool capability changes, affected surfaces include `.claude/settings.json`.
+- For MCP or external-tool capability changes, affected surfaces include role tool authorization.
+- For MCP or external-tool capability changes, affected surfaces include hook/settings posture.
+- For MCP or external-tool capability changes, affected surfaces include the owning skill/reference authority boundary.
 - When the modified artifact has no declared design-intent surface, the change packet itself must carry the intent.
   Missing declared intent includes no Structural Contract, fixed section order, owner boundaries, or authoring principles.
   Assign a `PATCH-CLASS` failure-mode tag.
   Add a one-sentence rationale in `CHANGE-BOUNDARY`.
   Add the missing declared-intent surface in a follow-on patch when scope allows.
-- Classify the failure mode before choosing text: `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, or `capability-gap`. Use `.claude/skills/self-growth-sequence/references/failure-mode-response.md` for allowed and prohibited responses.
+- Classify the failure mode before choosing text.
+- Failure modes are `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, and `capability-gap`.
+- Use `.claude/skills/self-growth-sequence/references/failure-mode-response.md` for allowed and prohibited responses.
 - Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`.
 - Append only when no existing owner slot can absorb the meaning cleanly.
 - Delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
 - Use one rule or action per sentence.
 - Split different ideas into separate sentences or bullets.
 - Line count is not the strength metric; the shortest owner-local edit that preserves stop, owner, evidence, recovery, and protected meaning wins.
-- For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY` -- enough that another model can reconstruct the patch from repository state alone.
+- For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY`.
+- `CHANGE-BOUNDARY` must let another model reconstruct the patch from repository state alone.
 - Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
 - Preserve protected local restatements that keep owner files independently readable.
 - When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, self-verification gate, or Hook-Last-approved runtime edge instead of duplicate doctrine.
-- Review the proposed changed content, not only the plan, before execution. Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
+- Review the proposed changed content, not only the plan, before execution.
+- Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
 - Verification must prove both sides of the patch.
   The recurrence path is blocked or explicitly assigned.
   The positive execution path remains visible and executable.
@@ -117,7 +141,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 
 ### Structural Baseline
 - Treat the current target design as the structure baseline.
-  - Legacy or reference material may restore missing meaning, but it does not automatically reclaim file layout, ownership, or runtime structure.
+  - Legacy or reference material can restore missing meaning, but it does not automatically reclaim file layout, ownership, or runtime structure.
 - Treat structural connectivity as protected meaning.
   - When a document already declares a fixed hierarchy or explicit mapping chain, preserve that structure and restore its links after any migration, compression, or normalization patch.
 - Preserve zero information loss.
@@ -130,20 +154,25 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - role identity, boundaries, output contract, completion condition -> matching agent file
   - repeatable workflow/checklist -> matching `SKILL.md`
   - runtime enforcement or state -> settings, hooks, or runtime owner file
-- Do not place always-on doctrine in `.claude/rules/*.md` files. If the content should load unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
-- Prefer `replace`, `trim`, or `re-home` over append-only accumulation, but never by weakening protected meaning.
+- Do not place always-on doctrine in `.claude/rules/*.md` files. If the content loads unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
+- Apply `replace`, `trim`, or `re-home` over append-only accumulation, but never by weakening protected meaning.
 - When a rule is repeated so a file remains safe to read in isolation, treat that local restatement as protected common contract rather than cosmetic duplication.
 - When a value must stay configurable, keep one literal owner for that value and make all other documents or prompts reference that owner instead of copying the literal value.
 
 ### Specialist And Skill Ordering
-- When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution, but keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
-- Treat the consuming lane as the default skill-up owner. Each specialist skill declares its `PRIMARY-OWNER` and optional `SECONDARY-CONSUMER` in SKILL.md frontmatter and may restate them in its Structural Contract when local readability requires it. The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
+- When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution.
+- Keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
+- Treat the consuming lane as the default skill-up owner.
+- Each specialist skill declares its `PRIMARY-OWNER`.
+- Each specialist skill declares `SECONDARY-CONSUMER` when present in SKILL.md frontmatter.
+- Each specialist skill restates those fields in its Structural Contract when local readability requires it.
+- The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
   - developer-owned specialists and their controlling order: `skills/developer/references/developer-lane-detail.md` § Specialist Skill Loading.
   - reviewer-owned specialists: `skills/reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
   - tester-owned specialists: `skills/tester/references/tester-lane-detail.md` § Specialist Skill Loading.
 - Treat common-skill hardening differently from specialist skill-up.
   - Common-skill patches still require one primary owner, never diffuse co-ownership.
-  - Inspectors may propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
+  - Inspectors propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
   - For current shared team-operation skills, `team-lead` is the default primary owner unless governance explicitly records a different owner.
 
 ### Post-Change Discipline
@@ -174,12 +203,14 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Ask the user only when destructive, security-sensitive, operator-policy-choice, or objectively undecidable.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
 - Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
-- For governance-sensitive patches, require the patch class, owner surfaces, preserved meaning, and verification basis to remain explicit enough that another model can continue safely from repository state alone without relying on a dedicated patch-ledger file.
+- For governance-sensitive patches, keep the patch class, owner surfaces, preserved meaning, and verification basis explicit.
+- Another model must be able to continue safely from repository state alone.
+- Do not rely on a dedicated patch-ledger file.
 
 ### Human-readable packet owners
 See `.claude/skills/self-growth-sequence/references/human-readable-packet-owners.md` for field catalogs.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Completed patch design opens the owning patch execution path.
 - Missing owner surface opens governance architecture mapping.
 - Semantic overlap opens replace, trim, re-home, or protected restatement decision.

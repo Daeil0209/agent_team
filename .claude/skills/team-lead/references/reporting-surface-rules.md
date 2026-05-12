@@ -11,7 +11,7 @@ SOURCE-RULES: "RPA-7 report shape and evidence inclusion; Communication And Repo
 - Consume When
 - Required Output
 - Stop
-- Next-Action Drive
+- Resolve Next Owner And Action
 - Primary Report Surface
 - Output Shape
 - Internal Content
@@ -47,7 +47,7 @@ Stop before basis expansion by default.
 Basis expansion is allowed for explicit user detail request.
 Basis expansion is allowed for blocker-required detail.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - A stopped reporting route opens `SV-RESULT`.
 - A stopped `FINAL` route opens residual work processing.
 - A stopped shard/corpus `FINAL` route opens merge-owner integration, explicit owner deferral, or out-of-scope classification.

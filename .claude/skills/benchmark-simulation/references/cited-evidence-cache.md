@@ -34,7 +34,7 @@ The following reference families were captured via external benchmark and ground
 ## ThoughtWorks Technology Radar
 - Class: principle-class, high confidence
 - Sources: `thoughtworks.com/en-us/radar/faq`, `thoughtworks.com/en-us/radar`, `thoughtworks.com/insights/blog/build-your-own-technology-radar`
-- Abstracted principle: evidence-driven technology adoption operates through four explicit rings: Adopt / Trial / Assess / Hold. Trial requires production experience; reassessment is time-boxed; unchanged items fade to keep attention on meaningful confidence shifts. Hold is an active recommendation against new use, not passive ignore.
+- Abstracted principle: evidence-based technology adoption operates through four explicit rings: Adopt / Trial / Assess / Hold. Trial requires production experience; reassessment is time-boxed; unchanged items fade to keep attention on meaningful confidence shifts. Hold is an active recommendation against new use, not passive ignore.
 - Apply to this doctrine: this grounds `Pattern Lifecycle Staging` in `SKILL.md`. Adopt the ring discipline, active rejection, and periodic prune-and-promote review.
 - Anti-pattern: catalogs that grow monotonically without periodic prune-and-promote review degrade into noise rather than evidence.
 - Reject log: ThoughtWorks quadrant structure and committee process are domain-specific to enterprise technology selection. The team evolves doctrine through team-lead, lane interaction, and governance review rather than a periodic in-person committee.
@@ -66,8 +66,8 @@ The reference families converge on three meta-strengthenings integrated into `SK
 - Fowler test-double taxonomy can add vocabulary-precision rules to the text-document modality glossary.
 - Google SMURF size-vs-scope and hermeticity-vs-fidelity can deepen verification-methodology synthesis.
 - NN/g diversity-not-N can strengthen multi-source corroboration with same-source-family discounting.
-- ThoughtWorks cadence can inspire "every Nth benchmark-simulation invocation triggers stale-pattern review"; N is a doctrine-design decision, not evidence-driven.
+- ThoughtWorks cadence can inspire "every Nth benchmark-simulation invocation triggers stale-pattern review"; N is a doctrine-design decision, not evidence-based.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return accepted source families, rejected local details, abstracted principles, and open evidence surfaces to the active benchmark-simulation workflow.
 - If a cached principle affects doctrine, verification method, or acceptance strength, route the cited delta through the owning change path before promotion.

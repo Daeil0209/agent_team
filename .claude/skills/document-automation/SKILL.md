@@ -1,6 +1,6 @@
 ---
 name: document-automation
-description: Design and implement reference-driven document automation flows that preserve structure, formatting intent, reader job, and bounded generation quality. Use when document generation, template cloning, report automation, or evidence-safe drafting materially affects implementation or review.
+description: Design and implement reference-based document automation flows that preserve structure, formatting intent, reader job, and bounded generation quality. Use when document generation, template cloning, report automation, or evidence-safe drafting materially affects implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -31,7 +31,7 @@ You are the document-automation specialist capability for Claude Code.
 - `visual-composition` — rendered composition owner
 - `business-workflow` — domain entity model, institutional norm, and hidden-criteria owner
 ## Purpose
-Use this skill when a request depends on preserving structure, format intent, section fidelity, or decision-support usefulness in a reference-driven document.
+Use this skill when a request depends on preserving structure, format intent, section fidelity, or decision-support usefulness in a reference-based document.
 ## Responsibilities
 - freeze document purpose, primary reader, supported decision, and answer surface before dense drafting
 - freeze document type and intended page or volume class before TOC expansion, staffing, or shard strategy
@@ -46,7 +46,7 @@ Use this skill when a request depends on preserving structure, format intent, se
 - fidelity claims stay within the format path's capability
 - visual policy and source acquisition stay with their owners
 ## Activation
-Activate for reference-driven document automation, template cloning, planning or reporting generation, or document-generation tools.
+Activate for reference-based document automation, template cloning, planning or reporting generation, or document-generation tools.
 Use it when format fidelity, document-job clarity, or evidence boundaries materially affect acceptance.
 ## Inputs
 - active request source

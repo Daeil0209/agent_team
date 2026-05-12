@@ -13,7 +13,7 @@ auto-inject: false
 - `BENCHMARK-PROVENANCE: simulator-only` or `CROSS-CHECK-STATUS: simulator-unconfirmed` is still a benchmark-stage `HOLD`, not edit authorization.
 - When a self-growth round claims advancement, keep the current readiness label, visible evidence delta, throughput or neighbor-regression visibility, and follow-on optimization closure explicit in the active sequence packet before the round is handed back for lead judgment.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Benchmark-proven deficiency opens modification proposal.
 - Simulator-only or unconfirmed cross-check opens `HOLD`.
 - Concrete modification proposal opens pre-edit loss-risk gate.

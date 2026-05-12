@@ -26,7 +26,7 @@ Before declaring a self-growth round complete, keep all of the following explici
 
 If one of these remains false, the self-growth round is not closed cleanly.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Justified user correction opens immediate classification.
 - Self-detected behavioral defect opens self-growth classification.
 - Repeated missed-catch opens deeper hardening route.

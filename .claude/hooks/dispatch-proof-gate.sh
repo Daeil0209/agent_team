@@ -380,7 +380,7 @@ if [[ "$TOOL_NAME" == "SendMessage" ]] \
     if [[ -z "$target_label" || "$target_label" == "unknown" ]]; then
       target_label="${AGENT_NAME:-target}"
     fi
-    emit_channel_clarity_warning "$(dispatch_proof_note "free-form SendMessage reads as assignment-grade lane work for ${target_label} without the assignment packet floor" "prefer a structured assignment packet with MESSAGE-CLASS, WORK-SURFACE, CURRENT-PHASE, REQUIRED-SKILLS, and lane-specific fields; use MESSAGE-CLASS: status, phase-transition-control, or lifecycle-control for non-assignment channel traffic")"
+    emit_channel_clarity_warning "$(dispatch_proof_note "free-form SendMessage reads as assignment-grade lane work for ${target_label} without the assignment packet floor" "send a structured assignment packet with MESSAGE-CLASS, WORK-SURFACE, CURRENT-PHASE, REQUIRED-SKILLS, and lane-specific fields; use MESSAGE-CLASS: status, phase-transition-control, or lifecycle-control for non-assignment channel traffic")"
     exit 0
   fi
   exit 0

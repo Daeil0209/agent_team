@@ -19,7 +19,7 @@ auto-inject: false
 - Benchmark-Enhanced Search Fields
 - Operational Reality Classification
 - Researcher Handoff Detail
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Auto-inject
 false — load explicitly when packet detail, benchmark detail, evidence-hardening detail, or handoff detail is needed.
@@ -37,7 +37,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control. Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material; shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Researcher Packet Detail
-- Consequential researcher packets should keep these fields explicit:
+- Consequential researcher packets keep these fields explicit:
   - `QUESTION-BOUNDARY`
   - `OUTPUT-SURFACE`
   - `RESEARCH-MODE`
@@ -106,9 +106,9 @@ Upward assertion must name:
 
 ## Surface-Specific Evidence Requirements
 - Visual, structural, interaction, and UX decision targets require rendered or multi-modal evidence. Text-only synthesis is a methodology defect unless the visual surface is explicitly unavailable and the handoff downgrades confidence.
-- Multi-modal evidence may include image or screenshot capture, layout extraction, quantitative measurement of font, image, whitespace, table form, color, spacing, or typography signals, and rendered page or artifact observation.
+- Multi-modal evidence includes image or screenshot capture, layout extraction, quantitative measurement of font, image, whitespace, table form, color, spacing, or typography signals, and rendered page or artifact observation when material.
 - If researcher cannot obtain the required rendered or multi-modal evidence with its toolset, it must run bounded tool-selection research when current tools can lawfully inspect or search candidate options.
-- The upward request must name: missing evidence surface; required capability; current toolset limit; candidate tools considered; recommended tool or program; fit rationale; why text-only evidence is invalid; smallest truthful evidence boundary; recommended setup owner or packet correction.
+- The upward request must name: missing evidence surface; required capability; current toolset limit; candidate tools considered; selected tool or program candidate; fit rationale; why text-only evidence is invalid; smallest truthful evidence boundary; setup owner candidate or packet correction.
 - Methodology, governance-hardening, and evolving best-practice decision targets require external authoritative evidence or benchmark synthesis unless infeasible. If infeasible, name the deferral basis and mark the claim as lower confidence.
 - Use `.claude/skills/benchmark-simulation/references/observation-protocol.md` when per-modality discipline is needed.
 
@@ -128,17 +128,17 @@ Required classes for governance, process, or runtime-policy critique:
 - `observed-operational-friction`
 - `static-contradiction`
 - `theoretical-risk`
-Severity should follow the evidence class. Do not promote static or theoretical issues into runtime-break claims without stronger evidence.
+Severity follows the evidence class. Do not promote static or theoretical issues into runtime-break claims without stronger evidence.
 
 ## Researcher Handoff Detail
-- For request-bound document work, state what downstream drafting can start immediately from current evidence, what remains uncertain, and what extra research is optional versus blocking.
+- For request-bound document work, state what downstream drafting can start immediately from current evidence, what remains uncertain, and what extra research is non-blocking versus blocking.
 - If packet formatting instructions suppress the mandatory evidence contract, use `hold|blocker` and name the packet-format conflict in `OPEN-SURFACES`.
 - For artifact, governance, program, report, or document critique, include the target intent that made the evidence relevant.
 - If the handoff proposes removal, reduction, simplification, or optimization, satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Keep the handoff teammate-efficient: concrete evidence anchors, decision-ready conclusions, smallest useful unblock step.
 - For benchmark-perspective work, include `COMPARISON-FRAME`, `QUERY-LEDGER-SUMMARY`, `SOURCE-FAMILY-COVERAGE`, `TRIANGULATION-STATUS`, `STOPPING-RULE`, `UNVERIFIED-CLAIMS`, and `DOWNSTREAM-BENCHMARK-NEEDS`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `execute` opens researcher-owned evidence work.
 - `reconstruct-with-inference` opens researcher-owned evidence work with marked inference.
 - `scope-pressure` opens team-lead packet correction, tool-selection research routing, owner split, or replanning.

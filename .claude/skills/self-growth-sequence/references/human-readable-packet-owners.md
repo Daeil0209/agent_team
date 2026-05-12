@@ -6,7 +6,7 @@ LOAD-POLICY: on-demand reference only
 auto-inject: false
 
 For `developer` governance-modification execution, keep the governance packet readable here as the semantic packet owner only after required researcher/reviewer audit or review basis is supplied.
-Runtime hooks and dispatch gates may enforce adjacent discipline, but this catalog controls semantic completeness.
+Runtime hooks and dispatch gates can enforce adjacent discipline, but this catalog controls semantic completeness.
 Audit, review, proof, validation, routing, and acceptance ownership stay on their governing owners.
 Developer dispatch-field baseline lives in `.claude/skills/developer/references/developer-lane-detail.md` `Required Dispatch Packet Fields`.
 
@@ -30,7 +30,7 @@ Current solution-development packet surface:
 - when `ROOT-CAUSE-BASIS: hypothesis|unknown`, also keep `COMPETING-HYPOTHESES`
 - when `SELECTED-SCOPE: staged-class-fix`, also keep `FOLLOW-UP-OWNER`
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete governance packet surface opens developer governance-modification execution.
 - Missing researcher/reviewer audit or review basis opens the required evidence owner.
 - Complete solution-development packet surface opens consequential solution work.

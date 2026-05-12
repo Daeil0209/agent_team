@@ -67,14 +67,14 @@ Target-resolution preflight is mandatory before the tool call:
 ## Partial Parallel Failure Recovery
 When N parallel dispatches are attempted and M succeed while K fail before agent-start (Agent spawn failure, missing receipt, no-start receipt, or packet rejection), recover K without stopping M.
 
-The failed K may be retried or reassigned to surviving M without reopening `work-planning` only when all hold:
+The failed K is retried or reassigned to surviving M without reopening `work-planning` only when all hold:
 - `AGENT-MAP`, `PARALLEL-GROUPS` independence, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof separation are unchanged.
 - The failure happened before agent-start evidence on the failed K.
 - Surviving M can truthfully cover failed K's surface without packet shape change.
 
 Otherwise reopen `work-planning` for redistribution per `CLAUDE.md` Communication And Reporting Law single-agent-collapse rule.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Valid runtime creation, lane dispatch, or reuse returns to `task-execution` Step 3 Dispatch Truth.
 - Required new team runtime opens `TeamCreate` through `task-execution`.
 - Current-session runtime recovery opens `session-boot`.

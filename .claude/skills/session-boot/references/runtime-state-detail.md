@@ -27,19 +27,19 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 - Proactive Team-Composition Reassessment
 - Stall-Without-Progress Rule
 - Agent Lifecycle Rules
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Boot Window And Startup Rules
 - `Boot Sequence` is first for lead-session boot; its team-agent runtime branch is only for explicit runtime readiness, recovery, or entry gating.
 - Runtime-entry `TeamCreate`, team-scoped agent launch, and assignment-grade reuse are `task-execution` moves after `work-planning`. Standalone `Agent` is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to decide runtime entry.
 - No production fan-out before boot closes.
-- Prefer current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs. Do not use legacy continuity snapshot files as continuity truth.
-- Fresh-task isolation stays active during startup. Inherited continuity may reveal blockers or residue, but it does not reopen prior goals by habit.
+- Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs. Do not use legacy continuity snapshot files as continuity truth.
+- Fresh-task isolation stays active during startup. Inherited continuity can reveal blockers or residue, but it does not reopen prior goals by habit.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
 
 ## Session-Start Recovery
-- `Session-Start Sequence` always runs; `Boot Sequence` is the optional explicit-runtime branch on top.
+- `Session-Start Sequence` always runs; `Boot Sequence` is the conditional explicit-runtime branch on top.
 - Shared continuity read is reused when both run.
 - Default startup scope is narrow: continuity, active root, runtime need, then stop unless contradiction or current request demands more.
 - If explicit team-agent runtime becomes necessary later, re-enter through the runtime-entry gate, then return to `task-execution` for any assignment-grade `TeamCreate` or agent fan-out instead of improvising fan-out.
@@ -57,7 +57,7 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 
 Current-runtime monitoring or recovery is materially active when workspace-root `.runtime/procedure-state.json` has `teamRuntimeState: active` and any agent has live, standby, hold, stale, unresolved startup, stale dispatch, recovery, or monitoring state that could affect the next consequential step.
 
-The `session-start.sh` hook may detect active runtime from a runtime snapshot, but it does not auto-load this skill. Hook observation is evidence only; it never replaces `team-lead`'s duty to enter `session-boot` when the active-runtime condition holds.
+The `session-start.sh` hook can detect active runtime from a runtime snapshot, but it does not auto-load this skill. Hook observation is evidence only; it never replaces `team-lead`'s duty to enter `session-boot` when the active-runtime condition holds.
 
 Failure to enter `session-boot` when the condition holds is a procedure violation. It suppresses `Monitoring Sequence` proactive team-composition reassessment and can allow ghost agents, stale agents, idle holds, or missing-handoff agents to accumulate without lifecycle-control release.
 
@@ -98,7 +98,7 @@ Rules:
 - During active runtime, `session-boot` owns lifecycle interpretation and lifecycle-control need after completion-grade output when no new assignment-grade packet is being sent.
 - `assignment` and `reuse` return an agent to `ACTIVE`.
 - Teammate population changes only on creation and confirmed shutdown/removal.
-- Closeout exception: session teardown may use the narrow closeout shutdown path from `session-closeout`.
+- Closeout exception: session teardown uses the narrow closeout shutdown path from `session-closeout`.
 
 ## Reuse Rule
 - New dispatch rebuilds context.
@@ -108,7 +108,7 @@ Rules:
 - Cron-backed health monitoring runs only when a tracked health-check cron is actually active.
 - Team-agent runtime requires tracked health monitoring before team-scoped agent launch when hook policy enforces it.
 - Team existence alone is not team-scoped launch readiness when health monitoring is required by hook policy.
-- Standalone `Agent` calls are synchronous host calls outside team-agent runtime; they do not create live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, or health-cron duty. They may support fallback evidence only when the route truth allows non-runtime evidence.
+- Standalone `Agent` calls are synchronous host calls outside team-agent runtime; they do not create live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, or health-cron duty. They support fallback evidence only when the route truth allows non-runtime evidence.
 - Literal cadence and stale thresholds belong to `.claude/hooks/lib/hook-policy.sh`; do not restate numeric values here.
 - Direct oversight remains primary even without cron-backed monitoring.
 - Team existence and team activity are separate questions.
@@ -179,7 +179,7 @@ Canonical evidence mapping:
 - explicit lifecycle-control message -> authoritative lead decision for non-terminating lifecycle edges; shutdown intent becomes authoritative only through structured `shutdown_request`
 
 ## Hook-Maintained Ledger Surfaces
-These are hook-maintained mirrors, not alternate semantic owners. They may corroborate the runtime-truth ladder above; they must not invent competing lifecycle vocabulary, and absence of a ledger entry is not evidence by itself.
+These are hook-maintained mirrors, not alternate semantic owners. They can corroborate the runtime-truth ladder above; they must not invent competing lifecycle vocabulary, and absence of a ledger entry is not evidence by itself.
 
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
@@ -196,11 +196,11 @@ The canonical hook-policy ownership for these ledger surfaces lives in `.claude/
 ## Workflow Continuity Bridge
 - `session-boot` observes runtime for active workflows; it does not own workflow progression.
 - `team-lead` plus the active workflow owner still own phase advancement, checkpoint resolution, redistribution, synthesis, and completion claims.
-- Runtime observation may sharpen agent-start evidence, lifecycle evidence, stale/ghost classification, and bottleneck observation.
+- Runtime observation sharpens agent-start evidence, lifecycle evidence, stale/ghost classification, and bottleneck observation when material.
 - If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or `HOLD`.
 
 ## Proactive Team-Composition Reassessment
-At phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work may reuse, release, redistribute, or reassign active or standby agents.
+At phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work can reuse, release, redistribute, or reassign active or standby agents.
 Synthesis is a trigger test for material team-composition risk, not automatic reassessment ceremony.
 
 Required reassessment questions:
@@ -244,12 +244,12 @@ Non-destructive runtime recovery is team-lead owned.
 Do not ask the user to choose among routine nudge, replacement, redistribution, or shutdown of stalled teammates.
 
 ## Agent Lifecycle Rules
-- Prefer shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.
-- Prefer standby when near-term reuse is concrete and context reuse is still valuable.
+- Choose shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.
+- Choose standby when near-term reuse is concrete and context reuse is still valuable.
 - Do not bypass runtime-capacity or overlap guards by forcing new fan-out while pressure or orphan residue remains unresolved.
 - Historical continuity artifacts are not automatic shutdown targets.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Runtime-ready state returns to the frozen next owner/action.
 - Team-runtime creation need opens `task-execution`.
 - Runtime recovery need opens `session-boot` recovery.

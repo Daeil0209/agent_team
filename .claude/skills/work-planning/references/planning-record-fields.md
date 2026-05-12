@@ -12,7 +12,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 ## Contents
 - Allowed Values
 - Internal Planning Record Template
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Allowed Values
 - `ACTION-CLASS` must be one of `lead-local`, `team-routed`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
@@ -41,18 +41,18 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `LEAD-LOCAL-REQUIRED-SKILLS` is mandatory when `ROUTING-SIGNAL` is `lead-local candidate` and the acting subject needs any non-owner skill to complete the frozen local path truthfully.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when routing is team-routed or becomes team-routed after one named blocker-clear move.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when additional-agent routing is host-authorized.
-- When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` may consume the route, record `not-applicable:<basis>` instead of leaving the field blank.
+- When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` consumes the route, record `not-applicable:<basis>` instead of leaving the field blank.
 - Valid `not-applicable` bases are limited to the current route basis. Do not use `not-applicable` to hide missing decomposition or missing readiness.
 - `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route.
 - Every lane entry records non-lane-core skills frozen as required for credible execution.
 - Use `[]` to record absence of required non-lane-core skills.
 - Lane ownership triggers lane-core skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
-- Methodology-only suggestions go to `SKILL-RECOMMENDATIONS`.
+- Methodology-only entries go to `SKILL-RECOMMENDATIONS`.
 - `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology guidance map when any configured lane is a candidate receiver for assignment-grade work.
 - `SKILL-RECOMMENDATIONS` carries methodology guidance only.
 - `SKILL-RECOMMENDATIONS` preserves the receiving lane's work-surface selection.
 - The receiving lane classifies each carried recommendation as applied, not-material, or blocked under `Skill Loading`.
-- Deliverable trigger-flag analysis drives `LANE-REQUIRED-SKILLS-MAP` and `LEAD-LOCAL-REQUIRED-SKILLS` skill freezes:
+- Deliverable trigger-flag analysis determines `LANE-REQUIRED-SKILLS-MAP` and `LEAD-LOCAL-REQUIRED-SKILLS` skill freezes:
 
 | trigger flag (set when frozen scope makes it material) | activates owner asset |
 |---|---|
@@ -63,10 +63,10 @@ Use this file when field-level semantics, allowed values, the internal planning 
 | learner-facing (audience must learn) | instructional-design for developer-owned content/design; learner-objective basis for review/proof/validation lanes |
 | logs-as-decisive-proof (frozen proof surface names logs) | log-based-qa for tester-owned proof |
 | software-cross-artifact-boundary (module / interface / state boundary) | software-architecture for developer-owned design/production |
-| generated-document-output (report / template / reference-driven document) | document-automation for developer-owned generation/design |
+| generated-document-output (report / template / reference-based document) | document-automation for developer-owned generation/design |
 | knowledge-analysis-output (market / technology / patent / literature / standards analysis supports a decision, report, or downstream artifact) | researcher for source-family method and evidence packet; document-automation when a reader-facing report or generated document is produced |
 | evidence-bound-generation-program (program ingests sources and generates reports, analyses, or decision artifacts) | researcher evidence schema + document-automation generation contract + software-architecture implementation contract |
-| engineering-calculation-or-design-tool (formula, standard, unit, tolerance, or operating-condition correctness drives acceptance) | engineering-grounding and mathematical-correctness for developer-owned design/production; oracle basis for review, proof, and validation lanes |
+| engineering-calculation-or-design-tool (formula, standard, unit, tolerance, or operating-condition correctness determines acceptance) | engineering-grounding and mathematical-correctness for developer-owned design/production; oracle basis for review, proof, and validation lanes |
 | receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned producer self-review and reviewer-owned clarity review |
 | executable-on-receiver-runtime (deliverable runs on operator's actual environment) | operator-delivery reference (loaded by dev-workflow at Phase 1/2/4/5) |
 
@@ -85,13 +85,13 @@ Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, lifecycle, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
 - `CODEX-ADVISORY-BASIS` is mandatory for consequential `team-lead` plans after Codex trigger evaluation. It records team-lead trigger handling, adjudication, or fail-open truth, not Codex authority. Use `triggered:*` when advisory points were adjudicated, `fail-open:*` when a required or triggered attempt could not complete, and `skipped:*` only when no trigger applies. If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>`; advisory access failure is `fail-open:*` and is not a blocker by itself.
-- For any route that may enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
+- For any route eligible to enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or SV-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
 - `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `task-execution`, exact blocker-clear move, or exact authorization request, not an implied "inspect more".
 - If execution reveals a new consequential local item that is not frozen here, stop and reopen `work-planning`.
-- A bounded correction may stay inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
+- A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
 - That bounded correction exception ends immediately when execution reveals a moved `work-planning` boundary-change axis or route ambiguity.
 - Do not treat the full planning record as the outbound agent message. Downstream agent communication must receive a bounded assignment packet derived from this freeze by `task-execution`.
 
@@ -122,7 +122,7 @@ NEXT-CONSEQUENTIAL-ACTION:
 DISPATCH-BLOCKERS:
 ```
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete planning record opens `NEXT-CONSEQUENTIAL-ACTION`.
 - `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner.
 - Team-routed ready basis opens `task-execution`.

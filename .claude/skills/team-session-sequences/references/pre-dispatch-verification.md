@@ -26,15 +26,15 @@ Dispatch readiness coverage that must be preserved by those owners:
 7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless `HOLD`.
 
 Risk-tier record rule:
-- Low-risk bounded inspection may satisfy the index through goal alignment plus prior-analysis handoff when no other item is material.
+- Low-risk bounded inspection satisfies the index through goal alignment plus prior-analysis handoff when no other item is material.
 - Medium-risk dispatch requires all material items to be present in the frozen readiness or packet basis.
-- High-risk dispatch, including governance changes, architecture, deletion, or high-acceptance-risk work, records the readiness basis explicitly in `EXECUTION-READINESS-BASIS`; the dispatch packet may only carry or cite that basis.
-- Runtime-protection emergencies may abbreviate only under the owning runtime policy, and the abbreviated basis must still be recorded.
+- High-risk dispatch, including governance changes, architecture, deletion, or high-acceptance-risk work, records the readiness basis explicitly in `EXECUTION-READINESS-BASIS`; the dispatch packet carries or cites that basis only.
+- Runtime-protection emergencies abbreviate only under the owning runtime policy, and the abbreviated basis must still be recorded.
 
 Do not require a separate seven-question pre-dispatch checklist from `team-session-sequences`.
 If readiness or packet basis is missing, use the canonical owner result: `packet-correction`, `route-replan`, `parallel-continue`, blocker-clear, or `HOLD`.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Complete readiness index returns to `task-execution` packet preflight or dispatch.
 - Missing planning readiness opens `work-planning`.
 - Missing packet basis opens `packet-correction`.

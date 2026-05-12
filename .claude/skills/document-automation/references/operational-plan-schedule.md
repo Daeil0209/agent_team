@@ -28,6 +28,6 @@ Use when the document is an operational plan, schedule, timetable, resource plan
 - Multi-purpose schedules require explicit priority ranking among purpose types.
 - Missing priority ranking in a multi-purpose schedule is a structural defect.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - Return schedule mode, representation choice, feasibility findings, buffer logic, acceptance priority, and purpose-priority ranking to the active document-automation workflow.
 - If feasibility fails, route the exact `HOLD` basis and smallest correcting owner before schedule generation continues.

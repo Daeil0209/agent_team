@@ -1,12 +1,12 @@
 ---
 name: self-verification
-description: Verify disputed frozen plans and phase/stage-end consequential results before analyzed-result reporting, completion claim, or redispatch. Use when SV-PLAN or SV-RESULT is triggered for consequential planning, reporting, completion, or synthesis-driven redispatch.
+description: Verify disputed frozen plans and phase/stage-end consequential results before analyzed-result reporting, completion claim, or redispatch. Use when SV-PLAN or SV-RESULT is triggered for consequential planning, reporting, completion, or synthesis-triggered redispatch.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Sharpens only its owned verification surface.
-- Fixed top-level section order after Structural Contract: Purpose, Reporting Principle, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Step 4, Step 5, Verification Output Format, Next-Action Drive.
+- Fixed top-level section order after Structural Contract: Purpose, Reporting Principle, Activation Trigger, Step 0, Step 1, Step 2, Step 3, Step 4, Step 5, Verification Output Format, Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
 - Step names: Choose Verification Mode And Target, Scope Match, Critical Challenge, Evidence Basis, Converge Or HOLD, Output Verified State.
 - PRIMARY-OWNER: team-lead
@@ -74,10 +74,20 @@ Profile-specific reference-use and citation discipline live in that reference.
 Keep the detailed trigger list in that reference.
 
 ## Step 1: Scope Match
-Check against frozen plan, `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, assignment packet fields, explicit user instruction, user philosophy, and active constraints.
+Check these frozen surfaces before challenge:
+- frozen plan
+- `REQUEST-FIT-BASIS`
+- `SEMANTIC-INTENT-BASIS`
+- material `TARGET-INTENT-BASIS`
+- `REQUEST-BOUND-PACKET-FIELDS`
+- assignment packet fields
+- explicit user instruction
+- user philosophy
+- active constraints
 
 Fail when the target:
 - widens scope, drops a stated priority, weakens a user constraint, ignores failure-history cues, or departs from the frozen deliverable
+- omits, contradicts, or replaces frozen semantic intent with literal wording, target purpose alone, or local convenience
 - treats progress, dispatch, receipt, status, or partial runtime signal as completion
 - uses phase-local skill refinement to create a new lane, work surface, proof surface, acceptance owner, or hidden route
 - changes doctrine, skills, agents, hooks, code, configs, or references without preserving declared design intent
@@ -90,14 +100,18 @@ Ask the mode question:
 - `SV-RESULT`: is the result actually verified at the claim strength being used?
 
 Compact challenge that always applies:
-- request-fit: would this satisfy the user's request if read literally?
+- request-fit: did the target satisfy the explicit user instruction?
+- semantic-fit: did the target preserve the frozen `SEMANTIC-INTENT-BASIS`, user anti-goal, priority order, and material `TARGET-INTENT-BASIS`?
+- deliverable-fit: did the target satisfy the frozen deliverable and acceptance surface?
 - continuity: did same-session corrections, patches, recurrence barriers, and active doctrine govern this claim?
 - claim/evidence: what exact claim is made?
 - claim/evidence: what supports it?
 - claim/evidence: what would defeat it?
 - claim/evidence: what remains uncertain?
 - counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
-- defect-label: if the claim names a defect or patch recommendation, which owner had authority to classify it, what protected function would correction or removal lose, and why are `protected-restatement`, `design-tradeoff`, and `non-issue` classifications rejected?
+- defect-label: if the claim names a defect or patch recommendation, identify the owner with classification authority.
+- defect-label: identify the protected function that correction or removal could lose.
+- defect-label: reject `protected-restatement`, `design-tradeoff`, and `non-issue` classifications with evidence.
 - owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
 
 `anti-self-certification`:
@@ -114,7 +128,9 @@ Rules:
 - synthesized outputs require reconciled verification for stronger claims
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
-- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` and `completion-handoff.md` common finding basis before promoting any item to `confirmed-defect`; if proof that correction will not remove a stronger protected function is missing, report the item as candidate evidence, `risk-hypothesis`, `design-tradeoff`, `protected-restatement`, `non-issue`, or `UNVERIFIED` instead of patch authorization.
+- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` and `completion-handoff.md` common finding basis before promoting any item to `confirmed-defect`.
+- Promote an item to `confirmed-defect` only when correction will not remove a stronger protected function.
+- If that proof is missing, report the item as candidate evidence, `risk-hypothesis`, `design-tradeoff`, `protected-restatement`, `non-issue`, or `UNVERIFIED` instead of patch authorization.
 - Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.
 - Apply detailed SV-PLAN reject conditions per `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and detailed SV-RESULT verification per `## SV-RESULT Detailed Gate`.
 - If final prose outruns the verified surface, reset `SV-RESULT`.
@@ -162,7 +178,7 @@ UNVERIFIED-ITEMS:
 HOLD-REASON:
 ```
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `SV-PLAN: proceed-local` opens the frozen local action.
 - `SV-PLAN: open-task-execution` opens `task-execution`.
 - `SV-PLAN: clear-blocker` opens the named blocker-clear move.

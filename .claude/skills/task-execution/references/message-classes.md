@@ -10,7 +10,7 @@ LOAD-POLICY: on-demand reference only
 - Common Message Law
 - Canonical Channel Registry
 - Upward Message Classes
-- Next-Action Drive
+- Resolve Next Owner And Action
 
 ## Common Message Law
 - `work-planning` produces the full frozen plan internally.
@@ -42,7 +42,7 @@ Task tools are task-state channels.
 Agent communication uses `SendMessage` or Claude Code teammate UI.
 Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
 `TaskCreate` requires top-level non-empty `subject` and `description`.
-Prefer `Read` on the background task output path when the runtime provides that path.
+Use `Read` on the background task output path when the runtime provides that path.
 Blocked reports use exact literal `MESSAGE-CLASS: hold|blocker`.
 Hooks and ledgers observe, gate, or record channel truth.
 The owning message class, packet, handoff, or lifecycle payload remains decisive over hook and ledger observations.
@@ -81,7 +81,7 @@ Plain text in a pane is evidence only until resent through the required channel.
     - `PRESSURE-TYPE`
     - `WHY-CURRENT-PACKET-FAILS`
     - `SMALLEST-SAFE-BOUNDARY`
-    - `RECOMMENDED-NEXT-LANE`
+    - `LANE-NEXT-CANDIDATE`
     - `REPLAN-REQUIRED`
 - `handoff` / `completion`
   - completion-grade candidate only
@@ -118,7 +118,7 @@ Before any re-dispatch, synthesis, or positive report, team-lead must classify t
 
 Tool/evidence-gap consumption:
 - If the agent names a missing evidence surface, required tool, setup owner, or current-toolchain gap, team-lead resolves it through tool/setup research, setup owner routing, packet correction, or route replan.
-- A usable tool/evidence-gap request names the missing evidence surface, required capability, current toolset limit, candidate tools considered, recommended tool or program, fit rationale, why weaker evidence is invalid, smallest truthful boundary, and recommended setup owner or packet correction.
+- A usable tool/evidence-gap request names the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program candidate, fit rationale, why weaker evidence is invalid, smallest truthful boundary, and setup owner candidate or packet correction.
 - If those details are missing, team-lead must request a corrected blocker/pressure report, route bounded tool-selection research to `researcher`, or reopen `work-planning`.
 - Missing basis becomes explicit packet correction, route replan, or blocker truth.
 - A corrected packet is valid only when the same frozen route remains truthful and the missing setup/tool basis is explicit.
@@ -134,7 +134,7 @@ Valid resume routes are method research, setup/tool bridge, packet correction, o
 Then return the corrected executable path to developer.
 Treat the constraint report as a resume-route trigger until a genuine impossible or unsafe condition is proven.
 
-## Next-Action Drive
+## Resolve Next Owner And Action
 - `dispatch-ack` opens same-turn lane work.
 - Executable same-boundary packet correction opens corrected assignment messaging.
 - `scope-pressure` opens team-lead classification as `packet-correction`, `route-replan`, `parallel-continue`, or proven user-owned blocker.
@@ -144,4 +144,4 @@ Treat the constraint report as a resume-route trigger until a genuine impossible
 - `status` returns to monitoring or the active owner as progress evidence only.
 - Missing `TaskCreate` subject or description opens task packet correction.
 - Missing or stale task identity opens `TaskList`, `TaskGet`, `task_assignment`, or returned-mutation evidence recovery before task mutation.
-- Available background task output path opens `Read` as the preferred output-read channel.
+- Available background task output path opens `Read` as the output-read channel.
