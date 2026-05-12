@@ -204,7 +204,7 @@ Validator writes a correction packet with:
 - `REQUIRED-USER-SURFACE-EVIDENCE`
 - `REQUIRED-RETURN-EVIDENCE`
 - `REVALIDATION-TARGET`
-- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
+- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `.claude/skills/dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
 
 Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 

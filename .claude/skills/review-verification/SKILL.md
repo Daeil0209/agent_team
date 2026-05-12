@@ -156,6 +156,8 @@ Classify findings from owner semantics and operating effect.
 Treat matching labels or verdict-like words as evidence until owning authority and effect are proven.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm, correction ownership, and no stronger protected-function loss from the proposed correction.
 Classify deletion, non-enforcement, hook silence, runtime omission, heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence.
+Hook matcher burden requires a matched-tool side-effect map before defect classification.
+Silent ledgers, planning markers, SV markers, lifecycle markers, and recovery markers are protected functions until proven non-material.
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
 
 ### 5. Design Removal-First Patch

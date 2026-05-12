@@ -130,7 +130,7 @@ Branch rule:
 - new route, owner, or claim class reopens `work-planning`
 - if a branch requires new route judgment, new work surface decomposition, or changed ownership, reopen `work-planning` first
 ## Step 3: Dispatch Truth
-Follow `team-lead/references/output-surface-law.md`.
+Follow `.claude/skills/team-lead/references/output-surface-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
 Report only blocker, required user action, explicit status answer, next owner/action when blocked, or first `dispatch pending`.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.

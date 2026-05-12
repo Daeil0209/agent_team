@@ -100,7 +100,7 @@ When the lane claims user-surface proof or user-surface acceptance on an execute
   Cite the design-stated expectation each image proves.
   State the per-image visual verdict after opening the image directly via the multimodal `Read` tool.
   Each verdict is `matches-expectation`, `deviates:<concrete deviation>`, or `inconclusive:<reason>`.
-  `matches-expectation` requires per-axis inspection of all 7 axes per `dev-workflow/references/final-acceptance-review.md` §PROOF (font size, spacing, ratio, alignment, color, label clarity, glyph rendering); surface-level "visible/clean" verdict without coordinate/proportion/alignment inspection is silent-PASS defect.
+  `matches-expectation` requires per-axis inspection of all 7 axes per `.claude/skills/dev-workflow/references/final-acceptance-review.md` §PROOF (font size, spacing, ratio, alignment, color, label clarity, glyph rendering); surface-level "visible/clean" verdict without coordinate/proportion/alignment inspection is silent-PASS defect.
   `matches-expectation` proves only the captured visual state.
   Dynamic behavior still requires the relevant Evidence-Quality Matrix row plus executed user action and retained postcondition evidence.
   Cite-path-only or capture-without-open on AC-supporting evidence is procedural failure.

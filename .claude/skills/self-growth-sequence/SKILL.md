@@ -269,7 +269,7 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 ### Closure Standard
 - Self-growth is not closed while the recurrence path remains implicit.
 - If the recurrence path is known but cannot be patched immediately, keep the topic on `HOLD` with owner, blocked surface, and next safe execution boundary.
-- Self-growth closure requires recurrence-barrier basis, owner surface, and current verification basis; receipt/dispatch/load/status are non-closure evidence per `task-execution/references/truth-rules.md`.
+- Self-growth closure requires recurrence-barrier basis, owner surface, and current verification basis; receipt/dispatch/load/status are non-closure evidence per `.claude/skills/task-execution/references/truth-rules.md`.
 - Failed verification reopens the self-growth round at the smallest invalidated step.
 - Reconstruct when design intent was wrong.
 - Diagnose when causal basis was weak.

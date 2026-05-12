@@ -67,7 +67,7 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
 
 ## Communication Detail
 - Trigger: assignment vs workflow-control vs lifecycle-control vs completion class distinction, lifecycle-debt visibility, primary-downward-class limit on a single agent segment.
-- Owner: `references/communication-objections.md` plus `task-execution/references/{message-classes.md, truth-rules.md}`.
+- Owner: `references/communication-objections.md` plus `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
 
 ## Agent Objection Detailed Consume
 - Trigger: `hold|blocker` / `scope-pressure` arbitration, single-agent parallel collapse, boundary/owner/phase/proof/acceptance mismatch, `REPLAN-REQUIRED: yes`.
@@ -75,7 +75,7 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
 
 ## Synthesis Detail
 - Trigger: completion-grade `handoff`/`completion` synthesis, strengthened synthesis or redispatch needing `SV-RESULT`+`[DESIGN-INTENT]` fit, FAR `FINAL-REJECT` correction-packet consumption.
-- Owner: `references/synthesis-consume.md` plus `task-execution/references/completion-handoff.md`.
+- Owner: `references/synthesis-consume.md` plus `.claude/skills/task-execution/references/completion-handoff.md`.
 
 ## Reporting Detail
 - Trigger: phase/stage-end reporting requiring `SV-RESULT`, claim-strength narrowing to `INFERENCE/UNVERIFIED`, planning/dispatch/closeout reporting limits, internal-by-default scaffolding exposure on explicit request.

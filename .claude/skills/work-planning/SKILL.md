@@ -175,7 +175,7 @@ Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
-Follow `team-lead/references/output-surface-law.md`.
+Follow `.claude/skills/team-lead/references/output-surface-law.md`.
 Planning progress is silent while the next owner/action can run in the same segment.
 If execution is stopped, emit one plain line naming blocker, required user action, explicit status answer, or next owner/action.
 Keep the planning record internal.

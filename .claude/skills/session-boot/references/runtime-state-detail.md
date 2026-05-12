@@ -184,11 +184,11 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
 | `WORKER_REPORT_LEDGER` | agent-originated progress, handoff/completion-grade message receipt | absence is not handoff/completion absence; consult message body and lane evidence |
-| `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `task-execution/references/dispatch-recovery.md`, not silent stale classification |
+| `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification |
 | `IDLE_DECISION_PENDING_FILE` | `TeammateIdle` awaiting governing lifecycle-control decision | absence does not clear lifecycle obligation; explicit `lifecycle-control` message remains authority |
 | `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | absence is not active evidence; do not infer activity from missing idle marker |
 | `STANDBY_FILE` | acknowledged `standby` lifecycle decision | absence is not authority to skip standby decision |
-| `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence requires `TeamCreate` per `task-execution/references/runtime-dispatch-law.md` before team-scoped dispatch |
+| `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence requires `TeamCreate` per `.claude/skills/task-execution/references/runtime-dispatch-law.md` before team-scoped dispatch |
 | `KILL_LIST` | observed teardown intent on listed agents | absence is not agent-still-live evidence; consult live process-backed roster |
 
 The canonical hook-policy ownership for these ledger surfaces lives in `.claude/hooks/MANIFEST.md`.
@@ -214,7 +214,7 @@ Downstream-phase prep examples include tester scenario design plus test-infrastr
 
 Rules:
 - Phase boundaries gate execution, not prep.
-- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the lifecycle gate from `task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
+- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the lifecycle gate from `.claude/skills/task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
 - Producer-lane agents on a surface still inside the active validation chain (review → test → validate) hold via `standby` or `hold-for-validation` until the chain reaches ACCEPT.
 - Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.

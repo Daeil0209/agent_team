@@ -32,7 +32,7 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 3. Narrow matcher: the hook triggers only on the smallest event/tool/path/message class that can catch the failure.
 4. Recovery path: a lawful next owner or retry path is stated; a blocked user/agent is not left guessing.
 5. False-positive review: known legitimate actions that might be blocked are listed, exempted, downgraded to silent tracking, or explicitly accepted as risk.
-6. Footprint review: record affected hook event, matcher count, script size trend, and whether the change adds latency to high-frequency tool paths.
+6. Footprint review: record affected hook event, matcher count, script size trend, matched-tool side-effect map, and whether the change adds latency to high-frequency tool paths.
 
 If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 
@@ -46,6 +46,9 @@ Rules:
 - Treat missing itemized ledger records as `UNVERIFIED`.
 - Claim current hook density improvement only from measured latency, context, or runtime evidence.
 - When a broad hook blocks a legitimate lane action, classify over-broad blocking as a defect and repair the narrowest owner surface before adding hook logic.
+- Before narrowing an existing matcher, prove every removed tool lacks protected side effects.
+- Removed warning code does not prove the matcher is dead.
+- A matcher that writes protected ledgers or sequence markers is not removable by footprint argument alone.
 - Reduce footprint by removing, merging, narrowing, or downgrading existing hook work before adding hook work.
 
 ## Runtime Footprint Claims

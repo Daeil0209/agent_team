@@ -121,7 +121,7 @@ Source: https://code.claude.com/docs/en/settings
 
 Cached facts:
 - `CLAUDE.md` and auto memory are context, not enforced configuration.
-- Project instructions live at `./CLAUDE.md` or `./.claude/CLAUDE.md`; `AGENTS.md` is not read unless imported from `CLAUDE.md`.
+- Project instructions live at `./CLAUDE.md` or `./.claude/CLAUDE.md`.
 - Long `CLAUDE.md` files consume context and reduce adherence; official guidance favors concise, specific, structured instructions.
 - Official troubleshooting says `CLAUDE.md` files over 200 lines can reduce adherence.
 - `.claude/rules/` can split instructions and scope them to paths.
