@@ -37,7 +37,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 ## Required Dispatch Packet Fields
 | Work Type | Required Fields |
 |-----------|----------------|
-| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when multiple promised surfaces exist; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
+| All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when one or more completion-critical promised surfaces exist; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Active `dev-workflow` Phase 3+ supporting plan/design sub-artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, and `SCOPE-BASELINE`/`ACTIVE-SLICE` when the artifact freezes or changes multi-surface scope |
 | Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Meaningful/high/critical risk | explicit acceptance pipeline: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator` |
@@ -55,7 +55,7 @@ Minimum decisive production basis:
 - `PLAN-STEP`
 - `CHANGE-SPEC`
 - `CHANGE-BOUNDARY`
-- `DONE-CONDITION`
+- `DONE-CONDITION`, naming the frozen deliverable, user-ready delivery chain, material closure or evidence rows, and open-surface/defer basis needed before producer completion
 - `WRITE-SCOPE` when any file mutation is path-bounded
 - `REQUIRED-SKILLS`
 - `ACCEPTANCE-RISK`
@@ -65,7 +65,7 @@ Minimum decisive production basis:
 - `AGENT-FIT`
 - `SCOPE-MATCH`
 - `PRIOR-ANALYSIS`
-- `SCOPE-BASELINE` and `ACTIVE-SLICE` when multiple promised features, workflows, surfaces, or controls exist
+- `SCOPE-BASELINE` and `ACTIVE-SLICE` when one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes exist
 - user-facing surface when it materially affects production; for executable surfaces, include launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start, shutdown/cleanup, and clean-relaunch production basis
 - first lane action
 - stop condition
@@ -74,7 +74,7 @@ Decision table:
 | State | Condition | Action |
 |---|---|---|
 | `execute` | Decisive basis is explicit, bounded, and owner-consistent | Proceed through workflow |
-| `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, or write scope | Reconstruct explicitly, mark inference, then proceed |
+| `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle | Reconstruct explicitly, mark inference, then proceed |
 | `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles review/proof/validation into production | Stop the unsafe path; send pressure to `team-lead` via `SendMessage` with smallest truthful production boundary and next executable step |
 | `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis and what is needed to resume |
 

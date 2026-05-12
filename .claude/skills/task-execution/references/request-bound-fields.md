@@ -51,17 +51,22 @@ Governance analysis uses governance design intent.
 Program work uses program intent and user-workflow intent.
 Report and document work use reader, question, conclusion, evidence, and action intent.
 Review, proof, validation, and completion work use the target intent that defines fit and closure.
-If this basis is safely inferable from the request, plan, design, Structural Contract, cited artifact, or frozen scope, mark it as `INFERENCE` and proceed.
+If this basis is safely inferable from the request, plan, design, Structural Contract, cited artifact, or frozen scope without inventing scope, closure rows, disposition paths, consumer/recompute paths, source authority, display-only basis, or acceptance oracle, mark it as `INFERENCE` and proceed.
 If the basis is not safely inferable, use `scope-pressure` or `hold|blocker`.
 `TARGET-INTENT-BASIS` states protected purpose and user outcome.
 Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.
 
-When a frozen plan, MVP, release, or phase scope contains multiple promised features, workflows, surfaces, or controls, completion-critical lane packets must also carry:
+When a frozen plan, MVP, release, or phase scope contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, completion-critical lane packets must also carry:
 - `SCOPE-BASELINE`
 - `ACTIVE-SLICE`
 - `DEFERRED-SURFACES`
 
-`SCOPE-BASELINE` is the authoritative in-scope list. `ACTIVE-SLICE` is the subset assigned in the current packet. `DEFERRED-SURFACES` is valid only when original frozen request/plan/design explicitly deferred or excluded those items; an unimplemented baseline item remains open, not out-of-scope by dispatch.
+`SCOPE-BASELINE` is the authoritative in-scope list at proofable row granularity.
+Each baseline row names a feature, workflow, surface, control, data, artifact, or reader/operator expectation that can be mapped to evidence.
+Module, epic, or screen labels are parent headings only.
+`ACTIVE-SLICE` is the subset assigned in the current packet.
+`DEFERRED-SURFACES` is valid only when original frozen request/plan/design explicitly deferred or excluded those row-granular items.
+An unimplemented baseline item remains open, not out-of-scope by dispatch.
 
 When exact instruction wording materially affects acceptance, decision-fit, or request-fit review, the packet must additionally carry:
 - `USER-INSTRUCTION-VERBATIM`

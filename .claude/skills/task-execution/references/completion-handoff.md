@@ -40,7 +40,7 @@ When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENC
 Conversation-only output is valid only when the packet names conversation as the output surface.
 
 `TARGET-INTENT-BASIS` names the governance, program, report, document, review, proof, or validation purpose that controlled the work.
-Use `INFERENCE` when reconstructed safely from request, plan, design, Structural Contract, cited artifact, or frozen scope.
+Use `INFERENCE` only when reconstructed safely from request, plan, design, Structural Contract, cited artifact, or frozen scope without inventing scope, closure rows, disposition paths, consumer/recompute paths, source authority, display-only basis, or acceptance oracle.
 Use concrete task, artifact, expectation, evidence, and next-owner wording.
 Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.

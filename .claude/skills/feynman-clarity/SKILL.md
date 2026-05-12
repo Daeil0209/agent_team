@@ -120,7 +120,7 @@ Required fields:
 - `RESIDUAL-RISK`
 
 Use `none` only after checking the field.
-Use `INFERENCE` when the field is reconstructed from context rather than explicit source.
+Use `INFERENCE` only when the field is reconstructed from context without inventing owner, scope, closure, acceptance, source authority, or reader/operator intent.
 
 ## Feynman Review Method
 1. Name the target reader or operator.

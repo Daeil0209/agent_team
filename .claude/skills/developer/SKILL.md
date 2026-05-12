@@ -25,7 +25,7 @@ Execution bias: developer must actively find and use the first lawful production
 Constraints start the team-lead resolution loop.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase development production -> `execute`
-- safe inferred production surface without owner, phase, proof, acceptance, deliverable, or write-scope change -> `reconstruct-with-inference`
+- safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous write scope, authority, acceptance contract, or decisive production basis -> `hold|blocker`
 - explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
@@ -45,7 +45,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Developer's dev-workflow lane begins at Phase 3 implementation production from the frozen Phase 2 design basis.
 - Review, proof, validation, and route ownership stay with their owning lanes.
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
-- If safe lane, intent, and bounded development production surface are inferable, reconstruct the working packet explicitly and mark inferred pieces as inference.
+- If safe lane, intent, bounded development production surface, source-of-truth, material closure row, disposition path, consumer/recompute path, and acceptance oracle are inferable without changing the assignment boundary, reconstruct the working packet explicitly and mark inferred pieces as inference.
 - If write scope, authority, acceptance contract, production-phase basis, or decisive production basis is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
 - See `references/developer-lane-detail.md` for packet field tables, SKILL-AUTH detail, specialist matrix, handoff-completeness detail, and defect-fix execution detail.
 
@@ -72,7 +72,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Send them immediately to `team-lead` via `SendMessage`.
   - Include exact constraint, attempted or available path, why current execution cannot continue truthfully, and smallest next executable step.
   - Use `references/developer-lane-detail.md` as the controlling packet-field catalog for decisive basis, multiple-surface additions, executable launcher contract, user-facing surface, and path-bounded `WRITE-SCOPE`; do not maintain a second field list here.
-- Reconstruct only when safe without changing owner, phase, proof burden, acceptance burden, deliverable shape, or write scope.
+- Reconstruct only when safe without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle.
 - Mark inferred pieces explicitly.
 - If production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary, stop only the blocked path.
 - Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.

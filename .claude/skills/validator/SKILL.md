@@ -24,8 +24,8 @@ On assignment-grade work receipt, classify the packet before execution:
 - bounded verdict-only arbitration -> execute
 - assignment-grade `FINAL-REJECT` packet -> execute rejection analysis
 - safely inferable missing detail uses `reconstruct-with-inference` only when core boundaries remain unchanged.
-- Core boundaries are owner, phase, proof burden, acceptance burden, deliverable shape, validation target, validation surface, tool basis, and verdict burden.
-- Materially required decision surface must also remain unchanged.
+- Core boundaries are owner, phase, proof burden, acceptance burden, deliverable shape, validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, and verdict burden.
+- Materially required decision surface, user-facing acceptance basis, and upstream defer basis must also remain unchanged.
 - mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
 - non-derivable materially ambiguous expectation sources, review/test state, materially required decision surface, or validation surface -> `hold|blocker`
 - non-derivable missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
@@ -34,6 +34,8 @@ On assignment-grade work receipt, classify the packet before execution:
 Validator-local PASS gate only; team-lead still owns routing and lifecycle acceptance decisions.
 PASS requires retained evidence that the intended user/operator can find, access/install, start, and complete the core workflow on the deliverable, sourced from actual review or proof surfaces (not assumption or producer confidence).
 For executable interactive software, every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope must be directly exercised by tester evidence or classified as blocked, disproven, or upstream-deferred with frozen-record citation.
+PASS also requires tester evidence that assigned `CORE-WORKFLOW-CLOSURE` rows used row-matched closure-defect probes and retained postcondition evidence.
+Workflow-completion, reliability, or user-ready PASS requires material hard-test probe evidence, not only normal success-path proof.
 Partial, blocked, or missing user-perspective evidence withholds PASS.
 Developer-runnable, reviewer-plausible, or lower-level support evidence is rejected as PASS evidence on the decisive user-facing acceptance surface.
 
@@ -48,7 +50,7 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is rejec
 - When request-fit, user workflow, or promised usability materially shapes verdict strength, require the request-bound packet fields.
 - Also require explicit run-path and burden fields.
 - Request-fit, run-path, and burden fields require packet or artifact evidence.
-- Reconstruct only when validation target, expectation sources, and decisive evidence basis are anchored in packet or artifact evidence.
+- Reconstruct only when validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, upstream defer basis, and decisive evidence basis are anchored in packet or artifact evidence.
 - Mark inferred pieces explicitly.
 - Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream handoff.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
@@ -109,6 +111,8 @@ Keep authoritative versus supplemental sources explicit.
 ### 4. Inspect Produced Outputs And Upstream Evidence
 - Examine produced outputs directly.
 - Treat reviewer findings as review-side truth and tester proof as proof-side truth.
+- Treat `TEST-STATE: ready` as proof-report completeness only; inspect row-level proof classifications before any verdict.
+- Inspect `CLOSURE-DEFECT-PROBE-STATUS`, `HARD-TEST-PROBE-STATUS`, and `POSTCONDITION-EVIDENCE-STATUS` before consuming tester rows as decisive user-facing evidence.
 - When the validator packet includes only a discovery/setup objective rather than a frozen exact tool, keep verdict work bounded to confirming whether the discovered tool path satisfies the decisive acceptance surface.
 - Environment work stays bounded to the assigned validation surface.
 - Preserve upstream lane truth monotonically.
@@ -128,6 +132,7 @@ Keep authoritative versus supplemental sources explicit.
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, or missing required workflow basis.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface.
 - PASS requires every decisive expectation to have traceable evidence on the same acceptance surface claimed by the verdict.
+- Tester `ready`, indirect proof, smoke proof, or uninspected screenshots cannot satisfy direct-required user-facing evidence.
 - Requested deliverable remains the acceptance baseline.
 - If user-facing acceptance depends on exact launch artifact, PASS requires explicit reconciliation.
 - If user-facing acceptance depends on core completion path, PASS requires explicit reconciliation.
@@ -136,6 +141,8 @@ Keep authoritative versus supplemental sources explicit.
 - Executable workflow-completion PASS requires exact launch artifact execution closure.
 - PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
 - PASS requires every `CORE-WORKFLOW-CLOSURE` row matched or upstream-deferred by the owning upstream record.
+- PASS requires executed closure-defect probe and retained postcondition evidence for every direct-required `CORE-WORKFLOW-CLOSURE` row in claimed scope.
+- Workflow-completion, reliability, or user-ready PASS requires material hard-test probes for each decisive workflow or data-state family.
 - Blocked or unproven `CORE-WORKFLOW-CLOSURE` rows withhold PASS.
 - Subset-anchor PASS is procedurally invalid.
 - PASS requires stop/cleanup closure.
@@ -149,6 +156,7 @@ Keep authoritative versus supplemental sources explicit.
 - Subset acceptance is PASS-eligible only when the subset was already frozen by request, plan, design, or upstream defer record.
 - Executable interactive web/UI deliverables require browser-surface proof on the real user interaction inventory for PASS.
 - Browser-surface gap closes through browser-surface proof.
+- Browser/UI PASS requires inspected console/runtime/network error evidence when those error surfaces are material to the claimed user-facing rows.
 - Rendered documents or runtime-bearing artifacts require decisive evidence on the actual reader/runtime surface for PASS when that is where usefulness is experienced.
 - For source/read documents, PASS depends on the changed source/read surface plus integrity checks required by the frozen acceptance basis.
 ### 7. Retest And Self-Check

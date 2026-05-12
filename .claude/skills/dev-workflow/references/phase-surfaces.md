@@ -26,7 +26,7 @@ auto-inject: false
 - Minimum canonical contents:
   - verbatim `USER-INSTRUCTION`
   - executive summary
-  - Receiver-Surface Contract: WHY / PRIMARY-RECEIVER / RECEIVER-JOB / CONSUMPTION-ENVIRONMENT / RISK / SUCCESS / SCOPE / DELIVERY, including the frozen `SCOPE-BASELINE` rows and the run/read/operate/decide/learn/present path; executable deliverables also freeze `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, and `BURDEN-CONTRACT`
+  - Receiver-Surface Contract: WHY / PRIMARY-RECEIVER / RECEIVER-JOB / CONSUMPTION-ENVIRONMENT / RISK / SUCCESS / SCOPE / DELIVERY, including row-granular frozen `SCOPE-BASELINE` rows that map to proofable features, workflows, surfaces, controls, data, artifacts, or reader/operator expectations, plus the run/read/operate/decide/learn/present path; executable deliverables also freeze `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, and `BURDEN-CONTRACT`
   - Consumption Chain for material output flow from source or setup through final receiver use
   - Reference Fit Summary when a reference exists
   - Work-Tool Pattern Packet when a practical work-tool pattern materially shapes operator use, persistence, import/export, generated artifacts, or completion proof
@@ -57,12 +57,12 @@ auto-inject: false
     - `FIRST-USE-STATE`: initial visible state, empty/demo/imported state, and minimum useful information before user configuration
     - `CORE-WORKFLOW-CLOSURE`: enumerate every user-visible action and its mandatory paired completion.
       Required pair types:
-      - create→disposition: every entity create has an allowed disposition path: delete, archive, void, deactivate, restrict, or no-delete basis.
-      - edit↔save+reload-persist: every edit control has a save whose result persists across page reload.
-      - input→dependent-recompute/reactivity: every editable value feeding a sum, total, badge, or status triggers recompute on the user surface.
-      - UI-element→navigation-destination: every clickable card, row, icon, or button names its arrival surface.
-      - entity→related-entity trace: every material relation surfaces as an authority-fit navigation or trace path.
-      Each row names trigger surface, paired completion surface, and persistence/recompute basis.
+      - create/import/upsert→disposition: every created, imported, or upserted item has an allowed disposition path: delete, clear, archive, void, deactivate, restrict, or frozen no-disposition basis.
+      - edit→save+reload+consumer-persist: every edit control has a save whose result persists across reload and every in-scope visible consumer of the changed fact.
+      - input/mutation→dependent-recompute/reactivity: every editable value or mutation feeding a sum, total, badge, warning, status, report, export, ledger, or dashboard triggers recompute on the user surface.
+      - displayed-surface→inspection/action/navigation: every displayed record, metric, card, row, icon, or button names its inspection, action, arrival surface, or explicit display-only basis.
+      - entity/aggregate→authority trace: every material relation, derived value, or displayed aggregate surfaces as an authority-fit source trace and related-entity path, unless a frozen not-applicable basis states why no user decision or action depends on that path.
+      Each row names trigger surface, paired completion surface, source authority, disposition, consumer/recompute, inspection/action/navigation, or display-only basis as applicable.
       Phase 3 entry for a user-visible action requires a `CORE-WORKFLOW-CLOSURE` row.
       The design must add the row or explicitly defer it via frozen-record citation.
     - `DATA-CONTENT-STATE`: sample, fixture, imported, saved, reloaded, reset, and real-data states that affect usefulness

@@ -23,7 +23,7 @@ Before any work:
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase review -> `execute`
-- safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, or review-boundary change -> `reconstruct-with-inference`
+- safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
 - materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
 - explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
@@ -46,7 +46,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Planning, route freeze, staffing, implementation, proof execution, and final acceptance stay with their owning lanes.
 - If review prerequisites or producer handoff are missing, return `hold|blocker`.
 - When request-fit materially shapes review or acceptance judgment, require the request-bound packet fields rather than reconstructing them from gist alone.
-- Reconstruct only when the review target and evidence basis are anchored in packet or artifact evidence.
+- Reconstruct only when the review target, evidence basis, expectation sources, scope baseline, closure/oracle row, and evidence authority are anchored in packet or frozen artifact evidence without changing the review boundary.
 - Mark inferred pieces explicitly.
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned review surface.

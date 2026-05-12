@@ -38,10 +38,10 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Consequential validator packets must carry these fields explicitly:
   - `VALIDATION-TARGET-TYPE` (`plan`, `design`, `implementation`, `proof-result`, `report`, `governance`, `human-consumed-artifact`, `executable-user-facing`, or another explicit acceptance target type)
   - `VALIDATION-TARGET`
-  - `EXPECTATION-SOURCES`
+  - `EXPECTATION-SOURCES`, sourced from the frozen request, plan, design, upstream defer record, closure matrix, Evidence-Quality Matrix, or specialist oracle when material
   - `REVIEW-STATE`
   - `TEST-STATE`
-  - `VALIDATION-SURFACE`
+  - `VALIDATION-SURFACE`, tied to the decisive user, reader, operator, or source-read surface named by the frozen delivery contract
 - Keep `DECISION-SURFACE` explicit when the decisive acceptance surface materially differs from the validator execution surface or the verdict must reconcile more than one candidate acceptance surface.
 - Keep these conditional additions explicit when applicable:
   - exact frozen tool: `TOOL-REQUIREMENT`
@@ -53,7 +53,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream handoff.
 Mark every inferred piece.
 If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
-If only part of the basis is derivable, narrow the verdict to the verified surface and report the unverified scope.
+If only part of the basis is derivable, narrow the verdict to a non-PASS verified-scope report and report the unverified scope, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
 
 If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 Do not replace decisive runtime, rendered, interaction, environment, or operator-burden evidence with source-only evidence.
@@ -71,6 +71,9 @@ Use only the lenses that materially affect the assigned validation surface.
 ## Applied Validation Techniques
 - Requirements traceability: map every decisive expectation to evidence anchor, acceptance surface, upstream owner, and verdict class.
 - Acceptance oracle challenge: identify the condition that would make the verdict false; if that condition is untested, PASS is unavailable.
+- Closure-defect challenge: identify whether tester proof attacked missing disposition, unreachable displayed data, stale consumer, orphaned source authority, reload loss, empty/null/crashed surface, and console/runtime/network error when those failure modes are material.
+- Hard-test challenge: identify whether tester proof tried to break the workflow with plausible hostile conditions such as malformed data, extreme values, rapid repeated actions, interrupted flows, stale sessions, conflicting state, corrupted imports, high volume, and weird-but-valid user input.
+- Tester `TEST-STATE: ready` is a completeness signal for the proof report, not a positive verdict; consume its row-level classifications before PASS/HOLD/FAIL.
 - Scope-baseline challenge: identify whether the verdict claims more than the proven `ACTIVE-SLICE`.
 - Unresolved `SCOPE-BASELINE` rows force `HOLD` or a non-PASS verified-scope report.
 - PASS for narrowed scope is allowed only when that subset was frozen or deferred by the owning upstream record.
@@ -96,6 +99,7 @@ Specialist output is verdict evidence, not final authority. PASS still requires 
 
 ## PASS Prohibition Detail
 PASS is prohibited when any decisive acceptance surface remains:
+- indirect-only where direct proof is required
 - blocked
 - mismatched
 - partially matched
@@ -104,11 +108,15 @@ PASS is prohibited when any decisive acceptance surface remains:
 - unsupported by required workflow authority
 - unsupported by required user-facing launch, interaction, or burden evidence
 - unsupported by required first-use or data-content evidence
+- unsupported by required closure-defect probe or retained postcondition evidence
+- unsupported by required hard-test probe evidence for workflow-completion, reliability, or user-ready claims
+- unsupported by required browser console/runtime/network error inspection when browser/UI behavior is decisive
 
 ## Acceptance Reconciliation Detail
 - `ACCEPTANCE-RECONCILIATION` is explicit only when review truth, proof truth, user-facing acceptance, and burden/run-path evidence have been reconciled on the same decisive surface.
 - Contradictory upstream evidence stays `HOLD` until explicitly reconciled; do not silently prefer the optimistic lane.
 - If tester or reviewer evidence is weaker than the requested verdict, downgrade the verdict rather than upgrading the evidence.
+- For direct-required user-facing rows, indirect tester proof remains `partial`, `not assessable`, or support evidence unless a frozen acceptance oracle explicitly permits indirect proof for that row.
 
 ## Operator-Runtime Verification Protocol
 Use this section when validation has operator-runtime cross-environment dependency, executable user-facing program burden, exact launch/termination path, or no-operator-labor risk.
@@ -120,7 +128,9 @@ If that broader surface is unavailable, report it in `OPEN-SURFACES` or return `
 For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix that also enumerates every `CORE-WORKFLOW-CLOSURE` row and traces each row to retained tester evidence; partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows the verdict or forces `HOLD`, not PASS.
 The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
 Static screenshot or initial-render evidence cannot satisfy dynamic rows.
-For edit-save, recompute/reactivity, navigation, entity-link, create-delete, import/export, or workflow-state rows, validator checks the executed user action and the retained postcondition evidence.
+For edit-save-reload, create/import/upsert-disposition, mutation-dependent recompute, displayed-surface inspection/action/navigation, entity or aggregate authority trace, import/export, or workflow-state rows, validator checks the executed user action, retained postcondition evidence, and row-matched closure-defect probe status.
+Workflow-completion, reliability, or user-ready claims also require material hard-test probe status against decisive workflow and data-state families.
+Browser/UI rows also require inspected console/runtime/network error evidence for the affected navigation and mutation surfaces before PASS can use them.
 For practical work-tool or business-workflow rows, validator checks the frozen pattern or workflow oracle against the retained user-surface evidence.
 For receiver-facing reports, decks, lessons, generated artifacts, and rendered documents, the same matrix maps expectation -> receiver surface -> evidence artifact -> inspection method -> inspected defect classes -> verdict class.
 
@@ -219,6 +229,10 @@ Validator states route-relevant evidence without freezing route. team-lead class
   - `DATA-CONTENT-STATE-STATUS`
   - `CORE-WORKFLOW-STATUS`
   - `INTERACTION-COVERAGE-STATUS`
+  - `CLOSURE-DEFECT-PROBE-STATUS`
+  - `HARD-TEST-PROBE-STATUS`
+  - `POSTCONDITION-EVIDENCE-STATUS`
+  - `RUNTIME-ERROR-SURFACE-STATUS`
   - `BURDEN-STATUS`
   - `ACCEPTANCE-RECONCILIATION`
   - `DECISIVE-EXPECTATION-TRACE`

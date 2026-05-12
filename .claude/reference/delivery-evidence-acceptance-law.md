@@ -42,7 +42,7 @@ The consuming owner records:
 - decisive user surface
 - evidence surface used
 - requested delivery contract
-- covered baseline or explicitly deferred baseline
+- covered row-granular baseline or explicitly deferred baseline row
 - open surfaces
 - claim strength
 
@@ -88,6 +88,7 @@ Stop final acceptance when final-arbitration trigger rules require a verdict.
 - Owner deferral names owner.
 - Owner deferral names reason.
 - Owner deferral names next action.
+- Downstream missing implementation, proof, or acceptance evidence cannot create deferral; it leaves the row open or blocked.
 - Record implemented subset coverage against the requested deliverable.
 - Classify half-delivered artifacts as defects.
 - Type-fit defaults live in `.claude/skills/work-planning/references/deliverable-defaults.md`.
@@ -98,11 +99,11 @@ The matrix is canonical for user-visible action closure.
 Every row is proven end-to-end on the user surface.
 
 Required row families:
-- create<->delete
-- edit<->save plus reload persistence
-- input->dependent-recompute/reactivity
-- UI-element->navigation-destination
-- entity<->related-entity link
+- create/import/upsert->disposition path, including delete, clear, archive, void, deactivate, restrict, or frozen no-disposition basis
+- edit->save plus reload persistence and every in-scope visible consumer of the changed fact
+- input/mutation->dependent recompute/reactivity across in-scope summaries, totals, badges, warnings, statuses, reports, and exported or ledger views
+- displayed record, metric, card, row, icon, or button->inspection, action, navigation destination, or explicit display-only basis
+- entity, relationship, derived value, or displayed aggregate->source authority trace and related-entity path, unless a frozen not-applicable basis states why no user decision or action depends on that path
 
 Each row names:
 - trigger surface

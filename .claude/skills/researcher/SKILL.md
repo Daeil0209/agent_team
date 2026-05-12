@@ -23,7 +23,7 @@ Before any work:
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-target or tightly coupled deep research -> `execute`
-- safe inferred question boundary without owner, phase, proof, acceptance, deliverable, or evidence-boundary change -> `reconstruct-with-inference`
+- safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
 - hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
 - explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
@@ -45,9 +45,9 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Before research discovery, classify the received packet as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
 - `scope-pressure` and `hold|blocker` stop evidence work. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis and the smallest truthful evidence boundary.
 - Required decisive basis: `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`, `REQUIRED-SKILLS`, and the smallest truthful evidence boundary.
-- If the safe question boundary is inferable, reconstruct the working packet explicitly.
+- If the safe question boundary, source family, decision target, downstream consumer, and evidence-authority threshold are inferable without changing the assignment boundary, reconstruct the working packet explicitly.
 - Mark inferred pieces as inference.
-- Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, and evidence boundary.
+- Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, and evidence-authority threshold.
 - If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, send `hold|blocker`.
 - Material coverage lenses apply from the decision target.
 - See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and handoff detail.

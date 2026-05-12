@@ -66,7 +66,7 @@ Plain text in a pane is evidence only until resent through the required channel.
   - missing fields route to `scope-pressure` or `hold|blocker`
   - if one bounded packet correction preserves the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary, send a separate `scope-pressure` in the same turn
   - if the defect prevents truthful execution even with narrow correction, send a separate `hold|blocker` in the same turn
-  - if the packet remains executable after explicit same-boundary inference, continue lane work and mark the inference
+  - if the packet remains executable after explicit same-boundary inference that does not invent scope, closure rows, source authority, disposition, consumer/recompute, display-only, or acceptance-oracle basis, continue lane work and mark the inference
   - blocker text travels through separate `scope-pressure` or `hold|blocker`
 - `control-ack`
   - receipt only for structured control packets such as `phase-transition-control` or `lifecycle-control`

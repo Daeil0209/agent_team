@@ -20,6 +20,7 @@ LOAD-POLICY: on-demand reference only
   - `validator` -> `VERDICT: PASS|HOLD|FAIL`
 - Preserve lane-owned state monotonically across reroute and re-dispatch. `team-lead` summarizes or routes from these fields, but must not silently strengthen an agent-owned state without a fresh explicit report from the owning lane or stronger evidence on that same lane surface.
 - `tester` does not emit `TEST-STATE: not-needed`; that remains a lead-side validation-ingress decision when the acceptance design truthfully does not require tester proof.
+- `TEST-STATE: ready` means the tester handoff is row-classified and decision-ready, not that the tested artifact passed.
 
 ## Resolve Next Owner And Action
 - Valid completion-grade handoff opens `completion-handoff` reconciliation.

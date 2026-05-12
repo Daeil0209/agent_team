@@ -43,7 +43,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
   - `EVIDENCE-BASIS`
   - `ACCEPTANCE-RISK`
   - `ACCEPTANCE-SURFACE`
-  - `EXPECTATION-SOURCES` when the review judges completion, scope fit, or contract fit
+  - `EXPECTATION-SOURCES` when the review judges completion, scope fit, or contract fit; source from the frozen request, plan, design, upstream defer record, closure matrix, or Evidence-Quality Matrix, not from implemented artifacts alone
   - `PRIOR-ANALYSIS`
   - `SCOPE-BASELINE` and `ACTIVE-SLICE` when reviewing current-scope completion or multi-surface implementation
 - For plan review, also keep explicit when material:
@@ -90,7 +90,7 @@ Use only the lenses that materially affect the assigned surface.
 - Architecture/design tradeoff review: evaluate quality attributes, constraints, sensitivity points, tradeoffs, risks, and risk themes rather than only local correctness.
 - Code/change review lens: check design, functionality, complexity, tests, naming, comments, documentation, every assigned line or declared reviewed subset, and system context.
 - Contract-fit review lens: verify producer/consumer source-of-truth, runtime data shape, generated or audited types, field names, error states, and visible consumer failure.
-- Scope-baseline lens: compare produced or proven surfaces against `SCOPE-BASELINE`; implemented-subset quality does not close missing, placeholder-only, or unproven baseline rows.
+- Scope/closure-baseline lens: compare produced or proven surfaces against `SCOPE-BASELINE` and material closure or oracle rows; implemented-subset quality does not close missing, placeholder-only, unproven, source-untraced, disposition-less, or stale-consumer baseline rows.
 - Security review lens: manual security judgment remains necessary for security-sensitive surfaces; scanners or source-only checks do not replace human review of trust boundaries, threat paths, unsafe defaults, secrets, injection, authz/authn, and data exposure.
 - Intent-preserving critique: before accepting a proposed defect or fix, apply `TARGET-INTENT-BASIS`, the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`, and the smallest meaning-preserving correction.
 - Feynman clarity lens: when a plan, design, report, governance text, or handoff cannot be explained plainly without invented meaning, treat that as a review finding.
