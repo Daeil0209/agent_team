@@ -72,7 +72,7 @@ The failed K is retried or reassigned to surviving M without reopening `work-pla
 - The failure happened before agent-start evidence on the failed K.
 - Surviving M can truthfully cover failed K's surface without packet shape change.
 
-Otherwise reopen `work-planning` for redistribution per `CLAUDE.md` Communication And Reporting Law single-agent-collapse rule.
+Otherwise reopen `work-planning` for redistribution per `CLAUDE.md` `## Communication` single-agent-collapse rule.
 
 ## Resolve Next Owner And Action
 - Valid runtime creation, lane dispatch, or reuse returns to `task-execution` Step 3 Dispatch Truth.

@@ -476,8 +476,8 @@ case "$LATEST_CLASS" in
     ;;
 esac
 
-if [[ "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
-  FAILURES+=("Completion-grade report must carry TASK-ID field.")
+if [[ -n "$TASK_ID" && "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
+  FAILURES+=("Completion-grade report must carry TASK-ID field when task tracking is active.")
 fi
 
 if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then

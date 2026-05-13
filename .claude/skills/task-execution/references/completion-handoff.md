@@ -13,7 +13,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Common Completion Result Spine
 Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` must include:
-- `TASK-ID`
+- `TASK-ID` when task tracking is active
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
 - `EVIDENCE-BASIS`
@@ -24,7 +24,7 @@ Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: 
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
 - `REQUESTED-LIFECYCLE`
-- `PRODUCER-SELF-REVIEW-PASS` — lenses applied, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer runs self-review on production completion under their own authority.
+- `PRODUCER-SELF-REVIEW-PASS` — defeater lenses applied, disconfirming checks attempted, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
 Team-lead accepts completion-grade messages that carry both blocks; messages missing either return to the producer via packet-correction.

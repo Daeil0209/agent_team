@@ -17,19 +17,19 @@ Before any work:
 1. Request fit: does the verdict still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the validation surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
-4. Charter fit: is this final verdict work or final acceptance rejection analysis owned by validator?
+4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded verdict-only arbitration -> execute
-- assignment-grade `FINAL-REJECT` packet -> execute rejection analysis
+- assignment-grade validator correction packet after `FINAL-REJECT` -> execute bounded correction-basis analysis
 - safely inferable missing detail uses `reconstruct-with-inference` only when core boundaries remain unchanged.
 - Core boundaries are owner, phase, proof burden, acceptance burden, deliverable shape, validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, and verdict burden.
 - Materially required decision surface, user-facing acceptance basis, and upstream defer basis must also remain unchanged.
 - mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
 - non-derivable materially ambiguous expectation sources, review/test state, materially required decision surface, or validation surface -> `hold|blocker`
 - non-derivable missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
-- explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
 Validator-local PASS gate only; team-lead still owns routing and lifecycle acceptance decisions.
 PASS requires retained evidence that the intended user/operator can find, access/install, start, and complete the core workflow on the deliverable, sourced from actual review or proof surfaces (not assumption or producer confidence).

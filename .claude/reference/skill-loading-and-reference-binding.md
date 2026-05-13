@@ -76,8 +76,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties.
 - The receiving lane loads each `REQUIRED-SKILLS` entry before execution.
 - The receiving lane applies each `REQUIRED-SKILLS` entry before execution.
-- The receiving lane loads each `REQUIRED-SKILLS` entry before handoff.
-- The receiving lane applies each `REQUIRED-SKILLS` entry before handoff.
+- The receiving lane records applied or blocked basis for each `REQUIRED-SKILLS` entry before handoff.
 - Classify missing required skill consumption as a packet defect when the packet omitted it.
 - Classify missing required skill consumption as a lane defect when the lane ignored it.
 
@@ -98,6 +97,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - A trigger-bound reference carries `SOURCE-ANCHOR`.
 - A trigger-bound reference carries `SOURCE-RULES`.
+- Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
 - A method-detail reference returns applied method basis through the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.

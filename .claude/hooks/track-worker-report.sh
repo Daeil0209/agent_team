@@ -404,12 +404,10 @@ NODE
 
 append_line_locked "$WORKER_REPORT_LEDGER_LOCK" "$WORKER_REPORT_LEDGER" "$LEDGER_LINE"
 
-# ─── VALIDATOR SILENT-PASS DETECTION (recovery design Phase 1.1c) ───────
-# CLAUDE.md `[USER-SURFACE]` + `## Acceptance` enforcement at
-# hook layer. Detects validator handoff/completion with PASS-grade verdict
-# but weak/missing evidence-vs-claim alignment. Injects system-reminder so
-# team-lead synthesis catches the silent-PASS pattern before treating it
-# as completion-grade.
+# ─── VALIDATOR REPORT FIELD WARNING (recovery design Phase 1.1c) ───────
+# Runtime tracker records a non-blocking warning when a validator PASS-grade
+# report carries obvious evidence-field mismatches. Validator remains the
+# acceptance owner; this hook does not issue, deny, or revise verdict truth.
 #
 # Trigger conditions (ALL must hold to fire):
 #   (a) AGENT_TYPE = validator
@@ -423,8 +421,8 @@ append_line_locked "$WORKER_REPORT_LEDGER_LOCK" "$WORKER_REPORT_LEDGER" "$LEDGER
 #       - BURDEN-STATUS not 'matched'
 #       - ACCEPTANCE-RECONCILIATION value present but noncanonical
 #
-# Narrow recurrence barrier: validator PASS must carry matched user-surface
-# proof fields; otherwise downstream completion gates hold the claim.
+# Narrow recurrence signal only: downstream owners decide whether the report
+# is acceptable, blocked, or needs correction.
 if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] || [[ "$MESSAGE_CLASS" == "completion" ]]; }; then
   PASS_VERDICT="false"
   if printf '%s' "$DESCRIPTION" | grep -Eiq '(^|[[:space:]])VERDICT[[:space:]]*:[[:space:]]*PASS([[:space:]]|$)'; then
@@ -455,11 +453,11 @@ if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] |
 
     if (( ${#SILENT_PASS_MISMATCHES[@]} > 0 )); then
       WARN_MISMATCH_LIST="$(printf '%s; ' "${SILENT_PASS_MISMATCHES[@]}")"
-      printf '[%s] TRACK-WORKER-REPORT WARN: validator silent-pass evidence mismatch from %s task=%s mismatches=%s\n' \
+      printf '[%s] TRACK-WORKER-REPORT WARN: validator PASS report field mismatch from %s task=%s mismatches=%s\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" "${TASK_ID:-unknown}" "$WARN_MISMATCH_LIST" >> "$VIOLATION_LOG"
     fi
   fi
 fi
-# ─── END VALIDATOR SILENT-PASS DETECTION ──────────────────────────────────
+# ─── END VALIDATOR REPORT FIELD WARNING ───────────────────────────────────
 
 exit 0

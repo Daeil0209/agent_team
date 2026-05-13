@@ -21,7 +21,7 @@ Use this reference when work creates files.
 Use this reference when work edits source files.
 Use this reference when work edits governance files.
 Use this reference when work names an output root.
-Use this reference when work targets a path outside the approved output root.
+Use this reference when work targets a path outside the frozen output root.
 It keeps user deliverables in the task project folder.
 It keeps governance edits on owner files.
 
@@ -54,7 +54,7 @@ The consuming owner records:
 Stop before file output when no safe canonical output root is frozen.
 Stop before editing protected settings without the owning update path.
 Stop before destructive mutation unless the user explicitly requested it.
-Stop before destructive mutation unless the approval path is lawful.
+Stop before destructive mutation unless the destructive-approval path is lawful.
 Stop before hiding protected filesystem mutation behind interpreter snippets.
 
 ## Resolve Next Owner And Action
@@ -62,7 +62,7 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
 - A stopped settings route opens the owning update path.
 - A stopped destructive route opens explicit user approval.
 - A stopped destructive route opens non-destructive redesign when redesign is lawful.
-- A stopped interpreter-mutation route opens direct owner-file mutation through the approved edit path.
+- A stopped interpreter-mutation route opens direct owner-file mutation through the structured edit path.
 
 ## Output-Root Rules
 - Task-created deliverables stay under the task project folder.
@@ -82,7 +82,7 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
 ## Filesystem Boundary Rules
 - Record active workspace before file work.
 - Record repository boundary before file work.
-- Record approved output root before file work.
+- Record frozen output root before file work.
 - Use non-destructive mutation path for filesystem changes.
 - Keep secret-bearing surfaces outside output artifacts.
 - Send protected settings changes to the owning update path.

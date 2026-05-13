@@ -2,15 +2,15 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-4 Codex advisory or same-boundary correction; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-4 Codex MCP independent-review output or same-boundary correction; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Codex Own-Review Discipline
 
 ## Purpose
-Use this reference when Codex advisory or same-boundary correction output could be treated as convergence without team-lead own-review.
+Use this reference when Codex MCP independent-review output or same-boundary correction output could be treated as convergence without team-lead own-review.
 
 ## Consume When
-- Codex advisory shapes planning, artifact judgment, review, redesign, or correction.
+- Codex MCP independent-review output shapes planning, artifact judgment, review, redesign, or correction.
 - A same-boundary correction pass repeats after Codex input.
 - Team-lead is about to accept Codex consensus, relay Codex output, or carry forward prior own-review.
 
@@ -21,7 +21,7 @@ Record:
 - material specialist skills consumed
 - accepted Codex points
 - rejected Codex points
-- unresolved advisory gaps
+- unresolved Codex review gaps
 
 ## Stop
 Stop before positive freeze until same-pass team-lead own-review is present.
@@ -37,7 +37,7 @@ Stop before relay until team-lead adjudicates the output.
 
 ## Rules
 - Treat every same-boundary correction pass as a new Codex pass.
-- Satisfy own-review with same-pass team-lead review.
+- Satisfy own-review only with same-pass team-lead defect-seeking review that names accepted points, rejected points, and unresolved gaps.
 - Treat prior-pass own-review as advisory context.
 - Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
 - Team-lead own-review consumes material specialist skills before convergence acceptance.

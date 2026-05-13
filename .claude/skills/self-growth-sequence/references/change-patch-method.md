@@ -33,7 +33,7 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 5. `Content Review`
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
-- Developer self-review is sufficient for trivial single-line fixes.
+- Developer defect-seeking self-review is sufficient for trivial single-line fixes.
 - For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute.
 - The narrow single-file quick-hardening wording-fix exception defined by the parent skill records owner-surface citation.
 - Reviewer/Codex input is evidence.

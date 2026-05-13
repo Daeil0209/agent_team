@@ -2,7 +2,7 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-7 Output Surface; Communication And Reporting Law; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-7 Output Surface; CLAUDE.md Communication; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Output Surface Law
 

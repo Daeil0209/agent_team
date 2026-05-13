@@ -52,7 +52,7 @@ Never redefine supervisory authority, routing, synthesis, or user-facing reporti
 - For UI/browser surfaces, proof must execute the designed user action and assert the designed visible result. Page load is not feature proof.
 - Each `CORE-WORKFLOW-CLOSURE` row must be exercised end-to-end on the rendered user surface.
 - An unexercised `CORE-WORKFLOW-CLOSURE` row is a silent-PASS defect.
-- On any `CORE-WORKFLOW-CLOSURE` gap, raise `scope-pressure` naming the missing pair; never narrow PASS, never report `matches-expectation` on the affected surface.
+- On any missing or unassigned `CORE-WORKFLOW-CLOSURE` row, raise `scope-pressure` naming the missing pair; when an assigned row is exercised and fails or cannot complete, report disproof or blocked proof with row classification; never report `matches-expectation` or pass-like language on the affected surface.
 - If the packet smuggles validation ownership or implementation closure into proof work, do not absorb it.
 ## Priority 2: Assignment And Reporting Contract(RPA)
 ### RPA-1. Assignment Intake

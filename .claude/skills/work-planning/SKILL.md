@@ -57,7 +57,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/execution-readiness.md`: packet, proof, setup, lifecycle, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
-- `references/codex-advisory.md`: Codex MCP advisory trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
+- `references/codex-advisory.md`: Codex MCP independent-review trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
 
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
@@ -158,9 +158,9 @@ Freeze when material:
 - analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`
 - team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`
-- Codex advisory: `CODEX-ADVISORY-BASIS`
+- Codex MCP independent review: `CODEX-ADVISORY-BASIS`
 
-Codex advisory detail stays in `references/codex-advisory.md`.
+Codex MCP independent-review detail stays in `references/codex-advisory.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
 Planning opens one next owner/action before execution, dispatch, or reporting.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.

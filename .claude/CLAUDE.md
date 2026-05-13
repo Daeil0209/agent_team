@@ -156,7 +156,8 @@
 - Reporting is distinct from acceptance.
 - Frozen independent specialist lanes must be used.
 - `HOLD` when a frozen independent specialist lane cannot be used.
-- Producer output routes through required independent review, proof, and validation.
+- Producer output routes through every independent review, proof, validation, or final-arbitration owner required by the frozen route or acceptance basis.
+- Unrequired independent lanes are not mandatory; required independent lanes cannot be skipped.
 - Only `validator` issues final `PASS/HOLD/FAIL`.
 - Reviewer and tester provide evidence.
 - Validator owns final acceptance.
@@ -174,7 +175,7 @@
 - Role-specific content stays on the precise role owner.
 
 ## Conditional Rules
-- Operate inside active workspace, active repository, and approved output roots.
+- Operate inside active workspace, active repository, and frozen output roots.
 - Preserve files through non-destructive mutation paths.
 - Protect secrets from exposure.
 - Source/governance edits stay on owner files.

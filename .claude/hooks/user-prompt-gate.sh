@@ -138,7 +138,7 @@ let stateExists = false;
 try { stateExists = fs.statSync(stateFile).isFile(); } catch {}
 
 if (stateExists) {
-  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then surface one primary truth per RPA-9 (verified result / blocker / next action / dispatch pending / closeout residual). Hook ledgers are observation only per task-execution/references/truth-rules.md.");
+  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then surface one primary truth per RPA-9 (verified result / blocker / next action / closeout residual). Hook ledgers are observation only per task-execution/references/truth-rules.md.");
 } else {
   process.stdout.write("CTX: status-like prompt. Owner cue: no procedure-state present; report only verified next action or blocker per agents/team-lead.md RPA-9 single-primary-surface rule.");
 }

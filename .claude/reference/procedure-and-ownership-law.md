@@ -14,7 +14,6 @@ Use it to attach every consequential path to one truthful next action.
 
 ## Consume When
 - A task moves beyond `answer-only`.
-- A user asks for analysis.
 - A user asks for correction.
 - A user asks for mutation.
 - A user asks for proof.

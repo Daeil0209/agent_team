@@ -26,7 +26,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
 - hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
-- explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
 `scope-pressure` and `hold|blocker` are stop states, not notes.
 ### User-Perspective Gate

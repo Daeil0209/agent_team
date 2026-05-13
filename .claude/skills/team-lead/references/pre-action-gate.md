@@ -88,7 +88,6 @@ Select one user-facing truth surface:
 - `verified result`
 - `blocker`
 - `next action`
-- `dispatch pending`
 - `closeout residual`
 
 If no new or changed primary surface exists, keep the turn internal.

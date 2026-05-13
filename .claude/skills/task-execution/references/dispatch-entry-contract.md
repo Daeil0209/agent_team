@@ -44,7 +44,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - Valid `not-applicable` bases are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route that `work-planning` kept dispatch-owned without authorizing an agent dispatch move yet.
 - `not-applicable` is invalid once an authorized agent dispatch move exists.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path. File-only, guessed, or pre-`work-planning` measurement is not dispatch-ready.
-- `CODEX-ADVISORY-BASIS` is dispatch context only.
+- `CODEX-ADVISORY-BASIS` is dispatch context only for Codex MCP independent-review handling.
 - `task-execution` consumes the frozen `triggered:*`, `fail-open:*`, or `skipped:*` truth.
 - Does not call Codex.
 - Does not adjudicate Codex points.

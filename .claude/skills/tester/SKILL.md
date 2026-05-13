@@ -29,7 +29,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred proof surface without owner, phase, proof, acceptance, deliverable, user-run-path, tool-basis, closure/oracle row, scenario boundary, or state-postcondition change -> `reconstruct-with-inference`
 - mixed phase-intent, shardable proof overload, hidden prerequisite, or contradictory proof contract -> `scope-pressure`
 - materially ambiguous proof objective, scenario scope, tool requirement, user run path, or expected proof level -> `hold|blocker`
-- explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one tester -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one tester -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface.
 1. Has proof executed the exact operator launch artifact through the intended invocation shape?

@@ -28,7 +28,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous write scope, authority, acceptance contract, or decisive production basis -> `hold|blocker`
-- explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
 Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer-only knowledge?
@@ -110,7 +110,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 6. Pre-Handoff Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
-- Run producer self-review cycles on the changed surface immediately on production completion: request fit, target intent, production craft baseline, selected skill lenses, and obvious normal/failure path defects. Self-review is producer's own duty.
+- Run producer self-review cycles on the changed surface immediately on production completion by trying to break or disprove the changed surface across request fit, target intent, production craft baseline, selected skill lenses, and normal/failure path defects. Confirmation-only self-review is invalid.
 - Correct bounded developer-owned defects found by each producer self-review pass before handoff when owner, phase, deliverable shape, and acceptance chain stay unchanged.
 - Repeat producer self-review while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
 - Handoff only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
@@ -121,7 +121,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ### 7. Handoff
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
-- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`. Carry `PRODUCER-SELF-REVIEW-PASS` (lenses applied, defects found and fixed in-pass, final-pass convergence) and `LANE-LOCAL-SV-RESULT` (mode, verified surface, verification basis, claim strength, allowed next action) as named blocks.
+- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`. Carry `PRODUCER-SELF-REVIEW-PASS` (defeater lenses applied, defects found and fixed in-pass, final-pass convergence) and `LANE-LOCAL-SV-RESULT` (mode, verified surface, verification basis, claim strength, allowed next action) as named blocks.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.

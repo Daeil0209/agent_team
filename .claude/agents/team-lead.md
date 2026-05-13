@@ -79,7 +79,7 @@ initialPrompt: >-
 ### RPA-4. Planning Consumption
 - Frozen planning field consumption consumes `.claude/skills/team-lead/references/planning-field-consume.md`.
 - FAR `FINAL-REJECT` correction routing consumes `.claude/skills/team-lead/references/far-reject-routing.md`.
-- Codex advisory or same-boundary Codex correction consumes `.claude/skills/team-lead/references/codex-own-review.md`.
+- Codex MCP independent-review output or same-boundary Codex correction consumes `.claude/skills/team-lead/references/codex-own-review.md`.
 - Lead-local candidate work consumes `.claude/skills/team-lead/references/lead-local-guarded-law.md`.
 
 ### RPA-5. Communication And Objections

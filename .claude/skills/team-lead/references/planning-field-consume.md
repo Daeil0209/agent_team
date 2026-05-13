@@ -65,10 +65,10 @@ Read frozen planning fields in this order:
 - Stale tier basis reopens `work-planning`.
 - Weaker-than-floor tier basis reopens `work-planning`.
 - Consume frozen tier basis before staffing, checkpoint, review, proof, or acceptance sizing.
-- Missing required Codex advisory basis reopens `work-planning`.
-- Stale Codex advisory basis reopens `work-planning`.
-- Invalidly skipped Codex advisory basis reopens `work-planning`.
-- Pre-`work-planning` Codex advisory basis reopens `work-planning`.
+- Missing required Codex MCP independent-review basis reopens `work-planning`.
+- Stale Codex MCP independent-review basis reopens `work-planning`.
+- Invalidly skipped Codex MCP independent-review basis reopens `work-planning`.
+- Pre-`work-planning` Codex MCP independent-review basis reopens `work-planning`.
 - `triggered:*` requires active adjudication.
 - Treat `fail-open:*` as advisory-unavailable evidence.
 - Required `PARALLEL-GROUPS` carries boundary, non-overlap, and measured/cited burden basis.

@@ -27,7 +27,7 @@ This lens also covers routed setup/auth/quota/credential-repair investigation fo
 **Adjacent owners hold:** canonical planning, live dispatch, broad implementation, artifact merge governance, review findings, runnable proof, final validation, final reporting, silent login, and unapproved credential mutation.
 ## Agent Relationships
 - `team-lead` — sole planning and top-level routing owner by default
-- `task-execution` — owns live subagent dispatch when an explicitly authorized frozen route uses one
+- `task-execution` — owns live subagent dispatch when a frozen host-authorized route uses one
 - Dispatch ownership stays with its owner
 - `team-lead` — owns drift control, reuse discipline, modular integrity, and merge-governance correction
 - `developer` and approved specialist skills — bounded production owners

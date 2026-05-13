@@ -80,10 +80,10 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 | Anti-Pattern | Symptoms | Correction |
 |---|---|---|
 | **Blind Trust** | AI output used before review or test evidence | Require code review and test coverage for all AI-generated code before merge |
-| **Verbal Instructions** | Requirements exist only in conversation or memory | Write requirements in `docs/00-requirements/` before implementation begins |
-| **Skipping Design** | Jump from idea directly to code | Require design doc in `docs/02-design/` with architecture options and trade-off rationale |
+| **Verbal Instructions** | Requirements exist only in conversation or memory | Write requirements in the project-local canonical requirements record before implementation begins; `docs/00-requirements/` is an example path |
+| **Skipping Design** | Jump from idea directly to code | Require a project-local design record with architecture options and trade-off rationale before implementation begins; `docs/02-design/` is an example path |
 | **Context Fragmentation** | Different team members operate from different understandings | Use Context Anchor pattern: WHY / WHO / RISK / SUCCESS / SCOPE — shared and visible |
-| **Outdated Docs** | Code evolved while design or API docs stayed stale | Update `docs/02-design/` and API contracts inside the implementation task |
+| **Outdated Docs** | Code evolved while design or API docs stayed stale | Update the project-local design record and API contracts inside the implementation task |
 | **Layer Leakage** | Business logic accumulates in API controllers or infrastructure adapters | Enforce Clean Architecture layer rules; return blocked architecture evidence on PR with misplaced logic |
 | **God Service** | One application service handles unrelated responsibilities | Decompose by bounded context; each service owns one responsibility domain |
 | **Hardcoded Configuration** | Environment-specific values embedded in source code | Externalize all configuration; fail architecture review if any hardcoded env value is found |

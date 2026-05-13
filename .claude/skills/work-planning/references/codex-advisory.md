@@ -1,4 +1,4 @@
-# Work-Planning Codex Advisory
+# Work-Planning Codex MCP Independent Review
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
@@ -10,6 +10,7 @@ Pre-`work-planning` Codex output is not planning evidence.
 
 ## Contents
 - Trigger
+- Terminology
 - Authority
 - Tool Discipline
 - Packet
@@ -32,13 +33,16 @@ Risk-triggered:
 Skip only for light, receipt/control/status/lifecycle/clarification-only, or no-trigger consequential work.
 For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>` after evaluating this section; advisory tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
 
+## Terminology
+`CODEX-ADVISORY-BASIS` is a compatibility field name. In this governance set, Codex MCP work is an independent quality review by an external advisory capability. "Advisory" means Codex does not own route, dispatch, validation, acceptance, mutation, or user communication authority; it does not mean optional low-value opinion when the trigger is material.
+
 ## Authority
-Codex is advisory-only structural review.
+Codex MCP provides independent structural quality review with advisory-only authority.
 Review route, owner, workflow, parallel-fit, readiness, skill-map, acceptance path, and needless-user-gate defects from the user's usable-result perspective.
 Choose the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
 
 Codex never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
-`CODEX-ADVISORY-BASIS` is the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
+`CODEX-ADVISORY-BASIS` records team-lead handling of the independent Codex MCP review trigger, adjudication, or fail-open truth; Codex output alone never satisfies it.
 team-lead owns the plan, accepted revisions, rejected points, and final route.
 
 ## Tool Discipline
@@ -119,7 +123,7 @@ Freeze one:
 - `CODEX-ADVISORY-BASIS: triggered:accepted=<n>;rejected=<n>;dropped=<n>`
 - `CODEX-ADVISORY-BASIS: fail-open:<reason>`
 
-Post-route-freeze Codex expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
+Post-route-freeze Codex MCP independent-review expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
 
 ## Resolve Next Owner And Action
 - Accepted advisory points update the affected planning field or blocker basis.

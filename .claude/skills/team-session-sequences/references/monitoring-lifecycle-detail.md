@@ -98,7 +98,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
-- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's approved output root (`./projects/`).
+- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root (`./projects/`).
 
 ## Runtime Pressure
 - In single-primary automation mode, treat non-current `parent-session-id` agent processes as orphan runtime residue rather than valid parallel production sessions.

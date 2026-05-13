@@ -123,8 +123,8 @@ mutation_payload_exceeds_compact_surface_budget() {
   [[ "$char_count" =~ ^[0-9]+$ ]] || char_count=0
   [[ "$line_count" =~ ^[0-9]+$ ]] || line_count=0
 
-  # Hard guard only: catch massive accidental governance dumps without forcing
-  # normal section-grade governance edits into artificial fragments.
+  # Warning-only budget signal: catch massive accidental governance dumps without
+  # forcing normal section-grade governance edits into artificial fragments.
   (( char_count > 8000 || line_count > 150 ))
 }
 

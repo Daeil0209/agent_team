@@ -5,9 +5,9 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Final Acceptance Review is the final ACCEPT/REJECT workflow gate after validator `PASS` in validator-required chains.
-Validator owns `PASS/HOLD/FAIL`.
-team-lead owns `FINAL-ACCEPT/FINAL-REJECT`.
+Final Acceptance Review is the workflow-closure reconciliation after validator `PASS` in validator-required chains.
+Validator owns final `PASS/HOLD/FAIL`.
+team-lead owns `FINAL-ACCEPT/FINAL-REJECT` as workflow-closure records; they do not replace validator verdict authority.
 
 ## Contents
 - Entry
@@ -28,9 +28,9 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `ARTIFACT-MAP`: final artifact identity, final location, produced output inventory, instruction-to-artifact mapping, artifact hygiene
 - `USER-SURFACE`: target user environment, exact start/open/read/action path, material first-use/data-content/demo/import state, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
 - `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity.
-  For user-facing rendered surfaces, `PROOF` includes per-feature/per-state screenshot and full-page capture paths.
-  `PROOF` includes an `IMAGE-INSPECTION-RECORD` confirming each cited image was opened directly via the multimodal `Read` tool and matched against the design-stated expectation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering).
-  Cite-path-only or capture-without-open is procedurally invalid for `FINAL-ACCEPT`.
+  For user-facing rendered surfaces, `PROOF` includes captures at the granularity required by the Evidence-Quality Matrix: per-feature, per-state, viewport, or full-page/full-design-area when that level is material to acceptance.
+  `PROOF` includes an `IMAGE-INSPECTION-RECORD` for each rendered capture used as acceptance evidence, confirming it was opened directly and matched against material design-stated expectations (font size, spacing, ratio, alignment, color, label clarity, glyph rendering).
+  Cite-path-only or material capture-without-open is procedurally invalid for `FINAL-ACCEPT`.
   When external visual benchmarks materially shaped operator-facing UI, dashboards, reports, or decks, `FINAL-EVIDENCE-PACKET` carries the frozen benchmark-synthesis identity.
   Final Acceptance Review compares rendered proof against the frozen benchmark-synthesis characteristics.
   Missing required design-time benchmark synthesis is an acceptance gap.
@@ -41,13 +41,13 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `OPEN-SURFACES`: remaining surfaces with frozen upstream deferral or frozen out-of-scope basis
 
 ## Parallel Evaluation
-team-lead starts own-review and Codex advisory in parallel from the same frozen packet.
+team-lead starts own-review and Codex MCP independent review in parallel from the same frozen packet when the Codex review trigger is material or already frozen for this closure surface.
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.
-team-lead reconciles own-review, Codex findings, or fail-open fallback basis point by point, then applies reject-first decision order.
+team-lead reconciles own-review, Codex findings, skipped-review basis, or fail-open fallback basis point by point, then applies reject-first decision order.
 Each available evaluation identifies the governing final-acceptance rules.
 Each available evaluation judges evidence after rule identification.
-Codex applies `feynman-clarity` as an advisory lens.
+Codex applies `feynman-clarity` as an independent-review lens with advisory-only authority.
 Codex names the user or receiver.
 Codex names the task.
 Codex names the completion path.
@@ -166,8 +166,8 @@ Reject-first decision order: if any material instruction, baseline row, acceptan
 Subset-anchor own-review (anchoring on implemented routes/templates instead of the design's `CORE-WORKFLOW-CLOSURE` rows) is automatic FINAL-REJECT.
 FAR own-review compares retained matched-evidence axes against original instruction-trace and frozen plan/design acceptance rows directly; validator-narrowed PASS-scope without frozen-record passage citation is automatic FINAL-REJECT-CANDIDATE on the excluded axis.
 Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `SV-RESULT` on the `FINAL-ACCEPT` record.
-`FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input and opens `task-execution` for assigned-validator rejection analysis.
-Codex unavailable status records `fail-open:<reason>` with fallback final-acceptance inspection basis and conservative `SV-RESULT`; validator `PASS` identity remains the acceptance prerequisite.
+`FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input for `far-reject-routing`; enter `task-execution` only for assigned correction dispatch after team-lead classification.
+Codex unavailable status records `fail-open:<reason>` with fallback closure-inspection basis and conservative `SV-RESULT`; validator `PASS` identity remains the acceptance prerequisite.
 
 `FINAL-ACCEPT` record carries:
 - validator `PASS` identity
@@ -175,7 +175,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - Evidence-Quality Matrix supported scope
 - Feynman plain-explanation basis
 - team-lead own-review basis
-- Codex status
+- Codex MCP independent-review status
 - reconciliation result
 - 100% instruction-closure basis
 - user-ready completion basis, including operator-delivery closure when executable user-facing
@@ -190,7 +190,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback final-accept
 - evidence gap or contradiction
 - user-ready gap
 - team-lead own-review basis
-- Codex status
+- Codex MCP independent-review status
 - reconciliation result
 - validator return instruction
 - `IMAGE-EVIDENCE` for every visual / rendered defect — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, or other measurable visual delta), and the multimodal `Read` confirmation that the receiving lane opened the image directly. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
@@ -207,7 +207,7 @@ The fresh validator `PASS` from that rerun is the next Final Acceptance Review e
 
 ## Resolve Next Owner And Action
 - Reject-first gap opens `FINAL-REJECT`.
-- `FINAL-REJECT` opens assigned-validator rejection analysis through `task-execution`.
+- `FINAL-REJECT` opens `far-reject-routing` classification; correction dispatch enters `task-execution` only after team-lead route classification.
 - Validator correction packet opens CP5 route classification.
 - CP5 design-level classification opens Phase 2 correction.
 - CP5 implementation or operator-delivery classification opens Phase 5 correction.

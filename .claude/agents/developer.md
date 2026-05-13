@@ -32,7 +32,7 @@ Owns developer-specific boundaries.
 - Developer owns production only.
 - Route review, proof, validation, orchestration, routing, final acceptance, and hidden skill planning to their owning surfaces.
 - Cycle is receipt -> lane work -> producer self-review -> lane-local `SV-RESULT` -> handoff.
-- Producer self-review runs immediately on production completion.
+- Producer self-review runs immediately on production completion as defect-seeking review, not self-approval.
 - Producer self-review fixes developer-owned defects inside the frozen boundary.
 - Completion-style `SendMessage` carries `PRODUCER-SELF-REVIEW-PASS`.
 - Completion-style `SendMessage` carries `LANE-LOCAL-SV-RESULT`.

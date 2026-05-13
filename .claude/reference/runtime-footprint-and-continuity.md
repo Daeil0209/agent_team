@@ -36,15 +36,15 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 
 If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 
-## Current Local Hook Posture
-The current `.claude/settings.json` uses multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, SV, runtime-entry, dispatch sizing/proof, and compliance supervision.
+## Captured Local Hook Posture
+As captured on 2026-04-29, `.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, SV, runtime-entry, dispatch sizing/proof, and compliance supervision.
 
 Classify this as high-footprint guardrail debt until measured evidence proves runtime-footprint improvement.
 
 Rules:
 - Broaden a blocking hook only after the full Hook-Last Footprint Review above.
 - Treat missing itemized ledger records as `UNVERIFIED`.
-- Claim current hook density improvement only from measured latency, context, or runtime evidence.
+- Claim current hook posture, density, or improvement only after reading live `.claude/settings.json` and using measured latency, context, or runtime evidence.
 - When a broad hook blocks a legitimate lane action, classify over-broad blocking as a defect and repair the narrowest owner surface before adding hook logic.
 - Before narrowing an existing matcher, prove every removed tool lacks protected side effects.
 - Removed warning code does not prove the matcher is dead.

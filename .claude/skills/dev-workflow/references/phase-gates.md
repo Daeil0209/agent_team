@@ -33,10 +33,10 @@ Additional gate law:
 - Material scope, owner-map, deliverable-shape, route, proof-chain, acceptance-chain, or delivery-surface change reopens `work-planning` and supersedes prior reviewer/tester/validator acceptance evidence for affected surfaces
 - New or sharpened doctrine targeting the active acceptance chain makes affected carry-forward PASS, handoff, or closure evidence stale until `[RETRO-APPLY]` marks it not affected, fixed, invalidated, or deferred by the owning upstream record.
 - A visible user-surface contradiction, unreadable rendered text, partial rendered coverage, missing baseline feature/surface/control, or missing launch/stop path invalidates the affected PASS scope and reopens the smallest correction/acceptance loop; do not ask the user to choose whether to fix it
-- Validator PASS opens Final Acceptance Review for validator-required chains.
+- Validator PASS opens Final Acceptance Review closure reconciliation for validator-required chains.
 - Final Acceptance Review uses `final-acceptance-review.md`.
 - `FINAL-ACCEPT` opens workflow `Complete`.
-- `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
+- `FINAL-REJECT` opens `far-reject-routing` classification; correction dispatch enters `task-execution` after team-lead classification.
 
 ## Resolve Next Owner And Action
 - Satisfied phase gate executes the frozen next owner/action in the same execution segment.
@@ -45,5 +45,5 @@ Additional gate law:
 - Missing review convergence opens `review-convergence-advisory`.
 - Validator `PASS` opens Final Acceptance Review for validator-required chains.
 - `FINAL-ACCEPT` opens workflow `Complete`.
-- `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis.
+- `FINAL-REJECT` opens `far-reject-routing` classification; correction dispatch enters `task-execution` after team-lead classification.
 - Boundary-changing gate evidence reopens `work-planning`.

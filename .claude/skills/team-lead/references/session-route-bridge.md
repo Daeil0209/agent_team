@@ -92,7 +92,7 @@ Send teammate-required lead facts through packet fields, task state, workflow st
 Team runtime details use `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
 ## FAR FINAL-REJECT Bridge
-FAR `FINAL-REJECT` opens `task-execution` for assigned-validator rejection analysis before correction dispatch.
+FAR `FINAL-REJECT` opens `far-reject-routing` classification first; enter `task-execution` only for bounded correction dispatch after team-lead route classification.
 Validator correction packet is correction basis.
 Team-lead classification chooses design, implementation/operator-delivery, or replanning route.
 Detailed routing lives in `.claude/skills/team-lead/references/far-reject-routing.md`.

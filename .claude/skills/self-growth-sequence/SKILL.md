@@ -68,7 +68,7 @@ Self-growth tiers:
 - Quick hardening must not change evidence.
 - Quick hardening must not change acceptance.
 - Quick hardening must not change runtime effect.
-- Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local self-review -> verify no regression.
+- Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local defect-seeking self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
 - Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
 - Structural hardening: architecture-level changes, cross-document impact. Requires all steps plus governance review.

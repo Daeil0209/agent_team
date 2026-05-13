@@ -26,7 +26,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
 - materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
-- explicitly authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
 ### User-Perspective Gate
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer knowledge?

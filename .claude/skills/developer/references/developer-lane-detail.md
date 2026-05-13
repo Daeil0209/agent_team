@@ -40,10 +40,12 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 | All developer-owned production | common base packet plus `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when one or more completion-critical promised surfaces exist; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Active `dev-workflow` Phase 3+ supporting plan/design sub-artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, and `SCOPE-BASELINE`/`ACTIVE-SLICE` when the artifact freezes or changes multi-surface scope |
 | Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
-| Meaningful/high/critical risk | explicit acceptance pipeline: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator` |
+| Meaningful/high/critical risk | surface-driven acceptance chain: `REVIEW-OWNER: reviewer`; `PROOF-OWNER: tester` only when executable, rendered, runtime, interaction, or user-surface proof is material, otherwise `PROOF-OWNER: not-applicable:<basis>`; `ACCEPTANCE-OWNER: validator` only when final-arbitration trigger or acceptance basis requires validator verdict, otherwise `ACCEPTANCE-OWNER: not-applicable:<reviewer-closeable/local-verified-result basis>` |
 | Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, merge-integration, or bounded correction surface |
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
-| Governance-patch | All `All developer-owned production` fields plus `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`; not a standalone packet. `PRIOR-ANALYSIS` must cite upstream researcher/reviewer evidence when governance audit, review, or defect classification is material. |
+| Governance-patch | All `All developer-owned production` fields plus `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`; not a standalone packet. `PRIOR-ANALYSIS` must cite upstream researcher/reviewer evidence when governance audit, review, or defect classification is material; otherwise use `PRIOR-ANALYSIS: not-applicable:<basis>`. |
+
+Owner fields may use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
 
 ## Handoff Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
@@ -64,7 +66,7 @@ Minimum decisive production basis:
 - `ACCEPTANCE-OWNER`
 - `AGENT-FIT`
 - `SCOPE-MATCH`
-- `PRIOR-ANALYSIS`
+- `PRIOR-ANALYSIS` or `not-applicable:<basis>`
 - `SCOPE-BASELINE` and `ACTIVE-SLICE` when one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes exist
 - user-facing surface when it materially affects production; for executable surfaces, include launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start, shutdown/cleanup, and clean-relaunch production basis
 - first lane action

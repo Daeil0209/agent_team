@@ -54,7 +54,7 @@ Rendered composition → `visual-composition`.
 ## Boundary / Activation / Inputs
 Architecture work avoids duplicate ordinary coding work and preserves team-lead execution strategy.
 Activate for non-trivial applications, multi-module tools, stateful workflows, integration-heavy programs, or refactors where architecture quality materially affects outcome.
-Start only after purpose, business-rule packet, and output class are explicit.
+Start only after purpose and output class are explicit; require a business-rule packet only when workflow or business policy materially shapes the architecture.
 - Active request source, canonical contract, execution plan
 - Business workflow packet and relevant reference material or legacy code when present
 - For request-bound work: include the frozen request-fit basis and controlling business-workflow packet before freezing state or module boundaries

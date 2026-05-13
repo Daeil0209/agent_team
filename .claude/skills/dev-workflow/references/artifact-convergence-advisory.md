@@ -20,8 +20,8 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 - Resolve Next Owner And Action
 
 ## Authority
-Codex is advisory-only design-coherence review.
-team-lead owns phase design, Codex advisory consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
+Codex MCP provides independent design-coherence review with advisory-only authority.
+team-lead owns phase design, Codex MCP review consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
 Codex findings return to `team-lead` as redesign input; team-lead adjudicates them and synthesizes one coherent phase basis.
 For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-edits the document directly.
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
@@ -61,7 +61,7 @@ Missing required path records `fail-open:blocked_by_config`.
 
 ## Dual Review
 1. The artifact authoring owner writes or revises the canonical artifact from the frozen owner basis: team-lead for Phase 1/2 canonical (plan / design); the assigned producer for Phase 3+ separate-producer artifacts.
-2. team-lead own-review and Codex advisory run in parallel, with three discipline rules: (a) team-lead own-review basis (inspected surfaces, material specialist skills consumed that shape the artifact, axes, findings or `none`, next-phase risk) is recorded before any Codex output is read or used; (b) the first Codex packet in a pass uses canonical paths per `Packet` section above and must not include team-lead findings, verdict, or suggested fixes; (c) artifact-producer or developer self-review is input only and never satisfies team-lead own-review basis.
+2. team-lead defect-seeking own-review and Codex MCP independent review run in parallel, with three discipline rules: (a) team-lead own-review basis (inspected surfaces, material specialist skills consumed that shape the artifact, challenge axes, plausible defects/defeaters or `none`, next-phase risk) is recorded before any Codex output is read or used; (b) the first Codex packet in a pass uses canonical paths per `Packet` section above and must not include team-lead findings, verdict, or suggested fixes; (c) artifact-producer or developer self-review is input only and never satisfies team-lead own-review basis.
 3. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
 4. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
 5. Codex axes include user-perspective checks.
@@ -90,8 +90,8 @@ Missing required path records `fail-open:blocked_by_config`.
 28. The assigned producer is the artifact authoring owner for Phase 3+ separate-producer artifacts.
 29. After each revision, repeat steps 2-28 while material convergence value remains.
 30. Reconciliation challenges include both reviews when both reviews are material.
-31. Correction requires a fresh independent review pass starting from step 2.
-32. The changed artifact is reviewed again before the new Codex result is read or used.
+31. Correction requires a fresh independent review pass for the changed material surface before relying on the correction; unchanged non-material wording can use landing confirmation with basis.
+32. The changed material artifact surface is reviewed again before the new Codex result is read or used.
 33. Prior own-review, landing confirmation, diff-only spot-check, Codex-result relay, or consensus wording does not carry forward.
 
 ## Same-Boundary Loop
@@ -185,7 +185,7 @@ Do not print own-review findings, Codex findings, reconciliation tables, point l
 Record:
 - artifact path and phase
 - team-lead own-review basis status and verdict
-- Codex advisory status: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
+- Codex MCP independent-review status: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
 - accepted/rejected/deferred point counts
 - redesign plan validity for accepted findings: `not-needed`, `valid`, `invalid`, or `missing`
 - fallback inspection basis when fail-open is used

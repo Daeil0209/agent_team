@@ -2,7 +2,7 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-7 report shape and evidence inclusion; Communication And Reporting Law; Reference Binding"
+SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communication; Reference Binding"
 ---
 # team-lead: Reporting Surface Rules
 

@@ -36,7 +36,7 @@ Use these profiles inside `SV-PLAN` or `SV-RESULT`; do not create a third SV mod
 | `artifact-change` | doctrine, skill, agent, hook, code, config, reference, or produced artifact was modified | `SV-RESULT`; use `SV-PLAN` only when the change plan itself is disputed |
 | `proof-harness` | behavior, data, state, runtime, user-surface, generated artifact, or retained evidence proves a claim | `SV-RESULT` |
 | `handoff-report` | completion, user-facing report, closure claim, or redispatch basis is being formed | `SV-RESULT` |
-| `anti-self-certification` | same-lane positive closure, acceptance-grade claim, materially risky result, or convenient conclusion needs stronger counter-bias and owner-separation checks | both |
+| `anti-self-certification` | same-lane positive closure, acceptance-grade claim, materially risky result, or convenient conclusion needs defeater-first counter-bias and owner-separation checks | both |
 
 If more than one profile applies, use all material profiles. If profile choice changes owner, surface, deliverable, proof basis, or acceptance chain, reopen `work-planning`.
 
@@ -53,7 +53,7 @@ Load this reference when any condition below is true:
 - evidence is partial, conflicting, unstored, not user-surface, or weaker than the claim
 - lead-local work involves launch, runtime, smoke test, process spawn, generated artifact, screenshot/log/report, or operator-surface simulation
 
-When a trigger fires, using only the compact spine is insufficient for positive convergence. If the reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owner that can supply the missing basis.
+When a trigger fires, using only the compact spine is insufficient for positive convergence. The actor must identify plausible defeaters before confirmation. If the reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owner that can supply the missing basis.
 
 ## Challenge Lens Catalog
 Use every lens that materially applies to the target. Omission of an applicable triggered lens is verification failure.
@@ -63,7 +63,7 @@ Use every lens that materially applies to the target. Omission of an applicable 
 - Acceptance-fit lens: what acceptance surface matters?
 - Result-fit lens: does the current plan/result satisfy the explicit request, frozen semantic intent, material target intent, and acceptance surface?
 - Claim/evidence lens: what is the exact claim, what evidence supports it, what evidence would defeat it, and what residual uncertainty remains?
-- Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, or acceptance downgrade would a skeptical independent lane raise?
+- Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, acceptance downgrade, or disconfirming test would a skeptical independent lane raise?
 - Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, what breaks if it is removed, and whether `protected-restatement`, `design-tradeoff`, or `non-issue` classification defeats a defect label.
 - Detailed-design/mechanism lens: which lower-level unit, input, output, state transition, data flow, control flow, algorithm, interface, dependency, timing constraint, and error path make the intended behavior happen?
 - Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, required/omitted state, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
@@ -81,9 +81,9 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
 - routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
-- consequential top-level plans have coherent `CODEX-ADVISORY-BASIS`
-- `ACTIVE-WORKFLOW: dev-workflow` must show Codex advisory trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`
-- Codex advisory risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
+- consequential top-level plans have coherent `CODEX-ADVISORY-BASIS` when Codex MCP independent-review trigger handling is required or frozen
+- `ACTIVE-WORKFLOW: dev-workflow` must show Codex MCP independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>` when that review basis is required or frozen
+- Codex MCP independent-review risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
 - `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
@@ -110,7 +110,7 @@ If evidence is weaker than the claim, narrow the claim, downgrade to `INFERENCE/
 For AI analysis, diagnosis, consistency review, risk analysis, causal explanation, recommendation, or design judgment:
 - separate observation, inference, judgment, and recommendation
 - cite or name the evidence surface that supports each controlling claim
-- identify the strongest contrary interpretation or evidence that would defeat the conclusion
+- actively search for the strongest contrary interpretation or evidence that would defeat the conclusion
 - for defect labels or patch recommendations, verify the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications before positive wording
 - mark partial coverage as partial instead of generalizing to the whole system
 - do not treat fluent explanation, internal confidence, or repeated wording as evidence

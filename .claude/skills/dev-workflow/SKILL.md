@@ -29,8 +29,8 @@ PRIMARY-OWNER: team-lead
 Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the current owner transfers control here.
 Activation requires the frozen workflow route.
 
-Activation requires evaluated Codex advisory trigger handling.
-`CODEX-ADVISORY-BASIS` records trigger handling, adjudication, or fail-open truth, not Codex authority.
+Activation requires evaluated Codex MCP independent-review trigger handling.
+`CODEX-ADVISORY-BASIS` records trigger handling, adjudication, or fail-open truth for that independent review; it does not grant Codex authority.
 `work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
@@ -95,7 +95,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its owning phase.
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
-**Exit law**: user escalation requires `work-planning`, Codex confirmation review, and team-lead-verified evidence of the smallest true user-owned blocker.
+**Exit law**: user escalation requires `work-planning`, Codex MCP independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-owned blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
 **Exit law**: user questions become CP1 open questions or a proven user-owned blocker with next owner/action.
 
@@ -113,7 +113,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
-**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, `references/artifact-convergence-advisory.md` must be loaded and completed for that artifact.
+**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-advisory.md` only when the canonical plan artifact materially controls next-phase scope, risk, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
 **Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`; field schema is owned by `references/artifact-convergence-advisory.md` Output Record.
 
 ## Phase 2: Design
@@ -204,16 +204,16 @@ Load triggered references directly from `SKILL.md`.
 - `references/checkpoints.md`: CP1-CP5 trigger, auto-resolve, reopen/HOLD, and iteration reuse rules.
 - `references/phase-surfaces.md`: phase artifact minimums, option counts, implementation-surface, and Phase 4 user-surface proof defaults.
 - `references/phase-gates.md`: phase transition hard gates and cursor consumption law.
-- `references/artifact-convergence-advisory.md`: Codex-assisted, advisory-only dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail.
-- `references/review-convergence-advisory.md`: Codex-assisted, reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces.
-- `references/final-acceptance-review.md`: team-lead+Codex final ACCEPT/REJECT gate for validator-required chains after validator PASS.
+- `references/artifact-convergence-advisory.md`: Codex MCP independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; Codex remains non-authoritative.
+- `references/review-convergence-advisory.md`: Codex MCP independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; Codex remains non-authoritative.
+- `references/final-acceptance-review.md`: team-lead closure reconciliation with Codex MCP independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL` authority.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.
 
 Reference trigger rule:
 - `references/phase-gates.md` is mandatory when clearing, contesting, or changing a phase entry, phase exit, transition gate, checkpoint gate, workflow completion, or workflow `HOLD`.
-- `references/artifact-convergence-advisory.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase depends on it.
+- `references/artifact-convergence-advisory.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase materially depends on it for scope, risk, architecture, proof, acceptance, or downstream work; low-risk/no-new-decision artifacts record `not-applicable:<basis>`.
 - `references/review-convergence-advisory.md` is mandatory when material reviewer-owned review determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 - `references/final-acceptance-review.md` is mandatory when validator PASS is used for workflow `Complete`, or when `FINAL-REJECT` is recorded or consumed.
 - Any other listed reference is mandatory when its trigger is active.

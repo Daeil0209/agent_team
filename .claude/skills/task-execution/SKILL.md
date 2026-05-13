@@ -132,13 +132,13 @@ Branch rule:
 ## Step 3: Dispatch Truth
 Follow `.claude/skills/team-lead/references/output-surface-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
-Report only blocker, required user action, explicit status answer, next owner/action when blocked, or first `dispatch pending`.
+Report only blocker, required user action, explicit status answer, or next owner/action; keep `dispatch pending` as internal runtime truth.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
-- `dispatch pending` is reported once at first assignment success when a report is needed.
+- Assignment success reports use `next action` wording when user-facing reporting is needed.
 - No-change dispatch, ack, lane-count, waiting, and idle events stay internal.
 
 Recovery reconciliation:

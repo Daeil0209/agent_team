@@ -13,7 +13,7 @@ PRIMARY-OWNER: team-lead
 - Detailed target profiles, challenge lenses, artifact-change checks, harness/proof checks, synthesis checks, and expanded output fields live in `references/verification-targets-and-gates.md`.
 
 ## Purpose
-Verify only at the correct gate.
+Verify only at the correct gate and from a skeptical, defeater-seeking posture.
 Modes:
 - `SV-PLAN`: exception-only verification when a frozen plan is explicitly disputed or directly requested as the target.
 - `SV-RESULT`: verify a phase/stage-end consequential result before analyzed-result reporting, completion claim, or redispatch.
@@ -95,6 +95,8 @@ Fail when the target:
 Use the reference for artifact-change design-intent detail.
 
 ## Step 2: Critical Challenge
+Try to disprove the plan or result before any positive wording. Confirmation-only, convenience-aligned, or self-approval review is invalid.
+
 Ask the mode question:
 - `SV-PLAN`: is the frozen plan still the correct path?
 - `SV-RESULT`: is the result actually verified at the claim strength being used?
@@ -106,7 +108,7 @@ Compact challenge that always applies:
 - continuity: did same-session corrections, patches, recurrence barriers, and active doctrine govern this claim?
 - claim/evidence: what exact claim is made?
 - claim/evidence: what supports it?
-- claim/evidence: what would defeat it?
+- claim/evidence: what would defeat it, and was that defeater actively checked?
 - claim/evidence: what remains uncertain?
 - counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
 - defect-label: if the claim names a defect or patch recommendation, identify the owner with classification authority.
@@ -115,7 +117,7 @@ Compact challenge that always applies:
 - owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
 
 `anti-self-certification`:
-- same-lane positive closure starts suspect
+- same-lane positive closure starts as suspect, not presumed correct
 - name the strongest plausible contrary interpretation, evidence gap, or failure mode before convergence
 - materially risky or acceptance-grade surfaces can be narrowed, downgraded, held, reopened, or routed
 - they cannot be self-certified through SV alone

@@ -38,11 +38,11 @@ Score each module or function on 5 questions (1 point each):
 | if/else chains for type dispatch | Registry pattern (map of type → handler function) |
 | Hardcoded configuration lists | Config-backed with external source |
 | Switch on enum with inline logic | Plugin or strategy interface |
-Classify detected anti-patterns through reviewer severity and the refactoring matrix. For acceptance-blocking Major/Critical or RFP-1/RFP-2 cases, report reviewer blocking evidence with `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker`; otherwise report the pattern and replacement candidate as non-blocking debt.
+Classify detected anti-patterns through reviewer severity and the refactoring matrix. Report metric-only RFP signals as risk evidence; use `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker` only when acceptance, maintainability, or change-safety harm is demonstrated.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|
-| Urgent (RFP-1) | Files >300 lines, nesting >5 levels, same logic in 4+ places | Refactor before next feature; block merge |
+| Urgent (RFP-1) | Files >300 lines, nesting >5 levels, same logic in 4+ places | Refactor before next feature when harm is demonstrated; otherwise record urgent risk |
 | High (RFP-2) | Files >200 lines, nesting >4 levels, same logic in 3 places | Refactor in current sprint |
 | Medium (RFP-3) | Complex conditionals, unclear naming, missing type annotations | Schedule refactoring; record as technical debt |
 | Low | Style inconsistencies, minor naming issues | Record for future cleanup |

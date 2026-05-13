@@ -19,7 +19,7 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 - Resolve Next Owner And Action
 
 ## Authority
-Codex is reviewer-grade advisory only.
+Codex MCP provides reviewer-grade independent review with advisory-only authority.
 team-lead owns reconciliation and workflow cursor truth.
 Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.
@@ -64,7 +64,7 @@ Missing decisive reviewer-facing fields are not guessed.
 
 ## Blind Dual Review
 1. Start Claude reviewer through `task-execution`.
-2. Start Codex advisory from the same frozen reviewer packet fields without waiting for reviewer handoff.
+2. Start Codex MCP independent review from the same frozen reviewer packet fields without waiting for reviewer handoff.
 3. First Codex packet excludes Claude reviewer findings, reviewer verdict, team-lead verdict, and suggested fixes.
 4. team-lead must not use Codex findings to rewrite the Claude reviewer packet for the same pass.
 5. After both outputs exist, team-lead reconciles both point-by-point.
@@ -89,7 +89,7 @@ Accepted material findings become correction requirements.
 Rejected Codex and Claude reviewer points require governing doctrine, artifact evidence, or frozen request basis.
 Rubber-stamp acceptance or unexplained rejection is a convergence defect.
 
-After each correction, rerun Claude reviewer and Codex advisory as a new blind dual-review pass.
+After each correction, rerun Claude reviewer and Codex MCP independent review as a new blind dual-review pass.
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
@@ -141,7 +141,7 @@ It does not preserve prior reviewer, Codex, or reconciliation output as current-
 Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record
-Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-convergence-advisory.md` Output Record (artifact path/phase, Codex advisory state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
+Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-convergence-advisory.md` Output Record (artifact path/phase, Codex MCP review state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
 - review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
 
