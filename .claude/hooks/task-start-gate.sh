@@ -640,7 +640,7 @@ bootstrap_bash_segment_is_read_only() {
   # Inline node/python may be read-only only when the script body is inspectably inert.
   local is_inline_readonly_interpreter=0
   if printf '%s' "$stripped" | grep -Eq '^[[:space:]]*(node|nodejs|python([0-9]+([.][0-9]+)?)?)([[:space:]]+(-e|-c|<<))'; then
-    # Inspect raw $subcmd because inline script bodies live inside quotes.
+    # Inspect raw $subcmd; inline script bodies live inside quotes.
     if ! printf '%s' "$subcmd" | grep -Eq '(fs\.(write|mkdir|rm|rmdir|unlink|append|copyFile|rename|chmod|chown|symlink|truncate|utimes)|child_process|spawn[[:space:]]*\(|exec[[:space:]]*\(|execSync|spawnSync|require[[:space:]]*\([[:space:]]*['\''\"](child_process|http|https|net|dgram|dns|tls|cluster|worker_threads|repl|fs/promises)['\''\"]|import[[:space:]]*\([[:space:]]*['\''\"](child_process|http|https|net|dgram|dns|tls|cluster|worker_threads|repl|fs|fs/promises)['\''\"]|process\.binding[[:space:]]*\(|os\.(open|writeFile|system|popen|remove|unlink|rmdir|mkdir|chmod|chown)|process\.(exit|kill|abort|chdir)|eval[[:space:]]*\(|new[[:space:]]+Function|subprocess|shutil\.(move|copy|rmtree|chmod|chown)|urllib|requests\.|socket\.|http\.client|__import__[[:space:]]*\([[:space:]]*['\''\"](subprocess|os|socket|urllib|requests|http)|open[[:space:]]*\([^)]*['\''\"](w|a|x|wb|ab|xb|w\+|a\+|r\+))'; then
       is_inline_readonly_interpreter=1
     fi

@@ -79,7 +79,7 @@ Every queued item is patched, deferred by owning upstream record, or proven out-
 `FINAL` claim scope stays within Evidence-Quality Matrix supported scope.
 
 ## Internal-By-Default Content
-Internal orchestration means all procedure, planning, dispatch, runtime, lane-traffic, advisory, packet, progress, receipt, ack, measurement, route, staffing, and verification-record detail.
+Internal orchestration means all procedure, planning, dispatch, runtime, lane-traffic, review-tool, packet, progress, receipt, ack, measurement, route, staffing, and verification-record detail.
 It stays silent unless the user explicitly asks for status or the detail is necessary to report a blocker or required user action.
 
 ## Claim Control

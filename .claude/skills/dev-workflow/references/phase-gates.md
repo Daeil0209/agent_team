@@ -22,8 +22,8 @@ Additional gate law:
 - Phase advancement requires completion-grade evidence, not artifact existence alone
 - Carry-forward acceptance evidence is valid only when the original proof matched the same frozen scope, user surface, launch/read path, environment or equivalence basis, and acceptance chain. Otherwise it is stale for the affected surface and must be re-proven, narrowed, or reopened before advancement.
 - Phase/workflow completion requires `SCOPE-BASELINE` reconciliation. Evidence over an `ACTIVE-SLICE` cannot be widened into full-scope completion while any frozen baseline item is missing, stubbed, placeholder-only, unproven, or silently deferred.
-- Any artifact-advisory fail-open is not advisory resolution; for phase-gate material artifacts it requires conservative `SV-RESULT` plus documented fallback review before advancement
-- Route-level `CODEX-ADVISORY-BASIS`, developer self-review, discussion-only Codex output, or an unspined Codex call never satisfies artifact-level convergence.
+- Any artifact convergence fail-open is not Codex review resolution; for phase-gate material artifacts it requires conservative `SV-RESULT` plus documented fallback review before advancement
+- Route-level `CODEX-INDEPENDENT-REVIEW-BASIS`, developer self-review, discussion-only Codex output, or an unspined Codex call never satisfies artifact-level convergence.
 - Missing artifact-level convergence blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
 - Any review-convergence fail-open is not Codex agreement; for material review surfaces it requires Claude reviewer synthesis, documented fallback review basis, and `SV-RESULT` before advancement or completion
 - For material Phase 4/5 review surfaces, review-convergence trigger status must be explicit. Silent non-trigger, discussion-only Codex output, or unspined Codex calls do not satisfy the gate.
@@ -41,8 +41,8 @@ Additional gate law:
 ## Resolve Next Owner And Action
 - Satisfied phase gate executes the frozen next owner/action in the same execution segment.
 - Missing gate evidence keeps the phase cursor active.
-- Missing artifact convergence opens `artifact-convergence-advisory`.
-- Missing review convergence opens `review-convergence-advisory`.
+- Missing artifact convergence opens `artifact-convergence-review`.
+- Missing review convergence opens `review-convergence-review`.
 - Validator `PASS` opens Final Acceptance Review for validator-required chains.
 - `FINAL-ACCEPT` opens workflow `Complete`.
 - `FINAL-REJECT` opens `far-reject-routing` classification; correction dispatch enters `task-execution` after team-lead classification.

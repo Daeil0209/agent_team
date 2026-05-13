@@ -18,12 +18,12 @@ Keep detailed vertical rules in their own reference files.
 - A downstream owner needs the exact domain reference path before design, implementation, review, proof, or validation.
 
 ## Domain References
-- Event planning workflows load `references/event-planning-workflow.md`.
-- R&D proposal workflows load `references/rnd-proposal-workflow.md`.
-- R&D result report workflows load `references/rnd-result-report-workflow.md`.
-- Schedule planning workflows load `references/schedule-planning-workflow.md`.
-- Research report automation boundary decisions load `references/research-report-workflow-boundary.md`.
-- Budget, personnel, participation, allocation, period, reconciliation, and spreadsheet-migration workflows load `references/allocation-participation-workflow.md`.
+- Event planning workflows load `.claude/skills/business-workflow/references/event-planning-workflow.md`.
+- R&D proposal workflows load `.claude/skills/business-workflow/references/rnd-proposal-workflow.md`.
+- R&D result report workflows load `.claude/skills/business-workflow/references/rnd-result-report-workflow.md`.
+- Schedule planning workflows load `.claude/skills/business-workflow/references/schedule-planning-workflow.md`.
+- Research report automation boundary decisions load `.claude/skills/business-workflow/references/research-report-workflow-boundary.md`.
+- Budget, personnel, participation, allocation, period, reconciliation, and spreadsheet-migration workflows load `.claude/skills/business-workflow/references/allocation-participation-workflow.md`.
 
 ## Resolve Next Owner And Action
 - Matched domain vertical opens the listed reference.

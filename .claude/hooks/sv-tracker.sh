@@ -35,9 +35,8 @@ WORKER_NAME=""
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
-# Session-scoped planning-plus-SV-sequence marker; survives per-turn resets so
-# bounded continuation edits do not reload self-verification only because hook
-# sequence evidence already exists. Exact claim verification remains procedural.
+# Session-scoped planning-plus-SV marker survives per-turn resets.
+# Exact claim verification remains procedural.
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 # Session-scoped session-boot marker; consumed by dispatch gates when active
 # runtime requires monitoring before fresh consequential dispatch.

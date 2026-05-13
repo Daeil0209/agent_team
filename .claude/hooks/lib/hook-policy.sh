@@ -179,7 +179,7 @@ set_default_export HOOK_HEALTH_LOG "$LOG_DIR/hook-health.log"
 set_default_export RUNTIME_AUTOMATION_MODE "single-primary"
 set_default_export RUNTIME_AUTOREAP_ENABLED "0"
 set_default_export RUNTIME_KEEP_WATCHDOG_WHEN_IDLE ""
-# Available-memory thresholds; SOFT > HARD because lower MemAvailable is worse.
+# Available-memory thresholds: lower MemAvailable is worse, so SOFT > HARD.
 set_default_export RUNTIME_MEM_SOFT_KB "1572864"
 set_default_export RUNTIME_MEM_HARD_KB "786432"
 set_default_export RUNTIME_MEM_EMERGENCY_KB "393216"

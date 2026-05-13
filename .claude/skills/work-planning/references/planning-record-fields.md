@@ -19,7 +19,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `ROUTING-SIGNAL` must be one of `lead-local candidate`, `team-routing candidate`, `ambiguous-route`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
 - `DISPATCH-BLOCKERS` must be `[]`, `blocked:<owner-and-basis>`, or `authorization-required:<basis>`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
-- `CODEX-ADVISORY-BASIS` must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`. The compatibility field name refers to Codex MCP independent-review handling; advisory means non-authoritative, not unimportant.
+- `CODEX-INDEPENDENT-REVIEW-BASIS` must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
 - `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the Step 0 request-fit record enough to reconstruct request intent, deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, team-operation philosophy, target governance/design intent, and material priority order when those affect route, analysis, critique, review, validation, or patch truth.
@@ -75,7 +75,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 This table is the trigger floor.
 The receiving lane's lane-detail specialist matrix supplies additional specialist candidates.
 Specialist trigger scan also checks the receiving lane's lane-detail specialist matrix for material domain, architecture, quality, security, proof, tool, document, visual, or enterprise needs.
-For material specialist triggers outside this table, freeze the lane-appropriate required skill or advisory recommendation from the lane-detail matrix, or record `not-applicable:<basis>`.
+For material specialist triggers outside this table, freeze the lane-appropriate required skill or method recommendation from the lane-detail matrix, or record `not-applicable:<basis>`.
 `work-planning` records active trigger flags inside the freeze.
 Skill-freeze eligibility requires credible execution dependency.
 Skill-freeze target defaults to the skill's owner lane.
@@ -86,7 +86,15 @@ Methodology guidance goes to `SKILL-RECOMMENDATIONS`.
 Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, lifecycle, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
-- `CODEX-ADVISORY-BASIS` is mandatory for consequential `team-lead` plans after Codex MCP independent-review trigger evaluation. It records team-lead trigger handling, adjudication, or fail-open truth, not Codex authority. Use `triggered:*` when advisory points were adjudicated, `fail-open:*` when a required or triggered attempt could not complete, and `skipped:*` only when no trigger applies. If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>`; advisory access failure is `fail-open:*` and is not a blocker by itself.
+- `CODEX-INDEPENDENT-REVIEW-BASIS` is mandatory for consequential `team-lead` plans after Codex MCP independent-review trigger evaluation.
+- `CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead trigger handling, adjudication, or fail-open truth.
+- Codex output is not authority.
+- Use `triggered:*` when Codex points were adjudicated.
+- Use `fail-open:*` when a required or triggered attempt could not complete.
+- Use `skipped:*` only when no trigger applies.
+- If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-codex-review-trigger:<basis>`.
+- Codex MCP access failure is `fail-open:*`.
+- Codex MCP access failure is not a blocker by itself.
 - For any route eligible to enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or SV-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
@@ -119,7 +127,7 @@ PARALLEL-GROUPS:
 LANE-REQUIRED-SKILLS-MAP:
 SKILL-RECOMMENDATIONS:
 EXECUTION-READINESS-BASIS:
-CODEX-ADVISORY-BASIS:
+CODEX-INDEPENDENT-REVIEW-BASIS:
 NEXT-CONSEQUENTIAL-ACTION:
 DISPATCH-BLOCKERS:
 ```

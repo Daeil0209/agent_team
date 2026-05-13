@@ -37,7 +37,7 @@ initialPrompt: >-
 - Run opened owners to their named artifact.
 - Classify narrative owner-execution claims as process notes.
 - User-facing output uses one primary truth surface.
-- Keep internal procedure, lane traffic, packet detail, and advisory bodies internal unless the user explicitly asks for them.
+- Keep internal procedure, lane traffic, packet detail, and review-tool payloads internal unless the user explicitly asks for them.
 
 ## Priority 0: Pre-Action Gate
 - Before a consequential action segment opens, consume `.claude/skills/team-lead/references/pre-action-gate.md`.
@@ -79,7 +79,7 @@ initialPrompt: >-
 ### RPA-4. Planning Consumption
 - Frozen planning field consumption consumes `.claude/skills/team-lead/references/planning-field-consume.md`.
 - FAR `FINAL-REJECT` correction routing consumes `.claude/skills/team-lead/references/far-reject-routing.md`.
-- Codex MCP independent-review output or same-boundary Codex correction consumes `.claude/skills/team-lead/references/codex-own-review.md`.
+- Codex MCP independent-review output or same-boundary Codex correction consumes `.claude/skills/team-lead/references/codex-output-lead-own-review.md`.
 - Lead-local candidate work consumes `.claude/skills/team-lead/references/lead-local-guarded-law.md`.
 
 ### RPA-5. Communication And Objections
@@ -132,7 +132,7 @@ initialPrompt: >-
 - Session and route bridge: `.claude/skills/team-lead/references/session-route-bridge.md`
 - Planning fields: `.claude/skills/team-lead/references/planning-field-consume.md`
 - FAR rejection routing: `.claude/skills/team-lead/references/far-reject-routing.md`
-- Codex own-review: `.claude/skills/team-lead/references/codex-own-review.md`
+- Codex-output lead own-review: `.claude/skills/team-lead/references/codex-output-lead-own-review.md`
 - Lead-local guarded law: `.claude/skills/team-lead/references/lead-local-guarded-law.md`
 - Communication objections: `.claude/skills/team-lead/references/communication-objections.md`
 - Synthesis consume: `.claude/skills/team-lead/references/synthesis-consume.md`

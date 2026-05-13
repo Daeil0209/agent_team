@@ -7,7 +7,7 @@ PRIMARY-OWNER: team-lead
 ## Structural Contract
 - Inherits `CLAUDE.md` `Priority And Ownership` floor and `agents/team-lead.md`.
 - Sharpens only active edge-case detail.
-- Fixed top-level section order after Structural Contract: Purpose, Activation, Work-Planning Detailed Consume, Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail, Orchestration Defect Taxonomy.
+- Fixed top-level section order after Structural Contract: Purpose, Activation, Work-Planning Detailed Consume, Communication Detail, Agent Objection Detailed Consume, Synthesis Detail, Reporting Detail, Interrupt-Resume Detail, Autonomous Judgment Detail, Orchestration Defect Taxonomy, Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
 - PRIMARY-OWNER: team-lead
 - Binding detail for active team-lead edge cases.
@@ -37,7 +37,7 @@ Load the direct trigger-specific file.
 - `references/session-route-bridge.md`: fresh-instruction interpretation, session bridge, route bridge, FAR bridge entry.
 - `references/planning-field-consume.md`: frozen planning field order and stale-field reaction.
 - `references/far-reject-routing.md`: FAR `FINAL-REJECT` correction routing.
-- `references/codex-own-review.md`: same-pass Codex own-review discipline.
+- `references/codex-output-lead-own-review.md`: same-pass Codex-output lead own-review discipline.
 - `references/lead-local-guarded-law.md`: lead-local conditions and guarded-local law.
 - `references/communication-objections.md`: message-class truth, lifecycle debt, `hold|blocker`, `scope-pressure`, and resolution loops.
 - `references/synthesis-consume.md`: completion-grade synthesis, delivery-contract comparison, redispatch, FAR correction-packet consumption.
@@ -62,8 +62,8 @@ Default session start and ordinary RPA-4 planning consume compact rules after ed
 When this skill is loaded, its rules are decisive detail for the active edge case.
 
 ## Work-Planning Detailed Consume
-- Trigger: RPA-4 missing/contradictory frozen field, FAR `FINAL-REJECT` correction routing, lead-local routing scenarios, Codex same-pass own-review, specialist-skill consumption, Guarded-Local Law.
-- Owner: `references/planning-field-consume.md`, `references/far-reject-routing.md`, `references/codex-own-review.md`, or `references/lead-local-guarded-law.md` by active sub-trigger.
+- Trigger: RPA-4 missing/contradictory frozen field, FAR `FINAL-REJECT` correction routing, lead-local routing scenarios, Codex-output lead own-review, specialist-skill consumption, Guarded-Local Law.
+- Owner: `references/planning-field-consume.md`, `references/far-reject-routing.md`, `references/codex-output-lead-own-review.md`, or `references/lead-local-guarded-law.md` by active sub-trigger.
 
 ## Communication Detail
 - Trigger: assignment vs workflow-control vs lifecycle-control vs completion class distinction, lifecycle-debt visibility, primary-downward-class limit on a single agent segment.

@@ -78,7 +78,7 @@ Agent acknowledgments, partial outputs, lane counts, dispatch state, and waiting
 - Warning-bearing closeout names exact residual state, exact hold reason, and next recovery surface.
 
 ## Internal Content
-Internal content is procedure, route, runtime, lifecycle, packet, lane-traffic, advisory, and traversal detail.
+Internal content is procedure, route, runtime, lifecycle, packet, lane-traffic, review-tool, and traversal detail.
 Report only the selected primary truth surface in the compact output shape.
 
 Treat `internal:` labels as internal-content labels.

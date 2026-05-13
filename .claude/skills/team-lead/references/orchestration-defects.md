@@ -14,7 +14,7 @@ Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest
 Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
 
 ### Skipped Owner Chain
-- Trigger: bypassing an active triggered owner skill/sequence before lookup, advisory, judgment, dispatch, mutation, or report.
+- Trigger: bypassing an active triggered owner skill/sequence before lookup, review-tool use, judgment, dispatch, mutation, or report.
 - Owning rule: `agents/team-lead.md` RPA-2 trigger order and RPA-3.
 - Correction owner: open the missed owner.
 - Correction owner: consume the missed owner.
@@ -53,7 +53,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 
 ### Premature Agent Replacement
 - Trigger: replacing or shutting down a missing/idle agent before owning receipt/execution follow-up, wait, and assigned-surface activity/side-effect check.
-- Owning rule: `agents/team-lead.md` RPA-5 and `references/communication-objections.md`.
+- Owning rule: `agents/team-lead.md` RPA-5 and `.claude/skills/team-lead/references/communication-objections.md`.
 - Correction owner: run the recovery sequence on the existing agent before replacement.
 
 ### Reporting Leak
@@ -62,7 +62,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Trigger: emitting runtime internals to the user while explicit user request is missing.
 - Trigger: emitting lane internals to the user while explicit user request is missing.
 - Trigger: emitting convergence tables to the user while explicit user request is missing.
-- Trigger: emitting advisory payloads to the user while explicit user request is missing.
+- Trigger: emitting review-tool payloads to the user while explicit user request is missing.
 - Trigger: emitting internal artifact bodies/diffs to the user while explicit user request is missing.
 - Owning rule: `agents/team-lead.md` RPA-7 and `.claude/skills/team-lead/references/output-surface-law.md`.
 - Correction owner: collapse to one truth surface and keep procedure scaffolding internal.

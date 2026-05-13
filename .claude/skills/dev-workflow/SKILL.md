@@ -11,7 +11,7 @@ PRIMARY-OWNER: team-lead
   2. `Workflow Core Law`
   3. Phase sections (Phase 0-5) in order
   4. Reference-owned workflow sections (active references in `references/`):
-     - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Advisory`, `Review Convergence Advisory`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
+     - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Review`, `Review Convergence Review`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
      - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Self-Growth And Structural Feedback`
 - New top-level phase definitions require governance review.
@@ -30,8 +30,8 @@ Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the 
 Activation requires the frozen workflow route.
 
 Activation requires evaluated Codex MCP independent-review trigger handling.
-`CODEX-ADVISORY-BASIS` records trigger handling, adjudication, or fail-open truth for that independent review; it does not grant Codex authority.
-`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>`.
+`CODEX-INDEPENDENT-REVIEW-BASIS` records trigger handling, adjudication, or fail-open truth for that independent review; it does not grant Codex authority.
+`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-codex-review-trigger:<basis>`.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
@@ -73,8 +73,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 4. Convergence And Evidence
 - Keep planning, dispatch, monitoring, synthesis, verification, and reporting gates active inside phase sequencing.
-- Same-artifact convergence stays inside `artifact-convergence-advisory` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
-- Same-review-surface convergence stays inside `review-convergence-advisory` under the same unchanged-boundary rule.
+- Same-artifact convergence stays inside `artifact-convergence-review` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
+- Same-review-surface convergence stays inside `review-convergence-review` under the same unchanged-boundary rule.
 - `task-execution` owns correction dispatch or reuse when another lane must revise.
 - The phase owner owns integrated redesign planning and decision correction.
 - For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document.
@@ -113,8 +113,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
-**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-advisory.md` only when the canonical plan artifact materially controls next-phase scope, risk, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
-**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-ADVISORY-BASIS`; field schema is owned by `references/artifact-convergence-advisory.md` Output Record.
+**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-review.md` only when the canonical plan artifact materially controls next-phase scope, risk, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
+**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`; field schema is owned by `references/artifact-convergence-review.md` Output Record.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
@@ -143,12 +143,12 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
-**Exit law**: Phase 2 closes only when the artifact-convergence-advisory record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete.
+**Exit law**: Phase 2 closes only when the artifact-convergence-review record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete.
 **Exit law**: once Phase 2 closure is satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning`.
 **Exit law**: the Phase 2 internal detail bundle is the CP4 basis.
 **Exit law**: the Phase 2 artifact-convergence record is design-coherence level.
-**Exit law**: it is not wording-review level or route-level `CODEX-ADVISORY-BASIS`.
-**Exit law**: field schema is owned by `references/artifact-convergence-advisory.md` Output Record.
+**Exit law**: it is not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`.
+**Exit law**: field schema is owned by `references/artifact-convergence-review.md` Output Record.
 **Exit law**: field schema includes internal detail bundle status and material specialist contract status when specialist output shapes implementation, proof, or acceptance.
 
 ## Phase 3: Implementation
@@ -204,8 +204,8 @@ Load triggered references directly from `SKILL.md`.
 - `references/checkpoints.md`: CP1-CP5 trigger, auto-resolve, reopen/HOLD, and iteration reuse rules.
 - `references/phase-surfaces.md`: phase artifact minimums, option counts, implementation-surface, and Phase 4 user-surface proof defaults.
 - `references/phase-gates.md`: phase transition hard gates and cursor consumption law.
-- `references/artifact-convergence-advisory.md`: Codex MCP independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; Codex remains non-authoritative.
-- `references/review-convergence-advisory.md`: Codex MCP independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; Codex remains non-authoritative.
+- `references/artifact-convergence-review.md`: Codex MCP independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; Codex remains non-authoritative.
+- `references/review-convergence-review.md`: Codex MCP independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; Codex remains non-authoritative.
 - `references/final-acceptance-review.md`: team-lead closure reconciliation with Codex MCP independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL` authority.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
@@ -213,8 +213,8 @@ Load triggered references directly from `SKILL.md`.
 
 Reference trigger rule:
 - `references/phase-gates.md` is mandatory when clearing, contesting, or changing a phase entry, phase exit, transition gate, checkpoint gate, workflow completion, or workflow `HOLD`.
-- `references/artifact-convergence-advisory.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase materially depends on it for scope, risk, architecture, proof, acceptance, or downstream work; low-risk/no-new-decision artifacts record `not-applicable:<basis>`.
-- `references/review-convergence-advisory.md` is mandatory when material reviewer-owned review determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
+- `references/artifact-convergence-review.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase materially depends on it for scope, risk, architecture, proof, acceptance, or downstream work; low-risk/no-new-decision artifacts record `not-applicable:<basis>`.
+- `references/review-convergence-review.md` is mandatory when material reviewer-owned review determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
 - `references/final-acceptance-review.md` is mandatory when validator PASS is used for workflow `Complete`, or when `FINAL-REJECT` is recorded or consumed.
 - Any other listed reference is mandatory when its trigger is active.
 - If a mandatory reference cannot load, `HOLD` or reopen the owning path.

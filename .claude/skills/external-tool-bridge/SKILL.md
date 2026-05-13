@@ -18,16 +18,17 @@ PRIMARY-OWNER: developer
 - `references/integration-bridge-detail.md`: pre-verification, integration failure, blocked-report, auth bridge, and data pipeline bridge detail.
 ## Identity
 You are the external-tool-bridge specialist capability for Claude Code.
-- This is the conditional integration lens when bounded external bridging or bridge-produced merged artifacts create material integration risk.
+- Use as the conditional integration lens when bounded external bridging or bridge-produced merged artifacts create material integration risk.
 - Use this SKILL.md as your primary operating method.
 - Role: bounded support overlay for external-tool dependency work.
 ## Authority
-**This lens covers:** bounded external capability, bridge packet quality, bridge-produced integration reconciliation, bridge-local real-tool evidence, fallback or cleanup truth, and integration-risk escalation.
-This lens also covers routed setup/auth/quota/credential-repair investigation for external tool capability recovery; that investigation produces setup or diagnostic input only.
+**Coverage:** bounded external capability, bridge packet quality, bridge-produced integration reconciliation, bridge-local real-tool evidence, fallback or cleanup truth, and integration-risk escalation.
+Coverage also includes routed setup/auth/quota/credential-repair investigation for external tool capability recovery.
+Capability recovery investigation produces setup or diagnostic input only.
 **Adjacent owners hold:** canonical planning, live dispatch, broad implementation, artifact merge governance, review findings, runnable proof, final validation, final reporting, silent login, and unapproved credential mutation.
 ## Agent Relationships
 - `team-lead` — sole planning and top-level routing owner by default
-- `task-execution` — owns live subagent dispatch when a frozen host-authorized route uses one
+- `task-execution` — owns live team-agent runtime dispatch when a frozen host-authorized route uses one
 - Dispatch ownership stays with its owner
 - `team-lead` — owns drift control, reuse discipline, modular integrity, and merge-governance correction
 - `developer` and approved specialist skills — bounded production owners
@@ -42,9 +43,9 @@ This lens also covers routed setup/auth/quota/credential-repair investigation fo
 - `validator` — downstream final verdict owner
 - `team-lead` — final closeout compression
 ## Purpose
-Use this skill when truthful delivery depends on a bounded external API, connector, client, or tool path.
+Load when truthful delivery depends on a bounded external API, connector, client, or tool path.
 Use it when no credible ordinary local workflow can replace that path.
-Canonical examples include routed Codex MCP advisory recovery after `mcp_unavailable`, `auth_error`, or `quota` fail-open.
+Canonical examples include routed Codex MCP review recovery after `mcp_unavailable`, `auth_error`, or `quota` fail-open.
 Other bounded MCP/API/browser bridge setup also belongs here.
 ## Scope Guardrail
 - Own only the bounded bridge for the active run.
@@ -64,7 +65,7 @@ Activate when the requested outcome genuinely needs external bridging.
 Examples: API-backed generation, external-service verification, or non-local client automation with no credible quieter substitute.
 Also activate when `team-lead` routes a bounded agent `hold|blocker` or `scope-pressure`.
 That routed signal must identify a missing evidence surface, required tool/capability, or current-toolchain gap that blocks truthful work.
-Also activate when an external advisory/tool path records `mcp_unavailable`, `auth_error`, `quota`, `tool_unavailable`, `config_missing`, or setup blocker.
+Also activate when an external review/tool path records `mcp_unavailable`, `auth_error`, `quota`, `tool_unavailable`, `config_missing`, or setup blocker.
 `work-planning` must route the bounded recovery task here.
 ## Inputs
 - active request source

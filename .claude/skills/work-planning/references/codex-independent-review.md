@@ -10,7 +10,6 @@ Pre-`work-planning` Codex output is not planning evidence.
 
 ## Contents
 - Trigger
-- Terminology
 - Authority
 - Tool Discipline
 - Packet
@@ -20,7 +19,9 @@ Pre-`work-planning` Codex output is not planning evidence.
 
 ## Trigger
 Required trigger evaluation:
-- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate this reference. It does not require a successful Codex call when no material advisory trigger applies or advisory access records `fail-open:*`.
+- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate this reference.
+- No material Codex review trigger records `skipped:no-material-codex-review-trigger:<basis>`.
+- Codex MCP access failure records `fail-open:*`.
 
 Risk-triggered:
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
@@ -31,18 +32,17 @@ Risk-triggered:
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or owner-evidence route
 
 Skip only for light, receipt/control/status/lifecycle/clarification-only, or no-trigger consequential work.
-For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-advisory-trigger:<basis>` after evaluating this section; advisory tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
-
-## Terminology
-`CODEX-ADVISORY-BASIS` is a compatibility field name. In this governance set, Codex MCP work is an independent quality review by an external advisory capability. "Advisory" means Codex does not own route, dispatch, validation, acceptance, mutation, or user communication authority; it does not mean optional low-value opinion when the trigger is material.
+For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-codex-review-trigger:<basis>` after evaluating this section.
+Codex MCP tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
 
 ## Authority
-Codex MCP provides independent structural quality review with advisory-only authority.
+Codex MCP performs independent structural quality review.
+Codex output is evidence, not authority.
 Review route, owner, workflow, parallel-fit, readiness, skill-map, acceptance path, and needless-user-gate defects from the user's usable-result perspective.
 Choose the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
 
 Codex never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
-`CODEX-ADVISORY-BASIS` records team-lead handling of the independent Codex MCP review trigger, adjudication, or fail-open truth; Codex output alone never satisfies it.
+`CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead handling of the independent Codex MCP review trigger, adjudication, or fail-open truth; Codex output alone never satisfies it.
 team-lead owns the plan, accepted revisions, rejected points, and final route.
 
 ## Tool Discipline
@@ -51,7 +51,7 @@ team-lead owns the plan, accepted revisions, rejected points, and final route.
 - Consume `.mcp.json` `codex` args as the model/effort source.
 - Do not guess model, effort, verbosity, or tool shape from memory.
 - Use read-only operating constraints when the tool schema permits: `sandbox: "read-only"`, `approval-policy: "never"`, `cwd: <project-root>`.
-- Do not use shell `codex exec`, custom wrappers, worker lanes, login repair, package install, credential repair, or settings/hook edits inside advisory.
+- Do not use shell `codex exec`, custom wrappers, worker lanes, login repair, package install, credential repair, or settings/hook edits inside Codex MCP review.
 - Record `fail-open:<reason>` for `timeout`, `quota`, `parse_fail`, `mcp_unavailable`, `auth_error`, `tool_unavailable`, or `blocked_by_config`.
 - Retry one first-use connection miss before final `fail-open`.
 
@@ -112,23 +112,23 @@ Parameterizable uncertainty is not a blocker.
 4. Retry one first-use connection miss before final fail-open.
 5. Record `fail-open:<reason>` after exhausted MCP/tool/auth/quota/timeout/parse failure.
 
-Every valid point returned by a successful advisory requires team-lead adjudication before the planning basis is complete.
+Every valid point returned by a successful Codex MCP review requires team-lead adjudication before the planning basis is complete.
 - Accept only by changing the affected planning field or blocker basis.
 - Reject only by citing doctrine, user instruction, evidence, or frozen request basis.
 - Generic "noted" rationale is invalid.
 - Unadjudicated valid points leave `work-planning` incomplete.
 
 Freeze one:
-- `CODEX-ADVISORY-BASIS: skipped:<basis>`
-- `CODEX-ADVISORY-BASIS: triggered:accepted=<n>;rejected=<n>;dropped=<n>`
-- `CODEX-ADVISORY-BASIS: fail-open:<reason>`
+- `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`
+- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:accepted=<n>;rejected=<n>;dropped=<n>`
+- `CODEX-INDEPENDENT-REVIEW-BASIS: fail-open:<reason>`
 
 Post-route-freeze Codex MCP independent-review expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
 
 ## Resolve Next Owner And Action
-- Accepted advisory points update the affected planning field or blocker basis.
-- Rejected advisory points record cited doctrine, user instruction, evidence, or frozen request basis.
-- Exhausted advisory attempt records `CODEX-ADVISORY-BASIS: fail-open:<reason>`.
-- No-trigger advisory path records `CODEX-ADVISORY-BASIS: skipped:<basis>`.
+- Accepted Codex points update the affected planning field or blocker basis.
+- Rejected Codex points record cited doctrine, user instruction, evidence, or frozen request basis.
+- Exhausted Codex review attempt records `CODEX-INDEPENDENT-REVIEW-BASIS: fail-open:<reason>`.
+- No-trigger Codex review path records `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`.
 - Unadjudicated valid points keep `work-planning` open.
-- Post-route-freeze advisory expansion opens the owning governance change path.
+- Post-route-freeze Codex review expansion opens the owning governance change path.

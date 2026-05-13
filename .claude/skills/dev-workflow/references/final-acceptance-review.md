@@ -47,7 +47,7 @@ Codex evaluates independently from the same frozen packet.
 team-lead reconciles own-review, Codex findings, skipped-review basis, or fail-open fallback basis point by point, then applies reject-first decision order.
 Each available evaluation identifies the governing final-acceptance rules.
 Each available evaluation judges evidence after rule identification.
-Codex applies `feynman-clarity` as an independent-review lens with advisory-only authority.
+Codex applies `feynman-clarity` as a non-authoritative independent-review lens.
 Codex names the user or receiver.
 Codex names the task.
 Codex names the completion path.
@@ -201,7 +201,7 @@ Assigned validator writes the correction packet using active validator-lane-deta
 task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
 team-lead direct execution of production, test, or validation correction work without validator-authored correction packet routing through task-execution is lane-bypass; treat as procedural failure equivalent to silent self-certification.
 Validator correction packet names root-cause class, correction owner surface, required evidence, and revalidation target; it is evidence for route classification, not route freeze.
-team-lead classifies the owning correction route per `references/checkpoints.md` CP5 Auto-resolve priority before dispatch.
+team-lead classifies the owning correction route per `.claude/skills/dev-workflow/references/checkpoints.md` CP5 Auto-resolve priority before dispatch.
 After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.
 

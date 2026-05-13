@@ -18,7 +18,7 @@ Use this reference when hooks could be confused with owner procedure.
 Use this reference when settings could be confused with owner procedure.
 Use this reference when tools could be confused with proof.
 Use this reference when tools could be confused with acceptance.
-Use this reference when advisory output could be confused with owner judgment.
+Use this reference when non-owner tool output could be confused with owner judgment.
 Use this reference when runtime state could be confused with project documents.
 It keeps runtime guardrails narrow and prevents runtime signals from replacing owner procedure.
 
@@ -34,7 +34,7 @@ It keeps runtime guardrails narrow and prevents runtime signals from replacing o
 - A tool signal might be treated as acceptance.
 - A claim depends on hook, settings, sandbox, or runtime-footprint behavior.
 - External MCP influence affects a route.
-- Advisory tooling influence affects a route.
+- External review-tool influence affects a route.
 - Codex output influence affects a route.
 - Codex output influence affects a verdict.
 - A runtime state file or team-runtime artifact is involved.
@@ -65,16 +65,16 @@ Stop before treating tool availability as validation.
 Stop before treating tool availability as acceptance.
 Stop before treating tool availability as dispatch truth.
 Stop before treating tool availability as owner completion.
-Stop before treating advisory output as a blocker.
-Stop before treating advisory output as a mutator.
-Stop before treating advisory output as validator.
-Stop before treating advisory output as acceptance owner.
+Stop before treating non-owner tool output as a blocker.
+Stop before treating non-owner tool output as a mutator.
+Stop before treating non-owner tool output as validator.
+Stop before treating non-owner tool output as acceptance owner.
 
 ## Resolve Next Owner And Action
 - A stopped hook route opens the smallest non-runtime correction owner.
 - A stopped runtime-footprint claim opens measurement or narrows the claim to `UNVERIFIED`.
 - A stopped tool-signal route opens the owner procedure that actually owns the claim.
-- A stopped advisory route opens the owner procedure that actually owns the claim.
+- A stopped non-owner tool route opens the owner procedure that actually owns the claim.
 
 ## Runtime Boundary Rules
 - Hooks are last-resort runtime guards.
@@ -93,7 +93,7 @@ Stop before treating advisory output as acceptance owner.
 - Hooks guard observable runtime edges that would otherwise produce reserved hard-deny danger.
 - `settings.json` deny rules protect credential and secret paths.
 - Treat external MCP as capability.
-- Treat advisory tools as capability.
+- Treat external review tools as capability.
 - Runtime-boundary claims keep ownership with the governing role, skill, lane, or sequence.
 - Route blocker decisions to the owning procedure.
 - Route dispatch decisions to the owning procedure.

@@ -128,7 +128,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 11. Rerun stale owner consumption to outcome before downstream movement.
 12. Source lookup does not satisfy named-owner consumption.
 13. Remembered procedure text does not satisfy named-owner consumption.
-14. Advisory input does not satisfy named-owner consumption.
+14. Non-owner review input does not satisfy named-owner consumption.
 15. Unchecked owner summary does not satisfy named-owner consumption.
 16. `team-routing candidate` opens `task-execution`.
 17. `ambiguous-route` opens `task-execution`.

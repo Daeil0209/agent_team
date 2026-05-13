@@ -116,7 +116,7 @@ Resolve derivable uncertainty through evidence-backed default, configurable para
 Escalate to the user only for irreversible, destructive/security, operator-policy-choice, or proven user-owned blockers.
 
 ## Evidence Boundary
-Source lookup, memory, advisory input, and internal judgment are evidence only.
+Source lookup, memory, review-tool input, and internal judgment are evidence only.
 Consume owner skills through their triggers.
 Consume references through their triggers.
 Route proof to the proof owner.

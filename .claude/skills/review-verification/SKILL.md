@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- This is a common team-lead skill for review-sequence discipline.
+- Use as the common team-lead skill for review-sequence discipline.
 - New peer top-level sections require explicit governance review.
 - Route detailed domain checklists to the owning specialist skill.
 
@@ -18,11 +18,11 @@ You are the review-verification capability for Claude Code.
 - A bare `REQUIRED-SKILLS: [review-verification]` entry for a lane is invalid; packetization must name the required lens or route full workflow activation to `team-lead`.
 
 ## Authority
-**This lens covers:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure adherence, execution force, integrity, negative risk, and patch-worthiness.
+**Coverage:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure adherence, execution force, integrity, negative risk, and patch-worthiness.
 
 **Adjacent owners hold:** planning freeze, independent review findings, test execution, final validation verdict, implementation, governance patch execution, and runtime enforcement.
 
-This skill outputs `review_verification_packet`.
+Output: `review_verification_packet`.
 `validator` owns final `PASS/HOLD/FAIL`.
 `reviewer`, `tester`, `validator`, `self-verification`, `work-planning`, `update-upgrade-sequence`, and `self-growth-sequence` keep their owner gates.
 
@@ -45,11 +45,12 @@ User-narrowed scope defines the bounded corpus when the user explicitly narrows 
 Incomplete exhaustive inspection blocks `FINAL`, full-corpus, and no-open-surface claims.
 Report uninspected surfaces as `OPEN-SURFACES` and downgrade the claim to `UNVERIFIED` or `HOLD`.
 
-Use it to prevent these failures:
+Prevent these failures:
 - starting analysis before the target intent is reconstructed
 - judging risk from one document while ignoring adjacent owner surfaces
 - upgrading evidence into a defect before the common finding basis proves `confirmed-defect`
-- adding rules where removal, tightening, replacement, or re-home would be cleaner
+- adding explanatory rules where delete, trim, merge, re-home, replace, or tighten can make the rule executable
+- compressing distinct obligations into one sentence
 - claiming no risk or closure from partial evidence, including an uninspected user-use, reuse, example, data, or application path
 - patching before integrity, coherence, and owner-boundary checks are complete
 
@@ -147,7 +148,7 @@ Inspect every frozen target surface and material adjacent owner surface.
 Exhaustive review is satisfied by full inspected coverage of the frozen corpus or by an explicit user-narrowed scope.
 Inventory proof establishes corpus coverage only.
 Content inspection remains required for owner-relevant surfaces.
-Separate primary owner surfaces from references, generated outputs, runtime state, advisory evidence, and stale artifacts.
+Separate primary owner surfaces from references, generated outputs, runtime state, non-authoritative evidence, and stale artifacts.
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
@@ -158,6 +159,8 @@ Classify a design tradeoff as a defect only when live evidence proves protected-
 Classify deletion, non-enforcement, hook silence, runtime omission, heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence.
 Hook matcher burden requires a matched-tool side-effect map before defect classification.
 Silent ledgers, planning markers, SV markers, lifecycle markers, and recovery markers are protected functions until proven non-material.
+Classify explanatory defense as a defect when direct executable wording can carry the rule.
+Classify compressed multi-rule wording as a defect when it hides trigger, owner, stop, evidence, or exception boundary.
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
 
 ### 5. Design Removal-First Patch
@@ -165,6 +168,10 @@ Split bundled governance sentences before patch design.
 Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation.
 Design the patch from the smallest owner surface.
 Try `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` before adding text.
+Use direct executable wording.
+Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
+Delete explanatory defense when direct executable wording preserves the rule.
+Split compressed rules until each sentence carries one action or one rule.
 `REMOVAL-FIRST-PATCH-DESIGN` must state the selected existing-text operation.
 `REMOVAL-FIRST-PATCH-DESIGN` must state why rejected removals would lose protected function.
 Append-only patch designs are invalid while owner text can carry the correction without meaning loss.

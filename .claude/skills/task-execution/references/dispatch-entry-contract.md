@@ -25,7 +25,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 5. `ROUTING-SIGNAL`
 6. `NEXT-CONSEQUENTIAL-ACTION`
 7. `DISPATCH-BLOCKERS`
-8. `CODEX-ADVISORY-BASIS`
+8. `CODEX-INDEPENDENT-REVIEW-BASIS`
 9. `EXECUTION-READINESS-BASIS`
 10. `AGENT-MAP`
 11. `PARALLEL-GROUPS`
@@ -44,13 +44,13 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - Valid `not-applicable` bases are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route that `work-planning` kept dispatch-owned without authorizing an agent dispatch move yet.
 - `not-applicable` is invalid once an authorized agent dispatch move exists.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path. File-only, guessed, or pre-`work-planning` measurement is not dispatch-ready.
-- `CODEX-ADVISORY-BASIS` is dispatch context only for Codex MCP independent-review handling.
+- `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for Codex MCP independent-review handling.
 - `task-execution` consumes the frozen `triggered:*`, `fail-open:*`, or `skipped:*` truth.
 - Does not call Codex.
 - Does not adjudicate Codex points.
 - Does not turn `fail-open:*` into a blocker unless `work-planning` already marked the route blocked.
-- If a team-lead dispatch route lacks required `CODEX-ADVISORY-BASIS`, stop and reopen `work-planning`.
-- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-advisory-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
+- If a team-lead dispatch route lacks required `CODEX-INDEPENDENT-REVIEW-BASIS`, stop and reopen `work-planning`.
+- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-codex-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.

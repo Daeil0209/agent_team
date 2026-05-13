@@ -81,10 +81,10 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
 - routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
-- consequential top-level plans have coherent `CODEX-ADVISORY-BASIS` when Codex MCP independent-review trigger handling is required or frozen
-- `ACTIVE-WORKFLOW: dev-workflow` must show Codex MCP independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-advisory-trigger:<basis>` when that review basis is required or frozen
-- Codex MCP independent-review risk triggers from `.claude/skills/work-planning/references/codex-advisory.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
-- `CODEX-ADVISORY-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
+- consequential top-level plans have coherent `CODEX-INDEPENDENT-REVIEW-BASIS` when Codex MCP independent-review trigger handling is required or frozen
+- `ACTIVE-WORKFLOW: dev-workflow` must show Codex MCP independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-codex-review-trigger:<basis>` when that review basis is required or frozen
+- Codex MCP independent-review risk triggers from `.claude/skills/work-planning/references/codex-independent-review.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
+- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
 - team-lead workspace discovery, repository search, file reads, runtime probing, or external lookup is the frozen `NEXT-CONSEQUENTIAL-ACTION` or a verified `LEAD-LOCAL-WORK-ITEMS` entry

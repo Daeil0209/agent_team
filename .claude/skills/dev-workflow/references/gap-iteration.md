@@ -85,7 +85,7 @@ Verify:
 - tester proof surface and validator acceptance surface aligned to the same resolved interaction/control inventory
 
 ## Coverage Signals
-Scale implementation-completeness signals by deliverable type per `references/phase-surfaces.md`.
+Scale implementation-completeness signals by deliverable type per `.claude/skills/dev-workflow/references/phase-surfaces.md`.
 Use implementation-completeness signals as team-lead judgment inputs.
 A single blocking defect blocks advancement regardless of completeness signal.
 Full coverage still requires reviewer and tester sign-off on the acceptance chain.

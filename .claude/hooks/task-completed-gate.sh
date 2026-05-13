@@ -171,12 +171,8 @@ try {
   }
 
   latest = latestExactTask || latestFallback;
-  // When teammateName is absent and the entry was found via taskIdAnchorMatch,
-  // the matched entry's sessionId is the agent's session — it is not in
-  // candidateSessionIds (which only contains the lead's session from the event).
-  // Include it here so evidenceState resolves to the actual agent session markers
-  // rather than falling back to the lead's session and rejecting the report as
-  // "report-before-planning" due to the lead's WP timestamp post-dating the report.
+  // Add taskIdAnchorMatch sessionId so evidenceState uses actual agent markers.
+  // Avoid lead-session fallback for report-before-planning checks.
   const taskIdAnchorSession = (!teammateName && latestExactTask)
     ? trimText(latestExactTask.sessionId || "")
     : "";

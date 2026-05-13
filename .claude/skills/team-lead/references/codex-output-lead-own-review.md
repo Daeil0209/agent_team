@@ -4,10 +4,10 @@ LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
 SOURCE-RULES: "RPA-4 Codex MCP independent-review output or same-boundary correction; Reference Binding; Procedure And Ownership"
 ---
-# team-lead: Codex Own-Review Discipline
+# team-lead: Codex-Output Lead Own-Review Discipline
 
 ## Purpose
-Use this reference when Codex MCP independent-review output or same-boundary correction output could be treated as convergence without team-lead own-review.
+Use this reference when Codex MCP independent-review output or same-boundary correction output could be treated as convergence without same-pass team-lead own-review.
 
 ## Consume When
 - Codex MCP independent-review output shapes planning, artifact judgment, review, redesign, or correction.
@@ -38,15 +38,15 @@ Stop before relay until team-lead adjudicates the output.
 ## Rules
 - Treat every same-boundary correction pass as a new Codex pass.
 - Satisfy own-review only with same-pass team-lead defect-seeking review that names accepted points, rejected points, and unresolved gaps.
-- Treat prior-pass own-review as advisory context.
+- Treat prior-pass own-review as non-current context.
 - Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
 - Team-lead own-review consumes material specialist skills before convergence acceptance.
 - Team-lead reconciliation consumes material specialist skills before redispatch.
-- Prior carry-forward is advisory context only.
-- Landing confirmation is advisory context only.
-- Spot-check is advisory context only.
-- Codex-result relay is advisory context only.
-- Consensus wording is advisory context only.
+- Prior carry-forward is non-current context only.
+- Landing confirmation is non-current context only.
+- Spot-check is non-current context only.
+- Codex-result relay is non-current context only.
+- Consensus wording is non-current context only.
 - Lawful fail-open applies only when the owning reference names it.
 - Rubber-stamp acceptance is a defect.
 - Unexplained rejection is a defect.

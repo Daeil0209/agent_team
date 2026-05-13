@@ -246,7 +246,7 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
    Quick hardening can use owner-local inspection only when owner surface, write scope, and meaning preservation are unambiguous.
    Consume the emitted `review_verification_packet` before ownership finalization.
-   This is the default for all patch surfaces above.
+   Apply this default to all patch surfaces above.
    The narrow single-file quick-hardening wording-fix exception still records owner-surface citation.
    Lane inspection, reviewer input, or Codex input is evidence; the emitted `review_verification_packet` is the gate.
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.

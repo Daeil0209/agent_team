@@ -182,7 +182,7 @@
 - Runtime state is runtime-owned.
 - Report prose rules as context guidance.
 - Report technical enforcement only from runtime or settings evidence.
-- Treat external MCP/advisory tools as capabilities.
+- Treat external MCP and review tools as capabilities.
 - Team-lead coordination follows official agent-team channels.
 - Teammate work uses independent Claude Code session context.
 - Teammate packets carry task-specific context.

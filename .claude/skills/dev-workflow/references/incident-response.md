@@ -22,7 +22,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
   - T0: system halt, production down, data loss risk, or equivalent stop condition
   - T1: governance block, core feature broken, launch-path failure, or work that must be fixed before continuation
   - T2: quality gate defect that can be fixed in the current iteration cycle
-  - T3: advisory issue to record and schedule
+  - T3: issue to record and schedule
 
 2. Impact analysis
 - Name affected components, services, workflows, users, downstream work, and regression risk.

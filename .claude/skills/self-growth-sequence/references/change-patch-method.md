@@ -55,7 +55,7 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 - Use the post-execution live owner documents as the current governance basis for post-verification, affected-surface audit, and follow-on review.
 - When running simulation, smoke, or review verification, use the post-execution live owner documents, not memory, pre-patch snapshots, stale mirrors, or prior verdicts.
 - Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts.
-- If that basis is absent or unproved, treat the agent result as advisory and verify the live owner documents locally or redispatch with a self-contained packet carrying the existing basis.
+- If that basis is absent or unproved, treat the agent result as non-authoritative and verify the live owner documents locally or redispatch with a self-contained packet carrying the existing basis.
 - Use the resulting diff as change evidence.
 - Treat pre-execution snapshots and prior verdicts as baseline or preservation evidence only; memory-only recall is not governance evidence.
 - When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
@@ -94,7 +94,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Before drafting, freeze positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation.
 - If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
-- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner advisory warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
+- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner guidance warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
 - Warning, block, deny, deletion, restriction, or removal edits are valid only when that positive execution path remains explicit and executable.
 - Before drafting, enumerate affected surfaces beyond the edited file.
 - Affected surfaces include exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors.
@@ -193,10 +193,10 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
-- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue advisory or `HOLD`.
+- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue guidance-only or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks technically guard observable governance procedure edges.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
-- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `advisory` or `doctrine-only` until the meaning is packetized into exact fields.
+- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `guidance-only` or `doctrine-only` until the meaning is packetized into exact fields.
 - Do not add new hard-blocks merely to raise apparent coverage or enforcement rate.
 - Protect operator autonomy and ordinary throughput.
 - For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.

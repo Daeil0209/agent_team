@@ -9,7 +9,7 @@ For consequential work in a session with prior patches, confirmed corrections, r
 - planning-time before parallel route freeze
 - dispatch-time while constructing assignment-grade packets
 - phase-movement before opening the next phase or owner
-- synthesis-time before consuming lane handoffs or advisory convergence
+- synthesis-time before consuming lane handoffs or review convergence
 - report-time before consequential user-facing output
 
 At planning-time, check whether prior same-session decisions or doctrine patches changed:

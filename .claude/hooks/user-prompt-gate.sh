@@ -145,8 +145,8 @@ if (stateExists) {
 NODE
 }
 
-# Agent sessions skip prompt-level lead enforcement. Prefer the session
-# registry; TMUX naming is only a fallback for contexts without a known id.
+# Agent sessions skip prompt-level lead enforcement. Use the session registry;
+# TMUX naming is only a fallback for contexts without a known id.
 if runtime_sender_session_is_worker "$PROMPT_SESSION_ID" || is_worker_session; then
   exit 0
 fi
@@ -251,8 +251,8 @@ for (const root of unique(roots)) {
   }
 }
 
-// Generic delete approval may resolve from exactly one active team-runtime
-// project root only when the prompt names project-root or output cleanup intent.
+// Generic delete approval resolves from exactly one active team-runtime project
+// root only when the prompt names project-root or output cleanup intent.
 // Safety: workspace child, protected roots excluded, and exactly one candidate;
 // ambiguity grants no approval.
 if (approved.length === 0 && genericRuntimeDeleteIntent) {

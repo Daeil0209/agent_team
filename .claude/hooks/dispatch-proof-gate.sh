@@ -526,11 +526,11 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
         ;;
     esac
     if [[ "$acceptance_warning_needed" == "true" ]]; then
-      emit_packet_warning "Developer dispatch may have incomplete acceptance ownership. Add acceptance chain if known; agent must HOLD if review, proof, or final acceptance ownership is ambiguous."
+      emit_packet_warning "Developer dispatch acceptance ownership is unresolved. Add REVIEW-OWNER, PROOF-OWNER, and ACCEPTANCE-OWNER, or cite explicit not-applicable bases allowed by the frozen acceptance risk; agent must HOLD if review, proof, or final acceptance ownership remains ambiguous."
     fi
   fi
 
-  # Advisory: governance-patch guardrail check
+  # Warning: governance-patch guardrail check
   if [[ "$TASK_CLASS_NORM" == "governance-patch" || "$TASK_CLASS_NORM" == "governancepatch" ]]; then
     gov_warning_needed="false"
     if [[ -z "$CHANGE_BOUNDARY_RAW" ]]; then
@@ -542,10 +542,10 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
     if [[ "$gov_warning_needed" == "true" ]]; then
       emit_packet_warning "Governance-patch dispatch missing CHANGE-BOUNDARY or WRITE-SCOPE. These are minimum guardrails only; developer governance patches must also satisfy the semantic owner docs, including full developer production basis and material PRIOR-ANALYSIS evidence."
     fi
-    # Migration advisory: detect move/migrate/re-home without meaning inventory
+    # Migration warning: detect move/migrate/re-home without meaning inventory
     if [[ -n "$CHANGE_BOUNDARY_RAW" ]] && printf '%s' "$CHANGE_BOUNDARY_RAW" | grep -qiE '(move|migrate|re-home|transfer|relocate)'; then
       if ! printf '%s' "$CHANGE_BOUNDARY_RAW" | grep -qiE '(source.?meaning|meaning.?inventory|cross.?reference)'; then
-        emit_packet_warning "Governance-patch appears to be a migration but CHANGE-BOUNDARY may lack source-meaning inventory or cross-reference list."
+        emit_packet_warning "Governance-patch migration signal lacks source-meaning inventory or cross-reference list in CHANGE-BOUNDARY."
       fi
     fi
   fi

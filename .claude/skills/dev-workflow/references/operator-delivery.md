@@ -126,7 +126,7 @@ Classify the root cause at the narrowest owner.
 Phase 5 owns implementation or cleanup repair.
 Phase 2 owns delivery-contract or design weakness.
 `work-planning` owns changed deliverable shape, operator OS, proof/acceptance chain, or user requirement.
-Do not close it as advisory residue.
+Do not close it as guidance residue.
 When the frozen operator surface is still satisfiable, team-lead routes directly to Phase 5 operator-proof or repair and attempts non-destructive team-side proof before user escalation.
 Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required, or the user explicitly redirects scope.
 

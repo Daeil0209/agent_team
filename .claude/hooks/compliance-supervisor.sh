@@ -110,12 +110,6 @@ is_secret_or_credential_path() {
   return 1
 }
 
-# governance_reference_structured_edit_actor_allowed() removed.
-# Allow-list actor gating violated [HOOK-LAST] (not a MANIFEST hard-deny category)
-# and the over-broad-blocking rule. Wholesale-overwrite existence gate remains the pinpoint
-# protection for governance reference content; structured Edit/Update/MultiEdit
-# always produces reviewable diffs.
-
 mutation_payload_exceeds_compact_surface_budget() {
   local char_count="${1-0}"
   local line_count="${2-0}"
@@ -829,7 +823,7 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
 
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # Shared patterns are defined once before these wrappers.
-# S02_IMPLEMENTATION_PATTERN remains case-local because it depends on sender context.
+# S02_IMPLEMENTATION_PATTERN stays case-local; sender context is required.
 # Lead context uses exact predicates below; broad operational prefixes must not bypass later mutation checks.
 allowed_git_readonly_subcmd() {
   local sanitized
@@ -1050,30 +1044,21 @@ fi
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0
 	      fi
-	      # Retired-skill-reference.md anti-pattern is a structural concern, not a hard-deny danger.
-	      # Owner doctrine (update-upgrade-sequence + skill-introduction reference) governs that case.
-	      # Hook stays pinpoint per CLAUDE.md [HOOK-LAST] / MANIFEST hard-deny list.
-		      if is_governance_reference_path "$CANONICAL_PATH"; then
-	        # Wholesale rewrite tools (Write/NotebookEdit) on EXISTING references/ files are never allowed —
-	        # Update/Upgrade Sequence requires structured Edit/Update/MultiEdit so diff is reviewable.
-	        # New-file creation is creation, not rewrite, and falls through to the actor check below.
-	        # Mirrors the existence-gated pattern used by the high-traffic governance surface block.
-        case "$TOOL_NAME" in
-          Write|NotebookEdit)
-            if [[ -e "$CANONICAL_PATH" ]]; then
-		              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/Update/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
-              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
-              exit 0
-            fi
-            ;;
-        esac
-        # Structured Edit/Update/MultiEdit produces reviewable diffs; user reviews them.
-        # Actor-identity gating is allow-list shape and not a MANIFEST hard-deny category;
-        # removed per [HOOK-LAST] / over-broad-blocking rule. Wholesale-overwrite block above remains the
-        # pinpoint protection. Surface info-only marker for traceability.
-        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-structured-edit-allowed" || true
+
+	      if is_governance_reference_path "$CANONICAL_PATH"; then
+	        case "$TOOL_NAME" in
+	          Write|NotebookEdit)
+	            if [[ -e "$CANONICAL_PATH" ]]; then
+	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/Update/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+	              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
+	              exit 0
+	            fi
+	            ;;
+	        esac
+        # Structured reference edits are allowed; wholesale rewrite is blocked above.
+	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-structured-edit-allowed" || true
         # fall through to allow structured governance reference maintenance
-      fi
+	      fi
 
       if is_secret_or_credential_path "$CANONICAL_PATH"; then
         emit_deny "Direct edits to credential or secret files are blocked in this project."
@@ -1139,10 +1124,7 @@ fi
     if command_is_governance_file_rm_compound_with_readonly_followup "$CLEAN_COMMAND"; then
       exit 0
     fi
-    # Content-preserving relocation/structure carve-out: mv and mkdir within .claude/ are
-    # not destruction (mv preserves content; mkdir adds structure). Allowed before the broad
-    # mutation block so cleanup operations like relocating one orphan hook file into `.claude/hooks/archive/`
-    # are not falsely classified as governance-mutation requiring structured-tool review.
+    # Allow content-preserving .claude relocation and structure commands before broad mutation checks.
     if command_is_narrow_governance_relocation "$CLEAN_COMMAND"; then
       exit 0
     fi
@@ -1185,9 +1167,7 @@ fi
       fi
     fi
 
-    # Catastrophic primitives only: filesystem format, raw block-device write, root delete.
-    # `git reset --hard` removed per [HOOK-LAST]: it is reversible via reflog and is a
-    # user-choice repository operation, not a MANIFEST hard-deny category.
+    # Block catastrophic primitives only: filesystem format, raw block-device write, root delete.
     if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'; then
       emit_deny "Catastrophic shell primitive blocked (mkfs/dd if=/rm -rf /). Use a safer bounded command or obtain explicit user approval first."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "catastrophic-shell" || true
@@ -1230,11 +1210,8 @@ for (const sub of parts) {
   const words = tokenize(sub);
   if (!words || words.length < 2) continue;
   if (!["rm", "rmdir"].includes(words[0])) continue;
-  // Per-rm-subcommand metacharacter guard: only rm/rmdir's own argv must
-  // be free of dynamic-expansion characters (`, $(), backticks, globs, brace
-  // expansion, regex char-class). I/O redirections (>, <) belong to other
-  // subcommands and never reach this loop because they appear in non-rm
-  // segments of a compound command.
+  // Check only rm/rmdir argv for dynamic-expansion characters.
+  // I/O redirections belong to other compound-command segments.
   if (/[`$(){}*?[\]]/.test(sub)) {
     process.stdout.write("rm-subcommand-metacharacters-unsafe"); process.exit(0);
   }
@@ -1279,11 +1256,7 @@ NODE
         exit 0
       fi
     fi
-    # Worker implementation-pattern allow-list block removed per [HOOK-LAST] /
-    # over-broad-blocking rule: blocking ordinary dev commands (mkdir/touch/git/npm/python/...)
-    # for workers is allow-list shape, not a MANIFEST hard-deny category. Outside-workspace
-    # mutation is already pinpoint-blocked at the rm target restriction (above) and at the
-    # interpreter-bypass check (below). Workers run ordinary dev commands by default.
+    # Do not allow-list-block ordinary worker dev commands; objective filesystem guards handle risky edges.
 
     # No broad lead operational prefix allowlist. Exact predicates below handle
     # read-only git inspection and bounded stale-index-lock recovery; other

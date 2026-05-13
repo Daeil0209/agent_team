@@ -186,13 +186,9 @@ SPLIT_BASIS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRI
 DISPATCH_BLOCKERS_NORM="$(normalize_dispatch_text "$(dispatch_field_raw_value "$DESCRIPTION" "DISPATCH-BLOCKERS" 2>/dev/null || true)")"
 WRITE_SCOPE_RAW="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
 
-# Phase-3 / dev-workflow-specific dispatch advisory removed per F-G-7 — workflow doctrine
-# (work-planning + dev-workflow + task-execution packet preflight) owns those concerns.
-# Hook stays pinpoint per CLAUDE.md [HOOK-LAST] / MANIFEST hard-deny ledger.
+# Phase/workflow dispatch readiness stays doctrine-owned; this hook checks runtime collisions.
 
-# Sharded researcher dispatches are intentionally parallel runtime instances.
-# The hook recognizes them only by explicit shard identity fields because packet
-# mode wording is doctrine context, not a hook behavior controller.
+# Sharded researcher dispatch requires explicit shard identity fields.
 _is_sharded_researcher=false
 SHARDED_TARGET_NAME=""
 if [[ "$TARGET_LANE" == "researcher" ]]; then
@@ -218,8 +214,7 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    # Lifecycle-pending is recoverable handoff defect per MANIFEST, not hard-deny.
-    # Downgraded from deny to warn per [HOOK-LAST] / over-broad-blocking rule.
+    # Lifecycle-pending is recoverable handoff debt.
     emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$SHARDED_TARGET_NAME")"
     exit 0
   fi
@@ -237,15 +232,13 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    # Lifecycle-pending is recoverable handoff defect per MANIFEST, not hard-deny.
-    # Downgraded from deny to warn per [HOOK-LAST] / over-broad-blocking rule.
+    # Lifecycle-pending is recoverable handoff debt.
     emit_dispatch_warning "agent '${TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$TARGET_NAME")"
     exit 0
   fi
 fi
 
-# Exact live target collisions above stay blocking. Missing WORK-SURFACE
-# is recoverable packet debt, so hook-last policy warns instead of blocking.
+# Exact live target collisions block. Missing WORK-SURFACE warns.
 STANDBY_COUNT="$(standby_worker_count_for_surface "$DISPATCH_WORK_SURFACE")"
 if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
   STANDBY_SUMMARY="$(standby_worker_summary_for_surface "$DISPATCH_WORK_SURFACE")"
@@ -272,15 +265,15 @@ case "$TARGET_LANE" in
   researcher)
     if dispatch_field_present "$DESCRIPTION" "SHARD-ID" || dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
       if ! dispatch_field_present "$DESCRIPTION" "SHARD-ID"; then
-        emit_dispatch_warning "sharded researcher dispatch omits SHARD-ID; task-execution should repair the packet with shard identity before dispatch."
+        emit_dispatch_warning "sharded researcher dispatch omits SHARD-ID; task-execution must repair the packet with SHARD-ID before dispatch."
         exit 0
       fi
       if ! dispatch_field_present "$DESCRIPTION" "SHARD-BOUNDARY"; then
-        emit_dispatch_warning "sharded researcher dispatch omits SHARD-BOUNDARY; task-execution should repair the packet with non-overlap boundary before dispatch."
+        emit_dispatch_warning "sharded researcher dispatch omits SHARD-BOUNDARY; task-execution must repair the packet with SHARD-BOUNDARY before dispatch."
         exit 0
       fi
       if ! dispatch_field_present "$DESCRIPTION" "MERGE-OWNER"; then
-        emit_dispatch_warning "sharded researcher dispatch omits MERGE-OWNER; task-execution should repair the packet with merge owner before dispatch."
+        emit_dispatch_warning "sharded researcher dispatch omits MERGE-OWNER; task-execution must repair the packet with MERGE-OWNER before dispatch."
         exit 0
       fi
     fi

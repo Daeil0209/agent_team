@@ -77,7 +77,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - If production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary, stop only the blocked path.
 - Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.
 - Include common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
-- Include candidate route if known.
+- Include candidate route when known.
 - Include the smallest next executable step.
 - Tool, dependency, runtime, or evidence-surface gaps route through the explicit blocker path.
 - If the packet is too wide but naturally splitable, return one concrete split shape before any edits.

@@ -51,9 +51,9 @@ task_create_error() {
 [[ -n "$TASK_SUBJECT" ]] || deny_task_create "$(task_create_error "a non-empty task subject.")"
 [[ -n "$TASK_DESCRIPTION" ]] || deny_task_create "$(task_create_error "a non-empty task description so the shared task list remains a reliable state surface.")"
 
-# Minimal-guidance policy: TaskCreate should block only when the shared task row
-# is effectively unusable as a state surface. Non-empty subject + description are
-# sufficient for execution; bounded-scope and completion coordinates remain best
-# practice but do not justify a hard block by themselves.
+# Minimal-guidance policy: TaskCreate blocks only when the shared task row is
+# effectively unusable as a state surface. Non-empty subject and description are
+# sufficient for execution. Bounded-scope and completion coordinates do not
+# justify a hard block by themselves.
 
 exit 0

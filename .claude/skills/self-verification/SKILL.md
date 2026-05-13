@@ -47,7 +47,7 @@ Load and run the appropriate mode:
 3. `SV-RESULT`: before a completion claim.
 4. `SV-RESULT`: before redispatching from a synthesized result.
 
-In-phase repeated review, advisory, correction, and convergence checks stay with the active owner.
+In-phase repeated review, independent-review, correction, and convergence checks stay with the active owner.
 Temporal gate: verify first, then act or report.
 Carry-forward stays valid inside the same frozen workflow loop for non-reporting iteration only.
 Phase/stage-end reporting needs current `SV-RESULT` for the exact outgoing claim.

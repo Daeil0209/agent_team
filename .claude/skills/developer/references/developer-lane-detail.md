@@ -107,7 +107,7 @@ Insufficient handoff examples:
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology guidance inside an already bounded development production surface.
 - Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
-- Developer lane evaluation selects advisory or lane-local specialist skills for the production surface.
+- Developer lane evaluation selects recommended or lane-local specialist skills for the production surface.
 
 Specialist skills with `PRIMARY-OWNER: developer`:
 - practical work-tool product patterns: `work-tool-patterns`

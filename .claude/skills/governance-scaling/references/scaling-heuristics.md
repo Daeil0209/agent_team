@@ -12,7 +12,7 @@ These signals indicate a likely tier. They inform `team-lead` judgment. Project-
 |---|---|
 | `terraform/`, `k8s/`, `docker-compose.yml` present in repo | Precision |
 | Security-sensitive changes, auth systems, secrets management | Precision |
-| MCP server, external advisory tool, credential/session bridge, or external-tool capability promotion | Standard; Precision if credentials, security boundary, blocking authority, or final-acceptance authority changes |
+| MCP server, external review tool, credential/session bridge, or external-tool capability promotion | Standard; Precision if credentials, security boundary, blocking authority, or final-acceptance authority changes |
 | API integration, third-party service wiring, multi-file feature | Standard |
 | Structured development project with spec or design doc | Standard |
 | Single page, simple script, isolated config change, typo fix | Lightweight |
@@ -63,7 +63,7 @@ A composite score gives team-lead a quantitative view of project quality trends.
 | Error recovery rate | 20 pts | When issues occur, how quickly and cleanly are they resolved? |
 | Iteration efficiency | 15 pts | How many iteration cycles needed before acceptance? (fewer = better) |
 | Scope stability | 15 pts | How often does scope change after plan approval? (less change = better) |
-**Score Interpretation (advisory only):**
+**Score Interpretation (guidance only):**
 | Range | Signal | Team-Lead Action |
 |---|---|---|
 | 86-100 | Strong execution | Reduce oversight only after direct evidence confirms routine low-risk work |
@@ -72,7 +72,7 @@ A composite score gives team-lead a quantitative view of project quality trends.
 | 31-50 | Concerning | Full governance pipeline for all work, root cause analysis |
 | 0-30 | Critical | Pause and reassess project approach with user |
 **Rules:**
-- Score is advisory for tier review.
+- Score guides tier review.
 - Score changes are reported to team-lead as trend signals.
 - Team-lead uses score alongside direct evidence and user feedback
 - Score calculation happens at phase transitions, not continuously

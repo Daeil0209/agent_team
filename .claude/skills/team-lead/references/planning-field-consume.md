@@ -41,7 +41,7 @@ Read frozen planning fields in this order:
 6. `ACTIVE-REQUEST-TIER`
 7. `TIER-RAISE-REASON`
 8. `ACTIVE-WORKFLOW`
-9. `CODEX-ADVISORY-BASIS`
+9. `CODEX-INDEPENDENT-REVIEW-BASIS`
 10. `ACTIVE-SEQUENCE`
 11. `ROUTING-SIGNAL`
 12. `NEXT-CONSEQUENTIAL-ACTION`
@@ -70,7 +70,7 @@ Read frozen planning fields in this order:
 - Invalidly skipped Codex MCP independent-review basis reopens `work-planning`.
 - Pre-`work-planning` Codex MCP independent-review basis reopens `work-planning`.
 - `triggered:*` requires active adjudication.
-- Treat `fail-open:*` as advisory-unavailable evidence.
+- Treat `fail-open:*` as Codex-review-unavailable evidence.
 - Required `PARALLEL-GROUPS` carries boundary, non-overlap, and measured/cited burden basis.
 - File-only, guessed, or pre-`work-planning` parallel measurement reopens `work-planning`.
 - Named `ACTIVE-WORKFLOW` opens the workflow owner named by `NEXT-CONSEQUENTIAL-ACTION`.

@@ -75,7 +75,7 @@ When exact instruction wording materially affects acceptance, decision-fit, or r
 When planning or the active workflow already froze methodology guidance for the lane, the packet must also carry:
 - `SKILL-RECOMMENDATIONS`
 
-`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and advisory only inside the already bounded lane surface.
+`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and guidance-only inside the already bounded lane surface.
 It never creates lane ownership, authorizes lane-core skill listing, or changes proof/acceptance ownership.
 If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 

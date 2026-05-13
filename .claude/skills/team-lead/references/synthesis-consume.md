@@ -34,7 +34,7 @@ Stop positive synthesis when the conclusion outruns the reconciled verified surf
 Stop positive synthesis when required shard outputs are missing, late, unintegrated, or not explicitly deferred/out-of-scope.
 Stop positive synthesis when audit findings are labeled as defects without the common finding-class basis and tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign severity, priority, patch-worthiness, or confirmed-defect status through the common finding basis.
-Stop positive synthesis when quality, evidence, independent review, proof, validation, Codex-advisory, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis.
+Stop positive synthesis when quality, evidence, independent review, proof, validation, Codex independent review, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis.
 Stop positive synthesis when an agent conclusion uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`.
 Stop positive synthesis while `[RETRO-APPLY]` affected prior evidence remains stale or unclassified.
 

@@ -7,7 +7,7 @@ auto-inject: false
 
 Team operating rule: additional-agent lane work uses `TeamCreate` plus team-scoped `Agent`.
 
-Standalone `Agent` supplies fallback or advisory evidence only.
+Standalone `Agent` supplies fallback or non-authoritative evidence only.
 
 Lead-local or single-lane routing fits sequential chains, same-file edits, dependency-coupled steps, quick targeted changes, and latency-sensitive single-surface work.
 

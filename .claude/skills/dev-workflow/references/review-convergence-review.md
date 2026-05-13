@@ -1,4 +1,4 @@
-# dev-workflow: Review Convergence Advisory
+# dev-workflow: Review Convergence Review
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
@@ -19,7 +19,8 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 - Resolve Next Owner And Action
 
 ## Authority
-Codex MCP provides reviewer-grade independent review with advisory-only authority.
+Codex MCP performs reviewer-grade independent review.
+Codex output is evidence, not review authority.
 team-lead owns reconciliation and workflow cursor truth.
 Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.
@@ -45,7 +46,7 @@ Do not run for receipt/status/control-only messages, typo-only/cosmetic-only rev
 If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
 
 ## Packet
-Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/work-planning/references/codex-advisory.md`.
+Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/work-planning/references/codex-independent-review.md`.
 Every packet includes:
 - `.claude/CLAUDE.md`
 - `.claude/agents/reviewer.md`
@@ -70,7 +71,16 @@ Missing decisive reviewer-facing fields are not guessed.
 5. After both outputs exist, team-lead reconciles both point-by-point.
 
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
-Axes must include user-perspective and avoidable-user-burden checks. When the reviewed surface is operator-facing rendered UI, Codex axes also include: operator-naive comprehension (per AC-supporting element verdict — clear / partially-clear / unclear), image-inspection coverage (each cited screenshot or full-page capture supporting an AC verdict or finding opened via multimodal `Read` and matched against design-stated expectation; cite-path-only acceptance flagged as procedural failure), and visual benchmark consumption (when novel/composite UI, `benchmark-simulation` characteristics actually reflected in the rendered surface).
+Codex axes include user-perspective checks.
+Codex axes include avoidable-user-burden checks.
+Operator-facing rendered UI axes include operator-naive comprehension.
+Operator-naive comprehension records a `clear`, `partially-clear`, or `unclear` verdict for each AC-supporting element.
+Operator-facing rendered UI axes include image-inspection coverage.
+Image-inspection coverage opens every cited screenshot or full-page capture supporting an AC verdict or finding through multimodal `Read`.
+Image-inspection coverage matches each opened image against the design-stated expectation.
+Cite-path-only acceptance is a procedural failure.
+Novel or composite UI axes include visual benchmark consumption.
+Visual benchmark consumption checks that `benchmark-simulation` characteristics are reflected in the rendered surface.
 Plan, design, specification, report, governance, and implementation-binding review surfaces require Feynman clarity.
 
 Codex reviews missed negative space, evidence overreach, owner-action gaps, stale proof/artifact authority, user-surface weakness, and needless-user-gate risk.
@@ -108,7 +118,7 @@ Review convergence requires:
 Exact wording can differ.
 Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
-Codex disagreement is advisory, not veto.
+Codex disagreement is evidence, not veto.
 `SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop; team-lead executes the output-record next owner/action without user-facing review/proceed prompts unless explicit approval or a verified user-owned blocker exists.
 
@@ -127,7 +137,7 @@ Reopen `work-planning` when any boundary changes, becomes untrue, or cannot be n
 
 Same-review continuation packet carries:
 ```text
-ADVISORY-CONTINUATION: review-convergence
+REVIEW-CONTINUATION: review-convergence
 ACTIVE-WORKFLOW: dev-workflow
 CONTINUATION-CLASS: bounded-review-iteration
 CURRENT-PHASE: <Phase N name>
@@ -141,7 +151,7 @@ It does not preserve prior reviewer, Codex, or reconciliation output as current-
 Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record
-Use the shared `ADVISORY-CONVERGENCE-RECORD` schema in `references/artifact-convergence-advisory.md` Output Record (artifact path/phase, Codex MCP review state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
+Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record (artifact path/phase, Codex MCP review state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
 - review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
 
