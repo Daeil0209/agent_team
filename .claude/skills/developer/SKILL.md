@@ -23,6 +23,9 @@ Before any work:
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
 Execution bias: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
+On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
+Packet wording does not need to request this outcome; visible `working` never satisfies it.
+After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase development production -> `execute`
 - safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
@@ -150,7 +153,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Producer self-review never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
-- This verifies only the developer report; team-lead still owns synthesis `SV-RESULT`.
+- This verifies only the developer completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 7. Handoff
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
@@ -163,7 +166,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
-- If procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- If procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
 - Wait for lifecycle direction after handoff.
 - See `references/developer-lane-detail.md` for developer-specific handoff detail.
 

@@ -94,7 +94,7 @@
 - Lanes inherit the common floor.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
-- Lead-local completion reporting requires `SV-RESULT`.
+- Lead-local user-facing final report requires `SV-RESULT`.
 
 ## Reference Binding
 - Trigger-bound references are mandatory execution surfaces.
@@ -142,13 +142,20 @@
 - Acceptance facts travel in packets or cited artifacts.
 
 ## Communication
-- User-facing prose reports only a verified result, blocker, explicit status answer, or user-relevant action/residual needed to proceed; all internal orchestration stays silent.
-- Completion-grade messages require convergence.
-- Completion-grade messages require verification.
-- Agents raise `scope-pressure` for unsafe packets.
-- Agents raise `hold|blocker` for decisive proof gaps.
-- Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action.
+- Communication, Procedure, and Reporting are separate planes.
+- Communication Plane moves agent, task, runtime, lifecycle, handoff, pressure, status, and retained-output information between internal owners.
+- Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and self-growth.
+- Reporting Plane is the only user-facing prose authority and lives in `.claude/reference/user-reporting-law.md`.
+- `SendMessage`, teammate UI, `dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, `hold|blocker`, assignment packets, phase-transition packets, lifecycle packets, task rows, task output, runtime ledgers, and retained-output pointers are Communication Plane transport, not user reports.
+- Communication payloads stay in their governed Communication Plane carrier; pane/final prose must not duplicate them as user-facing report prose.
+- If Claude Code renders transport on screen, the rendering remains transport display; this does not authorize agents to place ACK, startup, plan, file-read, route, evidence, or report-intent prose in visible pane/final text.
+- Unavoidable visible rows consume `.claude/reference/user-reporting-law.md` Minimal Visible State Token; blank visible rows and bare punctuation placeholders are defects when a minimal state token can render.
+- `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
+- Completion-grade communications require convergence and verification before team-lead synthesis.
+- Agents raise `scope-pressure` for unsafe packets and `hold|blocker` for decisive proof gaps through Communication Plane.
+- Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
 - Team-runtime channel registry lives in `.claude/skills/task-execution/references/message-classes.md`.
+- Restating user-report admissibility outside `.claude/reference/user-reporting-law.md` is a single-source-of-truth defect.
 
 ## Acceptance
 - Planning is distinct from implementation.
@@ -161,7 +168,7 @@
 - Only `validator` issues final `PASS/HOLD/FAIL`.
 - Reviewer and tester provide evidence.
 - Validator owns final acceptance.
-- Local closure reports only `verified result`.
+- Local closure user-facing prose follows `.claude/reference/user-reporting-law.md`; its only closure claim class is `verified result`.
 - Final-arbitration triggers route to validator or `HOLD`.
 - Test and validation packets freeze surface, expected outcome, and acceptance basis.
 

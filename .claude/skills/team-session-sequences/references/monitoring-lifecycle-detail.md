@@ -23,15 +23,15 @@ LOAD-POLICY: on-demand reference only
 
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition. The agent remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
-- Receiving `idle_notification` without a preceding completion report from the agent is a handoff failure (T2).
-- Receiving a completion report without canonical `REQUESTED-LIFECYCLE` is a lifecycle-request defect (T3).
+- Receiving `idle_notification` without a preceding completion transport from the agent is a handoff failure (T2).
+- Receiving completion transport without canonical `REQUESTED-LIFECYCLE` is a lifecycle-request defect (T3).
 
 ## Agent Identity Rule
 - If multiple agents of the same capability can exist concurrently, assign unique agent names at dispatch time.
 - Standby, shutdown, stale tracking, and reuse decisions must refer to those concrete agent names rather than to the generic capability label alone.
 
 ## Supervisor Decisions On idle_notification
-When an idle_notification is received with a valid completion report, the governing lane must choose:
+When an idle_notification is received with a valid completion transport, the governing lane must choose:
 - `Reuse`: more work is immediately available and preserved context is still valuable.
 - `Standby Approve`: no immediate work, but near-future reuse is plausible. Send explicit lifecycle-control (`MESSAGE-CLASS: lifecycle-control`, `LIFECYCLE-DECISION: standby`) to the concrete agent name; helper or hook state only reflects that approved decision.
 - `Shutdown`: agent is no longer needed, wrong, harmful, stuck, or must be terminated. Send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for `shutdown_response` or teammate termination evidence.
@@ -41,7 +41,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Agent lifecycle control is message-first: completion, reuse, and standby approval travel through explicit internal messages; shutdown intent is normalized to structured `shutdown_request` rather than inferred from hook feedback or free text.
 - Failed shutdown is a recovery surface owned by `session-closeout` or explicit runtime recovery. Hooks do not create shutdown authority.
 - Treat `TeammateIdle`, ledgers, and health-check output as observation surfaces that inform the next lifecycle message, not authority to skip it.
-- Completion is an upward report requesting a governing decision; it does not authorize auto-standby, replacement, or teammate removal.
+- Completion is upward Communication Plane transport requesting a governing decision; it does not authorize auto-standby, replacement, or teammate removal.
 - Consequential completion handoff must carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is an agent request, not lifecycle authority.
 - Governing lane owns lifecycle transitions: dispatch or approved `assignment|reuse` -> `ACTIVE`; explicit `standby` approval -> `STANDBY`; confirmed shutdown/removal -> removed from teammate population.
 - Until the governing lane answers with `standby`, `reuse`, `shutdown`, or `hold-for-validation`, the agent is lifecycle-decision pending and remains `ACTIVE`.
@@ -82,7 +82,7 @@ When an idle_notification is received with a valid completion report, the govern
 - Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
 - Route ownership, acceptance, routing, lifecycle, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
 - Use free-form `SendMessage` for status, acknowledgment, clarification, or partial-result notes inside unchanged ownership, lifecycle, routing, and active surface.
-- Authoritative downward control packets, upward report `MESSAGE-CLASS` vocabulary, and structured lifecycle paths are owned by `.claude/skills/task-execution/references/phase-transition-control.md`, `.claude/skills/task-execution/references/lifecycle-control.md`, and `.claude/skills/task-execution/references/message-classes.md`.
+- Authoritative downward control packets, upward transport `MESSAGE-CLASS` vocabulary, and structured lifecycle paths are owned by `.claude/skills/task-execution/references/phase-transition-control.md`, `.claude/skills/task-execution/references/lifecycle-control.md`, and `.claude/skills/task-execution/references/message-classes.md`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard

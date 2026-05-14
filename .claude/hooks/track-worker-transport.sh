@@ -45,7 +45,7 @@ clear_worker_idle_notice() {
 
 PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
 const { encode, flattenText, joinUniqueText } = require(process.env.HOOK_JSON_HELPERS);
-const REPORT_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
+const TRANSPORT_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
 
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -55,9 +55,9 @@ try {
   const taskId = String(input.task_id || input.taskId || toolInput.task_id || toolInput.taskId || "").trim();
   const taskSubject = String(input.task_subject || input.taskSubject || toolInput.task_subject || toolInput.taskSubject || "").trim();
   const messageText = joinUniqueText(
-    flattenText(toolInput.summary, REPORT_TEXT_KEYS)
-      .concat(flattenText(toolInput.message || toolInput.content, REPORT_TEXT_KEYS))
-      .concat(flattenText(toolInput.description, REPORT_TEXT_KEYS))
+    flattenText(toolInput.summary, TRANSPORT_TEXT_KEYS)
+      .concat(flattenText(toolInput.message || toolInput.content, TRANSPORT_TEXT_KEYS))
+      .concat(flattenText(toolInput.description, TRANSPORT_TEXT_KEYS))
   );
   const fields = [
     toolName,
@@ -139,6 +139,36 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
   SENDER_IS_WORKER="true"
 fi
 
+
+recent_dispatch_ack_observed_for_worker() {
+  local worker_name="${1-}"
+  local window_seconds="${2:-120}"
+
+  [[ -n "$worker_name" && -f "$WORKER_TRANSPORT_LEDGER" ]] || return 1
+
+  WORKER_NAME="$worker_name" WORKER_TRANSPORT_LEDGER="$WORKER_TRANSPORT_LEDGER" WINDOW_SECONDS="$window_seconds" node <<'NODE'
+const fs = require('fs');
+const worker = String(process.env.WORKER_NAME || '').trim().toLowerCase();
+const ledger = process.env.WORKER_TRANSPORT_LEDGER || '';
+const windowSeconds = Number(process.env.WINDOW_SECONDS || 120);
+if (!worker || !ledger || !fs.existsSync(ledger)) process.exit(1);
+const cutoff = Date.now() - Math.max(1, windowSeconds) * 1000;
+const lines = fs.readFileSync(ledger, 'utf8').trim().split(/\r?\n/).filter(Boolean).reverse();
+for (const line of lines) {
+  let row;
+  try { row = JSON.parse(line); } catch { continue; }
+  const ts = Date.parse(String(row.timestamp || ''));
+  if (Number.isFinite(ts) && ts < cutoff) break;
+  const sender = String(row.senderName || '').trim().toLowerCase();
+  const klass = String(row.messageClass || '').trim().toLowerCase();
+  if (sender === worker && klass === 'dispatch-ack') process.exit(0);
+}
+process.exit(1);
+NODE
+}
+
+
+
 if [[ "$TOP_TYPE" == "shutdown_response" || "$NESTED_TYPE" == "shutdown_response" ]]; then
   if [[ "$SENDER_IS_WORKER" == "true" && -n "$SENDER_NAME" ]]; then
     clear_worker_idle_notice "$SENDER_NAME"
@@ -165,6 +195,10 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
         clear_worker_standby "$TARGET_NAME"
         mark_team_dispatch_pending "$SESSION_ID" "$TARGET_NAME" "sendmessage-${MESSAGE_CLASS}"
         mark_worker_dispatch_ack_required "$TARGET_NAME"
+        if recent_dispatch_ack_observed_for_worker "$TARGET_NAME" 120; then
+          clear_worker_dispatch_ack_required "$TARGET_NAME"
+          mark_team_dispatch_claimed "$SESSION_ID" "$TARGET_NAME" "worker-transport:dispatch-ack"
+        fi
       fi
       exit 0
       ;;
@@ -183,13 +217,13 @@ fi
 
 if [[ -z "$SENDER_NAME" ]] && runtime_sender_session_is_worker "$SESSION_ID"; then
   SENDER_NAME="session:${SESSION_ID}"
-  printf '[%s] TRACK-WORKER-REPORT WARN: unresolved agent sender identity; using session fallback (session: %s)\n' \
+  printf '[%s] TRACK-WORKER-TRANSPORT WARN: unresolved agent sender identity; using session fallback (session: %s)\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
 fi
 
 if [[ -z "$SENDER_NAME" || "$SENDER_NAME" == "team-lead" ]]; then
   if runtime_sender_session_is_worker "$SESSION_ID"; then
-    printf '[%s] TRACK-WORKER-REPORT WARN: skipped report append because sender identity remained unresolved (session: %s)\n' \
+    printf '[%s] TRACK-WORKER-TRANSPORT WARN: skipped transport append because sender identity remained unresolved (session: %s)\n' \
       "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
   fi
   exit 0
@@ -214,21 +248,21 @@ if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]] \
   && [[ "$ACK_WAS_REQUIRED" != "true" ]] \
   && [[ "$CURRENT_DISPATCH_STATE" != "pending" ]]; then
   DUPLICATE_DISPATCH_ACK="true"
-  printf '[%s] TRACK-WORKER-REPORT WARN: duplicate or stale dispatch-ack from %s without pending ack requirement; treating as receipt-only anomaly, not new work.\n' \
+  printf '[%s] TRACK-WORKER-TRANSPORT WARN: duplicate or stale dispatch-ack from %s without pending ack requirement; treating as receipt-only anomaly, not new work.\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" >> "$VIOLATION_LOG"
 fi
 
 if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
-  record_team_runtime_state "$SESSION_ID" "active" "worker-report:${MESSAGE_CLASS}"
+  record_team_runtime_state "$SESSION_ID" "active" "worker-transport:${MESSAGE_CLASS}"
 
   if [[ "$CURRENT_DISPATCH_STATE" == "pending" ]] \
     && { [[ "$CURRENT_PENDING_WORKER" == "$SENDER_NAME" ]] || [[ "$CURRENT_DISPATCH_WORKER" == "$SENDER_NAME" ]]; }; then
-    mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-report:${MESSAGE_CLASS}"
+    mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-transport:${MESSAGE_CLASS}"
   elif [[ "$MESSAGE_CLASS" == "dispatch-ack" && "$ACK_WAS_REQUIRED" == "true" ]]; then
-    mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-report:${MESSAGE_CLASS}"
+    mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-transport:${MESSAGE_CLASS}"
   fi
 
-  if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]]; then
+  if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]] || { [[ "$ACK_WAS_REQUIRED" == "true" ]] && { [[ "$MESSAGE_CLASS" == "scope-pressure" ]] || [[ "$MESSAGE_CLASS" == "hold|blocker" ]]; }; }; then
     clear_worker_dispatch_ack_required "$SENDER_NAME"
     clear_worker_standby "$SENDER_NAME"
     clear_worker_idle_pending "$SENDER_NAME"
@@ -341,72 +375,72 @@ LANE_LOCAL_SV_RESULT="false"
 
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-LEDGER_LINE="$(REPORT_TIMESTAMP="$TIMESTAMP" REPORT_SESSION_ID="$SESSION_ID" REPORT_SENDER_NAME="$SENDER_NAME" REPORT_TEAM_NAME="$TEAM_NAME" REPORT_AGENT_TYPE="$AGENT_TYPE" REPORT_TASK_ID="$TASK_ID" REPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" REPORT_TASK_SUBJECT="$TASK_SUBJECT" REPORT_MESSAGE_CLASS="$MESSAGE_CLASS" REPORT_REQUESTED_LIFECYCLE="$REQUESTED_LIFECYCLE" REPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" REPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" REPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" REPORT_OPEN_SURFACES="$OPEN_SURFACES" REPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" REPORT_NEXT_LANE="$NEXT_LANE" REPORT_USER_RUN_PATH="$USER_RUN_PATH" REPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" REPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" REPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" REPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" REPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" REPORT_BURDEN_STATUS="$BURDEN_STATUS" REPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" REPORT_PLANNING_BASIS="$PLANNING_BASIS" REPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" REPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" REPORT_TOOL_PATH_USED="$TOOL_PATH_USED" REPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" REPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" REPORT_PRODUCER_SELF_REVIEW_PASS="$PRODUCER_SELF_REVIEW_PASS" REPORT_LANE_LOCAL_SV_RESULT="$LANE_LOCAL_SV_RESULT" REPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" REPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" REPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" REPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" REPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" REPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" REPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" REPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" REPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" REPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" REPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" REPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" REPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" REPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" REPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" REPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" REPORT_PRODUCER_SELF_REVIEW_PASS_VALUE="$PRODUCER_SELF_REVIEW_PASS_VALUE" REPORT_LANE_LOCAL_SV_RESULT_VALUE="$LANE_LOCAL_SV_RESULT_VALUE" node <<'NODE'
+LEDGER_LINE="$(TRANSPORT_TIMESTAMP="$TIMESTAMP" TRANSPORT_SESSION_ID="$SESSION_ID" TRANSPORT_SENDER_NAME="$SENDER_NAME" TRANSPORT_TEAM_NAME="$TEAM_NAME" TRANSPORT_AGENT_TYPE="$AGENT_TYPE" TRANSPORT_TASK_ID="$TASK_ID" TRANSPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" TRANSPORT_TASK_SUBJECT="$TASK_SUBJECT" TRANSPORT_MESSAGE_CLASS="$MESSAGE_CLASS" TRANSPORT_REQUESTED_LIFECYCLE="$REQUESTED_LIFECYCLE" TRANSPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" TRANSPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" TRANSPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" TRANSPORT_OPEN_SURFACES="$OPEN_SURFACES" TRANSPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" TRANSPORT_NEXT_LANE="$NEXT_LANE" TRANSPORT_USER_RUN_PATH="$USER_RUN_PATH" TRANSPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" TRANSPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" TRANSPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" TRANSPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" TRANSPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" TRANSPORT_BURDEN_STATUS="$BURDEN_STATUS" TRANSPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" TRANSPORT_PLANNING_BASIS="$PLANNING_BASIS" TRANSPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" TRANSPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" TRANSPORT_TOOL_PATH_USED="$TOOL_PATH_USED" TRANSPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" TRANSPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" TRANSPORT_PRODUCER_SELF_REVIEW_PASS="$PRODUCER_SELF_REVIEW_PASS" TRANSPORT_LANE_LOCAL_SV_RESULT="$LANE_LOCAL_SV_RESULT" TRANSPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" TRANSPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" TRANSPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" TRANSPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" TRANSPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" TRANSPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" TRANSPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" TRANSPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" TRANSPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" TRANSPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" TRANSPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" TRANSPORT_PRODUCER_SELF_REVIEW_PASS_VALUE="$PRODUCER_SELF_REVIEW_PASS_VALUE" TRANSPORT_LANE_LOCAL_SV_RESULT_VALUE="$LANE_LOCAL_SV_RESULT_VALUE" node <<'NODE'
 const line = {
-  timestamp: process.env.REPORT_TIMESTAMP || "",
-  sessionId: process.env.REPORT_SESSION_ID || "",
-  senderName: process.env.REPORT_SENDER_NAME || "",
-  teamName: process.env.REPORT_TEAM_NAME || "",
-  agentType: process.env.REPORT_AGENT_TYPE || "",
-  taskId: process.env.REPORT_TASK_ID || "",
-  taskIdFieldPresent: process.env.REPORT_TASK_ID_FIELD_PRESENT === "true",
-  taskSubject: process.env.REPORT_TASK_SUBJECT || "",
-  messageClass: process.env.REPORT_MESSAGE_CLASS || "",
-  requestedLifecycle: process.env.REPORT_REQUESTED_LIFECYCLE || "",
+  timestamp: process.env.TRANSPORT_TIMESTAMP || "",
+  sessionId: process.env.TRANSPORT_SESSION_ID || "",
+  senderName: process.env.TRANSPORT_SENDER_NAME || "",
+  teamName: process.env.TRANSPORT_TEAM_NAME || "",
+  agentType: process.env.TRANSPORT_AGENT_TYPE || "",
+  taskId: process.env.TRANSPORT_TASK_ID || "",
+  taskIdFieldPresent: process.env.TRANSPORT_TASK_ID_FIELD_PRESENT === "true",
+  taskSubject: process.env.TRANSPORT_TASK_SUBJECT || "",
+  messageClass: process.env.TRANSPORT_MESSAGE_CLASS || "",
+  requestedLifecycle: process.env.TRANSPORT_REQUESTED_LIFECYCLE || "",
   fields: {
-    outputSurface: process.env.REPORT_OUTPUT_SURFACE === "true",
-    targetIntentBasis: process.env.REPORT_TARGET_INTENT_BASIS === "true",
-    evidenceBasis: process.env.REPORT_EVIDENCE_BASIS === "true",
-    openSurfaces: process.env.REPORT_OPEN_SURFACES === "true",
-    frozenContractStatus: process.env.REPORT_FROZEN_CONTRACT_STATUS === "true",
-    laneNextCandidate: process.env.REPORT_NEXT_LANE === "true",
-    userRunPath: process.env.REPORT_USER_RUN_PATH === "true",
-    burdenContract: process.env.REPORT_BURDEN_CONTRACT === "true",
-    proofSurfaceMatch: process.env.REPORT_PROOF_SURFACE_MATCH === "true",
-    runPathStatus: process.env.REPORT_RUN_PATH_STATUS === "true",
-    coreWorkflowStatus: process.env.REPORT_CORE_WORKFLOW_STATUS === "true",
-    interactionCoverageStatus: process.env.REPORT_INTERACTION_COVERAGE_STATUS === "true",
-    burdenStatus: process.env.REPORT_BURDEN_STATUS === "true",
-    acceptanceReconciliation: process.env.REPORT_ACCEPTANCE_RECONCILIATION === "true",
-    planningBasis: process.env.REPORT_PLANNING_BASIS === "true",
-    resourceCleanup: process.env.REPORT_RESOURCE_CLEANUP === "true",
-    userSurfaceProofMethod: process.env.REPORT_USER_SURFACE_PROOF_METHOD === "true",
-    toolPathUsed: process.env.REPORT_TOOL_PATH_USED === "true",
-    toolExecutionEvidence: process.env.REPORT_TOOL_EXECUTION_EVIDENCE === "true",
-    convergencePass: process.env.REPORT_CONVERGENCE_PASS === "true",
-    producerSelfReviewPass: process.env.REPORT_PRODUCER_SELF_REVIEW_PASS === "true",
-    laneLocalSvResult: process.env.REPORT_LANE_LOCAL_SV_RESULT === "true"
+    outputSurface: process.env.TRANSPORT_OUTPUT_SURFACE === "true",
+    targetIntentBasis: process.env.TRANSPORT_TARGET_INTENT_BASIS === "true",
+    evidenceBasis: process.env.TRANSPORT_EVIDENCE_BASIS === "true",
+    openSurfaces: process.env.TRANSPORT_OPEN_SURFACES === "true",
+    frozenContractStatus: process.env.TRANSPORT_FROZEN_CONTRACT_STATUS === "true",
+    laneNextCandidate: process.env.TRANSPORT_NEXT_LANE === "true",
+    userRunPath: process.env.TRANSPORT_USER_RUN_PATH === "true",
+    burdenContract: process.env.TRANSPORT_BURDEN_CONTRACT === "true",
+    proofSurfaceMatch: process.env.TRANSPORT_PROOF_SURFACE_MATCH === "true",
+    runPathStatus: process.env.TRANSPORT_RUN_PATH_STATUS === "true",
+    coreWorkflowStatus: process.env.TRANSPORT_CORE_WORKFLOW_STATUS === "true",
+    interactionCoverageStatus: process.env.TRANSPORT_INTERACTION_COVERAGE_STATUS === "true",
+    burdenStatus: process.env.TRANSPORT_BURDEN_STATUS === "true",
+    acceptanceReconciliation: process.env.TRANSPORT_ACCEPTANCE_RECONCILIATION === "true",
+    planningBasis: process.env.TRANSPORT_PLANNING_BASIS === "true",
+    resourceCleanup: process.env.TRANSPORT_RESOURCE_CLEANUP === "true",
+    userSurfaceProofMethod: process.env.TRANSPORT_USER_SURFACE_PROOF_METHOD === "true",
+    toolPathUsed: process.env.TRANSPORT_TOOL_PATH_USED === "true",
+    toolExecutionEvidence: process.env.TRANSPORT_TOOL_EXECUTION_EVIDENCE === "true",
+    convergencePass: process.env.TRANSPORT_CONVERGENCE_PASS === "true",
+    producerSelfReviewPass: process.env.TRANSPORT_PRODUCER_SELF_REVIEW_PASS === "true",
+    laneLocalSvResult: process.env.TRANSPORT_LANE_LOCAL_SV_RESULT === "true"
   },
   fieldValues: {
-    openSurfaces: process.env.REPORT_OPEN_SURFACES_VALUE || "",
-    frozenContractStatus: process.env.REPORT_FROZEN_CONTRACT_STATUS_VALUE || "",
-    userRunPath: process.env.REPORT_USER_RUN_PATH_VALUE || "",
-    burdenContract: process.env.REPORT_BURDEN_CONTRACT_VALUE || "",
-    proofSurfaceMatch: process.env.REPORT_PROOF_SURFACE_MATCH_VALUE || "",
-    runPathStatus: process.env.REPORT_RUN_PATH_STATUS_VALUE || "",
-    coreWorkflowStatus: process.env.REPORT_CORE_WORKFLOW_STATUS_VALUE || "",
-    interactionCoverageStatus: process.env.REPORT_INTERACTION_COVERAGE_STATUS_VALUE || "",
-    burdenStatus: process.env.REPORT_BURDEN_STATUS_VALUE || "",
-    acceptanceReconciliation: process.env.REPORT_ACCEPTANCE_RECONCILIATION_VALUE || "",
-    planningBasis: process.env.REPORT_PLANNING_BASIS_VALUE || "",
-    resourceCleanup: process.env.REPORT_RESOURCE_CLEANUP_VALUE || "",
-    userSurfaceProofMethod: process.env.REPORT_USER_SURFACE_PROOF_METHOD_VALUE || "",
-    toolPathUsed: process.env.REPORT_TOOL_PATH_USED_VALUE || "",
-    toolExecutionEvidence: process.env.REPORT_TOOL_EXECUTION_EVIDENCE_VALUE || "",
-    convergencePass: process.env.REPORT_CONVERGENCE_PASS_VALUE || "",
-    producerSelfReviewPass: process.env.REPORT_PRODUCER_SELF_REVIEW_PASS_VALUE || "",
-    laneLocalSvResult: process.env.REPORT_LANE_LOCAL_SV_RESULT_VALUE || ""
+    openSurfaces: process.env.TRANSPORT_OPEN_SURFACES_VALUE || "",
+    frozenContractStatus: process.env.TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE || "",
+    userRunPath: process.env.TRANSPORT_USER_RUN_PATH_VALUE || "",
+    burdenContract: process.env.TRANSPORT_BURDEN_CONTRACT_VALUE || "",
+    proofSurfaceMatch: process.env.TRANSPORT_PROOF_SURFACE_MATCH_VALUE || "",
+    runPathStatus: process.env.TRANSPORT_RUN_PATH_STATUS_VALUE || "",
+    coreWorkflowStatus: process.env.TRANSPORT_CORE_WORKFLOW_STATUS_VALUE || "",
+    interactionCoverageStatus: process.env.TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE || "",
+    burdenStatus: process.env.TRANSPORT_BURDEN_STATUS_VALUE || "",
+    acceptanceReconciliation: process.env.TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE || "",
+    planningBasis: process.env.TRANSPORT_PLANNING_BASIS_VALUE || "",
+    resourceCleanup: process.env.TRANSPORT_RESOURCE_CLEANUP_VALUE || "",
+    userSurfaceProofMethod: process.env.TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE || "",
+    toolPathUsed: process.env.TRANSPORT_TOOL_PATH_USED_VALUE || "",
+    toolExecutionEvidence: process.env.TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE || "",
+    convergencePass: process.env.TRANSPORT_CONVERGENCE_PASS_VALUE || "",
+    producerSelfReviewPass: process.env.TRANSPORT_PRODUCER_SELF_REVIEW_PASS_VALUE || "",
+    laneLocalSvResult: process.env.TRANSPORT_LANE_LOCAL_SV_RESULT_VALUE || ""
   }
 };
 process.stdout.write(JSON.stringify(line));
 NODE
 )"
 
-append_line_locked "$WORKER_REPORT_LEDGER_LOCK" "$WORKER_REPORT_LEDGER" "$LEDGER_LINE"
+append_line_locked "$WORKER_TRANSPORT_LEDGER_LOCK" "$WORKER_TRANSPORT_LEDGER" "$LEDGER_LINE"
 
-# ─── VALIDATOR REPORT FIELD WARNING (recovery design Phase 1.1c) ───────
+# ─── VALIDATOR TRANSPORT FIELD WARNING (recovery design Phase 1.1c) ───────
 # Runtime tracker records a non-blocking warning when a validator PASS-grade
-# report carries obvious evidence-field mismatches. Validator remains the
+# transport carries obvious evidence-field mismatches. Validator remains the
 # acceptance owner; this hook does not issue, deny, or revise verdict truth.
 #
 # Trigger conditions (ALL must hold to fire):
@@ -421,7 +455,7 @@ append_line_locked "$WORKER_REPORT_LEDGER_LOCK" "$WORKER_REPORT_LEDGER" "$LEDGER
 #       - BURDEN-STATUS not 'matched'
 #       - ACCEPTANCE-RECONCILIATION value present but noncanonical
 #
-# Narrow recurrence signal only: downstream owners decide whether the report
+# Narrow recurrence signal only: downstream owners decide whether the transport
 # is acceptable, blocked, or needs correction.
 if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] || [[ "$MESSAGE_CLASS" == "completion" ]]; }; then
   PASS_VERDICT="false"
@@ -453,11 +487,11 @@ if [[ "$AGENT_TYPE" == "validator" ]] && { [[ "$MESSAGE_CLASS" == "handoff" ]] |
 
     if (( ${#SILENT_PASS_MISMATCHES[@]} > 0 )); then
       WARN_MISMATCH_LIST="$(printf '%s; ' "${SILENT_PASS_MISMATCHES[@]}")"
-      printf '[%s] TRACK-WORKER-REPORT WARN: validator PASS report field mismatch from %s task=%s mismatches=%s\n' \
+      printf '[%s] TRACK-WORKER-TRANSPORT WARN: validator PASS transport field mismatch from %s task=%s mismatches=%s\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" "${TASK_ID:-unknown}" "$WARN_MISMATCH_LIST" >> "$VIOLATION_LOG"
     fi
   fi
 fi
-# ─── END VALIDATOR REPORT FIELD WARNING ───────────────────────────────────
+# ─── END VALIDATOR TRANSPORT FIELD WARNING ───────────────────────────────────
 
 exit 0

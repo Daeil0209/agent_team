@@ -2,7 +2,7 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-7 Output Surface; CLAUDE.md Communication; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-7 User Reporting; .claude/reference/user-reporting-law.md; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Output Surface Law
 
@@ -15,14 +15,13 @@ SOURCE-RULES: "RPA-7 Output Surface; CLAUDE.md Communication; Reference Binding;
 - MID-FLIGHT
 - PHASE-RESULT
 - FINAL
-- Internal-By-Default Content
+- Reporting Law Boundary
 - Claim Control
 
 ## Purpose
-Use this reference before any user-facing team-lead output.
-It prevents internal procedure from being reported as completion.
-It prevents runtime noise from being reported as completion.
-It prevents partial state from being reported as completion.
+Use this reference only after `.claude/reference/user-reporting-law.md` admits a user-facing team-lead report.
+It stages admitted reports as `MID-FLIGHT`, `PHASE-RESULT`, or `FINAL`.
+It does not authorize Communication Plane or Procedure Plane content as report content.
 Terminal-visible team-lead prose is user-facing output.
 Pane-visible team-lead prose is user-facing output.
 Visible task-plan UI is user-facing output.
@@ -41,33 +40,16 @@ Visible checklist UI is user-facing output.
 - A closeout-residual report is about to be emitted.
 
 ## Required Output
-Select exactly one primary truth surface:
-- `verified result`
-- `blocker`
-- `next action`
-- `closeout residual`
-
-Then select exactly one output surface:
+Report admissibility and primary truth class are owned by `.claude/reference/user-reporting-law.md`.
+This surface adds team-lead output-surface staging only.
+Pick exactly one output surface from:
 - `MID-FLIGHT`
 - `PHASE-RESULT`
 - `FINAL`
 
 ## Stop
-User-facing prose requires stopped execution or a user-requested status answer.
-If same-segment execution can continue and the user did not request status, say nothing.
-For client-visible tool UI and runtime UI:
-- treat it as evidence only
-- do not treat it as a reporting license
-- do not mirror it into prose
-User-facing prose must report only:
-- a verified result
-- a blocker
-- an explicit status answer
-- a user-relevant action needed to proceed
-- a user-relevant residual needed to proceed
-Internal orchestration stays silent.
-Dispatch success is not a user-facing result.
-Dispatch topology and protocol detail stay internal.
+Pre-report suppression is owned by `.claude/reference/user-reporting-law.md`; this surface does not restate it.
+Additional team-lead-specific stops:
 Stop before `FINAL` when any item is:
 - queued
 - remaining
@@ -86,45 +68,24 @@ Stop before `verified result` when `SV-RESULT` is:
 - A stopped `verified result` route opens `SV-RESULT`.
 
 ## MID-FLIGHT
-`MID-FLIGHT` is silent by default.
-`MID-FLIGHT` executes required tool calls without status prose unless `Stop` allows one concise prose line.
-`MID-FLIGHT` follows the user-facing prose rule without exception.
-Terminal-visible prose follows the same limit.
-Pane-visible prose follows the same limit.
-Visible task-plan UI follows the same limit.
-Visible todo UI follows the same limit.
-Visible checklist UI follows the same limit.
+`MID-FLIGHT` executes required tool calls without status prose unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Lane transport arrival, retained-output availability, shard completion, partial convergence, candidate counts, findings counts, and hook/agent notes are not admitted prose.
+Partial fan-out state cannot become `PHASE-RESULT`; it remains Procedure Plane until all-required-output integration and required `SV-RESULT` close.
+Report content follows `.claude/reference/user-reporting-law.md`; this surface does not restate that allowlist.
 
 ## PHASE-RESULT
-`PHASE-RESULT` carries:
-- phase outcome
-- next owner/action
-- canonical artifact path when material
-`PHASE-RESULT` uses one or two sentences.
-`PHASE-RESULT` requires current `SV-RESULT` when it reports consequential content that is:
-- analyzed
-- evaluated
-- synthesized
+`PHASE-RESULT` is a staging label only after `.claude/reference/user-reporting-law.md` admits a phase-result report.
+Content shape and allowed fields stay with user-reporting law.
+Current `SV-RESULT` is required before reporting analyzed, evaluated, or synthesized consequential content.
 
 ## FINAL
-`FINAL` is valid only on zero-residual deliverable convergence.
-A queued item is closed by:
-- a patch
-- owning upstream deferral
-- cited out-of-scope proof
-An unclosed queued item blocks `FINAL`.
-`FINAL` summarizes the core result first.
-`FINAL` evidence inclusion is limited to:
-- the highest-impact evidence
-- verified user-usable next state
-`FINAL` claim scope stays within:
-- validator/FAR supported scope
-- Evidence-Quality Matrix supported scope
+`FINAL` is a staging label only after `.claude/reference/user-reporting-law.md` admits a verified result or closeout residual.
+Zero-residual convergence, owner deferral, out-of-scope basis, content shape, and evidence inclusion stay with user-reporting law plus the active acceptance/synthesis owner.
 
-## Internal-By-Default Content
-Use `.claude/skills/task-execution/references/message-classes.md` Screen Display Reporting Law as the canonical screen-display reporting rule and disclosure test.
-Team-lead user-facing prose applies that law to terminal-visible prose, pane-visible prose, visible task-plan UI, visible todo UI, and visible checklist UI.
-This surface does not restate or override that law.
+## Reporting Law Boundary
+Use `.claude/reference/user-reporting-law.md` as the canonical reporting rule and disclosure test.
+Team-lead user-facing prose applies only after that law admits the report.
+This surface does not restate, override, or replace that law.
 
 ## Claim Control
 Dispatch is internal unless an explicit status answer reports only the user-relevant waiting condition.

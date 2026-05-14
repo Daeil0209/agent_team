@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# TeammateIdle lifecycle sync. SendMessage state belongs to track-worker-report.sh.
+# TeammateIdle lifecycle sync. SendMessage state belongs to track-worker-transport.sh.
 set -euo pipefail
 
 source "$(dirname "$0")/hook-config.sh"
@@ -17,15 +17,15 @@ try {
 NODE
 )"
 
-latest_worker_report_class() {
+latest_worker_transport_class() {
   local worker_name="${1-}"
 
   [[ -n "$worker_name" ]] || return 1
 
-  WORKER_NAME="$worker_name" WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" node <<'NODE' 2>/dev/null || true
+  WORKER_NAME="$worker_name" WORKER_TRANSPORT_LEDGER="$WORKER_TRANSPORT_LEDGER" node <<'NODE' 2>/dev/null || true
 const fs = require("fs");
 
-const ledgerPath = process.env.WORKER_REPORT_LEDGER || "";
+const ledgerPath = process.env.WORKER_TRANSPORT_LEDGER || "";
 const workerName = String(process.env.WORKER_NAME || "").trim().toLowerCase();
 if (!ledgerPath || !workerName || !fs.existsSync(ledgerPath)) process.exit(0);
 
@@ -114,7 +114,7 @@ worker_turn_end_classification() {
   local dispatch_at=""
 
   [[ -n "$worker_name" ]] || {
-    printf 'working-report-missing'
+    printf 'working-transport-missing'
     return 0
   }
 
@@ -123,10 +123,10 @@ worker_turn_end_classification() {
     return 0
   fi
 
-  parsed="$(latest_worker_report_class "$worker_name")"
-  mapfile -t _turn_end_report_fields <<<"$parsed"
-  last_message_class="${_turn_end_report_fields[0]:-}"
-  last_message_timestamp="${_turn_end_report_fields[1]:-}"
+  parsed="$(latest_worker_transport_class "$worker_name")"
+  mapfile -t _turn_end_transport_fields <<<"$parsed"
+  last_message_class="${_turn_end_transport_fields[0]:-}"
+  last_message_timestamp="${_turn_end_transport_fields[1]:-}"
   dispatch_worker="$(get_procedure_state_field "lastDispatchWorker" "")"
   dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
   permission_request_timestamp="$(latest_worker_permission_request_timestamp "$worker_name")"
@@ -142,14 +142,14 @@ worker_turn_end_classification() {
   case "$last_message_class" in
     handoff)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-report-missing'
+        printf 'working-transport-missing'
         return 0
       fi
       printf 'standby'
       ;;
     completion)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-report-missing'
+        printf 'working-transport-missing'
         return 0
       fi
       printf 'standby'
@@ -161,7 +161,7 @@ worker_turn_end_classification() {
       printf 'scope-pressure-resolution'
       ;;
     *)
-      printf 'working-report-missing'
+      printf 'working-transport-missing'
       ;;
   esac
 }
@@ -279,7 +279,7 @@ NODE
 const teammate = process.env.TEAMMATE_VAR || "unknown";
 const reason = process.env.IDLE_REASON_VAR || "unknown";
 const status = process.env.COMPLETED_STATUS_VAR || "none";
-const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-report-missing";
+const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-transport-missing";
 let ctx;
 switch (classification) {
   case "standby":
@@ -300,7 +300,7 @@ switch (classification) {
   default:
     ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
 }
-process.stdout.write(JSON.stringify({ systemMessage: ctx }));
+process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "TeammateIdle", additionalContext: ctx }, suppressOutput: true }));
 NODE
 
     exit 0

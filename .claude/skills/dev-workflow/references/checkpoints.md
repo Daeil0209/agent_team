@@ -38,7 +38,7 @@ Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or u
 
 ## CP5 -- Gap Resolution Decision
 - **Phase**: Analysis
-- **Trigger**: reviewer or tester reports blocking defects or significant coverage gaps
+- **Trigger**: reviewer or tester transports blocking defects or significant coverage gaps
 - **Auto-resolve priority**:
   1. design-level gap, missing/untrue Phase 2 source-of-truth, or repeated same-class cross-surface contract gap caused by weak design contract -> Phase 2 correction
   2. implementation or operator-delivery gap inside unchanged Phase 1/2 contract, including repeated same-class implementation drift with adequate design contract -> Phase 5 systemic correction with Phase-2-derived acceptance-grade gap-to-correction-surface map

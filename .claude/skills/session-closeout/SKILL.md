@@ -15,8 +15,10 @@ PRIMARY-OWNER: team-lead
 - `references/closeout-state-detail.md`: closeout state schema, hold conditions, residual truth, and detailed agent lifecycle requirements.
 
 ## Activation
-Load this skill when explicit user-directed session end or confirmed teardown intent is active.
-Hook feedback can surface teardown state.
+Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any teardown-class tool call (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tool).
+Calling a teardown-class tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `self-growth-sequence`; the hook runtime guard is enforcement evidence, not authorization.
+Reviewer / agent task completion is not session end; teardown requires user-directed intent or proven session-closing basis.
+Hook feedback can surface teardown state but is not authority.
 Session-end intent requires explicit closeout or teardown basis.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
 
@@ -39,7 +41,7 @@ Keep closeout narrow:
 - leave a truthful residual state when not
 
 ### Core law
-- Explicit closeout intent preempts ordinary planning, synthesis, and completion-style reporting.
+- Explicit closeout intent preempts ordinary planning, synthesis, and completion-style transporting.
 - Once closeout owns the path, agent outputs can narrow residual truth only.
 - A late agent output after closeout intent can still narrow residual truth.
 - Treat late output as residual evidence, not ordinary completion.

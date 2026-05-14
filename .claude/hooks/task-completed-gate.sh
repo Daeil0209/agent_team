@@ -5,7 +5,7 @@ source "$(dirname "$0")/hook-config-core.sh"
 
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" LOG_DIR="$LOG_DIR" SESSION_AGENT_MAP="$SESSION_AGENT_MAP" PENDING_AGENTS_FILE="$PENDING_AGENTS_FILE" PENDING_AGENT_MODES_FILE="$PENDING_AGENT_MODES_FILE" node <<'NODE'
+PARSED="$(INPUT_JSON="$INPUT" WORKER_TRANSPORT_LEDGER="$WORKER_TRANSPORT_LEDGER" LOG_DIR="$LOG_DIR" SESSION_AGENT_MAP="$SESSION_AGENT_MAP" PENDING_AGENTS_FILE="$PENDING_AGENTS_FILE" PENDING_AGENT_MODES_FILE="$PENDING_AGENT_MODES_FILE" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
 
@@ -120,8 +120,8 @@ try {
   let latest = null;
   let latestExactTask = null;
   let latestFallback = null;
-  let reportRejectionReason = "";
-  const ledgerPath = process.env.WORKER_REPORT_LEDGER || "";
+  let transportRejectionReason = "";
+  const ledgerPath = process.env.WORKER_TRANSPORT_LEDGER || "";
   if (ledgerPath && fs.existsSync(ledgerPath)) {
     const lines = fs.readFileSync(ledgerPath, "utf8").split(/\r?\n/).filter(Boolean);
     for (const line of lines) {
@@ -144,7 +144,7 @@ try {
       const sameTeam = !teamName || !parsedTeamName || parsedTeamName === teamName;
       // When teammateName is absent (TaskCompleted event provides only session_id+task_id),
       // accept entries that exactly match the task_id — the session/sender filter cannot
-      // resolve an agent identity and would otherwise skip all agent report ledger entries.
+      // resolve an agent identity and would otherwise skip all agent transport ledger entries.
       // When teammateName IS provided the stricter session+sender guard still applies.
       const taskIdAnchorMatch = !teammateName && taskId && parsedTaskId === taskId;
       if (!sameSession && !(sameTeammate && sameTeam) && !taskIdAnchorMatch) continue;
@@ -172,7 +172,7 @@ try {
 
   latest = latestExactTask || latestFallback;
   // Add taskIdAnchorMatch sessionId so evidenceState uses actual agent markers.
-  // Avoid lead-session fallback for report-before-planning checks.
+  // Avoid lead-session fallback for transport-before-planning checks.
   const taskIdAnchorSession = (!teammateName && latestExactTask)
     ? trimText(latestExactTask.sessionId || "")
     : "";
@@ -212,7 +212,7 @@ try {
     latest = null;
     latestExactTask = null;
     latestFallback = null;
-    reportRejectionReason = "report-before-planning";
+    transportRejectionReason = "transport-before-planning";
   }
 
   const fields = latest && latest.fields && typeof latest.fields === "object" ? latest.fields : {};
@@ -271,7 +271,7 @@ try {
     evidenceSessionId: trimText(evidenceState.sessionId || ""),
     wpTimestamp: trimText(evidenceState.wpTimestamp || ""),
     svResultPresent: Boolean(evidenceState.svResultPresent),
-    exactTaskReportPresent: Boolean(latestExactTask),
+    exactTaskTransportPresent: Boolean(latestExactTask),
     explicitTaskIdFieldPresent: latest ? Boolean(latest.taskIdFieldPresent) : false,
     latestAgentType: latest ? String(latest.agentType || "") : "",
     latestMessageClass: latest ? String(latest.messageClass || "") : "",
@@ -294,7 +294,7 @@ try {
     convergencePassValue: String(fieldValues.convergencePass || ""),
     missingFields,
     identitySummary,
-    reportRejectionReason,
+    transportRejectionReason,
     evidenceIsWorker
   };
 
@@ -309,7 +309,7 @@ try {
     evidenceSessionId: "",
     wpTimestamp: "",
     svResultPresent: false,
-    exactTaskReportPresent: false,
+    exactTaskTransportPresent: false,
     explicitTaskIdFieldPresent: false,
     latestAgentType: "",
     latestMessageClass: "",
@@ -332,7 +332,7 @@ try {
     convergencePassValue: "",
     missingFields: [],
     identitySummary: "",
-    reportRejectionReason: "",
+    transportRejectionReason: "",
     evidenceIsWorker: false,
     parseError: String(error && error.message || error)
   }));
@@ -358,7 +358,7 @@ const fieldValues = [
   parsed.evidenceSessionId || "",
   parsed.wpTimestamp || "",
   parsed.svResultPresent ? "true" : "false",
-  parsed.exactTaskReportPresent ? "true" : "false",
+  parsed.exactTaskTransportPresent ? "true" : "false",
   parsed.explicitTaskIdFieldPresent ? "true" : "false",
   parsed.latestAgentType || "",
   parsed.latestMessageClass || "",
@@ -380,7 +380,7 @@ const fieldValues = [
   parsed.convergencePassValue || "",
   Array.isArray(parsed.missingFields) ? parsed.missingFields.join(", ") : "",
   parsed.identitySummary || "",
-  parsed.reportRejectionReason || "",
+  parsed.transportRejectionReason || "",
   parsed.evidenceIsWorker ? "true" : "false"
 ];
 
@@ -397,7 +397,7 @@ TASK_SUBJECT="${TASK_COMPLETED_FIELDS[3]-}"
 EVIDENCE_SESSION_ID="${TASK_COMPLETED_FIELDS[4]-}"
 WP_TIMESTAMP="${TASK_COMPLETED_FIELDS[5]-}"
 SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
-EXACT_TASK_REPORT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
+EXACT_TASK_TRANSPORT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
 EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
 LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[9]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 LATEST_CLASS="${TASK_COMPLETED_FIELDS[10]-}"
@@ -423,7 +423,7 @@ TOOL_STATEFUL_EVIDENCE_NORM="$(printf '%s\n%s' "$TOOL_PATH_USED_VALUE" "$TOOL_EX
 CONVERGENCE_PASS_VALUE="${TASK_COMPLETED_FIELDS[26]-}"
 MISSING_FIELDS="${TASK_COMPLETED_FIELDS[27]-}"
 IDENTITY_SUMMARY="${TASK_COMPLETED_FIELDS[28]-}"
-REPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[29]-}"
+TRANSPORT_REJECTION_REASON="${TASK_COMPLETED_FIELDS[29]-}"
 EVIDENCE_IS_WORKER="${TASK_COMPLETED_FIELDS[30]-false}"
 
 FAILURES=()
@@ -447,37 +447,37 @@ if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then
-  if [[ "$REPORT_REJECTION_REASON" == "report-before-planning" ]]; then
-    FAILURES+=("Latest completion-grade report predates planning evidence (${IDENTITY_SUMMARY}). Send fresh report after verification.")
+  if [[ "$TRANSPORT_REJECTION_REASON" == "transport-before-planning" ]]; then
+    FAILURES+=("Latest completion-grade transport predates planning evidence (${IDENTITY_SUMMARY}). Send fresh completion-grade transport after verification.")
   else
-    FAILURES+=("No completion-grade report matched agent identity (${IDENTITY_SUMMARY}). Send a report to team-lead via SendMessage.")
+    FAILURES+=("No completion-grade transport matched agent identity (${IDENTITY_SUMMARY}). Send completion-grade Communication Plane transport to team-lead via SendMessage.")
   fi
 fi
 
 case "$LATEST_CLASS" in
   hold\|blocker)
-    FAILURES+=("Latest report is ${LATEST_CLASS}. Task must remain open until governing lane resolves it.")
+    FAILURES+=("Latest transport is ${LATEST_CLASS}. Task must remain open until governing lane resolves it.")
     ;;
   hold)
-    FAILURES+=("Latest report uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
+    FAILURES+=("Latest transport uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
     ;;
   blocker)
-    FAILURES+=("Latest report uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
+    FAILURES+=("Latest transport uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
     ;;
   handoff) ;;
   completion) ;;
   "") ;;
   *)
-    FAILURES+=("Latest report is '${LATEST_CLASS}', not a completion-grade report.")
+    FAILURES+=("Latest transport is '${LATEST_CLASS}', not a completion-grade transport.")
     ;;
 esac
 
 if [[ -n "$TASK_ID" && "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
-  FAILURES+=("Completion-grade report must carry TASK-ID field when task tracking is active.")
+  FAILURES+=("Completion-grade transport must carry TASK-ID field when task tracking is active.")
 fi
 
-if [[ -n "$TASK_ID" && "$EXACT_TASK_REPORT_PRESENT" != "true" ]]; then
-  FAILURES+=("Report must carry matching TASK-ID: ${TASK_ID}.")
+if [[ -n "$TASK_ID" && "$EXACT_TASK_TRANSPORT_PRESENT" != "true" ]]; then
+  FAILURES+=("Transport must carry matching TASK-ID: ${TASK_ID}.")
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
@@ -489,7 +489,7 @@ if [[ -n "$MISSING_FIELDS" ]]; then
 fi
 
 if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
-  FAILURES+=("Report must carry PLANNING-BASIS: loaded.")
+  FAILURES+=("Transport must carry PLANNING-BASIS: loaded.")
 fi
 
 case "$FROZEN_CONTRACT_STATUS_VALUE" in
@@ -536,12 +536,12 @@ case "$RESOURCE_CLEANUP_NORM" in
     esac
     ;;
   *)
-    FAILURES+=("Report must carry RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
+    FAILURES+=("Transport must carry RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
     ;;
 esac
 
 if ! [[ "$CONVERGENCE_PASS_VALUE" =~ ^[1-9][0-9]*$ ]]; then
-  FAILURES+=("Report must carry CONVERGENCE-PASS as a positive integer.")
+  FAILURES+=("Transport must carry CONVERGENCE-PASS as a positive integer.")
 fi
 
 if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]; then
@@ -557,50 +557,50 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
   case "$PROOF_SURFACE_MATCH_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator report omitted PROOF-SURFACE-MATCH.")
+      FAILURES+=("Tester/validator transport omitted PROOF-SURFACE-MATCH.")
       ;;
     *)
-      FAILURES+=("Tester/validator report used noncanonical PROOF-SURFACE-MATCH.")
+      FAILURES+=("Tester/validator transport used noncanonical PROOF-SURFACE-MATCH.")
       ;;
   esac
 
   case "$RUN_PATH_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator report omitted RUN-PATH-STATUS.")
+      FAILURES+=("Tester/validator transport omitted RUN-PATH-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator report used noncanonical RUN-PATH-STATUS.")
+      FAILURES+=("Tester/validator transport used noncanonical RUN-PATH-STATUS.")
       ;;
   esac
 
   case "$CORE_WORKFLOW_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator report omitted CORE-WORKFLOW-STATUS.")
+      FAILURES+=("Tester/validator transport omitted CORE-WORKFLOW-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator report used noncanonical CORE-WORKFLOW-STATUS.")
+      FAILURES+=("Tester/validator transport used noncanonical CORE-WORKFLOW-STATUS.")
       ;;
   esac
 
   case "$INTERACTION_COVERAGE_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator report omitted INTERACTION-COVERAGE-STATUS.")
+      FAILURES+=("Tester/validator transport omitted INTERACTION-COVERAGE-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator report used noncanonical INTERACTION-COVERAGE-STATUS.")
+      FAILURES+=("Tester/validator transport used noncanonical INTERACTION-COVERAGE-STATUS.")
       ;;
   esac
 
   case "$BURDEN_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator report omitted BURDEN-STATUS.")
+      FAILURES+=("Tester/validator transport omitted BURDEN-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator report used noncanonical BURDEN-STATUS.")
+      FAILURES+=("Tester/validator transport used noncanonical BURDEN-STATUS.")
       ;;
   esac
 
@@ -608,10 +608,10 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
     case "$ACCEPTANCE_RECONCILIATION_VALUE" in
       explicit|missing|not-applicable) ;;
       "")
-        FAILURES+=("Validator report omitted ACCEPTANCE-RECONCILIATION.")
+        FAILURES+=("Validator transport omitted ACCEPTANCE-RECONCILIATION.")
         ;;
       *)
-        FAILURES+=("Validator report used noncanonical ACCEPTANCE-RECONCILIATION.")
+        FAILURES+=("Validator transport used noncanonical ACCEPTANCE-RECONCILIATION.")
         ;;
     esac
   fi

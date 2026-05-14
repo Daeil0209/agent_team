@@ -166,9 +166,8 @@ NODE
 
 	    clear_worker_standby "$AGENT_NAME"
 	    record_pending_agent_dispatch "$TIMESTAMP" "$AGENT_NAME" "$EFFECTIVE_MODE" "$DISPATCH_AGENT_LANE"
-	    mark_worker_dispatch_ack_required "$AGENT_NAME"
 	    record_permission_provenance "$SESSION_ID" "$RESOLVED_MODE" "$PERMISSION_BASIS" "$PERMISSION_SOURCE" "$MODE" "$AGENT_NAME"
-	    mark_team_dispatch_pending "$SESSION_ID" "$AGENT_NAME" "agent-dispatch"
+	    record_team_runtime_state "$SESSION_ID" "active" "agent-member:$AGENT_NAME"
 
 	    if [[ ! -s "$HEALTH_CRON_FLAG" ]]; then
       printf '1\n' > "$HEALTH_CRON_FLAG"

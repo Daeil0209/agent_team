@@ -13,12 +13,12 @@ SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communicatio
 - Stop
 - Resolve Next Owner And Action
 - Primary Report Surface
-- Output Shape
+- Shape Binding
 - Internal Content
 - Evidence Basis
 
 ## Purpose
-Use this reference to keep user-facing team-lead reports compact, evidence-bounded, and free of internal procedure.
+Use this reference only after `.claude/reference/user-reporting-law.md` admits a user-facing team-lead report. It keeps admitted reports compact, evidence-bounded, and free of Communication Plane or Procedure Plane payload.
 These team-lead prose surfaces use this same report shape:
 - terminal-visible prose
 - pane-visible prose
@@ -34,8 +34,8 @@ These team-lead prose surfaces use this same report shape:
 - Visual, rendered, runtime, or user-surface proof supports final wording.
 
 ## Required Output
-Record:
-- primary report surface
+Record shape only after user-reporting law admits the report:
+- admitted report reason
 - output surface
 - SV status when required
 - evidence basis included
@@ -58,57 +58,20 @@ Basis expansion is allowed only for:
 - A stopped basis-expansion route emits the compact report shape.
 
 ## Primary Report Surface
-Pick one:
-- `verified result`
-- `blocker`
-- `next action`
-- `closeout residual`
-
-`next action` report requires a blocked lead-owned execution path.
-Blocked path means:
-- proven user-owned decision
-- awaited runtime gate from another lane
-- explicit upstream `HOLD`
+Report admissibility and allowed report reasons are owned by `.claude/reference/user-reporting-law.md`.
+This section records only the chosen admitted reason and report shape.
 On any open lead-owned path, execute silently in the same turn.
-Agent-signal reporting follows `.claude/skills/team-lead/references/output-surface-law.md`.
+Agent signals are Communication Plane transport and are not report surfaces.
 
-## Output Shape
-- `PHASE-RESULT` carries:
-  - phase outcome
-  - next owner/action
-  - canonical artifact path
-- `PHASE-RESULT` runs one or two sentences.
-- `FINAL` summarizes the core result first.
-- `FINAL` evidence inclusion is limited to:
-  - highest-impact evidence
-  - verified user-usable next state
-- `FINAL` completion scope stays within:
-  - validator/FAR supported scope
-  - Evidence-Quality Matrix supported scope
-- `FINAL` audit scope stays within:
-  - integrated shard outputs
-  - inspected corpus
-  - explicitly owner-deferred surfaces
-  - out-of-scope surfaces
-- `FINAL` synthesis scope stays within:
-  - integrated shard outputs
-  - inspected corpus
-  - explicitly owner-deferred surfaces
-  - out-of-scope surfaces
-- Do not use:
-  - `FINAL` wording for partial shard drafts
-  - full-corpus wording for incomplete corpus inspection
-  - exhaustive wording for incomplete corpus inspection
-  - confirmed-defect wording for unclassified findings
-- Clean closeout report shape is silence or one line.
-- Warning-bearing closeout names:
-  - exact residual state
-  - exact hold reason
-  - next recovery surface
+## Shape Binding
+Report shape, allowed reasons, and non-reportable content are owned by `.claude/reference/user-reporting-law.md`.
+This reference does not restate `PHASE-RESULT`, `FINAL`, status, blocker, or closeout allowlists.
+Use this reference only to record the admitted report's compact evidence basis after user-reporting law admits the report.
+Incomplete shard, corpus, synthesis, validation, or defect-classification surfaces stay outside positive wording by the reporting law and the active synthesis/acceptance owner.
 
 ## Internal Content
-Internal-content suppression is owned by `.claude/skills/team-lead/references/output-surface-law.md`.
-Report only the selected primary truth surface in the compact output shape.
+Internal-content suppression is owned by `.claude/reference/user-reporting-law.md`.
+Report only the user-reporting-law-admitted reason in the compact output shape.
 
 Treat these labels as internal-content labels:
 - `internal:`

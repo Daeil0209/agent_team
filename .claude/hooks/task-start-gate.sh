@@ -60,6 +60,7 @@ WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
+TASK_EXECUTION_MARKER="$LOG_DIR/.task-execution-loaded-${SESSION_ID}"
 # session-boot marker: active runtime requires monitoring before fresh dispatch.
 SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
@@ -133,16 +134,22 @@ NODE
   return 0
 }
 
-sendmessage_is_dispatch_ack_to_lead() {
+sendmessage_is_first_receipt_outcome_to_lead() {
   [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
 
   local parsed=""
   local message_class=""
   local target_name=""
+  local ack_payload_ok=""
 
   parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
 const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
 const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+function field(text, name) {
+  const re = new RegExp(`(?:^|\\n)\\s*-?\\s*${name}\\s*:\\s*([^\\n\\r]+)`, "i");
+  const match = text.match(re);
+  return String(match ? match[1] : "").trim().toLowerCase();
+}
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
@@ -150,8 +157,7 @@ try {
     .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
     .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
-  const match = text.match(/(?:^|\n)\s*message-class\s*:\s*([^\n\r]+)/i);
-  const messageClass = String(match ? match[1] : "").trim().toLowerCase();
+  const messageClass = field(text, "MESSAGE-CLASS");
   const targetName = firstNonEmptyString(
     toolInput.to,
     toolInput.recipient,
@@ -163,22 +169,135 @@ try {
     toolInput.teammate_name,
     toolInput.teammateName
   ).toLowerCase();
-  process.stdout.write(`${messageClass}\n${targetName}\n`);
+  const allowedAckFields = new Set(["message-class", "task-id", "work-surface", "ack-status"]);
+  let ackPayloadOk = messageClass === "dispatch-ack";
+  let messageClassCount = 0;
+  let ackStatusCount = 0;
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  for (const line of lines) {
+    const match = line.match(/^-?\s*([A-Za-z0-9_-]+)\s*:/);
+    if (!match) {
+      ackPayloadOk = false;
+      continue;
+    }
+    const key = match[1].toLowerCase();
+    if (!allowedAckFields.has(key)) ackPayloadOk = false;
+    if (key === "message-class") messageClassCount += 1;
+    if (key === "ack-status") ackStatusCount += 1;
+  }
+  if (messageClassCount !== 1 || ackStatusCount !== 1) ackPayloadOk = false;
+  process.stdout.write(`${messageClass}\n${targetName}\n${ackPayloadOk ? "yes" : "no"}\n`);
 } catch {
-  process.stdout.write("\n\n");
+  process.stdout.write("\n\nno\n");
 }
 NODE
 )"
-  mapfile -t _ack_fields <<<"$parsed"
-  message_class="${_ack_fields[0]:-}"
-  target_name="${_ack_fields[1]:-}"
+  mapfile -t _receipt_fields <<<"$parsed"
+  message_class="${_receipt_fields[0]:-}"
+  target_name="${_receipt_fields[1]:-}"
+  ack_payload_ok="${_receipt_fields[2]:-no}"
 
-  [[ "$message_class" == "dispatch-ack" ]] || return 1
   case "$target_name" in
-    team-lead|lead|supervisor) return 0 ;;
+    ""|team-lead|lead|supervisor) ;;
     *) return 1 ;;
   esac
+
+  case "$message_class" in
+    dispatch-ack)
+      [[ "$ack_payload_ok" == "yes" ]]
+      return
+      ;;
+    scope-pressure|hold\|blocker)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
 }
+
+
+worker_sendmessage_screen_envelope_violation() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  local result=""
+  result="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+function field(text, name) {
+  const re = new RegExp(`(?:^|\\n)\\s*-?\\s*${name}\\s*:\\s*([^\\n\\r]+)`, "i");
+  const match = text.match(re);
+  return String(match ? match[1] : "").trim().toLowerCase();
+}
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const text = flattenText(toolInput.summary, TEXT_KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, TEXT_KEYS))
+    .concat(flattenText(toolInput.description, TEXT_KEYS))
+    .join("\n");
+  const targetName = firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.recipient_name,
+    toolInput.recipientName,
+    toolInput.name,
+    toolInput.target_name,
+    toolInput.targetName,
+    toolInput.teammate_name,
+    toolInput.teammateName
+  ).toLowerCase();
+  if (targetName && !["team-lead", "lead", "supervisor"].includes(targetName)) {
+    process.stdout.write("ok\n");
+    process.exit(0);
+  }
+  const messageClass = field(text, "MESSAGE-CLASS");
+  if (!messageClass) {
+    process.stdout.write("ok\n");
+    process.exit(0);
+  }
+  const classes = new Set(["dispatch-ack", "control-ack", "status", "scope-pressure", "hold|blocker", "handoff", "completion"]);
+  if (!classes.has(messageClass)) {
+    process.stdout.write("ok\n");
+    process.exit(0);
+  }
+  const allowedByClass = {
+    "dispatch-ack": new Set(["message-class", "task-id", "work-surface", "ack-status"]),
+    "control-ack": new Set(["message-class", "task-id", "work-surface", "control-status"]),
+    "status": new Set(["message-class", "task-id", "work-surface", "status", "state", "retained-output-path"]),
+    "scope-pressure": new Set(["message-class", "task-id", "work-surface", "pressure-type", "pressure-state", "retained-output-path", "payload-path", "replan-required"]),
+    "hold|blocker": new Set(["message-class", "task-id", "work-surface", "blocker-type", "blocker-state", "hold-state", "retained-output-path", "payload-path"]),
+    "handoff": new Set(["message-class", "task-id", "work-surface", "lane-state", "review-state", "research-state", "evidence-state", "test-state", "validation-state", "dev-state", "status", "retained-output-path", "requested-lifecycle"]),
+    "completion": new Set(["message-class", "task-id", "work-surface", "lane-state", "review-state", "research-state", "evidence-state", "test-state", "validation-state", "dev-state", "status", "retained-output-path", "requested-lifecycle"]),
+  };
+  const forbiddenWords = /\b(files-read|findings-count|findings|toxic-rule|duplication|ambiguity|conflict|bottleneck|current-step|next-step|eta-or-notes|note|quote|excerpt|all \d+|\d+\/\d+|already complete|already-complete|complete —|read in full|retained output is intact|line numbers|operational note|awaiting team-lead|no further|please reuse|re-run|delta against)\b/i;
+  let ok = true;
+  let messageClassCount = 0;
+  const allowed = allowedByClass[messageClass];
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  for (const line of lines) {
+    const match = line.match(/^-?\s*([A-Za-z0-9_-]+)\s*:/);
+    if (!match) {
+      ok = false;
+      continue;
+    }
+    const key = match[1].toLowerCase();
+    if (!allowed.has(key)) ok = false;
+    if (key === "message-class") messageClassCount += 1;
+  }
+  if (messageClassCount !== 1) ok = false;
+  if ((messageClass === "dispatch-ack" || messageClass === "control-ack") && lines.length > 4) ok = false;
+  if ((messageClass === "handoff" || messageClass === "completion") && !field(text, "RETAINED-OUTPUT-PATH")) ok = false;
+  if (forbiddenWords.test(text)) ok = false;
+  process.stdout.write(ok ? "ok\n" : `violation:${messageClass}\n`);
+} catch {
+  process.stdout.write("ok\n");
+}
+NODE
+)"
+  [[ "$result" == violation:* ]]
+}
+
 
 lead_sendmessage_is_worker_cleanup_control() {
   [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
@@ -306,15 +425,15 @@ NODE
   worker_is_standby "$target_name"
 }
 
-latest_worker_report_class_for_gate() {
+latest_worker_transport_class_for_gate() {
   local worker_name="${1-}"
 
   [[ -n "$worker_name" ]] || return 1
 
-  WORKER_NAME="$worker_name" WORKER_REPORT_LEDGER="$WORKER_REPORT_LEDGER" node <<'NODE' 2>/dev/null || true
+  WORKER_NAME="$worker_name" WORKER_TRANSPORT_LEDGER="$WORKER_TRANSPORT_LEDGER" node <<'NODE' 2>/dev/null || true
 const fs = require("fs");
 
-const ledgerPath = process.env.WORKER_REPORT_LEDGER || "";
+const ledgerPath = process.env.WORKER_TRANSPORT_LEDGER || "";
 const workerName = String(process.env.WORKER_NAME || "").trim().toLowerCase();
 if (!ledgerPath || !workerName || !fs.existsSync(ledgerPath)) process.exit(0);
 
@@ -418,10 +537,10 @@ lead_sendmessage_monitoring_target_state() {
     return 0
   fi
 
-  parsed="$(latest_worker_report_class_for_gate "$normalized_worker")"
-  mapfile -t _probe_report_fields <<<"$parsed"
-  last_message_class="${_probe_report_fields[0]:-}"
-  last_message_timestamp="${_probe_report_fields[1]:-}"
+  parsed="$(latest_worker_transport_class_for_gate "$normalized_worker")"
+  mapfile -t _probe_transport_fields <<<"$parsed"
+  last_message_class="${_probe_transport_fields[0]:-}"
+  last_message_timestamp="${_probe_transport_fields[1]:-}"
   permission_request_timestamp="$(latest_worker_permission_request_timestamp_for_gate "$normalized_worker")"
   dispatch_worker="$(normalize_lane_id "$(get_procedure_state_field "lastDispatchWorker" "")")"
   dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
@@ -450,7 +569,7 @@ lead_sendmessage_monitoring_target_state() {
       ;;
     handoff)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-report-missing'
+        printf 'working-transport-missing'
         return 0
       fi
       printf 'completed'
@@ -458,7 +577,7 @@ lead_sendmessage_monitoring_target_state() {
       ;;
     completion)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-report-missing'
+        printf 'working-transport-missing'
         return 0
       fi
       printf 'completed'
@@ -558,7 +677,7 @@ NODE
   target_is_already_active_worker "$target_name" || return 1
   target_state="$(lead_sendmessage_monitoring_target_state "$target_name")"
   case "$target_state" in
-    working|working-report-missing|blocked|scope-pressure-resolution)
+    working|working-transport-missing|blocked|scope-pressure-resolution)
       return 0
       ;;
     *)
@@ -758,16 +877,24 @@ boot_infra_tool_allowed() {
   local skill_name="${3:-}"
 
   case "$tool_name" in
-    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|TeamCreate|TeamDelete|WebFetch|WebSearch) return 0 ;;
+    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|TeamCreate|TeamDelete|WebFetch|WebSearch)
+      return 0
+      ;;
     Skill)
-      [[ "$skill_name" == *session-boot* ]]
-      return
+      if [[ "$skill_name" == *session-boot* ]]; then
+        return 0
+      fi
+      return 1
       ;;
     Bash)
-      printf '%s' "$command" | grep -qE '^[[:space:]]*(pwd|echo[[:space:]]+\$HOME)[[:space:]]*$'
-      return
+      if [[ "$command" =~ ^[[:space:]]*(pwd|echo[[:space:]]+\$HOME)[[:space:]]*$ ]]; then
+        return 0
+      fi
+      return 1
       ;;
-    *) return 1 ;;
+    *)
+      return 1
+      ;;
   esac
 }
 
@@ -777,16 +904,24 @@ lead_planning_bootstrap_tool_allowed() {
   local skill_name="${3:-}"
 
   case "$tool_name" in
-    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch) return 0 ;;
+    Read|Grep|Glob|LS|ToolSearch|TaskList|TaskGet|TaskOutput|WebFetch|WebSearch)
+      return 0
+      ;;
     Bash)
-      bash_command_is_read_only_context "$command"
-      return
+      if bash_command_is_read_only_context "$command"; then
+        return 0
+      fi
+      return 1
       ;;
     Skill)
-      [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* ]]
-      return
+      if [[ "$skill_name" == *work-planning* || "$skill_name" == *self-verification* ]]; then
+        return 0
+      fi
+      return 1
       ;;
-    *) return 1 ;;
+    *)
+      return 1
+      ;;
   esac
 }
 
@@ -816,18 +951,34 @@ if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] &
   fi
 fi
 
+if worker_sendmessage_screen_envelope_violation; then
+  deny_tool_use "BLOCKED: MESSAGE-CLASS SendMessage must be a screen-safe Communication Plane envelope. Put plans, counts, findings, notes, excerpts, and completion detail in retained-output or task carriers, then send only the envelope."
+  exit 0
+fi
+
 if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
   if [[ -n "$WORKER_NAME" ]] && worker_dispatch_ack_required "$WORKER_NAME"; then
-    if sendmessage_is_dispatch_ack_to_lead; then
+    if sendmessage_is_first_receipt_outcome_to_lead; then
+      if worker_sendmessage_screen_envelope_violation; then
+        deny_tool_use "BLOCKED: first worker receipt outcome must be a screen-safe Communication Plane envelope. Put blocker basis, counts, notes, excerpts, and completion detail in retained-output or task carriers, then send only the envelope."
+        exit 0
+      fi
       exit 0
     fi
     if reconcile_worker_dispatch_ack_from_transcript "$SESSION_ID" "$WORKER_NAME"; then
       exit 0
     fi
-    if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
+    if [[ "$TOOL_NAME" == "SendMessage" ]]; then
+      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be strict MESSAGE-CLASS: dispatch-ack, scope-pressure, or hold|blocker to team-lead. dispatch-ack may contain only MESSAGE-CLASS, optional TASK-ID, optional WORK-SURFACE, and ACK-STATUS."
       exit 0
     fi
+    if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
+      deny_tool_use "BLOCKED: worker receipt is pending. Send strict dispatch-ack, scope-pressure, or hold|blocker to team-lead before Skill, Read, Bash, discovery, proof, or lane work."
+      exit 0
+    fi
+    deny_tool_use "BLOCKED: worker receipt is pending. Send strict dispatch-ack, scope-pressure, or hold|blocker to team-lead before first lane work."
+    exit 0
   fi
   if completion_grade_sendmessage_missing_sv_result; then
     exit 0

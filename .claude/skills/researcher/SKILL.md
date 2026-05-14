@@ -21,6 +21,9 @@ Before any work:
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
+On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
+Packet wording does not need to request this outcome; visible `working` never satisfies it.
+After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-target or tightly coupled deep research -> `execute`
 - safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
@@ -113,7 +116,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Handoff
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
-- This verifies only the researcher report; team-lead still owns synthesis `SV-RESULT`.
+- This verifies only the researcher completion transport; team-lead still owns synthesis `SV-RESULT`.
 - Send consequential upward results to team-lead via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
@@ -122,7 +125,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
 - Wait for lifecycle direction after handoff.
 - See `references/researcher-lane-detail.md` for researcher-specific handoff detail.
 

@@ -12,7 +12,8 @@ LOAD-POLICY: on-demand reference only
 - Resolve Next Owner And Action
 
 ## Downward Assignment Base Packet
-Assignment-grade means any team-scoped `Agent` launch or `SendMessage` that assigns, reroutes, or reuses bounded work for an agent.
+Assignment-grade means `SendMessage` that assigns, reroutes, or reuses bounded work for an existing live team member.
+Team-scoped `Agent` creates or reattaches the member address; it is not assignment-grade work delivery.
 Lifecycle control, phase-transition control, and status probes are not assignment-grade.
 Standalone `Agent` is not a configured lane-work substitute under this governance.
 
@@ -20,11 +21,14 @@ Runtime shape terms:
 - `standalone Agent` is legacy or fallback host evidence outside team-agent runtime.
 - No `TeamCreate`, team mailbox state, `dispatch-ack`, or health-cron monitoring.
 - Not configured lane dispatch.
-- `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and are monitored as team-runtime work.
+- `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
+- Assignment-grade work begins only after `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` reaches that exact live member address.
 - `team member address` is the exact live process-backed roster name. A configured role label is not a `SendMessage.to` address unless the roster contains that exact member with live pane proof.
 - `teammate context` is independent. A teammate loads project context such as `CLAUDE.md`, configured MCP servers, and available skills, and receives the lead's spawn/assignment prompt; it does not inherit the lead's conversation history. Assignment packets must therefore be self-contained enough for the receiving lane to act without reconstructing prior chat.
+- `visible teammate response` is not an assignment, receipt, handoff, completion, status, pressure, blocker, or lifecycle transport channel. It is UI rendering only and may contain only the Minimal Visible State Token when unavoidable.
+- `SendMessage` is the first receipt transport channel for teammate ACK / pressure / blocker. Retained carriers and task state carry detailed payloads.
 
-Every assignment-grade agent packet carries:
+Every assignment-grade work packet carries:
 - `MESSAGE-CLASS`
 - `WORK-SURFACE`
 - `CURRENT-PHASE`
@@ -50,24 +54,31 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - tool-envelope validity per `message-classes.md` before packet-body checks
+- `Agent` member-creation prompt screen-safety clause: no `ready`, `context loaded`, `awaiting assignment`, startup ACK, `MESSAGE-CLASS`, handoff, completion, status, findings, counts, paths, plans, next-action prose, or instruction to send such startup transport
+- assignment `SendMessage` screen-safety clause: no visible `MESSAGE-CLASS`, ACK, handoff, completion, status, findings, counts, paths, plans, or next-action prose; use `SendMessage`, task state, or retained carriers as the governed transport
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` when task tracking is active
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
 - receiving lane additions from the lane-core skill and lane-detail reference
-- target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label
+- target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label (`member-created` for Agent; `assignment-sent` for assignment SendMessage)
 - concrete requested action must be executable with the receiving lane's allowed tools and output channel
-- do not tell a read-only lane to write files, mutate state, run unavailable tools, or report through a channel it cannot use
+- do not tell a read-only lane to write files, mutate state, run unavailable tools, or send output through a channel it cannot use
 - if the lane cannot produce the requested artifact directly, route the write/mutation to an owner that has the tool or require lane output through `SendMessage`
 - the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`: every material request-bound axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane-specific phase context, user-defined coverage obligations, assigned surfaces, acceptance basis, user-surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities
-- finding counts are reported evidence, not dispatch scope
+- finding counts are retained evidence, not dispatch scope
+- These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:
+  - parallel shard dispatches with large shared context use one shared retained context plus short per-shard packets; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
+  - handoff packets
+  - completion packets
+- a receiving lane that receives such a packet without the path sends `hold|blocker`
 - for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections populate `ACTIVE-SLICE` only, never substitute for `SCOPE-BASELINE`
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
 - Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
 - `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction dispatch.
 
 Preflight outcome names:
-- `packet-correction`: a packet defect whose missing or malformed value already exists in the frozen basis and can be corrected with all `work-planning` boundary-change axes unchanged. Correct the packet and rerun preflight before sending.
+- `packet-correction`: a packet defect that materially affects the receiver's in-flight truthful execution and whose missing or malformed value already exists in the frozen basis with all `work-planning` boundary-change axes unchanged. Post-convergence transport-display defects in delivered handoffs do not qualify — the retained output already carries the truth, re-emit multiplies auto-notification noise without effect, and cleanup routes to `self-growth-sequence` as a recurrence barrier (not to mid-flight correction). Correct the packet and rerun preflight before sending.
 - `route-replan`: the missing or contradictory basis is absent from the frozen basis, stale, or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
 - `parallel-continue`: one affected surface is blocked or being corrected, but unrelated independent surfaces remain inside the same frozen parallel route. Continue those unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 
@@ -83,7 +94,7 @@ For live owner-document verification assignments, carry the post-execution live 
 Packet field shape follows a strict line-prefix form compatible with `hooks/lib/hook-agent-dispatch.sh` `dispatch_populate_field_cache`: `^([[:alnum:]_-]+)[[:space:]]*:[[:space:]]*(.*)$`.
 A field counts as "present" only when this form matches its first line.
 Fields that look semantically present in prose but fail this format are packet defects.
-Warning hooks can report them as missing.
+Warning hooks can flag them as missing.
 The primary correction owner is the packet-producing procedure.
 
 Required shape for every dispatch field (assignment, validator, reviewer, tester, lifecycle control):

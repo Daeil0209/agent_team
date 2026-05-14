@@ -20,6 +20,9 @@ Before any work:
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
+On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
+Packet wording does not need to request this outcome; visible `working` never satisfies it.
+After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded verdict-only arbitration -> execute
 - assignment-grade validator correction packet after `FINAL-REJECT` -> execute bounded correction-basis analysis
@@ -164,7 +167,7 @@ Keep authoritative versus supplemental sources explicit.
 - State what evidence, acceptance condition, or upstream state changed before repeating a materially similar verdict pass.
 - Materially similar verdict pass requires changed evidence, changed blocker route, or changed validation surface.
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
-- This verifies only the validator report; team-lead still owns synthesis `SV-RESULT`.
+- This verifies only the validator completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 8. Handoff
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
@@ -180,7 +183,7 @@ Keep authoritative versus supplemental sources explicit.
 - Use `not-applicable` instead of omission only when that axis was not part of the frozen validation surface.
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
 - Wait for lifecycle direction after handoff.
 - See `references/validator-lane-detail.md` for validator-specific handoff detail.
 

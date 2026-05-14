@@ -64,15 +64,18 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
-- agent -> `team-lead` uses message-class reports (`dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, exact `hold|blocker`).
+- agent -> `team-lead` uses message-class transports (`dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, exact `hold|blocker`).
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, lifecycle, routing, and active surface.
 - user -> teammate uses Claude Code teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`; task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence, not an agent name.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
+- Visible teammate pane/final text is never the official message channel and must not contain ACK, handoff, status, blocker, findings, counts, paths, or `MESSAGE-CLASS` blocks.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.
+- `Agent` member-creation prompts carry only role and screen-safety; they must not request startup readiness, context-loaded, awaiting-assignment, ACK, status, handoff, or other upward transport.
+- Assignment packets carry the governed Communication Plane payload through `SendMessage`, task state, or retained carriers.
 
 ## Resolve Next Owner And Action
 - Passing entry contract opens `task-execution` Step 1 Activate Frozen Route.

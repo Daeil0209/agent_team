@@ -35,10 +35,10 @@ Use it whenever a result might be reported as:
   - handoff
   - validation
   - final report
-- These reports use positive wording:
-  - tester report
-  - reviewer report
-  - validator report
+- These lane transports and team-lead reports use positive wording:
+  - tester transport
+  - reviewer transport
+  - validator transport
   - team-lead report
 
 ## Required Output
@@ -134,7 +134,7 @@ Prove user-surface behavior on the user surface.
 - Tester evidence feeds validation.
 - Validator issues final acceptance.
 - `validator` issues final `PASS/HOLD/FAIL`.
-- Local closure reports only `verified result`.
+- Local closure user-facing prose follows `.claude/reference/user-reporting-law.md`; its only closure claim class is `verified result`.
 - Local closure is valid only when no final-arbitration trigger applies.
 - Final-arbitration trigger definitions live in `.claude/skills/validator/references/validator-lane-detail.md`.
 - Acceptance compares against the frozen delivery contract.

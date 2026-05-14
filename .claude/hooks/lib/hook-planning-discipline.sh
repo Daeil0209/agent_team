@@ -12,7 +12,8 @@ reset_planning_markers_for_session() {
   rm -f \
     "$LOG_DIR/.wp-loaded-${session_id}" \
     "$LOG_DIR/.sv-result-loaded-${session_id}" \
-    "$LOG_DIR/.post-wp-action-${session_id}"
+    "$LOG_DIR/.post-wp-action-${session_id}" \
+    "$LOG_DIR/.task-execution-loaded-${session_id}"
 }
 
 _mark_identity_in_file_locked() {

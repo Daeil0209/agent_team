@@ -11,7 +11,7 @@ PRIMARY-OWNER: team-lead
 - PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
 - State tables, lifecycle mappings, boot-window detail, compaction recovery detail, and schema detail belong in `references/runtime-state-detail.md`.
-- Assignment-grade `TeamCreate`, team-scoped agent launch, assignment-grade reuse, and fallback standalone result classification belong to `task-execution` after `work-planning`.
+- `TeamCreate`, team-scoped member creation, assignment-grade `SendMessage`, assignment-grade reuse, and fallback standalone result classification belong to `task-execution` after `work-planning`.
 ### Reference Map
 - `references/runtime-state-detail.md`: boot-window, startup, runtime-state, lifecycle, monitoring, stall, and recovery detail.
 
@@ -77,9 +77,10 @@ If both run, share the continuity read instead of repeating it.
 See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction-triggered recovery, startup isolation, and runtime-state discipline.
 
 ## Sequence Activation Discipline
-- Name the active session sequence when it is materially active.
-- Keep the current phase, checkpoint, or blocking step visible enough that the next update can be interpreted against the same sequence.
-- Sequence switches require an explicit active-sequence transition.
+- Record the active session sequence in the internal continuity carrier when it is materially active.
+- Record the current phase, checkpoint, or blocking step in the owning internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
+- Do not use boot, phase, checkpoint, continuity, or sequence names as pane-visible progress prose; visible output follows `.claude/reference/user-reporting-law.md` only.
+- Sequence switches require an explicit active-sequence transition in the internal carrier.
 - Defined session procedures follow the owning basis or stay on `HOLD`.
 
 ## Mode Split
@@ -104,7 +105,7 @@ Frozen independent work surfaces, `PARALLEL-GROUPS`, and required role separatio
 Otherwise stay lead-local only when frozen route, ownership boundaries, and proof/acceptance separation allow it.
 Required team runtime stands despite runtime friction.
 
-The first team-scoped agent launch or shared-runtime assignment message is the runtime escalation boundary.
+The first `TeamCreate` or team-scoped `Agent` member creation is the runtime escalation boundary; assignment starts only through assignment-grade `SendMessage`.
 Satisfy the runtime-entry gate before that boundary if the work no longer remains lead-local or standalone.
 If runtime is needed and no current-session team registration exists, `task-execution` owns the resulting `TeamCreate` move.
 

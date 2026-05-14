@@ -75,7 +75,7 @@ idle_pending_recovery_step() {
 
   primary_worker="$(printf '%s' "$worker_summary" | awk -F',' '{print $1}' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
   if [[ -n "$primary_worker" && "$worker_summary" != *","* ]]; then
-    printf "treat '%s' as lifecycle-decision pending from its completion report and read its REQUESTED-LIFECYCLE: reuse it with assignment-grade SendMessage after work-planning when reuse is requested or justified, approve standby, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat '%s' as lifecycle-decision pending from its completion transport and read its REQUESTED-LIFECYCLE: reuse it with assignment-grade SendMessage after work-planning when reuse is requested or justified, approve standby, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
       "$primary_worker"
     return 0
   fi

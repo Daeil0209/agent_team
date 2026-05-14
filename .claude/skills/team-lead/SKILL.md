@@ -41,8 +41,9 @@ Load the direct trigger-specific file.
 - `references/lead-local-guarded-law.md`: lead-local conditions and guarded-local law.
 - `references/communication-objections.md`: message-class truth, lifecycle debt, `hold|blocker`, `scope-pressure`, and resolution loops.
 - `references/synthesis-consume.md`: completion-grade synthesis, delivery-contract comparison, redispatch, FAR correction-packet consumption.
-- `references/output-surface-law.md`: user-facing output surface choice and no-prose mid-flight discipline.
-- `references/reporting-surface-rules.md`: evidence shaping, report brevity, and internal-by-default material.
+- `.claude/reference/user-reporting-law.md`: user-report admission, non-reportable content, and Communication/Procedure/Reporting plane separation.
+- `references/output-surface-law.md`: output staging after user-report admission.
+- `references/reporting-surface-rules.md`: evidence shaping and report brevity after user-report admission.
 - `references/routine-gate-continuation.md`: status, paused path, routine milestone, and zero-residual final continuation.
 - `references/interrupt-autonomy.md`: interrupt-resume stack discipline, autonomous judgment, user-challenge re-evaluation, and accountability.
 - `references/orchestration-defects.md`: consolidated orchestration defect taxonomy with trigger, owning rule, and correction owner per class.
@@ -78,8 +79,8 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
 - Owner: `references/synthesis-consume.md` plus `.claude/skills/task-execution/references/completion-handoff.md`.
 
 ## Reporting Detail
-- Trigger: phase/stage-end reporting requiring `SV-RESULT`, claim-strength narrowing to `INFERENCE/UNVERIFIED`, planning/dispatch/closeout reporting limits, internal-by-default scaffolding exposure on explicit request.
-- Owner: `references/output-surface-law.md`, `references/reporting-surface-rules.md`, or `references/routine-gate-continuation.md` by active sub-trigger.
+- Trigger: phase/stage-end reporting requiring `SV-RESULT`, claim-strength narrowing to `INFERENCE/UNVERIFIED`, planning/dispatch/closeout reporting limits, or explicit user request for internal material.
+- Owner: `.claude/reference/user-reporting-law.md` for report admission; `references/output-surface-law.md`, `references/reporting-surface-rules.md`, or `references/routine-gate-continuation.md` only for admitted report staging/shape by active sub-trigger.
 
 ## Interrupt-Resume Detail
 - Trigger: stacked interrupt frame discipline, status-question stall exposure, resume from verified resume action, reopen-`work-planning` only on owner/surface/deliverable/route/staffing/proof/acceptance/user-requirement axis movement.
@@ -92,10 +93,6 @@ When this skill is loaded, its rules are decisive detail for the active edge cas
 ## Orchestration Defect Taxonomy
 - Trigger: skipped owner chain, needless user prompt, user-choice loop on repeated same-class gap, missed parallel dispatch, serial-convenience bottleneck, design-decision delegation, Codex relay, premature agent replacement, reporting leak.
 - Owner: `references/orchestration-defects.md`.
-- Hard surface (taxonomy meta-rules, no duplicate of class detail):
-  - Use defect classification as route evidence.
-  - Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
-  - Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
 
 ## Resolve Next Owner And Action
 - Resolved lead-side detail opens the next owner/action named by planning, dispatch, synthesis, reporting, interrupt-resume, or closeout.

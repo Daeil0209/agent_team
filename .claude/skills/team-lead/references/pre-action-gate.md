@@ -26,7 +26,7 @@ The gate prevents team-lead from reporting, dispatching, or patching before owne
   - use tools
   - mutate files
   - dispatch or message an agent
-  - report a phase result, completion, blocker, or next action
+  - prepare a report admitted by `.claude/reference/user-reporting-law.md`
 
 ## Required Output
 Record an internal gate result with these fields:
@@ -35,7 +35,7 @@ Record an internal gate result with these fields:
 - `OWNER`
 - `REFERENCE`
 - `APPLIED-RULE-MAPPING`
-- `REPORT`
+- `REPORT-ADMISSION`
 - `ROUTE`
 - `USER-FIT`
 - `CHANGE-FIT`
@@ -45,8 +45,10 @@ Record an internal gate result with these fields:
 Stop before action when:
 - any required field is not named truthfully
 - applied-rule mapping is missing for active owner documents
-Stop before reusing the gate when work, owner, route, report, mutation boundary, or uncertainty changed.
-Stop before user-facing prose until the selected report surface is new or changed.
+Stop before reusing the gate when work, owner, route, report admission, mutation boundary, or uncertainty changed.
+Stop before user-facing prose until `.claude/reference/user-reporting-law.md` admits a new or changed report reason.
+Stop before user-facing prose on lane/shard arrival, partial completion, partial convergence, retained-output availability, or findings-count visibility; those open synthesis or monitoring, not reporting.
+Stop before tool-adjacent progress prose.
 Stop before mutation until `[GOV-MIN]` is applied.
 
 ## Resolve Next Owner And Action
@@ -54,10 +56,12 @@ Stop before mutation until `[GOV-MIN]` is applied.
 - A stopped applied-rule route opens loaded-document consumption.
 - A stopped stale-gate route reopens this gate.
 - A stopped pre-action prose route continues internal execution.
+- A stopped tool-adjacent prose route continues through the current owner tool action without prose.
+- A stopped lane-arrival prose route opens retained-carrier consumption, all-required-output barrier tracking, monitoring, synthesis, or `SV-RESULT`.
 - A stopped mutation route opens `[GOV-MIN]` inspection.
 
 ## Same-Segment Reuse
-- A gate remains current while `WORK`, `INTENT`, `OWNER`, `REFERENCE`, `REPORT`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, and `UNCERTAINTY` remain true.
+- A gate remains current while `WORK`, `INTENT`, `OWNER`, `REFERENCE`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, and `UNCERTAINTY` remain true.
 - Evidence-gathering tool calls inside a current gate use the current gate.
 - Dispatch, mutation, reporting, owner change, route change, or uncertainty change reopens this gate.
 
@@ -86,13 +90,9 @@ Consume each required reference before execution, handoff, synthesis, or report.
 If a reference is unavailable, return `HOLD` or reopen the smallest owner that can correct the path.
 
 ### REPORT
-Select one user-facing truth surface:
-- `verified result`
-- `blocker`
-- `next action`
-- `closeout residual`
-
-If no new or changed primary surface exists, keep the turn internal.
+Apply `.claude/reference/user-reporting-law.md` to classify Reporting Plane admission.
+Allowed admitted reasons are owned by `.claude/reference/user-reporting-law.md`.
+If no admitted user report exists, keep the turn internal.
 
 ### ROUTE
 Use configured lanes before lead-local imitation.

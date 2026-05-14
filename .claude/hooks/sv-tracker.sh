@@ -35,6 +35,7 @@ WORKER_NAME=""
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
+TASK_EXECUTION_MARKER="$LOG_DIR/.task-execution-loaded-${SESSION_ID}"
 # Session-scoped planning-plus-SV marker survives per-turn resets.
 # Exact claim verification remains procedural.
 SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
@@ -90,6 +91,10 @@ case "$SKILL_NAME" in
     fi
     SUPPRESS_DISPLAY=1
     ;;
+  *task-execution*)
+    date -u '+%Y-%m-%dT%H:%M:%SZ' > "$TASK_EXECUTION_MARKER"
+    SUPPRESS_DISPLAY=1
+    ;;
   *work-planning*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$WP_MARKER"
     clear_lead_planning_required "$SESSION_ID"
@@ -97,6 +102,7 @@ case "$SKILL_NAME" in
     rm -f "$SV_RESULT_MARKER"
     rm -f "$SV_CONVERGED_MARKER"
     rm -f "$POST_WP_ACTION_MARKER"
+    rm -f "$TASK_EXECUTION_MARKER"
     if [[ -z "$WORKER_NAME" ]]; then
       if [[ "$(get_procedure_state_field "startupState" "")" == "ready" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
         printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"

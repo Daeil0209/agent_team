@@ -106,7 +106,7 @@ SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Refe
   - the same parallel grouping
   - the required verification gate
 - Treat multiple aligned objections as stronger planning evidence.
-- Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style reporting.
+- Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style transporting.
 - Unresolved objections keep the blocked lane on a concrete resolution path.
 - Unrelated independent lanes keep moving when lawful.
 - Map changed evidence/proof surface to `proof-surface-mismatch`.

@@ -317,9 +317,10 @@ Keep the current readiness label explicit.
 Keep the evidence basis explicit.
 Keep follow-on optimization closure explicit before treating the round as closed.
 ## Sequence Activation Discipline
-When Self-Growth Sequence or Change Sequence is materially active, name it in progress updates.
-Keep current phase, step, or blocker visible enough for successor interpretation.
-Sequence switches require explicit transition while active runtime depends on one of them.
+When Self-Growth Sequence or Change Sequence is materially active, record it in the internal continuity or change carrier.
+Record the current phase, step, or blocker in the owning internal carrier so successor interpretation does not depend on pane-visible prose.
+Do not use progress-update wording as authorization for user-facing text; visible output follows `.claude/reference/user-reporting-law.md` only.
+Sequence switches require explicit transition in the internal carrier while active runtime depends on one of them.
 Omission allowance must come from the owning rule, not habit or convenience.
 Build sequencing decisions from the loaded skill procedure, not memory.
 If the governing procedure cannot be pointed to cleanly, keep the work on HOLD until the basis is explicit.

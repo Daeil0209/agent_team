@@ -194,7 +194,7 @@ Examples: test framework selection, proof tooling, coverage strategy, correction
 - synthesize verification approach from fitting patterns + reject misfits
 - compose with `tester` lane for execution and `validator` lane for final acceptance
 
-Verification-methodology benchmarking is mandatory when the verification choice is novel, disputed, high-risk, reusable, or lacks an already-frozen proven local default and materially affects acceptance quality.
+Use this verification-methodology lens when the active owner path selects `benchmark-simulation` and the verification choice is novel, disputed, high-risk, reusable, or lacks an already-frozen proven local default and materially affects acceptance quality.
 Skip when prior session already froze the verification basis from external evidence or when tester/validator uses an already-frozen proven local default cited in the packet, lane rule, or acceptance surface.
 See `references/verification-methodology.md` for protocol.
 

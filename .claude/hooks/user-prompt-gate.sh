@@ -131,16 +131,16 @@ if (!statusPromptRe.test(prompt)) process.exit(0);
 
 // Per [HOOK-LAST]: hook is observation-only. Detailed runtime-state diagnosis is
 // owned by team-lead via session-boot Monitoring Sequence + agents/team-lead.md
-// RPA-3/RPA-9. Emit a single bare cue and let the lead read procedure-state +
+// RPA-3/RPA-7. Emit a single bare cue and let the lead read procedure-state +
 // classify the runtime situation against the canonical truth-rules.md ladder.
 const stateFile = String(process.env.PROCEDURE_STATE_FILE || "");
 let stateExists = false;
 try { stateExists = fs.statSync(stateFile).isFile(); } catch {}
 
 if (stateExists) {
-  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then surface one primary truth per RPA-9 (verified result / blocker / next action / closeout residual). Hook ledgers are observation only per task-execution/references/truth-rules.md.");
+  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then answer only through `.claude/reference/user-reporting-law.md` admitted reasons. Hook ledgers are observation only per task-execution/references/truth-rules.md.");
 } else {
-  process.stdout.write("CTX: status-like prompt. Owner cue: no procedure-state present; report only verified next action or blocker per agents/team-lead.md RPA-9 single-primary-surface rule.");
+  process.stdout.write("CTX: status-like prompt. Owner cue: no procedure-state present; report only a user-reporting-law-admitted explicit status answer or user-action blocker per agents/team-lead.md RPA-7.");
 }
 NODE
 }

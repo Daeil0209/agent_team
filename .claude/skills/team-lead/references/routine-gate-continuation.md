@@ -27,11 +27,21 @@ Record:
 Stop before `FINAL` when residual queue is non-empty.
 Stop before asking to proceed when the next owner/action is lead-owned and non-destructive.
 Stop before unsolicited status prose when continuing the active path is possible in the same segment.
+Stop before lane/shard arrival or partial-convergence prose when monitoring, retained-carrier consumption, merge, correction, or synthesis can continue.
+
+## Explicit Why/Status Answer Limit
+When the user asks why an expected action did not happen, answer only:
+- violated owner/rule
+- direct procedural cause
+- current correction owner/action
+Do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.
+After the answer, resume the current owner action unless the user redirects or a user-action blocker is proven.
 
 ## Resolve Next Owner And Action
 - A stopped routine `FINAL` route opens residual queue processing.
 - A stopped proceed-prompt route executes the lead-owned next owner/action.
 - A stopped unsolicited status-prose route continues the active path in the same segment.
+- A stopped partial-arrival prose route continues monitoring, retained-carrier consumption, merge, correction, or synthesis.
 
 ## Continuation Rules
 - Resume these surfaces by executing the next owner/action:
@@ -58,7 +68,8 @@ Stop before unsolicited status prose when continuing the active path is possible
   - multi-round deliverables through the next round
   - multi-batch deliverables through the next batch
 - For routine milestones, continue through the next owner/action in the same segment.
-- Surface routine milestones on explicit user request.
+- Treat lane/shard arrival, single-lane completion, partial fan-out completion, and retained-output availability as routine internal milestones.
+- Surface routine milestones on explicit user request only, and then only as a compact waiting condition without shard inventories unless specifically requested.
 
 ## Final Convergence
 `FINAL` requires zero residual deliverable convergence.
@@ -78,14 +89,7 @@ Continue execution until:
 - the user explicitly redirects
 
 ## Surface Limit
-Use three user-facing surfaces only:
-- `MID-FLIGHT`
-- `PHASE-RESULT`
-- `FINAL`
-
-Routine output suppression follows `.claude/skills/team-lead/references/output-surface-law.md`.
+Routine reporting follows `.claude/reference/user-reporting-law.md`.
 Clean routine transitions produce no user-facing prose.
-These routine surfaces report through `.claude/skills/team-lead/references/output-surface-law.md`:
-- blockers
-- required user actions
+Routine milestones, lane/shard arrivals, partial convergence, satisfied gates, phase transitions, dispatch state, and monitoring state stay Procedure Plane unless `.claude/reference/user-reporting-law.md` admits a report.
 After `session-closeout` owns the path, late outputs narrow residual truth only.

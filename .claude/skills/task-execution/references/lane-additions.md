@@ -11,8 +11,20 @@ Every lane-core skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
-- Send `dispatch-ack` first for every fresh assignment-grade receipt.
-- Keep `dispatch-ack`, `status`, `handoff`, and `completion` visible bodies within `.claude/skills/task-execution/references/message-classes.md` payload limits.
+- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: `SendMessage` tool call to `team-lead` with `MESSAGE-CLASS: dispatch-ack`, or `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
+- If the first upward outcome cannot be sent, lane work does not start; `session-boot` monitoring/recovery owns the missing receipt.
+- This duty is lane-baseline; packet wording does not need to request it.
+- Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later handoff/completion never satisfies receipt.
+- Never emit `MESSAGE-CLASS` blocks through visible pane/final text; that is raw Communication Plane leakage, not a valid receipt or handoff.
+- Strict `dispatch-ack` contains only `MESSAGE-CLASS`, optional `TASK-ID`, optional `WORK-SURFACE`, and `ACK-STATUS`; put no plan, counts, file paths, evidence, retained-output path, completion state, operational note, or next-step prose in ACK.
+- After `dispatch-ack`, continue into lane work in the same turn unless the first outcome is `scope-pressure` or `hold|blocker`.
+- Assignment receipt, minimal ACK, and immediate lane work are one execution block; do not split them into separate readiness, planning, context-loaded, awaiting-assignment, or idle stages.
+- Execution-block internals stay inside the block: skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, and progress notes are not emitted as startup, ACK, status, or pane/final prose.
+- Do not emit ACK, startup, execution plan, file-read, route, evidence, or later-report-intent prose through visible pane/final text; use the governed Communication Plane carrier for receiver-required detail and the Minimal Visible State Token for unavoidable visible rows.
+- Every upward message follows `.claude/skills/task-execution/references/message-classes.md` Communication Plane Law.
+- Carry receiver-required detail through governed Communication Plane payload; use retained-output or task carriers only for size, evidence retention, or reuse.
+- Never use report suppression or visible-row hygiene to omit, distort, or weaken assignment facts; preserve exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action in governed carriers when material.
+- Load and apply duties remain internal unless a receiver-owned packet, blocker, or handoff field requires them.
 - Receipt is not permission to execute a defective packet.
 - Then classify in the same turn.
 - Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
@@ -29,8 +41,8 @@ Every lane-core skill inherits these common preconditions:
 - Apply each valid `REQUIRED-SKILLS` entry before lane execution.
 - Load each valid `REQUIRED-SKILLS` entry before handoff.
 - Apply each valid `REQUIRED-SKILLS` entry before handoff.
-- A blocked required entry reports `scope-pressure` when packet correction or replanning can restore execution.
-- A blocked required entry reports `hold|blocker` when truthful execution remains blocked.
+- A blocked required entry sends `scope-pressure` when packet correction or replanning can restore execution.
+- A blocked required entry sends `hold|blocker` when truthful execution remains blocked.
 - A non-fitting required entry is a packet or route defect.
 - A lane-mismatched required entry is a packet or route defect.
 - A contradictory required entry is a packet or route defect.

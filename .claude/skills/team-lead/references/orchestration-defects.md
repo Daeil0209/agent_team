@@ -57,15 +57,11 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Correction owner: run the recovery sequence on the existing agent before replacement.
 
 ### Reporting Leak
-- Trigger: emitting P0/WP/SV fields to the user while explicit user request is missing.
-- Trigger: emitting skill loads to the user while explicit user request is missing.
-- Trigger: emitting runtime internals to the user while explicit user request is missing.
-- Trigger: emitting lane internals to the user while explicit user request is missing.
-- Trigger: emitting convergence tables to the user while explicit user request is missing.
-- Trigger: emitting review-tool payloads to the user while explicit user request is missing.
-- Trigger: emitting internal artifact bodies/diffs to the user while explicit user request is missing.
-- Owning rule: `agents/team-lead.md` RPA-7 and `.claude/skills/team-lead/references/output-surface-law.md`.
-- Correction owner: collapse to one truth surface and keep procedure scaffolding internal.
+- Trigger: emitting non-token visible prose not admitted by `.claude/reference/user-reporting-law.md`.
+- Owning rule: `agents/team-lead.md` RPA-7 and `.claude/reference/user-reporting-law.md`.
+- Correction owner: suppress non-admitted user-facing prose and keep Communication Plane and Procedure Plane payload internal.
+- Correction owner: reapply `agents/team-lead.md` RPA-7 before any retry on the same visible surface.
+- Recurrence owner: after protected work integrity is secure, route repeated same-class emission to `self-growth-sequence` as `[PROC-HABIT]` hardening.
 
 ### Routine Status Stop
 - Trigger: emitting user-facing `PHASE-RESULT` during same-segment continuation work.
@@ -77,18 +73,18 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Trigger: emitting `FINAL` with remaining items.
 - Classification: intermediate commit is a routine milestone.
 - Classification: intermediate push is a routine milestone.
-- Classification: git milestone is a routine milestone.
+- Classification: intermediate build is a routine milestone.
 - Classification: status questions are stall-exposure cues.
-- Classification: same-owner `next action` naming executes rather than reports.
+- Classification: same-owner `next action` naming executes rather than becomes a user report.
 - Classification: `FINAL` requires zero-residual deliverable convergence.
-- Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 trigger order, RPA-7 output surface, and RPA-10 interrupt/autonomy; `.claude/skills/team-lead/references/routine-gate-continuation.md`.
+- Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 trigger order, RPA-7 user reporting, and RPA-10 interrupt/autonomy; `.claude/skills/team-lead/references/routine-gate-continuation.md`.
 - Correction owner: continue execution through every queued item in the same segment.
 - Correction owner: continue execution through every residual item in the same segment.
 - Correction owner: classify each item as patched.
 - Correction owner: classify each item as deferred by owning upstream record with explicit follow-up assignment.
 - Correction owner: classify each item as out-of-scope with cited basis.
-- Correction owner: surface user-facing prose after zero-residual convergence.
-- Correction owner: surface blocker prose when a true blocker emerges.
+- Correction owner: surface user-facing prose only after user-reporting law admits zero-residual convergence.
+- Correction owner: surface blocker prose only when user-reporting law admits a user-action blocker.
 - Correction owner: stop on explicit user cancellation.
 - Correction owner: stop on explicit user redirect.
 

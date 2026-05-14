@@ -35,7 +35,7 @@ Load trigger-specific files directly from `SKILL.md`.
 - `references/assignment-packet.md`: assignment-grade packet floor, packet preflight, field format, skill loading, and cross-continuity packet checks.
 - `references/dispatch-entry-contract.md`: consumed planning fields, concrete-vs-not-applicable rules, execution readiness entry checks, and information movement rule.
 - `references/request-bound-fields.md`: request-intent, exact user wording, governance tier, user-surface, proof/tool/setup, run-path, burden, decision, validation, environment, and scenario fields.
-- `references/message-classes.md`: common message law, canonical channel registry, upward message classes, receipt spine, information-request consumption, and blocker/pressure routing.
+- `references/message-classes.md`: Communication Plane law, canonical channel registry, upward message classes, receipt spine, information-request consumption, and blocker/pressure routing.
 - `references/scope-pressure.md`: canonical `scope-pressure` values, required fields, and replan vs packet-correction boundary.
 - `references/truth-rules.md`: runtime truth ladder and user-facing claim limits.
 - `references/runtime-dispatch-law.md`: team-runtime lane dispatch, TeamCreate sequencing, parallel/reuse law, SendMessage class boundaries, required-skill dispatch law, and partial-parallel-failure recovery.
@@ -79,7 +79,7 @@ Core rule:
 - `ambiguous-route` defaults to team-routed handling, not lead-local compression
 
 Keep explicit:
-- whether the next move is team-agent runtime creation, reuse by assignment message, team-scoped agent launch, parallel-agent dispatch, or blocker clearance
+- whether the next move is team-agent runtime creation, reuse by assignment message, team-scoped member creation, assignment-grade SendMessage, parallel assignment send, or blocker clearance
 - whether the frozen dispatch is single-lane, mirrored, or parallel-sharded
 - the exact serial reason when `PARALLEL-GROUPS` is `none`
 ## Step 2: Dispatch / Reuse
@@ -101,12 +101,15 @@ Own the actual execution move:
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
+- For `Agent` member creation, the spawn prompt must include the screen-safety clause from `references/assignment-packet.md`; do not rely on role-file memory or hook suppression.
 
 Dispatch law:
-- Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, `parallel-agent-dispatch`, or reuse-via-`SendMessage` move.
+- Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
+- A packet-correction-via-`SendMessage` whose receiver has no open executable task (post-handoff, idle, converged) fails the `SendMessage And Skill Law` necessity check (`bounded assignment, reroute, or reuse against an open executable task`); suppress the send and route cleanup to `self-growth-sequence` per `references/assignment-packet.md` packet-correction outcome.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
-- When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` dispatch.
-- When team runtime is active, delegated lane `Agent` satisfies team-runtime dispatch only when it is team-scoped with the resolved active `team_name` and concrete `name`.
+- When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
+- When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
+- A team-scoped `Agent` launch creates or reattaches the member address only; send assignment-grade `SendMessage` to that exact member before treating the target as dispatched, running, or ack-pending.
 - Role is responsibility.
 - Live process-backed member name is address.
 - `SendMessage.to` must match the live process-backed roster exactly.
@@ -118,30 +121,40 @@ Dispatch law:
 - Non-terminating lifecycle control `SendMessage` uses `MESSAGE-CLASS: lifecycle-control`.
 - Terminating lifecycle control uses structured `shutdown_request`.
 - Match each `SendMessage` to the exact class or structured payload owned by its reference.
+- Do not use teammate pane/final output as a substitute for `SendMessage`, task state, or retained carrier delivery.
+- Treat member creation plus assignment send plus lane receipt plus same-turn lane work as one dispatch execution block; do not insert readiness, context-loaded, awaiting-assignment, status-probe, or idle stages inside that block.
+- Details required only by that block stay in its packet, task state, retained carrier, or lane-local context; they do not become user-facing prose or extra upward messages.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.
 
 Inside the frozen routed state, treat these as the only valid next actions:
 - `TeamCreate`
 - `reuse-via-SendMessage`
-- `Agent`
-- `parallel-agent-dispatch`
+- `Agent` member creation
+- assignment-grade `SendMessage`
+- parallel assignment send
 - `clear-blocker:<exact blocker>`
 Branch rule:
 - branch only across these frozen execution moves and packet templates
 - new route, owner, or claim class reopens `work-planning`
 - if a branch requires new route judgment, new work surface decomposition, or changed ownership, reopen `work-planning` first
 ## Step 3: Dispatch Truth
-Follow `.claude/skills/team-lead/references/output-surface-law.md`.
+Dispatch truth is Procedure Plane and Communication Plane state.
+User-facing reporting is owned only by `.claude/reference/user-reporting-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
-Report dispatch state only for blocker, required user action, or explicit status answer; keep `dispatch pending` as internal runtime truth.
+Tool-adjacent progress prose is forbidden while dispatch, monitoring, recovery, merge, synthesis, or locked parallel dispatch can continue.
+Transport dispatch state through `message-classes.md`; do not convert dispatch state into a user report.
+Report to the user only when `.claude/reference/user-reporting-law.md` admits a user-facing report.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
+When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, task updates, packet-polishing passes, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+Do not narrate `PARALLEL-DISPATCH-LOCK`, allowed move lists, retained-output setup, or dispatch preparation to the user; execute the allowed move.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
-- Assignment success, no-change dispatch, ack, lane-count, waiting, and idle events stay internal while monitoring, recovery, merge, or synthesis can continue.
+- Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual handoff, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
 - User-requested dispatch status reports only the user-relevant waiting condition.
+- Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, and covered by the required `SV-RESULT` or independent verification route.
 
 Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.

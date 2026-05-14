@@ -21,6 +21,9 @@ Before any work:
 5. Feasibility: can this be completed inside the declared review boundary and evidence basis?
 6. Target-intent fit: can the review name the artifact, program, report, governance, or document intent that defines fit?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
+On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
+Packet wording does not need to request this outcome; visible `working` never satisfies it.
+After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase review -> `execute`
 - safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
@@ -107,7 +110,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
-- This verifies only the reviewer report; team-lead still owns synthesis `SV-RESULT`.
+- This verifies only the reviewer completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 9. Handoff
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
@@ -122,7 +125,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - If final validation is materially required, keep the frozen validator ingress contract explicit in the handoff.
 - Follow validator packet conditionality from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Superseded validator burden stays with validator-owned surfaces.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style report.
+- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
 - Wait for lifecycle direction after handoff.
 - See `references/reviewer-lane-detail.md` for reviewer-specific handoff detail.
 

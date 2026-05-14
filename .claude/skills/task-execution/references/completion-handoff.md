@@ -12,7 +12,13 @@ LOAD-POLICY: on-demand reference only
 - Resolve Next Owner And Action
 
 ## Common Completion Result Spine
-Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` must include:
+This spine names content that the producing lane must provide to team-lead through a retained carrier.
+`handoff` and `completion` are Communication Plane transport, not user reports.
+For team-agent runtime, the screen-rendered `SendMessage` body is a pointer envelope, not the completion spine.
+The envelope carries only `MESSAGE-CLASS`, optional `TASK-ID`, `WORK-SURFACE`, one lane-state field, and `RETAINED-OUTPUT-PATH`.
+The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
+
+Required completion payload fields for every completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`:
 - `TASK-ID` when task tracking is active
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
@@ -27,16 +33,15 @@ Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: 
 - `PRODUCER-SELF-REVIEW-PASS` — defeater lenses applied, disconfirming checks attempted, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
-Screen-visible handoff and completion reports must follow `.claude/skills/task-execution/references/message-classes.md` Screen Display Reporting Law.
-The retained-output path carries detailed output for team-lead synthesis.
-Missing retained-output path follows Screen Display Reporting Law.
+Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the pointer envelope through `SendMessage`.
+Inline completion payload in `SendMessage` is malformed screen-rendered transport.
 
-Team-lead accepts completion-grade messages that carry both blocks; messages missing either return to the producer via packet-correction.
+Team-lead accepts completion-grade transport only when the pointer envelope names a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
 
-Lane handoff reports lane-local convergence only and claims no team-lead `SV-RESULT`.
+Lane handoff transports lane-local convergence only and claims no team-lead `SV-RESULT`.
 Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
-For team-agent runtime, the report is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
+For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
 When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the handoff cites the retained path under `projects/<project-folder>/...`.
 When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained project-owned path. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
@@ -56,14 +61,14 @@ Common finding basis:
 - Only `patch-worthiness: must-fix|narrow-fix` with proof that correction will not remove a stronger protected function is patch-dispatch basis; `observe|no-patch` stays retained context.
 - Common finding-class taxonomy (used by reviewer, review-verification, and validator-input findings): `confirmed-defect` (live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction), `risk-hypothesis` (plausible risk lacks enough proof for patch dispatch), `design-tradeoff` (intentional protection with a cost), `duplication` (repeated meaning without protected local-restatement basis after proving correction will not remove a stronger protected function), `protected-restatement` (repeated meaning needed for isolated owner readability), `non-issue` (evidence disproves the concern), `unverified` (evidence basis incomplete).
 
-`RESOURCE-CLEANUP` reports whether long-running spawned resources opened during lane work were closed at handoff. Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes. Transient short-lived invocations (one-off linter, single-pass test harness, fixture file already removed) are not long-running resources for this field.
+`RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at handoff. Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes. Transient short-lived invocations (one-off linter, single-pass test harness, fixture file already removed) are not long-running resources for this field.
 - `RESOURCE-CLEANUP: complete` requires explicit enumeration of every long-running resource actually killed (server PID + port, daemon PID, or dev-runner PID) plus a post-cleanup verification that ports and resources are released.
-- `RESOURCE-CLEANUP: not-applicable (no long-running resource opened)` is allowed only when the lane invoked no long-running spawn; transient invocations report `not-applicable` truthfully.
-- Leaving any long-running spawned process at handoff is a `RESOURCE-CLEANUP` defect; team-lead rejects completion-grade reports that misuse `not-applicable` to cover an unkilled long-running resource or a bare `complete` without enumeration and post-cleanup probe.
+- `RESOURCE-CLEANUP: not-applicable (no long-running resource opened)` is allowed only when the lane invoked no long-running spawn; transient invocations record `not-applicable` truthfully.
+- Leaving any long-running spawned process at handoff is a `RESOURCE-CLEANUP` defect; team-lead rejects completion-grade transports that misuse `not-applicable` to cover an unkilled long-running resource or a bare `complete` without enumeration and post-cleanup probe.
 
 Lane docs require bounded additions only when they preserve this common result spine.
 Handoff names selected non-lane-core skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
-If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready wording.
+If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready transport.
 Team-lead reviews that basis against the handed-off work and sends correction to the owning lane when direction drifts.
 When material, `EVIDENCE-BASIS` names the Evidence-Quality Matrix rows supporting the handoff claim.
 `FROZEN-CONTRACT-STATUS` must be one of `matched`, `partial`, `drifted`, `blocked`, `not-assessable`, or `not-applicable:<basis>`. It compares the lane's evidence against the frozen assigned contract, not just the changed artifact or executed route.
@@ -89,7 +94,7 @@ Team-lead can allow one narrow same-surface follow-on before lifecycle control o
 - next dispatch targets a distinct concrete agent
 - unresolved lifecycle debt stays visible
 
-When the lane claims user-surface proof or user-surface acceptance on an executed surface, the completion-grade report must also keep the exercised method explicit:
+When the lane claims user-surface proof or user-surface acceptance on an executed surface, the completion-grade transport must also keep the exercised method explicit:
 - `USER-RUN-PATH` and `RUN-PATH-STATUS` when the deliverable is executable user-facing
 - `USER-SURFACE-PROOF-METHOD`
 - `TOOL-PATH-USED`
@@ -98,7 +103,7 @@ When the lane claims user-surface proof or user-surface acceptance on an execute
   Report a first-time-user walkthrough verdict per AC-supporting surface element (labels, controls, data displays, charts, gauges that bear acceptance weight).
   Each verdict is `clear`, `partially-clear:<reason>`, or `unclear:<reason>`.
   Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner.
-  Minor non-AC labels report as a single `routine: clear` summary unless a defect is observed.
+  Minor non-AC labels appear as a single `routine: clear` summary unless a defect is observed.
 - `IMAGE-INSPECTION-RECORD` for any handoff whose surface includes rendered UI.
   List each screenshot or full-page image cited in support of an AC verdict, FAR claim, or visual-conformance assertion.
   Cite the design-stated expectation each image proves.
@@ -112,16 +117,18 @@ When the lane claims user-surface proof or user-surface acceptance on an execute
   Routine baseline captures that neither support a verdict nor evidence a defect cite path-only without per-image verdict.
 
 Report decisive user-surface work with the concrete proof method and execution evidence actually used.
-Completion reporting requires requested content, functions, format, user-facing path, reader/operator burden, `CORE-WORKFLOW-CLOSURE` coverage, and acceptance surface to be matched, verified, frozen-narrowed, or frozen-deferred.
+Completion-grade transport requires requested content, functions, format, user-facing path, reader/operator burden, `CORE-WORKFLOW-CLOSURE` coverage, and acceptance surface to be matched, verified, frozen-narrowed, or frozen-deferred.
 Anchoring on the implemented subset instead of the frozen `CORE-WORKFLOW-CLOSURE` coverage is procedural failure.
-Executable completion reporting requires the exact operator launch artifact plus invocation evidence, stop/cleanup path, clean re-launch basis, access URL/port when applicable, and project-artifact hygiene status.
+Executable completion-grade transport requires the exact operator launch artifact plus invocation evidence, stop/cleanup path, clean re-launch basis, access URL/port when applicable, and project-artifact hygiene status.
 `ACTIVE-SLICE` evidence becomes phase, MVP, release, or workflow completion only after reconciliation against `SCOPE-BASELINE`.
 Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPEN-SURFACES`.
 
 ## Common Lane Handoff Law
-- Every agent handoff is an upward lane report, not a replacement for the frozen global plan.
-- Report only lane-local execution truth: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
-- Verdict or `PASS` language remains scoped to the reported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
+- Every agent handoff is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
+- The `SendMessage` body transports only the pointer envelope; lane-local execution truth travels in the retained carrier.
+- Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, or retained-output contents in the `SendMessage` body.
+- Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
+- Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Handoff exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.
 - `LANE-NEXT-CANDIDATE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.

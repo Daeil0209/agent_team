@@ -17,8 +17,22 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 - A strengthened synthesis or redispatch might be reported.
 - FAR `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
 
+## Screen Boundary
+Lane `handoff` and `completion` transports are not user reports even when Claude Code renders them on screen.
+Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
+Arrival opens retained-carrier consumption, synthesis, contradiction handling, lifecycle control, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
+If no admitted user report exists, visible team-lead prose after a lane transport is limited to the Minimal Visible State Token from `.claude/reference/user-reporting-law.md`.
+
+## All-Required-Output Barrier
+For a multi-lane, multi-shard, reviewer fan-out, proof fan-out, or validator-routed route, team-lead freezes the required output set from the active plan, dispatch record, task state, or route packet.
+No user-facing synthesis, phase result, completion claim, or shard-progress prose may be emitted while any required output is pending, missing, unintegrated, contradictory, only screen-visible, or awaiting retained-carrier consumption.
+Each required output closes only by completion-grade retained carrier consumed, explicit owner deferral, cited out-of-scope basis, `scope-pressure`, `hold|blocker`, failed-send/replacement truth, or user-cancel/user-redirect.
+Partial arrivals are synthesis queue events. They open internal merge work, not report text.
+Explicit user status questions during this barrier may answer only the user-relevant waiting condition; they must omit shard identities, counts, findings, evidence detail, retained paths, and per-agent narratives unless the user specifically requested those internal materials.
+
 ## Required Output
 Record:
+- required output set and per-output closure state
 - synthesized lane message identities
 - accepted evidence anchors
 - open surfaces
@@ -28,13 +42,19 @@ Record:
 - `SV-RESULT` status when synthesis controls reporting or redispatch
 - applicable per-claim basis when synthesis emits findings, patterns, rankings, defect labels, patch recommendations, or redispatch basis
 
+## Verification Gate
+Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead runs `SV-RESULT` on the exact synthesized claim.
+When the synthesis is full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment, use independent verification when available: reviewer/validator route, Codex independent review, or an equivalent independent proof surface.
+Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.
+Raw lane convergence, shard counts, candidate totals, and retained-output presence are not verified synthesis.
+
 ## Stop
 Stop positive synthesis when:
 - the input is not completion-grade
 - material open surfaces remain
 - agent outputs conflict
 - the conclusion outruns the reconciled verified surface
-- required shard outputs are missing, late, unintegrated, or not explicitly deferred/out-of-scope
+- required shard or lane outputs are missing, late, pending, unintegrated, contradictory, only screen-visible, or not explicitly deferred/out-of-scope
 - any emitted finding, pattern, ranking item, class bucket, defect group, patch recommendation, or redispatch basis lacks applicable per-claim basis
 - quality, evidence, independent review, proof, validation, Codex independent review, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
 - a meaning-dependent synthesis claim uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`

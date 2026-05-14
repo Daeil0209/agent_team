@@ -94,7 +94,7 @@ Rules:
 ## Message-First Lifecycle Rule
 - Agent lifecycle is message-first.
 - Completion creates a lifecycle obligation; it does not authorize auto-standby or removal.
-- Completion-grade agent reports must carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is a request, not authority.
+- Completion-grade agent transports must carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is a request, not authority.
 - During active runtime, `session-boot` owns lifecycle interpretation and lifecycle-control need after completion-grade output when no new assignment-grade packet is being sent.
 - `assignment` and `reuse` return an agent to `ACTIVE`.
 - Teammate population changes only on creation and confirmed shutdown/removal.
@@ -161,7 +161,7 @@ Canonical classes:
 - lifecycle state: `ACTIVE`, `STANDBY`, `SHUTDOWN-PENDING`, `HOLD-FOR-VALIDATION`
 - lifecycle control decision: `reuse`, `standby`, `shutdown`, `hold-for-validation`
 - agent lifecycle request: `standby`, `shutdown`, `hold-for-validation`
-- runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-report-missing`, `working-blocked`, `not-working-awaiting-lifecycle`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
+- runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-lifecycle`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
 - team runtime state: `active`, `inactive`
 - team dispatch state: `none`, `pending`, `claimed`
 
@@ -183,7 +183,7 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
-| `WORKER_REPORT_LEDGER` | agent-originated progress, handoff/completion-grade message receipt | absence is not handoff/completion absence; consult message body and lane evidence |
+| `WORKER_TRANSPORT_LEDGER` | agent-originated progress, handoff/completion-grade message receipt | absence is not handoff/completion absence; consult message body and lane evidence |
 | `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification |
 | `IDLE_DECISION_PENDING_FILE` | `TeammateIdle` awaiting governing lifecycle-control decision | absence does not clear lifecycle obligation; explicit `lifecycle-control` message remains authority |
 | `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | absence is not active evidence; do not infer activity from missing idle marker |

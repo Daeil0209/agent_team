@@ -15,15 +15,15 @@ Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 - Standalone `Agent` is not configured lane dispatch.
 - If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
 - If current-session team registration exists without live panes, recover through `session-boot` and reattach needed lanes with team-scoped `Agent` on the existing team.
-- For new team runtime, `TeamCreate` must succeed before any team-scoped `Agent` dispatch.
+- For new team runtime, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - For current-session recovery, `session-boot` must precede team-scoped reattach.
 - `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
 
 ## Team-Agent-Only Lane Dispatch
-- When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), every delegated lane dispatch via `Agent` must include `team_name` and `name` so the spawned agent joins the team runtime as a member addressable by `SendMessage`.
+- When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), team-scoped `Agent` uses `team_name` and `name` to create or reattach a live member addressable by `SendMessage`; it does not deliver assignment-grade work.
 - Standalone `Agent` shape (`Agent` without `team_name`) does not satisfy team-runtime delegation. It bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination. If it already happened, treat its result only as fallback evidence.
 - Role is responsibility; live process-backed member name is address. `SendMessage.to` must match the current live process-backed roster exactly. Configured role labels (`validator`, `reviewer`, `tester`, `developer`, `researcher`) are addresses only when the roster contains that exact member with live pane proof.
-- Any needed configured lane that is not yet present in the team runtime must be added as a team member via `Agent` with `team_name` and `name`; assignment-grade work then flows via `SendMessage`. If standalone `Agent` evidence already exists, report it as fallback evidence, not team-member lifecycle state, `dispatch-ack`, or later `SendMessage` addressability.
+- Any needed configured lane that is not yet present in the team runtime must be added as a team member via `Agent` with `team_name` and `name`; assignment-grade work then flows via `SendMessage`. If standalone `Agent` evidence already exists, treat it as fallback evidence, not team-member lifecycle state, `dispatch-ack`, assignment delivery, or later `SendMessage` addressability.
 
 Target-resolution preflight is mandatory before the tool call:
 1. name the active `team_name` from current-runtime evidence
@@ -32,7 +32,8 @@ Target-resolution preflight is mandatory before the tool call:
 4. choose `SendMessage` only on exact live-process roster match
 5. choose team-scoped `Agent` with top-level `team_name` and `name` when the lane is absent but team-runtime delegation remains the route
 6. treat standalone host evidence only as legacy/fallback evidence, not dispatch
-7. label the resulting truth before reporting: `dispatch pending`, fallback evidence, or `HOLD`
+7. label the resulting truth before any user-facing claim: `member-created`, `dispatch pending`, fallback evidence, or `HOLD`
+8. after `member-created`, send assignment-grade `SendMessage` before monitoring, fallback dispatch, replacement, or user-facing progress
 
 ## Parallel And Reuse Law
 - Configured project lanes come first.
@@ -40,9 +41,16 @@ Target-resolution preflight is mandatory before the tool call:
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
-- Do this before monitoring or user-facing progress beyond `dispatch pending`.
+- Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
+- When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
+- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
+- Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open must not emit listing, count, probe, diagnostic output, or user-facing prose.
+- While `PARALLEL-DISPATCH-LOCK` is open, do not run Codex/review tools, extra corpus reads, task updates, packet-polishing passes, monitoring, synthesis, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+- Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/user-reporting-law.md`.
+- Packet size or self-contained packet burden is not a reason to delay dispatch; put shared context in a retained carrier and send short shard packets that point to it.
+- A user challenge about missing parallel dispatch answers the cause through `.claude/reference/user-reporting-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.
 - A parallel execution segment then reconciles every intended target before it moves out.
-- Valid target states are `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
+- Valid target states after assignment send are `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`. `member-created` without assignment is `team-created-no-assignment` and immediately opens assignment-grade `SendMessage`, not monitoring or fallback dispatch.
 - A target with no receipt or no start evidence enters `dispatch-recovery`; replacement or shutdown follows only after the required follow-up, frozen re-check wait, and absent response/activity evidence.
 - Reuse a live or standby agent before unnecessary new spawn only when reuse preserves the frozen parallel shape, lane separation, and acceptance/proof separation.
 - Do not reuse one agent when that would collapse independent frozen shards into a single-agent critical path.

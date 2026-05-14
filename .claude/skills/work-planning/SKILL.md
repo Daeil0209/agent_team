@@ -24,7 +24,7 @@ PRIMARY-OWNER: team-lead
 ## Purpose
 Freeze the smallest complete plan basis before consequential action.
 Own planning freeze only.
-Execution, dispatch, review, proof, validation, completion reporting, and agent packets move to the named owner.
+Execution, dispatch, review, proof, validation, user-facing final reporting, and agent packets move to the named owner.
 
 Procedure spine:
 1. Freeze request fit.
@@ -175,9 +175,10 @@ Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
-Follow `.claude/skills/team-lead/references/output-surface-law.md`.
+Follow `.claude/reference/user-reporting-law.md`.
 Planning progress is silent while the next owner/action can run in the same segment.
-If execution is stopped, emit one plain line naming blocker, required user action, explicit status answer, or next owner/action.
+Do not expose corpus counts, shard plans, internal plan-freeze fields, routing signal, agent map, parallel groups, next-consequential-action, or `opening task-execution` while the next owner can run.
+If execution is stopped, emit only a report admitted by `.claude/reference/user-reporting-law.md`.
 Keep the planning record internal.
 
 ## Post-Planning Gate
