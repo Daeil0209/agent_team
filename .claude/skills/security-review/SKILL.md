@@ -28,7 +28,9 @@ Load when security-sensitive code, configuration, or runtime surfaces materially
 - identify security-sensitive surfaces
 - run the OWASP checklist and detection-pattern scans
 - classify findings as T0-T3 with corroborated evidence
-- send `hold|blocker` when any T0/T1 exists or T2 count crosses the blocking threshold
+- active owner reports `hold|blocker` when:
+  - any T0/T1 exists
+  - T2 count crosses the blocking threshold
 - route fixes to `developer` and require re-review after fixes
 ## Activation
 Load when security-sensitive surfaces are in scope for the active review task.
@@ -41,8 +43,9 @@ Return a structured security-findings packet.
 It must include file path, line, OWASP category, defect description, bounded fix, and explicit gate decision.
 ## Handoff Boundary
 Hand off after the next owner can tell whether the surface is blocked.
-The handoff must name what class of vulnerability exists.
-The handoff must name what bounded fix path must be re-reviewed.
+The handoff must name:
+- what class of vulnerability exists
+- what bounded fix path must be re-reviewed
 Fix implementation requires independent verification.
 ## Operational Discipline
 - A single detection signal is not enough; corroborate findings before classification.

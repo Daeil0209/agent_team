@@ -22,10 +22,11 @@ The gate prevents team-lead from reporting, dispatching, or patching before owne
 
 ## Consume When
 - A user request requires any channel beyond `answer-only`.
-- The next move could use tools.
-- The next move could mutate files.
-- The next move could dispatch or message an agent.
-- The next move could report a phase result, completion, blocker, or next action.
+- The next move can:
+  - use tools
+  - mutate files
+  - dispatch or message an agent
+  - report a phase result, completion, blocker, or next action
 
 ## Required Output
 Record an internal gate result with these fields:
@@ -41,8 +42,9 @@ Record an internal gate result with these fields:
 - `UNCERTAINTY`
 
 ## Stop
-Stop before action until every field is named truthfully.
-Stop before action when applied-rule mapping is missing for active owner documents.
+Stop before action when:
+- any required field is not named truthfully
+- applied-rule mapping is missing for active owner documents
 Stop before reusing the gate when work, owner, route, report, mutation boundary, or uncertainty changed.
 Stop before user-facing prose until the selected report surface is new or changed.
 Stop before mutation until `[GOV-MIN]` is applied.

@@ -50,12 +50,41 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - See `references/developer-lane-detail.md` for packet field tables, SKILL-AUTH detail, specialist matrix, handoff-completeness detail, and defect-fix execution detail.
 
 ## Escalation Triggers
+- These boundaries are modules:
+  - package boundary
+  - feature boundary
+  - layer boundary
+  - service boundary
+- In governance surfaces, these owner folders are modules:
+  - agent owner folder
+  - skill owner folder
+  - reference owner folder
+- A file set in one owner folder counts as one module unless it changes separate public contracts.
 - Change touches 3+ files across modules unless the dispatch already explicitly bounds that scope.
 - New inter-module dependency is introduced.
 - Shared interface contract is modified.
+- These units are sites:
+  - call site
+  - rule occurrence
+  - config key
+  - template row
+  - generated consumer
+  - governance citation
+- Multiple mentions inside one repeated block count as one site when one edit updates the block.
 - A reused pattern or rule change affects 5+ sites.
-- If the dispatch already bounds the triggered scope and downstream review, proof, and acceptance owners are explicit, continue inside that boundary and carry the trigger basis in the handoff.
-- Otherwise send `scope-pressure` when a bounded split, replan, or route decision can resolve the trigger; send `hold|blocker` when write authority, shared contract authority, or acceptance ownership is missing.
+- Continue inside the dispatch boundary only when all are true:
+  - the dispatch already bounds the triggered scope
+  - downstream review owner is explicit
+  - downstream proof owner is explicit
+  - downstream acceptance owner is explicit
+- Carry the trigger basis in the handoff.
+- Send `scope-pressure` when the trigger can be resolved by:
+  - bounded split
+  - replanning
+  - route decision
+- Send `hold|blocker` when write authority is missing.
+- Send `hold|blocker` when shared contract authority is missing.
+- Send `hold|blocker` when acceptance ownership is missing.
 
 ## Development Production Workflow
 ### 1. Confirm Assigned Scope
@@ -92,7 +121,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned production surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.
@@ -101,7 +130,11 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - If that is impossible or disproportionate, record the fallback basis.
 - Keep the retest surface explicit.
 - If root cause is unknown and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
-- Materially similar retry requires changed evidence, changed blocker route, or changed fix strategy.
+- A retry is materially changed when the evidence basis changes.
+- A retry is materially changed when the blocker route changes.
+- A retry is materially changed when the fix strategy changes.
+- A retry with no material change is a materially similar retry.
+- Do not repeat a materially similar retry.
 - See `references/developer-lane-detail.md` for durability and regression-guard detail.
 ### 5. Execute Bounded Change
 - Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.

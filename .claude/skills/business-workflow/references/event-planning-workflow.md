@@ -101,7 +101,7 @@ Repeatability checks whether the plan can run again next quarter or year with si
 Preparation effort must fit normal staff capacity.
 Budget must be proportional to institutional importance and organizational spending norms.
 The plan must match the institution's approval pattern.
-The designated organizer must be able to execute the plan without expert guidance.
+The designated organizer must be able to execute the plan without expert assistance.
 Plans that fail repeatability validation must be simplified or restructured before final output.
 
 ## Hidden-Criteria Question Set

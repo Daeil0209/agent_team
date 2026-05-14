@@ -35,7 +35,11 @@ Load when applied engineering realism, units, or operating constraints materiall
 - keep spec-anchored assumptions explicit
 - keep timing budgets explicit when timing matters
 - keep trade-off documentation explicit when competing metrics are in play
-- send `hold|blocker` when credible assumptions, operating conditions, constraints, or evidence are absent
+- active owner reports `hold|blocker` when:
+  - credible assumptions are absent
+  - credible operating conditions are absent
+  - credible constraints are absent
+  - credible evidence is absent
 ## Boundary
 - mathematical correctness checking stays with its owner
 - engineering requirements require evidence

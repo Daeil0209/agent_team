@@ -78,8 +78,9 @@ Never downgrade `hold|blocker`.
 ### RPA-3. Completion Contract
 On production completion, run producer self-review.
 Then run lane-local `SV-RESULT`.
-Every completion-style message emits `PRODUCER-SELF-REVIEW-PASS`.
-Every completion-style message emits `LANE-LOCAL-SV-RESULT`.
+Every completion-style message emits:
+- `PRODUCER-SELF-REVIEW-PASS`
+- `LANE-LOCAL-SV-RESULT`
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md`.
 Satisfy developer handoff detail in `.claude/skills/developer/references/developer-lane-detail.md`.
 Report lane-local execution truth only: changed surface, evidence basis, executed checks, blocked/unrun checks, `PREREQ-STATE: complete|partial|missing`, open surfaces, and `LANE-NEXT-CANDIDATE`.

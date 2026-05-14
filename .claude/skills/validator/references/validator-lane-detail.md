@@ -158,7 +158,7 @@ Required attempts before declaring the operator environment unreachable:
 - Reverse interop via `wsl.exe` from Windows or `powershell.exe -Command` from WSL for Windows-API-level checks.
 - Any other available tool bridge that can exercise the operator-runtime surface without requiring operator labor.
 
-Only when all such auto-test paths are tested and proven infeasible may the lane document an operator-test checklist as reference documentation. The checklist cannot support PASS; unresolved operator-runtime proof remains `HOLD` or a non-PASS narrowed verdict on the affected acceptance surface.
+Only after all such auto-test paths are tested and proven infeasible does the lane document an operator-test checklist as reference documentation. The checklist cannot support PASS; unresolved operator-runtime proof remains `HOLD` or a non-PASS narrowed verdict on the affected acceptance surface.
 
 Asking the operator to "double-click and report results" as a closure precondition is a verification-lane design defect. The operator is the deliverable recipient, not the team's co-tester.
 

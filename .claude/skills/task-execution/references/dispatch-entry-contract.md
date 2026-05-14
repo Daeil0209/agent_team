@@ -58,6 +58,8 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - If `PARALLEL-GROUPS: none` serializes multi-surface work without a measured dependency or serial-burden basis, stop and reopen `work-planning`.
 - If the next move asks the user to choose route, staffing, parallelism, or dispatch options that doctrine and evidence can settle, stop and reopen `work-planning` or continue with the evidence-backed route.
 - If a field required by the frozen route is missing, contradictory, or marked `not-applicable` without an allowed basis, stop and reopen `work-planning`.
+- Stop before dispatch when the assigned output requires detailed internal material and no retained-output path or non-visible carrier is available.
+- Stop before dispatch when the packet assigns task-state mutation to a receiver without the required task-state tool.
 
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
@@ -66,6 +68,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, lifecycle, routing, and active surface.
 - user -> teammate uses Claude Code teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`; task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence, not an agent name.
+- Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.

@@ -45,19 +45,22 @@ team-lead starts own-review and Codex MCP independent review in parallel from th
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.
 team-lead reconciles own-review, Codex findings, skipped-review basis, or fail-open fallback basis point by point, then applies reject-first decision order.
-Each available evaluation identifies the governing final-acceptance rules.
-Each available evaluation judges evidence after rule identification.
+Each available evaluation:
+- identifies the governing final-acceptance rules
+- judges evidence after rule identification
 Codex applies `feynman-clarity` as a non-authoritative independent-review lens.
-Codex names the user or receiver.
-Codex names the task.
-Codex names the completion path.
-Codex names the evidence path.
-Codex names the owner path.
-Codex names the acceptance surface.
+Codex names:
+- the user or receiver
+- the task
+- the completion path
+- the evidence path
+- the owner path
+- the acceptance surface
 Codex writes the basis in plain short sentences.
-Codex ties each material point to the identified rule.
-Codex ties each material point to the evidence row.
-Codex ties each material point to the user-ready completion effect.
+Codex ties each material point to:
+- the identified rule
+- the evidence row
+- the user-ready completion effect
 
 Codex packet carries:
 - this reference
@@ -100,7 +103,7 @@ Material requested axes:
 - minimum-effort start, open, read, or action path
 - minimum-effort read, use, operate, regenerate, data/example application, or method-reuse path when material
 - minimum-effort stop, close, cleanup, and re-entry path when material
-- every requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, and use-guidance path
+- every requested content, function, structure, format, data/calculation, media, interaction/control, operation, generation path, workflow path, and use-instruction path
 - visual-material purpose, evidence/source basis, readability, placement, and reader/learner value when material
 - environment coverage or equivalence declaration
 - error-channel visibility

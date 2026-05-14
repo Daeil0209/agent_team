@@ -56,7 +56,10 @@ Other bounded MCP/API/browser bridge setup also belongs here.
 - freeze the smallest safe bridge plus verification, fallback, and cleanup
 - keep credentials, quotas, permissions, and rollback scope explicit and narrow
 - report blocked-state evidence truthfully instead of soft-passing the bridge
-- send `hold|blocker` when the bridge is unjustified, unavailable, or riskier than a credible local-first path
+- active owner reports `hold|blocker` when:
+  - the bridge is unjustified
+  - the bridge is unavailable
+  - the bridge is riskier than a credible local-first path
 ## Boundary
 - external usage stays within the bounded need
 - local-first tasks stay local-first when feasible

@@ -40,7 +40,11 @@ Load when a request depends on preserving structure, format intent, section fide
 - preserve fact-vs-design boundaries
 - completed outcomes, verified evidence, and empirical results require proof
 - rebuild documents in reader decision order rather than source chronology
-- send `hold|blocker` when document type, answer surface, evidence-safe generation boundary, or format-preservation requirements remain unresolved
+- active owner reports `hold|blocker` when:
+  - document type remains unresolved
+  - answer surface remains unresolved
+  - evidence-safe generation boundary remains unresolved
+  - format-preservation requirements remain unresolved
 ## Boundary
 - domain validation stays with its owner
 - fidelity claims stay within the format path's capability

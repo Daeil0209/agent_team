@@ -46,7 +46,11 @@ Load when sheets, manual operations, approvals, or workflow-heavy tools hide rul
 - define the operator meaning of major tabs, windows, buttons, and save paths
 - preserve undefined but observed labels, policy meanings, and allocation choices as configurable categories, rule tables, or user-editable parameters
 - parameterizable ambiguity becomes parameter/default/open question
-- send `hold|blocker` when workflow start or end states, authority boundaries, or audit-sensitive transitions remain too weak for credible delivery
+- active owner reports `hold|blocker` when:
+  - workflow start states remain too weak for credible delivery
+  - workflow end states remain too weak for credible delivery
+  - authority boundaries remain too weak for credible delivery
+  - audit-sensitive transitions remain too weak for credible delivery
 ## Boundary
 - policy requires evidence
 - UI composition, implementation architecture, and final acceptance stay with adjacent owners

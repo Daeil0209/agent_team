@@ -58,7 +58,7 @@ Use when document mode is institutional event planning, including retreats, work
 - Rationale-first writing outranks embellishment.
 - Finalization checks reusable structure for the next similar event.
 - Finalization checks operational complexity against practitioner capacity.
-- Failed finalization check opens simplification or execution-guidance revision.
+- Failed finalization check opens simplification or execution-instruction revision.
 
 ## Resolve Next Owner And Action
 - Return pre-generation gate state, element decisions, venue cascade, participant-burden constraints, visual inclusion basis, and finalization check to the active document-automation workflow.

@@ -81,7 +81,7 @@ Required protocol per external reference consulted:
 - **Adapt-synthesize**: combine fitting abstracts from multiple references into one proposal tailored to destination
 - **Reject log**: explicitly record considered-then-rejected patterns plus fit-failure reason
 - **Confidence rating per claim**: high (multi-source authoritative + strong fit) / medium (one source OR partial fit) / low (single source + weak fit OR speculation)
-- **Anti-pattern flags**: external "what not to do" guidance
+- **Anti-pattern flags**: external "what not to do" instructions
 - **Strength preservation**: identify destination strengths not to lose in iteration informed by external evidence
 
 Output is design synthesis, not external-pattern catalog. Handoff that just lists external patterns without abstraction-fit-adapt is a methodology defect.

@@ -22,7 +22,7 @@ Before any work:
 6. Feasibility: can this be completed inside the declared proof boundary and turn budget?
 7. Intent fit: does the planned proof map the assigned design intent or proof expectation to executable actions and observable results?
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
-9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes that a plausible user or data source could trigger?
+9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before proof work.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase proof work -> `execute`
@@ -59,7 +59,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Proof work starts from packet, artifact, or marked safe inference.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned proof surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.

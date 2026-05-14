@@ -23,32 +23,36 @@ Record:
 - selected next executable owner/action
 
 ## Stop
-Stop before correction dispatch when validator correction packet is missing.
-Stop before correction dispatch when root cause changes scope.
-Stop before correction dispatch when root cause changes owner map.
-Stop before correction dispatch when root cause changes route.
-Stop before correction dispatch when root cause changes proof chain.
-Stop before correction dispatch when root cause changes acceptance chain.
+Stop before correction dispatch when:
+- validator correction packet is missing
+- root cause changes:
+  - scope
+  - owner map
+  - route
+  - proof chain
+  - acceptance chain
 Stop before the next FAR until the assigned owner consumes correction evidence.
 
 ## Resolve Next Owner And Action
 - A missing correction packet opens validator correction-packet retrieval.
-- A changed-scope route opens `work-planning`.
-- A changed-owner-map route opens `work-planning`.
-- A changed-route route opens `work-planning`.
-- A changed-proof-chain route opens `work-planning`.
-- A changed-acceptance-chain route opens `work-planning`.
+- These changed routes open `work-planning`:
+  - changed-scope route
+  - changed-owner-map route
+  - changed-route route
+  - changed-proof-chain route
+  - changed-acceptance-chain route
 - A stopped next-FAR route opens assigned-owner correction-evidence consumption.
 
 ## Routing Rules
 - Design-level root cause routes to the active workflow design-correction phase.
 - Implementation root cause routes to the active workflow production-correction phase.
 - Operator-delivery root cause routes to the active workflow production-correction phase.
-- Changed scope reopens `work-planning`.
-- Changed owner map reopens `work-planning`.
-- Changed route reopens `work-planning`.
-- Changed proof chain reopens `work-planning`.
-- Changed acceptance chain reopens `work-planning`.
+- These changes reopen `work-planning`:
+  - changed scope
+  - changed owner map
+  - changed route
+  - changed proof chain
+  - changed acceptance chain
 
 ## Evidence Rules
 - Validator evidence is correction basis.

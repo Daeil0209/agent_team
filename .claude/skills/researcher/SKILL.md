@@ -75,7 +75,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 3. Required Skill Consumption And Recommendations
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned research surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.

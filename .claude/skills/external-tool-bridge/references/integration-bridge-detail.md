@@ -37,7 +37,7 @@ Required fields for every blocked-state report:
 - Keep credentials, tokens, and session keys out of output artifacts such as integration notes, logs, and bridge reports. A-02 violation risk
 - Use minimum token scope: request only the permissions required for the specific bridge operation
 - Define session lifecycle at bridge design time: when the session opens, when it closes, and what triggers early termination
-- Document rotation risk: note any tokens or credentials that have expiry windows that could invalidate mid-session, and specify the re-auth path
+- Document rotation risk: note any tokens or credentials with expiry windows that can invalidate mid-session, and specify the re-auth path
 ### Data Pipeline Bridge Rules
 When the external bridge involves batch data transfer, streaming ingest, or pipeline synchronization:
 - **Idempotency proof**: define the condition under which re-running the bridge step produces identical results with no side effects (duplicate records, double charges, duplicate notifications)

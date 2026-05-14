@@ -42,65 +42,78 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `SV-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `notification-only carry-forward` stays outside planning unless it assigns, reopens, or changes consequential work.
-- Receipt-only messages stay outside planning unless they assign, reopen, or change consequential work.
-- Control-only messages stay outside planning unless they assign, reopen, or change consequential work.
-- Lifecycle-only messages stay outside planning unless they assign, reopen, or change consequential work.
-- Phase-transition-only messages stay outside planning unless they assign, reopen, or change consequential work.
-- Clarification-only messages stay outside planning unless they assign, reopen, or change consequential work.
+- These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
+  - receipt-only messages
+  - control-only messages
+  - lifecycle-only messages
+  - phase-transition-only messages
+  - clarification-only messages
 - Artifact judgment ends the exclusion when it moves a boundary-change axis.
 - Analysis result ends the exclusion when it moves a boundary-change axis.
 
 ## Boundary-Change Axes
 - Boundary-change axes are owner/phase, surface/artifact, deliverable, proof/acceptance chain, route/dispatch shape, staffing/parallel shape, skill basis, and user requirement.
-- The owner/phase axis moves when owner lane changes.
-- The owner/phase axis moves when workflow phase changes.
-- The owner/phase axis moves when sequence owner changes.
-- The surface/artifact axis moves when target artifact changes.
-- The surface/artifact axis moves when user surface changes.
-- The surface/artifact axis moves when consumed source changes.
-- The deliverable axis moves when output kind changes.
-- The deliverable axis moves when content contract changes.
-- The deliverable axis moves when scope baseline changes.
-- The proof/acceptance chain axis moves when proof burden changes.
-- The proof/acceptance chain axis moves when acceptance owner changes.
-- The proof/acceptance chain axis moves when verdict identity changes.
-- The route/dispatch shape axis moves when lead-local path changes.
-- The route/dispatch shape axis moves when workflow path changes.
-- The route/dispatch shape axis moves when `task-execution` path changes.
-- The route/dispatch shape axis moves when team-runtime path changes.
-- The route/dispatch shape axis moves when agent path changes.
-- The staffing/parallel shape axis moves when lane split changes.
-- The staffing/parallel shape axis moves when agent count changes.
-- The staffing/parallel shape axis moves when merge owner changes.
-- The staffing/parallel shape axis moves when parallel grouping changes.
+- The owner/phase axis moves when:
+  - owner lane changes
+  - workflow phase changes
+  - sequence owner changes
+- The surface/artifact axis moves when:
+  - target artifact changes
+  - user surface changes
+  - consumed source changes
+- The deliverable axis moves when:
+  - output kind changes
+  - content contract changes
+  - scope baseline changes
+- The proof/acceptance chain axis moves when:
+  - proof burden changes
+  - acceptance owner changes
+  - verdict identity changes
+- The route/dispatch shape axis moves when:
+  - lead-local path changes
+  - workflow path changes
+  - `task-execution` path changes
+  - team-runtime path changes
+  - agent path changes
+- The staffing/parallel shape axis moves when:
+  - lane split changes
+  - agent count changes
+  - merge owner changes
+  - parallel grouping changes
 - The skill-basis axis moves when material non-lane-core skill basis changes.
-- The user-requirement axis moves when explicit user constraint changes.
-- The user-requirement axis moves when priority changes.
-- The user-requirement axis moves when burden changes.
-- The user-requirement axis moves when scope changes.
+- The user-requirement axis moves when:
+  - explicit user constraint changes
+  - priority changes
+  - burden changes
+  - scope changes
 - Same-boundary correction requires every axis to cite the current frozen value.
 - A moved axis reopens `work-planning`.
 
 ## Hard Stops
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
-- Planning opens one next owner/action before execution.
-- Planning opens one next owner/action before dispatch.
-- Planning opens one next owner/action before reporting.
-- Route option lists to the user are invalid when doctrine and evidence can choose the best route.
-- Staffing option lists to the user are invalid when doctrine and evidence can choose the best route.
-- Parallelism option lists to the user are invalid when doctrine and evidence can choose the best route.
-- Dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
-- Required measurement missing from exhaustive work blocks dispatch-ready planning.
-- Required measurement missing from full-corpus work blocks dispatch-ready planning.
-- Required measurement missing from whole-folder work blocks dispatch-ready planning.
-- Required measurement missing from governance audit/review blocks dispatch-ready planning.
-- Required measurement missing from unknown-corpus work blocks dispatch-ready planning.
-- Dispatch-ready planning includes `team-dispatch-readiness-plan`.
-- Dispatch-ready planning includes `AGENT-MAP`.
-- Dispatch-ready planning includes `PARALLEL-GROUPS`.
-- Dispatch-ready planning includes dispatch-ready `NEXT-CONSEQUENTIAL-ACTION`.
-- `PARALLEL-GROUPS: none` is invalid for multi-surface work unless measured dependency or serial-burden basis proves serial stronger than parallel.
-- `PARALLEL-GROUPS: none` is invalid for unmeasured material corpus work unless measured dependency or serial-burden basis proves serial stronger than parallel.
+- Planning opens one next owner/action before:
+  - execution
+  - dispatch
+  - reporting
+- These option lists to the user are invalid when doctrine and evidence can choose the best route:
+  - route option lists
+  - staffing option lists
+  - parallelism option lists
+  - dispatch option lists
+- Required measurement missing from these work types blocks dispatch-ready planning:
+  - exhaustive work
+  - full-corpus work
+  - whole-folder work
+  - governance audit/review
+  - unknown-corpus work
+- Dispatch-ready planning includes:
+  - `team-dispatch-readiness-plan`
+  - `AGENT-MAP`
+  - `PARALLEL-GROUPS`
+  - dispatch-ready `NEXT-CONSEQUENTIAL-ACTION`
+- `PARALLEL-GROUPS: none` is invalid unless measured dependency or serial-burden basis proves serial stronger than parallel for:
+  - multi-surface work
+  - unmeasured material corpus work
 - Lane-core skills are not listed in packet `REQUIRED-SKILLS`.
 - Lane ownership lazy-loads lane-core skills.
 - Use `[]` when no additional non-lane-core skill is required.

@@ -7,7 +7,7 @@ SOURCE-RULES: "RPA-4 Codex MCP independent-review output or same-boundary correc
 # team-lead: Codex-Output Lead Own-Review Discipline
 
 ## Purpose
-Use this reference when Codex MCP independent-review output or same-boundary correction output could be treated as convergence without same-pass team-lead own-review.
+Use this reference when Codex MCP independent-review output or same-boundary correction output risks being treated as convergence without same-pass team-lead own-review.
 
 ## Consume When
 - Codex MCP independent-review output shapes planning, artifact judgment, review, redesign, or correction.

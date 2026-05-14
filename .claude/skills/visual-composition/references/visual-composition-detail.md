@@ -62,7 +62,7 @@ For dense workflow tools, protect operator workflow meaning beyond generic layou
 - Make constraint indicators actionable at editing: current value, calculation basis, likely post-edit effect, correction route
 - Treat destructive-action affordances as usability-critical: archive/delete/restore/reset must expose consequence and recovery before commitment
 - Design empty, partial, failed-import, and blocked-prerequisite states as first-class surfaces with one clear next action
-- Keep output readiness visible from upstream surfaces; require stateful novice guidance for first-start, post-import, post-failure, and resume states
+- Keep output readiness visible from upstream surfaces; require stateful novice instructions for first-start, post-import, post-failure, and resume states
 ### Dashboard Decorative Lobby Anti-Pattern
 Dashboard showing only welcome text, feature descriptions, navigation cards, or non-actionable static summaries = `decorative_noise`. Required: (1) current work status (active record count or last modification timestamp), (2) items needing attention (overdue, incomplete, stale), (3) core KPIs with actual values, (4) one-click resume of last workflow. Upgrade losing operational scan capability vs. previous version = blocking regression.
 Dashboard design principles: vertical scan > grid scan (full-width stacked areas, no parallel columns for non-comparative data); topmost = most important summary, increasing detail downward; color is semantic only (status/priority, not decoration); dashboard = work surface answering first 3 questions without navigation.

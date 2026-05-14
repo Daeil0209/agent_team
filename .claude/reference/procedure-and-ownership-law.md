@@ -8,27 +8,29 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` Procedure And Ownership.
-Use it to classify process words as nonterminal evidence.
-Use it to attach every consequential path to one truthful owner.
-Use it to attach every consequential path to one truthful next action.
+Use it to:
+- classify process words as nonterminal evidence
+- attach every consequential path to one truthful owner and next action
 
 ## Consume When
 - A task moves beyond `answer-only`.
-- A user asks for correction.
-- A user asks for mutation.
-- A user asks for proof.
-- A user asks for validation.
-- A user asks for completion.
-- Planning appears as a process state.
-- Dispatch appears as a process state.
-- Benchmark appears as a process state.
-- Self-growth appears as a process state.
-- Interrupt appears as a process state.
-- Status appears as a process state.
-- Review appears as a process state.
-- Proof appears as a process state.
-- Validation appears as a process state.
-- Rejection handling appears as a process state.
+- A user asks for:
+  - correction
+  - mutation
+  - proof
+  - validation
+  - completion
+- These appear as process states:
+  - planning
+  - dispatch
+  - benchmark
+  - self-growth
+  - interrupt
+  - status
+  - review
+  - proof
+  - validation
+  - rejection handling
 - The next owner is unclear.
 - The next action is unclear.
 - A lane output might be mistaken for completion.
@@ -45,11 +47,12 @@ The consuming owner records one of these outcomes:
 
 ## Stop
 Stop before reporting completion when no outcome above can be named truthfully.
-Stop before local substitution when a configured lane owns the next proof function.
-Stop before local substitution when a configured lane owns the next review function.
-Stop before local substitution when a configured lane owns the next validation function.
-Stop before local substitution when a configured lane owns the next implementation function.
-Stop before local substitution when a configured lane owns the next acceptance function.
+Stop before local substitution when a configured lane owns the next:
+- proof function
+- review function
+- validation function
+- implementation function
+- acceptance function
 Stop before dispatch when the packet would rely on lead-only conversation history.
 
 ## Resolve Next Owner And Action
@@ -58,11 +61,19 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - A stopped dispatch route opens packet correction.
 - The consuming owner must leave one next executable owner/action.
 - If no next owner/action is lawful, report `HOLD`.
-- The `HOLD` names owner.
-- The `HOLD` names blocker.
-- The `HOLD` names next safe evidence step.
+- The `HOLD` names:
+  - owner
+  - blocker
+  - next safe evidence step
 
 ## Rules
+- Governance documents are operating-rule surfaces, not passive surfaces.
+- A rule in an active governance document is a mandatory operating rule.
+- A loaded owner document rule is mandatory while that owner context is active.
+- A trigger-bound reference rule is mandatory while its trigger is active.
+- Do not weaken active governance rules into lower-force labels.
+- If an active governance rule is unclear, route to the owning correction path instead of ignoring it.
+- Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be actionable.
 - Actionable rules name owner when owner is material.
 - Actionable rules name trigger when trigger is material.
@@ -141,13 +152,15 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Conflict selects `hold|blocker` when safe continuation is blocked.
 
 ## Reference Continuity
-- Send lead conversation facts through packets when teammates need them.
-- Send lead conversation facts through task state when teammates need them.
-- Send lead conversation facts through workflow state when teammates need them.
-- Send lead conversation facts through cited artifacts when teammates need them.
-- Handoffs carry output.
-- Handoffs carry evidence.
-- Handoffs carry blocker truth.
-- Handoffs carry open surfaces.
-- Handoffs carry next owner/action.
+- Send lead conversation facts through these surfaces when teammates need them:
+  - packets
+  - task state
+  - workflow state
+  - cited artifacts
+- Handoffs carry:
+  - output
+  - evidence
+  - blocker truth
+  - open surfaces
+  - next owner/action
 - Receivers consume packetized upstream thinking.

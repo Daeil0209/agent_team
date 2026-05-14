@@ -114,8 +114,9 @@ Run the workflow in numeric order.
 Each step records current evidence in `SEQUENCE-STATUS` before the next step opens.
 The next step opens only when earlier step evidence is current for the same target, corpus, patch design, and diff.
 When target, corpus, findings, patch design, or diff changes, return to the earliest changed step and rerun every downstream step.
-Live patch eligibility begins only after Step 8 records completed integrity evidence.
-Live patch eligibility requires the emitted `review_verification_packet`.
+Live patch eligibility requires:
+- Step 8 recorded completed integrity evidence
+- emitted `review_verification_packet`
 Populate all sixteen packet fields.
 Use `UNVERIFIED` for fields whose live surface, design intent, or evidence basis was not inspected.
 Narrative claims of completed steps do not satisfy this gate.
@@ -132,16 +133,18 @@ Treat memory, prior summaries, stale mirrors, and expected wording as baseline c
 
 ### 2. Freeze Exhaustive Review Contract
 Name target, corpus boundary, exhaustiveness basis, evidence burden, user surface, output form, and parallel-fit basis.
-The frozen corpus must include every user-named target surface.
-The frozen corpus must include every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness.
+The frozen corpus must include:
+- every user-named target surface
+- every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness
 Governance defect review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 Governance removal review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 Preservation review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 If the corpus boundary is unknown, make bounded discovery the next action before judgment.
 When independent surfaces are material, dispatch parallel shards if host-authorized team runtime is available.
-Shard packets carry `SEMANTIC-INTENT-BASIS`.
-Shard packets carry `TARGET-INTENT-BASIS`.
-Shard packets carry common finding basis for each defect, removal, or patch-worthiness claim.
+Shard packets carry:
+- `SEMANTIC-INTENT-BASIS`
+- `TARGET-INTENT-BASIS`
+- common finding basis for each defect, removal, or patch-worthiness claim
 
 ### 3. Inspect The Whole Target Surface
 Inspect every frozen target surface and material adjacent owner surface.
@@ -172,23 +175,25 @@ Use direct executable wording.
 Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
 Delete explanatory defense when direct executable wording preserves the rule.
 Split compressed rules until each sentence carries one action or one rule.
-`REMOVAL-FIRST-PATCH-DESIGN` must state the selected existing-text operation.
-`REMOVAL-FIRST-PATCH-DESIGN` must state why rejected removals would lose protected function.
+`REMOVAL-FIRST-PATCH-DESIGN` must state:
+- the selected existing-text operation
+- why rejected removals would lose protected function
 Append-only patch designs are invalid while owner text can carry the correction without meaning loss.
 Accumulation-first patch designs are invalid while owner text can carry the correction without meaning loss.
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
 
 ### 6. Pre-Patch Negative-Risk Gate
-Against live governance documents, test the proposed patch for meaning loss.
-Test the proposed patch for owner conflict.
-Test the proposed patch for weaker procedure.
-Test the proposed patch for weaker clarity.
-Test the proposed patch for weaker execution force.
-Test the proposed patch for weaker next-owner/action resolution.
-Test the proposed patch for broken references.
-Test the proposed patch for added burden.
-Test the proposed patch for weaker user-use readiness.
-Test the proposed patch for acceptance regression.
+Against live governance documents, test the proposed patch for:
+- meaning loss
+- owner conflict
+- weaker procedure
+- weaker clarity
+- weaker execution force
+- weaker next-owner/action resolution
+- broken references
+- added burden
+- weaker user-use readiness
+- acceptance regression
 Revise the patch design until all identified negative risks are removed, disproven, or assigned as explicit blockers.
 Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
 Report absolute risk-zero only when absolute closure is proven.
@@ -227,12 +232,13 @@ Fix newly found defects through the smallest correction path.
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 
 ### 12. Decide Patch Worthiness
-Patch recommendations must state protected function.
-Patch recommendations must state user-outcome impact.
-Patch recommendations must state regression risk.
-Patch recommendations must state smallest owner.
-Patch recommendations must state operation type.
-Patch recommendations must state the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`.
+Patch recommendations must state:
+- protected function
+- user-outcome impact
+- regression risk
+- smallest owner
+- operation type
+- tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`
 Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
 
 ### 13. Handoff

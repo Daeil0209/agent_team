@@ -28,7 +28,10 @@ Load when derivation quality, notation clarity, or quantitative correctness mate
 - verify mathematical logic, notation, and derivation flow
 - detect hidden errors in formulas, worked examples, or quantitative explanations
 - define mathematical acceptance criteria
-- send `hold|blocker` when step-by-step derivation defense is absent, notation is ambiguous, or a critical assumption chain is unverified
+- active owner reports `hold|blocker` when:
+  - step-by-step derivation defense is absent
+  - notation is ambiguous
+  - a critical assumption chain is unverified
 ## Boundary
 - general pedagogy and visual design stay with their owners
 - correctness stays intact across presentation flow

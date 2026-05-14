@@ -55,7 +55,7 @@ Load only when runtime-state detail, lifecycle mapping, or recovery classificati
 - compaction recovery must reconstruct open work, team channel, roster, lifecycle truth, or dispatch state before consequential work resumes
 - current-session team registration without live panes is compaction recovery; reuse the existing team name and reattach needed lanes instead of creating a second team
 
-Current-runtime monitoring or recovery is materially active when workspace-root `.runtime/procedure-state.json` has `teamRuntimeState: active` and any agent has live, standby, hold, stale, unresolved startup, stale dispatch, recovery, or monitoring state that could affect the next consequential step.
+Current-runtime monitoring or recovery is materially active when workspace-root `.runtime/procedure-state.json` has `teamRuntimeState: active` and any agent has live, standby, hold, stale, unresolved startup, stale dispatch, recovery, or monitoring state affecting the next consequential step.
 
 The `session-start.sh` hook can detect active runtime from a runtime snapshot, but it does not auto-load this skill. Hook observation is evidence only; it never replaces `team-lead`'s duty to enter `session-boot` when the active-runtime condition holds.
 

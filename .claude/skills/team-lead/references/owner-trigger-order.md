@@ -13,7 +13,7 @@ Treat procedural narration as nonterminal evidence.
 
 ## Consume When
 - A named owner skill or sequence trigger is active.
-- The route could enter planning, workflow, sequence, task-execution, dispatch, mutation, self-verification, or reporting.
+- The route can enter planning, workflow, sequence, task-execution, dispatch, mutation, self-verification, or reporting.
 - A previous owner outcome is stale, missing, or only narrated.
 - The user challenges whether work is actually progressing.
 
@@ -65,8 +65,9 @@ Loaded owner text becomes execution evidence only through applied-rule mapping.
 Applied-rule mapping names action, stop, evidence, owner, or next-action effect.
 Treat tool output as artifact only when the owner defines it as artifact.
 Narrative claims of completed owner work are procedural failure.
-Rerun the owner when only narrative claim exists.
-Rerun the owner when target, corpus, route, patch design, or diff changed.
+Rerun the owner when:
+- only narrative claim exists
+- target, corpus, route, patch design, or diff changed
 
 ## Same-Boundary Continuation
 Same-boundary iterations consume the frozen boundary.

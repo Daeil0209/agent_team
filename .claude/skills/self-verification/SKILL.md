@@ -112,7 +112,7 @@ Compact challenge that always applies:
 - claim/evidence: what remains uncertain?
 - counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
 - defect-label: if the claim names a defect or patch recommendation, identify the owner with classification authority.
-- defect-label: identify the protected function that correction or removal could lose.
+- defect-label: identify the protected function at risk from correction or removal.
 - defect-label: reject `protected-restatement`, `design-tradeoff`, and `non-issue` classifications with evidence.
 - owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
 

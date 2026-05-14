@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: Provide high-confidence software design guidance for implementation architecture, modular boundaries, state models, interfaces, and hard logic paths. Use when software structure, module contracts, persistence boundaries, or architecture decisions materially affect implementation or review.
+description: Provide high-confidence software design instructions for implementation architecture, modular boundaries, state models, interfaces, and hard logic paths. Use when software structure, module contracts, persistence boundaries, or architecture decisions materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
@@ -50,7 +50,10 @@ Rendered composition → `visual-composition`.
 - define action contracts, import boundaries, and risky logic invariants
 - require a usable product shell: first-run context, resume point, save/load path, completion artifact
 - require workflow concept and layout contracts before freezing UI-bearing implementation boundaries
-- send `hold|blocker` when architecture, state authority, or failure semantics are not credible
+- active owner reports `hold|blocker` when:
+  - architecture is not credible
+  - state authority is not credible
+  - failure semantics are not credible
 ## Boundary / Activation / Inputs
 Architecture work avoids duplicate ordinary coding work and preserves team-lead execution strategy.
 Activate for non-trivial applications, multi-module tools, stateful workflows, integration-heavy programs, or refactors where architecture quality materially affects outcome.

@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loading and reference consumption.
-Use it to make loaded documents and references mandatory execution surfaces instead of non-binding reading.
+Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
 
 ## Consume When
 - An owner document is loaded in the active owner context.
@@ -30,12 +30,13 @@ The consuming owner records:
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
 
 ## Stop
-Stop before execution when a required skill is unavailable.
-Stop before execution when a required skill is lane-mismatched.
-Stop before execution when a required skill is contradictory.
-Stop before execution when a required skill is non-fitting.
-Stop before execution when a required skill is outside the frozen boundary.
-Stop before execution when a loaded document lacks applied-rule mapping.
+Stop before execution when:
+- a required skill is unavailable
+- a required skill is lane-mismatched
+- a required skill is contradictory
+- a required skill is non-fitting
+- a required skill is outside the frozen boundary
+- a loaded document lacks applied-rule mapping
 Stop before completion when a trigger-required reference remains unconsumed.
 Stop before handoff when applied or blocked skill/reference basis is missing.
 
@@ -51,41 +52,48 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 ## Skill Rules
 - Skills load only when required by the active owner path.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Loaded skills inherit `CLAUDE.md`.
-- Loaded skills inherit active owner role.
-- Loaded skills inherit common inheritance floor.
+- Loaded skills inherit:
+  - `CLAUDE.md`
+  - active owner role
+  - common inheritance floor
 - Loaded skills sharpen owner behavior only within their owner stops.
 - Lane-core skills load on assignment-grade lane work.
-- Receipt messages load lane-core skills only when they assign or reopen work.
-- Control messages load lane-core skills only when they assign or reopen work.
-- Status messages load lane-core skills only when they assign or reopen work.
-- Lifecycle messages load lane-core skills only when they assign or reopen work.
-- Phase messages load lane-core skills only when they assign or reopen work.
-- Clarification messages load lane-core skills only when they assign or reopen work.
+- These messages load lane-core skills only when they assign or reopen work:
+  - receipt messages
+  - control messages
+  - status messages
+  - lifecycle messages
+  - phase messages
+  - clarification messages
 - Loaded lane-core skill outranks packet skill fields inside the lane.
-- Doctrine outranks loaded lane-core skills.
-- Roles outrank loaded lane-core skills.
-- Owner gates outrank loaded lane-core skills.
+- These outrank loaded lane-core skills:
+  - doctrine
+  - roles
+  - owner gates
 
 ## Required Skills
 - Required-skill freezing is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Required non-lane-core skills freeze through planning basis.
-- Required non-lane-core skills freeze through workflow basis.
-- Required non-lane-core skills freeze through phase basis.
+- Required non-lane-core skills freeze through:
+  - planning basis
+  - workflow basis
+  - phase basis
 - Packetize required non-lane-core skills as `REQUIRED-SKILLS`.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties.
-- The receiving lane loads each `REQUIRED-SKILLS` entry before execution.
-- The receiving lane applies each `REQUIRED-SKILLS` entry before execution.
-- The receiving lane records applied or blocked basis for each `REQUIRED-SKILLS` entry before handoff.
-- Classify missing required skill consumption as a packet defect when the packet omitted it.
-- Classify missing required skill consumption as a lane defect when the lane ignored it.
+- The receiving lane must:
+  - load each `REQUIRED-SKILLS` entry before execution
+  - apply each `REQUIRED-SKILLS` entry before execution
+  - record applied or blocked basis for each `REQUIRED-SKILLS` entry before handoff
+- Classify missing required skill consumption as:
+  - a packet defect when the packet omitted it
+  - a lane defect when the lane ignored it
 
 ## Methodology Guidance
-- Packetize methodology guidance as `SKILL-RECOMMENDATIONS`.
-- The assigned lane classifies every carried recommendation as applied, not-material, or blocked before handoff.
-- The assigned lane records the basis for each recommendation classification.
-- The assigned lane selects material recommendations.
-- The assigned lane loads material recommendations before lane work.
+- Packetize methodology instructions as `SKILL-RECOMMENDATIONS`.
+- The assigned lane must:
+  - classify every carried recommendation as applied, not-material, or blocked before handoff
+  - record the basis for each recommendation classification
+  - select material recommendations
+  - load material recommendations before lane work
 - The assigned lane applies material recommendations before lane work.
 - The assigned lane hands off applied recommendation basis.
 - The assigned lane hands off blocked recommendation basis.
@@ -93,7 +101,12 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 ## Reference Binding
 - A trigger-bound reference is mandatory when its trigger is active.
 - A loaded owner document is mandatory when it is present in the active owner context.
-- Consumption means mapping active rules to action, stop, evidence, owner, or next-action effect.
+- Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
+- Loading, naming, quoting, or summarizing a governance document is not consumption.
+- Before action, report, handoff, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
+- `applied` means the rule changed, confirmed, stopped, or routed concrete behavior.
+- Missing material applied-rule mapping stops action and opens applied-rule correction.
+- Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - A trigger-bound reference carries `SOURCE-ANCHOR`.
 - A trigger-bound reference carries `SOURCE-RULES`.
@@ -108,7 +121,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Procedure-bearing reference completion requires a local `Resolve Next Owner And Action` section.
 - Treat an unconsumed trigger-required reference as completion blocker.
 - Treat missing applied-rule mapping as execution blocker.
-- Reference consumption must be visible in the owner-local packet, handoff, proof, verdict, or `SV-RESULT` when material.
+- Reference consumption must be recorded in the owner-local packet, handoff, proof, verdict, or `SV-RESULT` when material.
 - Load references only through trigger-bound consumption.
 - Treat `@imports` as context organization.
 - Measure launch context footprint independently from `@imports` organization.

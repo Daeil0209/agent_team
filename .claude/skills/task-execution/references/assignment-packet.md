@@ -115,7 +115,7 @@ Packet skill fields separate required skills from methodology recommendations.
 - Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
 - Receiving lanes must load and apply every `REQUIRED-SKILLS` entry or return `scope-pressure` / `hold|blocker`.
 - Use `REQUIRED-SKILLS: []` to record absence of upstream required skills.
-- Carry `SKILL-RECOMMENDATIONS` when planning or the active workflow owner froze methodology guidance for the receiving lane.
+- Carry `SKILL-RECOMMENDATIONS` when planning or the active workflow owner froze methodology instructions for the receiving lane.
 - The receiver classifies each carried recommendation as applied, not-material, or blocked.
 - The receiver loads and applies material recommendations before first lane work.
 - The receiver records recommendation classification basis in handoff.

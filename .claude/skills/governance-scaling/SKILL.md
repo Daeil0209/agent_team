@@ -29,11 +29,12 @@ Load when a new project starts, scope expands materially, or the active governan
 - keep explicit that request-specific risk can raise the active tier while preserving the project floor
 - surface guardrails for blast radius, retry depth, stale work, concurrent writes, and scope creep
 - keep task-level tier signals heuristic and team-lead judged
-- send `hold|blocker` when truthful tier evidence is absent
+- active owner reports `hold|blocker` when truthful tier evidence is absent
 ## Activation
-Load this skill at project start.
-Also load it at material scope expansion.
-Also load it when repeated over-governance or under-governance signals appear.
+Load this skill:
+- at project start
+- at material scope expansion
+- when repeated over-governance or under-governance signals appear
 Explicit user-confirmed tier decisions stand unless the owner reopens them.
 ## Inputs
 - active project scope

@@ -56,7 +56,7 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is rejec
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory non-lane-core skill load/apply items for the assigned validation surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as methodology guidance.
+- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.
@@ -134,10 +134,11 @@ Keep authoritative versus supplemental sources explicit.
 - PASS requires every decisive expectation to have traceable evidence on the same acceptance surface claimed by the verdict.
 - Tester `ready`, indirect proof, smoke proof, or uninspected screenshots cannot satisfy direct-required user-facing evidence.
 - Requested deliverable remains the acceptance baseline.
-- If user-facing acceptance depends on exact launch artifact, PASS requires explicit reconciliation.
-- If user-facing acceptance depends on core completion path, PASS requires explicit reconciliation.
-- If user-facing acceptance depends on interaction coverage, PASS requires explicit reconciliation.
-- If user-facing acceptance depends on burden contract, PASS requires explicit reconciliation.
+- If user-facing acceptance depends on any of these, PASS requires explicit reconciliation:
+  - exact launch artifact
+  - core completion path
+  - interaction coverage
+  - burden contract
 - Executable workflow-completion PASS requires exact launch artifact execution closure.
 - PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
 - PASS requires every `CORE-WORKFLOW-CLOSURE` row matched or upstream-deferred by the owning upstream record.

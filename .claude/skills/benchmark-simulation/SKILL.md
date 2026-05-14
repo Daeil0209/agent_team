@@ -50,7 +50,11 @@ Trivial surfaces include single-control forms, isolated text-only output, intern
 - compare destination design vs. external best-practice references via abstraction-fit-adapt cycle (see `External-Reference Methodology` below)
 - make throughput, bottleneck, acceptance, and regression tradeoffs explicit
 - choose a lean default path plus scenario-specific overrides
-- send `hold|blocker` when no fair baseline exists or the evidence is too weak for a routing, promotion, or capability-advance claim
+- active owner reports `hold|blocker` when:
+  - no fair baseline exists
+  - evidence is too weak for a routing claim
+  - evidence is too weak for a promotion claim
+  - evidence is too weak for a capability-advance claim
 
 ### Reference Map
 Load trigger-specific files directly from `SKILL.md`.
@@ -174,8 +178,9 @@ Activate materially active sibling phase skills.
 - Findings re-enter the next benchmark cycle as anti-pattern signal or strength-preservation note.
 - **Iteration phase**: `dev-workflow` gap iteration -> `benchmark-simulation` re-cycle with new evidence
 
-When a sibling phase is materially active, name it in `SKILL-RECOMMENDATIONS` or applied skill basis.
-When a sibling phase is inactive, omit it.
+For sibling phases:
+- when materially active, name it in `SKILL-RECOMMENDATIONS` or applied skill basis
+- when inactive, omit it
 Composition requires an explicit owner and phase basis.
 See `references/design-stack-composition.md` for per-recipe detail.
 
@@ -256,8 +261,9 @@ Hand off after the next owner can tell whether the benchmark is:
 
 Weak comparison frame downgrades or holds benchmark output.
 Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
-When benchmark evidence identifies a confirmed recurring specialist capability gap, hand off to `self-growth-sequence` for recurrence-barrier or capability-gap ownership.
-When benchmark evidence supports ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence, hand off to `update-upgrade-sequence`.
+When benchmark evidence supports a downstream owner:
+- hand off confirmed recurring specialist capability gaps to `self-growth-sequence` for recurrence-barrier or capability-gap ownership
+- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `update-upgrade-sequence`
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Operational Discipline
 - Comparative output with no fair baseline or external calibration stays explicitly low-confidence.

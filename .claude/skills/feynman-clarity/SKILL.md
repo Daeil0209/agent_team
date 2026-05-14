@@ -181,7 +181,10 @@ Hand off when the receiver can tell:
 - who owns each remaining gap
 - whether the artifact is clearer without weaker claims
 
-Send `hold|blocker` when the artifact cannot be explained without inventing meaning, hiding missing evidence, or deleting a required obligation.
+Active owner reports `hold|blocker` when:
+- the artifact cannot be explained without inventing meaning
+- the artifact cannot be explained without hiding missing evidence
+- the artifact cannot be explained without deleting a required obligation
 
 ## Codex Review Consumption
 Codex applies this skill only as a review lens inside a team-lead-owned packet.

@@ -155,7 +155,7 @@ skills/dev-workflow/references/ source -> destination:
 - `phase-micro-cycle.md` -> deleted deprecated stub. Phase-local cycle is fully owned by `CLAUDE.md` `[PLAN-SV]` + `dev-workflow/SKILL.md` Workflow Core Law section 2.
 - `lane-responsibility-map.md` -> deleted deprecated stub. Phase-to-lane responsibility owned by `dev-workflow/SKILL.md` per-phase Execution-law + `.claude/skills/dev-workflow/references/phase-surfaces.md`; lane evidence chain owned by `CLAUDE.md` `## Acceptance` + `.claude/skills/dev-workflow/references/phase-gates.md`.
 - `context-decision-chain.md` -> deleted deprecated stub. Phase 1 context anchor owned by `.claude/skills/dev-workflow/references/phase-surfaces.md` `Receiver-Surface Contract` (canonical fields WHY/PRIMARY-RECEIVER/RECEIVER-JOB/CONSUMPTION-ENVIRONMENT/RISK/SUCCESS/SCOPE/DELIVERY); decision propagation owned by `.claude/skills/dev-workflow/references/checkpoints.md` CP5 + `artifact-convergence-review.md` Stale Downstream.
-- `operator-delivery.md` Local Web App Launcher tech-stack-specific recipe (Flask/Node/VBS/pythonw) -> contract-level rule (single-action launch / hidden non-browser surfaces / browser-close-triggered termination / explicit exit affordance / production-only flags); tech-stack patterns belong to developer/researcher implementation guidance.
+- `operator-delivery.md` Local Web App Launcher tech-stack-specific recipe (Flask/Node/VBS/pythonw) -> contract-level rule (single-action launch / hidden non-browser surfaces / browser-close-triggered termination / explicit exit affordance / production-only flags); tech-stack patterns belong to developer/researcher implementation instructions.
 - `gap-iteration.md` Coverage Score Per File table (0/20/40/60/80/100 source-file-shaped) -> deliverable-class-neutral coverage signals statement pointing at `.claude/skills/dev-workflow/references/phase-surfaces.md`.
 - `artifact-convergence-review.md` Dual Review serial framing -> parallel framing ("team-lead own-review and Codex MCP independent review run in parallel when independence holds; team-lead own-review basis is recorded before any Codex output is read or used; first Codex packet must not include team-lead findings"); preserves design intent (own-review basis frozen before Codex consumption) without the bottleneck.
 - `review-convergence-review.md` Output Record schema -> shared with `artifact-convergence-review.md` Output Record canonical schema; review-convergence keeps only deltas (review target identity, Claude reviewer state, SV-RESULT coverage).
@@ -280,14 +280,15 @@ Queue empty (zero-residual): every queued / residual item is patched (round 1-16
 
 ## 2026-05-10 Doctrine Spine And Direct Reference Split Map
 This pass reviews the current doctrine-spine and team-lead reference-split patch under `.claude/skills/review-verification/SKILL.md`.
-The design intent is not compression for brevity.
-The design intent is strong always-on trigger, owner, stop, and next-action resolution in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through directly bound independent references.
+The design intent is:
+- not compression for brevity
+- strong always-on trigger, owner, stop, and next-action resolution in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through directly bound independent references
 
 CLAUDE.md source -> destination:
 - Procedure, owner separation, channel, communication, and escalation detail -> `.claude/reference/procedure-and-ownership-law.md`.
 - User-surface evidence, deliverable fit, functional closure, and acceptance detail -> `.claude/reference/delivery-evidence-acceptance-law.md`.
 - Scope abuse, cross-continuity, preservation, and retroactive application detail -> `.claude/reference/scope-continuity-change-law.md`.
-- Skill loading, required-skill consumption, methodology guidance, and trigger-bound reference consumption -> `.claude/reference/skill-loading-and-reference-binding.md`.
+- Skill loading, required-skill consumption, methodology instructions, and trigger-bound reference consumption -> `.claude/reference/skill-loading-and-reference-binding.md`.
 - `[GOV-MIN]`, `[HARDEN]`, governance patch selection, source-to-destination trace, and removal-first change detail -> `.claude/reference/minimal-governance-change-law.md`.
 - `[PROJECT-OUTPUT-ROOT]`, source/governance edit boundary, generated-output placement, and filesystem safety detail -> `.claude/reference/output-root-and-filesystem-law.md`.
 - `[HOOK-LAST]`, prose-vs-runtime enforcement boundary, tool/MCP/review-tool limits, runtime-state ownership, and footprint-claim routing -> `.claude/reference/runtime-boundary-law.md` plus `.claude/reference/runtime-footprint-and-continuity.md` for measured footprint claims.

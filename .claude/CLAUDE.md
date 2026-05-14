@@ -135,7 +135,7 @@
 - Skill consumption is situation-scoped.
 - Lane-core skills load on assignment-grade lane work.
 - Required non-lane-core skills travel as `REQUIRED-SKILLS`.
-- Methodology guidance travels as `SKILL-RECOMMENDATIONS`.
+- Methodology instructions travel as `SKILL-RECOMMENDATIONS`.
 - Missing required skill consumption is a defect.
 - Teammates do not inherit lead conversation history.
 - Request-fit facts travel in packets or cited artifacts.
@@ -180,7 +180,7 @@
 - Protect secrets from exposure.
 - Source/governance edits stay on owner files.
 - Runtime state is runtime-owned.
-- Report prose rules as context guidance.
+- Report prose rules as context-bound operating rules.
 - Report technical enforcement only from runtime or settings evidence.
 - Treat external MCP and review tools as capabilities.
 - Team-lead coordination follows official agent-team channels.

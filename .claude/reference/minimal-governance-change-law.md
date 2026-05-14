@@ -9,30 +9,34 @@ LOAD-POLICY: on-demand reference only
 ## Source Binding
 This reference is trigger-bound detail for `CLAUDE.md` Core Laws 5 `[GOV-MIN]` and `[HARDEN]`.
 This reference supplies governance-change detail for `CLAUDE.md` Change And Preservation Law.
-Hook rules stay with runtime-boundary owners.
-Settings rules stay with runtime-boundary owners.
-Runtime rules stay with runtime-boundary owners.
-Filesystem rules stay with output-root owners.
-Output-root rules stay with output-root owners.
-Footprint-claim rules stay with runtime-boundary owners.
+These rules stay with runtime-boundary owners:
+- hook rules
+- settings rules
+- runtime rules
+- footprint-claim rules
+These rules stay with output-root owners:
+- filesystem rules
+- output-root rules
 
 ## Purpose
-Use this reference for governance text changes.
-Use this reference for governance text migration.
-Use this reference for governance text reduction.
-Use this reference for governance text hardening.
+Use this reference for governance text:
+- changes
+- migration
+- reduction
+- hardening
 It keeps governance repair removal-first and owner-local.
 It prevents doctrine accumulation from being mistaken for stronger enforcement.
 
 ## Consume When
 - A governance asset is changed.
-- A rule is proposed for addition.
-- A rule is proposed for deletion.
-- A rule is proposed for trim.
-- A rule is proposed for merge.
-- A rule is proposed for replacement.
-- A rule is proposed for re-home.
-- A rule is proposed for split.
+- A rule is proposed for:
+  - addition
+  - deletion
+  - trim
+  - merge
+  - replacement
+  - re-home
+  - split
 - A defect is blamed on governance wording.
 - A recurrence barrier is installed only for a confirmed recurrence path.
 - A high-traffic owner surface is reduced or redistributed.
@@ -49,12 +53,13 @@ The consuming owner records:
 - post-change verification basis
 
 ## Stop
-Stop before appending when existing owner text can be tightened.
-Stop before appending when existing owner text can be replaced.
-Stop before appending when existing owner text can be trimmed.
-Stop before appending when existing owner text can be merged.
-Stop before appending when existing owner text can be re-homed.
-Stop before appending when existing owner text can be deleted.
+Stop before appending when existing owner text can be:
+- tightened
+- replaced
+- trimmed
+- merged
+- re-homed
+- deleted
 Stop before mutation when source-to-destination meaning remains unreconstructed.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
 Stop before closure when a moved rule lacks an explicit destination owner.
@@ -66,32 +71,36 @@ Stop before closure when a moved rule lacks an explicit destination owner.
 - A stopped closure route opens destination-owner assignment.
 
 ## Minimal Governance Rules
-- Before appending, find duplicate owner text.
-- Before appending, find obsolete owner text.
-- Before appending, find unnecessary owner text.
-- Before appending, find weaker owner text.
-- Before appending, find conflicting owner text.
-- Before appending, find behavior-weakening owner text.
-- Tighten existing text before adding doctrine.
-- Replace existing text before adding doctrine when replacement preserves meaning.
-- Trim existing text before adding doctrine when trimming preserves enforcement.
-- Merge existing text before adding doctrine when merge preserves owner boundary.
-- Re-home existing text before adding doctrine when another owner is precise.
-- Delete existing text before adding doctrine when it is obsolete, duplicate, or harmful.
-- Governance edits preserve or sharpen clarity.
-- Governance edits preserve or sharpen execution force.
-- Governance edits preserve or sharpen owner boundary.
-- Governance edits preserve or sharpen required gates.
+- Before appending, find owner text that is:
+  - duplicate
+  - obsolete
+  - unnecessary
+  - weaker
+  - conflicting
+  - behavior-weakening
+- Before adding doctrine:
+  - tighten existing text
+  - replace existing text when replacement preserves meaning
+  - trim existing text when trimming preserves enforcement
+  - merge existing text when merge preserves owner boundary
+  - re-home existing text when another owner is precise
+  - delete existing text when it is obsolete, duplicate, or harmful
+- Governance edits preserve or sharpen:
+  - clarity
+  - execution force
+  - owner boundary
+  - required gates
 - Each governance sentence carries one rule or one action.
-- Split bundled sentences before duplicate review.
-- Split bundled sentences before removal review.
+- Split bundled sentences before:
+  - duplicate review
+  - removal review
 
 ## Change Rules
 - Shared doctrine stays in `CLAUDE.md`.
 - Role identity and role stop rules stay in the matching `agents/*.md`.
 - Repeatable workflow and checklist detail stays in the matching skill or reference.
 - Runtime enforcement stays in hook, settings, or runtime owner files.
-- Always-loaded `CLAUDE.md` follows official Claude Code memory guidance.
+- Always-loaded `CLAUDE.md` follows official Claude Code memory documentation.
 - Target `CLAUDE.md` under 200 lines unless the user freezes an exception.
 - Keep `CLAUDE.md` concise.
 - Keep `CLAUDE.md` specific.

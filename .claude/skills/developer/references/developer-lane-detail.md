@@ -45,7 +45,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
 | Governance-patch | All `All developer-owned production` fields plus `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`; not a standalone packet. `PRIOR-ANALYSIS` must cite upstream researcher/reviewer evidence when governance audit, review, or defect classification is material; otherwise use `PRIOR-ANALYSIS: not-applicable:<basis>`. |
 
-Owner fields may use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
+Owner fields use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
 
 ## Handoff Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
@@ -105,7 +105,7 @@ Insufficient handoff examples:
 - `SKILL-AUTH` packets bind `skill-id` to the target lane plus blocked surface; developer resolves that against the active project skill root.
 - `team-lead` routes developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
-- `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology guidance inside an already bounded development production surface.
+- `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology instructions inside an already bounded development production surface.
 - Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 - Developer lane evaluation selects recommended or lane-local specialist skills for the production surface.
 

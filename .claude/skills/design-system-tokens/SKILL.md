@@ -36,7 +36,9 @@ Load when a design system needs a stable token architecture.
 - keep core components free of composite logic
 - make composites consume Layer 2 component contracts instead of raw tokens
 - import Layer 1 primitives from `mockup-to-component` CSS variables when that upstream packet already exists
-- send `hold|blocker` when credible token boundaries or layer-consumption rules are absent
+- active owner reports `hold|blocker` when:
+  - credible token boundaries are absent
+  - credible layer-consumption rules are absent
 ## Activation
 Activate when setting up a new design system, standardizing inconsistent tokens, or needing cross-platform token consistency.
 ## Inputs

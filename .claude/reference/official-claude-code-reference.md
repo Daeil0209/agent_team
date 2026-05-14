@@ -10,7 +10,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 Use this cached source map when checking whether local agent-team governance follows Claude Code's documented configuration and team-operation model.
-Not always-loaded context. Refresh from official docs only when behavior could have changed, a source is contradicted, or a decision depends on current product behavior.
+Not always-loaded context. Refresh from official docs when current product behavior is decision-relevant, a source is contradicted, or cached behavior is stale.
 
 ## Resolve Next Owner And Action
 - A current-product-behavior dependency opens official-document refresh.
@@ -83,7 +83,7 @@ Cached facts:
 - Unlike `CLAUDE.md`, a skill body loads only when used.
 - Skill metadata is visible for discovery; full `SKILL.md` content loads when triggered; supporting resources load when required.
 - Supporting files such as reference files, examples, or scripts keep `SKILL.md` focused and avoid loading large reference material until needed.
-- Official guidance says to keep `SKILL.md` under 500 lines and move detailed reference material into separate files.
+- Official documentation says to keep `SKILL.md` under 500 lines and move detailed reference material into separate files.
 - `user-invocable: false` hides a skill from direct slash-command use while keeping it available as background knowledge when relevant.
 - Invoked skill content stays in conversation context and can be carried through compaction within token budgets.
 - Claude Code custom skills are filesystem-based and separate from Claude.ai/API skill uploads.
@@ -107,7 +107,7 @@ Cached facts:
 - Command hooks execute shell commands automatically with the user's environment permissions.
 - Some hook events have no decision control.
 - `PostToolUse` and async hooks cannot prevent the triggering action that already completed.
-- Official security guidance emphasizes reviewing hook commands, sanitizing inputs, quoting variables, blocking path traversal, and using absolute paths.
+- Official security documentation emphasizes reviewing hook commands, sanitizing inputs, quoting variables, blocking path traversal, and using absolute paths.
 - Hook changes in settings can require review/reload behavior before they affect an active session.
 
 Governance implications:
@@ -122,7 +122,7 @@ Source: https://code.claude.com/docs/en/settings
 Cached facts:
 - `CLAUDE.md` and auto memory are context, not enforced configuration.
 - Project instructions live at `./CLAUDE.md` or `./.claude/CLAUDE.md`.
-- Long `CLAUDE.md` files consume context and reduce adherence; official guidance favors concise, specific, structured instructions.
+- Long `CLAUDE.md` files consume context and reduce adherence; official documentation favors concise, specific, structured instructions.
 - Official troubleshooting says `CLAUDE.md` files over 200 lines can reduce adherence.
 - `.claude/rules/` can split instructions and scope them to paths.
 - `@path` imports are an organization mechanism; imported files load into context at launch with the importing `CLAUDE.md`.

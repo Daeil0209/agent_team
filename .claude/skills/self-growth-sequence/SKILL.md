@@ -16,13 +16,14 @@ Convert the defect into a durable recurrence barrier on the narrowest correct ow
 Resume ordinary execution only from that corrected basis.
 
 Mandatory path summary starts from defect evidence.
-Mandatory path then runs design-intent review.
-Mandatory path then runs causal analysis.
-Mandatory path then runs failure classification.
-Mandatory path then runs ownership adjudication.
-Mandatory path then runs hardening.
-Mandatory path then runs verification.
-Mandatory path then resumes from corrected basis.
+Mandatory path then runs:
+- design-intent review
+- causal analysis
+- failure classification
+- ownership adjudication
+- hardening
+- verification
+- resume from corrected basis
 The canonical step-by-step procedure lives in `### Required order` below.
 
 Use the narrowest owner-local surface that blocks recurrence with less drift.
@@ -45,8 +46,9 @@ Every self-growth round must remain reconstructable through this minimum record:
 - `FOLLOW-ON-OPTIMIZATION`
 If any required record item is unknown, the round stays open as inspection, `HOLD`, or explicit follow-up ownership.
 ## Activation
-Load this skill when evidence confirms a behavioral or procedural defect requiring recurrence-barrier hardening.
-Load this skill to classify a justified user correction, hook signal, runtime/process error, or recurring missed-catch that indicates possible process failure.
+Load this skill when evidence:
+- confirms a behavioral or procedural defect requiring recurrence-barrier hardening
+- indicates possible process failure from a justified user correction, hook signal, runtime/process error, or recurring missed-catch
 Classification selects self-growth hardening, active workflow repair, `update-upgrade-sequence`, `HOLD`, or explicit follow-up ownership.
 Routine asset maintenance routes through `update-upgrade-sequence`.
 Use `Change Sequence` from here only as patch-mechanics support per `Sequence Arbitration Law` in CLAUDE.md.
@@ -57,17 +59,19 @@ Trigger sources:
 - Sufficient confirmed defect basis opens self-growth hardening without direct user instruction.
 Self-growth tiers:
 - Quick hardening applies only when owner surface, write scope, and meaning preservation are unambiguous.
-- Quick hardening covers typo fixes.
-- Quick hardening covers terminology normalization.
-- Quick hardening covers dead-text removal.
-- Quick hardening covers same-owner wording clarification.
-- Quick hardening must not change rule force.
-- Quick hardening must not change owner boundary.
-- Quick hardening must not change trigger.
-- Quick hardening must not change stop.
-- Quick hardening must not change evidence.
-- Quick hardening must not change acceptance.
-- Quick hardening must not change runtime effect.
+- Quick hardening covers:
+  - typo fixes
+  - terminology normalization
+  - dead-text removal
+  - same-owner wording clarification
+- Quick hardening must not change:
+  - rule force
+  - owner boundary
+  - trigger
+  - stop
+  - evidence
+  - acceptance
+  - runtime effect
 - Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local defect-seeking self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
 - Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
@@ -101,8 +105,9 @@ When the team hardens its own rules, skills, charters, or capability boundaries:
 - Always preserve the upgraded quality bar and protected meaning.
 ### Defect-To-Barrier Contract
 Every self-growth round must preserve this chain:
-Required chain part 1: `DEFECT-BASIS -> DESIGN-INTENT-BASIS -> CAUSAL-BASIS -> FAILURE-MODE -> RECURRENCE-PATH -> OWNER-SURFACE -> BARRIER-TYPE -> CHANGE-BOUNDARY`.
-Required chain part 2: `VERIFICATION-BASIS -> CONVERGENCE-STATUS -> SUSPENDED-WORK-SURFACE -> RESUME-OWNER -> RESUME-CONDITION -> RESUME-ACTION`.
+Required chain parts:
+- part 1: `DEFECT-BASIS -> DESIGN-INTENT-BASIS -> CAUSAL-BASIS -> FAILURE-MODE -> RECURRENCE-PATH -> OWNER-SURFACE -> BARRIER-TYPE -> CHANGE-BOUNDARY`
+- part 2: `VERIFICATION-BASIS -> CONVERGENCE-STATUS -> SUSPENDED-WORK-SURFACE -> RESUME-OWNER -> RESUME-CONDITION -> RESUME-ACTION`
 If any link is missing, inspect until the link is known, keep the round on `HOLD`, or assign explicit follow-up ownership with boundary and closure basis.
 
 Allowed barrier types:
@@ -123,14 +128,16 @@ The barrier must match the failure mode.
 ### Causal Repair Standard
 Patch from causal basis.
 Defect admission gate:
-- Confirmed defect requires proven target-intent conflict.
-- Confirmed defect requires proven protected function.
-- Confirmed defect requires proven negative operating effect.
+- Confirmed defect requires proven:
+  - target-intent conflict
+  - protected function
+  - negative operating effect
 - Reserved hard-deny breach can satisfy negative-effect proof.
 - Reserved runtime-truth breach can satisfy negative-effect proof.
-- Confirmed defect requires proven causal failure mode.
-- Confirmed defect requires proven recurrence path.
-- Confirmed defect requires the smallest intent-preserving correction.
+- Confirmed defect also requires:
+  - proven causal failure mode
+  - proven recurrence path
+  - the smallest intent-preserving correction
 - Treat literal token match, apparent contradiction, heavy gate, hook burden, deletion permission, or plausible misuse as defect evidence only until that proof exists.
 Use `references/causal-analysis.md` for the required reconstruction, failure-mode proof, recurrence path, and hypothesis limit.
 
@@ -139,28 +146,32 @@ Self-growth repairs and preserves the existing operating model.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
-Doctrine patch drafting requires `review-verification`.
-Role patch drafting requires `review-verification`.
-Skill patch drafting requires `review-verification`.
-Spine patch drafting requires `review-verification`.
-Hook patch drafting requires `review-verification`.
-Reference patch drafting requires `review-verification`.
+These patch drafting surfaces require `review-verification`:
+- doctrine
+- role
+- skill
+- spine
+- hook
+- reference
 Consume the emitted `review_verification_packet` before patch drafting.
-Cross-surface patches always run `review-verification`.
-Multi-file patches always run `review-verification`.
-Behavior-changing patches always run `review-verification`.
-Structural patches always run `review-verification`.
-Recurrence-barrier patches always run `review-verification`.
-Gate-altering patches always run `review-verification`.
+These patches always run `review-verification`:
+- cross-surface patches
+- multi-file patches
+- behavior-changing patches
+- structural patches
+- recurrence-barrier patches
+- gate-altering patches
 Single-file quick-hardening wording fix is the only skip path.
-The skip path requires unambiguous owner surface.
-The skip path requires unambiguous write scope.
-The skip path requires unambiguous meaning preservation.
+The skip path requires unambiguous:
+- owner surface
+- write scope
+- meaning preservation
 Record `REVIEW-VERIFICATION-NEED: skipped:single-file-wording-fix` with the owner-surface citation.
-Lane inspection is evidence.
-Reviewer input is evidence.
-Codex input is evidence.
-Team-lead self-classify is evidence.
+These inputs are evidence:
+- lane inspection
+- reviewer input
+- Codex input
+- team-lead self-classify
 The emitted `review_verification_packet` is the gate.
 
 When a defect or justified challenge is recognized, run the canonical `### Required order` below.
@@ -332,14 +343,16 @@ Hard surface:
 - Runtime enforcement expansion requires explicit operator approval.
 ## Patch Execution Method
 Detailed patch mechanics are owned by `references/change-patch-method.md`.
-Patch mechanics include operating rules.
-Patch mechanics include edit-operation ordering.
-Patch mechanics include the freeze list before drafting.
-Patch mechanics include structural-connectivity preservation.
-Patch mechanics include post-verify obligations.
+Patch mechanics include:
+- operating rules
+- edit-operation ordering
+- the freeze list before drafting
+- structural-connectivity preservation
+- post-verify obligations
 The self-growth spine adds one rule.
-Confirmed self-growth patches install a bounded recurrence barrier.
-Confirmed self-growth patches do not install content accumulation.
+Confirmed self-growth patches:
+- install a bounded recurrence barrier
+- do not install content accumulation
 
 ## Resolve Next Owner And Action
 - Confirmed recurrence defect opens the Required order.

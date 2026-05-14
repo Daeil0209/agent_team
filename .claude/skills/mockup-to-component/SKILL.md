@@ -28,7 +28,10 @@ Load when a UI mockup exists and implementation needs frozen layout intent.
 - separate CSS by component and keep token bridges explicit
 - map mockup surfaces to component names, slots, and props
 - define mock data and interface shape before framework implementation
-- send `hold|blocker` when component boundaries, token bridges, or prop contracts remain ambiguous
+- active owner reports `hold|blocker` when:
+  - component boundaries remain ambiguous
+  - token bridges remain ambiguous
+  - prop contracts remain ambiguous
 ## Activation
 Activate when mockup-based UI work depends on converting visual surfaces into bounded component structure.
 ## Inputs

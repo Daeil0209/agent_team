@@ -32,7 +32,11 @@ Load when the output must teach, train, or onboard effectively rather than merel
 - define teaching clarity, pacing, scaffolding, and explanation-object boundaries
 - require readable equations, diagrams, legends, annotations, and stepwise worked examples when material
 - identify likely confusion points where the learner needs visible geometry, state, workflow, or causal relations beyond text alone
-- send `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remain unreadable
+- active owner reports `hold|blocker` when:
+  - credible learner comprehension is absent because sequencing remains unreadable
+  - credible learner comprehension is absent because diagrams remain unreadable
+  - credible learner comprehension is absent because equations remain unreadable
+  - credible learner comprehension is absent because step logic remains unreadable
 ## Boundary
 - Own learning structure.
 - activate on text-first reports when they are explicitly learner-facing

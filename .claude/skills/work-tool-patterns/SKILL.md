@@ -54,7 +54,10 @@ It keeps governance burden proportional to product-pattern proof.
 - make first-run, resume, save/load, import/export, generated-output, and completion artifacts explicit when material
 - define the pattern-level proof oracle so review, test, and validation do not infer completion from the implemented subset
 - reject patterns that fit the source example but not the destination user, scale, constraints, or domain
-- send `hold|blocker` when credible tool family, operator surface, or pattern-level proof oracle is unavailable from evidence
+- active owner reports `hold|blocker` when:
+  - credible tool family is unavailable from evidence
+  - credible operator surface is unavailable from evidence
+  - credible pattern-level proof oracle is unavailable from evidence
 ## Activation
 Activate when the frozen scope materially includes any of:
 - practical personal or team internal software tool

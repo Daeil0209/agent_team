@@ -41,12 +41,13 @@ Result images or screenshots that imply real system output require evidence.
 Development process narrative is inferred only within the selected adaptive level.
 Conceptual diagrams are generated only when they are explanatory.
 Expected effects are generated only when grounded in market context and technical rationale.
-Content that could be mistaken for empirical evidence must be marked as projected or illustrative.
+Content at risk of being mistaken for empirical evidence must be marked as projected or illustrative.
 
 ## Expected Effects
 Expected effects sections incorporate industry applicability, market scalability, and business significance.
-Effects must tie to the project's specific technology domain.
-Effects must tie to identifiable market segments, adoption scenarios, competitive landscape, or regulatory landscape when material.
+Effects must tie to:
+- the project's specific technology domain
+- identifiable market segments, adoption scenarios, competitive landscape, or regulatory landscape when material
 Generic field-contribution boilerplate is insufficient.
 
 ## Visualization Requirement

@@ -8,34 +8,38 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` User Delivery, Evidence, and Acceptance.
-Use it whenever a result might be reported as usable.
-Use it whenever a result might be reported as complete.
-Use it whenever a result might be reported as verified.
-Use it whenever a result might be reported as accepted.
-Use it whenever a result might be reported as user-ready.
+Use it whenever a result might be reported as:
+- usable
+- complete
+- verified
+- accepted
+- user-ready
 
 ## Consume When
 - The deliverable is user-facing.
-- The claim depends on visual evidence.
-- The claim depends on UX evidence.
-- The claim depends on method evidence.
-- The claim depends on governance evidence.
-- The claim depends on best-practice evidence.
-- The claim depends on rendered proof.
-- The claim depends on runtime proof.
-- The claim depends on office/PDF/slide proof.
-- The claim depends on layout proof.
-- The claim depends on packaging proof.
-- The claim depends on reader-surface proof.
+- The claim depends on:
+  - visual evidence
+  - UX evidence
+  - method evidence
+  - governance evidence
+  - best-practice evidence
+  - rendered proof
+  - runtime proof
+  - office/PDF/slide proof
+  - layout proof
+  - packaging proof
+  - reader-surface proof
 - The deliverable is executable software.
-- A completion might rely on an implemented subset.
-- A handoff might rely on an implemented subset.
-- A validation might rely on an implemented subset.
-- A final report might rely on an implemented subset.
-- A tester report uses positive wording.
-- A reviewer report uses positive wording.
-- A validator report uses positive wording.
-- A team-lead report uses positive wording.
+- These outputs might rely on an implemented subset:
+  - completion
+  - handoff
+  - validation
+  - final report
+- These reports use positive wording:
+  - tester report
+  - reviewer report
+  - validator report
+  - team-lead report
 
 ## Required Output
 The consuming owner records:
@@ -47,10 +51,12 @@ The consuming owner records:
 - claim strength
 
 ## Stop
-Stop positive completion when requested content, function, format, data/example/use guidance, run/read path, or user burden remains missing.
-Stop positive completion when the decisive user surface remains unproven.
-Stop final acceptance when validator rules require a verdict.
-Stop final acceptance when final-arbitration trigger rules require a verdict.
+Stop positive completion when:
+- requested content, function, format, data/example/use instructions, run/read path, or user burden remains missing
+- the decisive user surface remains unproven
+Stop final acceptance when:
+- validator rules require a verdict
+- final-arbitration trigger rules require a verdict
 
 ## Resolve Next Owner And Action
 - A stopped delivery route opens missing-deliverable correction.
@@ -60,23 +66,26 @@ Stop final acceptance when final-arbitration trigger rules require a verdict.
 ## Evidence Rules
 - Evidence outranks assumption.
 - Use indirect evidence for diagnosis.
-- Verification stays where the user runs the deliverable.
-- Verification stays where the user reads the deliverable.
-- Verification stays where the user operates the deliverable.
-- Verification stays where the user decides from the deliverable.
-- Verification stays where the user learns from the deliverable.
-- Verification stays where the user presents the deliverable.
+- Verification stays where the user:
+  - runs the deliverable
+  - reads the deliverable
+  - operates the deliverable
+  - decides from the deliverable
+  - learns from the deliverable
+  - presents the deliverable
 - Source-read evidence is decisive only for source-read deliverables.
 - Rendered claims require rendered proof.
 - Runtime claims require runtime proof.
-- Visual claims need proper lane evidence.
-- Visual claims need proper skill evidence.
-- Visual claims need proper tool evidence.
-- Visual claims need live-document evidence when live-document evidence is the fitting surface.
-- UX claims need proper lane evidence.
-- UX claims need proper skill evidence.
-- UX claims need proper tool evidence.
-- UX claims need live-document evidence when live-document evidence is the fitting surface.
+- Visual claims need proper:
+  - lane evidence
+  - skill evidence
+  - tool evidence
+  - live-document evidence when live-document evidence is the fitting surface
+- UX claims need proper:
+  - lane evidence
+  - skill evidence
+  - tool evidence
+  - live-document evidence when live-document evidence is the fitting surface
 - A screenshot proves only the captured visual state.
 - Dynamic behavior requires executed user action and retained postcondition evidence.
 
@@ -84,10 +93,11 @@ Stop final acceptance when final-arbitration trigger rules require a verdict.
 - Completion requires the frozen requested deliverable.
 - Completion requires user burden to be satisfied.
 - Completion uses owner deferral only through the owning upstream record.
-- Owner deferral names deferred item.
-- Owner deferral names owner.
-- Owner deferral names reason.
-- Owner deferral names next action.
+- Owner deferral names:
+  - deferred item
+  - owner
+  - reason
+  - next action
 - Downstream missing implementation, proof, or acceptance evidence cannot create deferral; it leaves the row open or blocked.
 - Record implemented subset coverage against the requested deliverable.
 - Classify half-delivered artifacts as defects.

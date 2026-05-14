@@ -7,8 +7,9 @@ auto-inject: false
 
 Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
 Covered rounds: R21 operator on-ramp completeness, R23 operator-OS coverage, R27 termination symmetric pair, and R31 mental-model alignment.
-When `dev-workflow` is active, this contract is active during Phase 1 and Phase 2.
-When `dev-workflow` is not active, `work-planning` consumes this contract directly for user-runnable executables before implementation, proof, or acceptance.
+This contract activates through:
+- `dev-workflow` during Phase 1 and Phase 2
+- `work-planning` directly for user-runnable executables before implementation, proof, or acceptance when `dev-workflow` is not active
 Consumed again during Phase 4/5/Final Acceptance Review/Complete whenever launch, termination, demo data, operator OS, clean re-launch, or mental-model delivery affects proof or acceptance.
 Executable deliverables specialize the Receiver-Surface Contract through a native Consumption Chain.
 The chain covers setup/build, launch/open, operate, readable failure, terminate/cleanup, and clean re-launch.
@@ -28,7 +29,7 @@ For executable user-runnable deliverables, the deliverable MUST ship with:
 - Single-action operator exit means close window button -> graceful shutdown of all spawned processes via signal trap chain, or single-keystroke shortcut equivalent at most.
 - Native launch/build assets name the shell, encoding, line endings, dependency/setup source, build output path, run input path, and readable failure behavior when those assets are material.
 - Developer-tier instructions are operator burden, not delivery.
-- Examples: "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI guidance, manual environment teardown, or producer-tier shutdown knowledge.
+- Examples: "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI instructions, manual environment teardown, or producer-tier shutdown knowledge.
 - **sufficient representative demonstration-data path covering every in-scope visible feature/surface/control** when the deliverable's visible behavior depends on operator-input data; it must exercise the visible workflows, calculations, validation states, persistence, reload, and reset/import paths needed to prove the user can understand and trust the delivered tool.
 - Empty states alone cannot communicate populated visual behavior.
 - Seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
@@ -41,7 +42,7 @@ Local-only web apps must satisfy this contract regardless of stack:
 - the UI provides an explicit operator exit affordance;
 - production-only flags are set (debug/reloader off; technical "development server" warnings suppressed).
 
-Tech-stack-specific patterns (Flask + VBS + `pythonw.exe`, Node + nw.js, Tauri, Bun, Electron, etc.) are implementation guidance owned by the developer/researcher lane, not governance.
+Tech-stack-specific patterns (Flask + VBS + `pythonw.exe`, Node + nw.js, Tauri, Bun, Electron, etc.) are implementation instructions owned by the developer/researcher lane, not governance.
 
 The named launch artifact itself must be exercised by the operator invocation shape.
 Example: invoking the shipped launcher through the operator's native UI.
@@ -49,12 +50,14 @@ Starting an already-running server does not prove the operator launch path.
 Running a backend module directly does not prove the operator launch path.
 Inheriting a prior PID does not prove the operator launch path.
 Opening only the browser URL does not prove the operator launch path.
-A launcher that flashes and exits before opening the app is a launch failure.
-A launcher that exits without leaving a readable operator error is a launch failure.
+A launcher is a launch failure when it:
+- flashes and exits before opening the app
+- exits without leaving a readable operator error
 Carry-forward launch evidence is valid only when the original proof exercised the same launch artifact, invocation shape, operator environment, termination, and clean re-launch contract.
 Programs that launch hands-off but require producer-only knowledge to start, diagnose, or terminate cleanly are half-delivered.
-The operator does not need to prompt "how do I run this".
-The operator does not need to prompt "what does this look like with real data".
+The operator does not need to prompt:
+- "how do I run this"
+- "what does this look like with real data"
 Both belong to team-lead planning derivation.
 
 ## R23 -- Operator-OS Coverage
@@ -70,8 +73,9 @@ When operator OS is ambiguous, multi-OS, or unknown (general distribution, multi
 - Linux: desktop entry or executable launcher
 
 Defaulting to one OS by producer convenience when operator OS is not derivable from `PRIMARY-USER` is itself a delivery defect.
-The operator does not need to translate a Windows-only instruction on macOS.
-The operator does not need to learn `chmod +x` for a Linux-only shell script unless that burden was explicitly frozen as acceptable.
+The operator does not need to:
+- translate a Windows-only instruction on macOS
+- learn `chmod +x` for a Linux-only shell script unless that burden was explicitly frozen as acceptable
 
 ## R27 -- Termination Path Quality Criteria
 At minimum:
@@ -126,7 +130,7 @@ Classify the root cause at the narrowest owner.
 Phase 5 owns implementation or cleanup repair.
 Phase 2 owns delivery-contract or design weakness.
 `work-planning` owns changed deliverable shape, operator OS, proof/acceptance chain, or user requirement.
-Do not close it as guidance residue.
+Do not close it as instruction residue.
 When the frozen operator surface is still satisfiable, team-lead routes directly to Phase 5 operator-proof or repair and attempts non-destructive team-side proof before user escalation.
 Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required, or the user explicitly redirects scope.
 

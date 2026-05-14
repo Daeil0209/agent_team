@@ -19,13 +19,15 @@ SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communicatio
 
 ## Purpose
 Use this reference to keep user-facing team-lead reports compact, evidence-bounded, and free of internal procedure.
-Terminal-visible team-lead prose uses this same report shape.
-Pane-visible team-lead prose uses this same report shape.
+These team-lead prose surfaces use this same report shape:
+- terminal-visible prose
+- pane-visible prose
 
 ## Consume When
-- Team-lead will emit user-facing text.
-- Team-lead will emit terminal-visible prose.
-- Team-lead will emit pane-visible prose.
+- Team-lead will emit:
+  - user-facing text
+  - terminal-visible prose
+  - pane-visible prose
 - Phase/stage-end reporting is about to occur.
 - Completion wording is about to occur.
 - User asks for status during an active path.
@@ -41,11 +43,13 @@ Record:
 
 ## Stop
 Stop before reporting when `SV-RESULT` is required and missing.
-Stop before `FINAL` when residual work remains.
-Stop before `FINAL` when required shard outputs, required corpus surfaces, or material open surfaces are missing, late, unintegrated, or not explicitly deferred/out-of-scope.
+Stop before `FINAL` when:
+- residual work remains
+- required shard outputs, required corpus surfaces, or material open surfaces are missing, late, unintegrated, or not explicitly deferred/out-of-scope
 Stop before basis expansion by default.
-Basis expansion is allowed for explicit user detail request.
-Basis expansion is allowed for blocker-required detail.
+Basis expansion is allowed only for:
+- explicit user detail request
+- blocker-required detail
 
 ## Resolve Next Owner And Action
 - A stopped reporting route opens `SV-RESULT`.
@@ -61,28 +65,54 @@ Pick one:
 - `closeout residual`
 
 `next action` report requires a blocked lead-owned execution path.
-Blocked path means proven user-owned decision, awaited runtime gate from another lane, or explicit upstream `HOLD`.
+Blocked path means:
+- proven user-owned decision
+- awaited runtime gate from another lane
+- explicit upstream `HOLD`
 On any open lead-owned path, execute silently in the same turn.
-Agent acknowledgments, partial outputs, lane counts, dispatch state, and waiting states are internal while monitoring, merge, recovery, or synthesis can continue.
+Agent-signal reporting follows `.claude/skills/team-lead/references/output-surface-law.md`.
 
 ## Output Shape
-- `PHASE-RESULT` carries phase outcome plus next owner/action plus canonical artifact path.
+- `PHASE-RESULT` carries:
+  - phase outcome
+  - next owner/action
+  - canonical artifact path
 - `PHASE-RESULT` runs one or two sentences.
 - `FINAL` summarizes the core result first.
-- `FINAL` evidence inclusion is limited to highest-impact evidence and verified user-usable next state.
-- `FINAL` completion scope stays within validator/FAR supported scope.
-- `FINAL` completion scope stays within Evidence-Quality Matrix supported scope.
-- `FINAL` audit or synthesis scope stays within integrated shard outputs, inspected corpus, and explicitly owner-deferred or out-of-scope surfaces.
-- Do not use `FINAL`, full-corpus, exhaustive, or confirmed-defect wording for partial shard drafts, incomplete corpus inspection, or unclassified findings.
+- `FINAL` evidence inclusion is limited to:
+  - highest-impact evidence
+  - verified user-usable next state
+- `FINAL` completion scope stays within:
+  - validator/FAR supported scope
+  - Evidence-Quality Matrix supported scope
+- `FINAL` audit scope stays within:
+  - integrated shard outputs
+  - inspected corpus
+  - explicitly owner-deferred surfaces
+  - out-of-scope surfaces
+- `FINAL` synthesis scope stays within:
+  - integrated shard outputs
+  - inspected corpus
+  - explicitly owner-deferred surfaces
+  - out-of-scope surfaces
+- Do not use:
+  - `FINAL` wording for partial shard drafts
+  - full-corpus wording for incomplete corpus inspection
+  - exhaustive wording for incomplete corpus inspection
+  - confirmed-defect wording for unclassified findings
 - Clean closeout report shape is silence or one line.
-- Warning-bearing closeout names exact residual state, exact hold reason, and next recovery surface.
+- Warning-bearing closeout names:
+  - exact residual state
+  - exact hold reason
+  - next recovery surface
 
 ## Internal Content
-Internal content is procedure, route, runtime, lifecycle, packet, lane-traffic, review-tool, and traversal detail.
+Internal-content suppression is owned by `.claude/skills/team-lead/references/output-surface-law.md`.
 Report only the selected primary truth surface in the compact output shape.
 
-Treat `internal:` labels as internal-content labels.
-Treat `(internal):` labels as internal-content labels.
+Treat these labels as internal-content labels:
+- `internal:`
+- `(internal):`
 
 ## Evidence Basis
 When basis is needed, include concise verification basis, material open surfaces, unverified items, and required user action.

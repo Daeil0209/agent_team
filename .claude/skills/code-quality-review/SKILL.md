@@ -36,7 +36,7 @@ Load when the active review surface depends on class, function, module, or reuse
 - review SOLID compliance, duplication, extensibility, and refactoring priority
 - distinguish implementation-level debt from architecture-level debt
 - produce actionable code-quality-review findings rather than abstract style commentary
-- send `hold|blocker` when the review surface is too incomplete to classify the structural risk truthfully
+- active owner reports `hold|blocker` when the review surface is too incomplete to classify the structural risk truthfully
 ## Activation
 Activate for code review, implementation quality assessment, or `dev-workflow` analysis or iteration phases where structural code quality materially affects acceptance.
 ## Inputs

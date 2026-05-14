@@ -63,7 +63,7 @@ A composite score gives team-lead a quantitative view of project quality trends.
 | Error recovery rate | 20 pts | When issues occur, how quickly and cleanly are they resolved? |
 | Iteration efficiency | 15 pts | How many iteration cycles needed before acceptance? (fewer = better) |
 | Scope stability | 15 pts | How often does scope change after plan approval? (less change = better) |
-**Score Interpretation (guidance only):**
+**Score Interpretation (calibration only):**
 | Range | Signal | Team-Lead Action |
 |---|---|---|
 | 86-100 | Strong execution | Reduce oversight only after direct evidence confirms routine low-risk work |

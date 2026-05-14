@@ -8,11 +8,12 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` Scope, Continuity, Change, and Preservation.
-Use it when judging an existing artifact.
-Use it when modifying an existing artifact.
-Use it when migrating an existing artifact.
-Use it when reducing an existing artifact.
-Use it when reporting on an existing artifact.
+Use it when work:
+- judges an existing artifact
+- modifies an existing artifact
+- migrates an existing artifact
+- reduces an existing artifact
+- reports on an existing artifact
 
 ## Consume When
 - Work judges an existing artifact.
@@ -56,9 +57,10 @@ The consuming owner records:
 ## Stop
 Stop before judgment when live owner surfaces remain uninspected.
 Stop before mutation when target intent remains unreconstructed.
-Stop before positive synthesis until same-session changes are carried forward.
-Stop before positive synthesis until sibling outputs are carried forward.
-Stop before positive synthesis until acceptance contracts are carried forward.
+Stop before positive synthesis until all are carried forward:
+- same-session changes
+- sibling outputs
+- acceptance contracts
 Stop before removal until source-to-destination meaning is reconstructed.
 
 ## Resolve Next Owner And Action

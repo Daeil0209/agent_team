@@ -23,12 +23,14 @@ initialPrompt: >-
 - Loaded document consumption requires applied-rule mapping before action, handoff, synthesis, or report.
 - Applied-rule mapping names each active rule's action, stop, evidence, owner, or next-action effect.
 - Startup Contract application is internal by default.
-- Silent application suppresses prose only; it does not suppress required owner opening, skill execution, or boot completion.
+- Startup Contract reporting consumes `.claude/skills/team-lead/references/output-surface-law.md`.
+- Silent application suppresses user-facing prose.
+- Silent application does not suppress:
+  - required owner opening
+  - required skill execution
+  - required boot completion
 - Applied-rule mapping is an internal consumption record, not user-facing report content.
-- Owner-opening, skill-loading, boot diagnostics, and clean startup state stay internal unless they surface a blocker or required user action.
 - Clean startup emits no readiness prose.
-- Mid-flight prose stays internal while the next owner/action can be executed in the same segment.
-- Boot, planning, task-execution, dispatch preparation, runtime creation, packet fields, and lane assignment detail stay internal unless the user explicitly asks for procedure internals.
 - Treat skim, title lookup, summary awareness, and memory-based use as unconsumed document state.
 - Treat trigger-bound references as mandatory execution surfaces.
 - Run Priority 0 before each consequential action segment.
@@ -37,7 +39,7 @@ initialPrompt: >-
 - Run opened owners to their named artifact.
 - Classify narrative owner-execution claims as process notes.
 - User-facing output uses one primary truth surface.
-- Keep internal procedure, lane traffic, packet detail, and review-tool payloads internal unless the user explicitly asks for them.
+- Team-lead output suppression is owned by `.claude/skills/team-lead/references/output-surface-law.md`.
 
 ## Priority 0: Pre-Action Gate
 - Before a consequential action segment opens, consume `.claude/skills/team-lead/references/pre-action-gate.md`.

@@ -89,21 +89,23 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Do not weaken an already-correct path just to land the hardening.
 - Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
-- Before drafting, freeze the defect basis, design-intent basis, causal basis, and recurrence path.
-- Before drafting, freeze `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface.
-- Before drafting, freeze positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation.
+- Before drafting, freeze:
+  - defect basis, design-intent basis, causal basis, and recurrence path
+  - `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface
+  - positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation
 - If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
-- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner guidance warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
+- The enforcement tier states the lightest sufficient surface: owner prose, checklist, packet field, owner instruction warning, Hook-Last-approved runtime warning, or Hook-Last-approved hard block.
 - Warning, block, deny, deletion, restriction, or removal edits are valid only when that positive execution path remains explicit and executable.
 - Before drafting, enumerate affected surfaces beyond the edited file.
 - Affected surfaces include exact text/pattern matches, semantic-family terms, downstream doctrine references, sibling owner surfaces, and runtime/hook/settings mirrors.
 - Missing this enumeration is a patch-readiness defect, not a post-review nit.
-- For MCP or external-tool capability changes, affected surfaces include project-root `.mcp.json`.
-- For MCP or external-tool capability changes, affected surfaces include `.claude/settings.json`.
-- For MCP or external-tool capability changes, affected surfaces include role tool authorization.
-- For MCP or external-tool capability changes, affected surfaces include hook/settings posture.
-- For MCP or external-tool capability changes, affected surfaces include the owning skill/reference authority boundary.
+- For MCP or external-tool capability changes, affected surfaces include:
+  - project-root `.mcp.json`
+  - `.claude/settings.json`
+  - role tool authorization
+  - hook/settings posture
+  - the owning skill/reference authority boundary
 - When the modified artifact has no declared design-intent surface, the change packet itself must carry the intent.
   Missing declared intent includes no Structural Contract, fixed section order, owner boundaries, or authoring principles.
   Assign a `PATCH-CLASS` failure-mode tag.
@@ -193,10 +195,10 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
-- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue guidance-only or `HOLD`.
+- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue owner-rule-only or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks technically guard observable governance procedure edges.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
-- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `guidance-only` or `doctrine-only` until the meaning is packetized into exact fields.
+- If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `owner-rule-only` or `doctrine-only` until the meaning is packetized into exact fields.
 - Do not add new hard-blocks merely to raise apparent coverage or enforcement rate.
 - Protect operator autonomy and ordinary throughput.
 - For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.

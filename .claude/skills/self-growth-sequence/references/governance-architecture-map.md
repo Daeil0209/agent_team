@@ -22,7 +22,7 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 | Closeout teardown and residual truth | `.claude/skills/session-closeout/SKILL.md` and `.claude/skills/session-closeout/references/closeout-state-detail.md` |
 | Repeatable workflow or specialist methodology | owning `.claude/skills/<skill>/SKILL.md`; long lookup detail in that skill's direct `references/*.md` files when present |
 | External review or MCP capability wiring | project-root `.mcp.json`, `.claude/settings.json`, owning role tool authorization, and the owning skill/reference that defines trigger, authority, fail-open, and recovery boundary |
-| Technical enforcement, guidance guards, deterministic runtime checks | `.claude/hooks/` or `.claude/settings*.json` |
+| Technical enforcement, owner-rule guards, deterministic runtime checks | `.claude/hooks/` or `.claude/settings*.json` |
 | Official-source cache or preservation traceability | `.claude/reference/` |
 
 Reference files are lookup surfaces, not hidden always-on doctrine. A `SKILL.md` spine must keep the activation trigger, owner, stop rule, and instruction to load the direct reference file when the detailed lookup is required.

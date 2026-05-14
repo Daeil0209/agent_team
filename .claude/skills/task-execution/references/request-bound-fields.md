@@ -72,10 +72,10 @@ When exact instruction wording materially affects acceptance, decision-fit, or r
 - `USER-INSTRUCTION-VERBATIM`
 - `USER-INSTRUCTION-AMENDMENTS`
 
-When planning or the active workflow already froze methodology guidance for the lane, the packet must also carry:
+When planning or the active workflow already froze methodology instructions for the lane, the packet must also carry:
 - `SKILL-RECOMMENDATIONS`
 
-`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and guidance-only inside the already bounded lane surface.
+`SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and lane-scoped instruction only inside the already bounded lane surface.
 It never creates lane ownership, authorizes lane-core skill listing, or changes proof/acceptance ownership.
 If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 
@@ -137,8 +137,9 @@ WSL/Linux execution does not satisfy Windows launch proof by itself.
 Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 
 `DECISION-SURFACE` is a conditional final-arbitration field.
-Keep it explicit when the decisive acceptance surface materially differs from the validator execution surface.
-Keep it explicit when the verdict must reconcile more than one candidate acceptance surface.
+Keep it explicit when:
+- the decisive acceptance surface materially differs from the validator execution surface
+- the verdict must reconcile more than one candidate acceptance surface
 When `VALIDATION-SURFACE` already names the single decisive user-facing acceptance surface for the bounded acceptance path, `DECISION-SURFACE` can inherit from `VALIDATION-SURFACE`.
 
 `ENV-BASIS` and `SCENARIO-SCOPE` are tester-proof context fields with conditional default but executable-proof-floor enforcement. The narrow `not-applicable (...)` carve-out for genuinely static-render single-surface proof remains valid; default for any executable surface is mandatory.

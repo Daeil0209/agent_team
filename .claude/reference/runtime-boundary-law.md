@@ -13,29 +13,33 @@ Governance-text patch selection stays with `.claude/reference/minimal-governance
 Project output-root placement stays with `.claude/reference/output-root-and-filesystem-law.md`.
 
 ## Purpose
-Use this reference when prose rules could be confused with runtime enforcement.
-Use this reference when hooks could be confused with owner procedure.
-Use this reference when settings could be confused with owner procedure.
-Use this reference when tools could be confused with proof.
-Use this reference when tools could be confused with acceptance.
-Use this reference when non-owner tool output could be confused with owner judgment.
-Use this reference when runtime state could be confused with project documents.
+Use this reference when boundary confusion is possible:
+- prose rules with runtime enforcement
+- hooks with owner procedure
+- settings with owner procedure
+- tools with proof
+- tools with acceptance
+- non-owner tool output with owner judgment
+- runtime state with project documents
 It keeps runtime guardrails narrow and prevents runtime signals from replacing owner procedure.
 
 ## Consume When
 - A hook or setting is proposed as enforcement.
-- A runtime signal might be treated as planning.
-- A runtime signal might be treated as proof.
-- A runtime signal might be treated as validation.
-- A runtime signal might be treated as acceptance.
-- A tool signal might be treated as planning.
-- A tool signal might be treated as proof.
-- A tool signal might be treated as validation.
-- A tool signal might be treated as acceptance.
+- A runtime signal might be treated as:
+  - planning
+  - proof
+  - validation
+  - acceptance
+- A tool signal might be treated as:
+  - planning
+  - proof
+  - validation
+  - acceptance
 - A claim depends on hook, settings, sandbox, or runtime-footprint behavior.
-- External MCP influence affects a route.
-- External review-tool influence affects a route.
-- Codex output influence affects a route.
+- These influences affect a route:
+  - external MCP influence
+  - external review-tool influence
+  - Codex output influence
 - Codex output influence affects a verdict.
 - A runtime state file or team-runtime artifact is involved.
 
@@ -49,26 +53,30 @@ The consuming owner records:
 - blocker or follow-up owner when material
 
 ## Stop
-Stop before hook changes when the risk belongs to doctrine.
-Stop before hook changes when the risk belongs to skill.
-Stop before hook changes when the risk belongs to packet.
-Stop before hook changes when the risk belongs to owner report.
-Stop before hook changes when the risk belongs to task state.
-Stop before settings changes when the risk belongs to doctrine.
-Stop before settings changes when the risk belongs to skill.
-Stop before settings changes when the risk belongs to packet.
-Stop before settings changes when the risk belongs to owner report.
-Stop before settings changes when the risk belongs to task state.
+Stop before hook changes when the risk belongs to:
+- doctrine
+- skill
+- packet
+- owner report
+- task state
+Stop before settings changes when the risk belongs to:
+- doctrine
+- skill
+- packet
+- owner report
+- task state
 Stop before runtime-footprint claims without measured evidence.
-Stop before treating tool availability as proof.
-Stop before treating tool availability as validation.
-Stop before treating tool availability as acceptance.
-Stop before treating tool availability as dispatch truth.
-Stop before treating tool availability as owner completion.
-Stop before treating non-owner tool output as a blocker.
-Stop before treating non-owner tool output as a mutator.
-Stop before treating non-owner tool output as validator.
-Stop before treating non-owner tool output as acceptance owner.
+Stop before treating tool availability as:
+- proof
+- validation
+- acceptance
+- dispatch truth
+- owner completion
+Stop before treating non-owner tool output as:
+- a blocker
+- a mutator
+- validator
+- acceptance owner
 
 ## Resolve Next Owner And Action
 - A stopped hook route opens the smallest non-runtime correction owner.
@@ -78,17 +86,19 @@ Stop before treating non-owner tool output as acceptance owner.
 
 ## Runtime Boundary Rules
 - Hooks are last-resort runtime guards.
-- Planning ownership stays with owner procedures.
-- Routing ownership stays with owner procedures.
-- Judgment ownership stays with owner procedures.
+- These ownership surfaces stay with owner procedures:
+  - planning ownership
+  - routing ownership
+  - judgment ownership
 - Proof ownership stays with tester or proof owner.
 - Acceptance ownership stays with validator or acceptance owner.
-- Settings provide technical enforcement.
-- Permissions provide technical enforcement.
-- Sandbox provides technical enforcement.
-- Hooks provide technical enforcement.
+- These provide technical enforcement:
+  - settings
+  - permissions
+  - sandbox
+  - hooks
 - `CLAUDE.md`, role files, rules, skills, and references shape behavior through context.
-- Label prose rules as context guidance in runtime-boundary claims.
+- Label prose rules as context-bound operating rules in runtime-boundary claims.
 - Governance-flow hooks stay separate from settings-deny secret protection.
 - Hooks guard observable runtime edges that would otherwise produce reserved hard-deny danger.
 - `settings.json` deny rules protect credential and secret paths.

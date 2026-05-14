@@ -48,26 +48,29 @@ Approval requires triggered reference basis or owner reopening.
 Every update/upgrade path must:
 1. Name the target asset and owning surface.
 2. Classify the change type.
-   Use `ordinary asset maintenance` for routine asset updates.
-   Use `recurrence hardening` for confirmed recurrence barriers.
-   Use `capability introduction` for new capability surfaces.
-   Use `external-tool/MCP integration` for external tool integration.
-   Use `compression` for context or document reduction.
-   Use `migration` for source-to-destination moves.
-   Use `settings/hook change` for settings or hook edits.
-   Use `runtime enforcement expansion` for broader runtime blocking or enforcement.
-   Use `specialist-routing change` for specialist routing changes.
+   Use these change types:
+   - `ordinary asset maintenance` for routine asset updates
+   - `recurrence hardening` for confirmed recurrence barriers
+   - `capability introduction` for new capability surfaces
+   - `external-tool/MCP integration` for external tool integration
+   - `compression` for context or document reduction
+   - `migration` for source-to-destination moves
+   - `settings/hook change` for settings or hook edits
+   - `runtime enforcement expansion` for broader runtime blocking or enforcement
+   - `specialist-routing change` for specialist routing changes
    Live-surface synchronization is migration.
-   Hook edits that add deny behavior are `runtime enforcement expansion`.
-   Hook edits that broaden deny behavior are `runtime enforcement expansion`.
-   Hook edits that broaden matcher scope are `runtime enforcement expansion`.
-   Hook edits that broaden permission-deny scope are `runtime enforcement expansion`.
-   Hook edits that broaden blocking path are `runtime enforcement expansion`.
-   Hook edits that broaden runtime enforcement tier are `runtime enforcement expansion`.
-   Settings edits that add deny behavior are `runtime enforcement expansion`.
-   Settings edits that broaden deny behavior are `runtime enforcement expansion`.
-   Settings edits that broaden permission-deny scope are `runtime enforcement expansion`.
-   Settings edits that broaden runtime enforcement tier are `runtime enforcement expansion`.
+   Classify these hook edits as `runtime enforcement expansion`:
+   - add deny behavior
+   - broaden deny behavior
+   - broaden matcher scope
+   - broaden permission-deny scope
+   - broaden blocking path
+   - broaden runtime enforcement tier
+   Classify these settings edits as `runtime enforcement expansion`:
+   - add deny behavior
+   - broaden deny behavior
+   - broaden permission-deny scope
+   - broaden runtime enforcement tier
 3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
    Full self-growth opens only for confirmed behavioral or procedural defects.
 4. Preserve structural contracts.

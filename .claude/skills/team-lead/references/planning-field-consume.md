@@ -92,7 +92,8 @@ Contradictory cross-continuity basis reopens `work-planning`.
 
 ## Lead-Only Context Guard
 Before team-agent runtime dispatch, confirm receiving lanes have every material lead-context fact.
-Material facts travel as packet fields.
-Material facts travel as task state.
-Material facts travel as workflow state.
-Material facts travel as cited artifacts.
+Material facts travel as:
+- packet fields
+- task state
+- workflow state
+- cited artifacts

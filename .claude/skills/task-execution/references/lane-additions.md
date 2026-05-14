@@ -12,6 +12,7 @@ Every lane-core skill inherits these common preconditions:
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
 - Send `dispatch-ack` first for every fresh assignment-grade receipt.
+- Keep `dispatch-ack`, `status`, `handoff`, and `completion` visible bodies within `.claude/skills/task-execution/references/message-classes.md` payload limits.
 - Receipt is not permission to execute a defective packet.
 - Then classify in the same turn.
 - Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
@@ -23,8 +24,22 @@ Every lane-core skill inherits these common preconditions:
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
 - Run capability fit through `SEMANTIC-INTENT-BASIS`, target intent, assigned surface, `CLAIM-CEILING`, common finding basis for critique/removal/patch-worthiness, skill basis, and material tool or rendered/runtime needs.
 - If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
-- Every `REQUIRED-SKILLS` entry is mandatory consumption: load and apply it before lane execution or handoff, or return `scope-pressure` / `hold|blocker` with the smallest correcting owner.
-- A required entry that is non-fitting, lane-mismatched, contradictory, or outside the frozen boundary is a packet or route defect, not permission to drop the skill.
+- Every `REQUIRED-SKILLS` entry is mandatory consumption.
+- Load each valid `REQUIRED-SKILLS` entry before lane execution.
+- Apply each valid `REQUIRED-SKILLS` entry before lane execution.
+- Load each valid `REQUIRED-SKILLS` entry before handoff.
+- Apply each valid `REQUIRED-SKILLS` entry before handoff.
+- A blocked required entry reports `scope-pressure` when packet correction or replanning can restore execution.
+- A blocked required entry reports `hold|blocker` when truthful execution remains blocked.
+- A non-fitting required entry is a packet or route defect.
+- A lane-mismatched required entry is a packet or route defect.
+- A contradictory required entry is a packet or route defect.
+- A required entry outside the frozen boundary is a packet or route defect.
+- A required entry defect is not permission to drop the skill.
+- `REQUIRED-SKILLS: [review-verification]` is invalid for lane dispatch.
+- A lane dispatch that needs `review-verification` names the exact review-verification lens.
+- Full `review-verification` workflow routes to `team-lead`.
+- A bare full-workflow skill entry is a packet defect when the skill reserves full activation to another owner.
 - Every carried `SKILL-RECOMMENDATIONS` entry is classified as applied, not-material, or blocked before handoff.
 - Use fitting skills and tools as execution lenses inside the assigned lane; naming them without applying them to the work surface is not capability fit.
 - When a selected non-lane-core skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.

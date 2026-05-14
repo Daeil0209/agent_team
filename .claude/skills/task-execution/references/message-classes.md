@@ -9,6 +9,7 @@ LOAD-POLICY: on-demand reference only
 ## Contents
 - Common Message Law
 - Canonical Channel Registry
+- Screen Display Reporting Law
 - Upward Message Classes
 - Resolve Next Owner And Action
 
@@ -20,6 +21,9 @@ LOAD-POLICY: on-demand reference only
 - In team-agent runtime, official upward delivery requires `SendMessage` with a valid `MESSAGE-CLASS`.
 - Treat plain-text output, pane output, and agent final prose as observation evidence only.
 - Delivery proof, ledger evidence, lifecycle evidence, and synthesis-ready handoff require resend through `SendMessage`.
+- Methodology skills identify blocker conditions.
+- Methodology skills do not create message-class authority.
+- The active owner reports `hold|blocker` through its governed channel.
 - `status` is progress only.
 - `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` is positive-state reporting only.
 - `scope-pressure` is the structured objection path when the packet is directionally valid but unsafe as written.
@@ -40,6 +44,49 @@ Tool envelope fields are actual top-level tool parameters only; governance packe
 
 Task tools are task-state channels.
 Agent communication uses `SendMessage` or Claude Code teammate UI.
+
+## Screen Display Reporting Law
+This law is the only canonical screen-display reporting rule for teammate, lane, and subagent upward messages.
+Other owner surfaces must reference this law instead of restating screen-display criteria.
+Every rule in this law is a mandatory operating rule.
+Agent-team operation must apply this law before every upward message, status, handoff, completion, and team-lead user-facing report.
+Violating this law is screen pollution.
+Screen pollution is an operational defect because it prevents user monitoring.
+A screen-visible report is not a work log.
+A screen-visible report is not an evidence store.
+A screen-visible report is not a place to show who did what.
+Every teammate, lane, and subagent upward message is screen-visible.
+Screen-visible reports must carry only:
+- the required message-class envelope
+- user-relevant blocker, action, or status truth
+- retained-output path or pointer
+Internal detail includes:
+- teammate work detail
+- role activity
+- shard topology
+- raw inventories
+- findings lists
+- packet bodies
+- skill-load plans
+- audit details
+- task-state complaints
+- raw findings
+- evidence inventories
+- file lists
+- quotes
+- methodology notes
+- full evidence packs
+Internal detail stays retained and silent.
+Keeping internal detail off-screen never reduces evidence, handoff, retention, synthesis, or verification duties.
+Retain internal detail internally or at the required retained path before reporting.
+Screen output must expose only the compact envelope or pointer.
+Do not disclose internal detail on screen unless one applies:
+- the user explicitly asks for that specific raw material
+- the detail is necessary to report a blocker
+- the detail is necessary to report a required user action
+If no retained-output path or non-visible carrier exists for detailed assigned output, send `hold|blocker` instead of visible raw output.
+If a screen-visible report violates this law, reject it as report-correction required.
+
 Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
 `TaskCreate` requires top-level non-empty `subject` and `description`.
 Use `Read` on the background task output path when the runtime provides that path.
@@ -61,6 +108,7 @@ Plain text in a pane is evidence only until resent through the required channel.
     - `ACK-STATUS: accepted`
     - `PLANNING-BASIS: loading`
     - `TASK-ID` when assigned or present
+  - no other receipt prose is allowed
   - missing/incoherent `WORK-SURFACE` uses `hold|blocker`
   - missing/non-open required `TASK-ID` uses `scope-pressure` or `hold|blocker`
   - missing fields route to `scope-pressure` or `hold|blocker`
@@ -73,6 +121,8 @@ Plain text in a pane is evidence only until resent through the required channel.
   - closure proof remains with lifecycle evidence, handoff evidence, or acceptance evidence
 - `status`
   - internal progress only
+  - use only the status class, task id when assigned, work surface, and user-relevant waiting condition when team-lead explicitly requested status
+  - do not include internal detail named by Screen Display Reporting Law in status
   - closure proof remains with lifecycle evidence, handoff evidence, or acceptance evidence
 - `scope-pressure`
   - structured objection to workload, ownership split, hidden prerequisite, missing critical field, or burden contract
@@ -86,6 +136,9 @@ Plain text in a pane is evidence only until resent through the required channel.
 - `handoff` / `completion`
   - completion-grade candidate only
   - requires converged lane-owned work
+  - visible message body carries only the compact completion envelope and retained-output path
+  - internal detail named by Screen Display Reporting Law stays out of the visible message body
+  - missing retained-output path or non-visible carrier follows Screen Display Reporting Law
   - synthesis-ready only when the lane report satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
 - `hold|blocker`
   - required when ambiguity, missing authority, blocked environment, or missing decisive basis prevents truthful execution

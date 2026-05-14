@@ -86,17 +86,18 @@ Send `scope-pressure` or exact `MESSAGE-CLASS: hold|blocker` with smallest truth
 ### RPA-2. Agent Communication
 Use `task-execution` message, truth, scope-pressure, phase-control, and lifecycle references.
 Never downgrade `hold|blocker`.
-For validation, non-derivable missing target type is an information blocker.
-For validation, non-derivable missing expectation source is an information blocker.
-For validation, non-derivable missing review or test state is an information blocker.
-For validation, non-derivable missing validation surface is an information blocker.
-For validation, non-derivable missing user surface is an information blocker.
-For validation, non-derivable missing proof path is an information blocker.
-For validation, non-derivable missing run path is an information blocker.
-For validation, non-derivable missing burden contract is an information blocker.
-For validation, non-derivable missing tool basis is an information blocker.
-For validation, non-derivable missing decision surface is an information blocker.
-For validation, non-derivable missing decisive evidence is an information blocker.
+For validation, these non-derivable missing fields are information blockers:
+- target type
+- expectation source
+- review or test state
+- validation surface
+- user surface
+- proof path
+- run path
+- burden contract
+- tool basis
+- decision surface
+- decisive evidence
 Request it from `team-lead` with exact remaining missing fields, not guesswork or direct user escalation.
 ### RPA-3. Completion Contract
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md` plus validator handoff detail in `.claude/skills/validator/references/validator-lane-detail.md`.

@@ -13,7 +13,7 @@ It keeps team-lead from treating setup, boot, planning, or dispatch as completio
 ## Consume When
 - A fresh instruction arrives.
 - Boot, monitoring, recovery, or teardown can be active.
-- A route could be lead-local, team-routed, workflow-owned, or sequence-owned.
+- A route can be lead-local, team-routed, workflow-owned, or sequence-owned.
 - A frozen `NEXT-CONSEQUENTIAL-ACTION` must be consumed.
 - FAR `FINAL-REJECT` requires correction routing.
 
@@ -35,8 +35,9 @@ Stop before dispatch until required boot/runtime-entry is complete.
 Stop before local execution when `work-planning` boundary is missing, stale, contradictory, or changed.
 Stop before team dispatch when task-execution packet preflight is missing.
 Stop before correction dispatch after FAR `FINAL-REJECT` until the assigned-validator correction packet is consumed.
-Stop before route execution when loaded owner documents lack applied-rule mapping.
-Stop before route execution on governance, analysis, critique, review, validation, or patch work when `SEMANTIC-INTENT-BASIS` is missing or contradicts the user correction, team-operation philosophy, or target governance/design intent.
+Stop before route execution when:
+- loaded owner documents lack applied-rule mapping
+- governance, analysis, critique, review, validation, or patch work lacks `SEMANTIC-INTENT-BASIS` or contradicts the user correction, team-operation philosophy, or target governance/design intent
 
 ## Resolve Next Owner And Action
 - A stopped dispatch route opens boot or runtime-entry.
@@ -80,9 +81,10 @@ Consume `NEXT-CONSEQUENTIAL-ACTION` before local execution, dispatch, phase move
 Classify repeated same-class blocking gaps as root-cause route evidence.
 
 ## Lead-Local Bridge
-Lead-local work requires complete `LEAD-LOCAL-WORK-ITEMS`.
-Lead-local work requires frozen `LEAD-LOCAL-REQUIRED-SKILLS`.
-Lead-local work requires a first action and stop point.
+Lead-local work requires:
+- complete `LEAD-LOCAL-WORK-ITEMS`
+- frozen `LEAD-LOCAL-REQUIRED-SKILLS`
+- a first action and stop point
 Lead-local work stops when a lane-owned proof, validation, review, implementation, or acceptance surface appears.
 
 ## Team-Routed Bridge

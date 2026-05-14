@@ -30,9 +30,10 @@ SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Refe
 - Same-segment assignment-grade work satisfies the decision under lifecycle-control.
 - Lifecycle debt stays visible until consumed.
 - Report lifecycle debt resolution only after lifecycle control consumes it.
-- Same-surface follow-on before lifecycle control requires narrow scope.
-- Same-surface follow-on before lifecycle control requires explicit non-reuse `REQUESTED-LIFECYCLE`.
-- Same-surface follow-on before lifecycle control requires a distinct concrete agent target.
+- Same-surface follow-on before lifecycle control requires:
+  - narrow scope
+  - explicit non-reuse `REQUESTED-LIFECYCLE`
+  - a distinct concrete agent target
 - Same-surface follow-on before lifecycle control keeps debt in warning-state.
 - Consume lifecycle control first when any same-surface follow-on condition is missing.
 - Use one primary downward message class per agent per segment.
@@ -48,24 +49,28 @@ SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Refe
 - Treat `hold|blocker` as hard stop on the unsafe affected path.
 - Keep unrelated safe paths active.
 - Consume `BLOCKER-TYPE`, `BLOCKER-BASIS`, and `SAFE-NEXT-STEP` exactly.
-- Resolve information requests through corrected packet.
-- Resolve information requests through reopened `work-planning`.
-- Resolve information requests through proven user-owned blocker.
-- Corrected packet requires the same frozen owner.
-- Corrected packet requires the same phase.
-- Corrected packet requires the same deliverable.
-- Corrected packet requires the same proof/acceptance chain.
-- Corrected packet requires the same staffing shape.
-- Corrected packet requires the same agent boundary.
-- Corrected packet requires the same parallel grouping.
-- Provide explicit design intent before asking the agent to proceed.
-- Provide explicit proof surface before asking the agent to proceed.
-- Provide explicit authority before asking the agent to proceed.
-- Provide explicit tool/run-path basis before asking the agent to proceed.
-- Consume missing evidence surface as blocker-clear routing evidence.
-- Consume required tool as blocker-clear routing evidence.
-- Consume setup owner as blocker-clear routing evidence.
-- Consume current-toolchain gap as blocker-clear routing evidence.
+- Resolve information requests through:
+  - corrected packet
+  - reopened `work-planning`
+  - proven user-owned blocker
+- Corrected packet requires the same:
+  - frozen owner
+  - phase
+  - deliverable
+  - proof/acceptance chain
+  - staffing shape
+  - agent boundary
+  - parallel grouping
+- Provide explicit basis before asking the agent to proceed:
+  - design intent
+  - proof surface
+  - authority
+  - tool/run-path basis
+- Consume these as blocker-clear routing evidence:
+  - missing evidence surface
+  - required tool
+  - setup owner
+  - current-toolchain gap
 - Route bounded tool-selection research to `researcher` when tool choice is uncertain.
 - Reopen `work-planning` when tool/evidence gaps change owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, or parallel grouping.
 - Route researcher for method/tool discovery when developer implementation constraints need method evidence.
@@ -74,8 +79,9 @@ SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Refe
 - Split ownership when another lane is needed.
 - Return the next executable path to developer after correction.
 - Repeat the resolution loop until the user instruction is completed.
-- Report `HOLD` when evidence proves a genuine impossible condition.
-- Report `HOLD` when evidence proves a genuine unsafe condition.
+- Report `HOLD` when evidence proves a genuine:
+  - impossible condition
+  - unsafe condition
 
 ## scope-pressure
 - Treat `scope-pressure` as planning-quality evidence.
@@ -89,22 +95,24 @@ SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Refe
 - Reopen `work-planning` when the canonical pressure type shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
 - Classify single-agent collapse of intended parallel work as distribution-planning defect.
 - Restore parallel shape through `work-planning`.
-- Packet correction requires `REPLAN-REQUIRED: no`.
-- Packet correction requires the same frozen owner.
-- Packet correction requires the same phase.
-- Packet correction requires the same deliverable.
-- Packet correction requires the same proof/acceptance chain.
-- Packet correction requires the same staffing shape.
-- Packet correction requires the same agent boundary.
-- Packet correction requires the same parallel grouping.
-- Packet correction requires the required verification gate.
+- Packet correction requires:
+  - `REPLAN-REQUIRED: no`
+  - the same frozen owner
+  - the same phase
+  - the same deliverable
+  - the same proof/acceptance chain
+  - the same staffing shape
+  - the same agent boundary
+  - the same parallel grouping
+  - the required verification gate
 - Treat multiple aligned objections as stronger planning evidence.
 - Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style reporting.
 - Unresolved objections keep the blocked lane on a concrete resolution path.
 - Unrelated independent lanes keep moving when lawful.
 - Map changed evidence/proof surface to `proof-surface-mismatch`.
-- Map missing setup to `hidden-prerequisite`.
-- Map missing tooling to `hidden-prerequisite`.
+- Map these to `hidden-prerequisite`:
+  - missing setup
+  - missing tooling
 - Map distinct setup owner to `owner-split`.
 - Preserve canonical pressure values.
 - If pressure identifies a tool/evidence gap but lacks candidate-tool research, treat researcher tool-selection as the next evidence owner unless the packet already proves the correct tool or the issue is a proven user-owned blocker.

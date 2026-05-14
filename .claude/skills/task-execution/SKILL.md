@@ -89,10 +89,12 @@ Own the actual execution move:
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
 - run the task-state and packet final check before sending
+- confirm retained-output carrier before assigning bulky audit, evidence-pack, inventory, or report output
+- keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - carry required non-lane-core skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
-- treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not optional method guidance
+- treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not passive method text
 - carry `REQUEST-BOUND-PACKET-FIELDS` as exact agent-facing request-fit fields when the receiving lane needs original request shape, exact instruction wording, user surface, burden cue, or acceptance basis
-- carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology guidance for the receiving lane
+- carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology instructions for the receiving lane
 - missing or lane-mismatched skill-basis entries return to the same frozen owner when all `work-planning` boundary-change axes stay unchanged
 - ownership-changing `REQUIRED-SKILLS` or `SKILL-RECOMMENDATIONS` entries reopen `work-planning`
 
@@ -132,14 +134,14 @@ Branch rule:
 ## Step 3: Dispatch Truth
 Follow `.claude/skills/team-lead/references/output-surface-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
-Report only blocker, required user action, explicit status answer, or next owner/action; keep `dispatch pending` as internal runtime truth.
+Report dispatch state only for blocker, required user action, or explicit status answer; keep `dispatch pending` as internal runtime truth.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
-- Assignment success reports use `next action` wording when user-facing reporting is needed.
-- No-change dispatch, ack, lane-count, waiting, and idle events stay internal.
+- Assignment success, no-change dispatch, ack, lane-count, waiting, and idle events stay internal while monitoring, recovery, merge, or synthesis can continue.
+- User-requested dispatch status reports only the user-relevant waiting condition.
 
 Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.

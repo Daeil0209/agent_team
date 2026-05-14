@@ -27,6 +27,10 @@ Every completion-grade report using `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: 
 - `PRODUCER-SELF-REVIEW-PASS` — defeater lenses applied, disconfirming checks attempted, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
+Screen-visible handoff and completion reports must follow `.claude/skills/task-execution/references/message-classes.md` Screen Display Reporting Law.
+The retained-output path carries detailed output for team-lead synthesis.
+Missing retained-output path follows Screen Display Reporting Law.
+
 Team-lead accepts completion-grade messages that carry both blocks; messages missing either return to the producer via packet-correction.
 
 Lane handoff reports lane-local convergence only and claims no team-lead `SV-RESULT`.

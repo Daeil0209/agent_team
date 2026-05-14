@@ -50,8 +50,8 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - Use `[]` to record absence of required non-lane-core skills.
 - Lane ownership triggers lane-core skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
 - Methodology-only entries go to `SKILL-RECOMMENDATIONS`.
-- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology guidance map when any configured lane is a candidate receiver for assignment-grade work.
-- `SKILL-RECOMMENDATIONS` carries methodology guidance only.
+- `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology instruction map when any configured lane is a candidate receiver for assignment-grade work.
+- `SKILL-RECOMMENDATIONS` carries methodology instructions only.
 - `SKILL-RECOMMENDATIONS` preserves the receiving lane's work-surface selection.
 - The receiving lane classifies each carried recommendation as applied, not-material, or blocked under `Skill Loading`.
 - Deliverable trigger-flag analysis determines `LANE-REQUIRED-SKILLS-MAP` and `LEAD-LOCAL-REQUIRED-SKILLS` skill freezes:
@@ -82,7 +82,7 @@ Skill-freeze target defaults to the skill's owner lane.
 Skill-freeze target for a declared `SECONDARY-CONSUMER` lane requires the skill boundary.
 Skill-freeze target for lead-local requires lawful lead-local support.
 Required non-lane-core skills go to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP`.
-Methodology guidance goes to `SKILL-RECOMMENDATIONS`.
+Methodology instructions go to `SKILL-RECOMMENDATIONS`.
 Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, lifecycle, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
@@ -90,7 +90,7 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead trigger handling, adjudication, or fail-open truth.
 - Codex output is not authority.
 - Use `triggered:*` when Codex points were adjudicated.
-- Use `fail-open:*` when a required or triggered attempt could not complete.
+- Use `fail-open:*` when a required or triggered attempt did not complete.
 - Use `skipped:*` only when no trigger applies.
 - If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-codex-review-trigger:<basis>`.
 - Codex MCP access failure is `fail-open:*`.
