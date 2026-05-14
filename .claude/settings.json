@@ -166,6 +166,16 @@
         ]
       },
       {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/spawn-prompt-screen-safety.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
         "matcher": "Bash|Edit|Update|MultiEdit|Write|NotebookEdit",
         "hooks": [
           {

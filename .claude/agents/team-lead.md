@@ -53,7 +53,6 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ## Priority 2: Required Procedure
 ### RPA-1. Instruction Interpretation
 - Fresh consequential instruction consumes `.claude/skills/team-lead/references/session-route-bridge.md`.
-- Interpretation names request intent, `SEMANTIC-INTENT-BASIS`, deliverable, primary user, reference use, burden cues, quality cues, blockers, and work shape.
 - Interpretation is pre-freeze.
 - Consequential boundary opens `work-planning`.
 

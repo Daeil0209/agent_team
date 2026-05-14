@@ -101,7 +101,7 @@ Own the actual execution move:
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
-- For `Agent` member creation, the spawn prompt must include the screen-safety clause from `references/assignment-packet.md`; do not rely on role-file memory or hook suppression.
+- For `Agent` member creation, the spawn prompt follows `references/message-classes.md` Team Member Startup Recognition; do not rely on role-file memory or hook suppression.
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
@@ -166,16 +166,6 @@ Recovery reconciliation:
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
 Interruption includes user correction, self-growth trigger, compaction/resume, permission/runtime stop, control, lifecycle, and phase-transition interruption.
-
-Required recovery record:
-- `INTERRUPT-POINT`
-- `LAST-PROVEN-DISPATCH-TRUTH`
-- `RECOVERY-EVIDENCE`
-- `PACKET-SEND-STATUS`
-- `RUNTIME-SIDE-EFFECT`
-- `RESUME-OWNER`
-- `RESUME-ACTION`
-- `REPLAN-REQUIRED`
 
 Rules:
 - pre-open interruption resumes the last valid active owner: `work-planning`, active workflow, or `self-verification`

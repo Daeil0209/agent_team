@@ -29,8 +29,7 @@ Rules:
 - After the interrupt converges, verify `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute the `RESUME-ACTION`.
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
-- Status questions expose the stall.
-- Progress questions expose the stall.
+- Status or progress questions expose the stall.
 - Answer status briefly.
 - Continue through the same verified `RESUME-ACTION`.
 - Use `SV-RESULT` only before reporting or handoff.
@@ -70,9 +69,7 @@ Operating discipline:
 - Run reviewer separation post-application. If a reviewer surfaces a critical or design-intent finding, revert or improve in the same round.
 - Executable, destructive, security-sensitive, or externally committed paths still require validator PASS where acceptance law requires it.
 - Surface deferred items as active recommendations with explicit options.
-- Continue mid-stabilization until reviewer-verified clean state.
-- Continue mid-stabilization until proven user-owned blocker.
-- Continue mid-stabilization until convergence.
+- Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
 - Route, staffing, parallelism, and dispatch choices are derivable unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
 - User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.

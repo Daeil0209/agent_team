@@ -21,8 +21,8 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
-- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the Step 0 request-fit record enough to reconstruct request intent, deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
-- `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, team-operation philosophy, target governance/design intent, and material priority order when those affect route, analysis, critique, review, validation, or patch truth.
+- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording plus deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
+- `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, team-operation philosophy, target governance/design intent, and priority order.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - `REQUEST-BOUND-PACKET-FIELDS` is mandatory as `[]` or the exact request-bound fields that `task-execution` must carry into downstream assignment packets.
 - When the frozen request, plan, MVP, release, or phase contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, `REQUEST-BOUND-PACKET-FIELDS` must include row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES`.

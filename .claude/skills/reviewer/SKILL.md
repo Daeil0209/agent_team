@@ -21,9 +21,6 @@ Before any work:
 5. Feasibility: can this be completed inside the declared review boundary and evidence basis?
 6. Target-intent fit: can the review name the artifact, program, report, governance, or document intent that defines fit?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
-On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
-Packet wording does not need to request this outcome; visible `working` never satisfies it.
-After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase review -> `execute`
 - safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
@@ -95,7 +92,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner handoffs that are required but missing.
 - Check whether each apparent defect is a true defect or an intended protection for the target intent.
-- Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS`; a technically supported conclusion that misses the user concern signal, anti-goal, team-operation philosophy, governance/design intent, or priority order is a review finding.
+- Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS` bridge axes; a technically supported conclusion that misses any of them is a review finding.
 - Removal, reduction, simplification, or optimization recommendations require the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
 - Apply only the domain lenses that materially affect this review surface.

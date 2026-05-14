@@ -113,7 +113,6 @@ Every class below is Communication Plane transport. The descriptions name when t
   - receipt event; follows `Receipt Event Contract`
   - use when fresh assignment-grade work has coherent `WORK-SURFACE` and required task state
   - first upward outcome is mandatory: `dispatch-ack`, `scope-pressure`, or `hold|blocker`
-  - first-outcome silence routes to monitoring recovery
   - after sending, continue the same turn into lane work or send a separate `scope-pressure` / `hold|blocker`
   - missing/incoherent `WORK-SURFACE` uses `hold|blocker`
   - missing/non-open required `TASK-ID` uses `scope-pressure` or `hold|blocker`
@@ -173,6 +172,7 @@ Tool/evidence-gap consumption:
 
 The corrected packet must name the original blocker, the supplied field or correction, the unchanged boundary, and the open executable `TASK-ID` when task tracking is active.
 `packet-correction` handling requires those names.
+A lane recognizes a packet-correction only when an incoming `SendMessage` with `MESSAGE-CLASS: assignment` carries those explicit fields; absent that signal, the lane must not classify or transport state as `post-correction`, `correction-attempted`, or any equivalent inferred-correction label, and must not treat the prior blocker as resolved.
 If one missing basis affects multiple assignments, correct the shared basis once.
 Then send bounded corrected packets to every affected agent.
 When one lane is blocked, keep unrelated independent lanes moving inside the frozen route.

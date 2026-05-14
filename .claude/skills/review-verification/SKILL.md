@@ -178,7 +178,7 @@ Construct material defeater candidates from these lenses:
 - protected-function loss
 - weaker procedure or execution force
 - residual ambiguous wording or semantic collision
-- runtime, user-surface, or reuse path failure
+- runtime, tool-side-effect, filesystem-propagation, observation-race, transient-state, user-surface, or reuse path failure
 - stronger narrower alternative such as delete, trim, merge, re-home, tighten, no-patch, or hook-last
 For each material defeater, record:
 - evidence surface inspected

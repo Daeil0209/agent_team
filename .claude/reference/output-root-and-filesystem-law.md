@@ -87,6 +87,11 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
   - incidental cwd
 - If the project output folder is unknown, derive and freeze the safest canonical root.
 - User escalation is invalid when a safe canonical root exists.
+- Team-lead work-distribution planning documents live under `<project-root>/claude_doc/<work-name>/` inside the task project folder.
+- Shared binding surfaces used by parallel dispatch live in the same `claude_doc/<work-name>/` folder as the planning document.
+- Per-work-item retained outputs and intra-work synthesis co-locate in `claude_doc/<work-name>/` or its declared sub-batch directory.
+- `parallel-fit` on-disk verification resolves materialized binding surfaces against this canonical location.
+- `<work-name>` is named by the owning `work-planning` freeze; sub-batch directories such as `claude_doc/<work-name>/<date-or-batch>/` are allowed when multiple runs of the same work shape are needed.
 
 ## Filesystem Boundary Rules
 - Record these before file work:
@@ -108,3 +113,6 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
   - mailbox state
   - cleanup state
   - generated runtime state
+- `claude_doc/<work-name>/` contents are protected work-artifact carriers, distinct from runtime-owned surfaces and from `.claude/` governance text.
+- Hooks, settings rules, and runtime cleanup must not delete, move, or block `claude_doc/<work-name>/` lifecycle without explicit user-approved teardown.
+- Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review per `.claude/hooks/MANIFEST.md` and CLAUDE.md `[HOOK-LAST]`.

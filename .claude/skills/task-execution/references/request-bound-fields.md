@@ -17,7 +17,7 @@ A packet is start-ready when every material axis needed for the receiving lane t
 
 The contract axes are:
 - original request intent, required deliverable, audience, and excluded scope
-- semantic intent bridge across user concern, anti-goal, team-operation philosophy, target design intent, and material priority order
+- semantic intent bridge per `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
 - exact user wording when wording controls acceptance
@@ -39,7 +39,7 @@ When truthful lane execution depends on the original request shape, the assignme
 - `EXCLUDED-SCOPE`
 
 `SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
-It names the user concern signal, anti-goal, governing team-operation philosophy or target governance/design intent, and material priority order.
+Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
 Do not replace it with literal task wording or target purpose alone.
 If the carried semantic basis conflicts with the user instruction, cited artifact intent, or governing design philosophy, the receiving lane returns `scope-pressure` or `hold|blocker`.
 

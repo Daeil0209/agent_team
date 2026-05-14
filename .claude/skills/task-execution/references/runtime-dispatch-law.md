@@ -43,7 +43,7 @@ Target-resolution preflight is mandatory before the tool call:
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
 - When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
-- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
+- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads when the frozen packet's binding surface materializes as an external carrier; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open must not emit listing, count, probe, diagnostic output, or user-facing prose.
 - While `PARALLEL-DISPATCH-LOCK` is open, do not run Codex/review tools, extra corpus reads, task updates, packet-polishing passes, monitoring, synthesis, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
 - Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/user-reporting-law.md`.
@@ -55,9 +55,6 @@ Target-resolution preflight is mandatory before the tool call:
 - Reuse a live or standby agent before unnecessary new spawn only when reuse preserves the frozen parallel shape, lane separation, and acceptance/proof separation.
 - Do not reuse one agent when that would collapse independent frozen shards into a single-agent critical path.
 - Lane-owned work must stay on the configured lane, not a generic helper path.
-
-- Before new `Agent`, reuse a fitting live/standby agent when it preserves the frozen surface.
-- Otherwise use the frozen concrete agent identity.
 - Recoverable packet or target gaps route to packet correction, team-scoped creation, route replan, or lane `hold|blocker`.
 - They do not route to hook-controlled blocking.
 

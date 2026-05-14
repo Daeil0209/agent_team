@@ -20,9 +20,6 @@ Before any work:
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
-On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
-Packet wording does not need to request this outcome; visible `working` never satisfies it.
-After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded verdict-only arbitration -> execute
 - assignment-grade validator correction packet after `FINAL-REJECT` -> execute bounded correction-basis analysis

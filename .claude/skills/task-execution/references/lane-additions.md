@@ -12,29 +12,22 @@ Every lane-core skill inherits these common preconditions:
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
 - Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: `SendMessage` tool call to `team-lead` with `MESSAGE-CLASS: dispatch-ack`, or `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
-- If the first upward outcome cannot be sent, lane work does not start; `session-boot` monitoring/recovery owns the missing receipt.
 - This duty is lane-baseline; packet wording does not need to request it.
 - Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later handoff/completion never satisfies receipt.
-- Never emit `MESSAGE-CLASS` blocks through visible pane/final text; that is raw Communication Plane leakage, not a valid receipt or handoff.
-- Strict `dispatch-ack` contains only `MESSAGE-CLASS`, optional `TASK-ID`, optional `WORK-SURFACE`, and `ACK-STATUS`; put no plan, counts, file paths, evidence, retained-output path, completion state, operational note, or next-step prose in ACK.
-- After `dispatch-ack`, continue into lane work in the same turn unless the first outcome is `scope-pressure` or `hold|blocker`.
-- Assignment receipt, minimal ACK, and immediate lane work are one execution block; do not split them into separate readiness, planning, context-loaded, awaiting-assignment, or idle stages.
-- Execution-block internals stay inside the block: skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, and progress notes are not emitted as startup, ACK, status, or pane/final prose.
-- Do not emit ACK, startup, execution plan, file-read, route, evidence, or later-report-intent prose through visible pane/final text; use the governed Communication Plane carrier for receiver-required detail and the Minimal Visible State Token for unavoidable visible rows.
+- Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.
+- Execution-block internals (skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, progress notes) stay inside the block.
 - Every upward message follows `.claude/skills/task-execution/references/message-classes.md` Communication Plane Law.
 - Carry receiver-required detail through governed Communication Plane payload; use retained-output or task carriers only for size, evidence retention, or reuse.
 - Never use report suppression or visible-row hygiene to omit, distort, or weaken assignment facts; preserve exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action in governed carriers when material.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or handoff field requires them.
-- Receipt is not permission to execute a defective packet.
-- Then classify in the same turn.
-- Execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
+- Receipt is not permission to execute a defective packet; classify in the same turn, then execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
 - Continue into lane work after receipt.
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - Reconcile completion-grade handoff against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Load lane-core skill only for consequential lane-owned work.
 - Receipt/control/status/lifecycle/phase/clarification messages do not activate it unless they assign or reopen work.
 - Once loaded, lane-core procedure outranks packet non-lane-core skills inside the lane.
-- Run capability fit through `SEMANTIC-INTENT-BASIS`, target intent, assigned surface, `CLAIM-CEILING`, common finding basis for critique/removal/patch-worthiness, skill basis, and material tool or rendered/runtime needs.
+- Run capability fit through `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, assigned surface, `CLAIM-CEILING`, common finding basis for critique/removal/patch-worthiness, skill basis, and material tool or rendered/runtime needs.
 - If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
 - Every `REQUIRED-SKILLS` entry is mandatory consumption.
 - Load each valid `REQUIRED-SKILLS` entry before lane execution.

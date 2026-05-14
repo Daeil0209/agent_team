@@ -153,6 +153,7 @@
 - `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
 - Completion-grade communications require convergence and verification before team-lead synthesis.
 - Agents raise `scope-pressure` for unsafe packets and `hold|blocker` for decisive proof gaps through Communication Plane.
+- On assignment-grade work receipt, agents send the first upward outcome — `dispatch-ack`, `scope-pressure`, or `hold|blocker` — through Communication Plane before loading skills, reading references, or running any other tool work; silent idle is a Receipt Event Contract violation.
 - Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
 - Team-runtime channel registry lives in `.claude/skills/task-execution/references/message-classes.md`.
 - Restating user-report admissibility outside `.claude/reference/user-reporting-law.md` is a single-source-of-truth defect.

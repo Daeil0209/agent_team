@@ -54,7 +54,7 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - tool-envelope validity per `message-classes.md` before packet-body checks
-- `Agent` member-creation prompt screen-safety clause: no `ready`, `context loaded`, `awaiting assignment`, startup ACK, `MESSAGE-CLASS`, handoff, completion, status, findings, counts, paths, plans, next-action prose, or instruction to send such startup transport
+- `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
 - assignment `SendMessage` screen-safety clause: no visible `MESSAGE-CLASS`, ACK, handoff, completion, status, findings, counts, paths, plans, or next-action prose; use `SendMessage`, task state, or retained carriers as the governed transport
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` when task tracking is active
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
@@ -83,10 +83,8 @@ Preflight outcome names:
 - `parallel-continue`: one affected surface is blocked or being corrected, but unrelated independent surfaces remain inside the same frozen parallel route. Continue those unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 
 Packet preflight never invents route facts, tool facts, acceptance facts, or skill openings. It corrects a bounded packet translation defect, reopens the route owner, or keeps independent unblocked work moving.
-Target resolution is packet translation only when active team name, live process-backed roster, and exact target already exist in current-runtime evidence.
-If the frozen route already names the missing member, create it through team-scoped `Agent`.
+Target resolution preflight per `runtime-dispatch-law.md` Target-resolution preflight.
 If member creation would move a `work-planning` boundary-change axis, reopen `work-planning`.
-Never guess that a role label is addressable.
 When the receiving path is team-agent runtime, preflight must also reject packets that rely on lead-only conversation context, unlinked prior reasoning, or implicit upstream decisions. Those facts must be carried as packet fields, task/workflow state, or preserved artifacts before dispatch.
 For live owner-document verification assignments, carry the post-execution live diff and owner-document basis as packet facts, task/workflow state, or preserved artifacts, or require returned evidence that proves the receiver used those live owner documents. If that evidence is absent or unproved, the receiver returns `hold|blocker` or marks findings non-authoritative; team-lead must not use that output as verification evidence.
 

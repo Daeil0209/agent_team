@@ -21,9 +21,6 @@ Before any work:
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
-On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
-Packet wording does not need to request this outcome; visible `working` never satisfies it.
-After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-target or tightly coupled deep research -> `execute`
 - safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
@@ -133,7 +130,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
 - Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
 - For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it affects.
-- When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against the user concern signal, anti-goal, team-operation philosophy, governance/design intent, and priority order it carries.
+- When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against its bridge axes.
 - If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - A removal, reduction, simplification, optimization, or burden-cut proposal is incomplete until the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md` is satisfied.
 - Research output is evidence input to downstream owners, not implementation, patch-worthiness, validation, or confirmed-defect authority.

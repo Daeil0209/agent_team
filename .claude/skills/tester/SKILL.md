@@ -24,9 +24,6 @@ Before any work:
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before proof work.
-On assignment-grade work receipt, first perform only receipt-safety classification, then send the first upward outcome (`dispatch-ack`, `scope-pressure`, or `hold|blocker`) to `team-lead` before any Skill, Read, Bash, discovery, proof, or lane work.
-Packet wording does not need to request this outcome; visible `working` never satisfies it.
-After `dispatch-ack`, continue into classification and lane work in the same turn.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase proof work -> `execute`
 - safe inferred proof surface without owner, phase, proof, acceptance, deliverable, user-run-path, tool-basis, closure/oracle row, scenario boundary, or state-postcondition change -> `reconstruct-with-inference`

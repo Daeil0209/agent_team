@@ -57,7 +57,7 @@ Name the thin request basis:
 - quality cues
 - material blockers
 - governing team-operation philosophy or target governance/design intent
-- priority order when the user makes quality, evidence, autonomy, silence, speed, removal-first, or acceptance integrity material
+- priority order when the user states one
 
 Name the visible work shape:
 - work type
