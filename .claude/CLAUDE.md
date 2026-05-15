@@ -56,6 +56,8 @@
 - `[PRES-FIRST]` Migration preserves protected procedure force.
 - Refactoring preserves protected procedure force.
 - Reduction preserves protected procedure force.
+- Removal candidates undergo information-loss inspection before the operation applies.
+- Similar-but-not-identical rules sharpen to distinct rules rather than merge or delete when each carries operator-evaluable context, examples, or qualifiers the canonical does not capture.
 - `[RETRO-APPLY]` Sharpened doctrine lands after affected current-session surfaces are handled.
 
 ### 4. Autonomy, Parallelism, And Escalation
