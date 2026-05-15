@@ -43,7 +43,7 @@ Record:
 - applicable per-claim basis when synthesis emits findings, patterns, rankings, defect labels, patch recommendations, or redispatch basis
 
 ## Verification Gate
-Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead runs `SV-RESULT` on the exact synthesized claim.
+Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead loads `.claude/skills/self-verification/SKILL.md`, executes its `SV-RESULT` mode through Steps 0-5, and records the internal `SELF-VERIFICATION:` block on the exact synthesized claim; mental review or inline reasoning does not satisfy this gate.
 When the synthesis is full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment, use independent verification when available: reviewer/validator route, Codex independent review, or an equivalent independent proof surface.
 Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.
 Raw lane convergence, shard counts, candidate totals, and retained-output presence are not verified synthesis.
