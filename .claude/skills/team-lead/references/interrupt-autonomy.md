@@ -71,9 +71,9 @@ Operating discipline:
 - Surface deferred items as active recommendations with explicit options.
 - Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
-- Route, staffing, parallelism, and dispatch choices are derivable unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
+- Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
 - User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
-- Pre-emit gate: any user-facing prose containing a question, permission request, option list, "진행할까", "지시하면", "선택 부탁", "다음 라운드", or equivalent direction-soliciting phrasing must first record the `[NO-NEEDLESS-ASK]` exception class (`irreversible`, `destructive`, `security-sensitive`, `operator-policy-choice`, or `proven user-owned blocker`) that justifies the ask; absent that recorded basis the emission is a `[NO-NEEDLESS-ASK]` violation and the team-lead must instead execute the evidence-backed default action in the same turn.
+- User-facing prose that asks for choice, permission, direction, or follow-up sequencing without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation; the team-lead executes the evidence-backed default in the same turn instead.
 
 ## Resolve Next Owner And Action
 - An interrupt frame opens the deepest active resume action.
