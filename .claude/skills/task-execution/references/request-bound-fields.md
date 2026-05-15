@@ -51,7 +51,7 @@ Governance analysis uses governance design intent.
 Program work uses program intent and user-workflow intent.
 Report and document work use reader, question, conclusion, evidence, and action intent.
 Review, proof, validation, and completion work use the target intent that defines fit and closure.
-If this basis is safely inferable from the request, plan, design, Structural Contract, cited artifact, or frozen scope without inventing facts beyond the named source, mark it as `INFERENCE` and proceed.
+If this basis is safely inferable from the named source (request, plan, design, Structural Contract, cited artifact, or frozen scope) without inventing scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, or acceptance oracle that the named source does not specify, mark it as `INFERENCE` and proceed.
 If the basis is not safely inferable, use `scope-pressure` or `hold|blocker`.
 `TARGET-INTENT-BASIS` states protected purpose and user outcome.
 Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.

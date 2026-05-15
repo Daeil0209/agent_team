@@ -20,7 +20,7 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 
 ## Authority
 Codex MCP performs reviewer-grade independent review.
-Codex output is evidence, not authority.
+Codex output is independent reviewer-grade evidence, not review verdict authority.
 team-lead owns reconciliation and workflow cursor truth.
 Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.

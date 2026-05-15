@@ -158,6 +158,7 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Subset acceptance is PASS-eligible only when the subset was already frozen by request, plan, design, or upstream defer record.
 - Executable interactive web/UI deliverables require browser-surface proof on the real user interaction inventory for PASS.
 - Browser-surface gap closes through browser-surface proof.
+- PASS requires per-row inspected console/runtime/network error evidence for each claimed user-facing row whose error surface is material to that row's acceptance; this row-level check is distinct from the canonical verdict-level inspection in `references/validator-lane-detail.md` PASS Prohibition Detail.
 - Rendered documents or runtime-bearing artifacts require decisive evidence on the actual reader/runtime surface for PASS when that is where usefulness is experienced.
 - For source/read documents, PASS depends on the changed source/read surface plus integrity checks required by the frozen acceptance basis.
 ### 7. Retest And Self-Check
