@@ -52,13 +52,7 @@ Validation is forbidden except on `execute` or `reconstruct-with-inference`.
 Weak or missing evidence never becomes `PASS`.
 Choose decisive evidence from the user-facing acceptance surface.
 Source/read state can be decisive when the user-facing acceptance surface is the source/read document itself.
-Browser validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-Human-consumed validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-Operator-runtime validation surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-Exact launch and termination surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-Rendered visual quality surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-No-operator-labor surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
-Operator-naive comprehension surfaces follow `.claude/skills/validator/references/validator-lane-detail.md`.
+Browser, human-consumed, operator-runtime, exact-launch-and-termination, rendered-visual-quality, no-operator-labor, and operator-naive-comprehension validation surfaces all follow `.claude/skills/validator/references/validator-lane-detail.md`.
 Final arbitration on user-facing surfaces runs a Feynman walkthrough at first-time-user perspective.
 Confirm every label, control, data display, and visual element is self-explanatory.
 Lane-local reviewer + tester PASS does not substitute for that walkthrough.

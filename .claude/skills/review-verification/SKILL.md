@@ -264,7 +264,7 @@ Patch recommendations must state:
 - tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`
 Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
 
-### 13. Handoff
+### 13. Next-Owner Routing
 Return the smallest truthful next owner/action.
 Use `reviewer` for independent review.
 Use `researcher` for missing evidence.

@@ -82,8 +82,10 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Re-review returns to the same convergence loop after correction.
 
 ### 5. User-Surface Closure And Acceptance
-- Executable user-facing software requires reviewer plus tester in Phase 4; Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
-- Validator-required chains close through `references/final-acceptance-review.md`; bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
+- Executable user-facing software requires reviewer plus tester in Phase 4.
+- Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
+- Validator-required chains close through `references/final-acceptance-review.md`.
+- Bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
 
 ## Phase 0: Discovery (Conditional)
 **Purpose**: Resolve missing requirements or reference-fit ambiguity before plan writing begins.

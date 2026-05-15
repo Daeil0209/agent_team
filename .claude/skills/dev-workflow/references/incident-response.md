@@ -5,7 +5,7 @@ SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
 
-Use this reference when T0/T1 severity, implementation regression, unexpected failure, launch-path failure, or incident-related phase transition appears inside `dev-workflow`.
+Use this reference when P0/P1 severity, implementation regression, unexpected failure, launch-path failure, or incident-related phase transition appears inside `dev-workflow`.
 
 ## Activation Boundary
 Load incident detail when:
@@ -19,10 +19,10 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 1. Detection and classification
 - Identify the failed surface: error log, test failure, user report, monitoring alert, launch failure, or rendered/user-facing failure.
 - Classify severity:
-  - T0: system halt, production down, data loss risk, or equivalent stop condition
-  - T1: governance block, core feature broken, launch-path failure, or work that must be fixed before continuation
-  - T2: quality gate defect that can be fixed in the current iteration cycle
-  - T3: issue to record and schedule
+  - P0: system halt, production down, data loss risk, or equivalent stop condition
+  - P1: governance block, core feature broken, launch-path failure, or work that must be fixed before continuation
+  - P2: quality gate defect that can be fixed in the current iteration cycle
+  - P3: issue to record and schedule
 
 2. Impact analysis
 - Name affected components, services, workflows, users, downstream work, and regression risk.
@@ -31,7 +31,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 3. Fix proposal
 - Developer proposes root cause, bounded file/surface change, fix risk, and verification plan.
 - Team-lead reviews the proposal before routing execution.
-- T0/T1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
+- P0/P1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
 - Explicit user approval before modification is required only when the proposed action is destructive, security-sensitive, externally committed, or a policy choice.
 
 4. Apply and verify
@@ -48,7 +48,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 Phase transitions during incident response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/references/phase-transition-control.md`. Do not author a parallel notification format here.
 
 Incident response contributes only incident-context fields:
-- severity tier T0-T3
+- severity tier P0-P3
 - blast-radius summary
 - root-cause status: proposed, approved, applied, or verified
 - carried-forward blocking issues from the prior phase
@@ -56,7 +56,7 @@ Incident response contributes only incident-context fields:
 Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live with the canonical packet contract.
 
 ## Resolve Next Owner And Action
-- T0/T1 detection opens incident classification and user-facing blocker truth.
+- P0/P1 detection opens incident classification and user-facing blocker truth.
 - Approved bounded fix opens developer correction.
 - Applied fix opens tester proof on the decisive proof surface.
 - Verified fix opens reviewer regression check.

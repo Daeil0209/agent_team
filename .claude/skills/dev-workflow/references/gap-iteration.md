@@ -99,8 +99,8 @@ Reviewer classifies each gap:
 | Non-blocking | Minor behavioral gap, cosmetic mismatch, or deviation without user-surface, acceptance, data, security, or workflow impact | Record in report |
 | Deferred | Design decision intentionally outside this iteration | Record under follow-up |
 
-When a gap is Blocking at T0 or T1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`.
-Classify T0/T1 gaps as incident-response candidates.
+When a gap is Blocking at P0 or P1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`.
+Classify P0/P1 gaps as incident-response candidates.
 
 ## Iteration Protocol Detail
 `dev-workflow` Phase 5 owns iteration structure and convergence truth.
@@ -146,7 +146,7 @@ Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repea
 
 ## Resolve Next Owner And Action
 - Blocking gap opens CP5 route classification.
-- T0/T1 gap opens `incident-response`.
+- P0/P1 gap opens `incident-response`.
 - Phase 5 gap contribution opens correction owner with required return evidence.
 - Corrected output opens reviewer quick-check and tester re-verification.
 - Cleared blocking gaps open validator ingress or Final Acceptance Review by acceptance path.

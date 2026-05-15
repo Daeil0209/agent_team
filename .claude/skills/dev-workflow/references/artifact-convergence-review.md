@@ -21,7 +21,7 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 
 ## Authority
 Codex MCP performs independent design-coherence review.
-Codex output is evidence, not workflow authority.
+Codex output is evidence, not authority.
 team-lead owns phase design, Codex MCP review consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
 Codex findings return to `team-lead` as redesign input; team-lead adjudicates them and synthesizes one coherent phase basis.
 For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-edits the document directly.

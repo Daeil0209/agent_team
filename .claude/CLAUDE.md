@@ -12,6 +12,7 @@
 ## Core Laws
 ### 1. Procedure And Ownership
 - `[RULE-FORCE]` Rules must be executable.
+- `material` means an axis, fact, or trigger that changes what the active owner must do next.
 - Executable rules name the material owner.
 - Executable rules name the material trigger.
 - Executable rules name the material stop.
