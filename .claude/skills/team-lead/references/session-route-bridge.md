@@ -57,7 +57,7 @@ Name the thin request basis:
 - quality cues
 - material blockers
 - governing team-operation philosophy or target governance/design intent
-- priority order when the user states one
+- priority order when the user states one — examples include quality, evidence, autonomy, silence, speed, removal-first, acceptance integrity, or other operator-named priority axes
 
 Name the visible work shape:
 - work type
