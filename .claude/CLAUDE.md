@@ -191,6 +191,7 @@
 - Report prose rules as context-bound operating rules.
 - Report technical enforcement only from runtime or settings evidence.
 - Treat external MCP and review tools as capabilities.
+- Fetch deferred-tool schemas via `ToolSearch` before first call; the harness lists deferred tools in session-start system reminders.
 - Team-lead coordination follows official agent-team channels.
 - Teammate work uses independent Claude Code session context.
 - Teammate packets carry task-specific context.

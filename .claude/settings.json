@@ -216,6 +216,16 @@
             "timeout": 15
           }
         ]
+      },
+      {
+        "matcher": "Read|Bash|Glob|Grep|LS|TaskList|TaskGet|TaskOutput|ToolSearch|Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/dispatch-stall-monitor.sh",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "TaskCompleted": [
