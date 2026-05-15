@@ -128,6 +128,7 @@ Keep authoritative versus supplemental sources explicit.
 - For each decisive expectation, keep a trace: expectation -> evidence anchor -> surface -> upstream owner -> verdict class.
 - Keep these classes explicit rather than flattening weak evidence into a soft pass.
 ### 6. Final Acceptance Gate
+Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `## PASS Prohibition Detail`; the workflow rules below apply that canonical at verdict time.
 - `PASS`: all decisive expectations met, no blocking findings, evidence sufficient.
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, or missing required workflow basis.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface.
