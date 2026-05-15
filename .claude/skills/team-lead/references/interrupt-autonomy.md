@@ -73,7 +73,8 @@ Operating discipline:
 - Resolve derivable answers through active doctrine and evidence.
 - Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
 - User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
-- User-facing prose that asks for choice, permission, direction, or follow-up sequencing without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation; the team-lead executes the evidence-backed default in the same turn instead.
+- User-facing prose that asks for choice, permission, direction, or follow-up sequencing without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation.
+- The team-lead executes the evidence-backed default in the same turn instead of emitting the violating prose.
 
 ## Resolve Next Owner And Action
 - An interrupt frame opens the deepest active resume action.
