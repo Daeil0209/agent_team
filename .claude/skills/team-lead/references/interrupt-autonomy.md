@@ -73,6 +73,7 @@ Operating discipline:
 - Resolve derivable answers through active doctrine and evidence.
 - Route, staffing, parallelism, and dispatch choices are derivable unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
 - User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
+- Pre-emit gate: any user-facing prose containing a question, permission request, option list, "진행할까", "지시하면", "선택 부탁", "다음 라운드", or equivalent direction-soliciting phrasing must first record the `[NO-NEEDLESS-ASK]` exception class (`irreversible`, `destructive`, `security-sensitive`, `operator-policy-choice`, or `proven user-owned blocker`) that justifies the ask; absent that recorded basis the emission is a `[NO-NEEDLESS-ASK]` violation and the team-lead must instead execute the evidence-backed default action in the same turn.
 
 ## Resolve Next Owner And Action
 - An interrupt frame opens the deepest active resume action.
