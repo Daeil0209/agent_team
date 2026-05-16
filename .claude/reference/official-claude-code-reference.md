@@ -5,6 +5,7 @@ SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Reference Binding; Conditional Rules; Skill Loading"
 captured: 2026-05-12
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Official Claude Code Reference Cache
 
@@ -68,7 +69,7 @@ Cached facts:
 
 Governance implications:
 - Keep role files focused because their Markdown body is instruction context for the teammate.
-- Do not preload lane-core skills through agent frontmatter when context footprint matters; prefer on-demand lane-core skill loading in role instructions.
+- Do not preload agent-specific skills through agent frontmatter when context footprint matters; prefer on-demand agent-specific skill loading in role instructions.
 - Tool allowlists and disallowlists belong in agent frontmatter when they define role capability.
 - Do not treat subagent `skills` or `mcpServers` frontmatter as a reliable teammate-runtime contract.
 
@@ -92,7 +93,7 @@ Cached facts:
 
 Governance implications:
 - Move detailed procedure and source notes out of always-loaded doctrine into on-demand skills or reference files.
-- Keep high-frequency role and lane-core skills concise; put detailed edge-case mechanics into direct reference files such as `references/*.md` rather than nested lookup chains.
+- Keep high-frequency role files and agent-specific skills concise; put detailed edge-case mechanics into direct reference files such as `references/*.md` rather than nested lookup chains.
 - Use `user-invocable: false` for governance skills that are model-invoked rather than user-facing commands.
 - Do not treat absence of `.claude/commands/` as a defect when the project uses equivalent skills.
 

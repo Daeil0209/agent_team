@@ -3,6 +3,7 @@ name: dev-workflow
 description: Run structured development workflow with phase gates, checkpoint resolution, iterative quality convergence, gap detection, and YAGNI review. Use when a development project needs phase-based orchestration from discovery through acceptance and iteration.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned workflow surface.
@@ -35,7 +36,7 @@ Activation requires evaluated Codex MCP independent-review trigger handling.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
-Field consumption detail stays with `.claude/skills/team-lead/references/planning-field-consume.md`.
+Field consumption detail stays with `.claude/agents/team-lead/references/planning-field-consume.md`.
 
 `work-planning` selects this workflow when:
 - a development request spans meaningful plan, design, implementation, and analysis phases
@@ -53,8 +54,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 2. Phase Boundary Cycle
 - Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> SV-RESULT -> exit law or correct owner`.
-- Before phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, or phase-result reporting, team-lead consumes `references/phase-gates.md` and every mandatory reference named by the active gate.
-- Consume a satisfied phase boundary in the same turn by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel. Resume on stall recognition (including user status questions) by tool-call execution.
+- Phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, and phase-result reporting all share one precondition: team-lead consumes `references/phase-gates.md` plus every mandatory reference named by the active gate.
+- A satisfied phase boundary is consumed in the same turn by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
+- Stall recognition (including user status questions) resumes by tool-call execution.
 - Convergence loops, status questions, interrupts, rejection routes, and routine review offers continue through the next owner/action by tool-call execution.
 - If a verified phase handoff or convergence record fixes the next phase boundary, team-lead bridges directly without user confirmation.
 - Reopen `work-planning` only when a boundary changes or becomes untrue.

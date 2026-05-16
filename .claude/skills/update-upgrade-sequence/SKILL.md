@@ -3,6 +3,7 @@ name: update-upgrade-sequence
 description: Update and upgrade sequence for doctrine, agents, skills, settings, hooks, and team-system assets.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 ## Structural Contract
@@ -16,11 +17,12 @@ PRIMARY-OWNER: team-lead
 ## Purpose
 Open `Update/Upgrade Sequence` when team-system assets change.
 Route directly from `work-planning` as `ACTIVE-SEQUENCE: update-upgrade-sequence`.
+Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
 
 Adjacent owners:
 - confirmed recurrence defects -> `self-growth-sequence`
 - patch mechanics -> `self-growth-sequence` `Change Sequence`
-- lane-owned specialist execution -> lane role files or lane-core skills
+- lane-owned specialist execution -> lane role files or agent-specific skills
 - agent dispatch or packet truth -> `task-execution`
 
 ## Activation
@@ -47,6 +49,7 @@ Approval requires triggered reference basis or owner reopening.
 ## Update/Upgrade Sequence
 Every update/upgrade path must:
 1. Name the target asset and owning surface.
+   For governance patches, name the consumed execution path that makes the target surface effective.
 2. Classify the change type.
    Use these change types:
    - `ordinary asset maintenance` for routine asset updates
@@ -73,6 +76,7 @@ Every update/upgrade path must:
    - broaden runtime enforcement tier
 3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
    Full self-growth opens only for confirmed behavioral or procedural defects.
+   Governance patch mechanics include consumed-layer placement and generalization basis from `.claude/reference/minimal-governance-change-law.md`.
 4. Preserve structural contracts.
 5. Preserve owner boundaries.
 6. Preserve live references.
@@ -97,19 +101,21 @@ Use `references/update-checks.md` for the update-specific checks that are not al
 Before adding, removing, splitting, merging, or re-homing a skill, classify whether the surface is:
 - independent top-level skill
 - parent-owned reference/detail
-- lane-core skill
+- agent-specific skill
 - specialist skill
 - common team-operation skill
 
 Use `references/skill-introduction.md` for new skill approval and ownership.
 Use `references/specialist-routing.md` when `REQUIRED-SKILLS`, `SKILL-AUTH`, specialist order, or owner-matrix routing is material.
 
-Independently routable workflow, sequence, lane-core, or dispatch owners stay top-level.
+Independently routable workflow, sequence, agent-specific, or dispatch owners stay top-level.
 Parent-detail skills re-home under the parent.
 Skill names remain only when a packet, route, or activation path needs them.
 
 ## Constraints
 - No new operational rule without a clear owner.
+- No governance patch on an unconsumed owner surface unless the update also makes that surface consumed by the active path, per `.claude/reference/minimal-governance-change-law.md`.
+- No symptom-only patch when the same owner/trigger/action/stop/evidence class can recur, per `.claude/reference/minimal-governance-change-law.md`.
 - Before adding governance text, test tighter owner-local alternatives first.
 - Apply tightening, replacing, trimming, merging, or re-homing when they preserve force.
 - Any expansion requires proof that no shorter owner-local edit carries the same force; otherwise replace, trim, merge, or re-home.

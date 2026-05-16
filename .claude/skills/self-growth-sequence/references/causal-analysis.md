@@ -3,12 +3,13 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this guide when the visible failure is known but the actual prevention point is not yet obvious. Do not patch from symptom alone.
 
 Required reconstruction:
-1. Name the intended governing surface: doctrine, team-lead role, lane role, lane-core skill, workflow skill, session skill, packet/reference file, hook, settings, or runtime state.
+1. Name the intended governing surface: doctrine, team-lead role, lane role, agent-specific skill, workflow skill, session skill, packet/reference file, hook, settings, or runtime state.
 2. Name the actual execution point where the duty failed to surface, bind, stop, or route behavior.
 3. Name the evidence that proves the failure mode instead of relying on memory, preference, or hindsight.
 4. Classify the primary failure mode using `.claude/skills/self-growth-sequence/references/failure-mode-response.md`.

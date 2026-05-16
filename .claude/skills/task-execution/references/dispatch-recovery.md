@@ -3,6 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Dispatch Recovery
@@ -33,8 +34,12 @@ Required recovery record:
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
 - Unknown send state is not safe to resend. First check the current dispatch authority; if still unknown, use `HOLD` or `session-boot` recovery rather than duplicate assignment.
+- Missing receipt and no-start receipt recovery are exact-target drives; do not send group-level probes when one target is unresolved.
+- Do not report ack counts, missing target names, inbox read state, nudges, replacement consideration, or no-start classification to the user while Procedure Plane or Communication Plane recovery can continue.
 - Do not stack repeated assignment or correction messages into a target with no agent-originated receipt, start, blocker, or progress.
+- The one bounded follow-up asks for the missing receipt, start evidence, `scope-pressure`, or `hold|blocker`; do not resend assignment content unless prior send evidence is absent or duplicate side-effect risk is ruled out.
 - After one bounded follow-up, wait for response, agent-start, blocker, or assigned-surface activity until the `session-boot` re-check window; missing response after that window is runtime recovery, not another packet retry.
+- A same-target packet correction to a responsive live target opens a correction-response window. Do not shutdown or replace that target until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - A parallel group is not "running" while any target remains `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
 - A control packet, lifecycle packet, phase-transition packet, or self-growth sidecar must not erase the suspended dispatch surface.
@@ -44,7 +49,7 @@ Recovery rules:
 - If recovery would change lane, owner, work surface, proof/acceptance chain, parallel grouping, or packet required skills, reopen `work-planning` instead of repairing inside `task-execution`.
 
 ## Agent Compaction Recovery
-A compacted agent has lost the assignment-grade packet context but retains lane-core skill. To resume truthfully:
+A compacted agent has lost the assignment-grade packet context but retains its agent-specific skill. To resume truthfully:
 
 - Agent emits the exact literal `MESSAGE-CLASS: hold|blocker`.
 - It includes `BLOCKER-TYPE: context-loss-after-compaction`.

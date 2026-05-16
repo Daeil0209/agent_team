@@ -3,12 +3,13 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 For `developer` governance-modification execution, keep the governance packet readable here as the semantic packet owner only after required researcher/reviewer audit or review basis is supplied.
 Runtime hooks and dispatch gates can enforce adjacent discipline, but this catalog controls semantic completeness.
 Audit, review, proof, validation, routing, and acceptance ownership stay on their governing owners.
-Developer dispatch-field baseline lives in `.claude/skills/developer/references/developer-lane-detail.md` `Required Dispatch Packet Fields`.
+Developer dispatch-field baseline lives in `.claude/skills/agent-developer/references/developer-lane-detail.md` `Required Dispatch Packet Fields`.
 
 Current governance packet surface:
 - **Standard execution additions**: `TASK-CLASS: governance-patch`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`

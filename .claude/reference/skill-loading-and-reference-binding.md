@@ -10,6 +10,12 @@ LOAD-POLICY: on-demand reference only
 This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loading and reference consumption.
 Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
 
+## Reporting Curtain Inheritance
+Every loaded role, skill, reference, method-detail document, and lookup document inherits `.claude/reference/user-reporting-law.md` for assistant-authored visible prose.
+Local words such as `Required Output`, `Record`, `report`, `status`, `progress`, `summary`, `handoff`, `proof`, `verdict`, `result`, `finding`, `evidence`, or `next action` name internal owner evidence unless `.claude/reference/user-reporting-law.md` admits user-facing report prose.
+Loading, consuming, quoting, mapping, or verifying a document never creates report permission.
+When a loaded document must both inspect information and speak to the user, the inspection stays in the Procedure Plane or Communication Plane and the visible text is resolved through `.claude/reference/user-reporting-law.md`.
+
 ## Consume When
 - An owner document is loaded in the active owner context.
 - A rule names a skill.
@@ -52,32 +58,36 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 ## Skill Rules
 - Skills load only when required by the active owner path.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
+- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS`.
+- Agent role names are not valid skill names.
+- Agent-specific skills use `agent-<lane>` names.
+- Team-lead direct references live under `.claude/agents/team-lead/references/` and are not skill-owned surfaces.
 - Loaded skills inherit:
   - `CLAUDE.md`
   - active owner role
   - common inheritance floor
 - Loaded skills sharpen owner behavior only within their owner stops.
-- Lane-core skills load on assignment-grade lane work.
-- These messages load lane-core skills only when they assign or reopen work:
+- Agent-specific skills load on assignment-grade lane work.
+- These messages load agent-specific skills only when they assign or reopen work:
   - receipt messages
   - control messages
   - status messages
   - lifecycle messages
   - phase messages
   - clarification messages
-- Loaded lane-core skill outranks packet skill fields inside the lane.
-- These outrank loaded lane-core skills:
+- Loaded agent-specific skill outranks packet skill fields inside the lane.
+- These outrank loaded agent-specific skills:
   - doctrine
   - roles
   - owner gates
 
 ## Required Skills
 - Required-skill freezing is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Required non-lane-core skills freeze through:
+- Required methodology or capability skills freeze through:
   - planning basis
   - workflow basis
   - phase basis
-- Packetize required non-lane-core skills as `REQUIRED-SKILLS`.
+- Packetize required methodology or capability skills as `REQUIRED-SKILLS`.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties.
 - The receiving lane must:
   - load each `REQUIRED-SKILLS` entry before execution

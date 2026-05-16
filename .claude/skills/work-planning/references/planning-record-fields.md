@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this file when field-level semantics, allowed values, the internal planning record, `not-applicable` bases, serial reasons, or bounded correction rules are material.
@@ -46,9 +47,9 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` consumes the route, record `not-applicable:<basis>` instead of leaving the field blank.
 - Valid `not-applicable` bases are limited to the current route basis. Do not use `not-applicable` to hide missing decomposition or missing readiness.
 - `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route.
-- Every lane entry records non-lane-core skills frozen as required for credible execution.
-- Use `[]` to record absence of required non-lane-core skills.
-- Lane ownership triggers lane-core skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
+- Every lane entry records methodology or capability skills frozen as required for credible execution.
+- Use `[]` to record absence of required methodology or capability skills.
+- Lane ownership triggers agent-specific skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
 - Methodology-only entries go to `SKILL-RECOMMENDATIONS`.
 - `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology instruction map when any configured lane is a candidate receiver for assignment-grade work.
 - `SKILL-RECOMMENDATIONS` carries methodology instructions only.
@@ -81,7 +82,7 @@ Skill-freeze eligibility requires credible execution dependency.
 Skill-freeze target defaults to the skill's owner lane.
 Skill-freeze target for a declared `SECONDARY-CONSUMER` lane requires the skill boundary.
 Skill-freeze target for lead-local requires lawful lead-local support.
-Required non-lane-core skills go to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP`.
+Required methodology or capability skills go to `LEAD-LOCAL-REQUIRED-SKILLS` or `LANE-REQUIRED-SKILLS-MAP`.
 Methodology instructions go to `SKILL-RECOMMENDATIONS`.
 Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.

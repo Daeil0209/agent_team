@@ -60,6 +60,8 @@ Hard surface:
 - `blocked:<basis>` enters only for a dispatch-owned blocker-clear move.
 - Missing, contradictory, stale, or route-unfit `not-applicable` route fields reopen `work-planning`.
 - Missing measured burden basis required by `work-planning` or `parallel-fit` reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
+- A frozen `AGENT-MAP` or `PARALLEL-GROUPS` that would create more than 5 concurrent active team-scoped agents is dispatch-invalid.
+- Missing applied 5-member cap basis on a team-routed parallel freeze reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
 - `PARALLEL-GROUPS: none` on multi-surface work is dispatch-invalid unless the frozen basis proves dependency or serial burden stronger than parallel.
 - Route, staffing, parallelism, or dispatch option prompts to the user are not dispatch actions unless a proven user-owned blocker is frozen.
 - Packet repair inside `task-execution` is limited to values already frozen by the owning path.
@@ -91,7 +93,7 @@ Own the actual execution move:
 - run the task-state and packet final check before sending
 - confirm retained-output carrier before assigning bulky audit, evidence-pack, inventory, or report output
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
-- carry required non-lane-core skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
+- carry required methodology or capability skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
 - treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not passive method text
 - carry `REQUEST-BOUND-PACKET-FIELDS` as exact agent-facing request-fit fields when the receiving lane needs original request shape, exact instruction wording, user surface, burden cue, or acceptance basis
 - carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology instructions for the receiving lane
@@ -101,7 +103,16 @@ Own the actual execution move:
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
-- For `Agent` member creation, the spawn prompt follows `references/message-classes.md` Team Member Startup Recognition; do not rely on role-file memory or hook suppression.
+- For `Agent` member creation, the spawn prompt is member creation only: role/member identity plus screen-safety.
+- Use the canonical team-member spawn prompt template: `Member: <name>. Role: <lane>. Screen-safety: no visible prose from this member-creation prompt.`
+- In the canonical template, only `<name>` and `<lane>` vary.
+- Do not hand-write alternate spawn prompts for ordinary team-scoped member creation.
+- `Agent` spawn prompts must not contain `MESSAGE-CLASS`, assignment payload, `SendMessage` instructions, ACK requests, `dispatch-ack` fields, work plans, retained-output paths, or future-action language.
+- Before any parallel `Agent` batch, preflight every planned spawn prompt in the batch against this screen-safety floor.
+- If any planned spawn prompt fails the floor, send zero `Agent` calls from that batch; correct the prompt set first, then dispatch only the corrected batch.
+- Hook denial is not preflight. A hook `BLOCKED` result proves the preflight was missed.
+- Assignment-grade work begins only through `SendMessage` after the live member address exists.
+- The detailed Team Member Startup Recognition rule stays in `references/message-classes.md`; this `SKILL.md` surface carries the executable preflight floor.
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
@@ -109,6 +120,13 @@ Dispatch law:
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
+- Planned team-routed `Agent` dispatch always uses top-level `team_name` plus concrete `name`; do not try standalone `Agent` first and then retry team-scoped dispatch after it fails.
+- If any `TeamCreate`, `Agent`, or assignment-grade `SendMessage` returns a host or hook `BLOCKED` result before agent-start evidence, stop the remaining same-shape dispatch attempts.
+- Consume the blocker text immediately, identify the failed preflight or owner, correct that cause, then retry only the corrected dispatch path.
+- Do not continue, batch, or repeat the blocked shape after the first `BLOCKED` result.
+- If the blocker changes `AGENT-MAP`, `PARALLEL-GROUPS`, route shape, or dispatch readiness, reopen `work-planning` before redispatch.
+- Same-target packet-correction escalation follows the `dispatch-recovery` correction-response window before shutdown or replacement.
+- A blocked pre-agent-start dispatch batch is not partial-parallel-failure recovery; that recovery begins only after at least one intended target has valid dispatch-side truth to preserve.
 - A team-scoped `Agent` launch creates or reattaches the member address only; send assignment-grade `SendMessage` to that exact member before treating the target as dispatched, running, or ack-pending.
 - Role is responsibility.
 - Live process-backed member name is address.
@@ -122,7 +140,7 @@ Dispatch law:
 - Terminating lifecycle control uses structured `shutdown_request`.
 - Match each `SendMessage` to the exact class or structured payload owned by its reference.
 - Do not use teammate pane/final output as a substitute for `SendMessage`, task state, or retained carrier delivery.
-- Treat member creation plus assignment send plus lane receipt plus same-turn lane work as one dispatch execution block; do not insert readiness, context-loaded, awaiting-assignment, status-probe, or idle stages inside that block.
+- Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block; `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
 - Details required only by that block stay in its packet, task state, retained carrier, or lane-local context; they do not become user-facing prose or extra upward messages.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.
@@ -158,6 +176,7 @@ Reporting consequences:
 
 Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
+- Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.
 - `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.

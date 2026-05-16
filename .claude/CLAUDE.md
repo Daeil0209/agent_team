@@ -1,6 +1,6 @@
 # Common Team Doctrine
 ## Structural Contract
-- This file governs shared agent-team behavior.
+- This top doctrine governs shared agent-team behavior and is consumed before role, skill, or reference-specific execution.
 - Claude Code official behavior is the compatibility baseline.
 - Detailed procedure lives on trigger-bound owner surfaces.
 
@@ -56,8 +56,6 @@
 - `[PRES-FIRST]` Migration preserves protected procedure force.
 - Refactoring preserves protected procedure force.
 - Reduction preserves protected procedure force.
-- Removal candidates undergo information-loss inspection before the operation applies.
-- Similar-but-not-identical rules sharpen to distinct rules rather than merge or delete when each carries operator-evaluable context, examples, or qualifiers the canonical does not capture.
 - `[RETRO-APPLY]` Sharpened doctrine lands after affected current-session surfaces are handled.
 
 ### 4. Autonomy, Parallelism, And Escalation
@@ -79,6 +77,8 @@
 - Remove or tighten wording that weakens compliance.
 - `[HARDEN]` Correct valid defects at the narrowest owner.
 - Harden adherence when adherence is the real fix.
+- Governance patches land on the consumed owner surface for the failing rule path.
+- A patch on an unconsumed surface or one-off symptom does not close a recurring defect.
 - `[PROJECT-OUTPUT-ROOT]` Task-created outputs stay under the task project folder.
 - `[HOOK-LAST]` Hooks are last-resort runtime guards.
 
@@ -102,20 +102,15 @@
 ## Reference Binding
 - Trigger-bound references are mandatory execution surfaces.
 - Loaded owner documents are active rule surfaces.
-- Consumption requires applied-rule mapping.
-- Action requires consumed active owner documents.
-- Handoff requires consumed active owner documents.
-- Synthesis requires consumed active owner documents.
-- Report requires consumed active owner documents.
-- Completion requires consumed active owner documents.
-- Skim leaves the document unconsumed.
-- Title lookup leaves the document unconsumed.
-- Summary awareness leaves the document unconsumed.
-- Memory-based use leaves the document unconsumed.
+- Citation and consumption require applied-rule mapping.
+- Action, handoff, synthesis, report, and completion require consumed active owner documents.
+- Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - Missing applied-rule mapping is an execution blocker.
 - Unconsumed trigger-bound reference is a completion blocker.
 
 ## Control Sequences
+- Fresh consequential execution starts with `session-boot` minimal runtime-readiness before `work-planning`.
+- Only `runtime-ready` or `runtime-ready: clean` opens fresh consequential `work-planning`; runtime-blocked opens recovery or `HOLD`.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
@@ -136,8 +131,9 @@
 ## Skill Loading
 - Skills load only when required by the active owner path.
 - Skill consumption is situation-scoped.
-- Lane-core skills load on assignment-grade lane work.
-- Required non-lane-core skills travel as `REQUIRED-SKILLS`.
+- Agent role names are not skill names.
+- Agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
+- Methodology or capability skills use non-role names and travel as `REQUIRED-SKILLS`.
 - Methodology instructions travel as `SKILL-RECOMMENDATIONS`.
 - Missing required skill consumption is a defect.
 - Teammates do not inherit lead conversation history.
@@ -146,17 +142,16 @@
 
 ## Communication
 - Communication, Procedure, and Reporting are separate planes.
-- Communication Plane moves agent, task, runtime, lifecycle, handoff, pressure, status, and retained-output information between internal owners.
-- Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and self-growth.
 - Reporting Plane is the only user-facing prose authority and lives in `.claude/reference/user-reporting-law.md`.
-- `SendMessage`, teammate UI, `dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, `hold|blocker`, assignment packets, phase-transition packets, lifecycle packets, task rows, task output, runtime ledgers, and retained-output pointers are Communication Plane transport, not user reports.
+- Before assistant-authored visible pane or final prose, apply `.claude/reference/user-reporting-law.md`.
+- If `.claude/reference/user-reporting-law.md` admits no report, emit nothing or only its Minimal Visible State Token when Claude Code forces a visible row.
+- `SendMessage`, teammate UI, receipts, status, pressure, lifecycle, handoff, completion, task output, runtime ledgers, and retained-output pointers are Communication Plane transport, not user reports.
 - Communication payloads stay in their governed Communication Plane carrier; pane/final prose must not duplicate them as user-facing report prose.
-- If Claude Code renders transport on screen, the rendering remains transport display; this does not authorize agents to place ACK, startup, plan, file-read, route, evidence, or report-intent prose in visible pane/final text.
-- Unavoidable visible rows consume `.claude/reference/user-reporting-law.md` Minimal Visible State Token; blank visible rows and bare punctuation placeholders are defects when a minimal state token can render.
 - `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
 - Completion-grade communications require convergence and verification before team-lead synthesis.
 - Agents raise `scope-pressure` for unsafe packets and `hold|blocker` for decisive proof gaps through Communication Plane.
-- On assignment-grade work receipt, agents send the first upward outcome — `dispatch-ack`, `scope-pressure`, or `hold|blocker` — through Communication Plane before loading skills, reading references, or running any other tool work; silent idle is a Receipt Event Contract violation.
+- On assignment-grade work receipt, agents send the first upward outcome — one-line `dispatch-ack`, or `scope-pressure` / `hold|blocker` when unsafe — through Communication Plane before loading skills, reading references, or running any other tool work; silent idle is a Receipt Event Contract violation.
+- Unsafe assignment receipt routes to `scope-pressure` or `hold|blocker`; receivers must not infer missing identity, surface, output, or authority into executable work.
 - Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
 - Team-runtime channel registry lives in `.claude/skills/task-execution/references/message-classes.md`.
 - Restating user-report admissibility outside `.claude/reference/user-reporting-law.md` is a single-source-of-truth defect.
@@ -195,14 +190,9 @@
 - Report technical enforcement only from runtime or settings evidence.
 - Treat external MCP and review tools as capabilities.
 - Fetch deferred-tool schemas via `ToolSearch` before first call; the harness lists deferred tools in session-start system reminders.
-- Team-lead coordination follows official agent-team channels.
-- Teammate work uses independent Claude Code session context.
-- Teammate packets carry task-specific context.
-- Team runtime state is Claude Code-owned.
-- Team runtime state stays out of project governance documents.
-- Shared task list use follows Claude Code agent-team behavior.
-- Teammate messaging follows Claude Code agent-team behavior.
-- Team cleanup follows Claude Code lead-owned cleanup behavior.
+- Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
+- Teammate work uses independent Claude Code session context and task-specific packets.
+- Team runtime state is Claude Code-owned and stays out of project governance documents.
 
 ## Self-Growth
 - Sequence Arbitration Law governs self-growth routing.

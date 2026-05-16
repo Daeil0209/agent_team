@@ -4,12 +4,13 @@ SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # team-session-sequences: Dispatch Packet Compliance
 This section is a session-side controlled-value and presence-field lookup consumed by `.claude/skills/team-session-sequences/SKILL.md` and `.claude/skills/task-execution/references/lane-additions.md` for lane-specific packet value and presence checks.
 
-Cross-lane packet schema, common message classes, field format, and packet preflight remain owned by `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md`. Lane-specific packet additions and completion extras are owned by the target lane's lane-core skill and lane-detail reference. Lane role documents remain always-loaded identity, boundary, and stop-condition spines, not packet catalogs. If wording diverges outside the table values below, consume the owning source named above.
+Cross-lane packet schema, common message classes, field format, and packet preflight remain owned by `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md`. Lane-specific packet additions and completion extras are owned by the target lane's agent-specific skill and lane-detail reference. Lane role documents remain always-loaded identity, boundary, and stop-condition spines, not packet catalogs. If wording diverges outside the table values below, consume the owning source named above.
 
 ## Controlled-Value Fields
 | Lane | Field | Rule |

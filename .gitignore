@@ -13,6 +13,8 @@ plans/
 plugins/
 projects/
 references/
+!/.claude/agents/team-lead/references/
+!/.claude/agents/team-lead/references/**
 rules/
 backups/
 worktrees/

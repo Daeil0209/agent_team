@@ -52,6 +52,12 @@ emit_packet_warning() {
   printf '[%s] DISPATCH-PROOF WARN: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
 }
 
+emit_packet_deny() {
+  local reason="${1:?reason required}"
+  printf '[%s] DISPATCH-PROOF DENY: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$reason" >> "$VIOLATION_LOG"
+  hook_emit_pretool_deny "$reason" "Dispatch packet blocked."
+}
+
 emit_channel_clarity_warning() {
   local reason="${1:?reason required}"
   emit_packet_warning "$reason"
@@ -369,6 +375,16 @@ lane_packet_missing_fields() {
   printf '%s' "${missing[*]:-}"
 }
 
+assignment_packet_requests_screen_polluting_completion() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  local text_norm=""
+  text_norm="$(printf '%s' "$DESCRIPTION" | tr '[:upper:]' '[:lower:]')"
+
+  printf '%s' "$text_norm" | grep -Eq 'final[[:space:]-]+upward[[:space:]-]+message|upward[[:space:]-]+message[[:space:]]+to[[:space:]]+team-lead' || return 1
+  printf '%s' "$text_norm" | grep -Eq 'count|counts|files-with-findings|files-clean|per-axis|finding[s]?[[:space:]-]+count|read[[:space:]-]+count|excerpt|summary|next-action|starting|will[[:space:]]+read|will[[:space:]]+write|retained[[:space:]-]+output[[:space:]-]+contents'
+}
+
 if [[ "$TOOL_NAME" == "SendMessage" ]] \
   && [[ -z "$MESSAGE_CLASS_NORM" ]] \
   && [[ -z "$WORK_SURFACE_RAW" ]] \
@@ -398,6 +414,11 @@ case "$MESSAGE_CLASS_NORM" in
 esac
 
 if [[ "$is_assignment_dispatch" == "true" ]]; then
+  if assignment_packet_requests_screen_polluting_completion; then
+    emit_packet_deny "BLOCKED: assignment packet requests screen-polluting final upward message detail. Completion counts, excerpts, plans, retained-output contents, and future-action prose must stay in retained-output; the upward completion transport is the completion-handoff pointer envelope only."
+    exit 0
+  fi
+
   if [[ "$TOOL_NAME" == "SendMessage" && "$TARGET_LANE" == "unknown" ]]; then
     inferred_lane="$(infer_sendmessage_assignment_lane "$DESCRIPTION" || true)"
     if [[ -n "$inferred_lane" ]]; then
@@ -423,7 +444,7 @@ if [[ "$is_assignment_dispatch" == "true" ]]; then
     packet_warning_needed="true"
   fi
   if [[ "$packet_warning_needed" == "true" ]]; then
-    emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS (additional non-lane-core skills or []), WORK-SURFACE, CURRENT-PHASE, and TASK-ID when task tracking is active. task-execution corrects the packet before send; if a deficient packet is delivered, the agent holds on decisive missing-field ambiguity."
+    emit_packet_warning "Dispatch packet has incomplete clean fields. Add MESSAGE-CLASS, REQUIRED-SKILLS (additional methodology or capability skills or []), WORK-SURFACE, CURRENT-PHASE, and TASK-ID when task tracking is active. task-execution corrects the packet before send; if a deficient packet is delivered, the agent holds on decisive missing-field ambiguity."
   fi
 fi
 

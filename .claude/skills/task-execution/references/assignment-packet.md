@@ -3,6 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Assignment Packet
@@ -33,20 +34,28 @@ Every assignment-grade work packet carries:
 - `WORK-SURFACE`
 - `CURRENT-PHASE`
 - `REQUIRED-SKILLS`
-- open executable `TASK-ID` when task tracking is active
+- open executable `TASK-ID` from the active task namespace when task tracking is active
 - `SEMANTIC-INTENT-BASIS` from the frozen planning/request-bound basis.
 - `TARGET-INTENT-BASIS` per `CLAUDE.md` `[DESIGN-INTENT]`.
 - `CLAIM-CEILING` for analysis, critique, governance judgment, review, validation, or patch-worthiness packets. Allowed values are `evidence-only candidates`, `review findings`, `validation verdict input`, and `patch-worthiness classification`. Missing claim ceiling means returned items stay evidence-only until reviewer/review-verification/team-lead synthesis lawfully classifies them.
+- `WRITE-SCOPE` carries bounded write authority as one or more allowed write-path prefixes for the receiving lane.
+- Receiving lanes include reviewer, validator, tester, researcher, and any non-developer lane that produces a retained-output artifact.
+- Allowed prefixes are the frozen `RETAINED-OUTPUT-PATH` and `claude_doc/<work-name>/` plus declared sub-paths.
+- Paths outside these prefixes are out-of-scope for `Write`, `Edit`, `MultiEdit`, and `Bash` artifact mutation.
+- Missing `WRITE-SCOPE` on a write-producing lane packet defaults to the frozen `RETAINED-OUTPUT-PATH` only.
+- Ambiguous `WRITE-SCOPE` routes to `scope-pressure`.
+- Missing or contradictory `RETAINED-OUTPUT-PATH` on a write-producing packet is not inferable by project-folder convention; the receiver returns `hold|blocker` before evidence work.
 
 ### Tester Executable-Proof Schema Floor
 For tester assignment-grade dispatch where the proof surface is executable, `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor.
 Executable surfaces include browser-ui, cli, runtime, server, app, and api.
 `task-execution` carries this doctrine-owned packet discipline.
-Tester must raise `scope-pressure` or `hold|blocker` when omission makes truthful proof impossible.
-Conditional carve-out: proof must be genuinely static-render with no runtime dependency.
-Conditional carve-out also requires a single surface with no scenario variation.
+Tester raises `scope-pressure` or `hold|blocker` when omission makes truthful proof impossible.
+Conditional carve-out has two conditions:
+- proof is genuinely static-render with no runtime dependency
+- single surface with no scenario variation
 When the carve-out applies, mark `ENV-BASIS: not-applicable (<reason>)` and `SCENARIO-SCOPE: not-applicable (<reason>)`.
-Do not omit them silently.
+Silent omission is forbidden.
 `PROOF-TARGET`, `PROOF-EXPECTATION`, and `PROOF-SURFACE` alone are not sufficient for executable proof.
 Env and scenario binding must be explicit.
 See `agents/tester.md` RPA-1 for the lane-side restatement.
@@ -55,20 +64,25 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - tool-envelope validity per `message-classes.md` before packet-body checks
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
-- assignment `SendMessage` screen-safety clause: no visible `MESSAGE-CLASS`, ACK, handoff, completion, status, findings, counts, paths, plans, or next-action prose; use `SendMessage`, task state, or retained carriers as the governed transport
-- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` when task tracking is active
+- for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
+- assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, move detail to task state or retained carriers and keep the packet's required floor plus carrier pointer
+- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch-intent task ids are invalid packet identity
+- invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
-- receiving lane additions from the lane-core skill and lane-detail reference
+- receiving lane additions from the agent-specific skill and lane-detail reference
 - target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label (`member-created` for Agent; `assignment-sent` for assignment SendMessage)
 - concrete requested action must be executable with the receiving lane's allowed tools and output channel
-- do not tell a read-only lane to write files, mutate state, run unavailable tools, or send output through a channel it cannot use
+- when the requested output requires a retained artifact, the receiving lane must have `Write` in `tools`, must not list `Write` in `disallowedTools`, and must receive `RETAINED-OUTPUT-PATH` plus bounded `WRITE-SCOPE`
+- do not tell a lane without bounded artifact-write authority to write files, mutate state, run unavailable tools, or send output through a channel it cannot use
 - if the lane cannot produce the requested artifact directly, route the write/mutation to an owner that has the tool or require lane output through `SendMessage`
 - the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`: every material request-bound axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane-specific phase context, user-defined coverage obligations, assigned surfaces, acceptance basis, user-surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities
 - finding counts are retained evidence, not dispatch scope
+- assignment or completion contracts must not request final upward messages with counts, excerpts, file-read totals, execution plans, retained-output contents, or future-action prose; request retained-output completion payload plus the `completion-handoff.md` pointer envelope only.
 - These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:
-  - parallel shard dispatches with large shared context use one shared retained context plus short per-shard packets; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
+  - parallel shard dispatches with large shared context use one complete shared retained context plus per-shard packets that carry the required packet floor and point to that context; short means no duplicate large context, not reduced receiver-required basis; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
   - handoff packets
   - completion packets
 - a receiving lane that receives such a packet without the path sends `hold|blocker`
@@ -121,7 +135,7 @@ Read the field's first-line shape against the rules above before retrying.
 Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
 Packet skill fields separate required skills from methodology recommendations.
-- Use `REQUIRED-SKILLS` for non-lane-core skills frozen as necessary for the receiving lane's bounded work.
+- Use `REQUIRED-SKILLS` for methodology or capability skills frozen as necessary for the receiving lane's bounded work.
 - Receiving lanes must load and apply every `REQUIRED-SKILLS` entry or return `scope-pressure` / `hold|blocker`.
 - Use `REQUIRED-SKILLS: []` to record absence of upstream required skills.
 - Carry `SKILL-RECOMMENDATIONS` when planning or the active workflow owner froze methodology instructions for the receiving lane.

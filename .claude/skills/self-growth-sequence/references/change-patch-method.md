@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 ## Contents
@@ -14,6 +15,7 @@ auto-inject: false
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only when the change plan is disputed; otherwise reserve `SV-RESULT` for Post-Verify.
+Prerequisite C. Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
 
 1. `Classify + Plan`
 - Classify the change type and scope before editing.
@@ -34,11 +36,11 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
 - Developer defect-seeking self-review is sufficient for trivial single-line fixes.
-- For self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces, consume the emitted `review_verification_packet` before Draft and Execute.
-- The narrow single-file quick-hardening wording-fix exception defined by the parent skill records owner-surface citation.
-- Reviewer/Codex input is evidence.
+- Self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces consume the emitted `review_verification_packet` before Draft and Execute.
+- The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
+- Reviewer and Codex input are evidence.
 - The emitted packet is the gate.
-- Use evidence, not author intent, for acceptance judgment.
+- Acceptance judgment uses evidence, not author intent.
 
 5b. `Execution Gate`
 - For governance-sensitive modifications, complete the reviewed change path before Execute.
@@ -72,7 +74,9 @@ Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only wh
 - Lifecycle state order is `ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`.
 - New rules start as `ACTIVE`.
 - The execution gate in step 5b governs governance-sensitive execution. See step 5b above.
-- Runtime permission bypass, hook approval, or pre-authorized self-growth dispatch does not waive review separation, preservation checks, or the destructive/safety gate.
+- Runtime permission bypass, hook approval, and pre-authorized self-growth dispatch do not waive review separation.
+- They also do not waive preservation checks.
+- They also do not waive the destructive/safety gate.
 - High-traffic governance surfaces named by `CLAUDE.md` `## Priority And Ownership` and `## Change And Preservation` require session revalidation and baseline anchoring before modification resumes after interruption.
 
 ## Patch Execution Method
@@ -84,6 +88,9 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Required operating rules
 - For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
+- Patch placement starts from the failing execution path and lands on the narrowest owner surface actually consumed on that path per `.claude/reference/minimal-governance-change-law.md`.
+- A patch on an unconsumed or non-triggered document is not closure unless the patch also makes that document part of the consumed path.
+- Patch the recurring owner/trigger/action/stop/evidence class, not only the observed symptom, unless evidence proves the defect is isolated.
 - Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
 - Apply `tighten`, `replace`, or `re-home` before `append`.
 - Do not weaken an already-correct path just to land the hardening.
@@ -92,6 +99,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Before drafting, freeze:
   - defect basis, design-intent basis, causal basis, and recurrence path
   - `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface
+  - consumed-layer basis and generalization basis
   - positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation
 - If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
@@ -106,11 +114,11 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - role tool authorization
   - hook/settings posture
   - the owning skill/reference authority boundary
-- When the modified artifact has no declared design-intent surface, the change packet itself must carry the intent.
-  Missing declared intent includes no Structural Contract, fixed section order, owner boundaries, or authoring principles.
-  Assign a `PATCH-CLASS` failure-mode tag.
-  Add a one-sentence rationale in `CHANGE-BOUNDARY`.
-  Add the missing declared-intent surface in a follow-on patch when scope allows.
+- When the modified artifact has no declared design-intent surface, the change packet itself carries the intent.
+- "No declared intent" means no Structural Contract, no fixed section order, no owner boundaries, and no authoring principles.
+- The packet assigns a `PATCH-CLASS` failure-mode tag.
+- The packet adds a one-sentence rationale in `CHANGE-BOUNDARY`.
+- A follow-on patch adds the missing declared-intent surface when scope allows.
 - Classify the failure mode before choosing text.
 - Failure modes are `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, and `capability-gap`.
 - Use `.claude/skills/self-growth-sequence/references/failure-mode-response.md` for allowed and prohibited responses.
@@ -169,9 +177,9 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - Each specialist skill declares `SECONDARY-CONSUMER` when present in SKILL.md frontmatter.
 - Each specialist skill restates those fields in its Structural Contract when local readability requires it.
 - The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
-  - developer-owned specialists and their controlling order: `skills/developer/references/developer-lane-detail.md` § Specialist Skill Loading.
-  - reviewer-owned specialists: `skills/reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
-  - tester-owned specialists: `skills/tester/references/tester-lane-detail.md` § Specialist Skill Loading.
+  - developer-owned specialists and their controlling order: `skills/agent-developer/references/developer-lane-detail.md` § Specialist Skill Loading.
+  - reviewer-owned specialists: `skills/agent-reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
+  - tester-owned specialists: `skills/agent-tester/references/tester-lane-detail.md` § Specialist Skill Loading.
 - Treat common-skill hardening differently from specialist skill-up.
   - Common-skill patches still require one primary owner, never diffuse co-ownership.
   - Inspectors propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.

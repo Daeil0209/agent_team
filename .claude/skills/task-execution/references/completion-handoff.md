@@ -3,6 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Completion And Handoff
@@ -30,7 +31,12 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: ha
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
 - `REQUESTED-LIFECYCLE`
-- `PRODUCER-SELF-REVIEW-PASS` — defeater lenses applied, disconfirming checks attempted, defects found and fixed by the producer in-pass, final-pass convergence (last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`). Producer self-review is defect-seeking review, not self-approval.
+- `PRODUCER-SELF-REVIEW-PASS` records:
+  - defeater lenses applied
+  - disconfirming checks attempted
+  - defects found and fixed by the producer in-pass
+  - final-pass convergence: last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`.
+  - Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
 Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the pointer envelope through `SendMessage`.
@@ -59,15 +65,25 @@ Common finding basis:
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.
 - Quality, evidence, independent review, proof, validation, Codex independent review, and FAR gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
 - Only `patch-worthiness: must-fix|narrow-fix` with proof that correction will not remove a stronger protected function is patch-dispatch basis; `observe|no-patch` stays retained context.
-- Common finding-class taxonomy (used by reviewer, review-verification, and validator-input findings): `confirmed-defect` (live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction), `risk-hypothesis` (plausible risk lacks enough proof for patch dispatch), `design-tradeoff` (intentional protection with a cost), `duplication` (repeated meaning without protected local-restatement basis after proving correction will not remove a stronger protected function), `protected-restatement` (repeated meaning needed for isolated owner readability), `non-issue` (evidence disproves the concern), `unverified` (evidence basis incomplete).
+- Common finding-class taxonomy is shared by reviewer, review-verification, and validator-input findings:
+  - `confirmed-defect`: live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction.
+  - `risk-hypothesis`: plausible risk lacks enough proof for patch dispatch.
+  - `design-tradeoff`: intentional protection with a cost.
+  - `duplication`: repeated meaning without protected local-restatement basis, after proving correction will not remove a stronger protected function.
+  - `protected-restatement`: repeated meaning needed for isolated owner readability.
+  - `non-issue`: evidence disproves the concern.
+  - `unverified`: evidence basis incomplete.
 
-`RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at handoff. Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes. Transient short-lived invocations (one-off linter, single-pass test harness, fixture file already removed) are not long-running resources for this field.
+`RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at handoff.
+Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes.
+Transient short-lived invocations are not long-running resources for this field.
+Examples of transient invocations are one-off linter, single-pass test harness, and fixture file already removed.
 - `RESOURCE-CLEANUP: complete` requires explicit enumeration of every long-running resource actually killed (server PID + port, daemon PID, or dev-runner PID) plus a post-cleanup verification that ports and resources are released.
 - `RESOURCE-CLEANUP: not-applicable (no long-running resource opened)` is allowed only when the lane invoked no long-running spawn; transient invocations record `not-applicable` truthfully.
 - Leaving any long-running spawned process at handoff is a `RESOURCE-CLEANUP` defect; team-lead rejects completion-grade transports that misuse `not-applicable` to cover an unkilled long-running resource or a bare `complete` without enumeration and post-cleanup probe.
 
 Lane docs require bounded additions only when they preserve this common result spine.
-Handoff names selected non-lane-core skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
+Handoff names selected methodology or capability skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
 If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready transport.
 Team-lead reviews that basis against the handed-off work and sends correction to the owning lane when direction drifts.
 When material, `EVIDENCE-BASIS` names the Evidence-Quality Matrix rows supporting the handoff claim.
@@ -94,7 +110,8 @@ Team-lead can allow one narrow same-surface follow-on before lifecycle control o
 - next dispatch targets a distinct concrete agent
 - unresolved lifecycle debt stays visible
 
-When the lane claims user-surface proof or user-surface acceptance on an executed surface, the completion-grade transport must also keep the exercised method explicit:
+User-surface proof or user-surface acceptance claims on an executed surface require the completion-grade transport to keep the exercised method explicit.
+The method record covers:
 - `USER-RUN-PATH` and `RUN-PATH-STATUS` when the deliverable is executable user-facing
 - `USER-SURFACE-PROOF-METHOD`
 - `TOOL-PATH-USED`

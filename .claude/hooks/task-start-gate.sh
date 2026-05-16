@@ -146,17 +146,27 @@ sendmessage_is_first_receipt_outcome_to_lead() {
 const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
 const TASK_START_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
 function field(text, name) {
-  const re = new RegExp(`(?:^|\\n)\\s*-?\\s*${name}\\s*:\\s*([^\\n\\r]+)`, "i");
+  if (String(name || "").toLowerCase() === "message-class") {
+    const classRe = /(?:^|\n|\|)\s*-?\s*MESSAGE-CLASS\s*:\s*(hold\|blocker|[A-Za-z0-9_-]+)/i;
+    const classMatch = text.match(classRe);
+    return String(classMatch ? classMatch[1] : "").trim().toLowerCase();
+  }
+  const re = new RegExp(`(?:^|\\n|\\|)\\s*-?\\s*${name}\\s*:\\s*([^\\n\\r|]+)`, "i");
   const match = text.match(re);
   return String(match ? match[1] : "").trim().toLowerCase();
+}
+function governedPayloadText(toolInput) {
+  const candidates = [
+    flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.summary, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.description, TASK_START_TEXT_KEYS).join("\n"),
+  ].map((chunk) => String(chunk || "").trim()).filter(Boolean);
+  return candidates.find((chunk) => /(?:^|\n|\|)\s*-?\s*MESSAGE-CLASS\s*:/i.test(chunk)) || candidates.join("\n");
 }
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
-  const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
-    .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
-    .join("\n");
+  const text = governedPayloadText(toolInput);
   const messageClass = field(text, "MESSAGE-CLASS");
   const targetName = firstNonEmptyString(
     toolInput.to,
@@ -173,8 +183,11 @@ try {
   let ackPayloadOk = messageClass === "dispatch-ack";
   let messageClassCount = 0;
   let ackStatusCount = 0;
-  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-  for (const line of lines) {
+  const rawText = text.trim();
+  const hasLineBreak = /\r?\n/.test(rawText);
+  const receiptParts = rawText.split(/\s*\|\s*/).map((line) => line.trim()).filter(Boolean);
+  if (hasLineBreak) ackPayloadOk = false;
+  for (const line of receiptParts) {
     const match = line.match(/^-?\s*([A-Za-z0-9_-]+)\s*:/);
     if (!match) {
       ackPayloadOk = false;
@@ -214,88 +227,6 @@ NODE
       return 1
       ;;
   esac
-}
-
-
-worker_sendmessage_screen_envelope_violation() {
-  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
-
-  local result=""
-  result="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
-const TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
-function field(text, name) {
-  const re = new RegExp(`(?:^|\\n)\\s*-?\\s*${name}\\s*:\\s*([^\\n\\r]+)`, "i");
-  const match = text.match(re);
-  return String(match ? match[1] : "").trim().toLowerCase();
-}
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const toolInput = input.tool_input || {};
-  const text = flattenText(toolInput.summary, TEXT_KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, TEXT_KEYS))
-    .concat(flattenText(toolInput.description, TEXT_KEYS))
-    .join("\n");
-  const targetName = firstNonEmptyString(
-    toolInput.to,
-    toolInput.recipient,
-    toolInput.recipient_name,
-    toolInput.recipientName,
-    toolInput.name,
-    toolInput.target_name,
-    toolInput.targetName,
-    toolInput.teammate_name,
-    toolInput.teammateName
-  ).toLowerCase();
-  if (targetName && !["team-lead", "lead", "supervisor"].includes(targetName)) {
-    process.stdout.write("ok\n");
-    process.exit(0);
-  }
-  const messageClass = field(text, "MESSAGE-CLASS");
-  if (!messageClass) {
-    process.stdout.write("ok\n");
-    process.exit(0);
-  }
-  const classes = new Set(["dispatch-ack", "control-ack", "status", "scope-pressure", "hold|blocker", "handoff", "completion"]);
-  if (!classes.has(messageClass)) {
-    process.stdout.write("ok\n");
-    process.exit(0);
-  }
-  const allowedByClass = {
-    "dispatch-ack": new Set(["message-class", "task-id", "work-surface", "ack-status"]),
-    "control-ack": new Set(["message-class", "task-id", "work-surface", "control-status"]),
-    "status": new Set(["message-class", "task-id", "work-surface", "status", "state", "retained-output-path"]),
-    "scope-pressure": new Set(["message-class", "task-id", "work-surface", "pressure-type", "pressure-state", "retained-output-path", "payload-path", "replan-required"]),
-    "hold|blocker": new Set(["message-class", "task-id", "work-surface", "blocker-type", "blocker-state", "hold-state", "retained-output-path", "payload-path"]),
-    "handoff": new Set(["message-class", "task-id", "work-surface", "lane-state", "review-state", "research-state", "evidence-state", "test-state", "validation-state", "dev-state", "status", "retained-output-path", "requested-lifecycle"]),
-    "completion": new Set(["message-class", "task-id", "work-surface", "lane-state", "review-state", "research-state", "evidence-state", "test-state", "validation-state", "dev-state", "status", "retained-output-path", "requested-lifecycle"]),
-  };
-  const forbiddenWords = /\b(files-read|findings-count|findings|toxic-rule|duplication|ambiguity|conflict|bottleneck|current-step|next-step|eta-or-notes|note|quote|excerpt|all \d+|\d+\/\d+|already complete|already-complete|complete —|read in full|retained output is intact|line numbers|operational note|awaiting team-lead|no further|please reuse|re-run|delta against)\b/i;
-  let ok = true;
-  let messageClassCount = 0;
-  const allowed = allowedByClass[messageClass];
-  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-  for (const line of lines) {
-    const match = line.match(/^-?\s*([A-Za-z0-9_-]+)\s*:/);
-    if (!match) {
-      ok = false;
-      continue;
-    }
-    const key = match[1].toLowerCase();
-    if (!allowed.has(key)) ok = false;
-    if (key === "message-class") messageClassCount += 1;
-  }
-  if (messageClassCount !== 1) ok = false;
-  if ((messageClass === "dispatch-ack" || messageClass === "control-ack") && lines.length > 4) ok = false;
-  if ((messageClass === "handoff" || messageClass === "completion") && !field(text, "RETAINED-OUTPUT-PATH")) ok = false;
-  if (forbiddenWords.test(text)) ok = false;
-  process.stdout.write(ok ? "ok\n" : `violation:${messageClass}\n`);
-} catch {
-  process.stdout.write("ok\n");
-}
-NODE
-)"
-  [[ "$result" == violation:* ]]
 }
 
 
@@ -871,6 +802,67 @@ bash_command_is_safe_git_workflow() {
   [[ "$saw_safe_git" == "1" ]]
 }
 
+procedure_skill_surface_read_violation() {
+  case "$TOOL_NAME" in
+    Read|Grep|Glob|LS) ;;
+    *) return 1 ;;
+  esac
+
+  if lead_preplanning_reference_allowed; then
+    return 1
+  fi
+
+  local skill_name=""
+  skill_name="$(procedure_skill_surface_name)"
+  [[ -n "$skill_name" && "$skill_name" != "active procedure" ]] || return 1
+  case "$skill_name" in
+    team-lead|developer|researcher|reviewer|tester|validator)
+      return 1
+      ;;
+  esac
+
+  if procedure_skill_surface_loaded "$skill_name"; then
+    return 1
+  fi
+
+  return 0
+}
+
+procedure_skill_surface_name() {
+  local skill_name=""
+  skill_name="$(printf '%s\n' "$TARGET_PATHS" | sed -nE 's#.*(^|/)\.claude/skills/([^/]+)/.*#\2#p; s#.*(^|/)skills/([^/]+)/.*#\2#p' | sed -n '1p')"
+  if [[ -n "$skill_name" ]]; then
+    printf '%s' "$skill_name"
+  else
+    printf 'active procedure'
+  fi
+}
+
+procedure_skill_surface_loaded() {
+  local skill_name="${1-}"
+  [[ -n "$skill_name" ]] || return 1
+
+  case "$skill_name" in
+    session-boot)
+      [[ -f "$SB_LOADED_MARKER" ]] && return 0
+      ;;
+    work-planning)
+      [[ -f "$WP_MARKER" ]] && return 0
+      ;;
+    task-execution)
+      [[ -f "$TASK_EXECUTION_MARKER" ]] && return 0
+      ;;
+  esac
+
+  [[ -f "$LOG_DIR/.skill-loaded-${SESSION_ID}-${skill_name}" ]]
+}
+
+procedure_skill_surface_block_reason() {
+  local skill_name=""
+  skill_name="$(procedure_skill_surface_name)"
+  printf 'BLOCKED: %s skill surfaces must be entered through Skill(%s) before Read/Grep/Glob/LS.' "$skill_name" "$skill_name"
+}
+
 boot_infra_tool_allowed() {
   local tool_name="${1:-}"
   local command="${2:-}"
@@ -925,6 +917,94 @@ lead_planning_bootstrap_tool_allowed() {
   esac
 }
 
+lead_preplanning_reference_allowed() {
+  [[ "$TOOL_NAME" == "Read" ]] || return 1
+
+  case "$TARGET_PATHS" in
+    *"/.claude/CLAUDE.md"*|*".claude/CLAUDE.md"*|CLAUDE.md)
+      return 0
+      ;;
+    *"/.claude/agents/team-lead.md"*|*".claude/agents/team-lead.md"*|*"agents/team-lead.md"*)
+      return 0
+      ;;
+    *"/.claude/reference/user-reporting-law.md"*|*".claude/reference/user-reporting-law.md"*|*"reference/user-reporting-law.md"*)
+      return 0
+      ;;
+    *"/.claude/agents/team-lead/references/pre-action-gate.md"*|*".claude/agents/team-lead/references/pre-action-gate.md"*|*"agents/team-lead/references/pre-action-gate.md"*)
+      return 0
+      ;;
+    *"/.claude/agents/team-lead/references/owner-trigger-order.md"*|*".claude/agents/team-lead/references/owner-trigger-order.md"*|*"agents/team-lead/references/owner-trigger-order.md"*)
+      return 0
+      ;;
+    *"/.claude/agents/team-lead/references/session-route-bridge.md"*|*".claude/agents/team-lead/references/session-route-bridge.md"*|*"agents/team-lead/references/session-route-bridge.md"*)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+lead_required_planning_owner_allowed() {
+  local tool_name="${1:-}"
+  local skill_name="${2:-}"
+
+  case "$tool_name" in
+    Read)
+      if lead_preplanning_reference_allowed; then
+        return 0
+      fi
+      return 1
+      ;;
+    Skill)
+      if [[ "$skill_name" == *work-planning* ]]; then
+        return 0
+      fi
+      if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] \
+          && [[ "$skill_name" == *session-boot* ]]; then
+        return 0
+      fi
+      return 1
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+lead_dispatch_requires_task_execution() {
+  local tool_name="${1:-}"
+
+  case "$tool_name" in
+    TeamCreate|TaskCreate|Agent|SendMessage)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+agent_missing_team_scope_fields() {
+  [[ "$TOOL_NAME" == "Agent" ]] || return 1
+
+  local parsed=""
+  local team_name=""
+  local member_name=""
+
+  parsed="$(INPUT_JSON="$INPUT" node -e "
+    try {
+      const input = JSON.parse(process.env.INPUT_JSON || '{}');
+      const ti = input.tool_input || {};
+      process.stdout.write(String(ti.team_name || '').trim() + '\n' + String(ti.name || '').trim());
+    } catch { process.stdout.write('\n'); }
+  " 2>/dev/null || printf '\n')"
+  team_name="$(printf '%s' "$parsed" | sed -n '1p')"
+  member_name="$(printf '%s' "$parsed" | sed -n '2p')"
+
+  [[ -z "$team_name" || -z "$member_name" ]]
+}
+
 lead_runtime_prep_allowed_before_dispatch_gate() {
   local tool_name="${1:-}"
 
@@ -945,32 +1025,46 @@ fi
 
 mark_post_wp_action_after_planning
 
+if procedure_skill_surface_read_violation; then
+  deny_tool_use "$(procedure_skill_surface_block_reason)"
+  exit 0
+fi
+
+if ! runtime_sender_session_is_worker "$SESSION_ID"; then
+  if lead_planning_required "$SESSION_ID" && [[ ! -f "$WP_MARKER" ]]; then
+    if lead_required_planning_owner_allowed "$TOOL_NAME" "$SKILL_NAME_NORM"; then
+      exit 0
+    fi
+    deny_tool_use "BLOCKED: work-planning required before consequential discovery or dispatch. Next: Skill(work-planning)."
+    exit 0
+  fi
+  if [[ -f "$WP_MARKER" && ! -f "$TASK_EXECUTION_MARKER" ]] && lead_dispatch_requires_task_execution "$TOOL_NAME"; then
+    deny_tool_use "BLOCKED: task-execution required before team runtime dispatch or assignment messaging. Next: Skill(task-execution)."
+    exit 0
+  fi
+  if [[ -f "$WP_MARKER" && -f "$TASK_EXECUTION_MARKER" && "$TOOL_NAME" == "Agent" ]] && agent_missing_team_scope_fields; then
+    deny_tool_use "BLOCKED: team-scoped Agent required before dispatch attempt. Detail: planned team-agent dispatch must include BOTH top-level team_name and name; standalone Agent is fallback evidence only, not a valid planned dispatch. Next: use TeamCreate when no team exists, otherwise retry Agent with team_name and concrete member name."
+    exit 0
+  fi
+fi
+
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && ! session_id_is_known_worker "$SESSION_ID"; then
   if boot_infra_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
     exit 0
   fi
 fi
 
-if worker_sendmessage_screen_envelope_violation; then
-  deny_tool_use "BLOCKED: MESSAGE-CLASS SendMessage must be a screen-safe Communication Plane envelope. Put plans, counts, findings, notes, excerpts, and completion detail in retained-output or task carriers, then send only the envelope."
-  exit 0
-fi
-
 if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
   if [[ -n "$WORKER_NAME" ]] && worker_dispatch_ack_required "$WORKER_NAME"; then
     if sendmessage_is_first_receipt_outcome_to_lead; then
-      if worker_sendmessage_screen_envelope_violation; then
-        deny_tool_use "BLOCKED: first worker receipt outcome must be a screen-safe Communication Plane envelope. Put blocker basis, counts, notes, excerpts, and completion detail in retained-output or task carriers, then send only the envelope."
-        exit 0
-      fi
       exit 0
     fi
     if reconcile_worker_dispatch_ack_from_transcript "$SESSION_ID" "$WORKER_NAME"; then
       exit 0
     fi
     if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be strict MESSAGE-CLASS: dispatch-ack, scope-pressure, or hold|blocker to team-lead. dispatch-ack may contain only MESSAGE-CLASS, optional TASK-ID, optional WORK-SURFACE, and ACK-STATUS."
+      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be strict one-line MESSAGE-CLASS: dispatch-ack, scope-pressure, or hold|blocker to team-lead. dispatch-ack may contain only MESSAGE-CLASS, optional TASK-ID, optional WORK-SURFACE, and ACK-STATUS."
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
@@ -987,9 +1081,6 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
 fi
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
-  if lead_planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
-    exit 0
-  fi
   if lead_sendmessage_is_worker_cleanup_control; then
     exit 0
   fi
@@ -1005,10 +1096,13 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   if self_growth_required_for_session "$SESSION_ID" && self_growth_gate_applies_to_tool "$TOOL_NAME"; then
     exit 0
   fi
-	  if lead_planning_required "$SESSION_ID"; then
-	    if [[ "$TOOL_NAME" == "mcp__codex__codex" && ! -f "$WP_MARKER" ]]; then
-	      exit 0
-	    fi
+  if lead_planning_bootstrap_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then
+    exit 0
+  fi
+  if lead_planning_required "$SESSION_ID"; then
+    if [[ "$TOOL_NAME" == "mcp__codex__codex" && ! -f "$WP_MARKER" ]]; then
+      exit 0
+    fi
     if lead_runtime_prep_allowed_before_dispatch_gate "$TOOL_NAME"; then
       exit 0
     fi

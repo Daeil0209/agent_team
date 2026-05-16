@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this file when activation scope, corpus measurement, same-boundary exclusion, boundary-change axes, hard stops, or post-planning gate detail is material.
@@ -27,6 +28,10 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Measurement basis includes high-touch or critical-surface notes.
 - Measurement basis must support burden judgment.
 - Measurement basis must support parallel-fit judgment.
+- Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
+- Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
+- Do not block a lawful measurement command only to hide Claude Code host-native tool output.
+- Reporting discipline controls assistant-authored prose; it does not reduce or suppress measurement evidence required for the work.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
 - Unmeasured material burden blocks dispatch-ready planning.
@@ -80,7 +85,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - agent count changes
   - merge owner changes
   - parallel grouping changes
-- The skill-basis axis moves when material non-lane-core skill basis changes.
+- The skill-basis axis moves when material methodology or capability skill basis changes.
 - The user-requirement axis moves when:
   - explicit user constraint changes
   - priority changes
@@ -95,11 +100,18 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - execution
   - dispatch
   - reporting
-- These option lists to the user are invalid when doctrine and evidence can choose the best route:
+- These option lists to the user are invalid when doctrine, current request, and evidence can choose the next action:
   - route option lists
   - staffing option lists
   - parallelism option lists
   - dispatch option lists
+  - prior-artifact reuse vs restart option lists
+  - deliverable-source option lists
+- Prior task-created outputs are excluded sources for current-target or current-corpus work unless the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
+- Excluded source means do not open, read, copy, paraphrase, cite, or derive shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion from that prior output.
+- Prior outputs become deliverables or reference sources only when the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
+- If an excluded prior output was consulted before the exclusion was recognized, any planning record, binding surface, packet, shard map, taxonomy, or workflow derived from it is tainted and must be discarded and rebuilt from the current live target/corpus.
+- Prior outputs are not a replacement deliverable, user choice, route source, or methodology source unless explicit prior-output use was requested.
 - Required measurement missing from these work types blocks dispatch-ready planning:
   - exhaustive work
   - full-corpus work
@@ -114,9 +126,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - `PARALLEL-GROUPS: none` is invalid unless measured dependency or serial-burden basis proves serial stronger than parallel for:
   - multi-surface work
   - unmeasured material corpus work
-- Lane-core skills are not listed in packet `REQUIRED-SKILLS`.
-- Lane ownership lazy-loads lane-core skills.
-- Use `[]` when no additional non-lane-core skill is required.
+- Agent-specific skills are not listed in packet `REQUIRED-SKILLS`.
+- Lane ownership lazy-loads agent-specific skills.
+- Use `[]` when no additional methodology or capability skill is required.
 - Agent-boundary transfer uses `task-execution` packet translation.
 - Agent-boundary transfer does not use the internal planning record.
 - New consequential item reopens `work-planning` when it changes the frozen boundary.

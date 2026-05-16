@@ -3,6 +3,7 @@ PRIMARY-OWNER: reviewer
 SOURCE-ANCHOR: .claude/skills/security-review/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Reference Material
@@ -119,7 +120,7 @@ Run each item against the identified security-sensitive surfaces. Record finding
 **Reviewer action:** Flag every outbound network call or URL-consuming operation where the target URL is fully or partially controlled by user input without strict allowlist enforcement. Redirect leaving application domain: T1. Intra-app redirect without path validation: T2.
 ---
 ## 3. Security Severity Framework
-Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Advisory mapping in `.claude/skills/reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`. Security findings additionally carry a deployment-block escalation tier T0–T3 to gate release activity:
+Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`. Security findings additionally carry a deployment-block escalation tier T0–T3 to gate release activity:
 | Tier | Reviewer Severity | Action Required |
 |---|---|---|
 | **T0** | Critical | Block deployment immediately; fix required before any further release activity |

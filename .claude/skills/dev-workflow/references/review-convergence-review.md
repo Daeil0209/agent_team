@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use only inside active `dev-workflow` when reviewer-owned review materially determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
@@ -50,8 +51,8 @@ Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline
 Every packet includes:
 - `.claude/CLAUDE.md`
 - `.claude/agents/reviewer.md`
-- `.claude/skills/reviewer/SKILL.md`
-- `.claude/skills/reviewer/references/reviewer-lane-detail.md`
+- `.claude/skills/agent-reviewer/SKILL.md`
+- `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md`
 - `.claude/skills/dev-workflow/SKILL.md`
 - `.claude/skills/dev-workflow/references/phase-gates.md`
 - `.claude/skills/dev-workflow/references/gap-iteration.md`
@@ -120,7 +121,9 @@ Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
 Codex disagreement is evidence, not veto.
 `SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
-In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop; team-lead executes the output-record next owner/action without user-facing review/proceed prompts unless explicit approval or a verified user-owned blocker exists.
+In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop.
+team-lead executes the output-record next owner/action without user-facing review/proceed prompts.
+The exception is explicit approval or a verified user-owned blocker.
 
 ## Same-Boundary Loop
 Do not reopen `work-planning` between passes while all remain unchanged:

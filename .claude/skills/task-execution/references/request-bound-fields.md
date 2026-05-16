@@ -3,6 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Request-Bound Conditional Packet Fields
@@ -16,7 +17,7 @@ Upstream planning or workflow owners freeze the material axes; `task-execution` 
 A packet is start-ready when every material axis needed for the receiving lane to close its assigned surface is explicit, marked `not-applicable:<basis>` where this reference allows omission, or routed through `packet-correction` / `route-replan` before dispatch.
 
 The contract axes are:
-- original request intent, required deliverable, audience, and excluded scope
+- original request intent, required deliverable, audience, excluded scope, and excluded sources
 - semantic intent bridge per `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
@@ -37,6 +38,11 @@ When truthful lane execution depends on the original request shape, the assignme
 - `REQUIRED-DELIVERABLE`
 - `PRIMARY-AUDIENCE`
 - `EXCLUDED-SCOPE`
+- `EXCLUDED-SOURCES`
+
+`EXCLUDED-SOURCES` names source classes or paths the receiver must not use.
+When the user rejects prior history, prior audit artifacts, prior findings, prior shard reports, or prior inventory, `EXCLUDED-SOURCES` must carry that no-history constraint.
+Receivers return `scope-pressure` when a packet omits material `EXCLUDED-SOURCES` or when the assigned carrier appears derived from an excluded source.
 
 `SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
 Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
@@ -51,8 +57,9 @@ Governance analysis uses governance design intent.
 Program work uses program intent and user-workflow intent.
 Report and document work use reader, question, conclusion, evidence, and action intent.
 Review, proof, validation, and completion work use the target intent that defines fit and closure.
-If this basis is safely inferable from the named source (request, plan, design, Structural Contract, cited artifact, or frozen scope) without inventing scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, or acceptance oracle that the named source does not specify, mark it as `INFERENCE` and proceed.
-If the basis is not safely inferable, use `scope-pressure` or `hold|blocker`.
+Safe inference from a named source (request, plan, design, Structural Contract, cited artifact, or frozen scope) marks the basis as `INFERENCE` and proceeds.
+Safe inference must not invent scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, or acceptance oracle that the named source does not specify.
+Non-inferable basis uses `scope-pressure` or `hold|blocker`.
 `TARGET-INTENT-BASIS` states protected purpose and user outcome.
 Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.
 
@@ -76,7 +83,7 @@ When planning or the active workflow already froze methodology instructions for 
 - `SKILL-RECOMMENDATIONS`
 
 `SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and lane-scoped instruction only inside the already bounded lane surface.
-It never creates lane ownership, authorizes lane-core skill listing, or changes proof/acceptance ownership.
+It never creates lane ownership, authorizes agent-specific skill listing, or changes proof/acceptance ownership.
 If missing from the frozen planning/workflow basis, do not invent it during dispatch.
 
 Do not leave these request-fit or methodology fields only in linked-path references when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
@@ -130,7 +137,12 @@ When the current request/environment evidence points to Windows as the operator 
 WSL/Linux execution does not satisfy Windows launch proof by itself.
 
 `USER-RUN-PATH` and `BURDEN-CONTRACT` are delivery-contract fields scoped by deliverable surface class:
-- **MANDATORY** when target lane is `tester` or `validator` AND the deliverable surface is **executable user-facing** (operator runs the program / launches a server / interacts with a browser-rendered UI / opens a runnable artifact). Launch path defines proof; operator burden defines acceptance. Omission is a packet defect that `task-execution`, tester, and validator must not absorb by guesswork.
+- **MANDATORY** when target lane is `tester` or `validator` AND the deliverable surface is **executable user-facing**.
+  - Executable user-facing surfaces: operator runs the program, launches a server, interacts with a browser-rendered UI, or opens a runnable artifact.
+  - Launch path defines proof.
+  - Operator burden defines acceptance.
+  - Omission is a packet defect.
+  - `task-execution`, tester, and validator must not absorb that defect by guesswork.
 - **CONDITIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
 - **NOT a permission-graded field**. Executable user-facing surfaces cannot skip these fields; the delivery contract treats them as schema floor.
 

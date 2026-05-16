@@ -136,5 +136,5 @@ Prove user-surface behavior on the user surface.
 - `validator` issues final `PASS/HOLD/FAIL`.
 - Local closure user-facing prose follows `.claude/reference/user-reporting-law.md`; its only closure claim class is `verified result`.
 - Local closure is valid only when no final-arbitration trigger applies.
-- Final-arbitration trigger definitions live in `.claude/skills/validator/references/validator-lane-detail.md`.
+- Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md`.
 - Acceptance compares against the frozen delivery contract.

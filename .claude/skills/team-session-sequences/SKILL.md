@@ -35,6 +35,12 @@ Use the exact lifecycle names defined in `.claude/CLAUDE.md`:
 
 Use these procedures when the corresponding sequence is materially in play.
 
+### Reporting Curtain Inheritance
+This sequence index carries runtime, dispatch, monitoring, handoff, and merge information as Procedure Plane evidence.
+Every sequence-specific reference named here inherits `.claude/reference/user-reporting-law.md` for assistant-authored visible prose.
+Sequence activation, dispatch readiness, lifecycle state, ack counts, handoff readiness, merge state, retained-output paths, and monitoring signals are internal unless `.claude/reference/user-reporting-law.md` admits a user report.
+If a sequence reference says to record, report, output, summarize, or name status, resolve the visible surface through `.claude/reference/user-reporting-law.md`.
+
 ## Sequence Activation Discipline
 
 Canonical Sequence Activation Discipline is owned by `.claude/skills/session-boot/SKILL.md`.
@@ -78,7 +84,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 
 - Pre-dispatch readiness — `.claude/skills/work-planning/references/execution-readiness.md` (planning-level readiness) and `.claude/skills/task-execution/references/assignment-packet.md` (packet preflight); `references/pre-dispatch-verification.md` is a non-authoritative index of goal alignment, alternative routing, agent-charter fit, scope boundary, prior-analysis handoff, prerequisite completeness, and failure-path coverage.
 - Task decomposition — `references/task-decomposition.md` for split basis, child boundary, excluded boundary, done condition, and return form.
-- Dispatch packet compliance — `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md` (cross-lane schema and packet preflight); lane-specific additions are owned by the target lane-core skill and lane-detail reference; `references/dispatch-packet-compliance.md` provides session-side controlled-value lookup.
+- Dispatch packet compliance — `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md` (cross-lane schema and packet preflight); lane-specific additions are owned by the target agent-specific skill and lane-detail reference; `references/dispatch-packet-compliance.md` provides session-side controlled-value lookup.
 - Agent load guard — `references/agent-load-guard.md` for sizing bounds and serial-basis requirement.
 - Dispatch execution contract — `references/dispatch-execution-contract.md` for request-fit-packet → deliverable-shape → phase-intent → staffing-choice ordering and mixed-purpose split discipline.
 - Parallel shard and merge — `references/parallel-shard-merge.md` for parent-packet freeze, MERGE-OWNER, shard non-overlap, and integrated-output routing.

@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs required or risk-triggered Codex critique.
@@ -100,8 +101,8 @@ Valid point types:
 
 Point fields: `id`, `type`, `severity`, `field`, `observation`, `suggested_fix`.
 `severity` is `high`, `medium`, or `low`.
-`SKILL_GAP` covers non-lane-core methodology or specialist recommendations only.
-Codex must not flag missing lane-core skills.
+`SKILL_GAP` covers methodology or specialist recommendations only.
+Codex must not flag missing agent-specific skills.
 `FEYNMAN_CLARITY_GAP` never gives Codex ownership.
 Parameterizable uncertainty is not a blocker.
 
