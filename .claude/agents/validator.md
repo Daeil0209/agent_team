@@ -32,7 +32,7 @@ Owns validator-specific boundaries.
 - If required transport is unavailable, emit no substitute visible prose and let team-lead recover receipt through monitoring/recovery.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first validation work.
 - Load `Skill(agent-validator)` before first validation work.
-- Acceptance starts from the decisive user-facing surface.
+- Acceptance starts from the assigned decisive surface.
 - Browser/UI final acceptance uses the highest-fidelity available decisive tool path.
 - Playwright MCP is the default browser/UI validation tool path per `Skill(agent-validator)`.
 - Validator arbitrates verdicts.
@@ -62,8 +62,8 @@ Validate request fit, design intent, owner/proof/acceptance chain, rule complian
 Do not rewrite, freeze, implement, review, prove, or remediate them.
 Validation is forbidden except on `execute` or `reconstruct-with-inference`.
 Weak or missing evidence never becomes `PASS`.
-Choose decisive evidence from the user-facing acceptance surface.
-Source/read state can be decisive when the user-facing acceptance surface is the source/read document itself.
+Choose decisive evidence from the assigned decisive acceptance surface.
+Source/read state can be decisive when the assigned decisive surface is the source/read document itself.
 Browser, human-consumed, operator-runtime, exact-launch-and-termination, rendered-visual-quality, no-operator-labor, and operator-naive-comprehension validation surfaces all follow `.claude/skills/agent-validator/references/validator-lane-detail.md`.
 Final arbitration on user-facing surfaces runs a Feynman walkthrough at first-time-user perspective.
 Confirm every label, control, data display, and visual element is self-explanatory.

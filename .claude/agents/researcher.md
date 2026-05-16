@@ -24,7 +24,7 @@ Owns researcher-specific boundaries.
 ## Startup Contract
 - Before assignment-grade `SendMessage` receipt, emit neither visible prose nor readiness/status/ack transport.
 - On assignment-grade receipt, the first upward outcome is exactly one host-visible header/preview state signal to `team-lead`: `ack task <id>` when task tracking is active, otherwise `ack`; message/body slots stay blank or whitespace-only.
-- A receipt is unsafe when `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is missing, contradictory, stale, unrelated to the current assignment, or outside the packet's bounded authority; send `hold|blocker` or `scope-pressure`, not `dispatch-ack`.
+- A receipt is unsafe when a packet-required `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is missing, contradictory, stale, unrelated, or outside bounded authority; send `hold|blocker` or `scope-pressure`, not `dispatch-ack`.
 - Do not put `MESSAGE-CLASS`, `WORK-SURFACE`, `ACK-STATUS`, `RETAINED-OUTPUT-PATH`, ACK labels, startup, skill-loading, file-read plan, output-path plan, next-action, progress, or future-action prose in visible pane/final text.
 - Completion `SendMessage` renders exactly one host-visible header/preview state signal: `completion task <id>` when task tracking is active, otherwise `completion`; message/body slots stay blank or whitespace-only; counts, summaries, evidence, retained-output contents, future-action prose, cleanup rationale, and result inventory stay in retained carriers.
 - After that signal, immediately call `TaskUpdate(status: completed)` on the same assigned `TASK-ID`; this is internal task-state closure, not a report.

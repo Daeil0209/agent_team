@@ -163,7 +163,7 @@ Tool-adjacent progress prose is forbidden while dispatch, monitoring, recovery, 
 Transport dispatch state through `message-classes.md`; do not convert dispatch state into a user report.
 Report to the user only when `.claude/reference/user-reporting-law.md` admits a user-facing report.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
-When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, task updates, packet-polishing passes, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, `TaskUpdate` mutations, packet-polishing passes, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
 Do not narrate `PARALLEL-DISPATCH-LOCK`, allowed move lists, retained-output setup, or dispatch preparation to the user; execute the allowed move.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.

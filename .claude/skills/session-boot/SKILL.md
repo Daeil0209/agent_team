@@ -42,7 +42,7 @@ Before any boot, resume, or monitoring prose, preserve and apply that already-ac
 Do not re-consume or narrate `.claude/reference/user-reporting-law.md` during clean startup.
 If the gate was not applied before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
 Session start loads `Skill(session-boot)`.
-A current task instruction loads `Skill(work-planning)`.
+A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
 Work-planning does not reload session-boot unless runtime, recovery, monitoring, cleanup, or unresolved session-start readiness is active.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.

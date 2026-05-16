@@ -47,7 +47,7 @@ Alternatively blocker-clear or reopen the owner.
 Approval requires triggered reference basis or owner reopening.
 
 ## Update/Upgrade Sequence
-Every update/upgrade path must:
+Every update/upgrade path first:
 1. Name the target asset and owning surface.
    For governance patches, name the consumed execution path that makes the target surface effective.
 2. Classify the change type.
@@ -74,28 +74,40 @@ Every update/upgrade path must:
    - broaden deny behavior
    - broaden permission-deny scope
    - broaden runtime enforcement tier
-3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
+3. Classify the update tier.
+   Tiering selects update-local verification depth only.
+   Tiering does not waive `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`, triggered reference consumption, `self-growth-sequence` `Change Sequence` execution gate, Hook-Last approval, destructive/security approval, or `SV-RESULT` closure.
+   Use the smallest tier that preserves the target asset's owner boundary, live consumption path, and protected procedure force.
+   - `quick update`: same-owner typo, dead-text deletion, duplicate trim, pointer correction, terminology normalization, or wording clarification that preserves rule force, owner, trigger, stop, evidence, acceptance, runtime effect, live references, and consumed path.
+   - `standard update`: ordinary governance, role, skill, or reference edits that change consumed procedure detail inside the same owner family without moving ownership, expanding runtime enforcement, changing acceptance authority, or migrating meaning across owner surfaces.
+   - `structural update`: owner re-home, migration, compression with destination-owner change, skill introduction, skill split or merge, specialist-routing change, external-tool/MCP integration, settings/hook change, runtime enforcement expansion, acceptance/validation authority change, or cross-surface structural impact.
+   Unknown, mixed, or disputed tier upgrades to the highest material tier before mutation.
+4. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change type and tier.
    Full self-growth opens only for confirmed behavioral or procedural defects.
    Governance patch mechanics include consumed-layer placement, generalization basis, and patch-ready record from `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
-4. Preserve structural contracts.
-5. Preserve owner boundaries.
-6. Preserve live references.
-7. Preserve protected local restatements.
-8. Preserve source-to-destination meaning.
-9. Preserve current trigger behavior for live-surface synchronization.
-10. Preserve current owner behavior for live-surface synchronization.
-11. Preserve current stop behavior for live-surface synchronization.
-12. Preserve current evidence behavior for live-surface synchronization.
-13. Preserve current design-intent behavior for live-surface synchronization.
-14. Post-verify the diff before reporting the change as verified.
-15. Post-verify references before reporting the change as verified.
-16. Post-verify owner semantics before reporting the change as verified.
-17. Post-verify information preservation before reporting the change as verified.
-18. Post-verify affected surfaces before reporting the change as verified.
-19. Post-verify in-flight outputs before reporting the change as verified.
-20. Post-verify prior verdict impact before reporting the change as verified.
+5. Apply the tier checks.
 
-Use `references/update-checks.md` for the update-specific checks that are not already owned by `Change Sequence`.
+Quick update checks:
+- Preserve structural contracts, owner boundaries, live references, protected local restatements, source meaning, and the current consumed path.
+- Preserve current rule force, trigger, stop, evidence, acceptance, runtime, and design-intent behavior.
+- Post-verify the resulting diff and the touched owner surface before reporting the change as verified.
+- Upgrade to `standard update` when preservation is not obvious from the touched owner surface.
+
+Standard update checks:
+- Complete all quick update checks.
+- Inspect material adjacent consumed owner surfaces before mutation when the change can affect them.
+- Post-verify references, owner semantics, information preservation, and affected consumed surfaces before reporting the change as verified.
+- Check in-flight outputs or prior verdict impact only when the change touches active route, dispatch, proof, validation, acceptance, reporting, or user-facing closure.
+
+Structural update checks:
+- Complete all standard update checks.
+- Record source-to-destination trace when meaning moves, compresses, replaces, or redistributes across owner surfaces.
+- Consume `references/update-checks.md`, `references/skill-introduction.md`, or `references/specialist-routing.md` when their trigger is active.
+- Verify current trigger, owner, stop, evidence, runtime, and design-intent behavior for moved or structurally affected surfaces.
+- Verify hook/settings/runtime side effects when enforcement, tooling, permissions, or runtime behavior changes.
+- Post-verify in-flight outputs and prior verdict impact before reporting the change as verified.
+
+Use `references/update-checks.md` for update-specific checks not already owned by `Change Sequence` and for triggered structural checks.
 
 ## Skill And Specialist Changes
 Before adding, removing, splitting, merging, or re-homing a skill, classify whether the surface is:

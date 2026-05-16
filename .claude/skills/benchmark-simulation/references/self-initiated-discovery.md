@@ -12,7 +12,7 @@ The responsible owner evaluates them without waiting for explicit user direction
 When a material cue applies, select `benchmark-simulation` or record a valid deferral basis.
 
 ## Cues
-- **T1. Visual / structural deliverable**: dashboard, monitoring UI, report-with-figures, document layout, slide composition, form-flow design.
+- **T1. Visual / structural / information-representation deliverable**: dashboard, monitoring UI, report-with-figures, document layout, slide composition, form-flow design, diagram, dense table, chart, card set, governance/procedure representation, or any surface where external examples can reveal useful information elements or presentation patterns.
 - **T2. "Best" / "ideal" / "professional" / "industry-standard" claim** is implied or stated for the deliverable.
 - **T3. Known external solution space exists**: industry standards, established design systems, public reference implementations are known to address this problem class.
 - **T4. Verification methodology selection** materially affects acceptance quality.

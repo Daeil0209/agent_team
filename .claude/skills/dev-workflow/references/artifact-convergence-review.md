@@ -58,7 +58,7 @@ Every packet includes:
 - `.claude/skills/dev-workflow/references/phase-gates.md`
 - `.claude/skills/dev-workflow/references/phase-surfaces.md`
 - `.claude/skills/feynman-clarity/SKILL.md` when Feynman clarity applies
-- `.claude/skills/benchmark-simulation/SKILL.md` when visual-reference benchmark coverage is material
+- `.claude/skills/benchmark-simulation/SKILL.md` when Phase 2 benchmark-required coverage is material
 - current canonical artifact path
 - potentially stale downstream artifact paths
 
@@ -82,8 +82,8 @@ Missing required path records `fail-open:blocked_by_config`.
 13. Codex axes include user-perspective checks.
 14. Codex axes include user-convenience checks.
 15. Operator-facing rendered UI axes consume `Skill(visual-composition)` for operator-naive comprehension.
-16. Novel or composite operator-facing rendered UI axes consume `Skill(benchmark-simulation)` for visual-reference benchmark coverage.
-17. Visual-reference benchmark coverage checks invocation, extracted concrete visual characteristics, and abstraction-fit-adapt synthesis.
+16. Phase 2 benchmark-required axes consume `Skill(benchmark-simulation)` for external-reference capture, information-representation pattern extraction, and abstraction-fit-adapt synthesis.
+17. Benchmark coverage checks invocation, source/capture basis, extracted concrete characteristics, rejected misfits, and destination-fit synthesis.
 22. Operator-facing rendered UI axes include acceptance image-evidence path.
 23. Acceptance image-evidence path checks per-AC capture cited and openable via multimodal `Read`.
 24. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.

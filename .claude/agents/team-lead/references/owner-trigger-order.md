@@ -50,16 +50,17 @@ Stop before lower-trigger tools when `work-planning` is the highest active trigg
 ## Trigger Order
 Consume the highest active trigger first:
 1. `Skill(session-closeout)` for explicit closeout
-2. `Skill(session-boot)` for boot, runtime-entry, monitoring, or recovery
-3. `Skill(work-planning)` for missing or changed planning boundary
+2. `Skill(session-boot)` for session start, boot, runtime-entry, monitoring, recovery, or unresolved session-start readiness
+3. `Skill(work-planning)` when a current instruction creates, reopens, or changes a consequential work boundary
 4. confirmed primary sequence skill owner
 5. frozen workflow or sequence skill owner
 6. `Skill(task-execution)` for assignment-grade dispatch
 7. `Skill(self-verification)` for required report or redispatch gate
 
+After the current session-start artifact is current, trigger 3 does not reopen trigger 2 unless trigger 2 is independently active.
+
 ## Named Artifacts
 - `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
-- A current task instruction loads `Skill(work-planning)`.
 - `Skill(work-planning)` emits frozen-fields record.
 - `Skill(review-verification)` emits `review_verification_packet`.
 - `Skill(self-verification)` emits `SV-RESULT` or `SV-PLAN`.

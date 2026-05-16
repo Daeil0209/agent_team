@@ -43,7 +43,7 @@ Tool envelope fields are actual top-level tool parameters only; governance packe
 | Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, silent phase-context consumption, or shutdown evidence |
 | Agent-to-lead transport | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, completion, or blocked transport | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
 | Direct teammate interaction | Claude Code teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
-| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, owner/display update, read, update, output read, or stop; never assignment delivery | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | task correction, owner/display synchronization, task identity recovery, retained-output `Read`, or exact task stop |
+| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, status update, read, output read, or stop; never assignment delivery | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | task correction, task identity recovery, retained-output `Read`, completion status closure, or exact task stop |
 
 Task tools are task-state channels.
 Agent communication uses `SendMessage` or Claude Code teammate UI.
@@ -108,8 +108,6 @@ A pane/final response containing `MESSAGE-CLASS`, `DISPATCH-ACK`, `COMPLETION-HA
 If an agent cannot use the required transport tool, visible text is not a substitute transport and the lead resolves missing receipt through monitoring/recovery.
 Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
 `TaskCreate` requires top-level non-empty `subject` and `description`.
-`TaskUpdate(owner=<member>)` is task-state owner/display synchronization, not assignment-grade delivery.
-It may mark the task row owner; the assignment-grade work packet still travels through `SendMessage.to`.
 Use `Read` on the background task output path when the runtime provides that path.
 
 ### Team Member Startup Recognition

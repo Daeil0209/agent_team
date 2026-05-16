@@ -60,7 +60,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Additional-agent dispatch uses team-agent runtime.
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - When task tracking is active for team-agent dispatch, task rows used as assignment `TASK-ID` are created or verified only after current-session `TeamCreate` or team registration is proven and before assignment-grade `SendMessage`; pre-team task rows are not team assignment identity.
-- `TaskUpdate(owner=<member>)` may synchronize task-row owner/display state, but assignment-grade `SendMessage` remains the dispatch step.
+- Task rows provide `TASK-ID` identity; worker targeting and assignment delivery use assignment-grade `SendMessage.to`.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
@@ -69,9 +69,9 @@ Target-resolution preflight is mandatory before the tool call:
 - Ordinary team-scoped member creation uses the canonical prompt template from `message-classes.md`; alternate prompt text is a preflight exception, not the default.
 - Batch preflight is all-or-none: one invalid planned spawn prompt blocks the entire parallel `Agent` batch before any member-creation call is issued.
 - A hook `BLOCKED` result during member creation means batch preflight failed; stop the rest of that dispatch shape and retry only after correcting the failed preflight cause.
-- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads when the frozen packet's binding surface materializes as an external carrier; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
+- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads when the frozen packet's binding surface materializes as an external carrier; same-batch `TaskCreate` required for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open must not emit listing, count, probe, diagnostic output, or user-facing prose.
-- While `PARALLEL-DISPATCH-LOCK` is open, do not run Codex/review tools, extra corpus reads, task updates, packet-polishing passes, monitoring, synthesis, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+- While `PARALLEL-DISPATCH-LOCK` is open, do not run Codex/review tools, extra corpus reads, `TaskUpdate` mutations, packet-polishing passes, monitoring, synthesis, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
 - Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/user-reporting-law.md`.
 - Packet size or self-contained packet burden is not a reason to delay dispatch or omit receiver-required basis; put complete shared context in a retained carrier and send required-floor shard packets that point to it.
 - A user challenge about missing parallel dispatch answers the cause through `.claude/reference/user-reporting-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.
@@ -90,7 +90,7 @@ Target-resolution preflight is mandatory before the tool call:
 
 ## SendMessage And Skill Law
 - Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task per `truth-rules.md`.
-- `SendMessage.to` is the worker-targeting field for assignment; `TaskUpdate(owner=<member>)` is task-state owner/display synchronization and not worker targeting.
+- `SendMessage.to` is the worker-targeting field for assignment; task-row mutation is not worker targeting.
 - Completed-task correction first needs an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation.
 - Workflow-control `SendMessage` is for canonical `phase-transition-control` only.
 - Runtime-cleanup `SendMessage` is not assignment and does not replace dispatch.

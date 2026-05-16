@@ -34,12 +34,20 @@ On assignment-grade work receipt, classify the packet before execution:
 - frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Validator-local PASS gate only; team-lead still owns routing and cleanup decisions.
-PASS requires retained evidence that the intended user/operator can find, access/install, start, and complete the core workflow on the deliverable, sourced from actual review or proof surfaces (not assumption or producer confidence).
+PASS requires retained evidence on the assigned target's decisive surface.
+The decisive surface is the surface where the intended receiver runs, reads, operates, decides from, learns from, or presents the deliverable.
+Validation target type selects the evidence profile:
+- `executable-user-facing`: launch, access, interaction, completion, cleanup, relaunch, burden, `SCOPE-BASELINE`, and applicable `CORE-WORKFLOW-CLOSURE` evidence.
+- `implementation`: runtime evidence when behavior is in scope; source/read evidence when the assigned target is source-read implementation quality.
+- `plan` or `design`: request fit, design intent, owner/proof/acceptance chain, rule compliance, risk handling, and downstream executability evidence.
+- `governance` or `report`: source/read integrity, rule force, owner boundary, cross-reference truth, claim truth, and reader clarity evidence.
+- `human-consumed-artifact`: native-capable or format-faithful rendered evidence for layout, pagination, formulas, media, and reader burden when those are in scope.
+- `proof-result` or `review-output`: method validity, surface match, claim strength, unresolved contradiction, and evidence-to-verdict support.
 For executable interactive software, every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope must be directly exercised by tester evidence or classified as blocked, disproven, or upstream-deferred with frozen-record citation.
-PASS also requires tester evidence that assigned `CORE-WORKFLOW-CLOSURE` rows used row-matched closure-defect probes and retained postcondition evidence.
+When `CORE-WORKFLOW-CLOSURE` applies, PASS requires tester evidence that assigned rows used row-matched closure-defect probes and retained postcondition evidence.
 Workflow-completion, reliability, or user-ready PASS requires material hard-test probe evidence, not only normal success-path proof.
-Partial, blocked, or missing user-perspective evidence withholds PASS.
-Developer-runnable, reviewer-plausible, or lower-level support evidence is rejected as PASS evidence on the decisive user-facing acceptance surface.
+Partial, blocked, or missing decisive-surface evidence withholds PASS on the affected target.
+Lower-level support evidence is rejected as PASS evidence when the assigned target requires direct receiver-surface evidence.
 
 ## Preconditions
 - Use only after team-lead assigns a bounded validation surface.
@@ -62,14 +70,14 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is rejec
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.
-- Choose the decisive proof tool from the user-facing acceptance surface.
+- Choose the decisive proof tool from the assigned decisive acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
-- Tester evidence must come from a browser-proof path.
+- For those deliverables, tester evidence must come from a browser-proof path.
 - For browser/UI final acceptance, available Playwright MCP is the default validation profile; absence of MCP use blocks PASS unless the packet freezes a narrower lawful tool or proves MCP unavailable.
 - For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, PASS depends on native-capable or format-faithful rendered/runtime evidence.
 - This applies when layout, formulas, pagination, interaction, or visible burden are part of acceptance.
-- Missing decisive user-surface tooling routes to `hold|blocker` or `scope-pressure`.
+- Missing decisive-surface tooling routes to `hold|blocker` or `scope-pressure`.
 - Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Do this unless a frozen discovery/setup path already authorizes the exact next step.
 - For executable user-facing programs, operator-exhaustive integrity is verdict-critical.
@@ -143,19 +151,13 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
   - interaction coverage
   - burden contract
 - Executable workflow-completion PASS requires exact launch artifact execution closure.
-- PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
-- PASS requires every `CORE-WORKFLOW-CLOSURE` row matched or upstream-deferred by the owning upstream record.
-- PASS requires executed closure-defect probe and retained postcondition evidence for every direct-required `CORE-WORKFLOW-CLOSURE` row in claimed scope.
+- For executable user-facing or workflow-completion verdicts, PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
+- When `CORE-WORKFLOW-CLOSURE` applies, PASS requires every row matched or upstream-deferred by the owning upstream record.
+- When `CORE-WORKFLOW-CLOSURE` applies, PASS requires executed closure-defect probe and retained postcondition evidence for every direct-required row in claimed scope.
 - Workflow-completion, reliability, or user-ready PASS requires material hard-test probes for each decisive workflow or data-state family.
-- Blocked or unproven `CORE-WORKFLOW-CLOSURE` rows withhold PASS.
+- Blocked or unproven applicable `CORE-WORKFLOW-CLOSURE` rows withhold PASS.
 - Subset-anchor PASS is procedurally invalid.
-- PASS requires stop/cleanup closure.
-- PASS requires clean re-launch closure.
-- PASS requires access path closure.
-- PASS requires resource cleanup closure.
-- PASS requires demo-data preview closure.
-- PASS requires operator-OS fit closure.
-- PASS requires project-artifact hygiene closure.
+- When executable, operator-runtime, or workflow-completion acceptance depends on them, PASS requires stop/cleanup, clean relaunch, access path, resource cleanup, demo-data preview, operator-OS fit, and project-artifact hygiene closure.
 - If decisive coverage is incomplete, issue `HOLD` or a non-PASS verified-scope report instead of calling workflow complete.
 - Subset acceptance is PASS-eligible only when the subset was already frozen by request, plan, design, or upstream defer record.
 - Executable interactive web/UI deliverables require browser-surface proof on the real user interaction inventory for PASS.

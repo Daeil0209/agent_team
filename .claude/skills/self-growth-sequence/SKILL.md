@@ -28,7 +28,16 @@ The canonical step-by-step procedure lives in `### Required order` below.
 
 Use the narrowest owner-local surface that blocks recurrence with less drift.
 
-Every self-growth round must remain reconstructable through this minimum record:
+Self-growth records are tiered by hardening depth.
+Quick hardening records only:
+- `DEFECT-BASIS`
+- `DESIGN-INTENT-BASIS`
+- `OWNER-SURFACE`
+- `CHANGE-BOUNDARY`
+- `VERIFICATION-BASIS`
+- `CONVERGENCE-STATUS`
+- `RESUME-ACTION`
+Standard and structural hardening record the full chain:
 - `DEFECT-BASIS`
 - `DESIGN-INTENT-BASIS`
 - `CAUSAL-BASIS`
@@ -44,7 +53,8 @@ Every self-growth round must remain reconstructable through this minimum record:
 - `RESUME-CONDITION`
 - `RESUME-ACTION`
 - `FOLLOW-ON-OPTIMIZATION`
-If any required record item is unknown, the round stays open as inspection, `HOLD`, or explicit follow-up ownership.
+When self-growth interrupts active work, every tier also records `SUSPENDED-WORK-SURFACE`, `RESUME-OWNER`, and `RESUME-CONDITION`.
+If any tier-required record item is unknown, the round stays open as inspection, `HOLD`, or explicit follow-up ownership.
 ## Activation
 Load this skill when evidence:
 - confirms a behavioral or procedural defect requiring recurrence-barrier hardening
@@ -100,14 +110,15 @@ When the team hardens its own rules, skills, charters, or capability boundaries:
 - Tighten, replace, re-home, or merge before adding new doctrine.
 - When self-growth expands a lane's charter or capability, make a bounded follow-on optimization decision before closing.
 - Run the optimization pass when material avoidable redundancy or runtime burden is visible.
-- Otherwise record `FOLLOW-ON-OPTIMIZATION: not-needed`.
+- When a follow-on optimization decision is triggered and no pass is needed, record `FOLLOW-ON-OPTIMIZATION: not-needed`.
 - Always preserve the upgraded quality bar and protected meaning.
 ### Defect-To-Barrier Contract
-Every self-growth round must preserve this chain:
+Standard and structural hardening preserve this chain:
 Required chain parts:
 - part 1: `DEFECT-BASIS -> DESIGN-INTENT-BASIS -> CAUSAL-BASIS -> FAILURE-MODE -> RECURRENCE-PATH -> OWNER-SURFACE -> BARRIER-TYPE -> CHANGE-BOUNDARY`
 - part 2: `VERIFICATION-BASIS -> CONVERGENCE-STATUS -> SUSPENDED-WORK-SURFACE -> RESUME-OWNER -> RESUME-CONDITION -> RESUME-ACTION`
-If any link is missing, inspect until the link is known, keep the round on `HOLD`, or assign explicit follow-up ownership with boundary and closure basis.
+Quick hardening preserves the Quick record and upgrades before execution if causal basis, recurrence path, rule force, owner boundary, trigger, stop, evidence, acceptance, runtime effect, or cross-surface impact becomes material.
+If any required link is missing, inspect until the link is known, keep the round on `HOLD`, or assign explicit follow-up ownership with boundary and closure basis.
 
 Allowed barrier types:
 - rule hardening
@@ -181,7 +192,7 @@ Explanation alone is not self-healing.
 - Pause queued `TaskCreate`, `Agent`, `SendMessage`, `TaskUpdate`, and other consequential retries only on the affected surface.
 - Load `self-growth-sequence` first.
 - Resume from the corrected state after the gate clears.
-- When self-growth interrupts active work, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
+- When self-growth interrupts active work, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, `RESUME-CONDITION`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
 - A justified user correction opens classification immediately.
 - A first failure opens hardening when classification confirms a behavioral or procedural defect, missed-catch owner, and recurrence path.
 - Self-growth opening can be immediate.
@@ -253,9 +264,9 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
    Fresh evidence means rerun, retest, or equivalent evidence gate.
 9. Close only after identified improvements, unresolved missed-catches, and deferred passivity defects are hardened into the correct parent document or assigned follow-up ownership.
 ### Closure Standard
-- Self-growth is not closed while the recurrence path remains implicit.
+- Standard and structural self-growth are not closed while the recurrence path remains implicit.
 - If the recurrence path is known but cannot be patched immediately, keep the topic on `HOLD` with owner, blocked surface, and next safe execution boundary.
-- Self-growth closure requires recurrence-barrier basis, owner surface, and current verification basis; receipt/dispatch/load/status are non-closure evidence per `.claude/skills/task-execution/references/truth-rules.md`.
+- Self-growth closure requires the applicable tier record, owner surface, and current verification basis; receipt/dispatch/load/status are non-closure evidence per `.claude/skills/task-execution/references/truth-rules.md`.
 - Failed verification reopens the self-growth round at the smallest invalidated step.
 - Reconstruct when design intent was wrong.
 - Diagnose when causal basis was weak.
@@ -269,8 +280,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
 - Valid resume actions: continue from corrected state, reopen `work-planning`, dispatch next owner/action, or report `HOLD` with owner and blocker.
 - Without explicit cancellation, redirect, or proven user-owned blocker, `waiting for user` is false closure.
 - Status/progress questions expose the stall only.
-- Resume duty requires `RESUME-OWNER` and verified `RESUME-ACTION`.
-- Before closure, the minimum self-growth record must be reconstructable from changed owner surface, active sequence packet, or explicit follow-up assignment.
+- When resume duty exists, closure requires `RESUME-OWNER` and verified `RESUME-ACTION`.
+- Before closure, the applicable tier record must be reconstructable from changed owner surface, active sequence packet, or explicit follow-up assignment.
 - Hidden session memory is not closure evidence.
 - If the issue was real but the owner surface remains uncertain, closure requires explicit adjudicated follow-up ownership.
 ### Capability-Gap Fast Path

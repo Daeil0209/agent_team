@@ -24,7 +24,7 @@ Runtime shape terms:
 - Not configured lane dispatch.
 - `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
 - Assignment-grade work begins only after `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` reaches that exact live member address.
-- `TaskUpdate(owner=<member>)` may synchronize task-row owner/display state, but it is not an assignment-grade work packet and must not replace `SendMessage.to` for work delivery.
+- Task rows provide `TASK-ID` identity; work delivery uses assignment-grade `SendMessage.to`.
 - `team member address` is the exact live process-backed roster name. A configured role label is not a `SendMessage.to` address unless the roster contains that exact member with live pane proof.
 - `teammate context` is independent. A teammate loads project context such as `CLAUDE.md`, configured MCP servers, and available skills, and receives the lead's spawn/assignment prompt; it does not inherit the lead's conversation history. Assignment packets must therefore be self-contained enough for the receiving lane to act without reconstructing prior chat.
 - `visible teammate response` is not an assignment, receipt, completion, status, pressure, blocker, or shutdown channel. It is UI rendering only. Screen-rendered `SendMessage` state signals are governed by `.claude/skills/task-execution/references/message-classes.md`.
@@ -69,9 +69,8 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
 - assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, move detail to task state or retained carriers and keep the packet's required floor plus carrier pointer
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
-- for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch-intent task ids are invalid packet identity
+- for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch planned-but-not-returned task ids are invalid packet identity
 - when creating that `TASK-ID`, call `TaskCreate` with top-level non-empty `subject` and `description`; missing `description` is tool-envelope invalid and sends zero assignment-grade `SendMessage` calls
-- `TaskUpdate(owner=<member>)` may synchronize the task-row owner/display marker; worker targeting belongs to the assignment-grade `SendMessage.to` field
 - invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation

@@ -111,7 +111,7 @@
 
 ## Control Sequences
 - Session start loads `Skill(session-boot)`.
-- A current task instruction loads `Skill(work-planning)`.
+- A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.

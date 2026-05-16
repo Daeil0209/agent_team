@@ -75,12 +75,15 @@ auto-inject: false
   - business workflow packet: source-of-truth meaning, operator workflow meaning, mutation authority, period basis, allocation or participation semantics, reconciliation behavior, and proof oracle when spreadsheet or operations workflow meaning determines acceptance
   - ERD/data invariants/lifecycle when persistence or imported data matters
   - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure determines acceptance
-  - visual-reference benchmark packet:
-    - Trigger and novel/composite surface definitions are owned by `.claude/skills/benchmark-simulation/SKILL.md`.
-    - When triggered, `benchmark-simulation` runs for external visual-reference comparison.
-    - Concrete visual characteristics fed into the canonical design artifact via abstraction-fit-adapt include: font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance.
-    - Trivial surfaces skip with recorded basis.
-    - Trivial surfaces include: single-control forms, isolated text-only output, and surfaces fully governed by a frozen prior benchmark.
+  - benchmark / information-representation packet:
+    - Phase 2 owns the benchmark-required decision for detailed design.
+    - Require `benchmark-simulation` before design freeze when external references can materially improve information representation, visual structure, workflow pattern, methodology choice, domain pattern, or design element selection.
+    - Benchmark-required surfaces include dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, diagrams, document layouts, governance/procedure representations, monitoring surfaces, and any design where layout, hierarchy, typography, color, ratio, or information grouping materially affects receiver comprehension.
+    - Benchmark capture uses external sites, public examples, authoritative docs, standards, reference UIs, images, and demos when those sources are the best available task input.
+    - Concrete characteristics fed into the canonical design artifact via abstraction-fit-adapt include information elements, layout hierarchy, table/chart/card patterns, font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance, workflow states, anti-patterns, and standards constraints.
+    - Visual or rendered acceptance also feeds the extracted characteristics into the `visual-composition` packet.
+    - Trivial surfaces skip only with recorded basis.
+    - Trivial surfaces include: single-control forms, isolated text-only output, internal-only diagnostic surfaces, and surfaces fully governed by a frozen prior benchmark.
   - verifiable interface, runtime data-shape, format, and error contracts when production surfaces interact; when drift would break user-visible behavior, name the shared source-of-truth, generated or audited type path, producer-consumer field/shape mapping, and runtime validation/proof oracle
   - screen/user-flow/first-viewport contracts when visible UX determines acceptance
   - import/export mapping and validation error model when data migration or file I/O matters

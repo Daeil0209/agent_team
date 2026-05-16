@@ -79,7 +79,7 @@ Do not use `null`.
 `doctrine_read_paths` must include `.claude/CLAUDE.md` plus owner paths needed for doctrine-specific judgment.
 Codex must read canonical files directly before doctrine judgment.
 Add `.claude/skills/feynman-clarity/SKILL.md` when the deliverable is a plan, design, report, governance/document artifact, specification, or user-facing delivery path.
-Add `.claude/skills/benchmark-simulation/SKILL.md` when external visual benchmark, methodology benchmark, verification-method benchmark, or capability-growth benchmark materially affects the planning basis.
+Add `.claude/skills/benchmark-simulation/SKILL.md` when external visual benchmark, information-representation benchmark, methodology benchmark, verification-method benchmark, domain-pattern benchmark, or capability-growth benchmark materially affects the planning basis.
 Populate `user_confirmation_candidate` only to challenge a proposed user question.
 
 ## Review Criteria
@@ -97,7 +97,7 @@ Valid point types:
 - `USER_PERSPECTIVE_GAP`
 - `USER_CONVENIENCE_GAP`
 - `FEYNMAN_CLARITY_GAP`
-- `VISUAL_BENCHMARK_GAP` (Phase 2 design produces novel/composite operator-facing rendered UI yet `benchmark-simulation` invocation, visual-reference packet, or extracted visual characteristics are missing from planning fields)
+- `VISUAL_BENCHMARK_GAP` (Phase 2 design has a benchmark-required visual, information-representation, workflow-pattern, methodology, or domain-pattern surface yet `benchmark-simulation` invocation, benchmark packet, captured source basis, or extracted characteristics are missing from planning fields)
 - `IMAGE_EVIDENCE_GAP` (planning produces user-facing rendered surface yet the proof/acceptance path lacks per-AC image capture + multimodal `Read` inspection mandate)
 - `OPERATOR_NAIVE_COMPREHENSION_GAP` (planning produces user-facing rendered surface yet comprehension audit at first-time-user perspective is absent from review/proof/acceptance basis)
 - `OBSERVATION`

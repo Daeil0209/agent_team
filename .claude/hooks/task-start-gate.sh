@@ -1371,12 +1371,6 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     fi
     case "$TOOL_NAME" in
       Agent|TaskCreate|SendMessage)
-        # Hard guard: active runtime dispatch/reuse must not bypass session-boot.
-        if [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]] \
-            && [[ ! -f "$SB_LOADED_MARKER" ]]; then
-          deny_tool_use "BLOCKED: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-completion agents to accumulate without reuse, recovery, or cleanup. Next: Skill(session-boot) -> retry $TOOL_NAME."
-          exit 0
-        fi
         # Hard guard: active team runtime requires addressable team-member Agent dispatch.
         if [[ "$TOOL_NAME" == "Agent" ]] \
             && [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]]; then

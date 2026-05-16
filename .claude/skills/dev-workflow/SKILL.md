@@ -132,6 +132,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - canonical design document authoring
 **Execution law**: the design basis covers:
 - selected direction, ER/data, interface/API/format, and UI/user-flow
+- benchmark-required external-reference capture for detailed design when information representation, visual structure, workflow pattern, methodology choice, or domain pattern materially shapes the design
 - proof, acceptance, correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis
 **Execution law**: team-lead Phase 2 authorship:
 - expands the frozen Phase 2 design basis directly into the required canonical design document structure
