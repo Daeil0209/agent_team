@@ -216,7 +216,6 @@ get_agent_category() {
     developer|external-tool-bridge) echo "implementation" ;;
     reviewer|tester) echo "review" ;;
     validator) echo "validation" ;;
-    software-architecture|business-workflow|visual-composition|instructional-design|engineering-grounding|mathematical-correctness|document-automation) echo "specialist" ;;
     benchmark-simulation) echo "meta" ;;
     *)
       if skill_registry_has_name "$id"; then
@@ -277,9 +276,30 @@ dispatch_populate_field_cache() {
         line = $0
         while (length(line) > 0) {
           split_index = index(line, ";")
+          split_len = 1
+          pipe_index = 0
+          pipe_len = 0
+          pipe_search_offset = 0
+          pipe_search_line = line
+          while (match(pipe_search_line, /[[:space:]]\|[[:space:]]+/)) {
+            candidate_index = pipe_search_offset + RSTART
+            candidate_len = RLENGTH
+            candidate_rest = substr(pipe_search_line, RSTART + candidate_len)
+            if (candidate_rest ~ /^[[:alnum:]_-]+[[:space:]]*:/) {
+              pipe_index = candidate_index
+              pipe_len = candidate_len
+              break
+            }
+            pipe_search_offset += RSTART + candidate_len - 1
+            pipe_search_line = substr(line, pipe_search_offset + 1)
+          }
+          if (pipe_index > 0 && (split_index == 0 || pipe_index < split_index)) {
+            split_index = pipe_index
+            split_len = pipe_len
+          }
           if (split_index > 0) {
             segment = substr(line, 1, split_index - 1)
-            line = substr(line, split_index + 1)
+            line = substr(line, split_index + split_len)
           } else {
             segment = line
             line = ""

@@ -269,8 +269,68 @@ if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
   fi
 fi
 
+description_field_value() {
+  local field_name="${1:?field required}"
+  dispatch_field_raw_value "$DESCRIPTION" "$field_name" 2>/dev/null || true
+}
+
+read_retained_carrier() {
+  local raw_path="${1-}"
+  local project_root=""
+
+  [[ -n "$(printf '%s' "$raw_path" | tr -d '[:space:]')" ]] || return 0
+  project_root="$(resolve_project_root)"
+
+  RAW_RETAINED_OUTPUT_PATH="$raw_path" PROJECT_ROOT="$project_root" node <<'NODE'
+const fs = require('fs');
+const path = require('path');
+
+try {
+  const raw = String(process.env.RAW_RETAINED_OUTPUT_PATH || '').trim();
+  if (!raw) process.exit(0);
+
+  const projectRoot = fs.realpathSync(String(process.env.PROJECT_ROOT || process.cwd()));
+  const candidate = path.resolve(projectRoot, raw);
+  const real = fs.realpathSync(candidate);
+  const relative = path.relative(projectRoot, real);
+
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) process.exit(0);
+  if (relative === '.claude' || relative.startsWith('.claude/')) process.exit(0);
+  if (relative === '.runtime' || relative.startsWith('.runtime/')) process.exit(0);
+  if (relative !== 'claude_doc' && !relative.startsWith('claude_doc/')) process.exit(0);
+
+  process.stdout.write(fs.readFileSync(real, 'utf8'));
+} catch {
+  process.exit(0);
+}
+NODE
+}
+
+RETAINED_OUTPUT_PATH_VALUE="$(description_field_value "RETAINED-OUTPUT-PATH")"
+RETAINED_CARRIER_TEXT=""
+case "$MESSAGE_CLASS" in
+  handoff|completion)
+    RETAINED_CARRIER_TEXT="$(read_retained_carrier "$RETAINED_OUTPUT_PATH_VALUE" || true)"
+    ;;
+esac
+
+field_value() {
+  local field_name="${1:?field required}"
+  local carrier_value=""
+
+  if [[ -n "$RETAINED_CARRIER_TEXT" ]]; then
+    carrier_value="$(dispatch_field_raw_value "$RETAINED_CARRIER_TEXT" "$field_name" 2>/dev/null || true)"
+    if [[ -n "$(printf '%s' "$carrier_value" | tr -d '[:space:]')" ]]; then
+      printf '%s' "$carrier_value"
+      return 0
+    fi
+  fi
+
+  description_field_value "$field_name"
+}
+
 TASK_ID_FIELD_PRESENT="false"
-TASK_ID_FROM_MESSAGE="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
+TASK_ID_FROM_MESSAGE="$(field_value "TASK-ID")"
 if [[ -n "$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')" ]]; then
   TASK_ID_FIELD_PRESENT="true"
   TASK_ID="$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')"
@@ -278,7 +338,7 @@ else
   TASK_ID="$(printf '%s' "$TASK_ID" | tr -d '[:space:]')"
 fi
 
-REQUESTED_LIFECYCLE="$(dispatch_field_raw_value "$DESCRIPTION" "REQUESTED-LIFECYCLE" 2>/dev/null || true)"
+REQUESTED_LIFECYCLE="$(field_value "REQUESTED-LIFECYCLE")"
 REQUESTED_LIFECYCLE="$(printf '%s' "$REQUESTED_LIFECYCLE" | tr '[:upper:]' '[:lower:]')"
 
 case "$MESSAGE_CLASS" in
@@ -296,13 +356,8 @@ case "$MESSAGE_CLASS" in
 esac
 
 if [[ -z "$TASK_SUBJECT" ]]; then
-  TASK_SUBJECT="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-SUBJECT" 2>/dev/null || true)"
+  TASK_SUBJECT="$(field_value "TASK-SUBJECT")"
 fi
-
-field_value() {
-  local field_name="${1:?field required}"
-  dispatch_field_raw_value "$DESCRIPTION" "$field_name" 2>/dev/null || true
-}
 
 OUTPUT_SURFACE_VALUE="$(field_value "OUTPUT-SURFACE")"
 TARGET_INTENT_BASIS_VALUE="$(field_value "TARGET-INTENT-BASIS")"

@@ -36,7 +36,7 @@ Rules:
 ## Governance Parameters Per Tier Table
 | Parameter | Lightweight | Standard | Precision |
 |---|---|---|---|
-| **Default review/proof depth** | `reviewer` gate | `reviewer` + `tester` | `reviewer` + `tester` + `validator` |
+| **Default review/proof evidence depth** | `reviewer` evidence gate | `reviewer` + `tester` | `reviewer` + `tester` + `validator` |
 | **Review scope** | Code quality | + architecture consistency | + security (`security-review`) + infrastructure |
 | **Testing requirements** | Basic verification | Structured testing | E2E + security + performance |
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
@@ -47,7 +47,7 @@ Rules:
 | **Specialist skills** | None by default | `dev-workflow`; add `external-tool-bridge` when external capability is active | `dev-workflow`; add `security-review`, `enterprise-architecture`, or `external-tool-bridge` only when each skill's activation criteria is true |
 ### Checkpoint Semantics
 Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input becomes relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
-Acceptance-depth semantics: the table sizes default review and proof depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
+Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
 ## Quality Metrics Table
 | Metric | Description | Use |
 |---|---|---|

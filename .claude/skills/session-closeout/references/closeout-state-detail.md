@@ -18,9 +18,9 @@ false — load explicitly when detailed closeout state is needed.
 - `continuity_captured`: boolean
 - `closeout_state`: "clean" | "hold" | "partial"
 ## not-needed Conditions
-`validation_ownership: not-needed` is valid when:
+`validation_ownership: not-needed` is valid when the session produced zero implementation deliverable and one condition applies:
 - Session performed only research, Q&A, or read-only analysis
-- Session produced zero implementation deliverable
+- Session performed only runtime setup, teardown, monitoring, or lifecycle-control operations
 Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-only`.
 ## Hold Conditions
 `closeout_state: hold` when:

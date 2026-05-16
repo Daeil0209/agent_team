@@ -65,7 +65,7 @@ Keep closeout narrow:
 ### Fast paths
 - No-runtime fast path: when no explicit team runtime or recurring monitor was created in the current session, closeout reduces to intent mark, exact residual disclosure if needed, and `SessionEnd` capture.
 - User-facing output is a short acknowledgement at most.
-- No-acceptance-surface fast path applies to research, Q&A, read-only analysis, and sessions with zero implementation deliverable.
+- No-acceptance-surface and operational-only not-needed eligibility is defined in `references/closeout-state-detail.md`.
 - Implementation deliverables route to `HOLD` until validation ownership and acceptance evidence are resolved.
 
 ### Closeout constraints

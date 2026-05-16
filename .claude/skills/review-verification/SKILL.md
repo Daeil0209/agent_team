@@ -6,7 +6,7 @@ PRIMARY-OWNER: team-lead
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
-- Use as the common team-lead skill for review-sequence discipline.
+- Use as the common team-lead-consumed review procedure for review-sequence discipline.
 - New peer top-level sections require explicit governance review.
 - Route detailed domain checklists to the owning specialist skill.
 
@@ -59,8 +59,8 @@ Prevent these failures:
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
-`team-lead` activates this skill only for lead-local cross-surface review synthesis.
-`team-lead` also activates this skill when packetizing review basis for downstream lanes.
+Mode A - full workflow: `team-lead` activates this skill for lead-local cross-surface review synthesis and runs the numeric workflow.
+Mode B - packetization lens: `team-lead` uses this skill to name exact downstream lane lenses; the lane consumes only those packet fields unless `team-lead` retains Mode A.
 Bounded reviewer-owned acceptance review routes to the reviewer lane.
 
 Activation triggers when the request materially includes one or more of:
@@ -190,9 +190,12 @@ A confirmed defeater returns to Step 5 patch design or Step 2 corpus widening be
 `PATCH-WORTHINESS` explains why the selected patch is narrower and safer than material alternatives.
 
 ### 5. Design Removal-First Patch
+Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
 Split bundled governance sentences before patch design.
 Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation.
 Design the patch from the smallest owner surface.
+Design the patch on the smallest owner surface actually consumed by the failing execution path.
+Treat an unconsumed or non-triggered patch target as invalid unless the patch also makes it consumed.
 Try `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` before adding text.
 Use direct executable wording.
 Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
@@ -204,6 +207,7 @@ Split compressed rules until each sentence carries one action or one rule.
 Append-only patch designs are invalid while owner text can carry the correction without meaning loss.
 Accumulation-first patch designs are invalid while owner text can carry the correction without meaning loss.
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
+Every proposed governance patch states its consumed-layer basis and whether it fixes the recurring class or a proven isolated instance.
 
 ### 6. Pre-Patch Negative-Risk Gate
 Against live governance documents, test the proposed patch for:

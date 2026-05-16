@@ -63,7 +63,7 @@ Self-growth tiers:
   - typo fixes
   - terminology normalization
   - dead-text removal
-  - same-owner wording clarification
+  - same-owner wording clarification that preserves existing rule force, owner boundary, trigger, stop, evidence, acceptance, and runtime effect
 - Quick hardening must not change:
   - rule force
   - owner boundary
@@ -74,7 +74,7 @@ Self-growth tiers:
   - runtime effect
 - Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local defect-seeking self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
-- Standard hardening: behavioral rule changes, new constraints, recurrence barriers. Requires all steps.
+- Standard hardening: behavioral rule changes, executable-rule force/trigger/stop/evidence changes, new constraints, recurrence barriers. Requires all steps.
 - Structural hardening: architecture-level changes, cross-document impact. Requires all steps plus governance review.
 
 ### Reference Map
@@ -143,6 +143,7 @@ Use `references/causal-analysis.md` for the required reconstruction, failure-mod
 
 ### Governance Repair Orientation
 Self-growth repairs and preserves the existing operating model.
+Consumed-layer placement and generalization basis follow `.claude/reference/minimal-governance-change-law.md`.
 Use `references/governance-architecture-map.md` to reconstruct owners.
 Use `references/repair-decision-guide.md` to choose the narrowest barrier.
 Change philosophy, route ownership, lane boundary, proof owner, acceptance owner, or skill-loading model only when structural evidence proves that surface is the defect.
@@ -254,6 +255,8 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
    Capture recurrence path.
    Capture review-verification need basis.
    Capture likely owner surface.
+   Capture the owner surface actually consumed on the recurrence path.
+   Capture the general owner/trigger/action/stop/evidence class the barrier must cover.
 2. For standard hardening, structural hardening, material ownership ambiguity, or cross-lane capability impact, require relevant lanes to inspect the topic before ownership is finalized.
    Quick hardening can use owner-local inspection only when owner surface, write scope, and meaning preservation are unambiguous.
    Consume the emitted `review_verification_packet` before ownership finalization.
@@ -263,11 +266,14 @@ Dispatch the sidecar at the nearest safe boundary after the triggering owner exe
    Lane inspection can be local evidence review, routed agent work, or lawful single-thread fallback.
    Additional-agent dispatch is valid only on a host-authorized active-runtime path through `task-execution`.
 3. Adjudicate ownership explicitly.
+   The selected owner surface must be the narrowest surface actually consumed on the recurrence path per `.claude/reference/minimal-governance-change-law.md`.
+   A non-consumed owner surface is a failed barrier target unless it is first made part of the consumed path.
 4. Keep self-growth role-scoped.
    A lane hardens its own charter-bound failures first.
 5. Apply the actual change through the normal `Change Sequence`.
 6. Install the recurrence barrier on the correct owner surface.
    Harden the rule, checklist, packet requirement, Hook-Last-approved runtime edge, capability boundary, or owner-local procedure that blocks recurrence.
+   The barrier must cover the recurring class, not only the observed symptom.
 6.5. **Retroactive application phase (per CLAUDE.md `[RETRO-APPLY]`)**.
    Before optimization decision and before close, audit current-session surfaces directly governed or contradicted by the new rule per `references/retroactive-application.md`.
    Skipping retroactive application is a `[RETRO-APPLY]` defect.
@@ -354,6 +360,7 @@ The self-growth spine adds one rule.
 Confirmed self-growth patches:
 - install a bounded recurrence barrier
 - do not install content accumulation
+- obey `.claude/reference/minimal-governance-change-law.md` consumed-layer and generalization rules
 
 ## Resolve Next Owner And Action
 - Confirmed recurrence defect opens the Required order.
