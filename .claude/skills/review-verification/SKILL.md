@@ -172,11 +172,14 @@ Separate primary owner surfaces from references, generated outputs, runtime stat
 
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
+Start by trying to discard, merge, downgrade, or preserve each candidate before promotion.
+Reviewer-lane governance labels are candidate evidence until Mode A verifies the common finding basis and protected-function preservation.
 Promote shard labels only after verifying design-intent conflict, negative operating effect, correction owner, and protected-function preservation.
 Classify findings from owner semantics and operating effect.
 Treat matching labels or verdict-like words as evidence until owning authority and effect are proven.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm, correction ownership, and no stronger protected-function loss from the proposed correction.
 Classify deletion, non-enforcement, hook silence, runtime omission, heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence.
+Repeated wording is not a defect until protected local-restatement need is disproven on every affected consuming surface.
 Hook matcher burden requires a matched-tool side-effect map before defect classification.
 Silent ledgers, planning markers, SV markers, lifecycle markers, and recovery markers are protected functions until proven non-material.
 Classify explanatory defense as a defect when direct executable wording can carry the rule.

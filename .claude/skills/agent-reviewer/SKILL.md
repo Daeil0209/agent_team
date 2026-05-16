@@ -101,6 +101,10 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 7. Classify Findings
 - Every finding states severity, evidence anchor, impact, owner, and fix direction.
 - Findings that lack the common finding basis are preliminary evidence, not blocking, patchable, or confirmed defects.
+- Governance defect, removal, or patch-worthiness review outputs common finding-class labels only as candidate evidence under the frozen claim ceiling.
+- That candidate ceiling does not weaken ordinary acceptance review; blocking acceptance findings remain blocking under severity mapping.
+- `confirmed-defect`, patch-worthiness, and correction-priority promotion belong to team-lead `review-verification` Mode A synthesis.
+- Repeated wording stays candidate evidence until local consuming-surface need is disproven on each affected surface.
 - Distinguish blocking from non-blocking findings explicitly.
 - Blocking findings include contract breach, missing decisive evidence, user/reader/operator-surface failure, skipped required gate, or unsupported acceptance claim.
 - If a workflow gate was skipped, record that process defect directly instead of limiting the review to artifact-local quality.

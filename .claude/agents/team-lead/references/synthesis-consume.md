@@ -59,6 +59,7 @@ Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
 Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.
 Raw lane convergence, shard counts, candidate totals, and retained-output presence are not verified synthesis.
+Synthesis starts discard-first: exclude, merge, downgrade, or preserve each candidate before promotion.
 
 ## Stop
 Stop positive synthesis when:
@@ -118,6 +119,7 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - Team-lead synthesis must preserve common finding classes: `confirmed-defect`, `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified`.
 - Do not promote `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified` findings to `confirmed-defect` during synthesis.
 - Do not promote researcher-only evidence to review finding, patch-worthiness, or confirmed defect without downstream review-classification basis.
+- Reviewer governance defect, removal, or patch-worthiness outputs remain candidate evidence until `review-verification` Mode A records promotion basis.
 - Treat these convergence patterns as packet-limited evidence:
   - multi-lane convergence from the same narrowed packet
   - Claude+Codex convergence from the same convenience-built packet

@@ -21,7 +21,7 @@ PRIMARY-OWNER: team-lead
 ## Purpose
 Own host-authorized additional-agent execution after planning is complete.
 Load only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
-When active, it owns dispatch packet assembly, send truth, runtime creation/launch, and dispatch interruption state.
+When active, it owns dispatch packet assembly, dispatch-bound binding-surface materialization, send truth, runtime creation/launch, and dispatch interruption state.
 Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
 Boundary:

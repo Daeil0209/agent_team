@@ -133,6 +133,7 @@ Remediation stays with the producing owner.
 - Reviewer completion must include `TARGET-INTENT-BASIS` through the common completion spine.
 - Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Without that basis, classify the item as preliminary evidence, not a completed review finding.
+- Governance defect, removal, and patch-worthiness assignments use the candidate ceiling in `agent-reviewer/SKILL.md`; reviewer completion does not promote to `confirmed-defect`.
 - Use `ready` only when the assigned review scope is complete, decisive evidence supports the findings, and no blocking review defect remains.
 - Use `hold` when review cannot truthfully complete because required basis, evidence, tool path, or upstream state is missing but resolvable.
 - Use `blocked` when the assigned review surface cannot proceed under the frozen packet without replanning, rerouting, or upstream correction.
