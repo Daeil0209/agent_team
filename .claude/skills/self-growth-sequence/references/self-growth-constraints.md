@@ -10,7 +10,7 @@ auto-inject: false
 - Self-growth scope stays tied to the confirmed recurring defect.
 - Improvement closure requires evidence of the actual hardening change.
 - Existing-owner update outranks new-skill introduction when it solves the recurrence.
-- Protected local restatements remain when they keep owner files safe to read in isolation.
+- Protected local restatements remain when they have a named owner and direct-consumption or isolation-safety basis.
 - Reusable ownership changes protect average-capability and prevent lane hollowing.
 
 ## Resolve Next Owner And Action

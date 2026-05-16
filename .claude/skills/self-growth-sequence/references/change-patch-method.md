@@ -127,7 +127,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - For every moved, compressed, replaced, or removed meaning, keep source-meaning inventory and destination-owner mapping explicit in `CHANGE-BOUNDARY`.
 - `CHANGE-BOUNDARY` must let another model reconstruct the patch from repository state alone.
 - Preserve closed boundaries. Keep each role, skill, rule, hook, and packet inside the defect's proven recurrence path.
-- Preserve protected local restatements that keep owner files independently readable.
+- Preserve protected local restatements with a named owner and direct-consumption or isolation-safety basis.
 - When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, self-verification gate, or Hook-Last-approved runtime edge instead of duplicate doctrine.
 - Review the proposed changed content, not only the plan, before execution.
 - Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
@@ -162,7 +162,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - runtime enforcement or state -> settings, hooks, or runtime owner file
 - Do not place always-on doctrine in `.claude/rules/*.md` files. If the content loads unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
 - Apply `replace`, `trim`, or `re-home` over append-only accumulation, but never by weakening protected meaning.
-- When a rule is repeated so a file remains safe to read in isolation, treat that local restatement as protected common contract rather than cosmetic duplication.
+- When repeated meaning has a named owner and direct-consumption or isolation-safety basis, treat that local restatement as protected common contract rather than cosmetic duplication.
 - When a value must stay configurable, keep one literal owner for that value and make all other documents or prompts reference that owner instead of copying the literal value.
 
 ### Specialist And Skill Ordering

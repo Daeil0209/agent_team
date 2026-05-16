@@ -69,7 +69,7 @@ Common finding basis:
   - `risk-hypothesis`: plausible risk lacks enough proof for patch dispatch.
   - `design-tradeoff`: intentional protection with a cost.
   - `duplication`: repeated meaning without protected local-restatement basis, after proving correction will not remove a stronger protected function.
-  - `protected-restatement`: repeated meaning needed for isolated owner readability.
+  - `protected-restatement`: repeated meaning with a named owner and direct-consumption or isolation-safety basis.
   - `non-issue`: evidence disproves the concern.
   - `unverified`: evidence basis incomplete.
 

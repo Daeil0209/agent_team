@@ -88,7 +88,7 @@ Load trigger-specific files directly from `SKILL.md`.
 - `references/benchmark-protocol.md`: benchmark-first preparation and self-growth comparison gates.
 - `references/patch-classification.md`: patch class definitions.
 - `references/failure-mode-response.md`: failure mode matrix and response boundaries.
-- `references/human-readable-packet-owners.md`: semantic packet catalogs for governance and solution-development patches.
+- `references/human-readable-packet-owners.md`: semantic packet catalog for governance patches.
 - `references/high-traffic-surfaces.md`: high-traffic governance surfaces and protection layers.
 - `references/self-growth-constraints.md`: constraint checklist.
 - `references/change-patch-method.md`: detailed Change Sequence, patch execution method, meaning routing, specialist ordering, file/runtime hygiene, and hook enforcement rules.
