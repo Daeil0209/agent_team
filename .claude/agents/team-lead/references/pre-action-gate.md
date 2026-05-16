@@ -58,8 +58,8 @@ Stop before tool-adjacent progress prose.
 Stop before mutation until `[GOV-MIN]` is applied.
 
 ## Resolve Next Owner And Action
-- A current instruction that creates, reopens, or changes a consequential work boundary opens `work-planning` through `session-route-bridge`.
-- Unresolved session-start, active runtime, recovery, monitoring, or lifecycle evidence opens `session-boot`.
+- A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)` through `session-route-bridge`.
+- Unresolved session-start, active runtime, recovery, monitoring, or cleanup evidence loads `Skill(session-boot)`.
 - A stopped action route opens the missing gate field.
 - A stopped applied-rule route opens loaded-document consumption.
 - A stopped stale-gate route reopens this gate.

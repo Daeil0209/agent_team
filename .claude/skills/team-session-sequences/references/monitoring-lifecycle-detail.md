@@ -7,13 +7,13 @@ LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
-# team-session-sequences: Monitoring Lifecycle Detail
+# team-session-sequences: Monitoring And Runtime Cleanup Detail
 
 ## Contents
 - Runtime Signals
 - Agent Identity Rule
 - Supervisor Decisions On idle_notification
-- Message-First Lifecycle Rule
+- Message-First Runtime Cleanup Rule
 - Reuse Rule
 - Manifest Review Gate
 - Task Identity And Communication
@@ -25,8 +25,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition.
 - `dispatch-ack` is the team-lead tracking signal that the lane is `ACTIVE` for the assigned execution block.
-- `handoff` or `completion` is the team-lead tracking signal that the lane is `STANDBY` and eligible for reuse when ownership fit and context fit remain truthful.
-- Receiving `idle_notification` without a preceding completion transport from the agent is a handoff failure (T2).
+- `completion` is the team-lead tracking signal that the lane is `STANDBY` and eligible for reuse when ownership fit and context fit remain truthful.
+- Receiving `idle_notification` without a preceding completion transport from the agent is a completion failure (T2).
 - Receiving completion transport marks `STANDBY` directly.
 
 ## Agent Identity Rule
@@ -37,15 +37,15 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
 If immediate work is available and preserved context is valuable, send `assignment`, `reuse`, or `reroute` as new bounded work.
 If no immediate work is available, send nothing.
-If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for `shutdown_response` or teammate termination evidence.
+If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for termination evidence.
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
 
-## Message-First Lifecycle Rule
+## Message-First Runtime Cleanup Rule
 - Consume `session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
 - Completion transport shape is owned by `task-execution/references/completion-handoff.md`.
 - Immediate reuse sends distinct bounded work promptly; otherwise the lane remains `STANDBY` until reuse or cleanup.
 - Runtime task lists, mailbox state, and team config are Claude Code runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
-- An agent-targeted `shutdown_request` is agent lifecycle cleanup, not evidence that the whole session is entering `Closeout Sequence`.
+- An agent-targeted `shutdown_request` is teammate cleanup, not evidence that the whole session is entering `Closeout Sequence`.
 - Replacing a stale current-runtime agent outside closeout follows three steps:
   1. send `shutdown_request`
   2. wait for shutdown evidence or classify recovery explicitly
@@ -57,7 +57,7 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - New dispatch rebuilds context.
 - Reuse or standby is valid only when ownership fit and context fit remain truthful per `session-boot/references/runtime-state-detail.md`.
 - Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
-- Treat `standby` as already set by valid `handoff` or `completion`; choose no message when no immediate reuse, correction, or shutdown is needed.
+- Treat `standby` as already set by valid `completion`; choose no message when no immediate reuse, correction, or shutdown is needed.
 
 ## Manifest Review Gate
 - When execution depends on a user-provided file list, copy set, or overwrite manifest, complete review before fan-out: collapse duplicates, verify final unique write set, and make pre-execution review explicit.
@@ -79,11 +79,11 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - A configured role label becomes a message address only when the roster contains that exact live member name.
 - Treat direct user-to-teammate messages as user instructions to the receiving teammate inside that teammate's current authority and active surface.
 - Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
-- Route ownership, acceptance, routing, lifecycle, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
-- Use free-form `SendMessage` for peer status, acknowledgment, clarification, or partial-result notes only inside unchanged ownership, lifecycle, routing, and active surface.
+- Route ownership, acceptance, routing, cleanup, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
+- Use free-form `SendMessage` for peer status, clarification, or partial-result notes only inside unchanged ownership, cleanup, routing, and active surface.
 - Free-form teammate interaction does not create agent-to-lead `MESSAGE-CLASS` authority and does not reopen a closed assignment execution block.
-- After a lane sends `handoff` or `completion`, duplicate packet replay and already-completed confirmation are handled by `.claude/skills/task-execution/references/message-classes.md` `Receipt Event Contract`, not by free-form status or clarification.
-- Authoritative downward control packets, upward transport `MESSAGE-CLASS` vocabulary, and structured lifecycle paths are owned by `.claude/skills/task-execution/references/phase-transition-control.md`, `.claude/skills/task-execution/references/lifecycle-control.md`, and `.claude/skills/task-execution/references/message-classes.md`.
+- After a lane sends `completion`, duplicate packet replay and already-completed confirmation are handled by `.claude/skills/task-execution/references/message-classes.md` `Receipt Event Contract`, not by free-form status or clarification.
+- Authoritative downward phase packets, upward transport `MESSAGE-CLASS` vocabulary, and structured shutdown requests are owned by `.claude/skills/task-execution/references/phase-transition-control.md` and `.claude/skills/task-execution/references/message-classes.md`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
@@ -104,14 +104,14 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 ## Runtime Pressure
 - Consume `session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.
 - When hard runtime pressure or unresolved orphan residue exists, stop new `Agent` fan-out until explicit recovery clears that pressure.
-- Routine orphan scans report residue; they do not kill processes or rewrite team lifecycle truth.
-- Runtime-pressure handling must not invent session closeout authority or bypass message-first lifecycle decisions for current live agents.
+- Routine orphan scans report residue; they do not kill processes or rewrite team cleanup truth.
+- Runtime-pressure handling must not invent session closeout authority or bypass message-first cleanup decisions for current live agents.
 - If orphan historical agents are detected from a previous session, do not send `shutdown_request` to those remembered agent names from the new session. Route explicit orphan-runtime recovery instead.
 
 ## Resolve Next Owner And Action
 - Healthy active lane returns to monitoring.
 - Reuse-fit live lane opens bounded reuse.
-- Standby decision opens lifecycle control.
+- Standby decision sends no message unless bounded reuse or cleanup is selected.
 - Shutdown decision opens structured `shutdown_request`.
 - Stale response opens investigate, wait-extension, reroute, resize, replacement, or replan.
 - Manifest overlap opens pre-execution manifest correction.

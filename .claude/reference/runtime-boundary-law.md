@@ -40,8 +40,8 @@ It keeps runtime guardrails narrow and prevents runtime signals from replacing o
 - These influences affect a route:
   - external MCP influence
   - external review-tool influence
-  - Codex output influence
-- Codex output influence affects a verdict.
+  - external-review output influence
+- External-review output influence affects a verdict.
 - A runtime state file or team-runtime artifact is involved.
 
 ## Required Output

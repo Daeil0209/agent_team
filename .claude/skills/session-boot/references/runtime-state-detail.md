@@ -9,24 +9,24 @@ auto-inject: false
 Load only for the explicit session-boot runtime-detail triggers below.
 This is normally a mid-run or resume/recovery reference, not a clean-startup reference.
 
-Load when the active session-boot owner must decide one of these: boot-window tool limit, startup continuity, current-session runtime truth, lifecycle state, lifecycle-control need, stale state, stall state, runtime pressure, compaction recovery, dispatch-state recovery, or monitoring classification.
-This reference classifies runtime readiness, recovery, monitoring, and lifecycle truth. Dispatch-runtime execution preflight is owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+Load when the active session-boot owner must decide one of these: boot-window tool limit, startup continuity, current-session runtime truth, cleanup state, stale state, stall state, runtime pressure, compaction recovery, dispatch-state recovery, or monitoring classification.
+This reference classifies runtime readiness, recovery, monitoring, and cleanup truth. Dispatch-runtime execution preflight is owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
-Do not load for clean startup when no runtime state, recovery state, monitoring state, lifecycle obligation, or runtime-dependent next action exists.
+Do not load for clean startup when no runtime state, recovery state, monitoring state, cleanup obligation, or runtime-dependent next action exists.
 Do not load to narrate boot progress, reassure the user, produce a status report, or inspect details unrelated to the next boot owner/action.
 
 This reference never admits user-facing prose.
 All detail checks stay under the already-active `.claude/reference/user-reporting-law.md` gate and remain Procedure Plane evidence unless that law admits a report.
-Runtime detail can change runtime classification, lifecycle decision, recovery owner, or next action; it cannot create status, progress, summary, or boot-completion prose permission.
+Runtime detail can change runtime classification, cleanup decision, recovery owner, or next action; it cannot create status, progress, summary, or boot-completion prose permission.
 
 ## Contents
 - Boot Window And Startup Rules
 - Session-Start Recovery
 - Team-Lead Entry Trigger Detail
-- Agent Lifecycle States
+- Agent Work States
 - Runtime Signals (Not Governance States)
 - Supervisor Decisions On Turn-Ended Signals
-- Message-First Lifecycle Rule
+- Message-First Runtime Cleanup Rule
 - Reuse Rule
 - Health-Check Standard
 - Stale-Response Rule
@@ -37,7 +37,7 @@ Runtime detail can change runtime classification, lifecycle decision, recovery o
 - Workflow Continuity Bridge
 - Proactive Team-Composition Reassessment
 - Stall-Without-Progress Rule
-- Agent Lifecycle Rules
+- Runtime Cleanup Rules
 - Resolve Next Owner And Action
 
 ## Boot Window And Startup Rules
@@ -54,7 +54,7 @@ Runtime detail can change runtime classification, lifecycle decision, recovery o
 - Shared continuity read is reused when both run.
 - Default startup scope is narrow: continuity, active root, runtime need, then stop unless contradiction or current request demands more.
 - If explicit team-agent runtime becomes necessary later, re-enter through the runtime-readiness gate, then return to `task-execution` for dispatch-runtime execution instead of improvising fan-out.
-- Compaction-triggered recovery must re-read open work, team channel, roster, and lifecycle truth from current-session authorities before consequential dispatch.
+- Compaction-triggered recovery must re-read open work, team channel, roster, and cleanup truth from current-session authorities before consequential dispatch.
 
 ## Team-Lead Entry Trigger Detail
 `agents/team-lead.md` owns the decision to enter `session-boot`; this reference owns the runtime-state detail behind that decision.
@@ -63,30 +63,30 @@ Runtime detail can change runtime classification, lifecycle decision, recovery o
 - session entry still has boot incomplete
 - explicit team-runtime activation is needed
 - current-runtime monitoring or recovery is materially active
-- compaction recovery must reconstruct open work, team channel, roster, lifecycle truth, or dispatch state before consequential work resumes
+- compaction recovery must reconstruct open work, team channel, roster, cleanup truth, or dispatch state before consequential work resumes
 - current-session team registration without live panes is compaction recovery; classify recovery-required instead of creating a second runtime
 
 Current-runtime monitoring or recovery is materially active when workspace-root `.runtime/procedure-state.json` has `teamRuntimeState: active` and any agent has live, standby, hold, stale, unresolved startup, stale dispatch, recovery, or monitoring state affecting the next consequential step.
 
 The `session-start.sh` hook can detect active runtime from a runtime snapshot, but it does not auto-load this skill. Hook observation is evidence only; it never replaces `team-lead`'s duty to enter `session-boot` when the active-runtime condition holds.
 
-Failure to enter `session-boot` when the condition holds is a procedure violation. It suppresses `Monitoring Sequence` proactive team-composition reassessment and can allow ghost agents, stale agents, idle holds, or missing-handoff agents to accumulate without lifecycle-control release.
+Failure to enter `session-boot` when the condition holds is a procedure violation. It suppresses `Monitoring Sequence` proactive team-composition reassessment and can allow ghost agents, stale agents, idle holds, or missing-completion agents to accumulate without reuse, recovery, or cleanup.
 
-## Agent Lifecycle States
+## Agent Work States
 - `ACTIVE`: valid `dispatch-ack` was sent for the current assignment execution block and no closing transport has followed.
-- `STANDBY`: valid `handoff` or `completion` was received for that assignment execution block; the exact teammate is eligible for reuse when ownership fit and context fit remain truthful.
+- `STANDBY`: valid `completion` was received for that assignment execution block; the exact teammate is eligible for reuse when ownership fit and context fit remain truthful.
 - Shutdown-pending, removed, blocked, stale, validation-waiting, and residue are runtime or routing classifications, not additional team-lead managed lane work states.
 
 Canonical rule:
 - `dispatch-ack` is the `ACTIVE` tracking signal, not progress, quality, completion, or acceptance evidence.
 - `dispatch pending` is not `agent started`.
 - `agent started` needs agent-side activity, progress, or other started-work evidence.
-- `handoff` or `completion` is the `STANDBY` tracking signal, not acceptance evidence.
+- `completion` is the `STANDBY` tracking signal, not acceptance evidence.
 
 ## Runtime Signals (Not Governance States)
 - `idle_notification` is an observation signal, not a lifecycle transition.
 - `permission_request` proves the agent is still active but blocked on permission.
-- completion records `STANDBY` through valid `handoff` or `completion`.
+- completion records `STANDBY` through valid `completion`.
 - observed single-agent collapse in nominal parallel work is a distribution-planning defect, not local runtime authority to rebalance staffing.
 - when a workflow is active, runtime signals classify agent/runtime truth only; they do not advance phases or clear checkpoints.
 
@@ -97,11 +97,11 @@ If no immediate work exists, send nothing.
 Shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence.
 Validation waiting keeps the teammate in `STANDBY` while the validation route resolves.
 
-## Message-First Lifecycle Rule
-- Agent lifecycle is message-first when the lifecycle decision requires agent-side behavior.
+## Message-First Runtime Cleanup Rule
+- Runtime cleanup is message-first when the cleanup decision requires agent-side behavior.
 - Completion creates `STANDBY` and a synthesis obligation; it does not authorize removal.
 - Completion-grade agent transports carry the one-line pointer envelope and retained carrier required by `completion-handoff.md`.
-- During active runtime, `session-boot` owns lifecycle interpretation and lifecycle-control need after completion-grade output when no new assignment-grade packet is being sent.
+- During active runtime, `session-boot` owns cleanup interpretation after completion-grade output when no new assignment-grade packet is being sent.
 - `assignment` and `reuse` return an agent to `ACTIVE`.
 - Teammate population changes only on creation and confirmed shutdown/removal.
 - Closeout exception: session teardown uses the narrow closeout shutdown path from `session-closeout`.
@@ -135,7 +135,7 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 - Treat non-current `parent-session-id` agents as orphan residue, not live production agents.
 - Hard runtime pressure or unresolved orphan residue blocks new fan-out.
 - Routine orphan scans report residue. Explicit recovery owns cleanup.
-- Orphan recovery does not create closeout authority or bypass message-first lifecycle decisions for the current live session.
+- Orphan recovery does not create closeout authority or bypass message-first cleanup decisions for the current live session.
 
 ## Procedure-State Schema
 Canonical structured runtime truth lives in workspace-root `.runtime/procedure-state.json`. Internal procedure scaffolding stays in internal context for the current cycle. Legacy continuity snapshot files are not continuity surfaces.
@@ -171,7 +171,7 @@ Semantic ownership split:
 Canonical classes:
 - lane work state: `ACTIVE`, `STANDBY`
 - cleanup or routing classification: `SHUTDOWN-PENDING`, `blocked`, `stale`, `validation-waiting`, `residue`
-- runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-lifecycle`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
+- runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-cleanup`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
 - team runtime state: `active`, `inactive`
 - team dispatch state: `none`, `pending`, `claimed`
 
@@ -182,22 +182,22 @@ Canonical evidence mapping:
 - default tmux-server absence does not prove a named team runtime is dead
 - inbox growth, read/unread state, send success, config residue, and hook-emitted idle notices are not agent-originated progress
 - `dispatch-ack` -> `ACTIVE` assignment receipt and tracking signal only
-- agent `status`, `handoff`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
+- agent `status`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
 - current-session agent tool activity or assigned-surface mtime/diff in the dispatch window -> corroborating activity/side-effect evidence
 - `permission_request` -> active-but-permission-blocked evidence
-- `handoff` or `completion` -> `STANDBY` tracking signal plus completion-grade carrier for synthesis
-- structured `shutdown_request` -> shutdown intent evidence; shutdown becomes authoritative only through shutdown response or termination evidence
+- `completion` -> `STANDBY` tracking signal plus completion-grade carrier for synthesis
+- structured `shutdown_request` -> shutdown intent evidence; shutdown becomes authoritative only through live-roster absence, termination evidence, or hook/runtime shutdown evidence
 
 ## Hook-Maintained Ledger Surfaces
-These are hook-maintained mirrors, not alternate semantic owners. They can corroborate the runtime-truth ladder above; they must not invent competing lifecycle vocabulary, and absence of a ledger entry is not evidence by itself.
+These are hook-maintained mirrors, not alternate semantic owners. They can corroborate the runtime-truth ladder above; they must not invent competing cleanup vocabulary, and absence of a ledger entry is not evidence by itself.
 
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
-| `WORKER_TRANSPORT_LEDGER` | agent-originated progress, handoff/completion-grade message receipt | absence is not handoff/completion absence; consult message body and lane evidence |
+| `WORKER_TRANSPORT_LEDGER` | agent-originated progress, completion-grade message receipt | absence is not completion absence; consult message body and lane evidence |
 | `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification |
-| `IDLE_DECISION_PENDING_FILE` | legacy or exceptional turn-ended state not yet synchronized to canonical transport | absence does not prove activity; consult handoff/completion transport, standby ledger, and live runtime evidence |
+| `IDLE_DECISION_PENDING_FILE` | legacy or exceptional turn-ended state not yet synchronized to canonical transport | absence does not prove activity; consult completion transport, standby ledger, and live runtime evidence |
 | `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | absence is not active evidence; do not infer activity from missing idle marker |
-| `STANDBY_FILE` | completion-derived `STANDBY` tracking signal | absence is not authority to require lifecycle-control; consult handoff/completion transport |
+| `STANDBY_FILE` | completion-derived `STANDBY` tracking signal | absence is not authority to require cleanup; consult completion transport |
 | `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence is not team-existence proof; dispatch-runtime creation is decided by `.claude/skills/task-execution/references/runtime-dispatch-law.md` |
 | `KILL_LIST` | observed teardown intent on listed agents | absence is not agent-still-live evidence; consult live process-backed roster |
 
@@ -206,11 +206,11 @@ The canonical hook-policy ownership for these ledger surfaces lives in `.claude/
 ## Workflow Continuity Bridge
 - `session-boot` observes runtime for active workflows; it does not own workflow progression.
 - `team-lead` plus the active workflow owner still own phase advancement, checkpoint resolution, redistribution, synthesis, and completion claims.
-- Runtime observation sharpens agent-start evidence, lifecycle evidence, stale/ghost classification, and bottleneck observation when material.
+- Runtime observation sharpens agent-start evidence, cleanup evidence, stale/ghost classification, and bottleneck observation when material.
 - If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or `HOLD`.
 
 ## Proactive Team-Composition Reassessment
-At phase transition, agent handoff convergence, major checkpoint, or handoff/completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work can reuse, release, redistribute, or reassign active or standby agents.
+At phase transition, agent completion convergence, major checkpoint, or completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work can reuse, release, redistribute, or reassign active or standby agents.
 Synthesis is a trigger test for material team-composition risk, not automatic reassessment ceremony.
 
 Required reassessment questions:
@@ -224,7 +224,7 @@ Downstream-phase prep examples include tester scenario design plus test-infrastr
 
 Rules:
 - Phase boundaries gate execution, not prep.
-- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the lifecycle gate from `.claude/skills/task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
+- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the release gate from `.claude/skills/task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
 - Producer-lane agents on a surface still inside the active validation chain (review -> test -> validate) remain `STANDBY` while validation routing resolves.
 - Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.
@@ -243,7 +243,7 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `assignment-sent-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, handoff, or assigned-surface activity until the frozen re-check window.
+1. For `assignment-sent-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
 2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
 3. Do not stack more assignment/correction packets into a silent inbox.
 4. At the re-check window, inspect current activity/side-effect evidence. Preserve active agents in lane execution; when both response and activity evidence are absent, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
@@ -253,7 +253,7 @@ Waiting for the user to identify agent stalls is itself a monitoring defect. Re-
 Non-destructive runtime recovery is team-lead owned.
 Do not ask the user to choose among routine nudge, replacement, redistribution, or shutdown of stalled teammates.
 
-## Agent Lifecycle Rules
+## Runtime Cleanup Rules
 - Choose shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.
 - Choose standby when near-term reuse is concrete and context reuse is still valuable.
 - Do not bypass runtime-capacity or overlap guards by forcing new fan-out while pressure or orphan residue remains unresolved.
@@ -266,5 +266,5 @@ Do not ask the user to choose among routine nudge, replacement, redistribution, 
 - Missing receipt or start evidence opens one bounded follow-up and re-check.
 - Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or `HOLD`.
 - Bottleneck or missed downstream-prep parallel-fit opens `work-planning`.
-- Lifecycle resolution need opens lifecycle control or `session-closeout`.
+- Cleanup need opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Hard runtime pressure opens explicit recovery before new fan-out.

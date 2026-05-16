@@ -36,7 +36,7 @@ The following reference families were captured via external benchmark and ground
 - Class: principle-class, high confidence
 - Sources: `thoughtworks.com/en-us/radar/faq`, `thoughtworks.com/en-us/radar`, `thoughtworks.com/insights/blog/build-your-own-technology-radar`
 - Abstracted principle: evidence-based technology adoption operates through four explicit rings: Adopt / Trial / Assess / Hold. Trial requires production experience; reassessment is time-boxed; unchanged items fade to keep attention on meaningful confidence shifts. Hold is an active recommendation against new use, not passive ignore.
-- Apply to this doctrine: this grounds `Pattern Lifecycle Staging` in `SKILL.md`. Adopt the ring discipline, active rejection, and periodic prune-and-promote review.
+- Apply to this doctrine surface: this grounds `Pattern Lifecycle Staging` in the parent skill. Adopt the ring discipline, active rejection, and periodic prune-and-promote review.
 - Anti-pattern: catalogs that grow monotonically without periodic prune-and-promote review degrade into noise rather than evidence.
 - Reject log: ThoughtWorks quadrant structure and committee process are domain-specific to enterprise technology selection. The team evolves doctrine through team-lead, lane interaction, and governance review rather than a periodic in-person committee.
 

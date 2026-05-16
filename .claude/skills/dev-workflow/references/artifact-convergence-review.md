@@ -21,15 +21,15 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 - Resolve Next Owner And Action
 
 ## Authority
-Codex MCP performs independent design-coherence review.
+Codex MCP is the current configured independent-review adapter for design-coherence review.
 Codex output is independent design-coherence evidence, not workflow phase authority.
-team-lead owns phase design, Codex MCP review consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
-Codex findings return to `team-lead` as redesign input; team-lead adjudicates them and synthesizes one coherent phase basis.
+team-lead owns phase design, configured-review consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
+Codex findings return to `team-lead` as configured-review input; team-lead adjudicates them and synthesizes one coherent phase basis.
 For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-edits the document directly.
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
 User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
-Codex authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for artifact-convergence review.
+Configured independent-review authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for artifact-convergence review.
 `CODEX-INDEPENDENT-REVIEW-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 
 `REDESIGN-PLAN` validity requires four named contents in order:
@@ -48,7 +48,7 @@ Run for:
 - Phase 2 design artifact or implementation-binding internal detail bundle
 - first artifact that freezes data model, API, UX, proof, import/export lineage, exact operator launch/termination path, module decomposition, or acceptance basis
 
-Do not run for receipt/status/control-only messages, typo-only edits, already-converged artifacts without material upstream change, or light answer-only work.
+Do not run for receipt/status/phase-context-only messages, typo-only edits, already-converged artifacts without material upstream change, or light answer-only work.
 
 ## Packet
 Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/work-planning/references/codex-independent-review.md`.
@@ -81,8 +81,8 @@ Missing required path records `fail-open:blocked_by_config`.
 12. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
 13. Codex axes include user-perspective checks.
 14. Codex axes include user-convenience checks.
-15. Operator-facing rendered UI axes consume `.claude/skills/visual-composition/SKILL.md` for operator-naive comprehension.
-16. Novel or composite operator-facing rendered UI axes consume `.claude/skills/benchmark-simulation/SKILL.md` for visual-reference benchmark coverage.
+15. Operator-facing rendered UI axes consume `Skill(visual-composition)` for operator-naive comprehension.
+16. Novel or composite operator-facing rendered UI axes consume `Skill(benchmark-simulation)` for visual-reference benchmark coverage.
 17. Visual-reference benchmark coverage checks invocation, extracted concrete visual characteristics, and abstraction-fit-adapt synthesis.
 22. Operator-facing rendered UI axes include acceptance image-evidence path.
 23. Acceptance image-evidence path checks per-AC capture cited and openable via multimodal `Read`.

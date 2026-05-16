@@ -12,7 +12,7 @@ Use it to make loaded documents and references mandatory execution surfaces inst
 
 ## Reporting Curtain Inheritance
 Every loaded role, skill, reference, method-detail document, and lookup document inherits `.claude/reference/user-reporting-law.md` for assistant-authored visible prose.
-Local words such as `Required Output`, `Record`, `report`, `status`, `progress`, `summary`, `handoff`, `proof`, `verdict`, `result`, `finding`, `evidence`, or `next action` name internal owner evidence unless `.claude/reference/user-reporting-law.md` admits user-facing report prose.
+Local words such as `Required Output`, `Record`, `report`, `status`, `progress`, `summary`, `completion`, `proof`, `verdict`, `result`, `finding`, `evidence`, or `next action` name internal owner evidence unless `.claude/reference/user-reporting-law.md` admits user-facing report prose.
 Loading, consuming, quoting, mapping, or verifying a document never creates report permission.
 When a loaded document must both inspect information and speak to the user, the inspection stays in the Procedure Plane or Communication Plane and the visible text is resolved through `.claude/reference/user-reporting-law.md`.
 
@@ -32,7 +32,7 @@ The consuming owner records:
 - trigger that required it
 - applied rules
 - blocked or unavailable rules
-- effect on work, packet, proof, handoff, or verdict
+- effect on work, packet, proof, completion, or verdict
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
 
 ## Stop
@@ -44,19 +44,20 @@ Stop before execution when:
 - a required skill is outside the frozen boundary
 - a loaded document lacks applied-rule mapping
 Stop before completion when a trigger-required reference remains unconsumed.
-Stop before handoff when applied or blocked skill/reference basis is missing.
+Stop before completion when applied or blocked skill/reference basis is missing.
 
 ## Resolve Next Owner And Action
 - A stopped required-skill route opens skill availability correction.
 - A stopped required-reference route opens reference consumption.
 - A stopped applied-rule route opens loaded-document consumption.
-- A stopped handoff route opens applied-basis recording.
+- A stopped completion route opens applied-basis recording.
 - Procedure-bearing reference missing a local `Resolve Next Owner And Action` section opens reference correction.
 - A method-detail reference returns applied method basis to the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
 
 ## Skill Rules
 - Skills load only when required by the active owner path.
+- Skill load means `Skill(<skill>)`.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
 - Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS`.
 - Agent role names are not valid skill names.
@@ -92,7 +93,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - The receiving lane must:
   - load each `REQUIRED-SKILLS` entry before execution
   - apply each `REQUIRED-SKILLS` entry before execution
-  - record applied or blocked basis for each `REQUIRED-SKILLS` entry before handoff
+  - record applied or blocked basis for each `REQUIRED-SKILLS` entry before completion
 - Classify missing required skill consumption as:
   - a packet defect when the packet omitted it
   - a lane defect when the lane ignored it
@@ -100,7 +101,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 ## Methodology Guidance
 - Packetize methodology instructions as `SKILL-RECOMMENDATIONS`.
 - The assigned lane must:
-  - classify every carried recommendation as applied, not-material, or blocked before handoff
+  - classify every carried recommendation as applied, not-material, or blocked before completion
   - record the basis for each recommendation classification
   - select material recommendations
   - load material recommendations before lane work
@@ -113,7 +114,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - A loaded owner document is mandatory when it is present in the active owner context.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
 - Loading, naming, quoting, or summarizing a governance document is not consumption.
-- Before action, report, handoff, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
+- Before action, report, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
 - `applied` means the rule changed, confirmed, stopped, or routed concrete behavior.
 - Missing material applied-rule mapping stops action and opens applied-rule correction.
 - Governance compliance claims require recorded applied-rule mapping.
@@ -131,7 +132,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Procedure-bearing reference completion requires a local `Resolve Next Owner And Action` section.
 - Treat an unconsumed trigger-required reference as completion blocker.
 - Treat missing applied-rule mapping as execution blocker.
-- Reference consumption must be recorded in the owner-local packet, handoff, proof, verdict, or `SV-RESULT` when material.
+- Reference consumption must be recorded in the owner-local packet, completion carrier, proof, verdict, or `SV-RESULT` when material.
 - Load references only through trigger-bound consumption.
 - Treat `@imports` as context organization.
 - Measure launch context footprint independently from `@imports` organization.

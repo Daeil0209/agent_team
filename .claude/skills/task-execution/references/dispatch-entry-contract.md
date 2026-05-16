@@ -8,7 +8,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 # task-execution: Dispatch Entry Contract
 
-Load before `task-execution/SKILL.md` performs any dispatch, reuse, blocker-clear, or packet assembly move.
+Load after `Skill(task-execution)` is active and before any dispatch, reuse, blocker-clear, or packet assembly move.
 
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
@@ -19,7 +19,7 @@ Before this skill acts, the lead must already have:
 - `session-boot` supplies current-runtime readiness or recovery classification only when live runtime truth can change the next owner/action
 
 ## Consumed Frozen Fields
-Consume dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
+Consume only dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
 1. `REQUEST-FIT-BASIS`
 2. `SEMANTIC-INTENT-BASIS`
 3. `REQUEST-BOUND-PACKET-FIELDS`
@@ -27,7 +27,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 5. `ROUTING-SIGNAL`
 6. `NEXT-CONSEQUENTIAL-ACTION`
 7. `DISPATCH-BLOCKERS`
-8. `CODEX-INDEPENDENT-REVIEW-BASIS`
+8. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
 9. `EXECUTION-READINESS-BASIS`
 10. `AGENT-MAP`
 11. `PARALLEL-GROUPS`
@@ -38,6 +38,7 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
+- A field outside packet assembly, runtime dispatch, receiving-lane execution, workflow, or active report gates is not dispatch-entry floor.
 - Missing or contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
@@ -47,13 +48,13 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 - `not-applicable` is invalid once an authorized agent dispatch move exists.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path.
 - File-only, guessed, or pre-`work-planning` measurement is not dispatch-ready.
-- `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for Codex MCP independent-review handling.
+- `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for configured independent-review handling.
 - `task-execution` consumes the frozen `triggered:*`, `fail-open:*`, or `skipped:*` truth.
-- Does not call Codex.
-- Does not adjudicate Codex points.
+- Does not call the configured independent reviewer.
+- Does not adjudicate configured-review points.
 - Does not turn `fail-open:*` into a blocker unless `work-planning` already marked the route blocked.
 - If a team-lead dispatch route lacks required `CODEX-INDEPENDENT-REVIEW-BASIS`, stop and reopen `work-planning`.
-- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-codex-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
+- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-independent-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.
@@ -69,15 +70,15 @@ Consume dispatch-relevant frozen fields in this order. A consumed field must car
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
-- agent -> `team-lead` uses message-class transports (`dispatch-ack`, `control-ack`, `status`, `scope-pressure`, `handoff`, `completion`, exact `hold|blocker`).
-- agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, lifecycle, routing, and active surface.
+- agent -> `team-lead` uses message-class transports (`dispatch-ack`, `status`, `scope-pressure`, `completion`, exact `hold|blocker`).
+- agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
 - user -> teammate uses Claude Code teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`.
 - Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
 - Agent name alone is not task identity.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
-- Visible teammate pane/final text is never the official message channel and must not contain ACK, handoff, status, blocker, findings, counts, paths, or `MESSAGE-CLASS` blocks.
+- Visible teammate pane/final text is never the official message channel and must not contain ACK, completion, status, blocker, findings, counts, paths, or `MESSAGE-CLASS` blocks.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.

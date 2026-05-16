@@ -72,7 +72,7 @@ if grep -qi 'sendmessage' <<<"$SPAWN_PROMPT"; then
 fi
 
 # 4) Communication Plane payload class names instructed as outbound transport in spawn.
-if grep -qE '(send|emit|report|return|provide)[^.]{0,40}(handoff|completion|scope-pressure|hold[[:space:]]*\|[[:space:]]*blocker|status[[:space:]]+(update|report)|findings[[:space:]]+(count|summary)|count[s]?|paths?|plans?|next[-[:space:]]?action)' <<<"$prompt_lower"; then
+if grep -qE '(send|emit|report|return|provide)[^.]{0,40}(completion|scope-pressure|hold[[:space:]]*\|[[:space:]]*blocker|status[[:space:]]+(update|report)|findings[[:space:]]+(count|summary)|count[s]?|paths?|plans?|next[-[:space:]]?action)' <<<"$prompt_lower"; then
   violations+=("comms-plane-payload-instruction")
 fi
 

@@ -20,14 +20,14 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 - Resolve Next Owner And Action
 
 ## Authority
-Codex MCP performs reviewer-grade independent review.
+Codex MCP is the current configured independent-review adapter for reviewer-grade independent review.
 Codex output is independent reviewer-grade evidence, not review verdict authority.
 team-lead owns reconciliation and workflow cursor truth.
 Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
 
-Codex authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for review-convergence review.
+Configured independent-review authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for review-convergence review.
 
 ## Trigger
 Run when all are true:
@@ -42,7 +42,7 @@ Default surfaces:
 - cross-surface coherence review after parallel production
 - governance, proof, report, or design-implementation review that determines acceptance or redispatch
 
-Do not run for receipt/status/control-only messages, typo-only/cosmetic-only review, already-adjudicated findings without material artifact change, or light answer-only work.
+Do not run for receipt/status/phase-context-only messages, typo-only/cosmetic-only review, already-adjudicated findings without material artifact change, or light answer-only work.
 If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
 
 ## Packet
@@ -73,12 +73,12 @@ Missing decisive reviewer-facing fields are not guessed.
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
 Codex axes include user-perspective checks.
 Codex axes include avoidable-user-burden checks.
-Operator-facing rendered UI axes consume `.claude/skills/visual-composition/SKILL.md` for operator-naive comprehension and record `clear`, `partially-clear`, or `unclear` per AC-supporting element.
+Operator-facing rendered UI axes consume `Skill(visual-composition)` for operator-naive comprehension and record `clear`, `partially-clear`, or `unclear` per AC-supporting element.
 Operator-facing rendered UI axes include image-inspection coverage.
 Image-inspection coverage opens every cited screenshot or full-page capture supporting an AC verdict or finding through multimodal `Read`.
 Image-inspection coverage matches each opened image against the design-stated expectation.
 Cite-path-only acceptance is a procedural failure.
-Novel or composite UI axes consume `.claude/skills/benchmark-simulation/SKILL.md` and check that benchmark characteristics are reflected in the rendered surface.
+Novel or composite UI axes consume `Skill(benchmark-simulation)` and check that benchmark characteristics are reflected in the rendered surface.
 Plan, design, specification, report, governance, and implementation-binding review surfaces require Feynman clarity.
 
 Codex reviews missed negative space, evidence overreach, owner-action gaps, stale proof/artifact authority, user-surface weakness, and needless-user-gate risk.

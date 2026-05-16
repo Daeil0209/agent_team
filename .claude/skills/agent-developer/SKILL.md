@@ -1,6 +1,6 @@
 ---
 name: agent-developer
-description: Agent-specific developer lane skill for consequential developer-owned production assignments — Phase 3+ implementation production, governance patch edits, and bounded supporting document production. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Agent-specific developer lane skill for consequential developer-owned production assignments — Phase 3+ implementation production, governance patch edits, and bounded supporting document production. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: developer
 ---
@@ -11,11 +11,11 @@ PRIMARY-OWNER: developer
 - PRIMARY-OWNER: developer
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/developer-lane-detail.md`: developer packet fields, `SKILL-AUTH`, specialist matrix, durability, regression guard, and handoff detail.
+- `references/developer-lane-detail.md`: developer packet fields, `SKILL-AUTH`, specialist matrix, durability, regression guard, and completion detail.
 ### Scope & Quality Gate
 Before any work:
 User-facing report permission is never produced by this lane.
-This skill's handoffs, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
 1. Request fit: does the assignment still serve the user's actual request?
 2. Scope proportionality: is the development production surface bounded and truthful?
 3. Charter fit: is this developer-owned production work rather than review, proof, validation, or orchestration?
@@ -30,13 +30,13 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous write scope, authority, acceptance contract, or decisive production basis -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer-only knowledge?
 2. Can they install, open, or start the deliverable using the stated procedure rather than hidden setup knowledge?
 3. Can they complete the core task without developer assistance or implementation knowledge?
-If any answer is `no` or `unverified`, keep the exact user-perspective gap explicit in the handoff. "Developer can run it" is not enough.
+If any answer is `no` or `unverified`, keep the exact user-perspective gap explicit in the completion carrier. "Developer can run it" is not enough.
 
 ## Preconditions
 - Use only after team-lead assigns bounded developer-owned production scope.
@@ -49,7 +49,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, bounded development production surface, source-of-truth, material closure row, disposition path, consumer/recompute path, and acceptance oracle are inferable without changing the assignment boundary, reconstruct the working packet explicitly and mark inferred pieces as inference.
 - If write scope, authority, acceptance contract, production-phase basis, or decisive production basis is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
-- See `references/developer-lane-detail.md` for packet field tables, SKILL-AUTH detail, specialist matrix, handoff-completeness detail, and defect-fix execution detail.
+- See `references/developer-lane-detail.md` for packet field tables, SKILL-AUTH detail, specialist matrix, completion-completeness detail, and defect-fix execution detail.
 
 ## Escalation Triggers
 - These boundaries are modules:
@@ -79,7 +79,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
   - downstream review owner is explicit
   - downstream proof owner is explicit
   - downstream acceptance owner is explicit
-- Carry the trigger basis in the handoff.
+- Carry the trigger basis in the completion carrier.
 - Send `scope-pressure` when the trigger can be resolved by:
   - bounded split
   - replanning
@@ -145,17 +145,17 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - For governance patch edits, consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
 - If the assigned governance target is unconsumed, return `scope-pressure` unless the same bounded change makes it consumed.
 - Review, proof, and validation work remain explicit owning-lane surfaces.
-### 6. Pre-Handoff Integrity
+### 6. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
 - Run producer self-review cycles on the changed surface immediately on production completion by trying to break or disprove the changed surface across request fit, target intent, production craft baseline, selected skill lenses, and normal/failure path defects. Confirmation-only self-review is invalid.
-- Correct bounded developer-owned defects found by each producer self-review pass before handoff when owner, phase, deliverable shape, and acceptance chain stay unchanged.
+- Correct bounded developer-owned defects found by each producer self-review pass before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
 - Repeat producer self-review while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
-- Handoff only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
+- Complete only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
 - Producer self-review never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
+- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the developer completion transport; team-lead still owns synthesis `SV-RESULT`.
-### 7. Handoff
+### 7. Completion
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`. Carry `PRODUCER-SELF-REVIEW-PASS` (defeater lenses applied, defects found and fixed in-pass, final-pass convergence) and `LANE-LOCAL-SV-RESULT` (mode, verified surface, verification basis, claim strength, allowed next action) as named blocks.
@@ -165,11 +165,11 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - This lets team-lead route research, setup, packet correction, or another owner and return execution to developer.
 - Global route, acceptance pipeline, and staffing shape changes use `scope-pressure` or `hold|blocker`.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
+- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
 - If procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
-- See `references/developer-lane-detail.md` for developer-specific handoff detail.
+- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
+- See `references/developer-lane-detail.md` for developer-specific completion detail.
 
 ## Changeset Separation
 - Keep mixed change types separable by owner, boundary, or verification surface.
@@ -182,15 +182,15 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Inherited violations are observations unless the packet explicitly includes refactoring.
 - Preserve the established architecture unless the dispatch explicitly authorizes boundary change.
 - Production craft closes the producer-owned mechanism: domain meaning, component responsibility, interface/data contract, state transition, error path, and receiver-flow coherence are explicit when material.
-- User-facing production keeps entry path, core workflow, failure visibility, and downstream proof or acceptance handoff explainable from the changed surface.
+- User-facing production keeps entry path, core workflow, failure visibility, and downstream proof or acceptance completion explainable from the changed surface.
 - Material quality attributes such as security, accessibility, performance, observability, and recoverability are implemented, bounded by packet scope, or kept as explicit open surfaces proportional to risk.
 - Developer does not self-certify these qualities as review, proof, or acceptance; it makes the production basis inspectable for the owning downstream lanes.
 
 ## Active Communication Protocol
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
-- Completion uses `handoff` or `completion` only for converged developer-owned output.
+- Completion uses `completion` only for converged developer-owned output.
 
 ## Resolve Next Owner And Action
-- Converged developer-owned output opens team-lead synthesis through the completion-grade handoff path.
+- Converged developer-owned output opens team-lead synthesis through the completion-grade path.
 - Developer-owned open surfaces open correction, blocker routing, proof routing, or review routing through the named next owner/action.

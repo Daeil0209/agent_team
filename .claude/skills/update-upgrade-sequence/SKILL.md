@@ -121,7 +121,7 @@ Skill names remain only when a packet, route, or activation path needs them.
 - Treat rule, skill, settings, and hook changes as governance-sensitive by default.
 - Runtime enforcement expansion requires `references/update-checks.md` Hook-Last preflight plus explicit operator approval before execution.
 - Destructive, security-sensitive, externally committed, or operator-policy-choice actions require operator approval before modification.
-- Reviewed non-destructive governance changes proceed through `.claude/skills/self-growth-sequence/SKILL.md` `Change Sequence` Step 5b `Execution Gate`.
+- Reviewed non-destructive governance changes proceed through `Skill(self-growth-sequence)` `Change Sequence` Step 5b `Execution Gate`.
 - Sandbox filesystem approval is technical permission, not governance approval.
 
 ## Resolve Next Owner And Action

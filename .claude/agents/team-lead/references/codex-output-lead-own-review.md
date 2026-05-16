@@ -2,42 +2,43 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-4 Codex MCP independent-review output or same-boundary correction; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-4 configured independent-review output or same-boundary correction; Reference Binding; Procedure And Ownership"
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
-# team-lead: Codex-Output Lead Own-Review Discipline
+# team-lead: Configured-Review Output Lead Own-Review Discipline
 
 ## Purpose
-Use this reference when Codex MCP independent-review output or same-boundary correction output risks being treated as convergence without same-pass team-lead own-review.
+Use this reference when configured independent-review output or same-boundary correction output risks being treated as convergence without same-pass team-lead own-review.
+The current configured independent-review output source is Codex MCP unless the tool owner is explicitly migrated.
 
 ## Consume When
-- Codex MCP independent-review output shapes planning, artifact judgment, review, redesign, or correction.
+- Configured independent-review output shapes planning, artifact judgment, review, redesign, or correction.
 - A same-boundary correction pass repeats after Codex input.
-- Team-lead is about to accept Codex consensus, relay Codex output, or carry forward prior own-review.
+- Team-lead is about to accept configured-review consensus, relay configured-review output, or carry forward prior own-review.
 
 ## Required Output
 Record:
-- Codex pass identity
+- configured-review pass identity
 - same-pass team-lead own-review basis
 - material specialist skills consumed
-- accepted Codex points
-- rejected Codex points
-- unresolved Codex review gaps
+- accepted configured-review points
+- rejected configured-review points
+- unresolved configured-review gaps
 
 ## Stop
 Stop before positive freeze until same-pass team-lead own-review is present.
 Stop before convergence until same-pass team-lead own-review is present.
-Stop before accepting Codex agreement when the governing reference only permits fail-open.
+Stop before accepting configured-review agreement when the governing reference only permits fail-open.
 Stop before relay until team-lead adjudicates the output.
 
 ## Resolve Next Owner And Action
 - A stopped freeze route opens same-pass team-lead own-review.
 - A stopped convergence route opens same-pass team-lead own-review.
-- A stopped Codex-agreement route opens governing-reference check.
+- A stopped configured-review agreement route opens governing-reference check.
 - A stopped relay route opens team-lead adjudication.
 
 ## Rules
-- Treat every same-boundary correction pass as a new Codex pass.
+- Treat every same-boundary correction pass as a new configured-review pass.
 - Satisfy own-review only with same-pass team-lead defect-seeking review that names accepted points, rejected points, and unresolved gaps.
 - Treat prior-pass own-review as non-current context.
 - Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
@@ -46,11 +47,11 @@ Stop before relay until team-lead adjudicates the output.
 - Prior carry-forward is non-current context only.
 - Landing confirmation is non-current context only.
 - Spot-check is non-current context only.
-- Codex-result relay is non-current context only.
+- Configured-review result relay is non-current context only.
 - Consensus wording is non-current context only.
 - Lawful fail-open applies only when the owning reference names it.
 - Rubber-stamp acceptance is a defect.
 - Unexplained rejection is a defect.
-- Codex-led relay is a defect.
+- Configured-review-led relay is a defect.
 - Consensus treatment is a defect.
 - Pre-owner carry-forward is a defect.

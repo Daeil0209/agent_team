@@ -49,8 +49,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - `notification-only carry-forward` stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
   - receipt-only messages
-  - control-only messages
-  - lifecycle-only messages
+  - cleanup-only messages
   - phase-transition-only messages
   - clarification-only messages
 - Artifact judgment ends the exclusion when it moves a boundary-change axis.

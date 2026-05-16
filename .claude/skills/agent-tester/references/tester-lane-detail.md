@@ -10,7 +10,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Tester Reference
 ## Contents
 - Auto-inject
-- Role-Spine Handoff
+- Role-Spine Completion
 - Control Packet Discipline
 - Tester Packet Detail
 - UI Intent Proof Matrix
@@ -19,26 +19,24 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Interaction Coverage
 - Human-Facing Checklist
 - Specialist Skill Loading
-- Tester Handoff Detail
+- Tester Completion Detail
 - Resolve Next Owner And Action
 
 ## Auto-inject
-false - load explicitly when packet detail, UI intent proof detail, interaction coverage, human-facing checklist detail, or handoff detail is needed.
+false - load explicitly when packet detail, UI intent proof detail, interaction coverage, human-facing checklist detail, or completion detail is needed.
 
-## Role-Spine Handoff
-`agents/tester.md` owns only the always-loaded tester charter, boundary, receipt trigger, stop rule, and proof-local completion duty. This reference owns detailed tester packet fields, UI intent proof matrix, tool-tier detail, interaction coverage, human-facing checklist, specialist skill rule, and handoff detail.
+## Role-Spine Completion
+`agents/tester.md` owns only the always-loaded tester charter, boundary, receipt trigger, stop rule, and proof-local completion duty. This reference owns detailed tester packet fields, UI intent proof matrix, tool-tier detail, interaction coverage, human-facing checklist, specialist skill rule, and completion detail.
 
 When a tester role or skill says "tester additions" or "tester detail", consume this file directly. Do not re-expand `agents/tester.md` into a packet-field catalog. Missing decisive proof detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless proof target, expectation, surface, environment basis, scenario scope, and decisive evidence basis are anchored in packet or artifact evidence.
 
-Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the tester-specific payload and proof discipline needed on top of those common contracts.
+Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the tester-specific payload and proof discipline needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only.
 - It does not replace an assignment-grade tester packet when new bounded proof work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
-- Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
+- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
+- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Tester Packet Detail
 - Consequential tester packets must carry these fields explicitly:
@@ -153,8 +151,8 @@ Tester lane evaluation selects and applies materially relevant specialist lenses
 - Log and runtime-observation proof support: `log-based-qa`.
 Specialist lenses complement tester execution authority and do not replace user-surface proof.
 
-## Tester Handoff Detail
-- In completion-grade handoff, keep these tester-specific fields explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface:
+## Tester Completion Detail
+- In completion-grade completion, keep these tester-specific fields explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface:
   - `TEST-STATE`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
@@ -174,17 +172,17 @@ Specialist lenses complement tester execution authority and do not replace user-
 - `matched` is reserved for true contract alignment on that exact surface.
 - `TEST-STATE: ready` requires every assigned proof row to have an explicit proof classification; it does not turn disproven, blocked, indirect-only, or uncovered rows into passing evidence.
 - Direct-required executable user-facing rows need direct proof, executed closure-defect probe, and retained postcondition evidence; indirect proof can support diagnosis or narrowing only.
-- User-ready, reliability, or workflow-completion handoff needs material hard-test probe status; absent hard-test evidence narrows the proof claim to normal-path or smoke coverage.
-- For a Windows primary operator surface, handoff names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
-- For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the handoff or evidence anchor.
+- User-ready, reliability, or workflow-completion completion needs material hard-test probe status; absent hard-test evidence narrows the proof claim to normal-path or smoke coverage.
+- For a Windows primary operator surface, completion names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
+- For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the completion or evidence anchor.
 - If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` according to the contradiction and explain it in `OPEN-SURFACES` instead of silently mutating the validator basis.
 
 ## Resolve Next Owner And Action
 - `execute` opens tester-owned proof work.
 - `reconstruct-with-inference` opens tester-owned proof work with marked inference.
-- Directly proven surface opens tester handoff.
-- Disproven surface opens proof-failure handoff.
+- Directly proven surface opens tester completion.
+- Disproven surface opens proof-failure completion.
 - Blocked proof surface opens `scope-pressure` or `hold|blocker`.
 - Missing decisive tool path opens bounded tool discovery or setup route through team-lead.
 - Untruthful validator contract opens `TEST-STATE: hold` or `TEST-STATE: blocked`.
-- Completed proof handoff opens reviewer, validator, correction owner, or team-lead synthesis by frozen route.
+- Completed proof completion opens reviewer, validator, correction owner, or team-lead synthesis by frozen route.

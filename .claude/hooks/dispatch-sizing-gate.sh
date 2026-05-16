@@ -214,8 +214,8 @@ if [[ "$_is_sharded_researcher" == "true" && -n "$SHARDED_TARGET_NAME" ]]; then
   fi
 
   if worker_is_idle_pending "$SHARDED_TARGET_NAME"; then
-    # Lifecycle-pending is recoverable handoff debt.
-    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$SHARDED_TARGET_NAME")"
+    # Cleanup-pending is recoverable completion debt.
+    emit_dispatch_warning "sharded researcher agent '${SHARDED_TARGET_NAME}' has completion-grade output pending cleanup decision; $(idle_pending_recovery_step "$SHARDED_TARGET_NAME")"
     exit 0
   fi
 fi
@@ -232,8 +232,8 @@ if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "unknown" ]]; then
   fi
 
   if [[ "$_is_sharded_researcher" != "true" ]] && worker_is_idle_pending "$TARGET_NAME"; then
-    # Lifecycle-pending is recoverable handoff debt.
-    emit_dispatch_warning "agent '${TARGET_NAME}' has completion-grade output pending lifecycle decision; $(idle_pending_recovery_step "$TARGET_NAME")"
+    # Cleanup-pending is recoverable completion debt.
+    emit_dispatch_warning "agent '${TARGET_NAME}' has completion-grade output pending cleanup decision; $(idle_pending_recovery_step "$TARGET_NAME")"
     exit 0
   fi
 fi
@@ -248,12 +248,12 @@ if [[ "$STANDBY_COUNT" =~ ^[0-9]+$ ]] && (( STANDBY_COUNT >= 1 )); then
   fi
 
   if acceptance_follow_on_can_proceed "$STANDBY_SUMMARY" "$TARGET_LANE"; then
-    emit_dispatch_warning "allowing '${TARGET_LANE}' acceptance follow-on on work-surface '${DISPATCH_WORK_SURFACE}' despite standby overlap (${STANDBY_SUMMARY}). Upstream completion-grade handoff exists; keep ownership explicit."
+    emit_dispatch_warning "allowing '${TARGET_LANE}' acceptance follow-on on work-surface '${DISPATCH_WORK_SURFACE}' despite standby overlap (${STANDBY_SUMMARY}). Upstream completion-grade output exists; keep ownership explicit."
     exit 0
   fi
 
   if sharded_researcher_follow_on_can_proceed "$STANDBY_SUMMARY" "$TARGET_LANE" "$SHARDED_TARGET_NAME" "$TARGET_SHARD_BOUNDARY"; then
-    emit_dispatch_warning "allowing sharded researcher fan-out on work-surface '${DISPATCH_WORK_SURFACE}' despite standby overlap (${STANDBY_SUMMARY}). Distinct SHARD-BOUNDARY values and completion-grade handoff are present; keep ownership explicit."
+    emit_dispatch_warning "allowing sharded researcher fan-out on work-surface '${DISPATCH_WORK_SURFACE}' despite standby overlap (${STANDBY_SUMMARY}). Distinct SHARD-BOUNDARY values and completion-grade output are present; keep ownership explicit."
     exit 0
   fi
 

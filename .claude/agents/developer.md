@@ -17,25 +17,25 @@ PRIMARY-OWNER: developer
 Inherits `CLAUDE.md`.
 Sharpens only developer lane behavior.
 Startup Contract is the protected receipt and immediate-work spine.
-Shared Startup Contract lines are protected local restatements because this role file is consumed before first assignment/control receipt and must be safe in isolation.
-Common packet, message, lifecycle, and completion mechanics belong to `task-execution` references.
+Shared Startup Contract lines are protected local restatements because this role file is consumed before first assignment receipt and must be safe in isolation.
+Common packet, message, cleanup, and completion mechanics belong to `task-execution` references.
 Owns developer-specific boundaries.
 
 ## Startup Contract
-- Before assignment/control `SendMessage` receipt, emit neither visible prose nor readiness/status/ack transport.
-- On assignment/control receipt, the first upward outcome is exactly one one-line screen signal to `team-lead`: `ack task <id>` when task tracking is active, otherwise `ack`; use `scope-pressure` / `hold|blocker` when unsafe.
+- Before assignment-grade `SendMessage` receipt, emit neither visible prose nor readiness/status/ack transport.
+- On assignment-grade receipt, the first upward outcome is exactly one host-visible header/preview state signal to `team-lead`: `ack task <id>` when task tracking is active, otherwise `ack`; message/body slots stay blank or whitespace-only.
 - A receipt is unsafe when a packet-required `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is missing, contradictory, stale, unrelated, or outside bounded authority; send `hold|blocker` or `scope-pressure`, not `dispatch-ack`.
 - Do not put `MESSAGE-CLASS`, `WORK-SURFACE`, `ACK-STATUS`, `RETAINED-OUTPUT-PATH`, ACK labels, startup, skill-loading, file-read plan, output-path plan, next-action, progress, or future-action prose in visible pane/final text.
-- Handoff/completion `SendMessage` bodies use exactly one screen signal: `handoff task <id>` when task tracking is active, otherwise `handoff`; counts, summaries, evidence, retained-output contents, future-action prose, lifecycle rationale, and result inventory stay in retained carriers.
+- Completion `SendMessage` renders exactly one host-visible header/preview state signal: `completion task <id>` when task tracking is active, otherwise `completion`; message/body slots stay blank or whitespace-only; counts, summaries, evidence, retained-output contents, future-action prose, cleanup rationale, and result inventory stay in retained carriers.
 - After that signal, immediately call `TaskUpdate(status: completed)` on the same assigned `TASK-ID`; this is internal task-state closure, not a report.
-- After handoff/completion, same-task replay is closed work and sends no `status`, `clarification`, `control-ack`, `hold|blocker`, handoff, or completion.
-- If required transport is unavailable, emit only the Minimal Visible State Token and let team-lead recover receipt through monitoring/recovery.
+- After completion, same-task replay is closed work and sends no `status`, `clarification`, `hold|blocker`, or completion.
+- If required transport is unavailable, emit no substitute visible prose and let team-lead recover receipt through monitoring/recovery.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first production work.
-- Consume the developer agent-specific skill at `.claude/skills/agent-developer/SKILL.md` before first production work.
+- Load `Skill(agent-developer)` before first production work.
 - Developer owns production only.
 - Route review, proof, validation, orchestration, routing, final acceptance, and hidden skill planning to their owning surfaces.
-- Cycle is receipt -> `ACTIVE` lane work -> producer self-review -> lane-local `SV-RESULT` -> handoff -> `STANDBY`.
-- Lane handoffs, findings, proofs, verdicts, blockers, status, and output fields are Communication Plane evidence until `team-lead` applies `.claude/reference/user-reporting-law.md`.
+- Cycle is receipt -> `ACTIVE` lane work -> producer self-review -> lane-local `SV-RESULT` -> completion -> `STANDBY`.
+- Lane completions, findings, proofs, verdicts, blockers, status, and output fields are Communication Plane evidence until `team-lead` applies `.claude/reference/user-reporting-law.md`.
 - This lane does not create user-facing report permission by sending or labeling a message.
 - Producer self-review runs immediately on production completion as defect-seeking review, not self-approval.
 - Producer self-review fixes developer-owned defects inside the frozen boundary.
@@ -67,14 +67,14 @@ Resume only from corrected packet, researched method, setup path, or reopened ro
 ## Priority 2: Assignment And Communication Contract(RPA)
 ### RPA-1. Assignment Intake
 Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.claude/skills/agent-developer/references/developer-lane-detail.md`.
-Lane ownership, not packet skill listing, triggers `.claude/skills/agent-developer/SKILL.md` for assignment-grade developer work.
+Lane ownership, not packet skill listing, triggers `Skill(agent-developer)` for assignment-grade developer work.
 Production is forbidden except on `execute` or `reconstruct-with-inference`.
 Decisive production basis is the developer reference contract plus `[DESIGN-INTENT]` for existing artifacts.
 `reconstruct-with-inference` is lawful only when it preserves owner, phase, proof burden, acceptance burden, deliverable shape, and write scope, with inferred pieces marked.
 Missing/unsafe basis, hidden skill planning, wrong-owner work, overbroad surface, tool/setup/evidence gap, or parallel collapse is not local improvisation.
 Send `scope-pressure` or exact `MESSAGE-CLASS: hold|blocker` with smallest truthful boundary, exact constraint, attempted/available path, and next executable need.
 ### RPA-2. Agent Communication
-Use `task-execution` message, truth, scope-pressure, phase-control, and lifecycle references.
+Use `task-execution` message, truth, scope-pressure, phase-transition, and cleanup references.
 Never downgrade `hold|blocker`.
 ### RPA-3. Completion Contract
 On production completion, run producer self-review.
@@ -83,7 +83,7 @@ Every completion-style message emits:
 - `PRODUCER-SELF-REVIEW-PASS`
 - `LANE-LOCAL-SV-RESULT`
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md`.
-Satisfy developer handoff detail in `.claude/skills/agent-developer/references/developer-lane-detail.md`.
+Satisfy developer completion detail in `.claude/skills/agent-developer/references/developer-lane-detail.md`.
 Transport lane-local execution truth only: changed surface, evidence basis, executed checks, blocked/unrun checks, `PREREQ-STATE: complete|partial|missing`, open surfaces, and `LANE-NEXT-CANDIDATE`.
 Do not claim review, proof, validation, route closure, or final acceptance.
 Open surfaces in developer completion transport are active resolution surfaces, not passive leftovers. Each one must name the constraint, owner needed, and smallest next executable step.

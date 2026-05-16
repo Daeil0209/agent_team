@@ -1,4 +1,4 @@
-# Work-Planning Codex MCP Independent Review
+# Work-Planning Configured Independent Review (Codex MCP Adapter)
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
@@ -6,8 +6,11 @@ LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
-Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs required or risk-triggered Codex critique.
-Pre-`work-planning` Codex output is not planning evidence.
+This reference owns the currently configured independent-review tool path.
+Codex MCP is the current tool adapter, not doctrine authority.
+When this reference requires an available configured reviewer, the active tool is `mcp__codex__codex`.
+Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs required or risk-triggered independent critique.
+Pre-`work-planning` external review output is not planning evidence.
 
 ## Contents
 - Trigger
@@ -20,8 +23,8 @@ Pre-`work-planning` Codex output is not planning evidence.
 
 ## Trigger
 Required trigger evaluation:
-- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate this reference.
-- No material Codex review trigger records `skipped:no-material-codex-review-trigger:<basis>`.
+- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate whether configured independent review is material.
+- No material independent-review trigger records `skipped:no-material-independent-review-trigger:<basis>`.
 - Codex MCP access failure records `fail-open:*`.
 
 Risk-triggered:
@@ -29,21 +32,21 @@ Risk-triggered:
 - lead-local can substitute for a configured lane
 - planning target is `team-dispatch-readiness-plan`
 - parallel fit affects correctness, bottleneck risk, runtime footprint, or staffing
-- workflow, sequence, acceptance path, packet readiness, proof path, tool/setup, lifecycle, or parallel grouping is material
+- workflow, sequence, acceptance path, packet readiness, proof path, tool/setup, cleanup, or parallel grouping is material
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or owner-evidence route
 
-Skip only for light, receipt/control/status/lifecycle/clarification-only, or no-trigger consequential work.
-For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-codex-review-trigger:<basis>` after evaluating this section.
+Skip only for light, receipt/status/cleanup/clarification-only, or no-trigger consequential work.
+For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-independent-review-trigger:<basis>` after evaluating this section.
 Codex MCP tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
 
 ## Authority
-Codex MCP performs independent structural quality review.
-Codex output is evidence, not authority.
+The configured independent reviewer performs independent structural quality review.
+Configured-review output is evidence, not authority.
 Review route, owner, workflow, parallel-fit, readiness, skill-map, acceptance path, and needless-user-gate defects from the user's usable-result perspective.
 Choose the lawful route with less user setup, decision burden, debugging, rework, and interpretation burden.
 
-Codex never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
-`CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead handling of the independent Codex MCP review trigger, adjudication, or fail-open truth; Codex output alone never satisfies it.
+The configured independent reviewer never blocks, dispatches, validates, accepts, logs in, changes files, or replaces `SV-PLAN`/`SV-RESULT`.
+`CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for configured independent-review trigger handling, adjudication, or fail-open truth; external review output alone never satisfies it.
 team-lead owns the plan, accepted revisions, rejected points, and final route.
 
 ## Tool Discipline
@@ -113,7 +116,7 @@ Parameterizable uncertainty is not a blocker.
 4. Retry one first-use connection miss before final fail-open.
 5. Record `fail-open:<reason>` after exhausted MCP/tool/auth/quota/timeout/parse failure.
 
-Every valid point returned by a successful Codex MCP review requires team-lead adjudication before the planning basis is complete.
+Every valid point returned by a successful configured independent review requires team-lead adjudication before the planning basis is complete.
 - Accept only by changing the affected planning field or blocker basis.
 - Reject only by citing doctrine, user instruction, evidence, or frozen request basis.
 - Generic "noted" rationale is invalid.
@@ -124,12 +127,12 @@ Freeze one:
 - `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:accepted=<n>;rejected=<n>;dropped=<n>`
 - `CODEX-INDEPENDENT-REVIEW-BASIS: fail-open:<reason>`
 
-Post-route-freeze Codex MCP independent-review expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
+Post-route-freeze configured independent-review expansion requires a separate governance change with measured benefit, authority/footprint review, and owner path.
 
 ## Resolve Next Owner And Action
-- Accepted Codex points update the affected planning field or blocker basis.
-- Rejected Codex points record cited doctrine, user instruction, evidence, or frozen request basis.
-- Exhausted Codex review attempt records `CODEX-INDEPENDENT-REVIEW-BASIS: fail-open:<reason>`.
-- No-trigger Codex review path records `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`.
+- Accepted configured-review points update the affected planning field or blocker basis.
+- Rejected configured-review points record cited doctrine, user instruction, evidence, or frozen request basis.
+- Exhausted configured-review attempt records `CODEX-INDEPENDENT-REVIEW-BASIS: fail-open:<reason>`.
+- No-trigger configured-review path records `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`.
 - Unadjudicated valid points keep `work-planning` open.
-- Post-route-freeze Codex review expansion opens the owning governance change path.
+- Post-route-freeze configured-review expansion opens the owning governance change path.

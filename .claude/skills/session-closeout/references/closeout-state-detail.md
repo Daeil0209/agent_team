@@ -14,30 +14,31 @@ false — load explicitly when detailed closeout state is needed.
 - `closeout_initiated`: ISO8601 timestamp
 - `validation_ownership`: string | "not-needed"
 - `acceptance_evidence`: string | "not-needed" | null
-- `agent_lifecycle_resolved`: boolean
+- `agent_cleanup_resolved`: boolean
 - `runtime_cleaned`: boolean
 - `continuity_captured`: boolean
 - `closeout_state`: "clean" | "hold" | "partial"
 ## not-needed Conditions
 `validation_ownership: not-needed` is valid when the session produced zero implementation deliverable and one condition applies:
 - Session performed only research, Q&A, or read-only analysis
-- Session performed only runtime setup, teardown, monitoring, or lifecycle-control operations
+- Session performed only runtime setup, teardown, monitoring, or cleanup operations
 Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-only`.
 ## Hold Conditions
 `closeout_state: hold` when:
 - Active agent has unresolved handoff
 - Implementation deliverable was produced but not validated
 - User explicitly requested validation that was not completed
-## Agent Lifecycle Resolution
+## Agent Cleanup Resolution
 Before closeout completion, each teammate must be resolved as structured shutdown path, terminated, `STANDBY` with an owning validation or correction route, or non-live residue.
 During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
 During active closeout, `TeamDelete` proceeds without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
-A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.
+A roster entry with no live agent-process proof is residue, not a live teammate. `TeamDelete` uses live-process proof only.
+Structured shutdown request shape is owned by `.claude/skills/task-execution/references/message-classes.md`.
 
 ## Resolve Next Owner And Action
 - Clean closeout state returns to session-closeout completion.
 - Hold closeout state reports `HOLD` with residual owner and blocker.
 - Partial closeout state reports warning-bearing closeout.
-- Live teammate residue opens lifecycle resolution or warning-bearing closeout.
+- Live teammate residue opens shutdown resolution or warning-bearing closeout.
 - Validation debt returns to the owning validation or acceptance path.
 - Runtime cleanup debt returns to session-closeout teardown.

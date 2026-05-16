@@ -7,21 +7,19 @@ SOURCE-RULES: "RPA-6 Synthesis; Reference Binding; Procedure And Ownership"
 # team-lead: Synthesis Consume
 
 ## Purpose
-Use this reference when team-lead synthesizes lane outputs or decides redispatch after handoff.
+Use this reference when team-lead synthesizes lane outputs or decides redispatch after completion.
 
 ## Consume When
-- A lane sends:
-  - `MESSAGE-CLASS: handoff`
-  - `MESSAGE-CLASS: completion`
+- A lane sends `MESSAGE-CLASS: completion`.
 - Multiple lane outputs must be reconciled.
 - A strengthened synthesis or redispatch might be reported.
 - FAR `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
 
 ## Screen Boundary
-Lane `handoff` and `completion` transports are not user reports even when Claude Code renders them on screen.
+Lane `completion` transports are not user reports even when Claude Code renders them on screen.
 Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
-Arrival opens retained-carrier consumption, synthesis, contradiction handling, lifecycle control, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
-If no admitted user report exists, visible team-lead prose after a lane transport is limited to the Minimal Visible State Token from `.claude/reference/user-reporting-law.md`.
+Arrival opens retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
+If no admitted user report exists after a lane transport, team-lead emits no pane/final prose.
 
 ## All-Required-Output Barrier
 For a multi-lane, multi-shard, reviewer fan-out, proof fan-out, or validator-routed route, team-lead freezes the required output set from the active plan, dispatch record, task state, or route packet.
@@ -54,7 +52,7 @@ Record:
 - applicable per-claim basis when synthesis emits findings, patterns, rankings, defect labels, patch recommendations, or redispatch basis
 
 ## Verification Gate
-Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead loads `.claude/skills/self-verification/SKILL.md` and executes `SV-RESULT` Steps 0-5 on the exact synthesized claim.
+Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` Steps 0-5 on the exact synthesized claim.
 Team-lead records the internal `SELF-VERIFICATION:` block on that claim.
 Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification when available.
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
@@ -97,7 +95,7 @@ Failed per-claim basis routes to claim narrowing, finding reclassification, `OPE
 - A stopped `[RETRO-APPLY]` route opens affected-surface classification.
 
 ## Allowed Inputs
-Synthesis is allowed only from `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`.
+Synthesis is allowed only from `MESSAGE-CLASS: completion`.
 Consume the completion-handoff common spine and any lane-specific fields needed for the synthesized claim.
 For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and common finding basis items.
 
@@ -134,6 +132,6 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - `SV-RESULT` on strengthened synthesis verifies the per-claim basis actually used for every emitted synthesis claim.
 - A generic `SV-RESULT` label without per-claim basis verification is stale or narrower than the outgoing synthesis claim.
 - If synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]`.
-- Apply `.claude/skills/work-planning/references/cross-continuity.md` before consuming parallel-lane handoffs.
-- Handoff evidence of parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch opens `session-boot` Monitoring Sequence reassessment before redispatch.
+- Apply `.claude/skills/work-planning/references/cross-continuity.md` before consuming parallel-lane completions.
+- Completion evidence of parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch loads `Skill(session-boot)` Monitoring Sequence reassessment before redispatch.
 - After FAR `FINAL-REJECT`, next synthesis consumes assigned-validator correction packet and team-lead-classified route before next FAR or workflow `Complete`.

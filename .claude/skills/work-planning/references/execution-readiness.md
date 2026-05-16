@@ -8,7 +8,7 @@ auto-inject: false
 
 `EXECUTION-READINESS-BASIS` is the planning-level readiness contract.
 It does not assemble packets or prove results.
-It records whether the frozen next owner can execute the next action without re-deriving omitted route, packet, proof, setup, lifecycle, parallel, or acceptance facts.
+It records whether the frozen next owner can execute the next action without re-deriving omitted route, packet, proof, setup, cleanup, parallel, or acceptance facts.
 
 For team-routed or dispatch-capable paths, readiness must cover:
 - packet schema floor

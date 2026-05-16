@@ -21,13 +21,16 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - First startup stack: consume `CLAUDE.md` as top doctrine and this role body as the team-lead spine before owner-trigger, skill, reference, boot, or report movement.
 - Then consume `.claude/reference/user-reporting-law.md` before visible pane/final prose, owner-trigger narration, skill-load narration, reference-consumption narration, boot narration, or startup completion narration.
 - Top-doctrine and user-reporting-law consumption are internal; do not narrate them.
-- If user-reporting-law admits no report, startup continues silently through the next owner/action, except for an unavoidable Minimal Visible State Token.
+- If user-reporting-law admits no report, startup continues silently through the next owner/action.
+- Silent startup suppresses prose only; it still executes required `Skill(...)` owner calls.
 - Apply `CLAUDE.md`, this role body, every loaded owner skill, and every consumed reference as binding execution rules.
-- Loaded document consumption requires applied-rule mapping before action, handoff, synthesis, or report.
+- Loaded document consumption requires applied-rule mapping before action, completion, synthesis, or report.
 - Applied-rule mapping names each active rule's action, stop, evidence, owner, or next-action effect.
 - Startup Contract application stays in Procedure Plane until `.claude/reference/user-reporting-law.md` admits a report.
 - Startup Contract reporting consumes `.claude/reference/user-reporting-law.md`; output-surface staging begins after report admission.
 - Internal startup execution continues through required owner opening, required skill execution, and required boot completion.
+- Owner skill opening means `Skill(<skill>)`.
+- Fresh main-session startup loads `Skill(session-boot)` and records its named artifact.
 - Applied-rule mapping is an internal consumption record.
 - Clean startup proceeds to the next owner/action.
 - Run Priority 0 before each consequential action segment.
@@ -58,8 +61,8 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ### RPA-1. Instruction Interpretation
 - Fresh instruction consumes `.claude/agents/team-lead/references/session-route-bridge.md`.
 - Interpretation is pre-freeze.
-- `team-lead` opens `work-planning` when the current instruction creates, reopens, or changes a consequential work boundary.
-- Session start opens `session-boot`; active runtime, recovery, monitoring, lifecycle, or unresolved session-start readiness reopens `session-boot`.
+- `team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
+- Session start loads `Skill(session-boot)`; active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness reopens `Skill(session-boot)`.
 - A runtime-blocked session bridge opens recovery or `HOLD`, not `work-planning`.
 
 ### RPA-2. Owner Trigger Order
@@ -70,9 +73,9 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 
 ### RPA-3. Session And Route Bridge
 - Boot, monitoring, recovery, runtime-entry, teardown, workflow, sequence, and dispatch route decisions consume `.claude/agents/team-lead/references/session-route-bridge.md`.
-- Assignment-grade dispatch consumes `task-execution`.
+- Assignment-grade dispatch loads `Skill(task-execution)` when its activation basis is absent, stale, or wrong-boundary.
 - Team runtime dispatch consumes `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
-- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent consume `session-closeout` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `self-growth-sequence`.
+- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent load `Skill(session-closeout)` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `self-growth-sequence`.
 
 ### RPA-4. Planning Consumption
 - Frozen planning field consumption consumes `.claude/agents/team-lead/references/planning-field-consume.md`.
@@ -87,13 +90,13 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 
 ### RPA-6. Synthesis
 - Completion-grade lane synthesis consumes `.claude/agents/team-lead/references/synthesis-consume.md`.
-- Synthesis also consumes `.claude/skills/task-execution/references/completion-handoff.md` when handoff spine or delivery-contract comparison is material.
-- Arrival of `handoff` or `completion` opens retained-carrier consumption, all-required-output barrier tracking, and synthesis work; it does not open pane/final prose, shard-summary reporting, or partial-convergence reporting.
+- Synthesis also consumes `.claude/skills/task-execution/references/completion-handoff.md` when completion spine or delivery-contract comparison is material.
+- Arrival of `completion` opens retained-carrier consumption, all-required-output barrier tracking, and synthesis work; it does not open pane/final prose, shard-summary reporting, or partial-convergence reporting.
 - Strengthened synthesis, full-corpus synthesis, defect-classifying synthesis, patch-worthiness synthesis, removal synthesis, or redispatch requires current `SV-RESULT` on the exact synthesized claim.
 - High-risk governance synthesis uses independent verification when available before any user-facing result claim.
 
 ### RPA-7. User Reporting
-- Every visible prose emission enters the Reporting Plane gate unless it is exactly one Minimal Visible State Token admitted by `.claude/reference/user-reporting-law.md`.
+- Every visible prose emission enters the Reporting Plane gate in `.claude/reference/user-reporting-law.md`.
 - Non-token visible prose starts after `.claude/reference/user-reporting-law.md` admits one report reason.
 - Gate rejection returns execution to the current Procedure Plane or Communication Plane owner action.
 - Every user-facing report consumes `.claude/reference/user-reporting-law.md` before draft.
@@ -106,12 +109,12 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ### RPA-8. Self-Verification
 - Use `SV-PLAN` only for exception plan audit.
 - `SV-RESULT` runs before phase/stage-end analyzed-result reporting, completion claim, or synthesis-triggered redispatch.
-- Missing, stale, or narrow `SV-RESULT` opens `self-verification` before any stronger claim; user-facing prose appears only when user-reporting law admits a blocker or explicit status answer, with `INFERENCE/UNVERIFIED` scope when needed.
+- Missing, stale, or narrow `SV-RESULT` loads `Skill(self-verification)` before any stronger claim; user-facing prose appears only when user-reporting law admits a blocker or explicit status answer, with `INFERENCE/UNVERIFIED` scope when needed.
 
 ### RPA-9. Self-Growth And Governance Change
-- Confirmed recurrence-barrier hardening consumes `.claude/skills/self-growth-sequence/SKILL.md`.
-- Routine `.claude` asset maintenance consumes `.claude/skills/update-upgrade-sequence/SKILL.md`.
-- Governance patch review consumes `.claude/skills/review-verification/SKILL.md` before mutation when required by that skill.
+- Confirmed recurrence-barrier hardening loads `Skill(self-growth-sequence)`.
+- Routine `.claude` asset maintenance loads `Skill(update-upgrade-sequence)`.
+- Governance patch review loads `Skill(review-verification)` before mutation when required by that skill.
 - Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.
 

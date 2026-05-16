@@ -118,13 +118,14 @@ try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
   const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.message, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.content, TASK_START_TEXT_KEYS))
     .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const stateSignal = text.trim().replace(/\s+/g, " ");
-  if (/^(handoff|completion)(?: task [A-Za-z0-9._:-]+)?$/i.test(stateSignal)) process.exit(0);
+  if (/^completion(?: task [A-Za-z0-9._:-]+)?$/i.test(stateSignal)) process.exit(0);
   const messageClass = field(text, "MESSAGE-CLASS");
-  process.exit(messageClass === "handoff" || messageClass === "completion" ? 0 : 1);
+  process.exit(messageClass === "completion" ? 0 : 1);
 } catch {
   process.exit(1);
 }
@@ -159,11 +160,44 @@ function field(text, name) {
 }
 function governedPayloadText(toolInput) {
   const candidates = [
-    flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS).join("\n"),
     flattenText(toolInput.summary, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.message, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.content, TASK_START_TEXT_KEYS).join("\n"),
     flattenText(toolInput.description, TASK_START_TEXT_KEYS).join("\n"),
   ].map((chunk) => String(chunk || "").trim()).filter(Boolean);
   return candidates.find((chunk) => /(?:^|\n|\|)\s*-?\s*MESSAGE-CLASS\s*:/i.test(chunk)) || candidates.join("\n");
+}
+function stateSignalSourceCount(toolInput, signalRe) {
+  const chunks = [
+    flattenText(toolInput.summary, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.title, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.message, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.content, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.description, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.body, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.note, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.notes, TASK_START_TEXT_KEYS).join("\n"),
+  ].map((chunk) => String(chunk || "").trim().replace(/\s+/g, " ")).filter(Boolean);
+  return chunks.filter((chunk) => signalRe.test(chunk)).length;
+}
+function singleStateSignal(toolInput, signalRe) {
+  const chunks = [
+    flattenText(toolInput.summary, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.title, TASK_START_TEXT_KEYS).join("\n"),
+  ].map((chunk) => String(chunk || "").trim().replace(/\s+/g, " ")).filter(Boolean);
+  const signals = chunks.filter((chunk) => signalRe.test(chunk));
+  return signals.length === 1 ? signals[0] : "";
+}
+function bodySlotHasVisibleText(toolInput) {
+  const chunks = [
+    flattenText(toolInput.message, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.content, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.body, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.description, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.note, TASK_START_TEXT_KEYS).join("\n"),
+    flattenText(toolInput.notes, TASK_START_TEXT_KEYS).join("\n"),
+  ].map((chunk) => String(chunk || "").trim()).filter(Boolean);
+  return chunks.length > 0;
 }
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -183,7 +217,10 @@ try {
   ).toLowerCase();
   const rawText = text.trim();
   const hasLineBreak = /\r?\n/.test(rawText);
-  let ackPayloadOk = !hasLineBreak && /^ack(?: task [A-Za-z0-9._:-]+)?$/i.test(rawText);
+  const ackSignalRe = /^ack(?: task [A-Za-z0-9._:-]+)?$/i;
+  const ackSignal = singleStateSignal(toolInput, ackSignalRe);
+  const duplicateStateSignal = stateSignalSourceCount(toolInput, ackSignalRe) > 1;
+  let ackPayloadOk = !duplicateStateSignal && Boolean(ackSignal) && !bodySlotHasVisibleText(toolInput) && (!hasLineBreak || ackSignalRe.test(rawText));
   let effectiveClass = messageClass;
   if (ackPayloadOk) {
     effectiveClass = "dispatch-ack";
@@ -216,6 +253,59 @@ NODE
       return 1
       ;;
   esac
+}
+
+sendmessage_malformed_visible_state_signal_to_lead() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+
+  INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { firstNonEmptyString, flattenText } = require(process.env.HOOK_JSON_HELPERS);
+const KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+function normalize(value) {
+  return String(value || "").trim().replace(/\s+/g, " ");
+}
+function slotText(toolInput, key) {
+  if (!Object.prototype.hasOwnProperty.call(toolInput, key)) return "";
+  return normalize(flattenText(toolInput[key], KEYS).join("\n"));
+}
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const targetName = normalize(firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.recipient_name,
+    toolInput.recipientName,
+    toolInput.name,
+    toolInput.target_name,
+    toolInput.targetName,
+    toolInput.teammate_name,
+    toolInput.teammateName
+  )).toLowerCase();
+  if (!["", "team-lead", "lead", "supervisor"].includes(targetName)) process.exit(1);
+
+  const allSlots = ["summary", "title", "message", "content", "description", "body", "note", "notes"]
+    .map((key) => slotText(toolInput, key))
+    .filter(Boolean);
+  const headerSlots = ["summary", "title"]
+    .map((key) => slotText(toolInput, key))
+    .filter(Boolean);
+  const bodySlots = ["message", "content", "body"]
+    .concat(["description", "note", "notes"])
+    .map((key) => slotText(toolInput, key))
+    .filter(Boolean);
+  const stateRe = /^(ack|completion)(?: task [A-Za-z0-9._:-]+)?$/i;
+  const stateSignalSlots = allSlots.filter((slot) => stateRe.test(slot));
+  const headerStateSignalSlots = headerSlots.filter((slot) => stateRe.test(slot));
+  const bodyStateSignalSlots = bodySlots.filter((slot) => stateRe.test(slot));
+  if (stateSignalSlots.length > 1) process.exit(0);
+  if (stateSignalSlots.length === 1 && (headerStateSignalSlots.length !== 1 || bodySlots.length > 0 || bodyStateSignalSlots.length > 0)) process.exit(0);
+  if (allSlots.some((slot) => /(?:^|\n|\|)\s*-?\s*MESSAGE-CLASS\s*:\s*(dispatch-ack|completion)\b/i.test(slot))) process.exit(0);
+  process.exit(1);
+} catch {
+  process.exit(1);
+}
+NODE
 }
 
 
@@ -276,7 +366,8 @@ try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
   const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.message, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.content, TASK_START_TEXT_KEYS))
     .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const hasRequiredSkills = /(?:^|\n)\s*required-skills\s*:/i.test(text) ? "true" : "false";
@@ -404,7 +495,7 @@ worker_sendmessage_reopens_closed_task() {
   latest_class="${_closed_transport_fields[0]:-}"
   latest_task_id="$(printf '%s' "${_closed_transport_fields[2]:-}" | tr -d '[:space:]')"
   case "$latest_class" in
-    handoff|completion) ;;
+    completion) ;;
     *) return 1 ;;
   esac
   [[ -n "$latest_task_id" ]] || return 1
@@ -422,7 +513,8 @@ try {
   const toolInput = input.tool_input || {};
   const nested = toolInput.message && typeof toolInput.message === "object" ? toolInput.message : {};
   const text = flattenText(toolInput.summary, KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, KEYS))
+    .concat(flattenText(toolInput.message, KEYS))
+    .concat(flattenText(toolInput.content, KEYS))
     .concat(flattenText(toolInput.description, KEYS))
     .join("\n")
     .trim();
@@ -434,10 +526,10 @@ try {
     klass = "dispatch-ack";
     task = task || match[1] || "";
   }
-  match = state.match(/^(handoff|completion)(?: task ([A-Za-z0-9._:-]+))?$/i);
+  match = state.match(/^completion(?: task ([A-Za-z0-9._:-]+))?$/i);
   if (!klass && match) {
-    klass = match[1].toLowerCase();
-    task = task || match[2] || "";
+    klass = "completion";
+    task = task || match[1] || "";
   }
   const targetName = firstNonEmptyString(
     toolInput.to,
@@ -505,7 +597,8 @@ try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
   const text = flattenText(toolInput.summary, KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, KEYS))
+    .concat(flattenText(toolInput.message, KEYS))
+    .concat(flattenText(toolInput.content, KEYS))
     .concat(flattenText(toolInput.description, KEYS))
     .join("\n");
   const targetName = firstNonEmptyString(
@@ -549,13 +642,13 @@ NODE
   latest_class="${_lead_latest_fields[0]:-}"
   latest_task_id="$(printf '%s' "${_lead_latest_fields[2]:-}" | tr -d '[:space:]')"
   case "$latest_class" in
-    handoff|completion) ;;
+    completion) ;;
     *) return 1 ;;
   esac
   [[ "$latest_task_id" == "$outgoing_task_id" ]]
 }
 
-worker_taskupdate_completes_latest_handoff() {
+worker_taskupdate_completes_latest_completion() {
   [[ "$TOOL_NAME" == "TaskUpdate" ]] || return 1
   runtime_sender_session_is_worker "$SESSION_ID" || return 1
 
@@ -576,7 +669,7 @@ worker_taskupdate_completes_latest_handoff() {
   latest_class="${_taskupdate_latest_fields[0]:-}"
   latest_task_id="$(printf '%s' "${_taskupdate_latest_fields[2]:-}" | tr -d '[:space:]')"
   case "$latest_class" in
-    handoff|completion) ;;
+    completion) ;;
     *) return 1 ;;
   esac
   [[ -n "$latest_task_id" ]] || return 1
@@ -710,14 +803,6 @@ lead_sendmessage_monitoring_target_state() {
       printf 'blocked'
       return 0
       ;;
-    handoff)
-      if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-transport-missing'
-        return 0
-      fi
-      printf 'completed'
-      return 0
-      ;;
     completion)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$normalized_worker" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
         printf 'working-transport-missing'
@@ -761,7 +846,8 @@ try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
   const toolInput = input.tool_input || {};
   const text = flattenText(toolInput.summary, TASK_START_TEXT_KEYS)
-    .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.message, TASK_START_TEXT_KEYS))
+    .concat(flattenText(toolInput.content, TASK_START_TEXT_KEYS))
     .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
   const hasRequiredSkills = /(?:^|\n)\s*required-skills\s*:/i.test(text) ? "true" : "false";
@@ -799,9 +885,6 @@ NODE
 
   case "$message_class" in
     ""|status) ;;
-    handoff)
-      return 1
-      ;;
     completion)
       return 1
       ;;
@@ -1184,6 +1267,11 @@ if [[ -z "$TOOL_NAME" || -z "$SESSION_ID" ]]; then
   exit 0
 fi
 
+if sendmessage_malformed_visible_state_signal_to_lead; then
+  deny_tool_use "BLOCKED: malformed visible state signal. Put ack/completion only in the SendMessage header/preview; message/body slots must be blank or whitespace-only. Keep detail in task state or retained carriers."
+  exit 0
+fi
+
 mark_post_wp_action_after_planning
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
@@ -1214,31 +1302,32 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
   if [[ -n "$WORKER_NAME" ]] && worker_dispatch_ack_required "$WORKER_NAME"; then
     if sendmessage_is_first_receipt_outcome_to_lead; then
+      clear_worker_dispatch_ack_required "$WORKER_NAME"
       exit 0
     fi
     if reconcile_worker_dispatch_ack_from_transcript "$SESSION_ID" "$WORKER_NAME"; then
       exit 0
     fi
     if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be the one-line screen signal 'ack task <id>' when task tracking is active, otherwise 'ack'. Keep MESSAGE-CLASS, WORK-SURFACE, ACK-STATUS, paths, and packet detail in internal carriers. Use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be one host-visible header/preview state signal: 'ack task <id>' when task tracking is active, otherwise 'ack'. Message/body slots must be blank or whitespace-only. Keep MESSAGE-CLASS, WORK-SURFACE, ACK-STATUS, paths, and packet detail in internal carriers. Use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      deny_tool_use "BLOCKED: worker receipt is pending. Send 'ack task <id>' or 'ack' to team-lead before Skill, Read, Bash, discovery, proof, or lane work; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+      deny_tool_use "BLOCKED: worker receipt is pending. Send one host-visible header/preview 'ack task <id>' or 'ack' to team-lead before Skill, Read, Bash, discovery, proof, or lane work; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
-    deny_tool_use "BLOCKED: worker receipt is pending. Send 'ack task <id>' or 'ack' to team-lead before first lane work; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+    deny_tool_use "BLOCKED: worker receipt is pending. Send one host-visible header/preview 'ack task <id>' or 'ack' to team-lead before first lane work; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
     exit 0
   fi
   if worker_sendmessage_reopens_closed_task; then
-    deny_tool_use "BLOCKED: closed task already handed off. Same-task replay after handoff/completion must stay silent; team-lead consumes the retained carrier or sends distinct new assignment/reuse/reroute work."
+    deny_tool_use "BLOCKED: closed task already completed. Same-task replay after completion must stay silent; team-lead consumes the retained carrier or sends distinct new assignment/reuse/reroute work."
     exit 0
   fi
   if [[ "$TOOL_NAME" == "TaskUpdate" ]]; then
-    if worker_taskupdate_completes_latest_handoff; then
+    if worker_taskupdate_completes_latest_completion; then
       exit 0
     fi
-    deny_tool_use "BLOCKED: worker TaskUpdate is limited to immediate status=completed closure for the same TASK-ID after a valid handoff/completion signal."
+    deny_tool_use "BLOCKED: worker TaskUpdate is limited to immediate status=completed closure for the same TASK-ID after a valid completion signal."
     exit 0
   fi
   if completion_grade_sendmessage_missing_sv_result; then
@@ -1252,7 +1341,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     exit 0
   fi
   if lead_sendmessage_replays_completed_worker_task; then
-    deny_tool_use "BLOCKED: completed task replay. The target worker already handed off this TASK-ID and is STANDBY; consume the retained carrier or send distinct new assignment/reuse/reroute work with a new task basis."
+    deny_tool_use "BLOCKED: completed task replay. The target worker already completed this TASK-ID and is STANDBY; consume the retained carrier or send distinct new assignment/reuse/reroute work with a new task basis."
     exit 0
   fi
   if lead_sendmessage_is_monitoring_probe; then
@@ -1285,7 +1374,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         # Hard guard: active runtime dispatch/reuse must not bypass session-boot.
         if [[ "$(get_procedure_state_field "teamRuntimeState" "")" == "active" ]] \
             && [[ ! -f "$SB_LOADED_MARKER" ]]; then
-          deny_tool_use "BLOCKED: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-handoff agents to accumulate without lifecycle-control release. Next: Skill(session-boot) -> retry $TOOL_NAME."
+          deny_tool_use "BLOCKED: session-boot preflight incomplete. Detail: $TOOL_NAME on active team runtime (procedure-state.json teamRuntimeState=active) requires Skill(session-boot) load first per team-lead.md RPA-3. Monitoring Sequence cannot run without it, allowing ghost agents / stale agents / missed-completion agents to accumulate without reuse, recovery, or cleanup. Next: Skill(session-boot) -> retry $TOOL_NAME."
           exit 0
         fi
         # Hard guard: active team runtime requires addressable team-member Agent dispatch.
@@ -1303,7 +1392,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
           AGENT_TEAM_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '1p')"
           AGENT_NAME="$(printf '%s' "$AGENT_PARAMS" | sed -n '2p')"
           if [[ -z "$AGENT_TEAM_NAME" || -z "$AGENT_NAME" ]]; then
-            deny_tool_use "BLOCKED: team-agent-only mandate per task-execution/SKILL.md Step 2 Dispatch law. Detail: Agent dispatch on active team runtime (procedure-state.json teamRuntimeState=active) must include BOTH team_name AND name parameters so the spawned agent joins the team runtime as a member addressable via SendMessage by lane name. Standalone subagent shape or unaddressable shape bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination."
+            deny_tool_use "BLOCKED: team-agent-only mandate per Skill(task-execution) Step 2 Dispatch law. Detail: Agent dispatch on active team runtime (procedure-state.json teamRuntimeState=active) must include BOTH team_name AND name parameters so the spawned agent joins the team runtime as a member addressable via SendMessage by lane name. Standalone subagent shape or unaddressable shape bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination."
             exit 0
           fi
         fi

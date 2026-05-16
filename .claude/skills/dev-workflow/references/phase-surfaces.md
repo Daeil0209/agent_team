@@ -100,7 +100,7 @@ auto-inject: false
 - `DESIGN-ROW-IMPL-MATRIX` maps every Phase 2 design-stated entity, route, template, and `CORE-WORKFLOW-CLOSURE` row to an exact implementation path or `not-implemented:<frozen-defer-citation>`.
 - Silent omission of any design row blocks Phase 3 → 4 transition.
 - For executable user-facing surfaces, the handoff also names the implemented launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, clean re-launch status, and blocked or unrun operator-delivery checks.
-- Parallel production advancement consumes the parent `SKILL.md` Phase 3 merge-owner exit law.
+- Parallel production advancement follows `Skill(dev-workflow)` Phase 3 merge-owner exit law.
 
 ## Phase 4 Analysis And Acceptance
 - Reviewer and tester are both mandatory analysis owners for executable, user-facing software

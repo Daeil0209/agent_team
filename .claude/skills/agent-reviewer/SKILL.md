@@ -1,6 +1,6 @@
 ---
 name: agent-reviewer
-description: Agent-specific reviewer lane skill for consequential reviewer-owned acceptance-critical review assignments. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Agent-specific reviewer lane skill for consequential reviewer-owned acceptance-critical review assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: reviewer
 ---
@@ -11,11 +11,11 @@ PRIMARY-OWNER: reviewer
 - PRIMARY-OWNER: reviewer
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/reviewer-lane-detail.md`: reviewer packet fields, review lenses, severity mapping, specialist order, rendered/evidence-gap handling, and handoff detail.
+- `references/reviewer-lane-detail.md`: reviewer packet fields, review lenses, severity mapping, specialist order, rendered/evidence-gap handling, and completion detail.
 ### Scope & Quality Gate
 Before any work:
 User-facing report permission is never produced by this lane.
-This skill's handoffs, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
 1. Request fit: does the review still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the review surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other reviewable artifact?
@@ -28,7 +28,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
 - materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer knowledge?
@@ -46,7 +46,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Produced plans and designs are valid review targets.
 - Review them as artifacts.
 - Planning, route freeze, staffing, implementation, proof execution, and final acceptance stay with their owning lanes.
-- If review prerequisites or producer handoff are missing, return `hold|blocker`.
+- If review prerequisites or producer completion are missing, return `hold|blocker`.
 - When request-fit materially shapes review or acceptance judgment, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Reconstruct only when the review target, evidence basis, expectation sources, scope baseline, closure/oracle row, and evidence authority are anchored in packet or frozen artifact evidence without changing the review boundary.
 - Mark inferred pieces explicitly.
@@ -57,7 +57,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Classify every carried recommendation as applied, not-material, or blocked.
 - Load and apply material recommendations before lane work.
 - Record recommendation classification basis.
-- See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready handoff detail.
+- See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready completion detail.
 
 ## Review Workflow
 ### 1. Confirm Review Surface
@@ -71,7 +71,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 2. Review Pass Guard
 - Materially similar review pass requires changed evidence, changed scope, or unresolved-defect escalation.
 ### 3. Select Review Lens
-- Plans: check request fit, owner boundary, route logic, hidden prerequisites, parallel-fit, proof/acceptance chain, stop conditions, and handoff completeness.
+- Plans: check request fit, owner boundary, route logic, hidden prerequisites, parallel-fit, proof/acceptance chain, stop conditions, and completion completeness.
 - Designs: check design intent, quality attributes, tradeoffs, constraints, interfaces, failure modes, user-surface impact, and regression radius.
 - Implementations: check design fit, `SCOPE-BASELINE` coverage, functionality, complexity, tests, maintainability, security where in scope, and integration context.
 - Proof/test/validation outputs: check evidence method, surface match, claim strength, open surfaces, and whether the result outruns proof.
@@ -92,7 +92,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 6. Run Evidence Challenge
 - Verify claims against inspectable evidence.
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
-- Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner handoffs that are required but missing.
+- Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.
 - Check whether each apparent defect is a true defect or an intended protection for the target intent.
 - Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS` bridge axes; a technically supported conclusion that misses any of them is a review finding.
 - Removal, reduction, simplification, or optimization recommendations require the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
@@ -108,9 +108,9 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 8. Retest And Self-Check
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
+- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the reviewer completion transport; team-lead still owns synthesis `SV-RESULT`.
-### 9. Handoff
+### 9. Completion
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
@@ -121,18 +121,18 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - A normal next-lane/action candidate is lawful completion truth.
 - A change to frozen owner map, phase, deliverable shape, staffing shape, proof surface, or acceptance chain is not ordinary completion.
 - Use `scope-pressure` or `hold|blocker` for that change.
-- If final validation is materially required, keep the frozen validator ingress contract explicit in the handoff.
+- If final validation is materially required, keep the frozen validator ingress contract explicit in the completion carrier.
 - Follow validator packet conditionality from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Superseded validator burden stays with validator-owned surfaces.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
-- See `references/reviewer-lane-detail.md` for reviewer-specific handoff detail.
+- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
+- See `references/reviewer-lane-detail.md` for reviewer-specific completion detail.
 
 ## Active Communication Protocol
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Reviewer-specific blocker: missing plan, design, target, constraint, tradeoff, owner, proof, acceptance, prerequisite, or evidence basis.
 - Inference requires explicit marking and safe reconstruction basis.
-- Completion uses `handoff` or `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
+- Completion uses `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
 - `REVIEW-STATE: ready` opens proof, validation, correction, or team-lead synthesis by the frozen route.

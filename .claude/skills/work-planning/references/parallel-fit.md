@@ -52,7 +52,7 @@ The active session carries at most 5 concurrent active team-scoped agents, summe
 A plan that names more than 5 concurrent members is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 New `Agent` member creation is blocked when concurrent active count is already 5.
-The lead releases members through lifecycle control or `session-closeout` before creating new ones.
+The lead releases members through structured shutdown or `session-closeout` before creating new ones.
 
 ## Resolve Next Owner And Action
 - Independent specialist-fit surfaces open team-routed parallel planning.

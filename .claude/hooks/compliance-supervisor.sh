@@ -73,10 +73,41 @@ nondeveloper_worker_write_outside_retained_root() {
 
   workspace_root="$(resolve_project_root 2>/dev/null || true)"
   [[ -n "$workspace_root" ]] || return 1
+
+  if nondeveloper_worker_write_matches_retained_scope "$worker_name" "$candidate_path" "$workspace_root"; then
+    return 1
+  fi
+
   case "$candidate_path" in
     "$workspace_root"/claude_doc/*) return 1 ;;
     *) return 0 ;;
   esac
+}
+
+nondeveloper_worker_write_matches_retained_scope() {
+  local worker_name="${1-}"
+  local candidate_path="${2-}"
+  local workspace_root="${3-}"
+  [[ -n "$worker_name" && -n "$candidate_path" && -n "$workspace_root" ]] || return 1
+  [[ -f "${WORKER_RETAINED_CARRIER_MAP:-}" ]] || return 1
+
+  local retained_path canonical_retained
+  while IFS='|' read -r mapped_worker _task_id retained_path; do
+    [[ "$mapped_worker" == "$worker_name" ]] || continue
+    [[ -n "$retained_path" ]] || continue
+    case "$retained_path" in
+      /*) canonical_retained="$(realpath -m "$retained_path" 2>/dev/null || printf '%s' "$retained_path")" ;;
+      *) canonical_retained="$(realpath -m "$workspace_root/$retained_path" 2>/dev/null || printf '%s/%s' "$workspace_root" "$retained_path")" ;;
+    esac
+    [[ "$candidate_path" == "$canonical_retained" ]] && return 0
+    if [[ "$retained_path" == */ || -d "$canonical_retained" ]]; then
+      case "$candidate_path" in
+        "$canonical_retained"/*) return 0 ;;
+      esac
+    fi
+  done < "$WORKER_RETAINED_CARRIER_MAP"
+
+  return 1
 }
 
 is_hook_runtime_artifact_path() {
@@ -1078,7 +1109,7 @@ fi
 	    if [[ -n "$CANONICAL_PATH" ]]; then
 	      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
 	      if nondeveloper_worker_write_outside_retained_root "$CANONICAL_PATH"; then
-                emit_deny "Non-developer lane Write is restricted to retained work artifacts under claude_doc/<work-name>/ via WRITE-SCOPE. Use developer-owned edit/write authority for source, governance, or producer artifact mutation."
+                emit_deny "Non-developer lane Write is restricted to its frozen RETAINED-OUTPUT-PATH or claude_doc/<work-name>/ WRITE-SCOPE. Use developer-owned edit/write authority for source, governance, or producer artifact mutation."
                 log_violation "$TOOL_NAME" "$CANONICAL_PATH" "nondeveloper-write-outside-retained-root" || true
                 exit 0
               fi
@@ -1250,20 +1281,45 @@ const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.
 const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 if (!command.trim()) { process.stdout.write("empty-command"); process.exit(0); }
 const parts = command.split(/(?:&&|\|\||;)/).map(s => s.trim()).filter(Boolean);
+function firstGlobIndex(value) {
+  return ["*", "?", "["]
+    .map((token) => value.indexOf(token))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)[0] ?? -1;
+}
+function staticTargetRoot(raw) {
+  const value = String(raw);
+  const firstGlob = firstGlobIndex(value);
+  if (firstGlob < 0) return value;
+  let prefix = value.slice(0, firstGlob);
+  const slash = Math.max(prefix.lastIndexOf("/"), prefix.lastIndexOf("\\"));
+  return slash >= 0 ? prefix.slice(0, slash + 1) : ".";
+}
+function isRecursiveRm(words) {
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    if (word === "--") continue;
+    if (word.startsWith("-") && /r/i.test(word)) return true;
+  }
+  return false;
+}
 for (const sub of parts) {
   const words = tokenize(sub);
   if (!words || words.length < 2) continue;
   if (!["rm", "rmdir"].includes(words[0])) continue;
-  // Check only rm/rmdir argv for dynamic-expansion characters.
-  // I/O redirections belong to other compound-command segments.
-  if (/[`$(){}*?[\]]/.test(sub)) {
+  if (/[`$(){}]/.test(sub)) {
     process.stdout.write("rm-subcommand-metacharacters-unsafe"); process.exit(0);
   }
+  const recursive = words[0] === "rm" && isRecursiveRm(words);
   for (let i = 1; i < words.length; i++) {
     const w = words[i];
     if (w === "--" || w.startsWith("-")) continue;
-    const resolved = path.resolve(workspaceRoot, w);
+    const targetRoot = staticTargetRoot(w);
+    const resolved = path.resolve(workspaceRoot, targetRoot);
     const rel = path.relative(workspaceRoot, resolved).replace(/\\/g, "/");
+    if (recursive && firstGlobIndex(w) >= 0 && (!rel || rel === "." || rel === "claude_doc")) {
+      process.stdout.write("root-recursive-glob:" + w); process.exit(0);
+    }
     if (!rel || rel.startsWith("..") || path.isAbsolute(rel)) {
       process.stdout.write("outside-workspace:" + w); process.exit(0);
     }
@@ -1295,7 +1351,7 @@ process.stdout.write("");
 NODE
 )"
       if [[ -n "$RM_TARGET_DENY_REASON" ]]; then
-        emit_deny "Delete target restricted (${RM_TARGET_DENY_REASON}). Allowed by default: any workspace-internal non-protected path. Blocked: outside-workspace targets, .claude/, .git/, references/. Reserved hard-deny categories (secrets, governance shell mutation, runtime/team-state corruption) are guarded separately."
+        emit_deny "Delete target restricted (${RM_TARGET_DENY_REASON}). Blocked: outside-workspace targets, protected paths, unsafe dynamic expansion, and root-level recursive globs. Reserved hard-deny categories are guarded separately."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "rm-target-restricted" || true
         exit 0
       fi

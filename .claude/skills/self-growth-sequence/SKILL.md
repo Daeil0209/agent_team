@@ -77,7 +77,7 @@ Self-growth tiers:
 - Structural hardening: architecture-level changes, cross-document impact. Requires all steps plus governance review.
 
 ### Reference Map
-Load trigger-specific files directly from `SKILL.md`.
+After `Skill(self-growth-sequence)` is loaded, load trigger-specific references directly.
 - `references/self-healing.md`: trigger matrix and closure checklist.
 - `references/retroactive-application.md`: retroactive audit requirements after new/sharpened rules land.
 - `references/causal-analysis.md`: reconstruction questions and causal-basis standard.

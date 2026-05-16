@@ -17,11 +17,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 ## Message-Class Truth
 - Treat `phase-transition-control` as workflow control.
-- Treat `lifecycle-control` as lifecycle control.
 - Route `dispatch-ack` to dispatch-state tracking.
-- Route `control-ack` to control-state tracking.
 - Route `status` to internal progress tracking.
-- Treat `MESSAGE-CLASS: handoff` as completion-grade candidate after convergence and verification.
 - Treat `MESSAGE-CLASS: completion` as completion-grade candidate after convergence and verification.
 - `scope-pressure` is structured objection to the current packet, staffing shape, or frozen burden basis.
 
@@ -29,15 +26,15 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Assignment-grade dispatch proves receipt-level dispatch state.
 - Agent completion records `STANDBY` immediately and opens retained-carrier synthesis.
 - Same-surface follow-on requires distinct new bounded work through `assignment`, `reuse`, or `reroute`.
-- Duplicate packet replay, already-completed confirmation, and packet expansion after completion do not open `status`, `clarification`, `control-ack`, or repeated completion transport.
+- Duplicate packet replay, already-completed confirmation, and packet expansion after completion do not open `status`, `clarification`, or repeated completion transport.
 - Team-lead does not send duplicate assignment, reuse, reroute, or expanded packet text to a lane that already handed off the same `TASK-ID`.
 - Use one primary downward message class per agent per segment.
 - Send assignment-grade work and standalone `phase-transition-control` in separate execution segments.
 
 ## Resolve Next Owner And Action
 - A `hold|blocker` opens corrected packet, reopened `work-planning`, setup/tool owner, or proven user-owned blocker classification.
-- A `scope-pressure` opens packet correction or `work-planning` by `REPLAN-REQUIRED`.
-- A duplicate post-completion signal opens retained-carrier consumption or distinct bounded work, not lifecycle control.
+- A `scope-pressure` opens packet correction, `work-planning`, or parallel continuation by `CORRECTION-OUTCOME`.
+- A duplicate post-completion signal opens retained-carrier consumption or distinct bounded work.
 - A message-class conflict opens message-class split.
 
 ## hold|blocker
@@ -85,13 +82,13 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   - `WHY-CURRENT-PACKET-FAILS`
   - `SMALLEST-SAFE-BOUNDARY`
   - `LANE-NEXT-CANDIDATE`
-  - `REPLAN-REQUIRED`
-- Reopen `work-planning` immediately when `REPLAN-REQUIRED: yes`.
+  - `CORRECTION-OUTCOME`
+- Reopen `work-planning` immediately when `CORRECTION-OUTCOME: route-replan`.
 - Reopen `work-planning` when the canonical pressure type shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
 - Classify single-agent collapse of intended parallel work as distribution-planning defect.
 - Restore parallel shape through `work-planning`.
 - Packet correction requires:
-  - `REPLAN-REQUIRED: no`
+  - `CORRECTION-OUTCOME: packet-correction`
   - the same frozen owner
   - the same phase
   - the same deliverable
@@ -103,7 +100,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Treat multiple aligned objections as stronger planning evidence.
 - Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style transporting.
 - Unresolved objections keep the blocked lane on a concrete resolution path.
-- Unrelated independent lanes keep moving when lawful.
+- `CORRECTION-OUTCOME: parallel-continue` keeps unrelated independent lanes moving when lawful.
 - Map changed evidence/proof surface to `proof-surface-mismatch`.
 - Map these to `hidden-prerequisite`:
   - missing setup

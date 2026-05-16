@@ -10,9 +10,9 @@ PRIMARY-OWNER: team-lead
 - Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the closeout spine only.
-- State schema, hold conditions, and detailed agent lifecycle requirements belong in `references/closeout-state-detail.md` or the runtime lifecycle owner.
+- State schema, hold conditions, and detailed agent cleanup requirements belong in `references/closeout-state-detail.md` or the runtime cleanup owner.
 ### Reference Map
-- `references/closeout-state-detail.md`: closeout state schema, hold conditions, residual truth, and detailed agent lifecycle requirements.
+- `references/closeout-state-detail.md`: closeout state schema, hold conditions, residual truth, and detailed agent cleanup requirements.
 
 ## Activation
 Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any teardown-class tool call (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tool).
@@ -79,7 +79,7 @@ Keep closeout narrow:
 - New agent dispatch stays outside closeout.
 - During active closeout, `TeamDelete` is allowed without a shutdown-order error; unresolved live-agent truth is carried as warning, hold, or residue.
 - Runtime cleanup is lead-owned.
-- Teammates report lifecycle state; team cleanup stays lead-owned.
+- Teammate cleanup truth stays lead-owned.
 - Claude Code team config, task list, mailbox, and cleanup state stay runtime-owned.
 - Governed runtime cleanup uses governed runtime surfaces.
 - Blocked or partially cleaned closeout reports residual truth.

@@ -1,6 +1,6 @@
 ---
 name: agent-validator
-description: Agent-specific validator lane skill for consequential validator-owned final evidence-based validation or PASS/HOLD/FAIL verdict assignments. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Agent-specific validator lane skill for consequential validator-owned final evidence-based validation or PASS/HOLD/FAIL verdict assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: validator
 ---
@@ -11,11 +11,11 @@ PRIMARY-OWNER: validator
 - PRIMARY-OWNER: validator
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/validator-lane-detail.md`: validator packet fields, verdict lenses, PASS prohibitions, reconciliation, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, final acceptance rejection packet detail, and handoff detail.
+- `references/validator-lane-detail.md`: validator packet fields, verdict lenses, PASS prohibitions, reconciliation, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, final acceptance rejection packet detail, and completion detail.
 ### Scope & Quality Gate
 Before any work:
 User-facing report permission is never produced by this lane.
-This skill's handoffs, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
 1. Request fit: does the verdict still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the validation surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
@@ -31,9 +31,9 @@ On assignment-grade work receipt, classify the packet before execution:
 - mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
 - non-derivable materially ambiguous expectation sources, review/test state, materially required decision surface, or validation surface -> `hold|blocker`
 - non-derivable missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
-Validator-local PASS gate only; team-lead still owns routing and lifecycle acceptance decisions.
+Validator-local PASS gate only; team-lead still owns routing and cleanup decisions.
 PASS requires retained evidence that the intended user/operator can find, access/install, start, and complete the core workflow on the deliverable, sourced from actual review or proof surfaces (not assumption or producer confidence).
 For executable interactive software, every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope must be directly exercised by tester evidence or classified as blocked, disproven, or upstream-deferred with frozen-record citation.
 PASS also requires tester evidence that assigned `CORE-WORKFLOW-CLOSURE` rows used row-matched closure-defect probes and retained postcondition evidence.
@@ -48,13 +48,13 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is rejec
 - `agents/validator.md` is the role spine, not the packet-field catalog.
 - Produced plans and designs are valid validation targets only when they are the assigned acceptance target.
 - Validate them as deliverables.
-- Own bounded verdict arbitration, final acceptance rejection analysis, verdict-local evidence truth, validator correction packet writing after `FINAL-REJECT`, and validator-specific handoff.
+- Own bounded verdict arbitration, final acceptance rejection analysis, verdict-local evidence truth, validator correction packet writing after `FINAL-REJECT`, and validator-specific completion.
 - When request-fit, user workflow, or promised usability materially shapes verdict strength, require the request-bound packet fields.
 - Also require explicit run-path and burden fields.
 - Request-fit, run-path, and burden fields require packet or artifact evidence.
 - Reconstruct only when validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, upstream defer basis, and decisive evidence basis are anchored in packet or artifact evidence.
 - Mark inferred pieces explicitly.
-- Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream handoff.
+- Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned validation surface.
 - If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
@@ -79,7 +79,7 @@ Developer-runnable, reviewer-plausible, or lower-level support evidence is rejec
 - Cross-environment basis is verdict-critical.
 - No-operator-labor is verdict-critical.
 - Load `references/validator-lane-detail.md` when these rules affect PASS/HOLD/FAIL truth.
-- See `references/validator-lane-detail.md` for packet detail, PASS-prohibition detail, reconciliation detail, and handoff detail.
+- See `references/validator-lane-detail.md` for packet detail, PASS-prohibition detail, reconciliation detail, and completion detail.
 
 ## Validation Inputs
 - Requested expectations
@@ -166,12 +166,12 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 ### 7. Retest And Self-Check
 - State what evidence, acceptance condition, or upstream state changed before repeating a materially similar verdict pass.
 - Materially similar verdict pass requires changed evidence, changed blocker route, or changed validation surface.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
+- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the validator completion transport; team-lead still owns synthesis `SV-RESULT`.
-### 8. Handoff
+### 8. Completion
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
-- Use common completion-grade evidence fields from the active task-execution handoff contract.
+- Use common completion-grade evidence fields from the active task-execution completion contract.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
 - Global route, proof gathering, review closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
 - A normal next-lane/action candidate is lawful verdict truth.
@@ -184,8 +184,8 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
-- See `references/validator-lane-detail.md` for validator-specific handoff detail.
+- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
+- See `references/validator-lane-detail.md` for validator-specific completion detail.
 
 ## Blocked Validation
 - Use `MESSAGE-CLASS: hold|blocker` when decisive assignment basis is missing before truthful validation can continue.
@@ -195,7 +195,7 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Contradictory upstream evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact contradiction and resolution owner.
 - Environmental blocker: report it as environmental, not as soft PASS.
 - Missing decisive evidence before a truthful verdict pass can run is `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
-- A missing field triggers `MESSAGE-CLASS: hold|blocker` only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream handoff.
+- A missing field triggers `MESSAGE-CLASS: hold|blocker` only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - Derivable gaps are reconstructed with marked inference.
 - Partly derivable gaps narrow the verdict surface and remain open.
 - Send it to `team-lead` via `SendMessage`.
@@ -206,8 +206,8 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Validator-specific blocker: missing validation basis, blocked verdict basis, or missing decisive evidence.
 - Inference requires explicit marking and safe decisive basis.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked verdict.
-- Completion uses `handoff` or `completion` only for converged validator-owned verdict work.
-- Final acceptance rejection analysis uses `handoff` with `OUTPUT-SURFACE: validator correction packet`.
+- Completion uses `completion` only for converged validator-owned verdict work.
+- Final acceptance rejection analysis uses `completion` with `OUTPUT-SURFACE: validator correction packet`.
 
 ## Resolve Next Owner And Action
 - `PASS`, `HOLD`, or `FAIL` opens team-lead synthesis, correction routing, closeout, or continuation by the frozen route.

@@ -59,7 +59,7 @@ Trivial surfaces include: single-control forms, isolated text-only output, inter
   - evidence is too weak for a capability-advance claim
 
 ### Reference Map
-Load trigger-specific files directly from `SKILL.md`.
+After `Skill(benchmark-simulation)` is loaded, load trigger-specific references directly.
 - `references/capability-benchmark.md`: self-growth/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
 - It also covers external-reference, visual/UX, and workflow-product benchmark extensions.
 - `references/observation-protocol.md`: multi-modal reference observation, image-aware evidence handling, quantitative observation, and subjective-observation discipline.

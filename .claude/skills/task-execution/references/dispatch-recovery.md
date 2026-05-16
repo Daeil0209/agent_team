@@ -18,7 +18,7 @@ Required recovery record:
 - `RUNTIME-SIDE-EFFECT`
 - `RESUME-OWNER`
 - `RESUME-ACTION`
-- `REPLAN-REQUIRED`
+- `CORRECTION-OUTCOME`
 
 | `INTERRUPT-POINT` | Last proven truth | Resume owner/action |
 |---|---|---|
@@ -42,8 +42,8 @@ Recovery rules:
 - A same-target packet correction to a responsive live target opens a correction-response window. Do not shutdown or replace that target until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - A parallel group is not "running" while any target remains `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
-- A control packet, lifecycle packet, phase-transition packet, or self-growth sidecar must not erase the suspended dispatch surface.
-- If `REPLAN-REQUIRED: yes`, the resume owner is `work-planning`.
+- A phase-transition packet, shutdown request, or self-growth sidecar must not erase the suspended dispatch surface.
+- If `CORRECTION-OUTCOME: route-replan`, the resume owner is `work-planning`.
 - If the defect itself meets the `self-growth-sequence` entry gate, open `self-growth-sequence` first.
 - Leave a resume owner/action for the suspended work before closure or return.
 - If recovery would change lane, owner, work surface, proof/acceptance chain, parallel grouping, or packet required skills, reopen `work-planning` instead of repairing inside `task-execution`.
@@ -62,7 +62,7 @@ A compacted agent has lost the assignment-grade packet context but retains its a
 
 ## Resolve Next Owner And Action
 - Completed recovery record opens the named `RESUME-OWNER` and `RESUME-ACTION`.
-- `REPLAN-REQUIRED: yes` opens `work-planning`.
+- `CORRECTION-OUTCOME: route-replan` opens `work-planning`.
 - Uncertain runtime readiness opens `session-boot`.
 - Missing send-state evidence opens current dispatch-authority inspection.
 - Duplicate-send risk opens `HOLD` or `session-boot` recovery.

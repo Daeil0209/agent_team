@@ -16,7 +16,7 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 | Lane charter, always-loaded receipt trigger, stop rule, and lane-owned completion duty | `.claude/agents/<lane>.md` |
 | Lane execution procedure, lane-local gates, and direct pointer to detail references | `.claude/skills/agent-<lane>/SKILL.md` |
 | Lane packet additions, specialist matrices, tool/proof detail, and handoff field detail | `.claude/skills/agent-<lane>/references/*.md` |
-| Packet schema, message classes, lifecycle truth, dispatch preflight, completion spine | `.claude/skills/task-execution/references/assignment-packet.md`, `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/truth-rules.md`, `.claude/skills/task-execution/references/completion-handoff.md` |
+| Packet schema, message classes, cleanup truth, dispatch preflight, completion spine | `.claude/skills/task-execution/references/assignment-packet.md`, `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/truth-rules.md`, `.claude/skills/task-execution/references/completion-handoff.md` |
 | Consequential planning freeze and route basis | `.claude/skills/work-planning/SKILL.md` |
 | Plan/result verification gates | `.claude/skills/self-verification/SKILL.md` |
 | Session boot, runtime entry, monitoring, lifecycle interpretation | `.claude/skills/session-boot/SKILL.md` and `.claude/skills/session-boot/references/runtime-state-detail.md` |

@@ -8,7 +8,7 @@ auto-inject: false
 
 Use this file for update-specific checks when doctrine, agents, skills, settings, hooks, references, or other team-system assets are modified.
 
-The canonical `Change Sequence` from `.claude/skills/self-growth-sequence/SKILL.md` owns patch mechanics.
+Patch mechanics are owned by `Skill(self-growth-sequence)` `Change Sequence`.
 Patch mechanics covers execution order, migration traceability, zero-information-loss confirmation, hook-contract readability, protected local-restatement preservation, and optimization-vs-protected-content classification.
 Governance patch readiness consumes `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 This file adds update-specific checks; it does not restate patch-selection rules governed by that gate.
@@ -30,7 +30,7 @@ Mapping keys such as `PRIMARY-OWNER`, `SOURCE-ANCHOR`, `SOURCE-RULES`, `LOAD-POL
     Missing basis routes to doctrine-only/owner-rule-only or `HOLD`.
     Runtime enforcement edits are forbidden without the required basis.
 
-Defect admission is owned by `.claude/skills/self-growth-sequence/SKILL.md` `Causal Repair Standard`.
+Defect admission is owned by `Skill(self-growth-sequence)` `Causal Repair Standard`.
 This update/upgrade check supplies update-local evidence only.
 Update-local evidence covers: `TARGET-INTENT-BASIS`, protected function, user-impact risk, removal or weakening risk, and smallest intent-preserving correction.
 A literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains defect evidence until the self-growth defect admission gate proves `confirmed defect`.

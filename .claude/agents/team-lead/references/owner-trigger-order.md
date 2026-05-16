@@ -45,28 +45,28 @@ Stop before lower-trigger tools when `work-planning` is the highest active trigg
 - A stopped lower-trigger route opens the higher trigger owner.
 - A stopped owner-execution-credit route opens loaded-document consumption.
 - A stopped reporting route opens artifact refresh.
-- A stopped dispatch route opens `work-planning` or primary sequence owner.
+- A stopped dispatch route loads `Skill(work-planning)` or the primary sequence skill owner.
 
 ## Trigger Order
 Consume the highest active trigger first:
-1. explicit closeout
-2. boot, runtime-entry, monitoring, or recovery
-3. missing or changed `work-planning` boundary
-4. confirmed primary sequence
-5. frozen workflow or sequence owner
-6. assignment-grade `task-execution`
-7. required `self-verification` report or redispatch gate
+1. `Skill(session-closeout)` for explicit closeout
+2. `Skill(session-boot)` for boot, runtime-entry, monitoring, or recovery
+3. `Skill(work-planning)` for missing or changed planning boundary
+4. confirmed primary sequence skill owner
+5. frozen workflow or sequence skill owner
+6. `Skill(task-execution)` for assignment-grade dispatch
+7. `Skill(self-verification)` for required report or redispatch gate
 
 ## Named Artifacts
-- `session-boot` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
-- A current task instruction opens `work-planning`.
-- `work-planning` emits frozen-fields record.
-- `review-verification` emits `review_verification_packet`.
-- `self-verification` emits `SV-RESULT` or `SV-PLAN`.
-- `task-execution` emits dispatch-ready packet, dispatch-pending truth, or correction route.
-- `self-growth-sequence` emits recurrence-barrier patch basis and post-verify result.
-- `update-upgrade-sequence` emits update/upgrade patch basis and post-verify result.
-- `session-closeout` emits closeout residual truth or teardown completion.
+- `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
+- A current task instruction loads `Skill(work-planning)`.
+- `Skill(work-planning)` emits frozen-fields record.
+- `Skill(review-verification)` emits `review_verification_packet`.
+- `Skill(self-verification)` emits `SV-RESULT` or `SV-PLAN`.
+- `Skill(task-execution)` emits dispatch-ready packet, dispatch-pending truth, or correction route.
+- `Skill(self-growth-sequence)` emits recurrence-barrier patch basis and post-verify result.
+- `Skill(update-upgrade-sequence)` emits update/upgrade patch basis and post-verify result.
+- `Skill(session-closeout)` emits closeout residual truth or teardown completion.
 
 ## Artifact Discipline
 Skill load is availability only.

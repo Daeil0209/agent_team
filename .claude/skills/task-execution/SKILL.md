@@ -22,7 +22,7 @@ PRIMARY-OWNER: team-lead
 Own host-authorized additional-agent execution after planning is complete.
 Load only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
 When active, it owns dispatch packet assembly, send truth, runtime creation/launch, and dispatch interruption state.
-Use `references/phase-transition-control.md` or `references/lifecycle-control.md` without loading this skill when the active workflow or lifecycle owner sends control-only messages.
+Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
 Boundary:
 - `work-planning` owns scope freeze, mode freeze, and frozen next action
@@ -31,25 +31,24 @@ Boundary:
 - `team-lead` owns synthesis, closeout, and user-facing reporting
 
 ### Reference Map
-Load trigger-specific files directly from `SKILL.md`.
+After `Skill(task-execution)` is loaded, load trigger-specific references named below.
 - `references/assignment-packet.md`: assignment-grade packet floor, packet preflight, field format, skill loading, and cross-continuity packet checks.
 - `references/dispatch-entry-contract.md`: consumed planning fields, concrete-vs-not-applicable rules, execution readiness entry checks, and information movement rule.
 - `references/request-bound-fields.md`: request-intent, exact user wording, governance tier, user-surface, proof/tool/setup, run-path, burden, decision, validation, environment, and scenario fields.
-- `references/message-classes.md`: Communication Plane law, canonical channel registry, upward message classes, receipt spine, information-request consumption, and blocker/pressure routing.
+- `references/message-classes.md`: Communication Plane law, canonical channel registry, upward message classes, receipt spine, structured shutdown request, information-request consumption, and blocker/pressure routing.
 - `references/scope-pressure.md`: canonical `scope-pressure` values, required fields, and replan vs packet-correction boundary.
 - `references/truth-rules.md`: runtime truth ladder and user-facing claim limits.
 - `references/runtime-dispatch-law.md`: team-runtime lane dispatch, TeamCreate sequencing, parallel/reuse law, SendMessage class boundaries, required-skill dispatch law, and partial-parallel-failure recovery.
-- `references/completion-handoff.md`: common completion result spine, resource cleanup, user-surface proof method fields, and lane handoff law.
+- `references/completion-handoff.md`: common completion result spine, resource cleanup, user-surface proof method fields, and lane completion law.
 - `references/dispatch-recovery.md`: interruption points, resume owner/action, duplicate-send prevention, and compaction recovery.
-- `references/phase-transition-control.md`: phase-transition control packet schema.
-- `references/lifecycle-control.md`: lifecycle-control packet schema and structured shutdown protocol.
+- `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Open this skill only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent, stale, or wrong-boundary.
+Load `Skill(task-execution)` only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent, stale, or wrong-boundary.
 If already loaded for the same session and current dispatch owner, consume the loaded skill and execute the dispatch move without another `Skill(task-execution)` call.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
-Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, lifecycle-only state, control-only state, and phase-transition-only state stay with their current owner.
+Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, runtime-cleanup state, and phase-transition-only state stay with their current owner.
 Missing actual `work-planning` freeze discards the attempted dispatch path and returns to the missing owner before any dispatch step.
 ## Entry Contract
 Use `references/dispatch-entry-contract.md` before this skill acts.
@@ -117,7 +116,7 @@ Packet final check:
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
-- A packet-correction-via-`SendMessage` whose receiver has no open executable task (post-handoff, idle, converged) fails the `SendMessage And Skill Law` necessity check (`bounded assignment, reroute, or reuse against an open executable task`); suppress the send and route cleanup to `self-growth-sequence` per `references/assignment-packet.md` packet-correction outcome.
+- A packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check (`bounded assignment, reroute, or reuse against an open executable task`); suppress the send and route cleanup to `self-growth-sequence` per `references/assignment-packet.md` packet-correction outcome.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
@@ -137,8 +136,7 @@ Dispatch law:
 - Configured lanes, frozen `PARALLEL-GROUPS`, lane separation, proof/acceptance separation, and packet skill-field law outrank reuse or dispatch convenience.
 - Assignment-grade `SendMessage` uses `MESSAGE-CLASS: assignment`.
 - Phase-transition control `SendMessage` uses `MESSAGE-CLASS: phase-transition-control`.
-- Non-terminating lifecycle control `SendMessage` uses `MESSAGE-CLASS: lifecycle-control`.
-- Terminating lifecycle control uses structured `shutdown_request`.
+- Runtime cleanup uses structured `shutdown_request`.
 - Match each `SendMessage` to the exact class or structured payload owned by its reference.
 - Do not use teammate pane/final output as a substitute for `SendMessage`, task state, or retained carrier delivery.
 - Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block; `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
@@ -171,7 +169,7 @@ Do not narrate `PARALLEL-DISPATCH-LOCK`, allowed move lists, retained-output set
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
-- Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual handoff, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
+- Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
 - User-requested dispatch status reports only the user-relevant waiting condition.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, and covered by the required `SV-RESULT` or independent verification route.
 
@@ -185,7 +183,7 @@ Recovery reconciliation:
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
-Interruption includes user correction, self-growth trigger, compaction/resume, permission/runtime stop, control, lifecycle, and phase-transition interruption.
+Interruption includes user correction, self-growth trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
 
 Rules:
 - pre-open interruption resumes the last valid active owner: `work-planning`, active workflow, or `self-verification`
@@ -204,7 +202,7 @@ After the execution move:
 - then `self-verification (SV-RESULT)` runs before phase/stage-end reporting or synthesis-triggered redispatch
 - fallback standalone results stay outside team-runtime monitoring
 - `session-boot` owns monitoring and agent-state interpretation
-- agent lanes own execution and handoff/completion packets
+- agent lanes own execution and completion packets
 - `team-lead` owns synthesis after agent outputs arrive
 - `self-verification` reopens as `SV-RESULT` before phase/stage-end consequential reporting, completion claim, or synthesis-triggered re-dispatch
 
@@ -221,8 +219,8 @@ Canonical sequence:
 ## Move-Out Boundary
 Keep out of this spine:
 - long packet field catalogs -> `references/assignment-packet.md` and `references/request-bound-fields.md`
-- lane-specific packet or handoff deltas -> agent references and role docs
-- runtime monitoring/lifecycle recovery detail -> `session-boot` / `session-closeout`
+- lane-specific packet or completion deltas -> agent references and role docs
+- runtime monitoring/cleanup recovery detail -> `session-boot` / `session-closeout`
 - agent-only completion contracts -> agent role docs
 - broad evidence-burden or claim-strength rules -> `self-verification`
 

@@ -1,6 +1,6 @@
 ---
 name: agent-tester
-description: Agent-specific tester lane skill for consequential tester-owned proof assignments that require test execution or verification. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Agent-specific tester lane skill for consequential tester-owned proof assignments that require test execution or verification. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: tester
 ---
@@ -11,11 +11,11 @@ PRIMARY-OWNER: tester
 - PRIMARY-OWNER: tester
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/tester-lane-detail.md`: tester packet floor, UI proof matrix, detection amplifiers, tool-tier detail, interaction coverage, checklist, and handoff detail.
+- `references/tester-lane-detail.md`: tester packet floor, UI proof matrix, detection amplifiers, tool-tier detail, interaction coverage, checklist, and completion detail.
 ### Scope & Quality Gate
 Before any work:
 User-facing report permission is never produced by this lane.
-This skill's handoffs, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
 1. Request fit: does the proof work still serve the user's actual request and proof surface?
 2. Scope proportionality: is the proof surface bounded and truthful?
 3. Charter fit: is this executable proof gathering rather than implementation, review defect ownership, validation closure, or orchestration?
@@ -31,7 +31,7 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred proof surface without owner, phase, proof, acceptance, deliverable, user-run-path, tool-basis, closure/oracle row, scenario boundary, or state-postcondition change -> `reconstruct-with-inference`
 - mixed phase-intent, shardable proof overload, hidden prerequisite, or contradictory proof contract -> `scope-pressure`
 - materially ambiguous proof objective, scenario scope, tool requirement, user run path, or expected proof level -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one tester -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one tester -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface.
 1. Has proof executed the exact operator launch artifact through the intended invocation shape?
@@ -74,7 +74,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Missing, unavailable, or fidelity-uncertain user-surface tool path routes to `hold|blocker` or `scope-pressure`.
 - Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Do this unless a frozen discovery/setup path already authorizes the exact next step.
-- See `references/tester-lane-detail.md` for packet detail, interaction-coverage detail, human-facing checklist detail, and handoff detail.
+- See `references/tester-lane-detail.md` for packet detail, interaction-coverage detail, human-facing checklist detail, and completion detail.
 
 ## Testing Workflow
 ### 1. Declare The Test Surface
@@ -111,7 +111,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 ### 3. Execute Direct Checks
 - Run actual commands.
 - Record exact commands, outputs, exit codes, or observed interaction evidence.
-- When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in handoff.
+- When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in completion.
 - Retained evidence identity requires project-owned retained paths; `/tmp` fixture paths are scratch context only.
 - Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, assigned interaction scope, and `USER-RUN-PATH` only when run-path burden is frozen.
 - When a precise oracle is unavailable or impractical, use property, invariant, round-trip, differential, or metamorphic checks when they fit the assigned proof surface.
@@ -149,26 +149,26 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - State what changed.
 - State why rerun is justified before repeating materially similar proof.
 - Materially similar rerun requires changed evidence, changed blocker route, or changed proof path.
-- Before handoff, identify plausible developer mistakes that can survive the executed proof.
+- Before completion, identify plausible developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
+- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the tester completion transport; team-lead still owns synthesis `SV-RESULT`.
-### 7. Handoff
+### 7. Completion
 - Send consequential upward results to `team-lead` via `SendMessage`.
 - Continuity surfaces require their owning channel.
 - Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Global route, defect classification, validation closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
+- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep tester-specific proof-match and run-path status fields explicit and truthful.
 - Use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 - `matched` is reserved for real contract alignment on that surface.
 - Report whether each material design intent in the assigned proof surface was directly proven, disproven, blocked, or out-of-scope by dispatch.
 - When the proof claims an executed user surface, keep the proof method explicit. Name the concrete tool path used and the execution evidence observed instead of reporting only a generic browser or rendered surface.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
-- See `references/tester-lane-detail.md` for tester-specific handoff detail.
+- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
+- See `references/tester-lane-detail.md` for tester-specific completion detail.
 
 ## Proof Classification
 - `Direct proof`: executed check on the assigned decisive surface, expected behavior observed, required material closure-defect probe executed, and required postcondition evidence retained. Direct proof covers only the executed scenario; user-ready or reliability claims also require material hard-test probe evidence.
@@ -180,7 +180,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Tester-specific blocker: blocked proof path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked proof.
-- Completion uses `handoff` or `completion` only for converged tester-owned proof.
+- Completion uses `completion` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action
 - `TEST-STATE: ready` opens validator, reviewer, correction owner, or team-lead synthesis by the frozen route only as row-classified proof evidence, not as acceptance or pass evidence.

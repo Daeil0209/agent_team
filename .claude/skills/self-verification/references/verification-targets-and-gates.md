@@ -7,7 +7,7 @@ auto-inject: false
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Self-Verification Reference
-Load only when `self-verification/SKILL.md` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis check, material same-lane self-certification risk, or expanded output record.
+Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis check, material same-lane self-certification risk, or expanded output record.
 
 ## Auto-inject
 false - this file is binding detail when loaded, not always-loaded context.
@@ -84,10 +84,10 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - `PARALLEL-GROUPS` burden basis must be measured or cited.
 - File-count alone, guessed, or pre-`work-planning` basis is not valid.
 - Missing material measurement opens `reopen-work-planning` or `HOLD`.
-- consequential top-level plans have coherent `CODEX-INDEPENDENT-REVIEW-BASIS` when Codex MCP independent-review trigger handling is required or frozen
-- `ACTIVE-WORKFLOW: dev-workflow` must show Codex MCP independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-codex-review-trigger:<basis>` when that review basis is required or frozen
-- Codex MCP independent-review risk triggers from `.claude/skills/work-planning/references/codex-independent-review.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
-- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point.
+- consequential top-level plans have coherent `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review trigger handling is required or frozen
+- `ACTIVE-WORKFLOW: dev-workflow` must show configured independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` when that review basis is required or frozen
+- configured independent-review risk triggers from `.claude/skills/work-planning/references/codex-independent-review.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
+- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid configured-review point.
 - Accept requires field/value change.
 - Reject requires grounded rationale.
 - Codex output alone is not the basis.

@@ -29,7 +29,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   - `audit/evidence/review + governance patch execution`
   - `draft + final acceptance review`
   - `review + validation verdict`
-- Do not require a new agent only because the phase changed. When scope remains single-purpose and context reuse is beneficial, continue with the current agent through a bounded follow-up dispatch instead of manufacturing handoff overhead.
+- Do not require a new agent only because the phase changed. When scope remains single-purpose and context reuse is beneficial, continue with the current agent through a bounded follow-up dispatch instead of manufacturing completion overhead.
 - Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when the frozen packet and current evidence already support useful progress.
 - The designated draft or merge owner continues and then takes a bounded follow-up update for the late shard.
 - The active phase intent stays explicit.

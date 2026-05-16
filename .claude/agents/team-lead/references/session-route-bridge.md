@@ -46,9 +46,9 @@ Stop before route execution when:
 - governance, analysis, critique, review, validation, or patch work lacks `SEMANTIC-INTENT-BASIS` or contradicts the user correction, team-operation philosophy, or target governance/design intent
 
 ## Resolve Next Owner And Action
-- A stopped dispatch route opens boot or runtime-entry.
-- A stopped local-execution route opens `work-planning`.
-- A stopped team-dispatch route opens task-execution packet preflight.
+- A stopped dispatch route loads `Skill(session-boot)` for boot or runtime-entry.
+- A stopped local-execution route loads `Skill(work-planning)`.
+- A stopped team-dispatch route loads `Skill(task-execution)` packet preflight.
 - A stopped correction-dispatch route opens assigned-validator correction-packet consumption.
 - A stopped applied-rule route opens loaded-document consumption.
 
@@ -73,13 +73,13 @@ Name the visible work shape:
 Interpretation is pre-freeze.
 
 ## Session Bridge
-Session start loads `session-boot`.
-A current instruction that creates, reopens, or changes a consequential work boundary opens `work-planning`.
-Assignment-grade team work then follows `work-planning` -> `task-execution`.
-If runtime/recovery/monitoring/lifecycle evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
+Session start loads `Skill(session-boot)`.
+A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
+Assignment-grade team work then follows `Skill(work-planning)` -> `Skill(task-execution)`.
+If runtime/recovery/monitoring/cleanup evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
 A runtime-blocked session bridge opens recovery or `HOLD`.
-Route assignment-grade dispatch to `task-execution`.
-Route explicit teardown to `session-closeout`.
+Route assignment-grade dispatch to `Skill(task-execution)`.
+Route explicit teardown to `Skill(session-closeout)`.
 Once `session-closeout` owns the path, report only closeout residual truth.
 
 ## Planning Consume Bridge

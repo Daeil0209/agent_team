@@ -84,7 +84,7 @@
 ## Priority And Ownership
 - Conflict order 1 is request/deliverable fit.
 - Conflict order 2 is evidence/procedure fidelity.
-- Conflict order 3 is ownership/handoff quality.
+- Conflict order 3 is ownership/completion quality.
 - Conflict order 4 is acceptance/blocker honesty.
 - Conflict order 5 is staffing/output smoothness.
 - Top-level Claude Code session is `team-lead`.
@@ -104,14 +104,14 @@
 - Trigger-bound references are mandatory execution surfaces once their trigger fires.
 - Loaded owner documents are active rule surfaces.
 - Citation and consumption require applied-rule mapping.
-- Action, handoff, synthesis, report, and completion require consumed active owner documents.
+- Action, synthesis, report, and completion require consumed active owner documents.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - Missing applied-rule mapping is an execution blocker.
 - Unconsumed trigger-bound reference is a completion blocker.
 
 ## Control Sequences
-- Session start loads `session-boot`.
-- A current task instruction loads `work-planning`.
+- Session start loads `Skill(session-boot)`.
+- A current task instruction loads `Skill(work-planning)`.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
@@ -132,6 +132,8 @@
 ## Skill Loading
 - Skills load only when required by the active owner path.
 - Skill consumption is situation-scoped.
+- Skill load means `Skill(<skill>)`.
+- Direct inspection of `.claude/skills/<skill>/SKILL.md` is not skill load.
 - Agent role names are not skill names.
 - Agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
 - Non-role methodology or capability skills travel as `REQUIRED-SKILLS` when required.
@@ -145,7 +147,7 @@
 - Communication, Procedure, and Reporting are separate planes.
 - Reporting Plane is the only user-facing prose authority and lives in `.claude/reference/user-reporting-law.md`.
 - Before assistant-authored visible pane or final prose, apply `.claude/reference/user-reporting-law.md`.
-- If `.claude/reference/user-reporting-law.md` admits no report, emit nothing or only its Minimal Visible State Token when Claude Code forces a visible row.
+- If `.claude/reference/user-reporting-law.md` admits no report, emit nothing and continue internally.
 - Communication Plane transport classes and report separation live in `.claude/skills/task-execution/references/message-classes.md` and `.claude/reference/user-reporting-law.md`.
 - Communication payloads stay in their governed Communication Plane carrier; pane/final prose must not duplicate them as user-facing report prose.
 - `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
@@ -153,7 +155,7 @@
 - Agents raise `scope-pressure` for unsafe packets and `hold|blocker` for decisive proof gaps through Communication Plane.
 - On assignment-grade work receipt, agents send the first upward outcome — one-line `dispatch-ack`, or `scope-pressure` / `hold|blocker` when unsafe — through Communication Plane before loading skills, reading references, or running any other tool work; silent idle is a Receipt Event Contract violation.
 - Unsafe assignment receipt routes to `scope-pressure` or `hold|blocker`; receivers must not infer missing identity, surface, output, or authority into executable work.
-- Handoffs carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
+- Completions carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
 - Team-runtime channel registry lives in `.claude/skills/task-execution/references/message-classes.md`.
 - Restating user-report admissibility outside `.claude/reference/user-reporting-law.md` is a single-source-of-truth defect.
 

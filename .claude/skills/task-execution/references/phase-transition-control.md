@@ -6,12 +6,11 @@ LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
-# task-execution: Downward Phase-Transition Control Packet
-Use a structured phase-transition control packet when a workflow owner advances the shared phase and affected agents must update coordination context, standby readiness, or immediate next-phase coordination without receiving a brand-new bounded assignment yet.
+# task-execution: Downward Phase-Transition Packet
+Use a structured phase-transition packet when a workflow owner advances the shared phase and affected agents must update coordination context, standby readiness, or immediate next-phase coordination without receiving a brand-new bounded assignment yet.
 
 ## Validity
-- Phase-transition control updates coordination context after a workflow phase cursor advances truthfully.
-- Lifecycle state uses lifecycle-control.
+- Phase-transition updates coordination context after a workflow phase cursor advances truthfully.
 - Differing agent impact uses per-agent control.
 - Same-segment assignment-grade work replaces phase-transition control for that agent.
 
@@ -26,8 +25,8 @@ Carry:
 - `ACTIVE-AGENTS`
 - `BLOCKING-ISSUES`
 
-Agents acknowledge receipt when their active assignment, standby readiness, or immediate next-phase coordination is affected.
-Team-lead or the active workflow owner sends this control packet only after the workflow phase cursor is truthfully advanced.
+Affected agents consume phase context silently; new bounded work uses an assignment-grade packet and normal `dispatch-ack`.
+Team-lead or the active workflow owner sends this packet only after the workflow phase cursor is truthfully advanced.
 
 ## Resolve Next Owner And Action
 - Valid phase movement sends `MESSAGE-CLASS: phase-transition-control` to each affected agent.

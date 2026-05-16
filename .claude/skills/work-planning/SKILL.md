@@ -54,18 +54,18 @@ Triggered references are mandatory before positive route freeze.
 - `references/deliverable-defaults.md`: proof, review, validation, user burden, and acceptance defaults by deliverable type.
 - `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, serial basis, and the active concurrent-agent cap.
 - `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
-- `references/execution-readiness.md`: packet, proof, setup, lifecycle, parallel, and acceptance readiness.
+- `references/execution-readiness.md`: packet, proof, setup, cleanup, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
-- `references/codex-independent-review.md`: Codex MCP independent-review trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
+- `references/codex-independent-review.md`: configured independent-review trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
 
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
 ## Activation Trigger
-`team-lead` loads `work-planning` when the current instruction creates, reopens, or changes a consequential work boundary.
-Session start routes to `session-boot`.
-Answer-only, known-owner status, notification-only, receipt-only, control-only, lifecycle-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
-Active runtime, recovery, monitoring, lifecycle, or unresolved session-start readiness routes to `session-boot`.
+`team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
+Session start routes to `Skill(session-boot)`.
+Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
+Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.
 Also load for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
 Counting evidence is actual `Skill(work-planning)` load plus required freeze.
@@ -165,15 +165,15 @@ Freeze when material:
 - analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`
 - team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`
-- Codex MCP independent review: `CODEX-INDEPENDENT-REVIEW-BASIS`
+- Configured independent review: `CODEX-INDEPENDENT-REVIEW-BASIS`
 
-Codex MCP independent-review detail stays in `references/codex-independent-review.md`.
+Configured independent-review detail stays in `references/codex-independent-review.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail and the active concurrent-agent cap stay in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record the applied cap basis on this surface before dispatch can open.
 Planning opens one next owner/action before execution, dispatch, or reporting.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
-Use `references/execution-readiness.md` when packet, proof, setup, lifecycle, parallel, or acceptance readiness is at risk.
+Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
 
 ## Internal Planning Record
 Populate the internal record from `references/planning-record-fields.md`.

@@ -234,7 +234,7 @@ if [[ "$TOOL_NAME" == "TeamDelete" ]]; then
   if _rtg_live_cfg="$(current_session_live_team_config "$SESSION_ID" 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
     _rtg_live_members="$(team_config_live_member_names "$_rtg_live_cfg" | grep -vx 'team-lead' | paste -sd, - 2>/dev/null || true)"
     if [[ -n "$_rtg_live_members" ]]; then
-      emit_deny "BLOCKED: TeamDelete before teammate termination. Live process-backed teammates: ${_rtg_live_members}. Next: session-closeout auto-drains them with structured shutdown_request, waits for shutdown_response/teammate_terminated evidence, then retries TeamDelete. Roster residue without live process proof is not live teammate evidence."
+      emit_deny "BLOCKED: TeamDelete before teammate termination. Live process-backed teammates: ${_rtg_live_members}. Next: session-closeout sends structured shutdown_request, waits for termination evidence, then retries TeamDelete. Roster residue without live process proof is not live teammate evidence."
       exit 0
     fi
   fi
@@ -299,7 +299,7 @@ fi
 # Pinpoint must-block: SendMessage to a teammate name without live pane proof
 # causes silent ghost-dispatch (tool reports success while the message is never delivered).
 # Block this to preserve runtime truth; pass through when config or member list cannot be
-# resolved, and bypass for shutdown_request lifecycle control messages.
+# resolved, and bypass for shutdown_request cleanup messages.
 if [[ "$TOOL_NAME" == "SendMessage" && -s "$TEAM_RUNTIME_ACTIVE_FILE" && -n "$TOOL_RECIPIENT_NAME" ]]; then
   if [[ "$TOP_TYPE" != "shutdown_request" && "$MESSAGE_TYPE" != "shutdown_request" ]]; then
     if _rtg_live_cfg="$(active_team_config_live 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then

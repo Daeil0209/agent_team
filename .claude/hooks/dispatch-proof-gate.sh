@@ -396,7 +396,7 @@ if [[ "$TOOL_NAME" == "SendMessage" ]] \
     if [[ -z "$target_label" || "$target_label" == "unknown" ]]; then
       target_label="${AGENT_NAME:-target}"
     fi
-    emit_channel_clarity_warning "$(dispatch_proof_note "free-form SendMessage reads as assignment-grade lane work for ${target_label} without the assignment packet floor" "send a structured assignment packet with MESSAGE-CLASS, WORK-SURFACE, CURRENT-PHASE, REQUIRED-SKILLS, and lane-specific fields; use MESSAGE-CLASS: status, phase-transition-control, or lifecycle-control for non-assignment channel traffic")"
+    emit_channel_clarity_warning "$(dispatch_proof_note "free-form SendMessage reads as assignment-grade lane work for ${target_label} without the assignment packet floor" "send a structured assignment packet with MESSAGE-CLASS, WORK-SURFACE, CURRENT-PHASE, REQUIRED-SKILLS, and lane-specific fields; use MESSAGE-CLASS: status or phase-transition-control for non-assignment channel traffic; use structured shutdown_request for cleanup")"
     exit 0
   fi
   exit 0
@@ -415,7 +415,7 @@ esac
 
 if [[ "$is_assignment_dispatch" == "true" ]]; then
   if assignment_packet_requests_screen_polluting_completion; then
-    emit_packet_deny "BLOCKED: assignment packet requests screen-polluting final upward message detail. Completion counts, excerpts, plans, retained-output contents, and future-action prose must stay in retained-output; the upward completion transport is the completion-handoff pointer envelope only."
+    emit_packet_deny "BLOCKED: assignment packet requests screen-polluting final upward message detail. Completion counts, excerpts, plans, retained-output contents, and future-action prose must stay in retained-output; the upward completion transport is the completion pointer envelope only."
     exit 0
   fi
 

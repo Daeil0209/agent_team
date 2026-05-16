@@ -133,7 +133,7 @@ try {
       }
       if (!parsed || typeof parsed !== "object") continue;
       const messageClass = String(parsed.messageClass || "").toLowerCase();
-      if (!["handoff", "completion", "hold|blocker", "hold", "blocker"].includes(messageClass)) continue;
+      if (!["completion", "hold|blocker", "hold", "blocker"].includes(messageClass)) continue;
 
       const parsedSessionId = trimText(parsed.sessionId || "");
       const parsedSenderName = trimText(parsed.senderName || "");
@@ -461,7 +461,6 @@ case "$LATEST_CLASS" in
   blocker)
     FAILURES+=("Latest transport uses legacy MESSAGE-CLASS '${LATEST_CLASS}'. Exact MESSAGE-CLASS: hold|blocker is required; task remains open until corrected.")
     ;;
-  handoff) ;;
   completion) ;;
   "") ;;
   *)

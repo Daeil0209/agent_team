@@ -73,6 +73,19 @@ Activation triggers when the request materially includes one or more of:
 
 Activate for ordinary code review only when the review scope includes cross-surface integrity, design-intent, or risk-balance judgment.
 
+## Named Lane Lens Index
+Mode B lane packets may name only these bounded `review-verification` lenses:
+- `design-intent-lens`: compare the assigned surface with frozen `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, owner intent, and protected function.
+- `owner-boundary-lens`: test whether the finding, packet, or patch moves work across owner, lane, workflow, proof, validation, reporting, or runtime boundaries.
+- `procedure-adherence-lens`: test whether the active owner path, consumed references, gates, handoff, and evidence order were executed rather than narrated.
+- `coherence-integrity-lens`: test adjacent live owner surfaces for contradiction, stale duplicate wording, broken reference, or missing destination owner.
+- `negative-risk-lens`: test meaning loss, weaker procedure, added burden, user-surface regression, runtime side effect, and reuse failure.
+- `removal-first-lens`: test delete, trim, merge, re-home, replace, and tighten before append under `.claude/reference/minimal-governance-change-law.md`.
+- `patch-worthiness-lens`: test confirmed-defect basis, protected-function preservation, smallest owner, operation type, and no stronger narrower alternative.
+
+A named lane lens is a bounded question, not full workflow activation.
+If the packet needs full Steps 1-8, patch-worthiness synthesis, or three or more lenses, route Mode A to `team-lead`.
+
 ## Inputs
 - exact user request and amendments
 - frozen review scope and exhaustiveness basis

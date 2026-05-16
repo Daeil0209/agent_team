@@ -131,7 +131,7 @@ Rules:
 - synthesized outputs require reconciled verification for stronger claims
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
-- Apply `self-growth-sequence/SKILL.md` `Causal Repair Standard` and `completion-handoff.md` common finding basis before promoting any item to `confirmed-defect`.
+- Before promoting any item to `confirmed-defect`, load `Skill(self-growth-sequence)` and apply its `Causal Repair Standard` plus `completion-handoff.md` common finding basis.
 - Promote an item to `confirmed-defect` only when correction will not remove a stronger protected function.
 - If that proof is missing, report the item as candidate evidence, `risk-hypothesis`, `design-tradeoff`, `protected-restatement`, `non-issue`, or `UNVERIFIED` instead of patch authorization.
 - Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.

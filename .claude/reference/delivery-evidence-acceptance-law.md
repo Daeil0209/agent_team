@@ -32,7 +32,6 @@ Use it whenever a result might be reported as:
 - The deliverable is executable software.
 - These outputs might rely on an implemented subset:
   - completion
-  - handoff
   - validation
   - final report
 - These lane transports and team-lead reports use positive wording:

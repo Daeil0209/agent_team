@@ -24,15 +24,17 @@ Canonical `PRESSURE-TYPE` values:
 Use `parallel-split-needed` when nominally parallel or independently staffable work lets two or more independent tasks or surfaces collapse onto one agent strongly enough that the agent becomes the schedule bottleneck.
 Use `boundary-too-wide` when the packet already exceeds the smallest truthful lane-owned boundary even before throughput evidence accumulates.
 
-Replanning law:
-- `REPLAN-REQUIRED: yes` when the objection moves any `work-planning` boundary-change axis.
-- `REPLAN-REQUIRED: no` only when one bounded packet correction preserves all `work-planning` boundary-change axes plus same agent boundary.
-- Single-agent overload inside intended parallel work is a serious distribution-planning defect. Represent it as `PRESSURE-TYPE: parallel-split-needed` with `REPLAN-REQUIRED: yes`; do not downgrade it to packet correction.
+Correction outcome law:
+- `CORRECTION-OUTCOME: route-replan` when the objection moves any `work-planning` boundary-change axis.
+- `CORRECTION-OUTCOME: packet-correction` only when one bounded packet correction preserves all `work-planning` boundary-change axes plus same agent boundary.
+- `CORRECTION-OUTCOME: parallel-continue` when the affected lane is blocked or being corrected while unrelated independent lanes remain executable inside the same frozen route.
+- Single-agent overload inside intended parallel work is a serious distribution-planning defect. Represent it as `PRESSURE-TYPE: parallel-split-needed` with `CORRECTION-OUTCOME: route-replan`; do not downgrade it to packet correction.
 - If the agent cannot state a smallest safe boundary, default to `hold|blocker` instead of vague `scope-pressure`.
 
 ## Resolve Next Owner And Action
-- `REPLAN-REQUIRED: yes` opens `work-planning`.
-- `REPLAN-REQUIRED: no` opens bounded packet correction.
+- `CORRECTION-OUTCOME: route-replan` opens `work-planning`.
+- `CORRECTION-OUTCOME: packet-correction` opens bounded packet correction.
+- `CORRECTION-OUTCOME: parallel-continue` keeps unrelated independent lanes moving while the affected surface resolves.
 - `parallel-split-needed` opens distribution replanning.
 - Missing smallest safe boundary opens `hold|blocker`.
 - Resolved pressure returns corrected executable path to the affected lane.

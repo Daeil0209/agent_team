@@ -10,33 +10,31 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Developer Reference
 ## Contents
 - Auto-inject
-- Role-Spine Handoff
+- Role-Spine Completion
 - Control Packet Discipline
 - Required Dispatch Packet Fields
-- Handoff Completeness Challenge
+- Completion Completeness Challenge
 - Specialist Skill Loading
 - Durability Gate
 - Regression Guard
-- Developer Handoff Detail
+- Developer Completion Detail
 - Resolve Next Owner And Action
 
 ## Auto-inject
-false — load explicitly when packet detail, defect-fix detail, or handoff detail is needed.
+false — load explicitly when packet detail, defect-fix detail, or completion detail is needed.
 
-## Role-Spine Handoff
-`agents/developer.md` owns only the always-loaded developer charter, boundary, receipt trigger, stop rule, and lane-local completion duty. This reference owns the detailed developer packet fields, classification table, specialist matrix, defect-fix detail, and handoff detail.
+## Role-Spine Completion
+`agents/developer.md` owns only the always-loaded developer charter, boundary, receipt trigger, stop rule, and lane-local completion duty. This reference owns the detailed developer packet fields, classification table, specialist matrix, defect-fix detail, and completion detail.
 
 When a developer role or skill says "developer additions" or "developer detail", consume this file directly. Do not re-expand `agents/developer.md` into a packet-field catalog. Missing decisive detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless the safe-inference rule below permits it.
 
-Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the developer-specific payload needed on top of those common contracts.
+Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the developer-specific payload needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only.
 - It does not replace an assignment-grade developer packet when new bounded production work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
-- Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
+- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
+- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Required Dispatch Packet Fields
 | Work Type | Required Fields |
@@ -56,7 +54,7 @@ Acceptance-chain rules for the Meaningful/high/critical risk row:
 
 Owner fields use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
 
-## Handoff Completeness Challenge
+## Completion Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
 Production discovery and edits are forbidden until the packet is classified as `execute` or `reconstruct-with-inference`. Developer must use the first lawful executable path that can satisfy the user instruction. `scope-pressure` and `hold|blocker` stop only the unsafe current path; they open the team-lead resolution loop, not task abandonment.
@@ -103,7 +101,7 @@ Resolution loop:
 - `team-lead` consumes the report, routes researcher/tool/setup/packet correction when needed, and returns a corrected executable path.
 - Developer resumes execution from the corrected path and repeats the loop until the user instruction is completed or a genuine impossible/unsafe condition is proven.
 
-Insufficient handoff examples:
+Insufficient completion examples:
 - "Update the docs" without `CHANGE-BOUNDARY`, `DONE-CONDITION`, or excluded scope.
 - "Fix the bug" without observed failure, write scope, proof owner, or retest expectation.
 - "Implement the design" without artifact boundary, user-facing surface, or acceptance-risk basis.
@@ -128,8 +126,8 @@ Specialist skills with `PRIMARY-OWNER: developer`:
 - support overlays: `benchmark-simulation`, `external-tool-bridge`
 
 Secondary-consumer specialist support:
-- clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, handoff, governance, or document production when receiver comprehension is decisive
-- bounded code-quality self-review: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before handoff
+- clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, completion, governance, or document production when receiver comprehension is decisive
+- bounded code-quality self-review: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before completion
 
 Use this controlling order when multiple controlling specialists are active on one blocked surface:
 - `business-workflow`
@@ -163,11 +161,11 @@ Support overlays defer to earlier controlling contracts.
 - Fallback: if guard creation is impossible or disproportionate, record `FALLBACK-BASIS` and keep the retest surface explicit.
 - Non-skip: no silent correction-only path.
 
-## Developer Handoff Detail
+## Developer Completion Detail
 - Keep applied changes, executed checks, unrun or blocked checks, and unresolved assumptions separated so downstream lanes do not reconstruct implementation truth from the diff alone.
 - For current-scope implementation completion, set `FROZEN-CONTRACT-STATUS` against `DONE-CONDITION`, `CHANGE-BOUNDARY`, and any `SCOPE-BASELINE` rather than reporting only changed files.
 - For executable user-facing implementation, `FROZEN-CONTRACT-STATUS` also compares the produced launcher, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, and clean re-launch implementation against the Phase 2 operator-delivery contract; WSL-only developer execution cannot close a Windows-primary implementation contract unless the packet carries `WINDOWS-EQUIVALENCE-BASIS`.
-- Include `PREREQ-STATE: complete|partial|missing` in consequential upward handoff so downstream lanes do not infer prerequisite truth.
+- Include `PREREQ-STATE: complete|partial|missing` in consequential upward completion so downstream lanes do not infer prerequisite truth.
 - For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.
 
 ## Resolve Next Owner And Action
@@ -177,5 +175,5 @@ Support overlays defer to earlier controlling contracts.
 - `hold|blocker` opens team-lead blocker resolution.
 - Completed production opens producer self-review.
 - Passed producer self-review opens lane-local `SV-RESULT`.
-- Lane-local `SV-RESULT` opens completion handoff.
-- Handoff open surfaces route to the smallest named next owner/action.
+- Lane-local `SV-RESULT` opens completion.
+- Completion open surfaces route to the smallest named next owner/action.

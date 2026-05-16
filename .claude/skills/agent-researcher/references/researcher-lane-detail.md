@@ -10,35 +10,33 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Researcher Reference
 ## Contents
 - Auto-inject
-- Role-Spine Handoff
+- Role-Spine Completion
 - Control Packet Discipline
 - Researcher Packet Detail
 - Evidence Hardening Patterns
 - Source-Family Method Floor
-- Handoff Completeness Challenge
+- Completion Completeness Challenge
 - Surface-Specific Evidence Requirements
 - Benchmark-Enhanced Search Fields
 - Operational Reality Classification
-- Researcher Handoff Detail
+- Researcher Completion Detail
 - Resolve Next Owner And Action
 
 ## Auto-inject
-false — load explicitly when packet detail, benchmark detail, evidence-hardening detail, or handoff detail is needed.
+false — load explicitly when packet detail, benchmark detail, evidence-hardening detail, or completion detail is needed.
 
-## Role-Spine Handoff
-`agents/researcher.md` owns only the always-loaded researcher charter, boundary, receipt trigger, stop rule, and evidence-local completion duty. This reference owns detailed researcher packet fields, benchmark/evidence-hardening fields, surface-specific evidence requirements, operational reality classification, and handoff detail.
+## Role-Spine Completion
+`agents/researcher.md` owns only the always-loaded researcher charter, boundary, receipt trigger, stop rule, and evidence-local completion duty. This reference owns detailed researcher packet fields, benchmark/evidence-hardening fields, surface-specific evidence requirements, operational reality classification, and completion detail.
 
 When a researcher role or skill says "researcher additions" or "researcher detail", consume this file directly. Do not re-expand `agents/researcher.md` into a packet-field catalog. Missing decisive evidence detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless safe inference preserves owner, phase, proof burden, acceptance burden, deliverable shape, and evidence boundary.
 
-Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the researcher-specific payload and evidence discipline needed on top of those common contracts.
+Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the researcher-specific payload and evidence discipline needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only.
 - It does not replace an assignment-grade researcher packet when new bounded evidence work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
-- Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
+- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
+- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Researcher Packet Detail
 - Consequential researcher packets keep these fields explicit:
@@ -92,7 +90,7 @@ Use this floor when `SOURCE-FAMILY` includes market, technology, patent, academi
 - Evidence-bound generation or automation work hands off reusable source schemas, query or search-log identity, claim-strength tiers, and downstream golden-fixture or oracle needs.
 - Missing material method-floor basis is `hold|blocker` or `scope-pressure`, not low-confidence completion.
 
-## Handoff Completeness Challenge
+## Completion Completeness Challenge
 Researcher must challenge decisive evidence basis before research discovery. This is not a demand for every possible source; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
 Evidence work is forbidden until the packet is classified as `execute` or `reconstruct-with-inference`. `scope-pressure` and `hold|blocker` are stop states, not notes.
@@ -111,7 +109,7 @@ Upward assertion must name:
 - safe next packet correction or next owner/action
 
 ## Surface-Specific Evidence Requirements
-- Visual, structural, interaction, and UX decision targets require rendered or multi-modal evidence. Text-only synthesis is a methodology defect unless the visual surface is explicitly unavailable and the handoff downgrades confidence.
+- Visual, structural, interaction, and UX decision targets require rendered or multi-modal evidence. Text-only synthesis is a methodology defect unless the visual surface is explicitly unavailable and the completion carrier downgrades confidence.
 - Multi-modal evidence includes image or screenshot capture, layout extraction, quantitative measurement of font, image, whitespace, table form, color, spacing, or typography signals, and rendered page or artifact observation when material.
 - If researcher cannot obtain the required rendered or multi-modal evidence with its toolset, it must run bounded tool-selection research when current tools can lawfully inspect or search candidate options.
 - The upward request must name: missing evidence surface; required capability; current toolset limit; candidate tools considered; selected tool or program candidate; fit rationale; why text-only evidence is invalid; smallest truthful evidence boundary; setup owner candidate or packet correction.
@@ -136,12 +134,12 @@ Required classes for governance, process, or runtime-policy critique:
 - `theoretical-risk`
 Severity follows the evidence class. Do not promote static or theoretical issues into runtime-break claims without stronger evidence.
 
-## Researcher Handoff Detail
+## Researcher Completion Detail
 - For request-bound document work, state what downstream drafting can start immediately from current evidence, what remains uncertain, and what extra research is non-blocking versus blocking.
 - If packet formatting instructions suppress the mandatory evidence contract, use `hold|blocker` and name the packet-format conflict in `OPEN-SURFACES`.
 - For artifact, governance, program, report, or document critique, include the target intent that made the evidence relevant.
-- If the handoff proposes removal, reduction, simplification, or optimization, satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
-- Keep the handoff teammate-efficient: concrete evidence anchors, decision-ready conclusions, smallest useful unblock step.
+- If the completion proposes removal, reduction, simplification, or optimization, satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Keep the completion teammate-efficient: concrete evidence anchors, decision-ready conclusions, smallest useful unblock step.
 - For benchmark-perspective work, include `COMPARISON-FRAME`, `QUERY-LEDGER-SUMMARY`, `SOURCE-FAMILY-COVERAGE`, `TRIANGULATION-STATUS`, `STOPPING-RULE`, `UNVERIFIED-CLAIMS`, and `DOWNSTREAM-BENCHMARK-NEEDS`.
 
 ## Resolve Next Owner And Action
@@ -149,6 +147,6 @@ Severity follows the evidence class. Do not promote static or theoretical issues
 - `reconstruct-with-inference` opens researcher-owned evidence work with marked inference.
 - `scope-pressure` opens team-lead packet correction, tool-selection research routing, owner split, or replanning.
 - `hold|blocker` opens team-lead blocker resolution.
-- Completed evidence work opens researcher handoff.
+- Completed evidence work opens researcher completion.
 - Downstream benchmark need opens the named benchmark, review, proof, or validation owner.
-- Unverified consequential claim narrows the handoff or opens the needed evidence route.
+- Unverified consequential claim narrows the completion or opens the needed evidence route.

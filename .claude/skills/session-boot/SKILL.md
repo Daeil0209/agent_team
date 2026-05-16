@@ -1,6 +1,6 @@
 ---
 name: session-boot
-description: "Run lead-session boot, runtime-readiness gates, monitoring, lifecycle interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime lifecycle truth is active."
+description: "Run lead-session boot, runtime-readiness gates, monitoring, runtime cleanup interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime cleanup truth is active."
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -10,16 +10,16 @@ PRIMARY-OWNER: team-lead
 - Reference Map stays inside Structural Contract.
 - PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
-- Runtime-state tables, lifecycle mappings, boot-window detail, compaction recovery detail, monitoring detail, and schema detail belong in `references/runtime-state-detail.md`.
-- Dispatch-runtime execution preflight belongs to `task-execution`; this skill only classifies runtime readiness, monitoring, recovery, and lifecycle truth.
+- Runtime-state tables, cleanup mappings, boot-window detail, compaction recovery detail, monitoring detail, and schema detail belong in `references/runtime-state-detail.md`.
+- Dispatch-runtime execution preflight belongs to `task-execution`; this skill only classifies runtime readiness, monitoring, recovery, and cleanup truth.
 ### Reference Map
-- `references/runtime-state-detail.md`: active-runtime observation, recovery, lifecycle, stale/stall, runtime-pressure, compaction-recovery, and monitoring detail only for the explicit triggers named below.
+- `references/runtime-state-detail.md`: active-runtime observation, recovery, cleanup, stale/stall, runtime-pressure, compaction-recovery, and monitoring detail only for the explicit triggers named below.
 - Routine startup does not consume this reference unless the minimal gate detects material runtime detail.
 
 Runtime-detail triggers:
-- startup or resume must inspect current-session continuity, runtime snapshot, roster, lifecycle state, stale state, dispatch state, or recovery state
-- active delegated runtime must classify monitoring, lifecycle-control need, stall, stale, runtime-pressure, compaction recovery, dispatch-state recovery, or runtime recovery
-- a `SessionStart`, hook, task, runtime ledger, agent handoff, or `.runtime/procedure-state.json` signal changes the next session-boot owner/action
+- startup or resume must inspect current-session continuity, runtime snapshot, roster, cleanup state, stale state, dispatch state, or recovery state
+- active delegated runtime must classify monitoring, cleanup need, stall, stale, runtime-pressure, compaction recovery, dispatch-state recovery, or runtime recovery
+- a `SessionStart`, hook, task, runtime ledger, agent completion, or `.runtime/procedure-state.json` signal changes the next session-boot owner/action
 
 Runtime-detail non-triggers:
 - clean startup with no runtime state, no recovery state, no monitoring state, and no consequential action needing runtime truth
@@ -27,10 +27,10 @@ Runtime-detail non-triggers:
 - curiosity, reassurance, or narration about boot status
 
 Runtime-detail load decision:
-1. If current request or frozen route requires delegated runtime, classify runtime readiness; load `references/runtime-state-detail.md` only when existing runtime state, recovery state, monitoring state, lifecycle state, or dispatch state can change the next owner/action.
-2. If current-session runtime evidence exists (`.runtime/procedure-state.json`, `SessionStart`, hook signal, task state, runtime ledger, inbox/handoff, or live roster evidence), decide whether that evidence is clean, active, stale, blocked, lifecycle-pending, or recovery-relevant.
+1. If current request or frozen route requires delegated runtime, classify runtime readiness; load `references/runtime-state-detail.md` only when existing runtime state, recovery state, monitoring state, cleanup state, or dispatch state can change the next owner/action.
+2. If current-session runtime evidence exists (`.runtime/procedure-state.json`, `SessionStart`, hook signal, task state, runtime ledger, inbox/completion, or live roster evidence), decide whether that evidence is clean, active, stale, blocked, cleanup-pending, or recovery-relevant.
 3. If the evidence is clean and cannot change the next owner/action, do not load the reference.
-4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or lifecycle-control-needed.
+4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 
 Runtime-detail consumption stays inside the Procedure Plane.
 It never weakens the already-active User Surface Gate and never admits boot, monitoring, route, or runtime prose.
@@ -41,14 +41,15 @@ Session boot is loaded after the Startup Contract's first User Surface Gate appl
 Before any boot, resume, or monitoring prose, preserve and apply that already-active gate.
 Do not re-consume or narrate `.claude/reference/user-reporting-law.md` during clean startup.
 If the gate was not applied before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
-Session start loads `session-boot`.
-A current task instruction loads `work-planning`.
-The minimal gate checks only whether runtime, recovery, monitoring, lifecycle, compaction, or dispatch-state evidence is material to the next action.
+Session start loads `Skill(session-boot)`.
+A current task instruction loads `Skill(work-planning)`.
+Work-planning does not reload session-boot unless runtime, recovery, monitoring, cleanup, or unresolved session-start readiness is active.
+The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.
 Run `Session-Start Sequence` as the baseline.
 Run `Boot Sequence` when boot is incomplete.
-Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, lifecycle interpretation, or runtime recovery is required.
+Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, cleanup interpretation, or runtime recovery is required.
 Every boot information check remains internal unless `.claude/reference/user-reporting-law.md` admits a report.
 Boot checks can change runtime owner/action; they cannot create boot, status, progress, or summary prose permission.
 If boot evidence and visible-prose pressure conflict, keep boot evidence internal and continue the Procedure Plane path.
@@ -59,7 +60,7 @@ Consequential tool work waits until boot evidence exists.
 An explicit `session-boot` load can clear lead-local boot reminders when no explicit team runtime has started yet.
 Treat that observation as a boot-state marker only.
 Delegated runtime execution still returns to `task-execution`.
-Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or lifecycle-control-needed.
+Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 Runtime-ready and clean boot outcomes are internal move-out facts unless they create a blocker, required user action, or explicit status answer.
 Do not emit boot summaries before opening the next owner/action that can run in the same segment.
 
@@ -189,6 +190,6 @@ See `references/runtime-state-detail.md` for:
 - Runtime-required classification opens `task-execution`.
 - Monitoring risk opens `team-lead` plus the active workflow owner.
 - Bottleneck collapse opens `work-planning`.
-- Lifecycle obligation opens lifecycle control.
+- Cleanup obligation opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Closeout intent opens `session-closeout`.
 - Runtime-blocked reports `HOLD` with owner, blocker, and next safe evidence step.

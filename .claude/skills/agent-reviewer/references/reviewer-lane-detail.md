@@ -10,33 +10,31 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Reviewer Reference
 ## Contents
 - Auto-inject
-- Role-Spine Handoff
+- Role-Spine Completion
 - Control Packet Discipline
 - Reviewer Packet Detail
 - Domain Lenses
 - Applied Review Techniques
 - Severity Mapping
 - Specialist Skill Loading
-- Reviewer Handoff Detail
+- Reviewer Completion Detail
 - Resolve Next Owner And Action
 
 ## Auto-inject
-false — load explicitly when packet detail, lens detail, severity mapping, or handoff detail is needed.
+false — load explicitly when packet detail, lens detail, severity mapping, or completion detail is needed.
 
-## Role-Spine Handoff
-`agents/reviewer.md` owns only the always-loaded reviewer charter, boundary, receipt trigger, stop rule, and review-local completion duty. This reference owns detailed reviewer packet fields, review lenses, severity mapping, specialist skill order, validator-ready handoff detail, and rendered/evidence gap detail.
+## Role-Spine Completion
+`agents/reviewer.md` owns only the always-loaded reviewer charter, boundary, receipt trigger, stop rule, and review-local completion duty. This reference owns detailed reviewer packet fields, review lenses, severity mapping, specialist skill order, validator-ready completion detail, and rendered/evidence gap detail.
 
 When a reviewer role or skill says "reviewer additions" or "reviewer detail", consume this file directly. Do not re-expand `agents/reviewer.md` into a packet-field catalog. Missing decisive review detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless the review target and evidence basis are anchored in packet or artifact evidence.
 
-Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the reviewer-specific payload and review discipline needed on top of those common contracts.
+Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the reviewer-specific payload and review discipline needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only.
 - It does not replace an assignment-grade reviewer packet when new bounded review work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
-- Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
+- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
+- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Reviewer Packet Detail
 - Consequential reviewer packets must carry these fields explicitly:
@@ -97,8 +95,8 @@ Use only the lenses that materially affect the assigned surface.
 - Scope/closure-baseline lens: compare produced or proven surfaces against `SCOPE-BASELINE` and material closure or oracle rows; implemented-subset quality does not close missing, placeholder-only, unproven, source-untraced, disposition-less, or stale-consumer baseline rows.
 - Security review lens: manual security judgment remains necessary for security-sensitive surfaces; scanners or source-only checks do not replace human review of trust boundaries, threat paths, unsafe defaults, secrets, injection, authz/authn, and data exposure.
 - Intent-preserving critique: before accepting a proposed defect or fix, apply `TARGET-INTENT-BASIS`, the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`, and the smallest meaning-preserving correction.
-- Feynman clarity lens: when a plan, design, report, governance text, or handoff cannot be explained plainly without invented meaning, treat that as a review finding.
-- Negative-space review: look for required but missing constraints, evidence, edge cases, owner handoffs, user paths, rollback/cleanup paths, and acceptance/proof surfaces.
+- Feynman clarity lens: when a plan, design, report, governance text, or completion cannot be explained plainly without invented meaning, treat that as a review finding.
+- Negative-space review: look for required but missing constraints, evidence, edge cases, owner transfer, user paths, rollback/cleanup paths, and acceptance/proof surfaces.
 - Expert claim challenge: convert each major claim into `claim -> evidence -> impact -> owner -> required change`; do not accept unsupported confidence language.
 
 ## Severity Mapping
@@ -130,9 +128,9 @@ Run `feynman-clarity` when explanation failure materially affects review truth.
 These are review lenses; findings use normal severity and are blocking when severity warrants it.
 Remediation stays with the producing owner.
 
-## Reviewer Handoff Detail
-- Reviewer `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and adds `REVIEW-STATE` only as context.
-- Reviewer handoff must include `TARGET-INTENT-BASIS` through the common completion spine.
+## Reviewer Completion Detail
+- Reviewer `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and adds `REVIEW-STATE` only as context.
+- Reviewer completion must include `TARGET-INTENT-BASIS` through the common completion spine.
 - Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Without that basis, classify the item as preliminary evidence, not a completed review finding.
 - Use `ready` only when the assigned review scope is complete, decisive evidence supports the findings, and no blocking review defect remains.
@@ -152,7 +150,7 @@ Remediation stays with the producing owner.
   - bounded discovery/setup alternative: `TOOL-DISCOVERY-GOAL`, `TOOL-DISCOVERY-BOUNDARY`, `TOOL-VERIFICATION-STANDARD`, `TOOL-CLEANUP-EXPECTATION`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
-- For request-bound acceptance, keep the request-fit contract explicit in the same handoff rather than rewriting it from memory.
+- For request-bound acceptance, keep the request-fit contract explicit in the same completion rather than rewriting it from memory.
 - For visual/rendered review, name the inspected rendered evidence and any visible defect classes checked or found.
 - If review evidence makes the frozen contract untruthful, set `REVIEW-STATE: hold` or `REVIEW-STATE: blocked` and explain the contradiction in `OPEN-SURFACES`.
 
@@ -160,7 +158,7 @@ Remediation stays with the producing owner.
 - `execute` opens reviewer-owned review work.
 - `reconstruct-with-inference` opens reviewer-owned review work with marked inference.
 - Blocking review finding opens producer correction through team-lead.
-- `REVIEW-STATE: ready` opens reviewer handoff.
+- `REVIEW-STATE: ready` opens reviewer completion.
 - `REVIEW-STATE: hold` opens team-lead basis, evidence, tool, or upstream-state correction.
 - `REVIEW-STATE: blocked` opens team-lead replanning, rerouting, or upstream correction.
 - Runnable proof need opens tester routing.

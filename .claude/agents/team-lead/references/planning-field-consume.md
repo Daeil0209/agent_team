@@ -8,7 +8,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # team-lead: Planning Field Consume
 
 ## Purpose
-Consume frozen planning fields in a fixed order before local execution, dispatch, phase movement, or reporting.
+Consume route-relevant frozen planning fields before local execution, dispatch, phase movement, or reporting.
 
 ## Consume When
 - `work-planning` has emitted frozen fields.
@@ -33,7 +33,7 @@ Stop before team-agent runtime dispatch when receiving lanes depend on lead-only
 - A stopped team-agent dispatch route opens packet fact transfer.
 
 ## Field Order
-Read frozen planning fields in this order:
+Read only fields consumed by the current next owner/action, in this relative order:
 1. `REQUEST-FIT-BASIS`
 2. `SEMANTIC-INTENT-BASIS`
 3. `REQUEST-BOUND-PACKET-FIELDS`
@@ -42,7 +42,7 @@ Read frozen planning fields in this order:
 6. `ACTIVE-REQUEST-TIER`
 7. `TIER-RAISE-REASON`
 8. `ACTIVE-WORKFLOW`
-9. `CODEX-INDEPENDENT-REVIEW-BASIS`
+9. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling is material or workflow-required
 10. `ACTIVE-SEQUENCE`
 11. `ROUTING-SIGNAL`
 12. `NEXT-CONSEQUENTIAL-ACTION`
@@ -53,6 +53,8 @@ Read frozen planning fields in this order:
 
 ## Reaction Rules
 - `answer-only` means answer only.
+- A field outside the current owner path is not a preflight floor.
+- Do not reopen `work-planning` for a field that no current local execution, workflow, sequence, dispatch, or report owner consumes.
 - Missing request-fit basis reopens `work-planning`.
 - Stale request-fit basis reopens `work-planning`.
 - Contradictory request-fit basis reopens `work-planning`.
@@ -61,17 +63,17 @@ Read frozen planning fields in this order:
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Stale `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
-- Missing tier basis reopens `work-planning` per `governance-scaling/SKILL.md`.
+- Missing tier basis reopens `work-planning` per `Skill(governance-scaling)`.
 - Contradictory tier basis reopens `work-planning`.
 - Stale tier basis reopens `work-planning`.
 - Weaker-than-floor tier basis reopens `work-planning`.
 - Consume frozen tier basis before staffing, checkpoint, review, proof, or acceptance sizing.
-- Missing required Codex MCP independent-review basis reopens `work-planning`.
-- Stale Codex MCP independent-review basis reopens `work-planning`.
-- Invalidly skipped Codex MCP independent-review basis reopens `work-planning`.
-- Pre-`work-planning` Codex MCP independent-review basis reopens `work-planning`.
+- Missing required configured independent-review basis reopens `work-planning`.
+- Stale configured independent-review basis reopens `work-planning`.
+- Invalidly skipped configured independent-review basis reopens `work-planning`.
+- Pre-`work-planning` configured independent-review basis reopens `work-planning`.
 - `triggered:*` requires active adjudication.
-- Treat `fail-open:*` as Codex-review-unavailable evidence.
+- Treat `fail-open:*` as configured-review-unavailable evidence.
 - Required `PARALLEL-GROUPS` carries boundary, non-overlap, and measured/cited burden basis.
 - File-only, guessed, or pre-`work-planning` parallel measurement reopens `work-planning`.
 - Named `ACTIVE-WORKFLOW` opens the workflow owner named by `NEXT-CONSEQUENTIAL-ACTION`.

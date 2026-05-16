@@ -35,7 +35,7 @@ is_system_generated_followup_prompt() {
     return 0
   fi
 
-  # Pure teammate-message handoffs are notification-only carry-forward.
+  # Pure teammate-message completions are notification-only carry-forward.
   if teammate_message_only_prompt "$prompt"; then
     return 0
   fi
@@ -88,7 +88,7 @@ if is_system_generated_followup_prompt "$USER_PROMPT"; then
   exit 0
 fi
 
-# Real user turns reset destructive cleanup approval; stop/cancel is lifecycle control.
+# Real user turns reset destructive cleanup approval; stop/cancel is cleanup control.
 : > "$USER_APPROVED_DELETE_ROOTS_FILE"
 
 USER_DELETE_APPROVAL_ROOTS="$(USER_PROMPT="$USER_PROMPT" PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'

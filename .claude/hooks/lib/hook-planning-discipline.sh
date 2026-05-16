@@ -269,6 +269,13 @@ while (stack.length) {
 if (!transcriptPath) process.exit(1);
 
 const { flattenValueText: flattenText } = require(process.env.HOOK_JSON_HELPERS);
+function hasSingleAckStateSignal(text) {
+  const signals = String(text || "")
+    .split(/\r?\n/)
+    .map((line) => line.trim().replace(/\s+/g, " "))
+    .filter((line) => /^ack(?: task [A-Za-z0-9._:-]+)?$/i.test(line));
+  return signals.length === 1;
+}
 
 for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
   if (!line.trim()) continue;
@@ -296,7 +303,7 @@ for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
   }
 
   if (observeMode === "dispatch-ack-success") {
-    if (!/(?:^|\n)\s*message-class\s*:\s*dispatch-ack\b/i.test(text)) continue;
+    if (!/(?:^|\n)\s*message-class\s*:\s*dispatch-ack\b/i.test(text) && !hasSingleAckStateSignal(text)) continue;
     const explicitSuccess = row?.toolUseResult && row.toolUseResult.success === true;
     if (!explicitSuccess && !/message sent to team-lead's inbox/i.test(text) && !/"success"\s*:\s*true/i.test(text)) continue;
     process.exit(0);

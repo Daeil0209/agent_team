@@ -9,22 +9,20 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Validator Reference
 ## Auto-inject
-false — load explicitly when packet detail, PASS-prohibition detail, reconciliation detail, operator-runtime/rendered-quality detail, or handoff detail is needed.
+false — load explicitly when packet detail, PASS-prohibition detail, reconciliation detail, operator-runtime/rendered-quality detail, or completion detail is needed.
 
-## Role-Spine Handoff
-`agents/validator.md` owns only the always-loaded validator charter, boundary, receipt trigger, stop rule, PASS prohibition, and verdict-local completion duty. This reference owns detailed validator packet fields, verdict lenses, PASS prohibition detail, reconciliation detail, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, and handoff detail.
+## Role-Spine Completion
+`agents/validator.md` owns only the always-loaded validator charter, boundary, receipt trigger, stop rule, PASS prohibition, and verdict-local completion duty. This reference owns detailed validator packet fields, verdict lenses, PASS prohibition detail, reconciliation detail, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, and completion detail.
 
 When a validator role or skill says "validator additions" or "validator detail", consume this file directly. Do not re-expand `agents/validator.md` into a packet-field catalog. Non-derivable missing decisive validation detail is `hold|blocker` or `scope-pressure`; weak evidence never becomes `PASS` through reconstruction.
 
-Control packets, message classes, lifecycle truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the validator-specific payload and acceptance discipline needed on top of those common contracts.
+Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the validator-specific payload and acceptance discipline needed on top of those common contracts.
 
 ## Control Packet Discipline
 - `phase-transition-control` is workflow coordination context only.
 - It does not replace an assignment-grade validator packet when new bounded verdict work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
-- `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
-- Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
+- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
+- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Contents
 - Validator Packet Detail
@@ -36,7 +34,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - Operator-Runtime Verification Protocol
 - Final-Arbitration Trigger Definitions
 - Final Acceptance Rejection Packet Detail
-- Validator Handoff Detail
+- Validator Completion Detail
 
 ## Validator Packet Detail
 - Consequential validator packets must carry these fields explicitly:
@@ -54,7 +52,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
   - `BURDEN-CONTRACT`
   - `FIRST-USE-STATE` and sufficient `DATA-CONTENT-STATE` when visible behavior depends on operator data
 
-If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream handoff.
+If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
 If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
 If only part of the basis is derivable, narrow the verdict to a non-PASS verified-scope report and report the unverified scope, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
@@ -93,7 +91,7 @@ Use only the lenses that materially affect the assigned validation surface.
 ## Specialist Skill Loading
 Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 Validator selects and applies every materially relevant specialist lens needed to prove or disprove the assigned verdict on the decisive validation surface.
-Consume frozen specialist contracts, oracles, and skill-basis records from Phase 1/2 design, Phase 4 evidence, tester proof, reviewer findings, and handoff packets as expectation sources. If a material oracle is missing and cannot be derived, return `HOLD` or `hold|blocker`; do not convert the verdict to a narrower PASS.
+Consume frozen specialist contracts, oracles, and skill-basis records from Phase 1/2 design, Phase 4 evidence, tester proof, reviewer findings, and completion packets as expectation sources. If a material oracle is missing and cannot be derived, return `HOLD` or `hold|blocker`; do not convert the verdict to a narrower PASS.
 Use this surface map:
 - Work-tool, spreadsheet, operations, business-rule, and workflow-state acceptance: `business-workflow`, `work-tool-patterns`.
 - Report, document automation, reader/presenter-facing generation, and explanation-critical acceptance: `document-automation`, `visual-composition`, `feynman-clarity`.
@@ -259,11 +257,11 @@ Validator writes a correction packet with:
 
 Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
-## Validator Handoff Detail
+## Validator Completion Detail
 - Keep conditional validator-specific fields explicit when they were materially part of the frozen validation surface:
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
-- Keep these validator-specific status and reconciliation fields explicit in completion-grade handoff:
+- Keep these validator-specific status and reconciliation fields explicit in completion-grade completion:
   - `PROOF-SURFACE-MATCH`
   - `RUN-PATH-STATUS`
   - `FIRST-USE-STATE-STATUS`

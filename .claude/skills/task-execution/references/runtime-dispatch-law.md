@@ -7,11 +7,11 @@ LOAD-POLICY: on-demand reference only
 
 # task-execution: Runtime Dispatch Law
 
-Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
+Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 
 ## Team Runtime Shape
 - `TeamCreate` establishes team-agent runtime only when no current-session team registration exists.
-- Team-agent runtime is required when the frozen route names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, lifecycle monitoring, or continuity beyond lead-local work.
+- Team-agent runtime is required when the frozen route names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, runtime monitoring, or continuity beyond lead-local work.
 - Repeated `TeamCreate` is not the path to satisfy these requirements; one runtime serves all of them.
 - Standalone `Agent` is not configured lane dispatch.
 - If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
@@ -21,7 +21,7 @@ Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 - `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
 
 ## Runtime Entry Evidence Boundary
-- `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and lifecycle truth.
+- `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and cleanup truth.
 - `task-execution` consumes that classification plus current-session dispatch evidence before any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse move.
 - Current-session team registration evidence comes from the active procedure state, current team config, current live process-backed roster, or the hook-maintained team-runtime active marker when present.
 - `TeamCreate` success is current-session team existence proof.
@@ -35,7 +35,7 @@ Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 - Planned team-routed `Agent` dispatch is never standalone; missing top-level `team_name` or `name` is a preflight blocker before the host `Agent` call.
 - Team-scoped `Agent` does not deliver assignment-grade work.
 - Standalone `Agent` shape (`Agent` without `team_name`) does not satisfy team-runtime delegation.
-- Standalone `Agent` bypasses team continuity, lifecycle visibility, reuse, and inter-agent coordination.
+- Standalone `Agent` bypasses team continuity, cleanup visibility, reuse, and inter-agent coordination.
 - An already-happened standalone `Agent` result is treated only as fallback evidence.
 - Role is responsibility; live process-backed member name is address.
 - `SendMessage.to` must match the current live process-backed roster exactly.
@@ -43,7 +43,7 @@ Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 - A needed configured lane not yet present in the team runtime is added as a team member via `Agent` with `team_name` and `name`.
 - Assignment-grade work then flows via `SendMessage` to that exact member.
 - Already-existing standalone `Agent` evidence is fallback evidence only.
-- Fallback evidence is not team-member lifecycle state, `dispatch-ack`, assignment delivery, or later `SendMessage` addressability.
+- Fallback evidence is not team-member runtime state, `dispatch-ack`, assignment delivery, or later `SendMessage` addressability.
 
 Target-resolution preflight is mandatory before the tool call:
 1. name the active `team_name` from current-runtime evidence
@@ -60,6 +60,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Additional-agent dispatch uses team-agent runtime.
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - When task tracking is active for team-agent dispatch, task rows used as assignment `TASK-ID` are created or verified only after current-session `TeamCreate` or team registration is proven and before assignment-grade `SendMessage`; pre-team task rows are not team assignment identity.
+- `TaskUpdate(owner=<member>)` may synchronize task-row owner/display state, but assignment-grade `SendMessage` remains the dispatch step.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
@@ -77,7 +78,7 @@ Target-resolution preflight is mandatory before the tool call:
 - A parallel execution segment then reconciles every intended target before it moves out.
 - Assignment-grade `SendMessage` success arms a per-target receipt barrier keyed by the exact live process-backed member name.
 - Assignment-send success is `dispatch pending` only; it is not `agent started`, `running`, progress, or completion.
-- The receipt barrier clears only through official Communication Plane evidence: valid `dispatch-ack`, `scope-pressure`, `hold|blocker`, completion-grade `handoff` or `completion`, failed-send truth, replacement truth, or explicit `HOLD`.
+- The receipt barrier clears only through official Communication Plane evidence: valid `dispatch-ack`, `scope-pressure`, `hold|blocker`, completion-grade `completion`, failed-send truth, replacement truth, or explicit `HOLD`.
 - Pane/final prose, teammate UI chatter, host-native rendered rows, inbox read state, and role labels do not clear the receipt barrier.
 - Valid target states after assignment send are `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`. `member-created` without assignment is `team-created-no-assignment` and immediately opens assignment-grade `SendMessage` on the same frozen route; it is not monitoring, fallback dispatch, or operator-policy-choice when the frozen route remains unchanged.
 - A target with no receipt or no start evidence enters `dispatch-recovery`; replacement or shutdown follows only after the required follow-up, frozen re-check wait, and absent response/activity evidence.
@@ -89,9 +90,10 @@ Target-resolution preflight is mandatory before the tool call:
 
 ## SendMessage And Skill Law
 - Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task per `truth-rules.md`.
+- `SendMessage.to` is the worker-targeting field for assignment; `TaskUpdate(owner=<member>)` is task-state owner/display synchronization and not worker targeting.
 - Completed-task correction first needs an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation.
 - Workflow-control `SendMessage` is for canonical `phase-transition-control` only.
-- Lifecycle-only `SendMessage` is not assignment and does not replace dispatch.
+- Runtime-cleanup `SendMessage` is not assignment and does not replace dispatch.
 - Agent-facing `REQUIRED-SKILLS` is mandatory on every assignment-grade packet as required methodology or capability skills frozen by planning or the active workflow owner.
 - When no upstream required skill exists, carry `REQUIRED-SKILLS: []`; omission is invalid and listing the receiving agent-specific skill is invalid.
 - `task-execution` can narrow or phase-specialize the required skill basis only when the active workflow owner already resolved that phase-local basis.

@@ -1,6 +1,6 @@
 ---
 name: agent-researcher
-description: Agent-specific researcher lane skill for consequential researcher-owned evidence gathering or investigation assignments. Excludes receipt-only, control-only, narrow status, lifecycle-only, phase-transition-only, and clarification-only messages.
+description: Agent-specific researcher lane skill for consequential researcher-owned evidence gathering or investigation assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: researcher
 ---
@@ -11,11 +11,11 @@ PRIMARY-OWNER: researcher
 - PRIMARY-OWNER: researcher
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-hardening, operational-reality classification, and handoff detail.
+- `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-hardening, operational-reality classification, and completion detail.
 ### Scope & Quality Gate
 Before any work:
 User-facing report permission is never produced by this lane.
-This skill's handoffs, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
 1. Request fit: does the research still serve the user's actual question or decision need?
 2. Scope proportionality: is the evidence surface bounded and truthful?
 3. Charter fit: is this evidence work rather than drafting, implementation, proof, validation, or orchestration?
@@ -28,12 +28,12 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
 - hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `REPLAN-REQUIRED: yes`
+- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
 `scope-pressure` and `hold|blocker` are stop states, not notes.
 ### User-Perspective Gate
 Apply this gate whenever research shapes a user-facing deliverable or operator workflow.
-1. Does the handoff explain how the intended user or operator will access, start, or use the downstream deliverable when that workflow is in scope?
+1. Does the completion carrier explain how the intended user or operator will access, start, or use the downstream deliverable when that workflow is in scope?
 2. Does it surface user-access blockers, onboarding assumptions, or usability-critical gaps instead of stopping at technical correctness?
 3. If no direct user workflow is in scope, is that absence explicit so downstream lanes keep it out?
 Technically correct but user-inaccessible research is not finish-ready.
@@ -53,7 +53,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, and evidence-authority threshold.
 - If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, send `hold|blocker`.
 - Material coverage lenses apply from the decision target.
-- See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and handoff detail.
+- See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and completion detail.
 
 ## Research Modes
 - `RESEARCH-MODE` indicates `bounded`, `deep`, or `sharded` dispatch shape.
@@ -114,8 +114,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Then send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
-### 8. Handoff
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion-style handoff.
+### 8. Completion
+- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the researcher completion transport; team-lead still owns synthesis `SV-RESULT`.
 - Send consequential upward results to team-lead via `SendMessage`.
 - Continuity surfaces require their owning channel.
@@ -124,10 +124,10 @@ Technically correct but user-inaccessible research is not finish-ready.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
+- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
-- See `references/researcher-lane-detail.md` for researcher-specific handoff detail.
+- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
+- See `references/researcher-lane-detail.md` for researcher-specific completion detail.
 
 ## Evidence Standards
 - Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
@@ -143,8 +143,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 ## Active Communication Protocol
 - Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
-- Completion uses `handoff` or `completion` only for converged researcher-owned evidence.
+- Completion uses `completion` only for converged researcher-owned evidence.
 
 ## Resolve Next Owner And Action
-- Converged researcher-owned evidence opens team-lead synthesis through the completion-grade handoff path.
+- Converged researcher-owned evidence opens team-lead synthesis through the completion-grade path.
 - Researcher-owned open surfaces open downstream research, proof, review, planning, or blocker routing through the named next owner/action.

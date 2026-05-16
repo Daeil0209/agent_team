@@ -24,9 +24,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Each shard dispatch must stay bounded.
 - Each shard dispatch states what part of the parent work it owns.
 - Each shard dispatch states what it must not absorb.
-- Each shard dispatch states the required handoff form.
+- Each shard dispatch states the required completion form.
 - The merge owner must not reconstruct shard intent from prose.
-- Each shard handoff carries at minimum:
+- Each shard completion carries at minimum:
   - shard id or equivalent surface label
   - covered boundary and excluded boundary
   - concrete result payload

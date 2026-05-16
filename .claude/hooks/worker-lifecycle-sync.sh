@@ -140,13 +140,6 @@ worker_turn_end_classification() {
   fi
 
   case "$last_message_class" in
-    handoff)
-      if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
-        printf 'working-transport-missing'
-        return 0
-      fi
-      printf 'standby'
-      ;;
     completion)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
         printf 'working-transport-missing'

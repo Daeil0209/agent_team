@@ -147,7 +147,7 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
 - Use self-growth only for recurrence-barrier hardening.
 - Treat non-compliance as an adherence defect.
 - Harden adherence instead of adding duplicate doctrine for non-compliance.
-- Structural governance patches consume `.claude/skills/review-verification/SKILL.md` before mutation when its trigger applies.
-- Cross-surface governance patches consume `.claude/skills/review-verification/SKILL.md` before mutation when its trigger applies.
+- Structural governance patches load `Skill(review-verification)` before mutation when its trigger applies.
+- Cross-surface governance patches load `Skill(review-verification)` before mutation when its trigger applies.
 - Recurrence-barrier patch execution follows `.claude/skills/self-growth-sequence/references/change-patch-method.md`.
 - Routine asset patch execution follows the owning update sequence.

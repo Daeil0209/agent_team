@@ -30,9 +30,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the current owner transfers control here.
 Activation requires the frozen workflow route.
 
-Activation requires evaluated Codex MCP independent-review trigger handling.
-`CODEX-INDEPENDENT-REVIEW-BASIS` records trigger handling, adjudication, or fail-open truth for that independent review; it does not grant Codex authority.
-`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-codex-review-trigger:<basis>`.
+Activation requires evaluated configured independent-review trigger handling.
+The current configured implementation is Codex MCP through `.claude/skills/work-planning/references/codex-independent-review.md`.
+`CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for trigger handling, adjudication, or fail-open truth; it does not grant external-review authority.
+`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>`.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
@@ -99,7 +100,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its owning phase.
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
-**Exit law**: user escalation requires `work-planning`, Codex MCP independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-owned blocker.
+**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-owned blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
 **Exit law**: user questions become CP1 open questions or a proven user-owned blocker with next owner/action.
 
@@ -217,13 +218,13 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
 
 ## Reference-Owned Workflow Sections
-Load triggered references directly from `SKILL.md`.
+After `Skill(dev-workflow)` is loaded, load triggered references directly.
 - `references/checkpoints.md`: CP1-CP5 trigger, auto-resolve, reopen/HOLD, and iteration reuse rules.
 - `references/phase-surfaces.md`: phase artifact minimums, option counts, implementation-surface, and Phase 4 user-surface proof defaults.
 - `references/phase-gates.md`: phase transition hard gates and cursor consumption law.
-- `references/artifact-convergence-review.md`: Codex MCP independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; Codex remains non-authoritative.
-- `references/review-convergence-review.md`: Codex MCP independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; Codex remains non-authoritative.
-- `references/final-acceptance-review.md`: team-lead closure reconciliation with Codex MCP independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL` authority.
+- `references/artifact-convergence-review.md`: configured independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; external review remains non-authoritative.
+- `references/review-convergence-review.md`: configured independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; external review remains non-authoritative.
+- `references/final-acceptance-review.md`: team-lead closure reconciliation with configured independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL` authority.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.
@@ -245,8 +246,8 @@ Completed transition starts the next phase or records the exact blocker.
 A satisfied non-destructive/non-security/non-operator-policy-choice phase gate is consumed by team-lead, not user confirmation.
 
 When team-lead advances to a new phase, send the canonical `phase-transition-control` packet from `.claude/skills/task-execution/references/phase-transition-control.md` to each affected agent.
-Affected agents acknowledge with `control-ack`.
-Use assignment-grade packets for new bounded work and lifecycle-control for lifecycle decisions.
+Affected agents consume phase context silently.
+Use assignment-grade packets for new bounded work and structured `shutdown_request` for runtime cleanup.
 If the same agent also receives new bounded work in that segment, carry the needed phase context inside the assignment-grade packet.
 Expect the normal `dispatch-ack`.
 
