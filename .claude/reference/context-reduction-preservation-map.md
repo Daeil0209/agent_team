@@ -83,7 +83,7 @@ The 2026-04-29 lane role optimization keeps role files as always-loaded spines a
 
 Common preservation:
 - Each `.claude/agents/<lane>.md` still owns lane identity, non-negotiable boundary, lazy agent-specific skill loading trigger, packet authority, lane-local packet classification, `execute` / `reconstruct-with-inference` / `scope-pressure` / `hold|blocker` stop states, control-only message handling, and lane-local completion boundary.
-- Each `.claude/skills/<lane>/SKILL.md` now consumes `.claude/skills/<lane>/references/<lane>-lane-detail.md` as the detailed contract and states that `agents/<lane>.md` is the role spine, not the packet-field catalog.
+- Each `.claude/skills/agent-<lane>/SKILL.md` now consumes `.claude/skills/agent-<lane>/references/<lane>-lane-detail.md` as the detailed contract and states that `agents/<lane>.md` is the role spine, not the packet-field catalog.
 - Each lane detail reference now contains `Role-Spine Handoff` and `Control Packet Discipline` so moved detail remains reachable without making it always-loaded context.
 - Control-only messages remain safe without agent-specific skill loading because each role file still references `message-classes.md`, `truth-rules.md`, `scope-pressure.md`, `phase-transition-control.md`, and `lifecycle-control.md`, and states that phase/lifecycle control is control-only unless an assignment-grade packet is primary.
 

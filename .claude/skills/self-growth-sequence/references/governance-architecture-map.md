@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this map to choose the owner surface before drafting. Do not place a rule where it is merely convenient.
@@ -11,10 +12,10 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 |---|---|
 | Shared philosophy, priority, top-level ownership, preservation law | `.claude/CLAUDE.md` |
 | Team-lead trigger, route, orchestration, synthesis, reporting, interruption, self-growth adjudication | `.claude/agents/team-lead.md` |
-| Detailed team-lead edge cases that would bloat the role spine | `.claude/skills/team-lead/SKILL.md` |
+| Detailed team-lead edge cases that would bloat the role spine | Direct references named by `.claude/agents/team-lead.md` |
 | Lane charter, always-loaded receipt trigger, stop rule, and lane-owned completion duty | `.claude/agents/<lane>.md` |
-| Lane execution procedure, lane-local gates, and direct pointer to detail references | `.claude/skills/<lane>/SKILL.md` |
-| Lane packet additions, specialist matrices, tool/proof detail, and handoff field detail | `.claude/skills/<lane>/references/*.md` |
+| Lane execution procedure, lane-local gates, and direct pointer to detail references | `.claude/skills/agent-<lane>/SKILL.md` |
+| Lane packet additions, specialist matrices, tool/proof detail, and handoff field detail | `.claude/skills/agent-<lane>/references/*.md` |
 | Packet schema, message classes, lifecycle truth, dispatch preflight, completion spine | `.claude/skills/task-execution/references/assignment-packet.md`, `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/truth-rules.md`, `.claude/skills/task-execution/references/completion-handoff.md` |
 | Consequential planning freeze and route basis | `.claude/skills/work-planning/SKILL.md` |
 | Plan/result verification gates | `.claude/skills/self-verification/SKILL.md` |
@@ -25,7 +26,8 @@ Use this map to choose the owner surface before drafting. Do not place a rule wh
 | Technical enforcement, owner-rule guards, deterministic runtime checks | `.claude/hooks/` or `.claude/settings*.json` |
 | Official-source cache or preservation traceability | `.claude/reference/` |
 
-Reference files are lookup surfaces, not hidden always-on doctrine. A `SKILL.md` spine must keep the activation trigger, owner, stop rule, and instruction to load the direct reference file when the detailed lookup is required.
+Reference files are lookup surfaces, not hidden always-on doctrine.
+A `SKILL.md` spine keeps four things: the activation trigger, the owner, the stop rule, and the instruction to load the direct reference file when the detailed lookup is required.
 
 ## Resolve Next Owner And Action
 - Selected owner surface opens patch design on that surface.
