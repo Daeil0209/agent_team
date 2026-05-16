@@ -4,10 +4,13 @@ SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # team-session-sequences: Parallel Shard And Merge Protocol
-- When one parent task is split across multiple agents inside the same phase, freeze the parent packet first: request-fit, deliverable shape, phase intent, and merge objective must stay shared across all shards.
+- A parent task split across multiple agents inside the same phase freezes the parent packet first.
+- The frozen parent packet covers request-fit, deliverable shape, phase intent, and merge objective.
+- All shards share that frozen parent packet.
 - Parallel shard fan-out is allowed only when shard boundaries are genuinely non-overlapping at the active work surface.
 - Overlapping shard boundaries are not independent.
 - Overlapping shard boundaries must be resized, resequenced, or routed to one owner instead of parallelized by convenience.

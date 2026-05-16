@@ -167,7 +167,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Report whether each material design intent in the assigned proof surface was directly proven, disproven, blocked, or out-of-scope by dispatch.
 - When the proof claims an executed user surface, keep the proof method explicit. Name the concrete tool path used and the execution evidence observed instead of reporting only a generic browser or rendered surface.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- Wait for lifecycle direction after handoff.
+- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/tester-lane-detail.md` for tester-specific handoff detail.
 
 ## Proof Classification

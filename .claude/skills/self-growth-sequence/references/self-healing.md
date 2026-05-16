@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 ## Self-Healing Trigger Matrix
@@ -13,18 +14,14 @@ auto-inject: false
 | repeated missed-catch / recurrence | capability or boundary weakness | escalate beyond local patch into checklist, routing, hook, or authority hardening |
 | blocked execution due to missing reusable skill | capability gap | use Capability-Gap Fast Path with explicit owner and verification |
 
-First occurrence does not mean "ignore until repeated." It opens classification immediately. Repetition raises hardening depth; durable hardening still requires confirmed defect basis and recurrence path.
+First occurrence does not mean "ignore until repeated."
+First occurrence opens classification immediately.
+Repetition raises hardening depth.
+Durable hardening still requires confirmed defect basis and recurrence path.
 
-## Self-Healing Closure Checklist
-Before declaring a self-growth round complete, keep all of the following explicit:
-1. defect basis was real enough to govern behavior
-2. recurrence path was identified or explicitly narrowed
-3. correct owner surface was chosen
-4. bounded hardening actually landed or was explicitly assigned with owner and boundary
-5. fresh evidence was gathered on the affected path
-6. the active task resumed under corrected behavior, not pre-correction habit
-
-If one of these remains false, the self-growth round is not closed cleanly.
+## Self-Healing Closure
+Closure is owned by `.claude/skills/self-growth-sequence/SKILL.md` `### Closure Standard`.
+This reference supplies first-occurrence and repetition routing only.
 
 ## Resolve Next Owner And Action
 - Justified user correction opens immediate classification.

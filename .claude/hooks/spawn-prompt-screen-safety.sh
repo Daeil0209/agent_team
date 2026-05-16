@@ -1,21 +1,11 @@
 #!/usr/bin/env bash
 # spawn-prompt-screen-safety.sh
 #
-# Owner reference: .claude/skills/task-execution/references/assignment-packet.md
-#   "`Agent` member-creation prompt screen-safety clause: no `ready`,
-#    `context loaded`, `awaiting assignment`, startup ACK, `MESSAGE-CLASS`,
-#    handoff, completion, status, findings, counts, paths, plans,
-#    next-action prose, or instruction to send such startup transport"
+# Owner reference: .claude/skills/task-execution/references/message-classes.md
+# Team Member Startup Recognition owns the screen-safety rule.
 #
 # Stage: PreToolUse on Agent.
-# Behavior: inspect the spawn prompt for readiness-priming, ACK-priming,
-#   MESSAGE-CLASS embedding, and Communication-Plane payload instruction
-#   patterns. WARN (audit log only) — never DENY. Detection log enables
-#   verification of doctrine compliance across sessions.
-# Why advisory (not block): false-positive risk on legitimate prompts; hook
-#   serves as observation + behavioral nudge per `[HOOK-LAST]` last-resort
-#   principle. Blocking remains message-classes.md Team Member Startup Recognition enforcement at
-#   adherence layer.
+# Behavior: deny only direct startup-leak primes named by the owner rule.
 
 set -euo pipefail
 
@@ -66,28 +56,27 @@ prompt_lower="$(printf '%s' "$SPAWN_PROMPT" | tr '[:upper:]' '[:lower:]')"
 violations=()
 
 # 1) Explicit readiness/ACK transport instruction in spawn prompt body.
-#    Pattern targets verbs (send|report|emit|announce|declare|confirm|first say|first emit)
-#    paired with readiness/ack/receipt nouns. message-classes.md Team Member Startup Recognition forbids these.
-if grep -qE '(send|report|emit|announce|declare|confirm|first[[:space:]]+(say|emit|report))[^.]{0,40}(ready|readiness|dispatch-ack|startup[[:space:]]*ack|readiness[[:space:]]*ack|received|context[[:space:]]+loaded|standing[[:space:]]+by|awaiting[[:space:]]+(assignment|packet))' <<<"$prompt_lower"; then
+if grep -qE '(send|report|emit|announce|declare|confirm|first[[:space:]]+(say|emit|report))[^.]{0,40}(ready|readiness|dispatch-ack|startup[[:space:]]*ack|readiness[[:space:]]*ack|received|context[[:space:]]+loaded|standing[[:space:]]+by|awaiting[[:space:]]+(assignment|packet))' <<<"$prompt_lower" \
+  && ! grep -qE '(do[[:space:]]+not|don'\''t|never|no|neither)[^.]{0,60}(send|report|emit|announce|declare|confirm)?[^.]{0,60}(ready|readiness|dispatch-ack|startup[[:space:]]*ack|readiness[[:space:]]*ack|received|context[[:space:]]+loaded|standing[[:space:]]+by|awaiting[[:space:]]+(assignment|packet)|readiness/status/ack)' <<<"$prompt_lower"; then
   violations+=("readiness-or-ack-instruction")
 fi
 
 # 2) MESSAGE-CLASS embedded in spawn prompt body.
-#    MESSAGE-CLASS travels through SendMessage envelope, never inside the
-#    spawn prompt body. message-classes.md ### Team Member Startup Recognition.
 if grep -q 'MESSAGE-CLASS:' <<<"$SPAWN_PROMPT"; then
   violations+=("message-class-in-spawn-prompt")
 fi
 
-# 3) Communication-Plane payload class names instructed as outbound transport in spawn.
-#    handoff / completion / scope-pressure / hold|blocker / status payloads must NEVER be
-#    requested through the spawn prompt — they belong to assignment-grade SendMessage.
+# 3) SendMessage embedded in spawn prompt body.
+if grep -qi 'sendmessage' <<<"$SPAWN_PROMPT"; then
+  violations+=("sendmessage-in-spawn-prompt")
+fi
+
+# 4) Communication Plane payload class names instructed as outbound transport in spawn.
 if grep -qE '(send|emit|report|return|provide)[^.]{0,40}(handoff|completion|scope-pressure|hold[[:space:]]*\|[[:space:]]*blocker|status[[:space:]]+(update|report)|findings[[:space:]]+(count|summary)|count[s]?|paths?|plans?|next[-[:space:]]?action)' <<<"$prompt_lower"; then
   violations+=("comms-plane-payload-instruction")
 fi
 
-# 4) "Describe what you will do" priming language.
-#    LLM compliance variance is highest when the spawn prompt invites self-description.
+# 5) Self-description priming language.
 if grep -qE '(describe|tell[[:space:]]+(me|us)|explain[[:space:]]+(your|what[[:space:]]+you))[^.]{0,40}(plan|approach|next[[:space:]]+step|first[[:space:]]+(step|action)|what[[:space:]]+you[[:space:]]+will)' <<<"$prompt_lower"; then
   violations+=("self-description-prime")
 fi
@@ -118,14 +107,15 @@ printf '[%s] SPAWN-PROMPT-AUDIT status=%s team=%s agent=%s session=%s violations
   "${#SPAWN_PROMPT}" \
   >> "$audit_log"
 
-# Emit a warning row to the shared violation log only when flagged.
+# Block direct startup-leak primes.
 if [[ "$audit_status" == "flagged" ]]; then
-  printf '[%s] SPAWN-PROMPT SCREEN-SAFETY WARN: agent=%s team=%s violations=%s | per message-classes.md Team Member Startup Recognition; rewrite spawn prompt to role + screen-safety only, route work via assignment-grade SendMessage\n' \
+  printf '[%s] SPAWN-PROMPT SCREEN-SAFETY DENY: agent=%s team=%s violations=%s | per message-classes.md Team Member Startup Recognition\n' \
     "$(date '+%Y-%m-%d %H:%M:%S')" \
     "${AGENT_NAME:-unknown}" \
     "${TEAM_NAME:-none}" \
     "$audit_detail" \
     >> "$VIOLATION_LOG"
+  hook_emit_pretool_deny "BLOCKED: Agent spawn prompt violates Team Member Startup Recognition. Use role plus screen-safety only; send assignment-grade work after member creation." "Spawn prompt blocked."
 fi
 
 exit 0

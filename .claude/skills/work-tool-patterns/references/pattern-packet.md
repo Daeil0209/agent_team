@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/work-tool-patterns/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this file when a practical work-tool request needs a reusable product-pattern packet before implementation, review, proof, or validation.

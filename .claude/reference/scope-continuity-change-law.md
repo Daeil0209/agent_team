@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Self-Growth"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Common Doctrine Reference: Scope, Continuity, And Change
 
@@ -109,7 +110,7 @@ Drift reopens `work-planning`.
 - Refactoring preserves or sharpens action.
 - Reduction preserves or sharpens stop conditions.
 - Re-home preserves handoff, evidence, gate, owner boundary, and reporting truth.
-- Classify duplicate doctrine as protected local restatement only when it has a named owner.
+- Classify duplicate doctrine as protected local restatement only when it has a named owner and direct-consumption or isolation-safety basis.
 - Resolve divergent duplicate doctrine to the precise owner.
 - Scope/change review tightens weaker duplicate doctrine when tightening preserves meaning.
 - Scope/change review re-homes weaker duplicate doctrine when another owner is precise.

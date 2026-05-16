@@ -5,6 +5,7 @@ SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Minimal Governance And Runtime Footprint; Conditional Rules; Reference Binding"
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Runtime Footprint And Continuity Reference
 

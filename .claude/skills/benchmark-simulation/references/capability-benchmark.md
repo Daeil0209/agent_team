@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # benchmark-simulation: Capability And Product Benchmark Extensions
@@ -22,7 +23,9 @@ When used for self-evolution capability hardening, do more than compare team sha
 Required rules:
 - prefer fair before-vs-after comparisons over narrative claims of improvement
 - record when a benchmark is simulator-only, live-only, or mixed-path evidence
-- tag the provenance of every benchmark input, keep the comparative cross-check state explicit, and keep memory-only or citation-free benchmark exemplars inadmissible
+- tag the provenance of every benchmark input
+- keep the comparative cross-check state explicit
+- keep memory-only or citation-free benchmark exemplars inadmissible
 - require explicit gate criteria when a role is said to have advanced to a higher stage
 - require full-role coverage when the curriculum says every active role must reach a minimum stage
 - require evidence-backed relearning or retest artifacts when a role recovers from a failed gate
@@ -47,7 +50,15 @@ Any script must:
 - keep the benchmark path deterministic and repository-local
 
 ## Team Selection Protocol
-Optimize composition per scenario family; prefer smallest reliable team. Unproven agents removed from default. Fair before/after comparison with repository-local results. Satisfaction dimensions: reference fidelity, usability, educational clarity, stakeholder alignment.
+Optimize composition per scenario family.
+Prefer smallest reliable team.
+Unproven agents removed from default.
+Fair before/after comparison uses repository-local results.
+Satisfaction dimensions:
+- reference fidelity
+- usability
+- educational clarity
+- stakeholder alignment
 
 ## Workflow-Structure Benchmark Extension
 When benchmarking operator-facing tools, document systems, or spreadsheet migrations, benchmark product structure as well as team shape.

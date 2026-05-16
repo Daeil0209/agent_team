@@ -5,6 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
 effort: medium
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:

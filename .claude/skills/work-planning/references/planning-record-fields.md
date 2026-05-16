@@ -45,7 +45,8 @@ Use this file when field-level semantics, allowed values, the internal planning 
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when routing is team-routed or becomes team-routed after one named blocker-clear move.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when additional-agent routing is host-authorized.
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` consumes the route, record `not-applicable:<basis>` instead of leaving the field blank.
-- Valid `not-applicable` bases are limited to the current route basis. Do not use `not-applicable` to hide missing decomposition or missing readiness.
+- Valid `not-applicable` bases for `AGENT-MAP` or `PARALLEL-GROUPS` are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route kept dispatch-owned before authorized agent dispatch.
+- Authorized agent dispatch requires concrete `AGENT-MAP` and `PARALLEL-GROUPS`.
 - `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route.
 - Every lane entry records methodology or capability skills frozen as required for credible execution.
 - Use `[]` to record absence of required methodology or capability skills.

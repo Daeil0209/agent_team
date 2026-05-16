@@ -17,7 +17,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ## Purpose
 Open `Update/Upgrade Sequence` when team-system assets change.
 Route directly from `work-planning` as `ACTIVE-SEQUENCE: update-upgrade-sequence`.
-Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
+Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 Adjacent owners:
 - confirmed recurrence defects -> `self-growth-sequence`
@@ -76,7 +76,7 @@ Every update/upgrade path must:
    - broaden runtime enforcement tier
 3. Use only the `self-growth-sequence` `Change Sequence` patch mechanics required by the change class.
    Full self-growth opens only for confirmed behavioral or procedural defects.
-   Governance patch mechanics include consumed-layer placement and generalization basis from `.claude/reference/minimal-governance-change-law.md`.
+   Governance patch mechanics include consumed-layer placement, generalization basis, and patch-ready record from `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 4. Preserve structural contracts.
 5. Preserve owner boundaries.
 6. Preserve live references.
@@ -114,11 +114,8 @@ Skill names remain only when a packet, route, or activation path needs them.
 
 ## Constraints
 - No new operational rule without a clear owner.
-- No governance patch on an unconsumed owner surface unless the update also makes that surface consumed by the active path, per `.claude/reference/minimal-governance-change-law.md`.
-- No symptom-only patch when the same owner/trigger/action/stop/evidence class can recur, per `.claude/reference/minimal-governance-change-law.md`.
-- Before adding governance text, test tighter owner-local alternatives first.
-- Apply tightening, replacing, trimming, merging, or re-homing when they preserve force.
-- Any expansion requires proof that no shorter owner-local edit carries the same force; otherwise replace, trim, merge, or re-home.
+- Governance patches must satisfy `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before update closure.
+- Do not restate patch-selection rules here when that gate controls the same action.
 - Shared doctrine weakening requires explicit owner approval.
 - Duplicate ownership requires intentional protected restatement or hierarchy consistency basis.
 - Treat rule, skill, settings, and hook changes as governance-sensitive by default.

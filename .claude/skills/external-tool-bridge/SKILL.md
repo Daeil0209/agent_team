@@ -3,6 +3,7 @@ name: external-tool-bridge
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, cleanup truth, and blocked-condition reporting while adjacent role ownership stays intact. Use when an external API, connector, MCP path, browser/client automation, or bridge setup materially blocks truthful delivery.
 user-invocable: false
 PRIMARY-OWNER: developer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -33,9 +34,8 @@ Capability recovery investigation produces setup or diagnostic input only.
 - `team-lead` — owns drift control, reuse discipline, modular integrity, and merge-governance correction
 - `developer` and approved specialist skills — bounded production owners
 - You reconcile their outputs
-- Order position: support overlay outside the controlling-chain stage.
-- Can reconcile or bridge outputs.
-- Earlier controlling contracts remain active on the same blocked surface.
+- This skill bridges only the blocked external-tool surface and returns evidence or blocker truth to the current owner.
+- This skill never overrides team-lead routing, task-execution dispatch, reviewer findings, tester proof, validator acceptance, or active workflow gates.
 - Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere.
 - Preserve this owner-local contract unless an equivalent owner-local contract remains here.
 - `reviewer` — downstream review finding owner for integration-side defects, weak assumptions, and blocked merge quality
@@ -68,8 +68,14 @@ Activate when the requested outcome genuinely needs external bridging.
 Examples: API-backed generation, external-service verification, or non-local client automation with no credible quieter substitute.
 Also activate when `team-lead` routes a bounded agent `hold|blocker` or `scope-pressure`.
 That routed signal must identify a missing evidence surface, required tool/capability, or current-toolchain gap that blocks truthful work.
-Also activate when an external review/tool path records `mcp_unavailable`, `auth_error`, `quota`, `tool_unavailable`, `config_missing`, or setup blocker.
-`work-planning` must route the bounded recovery task here.
+Also activate when an external review/tool path records one of these conditions:
+- `mcp_unavailable`
+- `auth_error`
+- `quota`
+- `tool_unavailable`
+- `config_missing`
+- setup blocker
+`work-planning` routes the bounded recovery task here.
 ## Inputs
 - active request source
 - canonical contract

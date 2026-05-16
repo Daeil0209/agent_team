@@ -74,7 +74,7 @@
     ],
     "PermissionRequest": [
       {
-        "matcher": "Edit|Update|MultiEdit",
+        "matcher": "Edit|MultiEdit",
         "hooks": [
           {
             "type": "command",
@@ -86,7 +86,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|mcp__playwright__browser_.*|Agent|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskStop",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|MultiEdit|Write|NotebookEdit|Skill|mcp__playwright__browser_.*|Agent|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskStop",
         "hooks": [
           {
             "type": "command",
@@ -96,7 +96,7 @@
         ]
       },
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|WebFetch|WebSearch|Edit|Update|MultiEdit|Write|NotebookEdit|Skill|mcp__codex__codex|mcp__playwright__browser_.*|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|WebFetch|WebSearch|Edit|MultiEdit|Write|NotebookEdit|Skill|mcp__codex__codex|mcp__playwright__browser_.*|Agent|SendMessage|TaskCreate|TaskUpdate|TaskStop|TeamCreate|TeamDelete|CronCreate|CronDelete",
         "hooks": [
           {
             "type": "command",
@@ -176,7 +176,7 @@
         ]
       },
       {
-        "matcher": "Bash|Edit|Update|MultiEdit|Write|NotebookEdit",
+        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit",
         "hooks": [
           {
             "type": "command",
@@ -214,16 +214,6 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/track-runtime-lifecycle.sh",
             "timeout": 15
-          }
-        ]
-      },
-      {
-        "matcher": "Read|Bash|Glob|Grep|LS|TaskList|TaskGet|TaskOutput|ToolSearch|Skill",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/dispatch-stall-monitor.sh",
-            "timeout": 5
           }
         ]
       }

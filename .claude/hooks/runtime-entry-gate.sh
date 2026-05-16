@@ -77,6 +77,9 @@ SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
 
 emit_deny() {
   local reason="${1:?reason required}"
+  local surface_key=""
+  surface_key="runtime-entry:${TOOL_NAME:-tool}"
+  reason="$(augment_precheck_block_reason_on_repeat "$SESSION_ID" "${TOOL_NAME:-tool}" "$surface_key" "$reason")"
   hook_emit_pretool_deny "$reason" "Runtime entry is blocked."
 }
 
@@ -94,10 +97,10 @@ runtime_inactive_reason() {
     return
   fi
   if [[ "$tool_name" == "Agent" ]]; then
-    printf 'BLOCKED: runtime inactive. Next: TeamCreate -> retry Agent.'
+    printf 'BLOCKED: runtime inactive. Next: TeamCreate. Do not retry Agent until TeamCreate succeeds.'
     return
   fi
-  printf 'BLOCKED: runtime inactive. Next: TeamCreate -> retry %s.' "$tool_name"
+  printf 'BLOCKED: runtime inactive. Next: TeamCreate. Do not retry %s until TeamCreate succeeds.' "$tool_name"
 }
 
 cleanup_denied_agent_dispatch_residue() {

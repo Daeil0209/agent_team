@@ -3,13 +3,14 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Downward Lifecycle Control Packet
-Use a structured lifecycle control packet when team-lead resolves post-completion or runtime lifecycle state for an agent and no new bounded work is being assigned.
+Structured lifecycle control is exceptional non-work control that changes agent-side behavior without assigning new bounded work.
 
 ## Validity
-- Lifecycle control records post-completion or runtime lifecycle state.
+- Lifecycle control records exceptional runtime control outside the normal assignment work-state flow.
 - Workflow phase movement uses phase-transition control.
 - Same-segment assignment-grade work replaces lifecycle-control for that agent.
 
@@ -18,8 +19,8 @@ Carry:
 - `LIFECYCLE-DECISION`
 - `DECISION-BASIS`
 
-Agents acknowledge non-terminating lifecycle receipt when the decision materially affects active assignment, reuse, standby readiness, or hold-for-validation.
-Team-lead sends lifecycle control explicitly after agent completion, reuse decision, or runtime coordination when a non-terminating lifecycle edge must be recorded truthfully.
+When team-lead sends a valid lifecycle-control packet, the agent returns a one-line `control-ack`.
+Team-lead sends lifecycle control only when an exceptional lifecycle edge requires agent-side behavior and no assignment-grade packet or shutdown request fits.
 Shutdown intent is normalized to the structured shutdown protocol below.
 
 Termination form for shutdown specifically:
@@ -27,19 +28,17 @@ Termination form for shutdown specifically:
 - Send `SendMessage` with `message: {"type": "shutdown_request"}`.
 - During session closeout, team-lead sends this automatically to every live process-backed teammate before `TeamDelete`.
 - Routine teardown proceeds from lifecycle evidence without user selection.
-- A free-text lifecycle-control message with `LIFECYCLE-DECISION: shutdown` is a malformed shutdown attempt.
-- It records intent only.
-- Termination requires the structured shutdown request immediately after malformed intent is detected.
+- A free-text shutdown control records intent only.
+- Termination proceeds through the structured shutdown request.
 - Termination evidence requires the structured shutdown response and harness termination event.
 - The agent replies with `{"type": "shutdown_response", "approve": true|false}`.
 - On approve, the agent process exits and the harness emits a `teammate_terminated` event.
-- Use the free-text `lifecycle-control` form only when the decision is `reuse`, `standby`, or `hold-for-validation`.
-- Reuse, standby, and hold-for-validation require only a lifecycle-edge record.
+- Post-shutdown or post-stand-down output is cleanup, quarantine, or self-growth evidence; it satisfies the frozen lane deliverable only when `team-lead` explicitly cancels shutdown before that work starts.
 - `TeamDelete` succeeds only after every live process-backed teammate is confirmed terminated.
 - Termination proof requires `teammate_terminated` evidence rather than text `control-ack`.
 
 ## Resolve Next Owner And Action
-- Reuse, standby, or hold-for-validation sends `MESSAGE-CLASS: lifecycle-control`.
+- Exceptional non-work control sends `MESSAGE-CLASS: lifecycle-control`.
 - Shutdown intent sends structured `shutdown_request`.
 - Missing termination evidence keeps closeout open.
 - New bounded work returns to assignment-grade dispatch.

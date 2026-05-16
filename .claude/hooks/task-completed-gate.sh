@@ -257,9 +257,6 @@ try {
       if (!fields[key]) missingFields.push(label);
     }
   }
-  if (!latest || !String(latest.requestedLifecycle || "").trim()) {
-    missingFields.push("REQUESTED-LIFECYCLE");
-  }
   const identitySummary = `sessions=${candidateSessionIds.join(",") || "none"}; senders=${candidateSenderNames.join(",") || "none"}; evidence=${trimText(evidenceState.sessionId || "") || "none"}`;
 
   const result = {
@@ -473,23 +470,23 @@ case "$LATEST_CLASS" in
 esac
 
 if [[ -n "$TASK_ID" && "$EXPLICIT_TASK_ID_FIELD_PRESENT" != "true" ]]; then
-  FAILURES+=("Completion-grade transport must carry TASK-ID field when task tracking is active.")
+  FAILURES+=("Completion-grade transport envelope must carry TASK-ID field when task tracking is active.")
 fi
 
 if [[ -n "$TASK_ID" && "$EXACT_TASK_TRANSPORT_PRESENT" != "true" ]]; then
-  FAILURES+=("Transport must carry matching TASK-ID: ${TASK_ID}.")
+  FAILURES+=("Completion-grade transport envelope must carry matching TASK-ID: ${TASK_ID}.")
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS REQUESTED-LIFECYCLE PRODUCER-SELF-REVIEW-PASS LANE-LOCAL-SV-RESULT USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
+  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS PRODUCER-SELF-REVIEW-PASS LANE-LOCAL-SV-RESULT USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
     if missing_field_present "$field_name"; then
-      FAILURES+=("Missing completion-safety field: ${field_name}.")
+      FAILURES+=("Missing completion-carrier safety field: ${field_name}.")
     fi
   done
 fi
 
 if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
-  FAILURES+=("Transport must carry PLANNING-BASIS: loaded.")
+  FAILURES+=("Completion carrier must provide PLANNING-BASIS: loaded.")
 fi
 
 case "$FROZEN_CONTRACT_STATUS_VALUE" in
@@ -536,12 +533,12 @@ case "$RESOURCE_CLEANUP_NORM" in
     esac
     ;;
   *)
-    FAILURES+=("Transport must carry RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
+    FAILURES+=("Completion carrier must provide RESOURCE-CLEANUP: complete|not-applicable, with cleanup detail when stateful resources were opened.")
     ;;
 esac
 
 if ! [[ "$CONVERGENCE_PASS_VALUE" =~ ^[1-9][0-9]*$ ]]; then
-  FAILURES+=("Transport must carry CONVERGENCE-PASS as a positive integer.")
+  FAILURES+=("Completion carrier must provide CONVERGENCE-PASS as a positive integer.")
 fi
 
 if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]; then
@@ -557,50 +554,50 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
   case "$PROOF_SURFACE_MATCH_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator transport omitted PROOF-SURFACE-MATCH.")
+      FAILURES+=("Tester/validator completion carrier omitted PROOF-SURFACE-MATCH.")
       ;;
     *)
-      FAILURES+=("Tester/validator transport used noncanonical PROOF-SURFACE-MATCH.")
+      FAILURES+=("Tester/validator completion carrier used noncanonical PROOF-SURFACE-MATCH.")
       ;;
   esac
 
   case "$RUN_PATH_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator transport omitted RUN-PATH-STATUS.")
+      FAILURES+=("Tester/validator completion carrier omitted RUN-PATH-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator transport used noncanonical RUN-PATH-STATUS.")
+      FAILURES+=("Tester/validator completion carrier used noncanonical RUN-PATH-STATUS.")
       ;;
   esac
 
   case "$CORE_WORKFLOW_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator transport omitted CORE-WORKFLOW-STATUS.")
+      FAILURES+=("Tester/validator completion carrier omitted CORE-WORKFLOW-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator transport used noncanonical CORE-WORKFLOW-STATUS.")
+      FAILURES+=("Tester/validator completion carrier used noncanonical CORE-WORKFLOW-STATUS.")
       ;;
   esac
 
   case "$INTERACTION_COVERAGE_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator transport omitted INTERACTION-COVERAGE-STATUS.")
+      FAILURES+=("Tester/validator completion carrier omitted INTERACTION-COVERAGE-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator transport used noncanonical INTERACTION-COVERAGE-STATUS.")
+      FAILURES+=("Tester/validator completion carrier used noncanonical INTERACTION-COVERAGE-STATUS.")
       ;;
   esac
 
   case "$BURDEN_STATUS_VALUE" in
     matched|mismatched|blocked|missing|partial|not-applicable) ;;
     "")
-      FAILURES+=("Tester/validator transport omitted BURDEN-STATUS.")
+      FAILURES+=("Tester/validator completion carrier omitted BURDEN-STATUS.")
       ;;
     *)
-      FAILURES+=("Tester/validator transport used noncanonical BURDEN-STATUS.")
+      FAILURES+=("Tester/validator completion carrier used noncanonical BURDEN-STATUS.")
       ;;
   esac
 
@@ -608,10 +605,10 @@ if [[ "$LATEST_AGENT_TYPE" == "tester" || "$LATEST_AGENT_TYPE" == "validator" ]]
     case "$ACCEPTANCE_RECONCILIATION_VALUE" in
       explicit|missing|not-applicable) ;;
       "")
-        FAILURES+=("Validator transport omitted ACCEPTANCE-RECONCILIATION.")
+        FAILURES+=("Validator completion carrier omitted ACCEPTANCE-RECONCILIATION.")
         ;;
       *)
-        FAILURES+=("Validator transport used noncanonical ACCEPTANCE-RECONCILIATION.")
+        FAILURES+=("Validator completion carrier used noncanonical ACCEPTANCE-RECONCILIATION.")
         ;;
     esac
   fi

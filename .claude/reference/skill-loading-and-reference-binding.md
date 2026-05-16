@@ -65,7 +65,7 @@ Stop before handoff when applied or blocked skill/reference basis is missing.
 - Loaded skills inherit:
   - `CLAUDE.md`
   - active owner role
-  - common inheritance floor
+  - Common Lane-Core Preconditions when the loaded owner is a lane
 - Loaded skills sharpen owner behavior only within their owner stops.
 - Agent-specific skills load on assignment-grade lane work.
 - These messages load agent-specific skills only when they assign or reopen work:

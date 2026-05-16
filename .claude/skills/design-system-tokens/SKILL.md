@@ -4,6 +4,7 @@ description: Define 3-layer design token architecture, token naming, layer consu
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: reviewer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:

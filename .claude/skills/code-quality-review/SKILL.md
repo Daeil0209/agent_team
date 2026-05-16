@@ -4,6 +4,7 @@ description: Review implementation structure with SOLID checks, duplication taxo
 user-invocable: false
 PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:

@@ -21,42 +21,6 @@ USER_PROMPT="${SHARED_FIELDS[0]:-}"
 PROMPT_SESSION_ID="${SHARED_FIELDS[1]:-}"
 PROMPT_SESSION_ID="$(recover_session_id "$PROMPT_SESSION_ID")"
 
-# Strip harness wrapper blocks before correction detection so generated metadata
-# is not mistaken for user-authored defect language. Other prompt consumers use raw text.
-sanitize_prompt_for_correction_detection() {
-  local raw="${1-}"
-  RAW_PROMPT="$raw" node <<'NODE'
-const raw = String(process.env.RAW_PROMPT || "");
-const HARNESS_WRAPPERS = [
-  "system-reminder",
-  "command-name",
-  "command-message",
-  "command-args",
-  "command-output",
-  "local-command-stdout",
-  "local-command-stderr",
-  "local-command-caveat",
-  "task-notification",
-  "teammate-message",
-];
-let stripped = raw;
-for (const tag of HARNESS_WRAPPERS) {
-  const block = new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?<\\/${tag}>`, "giu");
-  const selfClose = new RegExp(`<${tag}\\b[^>]*\\/>`, "giu");
-  const orphanOpen = new RegExp(`<${tag}\\b[^>]*>`, "giu");
-  const orphanClose = new RegExp(`<\\/${tag}\\s*>`, "giu");
-  stripped = stripped
-    .replace(block, " ")
-    .replace(selfClose, " ")
-    .replace(orphanOpen, " ")
-    .replace(orphanClose, " ");
-}
-stripped = stripped.replace(/\s+/g, " ").trim();
-process.stdout.write(stripped);
-NODE
-}
-USER_PROMPT_FOR_PATTERNS="$(sanitize_prompt_for_correction_detection "$USER_PROMPT")"
-
 is_system_generated_followup_prompt() {
   local prompt="${1-}"
   [[ -n "$prompt" ]] || return 1
@@ -110,38 +74,6 @@ const stripped = prompt
   .replace(/\s+/g, " ")
   .trim();
 process.exit(stripped ? 1 : 0);
-NODE
-}
-
-status_runtime_recovery_context() {
-  local prompt="${1-}"
-  [[ -n "$prompt" ]] || return 1
-
-  USER_PROMPT="$prompt" \
-  PROCEDURE_STATE_FILE="$PROCEDURE_STATE_FILE" \
-  node <<'NODE' 2>/dev/null || true
-const fs = require("fs");
-
-const prompt = String(process.env.USER_PROMPT || "").trim();
-if (!prompt) process.exit(0);
-
-const statusPromptRe =
-  /(?:\bstatus\b|\bprogress\b|\bcurrent state\b|\bwhat remains\b|\bwhat(?:'s| is) left\b|\bwhat are you doing\b|\bwhy (?:did|are) you stop(?:ped)?\b|\bwhat is happening\b|\bwhere are we\b|지금[^.\n]{0,20}(?:뭐|무엇|어디|상태|진행|남|멈)|현재[^.\n]{0,20}(?:상태|진행|남)|뭐하고 있|무엇을 하고 있|어디까지|왜 멈|왜 안|남은 게|뭐가 남았|진행 상황|현재 상태)/iu;
-if (!statusPromptRe.test(prompt)) process.exit(0);
-
-// Per [HOOK-LAST]: hook is observation-only. Detailed runtime-state diagnosis is
-// owned by team-lead via session-boot Monitoring Sequence + agents/team-lead.md
-// RPA-3/RPA-7. Emit a single bare cue and let the lead read procedure-state +
-// classify the runtime situation against the canonical truth-rules.md ladder.
-const stateFile = String(process.env.PROCEDURE_STATE_FILE || "");
-let stateExists = false;
-try { stateExists = fs.statSync(stateFile).isFile(); } catch {}
-
-if (stateExists) {
-  process.stdout.write("CTX: status-like prompt. Owner cue: read procedure-state, apply session-boot Monitoring Sequence per agents/team-lead.md RPA-3, then answer only through `.claude/reference/user-reporting-law.md` admitted reasons. Hook ledgers are observation only per task-execution/references/truth-rules.md.");
-} else {
-  process.stdout.write("CTX: status-like prompt. Owner cue: no procedure-state present; report only a user-reporting-law-admitted explicit status answer or user-action blocker per agents/team-lead.md RPA-7.");
-}
 NODE
 }
 
@@ -344,50 +276,15 @@ if [[ -n "$USER_DELETE_APPROVAL_ROOTS" ]]; then
   printf '%s\n' "$USER_DELETE_APPROVAL_ROOTS" > "$USER_APPROVED_DELETE_ROOTS_FILE"
 fi
 
-# ─── SECTION 1: BOOT ENFORCEMENT ────────────────────────────────────────────
-BOOT_CONTEXT=""
-BOOT_SUPPRESS="false"
-DELIVERY_CONTEXT=""
-
-# Correction detection runs before boot handling. It emits context only; owner
-# skills classify route and hardening need.
-SELF_GROWTH_TERM_PATTERN="(self[-[:space:]]*growth|self[-[:space:]]*growth[-[:space:]]*sequence|self[-[:space:]]*improvement|change[-[:space:]]*sequence|재발[[:space:]]*방지|자기[[:space:]]*성장|셀프[[:space:]]*그로스)"
-SELF_GROWTH_EXECUTION_INTENT_PATTERN="(진입|실행|로드|적용|수행|패치|보완|고쳐|수정|하드닝|enter|run|load|apply|execute|patch|harden|fix)"
-CONFIRMED_CORRECTION_PATTERN="((${SELF_GROWTH_TERM_PATTERN})[^.?!]{0,80}${SELF_GROWTH_EXECUTION_INTENT_PATTERN}|(behavior(al)?[[:space:]]+defect|procedural[[:space:]]+defect|process[[:space:]]+failure|행동[[:space:]]*결함|절차[[:space:]]*결함)[^.?!]{0,80}(확정|맞|발생|고쳐|보완|수정|패치|confirmed|actual|fix|harden))"
-CORRECTION_PATTERN="((너|네|니)[[:space:]]*잘못(했|됐|된|한)?|틀렸|틀린|(네|너|니)[[:space:]]*(오류|실수)|왜[[:space:]]*(이런|그런|또)[[:space:]]*(오류|실수)|하지[[:space:]]*말|또[[:space:]]*(같은[[:space:]]*)?(실수|문제|오류)|안[[:space:]]*된다고[[:space:]]*(했|말했|했잖)|그게[[:space:]]*아니|규정[[:space:]]*무시|절차[[:space:]]*무시|규정[[:space:]]*위반|절차[[:space:]]*위반|(네|너|니)[[:space:]]*(오류|실수)|you.*wrong|wrong.*again|your mistake|that.s a mistake|you shouldn.t|not like that|you missed|don.t do|why did you (ignore|skip|miss|forget|not))"
-if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CONFIRMED_CORRECTION_PATTERN" 2>/dev/null; then
-  BOOT_CONTEXT="CTX: self-growth-evidence. User prompt supplies possible defect evidence. Owner cue: classify owner, recurrence path, and hardening need before consequential fan-out."
-elif printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$CORRECTION_PATTERN" 2>/dev/null; then
-  BOOT_CONTEXT="CTX: user-challenge-evidence. User challenge observed. Evidence cue: prompt is not defect proof; prior verified conclusions stand unless direct evidence or governing rules overturn them; confirmed behavioral defect may open self-growth classification."
-fi
-
-DELIVERY_INCIDENT_PATTERN="(double[-[:space:]]*click|더블클릭|start[._-]?bat|start[._-]?sh|launcher|아이콘|실행[^.]{0,20}(안[[:space:]]*돼|안돼|안됨|실패)|안[[:space:]]*열리|won.t[[:space:]]+launch|doesn.t[[:space:]]+launch|launch[[:space:]]+fail)"
-BURDEN_SHIFT_PROMPT_PATTERN="(내[[:space:]]*손이[[:space:]]*가|더블클릭만|hands[-[:space:]]*off|low[-[:space:]]*touch|cmd|powershell|terminal|명령[[:space:]]*(프롬프트|입력)|터미널|삭제[[:space:]]*후|node_modules|\\.next)"
-
-if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null; then
-  DELIVERY_CONTEXT="CTX: delivery-incident-evidence. Reported user-run-path failure may reopen acceptance. Evidence cue: promised user run path, hands-off remediation surface, and run-path proof need owner verification."
-fi
-
-if printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$DELIVERY_INCIDENT_PATTERN" 2>/dev/null \
-  && printf '%s' "$USER_PROMPT_FOR_PATTERNS" | grep -qiE "$BURDEN_SHIFT_PROMPT_PATTERN" 2>/dev/null; then
-  DELIVERY_CONTEXT="CTX: delivery-remediation-evidence. A promised hands-off delivery path may have failed and pulled the user into recovery steps. Evidence cue: acceptance reopen, agent-owned remediation, and self-growth classification may be relevant."
-fi
-
+# ─── SECTION 1: BOOT MARKER SYNC ────────────────────────────────────────────
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
   BOOT_STARTUP_STATE="$(get_procedure_state_field "startupState" "")"
   if [[ "$BOOT_STARTUP_STATE" == "ready" ]]; then
     printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
-  else
-    BOOT_CONTEXT="CTX: boot-state. Boot sequence is incomplete. Owner cue: session-boot before task-level work."
-    BOOT_SUPPRESS="true"
   fi
 fi
 
-# ─── SECTION 2: CLOSEOUT INTENT SYNC + TASK-START PLANNING REMINDER ─────────
-CLOSEOUT_CONTEXT=""
-CLOSEOUT_SUPPRESS="false"
-PLANNING_CONTEXT=""
-RECOVERY_CONTEXT=""
+# ─── SECTION 2: CLOSEOUT INTENT SYNC + TASK-START PLANNING MARKER ───────────
 CLOSEOUT_ACTION="$(USER_PROMPT="$USER_PROMPT" \
   EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN="${EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN:-}" \
   CLOSEOUT_CANCEL_PROMPT_JS_PATTERN="${CLOSEOUT_CANCEL_PROMPT_JS_PATTERN:-}" \
@@ -417,15 +314,11 @@ case "$CLOSEOUT_ACTION" in
   set)
     clear_lead_planning_required "$PROMPT_SESSION_ID"
     set_closeout_intent "$USER_PROMPT_CLOSEOUT_INTENT_REASON" "user-prompt" "intent_marked" "$PROMPT_SESSION_ID"
-    CLOSEOUT_CONTEXT="CTX: closeout-intent-state. Explicit closeout intent marked. Owner cue: session-closeout owns teardown and residual truth."
-    CLOSEOUT_SUPPRESS="true"
     ;;
   clear)
     if closeout_intent_is_active "$PROMPT_SESSION_ID"; then
       clear_closeout_intent "user-prompt-closeout-cancelled" "$PROMPT_SESSION_ID"
     fi
-    CLOSEOUT_CONTEXT="CTX: closeout-intent-state. Explicit closeout cancellation observed. Owner cue: closeout state cleared until a new explicit end-of-session instruction."
-    CLOSEOUT_SUPPRESS="true"
     ;;
 esac
 
@@ -433,44 +326,6 @@ if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_sy
   # A fresh prompt alone is not a planning owner. Priority 0 decides whether a boundary opened.
   # Keep the routine planning-required marker silent; only exceptional owner cues emit context.
   mark_lead_planning_required "$PROMPT_SESSION_ID"
-  RECOVERY_CONTEXT="$(status_runtime_recovery_context "$USER_PROMPT")"
 fi
 
-# ─── OUTPUT ──────────────────────────────────────────────────────────────────
-COMBINED_CONTEXT="$BOOT_CONTEXT"
-if [[ -n "$CLOSEOUT_CONTEXT" ]]; then
-  if [[ -n "$COMBINED_CONTEXT" ]]; then
-    COMBINED_CONTEXT="$COMBINED_CONTEXT $CLOSEOUT_CONTEXT"
-  else
-    COMBINED_CONTEXT="$CLOSEOUT_CONTEXT"
-  fi
-fi
-if [[ -n "$RECOVERY_CONTEXT" ]]; then
-  if [[ -n "$COMBINED_CONTEXT" ]]; then
-    COMBINED_CONTEXT="$COMBINED_CONTEXT $RECOVERY_CONTEXT"
-  else
-    COMBINED_CONTEXT="$RECOVERY_CONTEXT"
-  fi
-fi
-if [[ -n "$PLANNING_CONTEXT" ]]; then
-  if [[ -n "$COMBINED_CONTEXT" ]]; then
-    COMBINED_CONTEXT="$COMBINED_CONTEXT $PLANNING_CONTEXT"
-  else
-    COMBINED_CONTEXT="$PLANNING_CONTEXT"
-  fi
-fi
-if [[ -n "$DELIVERY_CONTEXT" ]]; then
-  if [[ -n "$COMBINED_CONTEXT" ]]; then
-    COMBINED_CONTEXT="$COMBINED_CONTEXT $DELIVERY_CONTEXT"
-  else
-    COMBINED_CONTEXT="$DELIVERY_CONTEXT"
-  fi
-fi
-
-[[ -n "$COMBINED_CONTEXT" ]] || exit 0
-
-SUPPRESS_OUTPUT="false"
-[[ "$BOOT_SUPPRESS" == "true" ]] && SUPPRESS_OUTPUT="true"
-[[ "$CLOSEOUT_SUPPRESS" == "true" ]] && SUPPRESS_OUTPUT="true"
-
-hook_emit_user_prompt_context "$COMBINED_CONTEXT" "User prompt context." "$SUPPRESS_OUTPUT"
+exit 0

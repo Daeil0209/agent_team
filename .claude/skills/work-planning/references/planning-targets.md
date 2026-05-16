@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use this file when the plan is large, mixed, ambiguous, or at risk of becoming one generic all-purpose planning pass.
@@ -18,7 +19,10 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 
 ## Target Selection Rules
 - Choose one primary target before Q1-Q5. Add a secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
-- On consequential top-level plans, `route-plan` is the default primary target; the matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear (then `lead-local-plan`/`delegated-lane-plan`/`blocker-clear-plan`/`workflow-sequence-plan` becomes primary). Lower-level lane plans use the matching target as primary.
+- On consequential top-level plans, `route-plan` is the default primary target.
+- The matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear.
+- In those cases, `lead-local-plan`, `delegated-lane-plan`, `blocker-clear-plan`, or `workflow-sequence-plan` becomes primary.
+- Lower-level lane plans use the matching target as primary.
 - `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-based, burden-sensitive, or dependent on user-surface proof or original wording.
 - `lead-local-plan` is valid only for one named item with no final-arbitration trigger, no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
 - `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`.

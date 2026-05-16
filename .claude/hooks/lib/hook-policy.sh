@@ -225,10 +225,8 @@ set_default_export USER_PROMPT_CLOSEOUT_INTENT_REASON "user-prompt-explicit-clos
 set_default_export EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN "(?:\\bclose\\s*out\\b|\\bcloseout\\b|\\bend\\s+(?:the\\s+)?session\\b|\\bexit\\s+(?:the\\s+)?session\\b|\\bterminate\\s+(?:the\\s+)?session\\b|\\bshut\\s+down\\s+(?:the\\s+)?(?:session|team|runtime)\\b|\\bwrap\\s+up\\s+(?:the\\s+)?(?:session|team|runtime)\\b|\\uC138\\uC158\\s*\\uC885\\uB8CC|\\uC791\\uC5C5\\s*\\uC885\\uB8CC|\\uD300\\s*\\uC885\\uB8CC|\\uB7F0\\uD0C0\\uC784\\s*\\uC885\\uB8CC)"
 set_default_export CLOSEOUT_CANCEL_PROMPT_JS_PATTERN "(?:\\bcancel\\s+closeout\\b|\\bdefer\\s+closeout\\b|\\bdo\\s+not\\s+(?:end|exit|close)\\b|\\bkeep\\s+(?:the\\s+)?session\\s+open\\b|\\bcontinue\\s+working\\b|\\bresume\\s+work\\b|\\uC885\\uB8CC\\s*(?:\\uCDE8\\uC18C|\\uBCF4\\uB958)|\\uC138\\uC158\\s*\\uACC4\\uC18D|\\uACC4\\uC18D\\s*\\uC791\\uC5C5|\\uC885\\uB8CC\\s*\\uD558\\uC9C0\\s*\\uB9C8)"
 set_default_export NON_EXECUTION_CLOSEOUT_PROMPT_JS_PATTERN "(?:\\bhook(?:s)?\\b|\\bstop\\b|\\bsequence\\b|\\berror(?:s)?\\b|\\bbug(?:s)?\\b|\\bissue(?:s)?\\b|\\bpatch(?:es)?\\b|\\banaly[sz](?:e|ing)?\\b|\\banalysis\\b|\\binvestigat(?:e|ion)\\b|\\bsimulat(?:e|ion)\\b|\\uD6C5|\\uC2DC\\uD000\\uC2A4|\\uC5D0\\uB7EC|\\uBC84\\uADF8|\\uC774\\uC288|\\uD328\\uCE58|\\uBD84\\uC11D|\\uAC80\\uD1A0|\\uD14C\\uC2A4\\uD2B8|\\uC2DC\\uBBAC\\uB808\\uC774\\uC158|\\uBA54\\uC2DC\\uC9C0|\\uC6D0\\uC778)"
-
-set_default_export MANIFEST_SYNC_DISPATCH_VERB_PATTERN "copy|overwrite|sync|mirror|propagat|deploy|replace"
-set_default_export MANIFEST_SYNC_DISPATCH_SCOPE_PATTERN "manifest|~/.claude|/\\.claude|global folder|patch folder|payload|file list|write-scope|original patch|target folder|source folder"
-
+set_default_export HOOK_MUTATING_SHELL_COMMAND_PATTERN '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)'
+set_default_export HOOK_MUTATING_GIT_COMMAND_PATTERN '(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push|pull)([[:space:]]|$)'
 
 RUNTIME_TRANSIENT_FILES=(
   "$VIOLATION_LOG"

@@ -20,6 +20,16 @@ Load only when `task-execution/SKILL.md` Step 2 reaches dispatch-law detail.
 - For current-session recovery, `session-boot` must precede team-scoped reattach.
 - `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
 
+## Runtime Entry Evidence Boundary
+- `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and lifecycle truth.
+- `task-execution` consumes that classification plus current-session dispatch evidence before any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse move.
+- Current-session team registration evidence comes from the active procedure state, current team config, current live process-backed roster, or the hook-maintained team-runtime active marker when present.
+- `TeamCreate` success is current-session team existence proof.
+- Absence of current-session team registration opens `TeamCreate`.
+- Current-session team registration without live process-backed roster opens `session-boot` recovery before team-scoped reattach.
+- Team existence alone is not team-scoped launch readiness when hook policy requires tracked health monitoring; prove the required monitor or route the blocker before team-scoped `Agent`.
+- Dispatch-runtime evidence is consumed here; do not require `session-boot/references/runtime-state-detail.md` as a hidden preflight for `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse.
+
 ## Team-Agent-Only Lane Dispatch
 - When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), team-scoped `Agent` uses `team_name` and `name` to create or reattach a live member addressable by `SendMessage`.
 - Planned team-routed `Agent` dispatch is never standalone; missing top-level `team_name` or `name` is a preflight blocker before the host `Agent` call.

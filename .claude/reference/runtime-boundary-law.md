@@ -3,13 +3,14 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Core Laws 5 [HOOK-LAST]; Conditional Rules; Codex boundary"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Common Doctrine Reference: Runtime Boundary
 
 ## Source Binding
 This reference is trigger-bound detail for `CLAUDE.md` `[HOOK-LAST]` and Conditional Rules runtime-boundary clauses.
 This reference owns the prose-vs-technical-enforcement boundary.
-Governance-text patch selection stays with `.claude/reference/minimal-governance-change-law.md`.
+Governance-text patch selection stays with `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 Project output-root placement stays with `.claude/reference/output-root-and-filesystem-law.md`.
 
 ## Purpose

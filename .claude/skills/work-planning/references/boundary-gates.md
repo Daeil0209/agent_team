@@ -110,7 +110,8 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Prior task-created outputs are excluded sources for current-target or current-corpus work unless the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
 - Excluded source means do not open, read, copy, paraphrase, cite, or derive shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion from that prior output.
 - Prior outputs become deliverables or reference sources only when the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
-- If an excluded prior output was consulted before the exclusion was recognized, any planning record, binding surface, packet, shard map, taxonomy, or workflow derived from it is tainted and must be discarded and rebuilt from the current live target/corpus.
+- If excluded prior output shaped shard shape, taxonomy, workflow, route, packet, or conclusion, discard the derived surface and rebuild it from the current live target/corpus.
+- Non-shape-defining consultation records the consultation and continues from current live sources.
 - Prior outputs are not a replacement deliverable, user choice, route source, or methodology source unless explicit prior-output use was requested.
 - Required measurement missing from these work types blocks dispatch-ready planning:
   - exhaustive work

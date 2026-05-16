@@ -15,8 +15,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ## Common Completion Result Spine
 This spine names content that the producing lane must provide to team-lead through a retained carrier.
 `handoff` and `completion` are Communication Plane transport, not user reports.
-For team-agent runtime, the screen-rendered `SendMessage` body is a pointer envelope, not the completion spine.
-The envelope carries only `MESSAGE-CLASS`, optional `TASK-ID`, `WORK-SURFACE`, one lane-state field, and `RETAINED-OUTPUT-PATH`.
+For team-agent runtime, the screen-rendered `SendMessage` body is a one-line pointer envelope, not the completion spine.
+The one-line envelope carries only `MESSAGE-CLASS`, optional `TASK-ID`, `WORK-SURFACE`, one lane-state field, and `RETAINED-OUTPUT-PATH`.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`:
@@ -30,7 +30,6 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: ha
 - `PLANNING-BASIS: loaded`
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
-- `REQUESTED-LIFECYCLE`
 - `PRODUCER-SELF-REVIEW-PASS` records:
   - defeater lenses applied
   - disconfirming checks attempted
@@ -39,7 +38,7 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: ha
   - Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
-Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the pointer envelope through `SendMessage`.
+Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the one-line pointer envelope through `SendMessage`.
 Inline completion payload in `SendMessage` is malformed screen-rendered transport.
 
 Team-lead accepts completion-grade transport only when the pointer envelope names a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
@@ -49,8 +48,8 @@ Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on t
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
-When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the handoff cites the retained path under `projects/<project-folder>/...`.
-When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained project-owned path. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
+When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the handoff cites the frozen `RETAINED-OUTPUT-PATH` under the canonical output root from `.claude/reference/output-root-and-filesystem-law.md` (default `claude_doc/<work-name>/`).
+When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the handoff must cite a retained path inside the frozen output root. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
 `/tmp`, shell scrollback, transient pane output, and deleted scratch files are execution context only, not retained evidence.
 Conversation-only output is valid only when the packet names conversation as the output surface.
 
@@ -94,21 +93,13 @@ Each material start-contract axis closes through matched evidence, upstream defe
 Use `matched` only when the supporting spine fields or lane-specific status fields show the axis outcome.
 When the user-ready delivery chain is material, `matched` requires traceable continuity from instruction through concept/detail, implementation or production surface, verification evidence, and final receiver path.
 Working features with disconnected information, hidden assumptions, orphaned components, or implausible receiver flow are not closed-result evidence.
-`REQUESTED-LIFECYCLE` is the producer's request.
-Lifecycle debt clears only through explicit lifecycle control.
-Team-lead executes explicit lifecycle control on each completion-grade handoff in the same turn.
-Production-lane agents (developer/researcher) on a surface still inside the active validation chain (review → test → validate) hold `standby` or `hold-for-validation` until the chain converges to ACCEPT.
-FAR/HOLD keeps the producing lane available until correction routing is resolved.
+The completion or handoff transport closes the assignment execution block and records `STANDBY`.
+Team-lead consumes the retained carrier for synthesis, routing, validation, correction, reuse, shutdown, or closeout.
 Correction dispatch follows `OPEN-SURFACES`, `LANE-NEXT-CANDIDATE`, or the validator correction packet.
 Re-dispatch the producer for producer-owned correction.
-Issue `shutdown_request` only when validation ACCEPT is recorded for the producer's surface, the surface is proven out of the frozen plan, or closeout owns the path.
-Send `reuse` for agents picked up for the next assignment in the active route.
+Reuse sends another assignment-grade packet.
+Shutdown sends `shutdown_request` when validation ACCEPT is recorded, the surface is out of the frozen plan, or closeout owns the path.
 Wait for confirmed termination evidence on shutdowns.
-Standby and reuse continue at lane.
-Team-lead can allow one narrow same-surface follow-on before lifecycle control only when all conditions hold:
-- prior completion already made a non-reuse requested lifecycle explicit
-- next dispatch targets a distinct concrete agent
-- unresolved lifecycle debt stays visible
 
 User-surface proof or user-surface acceptance claims on an executed surface require the completion-grade transport to keep the exercised method explicit.
 The method record covers:
@@ -142,7 +133,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 
 ## Common Lane Handoff Law
 - Every agent handoff is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
-- The `SendMessage` body transports only the pointer envelope; lane-local execution truth travels in the retained carrier.
+- The `SendMessage` body transports only the one-line pointer envelope; lane-local execution truth travels in the retained carrier.
 - Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, or retained-output contents in the `SendMessage` body.
 - Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
@@ -158,5 +149,4 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Missing common result spine opens same-lane handoff correction.
 - Missing user-surface proof opens tester or proof-owner routing.
 - Missing final acceptance basis opens validator routing.
-- Lifecycle debt opens lifecycle control.
 - Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain opens `scope-pressure` or `hold|blocker`.

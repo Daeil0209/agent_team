@@ -19,7 +19,7 @@ Use this file when specialist skill routing, `SKILL-AUTH`, owner matrices, or co
 
 For self-growth and consequential quality-hardening claims, default to benchmark-first comparison. Let `researcher` own benchmark-light evidence shaping for baseline, fairness, comparison-axis framing, provenance visibility, and cross-check visibility; use `benchmark-simulation` when the active packet escalates into full benchmark form.
 
-When multiple specialist skills are active on one blocked surface, use the owning role's specialist matrix and controlling order as the source of truth. For developer-owned specialists, consume `.claude/skills/agent-developer/references/developer-lane-detail.md` `Specialist Skill Loading` instead of restating the literal order here. `benchmark-simulation` and `external-tool-bridge` remain support overlays without controlling-chain position.
+When multiple specialist skills are active on one blocked surface, use the owning role's specialist matrix and controlling order as the source of truth. For developer-owned specialists, consume `.claude/skills/agent-developer/references/developer-lane-detail.md` `Specialist Skill Loading` instead of restating the literal order here. `benchmark-simulation` and `external-tool-bridge` are support overlays and never override the owning role's specialist matrix.
 
 This controlling order is a lead-side routing discipline for logical flow. Runtime chaining remains outside this reference. Authorization hooks can gate who can use a specialist skill, but the lead still owns the ordering judgment for the active request.
 

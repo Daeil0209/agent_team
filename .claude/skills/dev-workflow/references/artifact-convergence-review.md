@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Use only inside active `dev-workflow` after `work-planning` selected the workflow and a canonical artifact exists or was materially revised.
@@ -28,13 +29,18 @@ For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-ed
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
 User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
-Codex never blocks, dispatches, validates, accepts, issues `PASS/HOLD/FAIL`, mutates files, repairs tools, changes MCP/settings/hooks, or replaces owner gates.
+Codex authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for artifact-convergence review.
 `CODEX-INDEPENDENT-REVIEW-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 
-`REDESIGN-PLAN` is valid only when it states redesigned decisions, affected design dimensions, consistency impacts across materially affected scope/risk/user-surface/proof/acceptance/downstream/phase-gate surfaces, then derived producer instructions.
+`REDESIGN-PLAN` validity requires four named contents in order:
+1. redesigned decisions
+2. affected design dimensions
+3. consistency impacts across materially affected scope/risk/user-surface/proof/acceptance/downstream/phase-gate surfaces
+4. derived producer instructions
 A section edit list, addendum, framing note, or renamed patch list is not a valid `REDESIGN-PLAN` or producer-dispatch basis.
 Producer dispatch names the team-lead `REDESIGN-PLAN` as basis, not Codex findings.
-Invalid `REDESIGN-PLAN` dispatch stops that producer path; produced output is diagnostic only until valid `REDESIGN-PLAN` redispatch replaces it.
+Invalid `REDESIGN-PLAN` dispatch stops that producer path.
+Produced output is diagnostic only until valid `REDESIGN-PLAN` redispatch replaces it.
 
 ## Trigger
 Run for:
@@ -75,13 +81,9 @@ Missing required path records `fail-open:blocked_by_config`.
 12. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
 13. Codex axes include user-perspective checks.
 14. Codex axes include user-convenience checks.
-15. Operator-facing rendered UI includes dashboards, gauges, charts, dense tables, multi-step forms, decks, and reports.
-16. Operator-facing rendered UI axes include operator-naive comprehension.
-17. Operator-naive comprehension checks each label, control, data display, gauge, and chart at first glance for a first-time user with no prior specification, design, or domain context.
-18. Novel or composite operator-facing rendered UI axes include visual-reference benchmark coverage.
-19. Visual-reference benchmark coverage checks `benchmark-simulation` invocation.
-20. Visual-reference benchmark coverage checks extracted concrete visual characteristics: font size, spacing, ratio, hierarchy, and color contrast.
-21. Visual-reference benchmark coverage checks abstraction-fit-adapt synthesis.
+15. Operator-facing rendered UI axes consume `.claude/skills/visual-composition/SKILL.md` for operator-naive comprehension.
+16. Novel or composite operator-facing rendered UI axes consume `.claude/skills/benchmark-simulation/SKILL.md` for visual-reference benchmark coverage.
+17. Visual-reference benchmark coverage checks invocation, extracted concrete visual characteristics, and abstraction-fit-adapt synthesis.
 22. Operator-facing rendered UI axes include acceptance image-evidence path.
 23. Acceptance image-evidence path checks per-AC capture cited and openable via multimodal `Read`.
 24. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.

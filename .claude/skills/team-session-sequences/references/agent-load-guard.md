@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # team-session-sequences: Agent Load Guard

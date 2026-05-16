@@ -6,7 +6,7 @@ INPUT="$(cat)"
 
 # PermissionRequest is the narrow place where Claude Code asks the operator for
 # protected self-edit approval. Keep this hook smaller than the governance
-# doctrine: it only removes repeat prompts for structured Edit/Update/MultiEdit changes to document
+# doctrine: it only removes repeat prompts for structured Edit/MultiEdit changes to document
 # surfaces that the normal PreToolUse gates have already allowed.
 RESULT="$(INPUT_JSON="$INPUT" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'
 const fs = require("fs");
@@ -55,14 +55,12 @@ const flattenPaths = (toolName, toolInput) => {
 };
 
 const hasAllowedEditShape = (toolName, toolInput) => {
-  if (toolName === "Edit" || toolName === "Update") {
+  if (toolName === "Edit") {
     return (
       typeof toolInput.old_string === "string" ||
       typeof toolInput.new_string === "string" ||
       typeof toolInput.oldString === "string" ||
-      typeof toolInput.newString === "string" ||
-      typeof toolInput.update === "string" ||
-      typeof toolInput.patch === "string"
+      typeof toolInput.newString === "string"
     );
   }
 
@@ -85,7 +83,7 @@ const safeRelativeDocSurface = (relativePath) => {
 const safeRelativeOperationalSurface = (relativePath, toolName) => {
   const rel = relativePath.replace(/\\/g, "/");
   if (rel === ".runtime/procedure-state.json") {
-    return toolName === "Edit" || toolName === "Update" || toolName === "MultiEdit";
+    return toolName === "Edit" || toolName === "MultiEdit";
   }
   return false;
 };
@@ -95,7 +93,7 @@ try {
   const toolName = String(input.tool_name || input.toolName || "");
   const toolInput = input.tool_input || input.toolInput || input.input || {};
 
-  if (!["Edit", "Update", "MultiEdit"].includes(toolName)) {
+  if (!["Edit", "MultiEdit"].includes(toolName)) {
     emit(null);
     process.exit(0);
   }

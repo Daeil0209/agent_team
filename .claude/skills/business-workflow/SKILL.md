@@ -5,6 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
 effort: medium
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -37,7 +38,14 @@ Load when sheets, manual operations, approvals, or workflow-heavy tools hide rul
 ## Responsibilities
 - extract entities, lifecycle states, transitions, approvals, overrides, and generated artifacts
 - for allocation, participation, capacity, or period-based workflow systems, extract the rule packet before downstream design
-- allocation rule packet detail includes period basis, rate or unit meaning, overlap rules, over-allocation rules, effective dates, closure and reopen rules, and derived status meaning
+- allocation rule packet detail covers:
+  - period basis
+  - rate or unit meaning
+  - overlap rules
+  - over-allocation rules
+  - effective dates
+  - closure and reopen rules
+  - derived status meaning
 - budget, personnel, participation, or allocation tools consume `references/allocation-participation-workflow.md` before downstream design
 - separate stable business rules from layout accidents, convenience habits, or one-off exceptions
 - freeze source-of-truth meaning for master, transactional, derived, and exported data
@@ -46,11 +54,11 @@ Load when sheets, manual operations, approvals, or workflow-heavy tools hide rul
 - define the operator meaning of major tabs, windows, buttons, and save paths
 - preserve undefined but observed labels, policy meanings, and allocation choices as configurable categories, rule tables, or user-editable parameters
 - parameterizable ambiguity becomes parameter/default/open question
-- active owner reports `hold|blocker` when:
-  - workflow start states remain too weak for credible delivery
-  - workflow end states remain too weak for credible delivery
-  - authority boundaries remain too weak for credible delivery
-  - audit-sensitive transitions remain too weak for credible delivery
+- The active owner reports `hold|blocker` when any of these remain too weak for credible delivery:
+  - workflow start states
+  - workflow end states
+  - authority boundaries
+  - audit-sensitive transitions
 ## Boundary
 - policy requires evidence
 - UI composition, implementation architecture, and final acceptance stay with adjacent owners

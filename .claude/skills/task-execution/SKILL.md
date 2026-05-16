@@ -55,13 +55,13 @@ Missing actual `work-planning` freeze discards the attempted dispatch path and r
 Use `references/dispatch-entry-contract.md` before this skill acts.
 Hard surface:
 - Required prior owners: current boundary `work-planning`, any frozen workflow/sequence owner, and a frozen additional-agent or ambiguous dispatch route.
-- New agent dispatch also requires a host-authorized active-runtime path.
+- New agent dispatch also requires dispatch-runtime execution proof consumed from `references/runtime-dispatch-law.md`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` enters only for a dispatch-owned blocker-clear move.
 - Missing, contradictory, stale, or route-unfit `not-applicable` route fields reopen `work-planning`.
 - Missing measured burden basis required by `work-planning` or `parallel-fit` reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
-- A frozen `AGENT-MAP` or `PARALLEL-GROUPS` that would create more than 5 concurrent active team-scoped agents is dispatch-invalid.
-- Missing applied 5-member cap basis on a team-routed parallel freeze reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
+- A frozen `AGENT-MAP` or `PARALLEL-GROUPS` that would exceed the active concurrent-agent cap defined by `work-planning/references/parallel-fit.md` is dispatch-invalid.
+- Missing applied concurrent-agent cap basis on a team-routed parallel freeze reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
 - `PARALLEL-GROUPS: none` on multi-surface work is dispatch-invalid unless the frozen basis proves dependency or serial burden stronger than parallel.
 - Route, staffing, parallelism, or dispatch option prompts to the user are not dispatch actions unless a proven user-owned blocker is frozen.
 - Packet repair inside `task-execution` is limited to values already frozen by the owning path.
@@ -116,6 +116,7 @@ Packet final check:
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
+- Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - A packet-correction-via-`SendMessage` whose receiver has no open executable task (post-handoff, idle, converged) fails the `SendMessage And Skill Law` necessity check (`bounded assignment, reroute, or reuse against an open executable task`); suppress the send and route cleanup to `self-growth-sequence` per `references/assignment-packet.md` packet-correction outcome.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.

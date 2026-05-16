@@ -4,6 +4,7 @@ description: Turn benchmark-backed practical work-tool patterns into reusable pr
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: team-lead
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

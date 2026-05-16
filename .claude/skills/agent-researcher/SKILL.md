@@ -126,7 +126,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- Wait for lifecycle direction after handoff.
+- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/researcher-lane-detail.md` for researcher-specific handoff detail.
 
 ## Evidence Standards

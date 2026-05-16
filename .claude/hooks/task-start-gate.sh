@@ -533,7 +533,6 @@ lead_sendmessage_is_monitoring_probe() {
 
   local parsed=""
   local message_class=""
-  local lifecycle_decision=""
   local target_name=""
   local has_required_skills=""
   local target_state=""
@@ -567,27 +566,24 @@ try {
   ).toLowerCase();
   process.stdout.write([
     field(text, "message-class"),
-    field(text, "lifecycle-decision"),
     targetName,
     hasRequiredSkills
   ].join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n");
+  process.stdout.write("\n\n\n");
 }
 NODE
 )"
   mapfile -t _monitor_fields <<<"$parsed"
   message_class="${_monitor_fields[0]:-}"
-  lifecycle_decision="${_monitor_fields[1]:-}"
-  target_name="$(normalize_lane_id "${_monitor_fields[2]:-}")"
-  has_required_skills="${_monitor_fields[3]:-false}"
+  target_name="$(normalize_lane_id "${_monitor_fields[1]:-}")"
+  has_required_skills="${_monitor_fields[2]:-false}"
 
   [[ -n "$target_name" ]] || return 1
   case "$target_name" in
     team-lead|lead|supervisor) return 1 ;;
   esac
   [[ "$has_required_skills" != "true" ]] || return 1
-  [[ -z "$lifecycle_decision" ]] || return 1
 
   case "$message_class" in
     ""|status) ;;
@@ -802,67 +798,6 @@ bash_command_is_safe_git_workflow() {
   [[ "$saw_safe_git" == "1" ]]
 }
 
-procedure_skill_surface_read_violation() {
-  case "$TOOL_NAME" in
-    Read|Grep|Glob|LS) ;;
-    *) return 1 ;;
-  esac
-
-  if lead_preplanning_reference_allowed; then
-    return 1
-  fi
-
-  local skill_name=""
-  skill_name="$(procedure_skill_surface_name)"
-  [[ -n "$skill_name" && "$skill_name" != "active procedure" ]] || return 1
-  case "$skill_name" in
-    team-lead|developer|researcher|reviewer|tester|validator)
-      return 1
-      ;;
-  esac
-
-  if procedure_skill_surface_loaded "$skill_name"; then
-    return 1
-  fi
-
-  return 0
-}
-
-procedure_skill_surface_name() {
-  local skill_name=""
-  skill_name="$(printf '%s\n' "$TARGET_PATHS" | sed -nE 's#.*(^|/)\.claude/skills/([^/]+)/.*#\2#p; s#.*(^|/)skills/([^/]+)/.*#\2#p' | sed -n '1p')"
-  if [[ -n "$skill_name" ]]; then
-    printf '%s' "$skill_name"
-  else
-    printf 'active procedure'
-  fi
-}
-
-procedure_skill_surface_loaded() {
-  local skill_name="${1-}"
-  [[ -n "$skill_name" ]] || return 1
-
-  case "$skill_name" in
-    session-boot)
-      [[ -f "$SB_LOADED_MARKER" ]] && return 0
-      ;;
-    work-planning)
-      [[ -f "$WP_MARKER" ]] && return 0
-      ;;
-    task-execution)
-      [[ -f "$TASK_EXECUTION_MARKER" ]] && return 0
-      ;;
-  esac
-
-  [[ -f "$LOG_DIR/.skill-loaded-${SESSION_ID}-${skill_name}" ]]
-}
-
-procedure_skill_surface_block_reason() {
-  local skill_name=""
-  skill_name="$(procedure_skill_surface_name)"
-  printf 'BLOCKED: %s skill surfaces must be entered through Skill(%s) before Read/Grep/Glob/LS.' "$skill_name" "$skill_name"
-}
-
 boot_infra_tool_allowed() {
   local tool_name="${1:-}"
   local command="${2:-}"
@@ -1024,11 +959,6 @@ if [[ -z "$TOOL_NAME" || -z "$SESSION_ID" ]]; then
 fi
 
 mark_post_wp_action_after_planning
-
-if procedure_skill_surface_read_violation; then
-  deny_tool_use "$(procedure_skill_surface_block_reason)"
-  exit 0
-fi
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   if lead_planning_required "$SESSION_ID" && [[ ! -f "$WP_MARKER" ]]; then

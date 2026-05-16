@@ -124,7 +124,7 @@ Each row names:
 - acceptance owner
 
 An uncovered row is a defect.
-Keep uncovered rows outside positive verdict scope.
+An uncovered row blocks validator `PASS` and local verified-result closure.
 Prove dynamic rows with executed user action.
 Prove UI consumption through the UI surface.
 Prove user-surface behavior on the user surface.
@@ -134,7 +134,7 @@ Prove user-surface behavior on the user surface.
 - Tester evidence feeds validation.
 - Validator issues final acceptance.
 - `validator` issues final `PASS/HOLD/FAIL`.
-- Local closure user-facing prose follows `.claude/reference/user-reporting-law.md`; its only closure claim class is `verified result`.
+- Local closure report admission is owned by `.claude/reference/user-reporting-law.md`.
 - Local closure is valid only when no final-arbitration trigger applies.
 - Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md`.
 - Acceptance compares against the frozen delivery contract.

@@ -32,6 +32,15 @@ RAW_SESSION_ID="${FIELDS[1]:-unknown}"
 SESSION_ID="$(recover_session_id "$RAW_SESSION_ID")"
 WORKER_NAME=""
 
+skill_marker_name() {
+  local raw="${1-}"
+  [[ -n "$raw" ]] || return 1
+  raw="$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]')"
+  raw="$(printf '%s' "$raw" | sed -E 's#\\#/#g; s#^.*/skills/([^/]+)/skill\.md$#\1#; s#^.*/skills/([^/]+)/?$#\1#; s#^skill:##; s#^@##; s#[^a-z0-9._-]+#-#g; s#^-+##; s#-+$##')"
+  [[ -n "$raw" ]] || return 1
+  printf '%s' "$raw"
+}
+
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
@@ -52,6 +61,11 @@ fi
 # the user-visible transcript. The model still receives the tool result; only
 # the screen rendering is suppressed. Scope is narrow on purpose.
 SUPPRESS_DISPLAY=0
+SKILL_MARKER_NAME="$(skill_marker_name "$SKILL_NAME" 2>/dev/null || true)"
+
+if [[ -n "$SKILL_MARKER_NAME" ]]; then
+  date -u '+%Y-%m-%dT%H:%M:%SZ' > "$LOG_DIR/.skill-loaded-${SESSION_ID}-${SKILL_MARKER_NAME}"
+fi
 
 case "$SKILL_NAME" in
   *session-boot*)

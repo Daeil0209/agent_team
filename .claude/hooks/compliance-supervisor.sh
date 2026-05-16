@@ -56,6 +56,29 @@ is_governance_restricted_write_path() {
   esac
 }
 
+nondeveloper_worker_write_outside_retained_root() {
+  local candidate_path="${1-}"
+  [[ -n "$candidate_path" ]] || return 1
+  [[ "${TOOL_NAME:-}" == "Write" ]] || return 1
+  [[ -n "${SESSION_ID:-}" ]] || return 1
+  runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null || return 1
+
+  local worker_name="" worker_lane="" workspace_root=""
+  worker_name="$(worker_name_for_session_id "$SESSION_ID" 2>/dev/null || true)"
+  worker_lane="$(resolve_agent_id "$worker_name" 2>/dev/null || true)"
+  case "$worker_lane" in
+    researcher|reviewer|tester|validator) ;;
+    *) return 1 ;;
+  esac
+
+  workspace_root="$(resolve_project_root 2>/dev/null || true)"
+  [[ -n "$workspace_root" ]] || return 1
+  case "$candidate_path" in
+    "$workspace_root"/claude_doc/*) return 1 ;;
+    *) return 0 ;;
+  esac
+}
+
 is_hook_runtime_artifact_path() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
@@ -113,13 +136,16 @@ is_secret_or_credential_path() {
 mutation_payload_exceeds_compact_surface_budget() {
   local char_count="${1-0}"
   local line_count="${2-0}"
+  local max_chars="${COMPACT_SURFACE_MAX_CHARS:-8000}"
+  local max_lines="${COMPACT_SURFACE_MAX_LINES:-150}"
 
   [[ "$char_count" =~ ^[0-9]+$ ]] || char_count=0
   [[ "$line_count" =~ ^[0-9]+$ ]] || line_count=0
+  [[ "$max_chars" =~ ^[0-9]+$ ]] || max_chars=8000
+  [[ "$max_lines" =~ ^[0-9]+$ ]] || max_lines=150
 
-  # Warning-only budget signal: catch massive accidental governance dumps without
-  # forcing normal section-grade governance edits into artificial fragments.
-  (( char_count > 8000 || line_count > 150 ))
+  # Warning-only [HOOK-LAST] signal for massive accidental governance dumps.
+  (( char_count > max_chars || line_count > max_lines ))
 }
 
 strip_read_only_null_redirections() {
@@ -135,6 +161,16 @@ strip_read_only_null_redirections() {
 # Strip quoted data for substring scans; suitable for guard heuristics only.
 strip_quoted_regions() {
   printf '%s' "${1-}" | sed -E "s/'[^']*'/ /g; s/\"[^\"]*\"/ /g"
+}
+
+# Strip heredoc bodies for substring scans; suitable for guard heuristics only.
+# Truncates at the first heredoc marker (<< or <<-) with optional quoted
+# delimiter; the redirect target appears BEFORE <<, the heredoc body is stdin
+# content and never itself a mutation target. Prevents heredoc payloads that
+# legitimately cite governance paths (audit findings, doc generation, etc.)
+# from being mis-classified as governance-surface mutation.
+strip_heredoc_regions() {
+  printf '%s' "${1-}" | sed -E "s/[[:space:]]*<<-?[[:space:]]*['\"]?[A-Za-z_][A-Za-z_0-9]*.*\$//"
 }
 
 strip_full_line_shell_comments() {
@@ -153,9 +189,11 @@ allowed_package_or_build_command() {
   printf '%s' "$command_text" | grep -Eiq '^[[:space:]]*((npm|pnpm|yarn)[[:space:]]+(install|ci|add|remove|run[[:space:]]+(build|test|lint|typecheck))|(uv|python[0-9.]*[[:space:]]+-m[[:space:]]+pip|pip|pip3)[[:space:]]+(install|uninstall|sync|lock|check|freeze|show|list)|make[[:space:]]+([[:alnum:]_.-]+)|cargo[[:space:]]+(build|test|check)|go[[:space:]]+(build|test)|npm[[:space:]]+run[[:space:]]+build)([[:space:]].*)?$'
 }
 
-# Destructive sub-command pattern for compound validation.
-_DESTRUCTIVE_SUBCMD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)|(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
-_MUTATING_SUBCMD_PATTERN='(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|>>?|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)'
+# Destructive sub-command patterns for compound validation.
+_GIT_RESET_HARD_PATTERN='(^|[[:space:]])git[[:space:]]+reset[[:space:]]+--hard([[:space:]]|$)'
+_CATASTROPHIC_SUBCMD_PATTERN='(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'
+_DESTRUCTIVE_SUBCMD_PATTERN="${_GIT_RESET_HARD_PATTERN}|${_CATASTROPHIC_SUBCMD_PATTERN}"
+_MUTATING_SUBCMD_PATTERN="${HOOK_MUTATING_SHELL_COMMAND_PATTERN}|>>?|${HOOK_MUTATING_GIT_COMMAND_PATTERN}"
 GIT_READONLY_PATTERN='git[[:space:]]+(status|log|diff|show|branch[[:space:]]*(-[lva]|--list)|describe|ls-files|ls-tree|rev-parse|cat-file|remote[[:space:]]+(-v|--verbose))([[:space:]]|$)'
 
 # Split cmd on shell command separators and validate each sub-command denylist-first.
@@ -257,7 +295,7 @@ command_is_narrow_nonrestricted_claude_file_rm() {
 subcommand_is_mutating_shell() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
-  printf '%s' "$subcmd" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])(sed|perl)[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'
+  printf '%s' "$subcmd" | grep -Eiq "${HOOK_MUTATING_SHELL_COMMAND_PATTERN}|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]"
 }
 
 # Bounded .claude relocation/structure carve-out: mv only to trusted archive
@@ -1036,10 +1074,16 @@ if [[ -n "$FILE_PATH" ]]; then
 fi
 
 	case "$TOOL_NAME" in
-	  Edit|Update|MultiEdit|Write|NotebookEdit)
+	  Edit|MultiEdit|Write|NotebookEdit)
 	    if [[ -n "$CANONICAL_PATH" ]]; then
 	      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
-	      if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
+	      if nondeveloper_worker_write_outside_retained_root "$CANONICAL_PATH"; then
+                emit_deny "Non-developer lane Write is restricted to retained work artifacts under claude_doc/<work-name>/ via WRITE-SCOPE. Use developer-owned edit/write authority for source, governance, or producer artifact mutation."
+                log_violation "$TOOL_NAME" "$CANONICAL_PATH" "nondeveloper-write-outside-retained-root" || true
+                exit 0
+              fi
+
+              if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
 	        emit_deny "Runtime artifacts must not be created under .claude/hooks. Route tool output to projects/<project-folder>/.runtime/<tool>/ or the active project output surface."
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0
@@ -1049,7 +1093,7 @@ fi
 	        case "$TOOL_NAME" in
 	          Write|NotebookEdit)
 	            if [[ -e "$CANONICAL_PATH" ]]; then
-	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/Update/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
 	              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
 	              exit 0
 	            fi
@@ -1069,7 +1113,7 @@ fi
       if procedure_state_target_exact "$CANONICAL_PATH"; then
         case "$TOOL_NAME" in
           Write|NotebookEdit)
-            emit_deny "Procedure state must not be overwritten wholesale. Use exact structured Edit, Update, or MultiEdit checkpoint updates for .runtime/procedure-state.json."
+            emit_deny "Procedure state must not be overwritten wholesale. Use exact structured Edit/MultiEdit checkpoint updates for .runtime/procedure-state.json."
             log_violation "$TOOL_NAME" "$CANONICAL_PATH" "procedure-state-wholesale-write" || true
             exit 0
             ;;
@@ -1082,7 +1126,7 @@ fi
           case "$TOOL_NAME" in
             Write|NotebookEdit)
               if [[ -e "$CANONICAL_PATH" ]]; then
-                emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit, Update, or MultiEdit changes so governance intent remains reviewable."
+                emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit/MultiEdit changes so governance intent remains reviewable."
                 log_violation "$TOOL_NAME" "$CANONICAL_PATH" "governance-wholesale-write" || true
                 exit 0
               fi
@@ -1128,10 +1172,10 @@ fi
     if command_is_narrow_governance_relocation "$CLEAN_COMMAND"; then
       exit 0
     fi
-    # Governance protection runs before session allowlists; strip inert redirs/quotes first.
-    MUTATION_CHECK_COMMAND="$(strip_quoted_regions "$(strip_read_only_null_redirections "$CLEAN_COMMAND")")"
+    # Governance protection runs before session allowlists; strip inert redirs/quotes/heredocs first.
+    MUTATION_CHECK_COMMAND="$(strip_heredoc_regions "$(strip_quoted_regions "$(strip_read_only_null_redirections "$CLEAN_COMMAND")")")"
     if command_mutates_governance_surface "$MUTATION_CHECK_COMMAND"; then
-      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
+      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation-early" || true
       exit 0
     fi
@@ -1168,7 +1212,7 @@ fi
     fi
 
     # Block catastrophic primitives only: filesystem format, raw block-device write, root delete.
-    if printf '%s' "$CLEAN_COMMAND" | grep -Eiq '(^|[[:space:]])mkfs\.|(^|[[:space:]])dd[[:space:]]+if=|(^|[[:space:]])rm[[:space:]]+-rf[[:space:]]+/([[:space:]]|$)'; then
+    if printf '%s' "$CLEAN_COMMAND" | grep -Eiq "$_CATASTROPHIC_SUBCMD_PATTERN"; then
       emit_deny "Catastrophic shell primitive blocked (mkfs/dd if=/rm -rf /). Use a safer bounded command or obtain explicit user approval first."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "catastrophic-shell" || true
       exit 0
@@ -1293,8 +1337,8 @@ NODE
       if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
         exit 0
       fi
-      if command_mutates_governance_surface "$SANITIZED_COMMAND"; then
-        emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit, Update, or MultiEdit changes so policy and hook edits remain reviewable."
+      if command_mutates_governance_surface "$(strip_heredoc_regions "$SANITIZED_COMMAND")"; then
+        emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0
       fi

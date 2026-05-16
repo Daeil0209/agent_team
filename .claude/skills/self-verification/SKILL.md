@@ -32,9 +32,10 @@ Boundary:
 - If a triggered reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owning path.
 
 ## Reporting Principle
-Self-verification is internal process work.
-User-facing output exposes only concise verification basis, residual risk/open surfaces, or unverified items.
-Expose that basis only when the answer is final, audit-like, consequential, or explicitly asks for basis.
+Self-verification is internal process work governed by `.claude/reference/user-reporting-law.md`.
+`SV-PLAN`, `SV-RESULT`, challenge notes, evidence basis, open surfaces, verification fields, and convergence state are Procedure Plane records.
+User-facing output exposes only the verification outcome or concise verification basis that `.claude/reference/user-reporting-law.md` admits.
+Expose residual risk, open surfaces, or unverified items only when `.claude/reference/user-reporting-law.md` admits that exact report surface.
 
 Expose internal templates or labelled SV fields only on explicit request.
 Report this skill as used only when it was actually loaded and applied to the current target.
@@ -135,7 +136,7 @@ Rules:
 - If that proof is missing, report the item as candidate evidence, `risk-hypothesis`, `design-tradeoff`, `protected-restatement`, `non-issue`, or `UNVERIFIED` instead of patch authorization.
 - Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.
 - Apply detailed SV-PLAN reject conditions per `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and detailed SV-RESULT verification per `## SV-RESULT Detailed Gate`.
-- If final prose outruns the verified surface, reset `SV-RESULT`.
+- If final prose outruns the verified surface, apply the Activation Trigger reset rule.
 
 Use the reference for detailed gates, evidence calibration, behavior proof, artifact identity, and output detail.
 
@@ -156,7 +157,7 @@ Output only the next verified state:
 User-facing prose reports only the needed verification outcome surface.
 Procedure detail stays internal unless explicitly requested.
 `SV-RESULT` is current only for the exact target, evidence basis, open surfaces, and claim strength verified in this pass.
-New synthesis, stronger wording, changed acceptance surface, or unchecked analysis/evaluation/synthesis report draft voids report-preflight.
+New or stronger report drafts follow the Activation Trigger reset rule.
 Re-verify or narrow the report before showing it as verified.
 
 ## Verification Output Format

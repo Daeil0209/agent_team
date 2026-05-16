@@ -125,7 +125,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Follow validator packet conditionality from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Superseded validator burden stays with validator-owned surfaces.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- Wait for lifecycle direction after handoff.
+- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/reviewer-lane-detail.md` for reviewer-specific handoff detail.
 
 ## Active Communication Protocol

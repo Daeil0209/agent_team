@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/skills/self-verification/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Self-Verification Reference
 Load only when `self-verification/SKILL.md` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis check, material same-lane self-certification risk, or expanded output record.
@@ -80,11 +81,16 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
 - routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
-- `PARALLEL-GROUPS` burden basis is measured/cited, not file-count alone, guessed, or pre-`work-planning`; missing material measurement means `reopen-work-planning` or `HOLD`
+- `PARALLEL-GROUPS` burden basis must be measured or cited.
+- File-count alone, guessed, or pre-`work-planning` basis is not valid.
+- Missing material measurement opens `reopen-work-planning` or `HOLD`.
 - consequential top-level plans have coherent `CODEX-INDEPENDENT-REVIEW-BASIS` when Codex MCP independent-review trigger handling is required or frozen
 - `ACTIVE-WORKFLOW: dev-workflow` must show Codex MCP independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-codex-review-trigger:<basis>` when that review basis is required or frozen
 - Codex MCP independent-review risk triggers from `.claude/skills/work-planning/references/codex-independent-review.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
-- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point, with field/value change for accept and grounded rationale for reject; Codex output alone is not the basis
+- `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid Codex point.
+- Accept requires field/value change.
+- Reject requires grounded rationale.
+- Codex output alone is not the basis.
 - team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
 - delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
 - team-lead workspace discovery, repository search, file reads, runtime probing, or external lookup is the frozen `NEXT-CONSEQUENTIAL-ACTION` or a verified `LEAD-LOCAL-WORK-ITEMS` entry
@@ -144,7 +150,8 @@ Rules:
 - when the frozen deliverable is a source/read document, source/read inspection is the real surface
 - otherwise, source-only or indirect evidence supports diagnosis only
 - retained evidence must identify artifacts by path, report, log, screenshot, trace, output id, or equivalent stable surface when the claim depends on them
-- visual or rendered user-surface claims require retained evidence identity for capture scope, route/page/screen-state coverage, glyph sanity, and inspected defect classes; screenshot existence, DOM text, or source text alone is not enough
+- visual or rendered user-surface claims require retained evidence identity for capture scope, route/page/screen-state coverage, glyph sanity, and inspected defect classes.
+- Screenshot existence, DOM text, or source text alone is not enough.
 
 ## Synthesis Verification
 Synthesized conclusions do not inherit verification automatically.

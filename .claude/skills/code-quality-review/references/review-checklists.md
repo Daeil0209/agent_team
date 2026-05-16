@@ -3,6 +3,7 @@ PRIMARY-OWNER: reviewer
 SOURCE-ANCHOR: .claude/skills/code-quality-review/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Code Quality — Reference Material
@@ -23,7 +24,10 @@ Three duplication types require different remediation strategies:
 | Exact duplicate | Identical code blocks in two or more places | Extract to a shared function |
 | Structural similarity | Same logic, different variable names or literals | Parameterize into a reusable function |
 | Conceptual similarity | Same purpose, different implementation | Unify the interface or extract a strategy |
-Detection: grep for repeated patterns, compare function signatures, check for copy-paste indicators (same comment blocks, parallel variable names, mirrored structure).
+Detection methods:
+- grep for repeated patterns
+- compare function signatures
+- check copy-paste indicators (same comment blocks, parallel variable names, mirrored structure)
 ## 3. Reusability Assessment
 Score each module or function on 5 questions (1 point each):
 - Is it domain-independent? (reusable across features without modification)
@@ -38,7 +42,9 @@ Score each module or function on 5 questions (1 point each):
 | if/else chains for type dispatch | Registry pattern (map of type → handler function) |
 | Hardcoded configuration lists | Config-backed with external source |
 | Switch on enum with inline logic | Plugin or strategy interface |
-Classify detected anti-patterns through reviewer severity and the refactoring matrix. Report metric-only RFP signals as risk evidence; use `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker` only when acceptance, maintainability, or change-safety harm is demonstrated.
+Classify detected anti-patterns through reviewer severity and the refactoring matrix.
+Report metric-only RFP signals as risk evidence.
+Use `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker` only when acceptance, maintainability, or change-safety harm is demonstrated.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|
@@ -46,7 +52,8 @@ Classify detected anti-patterns through reviewer severity and the refactoring ma
 | High (RFP-2) | Files >200 lines, nesting >4 levels, same logic in 3 places | Refactor in current sprint |
 | Medium (RFP-3) | Complex conditionals, unclear naming, missing type annotations | Schedule refactoring; record as technical debt |
 | Low | Style inconsistencies, minor naming issues | Record for future cleanup |
-Apply this matrix during review. RFP-1 and RFP-2 triggers require explicit owner assignment and resolution path before merge approval.
+Apply this matrix during review.
+RFP-1 and RFP-2 triggers require explicit owner assignment and resolution path before merge approval.
 > **Note:** RFP labels are code-quality-review-local refactoring priorities. They do not map to the T0-T3 severity framework used by `.claude/skills/security-review/references/security-review-detail.md`.
 
 ## Resolve Next Owner And Action

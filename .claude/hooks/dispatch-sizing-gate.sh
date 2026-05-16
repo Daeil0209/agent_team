@@ -75,13 +75,13 @@ idle_pending_recovery_step() {
 
   primary_worker="$(printf '%s' "$worker_summary" | awk -F',' '{print $1}' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
   if [[ -n "$primary_worker" && "$worker_summary" != *","* ]]; then
-    printf "treat '%s' as lifecycle-decision pending from its completion transport and read its REQUESTED-LIFECYCLE: reuse it with assignment-grade SendMessage after work-planning when reuse is requested or justified, approve standby, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat '%s' as STANDBY from its completion transport: reuse it with assignment-grade SendMessage after work-planning when context fit is justified, or clean it up with shutdown_request during explicit teardown -> retry dispatch" \
       "$primary_worker"
     return 0
   fi
 
   if [[ -n "$worker_summary" ]]; then
-    printf "treat completed agent(s) (%s) as lifecycle-decision pending and consult REQUESTED-LIFECYCLE: reuse the fitting agent when reuse is requested or justified, approve standby, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch" \
+    printf "treat completed agent(s) (%s) as STANDBY: reuse the fitting agent when context fit is justified, or clean up unneeded agents with shutdown_request during explicit teardown -> retry dispatch" \
       "$worker_summary"
     return 0
   fi

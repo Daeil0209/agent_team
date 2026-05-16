@@ -27,8 +27,7 @@ Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
 
-Codex never replaces reviewer, tester, validator, `work-planning`, `task-execution`, `SV-PLAN`, or `SV-RESULT`.
-Codex never dispatches, mutates, proves, validates, accepts, issues final `PASS/HOLD/FAIL`, repairs tools, changes MCP/settings/hooks, or asks the user directly.
+Codex authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for review-convergence review.
 
 ## Trigger
 Run when all are true:
@@ -74,14 +73,12 @@ Missing decisive reviewer-facing fields are not guessed.
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
 Codex axes include user-perspective checks.
 Codex axes include avoidable-user-burden checks.
-Operator-facing rendered UI axes include operator-naive comprehension.
-Operator-naive comprehension records a `clear`, `partially-clear`, or `unclear` verdict for each AC-supporting element.
+Operator-facing rendered UI axes consume `.claude/skills/visual-composition/SKILL.md` for operator-naive comprehension and record `clear`, `partially-clear`, or `unclear` per AC-supporting element.
 Operator-facing rendered UI axes include image-inspection coverage.
 Image-inspection coverage opens every cited screenshot or full-page capture supporting an AC verdict or finding through multimodal `Read`.
 Image-inspection coverage matches each opened image against the design-stated expectation.
 Cite-path-only acceptance is a procedural failure.
-Novel or composite UI axes include visual benchmark consumption.
-Visual benchmark consumption checks that `benchmark-simulation` characteristics are reflected in the rendered surface.
+Novel or composite UI axes consume `.claude/skills/benchmark-simulation/SKILL.md` and check that benchmark characteristics are reflected in the rendered surface.
 Plan, design, specification, report, governance, and implementation-binding review surfaces require Feynman clarity.
 
 Codex reviews missed negative space, evidence overreach, owner-action gaps, stale proof/artifact authority, user-surface weakness, and needless-user-gate risk.

@@ -3,6 +3,7 @@ name: log-based-qa
 description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use when logs are the frozen decisive proof surface, executable test scripts are absent or impractical, or runtime signal materially supports tester proof.
 user-invocable: false
 PRIMARY-OWNER: tester
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

@@ -3,13 +3,13 @@ name: governance-scaling
 description: Classify project/request complexity and calibrate governance depth, tier floors, active request tiers, and guardrails. Use at project start, material scope expansion, or repeated over-governance/under-governance signals.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
 - Keep heuristic tables, parameter tables, and metrics detail in `references/scaling-heuristics.md`.
 - Team-lead common skill.
-- Supplements the primary operating loop.
-- Primary operating loop remains active.
+- Supplements the primary operating loop without replacing it.
 ### Reference Map
 - `references/scaling-heuristics.md`: governance-depth heuristics, parameter tables, metrics, and scaling guardrails.
 ## Identity

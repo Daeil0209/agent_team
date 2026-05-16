@@ -52,7 +52,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/reference-use.md`: reference-based planning and source-deviation risk.
 - `references/evidence-tier.md`: authority, benchmarks, and model-prior downgrade risk.
 - `references/deliverable-defaults.md`: proof, review, validation, user burden, and acceptance defaults by deliverable type.
-- `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, and serial basis.
+- `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, serial basis, and the active concurrent-agent cap.
 - `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
 - `references/execution-readiness.md`: packet, proof, setup, lifecycle, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
@@ -62,12 +62,13 @@ Triggered references are mandatory before positive route freeze.
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
 ## Activation Trigger
-Load after Priority 0 (`agents/team-lead.md`) classifies the turn as consequential.
+Fresh consequential instructions enter `work-planning` only after Priority 0 routes through `session-route-bridge` and the `session-boot` minimal gate records `runtime-ready: clean` or runtime-ready.
+If that session-gate artifact is missing, the next owner/action is `session-boot` minimal gate, not `Skill(work-planning)`.
+A runtime-blocked session-gate artifact opens recovery or `HOLD`, not `Skill(work-planning)`.
 Also load for reopened delegated lane boundary freeze.
-Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
+After the session-gate artifact exists, run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
 Counting evidence is actual `Skill(work-planning)` load plus required freeze.
 Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
-
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
@@ -133,7 +134,10 @@ Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence,
 
 Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
-- Additional-agent dispatch freezes team-agent runtime; absent runtime means later `task-execution` starts with `TeamCreate` per CLAUDE.md `[PARALLEL]`.
+- Load `references/parallel-fit.md` before freezing any `AGENT-MAP` or `PARALLEL-GROUPS`.
+- Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
+- A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
+- Additional-agent dispatch freezes the team-agent runtime route basis; runtime creation or reuse execution is decided later by `task-execution` from `runtime-dispatch-law.md`.
 
 User-surface law:
 - If truthful proof or acceptance needs a missing user-facing surface or tool path, freeze a bounded discovery/setup owner or blocker.
@@ -142,6 +146,8 @@ User-surface law:
 ## Step 3: Freeze Scope And Route
 Freeze only what the selected planning target requires.
 See `references/planning-record-fields.md` for field values, conditional fields, `not-applicable` rules, serial reasons, bounded corrections, and the record template.
+Load `references/planning-record-fields.md` before freezing `AGENT-MAP`, `PARALLEL-GROUPS`, `EXECUTION-READINESS-BASIS`, or any other dispatch-ready field.
+Missing applied `planning-record-fields.md` basis blocks dispatch-ready planning.
 
 Always freeze:
 - `REQUEST-FIT-BASIS`
@@ -162,6 +168,7 @@ Freeze when material:
 
 Codex MCP independent-review detail stays in `references/codex-independent-review.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
+Parallel dispatch-cap detail and the active concurrent-agent cap stay in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record the applied cap basis on this surface before dispatch can open.
 Planning opens one next owner/action before execution, dispatch, or reporting.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
@@ -177,7 +184,8 @@ Agent packets use `task-execution` translation.
 ## Progress Update Surface
 Follow `.claude/reference/user-reporting-law.md`.
 Planning progress is silent while the next owner/action can run in the same segment.
-Do not expose corpus counts, shard plans, internal plan-freeze fields, routing signal, agent map, parallel groups, next-consequential-action, or `opening task-execution` while the next owner can run.
+Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
+Do not expose internal planning or dispatch-preparation detail while the next owner can run.
 If execution is stopped, emit only a report admitted by `.claude/reference/user-reporting-law.md`.
 Keep the planning record internal.
 

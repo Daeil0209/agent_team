@@ -71,6 +71,8 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
+- Do not send assignment, reuse, reroute, or expanded packet text to ask an already-completed lane to confirm the same `TASK-ID`, `WORK-SURFACE`, or `RETAINED-OUTPUT-PATH`.
+- After completion, same-surface details are consumed from the retained carrier; additional lane work requires distinct new bounded work with distinct task/work-surface basis.
 - receiving lane additions from the agent-specific skill and lane-detail reference
 - target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label (`member-created` for Agent; `assignment-sent` for assignment SendMessage)
 - concrete requested action must be executable with the receiving lane's allowed tools and output channel

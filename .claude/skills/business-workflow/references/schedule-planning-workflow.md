@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
 SOURCE-RULES: "domain-rule-catalog.md routed Schedule Planning Domain Rules"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Schedule Planning Workflow Rules

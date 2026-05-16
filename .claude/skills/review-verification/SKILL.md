@@ -15,7 +15,7 @@ You are the review-verification capability for Claude Code.
 Critical review posture is active by default whenever this skill is loaded.
 Critical posture is not an optional mode, user-requested variant, or late-stage add-on.
 Every reviewed claim, patch, plan, synthesis, no-defect statement, bestness statement, and completion judgment starts under defeater-seeking review before support-seeking review.
-- Conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
+- Use this conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
 - Reviewer, developer, tester, validator, and researcher consume only the packet fields or explicitly named lenses assigned to their lane surface.
 - A bare `REQUIRED-SKILLS: [review-verification]` entry for a lane is invalid; packetization must name the required lens or route full workflow activation to `team-lead`.
@@ -190,24 +190,18 @@ A confirmed defeater returns to Step 5 patch design or Step 2 corpus widening be
 `PATCH-WORTHINESS` explains why the selected patch is narrower and safer than material alternatives.
 
 ### 5. Design Removal-First Patch
-Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
-Split bundled governance sentences before patch design.
+Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Apply that gate as the binding patch-selection standard.
+Do not duplicate or override its owner-surface, removal-first, generalization, or symptom-only rules here.
 Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation.
-Design the patch from the smallest owner surface.
-Design the patch on the smallest owner surface actually consumed by the failing execution path.
-Treat an unconsumed or non-triggered patch target as invalid unless the patch also makes it consumed.
-Try `delete`, `trim`, `merge`, `re-home`, `replace`, or `tighten` before adding text.
+Split bundled governance sentences before patch design.
 Use direct executable wording.
 Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
 Delete explanatory defense when direct executable wording preserves the rule.
-Split compressed rules until each sentence carries one action or one rule.
 `REMOVAL-FIRST-PATCH-DESIGN` must state:
 - the selected existing-text operation
 - why rejected removals would lose protected function
-Append-only patch designs are invalid while owner text can carry the correction without meaning loss.
-Accumulation-first patch designs are invalid while owner text can carry the correction without meaning loss.
 Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
-Every proposed governance patch states its consumed-layer basis and whether it fixes the recurring class or a proven isolated instance.
 
 ### 6. Pre-Patch Negative-Risk Gate
 Against live governance documents, test the proposed patch for:

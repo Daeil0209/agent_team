@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
@@ -27,10 +28,19 @@ For executable user-runnable deliverables, the deliverable MUST ship with:
 - **minimum-effort launch path AND minimum-effort termination path symmetric pair**.
 - Single-action operator entry means desktop icon, double-clickable executable, or single-step instruction at most.
 - Single-action operator exit means close window button -> graceful shutdown of all spawned processes via signal trap chain, or single-keystroke shortcut equivalent at most.
-- Native launch/build assets name the shell, encoding, line endings, dependency/setup source, build output path, run input path, and readable failure behavior when those assets are material.
+- Native launch/build assets, when material, name these axes:
+  - shell
+  - encoding
+  - line endings
+  - dependency/setup source
+  - build output path
+  - run input path
+  - readable failure behavior
 - Developer-tier instructions are operator burden, not delivery.
 - Examples: "press Ctrl+C in the right terminal", "run pkill -f", "find PID in task manager and kill", "open WSL and unmount", multi-step terminal CLI instructions, manual environment teardown, or producer-tier shutdown knowledge.
-- **sufficient representative demonstration-data path covering every in-scope visible feature/surface/control** when the deliverable's visible behavior depends on operator-input data; it must exercise the visible workflows, calculations, validation states, persistence, reload, and reset/import paths needed to prove the user can understand and trust the delivered tool.
+- **sufficient representative demonstration-data path** when the deliverable's visible behavior depends on operator-input data.
+  - The path covers every in-scope visible feature/surface/control.
+  - It exercises the visible workflows, calculations, validation states, persistence, reload, and reset/import paths needed to prove the user can understand and trust the delivered tool.
 - Empty states alone cannot communicate populated visual behavior.
 - Seeded fixtures or demo-mode toggle with reset capability must let the operator preview populated rendering before committing real input.
 

@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # benchmark-simulation: Multi-Modal Observation Protocol
@@ -30,7 +31,8 @@ For every external reference inspected during benchmarking, capture evidence per
 - color count: distinct hues used per surface (signal vs noise)
 - grid module count: column system, gutter, baseline grid
 - action-density-per-region: interactive controls per visual area
-- record numerically; vague observations ("feels balanced") must be backed by measurement
+- record numerically
+- vague observations ("feels balanced") must be backed by measurement
 
 ## Structural Form Modality
 - table: column count, header treatment, row alignment, separator weight, hover/selection state

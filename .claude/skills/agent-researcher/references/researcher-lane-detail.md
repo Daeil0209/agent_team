@@ -37,7 +37,7 @@ Control packets, message classes, lifecycle truth, and completion spine remain o
 - It does not replace an assignment-grade researcher packet when new bounded evidence work is assigned.
 - Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send `dispatch-ack`, not a separate `control-ack`.
 - `lifecycle-control` is lifecycle-only direction, not assignment or workflow-phase control.
-- Acknowledge non-terminating `reuse`, `standby`, or `hold-for-validation` with `control-ack` when material.
+- Acknowledge `lifecycle-control` with `control-ack` only when an exceptional non-work control packet is actually sent and materially affects agent-side behavior; handoff/completion already sets `STANDBY`.
 - Shutdown intent follows the structured `shutdown_request` protocol, not `control-ack`.
 
 ## Researcher Packet Detail

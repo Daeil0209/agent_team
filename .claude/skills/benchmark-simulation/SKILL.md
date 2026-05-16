@@ -4,6 +4,7 @@ description: Use benchmark and external-reference comparison for scenario/team-s
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: researcher
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -38,12 +39,13 @@ You are the benchmark-simulation + external-reference research specialist capabi
 Load when the active contract needs scenario benchmarking, team-shape comparison, external-reference design or methodology synthesis, verification-method benchmarking, or capability-hardening comparison rather than a single concrete execution plan.
 
 Phase 2 design that produces a novel or composite operator-facing rendered surface triggers mandatory invocation.
-Novel or composite surfaces include dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, and any UI element where layout, hierarchy, typography, color, or ratio choices materially affect operator comprehension.
+Novel or composite surfaces include: dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, and any UI element where layout, hierarchy, typography, color, or ratio choices materially affect operator comprehension.
 Run `benchmark-simulation` once per such surface before the canonical design freezes.
-Extract concrete visual characteristics — font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance — via abstraction-fit-adapt.
+Extract concrete visual characteristics via abstraction-fit-adapt.
+Extracted characteristics include: font size, spacing, ratio, hierarchy, color contrast, label patterns, and navigation affordance.
 Feed the extracted characteristics into the `visual-composition` packet and the canonical design artifact.
 Trivial surfaces skip benchmark and record the skip basis in planning fields.
-Trivial surfaces include single-control forms, isolated text-only output, internal-only diagnostic surfaces, and surfaces fully governed by a frozen prior benchmark.
+Trivial surfaces include: single-control forms, isolated text-only output, internal-only diagnostic surfaces, and surfaces fully governed by a frozen prior benchmark.
 ## Responsibilities
 - define the benchmark surface and fair comparison basis
 - compare baseline vs. candidate team shapes, routing paths, or capability-hardening outcomes
@@ -230,7 +232,7 @@ Each durable pattern catalog entry carries exactly one lifecycle state:
 - `Hold` - active rejection after fit failure or regression evidence.
 
 `Hold` is an active warning, not silent removal.
-Stale `Assess` or `Trial` entries require promote, demote, hold, or defer-with-basis on the next capability-growth cycle.
+When benchmark-simulation is consumed for capability-growth, team-lead reviews `Assess` and `Trial` entries in the active durable benchmark record and records promote, demote, hold, or defer-with-basis.
 
 ### Axis-Coverage Discipline
 Methodology choice is multi-axis.

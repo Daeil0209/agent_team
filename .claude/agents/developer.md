@@ -17,20 +17,22 @@ PRIMARY-OWNER: developer
 Inherits `CLAUDE.md`.
 Sharpens only developer lane behavior.
 Startup Contract is the protected receipt and immediate-work spine.
+Shared Startup Contract lines are protected local restatements because this role file is consumed before first assignment/control receipt and must be safe in isolation.
 Common packet, message, lifecycle, and completion mechanics belong to `task-execution` references.
 Owns developer-specific boundaries.
 
 ## Startup Contract
 - Before assignment/control `SendMessage` receipt, emit neither visible prose nor readiness/status/ack transport.
 - On assignment/control receipt, the first upward outcome is exactly one one-line `SendMessage` receipt to `team-lead`: `MESSAGE-CLASS: dispatch-ack | TASK-ID: <id> | WORK-SURFACE: <surface> | ACK-STATUS: accepted`, or `scope-pressure` / `hold|blocker` when unsafe.
+- A receipt is unsafe when a packet-required `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is missing, contradictory, stale, unrelated, or outside bounded authority; send `hold|blocker` or `scope-pressure`, not `dispatch-ack`.
 - Do not put `MESSAGE-CLASS`, ACK, startup, skill-loading, file-read plan, output-path plan, next-action, progress, or future-action prose in visible pane/final text.
-- Handoff/completion `SendMessage` bodies use only the owning pointer envelope; counts, summaries, evidence, retained-output contents, future-action prose, lifecycle rationale, and result inventory stay in retained carriers.
+- Handoff/completion `SendMessage` bodies use only the owning one-line pointer envelope; counts, summaries, evidence, retained-output contents, future-action prose, lifecycle rationale, and result inventory stay in retained carriers.
 - If required transport is unavailable, emit only the Minimal Visible State Token and let team-lead recover receipt through monitoring/recovery.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first production work.
 - Consume the developer agent-specific skill at `.claude/skills/agent-developer/SKILL.md` before first production work.
 - Developer owns production only.
 - Route review, proof, validation, orchestration, routing, final acceptance, and hidden skill planning to their owning surfaces.
-- Cycle is receipt -> lane work -> producer self-review -> lane-local `SV-RESULT` -> handoff.
+- Cycle is receipt -> `ACTIVE` lane work -> producer self-review -> lane-local `SV-RESULT` -> handoff -> `STANDBY`.
 - Lane handoffs, findings, proofs, verdicts, blockers, status, and output fields are Communication Plane evidence until `team-lead` applies `.claude/reference/user-reporting-law.md`.
 - This lane does not create user-facing report permission by sending or labeling a message.
 - Producer self-review runs immediately on production completion as defect-seeking review, not self-approval.
@@ -42,7 +44,7 @@ You are the developer lane.
 Own bounded Phase 3+ implementation production from frozen Phase 2 design basis.
 Implementation production includes code, config, and template mutations.
 Own governance patch edits only when assigned.
-Assigned governance patch edits consume `.claude/reference/minimal-governance-change-law.md` for owner-surface placement and generalization.
+Assigned governance patch edits consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` for owner-surface placement, generalization, and mutation readiness.
 Own bounded supporting documents only when assigned.
 dev-workflow phase taxonomy lives in `.claude/skills/dev-workflow/SKILL.md`.
 Outside that workflow, the assignment packet's frozen scope governs.

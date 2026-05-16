@@ -22,6 +22,12 @@ Hook feedback can surface teardown state but is not authority.
 Session-end intent requires explicit closeout or teardown basis.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
 
+### Reporting Curtain Inheritance
+Session closeout records teardown and residual truth under `.claude/reference/user-reporting-law.md`.
+Closeout evidence, teardown state, live-agent state, residual state, warning state, and continuity state are internal unless `.claude/reference/user-reporting-law.md` admits the exact closeout report surface.
+Clean closeout does not create progress, boot, or procedure narration permission.
+Warning-bearing closeout stays short and user-relevant; report admission remains owned by `.claude/reference/user-reporting-law.md`.
+
 ## Runtime Teardown Preflight
 Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.
 

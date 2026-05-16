@@ -3,23 +3,35 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
-`team-lead` derives type-fit through `work-planning` from `CONCRETE-DELIVERABLE` plus `PRIMARY-USER`. Plan, design, implement, and verify from the user's information-delivery perspective on what the deliverable is for them: what they receive, experience, use, or decide from.
+`team-lead` derives type-fit through `work-planning` from `CONCRETE-DELIVERABLE` plus `PRIMARY-USER`.
+Planning, design, implementation, and verification proceed from the user's information-delivery perspective.
+The perspective covers what the user receives, experiences, uses, or decides from.
 `DERIVED-DEFAULTS` names the receiver job, consumption path, and decisive proof surface for the deliverable class.
-`team-lead` derives primary operator environment from request evidence (Windows paths/launch files/UI language signals → Windows; explicit user statement overrides). Full derivation rule: `.claude/skills/dev-workflow/references/operator-delivery.md` R23.
+`team-lead` derives primary operator environment from request evidence.
+Signals include Windows paths, launch files, and UI language; explicit user statement overrides.
+Full derivation rule: `.claude/skills/dev-workflow/references/operator-delivery.md` R23.
 
-`team-lead` derives obvious type-fit duties from deliverable class and primary user, including duties such as "this is a program, test every button" or "this is a report, include tables and figures".
-The default done condition is a normal final artifact for that deliverable class: complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden.
-Partial draft, implemented subset, placeholder surface, or developer-only run path reaches done only when original frozen request/plan/design explicitly says so.
+`team-lead` derives obvious type-fit duties from deliverable class and primary user.
+Examples include "this is a program, test every button" or "this is a report, include tables and figures".
+The default done condition is a normal final artifact for that deliverable class.
+Normal-final means complete requested substance, usable format, truthful user-surface proof, and no hidden operator/reader burden.
+Partial draft, implemented subset, placeholder surface, or developer-only run path reaches done only when the original frozen request, plan, or design explicitly says so.
 
 ## User-Ready Delivery Chain
 Every consequential deliverable or active slice follows a named user-ready delivery chain.
-The chain starts from the user's instruction, expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence, then converges into the final user-consumed surface or explicit deferred receiver surface.
-Each stage must carry forward the information needed by the next stage: why the deliverable exists, what is in scope, which internal parts connect, what data/example/method makes it usable, what proves it, and what remains open.
-Implementation is the widest work stage; it adds necessary internal detail or parallel branches only when each branch traces back to request intent and forward to proof or user use.
+The chain starts from the user's instruction.
+The chain expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence.
+The chain converges into the final user-consumed surface or an explicit deferred receiver surface.
+Each stage carries forward the information needed by the next stage.
+The carried information covers why the deliverable exists, what is in scope, which internal parts connect, what data/example/method makes it usable, what proves it, and what remains open.
+Implementation is the widest work stage.
+Implementation adds necessary internal detail or parallel branches only when each branch traces back to request intent and forward to proof or user use.
 Verification and completion converge the widened work back to the named usable receiver path.
-Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item or reopens the owning design, implementation, proof, or acceptance path.
+Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item.
+Such items can also reopen the owning design, implementation, proof, or acceptance path.
 
 Use these defaults when the deliverable class is in scope:
 - usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, every `CORE-WORKFLOW-CLOSURE` row closed end-to-end on the user surface (create/import/upsert→disposition, edit→save+reload+consumer-persist, input/mutation→dependent-recompute/reactivity, displayed-surface→inspection/action/navigation, entity/aggregate→authority trace), UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment

@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 High-traffic governance surfaces require session revalidation, baseline anchoring, and bounded change scope before modification resumes after interruption.
@@ -18,7 +19,10 @@ Active high-traffic surfaces:
 - authority-bearing skill references under `.claude/skills/*/references/` when they define live triggers, authority, fail-open, preservation, or runtime boundaries
 - `.claude/reference/` caches when a change depends on official-source evidence or preservation traceability
 
-Runtime hook protection and settings-deny protection are separate layers. Governance-flow protection is enforced through runtime hooks such as `compliance-supervisor.sh` and related hooks. `settings.json` `permissions.deny` is reserved for hard credential and secret paths such as `.env`, `secrets/**`, and `credentials.json`.
+Runtime hook protection and settings-deny protection are separate layers.
+Governance-flow protection is enforced through runtime hooks such as `compliance-supervisor.sh` and related hooks.
+`settings.json` `permissions.deny` is reserved for hard credential and secret paths.
+Such paths include `.env`, `secrets/**`, and `credentials.json`.
 
 ## Resolve Next Owner And Action
 - High-traffic surface mutation opens session revalidation and baseline anchoring.

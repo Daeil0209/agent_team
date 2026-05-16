@@ -3,6 +3,7 @@ name: security-review
 description: Review security risk with OWASP checklist, detection patterns, dependency risk, and severity framework. Use when authentication, authorization, secrets, input handling, dependency security, exposure, or security-sensitive behavior materially affects implementation or review.
 user-invocable: false
 PRIMARY-OWNER: reviewer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

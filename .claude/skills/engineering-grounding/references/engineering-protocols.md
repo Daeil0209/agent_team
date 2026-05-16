@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/engineering-grounding/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Reference Material
@@ -42,7 +43,11 @@ Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md
   - Steady-state limit (t→∞) must be physically meaningful
 - Parameter sensitivity: identify which physical parameters most strongly affect the solution behavior
 ### Execution-Model Awareness
-- **Execution-Model Fidelity:** between source code and actual execution, transformation layers (compiler optimization, JIT compilation, runtime scheduling, ORM query generation, CSS cascade resolution) can silently break correctness assumptions. Designs must identify which transformation layers are in the execution path and account for their constraints. Unverified execution-fidelity assumptions are ungrounded and require explicit validation
+- **Execution-Model Fidelity**:
+  - Transformation layers between source code and actual execution can silently break correctness assumptions.
+  - Transformation layers include compiler optimization, JIT compilation, runtime scheduling, ORM query generation, and CSS cascade resolution.
+  - Designs identify which transformation layers are in the execution path and account for their constraints.
+  - Unverified execution-fidelity assumptions are ungrounded and require explicit validation.
 - Escalate to `software-architecture` when the primary concern shifts from execution-layer correctness to software architecture decisions, module boundary design, or system-level state modeling.
 ### Engineering Evidence Minimum
 Before endorsing any engineering claim:

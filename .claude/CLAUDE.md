@@ -43,7 +43,7 @@
 - Half-delivered artifacts are defects.
 - `[FUNCTIONAL-CLOSURE]` User-visible actions close through `CORE-WORKFLOW-CLOSURE`.
 - Uncovered `CORE-WORKFLOW-CLOSURE` rows are defects.
-- Uncovered `CORE-WORKFLOW-CLOSURE` rows stay outside positive verdict scope.
+- Uncovered `CORE-WORKFLOW-CLOSURE` rows block validator `PASS` and local verified-result closure.
 - `[USER-CONVENIENCE]` Use the evidence-backed path that reduces user burden.
 
 ### 3. Scope, Continuity, And Change
@@ -68,7 +68,6 @@
 - Additional-agent dispatch uses the current Claude Code agent-team runtime.
 - Serial convenience over independent surfaces is a `bottleneck defect`.
 - Over-broad blocking is a defect.
-- Deferral requires evidence.
 
 ### 5. Minimal Governance And Runtime Footprint
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
@@ -94,13 +93,15 @@
 - `team-lead` owns synthesis.
 - `team-lead` owns closeout.
 - `team-lead` owns user communication.
-- Lanes inherit the common floor.
+- Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
 - Lead-local user-facing final report requires `SV-RESULT`.
 
 ## Reference Binding
-- Trigger-bound references are mandatory execution surfaces.
+- `.claude/reference/*-law.md` files are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
+- `.claude/reference/*-map.md`, `official-claude-code-reference.md`, `runtime-footprint-and-continuity.md`, and `output-supervisor-runtime.md` are not always-on doctrine; consume them only when their local `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` trigger is material to the active owner path.
+- Trigger-bound references are mandatory execution surfaces once their trigger fires.
 - Loaded owner documents are active rule surfaces.
 - Citation and consumption require applied-rule mapping.
 - Action, handoff, synthesis, report, and completion require consumed active owner documents.
@@ -125,16 +126,16 @@
 - Discovery, route shaping, dispatch, mutation, artifact judgment, or stronger claim leaves light/control.
 - Boundary-change axes reopen `work-planning`.
 - Consequential flow opens one truthful next owner/action at a time.
-- Required stages run in their defined order.
-- Hook/runtime signals are observations only.
+- Active workflow phases and the `[PLAN-SV]` boundary spine run in their owning-document order.
+- Hook/runtime signals do not become proof, validation, acceptance, dispatch truth, or owner completion.
 
 ## Skill Loading
 - Skills load only when required by the active owner path.
 - Skill consumption is situation-scoped.
 - Agent role names are not skill names.
 - Agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
-- Methodology or capability skills use non-role names and travel as `REQUIRED-SKILLS`.
-- Methodology instructions travel as `SKILL-RECOMMENDATIONS`.
+- Non-role methodology or capability skills travel as `REQUIRED-SKILLS` when required.
+- Methodology instructions travel as `SKILL-RECOMMENDATIONS` when advisory.
 - Missing required skill consumption is a defect.
 - Teammates do not inherit lead conversation history.
 - Request-fit facts travel in packets or cited artifacts.
@@ -145,7 +146,7 @@
 - Reporting Plane is the only user-facing prose authority and lives in `.claude/reference/user-reporting-law.md`.
 - Before assistant-authored visible pane or final prose, apply `.claude/reference/user-reporting-law.md`.
 - If `.claude/reference/user-reporting-law.md` admits no report, emit nothing or only its Minimal Visible State Token when Claude Code forces a visible row.
-- `SendMessage`, teammate UI, receipts, status, pressure, lifecycle, handoff, completion, task output, runtime ledgers, and retained-output pointers are Communication Plane transport, not user reports.
+- Communication Plane transport classes and report separation live in `.claude/skills/task-execution/references/message-classes.md` and `.claude/reference/user-reporting-law.md`.
 - Communication payloads stay in their governed Communication Plane carrier; pane/final prose must not duplicate them as user-facing report prose.
 - `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
 - Completion-grade communications require convergence and verification before team-lead synthesis.
@@ -167,7 +168,7 @@
 - Only `validator` issues final `PASS/HOLD/FAIL`.
 - Reviewer and tester provide evidence.
 - Validator owns final acceptance.
-- Local closure user-facing prose follows `.claude/reference/user-reporting-law.md`; its only closure claim class is `verified result`.
+- Local closure report admission is owned by `.claude/reference/user-reporting-law.md`.
 - Final-arbitration triggers route to validator or `HOLD`.
 - Test and validation packets freeze surface, expected outcome, and acceptance basis.
 

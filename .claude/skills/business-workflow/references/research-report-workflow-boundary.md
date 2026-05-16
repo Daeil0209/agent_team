@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
 SOURCE-RULES: "domain-rule-catalog.md routed Research Report Workflow Boundary"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Research Report Workflow Boundary

@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Core Laws 5 [GOV-MIN], [HARDEN]; Change And Preservation Law; Self-Growth"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Common Doctrine Reference: Minimal Governance Change
 
@@ -41,16 +42,25 @@ It prevents doctrine accumulation from being mistaken for stronger enforcement.
 - A recurrence barrier is installed only for a confirmed recurrence path.
 - A high-traffic owner surface is reduced or redistributed.
 
-## Required Output
-The consuming owner records:
+## Patch-Ready Gate
+A governance patch is not patch-ready until the consuming owner records:
 - changed owner files
 - source rule or source meaning
+- failing execution path
 - edit operation
 - preserved meaning
+- protected procedure preservation result
 - changed meaning
+- selected consumed owner surface
 - destination owner
+- consumed-layer basis
+- generalization basis
 - reference integrity result
 - post-change verification basis
+This gate is the canonical governance patch standard.
+Other owner surfaces cite this gate for patch selection.
+Other owner surfaces may add owner-local route, review, execution, proof, or handoff duties.
+Local duties must not weaken or replace this gate.
 
 ## Stop
 Stop before appending when existing owner text can be:
@@ -61,14 +71,20 @@ Stop before appending when existing owner text can be:
 - re-homed
 - deleted
 Stop before mutation when source-to-destination meaning remains unreconstructed.
+Stop before mutation when an existing valid procedure, gate, owner path, or state transition would be weakened.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
 Stop before closure when a moved rule lacks an explicit destination owner.
+Stop before route, assignment, mutation, or closure when the Patch-Ready Gate is incomplete.
+Stop before mutation when the patch target is not consumed by the failing execution path.
+Stop before closure when the patch fixes only the observed symptom while the recurring rule path remains unhandled.
+Stop before duplicating patch-selection rules on an adjacent surface when citation to this gate preserves execution force.
 
 ## Resolve Next Owner And Action
 - A stopped append route opens edit-operation selection.
 - A stopped mutation route opens source-to-destination reconstruction.
 - A stopped defect claim opens `[GOV-MIN]` inspection.
 - A stopped closure route opens destination-owner assignment.
+- A stopped patch-ready route opens missing gate-record correction on the consuming owner.
 
 ## Minimal Governance Rules
 - Before appending, find owner text that is:
@@ -78,6 +94,11 @@ Stop before closure when a moved rule lacks an explicit destination owner.
   - weaker
   - conflicting
   - behavior-weakening
+- Use short, direct, triggerable sentences that name owner, trigger, action, stop, and evidence.
+- More sentences do not strengthen compliance; keep only the fewest sentences that preserve executable force.
+- Obsolete concepts leave active consumed surfaces through delete, replace, trim, merge, or re-home.
+- A live runtime artifact that can still emit an obsolete token is mapped to the valid replacement action without keeping that token in the normal schema.
+- Prohibition-only wording does not close a governance defect unless a current hazardous action remains live and the rule also names the valid replacement action.
 - Before adding doctrine:
   - tighten existing text
   - replace existing text when replacement preserves meaning
@@ -90,6 +111,12 @@ Stop before closure when a moved rule lacks an explicit destination owner.
   - execution force
   - owner boundary
   - required gates
+  - existing valid procedure paths
+- Patch placement starts from the failing execution path.
+- Patch the narrowest owner surface that is actually loaded, read, or enforced on that path.
+- Do not treat edits to unconsumed, stale, or merely indexed documents as closure.
+- Generalize the correction to the same owner/trigger/action/stop/evidence class.
+- Limit to an instance-only fix only when evidence proves the defect cannot recur as a class.
 - Each governance sentence carries one rule or one action.
 - Split bundled sentences before:
   - duplicate review
@@ -108,7 +135,7 @@ Stop before closure when a moved rule lacks an explicit destination owner.
 - Keep `CLAUDE.md` high-adherence.
 - Move repeatable procedure detail to trigger-bound skills or references.
 - Preserve moved meaning through source-to-destination trace.
-- A protected local restatement remains only when the local file must be safe to read in isolation.
+- A protected local restatement remains only when the local file has a named owner and direct-consumption or isolation-safety basis.
 - Divergent duplicates resolve to the precise owner.
 - Governance-change review tightens weaker duplicate doctrine when tightening preserves meaning.
 - Governance-change review re-homes weaker duplicate doctrine when another owner is precise.

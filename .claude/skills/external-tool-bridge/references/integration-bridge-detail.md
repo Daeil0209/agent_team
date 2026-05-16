@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/external-tool-bridge/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Int-Op — Reference Material
@@ -23,7 +24,15 @@ Standard response patterns for external service failures:
 - **Circuit breaker**: repeated consecutive failures to the same endpoint with unchanged route stop further attempts. Report service-level block.
 - **Fallback escalation**: when primary bridge fails, attempt fallback path if defined. If no fallback defined, this is a bridge design defect — report it as such
 All failure states must produce a structured blocked-condition report, not a generic error message.
-Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path. Standard font packages, browser runtime/cache, and equivalent local tool prerequisites run under a frozen allowed-setup boundary. Docker Desktop-class installers, persistent daemons/services, credential repair, paid/licensed tools, destructive package actions, and security-setting changes are approval-required or blocked by default.
+Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path.
+Standard font packages, browser runtime/cache, and equivalent local tool prerequisites run under a frozen allowed-setup boundary.
+The following are approval-required or blocked by default:
+- Docker Desktop-class installers
+- persistent daemons/services
+- credential repair
+- paid/licensed tools
+- destructive package actions
+- security-setting changes
 ### Blocked-Condition Report Schema
 Required fields for every blocked-state report:
 - `bridge_step`: which integration step failed (setup, auth, endpoint, quota, data transfer, cleanup)

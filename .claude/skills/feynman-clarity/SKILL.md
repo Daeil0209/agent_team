@@ -4,6 +4,7 @@ description: Apply Feynman-style explainability review to plans, designs, report
 user-invocable: false
 PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:

@@ -184,7 +184,7 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
 - If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- Wait for lifecycle direction after handoff.
+- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/validator-lane-detail.md` for validator-specific handoff detail.
 
 ## Blocked Validation

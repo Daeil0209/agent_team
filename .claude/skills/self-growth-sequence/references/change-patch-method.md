@@ -15,7 +15,7 @@ auto-inject: false
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only when the change plan is disputed; otherwise reserve `SV-RESULT` for Post-Verify.
-Prerequisite C. Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md`.
+Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 1. `Classify + Plan`
 - Classify the change type and scope before editing.
@@ -88,13 +88,9 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Required operating rules
 - For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
-- Patch placement starts from the failing execution path and lands on the narrowest owner surface actually consumed on that path per `.claude/reference/minimal-governance-change-law.md`.
-- A patch on an unconsumed or non-triggered document is not closure unless the patch also makes that document part of the consumed path.
-- Patch the recurring owner/trigger/action/stop/evidence class, not only the observed symptom, unless evidence proves the defect is isolated.
+- Satisfy `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before drafting or mutating.
 - Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
-- Apply `tighten`, `replace`, or `re-home` before `append`.
 - Do not weaken an already-correct path just to land the hardening.
-- Add brand-new doctrine only when the recurrence barrier cannot be absorbed into the current owner surface without information loss, owner confusion, or hidden meaning drift.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
 - Before drafting, freeze:
   - defect basis, design-intent basis, causal basis, and recurrence path

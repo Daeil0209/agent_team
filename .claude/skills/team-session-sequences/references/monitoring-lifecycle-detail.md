@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # team-session-sequences: Monitoring Lifecycle Detail
@@ -22,43 +23,41 @@ LOAD-POLICY: on-demand reference only
 - Resolve Next Owner And Action
 
 ## Runtime Signals
-- `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition. The agent remains `ACTIVE` until the governing lane makes an explicit lifecycle decision.
+- `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition.
+- `dispatch-ack` is the team-lead tracking signal that the lane is `ACTIVE` for the assigned execution block.
+- `handoff` or `completion` is the team-lead tracking signal that the lane is `STANDBY` and eligible for reuse when ownership fit and context fit remain truthful.
 - Receiving `idle_notification` without a preceding completion transport from the agent is a handoff failure (T2).
-- Receiving completion transport without canonical `REQUESTED-LIFECYCLE` is a lifecycle-request defect (T3).
+- Receiving completion transport marks `STANDBY` directly.
 
 ## Agent Identity Rule
 - If multiple agents of the same capability can exist concurrently, assign unique agent names at dispatch time.
 - Standby, shutdown, stale tracking, and reuse decisions must refer to those concrete agent names rather than to the generic capability label alone.
 
 ## Supervisor Decisions On idle_notification
-When an idle_notification is received with a valid completion transport, the governing lane must choose:
-- `Reuse`: more work is immediately available and preserved context is still valuable.
-- `Standby Approve`: no immediate work, but near-future reuse is plausible. Send explicit lifecycle-control (`MESSAGE-CLASS: lifecycle-control`, `LIFECYCLE-DECISION: standby`) to the concrete agent name; helper or hook state only reflects that approved decision.
-- `Shutdown`: agent is no longer needed, wrong, harmful, stuck, or must be terminated. Send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for `shutdown_response` or teammate termination evidence.
-- `Hold for validation`: final verdict is pending. Reserve the agent with no new assignment until validation resolves.
+When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
+If immediate work is available and preserved context is valuable, send `assignment`, `reuse`, or `reroute` as new bounded work.
+If no immediate work is available, send nothing.
+If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for `shutdown_response` or teammate termination evidence.
+If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
 
 ## Message-First Lifecycle Rule
-- Agent lifecycle control is message-first: completion, reuse, and standby approval travel through explicit internal messages; shutdown intent is normalized to structured `shutdown_request` rather than inferred from hook feedback or free text.
-- Failed shutdown is a recovery surface owned by `session-closeout` or explicit runtime recovery. Hooks do not create shutdown authority.
-- Treat `TeammateIdle`, ledgers, and health-check output as observation surfaces that inform the next lifecycle message, not authority to skip it.
-- Completion is upward Communication Plane transport requesting a governing decision; it does not authorize auto-standby, replacement, or teammate removal.
-- Consequential completion handoff must carry `REQUESTED-LIFECYCLE: standby|shutdown|hold-for-validation`; this is an agent request, not lifecycle authority.
-- Governing lane owns lifecycle transitions: dispatch or approved `assignment|reuse` -> `ACTIVE`; explicit `standby` approval -> `STANDBY`; confirmed shutdown/removal -> removed from teammate population.
-- Until the governing lane answers with `standby`, `reuse`, `shutdown`, or `hold-for-validation`, the agent is lifecycle-decision pending and remains `ACTIVE`.
-- Do not ignore an agent lifecycle request without reason. Brief hold is valid only while immediate reuse is being prepared.
-- `assignment` activates bounded work. `reuse` reactivates a standby agent or reassigns work to an active agent awaiting lifecycle decision on the same preserved topic/context. Neither creates a new teammate by itself.
-- Teammate population changes only on agent creation and confirmed shutdown/removal. `standby` and `reuse` are state transitions, not teammate-count changes.
-- Hook feedback can record or guard a lifecycle edge, but it does not create authority to infer session end or agent shutdown.
+- Consume `session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
+- Completion transport shape is owned by `task-execution/references/completion-handoff.md`.
+- Immediate reuse sends distinct bounded work promptly; otherwise the lane remains `STANDBY` until reuse or cleanup.
 - Runtime task lists, mailbox state, and team config are Claude Code runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
 - An agent-targeted `shutdown_request` is agent lifecycle cleanup, not evidence that the whole session is entering `Closeout Sequence`.
-- If a stale current-runtime agent must be replaced outside closeout, send `shutdown_request`, wait for shutdown evidence or classify recovery explicitly, then dispatch the replacement. Do not skip directly to replacement unless the agent is confirmed terminated or the replacement route has been frozen as recovery.
+- Replacing a stale current-runtime agent outside closeout follows three steps:
+  1. send `shutdown_request`
+  2. wait for shutdown evidence or classify recovery explicitly
+  3. dispatch the replacement
+- Skipping directly to replacement is forbidden unless the agent is confirmed terminated or the replacement route has been frozen as recovery.
 - Previous-session remembered agents are continuity artifacts, not runtime shutdown targets in a later session.
 
 ## Reuse Rule
 - New dispatch rebuilds context.
 - Reuse or standby is valid only when ownership fit and context fit remain truthful per `session-boot/references/runtime-state-detail.md`.
 - Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
-- Choose `standby` when near-future reuse is concrete and the valid live agent remains the correct owner/context.
+- Treat `standby` as already set by valid `handoff` or `completion`; choose no message when no immediate reuse, correction, or shutdown is needed.
 
 ## Manifest Review Gate
 - When execution depends on a user-provided file list, copy set, or overwrite manifest, complete review before fan-out: collapse duplicates, verify final unique write set, and make pre-execution review explicit.
@@ -81,12 +80,14 @@ When an idle_notification is received with a valid completion transport, the gov
 - Treat direct user-to-teammate messages as user instructions to the receiving teammate inside that teammate's current authority and active surface.
 - Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
 - Route ownership, acceptance, routing, lifecycle, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
-- Use free-form `SendMessage` for status, acknowledgment, clarification, or partial-result notes inside unchanged ownership, lifecycle, routing, and active surface.
+- Use free-form `SendMessage` for peer status, acknowledgment, clarification, or partial-result notes only inside unchanged ownership, lifecycle, routing, and active surface.
+- Free-form teammate interaction does not create agent-to-lead `MESSAGE-CLASS` authority and does not reopen a closed assignment execution block.
+- After a lane sends `handoff` or `completion`, duplicate packet replay and already-completed confirmation are handled by `.claude/skills/task-execution/references/message-classes.md` `Receipt Event Contract`, not by free-form status or clarification.
 - Authoritative downward control packets, upward transport `MESSAGE-CLASS` vocabulary, and structured lifecycle paths are owned by `.claude/skills/task-execution/references/phase-transition-control.md`, `.claude/skills/task-execution/references/lifecycle-control.md`, and `.claude/skills/task-execution/references/message-classes.md`.
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
-- For explicit team-runtime sessions, recurring health monitoring runs at the cadence configured through `hook-config.sh` from `hook-policy.sh` only when a tracked health-check cron is actually active.
+- Consume `session-boot/references/runtime-state-detail.md` for canonical health-check activation semantics.
 - The configured cron cadence and stale thresholds are defined in `hook-policy.sh`; treat that file as the single literal owner.
 - Direct oversight, event-triggered agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all agents are standby.
@@ -101,7 +102,7 @@ When an idle_notification is received with a valid completion transport, the gov
 - Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root (`./projects/`).
 
 ## Runtime Pressure
-- In single-primary automation mode, treat non-current `parent-session-id` agent processes as orphan runtime residue rather than valid parallel production sessions.
+- Consume `session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.
 - When hard runtime pressure or unresolved orphan residue exists, stop new `Agent` fan-out until explicit recovery clears that pressure.
 - Routine orphan scans report residue; they do not kill processes or rewrite team lifecycle truth.
 - Runtime-pressure handling must not invent session closeout authority or bypass message-first lifecycle decisions for current live agents.

@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/software-architecture/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Reference Material
@@ -28,7 +29,11 @@ For tightly coupled workflow cores:
 - Model many-to-many relationships explicitly; separate source facts, derived values, posted/closed results, reconciliation evidence into distinct write paths
 - Make recalculation, reposting, reopen, adjustment, idempotent rerun boundaries explicit
 - Isolate project-type/funding-mode variation in a visible rule path
-- **L-03 Entity ID Stability Contract**: Persistent entities require stable immutable identifiers. Array-position-based addressing = defect; ID recycling = defect. Required: UUID or monotonically increasing ID, FK using stable IDs, referential integrity rules (cascade delete/nullify/restrict).
+- **L-03 Entity ID Stability Contract**:
+  - Persistent entities require stable immutable identifiers.
+  - Array-position-based addressing = defect.
+  - ID recycling = defect.
+  - Required: UUID or monotonically increasing ID, FK using stable IDs, referential integrity rules (cascade delete/nullify/restrict).
 Send `hold|blocker` with architecture basis when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
 ## Operational Management Entity Architecture Extension
 For operational management systems (project management, resource allocation, personnel tracking, budget control):
@@ -37,7 +42,9 @@ For operational management systems (project management, resource allocation, per
 - **Period And Rate Invariant Contract**: Period-based allocation, participation, capacity, utilization, or budget-rate calculations require explicit period granularity and unit semantics.
 - **Period And Rate Detail**: Name cap or threshold rules, overlap handling, over-allocation classification, recalculation trigger, lock or post rule, and historical display basis.
 - **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling sends `hold|blocker` with architecture basis.
-Send `hold|blocker` with architecture basis when module/UI boundaries freeze before core entity set and relationship graph are explicit, or when material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts.
+Send `hold|blocker` with architecture basis when either condition holds:
+- module/UI boundaries freeze before core entity set and relationship graph are explicit
+- material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts
 ## Workflow-Product Architecture Extension
 For dense workflow tools:
 - Support inheritance/override resolution: global, project-type, project, period, person, exception scopes
@@ -91,7 +98,7 @@ Send `hold|blocker` with architecture basis when phase preconditions are missing
 - **Version Lifecycle Architecture**: carry version metadata, change attribution, impact-scope markers; latest-version authority resolution must be explicit.
 ### Result Report Writing Extensions
 - **Plan-to-Report Pipeline Variant**: routing (plan-only vs plan+refs) → gap analysis → adaptive depth selection → draft → visualization insertion → compression → output validation.
-- **Adaptive Generation Depth (L1-L3)**: L1 = evidence-rich assembly; L2 = partial evidence, guided inference; L3 = plan-only structured reasoning; assigned per section, consumed by draft generation for specificity/hedging calibration.
+- **Adaptive Generation Depth (L1-L3)**: use `.claude/skills/document-automation/references/result-report-generation.md` for level definitions; this extension supplies architecture-specific pipeline and fabrication boundaries.
 - **Fabrication Firewall**: forbidden = quantitative metrics/measurements/statistics without source data; permitted = process narrative, expected-effect reasoning, methodology; conditional = explicit reference backing required. Violations hard-blocked.
 - **Visualization Insertion Phase**: after draft, before compression; insert where visuals reduce textual burden; record all decisions (inserted/deferred/declined).
 - **Reference Image Routing**: classify at input collection (text-only, text+images, images-only); provided images → visualization insertion phase as priority candidates; absence → concept-diagram generation path.

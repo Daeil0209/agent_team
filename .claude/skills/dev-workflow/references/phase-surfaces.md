@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 ## Contents
@@ -74,7 +75,12 @@ auto-inject: false
   - business workflow packet: source-of-truth meaning, operator workflow meaning, mutation authority, period basis, allocation or participation semantics, reconciliation behavior, and proof oracle when spreadsheet or operations workflow meaning determines acceptance
   - ERD/data invariants/lifecycle when persistence or imported data matters
   - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure determines acceptance
-  - visual-reference benchmark packet: when the design produces a novel or composite operator-facing rendered surface (dashboard, gauge, chart, dense table, multi-step form, deck, report, or any UI where layout / hierarchy / typography / color / ratio choices materially affect operator comprehension), `benchmark-simulation` runs for external visual-reference comparison and feeds concrete visual characteristics (font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance) into the canonical design artifact via abstraction-fit-adapt; trivial surfaces (single-control forms, isolated text-only output, surfaces fully governed by a frozen prior benchmark) skip with recorded basis
+  - visual-reference benchmark packet:
+    - Trigger and novel/composite surface definitions are owned by `.claude/skills/benchmark-simulation/SKILL.md`.
+    - When triggered, `benchmark-simulation` runs for external visual-reference comparison.
+    - Concrete visual characteristics fed into the canonical design artifact via abstraction-fit-adapt include: font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance.
+    - Trivial surfaces skip with recorded basis.
+    - Trivial surfaces include: single-control forms, isolated text-only output, and surfaces fully governed by a frozen prior benchmark.
   - verifiable interface, runtime data-shape, format, and error contracts when production surfaces interact; when drift would break user-visible behavior, name the shared source-of-truth, generated or audited type path, producer-consumer field/shape mapping, and runtime validation/proof oracle
   - screen/user-flow/first-viewport contracts when visible UX determines acceptance
   - import/export mapping and validation error model when data migration or file I/O matters
@@ -94,7 +100,7 @@ auto-inject: false
 - `DESIGN-ROW-IMPL-MATRIX` maps every Phase 2 design-stated entity, route, template, and `CORE-WORKFLOW-CLOSURE` row to an exact implementation path or `not-implemented:<frozen-defer-citation>`.
 - Silent omission of any design row blocks Phase 3 → 4 transition.
 - For executable user-facing surfaces, the handoff also names the implemented launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, clean re-launch status, and blocked or unrun operator-delivery checks.
-- If parallel production occurred, phase advancement requires one authoritative integrated output surface routed forward from the frozen `MERGE-OWNER`.
+- Parallel production advancement consumes the parent `SKILL.md` Phase 3 merge-owner exit law.
 
 ## Phase 4 Analysis And Acceptance
 - Reviewer and tester are both mandatory analysis owners for executable, user-facing software
@@ -111,7 +117,7 @@ auto-inject: false
   - rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface; capture an image per acceptance-relevant feature/state and compare it against the design-stated expectation for that AC, named element, or behavior; image-based verification is mandatory on every user-facing rendered surface
   - whole-surface claims need full-page or full design-area capture, browser console/runtime-error check, glyph sanity, and visual defect inspection. Reviewer + tester + validator + team-lead synthesis each open the captured image files cited in support of an AC verdict, FAR claim, or visual-conformance assertion directly via the multimodal `Read` tool and inspect the rendered surface; this axis is satisfied only by direct image opening and rendered-surface inspection.
   - expected populated states must prove non-empty user-meaningful DOM; expected empty states must trace why they are empty rather than treating emptiness as proof
-  - operator-naive comprehension proof required: view each rendered surface as a first-time user with no prior specification or domain context and confirm every label, control, data display, gauge, and chart communicates its meaning self-explanatorily; this axis is satisfied by per-element rendered comprehension evidence. Tester reports the per-element walkthrough verdict; validator final-arbitration repeats the walkthrough independently.
+  - operator-naive comprehension definition is owned by `.claude/skills/visual-composition/SKILL.md`; tester records per-element rendered comprehension evidence and validator final-arbitration repeats it independently.
   - when multiple environments are in scope, cross-environment conditional fields per `.claude/skills/task-execution/references/request-bound-fields.md` accompany handoff
 - Reviewer + tester no-gap is necessary but not sufficient when validator-governed acceptance is required
 

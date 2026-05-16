@@ -31,10 +31,13 @@ session_has_only_operational_activity() {
       command = tool
       sub(/^Bash:/, "", command)
 
-      if (command ~ /[>|;&]/ || command ~ /(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)/) {
+      mutating_shell = ENVIRON["HOOK_MUTATING_SHELL_COMMAND_PATTERN"]
+      mutating_git = ENVIRON["HOOK_MUTATING_GIT_COMMAND_PATTERN"]
+
+      if (command ~ /[>|;&]/ || (mutating_shell != "" && command ~ mutating_shell)) {
         return 0
       }
-      if (command ~ /(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push|pull)([[:space:]]|$)/) {
+      if (mutating_git != "" && command ~ mutating_git) {
         return 0
       }
       if (command ~ /(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)/) {

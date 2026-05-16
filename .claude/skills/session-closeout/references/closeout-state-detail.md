@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/skills/session-closeout/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Session Closeout Reference
 ## Auto-inject
@@ -28,7 +29,7 @@ Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-on
 - Implementation deliverable was produced but not validated
 - User explicitly requested validation that was not completed
 ## Agent Lifecycle Resolution
-Before closeout completion, each teammate must be resolved as `shutdown`, `terminated`, `hold-for-validation`, or non-live residue.
+Before closeout completion, each teammate must be resolved as structured shutdown path, terminated, `STANDBY` with an owning validation or correction route, or non-live residue.
 During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
 During active closeout, `TeamDelete` proceeds without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
 A roster entry with no live agent-process proof is residue, not a live teammate. It does not require an impossible shutdown response before `TeamDelete`.

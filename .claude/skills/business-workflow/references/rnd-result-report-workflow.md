@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
 SOURCE-RULES: "domain-rule-catalog.md routed Result Report Domain Rules"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # R&D Result Report Workflow Rules
@@ -25,12 +26,8 @@ Result report generation follows this state sequence:
 Page count is a hard output constraint.
 
 ## Adaptive Generation Level
-Generation level is assessed from input richness.
-L1 rich plan summarizes and reorganizes detailed source plans into completion-oriented narrative.
-L2 standard generates domain-standard process narrative when the source lacks execution detail.
-L3 sparse infers plausible development process from domain knowledge, stated objectives, and deliverable type.
-Each level defines allowed inference.
-No level permits fabricated outcomes.
+Adaptive generation levels are owned by `.claude/skills/document-automation/references/result-report-generation.md`.
+Business-workflow supplies domain facts, constraints, and fabrication blockers for the selected level.
 
 ## Fact Fabrication Boundary
 Specific performance metrics require evidence.

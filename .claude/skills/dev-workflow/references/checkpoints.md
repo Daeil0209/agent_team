@@ -3,9 +3,16 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
-Checkpoint policy. CP1-CP5 are checkpoint surfaces, not default stop points or user-confirmation labels. team-lead resolves checkpoints autonomously when the frozen request-fit basis and available evidence are sufficient. Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here; it forces `HOLD` and re-entry through the owning path. CP5 is auto-resolved in normal gap flow; T0/T1 gaps follow Incident Response.
+Checkpoint policy.
+CP1-CP5 are checkpoint surfaces, not default stop points or user-confirmation labels.
+team-lead resolves checkpoints autonomously when the frozen request-fit basis and available evidence are sufficient.
+Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here.
+Those classes force `HOLD` and re-entry through the owning path.
+CP5 is auto-resolved in normal gap flow.
+T0/T1 gaps follow Incident Response.
 
 ## CP1 -- Plan Basis Freeze
 - **Phase**: Plan, before the canonical plan surface is finalized

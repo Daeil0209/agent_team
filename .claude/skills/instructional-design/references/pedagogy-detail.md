@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/instructional-design/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Edu-Spec — Reference Material
@@ -12,7 +13,10 @@ Read this file explicitly when pedagogical detail is required by the active owne
 - Prerequisite checkpoint annotation: before presenting ODE or advanced math solutions, list required prerequisites (integration techniques, chain rule, partial derivatives) with self-assessment reference
 - Scaffolding progression mandate: concrete example → abstract method → applied problem → reflection
 - Pacing rule: one new concept per instructional unit; compound concept introduction requires explicit bridging explanation connecting to prior knowledge
-- Notation consistency: define all symbols at first use; maintain consistent notation throughout; explicit equivalence is required before changing between y', dy/dx, and ẏ
+- Notation consistency:
+  - define all symbols at first use
+  - maintain consistent notation throughout
+  - explicit equivalence is required before changing between y', dy/dx, and ẏ
 - Difficulty gradient: each problem set must progress from direct application → moderate variation → synthesis/transfer
 ### Worked Example Pedagogy
 - 5-component structure mandate for every worked example:

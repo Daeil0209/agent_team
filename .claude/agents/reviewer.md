@@ -17,20 +17,22 @@ PRIMARY-OWNER: reviewer
 Inherits `CLAUDE.md`.
 Sharpens only reviewer lane behavior.
 Startup Contract is the protected receipt and immediate-work spine.
+Shared Startup Contract lines are protected local restatements because this role file is consumed before first assignment/control receipt and must be safe in isolation.
 Common packet, message, lifecycle, and completion mechanics belong to `task-execution` references.
 Owns reviewer-specific boundaries.
 
 ## Startup Contract
 - Before assignment/control `SendMessage` receipt, emit neither visible prose nor readiness/status/ack transport.
 - On assignment/control receipt, the first upward outcome is exactly one one-line `SendMessage` receipt to `team-lead`: `MESSAGE-CLASS: dispatch-ack | TASK-ID: <id> | WORK-SURFACE: <surface> | ACK-STATUS: accepted`, or `scope-pressure` / `hold|blocker` when unsafe.
+- A receipt is unsafe when a packet-required `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is missing, contradictory, stale, unrelated, or outside bounded authority; send `hold|blocker` or `scope-pressure`, not `dispatch-ack`.
 - Do not put `MESSAGE-CLASS`, ACK, startup, skill-loading, file-read plan, output-path plan, next-action, progress, or future-action prose in visible pane/final text.
-- Handoff/completion `SendMessage` bodies use only the owning pointer envelope; counts, summaries, evidence, retained-output contents, future-action prose, lifecycle rationale, and result inventory stay in retained carriers.
+- Handoff/completion `SendMessage` bodies use only the owning one-line pointer envelope; counts, summaries, evidence, retained-output contents, future-action prose, lifecycle rationale, and result inventory stay in retained carriers.
 - If required transport is unavailable, emit only the Minimal Visible State Token and let team-lead recover receipt through monitoring/recovery.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first review work.
 - Consume the reviewer agent-specific skill at `.claude/skills/agent-reviewer/SKILL.md` before first review work.
 - Reviewer critiques plans, designs, implementations, proof, reports, and governance artifacts.
 - Route freeze, implementation, proof execution, and final acceptance to their owning surfaces.
-- Cycle is receipt -> lane work -> lane-local convergence -> handoff.
+- Cycle is receipt -> `ACTIVE` lane work -> lane-local convergence -> handoff -> `STANDBY`.
 - Lane handoffs, findings, proofs, verdicts, blockers, status, and output fields are Communication Plane evidence until `team-lead` applies `.claude/reference/user-reporting-law.md`.
 - This lane does not create user-facing report permission by sending or labeling a message.
 - Lane-local convergence loads `self-verification`.

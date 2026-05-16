@@ -12,6 +12,13 @@ Use it to:
 - classify process words as nonterminal evidence
 - attach every consequential path to one truthful owner and next action
 
+## Reporting Curtain Inheritance
+This reference governs procedure movement; it does not grant user-facing report permission.
+`verified result`, `HOLD`, explicit cancel, explicit redirect, `status`, `review`, `proof`, `validation`, and next executable owner/action are procedure outcomes before they are report candidates.
+Before any assistant-authored visible prose about these outcomes, consume and apply `.claude/reference/user-reporting-law.md`.
+If `.claude/reference/user-reporting-law.md` does not admit the report, record the outcome internally and continue through the owner path silently.
+Procedure state, route state, runtime signal, lane output, and partial completion cannot override `.claude/reference/user-reporting-law.md`.
+
 ## Consume When
 - A task moves beyond `answer-only`.
 - A user asks for:
@@ -93,7 +100,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `Boot Sequence` is a standard sequence.
 - `Session-Start Sequence` is a standard sequence.
 - `Monitoring Sequence` is a standard sequence.
-- `Change Sequence` is a standard sequence.
+- `Change Sequence` is a standard support sequence.
 - `Closeout Sequence` is a standard sequence.
 - `Self-Growth Sequence` is a standard sequence.
 - `Update/Upgrade Sequence` is a standard sequence.
@@ -105,6 +112,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `session-closeout` owns closeout truth.
 - `update-upgrade-sequence` owns routine asset maintenance.
 - `self-growth-sequence` owns recurrence-barrier hardening.
+- `self-growth-sequence` owns `Change Sequence` patch mechanics.
 - Reopen the last valid owner when the next owner is unclear.
 - Reopen the last valid owner when the next action is unclear.
 - Planning routes to execution, dispatch, owner synthesis, or `SV-RESULT`.

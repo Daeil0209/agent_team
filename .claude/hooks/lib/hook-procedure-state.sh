@@ -36,7 +36,7 @@ procedure_state_edit_target_allowed() {
   local target_paths="${2-}"
 
   case "$tool_name" in
-    Edit|Update|MultiEdit) ;;
+    Edit|MultiEdit) ;;
     *) return 1 ;;
   esac
 

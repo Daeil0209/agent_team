@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Core Laws 5 [PROJECT-OUTPUT-ROOT]; Conditional Rules filesystem clauses"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Common Doctrine Reference: Output Root And Filesystem Boundary
 
@@ -16,7 +17,7 @@ This reference owns:
 These enforcement surfaces stay with `.claude/reference/runtime-boundary-law.md`:
 - hook enforcement
 - settings enforcement
-Governance-text patch selection stays with `.claude/reference/minimal-governance-change-law.md`.
+Governance-text patch selection stays with `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Purpose
 Use this reference when work:

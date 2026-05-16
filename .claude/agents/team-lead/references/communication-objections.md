@@ -27,23 +27,16 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 ## Communication Hard Rules
 - Assignment-grade dispatch proves receipt-level dispatch state.
-- Agent completion requires a lifecycle decision.
-- Same-segment assignment-grade work satisfies the decision under lifecycle-control.
-- Lifecycle debt stays visible until consumed.
-- Report lifecycle debt resolution only after lifecycle control consumes it.
-- Same-surface follow-on before lifecycle control requires:
-  - narrow scope
-  - explicit non-reuse `REQUESTED-LIFECYCLE`
-  - a distinct concrete agent target
-- Same-surface follow-on before lifecycle control keeps debt in warning-state.
-- Consume lifecycle control first when any same-surface follow-on condition is missing.
+- Agent completion records `STANDBY` immediately and opens retained-carrier synthesis.
+- Same-surface follow-on requires distinct new bounded work through `assignment`, `reuse`, or `reroute`.
+- Duplicate packet replay, already-completed confirmation, and packet expansion after completion do not open `status`, `clarification`, `control-ack`, or repeated completion transport.
 - Use one primary downward message class per agent per segment.
 - Send assignment-grade work and standalone `phase-transition-control` in separate execution segments.
 
 ## Resolve Next Owner And Action
 - A `hold|blocker` opens corrected packet, reopened `work-planning`, setup/tool owner, or proven user-owned blocker classification.
 - A `scope-pressure` opens packet correction or `work-planning` by `REPLAN-REQUIRED`.
-- A lifecycle debt signal opens lifecycle control.
+- A duplicate post-completion signal opens retained-carrier consumption or distinct bounded work, not lifecycle control.
 - A message-class conflict opens message-class split.
 
 ## hold|blocker

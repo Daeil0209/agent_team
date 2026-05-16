@@ -5,17 +5,6 @@ normalize_planning_worker_name() {
   normalize_lane_id "$worker_name"
 }
 
-reset_planning_markers_for_session() {
-  local session_id="${1-}"
-  [[ -n "$session_id" ]] || return 0
-
-  rm -f \
-    "$LOG_DIR/.wp-loaded-${session_id}" \
-    "$LOG_DIR/.sv-result-loaded-${session_id}" \
-    "$LOG_DIR/.post-wp-action-${session_id}" \
-    "$LOG_DIR/.task-execution-loaded-${session_id}"
-}
-
 _mark_identity_in_file_locked() {
   local target_file="${1:?target file required}"
   local identity="${2:?identity required}"
@@ -59,7 +48,9 @@ mark_lead_planning_required() {
   local session_id="${1-}"
   [[ -n "$session_id" ]] || return 0
 
-  reset_planning_markers_for_session "$session_id"
+  # A fresh user prompt marks possible planning pressure only.
+  # It must not erase already consumed owner evidence for the same session.
+  # Boundary-changing owners reopen planning by loading work-planning again.
   with_lock_file "$PLANNING_DISCIPLINE_LOCK" _mark_identity_in_file_locked "$LEAD_PLANNING_PENDING_FILE" "$session_id"
 }
 
@@ -231,90 +222,23 @@ worker_dispatch_ack_required_since() {
   ' "$WORKER_DISPATCH_ACK_PENDING_FILE" 2>/dev/null
 }
 
-worker_assignment_receipt_observed_since() {
+worker_transcript_event_observed_since() {
   local session_id="${1-}"
   local required_at="${2-}"
+  local observe_mode="${3-}"
 
-  [[ -n "$session_id" && -n "$required_at" ]] || return 1
+  [[ -n "$session_id" && -n "$required_at" && -n "$observe_mode" ]] || return 1
 
-  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE' >/dev/null 2>&1
+  SESSION_ID="$session_id" REQUIRED_AT="$required_at" OBSERVE_MODE="$observe_mode" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE' >/dev/null 2>&1
 const fs = require("fs");
 const path = require("path");
 
 const sessionId = String(process.env.SESSION_ID || "").trim();
 const requiredAt = String(process.env.REQUIRED_AT || "").trim();
+const observeMode = String(process.env.OBSERVE_MODE || "").trim();
 const projectsRoot = String(process.env.CLAUDE_PROJECTS_DIR || "").trim();
 
-if (!sessionId || !requiredAt || !projectsRoot || !fs.existsSync(projectsRoot)) process.exit(1);
-
-const targetName = `${sessionId}.jsonl`;
-const stack = [projectsRoot];
-let transcriptPath = null;
-
-while (stack.length) {
-  const current = stack.pop();
-  let entries = [];
-  try {
-    entries = fs.readdirSync(current, { withFileTypes: true });
-  } catch {
-    continue;
-  }
-  for (const entry of entries) {
-    const fullPath = path.join(current, entry.name);
-    if (entry.isDirectory()) {
-      stack.push(fullPath);
-      continue;
-    }
-    if (entry.isFile() && entry.name === targetName) {
-      transcriptPath = fullPath;
-      stack.length = 0;
-      break;
-    }
-  }
-}
-
-if (!transcriptPath) process.exit(1);
-
-const { flattenValueText: flattenText } = require(process.env.HOOK_JSON_HELPERS);
-
-for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
-  if (!line.trim()) continue;
-  let row;
-  try {
-    row = JSON.parse(line);
-  } catch {
-    continue;
-  }
-  const timestamp = String(row?.timestamp || "").trim();
-  if (!timestamp || timestamp < requiredAt) continue;
-  if (String(row?.type || "") !== "user") continue;
-  const text = flattenText(row?.message?.content).join("\n");
-  if (!text) continue;
-  if (!/<teammate-message\b/i.test(text)) continue;
-  if (!/teammate_id=["']team-lead["']/i.test(text)) continue;
-  if (!/(?:^|\n)\s*message-class\s*:\s*(assignment|reuse|reroute)\b/im.test(text)) continue;
-  process.exit(0);
-}
-
-process.exit(1);
-NODE
-}
-
-worker_dispatch_ack_success_observed_since() {
-  local session_id="${1-}"
-  local required_at="${2-}"
-
-  [[ -n "$session_id" && -n "$required_at" ]] || return 1
-
-  SESSION_ID="$session_id" REQUIRED_AT="$required_at" CLAUDE_PROJECTS_DIR="$CLAUDE_PROJECTS_DIR" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE' >/dev/null 2>&1
-const fs = require("fs");
-const path = require("path");
-
-const sessionId = String(process.env.SESSION_ID || "").trim();
-const requiredAt = String(process.env.REQUIRED_AT || "").trim();
-const projectsRoot = String(process.env.CLAUDE_PROJECTS_DIR || "").trim();
-
-if (!sessionId || !requiredAt || !projectsRoot || !fs.existsSync(projectsRoot)) process.exit(1);
+if (!sessionId || !requiredAt || !observeMode || !projectsRoot || !fs.existsSync(projectsRoot)) process.exit(1);
 
 const targetName = `${sessionId}.jsonl`;
 const stack = [projectsRoot];
@@ -363,16 +287,32 @@ for (const line of fs.readFileSync(transcriptPath, "utf8").split(/\r?\n/)) {
     ...flattenText(row?.toolUseResult),
   ].join("\n");
   if (!text) continue;
-  if (!/(?:^|\n)\s*message-class\s*:\s*dispatch-ack\b/i.test(text)) continue;
 
-  const explicitSuccess = row?.toolUseResult && row.toolUseResult.success === true;
-  if (explicitSuccess || /message sent to team-lead's inbox/i.test(text) || /"success"\s*:\s*true/i.test(text)) {
+  if (observeMode === "assignment-receipt") {
+    if (!/<teammate-message\b/i.test(text)) continue;
+    if (!/teammate_id=["']team-lead["']/i.test(text)) continue;
+    if (!/(?:^|\n)\s*message-class\s*:\s*(assignment|reuse|reroute)\b/im.test(text)) continue;
+    process.exit(0);
+  }
+
+  if (observeMode === "dispatch-ack-success") {
+    if (!/(?:^|\n)\s*message-class\s*:\s*dispatch-ack\b/i.test(text)) continue;
+    const explicitSuccess = row?.toolUseResult && row.toolUseResult.success === true;
+    if (!explicitSuccess && !/message sent to team-lead's inbox/i.test(text) && !/"success"\s*:\s*true/i.test(text)) continue;
     process.exit(0);
   }
 }
 
 process.exit(1);
 NODE
+}
+
+worker_assignment_receipt_observed_since() {
+  worker_transcript_event_observed_since "${1-}" "${2-}" "assignment-receipt"
+}
+
+worker_dispatch_ack_success_observed_since() {
+  worker_transcript_event_observed_since "${1-}" "${2-}" "dispatch-ack-success"
 }
 
 reconcile_worker_dispatch_ack_from_transcript() {

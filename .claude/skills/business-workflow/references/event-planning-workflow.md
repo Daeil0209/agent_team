@@ -3,6 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
 SOURCE-RULES: "domain-rule-catalog.md routed Event Planning Domain Rules"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Event Planning Workflow Rules
@@ -92,8 +93,6 @@ An element that passes necessity validation but conflicts with decision-maker st
 Minimum required formality is preserved.
 Added formality must produce proportional institutional value.
 Repeatable standard structures are preferred over ambitious one-off designs that cannot survive the next approval cycle.
-BP labels are business-workflow domain-local priority identifiers.
-BP labels are not CLAUDE.md-level governance laws.
 Unresolved conflicts open `team-lead` planning decision.
 
 ## Repeatability And Sustainability

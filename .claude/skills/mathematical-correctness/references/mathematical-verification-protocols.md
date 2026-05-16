@@ -3,12 +3,16 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/mathematical-correctness/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # Reference Material
 ## Responsibilities: Reference Protocols
 ### Analytical Solution Verification Protocol
-Note: The exactness test and integrating factor decision tree below are exemplars for ODEs; apply the same rigor (step justification, HOLD on unverified existence/uniqueness, back-substitution validation) to other analytical solution families (Laplace transforms, Fourier series, PDE separation of variables, eigenvalue problems).
+Note: The exactness test and integrating factor decision tree below are exemplars for ODEs.
+Apply the same rigor to other analytical solution families.
+Other analytical families include Laplace transforms, Fourier series, PDE separation of variables, and eigenvalue problems.
+The same-rigor checklist covers: step justification, HOLD on unverified existence/uniqueness, and back-substitution validation.
 #### ODE Exactness Verification
 **Exactness test checklist:**
 1. Identify M(x,y) and N(x,y) from the form M dx + N dy = 0

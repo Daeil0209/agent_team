@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # team-session-sequences: Dispatch Execution Contract
@@ -11,7 +12,8 @@ LOAD-POLICY: on-demand reference only
 - Foreground execution requires a current runtime-configured exemption.
 - Use the current runtime-configured foreground exemptions instead of hardcoding an informal exception list in session behavior.
 - When a dispatched lane requires explicit write authority under runtime policy, supply the required execution mode rather than relying on foreground execution as a shortcut.
-- For request-bound work, interpret dispatch design in this order: request-fit packet -> deliverable shape -> phase intent -> staffing choice. Do not let TOC, shard count, or runtime convenience redefine the document class.
+- Request-bound work interprets dispatch design in this fixed order: request-fit packet -> deliverable shape -> phase intent -> staffing choice.
+- TOC, shard count, and runtime convenience must not redefine the document class.
 - For request-bound document work, keep phase intent explicit using existing packet surfaces rather than inventing new fields.
 - `researcher` packets already express the evidence phase.
 - `developer` packets use `PLAN-STEP` plus `CHANGE-SPEC` to say whether the active phase is `draft` or `merge-integration`.
@@ -20,12 +22,13 @@ LOAD-POLICY: on-demand reference only
 - Review checks artifact quality, request fit, and defect classification.
 - Validation arbitrates final `PASS/HOLD/FAIL` against the authoritative expectation surfaces after review/test state is visible.
 - Mixed-purpose prompts are invalid even when all requested work is related.
-- A single dispatch must not ask one agent to expand broad evidence, draft the main artifact body, and perform final merge-integration at the same time.
-- Forbidden combination: `research + main-body draft`.
-- Forbidden combination: `broad research + merge-integration`.
-- Forbidden combination: `audit/evidence/review + governance patch execution`.
-- Forbidden combination: `draft + final acceptance review`.
-- Forbidden combination: `review + validation verdict`.
+- A single dispatch must not combine broad evidence expansion, main-body drafting, and final merge-integration.
+- Forbidden combinations:
+  - `research + main-body draft`
+  - `broad research + merge-integration`
+  - `audit/evidence/review + governance patch execution`
+  - `draft + final acceptance review`
+  - `review + validation verdict`
 - Do not require a new agent only because the phase changed. When scope remains single-purpose and context reuse is beneficial, continue with the current agent through a bounded follow-up dispatch instead of manufacturing handoff overhead.
 - Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when the frozen packet and current evidence already support useful progress.
 - The designated draft or merge owner continues and then takes a bounded follow-up update for the late shard.

@@ -3,16 +3,18 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/document-automation/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # document-automation: Result Report Generation
 Use when generating a result report from a plan, proposal, or project reference.
 
 ## Adaptive Generation Levels
-- L1 rich plan: summarize and reorganize, minimize inference.
-- L2 standard plan: generate domain-appropriate process narrative filling structural gaps.
+- L1 rich plan: reorganize evidence-rich source content with minimal inference.
+- L2 standard plan: generate domain-appropriate process narrative for structural gaps when source lacks execution detail.
 - L2 is the default.
-- L3 sparse or outline-only plan: proactively supply expert-level structure and bridging content within evidence-safe bounds.
+- L3 sparse or outline-only plan: supply expert-level structure and explicit domain assumptions within evidence-safe bounds.
+- No level permits fabricated outcomes, measurements, or performed work.
 - Assess generation level per section.
 - Section-level evidence differences govern over document-level generation level.
 

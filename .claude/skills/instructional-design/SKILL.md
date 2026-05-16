@@ -3,6 +3,7 @@ name: instructional-design
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, scaffolding, and pedagogical clarity. Use when teaching, training, onboarding, learner-facing explanation, worked examples, or instructional readability materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

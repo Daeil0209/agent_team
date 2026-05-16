@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Final Acceptance Review is the workflow-closure reconciliation after validator `PASS` in validator-required chains.
@@ -84,7 +85,10 @@ Every original instruction, accepted follow-up instruction, and frozen `SCOPE-BA
 - real user-surface proof
 - matched, user-authorized-deferred (with frozen-record passage citation), or original-plan/design-out-of-scope (with frozen-record passage citation) status
 
-Apply only the deliverable-type sub-bundles explicitly listed in `SCOPE-BASELINE` and the frozen Receiver-Surface Contract; mark non-applicable sub-bundles `not-applicable:<frozen-record-passage>`. FAR records sub-bundle selection rationale citing the frozen-record passage before reject-first decision; self-defined narrowing without frozen-record citation is silent-PASS defect.
+Apply only the deliverable-type sub-bundles explicitly listed in `SCOPE-BASELINE` and the frozen Receiver-Surface Contract.
+Mark non-applicable sub-bundles `not-applicable:<frozen-record-passage>`.
+FAR records sub-bundle selection rationale citing the frozen-record passage before reject-first decision.
+Self-defined narrowing without frozen-record citation is a silent-PASS defect.
 
 Every material requested axis carries one of:
 - retained matched evidence on the real user surface with Evidence-Quality Matrix support

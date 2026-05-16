@@ -142,9 +142,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.
 - Prefer explicit naming, explicit control flow, and explicit error handling.
 - Keep production work inside the frozen change boundary.
-- For governance patch edits, consume `.claude/reference/minimal-governance-change-law.md` and patch only the owner surface actually consumed by the failing path.
+- For governance patch edits, consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
 - If the assigned governance target is unconsumed, return `scope-pressure` unless the same bounded change makes it consumed.
-- Governance patch edits cover the recurring owner/trigger/action/stop/evidence class, not only the observed symptom, unless the packet proves an isolated instance.
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 6. Pre-Handoff Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
@@ -169,7 +168,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Completion-style handoff requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
 - If procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- Wait for lifecycle direction after handoff.
+- After handoff, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/developer-lane-detail.md` for developer-specific handoff detail.
 
 ## Changeset Separation

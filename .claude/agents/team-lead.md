@@ -112,7 +112,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Confirmed recurrence-barrier hardening consumes `.claude/skills/self-growth-sequence/SKILL.md`.
 - Routine `.claude` asset maintenance consumes `.claude/skills/update-upgrade-sequence/SKILL.md`.
 - Governance patch review consumes `.claude/skills/review-verification/SKILL.md` before mutation when required by that skill.
-- Governance patch placement and generalization consume `.claude/reference/minimal-governance-change-law.md` before route, owner, or assignment is treated as patch-ready.
+- Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.
 
 ### RPA-10. Interrupt And Autonomy

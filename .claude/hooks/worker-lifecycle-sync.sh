@@ -263,9 +263,9 @@ NODE
       "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
-      # Only unsynchronized completion-grade turn endings belong in the lifecycle-decision-pending fallback file.
-      if ! worker_is_standby "$TEAMMATE" && [[ "$TURN_END_CLASSIFICATION" == "standby" ]]; then
-        mark_worker_idle_pending "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"
+      if [[ "$TURN_END_CLASSIFICATION" == "standby" ]]; then
+        mark_worker_standby "$TEAMMATE"
+        clear_worker_idle_pending "$TEAMMATE"
       else
         clear_worker_idle_pending "$TEAMMATE"
       fi
@@ -283,7 +283,7 @@ const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-trans
 let ctx;
 switch (classification) {
   case "standby":
-    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as lifecycle-decision pending and read REQUESTED-LIFECYCLE before deciding reuse, standby, shutdown, or hold-for-validation.`;
+    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as STANDBY now; next valid lead actions are retained-carrier synthesis, distinct bounded reuse, structured cleanup, or route-owned validation/correction.`;
     break;
   case "working-permission-pending":
     ctx = `Agent still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the agent as not working.`;

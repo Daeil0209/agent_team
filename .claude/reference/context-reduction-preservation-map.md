@@ -289,7 +289,7 @@ CLAUDE.md source -> destination:
 - User-surface evidence, deliverable fit, functional closure, and acceptance detail -> `.claude/reference/delivery-evidence-acceptance-law.md`.
 - Scope abuse, cross-continuity, preservation, and retroactive application detail -> `.claude/reference/scope-continuity-change-law.md`.
 - Skill loading, required-skill consumption, methodology instructions, and trigger-bound reference consumption -> `.claude/reference/skill-loading-and-reference-binding.md`.
-- `[GOV-MIN]`, `[HARDEN]`, governance patch selection, source-to-destination trace, and removal-first change detail -> `.claude/reference/minimal-governance-change-law.md`.
+- `[GOV-MIN]`, `[HARDEN]`, governance patch selection (`## Patch-Ready Gate`), source-to-destination trace, and removal-first change detail -> `.claude/reference/minimal-governance-change-law.md`.
 - `[PROJECT-OUTPUT-ROOT]`, source/governance edit boundary, generated-output placement, and filesystem safety detail -> `.claude/reference/output-root-and-filesystem-law.md`.
 - `[HOOK-LAST]`, prose-vs-runtime enforcement boundary, tool/MCP/review-tool limits, runtime-state ownership, and footprint-claim routing -> `.claude/reference/runtime-boundary-law.md` plus `.claude/reference/runtime-footprint-and-continuity.md` for measured footprint claims.
 
@@ -336,7 +336,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Packet correction | Lawful only inside same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |
 | Completion synthesis | Only completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion` plus Common Completion Result Spine can synthesize; receipt/control/status/blocker/pressure cannot close work. |
 | Final arbitration | Formal `PASS/HOLD/FAIL` belongs to validator. Local verified-result closure is valid only when no final-arbitration trigger applies. It reports only `verified result`. Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md`. |
-| Runtime/lifecycle truth | Dispatch, receipt, agent-start, progress, completion, lifecycle request, lifecycle control, cleanup, and acceptance remain distinct; `REQUESTED-LIFECYCLE` never clears debt by itself. |
+| Runtime/lifecycle truth | Dispatch, receipt, agent-start, progress, completion, standby, cleanup, and acceptance remain distinct; `handoff` or `completion` sets `STANDBY`, while reuse still requires new bounded work and shutdown still requires structured cleanup evidence. |
 | Hook/runtime footprint claim | Separate official legality from local `[HOOK-LAST]` philosophy; measured claims need runtime evidence, otherwise report `design-level` or `UNVERIFIED`. |
 | Context reduction or migration | Live reference check, duplicate-overlap audit, source-to-destination map, and imperative-force check are required before closure. |
 | Duplicate doctrine overlap | Compact rule is trigger/anchor; precise owner surface controls detailed procedure; divergent duplicate is tightened, re-homed, or removed, not averaged. |
