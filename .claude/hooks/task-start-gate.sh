@@ -121,6 +121,8 @@ try {
     .concat(flattenText(toolInput.message || toolInput.content, TASK_START_TEXT_KEYS))
     .concat(flattenText(toolInput.description, TASK_START_TEXT_KEYS))
     .join("\n");
+  const stateSignal = text.trim().replace(/\s+/g, " ");
+  if (/^(handoff|completion)(?: task [A-Za-z0-9._:-]+)?$/i.test(stateSignal)) process.exit(0);
   const messageClass = field(text, "MESSAGE-CLASS");
   process.exit(messageClass === "handoff" || messageClass === "completion" ? 0 : 1);
 } catch {
@@ -179,27 +181,14 @@ try {
     toolInput.teammate_name,
     toolInput.teammateName
   ).toLowerCase();
-  const allowedAckFields = new Set(["message-class", "task-id", "work-surface", "ack-status"]);
-  let ackPayloadOk = messageClass === "dispatch-ack";
-  let messageClassCount = 0;
-  let ackStatusCount = 0;
   const rawText = text.trim();
   const hasLineBreak = /\r?\n/.test(rawText);
-  const receiptParts = rawText.split(/\s*\|\s*/).map((line) => line.trim()).filter(Boolean);
-  if (hasLineBreak) ackPayloadOk = false;
-  for (const line of receiptParts) {
-    const match = line.match(/^-?\s*([A-Za-z0-9_-]+)\s*:/);
-    if (!match) {
-      ackPayloadOk = false;
-      continue;
-    }
-    const key = match[1].toLowerCase();
-    if (!allowedAckFields.has(key)) ackPayloadOk = false;
-    if (key === "message-class") messageClassCount += 1;
-    if (key === "ack-status") ackStatusCount += 1;
+  let ackPayloadOk = !hasLineBreak && /^ack(?: task [A-Za-z0-9._:-]+)?$/i.test(rawText);
+  let effectiveClass = messageClass;
+  if (ackPayloadOk) {
+    effectiveClass = "dispatch-ack";
   }
-  if (messageClassCount !== 1 || ackStatusCount !== 1) ackPayloadOk = false;
-  process.stdout.write(`${messageClass}\n${targetName}\n${ackPayloadOk ? "yes" : "no"}\n`);
+  process.stdout.write(`${effectiveClass}\n${targetName}\n${ackPayloadOk ? "yes" : "no"}\n`);
 } catch {
   process.stdout.write("\n\nno\n");
 }
@@ -385,9 +374,232 @@ for (const line of fs.readFileSync(ledgerPath, "utf8").split(/\r?\n/)) {
 }
 
 if (latest) {
-  process.stdout.write(`${String(latest.messageClass || "").toLowerCase()}\n${String(latest.timestamp || "")}\n`);
+  process.stdout.write(`${String(latest.messageClass || "").toLowerCase()}\n${String(latest.timestamp || "")}\n${String(latest.taskId || "")}\n`);
 }
 NODE
+}
+
+worker_sendmessage_reopens_closed_task() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+  runtime_sender_session_is_worker "$SESSION_ID" || return 1
+
+  local worker_name=""
+  local latest=""
+  local latest_class=""
+  local latest_task_id=""
+  local parsed=""
+  local target_name=""
+  local message_class=""
+  local outgoing_task_id=""
+  local top_type=""
+  local nested_type=""
+
+  worker_name="$(worker_name_for_session_id "$SESSION_ID")"
+  worker_name="$(normalize_lane_id "$worker_name")"
+  [[ -n "$worker_name" ]] || return 1
+  worker_is_standby "$worker_name" || return 1
+
+  latest="$(latest_worker_transport_class_for_gate "$worker_name")"
+  mapfile -t _closed_transport_fields <<<"$latest"
+  latest_class="${_closed_transport_fields[0]:-}"
+  latest_task_id="$(printf '%s' "${_closed_transport_fields[2]:-}" | tr -d '[:space:]')"
+  case "$latest_class" in
+    handoff|completion) ;;
+    *) return 1 ;;
+  esac
+  [[ -n "$latest_task_id" ]] || return 1
+
+  parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+function field(text, name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = text.match(new RegExp(`(?:^|\\n|\\|)\\s*-?\\s*${escaped}\\s*:\\s*([^\\n\\r|]+)`, "i"));
+  return String(match ? match[1] : "").trim();
+}
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const nested = toolInput.message && typeof toolInput.message === "object" ? toolInput.message : {};
+  const text = flattenText(toolInput.summary, KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, KEYS))
+    .concat(flattenText(toolInput.description, KEYS))
+    .join("\n")
+    .trim();
+  const state = text.replace(/\s+/g, " ");
+  let klass = field(text, "MESSAGE-CLASS").toLowerCase().replace(/\s+/g, "");
+  let task = field(text, "TASK-ID").replace(/\s+/g, "");
+  let match = state.match(/^ack(?: task ([A-Za-z0-9._:-]+))?$/i);
+  if (!klass && match) {
+    klass = "dispatch-ack";
+    task = task || match[1] || "";
+  }
+  match = state.match(/^(handoff|completion)(?: task ([A-Za-z0-9._:-]+))?$/i);
+  if (!klass && match) {
+    klass = match[1].toLowerCase();
+    task = task || match[2] || "";
+  }
+  const targetName = firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.recipient_name,
+    toolInput.recipientName,
+    toolInput.name,
+    toolInput.target_name,
+    toolInput.targetName,
+    toolInput.teammate_name,
+    toolInput.teammateName
+  ).toLowerCase();
+  process.stdout.write([
+    targetName,
+    klass,
+    task,
+    String(toolInput.type || "").trim().toLowerCase(),
+    String(nested.type || "").trim().toLowerCase()
+  ].join("\n"));
+} catch {
+  process.stdout.write("\n\n\n\n\n");
+}
+NODE
+)"
+  mapfile -t _closed_send_fields <<<"$parsed"
+  target_name="$(normalize_lane_id "${_closed_send_fields[0]:-}")"
+  message_class="${_closed_send_fields[1]:-}"
+  outgoing_task_id="$(printf '%s' "${_closed_send_fields[2]:-}" | tr -d '[:space:]')"
+  top_type="${_closed_send_fields[3]:-}"
+  nested_type="${_closed_send_fields[4]:-}"
+
+  case "$top_type:$nested_type" in
+    shutdown_response:*|*:shutdown_response) return 1 ;;
+  esac
+  case "$target_name" in
+    ""|team-lead|lead|supervisor) ;;
+    *) return 1 ;;
+  esac
+  [[ "$outgoing_task_id" == "$latest_task_id" ]] || return 1
+  [[ -n "$message_class" ]] || return 1
+  return 0
+}
+
+lead_sendmessage_replays_completed_worker_task() {
+  [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
+  runtime_sender_session_is_worker "$SESSION_ID" && return 1
+
+  local parsed=""
+  local target_name=""
+  local message_class=""
+  local outgoing_task_id=""
+  local latest=""
+  local latest_class=""
+  local latest_task_id=""
+
+  parsed="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { flattenText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes", "type"];
+function field(text, name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = text.match(new RegExp(`(?:^|\\n|\\|)\\s*-?\\s*${escaped}\\s*:\\s*([^\\n\\r|]+)`, "i"));
+  return String(match ? match[1] : "").trim();
+}
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const text = flattenText(toolInput.summary, KEYS)
+    .concat(flattenText(toolInput.message || toolInput.content, KEYS))
+    .concat(flattenText(toolInput.description, KEYS))
+    .join("\n");
+  const targetName = firstNonEmptyString(
+    toolInput.to,
+    toolInput.recipient,
+    toolInput.recipient_name,
+    toolInput.recipientName,
+    toolInput.name,
+    toolInput.target_name,
+    toolInput.targetName,
+    toolInput.teammate_name,
+    toolInput.teammateName
+  ).toLowerCase();
+  process.stdout.write([
+    targetName,
+    field(text, "MESSAGE-CLASS").toLowerCase().replace(/\s+/g, ""),
+    field(text, "TASK-ID").replace(/\s+/g, "")
+  ].join("\n"));
+} catch {
+  process.stdout.write("\n\n\n");
+}
+NODE
+)"
+  mapfile -t _lead_replay_fields <<<"$parsed"
+  target_name="$(normalize_lane_id "${_lead_replay_fields[0]:-}")"
+  message_class="${_lead_replay_fields[1]:-}"
+  outgoing_task_id="$(printf '%s' "${_lead_replay_fields[2]:-}" | tr -d '[:space:]')"
+
+  [[ -n "$target_name" && -n "$outgoing_task_id" ]] || return 1
+  case "$target_name" in
+    team-lead|lead|supervisor) return 1 ;;
+  esac
+  case "$message_class" in
+    assignment|reuse|reroute) ;;
+    *) return 1 ;;
+  esac
+  worker_is_standby "$target_name" || return 1
+
+  latest="$(latest_worker_transport_class_for_gate "$target_name")"
+  mapfile -t _lead_latest_fields <<<"$latest"
+  latest_class="${_lead_latest_fields[0]:-}"
+  latest_task_id="$(printf '%s' "${_lead_latest_fields[2]:-}" | tr -d '[:space:]')"
+  case "$latest_class" in
+    handoff|completion) ;;
+    *) return 1 ;;
+  esac
+  [[ "$latest_task_id" == "$outgoing_task_id" ]]
+}
+
+worker_taskupdate_completes_latest_handoff() {
+  [[ "$TOOL_NAME" == "TaskUpdate" ]] || return 1
+  runtime_sender_session_is_worker "$SESSION_ID" || return 1
+
+  local worker_name=""
+  local latest=""
+  local latest_class=""
+  local latest_task_id=""
+  local parsed=""
+  local update_task_id=""
+  local update_status=""
+
+  worker_name="$(worker_name_for_session_id "$SESSION_ID")"
+  worker_name="$(normalize_lane_id "$worker_name")"
+  [[ -n "$worker_name" ]] || return 1
+
+  latest="$(latest_worker_transport_class_for_gate "$worker_name")"
+  mapfile -t _taskupdate_latest_fields <<<"$latest"
+  latest_class="${_taskupdate_latest_fields[0]:-}"
+  latest_task_id="$(printf '%s' "${_taskupdate_latest_fields[2]:-}" | tr -d '[:space:]')"
+  case "$latest_class" in
+    handoff|completion) ;;
+    *) return 1 ;;
+  esac
+  [[ -n "$latest_task_id" ]] || return 1
+
+  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  process.stdout.write([
+    String(toolInput.task_id || toolInput.taskId || toolInput.id || "").trim(),
+    String(toolInput.status || toolInput.state || "").trim().toLowerCase()
+  ].join("\n"));
+} catch {
+  process.stdout.write("\n\n");
+}
+NODE
+)"
+  mapfile -t _taskupdate_fields <<<"$parsed"
+  update_task_id="$(printf '%s' "${_taskupdate_fields[0]:-}" | tr -d '[:space:]')"
+  update_status="${_taskupdate_fields[1]:-}"
+
+  [[ "$update_task_id" == "$latest_task_id" ]] || return 1
+  [[ "$update_status" == "completed" ]]
 }
 
 latest_worker_permission_request_timestamp_for_gate() {
@@ -892,11 +1104,10 @@ lead_required_planning_owner_allowed() {
       return 1
       ;;
     Skill)
-      if [[ "$skill_name" == *work-planning* ]]; then
+      if [[ "$skill_name" == *session-boot* ]]; then
         return 0
       fi
-      if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] \
-          && [[ "$skill_name" == *session-boot* ]]; then
+      if [[ "$skill_name" == *work-planning* ]] && lead_session_start_ready; then
         return 0
       fi
       return 1
@@ -905,6 +1116,21 @@ lead_required_planning_owner_allowed() {
       return 1
       ;;
   esac
+}
+
+lead_session_start_ready() {
+  [[ -f "$SB_LOADED_MARKER" ]] && return 0
+  [[ -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && return 0
+  [[ "$(get_procedure_state_field "startupState" "")" == "ready" ]]
+}
+
+lead_required_planning_block_reason() {
+  if lead_session_start_ready; then
+    printf 'BLOCKED: work-planning required before consequential discovery or dispatch. Next: Skill(work-planning).'
+    return 0
+  fi
+
+  printf 'BLOCKED: session-start readiness unresolved. Next: Skill(session-boot).'
 }
 
 lead_dispatch_requires_task_execution() {
@@ -965,7 +1191,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     if lead_required_planning_owner_allowed "$TOOL_NAME" "$SKILL_NAME_NORM"; then
       exit 0
     fi
-    deny_tool_use "BLOCKED: work-planning required before consequential discovery or dispatch. Next: Skill(work-planning)."
+    deny_tool_use "$(lead_required_planning_block_reason)"
     exit 0
   fi
   if [[ -f "$WP_MARKER" && ! -f "$TASK_EXECUTION_MARKER" ]] && lead_dispatch_requires_task_execution "$TOOL_NAME"; then
@@ -994,14 +1220,25 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be strict one-line MESSAGE-CLASS: dispatch-ack, scope-pressure, or hold|blocker to team-lead. dispatch-ack may contain only MESSAGE-CLASS, optional TASK-ID, optional WORK-SURFACE, and ACK-STATUS."
+      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be the one-line screen signal 'ack task <id>' when task tracking is active, otherwise 'ack'. Keep MESSAGE-CLASS, WORK-SURFACE, ACK-STATUS, paths, and packet detail in internal carriers. Use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      deny_tool_use "BLOCKED: worker receipt is pending. Send strict dispatch-ack, scope-pressure, or hold|blocker to team-lead before Skill, Read, Bash, discovery, proof, or lane work."
+      deny_tool_use "BLOCKED: worker receipt is pending. Send 'ack task <id>' or 'ack' to team-lead before Skill, Read, Bash, discovery, proof, or lane work; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
-    deny_tool_use "BLOCKED: worker receipt is pending. Send strict dispatch-ack, scope-pressure, or hold|blocker to team-lead before first lane work."
+    deny_tool_use "BLOCKED: worker receipt is pending. Send 'ack task <id>' or 'ack' to team-lead before first lane work; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+    exit 0
+  fi
+  if worker_sendmessage_reopens_closed_task; then
+    deny_tool_use "BLOCKED: closed task already handed off. Same-task replay after handoff/completion must stay silent; team-lead consumes the retained carrier or sends distinct new assignment/reuse/reroute work."
+    exit 0
+  fi
+  if [[ "$TOOL_NAME" == "TaskUpdate" ]]; then
+    if worker_taskupdate_completes_latest_handoff; then
+      exit 0
+    fi
+    deny_tool_use "BLOCKED: worker TaskUpdate is limited to immediate status=completed closure for the same TASK-ID after a valid handoff/completion signal."
     exit 0
   fi
   if completion_grade_sendmessage_missing_sv_result; then
@@ -1012,6 +1249,10 @@ fi
 
 if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   if lead_sendmessage_is_worker_cleanup_control; then
+    exit 0
+  fi
+  if lead_sendmessage_replays_completed_worker_task; then
+    deny_tool_use "BLOCKED: completed task replay. The target worker already handed off this TASK-ID and is STANDBY; consume the retained carrier or send distinct new assignment/reuse/reroute work with a new task basis."
     exit 0
   fi
   if lead_sendmessage_is_monitoring_probe; then

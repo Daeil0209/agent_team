@@ -15,8 +15,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ## Common Completion Result Spine
 This spine names content that the producing lane must provide to team-lead through a retained carrier.
 `handoff` and `completion` are Communication Plane transport, not user reports.
-For team-agent runtime, the screen-rendered `SendMessage` body is a one-line pointer envelope, not the completion spine.
-The one-line envelope carries only `MESSAGE-CLASS`, optional `TASK-ID`, `WORK-SURFACE`, one lane-state field, and `RETAINED-OUTPUT-PATH`.
+For team-agent runtime, the screen-rendered `SendMessage` body is one state signal, not the completion spine.
+The state signal is `handoff task <TASK-ID>` when task tracking is active, otherwise `handoff`.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: handoff` or `MESSAGE-CLASS: completion`:
@@ -38,10 +38,12 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: ha
   - Producer self-review is defect-seeking review, not self-approval.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
-Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the one-line pointer envelope through `SendMessage`.
+Producers sending `handoff` / `completion` write the receiver-required completion payload to the retained carrier and send only the one-line state signal through `SendMessage`.
 Inline completion payload in `SendMessage` is malformed screen-rendered transport.
+After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
+That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the pointer envelope names a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry identifies a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
 
 Lane handoff transports lane-local convergence only and claims no team-lead `SV-RESULT`.
 Team-lead synthesizes only completion-grade handoffs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
@@ -133,7 +135,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 
 ## Common Lane Handoff Law
 - Every agent handoff is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
-- The `SendMessage` body transports only the one-line pointer envelope; lane-local execution truth travels in the retained carrier.
+- The `SendMessage` body transports only the one-line state signal; lane-local execution truth travels in the retained carrier.
 - Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, or retained-output contents in the `SendMessage` body.
 - Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.

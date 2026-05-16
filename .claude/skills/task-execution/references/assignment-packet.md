@@ -72,6 +72,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskUpdate` or `TaskCreate` result has returned before dependent dispatch or task mutation
 - Do not send assignment, reuse, reroute, or expanded packet text to ask an already-completed lane to confirm the same `TASK-ID`, `WORK-SURFACE`, or `RETAINED-OUTPUT-PATH`.
+- This is a lead-side no-send rule; the closed lane must not receive a duplicate packet just to prove it is closed.
 - After completion, same-surface details are consumed from the retained carrier; additional lane work requires distinct new bounded work with distinct task/work-surface basis.
 - receiving lane additions from the agent-specific skill and lane-detail reference
 - target-resolution basis for team runtime: active team name, live process-backed roster, target role, exact member address, tool shape, and resulting truth label (`member-created` for Agent; `assignment-sent` for assignment SendMessage)
@@ -82,7 +83,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`: every material request-bound axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane-specific phase context, user-defined coverage obligations, assigned surfaces, acceptance basis, user-surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities
 - finding counts are retained evidence, not dispatch scope
-- assignment or completion contracts must not request final upward messages with counts, excerpts, file-read totals, execution plans, retained-output contents, or future-action prose; request retained-output completion payload plus the `completion-handoff.md` pointer envelope only.
+- assignment or completion contracts must not request final upward messages with counts, excerpts, file-read totals, execution plans, retained-output contents, or future-action prose; request retained-output completion payload plus the `completion-handoff.md` state signal only.
 - These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:
   - parallel shard dispatches with large shared context use one complete shared retained context plus per-shard packets that carry the required packet floor and point to that context; short means no duplicate large context, not reduced receiver-required basis; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
   - handoff packets

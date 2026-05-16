@@ -12,7 +12,9 @@ Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
-- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: one-line `SendMessage` tool call to `team-lead` with `MESSAGE-CLASS: dispatch-ack`, or `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
+- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: one-line `SendMessage` screen signal `ack task <TASK-ID>` when task tracking is active, otherwise `ack`; use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
+- Completion-grade `handoff` / `completion` closes through the one-line state signal, then immediate `TaskUpdate(status: completed)` for the same assigned task when task tracking is active.
+- After `handoff` or `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
 - This duty is lane-baseline; packet wording does not need to request it.
 - Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later handoff/completion never satisfies receipt.
 - Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.

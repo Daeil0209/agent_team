@@ -71,14 +71,13 @@ Name the visible work shape:
 - single stream, independent streams, sequential streams, or interdependent streams
 
 Interpretation is pre-freeze.
-After the Session Bridge minimal gate is satisfied, open `work-planning` when a consequential boundary exists.
 
 ## Session Bridge
-Fresh consequential instructions follow this canonical order after the Startup Contract and User Surface Gate:
-`session-boot` minimal gate -> `work-planning` -> `task-execution`.
-Open `session-boot` before `work-planning` for the minimal gate. If runtime/recovery/monitoring/lifecycle evidence is absent, the gate records `runtime-ready: clean` internally and opens `work-planning` without runtime-detail consumption or visible prose.
-When boot is incomplete, runtime entry is needed, monitoring is active, or recovery is active, keep `session-boot` open until runtime-ready before `work-planning`, `task-execution`, `Agent`, or assignment-grade `SendMessage`.
-A runtime-blocked session bridge opens recovery or `HOLD`, not `work-planning`.
+Session start loads `session-boot`.
+A current instruction that creates, reopens, or changes a consequential work boundary opens `work-planning`.
+Assignment-grade team work then follows `work-planning` -> `task-execution`.
+If runtime/recovery/monitoring/lifecycle evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
+A runtime-blocked session bridge opens recovery or `HOLD`.
 Route assignment-grade dispatch to `task-execution`.
 Route explicit teardown to `session-closeout`.
 Once `session-closeout` owns the path, report only closeout residual truth.

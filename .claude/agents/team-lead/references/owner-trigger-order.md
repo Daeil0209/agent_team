@@ -37,8 +37,7 @@ Record the highest active trigger and its named artifact:
 Stop before lower-trigger work until a higher trigger emits its named artifact.
 Stop before owner execution credit until loaded owner text has applied-rule mapping.
 Stop before reporting when the required artifact is stale or only described narratively.
-Stop before `work-planning` on a fresh consequential instruction until `session-boot` minimal gate emits `runtime-ready`.
-If the `session-boot` artifact is `runtime-blocked`, open recovery or `HOLD`, not `work-planning`.
+Stop before task work when session-start readiness is unresolved.
 Stop before dispatch when `work-planning` or primary sequence owner is required but missing.
 Stop before lower-trigger tools when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first.
 
@@ -59,7 +58,8 @@ Consume the highest active trigger first:
 7. required `self-verification` report or redispatch gate
 
 ## Named Artifacts
-- `session-boot` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration; only runtime-ready outcomes allow fresh consequential `work-planning`.
+- `session-boot` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
+- A current task instruction opens `work-planning`.
 - `work-planning` emits frozen-fields record.
 - `review-verification` emits `review_verification_packet`.
 - `self-verification` emits `SV-RESULT` or `SV-PLAN`.

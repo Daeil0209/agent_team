@@ -322,10 +322,5 @@ case "$CLOSEOUT_ACTION" in
     ;;
 esac
 
-if [[ -n "$PROMPT_SESSION_ID" ]] && [[ "$CLOSEOUT_ACTION" != "set" ]] && ! is_system_generated_followup_prompt "$USER_PROMPT"; then
-  # A fresh prompt alone is not a planning owner. Priority 0 decides whether a boundary opened.
-  # Keep the routine planning-required marker silent; only exceptional owner cues emit context.
-  mark_lead_planning_required "$PROMPT_SESSION_ID"
-fi
 
 exit 0

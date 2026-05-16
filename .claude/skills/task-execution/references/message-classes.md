@@ -79,8 +79,8 @@ A receiving owner consumes the governed carrier before acting; a screen-visible 
 `dispatch-ack` and `control-ack` are receipt events inside the Communication Plane.
 This contract does not reduce Communication Plane payload capacity.
 Receiver-required execution detail travels through the assignment packet, control packet, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `handoff`, `completion`, or `hold|blocker`, according to the owning message class.
-A receipt event is one line and carries only its routing receipt header: `MESSAGE-CLASS`, `TASK-ID` when assigned, `WORK-SURFACE` when needed to identify the received surface, and one receipt token (`ACK-STATUS` or `CONTROL-STATUS`).
-For `dispatch-ack`, those are the only allowed fields. Any ACK carrying plan text, file path, retained-output path, read count, findings count, completion state, operational note, next-step prose, evidence summary, or future-action language is malformed and does not satisfy receipt.
+A receipt event is one screen-rendered state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
+The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; the screen signal must not expose `MESSAGE-CLASS`, `WORK-SURFACE`, `ACK-STATUS`, paths, field labels, or packet content.
 A receipt event must not duplicate or preview execution detail: no prose explanation, skill-loading narration, file-read plan, output-path plan, methodology note, lane count, route alternative, evidence summary, `starting now`, `will report`, `ping you`, or similar future-action language.
 If receipt exposes an unsafe packet, missing decisive basis, or blocked execution, send the required detail through a separate `scope-pressure` or `hold|blocker` transport.
 Valid `dispatch-ack` makes the lane `ACTIVE` for that assignment execution block.
@@ -90,9 +90,9 @@ The closing classes are `handoff`, `completion`, `scope-pressure`, `hold|blocker
 Closed work reopens only through distinct bounded `assignment`, `reuse`, or `reroute`.
 Same `TASK-ID` / `WORK-SURFACE` / `RETAINED-OUTPUT-PATH` replay is duplicate packet noise; team-lead consumes the retained carrier or sends distinct bounded work.
 After a closing class, the lane stays silent for that closed work.
+Closed-work replay is not a new unsafe receipt; it must not emit `status`, `clarification`, `control-ack`, `hold|blocker`, `handoff`, or `completion`.
 The lane drives its own continuation between intra-block turn boundaries without waiting for another team-lead prompt.
 A valid `dispatch-ack` clears receipt only; it does not prove agent-start, progress, work quality, completion, or acceptance.
-If no agent-start evidence, blocker, scope-pressure, failure, or `HOLD` follows after the receipt segment, the target remains `dispatch-ack-no-start` for `session-boot` recovery.
 Do not emit readiness, context-loaded, awaiting-assignment, skill-loading, file-read plan, retained-output plan, next-action, or progress messages from inside that block.
 
 ### Communication Integrity
@@ -156,7 +156,7 @@ Every class below is Communication Plane transport. The descriptions name when t
 - `handoff` / `completion`
   - completion-grade candidate only
   - requires converged lane-owned work
-  - screen-rendered `SendMessage` body is a one-line pointer envelope only: `MESSAGE-CLASS`, optional `TASK-ID`, `WORK-SURFACE`, one lane-state field, and `RETAINED-OUTPUT-PATH`
+  - screen-rendered `SendMessage` body is one state signal only: `handoff task <TASK-ID>` when task tracking is active, otherwise `handoff`
   - no files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, completion narrative, path-substitution rationale, next-step prose, or retained-output contents in the `SendMessage` body
   - synthesis-ready only when the retained carrier satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
 - `hold|blocker`

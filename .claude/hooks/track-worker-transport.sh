@@ -133,6 +133,34 @@ NESTED_TYPE="$(hook_decode_base64_field "${CONTROL_FIELDS[2]:-}")"
 MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/null || true)"
 MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
 
+STATE_SIGNAL_PARSED="$(DESCRIPTION_TEXT="$DESCRIPTION" node <<'NODE'
+const text = String(process.env.DESCRIPTION_TEXT || "").trim().replace(/\s+/g, " ");
+let klass = "";
+let taskId = "";
+let match = text.match(/^ack(?: task ([A-Za-z0-9._:-]+))?$/i);
+if (match) {
+  klass = "dispatch-ack";
+  taskId = match[1] || "";
+} else {
+  match = text.match(/^(handoff|completion)(?: task ([A-Za-z0-9._:-]+))?$/i);
+  if (match) {
+    klass = match[1].toLowerCase();
+    taskId = match[2] || "";
+  }
+}
+process.stdout.write(`${klass}\n${taskId}`);
+NODE
+)"
+mapfile -t STATE_SIGNAL_FIELDS <<<"$STATE_SIGNAL_PARSED"
+STATE_SIGNAL_CLASS="${STATE_SIGNAL_FIELDS[0]:-}"
+STATE_SIGNAL_TASK_ID="${STATE_SIGNAL_FIELDS[1]:-}"
+if [[ -z "$MESSAGE_CLASS" && -n "$STATE_SIGNAL_CLASS" ]]; then
+  MESSAGE_CLASS="$STATE_SIGNAL_CLASS"
+fi
+if [[ -n "$STATE_SIGNAL_TASK_ID" && -z "$(printf '%s' "$TASK_ID" | tr -d '[:space:]')" ]]; then
+  TASK_ID="$STATE_SIGNAL_TASK_ID"
+fi
+
 SENDER_NAME="$(resolve_runtime_sender_name "$SESSION_ID" "$AGENT_ID" "$AGENT_NAME" "$AGENT_TYPE" "$TEAMMATE_NAME" 2>/dev/null || true)"
 SENDER_IS_WORKER="false"
 if runtime_sender_session_is_worker "$SESSION_ID"; then
@@ -167,6 +195,50 @@ process.exit(1);
 NODE
 }
 
+_update_worker_retained_carrier_locked() {
+  local worker_name="${1:?worker name required}"
+  local task_id="${2-}"
+  local retained_path="${3:?retained path required}"
+  local target_file="$WORKER_RETAINED_CARRIER_MAP"
+  local temp_file=""
+
+  mkdir -p "$(dirname "$target_file")"
+  touch "$target_file"
+  temp_file="$(make_atomic_temp_file "$target_file")"
+  awk -F'|' -v worker="$worker_name" -v task="$task_id" '
+    !($1 == worker && $2 == task) { print $0 }
+  ' "$target_file" > "$temp_file"
+  printf '%s|%s|%s\n' "$worker_name" "$task_id" "$retained_path" >> "$temp_file"
+  atomic_replace_file "$temp_file" "$target_file"
+}
+
+remember_worker_retained_carrier() {
+  local worker_name="${1-}"
+  local task_id="${2-}"
+  local retained_path="${3-}"
+
+  worker_name="$(normalize_lane_id "$worker_name")"
+  task_id="$(printf '%s' "$task_id" | tr -d '[:space:]')"
+  retained_path="$(printf '%s' "$retained_path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  [[ -n "$worker_name" && -n "$retained_path" ]] || return 0
+
+  with_lock_file "$WORKER_RETAINED_CARRIER_MAP_LOCK" _update_worker_retained_carrier_locked "$worker_name" "$task_id" "$retained_path"
+}
+
+lookup_worker_retained_carrier() {
+  local worker_name="${1-}"
+  local task_id="${2-}"
+
+  worker_name="$(normalize_lane_id "$worker_name")"
+  task_id="$(printf '%s' "$task_id" | tr -d '[:space:]')"
+  [[ -n "$worker_name" && -f "$WORKER_RETAINED_CARRIER_MAP" ]] || return 0
+
+  awk -F'|' -v worker="$worker_name" -v task="$task_id" '
+    $1 == worker && $2 == task { value = $3 }
+    END { if (value != "") print value }
+  ' "$WORKER_RETAINED_CARRIER_MAP"
+}
+
 
 
 if [[ "$TOP_TYPE" == "shutdown_response" || "$NESTED_TYPE" == "shutdown_response" ]]; then
@@ -190,6 +262,9 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
   case "$MESSAGE_CLASS" in
     assignment|reuse|reroute)
       if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
+        ASSIGNMENT_TASK_ID="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
+        ASSIGNMENT_RETAINED_OUTPUT_PATH="$(dispatch_field_raw_value "$DESCRIPTION" "RETAINED-OUTPUT-PATH" 2>/dev/null || true)"
+        remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_TASK_ID" "$ASSIGNMENT_RETAINED_OUTPUT_PATH"
         clear_worker_idle_pending "$TARGET_NAME"
         clear_worker_idle_notice "$TARGET_NAME"
         clear_worker_standby "$TARGET_NAME"
@@ -300,6 +375,9 @@ NODE
 }
 
 RETAINED_OUTPUT_PATH_VALUE="$(description_field_value "RETAINED-OUTPUT-PATH")"
+if [[ -z "$(printf '%s' "$RETAINED_OUTPUT_PATH_VALUE" | tr -d '[:space:]')" ]]; then
+  RETAINED_OUTPUT_PATH_VALUE="$(lookup_worker_retained_carrier "$SENDER_NAME" "$TASK_ID")"
+fi
 RETAINED_CARRIER_TEXT=""
 case "$MESSAGE_CLASS" in
   handoff|completion)
@@ -327,6 +405,9 @@ TASK_ID_FROM_MESSAGE="$(field_value "TASK-ID")"
 if [[ -n "$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')" ]]; then
   TASK_ID_FIELD_PRESENT="true"
   TASK_ID="$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')"
+elif [[ -n "$STATE_SIGNAL_TASK_ID" ]]; then
+  TASK_ID_FIELD_PRESENT="true"
+  TASK_ID="$(printf '%s' "$STATE_SIGNAL_TASK_ID" | tr -d '[:space:]')"
 else
   TASK_ID="$(printf '%s' "$TASK_ID" | tr -d '[:space:]')"
 fi

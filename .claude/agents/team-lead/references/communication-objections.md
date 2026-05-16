@@ -30,6 +30,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Agent completion records `STANDBY` immediately and opens retained-carrier synthesis.
 - Same-surface follow-on requires distinct new bounded work through `assignment`, `reuse`, or `reroute`.
 - Duplicate packet replay, already-completed confirmation, and packet expansion after completion do not open `status`, `clarification`, `control-ack`, or repeated completion transport.
+- Team-lead does not send duplicate assignment, reuse, reroute, or expanded packet text to a lane that already handed off the same `TASK-ID`.
 - Use one primary downward message class per agent per segment.
 - Send assignment-grade work and standalone `phase-transition-control` in separate execution segments.
 

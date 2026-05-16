@@ -62,11 +62,12 @@ Triggered references are mandatory before positive route freeze.
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
 ## Activation Trigger
-Fresh consequential instructions enter `work-planning` only after Priority 0 routes through `session-route-bridge` and the `session-boot` minimal gate records `runtime-ready: clean` or runtime-ready.
-If that session-gate artifact is missing, the next owner/action is `session-boot` minimal gate, not `Skill(work-planning)`.
-A runtime-blocked session-gate artifact opens recovery or `HOLD`, not `Skill(work-planning)`.
+`team-lead` loads `work-planning` when the current instruction creates, reopens, or changes a consequential work boundary.
+Session start routes to `session-boot`.
+Answer-only, known-owner status, notification-only, receipt-only, control-only, lifecycle-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
+Active runtime, recovery, monitoring, lifecycle, or unresolved session-start readiness routes to `session-boot`.
 Also load for reopened delegated lane boundary freeze.
-After the session-gate artifact exists, run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
+Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
 Counting evidence is actual `Skill(work-planning)` load plus required freeze.
 Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.

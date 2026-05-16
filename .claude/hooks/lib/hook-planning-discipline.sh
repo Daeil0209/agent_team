@@ -48,8 +48,8 @@ mark_lead_planning_required() {
   local session_id="${1-}"
   [[ -n "$session_id" ]] || return 0
 
-  # A fresh user prompt marks possible planning pressure only.
-  # It must not erase already consumed owner evidence for the same session.
+  # Explicit owner signals mark planning pressure only.
+  # The marker is not a user-prompt classifier.
   # Boundary-changing owners reopen planning by loading work-planning again.
   with_lock_file "$PLANNING_DISCIPLINE_LOCK" _mark_identity_in_file_locked "$LEAD_PLANNING_PENDING_FILE" "$session_id"
 }

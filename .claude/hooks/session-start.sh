@@ -37,6 +37,7 @@ if [ -n "${TMUX:-}" ]; then
 fi
 
 REPO_ROOT="$(resolve_project_root)"
+SESSION_START_RUNTIME_SNAPSHOT_PRESENT=0
 
 describe_team_runtime_snapshot() {
   local config_file=""
@@ -67,6 +68,7 @@ describe_team_runtime_snapshot() {
   fi
 
   if [[ -n "$live_config" ]]; then
+    SESSION_START_RUNTIME_SNAPSHOT_PRESENT=1
     printf '%s\n' "$snapshot_label"
     return 0
   fi
@@ -80,6 +82,10 @@ if runtime_sender_session_is_worker "$SESSION_ID" || is_worker_session; then
 else
   reset_startup_volatile_state
   describe_team_runtime_snapshot
+  if [[ "$SESSION_START_RUNTIME_SNAPSHOT_PRESENT" == "0" ]]; then
+    mark_procedure_startup_ready "$SESSION_ID"
+    printf '%s | boot-complete | clean-session-start\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
+  fi
 fi
 
 # --- Refresh Name Registry ---

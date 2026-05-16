@@ -41,9 +41,11 @@ Session boot is loaded after the Startup Contract's first User Surface Gate appl
 Before any boot, resume, or monitoring prose, preserve and apply that already-active gate.
 Do not re-consume or narrate `.claude/reference/user-reporting-law.md` during clean startup.
 If the gate was not applied before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
-For fresh consequential instructions, run the minimal session gate before `work-planning`; the canonical order is `session-boot` minimal gate -> `work-planning` -> `task-execution`.
+Session start loads `session-boot`.
+A current task instruction loads `work-planning`.
 The minimal gate checks only whether runtime, recovery, monitoring, lifecycle, compaction, or dispatch-state evidence is material to the next action.
-When none is material, record `runtime-ready: clean` internally and open `work-planning`; do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.
+When none is material, record `runtime-ready: clean` internally.
+Do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.
 Run `Session-Start Sequence` as the baseline.
 Run `Boot Sequence` when boot is incomplete.
 Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, lifecycle interpretation, or runtime recovery is required.

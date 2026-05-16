@@ -56,10 +56,10 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 
 ## Priority 2: Required Procedure
 ### RPA-1. Instruction Interpretation
-- Fresh consequential instruction consumes `.claude/agents/team-lead/references/session-route-bridge.md`.
+- Fresh instruction consumes `.claude/agents/team-lead/references/session-route-bridge.md`.
 - Interpretation is pre-freeze.
-- Fresh consequential boundary opens `session-boot` minimal gate before `work-planning`.
-- `work-planning` opens only after the session bridge has `runtime-ready: clean` or runtime-ready.
+- `team-lead` opens `work-planning` when the current instruction creates, reopens, or changes a consequential work boundary.
+- Session start opens `session-boot`; active runtime, recovery, monitoring, lifecycle, or unresolved session-start readiness reopens `session-boot`.
 - A runtime-blocked session bridge opens recovery or `HOLD`, not `work-planning`.
 
 ### RPA-2. Owner Trigger Order

@@ -110,8 +110,8 @@
 - Unconsumed trigger-bound reference is a completion blocker.
 
 ## Control Sequences
-- Fresh consequential execution starts with `session-boot` minimal runtime-readiness before `work-planning`.
-- Only `runtime-ready` or `runtime-ready: clean` opens fresh consequential `work-planning`; runtime-blocked opens recovery or `HOLD`.
+- Session start loads `session-boot`.
+- A current task instruction loads `work-planning`.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
