@@ -90,7 +90,9 @@ Own the actual execution move:
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
 - run the task-state and packet final check before sending
-- confirm retained-output carrier before assigning bulky audit, evidence-pack, inventory, or report output
+- reject any planned `TaskCreate` lacking top-level non-empty `subject` and `description` before the tool call
+- reject any planned pre-completion `TaskUpdate`, `owner`, `assignee`, or `in_progress` task-row mutation before the tool call
+- confirm retained-output carriers with silent success commands; failed checks surface only through the owning blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - carry required methodology or capability skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
 - treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not passive method text

@@ -44,7 +44,7 @@ Inline completion payload or report text in the `SendMessage` message/body slots
 After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry identifies a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
 
 Lane completion transports lane-local convergence only and claims no team-lead `SV-RESULT`.
 Team-lead synthesizes only completion-grade lane outputs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.

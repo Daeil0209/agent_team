@@ -695,6 +695,43 @@ NODE
   [[ "$update_status" == "completed" ]]
 }
 
+taskupdate_is_completion_closure_payload() {
+  [[ "$TOOL_NAME" == "TaskUpdate" ]] || return 1
+
+  local parsed=""
+  local update_status=""
+  local mutation_marker=""
+
+  parsed="$(INPUT_JSON="$INPUT" node <<'NODE'
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const toolInput = input.tool_input || {};
+  const status = String(toolInput.status || toolInput.state || "").trim().toLowerCase();
+  const mutationKeys = [
+    "owner", "assignee", "assigned_to", "assignedTo",
+    "subject", "description", "activeForm", "metadata",
+    "blocks", "blockedBy", "addBlocks", "addBlockedBy"
+  ];
+  const hasMutation = mutationKeys.some((key) => {
+    const value = toolInput[key];
+    if (Array.isArray(value)) return value.length > 0;
+    if (value && typeof value === "object") return Object.keys(value).length > 0;
+    return String(value || "").trim();
+  });
+  process.stdout.write([status, hasMutation ? "mutation" : ""].join("\n"));
+} catch {
+  process.stdout.write("\nmutation");
+}
+NODE
+)"
+  mapfile -t _taskupdate_closure_fields <<<"$parsed"
+  update_status="${_taskupdate_closure_fields[0]:-}"
+  mutation_marker="${_taskupdate_closure_fields[1]:-}"
+
+  [[ "$update_status" == "completed" ]] || return 1
+  [[ -z "$mutation_marker" ]]
+}
+
 latest_worker_permission_request_timestamp_for_gate() {
   local worker_name="${1-}"
 
@@ -1290,6 +1327,11 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
     deny_tool_use "BLOCKED: team-scoped Agent required before dispatch attempt. Detail: planned team-agent dispatch must include BOTH top-level team_name and name; standalone Agent is fallback evidence only, not a valid planned dispatch. Next: use TeamCreate when no team exists, otherwise retry Agent with team_name and concrete member name."
     exit 0
   fi
+fi
+
+if [[ "$TOOL_NAME" == "TaskUpdate" ]] && ! taskupdate_is_completion_closure_payload; then
+  deny_tool_use "BLOCKED: TaskUpdate is completion-closure only. Use status=completed for the exact completed task; do not set owner, assignee, in_progress, subject, description, metadata, or block fields."
+  exit 0
 fi
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && ! session_id_is_known_worker "$SESSION_ID"; then

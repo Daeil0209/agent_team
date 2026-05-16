@@ -69,7 +69,7 @@ Stop before mutation until `[GOV-MIN]` is applied.
 - A stopped mutation route opens `[GOV-MIN]` inspection.
 
 ## Same-Segment Reuse
-- A gate remains current while `WORK`, `INTENT`, `OWNER`, `REFERENCE`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, and `UNCERTAINTY` remain true.
+- A gate remains current while `WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, and `UNCERTAINTY` remain true.
 - Evidence-gathering tool calls inside a current gate use the current gate.
 - Dispatch, mutation, reporting, owner change, route change, or uncertainty change reopens this gate.
 
@@ -93,11 +93,13 @@ Consume the named owner artifact as owner execution evidence.
 
 ### REFERENCE
 Name every always-loaded owner document and trigger-bound reference required by `CLAUDE.md`, this role, the active skill, or the receiving lane.
-Map each loaded document's active rules to action, stop, evidence, owner, or next-action effect.
 Consume each required reference before execution, handoff, synthesis, or report.
 If a reference is unavailable, return `HOLD` or reopen the smallest owner that can correct the path.
 
-### REPORT
+### APPLIED-RULE-MAPPING
+Map each loaded document's active rules to action, stop, evidence, owner, or next-action effect.
+
+### REPORT-ADMISSION
 Apply `.claude/reference/user-reporting-law.md` to classify Reporting Plane admission.
 Allowed admitted reasons are owned by `.claude/reference/user-reporting-law.md`.
 If no admitted user report exists, keep the turn internal.

@@ -63,7 +63,7 @@ Read only fields consumed by the current next owner/action, in this relative ord
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Stale `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
-- Missing tier basis reopens `work-planning` per `Skill(governance-scaling)`.
+- Missing tier basis reopens `work-planning` per `references/governance-depth.md`.
 - Contradictory tier basis reopens `work-planning`.
 - Stale tier basis reopens `work-planning`.
 - Weaker-than-floor tier basis reopens `work-planning`.

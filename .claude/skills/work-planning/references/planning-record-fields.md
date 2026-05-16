@@ -10,7 +10,7 @@ Use this file when field-level semantics, allowed values, the internal planning 
 Field floors are route-relevant, not universal ceremony.
 Do not require a field that no current owner, workflow, sequence, dispatch path, or report gate consumes.
 
-`PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, and `TIER-RAISE-REASON` field semantics are produced by `Skill(governance-scaling)` and consumed here.
+`PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, and `TIER-RAISE-REASON` field semantics are produced by `references/governance-depth.md` and consumed here.
 
 ## Contents
 - Allowed Values

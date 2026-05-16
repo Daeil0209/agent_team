@@ -1,12 +1,15 @@
 ---
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/governance-scaling/SKILL.md
+SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
-# Reference Material
+# work-planning: Governance Depth
+## Consume When
+Use this reference when `work-planning` must freeze governance depth because project tier is unset, the current request changes lane count, proof depth, acceptance owner, workflow phase, external-tool authority, security/safety risk, or the user reports over-governance or under-governance.
+
 ## Detection Heuristics Table
 These signals indicate a likely tier. They inform `team-lead` judgment. Project-tier authority comes from the frozen project floor. Project-level governance parameters apply after the project floor is frozen and consumed explicitly. Per-request handling raises autonomously when direct risk signals require a stricter task tier.
 | Signal | Likely Tier |
@@ -41,7 +44,7 @@ Rules:
 | **Review scope** | Code quality | + architecture consistency | + security (`security-review`) + infrastructure |
 | **Testing requirements** | Basic verification | Structured testing | E2E + security + performance |
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
-| **Default team size** | 1–2 agents | 2–3 agents | Precision 5-lane deployment |
+| **Default team size** | 1-2 agents | 2-4 agents | Precision 5-lane deployment |
 | **Design options** | Conditional | Default | Required (3 architecture options) |
 | **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
 | **Gap analysis** | Conditional | Default | Required before acceptance |
@@ -52,7 +55,7 @@ Acceptance-depth semantics: the table sizes default review and proof evidence de
 ## Quality Metrics Table
 | Metric | Description | Use |
 |---|---|---|
-| **Design-implementation match score** | How well does the code match the design doc? (0–100 per file or component) | Feed into team-lead's decision to iterate, escalate, or proceed to acceptance |
+| **Design-implementation match score** | How well does the code match the design doc? (0-100 per file or component) | Feed into team-lead's decision to iterate, escalate, or proceed to acceptance |
 | **Coverage indicator** | Percentage of design requirements with corresponding implementation | Identify unimplemented surfaces before routing to acceptance chain |
 ### Governance Trust Score (Input Signal)
 A composite score gives team-lead a quantitative view of project quality trends. This is an INPUT SIGNAL. Tier and approval-gate changes require owner judgment and direct evidence.
@@ -80,5 +83,5 @@ A composite score gives team-lead a quantitative view of project quality trends.
 - If score and direct evidence disagree, direct evidence wins
 
 ## Resolve Next Owner And Action
-- Return governance tier signals, scoring trend, direct-evidence conflicts, and oversight recommendations to the active governance-scaling workflow.
+- Return governance tier signals, scoring trend, direct-evidence conflicts, and oversight recommendations to the active `work-planning` path.
 - If scaling changes phase gates, checkpoint frequency, lane use, or review depth, reopen the owning planning path before execution continues.

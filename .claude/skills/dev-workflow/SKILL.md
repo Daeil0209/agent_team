@@ -30,10 +30,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the current owner transfers control here.
 Activation requires the frozen workflow route.
 
-Activation requires evaluated configured independent-review trigger handling.
+Activation requires configured independent-review handling for plan, design, and material review stages.
 The current configured implementation is Codex MCP through `.claude/skills/work-planning/references/codex-independent-review.md`.
 `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for trigger handling, adjudication, or fail-open truth; it does not grant external-review authority.
-`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>`.
+`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` under the skip rule in `.claude/skills/work-planning/references/codex-independent-review.md`.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 

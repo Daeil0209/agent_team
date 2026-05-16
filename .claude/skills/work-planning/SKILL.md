@@ -56,6 +56,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
 - `references/execution-readiness.md`: packet, proof, setup, cleanup, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
+- `references/governance-depth.md`: project/request tier classification, governance-depth fields, and scaling guardrails.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
 - `references/codex-independent-review.md`: configured independent-review trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
 
@@ -160,7 +161,7 @@ Always freeze:
 - `DISPATCH-BLOCKERS`
 
 Freeze when material:
-- governance depth: `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, `TIER-RAISE-REASON`
+- governance depth from `references/governance-depth.md`: `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, `TIER-RAISE-REASON`
 - workflow/sequence: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`
 - analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`

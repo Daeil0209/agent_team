@@ -9,7 +9,7 @@ auto-inject: false
 This reference owns the currently configured independent-review tool path.
 Codex MCP is the current tool adapter, not doctrine authority.
 When this reference requires an available configured reviewer, the active tool is `mcp__codex__codex`.
-Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs required or risk-triggered independent critique.
+Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs planning, design, material review, or risk-triggered independent critique.
 Pre-`work-planning` external review output is not planning evidence.
 
 ## Contents
@@ -22,12 +22,14 @@ Pre-`work-planning` external review output is not planning evidence.
 - Resolve Next Owner And Action
 
 ## Trigger
-Required trigger evaluation:
-- `ACTIVE-WORKFLOW: dev-workflow` requires team-lead to evaluate whether configured independent review is material.
-- No material independent-review trigger records `skipped:no-material-independent-review-trigger:<basis>`.
+Required triggers:
+- `ACTIVE-WORKFLOW: dev-workflow` opens configured independent-review handling for Phase 1 planning, Phase 2 design, and material Phase 4/5 reviewer-owned review surfaces.
+- Planning route freeze uses this reference.
+- Design convergence uses `.claude/skills/dev-workflow/references/artifact-convergence-review.md`.
+- Review convergence uses `.claude/skills/dev-workflow/references/review-convergence-review.md`.
 - Codex MCP access failure records `fail-open:*`.
 
-Risk-triggered:
+Risk-triggered outside those dev-workflow stages:
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
 - lead-local can substitute for a configured lane
 - planning target is `team-dispatch-readiness-plan`
@@ -36,7 +38,7 @@ Risk-triggered:
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or owner-evidence route
 
 Skip only for light, receipt/status/cleanup/clarification-only, or no-trigger consequential work.
-For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-independent-review-trigger:<basis>` after evaluating this section.
+For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only when no planning, design, material review, risk, route, or workflow boundary is being frozen, revised, or used for advancement.
 Codex MCP tool, auth, quota, timeout, parse, or config failure records `fail-open:*`.
 
 ## Authority

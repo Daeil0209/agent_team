@@ -18,7 +18,7 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 ## Screen Boundary
 Lane `completion` transports are not user reports even when Claude Code renders them on screen.
 Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
-Arrival opens retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
+Arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
 If no admitted user report exists after a lane transport, team-lead emits no pane/final prose.
 
 ## All-Required-Output Barrier
@@ -35,6 +35,7 @@ A required output closes only through one of:
 - user-cancel or user-redirect
 Partial arrivals are synthesis queue events.
 Partial arrivals open internal merge work, not report text.
+Retained-carrier presence, size, and block checks during this barrier use silent success commands; do not emit line counts, byte counts, path echoes, present/verified labels, waiting prose, or idle prose.
 Explicit user status questions during this barrier answer only the user-relevant waiting condition.
 The status answer omits shard identities, counts, findings, evidence detail, retained paths, and per-agent narratives.
 Internal materials enter the status answer only on specific user request.
@@ -52,8 +53,8 @@ Record:
 - applicable per-claim basis when synthesis emits findings, patterns, rankings, defect labels, patch recommendations, or redispatch basis
 
 ## Verification Gate
-Before any user-facing synthesis, completion claim, phase-result, or synthesis-triggered redispatch, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` Steps 0-5 on the exact synthesized claim.
-Team-lead records the internal `SELF-VERIFICATION:` block on that claim.
+Before team-lead reports a synthesized analysis result, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` on that exact analysis result.
+The gate remains open without current `SV-RESULT` evidence from that loaded skill run.
 Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification when available.
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
 Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.

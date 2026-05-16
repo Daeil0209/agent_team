@@ -7,7 +7,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 
 # task-execution: Lane-Specific Additions
-## Common Agent-Specific Skill Preconditions
+## Common Lane-Core Preconditions
 Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
