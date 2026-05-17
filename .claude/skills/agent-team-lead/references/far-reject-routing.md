@@ -1,11 +1,11 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "RPA-4 FAR FINAL-REJECT correction routing; Reference Binding; Procedure And Ownership"
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
+SOURCE-RULES: "RPA-4 Final Acceptance Review (FAR) FINAL-REJECT correction routing; Reference Binding; Procedure And Ownership"
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
-# team-lead: FAR FINAL-REJECT Correction Routing
+# team-lead: Final Acceptance Review (FAR) FINAL-REJECT Correction Routing
 
 ## Purpose
 Route correction after `FINAL-REJECT` without turning validator evidence into team-lead implementation judgment.
@@ -32,7 +32,7 @@ Stop before correction dispatch when:
   - route
   - proof chain
   - acceptance chain
-Stop before the next FAR until the assigned owner consumes correction evidence.
+Stop before the next Final Acceptance Review (FAR) until the assigned owner consumes correction evidence.
 
 ## Resolve Next Owner And Action
 - A missing correction packet opens validator correction-packet retrieval.
@@ -42,7 +42,7 @@ Stop before the next FAR until the assigned owner consumes correction evidence.
   - changed-route route
   - changed-proof-chain route
   - changed-acceptance-chain route
-- A stopped next-FAR route opens assigned-owner correction-evidence consumption.
+- A stopped route to the next Final Acceptance Review (FAR) opens assigned-owner correction-evidence consumption.
 
 ## Routing Rules
 - Design-level root cause routes to the active workflow design-correction phase.
@@ -60,4 +60,4 @@ Stop before the next FAR until the assigned owner consumes correction evidence.
 - Team-lead classification is route basis.
 - Route final acceptance to validator.
 - Correction dispatch carries the validator-authored correction packet.
-- The next FAR consumes the correction result and the prior `FINAL-REJECT` identity.
+- The next Final Acceptance Review (FAR) consumes the correction result and the prior `FINAL-REJECT` identity.

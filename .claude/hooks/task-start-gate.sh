@@ -1197,13 +1197,13 @@ lead_preplanning_reference_allowed() {
     *"/.claude/reference/user-reporting-law.md"*|*".claude/reference/user-reporting-law.md"*|*"reference/user-reporting-law.md"*)
       return 0
       ;;
-    *"/.claude/agents/team-lead/references/pre-action-gate.md"*|*".claude/agents/team-lead/references/pre-action-gate.md"*|*"agents/team-lead/references/pre-action-gate.md"*)
+    *"/.claude/skills/agent-team-lead/references/pre-action-gate.md"*|*".claude/skills/agent-team-lead/references/pre-action-gate.md"*|*"skills/agent-team-lead/references/pre-action-gate.md"*)
       return 0
       ;;
-    *"/.claude/agents/team-lead/references/owner-trigger-order.md"*|*".claude/agents/team-lead/references/owner-trigger-order.md"*|*"agents/team-lead/references/owner-trigger-order.md"*)
+    *"/.claude/skills/agent-team-lead/references/owner-trigger-order.md"*|*".claude/skills/agent-team-lead/references/owner-trigger-order.md"*|*"skills/agent-team-lead/references/owner-trigger-order.md"*)
       return 0
       ;;
-    *"/.claude/agents/team-lead/references/session-route-bridge.md"*|*".claude/agents/team-lead/references/session-route-bridge.md"*|*"agents/team-lead/references/session-route-bridge.md"*)
+    *"/.claude/skills/agent-team-lead/references/session-route-bridge.md"*|*".claude/skills/agent-team-lead/references/session-route-bridge.md"*|*"skills/agent-team-lead/references/session-route-bridge.md"*)
       return 0
       ;;
     *)
@@ -1224,6 +1224,9 @@ lead_required_planning_owner_allowed() {
       return 1
       ;;
     Skill)
+      if [[ "$skill_name" == *agent-team-lead* ]] && lead_session_start_ready; then
+        return 0
+      fi
       if [[ "$skill_name" == *session-boot* ]]; then
         return 0
       fi

@@ -81,13 +81,13 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Do not weaken active governance rules into lower-force labels.
 - If an active governance rule is unclear, route to the owning correction path instead of ignoring it.
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
-- Governance rules must be actionable.
-- Actionable rules name owner when owner is material.
-- Actionable rules name trigger when trigger is material.
-- Actionable rules name stop when stop is material.
-- Actionable rules name evidence when evidence is material.
-- Actionable rules name verification when verification is material.
-- Actionable rules name acceptance truth when acceptance truth is material.
+- Governance rules must be executable.
+- Executable rules name owner when owner is material.
+- Executable rules name trigger when trigger is material.
+- Executable rules name stop when stop is material.
+- Executable rules name evidence when evidence is material.
+- Executable rules name verification when verification is material.
+- Executable rules name acceptance truth when acceptance truth is material.
 - Procedure outranks habit.
 - Procedure outranks convenience.
 - Procedure outranks source memory.
@@ -134,12 +134,12 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Lawful independent work continues while the affected path is corrected.
 
 ## Owner Separation
-- `team-lead` supervises intake.
-- `team-lead` supervises route.
-- `team-lead` supervises orchestration.
-- `team-lead` supervises synthesis.
-- `team-lead` supervises closeout.
-- `team-lead` supervises user communication.
+- `team-lead` owns intake.
+- `team-lead` owns route.
+- `team-lead` owns orchestration.
+- `team-lead` owns synthesis.
+- `team-lead` owns closeout.
+- `team-lead` owns user communication.
 - `researcher` owns evidence gathering.
 - `researcher` owns investigation.
 - `developer` owns bounded production.

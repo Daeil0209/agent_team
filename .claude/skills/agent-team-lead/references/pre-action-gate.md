@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "Priority 0: Pre-Action Gate; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Pre-Action Gate
@@ -82,7 +82,7 @@ Name `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 
 ### INTENT
 Classify the channel as light or consequential.
-Light channels stay answer-only, SV-only audit, or notification-only carry-forward.
+Light channels stay `answer-only`, `SV-only audit`, or `notification-only carry-forward` under `.claude/CLAUDE.md` `## Channel And Procedure`.
 Consequential channels open the owning procedure.
 
 ### OWNER

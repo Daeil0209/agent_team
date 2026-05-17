@@ -35,19 +35,12 @@ Future plans are design-class.
 Design-class examples include development stages, review milestones, persuasion structure, expected effects, and market projections.
 The business packet tags each claim class before downstream generation.
 
-## Proposal Generation State Machine
-For document generation pipeline architecture, use `.claude/skills/document-automation/references/document-generation-detail.md`.
+## Proposal Business-Rule Checkpoints
+For proposal document generation order, use `.claude/skills/document-automation/references/proposal-plan-grant.md` `Proposal/Plan/Grant`.
 For generator architecture, use `.claude/skills/software-architecture/references/architecture-extensions.md` `Constraint-Satisfaction Document Generator Architecture Extension`.
-business-workflow owns the business rules and state machine for the proposal domain.
-Proposal generation follows this dependency chain:
-1. Announcement interpretation.
-2. Benchmark analysis.
-3. Organization background capture.
-4. Strategy axis determination.
-5. Narrative structure design.
-6. Draft generation.
-7. Visualization integration.
-8. Compression.
+business-workflow owns proposal business rules, requirement decomposition, evaluator-intent estimate, organizational strategy parameters, fact-vs-design claim labels, and narrative dependency constraints consumed by document generation.
+Proposal business-rule checkpoints are announcement or RFP decomposition, evaluator-intent estimate, benchmark relevance basis, organizational strategy capture, strategy axis determination, fact-vs-design tagging, and narrative dependency basis.
+These checkpoints gate generation while document-automation remains the proposal document generation-order owner.
 The narrative dependency chain is `problem -> goal -> method -> effect`.
 Each narrative stage must logically necessitate the next.
 
@@ -59,5 +52,5 @@ Future certainty must not be written as past accomplishment.
 
 ## Resolve Next Owner And Action
 - Complete proposal rule packet opens document-automation for proposal generation.
-- Missing announcement decomposition opens business-workflow packet correction.
+- Missing required proposal business-rule checkpoint opens business-workflow packet correction.
 - Missing fact-class evidence downgrades the claim or opens researcher evidence work.

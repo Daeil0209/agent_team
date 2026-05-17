@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-7 User Reporting; .claude/reference/user-reporting-law.md; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Output Surface Law
@@ -50,7 +50,7 @@ Pick exactly one output surface from:
 ## Stop
 Pre-report suppression is owned by `.claude/reference/user-reporting-law.md`; this surface does not restate it.
 Additional team-lead-specific stops:
-Stop before `FINAL` when residual deliverable convergence remains open under `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
+Stop before `FINAL` when residual deliverable convergence remains open under `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
 Stop before `verified result` when `SV-RESULT` is:
 - missing
 - stale
@@ -76,7 +76,7 @@ Current `SV-RESULT` is required before reporting analyzed, evaluated, or synthes
 
 ## FINAL
 `FINAL` is a staging label only after `.claude/reference/user-reporting-law.md` admits a verified result or closeout residual.
-Residual queue status comes from `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active synthesis, acceptance, or proof owner.
+Residual queue status comes from `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active synthesis, acceptance, or proof owner.
 Report admissibility, content shape, and evidence inclusion stay with `.claude/reference/user-reporting-law.md`.
 
 ## Reporting Law Boundary

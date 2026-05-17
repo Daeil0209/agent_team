@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-1 Instruction Interpretation; RPA-3 Session And Route Bridge; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Session And Route Bridge
@@ -21,7 +21,7 @@ Reporting curtain inheritance:
 - Boot, monitoring, recovery, or teardown can be active.
 - A route can be lead-local, team-routed, workflow-owned, or sequence-owned.
 - A frozen `NEXT-CONSEQUENTIAL-ACTION` must be consumed.
-- FAR `FINAL-REJECT` requires correction routing.
+- Final Acceptance Review (FAR) `FINAL-REJECT` requires correction routing.
 
 ## Required Output
 Record:
@@ -40,7 +40,7 @@ Record:
 Stop before dispatch until required boot/runtime-entry is complete.
 Stop before local execution when `work-planning` boundary is missing, stale, contradictory, or changed.
 Stop before team dispatch when task-execution packet preflight is missing.
-Stop before correction dispatch after FAR `FINAL-REJECT` until the assigned-validator correction packet is consumed.
+Stop before correction dispatch after Final Acceptance Review (FAR) `FINAL-REJECT` until the assigned-validator correction packet is consumed.
 Stop before route execution when:
 - loaded owner documents lack applied-rule mapping
 - governance, analysis, critique, review, validation, or patch work lacks `SEMANTIC-INTENT-BASIS` or contradicts the user correction, team-operation philosophy, or target governance/design intent
@@ -83,13 +83,13 @@ Route explicit teardown to `Skill(session-closeout)`.
 Once `session-closeout` owns the path, report only closeout residual truth.
 
 ## Planning Consume Bridge
-Consume frozen planning fields through `.claude/agents/team-lead/references/planning-field-consume.md`.
+Consume frozen planning fields through `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
 Open or change phase/work-surface boundaries through `work-planning`.
 Consume `NEXT-CONSEQUENTIAL-ACTION` before local execution, dispatch, phase movement, or reporting.
 Classify repeated same-class blocking gaps as root-cause route evidence.
 
 ## Lead-Local Bridge
-Lead-local candidate work consumes `.claude/agents/team-lead/references/lead-local-guarded-law.md`.
+Lead-local candidate work consumes `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md`.
 Lead-local route execution follows that reference's direct work conditions, break conditions, and next-owner routing.
 
 ## Team-Routed Bridge
@@ -98,8 +98,8 @@ Task-execution translates the frozen route into assignment-grade packets.
 Send teammate-required lead facts through packet fields, task state, workflow state, or cited artifacts.
 Team runtime details use `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
-## FAR FINAL-REJECT Bridge
-FAR `FINAL-REJECT` opens `far-reject-routing` classification first; enter `task-execution` only for bounded correction dispatch after team-lead route classification.
+## Final Acceptance Review (FAR) FINAL-REJECT Bridge
+Final Acceptance Review (FAR) `FINAL-REJECT` opens `far-reject-routing` classification first; enter `task-execution` only for bounded correction dispatch after team-lead route classification.
 Validator correction packet is correction basis.
 Team-lead classification chooses design, implementation/operator-delivery, or replanning route.
-Detailed routing lives in `.claude/agents/team-lead/references/far-reject-routing.md`.
+Detailed routing lives in `.claude/skills/agent-team-lead/references/far-reject-routing.md`.

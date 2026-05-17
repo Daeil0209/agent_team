@@ -13,16 +13,13 @@
 ### 1. Procedure And Ownership
 - `[RULE-FORCE]` Rules must be executable.
 - `material` means an axis, fact, or trigger that changes what the active owner must do next.
-- Executable rules name the material owner.
-- Executable rules name the material trigger.
-- Executable rules name the material stop.
-- Executable rules name the material evidence.
+- Executable rules name every material owner, trigger, stop, evidence, verification, and acceptance-truth requirement.
 - `[AUTO-PROC]` Consequential work stays inside the named procedure.
 - Consequential work keeps one truthful next owner.
 - Consequential work keeps one truthful next action.
 - Process states are nonterminal evidence.
 - Completion requires verified result.
-- `HOLD` requires owner and blocker.
+- `HOLD` requires owner, blocker, and next safe evidence step.
 - Missing next owner reopens the last valid owner.
 - Missing next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit.
@@ -89,10 +86,7 @@
 - Conflict order 5 is staffing/output smoothness.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
-- `team-lead` owns orchestration.
-- `team-lead` owns synthesis.
-- `team-lead` owns closeout.
-- `team-lead` owns user communication.
+- `team-lead` owns intake, route, orchestration, synthesis, closeout, and user communication.
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
@@ -122,6 +116,7 @@
 
 ## Channel And Procedure
 - Light channels are `answer-only`, `SV-only audit`, and `notification-only carry-forward`.
+- `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, report permission, and claim strength.
 - Consequential channels are `bounded local consequential work` and `team-routed complex work`.
 - Discovery, route shaping, dispatch, mutation, artifact judgment, or stronger claim leaves light/control.
 - Boundary-change axes reopen `work-planning`.
@@ -135,7 +130,8 @@
 - Skill load means `Skill(<skill>)`.
 - Direct inspection of `.claude/skills/<skill>/SKILL.md` is not skill load.
 - Agent role names are not skill names.
-- Agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
+- Lane agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
+- Team-lead procedure skill uses `agent-team-lead` and loads before team-lead consumes its skill-owned procedure references.
 - Non-role methodology or capability skills travel as `REQUIRED-SKILLS` when required.
 - Methodology instructions travel as `SKILL-RECOMMENDATIONS` when advisory.
 - Missing required skill consumption is a defect.
@@ -188,14 +184,13 @@
 - Preserve files through non-destructive mutation paths.
 - Protect secrets from exposure.
 - Source/governance edits stay on owner files.
-- Runtime state is runtime-owned.
+- Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
 - Report prose rules as context-bound operating rules.
 - Report technical enforcement only from runtime or settings evidence.
 - Treat external MCP and review tools as capabilities.
 - Fetch deferred-tool schemas via `ToolSearch` before first call; the harness lists deferred tools in session-start system reminders.
 - Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
 - Teammate work uses independent Claude Code session context and task-specific packets.
-- Team runtime state is Claude Code-owned and stays out of project governance documents.
 
 ## Self-Growth
 - Sequence Arbitration Law governs self-growth routing.

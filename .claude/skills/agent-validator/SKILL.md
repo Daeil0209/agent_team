@@ -166,22 +166,14 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the validator completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 8. Completion
-- Send consequential upward results to `team-lead` via `SendMessage`.
-- Continuity surfaces require their owning channel.
-- Use common completion-grade evidence fields from the active task-execution completion contract.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before validator-specific completion additions below.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
-- Global route, proof gathering, review closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
-- A normal next-lane/action candidate is lawful verdict truth.
-- A change to frozen owner map, phase, deliverable shape, staffing shape, proof surface, or acceptance chain is not ordinary completion.
-- Use `scope-pressure` or `hold|blocker` for that change.
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.
 - `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.
 - Keep every validator-specific status axis explicit.
 - Use `not-applicable` instead of omission only when that axis was not part of the frozen validation surface.
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/validator-lane-detail.md` for validator-specific completion detail.
 
 ## Blocked Validation
@@ -199,7 +191,7 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Include exact missing fields, blocker basis, and safe next step.
 
 ## Active Communication Protocol
-- Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
+- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Validator-specific blocker: missing validation basis, blocked verdict basis, or missing decisive evidence.
 - Inference requires explicit marking and safe decisive basis.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked verdict.

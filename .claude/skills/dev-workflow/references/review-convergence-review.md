@@ -151,7 +151,7 @@ It does not preserve prior reviewer, Codex, or reconciliation output as current-
 Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record
-Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record (artifact path/phase, Codex MCP review state, accepted/rejected/deferred point counts, fallback basis, downstream/stale status, next owner/action). Review-convergence additions:
+Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record. Review-convergence additions:
 - review target identity and Claude reviewer state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
 

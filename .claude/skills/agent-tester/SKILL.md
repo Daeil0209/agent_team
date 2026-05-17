@@ -148,20 +148,13 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the tester completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 7. Completion
-- Send consequential upward results to `team-lead` via `SendMessage`.
-- Continuity surfaces require their owning channel.
-- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before tester-specific completion additions below.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
-- Global route, defect classification, validation closure, and staffing-shape changes use `scope-pressure` or `hold|blocker`.
-- If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep tester-specific proof-match and run-path status fields explicit and truthful.
 - Use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 - `matched` is reserved for real contract alignment on that surface.
 - Report whether each material design intent in the assigned proof surface was directly proven, disproven, blocked, or out-of-scope by dispatch.
 - When the proof claims an executed user surface, keep the proof method explicit. Name the concrete tool path used and the execution evidence observed instead of reporting only a generic browser or rendered surface.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/tester-lane-detail.md` for tester-specific completion detail.
 
 ## Proof Classification
@@ -171,7 +164,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - `Disproof`: executed check, failing behavior observed.
 
 ## Active Communication Protocol
-- Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
+- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Tester-specific blocker: blocked proof path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked proof.
 - Completion uses `completion` only for converged tester-owned proof.

@@ -46,7 +46,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Same-artifact revision loops stay with the active workflow owner when all boundaries stay unchanged.
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `SV-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
-- `notification-only carry-forward` stays outside planning unless it assigns, reopens, or changes consequential work.
+- `notification-only carry-forward` uses `.claude/CLAUDE.md` `## Channel And Procedure` definition and stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
   - receipt-only messages
   - cleanup-only messages

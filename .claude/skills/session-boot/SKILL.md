@@ -33,14 +33,14 @@ Runtime-detail load decision:
 4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 
 Runtime-detail consumption stays inside the Procedure Plane.
-It never weakens the already-active User Surface Gate and never admits boot, monitoring, route, or runtime prose.
+It never weakens `.claude/reference/user-reporting-law.md` report admissibility and never admits boot, monitoring, route, or runtime prose.
 
 ## Activation
 Load at the main session's fresh start, resume, pause-return, or active-runtime recovery/monitoring re-entry.
-Session boot is loaded after the Startup Contract's first User Surface Gate application.
-Before any boot, resume, or monitoring prose, preserve and apply that already-active gate.
-Do not re-consume or narrate `.claude/reference/user-reporting-law.md` during clean startup.
-If the gate was not applied before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
+Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/user-reporting-law.md`.
+Before any boot, resume, or monitoring prose, preserve and apply that already-consumed `.claude/reference/user-reporting-law.md`.
+Do not re-consume `.claude/reference/user-reporting-law.md` during clean startup.
+If the Startup Contract did not consume `.claude/reference/user-reporting-law.md` before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
 Session start loads `Skill(session-boot)`.
 A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
 Work-planning does not reload session-boot unless runtime, recovery, monitoring, cleanup, or unresolved session-start readiness is active.
@@ -57,8 +57,6 @@ If boot evidence and visible-prose pressure conflict, keep boot evidence interna
 Answer-only text that needs no tool can remain light.
 Consequential tool work waits until boot evidence exists.
 
-An explicit `session-boot` load can clear lead-local boot reminders when no explicit team runtime has started yet.
-Treat that observation as a boot-state marker only.
 Delegated runtime execution still returns to `task-execution`.
 Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 Runtime-ready and clean boot outcomes are internal move-out facts unless they create a blocker, required user action, or explicit status answer.

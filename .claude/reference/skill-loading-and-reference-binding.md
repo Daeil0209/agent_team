@@ -61,14 +61,16 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
 - Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS`.
 - Agent role names are not valid skill names.
-- Agent-specific skills use `agent-<lane>` names.
-- Team-lead direct references live under `.claude/agents/team-lead/references/` and are not skill-owned surfaces.
+- Lane agent-specific skills use `agent-<lane>` names.
+- Team-lead procedure skill uses `agent-team-lead`.
+- Team-lead procedure references live under `.claude/skills/agent-team-lead/references/` and are skill-owned surfaces.
+- `agent-team-lead` loads when the team-lead role opens lead-owned procedure triggers.
 - Loaded skills inherit:
   - `CLAUDE.md`
   - active owner role
   - Common Lane-Core Preconditions when the loaded owner is a lane
 - Loaded skills sharpen owner behavior only within their owner stops.
-- Agent-specific skills load on assignment-grade lane work.
+- Lane agent-specific skills load on assignment-grade lane work.
 - These messages load agent-specific skills only when they assign or reopen work:
   - receipt messages
   - control messages

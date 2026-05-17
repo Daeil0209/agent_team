@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-4 Lead-local candidate work; Reference Binding; Procedure And Ownership"
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
@@ -37,7 +37,7 @@ Stop when a lane-owned proof, validation, review, implementation, or acceptance 
 - A new surface opens `work-planning`.
 - A hidden consequential step opens `work-planning`.
 - A stronger claim opens `work-planning`.
-- A stopped lane-owned function reopens `.claude/agents/team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
+- A stopped lane-owned function reopens `.claude/skills/agent-team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
 
 ## Direct Work Conditions
 Lead-local execution is allowed only when all hold:

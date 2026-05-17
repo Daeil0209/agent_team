@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-6 Synthesis; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Synthesis Consume
@@ -13,7 +13,7 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 - A lane sends `MESSAGE-CLASS: completion`.
 - Multiple lane outputs must be reconciled.
 - A strengthened synthesis or redispatch might be reported.
-- FAR `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
+- Final Acceptance Review (FAR) `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
 
 ## Screen Boundary
 Lane `completion` transports are not user reports even when Claude Code renders them on screen.
@@ -69,7 +69,7 @@ Stop positive synthesis when:
 - the conclusion outruns the reconciled verified surface
 - required shard or lane outputs are missing, late, pending, unintegrated, contradictory, only screen-visible, or not explicitly deferred/out-of-scope
 - any emitted finding, pattern, ranking item, class bucket, defect group, patch recommendation, or redispatch basis lacks applicable per-claim basis
-- quality, evidence, independent review, proof, validation, Codex independent review, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
+- quality, evidence, independent review, proof, validation, Codex independent review, Final Acceptance Review (FAR) gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
 - a meaning-dependent synthesis claim uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`
 - `[RETRO-APPLY]` affected prior evidence remains stale or unclassified
 Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign defect status, patch-worthiness, or correction priority only through current `review-verification` defect-promotion basis.
@@ -81,7 +81,7 @@ For each emitted synthesis claim, record the applicable items:
 - `review-verification` defect-promotion basis when the claim assigns defect status, correction priority, ranking, or patch-worthiness
 - non-finding route basis when the claim assigns redispatch force
 - `SEMANTIC-INTENT-BASIS` fit when the claim depends on user, team, design, governance, or artifact meaning
-- protected-function preservation analysis when the claim criticizes protected procedure, owner boundary, evidence, review, proof, validation, FAR gate, or restatement function
+- protected-function preservation analysis when the claim criticizes protected procedure, owner boundary, evidence, review, proof, validation, Final Acceptance Review (FAR) gate, or restatement function
 - Defect-promotion rejection basis when the claim promotes a candidate toward confirmed defect, patch-worthiness, priority, ranking, or correction redispatch
 Failed per-claim basis routes to claim narrowing, finding reclassification, `OPEN-SURFACES` downgrade, or exclusion from the outgoing synthesis body.
 
@@ -137,4 +137,4 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - If synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]`.
 - Apply `.claude/skills/work-planning/references/cross-continuity.md` before consuming parallel-lane completions.
 - Completion evidence of parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch loads `Skill(session-boot)` Monitoring Sequence reassessment before redispatch.
-- After FAR `FINAL-REJECT`, next synthesis consumes assigned-validator correction packet and team-lead-classified route before next FAR or workflow `Complete`.
+- After Final Acceptance Review (FAR) `FINAL-REJECT`, next synthesis consumes assigned-validator correction packet and team-lead-classified route before the next Final Acceptance Review (FAR) or workflow `Complete`.

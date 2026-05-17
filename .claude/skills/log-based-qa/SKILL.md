@@ -1,6 +1,6 @@
 ---
 name: log-based-qa
-description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use when logs are the frozen decisive proof surface, executable test scripts are absent or impractical, or runtime signal materially supports tester proof.
+description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use as required tester proof support when the frozen proof surface names logs; use as corroborating tester support when runtime signals materially support another frozen proof surface.
 user-invocable: false
 PRIMARY-OWNER: tester
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
@@ -24,9 +24,9 @@ You are the log-based-qa specialist capability for Claude Code.
 - `developer` — observability-fix owner when runtime signal is missing or malformed
 - `validator` — final verdict owner after proof is credible
 ## Purpose
-Load when executable assertions are absent or impractical and runtime logs are the decisive proof surface.
-When user-facing interaction is the assigned proof surface, logs can corroborate.
-Logs serve as direct tester proof when the frozen packet names logs as the decisive proof surface.
+Load as required tester-owned proof support when the frozen proof surface names logs or freezes logs as decisive because executable assertions are absent or impractical.
+Load as corroborating tester support when runtime logs materially support another frozen proof surface.
+Corroborating log use does not replace the frozen proof surface, user-surface proof, tester execution authority, or validator verdict.
 ## Responsibilities
 - prefer log-based QA when runtime signal is more decisive than writing a new harness
 - require success-path logging, structured payloads, and end-to-end request IDs
@@ -34,7 +34,9 @@ Logs serve as direct tester proof when the frozen packet names logs as the decis
 - document issues immediately with traceability evidence
 - route persistent observability debt back to `developer`
 ## Activation
-Activate when executable test scripts are absent or impractical, the environment is containerized or service-heavy, or runtime signal is the decisive proof path.
+Activate in required mode when the frozen packet carries `logs-as-decisive-proof` or otherwise names logs as decisive tester proof.
+Activate in required mode for absent or impractical executable scripts only after logs are frozen as the decisive proof surface.
+Activate in corroboration mode when the frozen proof surface stays user-facing or executable and runtime logs, including containerized or service-heavy signals, materially support that proof.
 ## Inputs
 - active request source
 - runnable environment and log access path

@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Reference Binding; Procedure And Ownership"
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---

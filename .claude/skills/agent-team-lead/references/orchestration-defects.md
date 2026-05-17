@@ -1,8 +1,8 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
-SOURCE-RULES: "team-lead SKILL Orchestration Defect Taxonomy; [HARDEN]; Reference Binding; Procedure And Ownership"
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
+SOURCE-RULES: "agent-team-lead Orchestration Defect Taxonomy; [HARDEN]; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Orchestration Defect Taxonomy
 Inherits `.claude/agents/team-lead.md` and `.claude/CLAUDE.md`.
@@ -55,7 +55,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 
 ### Premature Agent Replacement
 - Trigger: replacing or shutting down a missing/idle agent before owning receipt/execution follow-up, wait, and assigned-surface activity/side-effect check.
-- Owning rule: `agents/team-lead.md` RPA-5 and `.claude/agents/team-lead/references/communication-objections.md`.
+- Owning rule: `agents/team-lead.md` RPA-5 and `.claude/skills/agent-team-lead/references/communication-objections.md`.
 - Correction owner: run the recovery sequence on the existing agent before replacement.
 
 ### Reporting Leak
@@ -77,8 +77,8 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Classification: status questions are stall-exposure cues.
 - Classification: same-owner `next action` naming executes rather than becomes a user report.
 - Classification: `FINAL` requires zero-residual deliverable convergence.
-- Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 trigger order, RPA-7 user reporting, and RPA-10 interrupt/autonomy; `.claude/agents/team-lead/references/routine-gate-continuation.md`.
-- Correction owner: apply `.claude/agents/team-lead/references/routine-gate-continuation.md` `## Final Convergence`.
+- Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 trigger order, RPA-7 user reporting, and RPA-10 interrupt/autonomy; `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
+- Correction owner: apply `.claude/skills/agent-team-lead/references/routine-gate-continuation.md` `## Final Convergence`.
 - Correction owner: surface user-facing prose only after `.claude/reference/user-reporting-law.md` admits it.
 
 ## Resolve Next Owner And Action

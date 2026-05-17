@@ -74,7 +74,9 @@ The common base packet is extended by lane-specific required fields:
 - `tester`: proof and scenario boundary
 - `validator`: verdict and expectation boundary
 
-Each lane's agent-specific skill and lane-detail reference own exact assignment additions and lane-specific completion extras beyond the common result spine. Lane role documents own always-loaded lane identity, boundary, and stop conditions; they are not packet catalogs.
+Each lane's agent-specific skill and lane-detail reference own exact assignment additions, lane-specific blocker conditions, and lane-specific completion extras.
+They carry direct pointers to common transport and completion law instead of restating the common result spine.
+Lane role documents own always-loaded lane identity, boundary, and stop conditions; they are not packet catalogs.
 
 For session-side controlled packet value tables and lane-specific presence hints, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are lookup indexes. `team-session-sequences` owns session-sequence indexes and dispatch-detail lookups, not packet schema or agent-specific additions. Runtime spine stays with `session-boot`, closeout with `session-closeout`, and packet schema with `task-execution`. Hooks guard runtime integrity as last-resort checks; normal agent behavior stays with the owning procedure.
 

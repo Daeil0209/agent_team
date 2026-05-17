@@ -70,8 +70,8 @@ Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, 
 Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.
 Also load for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
-Counting evidence is actual `Skill(work-planning)` load plus required freeze.
-Non-counting context includes Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields.
+`work-planning` activation and freeze are proven only by actual `Skill(work-planning)` load plus the required freeze.
+Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields are context only; they do not prove `work-planning` activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.

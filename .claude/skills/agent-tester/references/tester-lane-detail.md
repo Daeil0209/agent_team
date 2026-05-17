@@ -148,7 +148,8 @@ When the same proof surface offers multiple tool profiles at different friction-
 Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 Tester lane evaluation selects and applies materially relevant specialist lenses from the proof surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
 - Work-tool, spreadsheet, operations, business-rule, and workflow-state proof: `business-workflow`, `work-tool-patterns`.
-- Log and runtime-observation proof support: `log-based-qa`.
+- Decisive log proof: apply `log-based-qa` when the frozen proof surface names logs or `REQUIRED-SKILLS` carries it.
+- Log and runtime-observation corroboration: apply `log-based-qa` only to support the frozen proof surface; it does not replace user-surface proof.
 Specialist lenses complement tester execution authority and do not replace user-surface proof.
 
 ## Tester Completion Detail

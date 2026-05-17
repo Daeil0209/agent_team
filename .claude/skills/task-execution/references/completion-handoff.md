@@ -36,7 +36,8 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
   - disconfirming checks attempted
   - defects found and fixed by the producer in-pass
   - final-pass convergence: last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`.
-  - Producer self-review is defect-seeking review, not self-approval.
+  - Producer self-review removes producer-owned defects before handoff.
+  - Producer self-review is not self-approval or independent acceptance.
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the host-visible header/preview state signal through `SendMessage`.
@@ -44,9 +45,11 @@ Inline completion payload or report text in the `SendMessage` message/body slots
 After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains both required blocks; missing retained carrier or missing block returns to the producer through correction only when the producer still has an open executable task, otherwise routes to self-growth cleanup.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-SV-RESULT`.
+If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer only when the producer still has an open executable task; otherwise team-lead routes self-growth cleanup.
 
-Lane completion transports lane-local convergence only and claims no team-lead `SV-RESULT`.
+Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
+Lane completion does not claim team-lead `SV-RESULT`.
 Team-lead synthesizes only completion-grade lane outputs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
@@ -65,7 +68,7 @@ Common finding basis:
 - Researcher outputs supply evidence and candidate classifications only unless a downstream review owner reclassifies them through this basis.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, regression risk, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.
-- Quality, evidence, independent review, proof, validation, Codex independent review, and FAR gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
+- Quality, evidence, independent review, proof, validation, Codex independent review, and Final Acceptance Review (FAR) gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
 - Only `patch-worthiness: must-fix|narrow-fix` with proof that correction will not remove a stronger protected function is patch-dispatch basis; `observe|no-patch` stays retained context.
 - Common finding-class taxonomy is shared by reviewer, review-verification, and validator-input findings:
   - `confirmed-defect`: live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction.
@@ -116,7 +119,7 @@ The method record covers:
   Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner.
   Minor non-AC labels appear as a single `routine: clear` summary unless a defect is observed.
 - `IMAGE-INSPECTION-RECORD` for any completion whose surface includes rendered UI.
-  List each screenshot or full-page image cited in support of an AC verdict, FAR claim, or visual-conformance assertion.
+  List each screenshot or full-page image cited in support of an AC verdict, Final Acceptance Review (FAR) claim, or visual-conformance assertion.
   Cite the design-stated expectation each image proves.
   State the per-image visual verdict after opening the image directly via the multimodal `Read` tool.
   Each verdict is `matches-expectation`, `deviates:<concrete deviation>`, or `inconclusive:<reason>`.

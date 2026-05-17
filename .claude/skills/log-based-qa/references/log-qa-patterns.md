@@ -70,14 +70,14 @@ Client → API Gateway → Backend → Database
 ## Issue Detection Thresholds
 | Condition | Severity | Action |
 |-----------|----------|--------|
-| `level: ERROR` or `status: 5xx` | **T2** — quality gate | Stage-blocking: report and investigate |
-| `duration_ms > 3000` | **T2** — quality gate | Warning: report slow path |
-| 3+ consecutive failures on same endpoint | **T1** — governance block | Escalate as system-level issue |
-| `status: 401` or `403` unexpectedly | **T2** — quality gate | Warning: auth/permission investigation |
-| `duration_ms > 1000` | **T2** — quality gate | Warning: performance degradation |
+| `level: ERROR` or `status: 5xx` | **T2** — quality gate | Record T2; investigate and retest; count toward the T2 accumulation gate |
+| `duration_ms > 3000` | **T2** — quality gate | Record T2; investigate slow path; count toward the T2 accumulation gate |
+| 3+ consecutive failures on same endpoint | **T1** — release-gate block | Block the current release gate; route endpoint/runtime correction to the owning implementation owner |
+| `status: 401` or `403` unexpectedly | **T2** — quality gate | Record T2; investigate auth/permission path; count toward the T2 accumulation gate |
+| `duration_ms > 1000` | **T2** — quality gate | Record T2; investigate performance degradation; count toward the T2 accumulation gate |
 | Missing required log fields | **T3** — advisory | Note for logging infrastructure |
 | request_id propagation gap across layers | **T3** — advisory | Note for traceability gap |
-> **Severity framework**: log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
+> **Severity framework**: log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 and tier actions defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; log-specific actions only name evidence collection, owner routing, and retest. Finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 
 If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps classify as `blocked proof` until another truthful proof surface is frozen.
 ---

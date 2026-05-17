@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-7 status, satisfied gates, phase transitions, and routine milestones; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Routine Gate Continuation

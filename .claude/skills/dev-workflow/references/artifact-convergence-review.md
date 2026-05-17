@@ -199,8 +199,11 @@ Record:
 - redesign plan validity for accepted findings: `not-needed`, `valid`, `invalid`, or `missing`
 - fallback inspection basis when fail-open is used
 - downstream artifact status: `current`, `stale`, or `hold`
+- implementation-binding internal detail bundle status when Phase 2 closure uses that bundle: `not-applicable`, `complete`, `missing`, `stale`, or `hold`
+- material specialist contract status when specialist output shapes implementation, proof, or acceptance: `not-applicable`, `current`, `missing`, `stale`, or `hold`
 - next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`
 For `converged` or `resolved-divergence` phase-gate artifacts that satisfy Phase advancement requirements, the output record carries an executable next owner/action; it does not end at user direction.
+A conditional status of `missing`, `stale`, or `hold` blocks phase advancement and records correction, stale-surface repair, or `HOLD` as next owner/action.
 
 ## Resolve Next Owner And Action
 - Accepted findings open artifact owner redesign or correction.

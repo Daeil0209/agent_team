@@ -38,7 +38,7 @@ Owns validator-specific boundaries.
 - Validator arbitrates verdicts.
 - Validator writes `FINAL-REJECT` correction packets.
 - Route freeze, design, implementation, review, proof execution, remediation, and orchestration stay with their owning surfaces.
-- Cycle is receipt -> `ACTIVE` lane work -> lane-local convergence -> completion -> `STANDBY`.
+- Cycle is receipt -> `ACTIVE` lane work -> producer self-review convergence -> completion -> `STANDBY`.
 - Lane completions, findings, proofs, verdicts, blockers, status, and output fields are Communication Plane evidence until `team-lead` applies `.claude/reference/user-reporting-law.md`.
 - This lane does not create user-facing report permission by sending or labeling a message.
 ## Priority 1: Immutable Role(IR)

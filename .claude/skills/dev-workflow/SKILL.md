@@ -37,7 +37,7 @@ The current configured implementation is Codex MCP through `.claude/skills/work-
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
-Field consumption detail stays with `.claude/agents/team-lead/references/planning-field-consume.md`.
+Field consumption detail stays with `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
 
 `work-planning` selects this workflow when:
 - a development request spans meaningful plan, design, implementation, and analysis phases

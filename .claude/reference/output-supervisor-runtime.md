@@ -35,7 +35,7 @@ The gate must not mutate internal payloads into user reports.
 If the curtain runtime fails, the supervised report surface fails closed and emits no child screen text.
 Direct `claude` native startup does not activate the curtain.
 If the operator uses normal Claude Code native UI, host-native display remains governed by Claude Code behavior and the model-side reporting law; it is not proof of curtain failure.
-In native UI, agent-authored prose leakage is a User Surface Gate violation, not supervised curtain proof.
+In native UI, agent-authored prose leakage violates `.claude/reference/user-reporting-law.md` report admissibility; it is not supervised curtain proof.
 Use `.claude/supervisor/claude-supervised` when the operator needs the physical report-rendering curtain.
 
 ## Proof Standard

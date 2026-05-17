@@ -35,7 +35,7 @@ is_system_generated_followup_prompt() {
     return 0
   fi
 
-  # Pure teammate-message completions are notification-only carry-forward.
+  # Pure teammate-message completions carry an already-received notification without changing work boundary.
   if teammate_message_only_prompt "$prompt"; then
     return 0
   fi

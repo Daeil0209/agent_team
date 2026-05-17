@@ -21,9 +21,9 @@ Use when document mode is institutional event planning, including retreats, work
 - Begin element selection after purpose type, target response, and approval path are frozen.
 
 ## Element-To-Region Selection
-- Standard element palette includes education sessions, meals/catering, recognition/awards, networking/social, free time/rest, logistics/transport, opening/closing ceremonies, team activities, guest speakers, and breakout sessions.
+- Document regions derive from the `business-workflow` element model.
 - `business-workflow` owns element entity model, definitions, constraints, and institutional norms.
-- Consume the business-workflow element model as input.
+- Consume the business-workflow element model before selecting document regions.
 - Each included element requires a purpose-link justification.
 - Each excluded element requires brief rationale.
 - Include only purpose-justified regions.
@@ -37,7 +37,7 @@ Use when document mode is institutional event planning, including retreats, work
 1. Purpose/audience/constraints intake: freeze purpose type, participant profile, venue constraints, budget envelope, institutional culture norms, and approval path.
 2. Full element enumeration with necessity checks: apply `why needed / removable / simpler alternative` check per element.
 3. Logical dependency and sequence design: arrange elements respecting temporal dependencies, participant energy curve, logistics transitions, and venue constraints.
-4. Compression preserving rationale chain: fit to target length while preserving necessity justifications.
+4. Compression preserving rationale chain: fit to target length while preserving necessity justifications and removing elements rejected by business-workflow gates.
 - Between stages 1 and 2, classify venue type.
 - Venue type examples include retreat/relaxation, gathering facility, urban facility, and outdoor/camping.
 - Venue type cascades into preset adjustments to schedule density, free-time allocation, collective-vs-individual time ratio, and meal operation mode.

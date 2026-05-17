@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ## Contents
 - Purpose
 - Authority Boundary
-- Generation State Machine
+- Business-Rule Checkpoints
 - Organizational Parameters
 - Element Necessity
 - Physical Constraints
@@ -29,24 +29,19 @@ business-workflow owns purpose definition, feasibility criteria, element necessi
 document-automation owns document-generation pipeline stages, structure, formatting, compression, and template conformance.
 software-architecture owns constraint-satisfaction generator architecture when a generation pipeline is implemented.
 
-## Generation State Machine
-For document generation pipeline architecture, use `.claude/skills/document-automation/references/document-generation-detail.md` `Event Planning Document Generation` and `Generation Stage Sequence`.
+## Business-Rule Checkpoints
+For event-planning document generation stages, use `.claude/skills/document-automation/references/event-planning-document.md` `Generation Stage Sequence`.
 For generator architecture, use `.claude/skills/software-architecture/references/architecture-extensions.md` `Constraint-Satisfaction Document Generator Architecture Extension`.
-business-workflow owns the business rules and domain constraints at each stage.
-Event planning document generation follows this business-rule sequence:
-0. Hidden-criteria elicitation.
-1. Purpose definition and constraint capture.
-2. Element selection and necessity validation.
-3. Operational feasibility check.
-4. Draft generation and compression.
-5. Repeatability and sustainability validation.
+business-workflow owns the business rules and domain constraints consumed by document-generation stages.
+Event planning business-rule checkpoints are hidden-criteria elicitation, purpose definition and constraint capture, element selection and necessity validation, operational feasibility check, and repeatability and sustainability validation.
+These checkpoints gate generation while document-automation remains the generation-stage owner.
 Hidden-criteria elicitation surfaces hidden review criteria through the Hidden-Criteria Question Set before generation begins.
 Critical hidden inputs must be captured before generation when omission would cause data loss, authority conflict, or unsafe delivery.
 Purpose definition establishes why the event exists, what outcome is required, and who the audience is before selecting any operational element.
-Element selection treats education, meals, recognition, networking, free time, site tours, presentations, and Q&A as composable options.
+Element selection uses the event element model in `## Element Necessity`.
 Each selected element must pass the necessity gate.
 Operational feasibility validates venue constraints, movement constraints, schedule density, participant burden, and budget.
-Draft compression removes redundant explanations, excessive formality, decorative content, and elements that failed necessity or feasibility gates.
+Document-generation compression belongs to document-automation; business-workflow supplies the rejection basis for elements that failed necessity or feasibility gates.
 Repeatability validation checks whether the plan can be repeated next cycle with proportional cost and effort.
 
 ## Organizational Parameters
@@ -66,6 +61,7 @@ Authority preference and participant satisfaction conflicts become explicit huma
 
 ## Element Necessity
 Operational elements are composable building blocks.
+Element model examples include education or training, meals or catering, recognition or awards, networking or social time, free time or rest, site tours, presentations, Q&A, logistics or transport, opening or closing ceremonies, team activities, guest speakers, and breakout sessions.
 Purpose alignment checks whether the element directly serves the stated event purpose.
 Necessity gate checks whether removal would make the event fail its purpose.
 Secondary benefits must outweigh burden when an element is not strictly necessary.

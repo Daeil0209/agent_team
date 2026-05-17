@@ -41,40 +41,40 @@ Compression is lawful only when the short surface remains stronger or equally st
 - Role separation, validator-only final PASS/HOLD/FAIL, verified-result local closure, user-surface acceptance, and test/validation surface freeze remain in `CLAUDE.md` `## Acceptance`; final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md`; lane execution detail remains in reviewer/tester/validator role files and agent-specific skills.
 - Meaning preservation, live-reference preservation, owner-boundary protection, update/upgrade route, compression blocker rule, and duplicate-overlap repair remain in `CLAUDE.md` `## Change And Preservation`; defect recurrence barriers live in `.claude/skills/self-growth-sequence/SKILL.md`.
 - Safety, Claude Code prose-vs-technical enforcement boundary, hook-vs-settings enforcement split, runtime-state ownership, runtime/output-root boundary, runtime-footprint claim limits, and owner-local detail placement remain in `CLAUDE.md` `## Conditional Rules`; runtime detail lives in `.claude/reference/runtime-boundary-law.md`; output-root detail lives in `.claude/reference/output-root-and-filesystem-law.md`; official Claude Code evidence is cached in `.claude/reference/official-claude-code-reference.md`; hook footprint detail lives in `.claude/reference/runtime-footprint-and-continuity.md`.
-- Codex owner-scoped independent-review trace: always-on authority anchor lives in `CLAUDE.md` `## Conditional Rules`. Route-freeze trigger, packet, acknowledgment, fail-open, and generic capability-promotion precondition live in `.claude/skills/work-planning/references/codex-independent-review.md`; field semantics live in `.claude/skills/work-planning/references/planning-record-fields.md`; consumption gates live in `.claude/agents/team-lead.md`, `.claude/agents/team-lead/references/planning-field-consume.md`, `.claude/agents/team-lead/references/codex-output-lead-own-review.md`, `.claude/skills/self-verification/SKILL.md`, `.claude/skills/self-verification/references/verification-targets-and-gates.md`, and `.claude/skills/task-execution/references/dispatch-entry-contract.md`.
+- Codex owner-scoped independent-review trace: always-on authority anchor lives in `CLAUDE.md` `## Conditional Rules`. Route-freeze trigger, packet, acknowledgment, fail-open, and generic capability-promotion precondition live in `.claude/skills/work-planning/references/codex-independent-review.md`; field semantics live in `.claude/skills/work-planning/references/planning-record-fields.md`; consumption gates live in `.claude/agents/team-lead.md`, `.claude/skills/agent-team-lead/references/planning-field-consume.md`, `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`, `.claude/skills/self-verification/SKILL.md`, `.claude/skills/self-verification/references/verification-targets-and-gates.md`, and `.claude/skills/task-execution/references/dispatch-entry-contract.md`.
 - Codex artifact/review/final-acceptance trace: `dev-workflow` trigger and authority boundary live in `.claude/skills/dev-workflow/references/artifact-convergence-review.md`, `.claude/skills/dev-workflow/references/review-convergence-review.md`, and `.claude/skills/dev-workflow/references/final-acceptance-review.md`; phase entry/exit pointers live in `.claude/skills/dev-workflow/SKILL.md`; transition enforcement lives in `.claude/skills/dev-workflow/references/phase-gates.md`; pre-planning hook posture lives in `.claude/hooks/MANIFEST.md` and `.claude/hooks/task-start-gate.sh`.
 
 ## Team-Lead.md Source-To-Destination Map
 - The required pre-action gate remains in `.claude/agents/team-lead.md` `Priority 0`; expanded request-fit freezing lives in `.claude/skills/work-planning/SKILL.md`.
 - Team-lead identity, configured-lane preference, lead-local exception handling, and binding stack remain in `Priority 1`; delegated lane contracts remain in `.claude/agents/researcher.md`, `developer.md`, `reviewer.md`, `tester.md`, and `validator.md`.
-- Instruction interpretation and route opening remain in `RPA-1` and `RPA-2`; detailed work-planning consumption and edge-case reading order live in direct references named by `.claude/agents/team-lead.md`.
+- Instruction interpretation and route opening remain in `RPA-1` and `RPA-2`; detailed work-planning consumption and edge-case reading order live in `Skill(agent-team-lead)` references named by `.claude/agents/team-lead.md`.
 - Session boot, runtime-entry, monitoring, recovery, and closeout bridging remain in `RPA-3`; detailed runtime limits and lifecycle interpretation live in `.claude/skills/session-boot/*` and `.claude/skills/session-closeout/SKILL.md`.
 - Work-planning field consumption, lead-local limits, no-implied-remainder stop rule, teammate context isolation, and packet-bound fact transfer remain in `RPA-4`; read-only audit default is a same-outcome scenario rule in this map, and lazy agent-specific skill loading remains in `CLAUDE.md` `Skill Loading` plus lane role contracts. Exact packet translation lives in `.claude/skills/task-execution/SKILL.md` and `.claude/skills/task-execution/references/assignment-packet.md`.
 - Communication truth, dispatch state, receipt, progress, completion, assignment/phase/runtime-cleanup separation, and assignment packet message classes remain in `RPA-5`; exact truth taxonomy lives in `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
-- Agent objection handling remains in `RPA-6`; packet correction versus route replan criteria live in `.claude/skills/task-execution/references/scope-pressure.md`, `.claude/skills/task-execution/references/request-bound-fields.md`, and `.claude/agents/team-lead/references/communication-objections.md`.
-- Completion synthesis, open-surface rejection, sibling-output reconciliation, redispatch proof, and artifact integrity remain in `RPA-6`; detailed synthesis lives in `.claude/agents/team-lead/references/synthesis-consume.md`; verification gates live in `.claude/skills/self-verification/SKILL.md`.
+- Agent objection handling remains in `RPA-6`; packet correction versus route replan criteria live in `.claude/skills/task-execution/references/scope-pressure.md`, `.claude/skills/task-execution/references/request-bound-fields.md`, and `.claude/skills/agent-team-lead/references/communication-objections.md`.
+- Completion synthesis, open-surface rejection, sibling-output reconciliation, redispatch proof, and artifact integrity remain in `RPA-6`; detailed synthesis lives in `.claude/skills/agent-team-lead/references/synthesis-consume.md`; verification gates live in `.claude/skills/self-verification/SKILL.md`.
 - SV-PLAN and SV-RESULT ownership remains in `RPA-8`; full challenge lenses and output formats live in `.claude/skills/self-verification/SKILL.md`.
-- User-facing report admission remains in `RPA-7` and `.claude/reference/user-reporting-law.md`; output and reporting shape live in `.claude/agents/team-lead/references/output-surface-law.md` and `.claude/agents/team-lead/references/reporting-surface-rules.md` after report admission.
-- Self-growth remains in `RPA-9`; interrupt-resume and autonomous judgment remain in `RPA-10`. Detailed recurrence-barrier handling lives in `.claude/skills/self-growth-sequence/SKILL.md` and interrupt/autonomy detail in `.claude/agents/team-lead/references/interrupt-autonomy.md`.
+- User-facing report admission remains in `RPA-7` and `.claude/reference/user-reporting-law.md`; output and reporting shape live in `.claude/skills/agent-team-lead/references/output-surface-law.md` and `.claude/skills/agent-team-lead/references/reporting-surface-rules.md` after report admission.
+- Self-growth remains in `RPA-9`; interrupt-resume and autonomous judgment remain in `RPA-10`. Detailed recurrence-barrier handling lives in `.claude/skills/self-growth-sequence/SKILL.md` and interrupt/autonomy detail in `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
 
 ## 2026-05-01 CLAUDE-Team-Lead Rehome Map
 This pass reduces always-loaded density by re-homing detail, not deleting meaning. The source surfaces remain hard-law spines; the destinations below own detail.
 
 CLAUDE.md source -> destination:
 - `[USER-SURFACE]` and `[USER-DELIVERY-FIT]` long explanatory detail -> `.claude/skills/work-planning/references/deliverable-defaults.md`, `.claude/skills/dev-workflow/references/operator-delivery.md`, `.claude/skills/agent-tester/references/tester-lane-detail.md`, and `.claude/skills/agent-validator/references/validator-lane-detail.md`.
-- `[NO-NEEDLESS-ASK]`, user-escalation limits, over-broad-blocking correction, and evidence-required deferral detail -> `.claude/agents/team-lead.md` Priority 0 / RPA-9 / RPA-10 plus `.claude/agents/team-lead/references/interrupt-autonomy.md`.
+- `[NO-NEEDLESS-ASK]`, user-escalation limits, over-broad-blocking correction, and evidence-required deferral detail -> `.claude/agents/team-lead.md` Priority 0 / RPA-9 / RPA-10 plus `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
 - `[GOV-MIN]`, `[PRES-FIRST]`, `[HARDEN]`, and top-doctrine patch discipline -> `.claude/skills/self-growth-sequence/SKILL.md` `Patch Execution Method` and this preservation map's audit rule.
 - `[PROJECT-OUTPUT-ROOT]` detailed output-root prohibitions -> `.claude/hooks/MANIFEST.md`, `.claude/hooks/compliance-supervisor.sh`, and `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md`.
 - Hook/settings/runtime-footprint details -> `.claude/hooks/MANIFEST.md`, `.claude/reference/runtime-footprint-and-continuity.md`, and `.claude/settings.json`.
 - Codex MCP independent-review detail -> `.claude/skills/work-planning/references/codex-independent-review.md`, `.claude/skills/dev-workflow/references/artifact-convergence-review.md`, `.claude/skills/dev-workflow/references/review-convergence-review.md`, and `.claude/skills/dev-workflow/references/final-acceptance-review.md`.
 
 team-lead.md source -> destination:
-- Long `initialPrompt` procedure restatement -> body RPA anchors plus direct references named by `.claude/agents/team-lead.md`; detailed session, dispatch, SV, reporting, and sequence rules remain in their named owner skills/references.
-- RPA-1 governance-refresh and discovery/measurement detail -> `.claude/skills/work-planning/SKILL.md` and `.claude/agents/team-lead/references/session-route-bridge.md`.
+- Long `initialPrompt` procedure restatement -> body RPA anchors plus `Skill(agent-team-lead)` references named by `.claude/agents/team-lead.md`; detailed session, dispatch, SV, reporting, and sequence rules remain in their named owner skills/references.
+- RPA-1 governance-refresh and discovery/measurement detail -> `.claude/skills/work-planning/SKILL.md` and `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
 - RPA-2 team-runtime address and standalone fallback detail -> `.claude/skills/task-execution/SKILL.md`, `.claude/skills/task-execution/references/runtime-dispatch-law.md`, and `.claude/skills/task-execution/references/assignment-packet.md`.
-- RPA-4 same-phase boundary law and Codex adjudication detail -> `.claude/skills/dev-workflow/SKILL.md`, `.claude/skills/dev-workflow/references/artifact-convergence-review.md`, `.claude/skills/dev-workflow/references/review-convergence-review.md`, `.claude/skills/work-planning/references/codex-independent-review.md`, and `.claude/agents/team-lead/references/codex-output-lead-own-review.md`.
-- RPA-7 user-report admission -> `.claude/reference/user-reporting-law.md`; mid-flight/final report staging after admission -> `.claude/agents/team-lead/references/output-surface-law.md`, `.claude/agents/team-lead/references/reporting-surface-rules.md`, and `.claude/agents/team-lead/references/routine-gate-continuation.md`.
-- RPA-9 self-growth detail -> `.claude/skills/self-growth-sequence/SKILL.md`. RPA-10 interrupt-resume + autonomous judgment detail -> `.claude/agents/team-lead/references/interrupt-autonomy.md`.
+- RPA-4 same-phase boundary law and Codex adjudication detail -> `.claude/skills/dev-workflow/SKILL.md`, `.claude/skills/dev-workflow/references/artifact-convergence-review.md`, `.claude/skills/dev-workflow/references/review-convergence-review.md`, `.claude/skills/work-planning/references/codex-independent-review.md`, and `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`.
+- RPA-7 user-report admission -> `.claude/reference/user-reporting-law.md`; mid-flight/final report staging after admission -> `.claude/skills/agent-team-lead/references/output-surface-law.md`, `.claude/skills/agent-team-lead/references/reporting-surface-rules.md`, and `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
+- RPA-9 self-growth detail -> `.claude/skills/self-growth-sequence/SKILL.md`. RPA-10 interrupt-resume + autonomous judgment detail -> `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
 
 Convergence criterion: after this pass, `CLAUDE.md` and `agents/team-lead.md` must be stronger first-read spines. If a removed detail cannot be reconstructed from the listed destination, restore it or move it to the correct owner before closing context reduction.
 
@@ -121,13 +121,13 @@ agents/team-lead.md source -> destination:
 - RPA-1 lines 60-62 carry-forward / reopen sentences -> trimmed; canonical owner stays `.claude/skills/work-planning/SKILL.md` Activation Trigger + boundary-change axes (Step 1).
 - RPA-2 line 66 cross-continuity carry-forward -> restored full 7-item set citing `CLAUDE.md` Scope, Continuity, And Change; redundant procedure-trigger scan removed (trigger order list at lines 71-78 already governs trigger consumption).
 - RPA-2 trigger order item 4 -> generalized to "confirmed primary sequence (`self-growth-sequence` for recurrence defect or `update-upgrade-sequence` for routine asset maintenance, per `Sequence Arbitration Law`)" so both primary sequences carry equal salience.
-- RPA-2 (new rule, recurrence barrier from round-3 self-growth): "intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; status questions are stall-exposure cues only and continue through the same resume action." Canonical defect class lives in `.claude/agents/team-lead/references/orchestration-defects.md` `Routine Status Stop` (newly added; trigger / owning rule / correction owner all named).
+- RPA-2 (new rule, recurrence barrier from round-3 self-growth): "intermediate commit, push, build, or other infrastructure milestone inside a multi-round/multi-batch deliverable is not a phase boundary; status questions are stall-exposure cues only and continue through the same resume action." Canonical defect class lives in `.claude/skills/agent-team-lead/references/orchestration-defects.md` `Routine Status Stop` (newly added; trigger / owning rule / correction owner all named).
 - RPA-3 closeout 3-sentence series -> merged to one sentence with explicit scope ("once `session-closeout` owns the path, suspend ordinary planning/synthesis/reporting and report only residual closeout truth").
 - Priority 0 step 5 ROUTE -> tightened to project-lane primacy default ("prefer team-routed configured lanes; lead-local only when project-lane primacy plus lead-local preconditions hold (`work-planning` freeze, complete `LEAD-LOCAL-WORK-ITEMS`, no lane-owned proof/validator substitution)"); aligns with `CLAUDE.md` `## Priority And Ownership` line "Project lanes outrank lead-local substitution."
 - All 5 lane initialPrompt blocks (developer/researcher/reviewer/tester/validator) -> shared 5-clause boilerplate (work-planning-loading scope, receipt/control exclusion, infer-safely, classify-4-states, only-material-unsafe-defects) re-homed to `.claude/skills/task-execution/references/lane-additions.md` `Common Lane-Core Preconditions`. Each lane initialPrompt now carries the protected receipt spine (dispatch-ack first, no idle), the Lane Receipt Spine pointer, `TARGET-INTENT-BASIS` identification, and the lane-specific delta only (~50% per-spawn boilerplate reduction).
 
-team-lead direct-reference source -> destination:
-- Detail-section restatements for communication, objection handling, synthesis, reporting, interrupt-resume, autonomous judgment, orchestration defects, and work-planning consume are owned by direct references named in `.claude/agents/team-lead.md`.
+team-lead procedure-reference source -> destination:
+- Detail-section restatements for communication, objection handling, synthesis, reporting, interrupt-resume, autonomous judgment, orchestration defects, and work-planning consume are owned by `Skill(agent-team-lead)` references named in `.claude/agents/team-lead.md`.
 
 deleted legacy `synthesis-reporting.md` source trace -> destination:
 - "At each completion synthesis apply session-boot Monitoring Sequence" universal gate (toxic bottleneck per `[PARALLEL]` + `CLAUDE.md` Channel And Procedure) -> conditional gate ("only on parallel-collapse / idle-preservation / missed-parallel-fit / missed-downstream-prep / agent-charter-mismatch evidence"); Monitoring Sequence canonical owner stays `session-boot/SKILL.md`.
@@ -137,7 +137,7 @@ deleted legacy `synthesis-reporting.md` source trace -> destination:
 - (round-3 self-growth recurrence barrier) "intermediate commit/push/build/infrastructure milestone is not a phase boundary; multi-round/multi-batch deliverables continue through next round in same segment without `PHASE-RESULT` emission, status prose, or `next action: continue X` announcement; only verified `FINAL`, true `blocker`, or explicit `closeout residual` surfaces."
 
 deleted legacy `planning-consume.md` source trace -> destination:
-- Tier-floor mechanics (`PROJECT-TIER`/`ACTIVE-REQUEST-TIER`/`TIER-RAISE-REASON` semantics) -> canonical owner stays `.claude/skills/work-planning/references/governance-depth.md` per `planning-record-fields.md`; stale or missing planning-field handling stays in `.claude/agents/team-lead/references/planning-field-consume.md`.
+- Tier-floor mechanics (`PROJECT-TIER`/`ACTIVE-REQUEST-TIER`/`TIER-RAISE-REASON` semantics) -> canonical owner stays `.claude/skills/work-planning/references/governance-depth.md` per `planning-record-fields.md`; stale or missing planning-field handling stays in `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
 - Read-only-audit lead-local default rule (toxic, anti-`[PARALLEL]`) -> replaced with independence-test gate citing `.claude/skills/work-planning/references/parallel-fit.md`'s independent-surface basis (evidence family / decision target / document section / production surface / source-of-truth / interface-format boundary / proof burden / correction owner); audits route through `task-execution` whenever the test fails.
 - FAR `FINAL-REJECT` route classification dev-workflow Phase vocabulary -> generalized to "active workflow's design-correction phase / production-correction phase / `work-planning` reopen" so non-dev-workflow rejections classify cleanly.
 
@@ -220,8 +220,8 @@ skills/work-planning/references/planning-targets.md source -> destination:
 - "## Role-Scoped Self-Growth Loop" sections in most specialists (universally restating "if my domain recurs, escalate to self-growth") -> deleted; canonical owner stays CLAUDE.md `[HARDEN]` + `self-growth-sequence/SKILL.md`.
 - "## Structural Feedback To Upstream" heading in 2 files (code-quality-review, design-system-tokens) -> renamed "## Role-Scoped Structural Feedback" matching the canonical sibling pattern.
 
-agents/reviewer.md source -> destination:
-- Cycle line "lane-local convergence" -> "lane-local convergence (load Skill(self-verification) and run lane-local SV-RESULT per Skill(agent-reviewer) Step 8)" — explicit cross-reference removes the F-A-4 SV-anchor mismatch between role spine and agent-specific skill.
+agents/*.md role cycle source -> destination:
+- Cycle line "lane-local convergence" -> "producer self-review convergence" — role spine convergence is producer-owned defect review and fix before completion to reduce downstream correction load, not `Skill(self-verification)` loading.
 
 hooks source -> destination:
 - `compliance-supervisor.sh` `is_disallowed_generated_output_path` + `command_targets_disallowed_generated_output_root` (~57 lines including 35-line node body) + `command_is_noisy_touch_probe` (~22 lines) + `emit_warning` no-op + 3 remaining callers -> deleted. Hardcoded outputs/backups/.playwright-mcp deny-list contradicted CLAUDE.md `[PROJECT-OUTPUT-ROOT]` ("unless user/config names another canonical folder"); style critique on touch+ls compounds was outside MANIFEST hard-deny categories; emit_warning was no-op so every call was dead policy. log_violation entries preserved for traceability.
@@ -231,7 +231,7 @@ hooks source -> destination:
 
 Convergence criterion: every reduction above migrates substantive meaning to a named canonical owner with explicit citation, preserves the same procedural outcome on the Same-Outcome Scenario Matrix, and either sharpens executable force at the canonical owner or removes a contradicting/dead surface. No source-to-destination trace gap; no enforcement-strength loss; no live-reference break.
 
-Round-11 recurrence-barrier strengthening (after second `Routine Status Stop` recurrence): `orchestration-defects.md` classifies emitting `FINAL` before zero-residual deliverable convergence as the trigger; canonical residual-queue closure detail lives in `.claude/agents/team-lead/references/routine-gate-continuation.md`. Source-to-destination: same meaning, re-homed to split reference.
+Round-11 recurrence-barrier strengthening (after second `Routine Status Stop` recurrence): `orchestration-defects.md` classifies emitting `FINAL` before zero-residual deliverable convergence as the trigger; canonical residual-queue closure detail lives in `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`. Source-to-destination: same meaning, re-homed to split reference.
 
 Round-12 residual cleanup:
 - `hooks/task-start-gate.sh` dead `warn_tool_use` no-op + 6 callers (PROCEDURE WARNING strings built and discarded) -> deleted; control-flow exits preserved per F-G-1.
@@ -252,7 +252,7 @@ Round-13 post-patch verification cleanup (V1/V2/V3/V4 cross-shard verification d
 - V-D-2 dev-workflow/SKILL.md callout above `## Reference-Owned Workflow Sections` -> deleted (broken completion transfer resolved; the explicit list below is self-explanatory).
 - V-D-3 dev-workflow/references/artifact-convergence-review.md Dual Review parallel discipline -> split executable steps for parallel start, own-review-before-Codex-read, first-Codex-packet exclusion, producer-self-review boundary, and material-specialist-skills basis.
 - V-B-1 deleted legacy `synthesis-reporting.md` line 27 cross-continuity citation -> full cross-skill path (`.claude/skills/work-planning/references/cross-continuity.md`) replaced the ambiguous bare cross-continuity reference before deletion.
-- V-B-2 current canonical routine-gate detail lives in `.claude/agents/team-lead/references/routine-gate-continuation.md`.
+- V-B-2 current canonical routine-gate detail lives in `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
 
 Convergence criterion (round-13): every post-patch verification finding either patched in same segment per Routine Status Stop zero-residual rule or deferred by owning upstream record with explicit follow-up basis. V1 CLEAN; V2/V3/V4 findings all patched or deferred by owning upstream record with cited basis. No new defects introduced; preservation map traces updated to reflect cite-corrections and structural-anchor additions.
 
@@ -282,7 +282,7 @@ Queue empty (zero-residual): every queued / residual item is patched (round 1-16
 This pass reviews the current doctrine-spine and team-lead reference-split patch under `.claude/skills/review-verification/SKILL.md`.
 The design intent is:
 - not compression for brevity
-- strong always-on trigger, owner, stop, and next-action resolution in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through directly bound independent references
+- strong always-on trigger, owner, stop, and next-action resolution in `CLAUDE.md` and `agents/team-lead.md`, with detailed procedure reachable through `agent-team-lead` skill references and other owner references
 
 CLAUDE.md source -> destination:
 - Procedure, owner separation, channel, communication, and escalation detail -> `.claude/reference/procedure-and-ownership-law.md`.
@@ -294,17 +294,24 @@ CLAUDE.md source -> destination:
 - `[HOOK-LAST]`, prose-vs-runtime enforcement boundary, tool/MCP/review-tool limits, runtime-state ownership, and footprint-claim routing -> `.claude/reference/runtime-boundary-law.md` plus `.claude/reference/runtime-footprint-and-continuity.md` for measured footprint claims.
 
 agents/team-lead.md source -> destination:
-- Priority 0 pre-action field gate -> `.claude/agents/team-lead/references/pre-action-gate.md`.
-- Highest-active owner trigger order -> `.claude/agents/team-lead/references/owner-trigger-order.md`.
-- Instruction/session/route/FAR bridge -> `.claude/agents/team-lead/references/session-route-bridge.md`.
-- Planning-consume detail -> `.claude/agents/team-lead/references/planning-field-consume.md`, `.claude/agents/team-lead/references/far-reject-routing.md`, `.claude/agents/team-lead/references/codex-output-lead-own-review.md`, and `.claude/agents/team-lead/references/lead-local-guarded-law.md`.
-- Synthesis/reporting detail -> `.claude/agents/team-lead/references/synthesis-consume.md`, `.claude/reference/user-reporting-law.md`, `.claude/agents/team-lead/references/output-surface-law.md`, `.claude/agents/team-lead/references/reporting-surface-rules.md`, and `.claude/agents/team-lead/references/routine-gate-continuation.md`.
-- Removed index-only routers after direct child references became active targets: deleted legacy `planning-consume.md` and deleted legacy `synthesis-reporting.md`.
-- Deleted routers carried no canonical procedure after child references were bound to `.claude/agents/team-lead.md`.
+- Priority 0 pre-action field gate -> `.claude/skills/agent-team-lead/references/pre-action-gate.md`.
+- Highest-active owner trigger order -> `.claude/skills/agent-team-lead/references/owner-trigger-order.md`.
+- Instruction/session/route/FAR bridge -> `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
+- Planning-consume detail -> `.claude/skills/agent-team-lead/references/planning-field-consume.md`, `.claude/skills/agent-team-lead/references/far-reject-routing.md`, `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`, and `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md`.
+- Synthesis/reporting detail -> `.claude/skills/agent-team-lead/references/synthesis-consume.md`, `.claude/reference/user-reporting-law.md`, `.claude/skills/agent-team-lead/references/output-surface-law.md`, `.claude/skills/agent-team-lead/references/reporting-surface-rules.md`, and `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
+- Removed index-only routers after `agent-team-lead` child references became skill-owned active targets: deleted legacy `planning-consume.md` and deleted legacy `synthesis-reporting.md`.
+- Deleted routers carried no canonical procedure after child references were bound through `Skill(agent-team-lead)` and named by `.claude/agents/team-lead.md`.
 
 Convergence criterion:
-- Every moved detail remains reachable from a direct top or role reference.
+- Every moved detail remains reachable from top doctrine, role spine, or a skill-owned reference.
 - Every new reference names its `SOURCE-ANCHOR`.
+
+## 2026-05-17 Team-Lead Procedure Skill Rehome
+- Source: `.claude/agents/team-lead/references/*` role-direct procedure references.
+- Destination: `.claude/skills/agent-team-lead/references/*` skill-owned procedure references.
+- `.claude/agents/team-lead.md` remains the always-loaded team-lead role spine.
+- `Skill(agent-team-lead)` now owns detailed team-lead procedure references.
+- Valid team-lead procedure skill path is `Skill(agent-team-lead)`; `team-lead` stays the role name.
 - No old mixed reference remains as an active target.
 - No deleted index-only file remains on an active load path.
 - Every triggered reference resolves to one next owner/action, verified result, explicit cancel/redirect, or `HOLD` with owner and blocker.

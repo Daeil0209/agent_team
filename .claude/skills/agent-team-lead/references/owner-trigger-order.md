@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-2 Owner Trigger Order; Reference Binding; Procedure And Ownership"
 ---
 # team-lead: Owner Trigger Order
@@ -88,4 +88,4 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 Status questions expose stalled execution.
 If the boundary is already complete, route the answer through `.claude/reference/user-reporting-law.md` `## Report Shape`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.
-Interrupt work uses `.claude/agents/team-lead/references/interrupt-autonomy.md`.
+Interrupt work uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.

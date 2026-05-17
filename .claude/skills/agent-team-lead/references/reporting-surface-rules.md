@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
-SOURCE-ANCHOR: .claude/agents/team-lead.md
+SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communication; Reference Binding"
 ---
 # team-lead: Reporting Surface Rules
@@ -43,7 +43,7 @@ Record shape only after user-reporting law admits the report:
 
 ## Stop
 Stop before reporting when `SV-RESULT` is required and missing.
-Stop before `FINAL` when residual deliverable convergence remains open under `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
+Stop before `FINAL` when residual deliverable convergence remains open under `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
 Stop before basis expansion by default.
 Basis expansion is allowed only for:
 - explicit user detail request

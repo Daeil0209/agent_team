@@ -148,19 +148,12 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the developer completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 7. Completion
-- Send consequential upward results to `team-lead` via `SendMessage`.
-- Continuity surfaces require their owning channel.
-- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`. Carry `PRODUCER-SELF-REVIEW-PASS` (defeater lenses applied, defects found and fixed in-pass, final-pass convergence) and `LANE-LOCAL-SV-RESULT` (mode, verified surface, verification basis, claim strength, allowed next action) as named blocks.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before developer-specific completion additions below.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.
 - This lets team-lead route research, setup, packet correction, or another owner and return execution to developer.
-- Global route, acceptance pipeline, and staffing shape changes use `scope-pressure` or `hold|blocker`.
-- If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
 - Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
-- If procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/developer-lane-detail.md` for developer-specific completion detail.
 
 ## Changeset Separation
@@ -179,7 +172,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Developer does not self-certify these qualities as review, proof, or acceptance; it makes the production basis inspectable for the owning downstream lanes.
 
 ## Active Communication Protocol
-- Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
+- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
 - Completion uses `completion` only for converged developer-owned output.
 

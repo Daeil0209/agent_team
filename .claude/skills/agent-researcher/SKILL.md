@@ -111,16 +111,10 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 8. Completion
 - Load `self-verification` and run lane-local `SV-RESULT` before any completion.
 - This verifies only the researcher completion transport; team-lead still owns synthesis `SV-RESULT`.
-- Send consequential upward results to team-lead via `SendMessage`.
-- Continuity surfaces require their owning channel.
-- Use the common completion-grade evidence block from `.claude/skills/task-execution/references/completion-handoff.md`.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before researcher-specific completion additions below.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.
-- If the truthful next step changes owner, phase, deliverable shape, or acceptance chain, use `scope-pressure` or `hold|blocker`.
-- Completion requires unchanged owner, phase, deliverable shape, and acceptance chain.
-- If the procedure state is not converged, use `hold|blocker` instead of a completion-style transport.
-- After completion, the lane is `STANDBY`; send no further transport unless distinct new work or structured shutdown request arrives.
 - See `references/researcher-lane-detail.md` for researcher-specific completion detail.
 
 ## Evidence Standards
@@ -135,7 +129,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol
-- Common message classes and `dispatch-ack` receipt law are owned by `.claude/skills/task-execution/references/message-classes.md`.
+- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Completion uses `completion` only for converged researcher-owned evidence.
 
