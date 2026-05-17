@@ -64,6 +64,7 @@ If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopene
 
 ## Activation Trigger
 `team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
+`material` follows `CLAUDE.md` Core Laws 1; consequential boundary changes are tested through `references/boundary-gates.md` Boundary-Change Axes.
 Session start routes to `Skill(session-boot)`.
 Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
 Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.

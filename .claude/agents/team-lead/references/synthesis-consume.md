@@ -72,17 +72,17 @@ Stop positive synthesis when:
 - quality, evidence, independent review, proof, validation, Codex independent review, FAR gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
 - a meaning-dependent synthesis claim uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`
 - `[RETRO-APPLY]` affected prior evidence remains stale or unclassified
-Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign severity, priority, patch-worthiness, or confirmed-defect status through the common finding basis.
+Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign defect status, patch-worthiness, or correction priority only through current `review-verification` defect-promotion basis.
 
 Per-claim basis is internal synthesis evidence.
 For each emitted synthesis claim, record the applicable items:
 - active rule or design-intent basis
 - claim ceiling
-- common finding class when the claim assigns finding status, defect status, priority, ranking, or patch-worthiness
+- `review-verification` defect-promotion basis when the claim assigns defect status, correction priority, ranking, or patch-worthiness
 - non-finding route basis when the claim assigns redispatch force
 - `SEMANTIC-INTENT-BASIS` fit when the claim depends on user, team, design, governance, or artifact meaning
 - protected-function preservation analysis when the claim criticizes protected procedure, owner boundary, evidence, review, proof, validation, FAR gate, or restatement function
-- rejection basis for `protected-restatement`, `design-tradeoff`, and `non-issue` when the claim promotes a candidate toward confirmed defect, patch-worthiness, priority, ranking, or correction redispatch
+- Defect-promotion rejection basis when the claim promotes a candidate toward confirmed defect, patch-worthiness, priority, ranking, or correction redispatch
 Failed per-claim basis routes to claim narrowing, finding reclassification, `OPEN-SURFACES` downgrade, or exclusion from the outgoing synthesis body.
 
 ## Resolve Next Owner And Action
@@ -99,7 +99,7 @@ Failed per-claim basis routes to claim narrowing, finding reclassification, `OPE
 ## Allowed Inputs
 Synthesis is allowed only from `MESSAGE-CLASS: completion`.
 Consume the completion-handoff common spine and any lane-specific fields needed for the synthesized claim.
-For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and common finding basis items.
+For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and current `review-verification` defect-promotion basis.
 
 ## Hard Rules
 - Apply `CLAUDE.md` Communication message-class truth before synthesis.
@@ -116,10 +116,10 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - Positive closure compares against the frozen request/plan delivery contract.
 - Positive synthesis claims only the scope supported by Evidence-Quality Matrix rows, `FROZEN-CONTRACT-STATUS`, and retained open-surface state.
 - Full-corpus, exhaustive, or `FINAL` synthesis requires required shard outputs and inspected corpus state to be integrated, owner-deferred, or out-of-scope with cited basis.
-- Team-lead synthesis must preserve common finding classes: `confirmed-defect`, `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified`.
-- Do not promote `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified` findings to `confirmed-defect` during synthesis.
+- Team-lead synthesis preserves the finding class assigned by `review-verification` defect-promotion path.
+- Do not promote a non-`confirmed-defect` finding class to `confirmed-defect` during synthesis.
 - Do not promote researcher-only evidence to review finding, patch-worthiness, or confirmed defect without downstream review-classification basis.
-- Reviewer governance defect, removal, or patch-worthiness outputs remain candidate evidence until `review-verification` Mode A records promotion basis.
+- Reviewer governance defect, removal, or patch-worthiness outputs remain candidate evidence until `review-verification` defect-promotion path records promotion basis.
 - Treat these convergence patterns as packet-limited evidence:
   - multi-lane convergence from the same narrowed packet
   - Claude+Codex convergence from the same convenience-built packet

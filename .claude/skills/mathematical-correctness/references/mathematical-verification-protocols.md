@@ -49,7 +49,7 @@ Defect handling still uses the shared blocking, acceptance, and reporting contra
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
 | **Minor** | Presentation/notation issue with correctness preserved | Notation inconsistency, conventional symbol choice, formatting of equation |
-Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
+Defect records must record defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Mathematical Assumption Governance
 Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations

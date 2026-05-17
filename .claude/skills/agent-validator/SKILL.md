@@ -14,8 +14,7 @@ PRIMARY-OWNER: validator
 - `references/validator-lane-detail.md`: validator packet fields, verdict lenses, PASS prohibitions, reconciliation, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, final acceptance rejection packet detail, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-User-facing report permission is never produced by this lane.
-This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the verdict still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the validation surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
@@ -64,12 +63,7 @@ Lower-level support evidence is rejected as PASS evidence when the assigned targ
 - Mark inferred pieces explicitly.
 - Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned validation surface.
-- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
-- Classify every carried recommendation as applied, not-material, or blocked.
-- Load and apply material recommendations before lane work.
-- Record recommendation classification basis.
+- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before validation work.
 - Choose the decisive proof tool from the assigned decisive acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
@@ -121,6 +115,7 @@ Keep authoritative versus supplemental sources explicit.
 ### 4. Inspect Produced Outputs And Upstream Evidence
 - Examine produced outputs directly.
 - Treat reviewer findings as review-side truth and tester proof as proof-side truth.
+- Treat upstream defect labels only at their upstream claim strength; do not promote them locally.
 - Treat `TEST-STATE: ready` as proof-report completeness only; inspect row-level proof classifications before any verdict.
 - Inspect `CLOSURE-DEFECT-PROBE-STATUS`, `HARD-TEST-PROBE-STATUS`, and `POSTCONDITION-EVIDENCE-STATUS` before consuming tester rows as decisive user-facing evidence.
 - When the validator packet includes only a discovery/setup objective rather than a frozen exact tool, keep verdict work bounded to confirming whether the discovered tool path satisfies the decisive acceptance surface.

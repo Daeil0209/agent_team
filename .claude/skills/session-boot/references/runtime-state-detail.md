@@ -10,7 +10,7 @@ Load only for the explicit session-boot runtime-detail triggers below.
 This is normally a mid-run or resume/recovery reference, not a clean-startup reference.
 
 Load when the active session-boot owner must decide one of these: boot-window tool limit, startup continuity, current-session runtime truth, cleanup state, stale state, stall state, runtime pressure, compaction recovery, dispatch-state recovery, or monitoring classification.
-This reference classifies runtime readiness, recovery, monitoring, and cleanup truth. Dispatch-runtime execution preflight is owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+This reference classifies runtime readiness, recovery, monitoring, and cleanup truth. It is the canonical owner for runtime-state vocabulary and runtime truth classification; monitoring lookup references may cite it but do not redefine those terms. Dispatch-runtime execution preflight is owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
 Do not load for clean startup when no runtime state, recovery state, monitoring state, cleanup obligation, or runtime-dependent next action exists.
 Do not load to narrate boot progress, reassure the user, produce a status report, or inspect details unrelated to the next boot owner/action.

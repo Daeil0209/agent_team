@@ -61,7 +61,7 @@ Use `INFERENCE` only when reconstructed safely from request, plan, design, Struc
 Use concrete task, artifact, expectation, evidence, and next-owner wording.
 Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.
-- Raw finding counts, repeated labels, multi-lane convergence, and candidate lists are evidence only; they are not severity, priority, patch-worthiness, or confirmed-defect proof.
+- Raw finding counts, repeated or similar labels, same words on different classification axes, multi-lane convergence, and candidate lists are evidence only; they are not conflict, severity, priority, patch-worthiness, or confirmed-defect proof.
 - Researcher outputs supply evidence and candidate classifications only unless a downstream review owner reclassifies them through this basis.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, regression risk, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.

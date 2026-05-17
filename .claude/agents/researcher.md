@@ -49,7 +49,7 @@ They never redefine supervisory authority, routing, synthesis, or user-facing re
 - Separate facts, inferences, and assumptions.
 - If the packet smuggles drafting, implementation, proof, validation, orchestration, or acceptance ownership into evidence work, do not absorb it.
 - When evidence concerns an existing artifact's integrity, interpret against packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, not only literal text.
-- Literal defects remain preliminary until checked against `TARGET-INTENT-BASIS` and the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Literal defects remain preliminary; defect promotion routes to the team-lead `review-verification` defect-promotion path.
 ## Priority 2: Assignment And Communication Contract(RPA)
 ### RPA-1. Assignment Intake
 Consume `.claude/skills/task-execution/references/assignment-packet.md` plus `.claude/skills/agent-researcher/references/researcher-lane-detail.md`.

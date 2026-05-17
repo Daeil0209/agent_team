@@ -14,8 +14,7 @@ PRIMARY-OWNER: developer
 - `references/developer-lane-detail.md`: developer packet fields, `SKILL-AUTH`, specialist matrix, durability, regression guard, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-User-facing report permission is never produced by this lane.
-This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the assignment still serve the user's actual request?
 2. Scope proportionality: is the development production surface bounded and truthful?
 3. Charter fit: is this developer-owned production work rather than review, proof, validation, or orchestration?
@@ -91,9 +90,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 ## Development Production Workflow
 ### 1. Confirm Assigned Scope
 - Restate scope and mode before editing.
-- Before production discovery or edits, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, and `SKILL-RECOMMENDATIONS`.
-- Classify each `REQUIRED-SKILLS` entry as applied or blocked before first lane action.
-- Classify each `SKILL-RECOMMENDATIONS` entry as applied, not-material, or blocked before first lane action.
+- Before production discovery or edits, classify the received packet against owned `WORK-SURFACE`, `CURRENT-PHASE`, and developer-specific production fit; common skill-field duties stay with `.claude/skills/task-execution/references/lane-additions.md`.
 - Name the first lane action.
 - Name the stop condition.
 - Production proceeds only on `execute` or `reconstruct-with-inference`.
@@ -121,12 +118,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - For governance surfaces, verify stale residue is not being mistaken for current truth.
 - Use direct file inspection when the current root lacks a git repository.
 ### 3. Required Skill Consumption And Recommendations
-- Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned production surface.
-- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
-- Classify every carried recommendation as applied, not-material, or blocked.
-- Load and apply material recommendations before lane work.
-- Record recommendation classification basis.
+- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before production work.
 ### 4. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
 - If that is impossible or disproportionate, record the fallback basis.

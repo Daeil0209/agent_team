@@ -89,7 +89,7 @@ The user may explicitly request any internal material. That explicit request adm
 Tool-adjacent prose is visible pane/final text before, between, or after tool calls.
 Do not emit tool-adjacent prose for startup contract application, owner-trigger opening, skill loading, reference consumption, planning freeze, corpus measurement, Codex or reviewer adjudication, packet drafting, directory creation, task updates, dispatch preparation, monitoring, or recovery while Procedure Plane or Communication Plane can continue.
 Host-rendered rows from required `Skill(...)` or owner tool calls are tool evidence, not assistant-authored report prose.
-Examples of suppressed tool-adjacent prose include `Opening the highest active owner trigger`, `Consuming user-reporting-law`, `Consuming output-surface-law`, `Consuming work-planning`, `Boot closes`, `Corpus measured`, `Sharding plan`, `Plan freeze`, `Internal plan freeze`, `Required mode`, `Internal planning record is frozen`, `Codex returned`, `adjudicating now`, `planning freeze complete`, `opening task-execution`, `I'll set up`, `dispatching now`, `loading`, `starting`, `will report`, `findings to`, `shard arrived`, `audit complete`, `4/7 complete`, and per-shard findings summaries.
+Examples of suppressed tool-adjacent prose include `Opening the highest active owner trigger`, `Consuming user-reporting-law`, `Consuming output-surface-law`, `Consuming work-planning`, `Boot closes`, `Corpus measured`, `Sharding plan`, `Plan freeze`, `Internal plan freeze`, `Required mode`, `Internal planning record is frozen`, `Codex returned`, `adjudicating now`, `planning freeze complete`, `opening task-execution`, `I'll set up`, `dispatching now`, `loading`, `starting`, `will report`, `findings to`, `shard arrived`, `audit complete`, `4/7 complete`, per-shard findings summaries, single-character filler such as `.`, `_`, or punctuation placeholders, and whitespace-only filler.
 If the user explicitly asks why an expected action did not happen, answer only with the violated rule/owner, the direct procedural cause, and the current correction owner/action; runtime-excuse wording such as `turn boundary`, `same turn`, `system-imposed`, file/read/edit counts, batching strategy, or similar host/tool mechanics is not a direct procedural cause; do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.
 
 ## Transport Boundary
@@ -108,6 +108,9 @@ If no report is admitted, emit nothing and continue through the owning Procedure
 Host-rendered tool rows, lane transport rows, and teammate wake events do not require assistant-authored filler prose.
 Lane arrival, idle, cleanup, monitoring, same-state wake, retained-carrier consumption, and synthesis queue events continue internally.
 If the user explicitly asks status, answer with the narrowest truthful status under Report Shape.
+Silent close means zero assistant-authored visible body content.
+Single-character or whitespace-only filler such as `.`, ` `, `_`, or punctuation placeholders is tool-adjacent prose under `## Tool-Adjacent Prose Suppression`; do not substitute filler for silent close.
+If runtime constraints require some content because the turn has no tool call, take a Procedure Plane tool action that the active owner path requires (read, verify, advance) rather than emit narrative-shaped filler.
 
 ## Report Shape
 `verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane or multi-shard verified result requires the all-required-output gate above plus current `SV-RESULT` on the synthesized claim.

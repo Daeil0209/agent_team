@@ -59,8 +59,9 @@ Prevent these failures:
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
-Mode A - full workflow: `team-lead` activates this skill for lead-local cross-surface review synthesis and runs the numeric workflow.
-Mode B - packetization lens: `team-lead` uses this skill to name exact downstream lane lenses; the lane consumes only those packet fields unless `team-lead` retains Mode A.
+Full workflow path: `team-lead` activates this skill for lead-local cross-surface review synthesis and runs the numeric workflow.
+Defect-promotion path: the full workflow path when the target promotes defect, removal, patch-worthiness, or correction-priority labels.
+Packetization lens path: `team-lead` uses this skill to name exact downstream lane lenses; the lane consumes only those packet fields unless `team-lead` retains the full workflow path.
 Bounded reviewer-owned acceptance review routes to the reviewer lane.
 
 Activation triggers when the request materially includes one or more of:
@@ -74,7 +75,7 @@ Activation triggers when the request materially includes one or more of:
 Activate for ordinary code review only when the review scope includes cross-surface integrity, design-intent, or risk-balance judgment.
 
 ## Named Lane Lens Index
-Mode B lane packets may name only these bounded `review-verification` lenses:
+Packetization lens lane packets may name only these bounded `review-verification` lenses:
 - `design-intent-lens`: compare the assigned surface with frozen `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, owner intent, and protected function.
 - `owner-boundary-lens`: test whether the finding, packet, or patch moves work across owner, lane, workflow, proof, validation, reporting, or runtime boundaries.
 - `procedure-adherence-lens`: test whether the active owner path, consumed references, gates, handoff, and evidence order were executed rather than narrated.
@@ -84,7 +85,7 @@ Mode B lane packets may name only these bounded `review-verification` lenses:
 - `patch-worthiness-lens`: test confirmed-defect basis, protected-function preservation, smallest owner, operation type, and no stronger narrower alternative.
 
 A named lane lens is a bounded question, not full workflow activation.
-If the packet needs full Steps 1-8, patch-worthiness synthesis, or three or more lenses, route Mode A to `team-lead`.
+If the packet needs full Steps 1-8, patch-worthiness synthesis, or three or more lenses, route the full workflow path to `team-lead`.
 
 ## Inputs
 - exact user request and amendments
@@ -173,10 +174,11 @@ Separate primary owner surfaces from references, generated outputs, runtime stat
 ### 4. Synthesize Findings
 Combine shard or local findings into one evidence map.
 Start by trying to discard, merge, downgrade, or preserve each candidate before promotion.
-Reviewer-lane governance labels are candidate evidence until Mode A verifies the common finding basis and protected-function preservation.
+Reviewer-lane governance labels are candidate evidence until the defect-promotion path verifies the common finding basis and protected-function preservation.
 Promote shard labels only after verifying design-intent conflict, negative operating effect, correction owner, and protected-function preservation.
 Classify findings from owner semantics and operating effect.
-Treat matching labels or verdict-like words as evidence until owning authority and effect are proven.
+For matching-label or verdict-like observations, apply `.claude/skills/task-execution/references/completion-handoff.md` common finding basis before promotion.
+Defect, removal, patch-worthiness, and correction-priority promotion use this defect-promotion path.
 Classify a design tradeoff as a defect only when live evidence proves protected-function harm, correction ownership, and no stronger protected-function loss from the proposed correction.
 Classify deletion, non-enforcement, hook silence, runtime omission, heavy gates, repeated wording, hook burden, line count, ceremony, matching labels, verdict-like words, and plausible misuse as evidence.
 Repeated wording is not a defect until protected local-restatement need is disproven on every affected consuming surface.

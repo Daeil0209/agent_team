@@ -15,7 +15,7 @@ Defect handling still uses the shared blocking, acceptance, and reporting contra
 | **Critical** | Safety margin violated, unit error, spec contradiction | Safety factor below minimum, unit mismatch in calculation, design exceeds rated limits, unguarded hardware errata |
 | **Major** | Spec not referenced, important constraint missing | Assumption lacking datasheet citation, missing operating condition bound, thermal budget unverified, timing budget exceeded |
 | **Minor** | Style/convention issue not affecting function | Unit notation style, significant figures convention, diagram labeling preference |
-Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
+Defect records must record defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Engineering Assumption Governance
 Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation; unresolved critical assumptions are blocking

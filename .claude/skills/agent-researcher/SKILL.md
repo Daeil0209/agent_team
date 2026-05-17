@@ -14,8 +14,7 @@ PRIMARY-OWNER: researcher
 - `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-hardening, operational-reality classification, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-User-facing report permission is never produced by this lane.
-This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the research still serve the user's actual question or decision need?
 2. Scope proportionality: is the evidence surface bounded and truthful?
 3. Charter fit: is this evidence work rather than drafting, implementation, proof, validation, or orchestration?
@@ -76,12 +75,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Select benchmark-perspective when external best practice, methodology selection, comparative evidence, capability hardening, or evolving current practice materially affects the decision target.
 - The material trigger overrides packet mode wording.
 ### 3. Required Skill Consumption And Recommendations
-- Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned research surface.
-- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
-- Classify every carried recommendation as applied, not-material, or blocked.
-- Load and apply material recommendations before lane work.
-- Record recommendation classification basis.
+- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before research work.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark ownership and routing authority stay with their owning lanes.
 ### 4. Retry Guard
@@ -135,9 +129,9 @@ Technically correct but user-inaccessible research is not finish-ready.
 - For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it affects.
 - When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against its bridge axes.
 - If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
-- A removal, reduction, simplification, optimization, or burden-cut proposal is incomplete until the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md` is satisfied.
-- Research output is evidence input to downstream owners, not implementation, patch-worthiness, validation, or confirmed-defect authority.
-- Use `candidate`, `evidence-only`, `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction`; stronger classification belongs to downstream reviewer/review-verification/team-lead synthesis under the common finding basis.
+- Research output is evidence input to downstream owners, not implementation, validation, patch-worthiness, confirmed-defect authority, or defect promotion.
+- Defect, removal, or patch-worthiness promotion routes to the team-lead `review-verification` defect-promotion path.
+- Use `candidate`, `evidence-only`, `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction`.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol

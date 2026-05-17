@@ -9,6 +9,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 # team-session-sequences: Monitoring And Runtime Cleanup Detail
 
+This reference is a lead-side monitoring lookup; it consumes `.claude/skills/session-boot/references/runtime-state-detail.md` for runtime-state meaning and adds only monitoring action selection.
+
 ## Contents
 - Runtime Signals
 - Agent Identity Rule

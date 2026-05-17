@@ -29,13 +29,13 @@ Read this file explicitly when pedagogical detail is required by the active owne
 - Variation requirement: after each worked example, provide at least one variation that changes the classification or requires a different method
 - Faded scaffolding: in problem sets following worked examples, progressively remove hints (first problems show method choice, later problems require student to identify method)
 ### Defect Ownership
-This role owns the following visual/instructional defect types per the shared taxonomy:
+This role owns these instructional-design local defect types:
 - `concept_cascade_missing` — lesson concept structure not frozen before dense fill; prerequisites and reveal order not established
 - `equation_text_placeholder` — formula slide reads as notes rather than a teachable equation block with interpretation
 - `slide_role_conflict` — slide carries mixed roles (content + navigation + summary) that fragment learner attention
 - `narrative_redundancy` — explanatory text restates what a diagram already shows with no interpretive value
 - `feature_missing` — geometry, feature state, or handoff context absent from a process or CAD slide, forcing the learner to imagine missing information
-Defect records must also satisfy the shared classification contract: defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
+Defect records must record defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 On recurrence of any owned defect type, add or strengthen the corresponding gate in this SKILL.md before the next run.
 
 ## Resolve Next Owner And Action

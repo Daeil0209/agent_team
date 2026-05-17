@@ -14,8 +14,7 @@ PRIMARY-OWNER: tester
 - `references/tester-lane-detail.md`: tester packet floor, UI proof matrix, detection amplifiers, tool-tier detail, interaction coverage, checklist, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-User-facing report permission is never produced by this lane.
-This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the proof work still serve the user's actual request and proof surface?
 2. Scope proportionality: is the proof surface bounded and truthful?
 3. Charter fit: is this executable proof gathering rather than implementation, review defect ownership, validation closure, or orchestration?
@@ -59,12 +58,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Frozen user run path or burden-contract ambiguity is also `hold|blocker`.
 - Include the exact missing information request.
 - Proof work starts from packet, artifact, or marked safe inference.
-- Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned proof surface.
-- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
-- Classify every carried recommendation as applied, not-material, or blocked.
-- Load and apply material recommendations before lane work.
-- Record recommendation classification basis.
+- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before proof work.
 - Choose the proof tool from the decisive user surface.
 - Source artifact alone is decisive only when the frozen proof surface is the source/read document itself.
 - Browser interaction requires a browser-proof path.

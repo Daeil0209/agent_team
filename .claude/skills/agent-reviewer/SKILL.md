@@ -14,8 +14,7 @@ PRIMARY-OWNER: reviewer
 - `references/reviewer-lane-detail.md`: reviewer packet fields, review lenses, severity mapping, specialist order, rendered/evidence-gap handling, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-User-facing report permission is never produced by this lane.
-This skill's completions, findings, proofs, verdicts, blockers, status, output fields, and evidence basis are lane-local or Communication Plane records unless `.claude/reference/user-reporting-law.md` admits user-facing prose.
+Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the review still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the review surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other reviewable artifact?
@@ -51,12 +50,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Reconstruct only when the review target, evidence basis, expectation sources, scope baseline, closure/oracle row, and evidence authority are anchored in packet or frozen artifact evidence without changing the review boundary.
 - Mark inferred pieces explicitly.
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Consume packet `REQUIRED-SKILLS` as mandatory methodology or capability skill load/apply items for the assigned review surface.
-- If any required skill is unavailable, lane-mismatched, contradictory, non-fitting, or outside the frozen boundary, return `scope-pressure` or `hold|blocker`.
-- Treat `SKILL-RECOMMENDATIONS` as lane-scoped methodology instructions.
-- Classify every carried recommendation as applied, not-material, or blocked.
-- Load and apply material recommendations before lane work.
-- Record recommendation classification basis.
+- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before review work.
 - See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready completion detail.
 
 ## Review Workflow
@@ -95,15 +89,13 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.
 - Check whether each apparent defect is a true defect or an intended protection for the target intent.
 - Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS` bridge axes; a technically supported conclusion that misses any of them is a review finding.
-- Removal, reduction, simplification, or optimization recommendations require the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Removal, reduction, simplification, or optimization recommendations remain review evidence unless the team-lead `review-verification` defect-promotion path promotes them.
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
 - Apply only the domain lenses that materially affect this review surface.
 ### 7. Classify Findings
 - Every finding states severity, evidence anchor, impact, owner, and fix direction.
-- Findings that lack the common finding basis are preliminary evidence, not blocking, patchable, or confirmed defects.
-- Governance defect, removal, or patch-worthiness review outputs common finding-class labels only as candidate evidence under the frozen claim ceiling.
+- Governance defect, removal, patch-worthiness, or correction-priority labels remain candidate evidence under the frozen claim ceiling until the team-lead `review-verification` defect-promotion path promotes them.
 - That candidate ceiling does not weaken ordinary acceptance review; blocking acceptance findings remain blocking under severity mapping.
-- `confirmed-defect`, patch-worthiness, and correction-priority promotion belong to team-lead `review-verification` Mode A synthesis.
 - Repeated wording stays candidate evidence until local consuming-surface need is disproven on each affected surface.
 - Distinguish blocking from non-blocking findings explicitly.
 - Blocking findings include contract breach, missing decisive evidence, user/reader/operator-surface failure, skipped required gate, or unsupported acceptance claim.
