@@ -8,21 +8,10 @@ auto-inject: false
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Validator Reference
-## Auto-inject
-false — load explicitly when packet detail, PASS-prohibition detail, reconciliation detail, operator-runtime/rendered-quality detail, or completion detail is needed.
-
 ## Role-Spine Completion
 `agents/validator.md` owns only the always-loaded validator charter, boundary, receipt trigger, stop rule, PASS prohibition, and verdict-local completion duty. This reference owns detailed validator packet fields, verdict lenses, PASS prohibition detail, reconciliation detail, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, and completion detail.
 
 When a validator role or skill says "validator additions" or "validator detail", consume this file directly. Do not re-expand `agents/validator.md` into a packet-field catalog. Non-derivable missing decisive validation detail is `hold|blocker` or `scope-pressure`; weak evidence never becomes `PASS` through reconstruction.
-
-Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the validator-specific payload and acceptance discipline needed on top of those common contracts.
-
-## Control Packet Discipline
-- `phase-transition-control` is workflow coordination context only.
-- It does not replace an assignment-grade validator packet when new bounded verdict work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
-- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Contents
 - Validator Packet Detail
@@ -89,7 +78,6 @@ Use only the lenses that materially affect the assigned validation surface.
 - Confidence calibration: downgrade to `HOLD`, `partial`, `mismatched`, `blocked`, `not assessable`, `INFERENCE`, or `UNVERIFIED` before using pass-like language that outruns evidence.
 
 ## Specialist Skill Loading
-Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 Validator selects and applies every materially relevant specialist lens needed to prove or disprove the assigned verdict on the decisive validation surface.
 Consume frozen specialist contracts, oracles, and skill-basis records from Phase 1/2 design, Phase 4 evidence, tester proof, reviewer findings, and completion packets as expectation sources. If a material oracle is missing and cannot be derived, return `HOLD` or `hold|blocker`; do not convert the verdict to a narrower PASS.
 Use this surface map:

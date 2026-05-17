@@ -9,9 +9,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Developer Reference
 ## Contents
-- Auto-inject
 - Role-Spine Completion
-- Control Packet Discipline
 - Required Dispatch Packet Fields
 - Completion Completeness Challenge
 - Specialist Skill Loading
@@ -20,21 +18,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Developer Completion Detail
 - Resolve Next Owner And Action
 
-## Auto-inject
-false — load explicitly when packet detail, defect-fix detail, or completion detail is needed.
-
 ## Role-Spine Completion
 `agents/developer.md` owns only the always-loaded developer charter, boundary, receipt trigger, stop rule, and lane-local completion duty. This reference owns the detailed developer packet fields, classification table, specialist matrix, defect-fix detail, and completion detail.
 
 When a developer role or skill says "developer additions" or "developer detail", consume this file directly. Do not re-expand `agents/developer.md` into a packet-field catalog. Missing decisive detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless the safe-inference rule below permits it.
-
-Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the developer-specific payload needed on top of those common contracts.
-
-## Control Packet Discipline
-- `phase-transition-control` is workflow coordination context only.
-- It does not replace an assignment-grade developer packet when new bounded production work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
-- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Required Dispatch Packet Fields
 | Work Type | Required Fields |
@@ -113,7 +100,6 @@ Insufficient completion examples:
 - `team-lead` routes developer-exclusive specialist skills, but direct specialist skill loading belongs to `developer`.
 - Use `SKILL-AUTH: lane=developer:<lane-id>; surface=<blocked-surface>; skill=<skill-id>` when governance-sensitive specialist skill routing basis must stay explicit.
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology instructions inside an already bounded development production surface.
-- Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 - Developer lane evaluation selects recommended or lane-local specialist skills for the production surface.
 
 Specialist skills with `PRIMARY-OWNER: developer`:

@@ -7,8 +7,6 @@ auto-inject: false
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Session Closeout Reference
-## Auto-inject
-false — load explicitly when detailed closeout state is needed.
 ## Closeout State Schema
 - `session_id`: string
 - `closeout_initiated`: ISO8601 timestamp

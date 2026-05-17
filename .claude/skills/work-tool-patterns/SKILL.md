@@ -88,7 +88,7 @@ Keep the packet compact:
 - defaults/settings demotion basis
 - empty, error, recovery, and re-run expectations
 - pattern-level proof oracle and acceptance-surface hints
-- benchmark basis: `adopted`, `trial`, `benchmark-light`, `benchmark-full`, or `inference`
+- `BENCHMARK-BASIS` from `references/pattern-packet.md`
 - rejected pattern notes when a tempting pattern fails destination fit
 - open surfaces and next owner/action
 ## Composition
@@ -98,7 +98,7 @@ Keep the packet compact:
 - In Phase 4/5, review and proof compare the delivered result against the frozen pattern packet plus adjacent-owner contracts.
 - When `benchmark-simulation` is active, consume its abstraction-fit-adapt synthesis.
 - Convert benchmark observations into destination-fit pattern decisions.
-- When no benchmark is required, mark the basis as `adopted`, `trial`, or `inference` and keep the confidence honest.
+- When no benchmark is required, select the applicable `BENCHMARK-BASIS` value from `references/pattern-packet.md` that does not claim benchmark evidence, and keep the confidence honest.
 ## Handoff Boundary
 Hand off when downstream owners can see what kind of tool is being built, how the operator uses it, what data or artifacts persist or leave the system, and how completion will be proven.
 

@@ -9,9 +9,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Reviewer Reference
 ## Contents
-- Auto-inject
 - Role-Spine Completion
-- Control Packet Discipline
 - Reviewer Packet Detail
 - Domain Lenses
 - Applied Review Techniques
@@ -20,21 +18,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Reviewer Completion Detail
 - Resolve Next Owner And Action
 
-## Auto-inject
-false — load explicitly when packet detail, lens detail, severity mapping, or completion detail is needed.
-
 ## Role-Spine Completion
 `agents/reviewer.md` owns only the always-loaded reviewer charter, boundary, receipt trigger, stop rule, and review-local completion duty. This reference owns detailed reviewer packet fields, review lenses, severity mapping, specialist skill order, validator-ready completion detail, and rendered/evidence gap detail.
 
 When a reviewer role or skill says "reviewer additions" or "reviewer detail", consume this file directly. Do not re-expand `agents/reviewer.md` into a packet-field catalog. Missing decisive review detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless the review target and evidence basis are anchored in packet or artifact evidence.
-
-Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the reviewer-specific payload and review discipline needed on top of those common contracts.
-
-## Control Packet Discipline
-- `phase-transition-control` is workflow coordination context only.
-- It does not replace an assignment-grade reviewer packet when new bounded review work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
-- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Reviewer Packet Detail
 - Consequential reviewer packets must carry these fields explicitly:
@@ -110,7 +97,6 @@ Use only the lenses that materially affect the assigned surface.
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
 
 ## Specialist Skill Loading
-Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
 Before severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.
 Use this surface map:

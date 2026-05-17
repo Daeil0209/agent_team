@@ -45,7 +45,7 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 - Dispatch-runtime creation, member creation, assignment send, and reuse are `task-execution` moves after `work-planning`. Standalone `Agent` is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to classify runtime readiness.
 - No production fan-out before boot closes.
-- Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs. Do not use legacy continuity snapshot files as continuity truth.
+- Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs.
 - Fresh-task isolation stays active during startup. Inherited continuity can reveal blockers or residue, but it does not reopen prior goals by habit.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
 
@@ -138,7 +138,8 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 - Orphan recovery does not create closeout authority or bypass message-first cleanup decisions for the current live session.
 
 ## Procedure-State Schema
-Canonical structured runtime truth lives in workspace-root `.runtime/procedure-state.json`. Internal procedure scaffolding stays in internal context for the current cycle. Legacy continuity snapshot files are not continuity surfaces.
+Canonical structured runtime truth lives in workspace-root `.runtime/procedure-state.json`.
+Internal procedure scaffolding stays in internal context for the current cycle.
 
 Minimum fields that must stay semantically stable:
 - `workspaceRoot`

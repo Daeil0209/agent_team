@@ -9,8 +9,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Reference Material
 ## Contents
 - Platform Implementation Tools
-- CSS Variables Token Definitions
-- Tailwind Config Integration
+- CSS Variables Token Definitions (Web Example)
+- Tailwind Config Integration (Web Example)
 - Cross-Platform Token JSON
 - Design System Checklist
 - Resolve Next Owner And Action

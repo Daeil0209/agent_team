@@ -11,14 +11,13 @@ PRIMARY-OWNER: researcher
 - PRIMARY-OWNER: researcher
 - New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
-- `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-hardening, operational-reality classification, and completion detail.
+- `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the research still serve the user's actual question or decision need?
 2. Scope proportionality: is the evidence surface bounded and truthful?
 3. Charter fit: is this evidence work rather than drafting, implementation, proof, validation, or orchestration?
-4. Feasibility: can this be completed inside the declared question boundary and turn budget?
+4. Feasibility: can this be completed inside the declared question boundary with an available lawful evidence path?
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
@@ -27,7 +26,6 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
 - hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one researcher -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
 `scope-pressure` and `hold|blocker` are stop states, not notes.
 ### User-Perspective Gate
@@ -41,7 +39,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Use only after team-lead assigns a bounded research brief.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the researcher detail contract in `references/researcher-lane-detail.md`.
-- `agents/researcher.md` is the role spine, not the packet-field catalog.
 - When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Before research discovery, classify the received packet as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
 - `scope-pressure` and `hold|blocker` stop evidence work. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis and the smallest truthful evidence boundary.
@@ -52,7 +49,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, and evidence-authority threshold.
 - If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, send `hold|blocker`.
 - Material coverage lenses apply from the decision target.
-- See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-hardening patterns, operational-reality classification, and completion detail.
+- See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 
 ## Research Modes
 - `RESEARCH-MODE` indicates `bounded`, `deep`, or `sharded` dispatch shape.
@@ -75,7 +72,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Select benchmark-perspective when external best practice, methodology selection, comparative evidence, capability hardening, or evolving current practice materially affects the decision target.
 - The material trigger overrides packet mode wording.
 ### 3. Required Skill Consumption And Recommendations
-- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before research work.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark ownership and routing authority stay with their owning lanes.
 ### 4. Retry Guard
@@ -109,8 +105,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
-- This verifies only the researcher completion transport; team-lead still owns synthesis `SV-RESULT`.
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before researcher-specific completion additions below.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
@@ -129,7 +123,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol
-- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Completion uses `completion` only for converged researcher-owned evidence.
 

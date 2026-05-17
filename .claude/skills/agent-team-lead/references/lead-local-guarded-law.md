@@ -83,7 +83,7 @@ Otherwise apply `[PARALLEL]` and route through `task-execution`.
 - Consume required skills before continuation.
 
 ## Team-Routing Guard
-If `team-routing candidate` is frozen, carry required methodology or capability skills from `LANE-REQUIRED-SKILLS-MAP`.
+If `team-routing candidate` is frozen, carry required methodology or capability skills from the `LANE-REQUIRED-SKILLS-MAP` defined by `.claude/skills/work-planning/references/planning-record-fields.md`.
 If `ambiguous-route` is frozen, carry required methodology or capability skills from lawful phase-local refinement.
 Lane ownership triggers agent-specific skill loading.
 Packet skill listing carries methodology or capability required skills.

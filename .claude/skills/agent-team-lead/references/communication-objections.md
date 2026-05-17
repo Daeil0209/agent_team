@@ -84,7 +84,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   - `LANE-NEXT-CANDIDATE`
   - `CORRECTION-OUTCOME`
 - Reopen `work-planning` immediately when `CORRECTION-OUTCOME: route-replan`.
-- Reopen `work-planning` when the canonical pressure type shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
+- Reopen `work-planning` when `PRESSURE-TYPE` from `.claude/skills/task-execution/references/scope-pressure.md` shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
 - Classify single-agent collapse of intended parallel work as distribution-planning defect.
 - Restore parallel shape through `work-planning`.
 - Packet correction requires:
@@ -106,5 +106,5 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   - missing setup
   - missing tooling
 - Map distinct setup owner to `owner-split`.
-- Preserve canonical pressure values.
+- Preserve `PRESSURE-TYPE` and `CORRECTION-OUTCOME` values from `.claude/skills/task-execution/references/scope-pressure.md`.
 - If pressure identifies a tool/evidence gap but lacks candidate-tool research, treat researcher tool-selection as the next evidence owner unless the packet already proves the correct tool or the issue is a proven user-owned blocker.

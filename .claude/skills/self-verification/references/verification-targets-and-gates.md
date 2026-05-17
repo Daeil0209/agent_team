@@ -9,9 +9,6 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Self-Verification Reference
 Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis check, material same-lane self-certification risk, or expanded output record.
 
-## Auto-inject
-false - this file is binding detail when loaded, not always-loaded context.
-
 ## Contents
 - Target Profiles
 - Reference Load Triggers

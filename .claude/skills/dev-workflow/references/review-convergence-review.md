@@ -123,16 +123,9 @@ team-lead executes the output-record next owner/action without user-facing revie
 The exception is explicit approval or a verified user-owned blocker.
 
 ## Same-Boundary Loop
-Do not reopen `work-planning` between passes while all remain unchanged:
-- `ACTIVE-WORKFLOW: dev-workflow`
-- phase
-- review target or named stale downstream surface under repair
-- owner map
-- deliverable shape
-- staffing shape
-- proof/acceptance chain
-- user requirement and request-fit basis
-
+Use the same-boundary common fields in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` `## Same-Boundary Loop`.
+Review-convergence adds review target or named stale downstream surface under repair.
+Do not reopen `work-planning` between passes while the common fields and review-convergence added field remain unchanged.
 Reopen `work-planning` when any boundary changes, becomes untrue, or cannot be named.
 
 Same-review continuation packet carries:

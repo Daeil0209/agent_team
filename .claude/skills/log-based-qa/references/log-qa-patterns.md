@@ -81,7 +81,7 @@ Client → API Gateway → Backend → Database
 
 If logs are the frozen decisive proof surface, missing required log fields or request_id propagation gaps classify as `blocked proof` until another truthful proof surface is frozen.
 ---
-### Issue Documentation Template
+## Issue Documentation Template
 ```markdown
 ### ISSUE-001: {short title}
 - **Request ID**: req_xxxxxx

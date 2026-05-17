@@ -53,7 +53,8 @@ Load when sheets, manual operations, approvals, or workflow-heavy tools hide rul
 - define import/export, persistence, reconciliation, and audit behavior
 - define the operator meaning of major tabs, windows, buttons, and save paths
 - preserve undefined but observed labels, policy meanings, and allocation choices as configurable categories, rule tables, or user-editable parameters
-- parameterizable ambiguity becomes parameter/default/open question
+- Record original value, source, meaning, scope, and unresolved state for each preserved ambiguity.
+- Ambiguity that cannot preserve those facts becomes an open question or `hold|blocker` with next owner/action.
 - The active owner reports `hold|blocker` when any of these remain too weak for credible delivery:
   - workflow start states
   - workflow end states
@@ -85,10 +86,10 @@ Capture only the decisive business packet:
 Hand off after downstream owners can implement or review from explicit purpose, authority, mutation rules, and reconciliation behavior.
 
 Keep unresolved authority or approval conflicts explicit.
-Expose them as explicit states, rules, or parameters.
-Parameterizable ambiguity is different.
-When all observed cases can be represented with full data preservation, asking is a defect.
-Record a configurable rule or assumption and continue.
+Expose authority, approval, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions, or `hold|blocker` with next owner/action.
+Continue without user escalation only when every observed case preserves original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
+Record the chosen representation and evidence basis before handoff.
+Ask the user only when representation would choose an irreversible policy, discard observed data, change authority, or hide an approval blocker.
 Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference or `references/allocation-participation-workflow.md` when material.
 ## Operational Discipline
 - Extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.

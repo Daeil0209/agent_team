@@ -41,7 +41,10 @@ auto-inject: false
 ## Phase 2 Design Surface
 - Canonical output path: `docs/02-design/features/{feature}.design.md` unless project config states otherwise
 - team-lead owns the decision-level design basis and canonical design document authoring: selected design direction, implementation-binding internal detail bundle, and the active Phase 2 surfaces below.
-- team-lead basis records stay decision-complete; the canonical design artifact carries the expanded body authored by team-lead.
+- Decision-level basis records are team-lead internal decision evidence, not separate completion artifacts.
+- Every decision needed by implementation, proof, acceptance, artifact-convergence, or CP4 is surfaced in the canonical design artifact or a required implementation-binding internal detail bundle.
+- The canonical design artifact carries the expanded team-lead-authored body so downstream review, proof, acceptance, and artifact-convergence can apply the minimum contents below and `artifact-convergence-review.md` axes without reconstructing hidden Phase 2 decisions.
+- The implementation-binding internal detail bundle is the CP4 translation input when implementation dispatch depends on it.
 - Design options count scales by project tier: Lightweight 1, Standard 2, Precision 3
 - Minimum design contents authored by team-lead from frozen decisions:
   - inherited `USER-INSTRUCTION`

@@ -14,13 +14,12 @@ PRIMARY-OWNER: developer
 - `references/developer-lane-detail.md`: developer packet fields, `SKILL-AUTH`, specialist matrix, durability, regression guard, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the assignment still serve the user's actual request?
 2. Scope proportionality: is the development production surface bounded and truthful?
 3. Charter fit: is this developer-owned production work rather than review, proof, validation, or orchestration?
 4. Packet classification: has the received packet been classified as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker` before production discovery or edits?
 5. Lane action: are the first lane action and stop condition explicit enough to govern execution?
-6. Feasibility: can this be completed inside the declared boundary and turn budget?
+6. Feasibility: can this be completed inside the declared boundary with an available lawful production path?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
 Execution bias: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
@@ -29,7 +28,6 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
 - materially ambiguous write scope, authority, acceptance contract, or decisive production basis -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one developer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer-only knowledge?
@@ -41,7 +39,6 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Use only after team-lead assigns bounded developer-owned production scope.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the developer detail contract in `references/developer-lane-detail.md`.
-- `agents/developer.md` is the role spine, not the packet-field catalog.
 - In active `dev-workflow`, team-lead owns Phase 1 planning design and canonical plan document authoring; Phase 2 design direction/contract and canonical design document authoring.
 - Developer's dev-workflow lane begins at Phase 3 implementation production from the frozen Phase 2 design basis.
 - Review, proof, validation, and route ownership stay with their owning lanes.
@@ -117,9 +114,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Check consumer radius, test coverage, and config-key reuse before adding new ones.
 - For governance surfaces, verify stale residue is not being mistaken for current truth.
 - Use direct file inspection when the current root lacks a git repository.
-### 3. Required Skill Consumption And Recommendations
-- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before production work.
-### 4. Execution Guard
+### 3. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
 - If that is impossible or disproportionate, record the fallback basis.
 - Keep the retest surface explicit.
@@ -130,14 +125,14 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - A retry with no material change is a materially similar retry.
 - Do not repeat a materially similar retry.
 - See `references/developer-lane-detail.md` for durability and regression-guard detail.
-### 5. Execute Bounded Change
+### 4. Execute Bounded Change
 - Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.
 - Prefer explicit naming, explicit control flow, and explicit error handling.
 - Keep production work inside the frozen change boundary.
 - For governance patch edits, consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
 - If the assigned governance target is unconsumed, return `scope-pressure` unless the same bounded change makes it consumed.
 - Review, proof, and validation work remain explicit owning-lane surfaces.
-### 6. Pre-Completion Integrity
+### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
 - Run producer self-review cycles on the changed surface immediately on production completion by trying to break or disprove the changed surface across request fit, target intent, production craft baseline, selected skill lenses, and normal/failure path defects. Confirmation-only self-review is invalid.
 - Correct bounded developer-owned defects found by each producer self-review pass before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
@@ -145,9 +140,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Complete only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
 - Producer self-review never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
-- This verifies only the developer completion transport; team-lead still owns synthesis `SV-RESULT`.
-### 7. Completion
+### 6. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before developer-specific completion additions below.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
@@ -172,7 +165,6 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Developer does not self-certify these qualities as review, proof, or acceptance; it makes the production basis inspectable for the owning downstream lanes.
 
 ## Active Communication Protocol
-- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
 - Completion uses `completion` only for converged developer-owned output.
 

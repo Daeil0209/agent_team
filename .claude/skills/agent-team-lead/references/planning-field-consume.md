@@ -48,7 +48,7 @@ Read only fields consumed by the current next owner/action, in this relative ord
 12. `NEXT-CONSEQUENTIAL-ACTION`
 13. `DISPATCH-BLOCKERS` / `HOLD-CONDITIONS`
 14. `EXECUTION-READINESS-BASIS`
-15. `LEAD-LOCAL-REQUIRED-SKILLS` / `LANE-REQUIRED-SKILLS-MAP`
+15. `LEAD-LOCAL-REQUIRED-SKILLS` / `LANE-REQUIRED-SKILLS-MAP` from `.claude/skills/work-planning/references/planning-record-fields.md`
 16. `AGENT-MAP` / `PARALLEL-GROUPS` when routed
 
 ## Reaction Rules

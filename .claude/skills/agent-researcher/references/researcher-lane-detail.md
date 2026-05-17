@@ -9,11 +9,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Researcher Reference
 ## Contents
-- Auto-inject
 - Role-Spine Completion
-- Control Packet Discipline
 - Researcher Packet Detail
-- Evidence Hardening Patterns
+- Evidence Tier Discipline
 - Source-Family Method Floor
 - Completion Completeness Challenge
 - Surface-Specific Evidence Requirements
@@ -22,21 +20,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Researcher Completion Detail
 - Resolve Next Owner And Action
 
-## Auto-inject
-false — load explicitly when packet detail, benchmark detail, evidence-hardening detail, or completion detail is needed.
-
 ## Role-Spine Completion
-`agents/researcher.md` owns only the always-loaded researcher charter, boundary, receipt trigger, stop rule, and evidence-local completion duty. This reference owns detailed researcher packet fields, benchmark/evidence-hardening fields, surface-specific evidence requirements, operational reality classification, and completion detail.
+`agents/researcher.md` owns only the always-loaded researcher charter, boundary, receipt trigger, stop rule, and evidence-local completion duty. This reference owns detailed researcher packet fields, benchmark fields, evidence-tier discipline, surface-specific evidence requirements, operational reality classification, and completion detail.
 
 When a researcher role or skill says "researcher additions" or "researcher detail", consume this file directly. Do not re-expand `agents/researcher.md` into a packet-field catalog. Missing decisive evidence detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless safe inference preserves owner, phase, proof burden, acceptance burden, deliverable shape, and evidence boundary.
-
-Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the researcher-specific payload and evidence discipline needed on top of those common contracts.
-
-## Control Packet Discipline
-- `phase-transition-control` is workflow coordination context only.
-- It does not replace an assignment-grade researcher packet when new bounded evidence work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
-- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Researcher Packet Detail
 - Consequential researcher packets keep these fields explicit:
@@ -65,21 +52,12 @@ Phase packets, message classes, cleanup truth, and completion spine remain owned
   - `UNVERIFIED-CLAIMS`
   - `DOWNSTREAM-BENCHMARK-NEEDS`
 
-## Evidence Hardening Patterns
+## Evidence Tier Discipline
 - Evidence-tier selection in descending order: external authoritative reference > prior session evidence > model prior knowledge > intuition.
 - A feasible, materially-relevant higher-tier source is the required default.
 - Lower-tier use requires named deferral basis.
 - Settling for a lower tier while a material higher tier is available is an evidence defect.
 - For design, visual, UX, methodology, and governance-hardening surfaces, external authoritative evidence or benchmark synthesis is the default quality ceiling raiser when the decision depends on current best practice.
-- Authoritative-source depth
-- Quantitative backing
-- Concrete case evidence
-- Cross-source normative references
-- Evidence density self-check
-- Requirement-vs-practice gap
-- Secondary-effect tracing
-- Specialist-boundary preservation
-Use only the patterns that materially strengthen the assigned decision target.
 
 ## Source-Family Method Floor
 Use this floor when `SOURCE-FAMILY` includes market, technology, patent, academic, standards, regulatory, or mixed evidence for a report, analysis, generated artifact, or downstream program.

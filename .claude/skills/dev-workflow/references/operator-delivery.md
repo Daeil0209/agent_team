@@ -99,7 +99,6 @@ When verifier cannot directly exercise the operator's window-close action, docum
 Acceptance closes from team-side auto-test proof or proven-equivalent interop proof.
 The proof target is: close button -> verify all ports release -> verify clean re-launch succeeds.
 If neither proof path is available, report `HOLD` or `UNVERIFIED-IN-OPERATOR-ENV`.
-Validator no-operator-labor rules still apply.
 
 ## R31 -- Mental-Model Alignment Mandate
 "Minimum-effort termination path" is NOT satisfied by merely providing a working close mechanism.

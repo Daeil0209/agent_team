@@ -54,7 +54,7 @@ Record:
 
 ## Verification Gate
 Before team-lead reports a synthesized analysis result, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` on that exact analysis result.
-The gate remains open without current `SV-RESULT` evidence from that loaded skill run.
+The gate remains open without current `SV-RESULT` evidence from an actually-loaded `Skill(self-verification)` run; `SV-RESULT` blocks authored inside the synthesis carrier, retained outputs, or report drafts do not satisfy the gate.
 Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification when available.
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
 Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.

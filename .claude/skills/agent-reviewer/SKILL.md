@@ -14,7 +14,6 @@ PRIMARY-OWNER: reviewer
 - `references/reviewer-lane-detail.md`: reviewer packet fields, review lenses, severity mapping, specialist order, rendered/evidence-gap handling, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the review still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the review surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other reviewable artifact?
@@ -27,7 +26,6 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
 - mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
 - materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one reviewer -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer knowledge?
@@ -41,7 +39,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Use only after team-lead assigns a bounded review surface.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the reviewer detail contract in `references/reviewer-lane-detail.md`.
-- `agents/reviewer.md` is the role spine, not the packet-field catalog.
 - Produced plans and designs are valid review targets.
 - Review them as artifacts.
 - Planning, route freeze, staffing, implementation, proof execution, and final acceptance stay with their owning lanes.
@@ -50,7 +47,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Reconstruct only when the review target, evidence basis, expectation sources, scope baseline, closure/oracle row, and evidence authority are anchored in packet or frozen artifact evidence without changing the review boundary.
 - Mark inferred pieces explicitly.
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before review work.
 - See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready completion detail.
 
 ## Review Workflow
@@ -104,8 +100,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 8. Retest And Self-Check
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
-- This verifies only the reviewer completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 9. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before reviewer-specific completion additions below.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
@@ -118,7 +112,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - See `references/reviewer-lane-detail.md` for reviewer-specific completion detail.
 
 ## Active Communication Protocol
-- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Reviewer-specific blocker: missing plan, design, target, constraint, tradeoff, owner, proof, acceptance, prerequisite, or evidence basis.
 - Inference requires explicit marking and safe reconstruction basis.
 - Completion uses `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.

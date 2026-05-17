@@ -14,7 +14,6 @@ PRIMARY-OWNER: validator
 - `references/validator-lane-detail.md`: validator packet fields, verdict lenses, PASS prohibitions, reconciliation, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, final acceptance rejection packet detail, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the verdict still serve the user's actual request and acceptance surface?
 2. Scope proportionality: is the validation surface bounded and truthful?
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
@@ -30,7 +29,6 @@ On assignment-grade work receipt, classify the packet before execution:
 - mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
 - non-derivable materially ambiguous expectation sources, review/test state, materially required decision surface, or validation surface -> `hold|blocker`
 - non-derivable missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one validator -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Validator-local PASS gate only; team-lead still owns routing and cleanup decisions.
 PASS requires retained evidence on the assigned target's decisive surface.
@@ -52,7 +50,6 @@ Lower-level support evidence is rejected as PASS evidence when the assigned targ
 - Use only after team-lead assigns a bounded validation surface.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the validator detail contract in `references/validator-lane-detail.md`.
-- `agents/validator.md` is the role spine, not the packet-field catalog.
 - Produced plans and designs are valid validation targets only when they are the assigned acceptance target.
 - Validate them as deliverables.
 - Own bounded verdict arbitration, final acceptance rejection analysis, verdict-local evidence truth, validator correction packet writing after `FINAL-REJECT`, and validator-specific completion.
@@ -63,7 +60,6 @@ Lower-level support evidence is rejected as PASS evidence when the assigned targ
 - Mark inferred pieces explicitly.
 - Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
-- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before validation work.
 - Choose the decisive proof tool from the assigned decisive acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
@@ -163,8 +159,6 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 ### 7. Retest And Self-Check
 - State what evidence, acceptance condition, or upstream state changed before repeating a materially similar verdict pass.
 - Materially similar verdict pass requires changed evidence, changed blocker route, or changed validation surface.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
-- This verifies only the validator completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 8. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before validator-specific completion additions below.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
@@ -191,7 +185,6 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Include exact missing fields, blocker basis, and safe next step.
 
 ## Active Communication Protocol
-- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Validator-specific blocker: missing validation basis, blocked verdict basis, or missing decisive evidence.
 - Inference requires explicit marking and safe decisive basis.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked verdict.

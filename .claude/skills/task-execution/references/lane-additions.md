@@ -27,7 +27,12 @@ Every agent-specific skill inherits these common preconditions:
 - Receipt is not permission to execute a defective packet; classify in the same turn, then execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
 - Continue into lane work after receipt.
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
+- If frozen host-authorized parallel-agent work collapses multiple independent surfaces onto one lane, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`.
 - Reconcile completion-grade output against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Before completion, load `self-verification`.
+- Before completion, run lane-local `SV-RESULT`.
+- Lane-local `SV-RESULT` verifies producer execution truth only.
+- Team-lead owns synthesis `SV-RESULT`.
 - Consume the agent-specific skill only for consequential lane-owned work.
 - Receipt, status, shutdown, phase, or clarification messages do not activate it unless they assign or reopen work.
 - Once consumed, the agent-specific skill outranks packet capability skills inside the lane.

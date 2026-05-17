@@ -75,35 +75,12 @@ After `Skill(benchmark-simulation)` is loaded, load trigger-specific references 
 - `references/cited-evidence-cache.md`: captured external reference families, source classifications, synthesis, and open surfaces.
 
 ## External-Reference Methodology
-When benchmarking against external references, the methodology MUST be **abstraction-fit-adapt**.
-Direct copy is invalid benchmark synthesis.
-External references include web research, public examples, reference UIs, industry best practices, and standards.
-Direct copy transplants source-context defaults into destination context.
-Destination context often differs in user, scale, constraint, or domain.
-That produces misfit dressed as best-practice.
-
-### External-Site Capture Contract
-External-site capture is task-input extraction, not browsing for decoration.
-Use external sites when the active task needs design, domain, information-representation, workflow, verification, methodology, or standard evidence that local context does not already ground.
-Valid sources include authoritative docs, standards, public product examples, reference UIs, image or layout examples, demos, case studies, and established design or workflow systems.
-Capture the reusable information the destination needs: information elements, grouping, hierarchy, layout pattern, table or chart or card structure, labels, state cues, interaction cues, workflow steps, constraints, anti-patterns, and standards thresholds.
-Record source identity, captured modality, extracted pattern, fit judgment, rejected misfit basis, and downstream use.
-Do not copy source styling, brand, content, or domain-specific assumptions unless the destination fit judgment proves they transfer.
-
-Required cycle for each external reference:
-1. **Abstract**: identify the design problem the reference solves.
-   Identify the underlying principle that makes it work.
-   Identify the user need it serves.
-   Strip away surface details.
-2. **Fit-judge**: evaluate against destination.
-   Check user need, scale, constraint, domain conventions, and regulatory context.
-   Reject patterns where fit fails.
-3. **Adapt-synthesize**: combine fitting abstract patterns into a NEW design proposal that solves OUR specific problem.
-   The output is a design synthesis informed by external evidence.
-4. **Reject misfits**: explicitly record patterns considered but rejected with fit-failure reason. Silence on rejection invites later reintroduction by drift.
-
-Load when the abstraction-fit-adapt cycle is needed.
-External evidence is useful only after destination fit-judgment.
+Load `references/capability-benchmark.md` `External-Reference Benchmark Extension` when external-reference benchmarking is material.
+That reference owns source provenance, abstraction-fit-adapt protocol, fit judgment, reject logging, confidence rating, anti-pattern flags, strength preservation, and synthesis output.
+Use `references/observation-protocol.md` for multi-modal reference observation.
+Use `references/search-quality.md` for source quality, corroboration, negative search, and search depth.
+Direct-copy output is invalid.
+External-reference output must be destination-fit synthesis.
 
 ### Reference-Class Discrimination
 External references split into two structurally distinct classes.
@@ -168,35 +145,15 @@ Activate when:
 - the active owner or assigned lane selects benchmark evidence for before/after proof, routing advantage, external design synthesis, methodology choice, or capability growth
 
 ## Composition with Design Capability Stack
-When the deliverable involves visual / UX / interaction design, benchmark-simulation is ONE node in a composable design capability stack.
-That stack exists for synergistic capability evolution.
-
-- **`benchmark-simulation`** (this skill) — external evidence + abstraction-fit-adapt → design synthesis + anti-pattern flags + dimension priorities
-- **`visual-composition`** — consumes synthesis → presentation composition + rendered legibility + operator-facing clarity discipline
-- **`design-system-tokens`** — 3-layer token architecture (color / spacing / typography) for cross-platform consistency that visual-composition applies
-- **`mockup-to-component`** — visual design output → React/component implementation via 4-step transition
-- **`dev-workflow` gap-iteration reference** — result-level design-implementation gap detection + YAGNI scope review + iteration protocol -> findings feed back to next benchmark cycle
-
-**Closed feedback loop**: external benchmark -> visual composition -> token application -> component implementation.
-Then run result-level gap detection through `.claude/skills/dev-workflow/references/gap-iteration.md` and feed the result into the next benchmark cycle.
-Each iteration enriches the team's design vocabulary and adaptive fit-judgment.
-That is how design capability evolves continuously rather than plateauing.
+Load `references/design-stack-composition.md` when a visual, UX, interaction, layout, or rendered design deliverable materially needs sibling design capabilities.
+That reference owns the phase-aligned recipes, sibling skill stack, composition defects, output shape, and next owner/action.
+Carry the selected recipe and material sibling skills into `SKILL-RECOMMENDATIONS` or the applied skill basis.
 
 ### Smart Composition Recipe
-Compose by deliverable phase.
-Invoke sibling skills only when their phase is materially active.
-Activate materially active sibling phase skills.
-- **Early-design / discovery phase**: `benchmark-simulation` (this skill) + `visual-composition` (layout + hierarchy framing) + `design-system-tokens` (color / spacing / typography vocabulary)
-- **Implementation-bridge phase**: `mockup-to-component` consumes the synthesis + tokens
-- **Post-implementation verify phase**: `dev-workflow` gap iteration operates on rendered result-level diff, not source diff.
-- Findings re-enter the next benchmark cycle as anti-pattern signal or strength-preservation note.
-- **Iteration phase**: `dev-workflow` gap iteration -> `benchmark-simulation` re-cycle with new evidence
-
-For sibling phases:
-- when materially active, name it in `SKILL-RECOMMENDATIONS` or applied skill basis
-- when inactive, omit it
+Use `references/design-stack-composition.md` for Recipe A-D selection.
+Name materially active sibling phases.
+Omit inactive sibling phases.
 Composition requires an explicit owner and phase basis.
-See `references/design-stack-composition.md` for per-recipe detail.
 
 ### Verification Methodology Composition
 The abstraction-fit-adapt cycle applies to **verification methodology** itself.
@@ -220,7 +177,7 @@ The composition's value is realized only when the rendered/operating deliverable
 Source-only verification when result-level is feasible is a verification defect for visual-UI deliverables.
 
 When dispatching this skill, lead pre-names sibling skills the receiving lane must compose with.
-Base that composition on deliverable phase per the Smart Composition Recipe above.
+Base that composition on the selected recipe in `references/design-stack-composition.md`.
 
 Use `BENCHMARK-MODE: light|full` exactly as frozen in the packet.
 Benchmark-light is the default comparative discipline.

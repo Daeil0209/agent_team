@@ -115,11 +115,11 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - receives accepted Codex or team-lead review findings through artifact-convergence and applies valid `REDESIGN-PLAN` edits directly to the canonical plan document
 - treats the canonical plan artifact as the plan surface
 **Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
-**Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning` and uses the Phase 1 artifact as the design basis.
+**Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning`, and Phase 2 expands the Phase 1 artifact into scope, risk, architecture, proof, acceptance, and downstream work decisions.
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
-**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-review.md` only when the canonical plan artifact materially controls next-phase scope, risk, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
+**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-review.md` only when the canonical plan artifact materially controls next-phase scope, risk, architecture, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
 **Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`; field schema is owned by `references/artifact-convergence-review.md` Output Record.
 
 ## Phase 2: Design
@@ -131,13 +131,17 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - the decision-level Phase 2 design basis and records it
 - canonical design document authoring
 **Execution law**: the design basis covers:
+- Phase 1 artifact-controlled scope, risk, architecture, proof, acceptance, and downstream work implications expanded by Phase 2
 - selected direction, ER/data, interface/API/format, and UI/user-flow
 - benchmark-required external-reference capture for detailed design when information representation, visual structure, workflow pattern, methodology choice, or domain pattern materially shapes the design
 - proof, acceptance, correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis
 **Execution law**: team-lead Phase 2 authorship:
-- expands the frozen Phase 2 design basis directly into the required canonical design document structure
-- keeps the decision basis operator-internal and decision-complete across the listed surfaces
-- carries the expanded team-lead-authored body in the canonical design artifact
+- records the decision-level Phase 2 design basis as team-lead internal decision evidence, not as a separate completion artifact
+- keeps that internal decision evidence decision-complete across the listed surfaces
+- surfaces every decision needed by implementation, proof, acceptance, artifact-convergence, or CP4 in the canonical design artifact or required implementation-binding internal detail bundle
+- expands those decisions into the required canonical design artifact and required implementation-binding internal detail bundle structure
+- makes the canonical design artifact directly usable for downstream design, proof, acceptance, and artifact-convergence from its recorded decisions and linked implementation-binding detail
+- makes the implementation-binding internal detail bundle the CP4 translation input when implementation dispatch depends on it
 **Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical design document.
 **Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
 **Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.

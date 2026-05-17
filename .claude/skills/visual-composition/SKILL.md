@@ -126,7 +126,7 @@ Visual-failing surfaces exit as blocking visual findings.
 
 **Dashboard / monitoring / at-a-glance UI discipline**:
 For integrated dashboard, monitoring, status console, command center, or executive-summary surfaces, derive the operator-decision frame before layout or handoff.
-Name 5-10 operator decisions the surface must support unless the frozen scope is narrower.
+Name the material operator decisions the frozen surface must support.
 Name the information that changes each decision.
 Use that frame to choose regions, metrics, hierarchy, and interactions.
 Single-domain metrics are acceptable only when the frozen surface is single-domain.

@@ -9,9 +9,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Tester Reference
 ## Contents
-- Auto-inject
 - Role-Spine Completion
-- Control Packet Discipline
 - Tester Packet Detail
 - UI Intent Proof Matrix
 - Defect Detection Amplifiers
@@ -22,21 +20,10 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Tester Completion Detail
 - Resolve Next Owner And Action
 
-## Auto-inject
-false - load explicitly when packet detail, UI intent proof detail, interaction coverage, human-facing checklist detail, or completion detail is needed.
-
 ## Role-Spine Completion
 `agents/tester.md` owns only the always-loaded tester charter, boundary, receipt trigger, stop rule, and proof-local completion duty. This reference owns detailed tester packet fields, UI intent proof matrix, tool-tier detail, interaction coverage, human-facing checklist, specialist skill rule, and completion detail.
 
 When a tester role or skill says "tester additions" or "tester detail", consume this file directly. Do not re-expand `agents/tester.md` into a packet-field catalog. Missing decisive proof detail is `hold|blocker` or `scope-pressure`, not local reconstruction unless proof target, expectation, surface, environment basis, scenario scope, and decisive evidence basis are anchored in packet or artifact evidence.
-
-Phase packets, message classes, cleanup truth, and completion spine remain owned by `.claude/skills/task-execution/references/`. This reference only states the tester-specific payload and proof discipline needed on top of those common contracts.
-
-## Control Packet Discipline
-- `phase-transition-control` is workflow coordination context only.
-- It does not replace an assignment-grade tester packet when new bounded proof work is assigned.
-- Phase context and assignment-grade work arriving in the same execution segment: consume the embedded phase context inside the assignment packet, and send only the normal `dispatch-ack`.
-- Shutdown intent follows the structured `shutdown_request` protocol.
 
 ## Tester Packet Detail
 - Consequential tester packets must carry these fields explicitly:
@@ -145,7 +132,6 @@ When the same proof surface offers multiple tool profiles at different friction-
 - Rendered evidence kept distinct from wording, logic, and request-fit review
 
 ## Specialist Skill Loading
-Packet `REQUIRED-SKILLS` entries stay mandatory under the common lane-additions preconditions.
 Tester lane evaluation selects and applies materially relevant specialist lenses from the proof surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
 - Work-tool, spreadsheet, operations, business-rule, and workflow-state proof: `business-workflow`, `work-tool-patterns`.
 - Decisive log proof: apply `log-based-qa` when the frozen proof surface names logs or `REQUIRED-SKILLS` carries it.

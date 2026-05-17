@@ -14,13 +14,12 @@ PRIMARY-OWNER: tester
 - `references/tester-lane-detail.md`: tester packet floor, UI proof matrix, detection amplifiers, tool-tier detail, interaction coverage, checklist, and completion detail.
 ### Scope & Quality Gate
 Before any work:
-Apply `.claude/reference/user-reporting-law.md`; this lane does not own Reporting Plane permission.
 1. Request fit: does the proof work still serve the user's actual request and proof surface?
 2. Scope proportionality: is the proof surface bounded and truthful?
 3. Charter fit: is this executable proof gathering rather than implementation, review defect ownership, validation closure, or orchestration?
 4. Packet classification: has the received packet been classified as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker` before proof discovery or execution?
 5. Lane action: are the first lane action and stop condition explicit enough to govern proof execution?
-6. Feasibility: can this be completed inside the declared proof boundary and turn budget?
+6. Feasibility: can this be completed inside the declared proof boundary with an available lawful proof path?
 7. Intent fit: does the planned proof map the assigned design intent or proof expectation to executable actions and observable results?
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
@@ -30,7 +29,6 @@ On assignment-grade work receipt, classify the packet before execution:
 - safe inferred proof surface without owner, phase, proof, acceptance, deliverable, user-run-path, tool-basis, closure/oracle row, scenario boundary, or state-postcondition change -> `reconstruct-with-inference`
 - mixed phase-intent, shardable proof overload, hidden prerequisite, or contradictory proof contract -> `scope-pressure`
 - materially ambiguous proof objective, scenario scope, tool requirement, user run path, or expected proof level -> `hold|blocker`
-- frozen host-authorized parallel-agent work collapsing multiple independent surfaces onto one tester -> `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`
 ### User-Perspective Gate
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface.
 1. Has proof executed the exact operator launch artifact through the intended invocation shape?
@@ -49,7 +47,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Use only after team-lead assigns a bounded test surface.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the tester detail contract in `references/tester-lane-detail.md`.
-- `agents/tester.md` is the role spine, not the packet-field catalog.
 - When request-fit or promised user workflow materially shapes proof, require the request-bound packet fields plus explicit proof-surface and run-path fields rather than reconstructing them from gist alone.
 - Reconstruct only when proof target, proof expectation, proof surface, environment basis, scenario scope, closure/oracle row, state-postcondition, and decisive evidence basis are anchored in packet or artifact evidence.
 - Reconstruction preserves owner, phase, proof burden, acceptance burden, deliverable shape, tool/run-path basis, scenario boundary, closure/oracle row, state-postcondition, and evidence authority.
@@ -58,7 +55,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Frozen user run path or burden-contract ambiguity is also `hold|blocker`.
 - Include the exact missing information request.
 - Proof work starts from packet, artifact, or marked safe inference.
-- Apply `.claude/skills/task-execution/references/lane-additions.md` common `REQUIRED-SKILLS` and `SKILL-RECOMMENDATIONS` duties before proof work.
 - Choose the proof tool from the decisive user surface.
 - Source artifact alone is decisive only when the frozen proof surface is the source/read document itself.
 - Browser interaction requires a browser-proof path.
@@ -145,8 +141,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Materially similar rerun requires changed evidence, changed blocker route, or changed proof path.
 - Before completion, identify plausible developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
-- Load `self-verification` and run lane-local `SV-RESULT` before any completion.
-- This verifies only the tester completion transport; team-lead still owns synthesis `SV-RESULT`.
 ### 7. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before tester-specific completion additions below.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
@@ -164,7 +158,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - `Disproof`: executed check, failing behavior observed.
 
 ## Active Communication Protocol
-- Apply common Communication Plane message-class law from `.claude/skills/task-execution/references/message-classes.md`: `dispatch-ack`, `status`, `completion`, `scope-pressure`, and `hold|blocker`.
 - Tester-specific blocker: blocked proof path, material ambiguity, unsafe packet, or wrong staffing shape.
 - Use exact `MESSAGE-CLASS: hold|blocker` for blocked proof.
 - Completion uses `completion` only for converged tester-owned proof.

@@ -45,7 +45,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 │   message queue adapters, file storage)     │
 └─────────────────────────────────────────────┘
 ```
-### Layer Violation Detection
+## Layer Violation Detection
 | Violation | Example | Severity |
 |---|---|---|
 | Domain imports infrastructure | Entity imports ORM model or HTTP client | T1 — block |

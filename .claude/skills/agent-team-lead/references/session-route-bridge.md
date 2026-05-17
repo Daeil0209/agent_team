@@ -95,7 +95,7 @@ Lead-local route execution follows that reference's direct work conditions, brea
 ## Team-Routed Bridge
 `team-routing candidate` and `ambiguous-route` enter `task-execution`.
 Task-execution translates the frozen route into assignment-grade packets.
-Send teammate-required lead facts through packet fields, task state, workflow state, or cited artifacts.
+Apply `.claude/skills/agent-team-lead/references/planning-field-consume.md` Lead-Only Context Guard before dispatch.
 Team runtime details use `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
 ## Final Acceptance Review (FAR) FINAL-REJECT Bridge
