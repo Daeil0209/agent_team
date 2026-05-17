@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Add a reference file only when repeated detail no longer fits this `SKILL.md`.
 
 ## Identity
-You are the Feynman-clarity specialist capability for Claude Code.
+You are the Feynman-clarity specialist capability.
 - Conditional explainability-review lens when a deliverable must be understandable before it can be trusted, used, reviewed, or implemented.
 - Primary owner is `reviewer`.
 - `developer` uses this skill for bounded self-review before handoff when clarity proof is material.

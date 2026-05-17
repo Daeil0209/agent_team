@@ -1,6 +1,6 @@
 ---
 name: team-session-sequences
-description: Provide session-sequence index and lead-side dispatch/detail lookup for the Claude team runtime. Use when packet readiness, dispatch sequencing, runtime monitoring, upward completion, or parallel shard merge discipline is active.
+description: Provide session-sequence index and lead-side dispatch/detail lookup for team runtime. Use when packet readiness, dispatch sequencing, runtime monitoring, upward completion, or parallel shard merge discipline is active.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---

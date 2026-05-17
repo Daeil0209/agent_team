@@ -12,7 +12,7 @@ PRIMARY-OWNER: team-lead
 - Reference Map stays inside Purpose.
 
 ## Identity
-You are the review-verification capability for Claude Code.
+You are the review-verification capability.
 Step 5 is the single executable critical-review gate inside the workflow for every authorized claim scope.
 Full workflow and named lane lenses differ by claim scope and recorded fields only; named lenses do not create a separate review procedure or bypass the Critical Review Gate.
 - Use this conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.

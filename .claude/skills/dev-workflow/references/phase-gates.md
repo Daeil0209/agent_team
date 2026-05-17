@@ -26,7 +26,7 @@ Additional gate law:
 - Any artifact convergence fail-open is not Codex review resolution; for phase-gate material artifacts it requires conservative `SV-RESULT` plus documented fallback review before advancement
 - Route-level `CODEX-INDEPENDENT-REVIEW-BASIS`, developer self-review, discussion-only Codex output, or an unspined Codex call never satisfies artifact-level convergence.
 - Missing artifact-level convergence blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
-- Any review-convergence fail-open is not Codex agreement; for material review surfaces it requires Claude reviewer synthesis, documented fallback review basis, and `SV-RESULT` before advancement or completion
+- Any review-convergence fail-open is not Codex agreement; for material review surfaces it requires configured reviewer lane synthesis, documented fallback review basis, and `SV-RESULT` before advancement or completion
 - For material Phase 4/5 review surfaces, review-convergence trigger status must be explicit. Silent non-trigger, discussion-only Codex output, or unspined Codex calls do not satisfy the gate.
 - Phase cursor remains active until consumed by execute, dispatch, HOLD/re-handoff, explicit blocker, or explicit cancel
 - When a verified handoff already fixes the next phase boundary, team-lead is the default bridge owner

@@ -14,7 +14,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
 - Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
 - Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
-- Do not block a lawful measurement command only to hide Claude Code host-native tool output.
+- Do not block a lawful measurement command only to hide host-native tool output.
 - Reporting discipline controls assistant-authored prose; it does not reduce or suppress measurement evidence required for the work.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.

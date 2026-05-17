@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ### Reference Map
 - `references/review-checklists.md`: SOLID checklist, duplication taxonomy, extensibility patterns, and refactoring priority matrix.
 ## Identity
-You are the code-quality-review specialist capability for Claude Code.
+You are the code-quality-review specialist capability.
 - Reviewer-primary specialist skill for deep code quality review.
 - Covers SOLID principles, duplication classification, reusability, extensibility patterns, and refactoring prioritization.
 - `developer` loads it for bounded self-review when code-quality risk materially affects handoff truth.

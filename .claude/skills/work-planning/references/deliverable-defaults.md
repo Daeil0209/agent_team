@@ -40,7 +40,7 @@ Use these defaults when the deliverable class is in scope:
 - API or library -> contract completeness and integration proof against a real or representative consumer
 - slides -> layout, legibility, visual hierarchy, and narrative flow
 - data export -> bit-fidelity, schema fidelity, example row/use note when material, or conversion correctness matched to the user-visible use
-- doctrine or governance patch -> reliable trigger, owner, stop condition, WHY anchor, evidence burden, verification gate, cumulative coherence, and source/read clarity; hook/settings contract claims also need direct bounded proof of the changed hook/settings surface, such as settings parsing, matcher coverage, or direct hook invocation; native Claude Code dispatcher/UI E2E or other operator-runtime E2E is required only when the frozen claim includes Claude Code client invocation, enforcement, UI, launch, or operator-flow behavior
+- doctrine or governance patch -> reliable trigger, owner, stop condition, WHY anchor, evidence burden, verification gate, cumulative coherence, and source/read clarity; hook/settings contract claims also need direct bounded proof of the changed hook/settings surface, such as settings parsing, matcher coverage, or direct hook invocation; native dispatcher/UI E2E or other operator-runtime E2E is required only when the frozen claim includes client invocation, enforcement, UI, launch, or operator-flow behavior
 
 `work-planning` Step 0 must classify deliverable type and user-information-delivery shape, then bake them into `DERIVED-DEFAULTS`. Failing to derive type-fit from the user-perspective lens is a planning defect.
 

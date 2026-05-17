@@ -16,7 +16,7 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 - Final Acceptance Review (FAR) `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
 
 ## Screen Boundary
-Lane `completion` transports are not user reports even when Claude Code renders them on screen.
+Lane `completion` transports are not user reports even when rendered on screen.
 Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
 Arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
 If no admitted user report exists after a lane transport, team-lead emits no pane/final prose.

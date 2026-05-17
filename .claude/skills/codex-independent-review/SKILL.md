@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - New peer top-level sections require explicit governance review.
 
 ## Identity
-You are the configured independent-review capability for Claude Code.
+You are the configured independent-review capability.
 Codex MCP is the current tool adapter, not doctrine authority.
 The active tool is `mcp__codex__codex` when configured independent review is required and available.
 Use this skill only through an active owner path.

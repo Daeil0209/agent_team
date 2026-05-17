@@ -94,6 +94,7 @@ Cached facts:
 Governance implications:
 - Move detailed procedure and source notes out of always-loaded doctrine into on-demand skills or reference files.
 - Keep high-frequency role files and agent-specific skills concise; put detailed edge-case mechanics into direct reference files such as `references/*.md` rather than nested lookup chains.
+- Executable governance owner, source, and reporting rules live in the skill body or owned reference.
 - Use `user-invocable: false` for governance skills that are model-invoked rather than user-facing commands.
 - Do not treat absence of `.claude/commands/` as a defect when the project uses equivalent skills.
 

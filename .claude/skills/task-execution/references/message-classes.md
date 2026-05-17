@@ -42,11 +42,11 @@ Tool envelope fields are actual top-level tool parameters only; governance packe
 | Runtime topology | `TeamCreate`, team-scoped `Agent`, `TeamDelete` | runtime creation, member creation/reattach with top-level `description`, `prompt`, `team_name`, and `name`; runtime deletion | `runtime-dispatch-law.md`; `session-closeout` closeout state | member-created truth, assignment-send next action, or closeout residual truth |
 | Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, silent phase-context consumption, or shutdown evidence |
 | Agent-to-lead transport | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, completion, or blocked transport | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
-| Direct teammate interaction | Claude Code teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
+| Direct teammate interaction | teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
 | Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, status update, read, output read, or stop; never assignment delivery | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | task correction, task identity recovery, retained-output `Read`, completion status closure, or exact task stop |
 
 Task tools are task-state channels.
-Agent communication uses `SendMessage` or Claude Code teammate UI.
+Agent communication uses `SendMessage` or teammate UI.
 
 ## Communication Plane Law
 This file owns agent-to-agent and agent-to-lead transport classes.
@@ -64,7 +64,7 @@ Reporting Plane may cite only the user-relevant outcome admitted by `.claude/ref
 Communication payload carries the detail required by the receiving owner through the active envelope plus governed carriers.
 Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, task state, or retained-output contract.
 Do not shrink, omit, or distort receiver-required detail for user-display reasons.
-When Claude Code can render `SendMessage` on a user-visible screen, `ack` and `completion` state signals place the signal text in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space, and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
+When `SendMessage` can render on a user-visible screen, `ack` and `completion` state signals place the signal text in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space, and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.

@@ -13,7 +13,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ### Reference Map
 - `references/log-qa-patterns.md`: log formats, Docker patterns, thresholds, templates, and runtime-signal QA patterns.
 ## Identity
-You are the log-based-qa specialist capability for Claude Code.
+You are the log-based-qa specialist capability.
 - Conditional runtime-signal lens when logs are the most truthful available verification surface.
 ## Authority
 **Coverage:** log-based runtime observation method, request-traceability expectations, and observability-quality challenge.

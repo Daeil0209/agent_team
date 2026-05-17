@@ -23,7 +23,7 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 Codex MCP is the current configured independent-review adapter for reviewer-grade independent review.
 Codex output is independent reviewer-grade evidence, not review verdict authority.
 team-lead owns reconciliation and workflow cursor truth.
-Claude reviewer owns the configured reviewer lane result.
+The configured reviewer lane owns its result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
 
@@ -32,7 +32,7 @@ Configured independent-review authority boundary is owned by `.claude/skills/cod
 ## Trigger
 Run when all are true:
 - active workflow is `dev-workflow`
-- Claude reviewer review is required or returned
+- configured reviewer lane review is required or returned
 - review result affects Phase 4/5 advancement, validator ingress, redispatch, or completion truth
 - reviewer packet fields, review target, review scope, evidence basis, acceptance surface, and doctrine paths can be identified
 
@@ -65,10 +65,10 @@ Missing required path records `fail-open:blocked_by_config`.
 Missing decisive reviewer-facing fields are not guessed.
 
 ## Blind Dual Review
-1. Start Claude reviewer through `task-execution`.
+1. Start the configured reviewer lane through `task-execution`.
 2. Start Codex MCP independent review from the same frozen reviewer packet fields without waiting for reviewer handoff.
-3. First Codex packet excludes Claude reviewer findings, reviewer verdict, team-lead verdict, and suggested fixes.
-4. team-lead must not use Codex findings to rewrite the Claude reviewer packet for the same pass.
+3. First Codex packet excludes configured reviewer lane findings, reviewer verdict, team-lead verdict, and suggested fixes.
+4. team-lead must not use Codex findings to rewrite the configured reviewer lane packet for the same pass.
 5. After both outputs exist, team-lead reconciles both point-by-point.
 
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
@@ -93,21 +93,21 @@ Classify each material point:
 
 Each material point must be accepted, rejected with evidence, or deferred with owner and phase.
 Accepted material findings become correction requirements.
-Rejected Codex and Claude reviewer points require governing doctrine, artifact evidence, or frozen request basis.
+Rejected Codex and configured reviewer lane points require governing doctrine, artifact evidence, or frozen request basis.
 Rubber-stamp acceptance or unexplained rejection is a convergence defect.
 
-After each correction, rerun Claude reviewer and Codex MCP independent review as a new blind dual-review pass.
+After each correction, rerun configured reviewer lane and Codex MCP independent review as a new blind dual-review pass.
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
-For material review surfaces, lawful fail-open requires Claude reviewer synthesis, fallback review basis, and conservative `SV-RESULT`.
+For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `SV-RESULT`.
 Fail-open cannot claim Codex concurrence or bypass reviewer, tester, validator, stale-artifact classification, or claim narrowing.
 
 ## Convergence
 Review convergence requires:
 - no accepted high/major/blocking review issue remains on the active surface
-- every Claude reviewer and Codex point is accepted, rejected, or deferred with reason
-- Codex-only and Claude-only material points are adjudicated
+- every configured reviewer lane and Codex point is accepted, rejected, or deferred with reason
+- Codex-only and reviewer-lane-only material points are adjudicated
 - any remaining low/minor issue has owner, phase, and acceptance impact
 - tester and validator ingress surfaces remain truthful
 - no stale artifact or proof result is used as current evidence
@@ -144,14 +144,14 @@ Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 
 ## Output Record
 Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record. Review-convergence additions:
-- review target identity and Claude reviewer state: `ready|hold|blocked`
+- review target identity and configured reviewer lane state: `ready|hold|blocked`
 - whether `SV-RESULT` covered the synthesized claim
 
 ## Resolve Next Owner And Action
 - Accepted material findings open correction requirements.
 - Resolved review convergence opens the output-record next owner/action.
 - Missing or false continuation values make the result discussion-only and reopen the review convergence route.
-- Lawful `fail-open` opens Claude reviewer synthesis plus conservative `SV-RESULT`.
+- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `SV-RESULT`.
 - Stale artifact or proof result opens stale-surface correction before advancement.
 - Boundary-changing review result reopens `work-planning`.
 - Repeated unresolved disagreement opens `HOLD`.

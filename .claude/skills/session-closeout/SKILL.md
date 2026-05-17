@@ -77,7 +77,7 @@ Keep closeout narrow:
 - During active closeout, `TeamDelete` is allowed without a shutdown-order error; unresolved live-agent truth is carried as warning, hold, or residue.
 - Runtime cleanup is lead-owned.
 - Teammate cleanup truth stays lead-owned.
-- Claude Code team config, task list, mailbox, and cleanup state stay runtime-owned.
+- Team config, task list, mailbox, and cleanup state stay runtime-owned.
 - Governed runtime cleanup uses governed runtime surfaces.
 - Blocked or partially cleaned closeout reports residual truth.
 - Clean closeout stays silent or one-line.

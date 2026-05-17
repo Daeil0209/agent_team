@@ -18,7 +18,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ### Reference Map
 - `references/integration-bridge-detail.md`: pre-verification, integration failure, blocked-report, auth bridge, and data pipeline bridge detail.
 ## Identity
-You are the external-tool-bridge specialist capability for Claude Code.
+You are the external-tool-bridge specialist capability.
 - Use as the conditional integration lens when bounded external bridging or bridge-produced merged artifacts create material integration risk.
 - Use this SKILL.md as your primary operating method.
 - Role: bounded support overlay for external-tool dependency work.

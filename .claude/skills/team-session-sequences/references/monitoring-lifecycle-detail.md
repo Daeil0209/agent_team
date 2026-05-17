@@ -46,7 +46,7 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - Consume `session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
 - Completion transport shape is owned by `task-execution/references/completion-handoff.md`.
 - Immediate reuse sends distinct bounded work promptly; otherwise the lane remains `STANDBY` until reuse or cleanup.
-- Runtime task lists, mailbox state, and team config are Claude Code runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
+- Runtime task lists, mailbox state, and team config are runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
 - An agent-targeted `shutdown_request` is teammate cleanup, not evidence that the whole session is entering `Closeout Sequence`.
 - Replacing a stale current-runtime agent outside closeout follows three steps:
   1. send `shutdown_request`

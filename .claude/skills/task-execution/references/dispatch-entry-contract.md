@@ -74,7 +74,7 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
 - agent -> `team-lead` uses message-class transports (`dispatch-ack`, `status`, `scope-pressure`, `completion`, exact `hold|blocker`).
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
-- user -> teammate uses Claude Code teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
+- user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`.
 - Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
 - Agent name alone is not task identity.
