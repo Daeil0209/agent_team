@@ -29,13 +29,10 @@ Stop before asking to proceed when the next owner/action is lead-owned and non-d
 Stop before unsolicited status prose when continuing the active path is possible in the same segment.
 Stop before lane/shard arrival or partial-convergence prose when monitoring, retained-carrier consumption, merge, correction, or synthesis can continue.
 
-## Explicit Why/Status Answer Limit
-When the user asks why an expected action did not happen, answer only:
-- violated owner/rule
-- direct procedural cause
-- current correction owner/action
-Do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.
-After the answer, resume the current owner action unless the user redirects or a user-action blocker is proven; runtime-excuse wording from `.claude/reference/user-reporting-law.md` is not a valid stop reason.
+## Status And Why Continuation
+Status answers follow `.claude/reference/user-reporting-law.md` `## Report Shape`.
+Answers to why an expected action did not happen follow `.claude/reference/user-reporting-law.md` `## Report Shape`.
+After the answer, resume the current owner action unless the user redirects or a user-action blocker is proven.
 
 ## Resolve Next Owner And Action
 - A stopped routine `FINAL` route opens residual queue processing.
@@ -55,7 +52,7 @@ After the answer, resume the current owner action unless the user redirects or a
   - a satisfied phase boundary remains unconsumed
   - a converged synthesis is unreported
 - On a paused path, resume by executing.
-- On a completed boundary with zero paused lead-owned action, deliver the status answer.
+- On a completed boundary with zero paused lead-owned action, route the status answer through `.claude/reference/user-reporting-law.md`.
 - That status answer terminates the turn only when no same-segment execution remains open.
 - Surface review/proceed prompts for user-requested review, explicit approval requirements, or verified user-owned blockers.
 
@@ -73,15 +70,13 @@ After the answer, resume the current owner action unless the user redirects or a
 
 ## Final Convergence
 `FINAL` requires zero residual deliverable convergence.
-A queued item is closed by:
-- a patch
+The residual queue contains every owner-named deliverable-convergence item whose required patch, proof, integration, owner deferral, or out-of-scope basis is still open.
+A residual queue item closes through:
+- patch
 - owning upstream deferral
 - cited out-of-scope proof
-An unclosed queued item blocks `FINAL`.
-Treat these items in `FINAL` as non-convergence evidence:
-- residual items
-- queued items
-- remaining items
+- owning synthesis, proof, validation, or acceptance integration
+An open residual queue blocks `FINAL`.
 Continue execution until:
 - the queue is empty
 - a true blocker emerges

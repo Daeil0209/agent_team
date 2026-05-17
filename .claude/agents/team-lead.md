@@ -114,7 +114,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ### RPA-9. Self-Growth And Governance Change
 - Confirmed recurrence-barrier hardening loads `Skill(self-growth-sequence)`.
 - Routine `.claude` asset maintenance loads `Skill(update-upgrade-sequence)`.
-- Governance patch review loads `Skill(review-verification)` before mutation when required by that skill.
+- When `Skill(review-verification)` is required, governance patch review opens it and uses the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
 - Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.
 

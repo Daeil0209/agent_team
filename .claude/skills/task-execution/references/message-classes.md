@@ -83,9 +83,8 @@ A receiving owner consumes the governed carrier before acting; a screen-visible 
 This contract does not reduce Communication Plane payload capacity.
 Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
 A receipt event is one host-visible header/preview state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
-The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; message/body slots must be blank or whitespace-only.
-A receipt event must not expose `MESSAGE-CLASS`, `WORK-SURFACE`, `ACK-STATUS`, paths, field labels, packet content, prose explanation, skill-loading narration, file-read plan, output-path plan, methodology note, lane count, route alternative, evidence summary, `starting now`, `will report`, `ping you`, or similar future-action language.
-If receipt exposes an unsafe packet, missing decisive basis, or blocked execution, send the required detail through a separate `scope-pressure` or `hold|blocker` transport.
+The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; message/body slots stay blank or whitespace-only as a host-envelope constraint, not report prose.
+When assignment receipt is unsafe, lacks decisive basis, or is blocked, the receiving owner sends `scope-pressure` or `hold|blocker` instead of `dispatch-ack`.
 Valid `dispatch-ack` makes the lane `ACTIVE` for that assignment execution block.
 The lane continues work until one closing class is sent.
 The closing classes are `completion`, `scope-pressure`, `hold|blocker`, and `HOLD`.

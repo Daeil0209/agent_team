@@ -90,7 +90,7 @@ Tool-adjacent prose is visible pane/final text before, between, or after tool ca
 Do not emit tool-adjacent prose for startup contract application, owner-trigger opening, skill loading, reference consumption, planning freeze, corpus measurement, Codex or reviewer adjudication, packet drafting, directory creation, task updates, dispatch preparation, monitoring, or recovery while Procedure Plane or Communication Plane can continue.
 Host-rendered rows from required `Skill(...)` or owner tool calls are tool evidence, not assistant-authored report prose.
 Examples of suppressed tool-adjacent prose include `Opening the highest active owner trigger`, `Consuming user-reporting-law`, `Consuming output-surface-law`, `Consuming work-planning`, `Boot closes`, `Corpus measured`, `Sharding plan`, `Plan freeze`, `Internal plan freeze`, `Required mode`, `Internal planning record is frozen`, `Codex returned`, `adjudicating now`, `planning freeze complete`, `opening task-execution`, `I'll set up`, `dispatching now`, `loading`, `starting`, `will report`, `findings to`, `shard arrived`, `audit complete`, `4/7 complete`, per-shard findings summaries, single-character filler such as `.`, `_`, or punctuation placeholders, and whitespace-only filler.
-If the user explicitly asks why an expected action did not happen, answer only with the violated rule/owner, the direct procedural cause, and the current correction owner/action; runtime-excuse wording such as `turn boundary`, `same turn`, `system-imposed`, file/read/edit counts, batching strategy, or similar host/tool mechanics is not a direct procedural cause; do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.
+When the user asks why an expected action did not happen, follow the `explicit status answer` shape under `## Report Shape`.
 
 ## Transport Boundary
 When Claude Code renders Communication Plane transport on a user-visible screen, the combined header/preview/body display is an envelope, not the full Communication Plane payload.
@@ -115,7 +115,14 @@ If runtime constraints require some content because the turn has no tool call, t
 ## Report Shape
 `verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane or multi-shard verified result requires the all-required-output gate above plus current `SV-RESULT` on the synthesized claim.
 `user-action blocker` reports the blocked user decision/action and the smallest safe next step.
-`explicit status answer` uses the narrowest truthful form: binary status questions get one yes/no sentence plus only a user-action blocker when present; dispatch status uses the narrowest proven truth label from `.claude/skills/task-execution/references/truth-rules.md`; omit internal topology, packet, shard, ack/completion, counts, paths, and evidence detail unless that exact field is requested.
+`explicit status answer` uses the narrowest truthful form.
+Binary status questions get one yes/no sentence plus only a user-action blocker when present.
+When the user asks why an expected action did not happen, answer only with the violated rule/owner, direct procedural cause, and current correction owner/action.
+Runtime-excuse wording such as `turn boundary`, `same turn`, `system-imposed`, file/read/edit counts, batching strategy, or similar host/tool mechanics is not a direct procedural cause.
+Do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.
+Dispatch status uses the narrowest proven truth label from `.claude/skills/task-execution/references/truth-rules.md`.
+Synthesis barrier and multi-lane status answers report only the user-relevant waiting condition unless the user requests a specific internal field.
+Status answers omit internal topology, packet, shard, ack/completion, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field is requested.
 `closeout residual` reports only residual state that affects the user.
 
 `FINAL` requires zero-residual deliverable convergence or explicit owner-deferred/out-of-scope basis.

@@ -89,11 +89,8 @@ Consume `NEXT-CONSEQUENTIAL-ACTION` before local execution, dispatch, phase move
 Classify repeated same-class blocking gaps as root-cause route evidence.
 
 ## Lead-Local Bridge
-Lead-local work requires:
-- complete `LEAD-LOCAL-WORK-ITEMS`
-- frozen `LEAD-LOCAL-REQUIRED-SKILLS`
-- a first action and stop point
-Lead-local work stops when a lane-owned proof, validation, review, implementation, or acceptance surface appears.
+Lead-local candidate work consumes `.claude/agents/team-lead/references/lead-local-guarded-law.md`.
+Lead-local route execution follows that reference's direct work conditions, break conditions, and next-owner routing.
 
 ## Team-Routed Bridge
 `team-routing candidate` and `ambiguous-route` enter `task-execution`.

@@ -36,10 +36,10 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
 - Developer defect-seeking self-review is sufficient for trivial single-line fixes.
-- Self-growth patches on doctrine, role, skill, spine, hook, or reference surfaces consume the emitted `review_verification_packet` before Draft and Execute.
+- Self-growth patch Draft starts from the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
 - The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
 - Reviewer and Codex input are evidence.
-- The emitted packet is the gate.
+- The emitted packet is the review-consumption record.
 - Acceptance judgment uses evidence, not author intent.
 
 5b. `Execution Gate`

@@ -18,7 +18,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - `MERGE-OWNER` is the lead or a designated agent.
 - `MERGE-OWNER` is explicit before shard outputs start accumulating.
 - Naming `MERGE-OWNER` does not force a global wait for shard completeness.
-- Once the frozen parent packet and available shard set support useful progress, that owner opens bounded drafting or integration.
+- A shard's retained carrier becomes merge-eligible input only after that shard's Communication Plane `completion` clears its per-target receipt barrier per `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Parallel And Reuse Law`.
+- File presence on disk, mtime, size, or partial content is supporting evidence only; pre-completion carrier reads do not become merge-eligible input even if their content later proves correct.
+- Once the frozen parent packet and the set of completion-cleared shards support useful progress, that owner opens bounded drafting or integration on that cleared set.
 - Later shard arrivals fold into explicit follow-up merge work.
 - Missing inputs remain visible.
 - Each shard dispatch must stay bounded.

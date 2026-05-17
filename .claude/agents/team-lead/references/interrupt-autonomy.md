@@ -31,7 +31,7 @@ Rules:
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Status or progress questions expose the stall.
-- Answer status briefly through `.claude/reference/user-reporting-law.md`; runtime-excuse wording is not a status answer.
+- Route status answers through `.claude/reference/user-reporting-law.md` `## Report Shape`.
 - Continue through the same verified `RESUME-ACTION`.
 - Use `SV-RESULT` only before reporting or handoff.
 - The resumed scope must match the original task.

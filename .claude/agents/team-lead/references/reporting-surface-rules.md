@@ -43,9 +43,7 @@ Record shape only after user-reporting law admits the report:
 
 ## Stop
 Stop before reporting when `SV-RESULT` is required and missing.
-Stop before `FINAL` when:
-- residual work remains
-- required shard outputs, required corpus surfaces, or material open surfaces are missing, late, unintegrated, or not explicitly deferred/out-of-scope
+Stop before `FINAL` when residual deliverable convergence remains open under `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
 Stop before basis expansion by default.
 Basis expansion is allowed only for:
 - explicit user detail request
@@ -53,8 +51,7 @@ Basis expansion is allowed only for:
 
 ## Resolve Next Owner And Action
 - A stopped reporting route opens `SV-RESULT`.
-- A stopped `FINAL` route opens residual work processing.
-- A stopped shard/corpus `FINAL` route opens merge-owner integration, explicit owner deferral, or out-of-scope classification.
+- A stopped `FINAL` route opens the residual queue, synthesis merge, proof, acceptance, owner-deferral, or out-of-scope action named by the open item.
 - A stopped basis-expansion route emits the compact report shape.
 
 ## Primary Report Surface

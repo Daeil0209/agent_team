@@ -86,6 +86,6 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 
 ## Status And Interruption
 Status questions expose stalled execution.
-Answer only the narrow status if the boundary is already complete.
+If the boundary is already complete, route the answer through `.claude/reference/user-reporting-law.md` `## Report Shape`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.
 Interrupt work uses `.claude/agents/team-lead/references/interrupt-autonomy.md`.

@@ -70,9 +70,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Trigger: emitting status prose during same-segment continuation work.
 - Trigger: emitting `next action: continue X` during same-owner executable continuation work.
 - Trigger: emitting routine progress claim, remaining-work count, or runtime-excuse wording as checkpoint during same-segment continuation work.
-- Trigger: emitting `FINAL` with residual items.
-- Trigger: emitting `FINAL` with queued items.
-- Trigger: emitting `FINAL` with remaining items.
+- Trigger: emitting `FINAL` before zero-residual deliverable convergence.
 - Classification: intermediate commit is a routine milestone.
 - Classification: intermediate push is a routine milestone.
 - Classification: intermediate build is a routine milestone.
@@ -80,15 +78,8 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Classification: same-owner `next action` naming executes rather than becomes a user report.
 - Classification: `FINAL` requires zero-residual deliverable convergence.
 - Owning rule: `CLAUDE.md` `[AUTO-PROC]` plus `[PROC-HABIT]`; `agents/team-lead.md` RPA-2 trigger order, RPA-7 user reporting, and RPA-10 interrupt/autonomy; `.claude/agents/team-lead/references/routine-gate-continuation.md`.
-- Correction owner: continue execution through every queued item in the same segment.
-- Correction owner: continue execution through every residual item in the same segment.
-- Correction owner: classify each item as patched.
-- Correction owner: classify each item as deferred by owning upstream record with explicit follow-up assignment.
-- Correction owner: classify each item as out-of-scope with cited basis.
-- Correction owner: surface user-facing prose only after user-reporting law admits zero-residual convergence.
-- Correction owner: surface blocker prose only when user-reporting law admits a user-action blocker.
-- Correction owner: stop on explicit user cancellation.
-- Correction owner: stop on explicit user redirect.
+- Correction owner: apply `.claude/agents/team-lead/references/routine-gate-continuation.md` `## Final Convergence`.
+- Correction owner: surface user-facing prose only after `.claude/reference/user-reporting-law.md` admits it.
 
 ## Resolve Next Owner And Action
 - A defect trigger opens its named correction owner.

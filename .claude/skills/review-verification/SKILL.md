@@ -12,9 +12,7 @@ PRIMARY-OWNER: team-lead
 
 ## Identity
 You are the review-verification capability for Claude Code.
-Critical review posture is active by default whenever this skill is loaded.
-Critical posture is not an optional mode, user-requested variant, or late-stage add-on.
-Every reviewed claim, patch, plan, synthesis, no-defect statement, bestness statement, and completion judgment starts under defeater-seeking review before support-seeking review.
+Critical review posture is active from skill load; Step 4A carries the executable defeater gate for reviewed claims, patches, plans, syntheses, no-defect, bestness, no-regression, and completion judgments.
 - Use this conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
 - Reviewer, developer, tester, validator, and researcher consume only the packet fields or explicitly named lenses assigned to their lane surface.
@@ -54,8 +52,7 @@ Prevent these failures:
 - upgrading evidence into a defect before the common finding basis proves `confirmed-defect`
 - adding explanatory rules where delete, trim, merge, re-home, replace, or tighten can make the rule executable
 - compressing distinct obligations into one sentence
-- claiming no risk, bestness, or closure from partial evidence, confirmation-only review, or an uninspected user-use, reuse, example, data, or application path
-- accepting a patch because it matches the desired philosophy without testing material contrary explanations and failure paths
+- claiming no risk, bestness, closure, or patch fitness from partial or uninspected evidence, or before Step 4A material defeaters are tested
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
@@ -81,7 +78,7 @@ Packetization lens lane packets may name only these bounded `review-verification
 - `procedure-adherence-lens`: test whether the active owner path, consumed references, gates, handoff, and evidence order were executed rather than narrated.
 - `coherence-integrity-lens`: test adjacent live owner surfaces for contradiction, stale duplicate wording, broken reference, or missing destination owner.
 - `negative-risk-lens`: test meaning loss, weaker procedure, added burden, user-surface regression, runtime side effect, and reuse failure.
-- `removal-first-lens`: test delete, trim, merge, re-home, replace, and tighten before append under `.claude/reference/minimal-governance-change-law.md`.
+- `removal-first-lens`: test consumed execution surface selection plus delete, trim, merge, re-home, replace, and tighten before append under `.claude/reference/minimal-governance-change-law.md`.
 - `patch-worthiness-lens`: test confirmed-defect basis, protected-function preservation, smallest owner, operation type, and no stronger narrower alternative.
 
 A named lane lens is a bounded question, not full workflow activation.
@@ -135,8 +132,6 @@ When target, corpus, findings, patch design, or diff changes, return to the earl
 Live patch eligibility requires:
 - Step 8 recorded completed integrity evidence
 - emitted `review_verification_packet`
-Populate all sixteen packet fields.
-Use `UNVERIFIED` for fields whose live surface, design intent, or evidence basis was not inspected.
 Narrative claims of completed steps do not satisfy this gate.
 Rerun from the earliest skipped step after a procedural failure.
 If a mutation already exists before eligibility, treat the current diff as the review target, route it through Steps 1-8, and execute only the corrected eligible patch path.
@@ -189,7 +184,7 @@ Classify compressed multi-rule wording as a defect when it hides trigger, owner,
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
 
 ### 4A. Critical Review Gate
-Run before patch-worthiness, bestness, no-defect, no-regression, or completion judgment; this gate records the default critical posture that is already active from skill load.
+Run before plan, synthesis, patch-worthiness, bestness, no-defect, no-regression, or completion judgment; this gate records the default critical posture that is already active from skill load.
 Assume the current patch or preferred conclusion is wrong until material defeaters are tested against live surfaces.
 Construct material defeater candidates from these lenses:
 - owner-boundary conflict
@@ -209,17 +204,22 @@ A confirmed defeater returns to Step 5 patch design or Step 2 corpus widening be
 
 ### 5. Design Removal-First Patch
 Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
-Apply that gate as the binding patch-selection standard.
+Apply that gate as the binding patch-selection standard; this step records gate results for review handoff.
 Do not duplicate or override its owner-surface, removal-first, generalization, or symptom-only rules here.
 Apply removal-first modification policy only after the finding is not a protected restatement, design tradeoff, or evidence-only observation.
 Split bundled governance sentences before patch design.
 Use direct executable wording.
 Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
 Delete explanatory defense when direct executable wording preserves the rule.
-`REMOVAL-FIRST-PATCH-DESIGN` must state:
+`REMOVAL-FIRST-PATCH-DESIGN` records the Patch-Ready Gate result:
+- failing execution path
+- consumed execution surface that carries the rule action
+- destination owner for moved, re-homed, or pointer-only meaning
+- adjacent surfaces after the edit: removed, citation-only, or protected local restatement
 - the selected existing-text operation
 - why rejected removals would lose protected function
-Every proposed change preserves or sharpens source meaning, positive execution path, owner boundary, recovery path, clarity, and execution force.
+A removal, trim, merge, re-home, replacement, or compression is patch-eligible only when it preserves or sharpens source meaning, positive execution path, owner boundary, trigger, stop, evidence, recovery path, rule recognition, clarity, and execution force.
+Compression that weakens procedure execution, compliance recognition, or required-rule clarity is invalid.
 
 ### 6. Pre-Patch Negative-Risk Gate
 Against live governance documents, test the proposed patch for:
@@ -247,6 +247,8 @@ Before live patch execution, verify the structural contract.
 Verify fixed order.
 Verify protected local restatement.
 Verify source-to-destination meaning.
+Verify the selected consumed execution surface is active on the failing execution path.
+Verify each adjacent surface is removed, citation-only, or a protected local restatement after trim, re-home, or pointer replacement.
 Verify positive execution path.
 Verify existing function preservation.
 Verify no-regression basis.
@@ -292,13 +294,7 @@ Use `self-growth-sequence` for confirmed recurrence-barrier hardening.
 Use `self-verification` before consequential reporting, completion claims, or synthesis-triggered redispatch.
 
 ## Handoff Boundary
-Hand off after the receiver can tell:
-- what was inspected
-- which surfaces remain uninspected or open
-- why the design intent was interpreted that way
-- which findings are confirmed versus hypothetical
-- which owner/action acts next
-- what evidence would verify closure
+Hand off only when the receiver can identify inspected surfaces, open surfaces, design-intent basis, confirmed versus hypothetical findings, next owner/action, and closure evidence.
 
 ## Resolve Next Owner And Action
 - Completed review packet opens the named downstream owner/action from Step 13.
@@ -309,11 +305,8 @@ Hand off after the receiver can tell:
 - Consequential reporting opens `self-verification`.
 
 ## Role-Scoped Structural Feedback
-- Challenge any analysis that starts from a desired patch, cites rules without testing actual adherence/execution path, or ignores live design intent.
-- Challenge any "risk-free", "best", "complete", or "no defect" claim that lacks complete inspected-surface basis and Critical Review Gate defeater results.
-- Challenge any defect label that lacks negative operating effect, owner-correction path, or proof that correction will not remove a stronger protected function.
-- Challenge any added rule when an existing owner sentence can be tightened.
-- Challenge removals by verifying preserved source meaning, positive execution path, and no loss of intended quality, independence, owner-boundary, safety, or user-intent protection.
+- Challenge desired-patch, rule-citation, risk-free, best, complete, or no-defect claims that lack live design intent, actual execution-path evidence, inspected-surface basis, or Step 4A defeater results.
+- Challenge defect labels, additions, removals, or compression unless owner-correction path, protected-function preservation, intended quality, independence, safety, user-intent protection, and Step 5 patch eligibility are proven.
 
 ## Role-Scoped Self-Growth Loop
 - Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `self-growth-sequence`.

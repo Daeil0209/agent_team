@@ -231,7 +231,7 @@ hooks source -> destination:
 
 Convergence criterion: every reduction above migrates substantive meaning to a named canonical owner with explicit citation, preserves the same procedural outcome on the Same-Outcome Scenario Matrix, and either sharpens executable force at the canonical owner or removes a contradicting/dead surface. No source-to-destination trace gap; no enforcement-strength loss; no live-reference break.
 
-Round-11 recurrence-barrier strengthening (after second `Routine Status Stop` recurrence — `FINAL` surface listed residual queue): `orchestration-defects.md` `Routine Status Stop` trigger expanded with subclause (d) (a `FINAL` listing residual / queued / remaining items is itself recurrence proof of non-convergence); current canonical zero-residual continuation detail lives in `.claude/agents/team-lead/references/routine-gate-continuation.md`. Source-to-destination: same meaning, re-homed to split reference.
+Round-11 recurrence-barrier strengthening (after second `Routine Status Stop` recurrence): `orchestration-defects.md` classifies emitting `FINAL` before zero-residual deliverable convergence as the trigger; canonical residual-queue closure detail lives in `.claude/agents/team-lead/references/routine-gate-continuation.md`. Source-to-destination: same meaning, re-homed to split reference.
 
 Round-12 residual cleanup:
 - `hooks/task-start-gate.sh` dead `warn_tool_use` no-op + 6 callers (PROCEDURE WARNING strings built and discarded) -> deleted; control-flow exits preserved per F-G-1.

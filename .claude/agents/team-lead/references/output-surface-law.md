@@ -50,13 +50,7 @@ Pick exactly one output surface from:
 ## Stop
 Pre-report suppression is owned by `.claude/reference/user-reporting-law.md`; this surface does not restate it.
 Additional team-lead-specific stops:
-Stop before `FINAL` when any item is:
-- queued
-- remaining
-- residual
-- unpatched
-- undeferred
-- unproven
+Stop before `FINAL` when residual deliverable convergence remains open under `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
 Stop before `verified result` when `SV-RESULT` is:
 - missing
 - stale
@@ -82,7 +76,8 @@ Current `SV-RESULT` is required before reporting analyzed, evaluated, or synthes
 
 ## FINAL
 `FINAL` is a staging label only after `.claude/reference/user-reporting-law.md` admits a verified result or closeout residual.
-Zero-residual convergence, owner deferral, out-of-scope basis, content shape, and evidence inclusion stay with user-reporting law plus the active acceptance/synthesis owner.
+Residual queue status comes from `.claude/agents/team-lead/references/routine-gate-continuation.md`, `.claude/agents/team-lead/references/synthesis-consume.md`, or the active synthesis, acceptance, or proof owner.
+Report admissibility, content shape, and evidence inclusion stay with `.claude/reference/user-reporting-law.md`.
 
 ## Reporting Law Boundary
 Use `.claude/reference/user-reporting-law.md` as the canonical reporting rule and disclosure test.
@@ -90,8 +85,8 @@ Team-lead user-facing prose applies only after that law admits the report.
 This surface does not restate, override, or replace that law.
 
 ## Claim Control
-Dispatch is internal unless an explicit status answer reports only the user-relevant waiting condition.
-Dispatch status answers omit internal dispatch detail.
+Dispatch remains internal unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
+Status answer content shape stays with `.claude/reference/user-reporting-law.md`.
 Runtime signals are evidence only.
 Receipt signals are evidence only.
 Status signals are evidence only.

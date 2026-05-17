@@ -37,11 +37,7 @@ Stop when a lane-owned proof, validation, review, implementation, or acceptance 
 - A new surface opens `work-planning`.
 - A hidden consequential step opens `work-planning`.
 - A stronger claim opens `work-planning`.
-- A lane-owned proof function opens proof owner.
-- A lane-owned validation function opens validator.
-- A lane-owned review function opens reviewer.
-- A lane-owned implementation function opens developer.
-- A lane-owned acceptance function opens validator.
+- A stopped lane-owned function reopens `.claude/agents/team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
 
 ## Direct Work Conditions
 Lead-local execution is allowed only when all hold:

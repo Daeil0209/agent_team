@@ -36,9 +36,9 @@ A required output closes only through one of:
 Partial arrivals are synthesis queue events.
 Partial arrivals open internal merge work, not report text.
 Retained-carrier presence, size, and block checks during this barrier use silent success commands; do not emit line counts, byte counts, path echoes, present/verified labels, waiting prose, or idle prose.
-Explicit user status questions during this barrier answer only the user-relevant waiting condition.
-The status answer omits shard identities, counts, findings, evidence detail, retained paths, and per-agent narratives.
-Internal materials enter the status answer only on specific user request.
+Explicit user status questions during this barrier route through `.claude/reference/user-reporting-law.md` `## Report Shape`.
+The barrier owner supplies the current required-output waiting condition as status context.
+Internal synthesis materials enter the status answer only when the user requests the exact field.
 
 ## Required Output
 Record:
