@@ -12,7 +12,7 @@ Read this file explicitly when needed; it is not auto-injected on Skill load.
 # Code Quality Deep Review
 ## 1. SOLID Principles Checklist
 Concrete, actionable per-principle checks before accepting implementation work:
-- **SRP (Single Responsibility):** Does the class/function change for only one reason? Does the name contain "and"? If yes → separation required.
+- **SRP (Single Responsibility):** A class/function fails SRP when it has more than one reason to change. A compound name containing "and" is a split trigger only when it bundles independent change reasons, actor responsibilities, persistence/UI/domain concerns, or lifecycle states. Descriptive compound names are SRP evidence only; split only when the responsibility boundary is proven.
 - **OCP (Open/Closed):** Can behavior be extended without modifying existing code? Are there hardcoded if/else chains for type dispatch? If yes → refactor to extension point.
 - **LSP (Liskov Substitution):** Can subtypes replace parent types without breaking behavior? Do overrides change preconditions or postconditions? If yes → inheritance is misused.
 - **ISP (Interface Segregation):** Are clients forced to depend on methods they don't use? Are interfaces bloated with unrelated concerns? If yes → split the interface.

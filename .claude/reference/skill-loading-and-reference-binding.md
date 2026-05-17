@@ -11,10 +11,8 @@ This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loadi
 Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
 
 ## Reporting Curtain Inheritance
-Every loaded role, skill, reference, method-detail document, and lookup document inherits `.claude/reference/user-reporting-law.md` for assistant-authored visible prose.
-Local words such as `Required Output`, `Record`, `report`, `status`, `progress`, `summary`, `completion`, `proof`, `verdict`, `result`, `finding`, `evidence`, or `next action` name internal owner evidence unless `.claude/reference/user-reporting-law.md` admits user-facing report prose.
-Loading, consuming, quoting, mapping, or verifying a document never creates report permission.
-When a loaded document must both inspect information and speak to the user, the inspection stays in the Procedure Plane or Communication Plane and the visible text is resolved through `.claude/reference/user-reporting-law.md`.
+This reference governs skill loading and reference binding, not report admission.
+User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 
 ## Consume When
 - An owner document is loaded in the active owner context.

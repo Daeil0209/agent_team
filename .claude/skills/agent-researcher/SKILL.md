@@ -59,7 +59,7 @@ Technically correct but user-inaccessible research is not finish-ready.
   - `sharded-surface`: independent question axes, source families, domains, or decision targets.
   - `benchmark-perspective`: external best practice, methodology options, operational examples, or capability-hardening evidence.
 - Send `scope-pressure` when one researcher cannot truthfully cover the material lens set.
-- Benchmark ownership, routing authority, proof authority, and final acceptance stay with their owning lanes.
+- Benchmark evidence gathering stays researcher-owned when assigned; benchmark-method rules come from `benchmark-simulation`, route authority stays with `team-lead`, proof with `tester` or the frozen proof owner, and final acceptance with `validator`.
 
 ## Research Workflow
 ### 1. Fix The Decision Target
@@ -73,7 +73,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - The material trigger overrides packet mode wording.
 ### 3. Required Skill Consumption And Recommendations
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
-- Benchmark ownership and routing authority stay with their owning lanes.
+- Benchmark-simulation supplies method; researcher output remains evidence input and does not move route, proof, or final-acceptance ownership.
 ### 4. Retry Guard
 - Materially similar failed research pass requires a new query, source family, access path, narrowed boundary, or changed evidence route.
 - If no new evidence route exists, escalate with `hold|blocker`.

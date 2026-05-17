@@ -13,6 +13,7 @@
 ### 1. Procedure And Ownership
 - `[RULE-FORCE]` Rules must be executable.
 - `material` means an axis, fact, or trigger that changes what the active owner must do next.
+- `consequential` means an action, decision, tool use, artifact read, discovery, mutation, dispatch, synthesis, handoff, or report that creates, reopens, changes, or closes a work boundary, owner, route, scope, evidence basis, artifact state, runtime state, acceptance state, or user-facing claim.
 - Executable rules name every material owner, trigger, stop, evidence, verification, and acceptance-truth requirement.
 - `[AUTO-PROC]` Consequential work stays inside the named procedure.
 - Consequential work keeps one truthful next owner.
@@ -115,13 +116,13 @@
 - Sequence arbitration chooses one primary sequence by purpose.
 
 ## Channel And Procedure
-- Light channels are `answer-only`, `SV-only audit`, and `notification-only carry-forward`.
+- Light channels are `answer-only`, `SV-only audit`, and `notification-only carry-forward`; planning-exclusion detail lives in `.claude/skills/work-planning/references/boundary-gates.md`.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, report permission, and claim strength.
 - Consequential channels are `bounded local consequential work` and `team-routed complex work`.
 - Discovery, route shaping, dispatch, mutation, artifact judgment, or stronger claim leaves light/control.
 - Boundary-change axes reopen `work-planning`.
 - Consequential flow opens one truthful next owner/action at a time.
-- Active workflow phases and the `[PLAN-SV]` boundary spine run in their owning-document order.
+- Active workflow phases follow the loaded workflow's declared order; `[PLAN-SV]` follows Core Laws 1.
 - Hook/runtime signals do not become proof, validation, acceptance, dispatch truth, or owner completion.
 
 ## Skill Loading

@@ -65,6 +65,7 @@ Communication payload carries the detail required by the receiving owner through
 Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, task state, or retained-output contract.
 Do not shrink, omit, or distort receiver-required detail for user-display reasons.
 When Claude Code can render `SendMessage` on a user-visible screen, `ack` and `completion` state signals use only the header/preview line; message/body slots must be blank or whitespace-only.
+If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
 Screen-rendered transport never becomes Reporting Plane prose and never carries raw internal inventories.

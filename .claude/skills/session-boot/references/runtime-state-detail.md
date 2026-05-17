@@ -10,7 +10,8 @@ Load only for the explicit session-boot runtime-detail triggers below.
 This is normally a mid-run or resume/recovery reference, not a clean-startup reference.
 
 Load when the active session-boot owner must decide one of these: boot-window tool limit, startup continuity, current-session runtime truth, cleanup state, stale state, stall state, runtime pressure, compaction recovery, dispatch-state recovery, or monitoring classification.
-This reference classifies runtime readiness, recovery, monitoring, and cleanup truth. It is the canonical owner for runtime-state vocabulary and runtime truth classification; monitoring lookup references may cite it but do not redefine those terms. Dispatch-runtime execution preflight is owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+This reference classifies runtime readiness, recovery, monitoring, and cleanup truth.
+It is the canonical owner for runtime-state vocabulary and runtime truth classification; monitoring lookup references may cite it but do not redefine those terms.
 
 Do not load for clean startup when no runtime state, recovery state, monitoring state, cleanup obligation, or runtime-dependent next action exists.
 Do not load to narrate boot progress, reassure the user, produce a status report, or inspect details unrelated to the next boot owner/action.
@@ -42,9 +43,9 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 
 ## Boot Window And Startup Rules
 - `Boot Sequence` is first for lead-session boot; its team-agent runtime branch is only for explicit runtime readiness, recovery, or entry gating.
-- Dispatch-runtime creation, member creation, assignment send, and reuse are `task-execution` moves after `work-planning`. Standalone `Agent` is not team-runtime dispatch.
+- Dispatch-runtime creation, member creation, assignment send, and reuse consume this reference only as runtime-readiness or recovery evidence after the dispatch route is frozen by its owning trigger. Standalone `Agent` is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to classify runtime readiness.
-- No production fan-out before boot closes.
+- Active `Boot Sequence` closes before delegated fan-out.
 - Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs.
 - Fresh-task isolation stays active during startup. Inherited continuity can reveal blockers or residue, but it does not reopen prior goals by habit.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
@@ -53,13 +54,13 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 - `Session-Start Sequence` always runs; `Boot Sequence` is the conditional explicit-runtime branch on top.
 - Shared continuity read is reused when both run.
 - Default startup scope is narrow: continuity, active root, runtime need, then stop unless contradiction or current request demands more.
-- If explicit team-agent runtime becomes necessary later, re-enter through the runtime-readiness gate, then return to `task-execution` for dispatch-runtime execution instead of improvising fan-out.
+- If explicit team-agent runtime becomes necessary later, re-enter through the runtime-readiness gate, then return its classification as runtime evidence instead of improvising fan-out.
 - Compaction-triggered recovery must re-read open work, team channel, roster, and cleanup truth from current-session authorities before consequential dispatch.
 
 ## Team-Lead Entry Trigger Detail
 `agents/team-lead.md` owns the decision to enter `session-boot`; this reference owns the runtime-state detail behind that decision.
 
-`team-lead` MUST open `session-boot` and run Boot Sequence to its runtime-ready, runtime-required, recovery-required, or runtime-blocked outcome as the first consequential action before `work-planning` or dispatch-runtime execution when any of these conditions holds:
+`team-lead` MUST open `session-boot` and run Boot Sequence to its runtime-ready, runtime-required, recovery-required, or runtime-blocked outcome as the first consequential action before runtime-dependent consequential action when any of these conditions holds:
 - session entry still has boot incomplete
 - explicit team-runtime activation is needed
 - current-runtime monitoring or recovery is materially active
@@ -112,7 +113,7 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 
 ## Health-Check Standard
 - Cron-backed health monitoring runs only when a tracked health-check cron is actually active.
-- When hook policy enforces tracked health monitoring, missing monitoring is runtime-blocked evidence here; the launch preflight and corrective dispatch move belong to `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- When hook policy enforces tracked health monitoring, missing monitoring is runtime-blocked evidence here.
 - Team existence alone is not runtime-ready evidence when health monitoring is required by hook policy.
 - Standalone `Agent` calls are synchronous host calls outside team-agent runtime; they do not create live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, or health-cron duty. They support fallback evidence only when the route truth allows non-runtime evidence.
 - Literal cadence and stale thresholds belong to `.claude/hooks/lib/hook-policy.sh`; do not restate numeric values here.
@@ -175,6 +176,17 @@ Canonical classes:
 - runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-cleanup`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
 - team runtime state: `active`, `inactive`
 - team dispatch state: `none`, `pending`, `claimed`
+
+Runtime recovery classification meanings:
+- `dispatch-pending-no-ack`: assignment send evidence exists and the target lacks valid `dispatch-ack`.
+- `ack-late`: `dispatch-ack` arrived after follow-up or stale suspicion and must be reconciled with current assignment truth.
+- `working-permission-pending`: target is active and blocked on permission.
+- `working-transport-missing`: side-effect or activity evidence exists but required Communication Plane transport is missing.
+- `working-blocked`: target reported `hold|blocker` or equivalent active blocker.
+- `not-working-awaiting-cleanup`: target is not active and cleanup or replacement truth remains unresolved.
+- `active-stall`: target is `ACTIVE` but lacks expected progress or side-effect evidence after the governed follow-up window.
+- `unclaimed-dispatch-failure`: dispatch or task evidence exists but no live target lawfully claimed the assignment.
+- `pipeline-ready-idle`: target is available for new bounded work after prior truth is reconciled.
 
 Canonical evidence mapping:
 - dispatch-runtime creation success -> current-session team existence proof
@@ -262,10 +274,10 @@ Do not ask the user to choose among routine nudge, replacement, redistribution, 
 
 ## Resolve Next Owner And Action
 - Runtime-ready state returns to the frozen next owner/action.
-- Runtime-required classification opens `task-execution`.
+- Runtime-required classification returns to the frozen next owner/action as runtime evidence.
 - Runtime recovery need opens `session-boot` recovery.
 - Missing receipt or start evidence opens one bounded follow-up and re-check.
 - Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or `HOLD`.
-- Bottleneck or missed downstream-prep parallel-fit opens `work-planning`.
+- Bottleneck or missed downstream-prep parallel-fit opens boundary-change correction through `team-lead`.
 - Cleanup need opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Hard runtime pressure opens explicit recovery before new fan-out.

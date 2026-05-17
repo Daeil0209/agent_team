@@ -61,6 +61,10 @@ This gate is the canonical governance patch standard.
 Other owner surfaces cite this gate for patch selection.
 Other owner surfaces may add owner-local route, review, execution, proof, or handoff duties.
 Local duties must not weaken or replace this gate.
+For `quick update` or `quick hardening`, the Patch-Ready record may be compact only when owner surface, write scope, and meaning preservation are unambiguous.
+Compact records still cover every gate field as an exact value, `unchanged:<basis>`, or `not-applicable:<basis>`.
+Grouped field records are valid only when they name the covered fields and the shared basis.
+Compact records are invalid when they hide changed meaning, moved ownership, weakened procedure force, broken reference integrity, or a nontrivial generalization decision.
 
 ## Stop
 Stop before appending when existing owner text can be:

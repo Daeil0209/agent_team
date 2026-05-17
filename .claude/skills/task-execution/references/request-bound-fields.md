@@ -19,6 +19,7 @@ A packet is start-ready when every material axis needed for the receiving lane t
 The contract axes are:
 - original request intent, required deliverable, audience, excluded scope, and excluded sources
 - semantic intent bridge per `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`
+- deliverable defaults per `planning-record-fields.md` `DERIVED-DEFAULTS`: deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
 - exact user wording when wording controls acceptance
@@ -146,7 +147,7 @@ WSL/Linux execution does not satisfy Windows launch proof by itself.
 - **CONDITIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
 - **NOT a permission-graded field**. Executable user-facing surfaces cannot skip these fields; the delivery contract treats them as schema floor.
 
-Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
+Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable:<basis>` instead of omission when a status axis was not part of the frozen surface.
 
 `DECISION-SURFACE` is a conditional final-arbitration field.
 Keep it explicit when:

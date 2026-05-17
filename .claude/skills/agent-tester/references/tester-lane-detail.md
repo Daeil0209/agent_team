@@ -139,7 +139,7 @@ Tester lane evaluation selects and applies materially relevant specialist lenses
 Specialist lenses complement tester execution authority and do not replace user-surface proof.
 
 ## Tester Completion Detail
-- In completion-grade completion, keep these tester-specific fields explicit; use `not-applicable` instead of omission when a status axis was not part of the frozen surface:
+- In completion-grade completion, keep these tester-specific fields explicit; use `not-applicable:<basis>` instead of omission when a status axis was not part of the frozen surface:
   - `TEST-STATE`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
@@ -161,7 +161,7 @@ Specialist lenses complement tester execution authority and do not replace user-
 - Direct-required executable user-facing rows need direct proof, executed closure-defect probe, and retained postcondition evidence; indirect proof can support diagnosis or narrowing only.
 - User-ready, reliability, or workflow-completion completion needs material hard-test probe status; absent hard-test evidence narrows the proof claim to normal-path or smoke coverage.
 - For a Windows primary operator surface, completion names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
-- For visual or rendered proof, `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the completion or evidence anchor.
+- For dev-workflow visual or rendered proof, consume `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the completion or evidence anchor.
 - If executed proof makes the frozen validator contract untruthful, use `TEST-STATE: hold` or `TEST-STATE: blocked` according to the contradiction and explain it in `OPEN-SURFACES` instead of silently mutating the validator basis.
 
 ## Resolve Next Owner And Action

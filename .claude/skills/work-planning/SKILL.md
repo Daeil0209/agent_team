@@ -45,7 +45,7 @@ Boundary:
 - the planning record is internal carry-forward, not the agent packet.
 
 ### Reference Map
-Load only the reference whose trigger is active.
+Load every listed reference whose trigger is active.
 Triggered references are mandatory before positive route freeze.
 - `references/planning-targets.md`: target definitions, required basis, and target-switch rules.
 - `references/boundary-gates.md`: activation scope, corpus measurement, boundary axes, hard stops, and post-planning gates.
@@ -93,6 +93,7 @@ Freeze these before route judgment:
 - burden cues
 - proof
 - defaults
+- `DERIVED-DEFAULTS`
 - blockers
 - request-bound packet fields
 
@@ -155,9 +156,11 @@ Missing applied `planning-record-fields.md` basis blocks dispatch-ready planning
 Always freeze:
 - `REQUEST-FIT-BASIS`
 - `SEMANTIC-INTENT-BASIS`
+- `DERIVED-DEFAULTS`
 - `REQUEST-BOUND-PACKET-FIELDS`
 - `ACTION-CLASS`
 - `ROUTING-SIGNAL`
+- `EXECUTION-READINESS-BASIS`
 - `NEXT-CONSEQUENTIAL-ACTION`
 - `DISPATCH-BLOCKERS`
 
@@ -166,7 +169,7 @@ Freeze when material:
 - workflow/sequence: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`
 - analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`
-- team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`
+- team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`
 - Configured independent review: `CODEX-INDEPENDENT-REVIEW-BASIS`
 
 Configured independent-review detail stays in `references/codex-independent-review.md`.

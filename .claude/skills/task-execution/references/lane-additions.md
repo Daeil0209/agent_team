@@ -38,6 +38,7 @@ Every agent-specific skill inherits these common preconditions:
 - Once consumed, the agent-specific skill outranks packet capability skills inside the lane.
 - Run capability fit through these axes:
   - `SEMANTIC-INTENT-BASIS`
+  - `DERIVED-DEFAULTS`
   - `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`
   - assigned surface
   - `CLAIM-CEILING`
@@ -45,19 +46,12 @@ Every agent-specific skill inherits these common preconditions:
   - skill basis
   - material tool or rendered/runtime needs
 - If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
-- Every `REQUIRED-SKILLS` entry is mandatory consumption.
+- Every valid `REQUIRED-SKILLS` entry must be loaded and applied before first lane execution; completion must preserve its applied or blocked truth.
 - Agent role names are invalid `REQUIRED-SKILLS` entries; agent-specific skills come from the assigned lane, not the packet skill list.
-- Load each valid `REQUIRED-SKILLS` entry before lane execution.
-- Apply each valid `REQUIRED-SKILLS` entry before lane execution.
-- Load each valid `REQUIRED-SKILLS` entry before completion.
-- Apply each valid `REQUIRED-SKILLS` entry before completion.
 - A blocked required entry sends `scope-pressure` when packet correction or replanning can restore execution.
 - A blocked required entry sends `hold|blocker` when truthful execution remains blocked.
-- A non-fitting required entry is a packet or route defect.
-- A lane-mismatched required entry is a packet or route defect.
-- A contradictory required entry is a packet or route defect.
-- A required entry outside the frozen boundary is a packet or route defect.
-- A required entry defect is not permission to drop the skill.
+- A non-fitting, lane-mismatched, contradictory, or outside-boundary required entry is a packet or route defect.
+- A required entry defect is not permission to drop the skill locally.
 - `REQUIRED-SKILLS: [review-verification]` is invalid for lane dispatch.
 - A lane dispatch that needs `review-verification` names one exact lens from `Skill(review-verification)` `## Named Lane Lens Index`.
 - Full `review-verification` workflow routes to `team-lead`.

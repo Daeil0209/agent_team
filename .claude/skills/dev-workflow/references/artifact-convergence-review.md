@@ -90,8 +90,8 @@ Missing required path records `fail-open:blocked_by_config`.
 15. Operator-facing rendered UI axes consume `Skill(visual-composition)` for operator-naive comprehension.
 16. Phase 2 benchmark-required axes consume `Skill(benchmark-simulation)` for external-reference capture, information-representation pattern extraction, and abstraction-fit-adapt synthesis.
 17. Benchmark coverage checks invocation, source/capture basis, extracted concrete characteristics, rejected misfits, and destination-fit synthesis.
-18. Operator-facing rendered UI axes include acceptance image-evidence path.
-19. Acceptance image-evidence path checks per-AC capture cited and openable via multimodal `Read`.
+18. Operator-facing rendered UI axes consume `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
+19. Acceptance image-evidence path checks that each AC-supporting capture has the path and inspection record required by that rule.
 20. Codex reports wording or typo issues only when they change design meaning, user burden, proof, acceptance, or downstream implementation.
 21. Plan, design, specification, report, governance, and implementation-binding artifacts also require Feynman clarity.
 22. team-lead reconciles team-lead and Codex findings point-by-point.

@@ -60,7 +60,7 @@ When tool choice, current UI practice, licensing, accessibility, or production a
 **Reference Sources**: Dribbble (trends/palettes), Awwwards (web), Mobbin (mobile patterns), Godly (landing pages)
 **Quick Tools**: v0.dev (AI UI generation), Tailwind UI (components), Coolors (palette), Heroicons / Lucide (icons)
 **Pre-Mockup Checklist**:
-- [ ] 3+ similar services analyzed; reference screenshots collected
+- [ ] Benchmark basis recorded through `benchmark-simulation` when external comparison is material; otherwise cite supplied mockup/reference or `not-material:<basis>`
 - [ ] Color palette decided (Primary / Secondary / Accent)
 - [ ] Typography selected (Heading / Body fonts)
 - [ ] Layout pattern chosen (Bento Grid, standard grid, etc.)

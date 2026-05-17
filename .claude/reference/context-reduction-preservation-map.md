@@ -165,7 +165,7 @@ skills/dev-workflow/references/ source -> destination:
 skills/self-growth-sequence/SKILL.md source -> destination:
 - Triple-numbered procedure conflict (Mandatory path / Causal Repair "When defect..." / Required order) -> single canonical `### Required order` (most operational, includes Step 6.5 retroactive); Mandatory path collapsed to purpose summary; Causal Repair "When defect..." collapsed to phase mapping that names the same nine Required-order steps.
 - Orphan H3 `### Self-Healing Algorithm` (no body) -> deleted (Defect-To-Barrier Contract follows immediately).
-- Dead H3 `### Skill Introduction Category Gate` -> deleted; Reference Map entry for `.claude/skills/self-growth-sequence/references/skill-introduction.md` already carries the trigger.
+- Dead H3 `### Skill Introduction Category Gate` -> deleted; later cleanup removed the self-growth skill-introduction bridge file and moved its trigger/boundary meaning into the parent Reference Map, which routes canonical skill-introduction rules to `.claude/skills/update-upgrade-sequence/references/skill-introduction.md`.
 - `## Patch Execution Method` body (~13 lines duplicating change-patch-method.md) -> pointer at `.claude/skills/self-growth-sequence/references/change-patch-method.md` plus the one self-growth-specific rule (recurrence-barrier installation, not content accumulation).
 - Step 6.5 Retroactive application (12-line body) -> 3 lines that cite `.claude/skills/self-growth-sequence/references/retroactive-application.md` plus the `[RETRO-APPLY]` defect rule.
 - `### Closure Standard` non-closure-evidence taxonomy (Acknowledgement, apology, hook marker, dispatch success, role/skill load, later self-verification load) -> pointer at `.claude/skills/task-execution/references/truth-rules.md` (canonical truth-evidence taxonomy owner).
@@ -178,13 +178,13 @@ skills/self-verification/SKILL.md source -> destination:
 - Step 3 SV-PLAN reject conditions (4 bullets) + SV-RESULT detail (2 bullets) -> pointer at `.claude/skills/self-verification/references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and `## SV-RESULT Detailed Gate`.
 
 skills/review-verification/SKILL.md source -> destination:
-- Step 9 "Execute Through The Owning Patch Sequence" -> "Hand Off To The Owning Patch Sequence". File mutation is owned by named patch sequence (`update-upgrade-sequence` / `self-growth-sequence` / assigned production owner), not by review-verification; eligibility precondition (Steps 1-8 complete + sixteen-field packet emitted) preserved.
-- Step 10 Post-Patch coherence -> re-homed to executing patch sequence's Post-Verify (`change-patch-method.md` Post-Verify); review-verification re-engages only when escalated.
-- Step 11 finding-class taxonomy -> canonical owner moved to `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis`; `review-verification` defect-promotion path points there. Reviewer and validator surfaces consume the promoted claim strength without creating a second taxonomy path.
-- Step 8 Integrity Gate -> trimmed to structural-baseline items not covered by Step 6 negative-risk gate.
+- Step 10 "Patch Sequence Boundary". File mutation is owned by named patch sequence (`update-upgrade-sequence` / `self-growth-sequence` / assigned production owner), not by review-verification; Steps 1-9 are mutation-readiness prerequisites, and handoff opens only after Step 14 emits the sixteen-field packet with classification, patch-worthiness, and next-owner/action.
+- Step 11 Post-Patch coherence -> re-homed to executing patch sequence's Post-Verify (`change-patch-method.md` Post-Verify); review-verification re-engages only when escalated.
+- Step 12 finding-class taxonomy -> canonical owner moved to `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis`; `review-verification` defect-promotion path points there. Reviewer and validator surfaces consume the promoted claim strength without creating a second taxonomy path.
+- Step 9 Integrity Gate -> trimmed to structural-baseline items not covered by Step 7 negative-risk gate.
   Structural-baseline items remain structural contract, fixed order, protected restatement, source-to-destination, positive execution path, existing function preservation, and no-regression.
-  Step 6 already covers clarity, execution force, owner conflict, broken reference, automatic next-owner/action resolution, user-use readiness.
-  Duplicate Step 8 checks were removed.
+  Step 7 already covers clarity, execution force, owner conflict, broken reference, automatic next-owner/action resolution, user-use readiness.
+  Duplicate Step 9 checks were removed.
 - Output field rename `VERIFICATION-NEED` -> `DOWNSTREAM-VERIFICATION-NEED` to remove name-collision with self-growth-sequence's `REVIEW-VERIFICATION-NEED` (whether review-verification must be loaded for this round).
 - `## Activation` -> tightened with explicit non-overlap clause (activate only when review work is held lead-local for cross-surface integrity / design-intent / risk-balance synthesis OR when packetizing review basis for downstream lanes; bounded reviewer-owned acceptance review routes to reviewer lane + reviewer SKILL).
 

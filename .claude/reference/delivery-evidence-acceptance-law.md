@@ -8,6 +8,7 @@ LOAD-POLICY: on-demand reference only
 
 ## Purpose
 This reference gives the detailed execution rules behind `CLAUDE.md` User Delivery, Evidence, and Acceptance.
+`AC` means acceptance criterion.
 Use it whenever a result might be reported as:
 - usable
 - complete
@@ -131,9 +132,8 @@ Prove user-surface behavior on the user surface.
 ## Acceptance Rules
 - Reviewer evidence feeds validation.
 - Tester evidence feeds validation.
-- Validator issues final acceptance.
-- `validator` issues final `PASS/HOLD/FAIL`.
+- `validator` owns final acceptance and issues final `PASS/HOLD/FAIL`.
 - Local closure report admission is owned by `.claude/reference/user-reporting-law.md`.
 - Local closure is valid only when no final-arbitration trigger applies.
-- Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md`.
+- Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md` `## Final-Arbitration Trigger Definitions`.
 - Acceptance compares against the frozen delivery contract.

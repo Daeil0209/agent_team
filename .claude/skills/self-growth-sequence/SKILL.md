@@ -28,7 +28,7 @@ The canonical step-by-step procedure lives in `### Required order` below.
 
 Use the narrowest owner-local surface that blocks recurrence with less drift.
 
-Self-growth records are tiered by hardening depth.
+The self-growth continuity and change carrier is the applicable hardening-depth record.
 Quick hardening records only:
 - `DEFECT-BASIS`
 - `DESIGN-INTENT-BASIS`
@@ -66,21 +66,9 @@ Trigger sources:
 - `.claude/agents/team-lead.md` §RPA-9 Self-Growth And Governance Change contains the lead-owned adjudication and closure boundary
 - Verified runtime/process error signals can raise confirmed self-growth once the defect basis is sufficient to govern behavior.
 - Sufficient confirmed defect basis opens self-growth hardening without direct user instruction.
-Self-growth tiers:
-- Quick hardening applies only when owner surface, write scope, and meaning preservation are unambiguous.
-- Quick hardening covers:
-  - typo fixes
-  - terminology normalization
-  - dead-text removal
-  - same-owner wording clarification that preserves existing rule force, owner boundary, trigger, stop, evidence, acceptance, and runtime effect
-- Quick hardening must not change:
-  - rule force
-  - owner boundary
-  - trigger
-  - stop
-  - evidence
-  - acceptance
-  - runtime effect
+Self-growth tiers select recurrence-hardening depth; routine asset update tiering belongs to `update-upgrade-sequence`.
+- Quick hardening applies only to same-owner typo fixes, terminology normalization, dead-text removal, or wording clarification when owner surface, write scope, meaning preservation, and Patch-Ready compact-record eligibility are unambiguous.
+- Quick hardening must not change rule force, owner boundary, trigger, stop, evidence, acceptance, runtime effect, recurrence path, or consumed owner path.
 - Quick hardening path: identify owner surface -> apply the relevant Change Sequence steps -> owner-local defect-seeking self-review -> verify no regression.
 - If meaning, owner, write scope, runtime enforcement, acceptance impact, or cross-surface effect is ambiguous, upgrade to standard or structural hardening.
 - Standard hardening: behavioral rule changes, executable-rule force/trigger/stop/evidence changes, new constraints, recurrence barriers. Requires all steps.
@@ -88,13 +76,15 @@ Self-growth tiers:
 
 ### Reference Map
 After `Skill(self-growth-sequence)` is loaded, load trigger-specific references directly.
-- `references/self-healing.md`: trigger matrix and closure checklist.
+- `references/self-healing.md`: trigger matrix, first-occurrence routing, and repetition-depth interpretation.
 - `references/retroactive-application.md`: retroactive audit requirements after new/sharpened rules land.
 - `references/causal-analysis.md`: reconstruction questions and causal-basis standard.
 - `references/governance-architecture-map.md`: owner-surface map for doctrine, role, skill, packet, hook, setting, and reference placement.
 - `references/repair-decision-guide.md`: narrowest repair selection and no-duplicate-doctrine guard.
 - `references/capability-gap-fast-path.md`: missing reusable-skill fast path and default rapid-skill routing.
-- `references/skill-introduction.md`: new-skill category gate, reject criteria, and approval packet.
+- Capability-gap skill-introduction boundary: `self-growth-sequence` owns the defect basis, causal basis, recurrence path, and barrier need.
+- Capability-gap skill creation, deletion, splitting, merging, re-homing, or reclassification routes to `update-upgrade-sequence`; canonical approval, ownership classification, category gate, reject criteria, and approval packet live at `.claude/skills/update-upgrade-sequence/references/skill-introduction.md`.
+- Accepted skill-introduction basis continues under `update-upgrade-sequence`; failed category gate returns to the existing owner update named by the canonical overlap check while self-growth retains recurrence-barrier closure.
 - `references/benchmark-protocol.md`: benchmark-first preparation and self-growth comparison gates.
 - `references/patch-classification.md`: patch class definitions.
 - `references/failure-mode-response.md`: failure mode matrix and response boundaries.
@@ -193,9 +183,7 @@ Explanation alone is not self-healing.
 - Load `self-growth-sequence` first.
 - Resume from the corrected state after the gate clears.
 - When self-growth interrupts active work, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, `RESUME-CONDITION`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
-- A justified user correction opens classification immediately.
-- A first failure opens hardening when classification confirms a behavioral or procedural defect, missed-catch owner, and recurrence path.
-- Self-growth opening can be immediate.
+- First-occurrence, justified-correction, repeated-missed-catch, and missing-reusable-skill trigger interpretation is owned by `references/self-healing.md`; after classification opens, this spine controls stabilization, hardening gate, and resume.
 - Governance-sensitive file modification is still execution-gated.
 - Use this owner opening to classify, route, inspect, and prepare the bounded patch packet. Assignment-grade `Agent` or `SendMessage` dispatch still belongs to `task-execution`.
 - Destructive, security-sensitive, operator-policy-choice, and runtime enforcement expansion require explicit operator approval.
@@ -303,10 +291,14 @@ Keep the current readiness label explicit.
 Keep the evidence basis explicit.
 Keep follow-on optimization closure explicit before treating the round as closed.
 ## Sequence Activation Discipline
-When Self-Growth Sequence or Change Sequence is materially active, record it in the internal continuity or change carrier.
-Record the current phase, step, or blocker in the owning internal carrier so successor interpretation does not depend on pane-visible prose.
+When Self-Growth Sequence or Change Sequence is materially active, use the applicable Quick, Standard, or Structural hardening record as the owning internal carrier.
+The active carrier resides in the active sequence packet or explicit follow-up assignment.
+After execution, the changed owner surface may provide closure reconstruction evidence.
+Record the current phase, step, blocker, and sequence switch in that carrier.
+Record Change Sequence state in `CHANGE-BOUNDARY`.
+Record open, blocked, or verified state in `CONVERGENCE-STATUS`.
+When active work is interrupted, record `SUSPENDED-WORK-SURFACE`, `RESUME-OWNER`, `RESUME-CONDITION`, and candidate `RESUME-ACTION` in that carrier before relying on memory or pane-visible prose.
 Do not use progress-update wording as authorization for user-facing text; visible output follows `.claude/reference/user-reporting-law.md` only.
-Sequence switches require explicit transition in the internal carrier while active runtime depends on one of them.
 Omission allowance must come from the owning rule, not habit or convenience.
 Build sequencing decisions from the loaded skill procedure, not memory.
 If the governing procedure cannot be pointed to cleanly, keep the work on HOLD until the basis is explicit.

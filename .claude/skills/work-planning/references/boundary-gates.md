@@ -9,25 +9,9 @@ auto-inject: false
 Use this file when activation scope, corpus measurement, same-boundary exclusion, boundary-change axes, hard stops, or post-planning gate detail is material.
 
 ## Corpus Measurement Gate
-- Unknown corpus discovery is consequential discovery.
-- Scope-changing corpus discovery is consequential discovery.
-- Route-shaping corpus discovery is consequential discovery.
-- Burden-sizing corpus discovery is consequential discovery.
-- File counts used for burden sizing are consequential discovery.
-- Line counts used for burden sizing are consequential discovery.
-- Byte counts used for burden sizing are consequential discovery.
-- Exhaustive work freezes bounded corpus measurement first.
-- Full-corpus work freezes bounded corpus measurement first.
-- Whole-folder work freezes bounded corpus measurement first.
-- Unknown-corpus work freezes bounded corpus measurement first.
-- Governance audit uses the bounded corpus measurement rule.
-- Governance review uses the bounded corpus measurement rule.
-- Measurement basis includes file count.
-- Measurement basis includes line or byte scale.
-- Measurement basis includes semantic surface inventory.
-- Measurement basis includes high-touch or critical-surface notes.
-- Measurement basis must support burden judgment.
-- Measurement basis must support parallel-fit judgment.
+- Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
+- Exhaustive, full-corpus, whole-folder, unknown-corpus, governance-audit, and governance-review work freezes bounded corpus measurement first.
+- Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
 - Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
 - Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
 - Do not block a lawful measurement command only to hide Claude Code host-native tool output.
@@ -44,7 +28,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Same-artifact correction loops stay with the active workflow owner when all boundaries stay unchanged.
 - Same-artifact review loops stay with the active workflow owner when all boundaries stay unchanged.
 - Same-artifact revision loops stay with the active workflow owner when all boundaries stay unchanged.
+- `answer-only` is a direct answer with no tool use, artifact judgment, route change, dispatch, mutation, acceptance, or stronger claim.
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
+- `SV-only audit` verifies an already-frozen plan or result claim without dispatch, mutation, acceptance, or report expansion.
 - `SV-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `notification-only carry-forward` uses `.claude/CLAUDE.md` `## Channel And Procedure` definition and stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
@@ -107,17 +93,12 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - prior-artifact reuse vs restart option lists
   - deliverable-source option lists
 - Prior task-created outputs are excluded sources for current-target or current-corpus work unless the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
-- Excluded source means do not open, read, copy, paraphrase, cite, or derive shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion from that prior output.
+- Excluded source means do not copy, paraphrase, cite as evidence, or derive shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion from that prior output; opening or reading is lawful only as non-shape-defining sanity consultation after the current live-source basis is frozen.
 - Prior outputs become deliverables or reference sources only when the user explicitly asks to reuse, merge, validate, report, or compare against that artifact.
 - If excluded prior output shaped shard shape, taxonomy, workflow, route, packet, or conclusion, discard the derived surface and rebuild it from the current live target/corpus.
-- Non-shape-defining consultation records the consultation and continues from current live sources.
+- Non-shape-defining consultation records `prior-output-consulted:no-derivation` and continues from current live sources; it cannot change route, packet, taxonomy, finding shape, workflow, methodology, or conclusion without explicit prior-output use.
 - Prior outputs are not a replacement deliverable, user choice, route source, or methodology source unless explicit prior-output use was requested.
-- Required measurement missing from these work types blocks dispatch-ready planning:
-  - exhaustive work
-  - full-corpus work
-  - whole-folder work
-  - governance audit/review
-  - unknown-corpus work
+- Missing required bounded corpus measurement from any Corpus Measurement Gate work type blocks dispatch-ready planning.
 - Dispatch-ready planning includes:
   - `team-dispatch-readiness-plan`
   - `AGENT-MAP`
@@ -131,12 +112,13 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Use `[]` when no additional methodology or capability skill is required.
 - Agent-boundary transfer uses `task-execution` packet translation.
 - Agent-boundary transfer does not use the internal planning record.
-- New consequential item reopens `work-planning` when it changes the frozen boundary.
-- New surface reopens `work-planning` when it changes the frozen boundary.
-- New owner map reopens `work-planning` when it changes the frozen boundary.
-- Hidden step reopens `work-planning` when it changes the frozen boundary.
-- Route ambiguity reopens `work-planning` when it changes the frozen boundary.
-- Stronger claim reopens `work-planning` when it changes the frozen boundary.
+- Reopen `work-planning` when any of these changes the frozen boundary:
+  - new consequential item
+  - new surface
+  - new owner map
+  - hidden step
+  - route ambiguity
+  - stronger claim
 - Same-phase same-artifact workflow iteration is not new when every Activation Trigger boundary remains unchanged.
 
 ## Post-Planning Gate
@@ -157,12 +139,11 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 15. Unchecked owner summary does not satisfy named-owner consumption.
 16. `team-routing candidate` opens `task-execution`.
 17. `ambiguous-route` opens `task-execution`.
-18. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target.
-19. Load `self-verification` in `SV-PLAN` mode only for disputed frozen-plan readiness.
-20. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
-21. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
-22. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
-23. Reopen `work-planning` when the next action is missing, vague, contradicted, or unconsumed.
+18. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+19. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
+20. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
+21. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
+22. Reopen `work-planning` when the next action is missing, vague, contradicted, or unconsumed.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

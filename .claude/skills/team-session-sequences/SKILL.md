@@ -36,10 +36,8 @@ Use the exact sequence names defined in `.claude/CLAUDE.md`:
 Use these procedures when the corresponding sequence is materially in play.
 
 ### Reporting Curtain Inheritance
-This sequence index carries runtime, dispatch, monitoring, completion, and merge information as Procedure Plane evidence.
-Every sequence-specific reference named here inherits `.claude/reference/user-reporting-law.md` for assistant-authored visible prose.
-Sequence activation, dispatch readiness, runtime state, receipt counts, completion readiness, merge state, retained-output paths, and monitoring signals are internal unless `.claude/reference/user-reporting-law.md` admits a user report.
-If a sequence reference says to record, report, output, summarize, or name status, resolve the visible surface through `.claude/reference/user-reporting-law.md`.
+This sequence index governs sequence lookup, not report admission.
+User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 
 ## Sequence Activation Discipline
 
@@ -66,11 +64,11 @@ When the current runtime is ambiguous, the lead resolves that ambiguity per sess
 
 ## Boot Sequence
 
-> On-demand: see `session-boot` skill. Load when the `session-boot` owner trigger opens; hooks provide observation evidence only.
+Trigger opens `Skill(session-boot)` Boot Sequence. This index stops after naming that owner; hooks provide observation evidence only.
 
 ## Session-Start Sequence
 
-> On-demand: see `session-boot` skill. Load when the `session-boot` owner trigger opens; hooks provide observation evidence only.
+Trigger opens `Skill(session-boot)` Session-Start Sequence. This index stops after naming that owner; hooks provide observation evidence only.
 
 ## Monitoring Sequence
 
@@ -94,7 +92,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 
 ## Closeout Sequence
 
-> On-demand: see `session-closeout` skill. Load when the `session-closeout` owner trigger opens; hooks provide observation evidence only.
+Trigger opens `Skill(session-closeout)` Closeout Sequence. This index stops after naming that owner; hooks provide observation evidence only.
 
 ## Resolve Next Owner And Action
 - A boot trigger opens `session-boot`.

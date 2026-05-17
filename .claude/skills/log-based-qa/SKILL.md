@@ -1,6 +1,6 @@
 ---
 name: log-based-qa
-description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use as required tester proof support when the frozen proof surface names logs; use as corroborating tester support when runtime signals materially support another frozen proof surface.
+description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use as required tester proof support when the frozen proof surface names logs; use as corroborating tester support when runtime signals can confirm or defeat another frozen proof surface.
 user-invocable: false
 PRIMARY-OWNER: tester
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
@@ -25,7 +25,8 @@ You are the log-based-qa specialist capability for Claude Code.
 - `validator` — final verdict owner after proof is credible
 ## Purpose
 Load as required tester-owned proof support when the frozen proof surface names logs or freezes logs as decisive because executable assertions are absent or impractical.
-Load as corroborating tester support when runtime logs materially support another frozen proof surface.
+Load as corroborating tester support when runtime logs can confirm or defeat another frozen proof surface.
+Runtime logs support proof when they can confirm or defeat a frozen behavior, state transition, request path, error path, or runtime invariant.
 Corroborating log use does not replace the frozen proof surface, user-surface proof, tester execution authority, or validator verdict.
 ## Responsibilities
 - prefer log-based QA when runtime signal is more decisive than writing a new harness
@@ -35,8 +36,8 @@ Corroborating log use does not replace the frozen proof surface, user-surface pr
 - route persistent observability debt back to `developer`
 ## Activation
 Activate in required mode when the frozen packet carries `logs-as-decisive-proof` or otherwise names logs as decisive tester proof.
-Activate in required mode for absent or impractical executable scripts only after logs are frozen as the decisive proof surface.
-Activate in corroboration mode when the frozen proof surface stays user-facing or executable and runtime logs, including containerized or service-heavy signals, materially support that proof.
+Activate in required mode for absent executable scripts, or for scripts the frozen packet marks impractical, only after logs are frozen as the decisive proof surface.
+Activate in corroboration mode when the frozen proof surface stays user-facing or executable and runtime logs can confirm or defeat a frozen behavior, state transition, request path, error path, or runtime invariant for that proof.
 ## Inputs
 - active request source
 - runnable environment and log access path

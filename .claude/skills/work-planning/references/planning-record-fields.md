@@ -26,6 +26,7 @@ Do not require a field that no current owner, workflow, sequence, dispatch path,
 
 - `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording plus deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, team-operation philosophy, target governance/design intent, and priority order.
+- `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `review-verification` promotion basis.
 - `REQUEST-BOUND-PACKET-FIELDS` is mandatory as `[]` or the exact request-bound fields that `task-execution` must carry into downstream assignment packets.
@@ -116,6 +117,7 @@ Hold this record in current-turn context only. Do not print it to the user, mirr
 ```
 REQUEST-FIT-BASIS:
 SEMANTIC-INTENT-BASIS:
+DERIVED-DEFAULTS:
 CLAIM-CEILING:
 REQUEST-BOUND-PACKET-FIELDS:
 PROJECT-TIER:

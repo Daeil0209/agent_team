@@ -115,6 +115,8 @@ Per-cycle gap detection contribution after authoritative corrected output and be
 Reviewer quick-check stays blocking-only and delta-scoped.
 Unclear delta raises `scope-pressure` and preserves delta scope.
 Tester re-verifies affected surfaces before stale interaction rows.
+Validator re-validates affected acceptance surfaces when final acceptance remains validator-required.
+A prior validator `PASS` is stale for surfaces changed by correction until validator marks them current or issues a fresh `PASS`.
 Same-class blocking gaps on different surfaces count as repeated same-class blocking gaps.
 Repeated same-class blocking gaps escalate to root-cause classification.
 Independent correction surfaces are split by correcting owner and run in parallel when owner, proof, acceptance, dependency, and merge boundaries remain unchanged.
@@ -150,6 +152,7 @@ Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repea
 - P0/P1 gap opens `incident-response`.
 - Phase 5 gap contribution opens correction owner with required return evidence.
 - Corrected output opens reviewer quick-check and tester re-verification.
-- Cleared blocking gaps open validator ingress or Final Acceptance Review by acceptance path.
+- Cleared blocking gaps open validator ingress when final acceptance remains validator-required.
+- Fresh or still-current validator `PASS` opens Final Acceptance Review by acceptance path.
 - Repeated same-class blocking gap opens root-cause classification.
 - Repeated missed-gap pattern opens `self-growth-sequence`.

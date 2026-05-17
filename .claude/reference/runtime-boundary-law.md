@@ -103,6 +103,7 @@ Stop before treating non-owner tool output as:
 - Governance-flow hooks stay separate from settings-deny secret protection.
 - Hooks guard observable runtime edges that would otherwise produce reserved hard-deny danger.
 - `settings.json` deny rules protect credential and secret paths.
+- `settings.json` `permissions.defaultMode: bypassPermissions` is the project operator-policy posture for allowed tools; it removes permission-UI prompts but does not waive destructive, security-sensitive, hook/settings enforcement-expansion, or operator-policy approval rules.
 - Treat external MCP as capability.
 - Treat external review tools as capability.
 - Runtime-boundary claims keep ownership with the governing role, skill, lane, or sequence.

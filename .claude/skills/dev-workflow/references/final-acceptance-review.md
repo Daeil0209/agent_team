@@ -29,9 +29,9 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `ARTIFACT-MAP`: final artifact identity, final location, produced output inventory, instruction-to-artifact mapping, artifact hygiene
 - `USER-SURFACE`: target user environment, exact start/open/read/action path, material first-use/data-content/demo/import state, minimum-effort read/use/operate path, minimum-effort stop/close/cleanup/re-entry path, and operator-delivery closure identity when material
 - `PROOF`: real user-surface proof, proof-surface match, tool path used, tool execution evidence, retained evidence paths, Evidence-Quality Matrix identity.
-  For user-facing rendered surfaces, `PROOF` includes captures at the granularity required by the Evidence-Quality Matrix: per-feature, per-state, viewport, or full-page/full-design-area when that level is material to acceptance.
-  `PROOF` includes an `IMAGE-INSPECTION-RECORD` for each rendered capture used as acceptance evidence, confirming it was opened directly and matched against material design-stated expectations (font size, spacing, ratio, alignment, color, label clarity, glyph rendering).
-  Cite-path-only or material capture-without-open is procedurally invalid for `FINAL-ACCEPT`.
+  For user-facing rendered surfaces, `PROOF` consumes `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
+  `PROOF` includes the required captures and an `IMAGE-INSPECTION-RECORD` for each rendered capture used as acceptance evidence.
+  Missing required direct-open inspection under that rule is procedurally invalid for `FINAL-ACCEPT`.
   When external visual benchmarks materially shaped operator-facing UI, dashboards, reports, or decks, `FINAL-EVIDENCE-PACKET` carries the frozen benchmark-synthesis identity.
   Final Acceptance Review compares rendered proof against the frozen benchmark-synthesis characteristics.
   Missing required design-time benchmark synthesis is an acceptance gap.
@@ -200,7 +200,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback closure-insp
 - Codex MCP independent-review status
 - reconciliation result
 - validator return instruction
-- `IMAGE-EVIDENCE` for every visual / rendered defect — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, or other measurable visual delta), and the multimodal `Read` confirmation that the receiving lane opened the image directly. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
+- `IMAGE-EVIDENCE` for every visual / rendered defect follows `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; each entry names the capture path, design-stated expectation, concrete observed deviation, and multimodal `Read` direct-open confirmation. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.
 
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.

@@ -22,13 +22,14 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 
 ## Runtime Entry Evidence Boundary
 - `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and cleanup truth.
-- `task-execution` consumes that classification plus current-session dispatch evidence before any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse move.
+- `task-execution` consumes current-session dispatch evidence before any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse move.
+- Current or required `session-boot` classification travels with that dispatch evidence.
 - Current-session team registration evidence comes from the active procedure state, current team config, current live process-backed roster, or the hook-maintained team-runtime active marker when present.
 - `TeamCreate` success is current-session team existence proof.
 - Absence of current-session team registration opens `TeamCreate`.
 - Current-session team registration without live process-backed roster opens `session-boot` recovery before team-scoped reattach.
 - Team existence alone is not team-scoped launch readiness when hook policy requires tracked health monitoring; prove the required monitor or route the blocker before team-scoped `Agent`.
-- Dispatch-runtime evidence is consumed here; do not require `session-boot/references/runtime-state-detail.md` as a hidden preflight for `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse.
+- Dispatch-runtime evidence on this owner surface is the launch preflight for `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, and assignment-grade reuse.
 
 ## Team-Agent-Only Lane Dispatch
 - When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), team-scoped `Agent` uses `team_name` and `name` to create or reattach a live member addressable by `SendMessage`.
@@ -61,7 +62,7 @@ Target-resolution preflight is mandatory before the tool call:
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - When task tracking is active for team-agent dispatch, task rows used as assignment `TASK-ID` are created or verified only after current-session `TeamCreate` or team registration is proven and before assignment-grade `SendMessage`; pre-team task rows are not team assignment identity.
 - Task rows provide `TASK-ID` identity; worker targeting and assignment delivery use assignment-grade `SendMessage.to`.
-- Task rows are not assignment-owner, assignee, or in-progress tracking surfaces; `TaskUpdate` is completion-closure only.
+- In this team runtime, generic task-tool start/owner affordances do not apply: task rows are not assignment-owner, assignee, or in-progress tracking surfaces; `TaskUpdate` is completion-closure only.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
@@ -72,9 +73,11 @@ Target-resolution preflight is mandatory before the tool call:
 - One invalid planned call in such a batch blocks the entire batch before any call in the batch is issued.
 - Tool-call envelope shape (parameter tag form, namespace prefix, required-parameter presence, attribute names) must be verified call-by-call against the first validated call's exact envelope before send; same-class copy-paste without per-call shape verification is the named batch-preflight failure mode.
 - A hook `BLOCKED` result, host `InputValidationError`, or `Invalid tool parameters` rejection on any call of a batch is batch-preflight-failure evidence; stop the rest of that dispatch shape and retry only after correcting the failed preflight cause.
-- While `PARALLEL-DISPATCH-LOCK` is open, allowed moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads when the frozen packet's binding surface materializes as an external carrier; same-batch valid `TaskCreate` with top-level non-empty `subject` and `description` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
+- While `PARALLEL-DISPATCH-LOCK` is open, every move must directly create, verify, send, or repair the next dispatch state for a frozen nonblocked group.
+- Allowed lock moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` with top-level non-empty `subject` and `description` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open must not emit listing, count, probe, diagnostic output, or user-facing prose.
-- While `PARALLEL-DISPATCH-LOCK` is open, do not run Codex/review tools, extra corpus reads, `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+- Moves outside the allowed lock moves are forbidden until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
+- Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
 - Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/user-reporting-law.md`.
 - Packet size or self-contained packet burden is not a reason to delay dispatch or omit receiver-required basis; put complete shared context in a retained carrier and send required-floor shard packets that point to it.
 - A user challenge about missing parallel dispatch answers the cause through `.claude/reference/user-reporting-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.

@@ -13,11 +13,8 @@ Use it to:
 - attach every consequential path to one truthful owner and next action
 
 ## Reporting Curtain Inheritance
-This reference governs procedure movement; it does not grant user-facing report permission.
-`verified result`, `HOLD`, explicit cancel, explicit redirect, `status`, `review`, `proof`, `validation`, and next executable owner/action are procedure outcomes before they are report candidates.
-Before any assistant-authored visible prose about these outcomes, consume and apply `.claude/reference/user-reporting-law.md`.
-If `.claude/reference/user-reporting-law.md` does not admit the report, record the outcome internally and continue through the owner path silently.
-Procedure state, route state, runtime signal, lane output, and partial completion cannot override `.claude/reference/user-reporting-law.md`.
+This reference governs procedure movement, not report admission.
+User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 
 ## Consume When
 - A task moves beyond `answer-only`.

@@ -50,7 +50,10 @@ T0/T1 gaps follow Incident Response.
   1. design-level gap, missing/untrue Phase 2 source-of-truth, or repeated same-class cross-surface contract gap caused by weak design contract -> Phase 2 correction
   2. implementation or operator-delivery gap inside unchanged Phase 1/2 contract, including repeated same-class implementation drift with adequate design contract -> Phase 5 systemic correction with Phase-2-derived acceptance-grade gap-to-correction-surface map
   3. changed scope, owner map, route, proof chain, or acceptance chain -> `work-planning`
-  4. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls and every `CORE-WORKFLOW-CLOSURE` row covered, and operator-delivery closure sufficient -> Final Acceptance Review for validator-required chains; workflow completion only after `FINAL-ACCEPT` or when no final-arbitration trigger applies
+  4. no blocking gap, all frozen `SCOPE-BASELINE` features/surfaces/controls and every `CORE-WORKFLOW-CLOSURE` row covered, and operator-delivery closure sufficient -> acceptance-path closure.
+     - Validator-required chains open validator ingress unless a fresh or still-current validator `PASS` already covers the corrected surfaces.
+     - Fresh or still-current validator `PASS` opens Final Acceptance Review.
+     - Workflow completion opens only after `FINAL-ACCEPT` or when no final-arbitration trigger applies.
 - **Reuse rule**: original CP3/CP4 remain valid only while the corrected design preserves the selected architecture family and implementation scope
 - **Iteration continuation reuse**: bounded iteration reuse is allowed only while the active workflow phase, owner surface, and acceptance path stay unchanged
 
@@ -62,5 +65,5 @@ T0/T1 gaps follow Incident Response.
 - CP5 design-level result opens Phase 2 correction.
 - CP5 implementation or operator-delivery result opens Phase 5 correction.
 - CP5 route-changing result opens `work-planning`.
-- CP5 no-blocking-gap result opens Final Acceptance Review or bounded verified-result closure by acceptance path.
+- CP5 no-blocking-gap result opens validator ingress, Final Acceptance Review after fresh or still-current validator `PASS`, or bounded verified-result closure by acceptance path.
 - T0/T1 gap opens `incident-response`.

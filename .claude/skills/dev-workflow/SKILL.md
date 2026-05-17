@@ -215,7 +215,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Entry law**: design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
 **Execution law**: Phase 5 iteration protocol per `references/gap-iteration.md` `Iteration Protocol Detail`; positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
 **Exit law**: CP5 gap state routes as follows:
-- cleared CP5-contracted blocking gaps against frozen `SCOPE-BASELINE` with required user-surface evidence let validator PASS immediately open Final Acceptance Review
+- cleared CP5-contracted blocking gaps against frozen `SCOPE-BASELINE` with required user-surface evidence open affected review, proof, and validator ingress by the frozen acceptance path
+- in validator-required chains, only a fresh or still-current validator `PASS` after affected review, proof, and validation rerun opens Final Acceptance Review
 - remaining blocking gaps make team-lead immediately return the workflow to the current root-cause owner
 **Exit law**: valid return owners are Phase 4 review/proof, Phase 2 design correction, Phase 5 correction, or `work-planning`.
 **Exit law**: the gap remains active until it converges, escalates, or reaches `HOLD`.
@@ -246,7 +247,6 @@ Reference trigger rule:
 
 ## Resolve Next Owner And Action
 Resolve the phase cursor in the same turn by tool-call execution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
-Completed transition starts the next phase or records the exact blocker.
 
 A satisfied non-destructive/non-security/non-operator-policy-choice phase gate is consumed by team-lead, not user confirmation.
 
@@ -254,7 +254,6 @@ When team-lead advances to a new phase, send the canonical `phase-transition-con
 Affected agents consume phase context silently.
 Use assignment-grade packets for new bounded work and structured `shutdown_request` for runtime cleanup.
 If the same agent also receives new bounded work in that segment, carry the needed phase context inside the assignment-grade packet.
-Expect the normal `dispatch-ack`.
 
 Record every phase transition in workspace-root `.runtime/procedure-state.json`.
 Phase-internal scaffolding stays in current-cycle internal context.

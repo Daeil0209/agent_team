@@ -130,7 +130,8 @@ Status answers omit internal topology, packet, shard, ack/completion, counts, pa
 `MID-FLIGHT` emits no user-facing prose unless the user explicitly asked for status or user action is required.
 
 ## Single-Source Rule
-This reference owns user-report admissibility, non-reportable content, and transport/reporting separation.
-Other documents may cite this reference.
-Other documents must not restate report allowlists or convert Communication Plane payload into user reports.
+This reference owns user-report admissibility, non-reportable content, and the user-facing side of transport/reporting separation.
+Other documents may state local transport-owner boundaries and cite this reference.
+Other documents must not restate user-report admissibility criteria, non-reportable content lists, or report-shape limits.
+Other documents must not convert Communication Plane payload into user reports.
 Conflicting wording resolves to this reference and routes to `self-growth-sequence` for owner-local cleanup.

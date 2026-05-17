@@ -28,5 +28,5 @@ This reference supplies first-occurrence and repetition routing only.
 - Self-detected behavioral defect opens self-growth classification.
 - Repeated missed-catch opens deeper hardening route.
 - Missing reusable skill opens Capability-Gap Fast Path.
-- Complete closure checklist returns to active task resume.
-- Incomplete closure checklist keeps self-growth open or opens bounded follow-up ownership.
+- Complete parent `### Closure Standard` returns to active task resume.
+- Incomplete parent `### Closure Standard` keeps self-growth open or opens bounded follow-up ownership.

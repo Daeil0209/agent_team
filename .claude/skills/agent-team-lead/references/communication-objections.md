@@ -39,7 +39,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 ## hold|blocker
 - Treat `hold|blocker` as hard stop on the unsafe affected path.
-- Keep unrelated safe paths active.
+- Keep paths active only when the frozen `parallel-fit` basis proves distinct acceptance contracts and output-to-input independence.
+- If the blocker changes shared source-of-truth, owner, proof, acceptance, staffing, or parallel grouping, reopen `work-planning` before continuing affected paths.
 - Consume `BLOCKER-TYPE`, `BLOCKER-BASIS`, and `SAFE-NEXT-STEP` exactly.
 - Resolve information requests through:
   - corrected packet

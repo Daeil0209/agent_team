@@ -146,6 +146,7 @@ User-visible defect classes include:
 - unexpected empty states
 - console/runtime errors
 
+For dev-workflow visual or rendered acceptance, validator consumes `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
 Validator must inspect rendered evidence as the acceptance oracle. A screenshot saved but not visually checked for glyph sanity, clipping, overlap, hidden controls, readable hierarchy, and missing media is not rendered-quality evidence.
 
 When the same proof surface offers multiple friction-vs-fidelity profiles, validator defaults to the highest-fidelity profile available.
@@ -241,7 +242,7 @@ Validator writes a correction packet with:
 - `REQUIRED-USER-SURFACE-EVIDENCE`
 - `REQUIRED-RETURN-EVIDENCE`
 - `REVALIDATION-TARGET`
-- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis — each entry names the captured screenshot or full-page image path, the design-stated expectation it must match, the concrete observed deviation (font size, spacing, ratio, alignment, color, label clarity, glyph rendering, or other measurable visual delta), and the multimodal `Read` confirmation per `.claude/skills/dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` rule. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
+- `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis follows `.claude/skills/dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` and `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; each entry names the capture path, design-stated expectation, concrete observed deviation, and multimodal `Read` direct-open confirmation. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
 
 Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
@@ -263,7 +264,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
   - `BURDEN-STATUS`
   - `ACCEPTANCE-RECONCILIATION`
   - `DECISIVE-EXPECTATION-TRACE`
-- Use `not-applicable` instead of omission only when a listed status axis was not part of the frozen validation surface.
+- Use `not-applicable:<basis>` instead of omission only when a listed status axis was not part of the frozen validation surface.
 - `matched` and `PASS` are reserved for true acceptance alignment on that exact surface.
 - If available evidence is useful but not sufficient for PASS, keep it and downgrade truthfully to `HOLD`, `partial`, `mismatched`, or `blocked` rather than softening into pass-like language.
 - For visual or rendered acceptance, `DECISIVE-EXPECTATION-TRACE` must map expectation -> route/page/screen-state -> viewport/capture scope -> evidence anchor -> inspected defect classes -> upstream owner -> verdict class. Missing trace, partial matrix, or unreadable rendered text blocks PASS for that surface.

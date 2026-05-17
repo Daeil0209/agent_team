@@ -41,11 +41,12 @@ Load when enterprise-scale work depends on credible layer separation, bounded co
 ## Activation
 Activate only when at least one activation condition is true.
 Condition 1: the work crosses 2+ services with independent deployment lifecycles.
+Independent deployment lifecycles require separate deployable artifacts and independent release/rollback, runtime environment, scaling/SLO, or operational ownership.
 Condition 2: bounded-context boundary review across services is the active deliverable.
 Condition 3: a production-readiness gate fires before externally-committed deploy.
 Single-application architecture review belongs to `software-architecture`.
 Examples: intra-app boundaries, modular separation, persistence contracts, internal layer discipline.
-When activation criteria remain unclear, default to `software-architecture`.
+Multi-module, monorepo, or integration-heavy work remains `software-architecture` unless Condition 1, 2, or 3 is proven from the frozen request or evidence.
 Team-lead escalates if scope grows.
 ## Inputs
 - active request source

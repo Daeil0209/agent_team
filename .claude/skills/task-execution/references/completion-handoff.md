@@ -46,7 +46,8 @@ After the state signal is sent, the producing lane immediately closes the same a
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-SV-RESULT`.
-If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer only when the producer still has an open executable task; otherwise team-lead routes self-growth cleanup.
+If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
+If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes self-growth cleanup.
 
 Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
 Lane completion does not claim team-lead `SV-RESULT`.

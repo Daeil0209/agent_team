@@ -22,24 +22,26 @@ Before this skill acts, the lead must already have:
 Consume only dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
 1. `REQUEST-FIT-BASIS`
 2. `SEMANTIC-INTENT-BASIS`
-3. `REQUEST-BOUND-PACKET-FIELDS`
-4. `CLAIM-CEILING` when material
-5. `ROUTING-SIGNAL`
-6. `NEXT-CONSEQUENTIAL-ACTION`
-7. `DISPATCH-BLOCKERS`
-8. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
-9. `EXECUTION-READINESS-BASIS`
-10. `AGENT-MAP`
-11. `PARALLEL-GROUPS`
-12. `LANE-REQUIRED-SKILLS-MAP`
-13. `SKILL-RECOMMENDATIONS`
-14. `ACTIVE-WORKFLOW` when present
-15. `ACTIVE-SEQUENCE` when present
+3. `DERIVED-DEFAULTS`
+4. `REQUEST-BOUND-PACKET-FIELDS`
+5. `CLAIM-CEILING` when material
+6. `ROUTING-SIGNAL`
+7. `NEXT-CONSEQUENTIAL-ACTION`
+8. `DISPATCH-BLOCKERS`
+9. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
+10. `EXECUTION-READINESS-BASIS`
+11. `AGENT-MAP`
+12. `PARALLEL-GROUPS`
+13. `LANE-REQUIRED-SKILLS-MAP`
+14. `SKILL-RECOMMENDATIONS`
+15. `ACTIVE-WORKFLOW` when present
+16. `ACTIVE-SEQUENCE` when present
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
 - A field outside packet assembly, runtime dispatch, receiving-lane execution, workflow, or active report gates is not dispatch-entry floor.
 - Missing or contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
+- Missing or contradictory `DERIVED-DEFAULTS` reopens `work-planning` when packet assembly, proof surface, or receiving-lane execution depends on it.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` must be concrete when additional-agent routing is host-authorized.

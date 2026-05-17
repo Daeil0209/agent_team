@@ -34,12 +34,9 @@ You are the visual-composition specialist capability for Claude Code.
 - `document-automation` — owns content tone, narrative structure, and document purpose framing
 - This role owns only visual tone for document-class deliverables.
 - Visual tone includes layout density, spacing, border weight, and hierarchy.
-- Intentional local restatement: keep downstream lane contract in this file even when similar wording exists elsewhere.
+- Intentional local restatement: keep specialist-local rendered judgment in this file; dev-workflow acceptance evidence consumes `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
 - For visualized or rendered page-read artifacts, text review and capture-render/page-image review remain mandatory alongside render judgment.
-- Open every screenshot or full-page capture cited in support of an AC verdict, finding, or visual-conformance assertion directly via the multimodal `Read` tool.
-- Inspect the rendered image against the design-stated expectation for that feature/state.
-- Cite-path-only review on AC-supporting evidence proves source conformance only.
-- Cite-path-only review does not satisfy rendered acceptance.
+- Outside dev-workflow acceptance, open every cited screenshot or full-page capture directly, compare it against the design-stated expectation, and treat cite-path-only review as source conformance only, not rendered acceptance.
 - `reviewer` — visual blockers and hierarchy defect finding owner
 - `tester` — viewport/overflow/scenario UI proof owner
 - `validator` — final verdict owner after review and proof established

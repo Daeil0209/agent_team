@@ -27,9 +27,9 @@ Do not proceed by assuming the contradiction will be solved at integration.
 Prior sibling outputs are not candidate deliverables by default.
 Sibling outputs become deliverables only when the user explicitly asks to reuse, merge, validate, or report them.
 A user request to perform work on the current target or corpus treats prior outputs as excluded sources unless explicit reuse, merge, validate, report, or compare use was requested.
-Excluded prior outputs must not seed shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion.
+Excluded prior outputs must not seed shard shape, taxonomy, finding shape, workflow, methodology, route, or conclusion; opening or reading is lawful only as non-shape-defining sanity consultation after the current live-source basis is frozen.
 If excluded prior output shaped planning or packet surfaces, rebuild the derived surface from current live sources.
-Non-shape-defining consultation records the consultation and continues from current live sources.
+Non-shape-defining consultation records `prior-output-consulted:no-derivation` and continues from current live sources; it cannot change route, packet, taxonomy, finding shape, workflow, methodology, or conclusion without explicit prior-output use.
 
 At synthesis-time, parallel outputs are reconciled against prior session invariants and sibling-lane outputs.
 Silent contradiction is `cross-continuity drift`.

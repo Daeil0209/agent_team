@@ -63,6 +63,7 @@ Stop before positive synthesis until all are carried forward:
 - sibling outputs
 - acceptance contracts
 Stop before removal until source-to-destination meaning is reconstructed.
+Governance text removal also satisfies `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Resolve Next Owner And Action
 - A stopped judgment route opens live-owner-surface inspection.
@@ -79,14 +80,16 @@ Stop before removal until source-to-destination meaning is reconstructed.
 - Original creation uses `TARGET-INTENT-BASIS: not-applicable:<reason>` only when no existing artifact exists.
 
 ## Scope-Abuse Rules
-Route to correction when any appears:
-- silent omission
-- vague phrasing
-- assignment-intent-only basis
-- anchor-by-inference
-- literal-text-only-lens substitution
-- request-fit-only substitution
-- PASS-by-default
+Scope-abuse trigger exists when a route, dispatch, synthesis, report, completion, or acceptance claim omits, substitutes, infers, or defaults required material.
+Required material is a material request, plan, `TARGET-INTENT-BASIS`, evidence basis, or acceptance requirement.
+Route to correction when the unsafe move is:
+- `silent omission`: required material is absent from the packet, synthesis, judgment, or report.
+- `vague phrasing`: wording hides the owner, boundary, evidence, or required next action.
+- `assignment-intent-only basis`: assignment purpose replaces cited request, plan, design intent, or evidence.
+- `anchor-by-inference`: an uncited source or unstated assumption is treated as a scope anchor.
+- `literal-text-only-lens substitution`: literal wording replaces semantic intent, design intent, or user burden.
+- `request-fit-only substitution`: request fit is treated as enough without plan, design, evidence, and acceptance reconciliation.
+- `PASS-by-default`: missing evidence or missing required owner output is treated as pass instead of `OPEN-SURFACES` or blocker.
 
 Corrective route:
 - dispatcher uses `route-replan`
@@ -106,10 +109,17 @@ Before dispatch, synthesis, phase movement, or consequential user-facing output,
 Drift reopens `work-planning`.
 
 ## Preservation Rules
-- Migration preserves or sharpens clarity.
-- Refactoring preserves or sharpens action.
-- Reduction preserves or sharpens stop conditions.
-- Re-home preserves handoff, evidence, gate, owner boundary, and reporting truth.
+- Migration, refactoring, reduction, and re-home edits preserve or sharpen the common baseline:
+  - clarity
+  - execution force
+  - owner boundary
+  - required gates
+  - existing valid procedure paths
+- Operation-specific emphasis does not narrow the common baseline.
+- Migration explicitly verifies clarity preservation.
+- Refactoring explicitly verifies action and execution-force preservation.
+- Reduction explicitly verifies stop-condition preservation.
+- Re-home explicitly verifies handoff, evidence, gate, owner-boundary, and reporting-truth continuity.
 - Classify duplicate doctrine as protected local restatement only when it has a named owner and direct-consumption or isolation-safety basis.
 - Resolve divergent duplicate doctrine to the precise owner.
 - Scope/change review tightens weaker duplicate doctrine when tightening preserves meaning.

@@ -65,7 +65,7 @@ Read-only diagnostic, audit, and analytical reports stay lead-local only when al
 - no independent interface or format boundary
 - no independent proof burden
 - no independent correction owner
-- measured context-footprint shows no fan-out benefit
+- a `measured` footprint record under `.claude/reference/runtime-footprint-and-continuity.md` `## Runtime Footprint Claims` shows no context-size, latency, or runtime-burden benefit from fan-out
 
 Otherwise apply `[PARALLEL]` and route through `task-execution`.
 

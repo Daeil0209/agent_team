@@ -76,6 +76,7 @@ Every update/upgrade path first:
    - broaden runtime enforcement tier
 3. Classify the update tier.
    Tiering selects update-local verification depth only.
+   Update tiers are not self-growth hardening tiers; confirmed behavioral or procedural defects use `self-growth-sequence` as primary and this sequence only covers the required asset-update surface.
    Tiering does not waive `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`, triggered reference consumption, `self-growth-sequence` `Change Sequence` execution gate, Hook-Last approval, destructive/security approval, or `SV-RESULT` closure.
    Use the smallest tier that preserves the target asset's owner boundary, live consumption path, and protected procedure force.
    - `quick update`: same-owner typo, dead-text deletion, duplicate trim, pointer correction, terminology normalization, or wording clarification that preserves rule force, owner, trigger, stop, evidence, acceptance, runtime effect, live references, and consumed path.

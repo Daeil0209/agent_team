@@ -103,7 +103,7 @@ For operational management systems (project dashboards, resource allocation UIs,
 - **Card-as-Summary-Entry-Point**: cards contain only identification, period, team summary, budget summary, quick actions. Detail tables, full participant lists, complex forms, or editable calculation UIs inside cards = `poor_proportion`.
 - **Positional Consistency**: same-type information fields must occupy same position and style across all repeated elements. Position/style drift across instances = `positional_consistency_violation` (blocking).
 - **Responsive Reflow Principle**: responsive means vertical restructure, not shrink. Force-shrinking below readability = blocking. Core information must never be hidden, only repositioned.
-- **Merged-Cell Layout Prohibition**: spreadsheet merged-cell layouts in web UI = blocking. Mobile-first designs degrading desktop efficiency (excessive whitespace, single-column on wide screens, hidden controls) = blocking.
+- **Merged-Cell Layout Prohibition**: Block spreadsheet-style merged-cell translation in web UI when it obscures data relationships, breaks responsive inspection, hides controls, or forces manual scanning that a structured table, grouped header, or workflow panel should preserve. Block mobile-first layouts when desktop operators lose visible controls, comparison density, or repeated-action efficiency.
 ### Decorative Clutter Anti-Pattern
 Icons, gradients, animations, hover effects, or badges not conveying operational status or priority = `decorative_noise`.
 Removal test: if removing causes zero operational information loss, remove it.

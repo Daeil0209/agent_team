@@ -74,10 +74,8 @@ Codex axes derive from artifact, user outcome, downstream consumers, evidence bu
 Codex axes include user-perspective checks.
 Codex axes include avoidable-user-burden checks.
 Operator-facing rendered UI axes consume `Skill(visual-composition)` for operator-naive comprehension and record `clear`, `partially-clear`, or `unclear` per AC-supporting element.
-Operator-facing rendered UI axes include image-inspection coverage.
-Image-inspection coverage opens every cited screenshot or full-page capture supporting an AC verdict or finding through multimodal `Read`.
-Image-inspection coverage matches each opened image against the design-stated expectation.
-Cite-path-only acceptance is a procedural failure.
+Operator-facing rendered UI axes consume `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule` for image-inspection coverage.
+Cite-path-only acceptance remains a procedural failure under that rule.
 Novel or composite UI axes consume `Skill(benchmark-simulation)` and check that benchmark characteristics are reflected in the rendered surface.
 Plan, design, specification, report, governance, and implementation-binding review surfaces require Feynman clarity.
 

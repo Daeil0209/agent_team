@@ -19,14 +19,11 @@ Load this skill when explicit user-directed session end or confirmed teardown in
 Calling a teardown-class tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `self-growth-sequence`; the hook runtime guard is enforcement evidence, not authorization.
 Reviewer / agent task completion is not session end; teardown requires user-directed intent or proven session-closing basis.
 Hook feedback can surface teardown state but is not authority.
-Session-end intent requires explicit closeout or teardown basis.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
 
 ### Reporting Curtain Inheritance
-Session closeout records teardown and residual truth under `.claude/reference/user-reporting-law.md`.
-Closeout evidence, teardown state, live-agent state, residual state, warning state, and continuity state are internal unless `.claude/reference/user-reporting-law.md` admits the exact closeout report surface.
-Clean closeout does not create progress, boot, or procedure narration permission.
-Warning-bearing closeout stays short and user-relevant; report admission remains owned by `.claude/reference/user-reporting-law.md`.
+This skill governs session closeout, not report admission.
+User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 
 ## Runtime Teardown Preflight
 Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.

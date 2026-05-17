@@ -21,7 +21,7 @@ Before any work:
 5. Lane action: are the first lane action and stop condition explicit enough to govern execution?
 6. Feasibility: can this be completed inside the declared boundary with an available lawful production path?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
-Execution bias: developer must actively find and use the first lawful production path that can satisfy the user instruction.
+Execution bias applies only after packet classification opens `execute` or `reconstruct-with-inference`: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
 On assignment-grade work receipt, classify the packet before execution:
 - bounded single-phase development production -> `execute`

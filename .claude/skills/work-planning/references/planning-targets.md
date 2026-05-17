@@ -18,7 +18,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition without transferring planning ownership.
 
 ## Target Selection Rules
-- Choose one primary target before Q1-Q5. Add a secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
+- Choose one primary target before Q1-Q5. Add each mandatory secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
 - On consequential top-level plans, `route-plan` is the default primary target.
 - The matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear.
 - In those cases, `lead-local-plan`, `delegated-lane-plan`, `blocker-clear-plan`, or `workflow-sequence-plan` becomes primary.
@@ -42,14 +42,14 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 
 ## Target Switching
 - Switching from one target to another is allowed only before the freeze or after reopening `work-planning`.
-- A secondary target is included only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
+- Each secondary target is included only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
 - If target switching changes route owner, lane owner, proof surface, acceptance owner, work surface, or dispatch shape, reopen the planning pass instead of extending it by habit.
 - Do not use `team-dispatch-readiness-plan` to invent a route. Route must already be frozen by `route-plan` or workflow/sequence owner.
 - Do not use `lead-local-plan` to bypass a configured lane, independent review/proof/validation separation, or user-surface proof need.
 
 ## Resolve Next Owner And Action
 - Selected primary target opens the Q1-Q5 planning pass.
-- Valid secondary target joins the same planning pass.
+- Valid secondary targets join the same planning pass.
 - Target switching after freeze reopens `work-planning`.
 - `team-dispatch-readiness-plan` returns dispatch readiness fields to the planning record.
 - `workflow-sequence-plan` opens the selected workflow or sequence owner before deeper execution.

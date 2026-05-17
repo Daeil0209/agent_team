@@ -71,7 +71,7 @@ Use every lens that materially applies to the target. Omission of an applicable 
 
 ## SV-PLAN Detailed Gate
 When exception-only `SV-PLAN` is loaded before consequential action, verify:
-- `REQUEST-FIT-BASIS`, `SEMANTIC-INTENT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
+- `REQUEST-FIT-BASIS`, `SEMANTIC-INTENT-BASIS`, `DERIVED-DEFAULTS`, `REQUEST-BOUND-PACKET-FIELDS`, and `ACTION-CLASS` are present and coherent
 - material `TARGET-INTENT-BASIS` is present before existing-artifact, governance, artifact-change, review, proof, validation, or patch-worthiness claims
 - if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable

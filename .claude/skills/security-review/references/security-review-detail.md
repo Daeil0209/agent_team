@@ -125,9 +125,9 @@ Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Ad
 |---|---|---|
 | **T0** | Critical | Block deployment immediately; fix required before any further release activity |
 | **T1** | Critical / Major | Fix before release; blocks the current release gate |
-| **T2** | Major / Minor | Fix in current sprint; blocks stage acceptance if 3 or more T2 findings accumulate |
+| **T2** | Major / Minor | Fix in current sprint; blocks stage acceptance when 3 or more unresolved T2 findings create cumulative release risk on a shared asset, control family, attack path, or deployment surface |
 | **T3** | Advisory | Record and schedule; does not block current release |
-**Gate rule:** Any T0 or T1 finding is individually blocking. Three or more T2 findings collectively constitute a blocking condition equivalent to T1.
+**Gate rule:** Any T0 or T1 finding is individually blocking. Three or more unresolved T2 findings collectively constitute a T1-equivalent blocking condition only when the reviewer records cumulative exploitability, shared control failure, or release-scope acceptance risk; otherwise keep them as current-sprint fixes with explicit rationale.
 ---
 ## 5. Allowed and Prohibited Practices
 ### Allowed

@@ -76,6 +76,7 @@ Select only the next concrete execution move that preserves the frozen routed st
 
 Core rule:
 - `lead-local candidate` returns to the frozen lead-local owner
+- `ambiguous-route` means the frozen route authorizes dispatch handling but the exact dispatch move is not safely reducible to lead-local execution without moving owner, phase, staffing, proof, acceptance, or work-surface boundaries
 - an additional-agent route enters here as a frozen routed state
 - `ambiguous-route` defaults to team-routed handling, not lead-local compression
 
@@ -94,12 +95,9 @@ Own the actual execution move:
 - reject any planned pre-completion `TaskUpdate`, `owner`, `assignee`, or `in_progress` task-row mutation before the tool call
 - confirm retained-output carriers with silent success commands; failed checks surface only through the owning blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
-- carry required methodology or capability skills in `REQUIRED-SKILLS` from the frozen planning basis or the active workflow owner's phase-local refinement
-- treat each `REQUIRED-SKILLS` entry as receiver-mandatory load/apply work, not passive method text
-- carry `REQUEST-BOUND-PACKET-FIELDS` as exact agent-facing request-fit fields when the receiving lane needs original request shape, exact instruction wording, user surface, burden cue, or acceptance basis
-- carry frozen `SKILL-RECOMMENDATIONS` only when `work-planning` or active workflow owner resolved methodology instructions for the receiving lane
-- missing or lane-mismatched skill-basis entries return to the same frozen owner when all `work-planning` boundary-change axes stay unchanged
-- ownership-changing `REQUIRED-SKILLS` or `SKILL-RECOMMENDATIONS` entries reopen `work-planning`
+- Carry `DERIVED-DEFAULTS`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, and request-bound packet fields only from the frozen planning basis or active workflow owner's phase-local refinement.
+- Packet skill and request-bound field duties route through `references/assignment-packet.md` and `references/request-bound-fields.md`; do not invent, drop, or relabel them during dispatch.
+- Missing, lane-mismatched, contradictory, or ownership-changing entries use the correction routing in those references; do not repair them with dispatch prose.
 
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
@@ -118,7 +116,8 @@ Packet final check:
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
-- A packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check (`bounded assignment, reroute, or reuse against an open executable task`); suppress the send and route cleanup to `self-growth-sequence` per `references/assignment-packet.md` packet-correction outcome.
+- A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
+- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `self-growth-sequence`.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
@@ -165,7 +164,7 @@ Tool-adjacent progress prose is forbidden while dispatch, monitoring, recovery, 
 Transport dispatch state through `message-classes.md`; do not convert dispatch state into a user report.
 Report to the user only when `.claude/reference/user-reporting-law.md` admits a user-facing report.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
-When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, `TaskUpdate` mutations, packet rewrites after `references/assignment-packet.md` preflight has passed, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
+When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, lead-side `TaskUpdate` mutations, packet rewrites after `references/assignment-packet.md` preflight has passed, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
 Do not narrate `PARALLEL-DISPATCH-LOCK`, allowed move lists, retained-output setup, or dispatch preparation to the user; execute the allowed move.
 
 The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.

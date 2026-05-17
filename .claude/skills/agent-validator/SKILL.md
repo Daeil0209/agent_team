@@ -165,7 +165,7 @@ Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.
 - `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.
 - Keep every validator-specific status axis explicit.
-- Use `not-applicable` instead of omission only when that axis was not part of the frozen validation surface.
+- Use `not-applicable:<basis>` instead of omission only when the validator reference allows that listed status axis to be outside the frozen validation surface.
 - When the verdict depends on an executed user surface, keep the decisive proof method explicit.
 - Name the concrete tool path used and the execution evidence observed.
 - See `references/validator-lane-detail.md` for validator-specific completion detail.

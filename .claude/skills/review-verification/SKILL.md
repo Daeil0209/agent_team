@@ -1,6 +1,6 @@
 ---
 name: review-verification
-description: Review live design intent, coherence, procedure adherence, execution force, negative risk, and patch-worthiness before consequential governance judgment.
+description: Review live design intent, coherence, procedure adherence, skill-consumption fit, execution force, negative risk, and patch-worthiness before consequential governance judgment.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -12,14 +12,15 @@ PRIMARY-OWNER: team-lead
 
 ## Identity
 You are the review-verification capability for Claude Code.
-Critical review posture is active from skill load; Step 4A carries the executable defeater gate for reviewed claims, patches, plans, syntheses, no-defect, bestness, no-regression, and completion judgments.
+Critical review posture is active from skill load; Step 5 is the executable defeater gate inside the single workflow for every authorized claim scope.
+Full workflow and named lane lenses differ by claim scope and recorded fields only; named lenses do not create a separate review procedure or bypass the Critical Review Gate.
 - Use this conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
 - Reviewer, developer, tester, validator, and researcher consume only the packet fields or explicitly named lenses assigned to their lane surface.
 - A bare `REQUIRED-SKILLS: [review-verification]` entry for a lane is invalid; packetization must name the required lens or route full workflow activation to `team-lead`.
 
 ## Authority
-**Coverage:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure adherence, execution force, integrity, negative risk, and patch-worthiness.
+**Coverage:** review order, live-surface inventory, design-intent reconstruction, owner-boundary coherence, procedure adherence, skill-consumption fit, execution force, integrity, negative risk, and patch-worthiness.
 
 **Adjacent owners hold:** planning freeze, independent review findings, test execution, final validation verdict, implementation, governance patch execution, and runtime enforcement.
 
@@ -39,7 +40,7 @@ Output: `review_verification_packet`.
 - `update-upgrade-sequence` and `self-growth-sequence` - own governance asset changes after this review identifies a patchable basis.
 
 ## Purpose
-Use this skill for exhaustive review, design-intent analysis, coherence analysis, toxic-rule judgment, removal judgment, or patch-readiness judgment.
+Use this skill for exhaustive review, design-intent analysis, coherence analysis, skill-consumption fit judgment, toxic-rule judgment, removal judgment, or patch-readiness judgment.
 
 Default review mode is exhaustive across the frozen target corpus.
 User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
@@ -48,11 +49,12 @@ Report uninspected surfaces as `OPEN-SURFACES` and downgrade the claim to `UNVER
 
 Prevent these failures:
 - starting analysis before the target intent is reconstructed
-- judging risk from one document while ignoring adjacent owner surfaces
+- judging a rule, field, route, or risk from one document before inspecting each producing, consuming, and adjacent owner surface on the active next-owner/action path
 - upgrading evidence into a defect before the common finding basis proves `confirmed-defect`
 - adding explanatory rules where delete, trim, merge, re-home, replace, or tighten can make the rule executable
 - compressing distinct obligations into one sentence
-- claiming no risk, bestness, closure, or patch fitness from partial or uninspected evidence, or before Step 4A material defeaters are tested
+- judging a skill rule without checking whether triggered consuming surfaces can find, load, apply, and record it toward the intended quality outcome
+- claiming no risk, bestness, closure, or patch fitness from partial or uninspected evidence, or before Step 5 material defeaters are tested for the authorized claim scope
 - patching before integrity, coherence, and owner-boundary checks are complete
 
 ## Activation
@@ -64,6 +66,7 @@ Bounded reviewer-owned acceptance review routes to the reviewer lane.
 Activation triggers when the request materially includes one or more of:
 - exhaustive inspection, full review, whole-folder review, or all-surface analysis
 - coherence, consistency, integrity, procedure-adherence, execution-force, or contradiction judgment
+- skill-loading, required-skill, specialist-consumption, or intended-outcome skill-consumption judgment
 - design intent, team philosophy, or owner-boundary judgment
 - negative-risk, no-regression, or safety judgment
 - removal-centered optimization or bottleneck/toxic-rule detection
@@ -76,13 +79,16 @@ Packetization lens lane packets may name only these bounded `review-verification
 - `design-intent-lens`: compare the assigned surface with frozen `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, owner intent, and protected function.
 - `owner-boundary-lens`: test whether the finding, packet, or patch moves work across owner, lane, workflow, proof, validation, reporting, or runtime boundaries.
 - `procedure-adherence-lens`: test whether the active owner path, consumed references, gates, handoff, and evidence order were executed rather than narrated.
+- `skill-consumption-lens`: test whether a material skill method is reachable from the triggered consuming surface, named in the packet or owner path when required, applied before the claim, and recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` with its effect on the intended outcome.
 - `coherence-integrity-lens`: test adjacent live owner surfaces for contradiction, stale duplicate wording, broken reference, or missing destination owner.
 - `negative-risk-lens`: test meaning loss, weaker procedure, added burden, user-surface regression, runtime side effect, and reuse failure.
 - `removal-first-lens`: test consumed execution surface selection plus delete, trim, merge, re-home, replace, and tighten before append under `.claude/reference/minimal-governance-change-law.md`.
 - `patch-worthiness-lens`: test confirmed-defect basis, protected-function preservation, smallest owner, operation type, and no stronger narrower alternative.
 
-A named lane lens is a bounded question, not full workflow activation.
-If the packet needs full Steps 1-8, patch-worthiness synthesis, or three or more lenses, route the full workflow path to `team-lead`.
+A named lane lens is a bounded claim-scope entry to the same numeric workflow, not a separate workflow, abbreviated checklist, or Step 5 exemption.
+The lane records only lens-relevant fields and marks out-of-lens review packet fields `not-applicable:<claim-scope-basis>`.
+Claims outside the named lens ceiling are invalid lane output and route to `team-lead` full workflow.
+If the packet needs all mutation-readiness fields through Step 9, patch-worthiness synthesis, or three or more lenses, route the full workflow path to `team-lead`.
 
 ## Inputs
 - exact user request and amendments
@@ -114,6 +120,7 @@ Required fields:
 - `OPEN-SURFACES`
 - `DOWNSTREAM-VERIFICATION-NEED`
 
+`PROCEDURE-EXECUTION-RESULT` records `skill-consumption-lens` results when skill consumption materially affects outcome, proof, acceptance, or procedure execution.
 Use `UNVERIFIED` when the live owner surface, design intent, or evidence basis was not inspected.
 Use absolute zero-risk language only when the frozen acceptance basis makes absolute closure truthful.
 Otherwise use `no identified negative risk on inspected surfaces`.
@@ -129,12 +136,15 @@ Run the workflow in numeric order.
 Each step records current evidence in `SEQUENCE-STATUS` before the next step opens.
 The next step opens only when earlier step evidence is current for the same target, corpus, patch design, and diff.
 When target, corpus, findings, patch design, or diff changes, return to the earliest changed step and rerun every downstream step.
-Live patch eligibility requires:
-- Step 8 recorded completed integrity evidence
-- emitted `review_verification_packet`
+Patch sequence handoff eligibility requires:
+- Step 9 recorded completed integrity evidence before mutation readiness
+- Step 14 emitted a current `review_verification_packet`
 Narrative claims of completed steps do not satisfy this gate.
 Rerun from the earliest skipped step after a procedural failure.
-If a mutation already exists before eligibility, treat the current diff as the review target, route it through Steps 1-8, and execute only the corrected eligible patch path.
+If a mutation already exists before handoff eligibility, treat the current diff as the review target, route it through Steps 1-14, and execute only the corrected eligible patch path.
+
+This skill has one workflow; every use follows this numeric order at the authorized claim scope.
+Bounded named-lens consumption narrows target, corpus, required fields, and claim ceiling only; it does not skip Step 5 or create a separate procedure.
 
 ### 1. Relearn Doctrine And Owner Intent
 Read the live top doctrine and affected owner surfaces before judgment.
@@ -149,6 +159,8 @@ Name target, corpus boundary, exhaustiveness basis, evidence burden, user surfac
 The frozen corpus must include:
 - every user-named target surface
 - every material adjacent owner surface needed to judge design intent, owner boundary, coherence, integrity, negative risk, and patch-worthiness
+- every producer and consumer owner surface for any field, route, state token, or skill rule being judged as missing, redundant, disconnected, or defective
+- every triggered consuming surface needed to judge material skill availability, packetization, applied-rule mapping, and intended outcome effect
 Governance defect review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 Governance removal review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
 Preservation review includes `.claude/reference/context-reduction-preservation-map.md` when trace basis exists there.
@@ -181,16 +193,20 @@ Hook matcher burden requires a matched-tool side-effect map before defect classi
 Silent ledgers, planning markers, SV markers, lifecycle markers, and recovery markers are protected functions until proven non-material.
 Classify explanatory defense as a defect when direct executable wording can carry the rule.
 Classify compressed multi-rule wording as a defect when it hides trigger, owner, stop, evidence, or exception boundary.
+Classify a skill-consumption defect only when live evidence shows a material skill method is required for the intended outcome and the consuming surface cannot find, load, apply, or record it at the required owner path.
+Classify unnecessary skill loading as a defect when it adds burden without material outcome, proof, acceptance, or procedure benefit.
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
 
-### 4A. Critical Review Gate
-Run before plan, synthesis, patch-worthiness, bestness, no-defect, no-regression, or completion judgment; this gate records the default critical posture that is already active from skill load.
+### 5. Critical Review Gate
+Run before any review-verification output, plan, synthesis, patch-worthiness, bestness, no-defect, no-regression, or completion judgment at the authorized claim scope; this is the same workflow gate for full and named-lens use.
 Assume the current patch or preferred conclusion is wrong until material defeaters are tested against live surfaces.
 Construct material defeater candidates from these lenses:
 - owner-boundary conflict
 - protected-function loss
 - weaker procedure or execution force
 - residual ambiguous wording or semantic collision
+- missing, wrong-owner, unrecorded, or burden-only skill-consumption path
+- untraced producer-consumer owner path for any field, route, state token, or skill-consumption claim
 - runtime, tool-side-effect, filesystem-propagation, observation-race, transient-state, user-surface, or reuse path failure
 - stronger narrower alternative such as delete, trim, merge, re-home, tighten, no-patch, or hook-last
 For each material defeater, record:
@@ -198,11 +214,11 @@ For each material defeater, record:
 - confirmed, disproven, or open result
 - correction owner and next action when confirmed or open
 A bestness or no-defect claim is blocked while any material defeater is untested, confirmed, or open without owner deferral.
-A confirmed defeater returns to Step 5 patch design or Step 2 corpus widening before final judgment.
+A confirmed defeater returns to Step 6 patch design or Step 2 corpus widening before final judgment.
 `NEGATIVE-RISK-RESULT` summarizes defeater outcomes.
 `PATCH-WORTHINESS` explains why the selected patch is narrower and safer than material alternatives.
 
-### 5. Design Removal-First Patch
+### 6. Design Removal-First Patch
 Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 Apply that gate as the binding patch-selection standard; this step records gate results for review handoff.
 Do not duplicate or override its owner-surface, removal-first, generalization, or symptom-only rules here.
@@ -221,7 +237,7 @@ Delete explanatory defense when direct executable wording preserves the rule.
 A removal, trim, merge, re-home, replacement, or compression is patch-eligible only when it preserves or sharpens source meaning, positive execution path, owner boundary, trigger, stop, evidence, recovery path, rule recognition, clarity, and execution force.
 Compression that weakens procedure execution, compliance recognition, or required-rule clarity is invalid.
 
-### 6. Pre-Patch Negative-Risk Gate
+### 7. Pre-Patch Negative-Risk Gate
 Against live governance documents, test the proposed patch for:
 - meaning loss
 - owner conflict
@@ -234,15 +250,15 @@ Against live governance documents, test the proposed patch for:
 - weaker user-use readiness
 - acceptance regression
 Revise the patch design until all identified negative risks and Critical Review Gate defeaters are removed, disproven, or assigned as explicit blockers.
-Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before live patch eligibility.
+Unresolved negative risk routes the work to patch redesign, evidence gathering, or explicit `HOLD` before patch sequence handoff eligibility.
 Report absolute risk-zero only when absolute closure is proven.
 Otherwise report `no identified negative risk on inspected surfaces`.
 
-### 7. Widen Coherence Radius
+### 8. Widen Coherence Radius
 After the patch design survives the first risk gate, inspect the surrounding references, sibling skills, lane roles, phase gates, packet fields, and acceptance path that the patch can affect.
 Update the patch design when wider coherence review finds drift, overlap, missing owner handoff, or newly stale meaning.
 
-### 8. Integrity Gate Before Live Patch
+### 9. Integrity Gate Before Live Patch
 Before live patch execution, verify the structural contract.
 Verify fixed order.
 Verify protected local restatement.
@@ -252,16 +268,16 @@ Verify each adjacent surface is removed, citation-only, or a protected local res
 Verify positive execution path.
 Verify existing function preservation.
 Verify no-regression basis.
-Do not re-test Step 6 axes here.
+Do not re-test Step 7 axes here.
 Any failed integrity item returns the work to patch design with the failed item named.
 
-### 9. Hand Off To The Owning Patch Sequence
+### 10. Patch Sequence Boundary
 File mutation is owned by the named patch sequence or production owner, not by review-verification.
-After Steps 1-8 record completed evidence, emit the `review_verification_packet`.
-Hand off the eligible patch to the owning patch sequence or assigned production owner.
-Missing eligibility evidence routes to the smallest incomplete review step before any handoff.
+After Steps 1-9 record completed evidence, keep mutation blocked until Steps 12-14 classify findings, decide patch-worthiness, and resolve next owner/action.
+Missing Step 1-9 evidence routes to the smallest incomplete review step before patch-worthiness or handoff.
 
-### 10. Post-Patch Coherence Re-engagement
+### 11. Post-Patch Coherence Re-engagement
+Before patch handoff, record only this re-engagement owner boundary.
 Post-patch coherence review is owned by the executing patch sequence's Post-Verify step.
 Re-engage `review-verification` only when that sequence escalates a coherence concern back to this lens.
 When re-engaged, re-read the changed live surfaces.
@@ -269,10 +285,10 @@ Re-read the resulting diff.
 Re-read surrounding owner surfaces and affected references.
 Fix newly found defects through the smallest correction path.
 
-### 11. Classify Findings
+### 12. Classify Findings
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 
-### 12. Decide Patch Worthiness
+### 13. Decide Patch Worthiness
 Patch recommendations must state:
 - protected function
 - user-outcome impact
@@ -280,9 +296,11 @@ Patch recommendations must state:
 - smallest owner
 - operation type
 - tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`
-Use the removal-first operation selected in Step 5, or return to patch design when the operation changes.
+Use the removal-first operation selected in Step 6, or return to patch design when the operation changes.
 
-### 13. Next-Owner Routing
+### 14. Next-Owner Routing
+Emit the `review_verification_packet` from Step 14 only after Steps 1-13 are current and next owner/action is resolved for the same target, corpus, patch design, and diff.
+The packet carries classification from Step 12, patch-worthiness from Step 13, and next owner/action from Step 14.
 Return the smallest truthful next owner/action.
 Use `reviewer` for independent review.
 Use `researcher` for missing evidence.
@@ -297,7 +315,7 @@ Use `self-verification` before consequential reporting, completion claims, or sy
 Hand off only when the receiver can identify inspected surfaces, open surfaces, design-intent basis, confirmed versus hypothetical findings, next owner/action, and closure evidence.
 
 ## Resolve Next Owner And Action
-- Completed review packet opens the named downstream owner/action from Step 13.
+- Completed review packet opens the named downstream owner/action from Step 14.
 - Missing corpus, design-intent, owner-boundary, or evidence basis keeps `review-verification` open.
 - Unresolved negative risk opens patch redesign, evidence gathering, or `HOLD`.
 - Ordinary governance asset update opens `update-upgrade-sequence`.
@@ -305,8 +323,8 @@ Hand off only when the receiver can identify inspected surfaces, open surfaces, 
 - Consequential reporting opens `self-verification`.
 
 ## Role-Scoped Structural Feedback
-- Challenge desired-patch, rule-citation, risk-free, best, complete, or no-defect claims that lack live design intent, actual execution-path evidence, inspected-surface basis, or Step 4A defeater results.
-- Challenge defect labels, additions, removals, or compression unless owner-correction path, protected-function preservation, intended quality, independence, safety, user-intent protection, and Step 5 patch eligibility are proven.
+- Challenge desired-patch, rule-citation, risk-free, best, complete, or no-defect claims that lack live design intent, actual execution-path evidence, inspected-surface basis, or Step 5 defeater results.
+- Challenge defect labels, additions, removals, or compression unless owner-correction path, protected-function preservation, intended quality, independence, safety, user-intent protection, and Step 6 patch eligibility are proven.
 
 ## Role-Scoped Self-Growth Loop
 - Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `self-growth-sequence`.

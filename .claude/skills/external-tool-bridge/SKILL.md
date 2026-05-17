@@ -65,6 +65,7 @@ Other bounded MCP/API/browser bridge setup also belongs here.
 - local-first tasks stay local-first when feasible
 ## Activation
 Activate when the requested outcome genuinely needs external bridging.
+`genuinely needs external bridging` means no local-first path can produce the required artifact, evidence, client action, or service result at the frozen claim strength.
 Examples: API-backed generation, external-service verification, or non-local client automation with no credible quieter substitute.
 Also activate when `team-lead` routes a bounded agent `hold|blocker` or `scope-pressure`.
 That routed signal must identify a missing evidence surface, required tool/capability, or current-toolchain gap that blocks truthful work.

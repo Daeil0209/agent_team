@@ -79,6 +79,7 @@ Check these frozen surfaces before challenge:
 - frozen plan
 - `REQUEST-FIT-BASIS`
 - `SEMANTIC-INTENT-BASIS`
+- `DERIVED-DEFAULTS`
 - material `TARGET-INTENT-BASIS`
 - `REQUEST-BOUND-PACKET-FIELDS`
 - assignment packet fields

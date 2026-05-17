@@ -55,7 +55,8 @@ Record:
 ## Verification Gate
 Before team-lead reports a synthesized analysis result, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` on that exact analysis result.
 The gate remains open without current `SV-RESULT` evidence from an actually-loaded `Skill(self-verification)` run; `SV-RESULT` blocks authored inside the synthesis carrier, retained outputs, or report drafts do not satisfy the gate.
-Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification when available.
+Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification unless the configured or assigned independent surface records unavailable, blocked, not-applicable, or `fail-open:*` basis from its owner.
+Do not silently downgrade the gate; unavailable independent verification keeps claim strength conservative and records the unavailable or fail-open basis.
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
 Independent verification is internal Procedure Plane work unless `.claude/reference/user-reporting-law.md` admits a user report.
 Raw lane convergence, shard counts, candidate totals, and retained-output presence are not verified synthesis.
@@ -127,7 +128,7 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - Packet basis itself must be compared against:
   - the frozen delivery contract
   - the frozen `SEMANTIC-INTENT-BASIS` when analysis, critique, governance judgment, review, validation, or patch-worthiness depends on user/team/design meaning
-- Missing frozen `REQUEST-BOUND-PACKET-FIELDS` baseline reopens the packet owner.
+- Missing frozen `DERIVED-DEFAULTS` or `REQUEST-BOUND-PACKET-FIELDS` baseline reopens the packet owner.
 
 ## Redispatch Rules
 - Every non-final synthesis resolves to one next executable owner/action, bounded redispatch basis, or `HOLD`.
