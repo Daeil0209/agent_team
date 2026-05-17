@@ -2,7 +2,7 @@
 doc-type: hook-governance-ledger
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 5 [HOOK-LAST]; Reference Binding; update-upgrade-sequence hook/settings owner"
+SOURCE-RULES: "Core Laws 5 [HOOK-LAST]; Reference Binding; governance-change hook/settings owner"
 LOAD-POLICY: on-demand hook governance ledger
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---

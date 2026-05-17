@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   4. Reference-owned workflow sections (active references in `references/`):
      - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Review`, `Review Convergence Review`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
-     - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Self-Growth And Structural Feedback`
+     - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Governance Change And Structural Feedback`
 - New top-level phase definitions require governance review.
 - Keep exact phase names stable when referenced by doctrine or dispatch packets.
 - Phase sections own only phase charter, owner, canonical output, and entry/exit law.
@@ -31,9 +31,9 @@ Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the 
 Activation requires the frozen workflow route.
 
 Activation requires configured independent-review handling for plan, design, and material review stages.
-The current configured implementation is Codex MCP through `.claude/skills/work-planning/references/codex-independent-review.md`.
+The current configured implementation is Codex MCP through `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
 `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for trigger handling, adjudication, or fail-open truth; it does not grant external-review authority.
-`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` under the skip rule in `.claude/skills/work-planning/references/codex-independent-review.md`.
+`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` under the skip rule in `Skill(codex-independent-review)`.
 If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
@@ -156,7 +156,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch
 - inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden
 **Execution law**: cross-surface drift after PASS-attempt returns to Phase 2 correction.
-**Execution law**: missed-catch classification selects workflow repair, owner correction, or `Self-Growth Sequence`.
+**Execution law**: missed-catch classification selects workflow repair, owner correction, or `governance-change`.
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
@@ -200,7 +200,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
 **Execution law**: validator cross-surface integration verification is required before PASS.
 **Execution law**: per-surface quality without cross-surface coherence is incomplete review.
-**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Self-Growth Sequence` on the narrowest owner surface.
+**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `governance-change` on the narrowest owner surface.
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.
@@ -273,7 +273,7 @@ Continuity files record only owner-required state.
 
 Executable launch, shutdown, operator-OS, demo-data, and mental-model detail lives in `references/operator-delivery.md`.
 
-## Self-Growth And Structural Feedback
+## Governance Change And Structural Feedback
 - Repeated skipped checkpoints, missing canonical phase artifacts, or repeated phase-cursor stalls are workflow hardening signals
 - Repeated misclassification of design-vs-implementation gaps is a workflow-quality signal
 - Repeated serial bottlenecks after decomposition, or repeated need for transition-only scouts, is a staffing/bridge design signal

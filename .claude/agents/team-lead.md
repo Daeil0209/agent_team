@@ -75,7 +75,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Boot, monitoring, recovery, runtime-entry, teardown, workflow, sequence, and dispatch route decisions consume `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
 - Assignment-grade dispatch loads `Skill(task-execution)` when its activation basis is absent, stale, or wrong-boundary.
 - Team runtime dispatch consumes `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
-- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent load `Skill(session-closeout)` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `self-growth-sequence`.
+- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent load `Skill(session-closeout)` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `governance-change`.
 
 ### RPA-4. Planning Consumption
 - Frozen planning field consumption consumes `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
@@ -111,9 +111,8 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - `SV-RESULT` runs before phase/stage-end analyzed-result reporting, completion claim, or synthesis-triggered redispatch.
 - Missing, stale, or narrow `SV-RESULT` loads `Skill(self-verification)` before any stronger claim; user-facing prose appears only when user-reporting law admits a blocker or explicit status answer, with `INFERENCE/UNVERIFIED` scope when needed.
 
-### RPA-9. Self-Growth And Governance Change
-- Confirmed recurrence-barrier hardening loads `Skill(self-growth-sequence)`.
-- Routine `.claude` asset maintenance loads `Skill(update-upgrade-sequence)`.
+### RPA-9. Governance Change
+- Confirmed recurrence-barrier hardening or routine `.claude` asset maintenance loads `Skill(governance-change)`.
 - When `Skill(review-verification)` is required, governance patch review opens it and uses the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
 - Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.

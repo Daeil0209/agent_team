@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback and self-growth blocks when present
+  5. owner-local structural feedback and governance-change blocks when present
 - Keep this skill methodology-only.
 - Authority stays limited to clarity.
 - Strengthen, split, merge, trim, or replace unclear wording before adding new doctrine.

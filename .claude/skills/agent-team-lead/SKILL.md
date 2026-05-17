@@ -15,7 +15,7 @@ PRIMARY-OWNER: team-lead
 - Load when `.claude/agents/team-lead.md` opens a team-lead procedure trigger that names a reference in this skill.
 - Load before consuming any reference under `.claude/skills/agent-team-lead/references/`.
 - Do not load for lane-owned assignment work unless team-lead procedure control is the active owner path.
-- This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, `self-growth-sequence`, or `update-upgrade-sequence`.
+- This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, or `governance-change`.
 
 ## Reference Map
 - Pre-action gate: `references/pre-action-gate.md`

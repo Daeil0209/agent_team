@@ -27,7 +27,7 @@ Claude reviewer owns the configured reviewer lane result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
 
-Configured independent-review authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for review-convergence review.
+Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for review-convergence review.
 
 ## Trigger
 Run when all are true:
@@ -46,9 +46,10 @@ Do not run for receipt/status/phase-context-only messages, typo-only/cosmetic-on
 If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
 
 ## Packet
-Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/work-planning/references/codex-independent-review.md`.
+Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
 Every packet includes:
 - `.claude/CLAUDE.md`
+- `.claude/skills/codex-independent-review/references/common-contract.md`
 - `.claude/agents/reviewer.md`
 - `.claude/skills/agent-reviewer/SKILL.md`
 - `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md`

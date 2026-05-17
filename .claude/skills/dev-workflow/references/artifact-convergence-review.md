@@ -29,7 +29,7 @@ For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-ed
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
 User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
-Configured independent-review authority boundary is owned by `.claude/skills/work-planning/references/codex-independent-review.md`; this reference consumes that boundary for artifact-convergence review.
+Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for artifact-convergence review.
 `CODEX-INDEPENDENT-REVIEW-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
 
 `REDESIGN-PLAN` validity requires four named contents in order:
@@ -51,9 +51,10 @@ Run for:
 Do not run for receipt/status/phase-context-only messages, typo-only edits, already-converged artifacts without material upstream change, or light answer-only work.
 
 ## Packet
-Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/work-planning/references/codex-independent-review.md`.
+Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
 Every packet includes:
 - `.claude/CLAUDE.md`
+- `.claude/skills/codex-independent-review/references/common-contract.md`
 - `.claude/skills/dev-workflow/SKILL.md`
 - `.claude/skills/dev-workflow/references/phase-gates.md`
 - `.claude/skills/dev-workflow/references/phase-surfaces.md`

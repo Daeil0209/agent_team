@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Interrupt handling preserves original-task ownership.
 Interrupt handling keeps the original task as resume target.
 
-Self-growth interrupt uses a stacked interrupt frame.
+`governance-change` interrupt uses a stacked interrupt frame.
 Cleanup interrupt uses a stacked interrupt frame.
 Defect-fix interrupt uses a stacked interrupt frame.
 Hook patch interrupt uses a stacked interrupt frame.
@@ -73,7 +73,7 @@ Operating discipline:
 - Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
 - Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
-- A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch self-growth cycles.
+- A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance-change cycles.
 - Step-to-step continuation inside such a plan is autonomous; plan freeze authorizes the whole sequence.
 - The lead proceeds from each completed-and-verified step to the next planned step without intermediate user query.
 - Step-selection prose after a completed step is a `[NO-NEEDLESS-ASK]` violation when the next step is named by the plan.

@@ -1,6 +1,6 @@
-# self-growth-sequence: Change And Patch Method Detail
+# governance-change: Change And Patch Method Detail
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
@@ -36,7 +36,7 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
 - Developer defect-seeking self-review is sufficient for trivial single-line fixes.
-- Self-growth patch Draft starts from the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
+- Recurrence-hardening patch Draft starts from the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
 - The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
 - Reviewer and Codex input are evidence.
 - The emitted packet is the review-consumption record.
@@ -74,7 +74,7 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Lifecycle state order is `ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`.
 - New rules start as `ACTIVE`.
 - The execution gate in step 5b governs governance-sensitive execution. See step 5b above.
-- Runtime permission bypass, hook approval, and pre-authorized self-growth dispatch do not waive review separation.
+- Runtime permission bypass, hook approval, and pre-authorized governance-change dispatch do not waive review separation.
 - They also do not waive preservation checks.
 - They also do not waive the destructive/safety gate.
 - High-traffic governance surfaces named by `CLAUDE.md` `## Priority And Ownership` and `## Change And Preservation` require session revalidation and baseline anchoring before modification resumes after interruption.
@@ -83,10 +83,10 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 Use this method for team-system asset patches that must remain understandable without hidden session memory. It refines patch mechanics; it does not decide the primary sequence owner.
 
 ### Patch classification map
-See `.claude/skills/self-growth-sequence/references/patch-classification.md` for the full classification table.
+See `.claude/skills/governance-change/references/decision-and-repair.md` for patch classification.
 
 ### Required operating rules
-- For confirmed self-growth patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
+- For confirmed recurrence-hardening patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
 - Satisfy `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before drafting or mutating.
 - Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
@@ -117,7 +117,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - A follow-on patch adds the missing declared-intent surface when scope allows.
 - Classify the failure mode before choosing text.
 - Failure modes are `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, and `capability-gap`.
-- Use `.claude/skills/self-growth-sequence/references/failure-mode-response.md` for allowed and prohibited responses.
+- Use `.claude/skills/governance-change/references/decision-and-repair.md` for allowed and prohibited responses.
 - Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`.
 - Append only when no existing owner slot can absorb the meaning cleanly.
 - Delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
@@ -182,10 +182,18 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
   - For current shared team-operation skills, `team-lead` is the default primary owner unless governance explicitly records a different owner.
 
 ### Post-Change Discipline
-- After any self-growth or capability-expansion patch, make a bounded follow-on optimization decision before closing the topic.
+- After any recurrence-hardening or capability-expansion patch, make a bounded follow-on optimization decision before closing the topic.
   - Run the optimization pass when material avoidable redundancy or runtime burden is visible.
   - Otherwise close with `FOLLOW-ON-OPTIMIZATION: not-needed`.
   - Any optimization that does run must preserve the improved quality bar and protected meaning.
+
+### Retroactive Application Phase
+Doctrine landing is incomplete until the new or sharpened rule is applied to current-session surfaces it directly governs or contradicts.
+Before a governance-hardening round closes, audit current-session artifacts, in-flight agent output, prior verdicts, active acceptance state, and live deliverable surfaces only when the new rule directly governs or contradicts them.
+Required closeout surface: audited surfaces with result `unaffected`, `fixed`, `invalidated`, or `deferred by owning upstream record`; defect inventory and proposed fixes; same-chain fix dispatches or explicit deferral with named follow-up owner, boundary, and closure basis; stale prior verdicts blocked from downstream use until fresh re-verification.
+Rounds hardening dashboard, verification, launcher, monitoring, governance migration, or similar recurring surfaces require the same retroactive audit.
+Closing without that audit is a `[RETRO-APPLY]` defect.
+The recurrence path already exists in the surfaces the new rule targets.
 
 ### File And Runtime Hygiene
 - Keep the target payload free of detached runtime artifacts and orphan files.
@@ -199,7 +207,7 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
-- Hook/settings edits that broaden runtime enforcement use `.claude/skills/update-upgrade-sequence/references/update-checks.md` Hook-Last preflight; otherwise keep the issue owner-rule-only or `HOLD`.
+- Hook/settings edits that broaden runtime enforcement use `.claude/skills/governance-change/references/asset-change-checks.md` Hook-Last preflight; otherwise keep the issue owner-rule-only or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks technically guard observable governance procedure edges.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `owner-rule-only` or `doctrine-only` until the meaning is packetized into exact fields.
@@ -208,19 +216,23 @@ See `.claude/skills/self-growth-sequence/references/patch-classification.md` for
 - For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.
 - Ask the user only when destructive, security-sensitive, operator-policy-choice, or objectively undecidable.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
-- Do not let optimization, compression, rewrite, or self-growth directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
+- Do not let optimization, compression, rewrite, or governance-change directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
 - For governance-sensitive patches, keep the patch class, owner surfaces, preserved meaning, and verification basis explicit.
 - Another model must be able to continue safely from repository state alone.
 - Do not rely on a dedicated patch-ledger file.
 
 ### Human-readable packet owners
-See `.claude/skills/self-growth-sequence/references/human-readable-packet-owners.md` for field catalogs.
+See `.claude/skills/governance-change/references/human-readable-packet-owners.md` for field catalogs.
 
 ## Resolve Next Owner And Action
 - Completed patch design opens the owning patch execution path.
+- Completed retroactive audit opens governance-change closeout.
+- Affected current-session surface opens fix, invalidation, or deferred-by-owner record.
+- Stale prior verdict opens fresh re-verification before downstream use.
+- Missing retroactive audit keeps the hardening round open.
 - Missing owner surface opens governance architecture mapping.
 - Semantic overlap opens replace, trim, re-home, or protected restatement decision.
 - Missing skill blocks only the affected downstream surface and opens skill update or introduction.
-- Hook/settings enforcement expansion opens `update-upgrade-sequence` Hook-Last preflight.
+- Hook/settings enforcement expansion opens `governance-change` Hook-Last preflight.
 - Post-change material redundancy opens bounded optimization.
-- Preserved patch basis returns to self-growth sequence verification.
+- Preserved patch basis returns to governance-change sequence verification.

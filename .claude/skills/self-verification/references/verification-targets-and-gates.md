@@ -7,7 +7,8 @@ auto-inject: false
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
 # Self-Verification Reference
-Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis check, material same-lane self-certification risk, or expanded output record.
+Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis claim check, material same-lane self-certification risk, or expanded output record.
+For material defect, removal, cross-surface governance, or patch-worthiness detail, open `Skill(review-verification)` and consume `.claude/skills/review-verification/references/governance-review-gates.md`.
 
 ## Contents
 - Target Profiles
@@ -16,7 +17,7 @@ Load only after `Skill(self-verification)` triggers a detailed target profile, c
 - SV-PLAN Detailed Gate
 - SV-RESULT Detailed Gate
 - Analysis Claim Verification
-- Artifact Change Verification
+- Artifact Claim Verification
 - Behavior And Harness Proof
 - Synthesis Verification
 - Lead-Local Completion Discipline
@@ -62,7 +63,8 @@ Use every lens that materially applies to the target. Omission of an applicable 
 - Result-fit lens: does the current plan/result satisfy the explicit request, frozen semantic intent, material target intent, and acceptance surface?
 - Claim/evidence lens: what is the exact claim, what evidence supports it, what evidence would defeat it, and what residual uncertainty remains?
 - Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, acceptance downgrade, or disconfirming test would a skeptical independent lane raise?
-- Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, what breaks if it is removed, and whether `protected-restatement`, `design-tradeoff`, or `non-issue` classification defeats a defect label.
+- Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, and what breaks if it is removed?
+- Review-routing lens: does the claim require material defect, removal, cross-surface governance, or patch-worthiness judgment by `review-verification` before self-verification can verify the outgoing claim?
 - Detailed-design/mechanism lens: which lower-level unit, input, output, state transition, data flow, control flow, algorithm, interface, dependency, timing constraint, and error path make the intended behavior happen?
 - Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, required/omitted state, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
 - Software development lens: are module boundaries cohesive, coupling controlled, contracts explicit, configuration and concurrency/idempotency risks handled, and errors observable and recoverable?
@@ -83,7 +85,7 @@ When exception-only `SV-PLAN` is loaded before consequential action, verify:
 - Missing material measurement opens `reopen-work-planning` or `HOLD`.
 - consequential top-level plans have coherent `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review trigger handling is required or frozen
 - `ACTIVE-WORKFLOW: dev-workflow` must show configured independent-review trigger handling as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` when that review basis is required or frozen
-- configured independent-review risk triggers from `.claude/skills/work-planning/references/codex-independent-review.md` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
+- configured independent-review risk triggers from `Skill(codex-independent-review)` make `skipped:*` invalid; use `triggered:*` or `fail-open:*` when any material trigger applies
 - `CODEX-INDEPENDENT-REVIEW-BASIS: triggered:*` requires active team-lead adjudication of every valid configured-review point.
 - Accept requires field/value change.
 - Reject requires grounded rationale.
@@ -114,7 +116,8 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - separate observation, inference, judgment, and recommendation
 - cite or name the evidence surface that supports each controlling claim
 - actively search for the strongest contrary interpretation or evidence that would defeat the conclusion
-- for defect labels or patch recommendations, verify the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications before positive wording
+- route material defect labels, removal judgments, cross-surface governance judgments, or patch recommendations to `Skill(review-verification)`
+- after `review-verification` returns, verify only whether the outgoing claim matches that review packet
 - mark partial coverage as partial instead of generalizing to the whole system
 - do not treat fluent explanation, internal confidence, or repeated wording as evidence
 - when reference material exists, verify that the conclusion follows the reference rather than a convenient substitute
@@ -122,17 +125,14 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 
 Analysis is verified only at the strength of its evidence. It justifies `next action`, `HOLD`, or a bounded recommendation without proving final acceptance.
 
-## Artifact Change Verification
-For changes to doctrine, skills, agents, hooks, code, configs, references, or produced artifacts, verify:
-- scope matches the frozen request and does not reopen excluded options
-- declared design intent is preserved: Structural Contract, fixed section order, priority hierarchy, owner boundaries, authoring principles, protected local restatements, and section purpose
-- the change strengthens what was weak without weakening what was already correct
-- moved, compressed, replaced, or removed meaning remains reconstructable through source meaning, destination owner, and bounded change scope
-- live cross-references still resolve
-- the WHY of the change is anchored in inline rationale, commit/session patch record, or the change packet's failure-mode/recurrence tag
-- no duplicate doctrine was added when adherence to an existing owner-local rule was the real fix
+## Artifact Claim Verification
+For changed doctrine, skills, agents, hooks, code, configs, references, or produced artifacts, self-verification verifies the outgoing claim surface, not the full governance review.
+- Verify that the reported scope matches the frozen request and changed artifact identity.
+- Verify that the claim is backed by retained evidence, live paths, or current diff.
+- Verify that unresolved review, proof, or acceptance surfaces remain open instead of being reported as closed.
+- For design-intent, owner-boundary, information-preservation, cross-reference, duplicate-doctrine, or patch-worthiness judgment, consume `Skill(review-verification)` and `.claude/skills/review-verification/references/governance-review-gates.md`.
 
-A result that passes claim-strength but fails design intent is not converged.
+A result that passes claim-strength but lacks required review-verification basis is not converged.
 
 ## Behavior And Harness Proof
 For behavior, runtime, data, state, generated artifact, or user-surface claims, the proof path must be explainable as:
@@ -156,7 +156,8 @@ Synthesized conclusions do not inherit verification automatically.
 Before positive synthesis:
 - consume only completion-grade or otherwise evidence-bearing surfaces, not receipt/status/progress signals
 - reconcile conflicts between agent outputs, evidence families, prior decisions, and sibling artifacts
-- preserve common finding classes and do not promote `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified` findings to `confirmed-defect` during synthesis
+- preserve common finding classes
+- route finding promotion to `Skill(review-verification)` before any `confirmed-defect`, removal, or patch-worthiness claim
 - preserve open surfaces instead of flattening them into a clean conclusion
 - keep claim strength limited to the weakest material unresolved surface
 - keep final wording inside Evidence-Quality Matrix supported scope when that matrix is material
@@ -210,5 +211,6 @@ This detail block is internal handoff only. Do not expose it to the user unless 
 - `INFERENCE/UNVERIFIED` opens evidence gathering, claim narrowing, or truthful report by active owner.
 - `HOLD` opens blocker reporting with owner and blocker.
 - `reopen-work-planning` opens `work-planning`.
+- Material defect, removal, cross-surface governance, or patch-worthiness gap opens `review-verification`.
 - Synthesis verification gap opens conflict reconciliation before reporting or redispatch.
 - Lead-local verification resource debt opens cleanup or explicit blocker before closure.

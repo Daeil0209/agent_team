@@ -16,7 +16,7 @@ PRIMARY-OWNER: team-lead
 
 ## Activation
 Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any teardown-class tool call (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tool).
-Calling a teardown-class tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `self-growth-sequence`; the hook runtime guard is enforcement evidence, not authorization.
+Calling a teardown-class tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `governance-change`; the hook runtime guard is enforcement evidence, not authorization.
 Reviewer / agent task completion is not session end; teardown requires user-directed intent or proven session-closing basis.
 Hook feedback can surface teardown state but is not authority.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
@@ -61,7 +61,7 @@ Keep closeout narrow:
 6. Bounded teardown only while new runtime evidence changes the result.
 7. No repeated teardown on the same evidence and no ad hoc runtime surgery.
 8. Let `SessionEnd` finish continuity capture and clear runtime-owned transient residue.
-9. Run team-lead-owned supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or self-growth work is active.
+9. Run team-lead-owned supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or governance-change work is active.
 10. End with concise operator-facing closeout only when blocked, warning-bearing, explicitly requested, or review-triggered.
 11. Otherwise clean closeout stays silent or one-line.
 

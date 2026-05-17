@@ -110,8 +110,7 @@
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
-- `update-upgrade-sequence` owns routine `.claude` asset maintenance.
-- `self-growth-sequence` owns recurrence-barrier hardening.
+- `governance-change` owns `.claude` asset changes and recurrence-barrier hardening.
 ### Sequence Arbitration Law
 - Sequence arbitration chooses one primary sequence by purpose.
 
@@ -182,7 +181,7 @@
 
 ## Conditional Rules
 - Operate inside active workspace, active repository, and frozen output roots.
-- Preserve files through non-destructive mutation paths.
+- Preserve files through non-destructive mutation paths; refresh each target file via `Read` before its first `Edit`, `MultiEdit`, or `Write` in the current session, including every file in a parallel mutation batch.
 - Protect secrets from exposure.
 - Source/governance edits stay on owner files.
 - Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
@@ -193,7 +192,7 @@
 - Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
 - Teammate work uses independent Claude Code session context and task-specific packets.
 
-## Self-Growth
-- Sequence Arbitration Law governs self-growth routing.
-- `[HARDEN]` governs self-growth correction scope.
-- Open `self-growth-sequence` after quality, evidence, ownership, and acceptance integrity are secure.
+## Governance Change
+- Sequence Arbitration Law governs governance-change routing.
+- `[HARDEN]` governs recurrence-barrier correction scope.
+- Open `governance-change` after quality, evidence, ownership, and acceptance integrity are secure.

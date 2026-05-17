@@ -117,7 +117,7 @@ Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
-- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `self-growth-sequence`.
+- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `governance-change`.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
@@ -184,7 +184,7 @@ Recovery reconciliation:
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
-Interruption includes user correction, self-growth trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
+Interruption includes user correction, governance-change trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
 
 Rules:
 - pre-open interruption resumes the last valid active owner: `work-planning`, active workflow, or `self-verification`
@@ -194,7 +194,7 @@ Rules:
 - resend an assignment-grade packet only when send evidence is absent and duplicate side-effect risk has been checked
 - stronger agent-start or completion truth requires stronger evidence than `team exists`, `dispatch pending`, or `dispatch-ack`
 - if the interruption moves any `work-planning` boundary-change axis, reopen `work-planning`
-- if a behavioral or procedural defect meets the `self-growth-sequence` entry gate, open `self-growth-sequence`
+- if a behavioral or procedural defect meets the `governance-change` entry gate, open `governance-change`
 - the suspended dispatch surface still requires `RESUME-OWNER` and verified `RESUME-ACTION` before closure or return
 - partial dispatch maps to recovery or resume truth only
 ## Resolve Next Owner And Action

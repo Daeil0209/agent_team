@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+  5. owner-local structural feedback / governance-change / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 - Reference-owned pre-verification, integration failure, blocked-report, auth bridge, and data pipeline bridge details live in `references/integration-bridge-detail.md`.

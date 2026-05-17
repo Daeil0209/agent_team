@@ -43,6 +43,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 
 ## Parallel Evaluation
 team-lead starts own-review and Codex MCP independent review in parallel from the same frozen packet when the configured-review trigger is material or already frozen for this closure surface.
+Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.
 team-lead reconciles own-review, Codex findings, skipped-review basis, or fail-open fallback basis point by point, then applies reject-first decision order.
@@ -65,6 +66,7 @@ Codex ties each material point to:
 
 Codex packet carries:
 - this reference
+- active configured independent-review common contract
 - active top-level doctrine
 - active dev-workflow skill
 - active phase-gates reference

@@ -17,7 +17,7 @@ This spine names content that the producing lane must provide to team-lead throu
 `completion` is Communication Plane transport, not a user report.
 For team-agent runtime, the screen-rendered `SendMessage` header/preview is one state signal, not the completion spine.
 The state signal is `completion task <TASK-ID>` when task tracking is active, otherwise `completion`.
-The `SendMessage` message/body slots are blank or whitespace-only.
+The state-signal text appears in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: completion`:
@@ -41,13 +41,13 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the host-visible header/preview state signal through `SendMessage`.
-Inline completion payload or report text in the `SendMessage` message/body slots is malformed screen-rendered transport.
+Any inline payload, label, or report text placed in the `SendMessage` tool's `message` parameter for a `completion` state signal is malformed screen-rendered transport.
 After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-SV-RESULT`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
-If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes self-growth cleanup.
+If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes governance-change cleanup.
 
 Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
 Lane completion does not claim team-lead `SV-RESULT`.

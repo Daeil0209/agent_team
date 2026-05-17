@@ -9,10 +9,11 @@ PRIMARY-OWNER: team-lead
 - Use as the common team-lead-consumed review procedure for review-sequence discipline.
 - New peer top-level sections require explicit governance review.
 - Route detailed domain checklists to the owning specialist skill.
+- Reference Map stays inside Purpose.
 
 ## Identity
 You are the review-verification capability for Claude Code.
-Critical review posture is active from skill load; Step 5 is the executable defeater gate inside the single workflow for every authorized claim scope.
+Step 5 is the single executable critical-review gate inside the workflow for every authorized claim scope.
 Full workflow and named lane lenses differ by claim scope and recorded fields only; named lenses do not create a separate review procedure or bypass the Critical Review Gate.
 - Use this conditional review-sequence lens when work requires exhaustive coherence, integrity, design-intent, and negative-risk analysis.
 - `team-lead` is the primary operator and activates the full workflow.
@@ -26,7 +27,8 @@ Full workflow and named lane lenses differ by claim scope and recorded fields on
 
 Output: `review_verification_packet`.
 `validator` owns final `PASS/HOLD/FAIL`.
-`reviewer`, `tester`, `validator`, `self-verification`, `work-planning`, `update-upgrade-sequence`, and `self-growth-sequence` keep their owner gates.
+`reviewer`, `tester`, `validator`, `self-verification`, `work-planning`, and `governance-change` keep their owner gates.
+When another owner consumes this skill, review-verification returns only the bounded review packet.
 
 ## Agent Relationships
 - `team-lead` - activates the full lens, freezes review scope, and synthesizes the result.
@@ -36,8 +38,8 @@ Output: `review_verification_packet`.
 - `developer` - owns bounded production or patch implementation.
 - `tester` - owns executable or rendered proof.
 - `validator` - owns final evidence-based verdict.
-- `self-verification` - verifies the outgoing claim or synthesis result.
-- `update-upgrade-sequence` and `self-growth-sequence` - own governance asset changes after this review identifies a patchable basis.
+- `self-verification` - verifies the outgoing claim or synthesis result and routes material defect or patch judgment here.
+- `governance-change` - owns governance asset changes and recurrence-barrier hardening after this review identifies a patchable basis.
 
 ## Purpose
 Use this skill for exhaustive review, design-intent analysis, coherence analysis, skill-consumption fit judgment, toxic-rule judgment, removal judgment, or patch-readiness judgment.
@@ -57,11 +59,15 @@ Prevent these failures:
 - claiming no risk, bestness, closure, or patch fitness from partial or uninspected evidence, or before Step 5 material defeaters are tested for the authorized claim scope
 - patching before integrity, coherence, and owner-boundary checks are complete
 
+### Reference Map
+- `references/governance-review-gates.md`: detailed claim review, artifact-change review, synthesis and finding-promotion review, and patch-worthiness review gates.
+
 ## Activation
 Full workflow path: `team-lead` activates this skill for lead-local cross-surface review synthesis and runs the numeric workflow.
 Defect-promotion path: the full workflow path when the target promotes defect, removal, patch-worthiness, or correction-priority labels.
 Packetization lens path: `team-lead` uses this skill to name exact downstream lane lenses; the lane consumes only those packet fields unless `team-lead` retains the full workflow path.
 Bounded reviewer-owned acceptance review routes to the reviewer lane.
+Caller-triggered path: `self-verification`, `governance-change`, or another owner opens only the bounded review question it cannot lawfully decide, then consumes the returned packet inside its own owner path.
 
 Activation triggers when the request materially includes one or more of:
 - exhaustive inspection, full review, whole-folder review, or all-surface analysis
@@ -196,10 +202,12 @@ Classify compressed multi-rule wording as a defect when it hides trigger, owner,
 Classify a skill-consumption defect only when live evidence shows a material skill method is required for the intended outcome and the consuming surface cannot find, load, apply, or record it at the required owner path.
 Classify unnecessary skill loading as a defect when it adds burden without material outcome, proof, acceptance, or procedure benefit.
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`.
+Use `references/governance-review-gates.md` when analysis, artifact-change, synthesis, finding-promotion, or patch-worthiness detail is material.
 
 ### 5. Critical Review Gate
 Run before any review-verification output, plan, synthesis, patch-worthiness, bestness, no-defect, no-regression, or completion judgment at the authorized claim scope; this is the same workflow gate for full and named-lens use.
-Assume the current patch or preferred conclusion is wrong until material defeaters are tested against live surfaces.
+Critical review posture starts at skill load and is recorded through this gate before any claim leaves `review-verification`.
+First try to disprove the current defect label, patch direction, or preferred conclusion against live surfaces.
 Construct material defeater candidates from these lenses:
 - owner-boundary conflict
 - protected-function loss
@@ -208,7 +216,7 @@ Construct material defeater candidates from these lenses:
 - missing, wrong-owner, unrecorded, or burden-only skill-consumption path
 - untraced producer-consumer owner path for any field, route, state token, or skill-consumption claim
 - runtime, tool-side-effect, filesystem-propagation, observation-race, transient-state, user-surface, or reuse path failure
-- stronger narrower alternative such as delete, trim, merge, re-home, tighten, no-patch, or hook-last
+- stronger narrower alternative such as no-patch, delete, trim, merge, re-home, replace, tighten, or hook-last
 For each material defeater, record:
 - evidence surface inspected
 - confirmed, disproven, or open result
@@ -297,6 +305,7 @@ Patch recommendations must state:
 - operation type
 - tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue`
 Use the removal-first operation selected in Step 6, or return to patch design when the operation changes.
+Use `references/governance-review-gates.md` for detailed patch-worthiness review when the recommendation depends on analysis, artifact-change, or synthesis judgment.
 
 ### 14. Next-Owner Routing
 Emit the `review_verification_packet` from Step 14 only after Steps 1-13 are current and next owner/action is resolved for the same target, corpus, patch design, and diff.
@@ -307,9 +316,9 @@ Use `researcher` for missing evidence.
 Use `developer` for bounded production.
 Use `tester` for proof.
 Use `validator` for final verdict.
-Use `update-upgrade-sequence` for ordinary governance asset update.
-Use `self-growth-sequence` for confirmed recurrence-barrier hardening.
+Use `governance-change` for ordinary governance asset update and confirmed recurrence-barrier hardening.
 Use `self-verification` before consequential reporting, completion claims, or synthesis-triggered redispatch.
+Return to the triggering `self-verification` or `governance-change` owner when this packet answers that owner's bounded review question.
 
 ## Handoff Boundary
 Hand off only when the receiver can identify inspected surfaces, open surfaces, design-intent basis, confirmed versus hypothetical findings, next owner/action, and closure evidence.
@@ -318,15 +327,15 @@ Hand off only when the receiver can identify inspected surfaces, open surfaces, 
 - Completed review packet opens the named downstream owner/action from Step 14.
 - Missing corpus, design-intent, owner-boundary, or evidence basis keeps `review-verification` open.
 - Unresolved negative risk opens patch redesign, evidence gathering, or `HOLD`.
-- Ordinary governance asset update opens `update-upgrade-sequence`.
-- Confirmed recurrence-barrier hardening opens `self-growth-sequence`.
+- Governance asset update or confirmed recurrence-barrier hardening opens `governance-change`.
 - Consequential reporting opens `self-verification`.
+- Caller-requested review returns to that caller unless Step 14 proves a different next owner/action.
 
 ## Role-Scoped Structural Feedback
 - Challenge desired-patch, rule-citation, risk-free, best, complete, or no-defect claims that lack live design intent, actual execution-path evidence, inspected-surface basis, or Step 5 defeater results.
 - Challenge defect labels, additions, removals, or compression unless owner-correction path, protected-function preservation, intended quality, independence, safety, user-intent protection, and Step 6 patch eligibility are proven.
 
-## Role-Scoped Self-Growth Loop
-- Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `self-growth-sequence`.
+## Role-Scoped Governance-Change Loop
+- Repeated misses in coherence, integrity, design-intent, procedure-adherence, execution-force, risk classification, or patch-worthiness trigger `governance-change`.
 - Harden the narrowest failed owner surface.
-- Keep this skill scoped to review-sequence discipline while reviewer, validator, and update sequence ownership remain on their owner surfaces.
+- Keep this skill scoped to review-sequence discipline while reviewer, validator, and governance-change execution ownership remain on their owner surfaces.

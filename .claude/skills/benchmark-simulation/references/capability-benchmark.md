@@ -35,9 +35,9 @@ Required rules:
 - treat inability to defend a specialization advantage against a simpler path as a competitiveness finding, not merely a neutral observation
 - treat unauthorized capture of another role's charter-core assets as an overlap regression, not as evidence of healthy improvement
 - when a fix-ownership contest is benchmarked, compare candidate roles on durable ownership fit, overlap burden, throughput effect, and evidence-backed success probability rather than on ambition alone
-- use `benchmark-light` by default for self-growth comparison claims, and escalate to `benchmark-full` when routing, promotion, or durable ownership is materially at stake
+- use `benchmark-light` by default for governance-change comparison claims, and escalate to `benchmark-full` when routing, promotion, or durable ownership is materially at stake
 - if a benchmark depends on uncited external comparisons, vague recollection, or non-inspectable examples, return `HOLD` or mark the result simulator-only instead of issuing a clean comparative verdict
-- if the result remains simulator-only or simulator-unconfirmed after comparison, do not let it masquerade as self-growth execution readiness
+- if the result remains simulator-only or simulator-unconfirmed after comparison, do not let it masquerade as capability-growth execution readiness
 
 ## Runnable Benchmark Asset
 No canonical runnable benchmark path is frozen. When a concrete benchmark asset is requested, freeze the repository-local path before treating it as runnable.

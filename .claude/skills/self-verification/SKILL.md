@@ -10,7 +10,7 @@ PRIMARY-OWNER: team-lead
 - Reference Map stays inside Purpose.
 - Step names: Choose Verification Mode And Target, Scope Match, Critical Challenge, Evidence Basis, Converge Or HOLD, Output Verified State.
 - PRIMARY-OWNER: team-lead
-- Detailed target profiles, challenge lenses, artifact-change checks, harness/proof checks, synthesis checks, and expanded output fields live in `references/verification-targets-and-gates.md`.
+- Detailed target profiles, challenge lenses, claim-strength checks, harness/proof checks, synthesis checks, and expanded output fields live in `references/verification-targets-and-gates.md`.
 
 ## Purpose
 Verify only at the correct gate and from a skeptical, defeater-seeking posture.
@@ -24,11 +24,13 @@ Boundary:
 - self-verification can narrow, block, reopen, route, or downgrade a claim
 - independent `reviewer`, `tester`, or `validator` owners still close required independent surfaces
 - materially risky or acceptance-grade same-lane positive closure routes to the required independent owner before closure
+- material defect, cross-surface governance, removal, or patch-worthiness review routes to `review-verification`; this skill keeps claim and resume control
 
 ### Reference Map
 - Exception-only `SV-PLAN` audits stay in this spine.
 - Load `references/verification-targets-and-gates.md` for non-routine analysis, artifact/governance change, data/state/behavior/design claim, harness proof, user-surface proof, or synthesized output.
 - Also load it for lead-local runtime/proof, acceptance-grade claim, same-lane positive closure risk, partial/conflicting evidence, or material contrary interpretation.
+- Material defect, removal, cross-surface governance, or patch-worthiness detail opens `Skill(review-verification)` and its `references/governance-review-gates.md`; this skill resumes only after that review packet exists.
 - If a triggered reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owning path.
 
 ## Reporting Principle
@@ -103,28 +105,12 @@ Ask the mode question:
 - `SV-PLAN`: is the frozen plan still the correct path?
 - `SV-RESULT`: is the result actually verified at the claim strength being used?
 
-Compact challenge that always applies:
-- request-fit: did the target satisfy the explicit user instruction?
-- semantic-fit: did the target preserve the frozen `SEMANTIC-INTENT-BASIS`, user anti-goal, priority order, and material `TARGET-INTENT-BASIS`?
-- deliverable-fit: did the target satisfy the frozen deliverable and acceptance surface?
-- continuity: did same-session corrections, patches, recurrence barriers, and active doctrine govern this claim?
-- claim/evidence: what exact claim is made?
-- claim/evidence: what supports it?
-- claim/evidence: what would defeat it, and was that defeater actively checked?
-- claim/evidence: what remains uncertain?
-- counter-bias: what would a skeptical independent lane challenge, especially if the conclusion is convenient?
-- defect-label: if the claim names a defect or patch recommendation, identify the owner with classification authority.
-- defect-label: identify the protected function at risk from correction or removal.
-- defect-label: reject `protected-restatement`, `design-tradeoff`, and `non-issue` classifications with evidence.
-- owner/acceptance: does this require reviewer, tester, or validator ownership before closure?
+Challenge floor:
+- test request, semantic intent, deliverable, exact claim, evidence, defeater, uncertainty, owner, and acceptance fit
+- treat same-lane positive closure as suspect until a contrary interpretation, evidence gap, or owner-separation need is tested
+- route material defect, removal, cross-surface governance, or patch-worthiness judgment to `review-verification`
 
-`anti-self-certification`:
-- same-lane positive closure starts as suspect, not presumed correct
-- name the strongest plausible contrary interpretation, evidence gap, or failure mode before convergence
-- materially risky or acceptance-grade surfaces can be narrowed, downgraded, held, reopened, or routed
-- they cannot be self-certified through SV alone
-
-Load the reference when detailed design, data/domain meaning, software mechanism, behavior proof, harness evidence, synthesis, or failure-risk lenses are material.
+Load the reference when a detailed profile, challenge lens, proof check, synthesis check, or anti-self-certification check is material.
 
 ## Step 3: Evidence Basis
 Rules:
@@ -135,6 +121,7 @@ Rules:
 - Defect promotion requires current `review-verification` defect-promotion basis.
 - Self-verification checks the outgoing claim against that basis; it does not create an alternate promotion path.
 - If that basis is missing, downgrade, narrow, or `HOLD` instead of authorizing patch dispatch.
+- Possible team-operation defect or recurrence path routes through `review-verification` before governance-change hardening.
 - Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.
 - Apply detailed SV-PLAN reject conditions per `references/verification-targets-and-gates.md` `## SV-PLAN Detailed Gate` and detailed SV-RESULT verification per `## SV-RESULT Detailed Gate`.
 - If final prose outruns the verified surface, apply the Activation Trigger reset rule.
@@ -144,9 +131,10 @@ Use the reference for detailed gates, evidence calibration, behavior proof, arti
 ## Step 4: Converge Or HOLD
 1. If the challenge changes the plan or result, correct the target and rerun on that corrected target.
 2. If frozen scope or route fails, reopen `work-planning`.
-3. If the target survives with no material change, it is converged.
-4. If repeated challenge adds no new defect, evidence, or correction path, `HOLD`.
-5. Workflow-owned Codex convergence loops stay with the workflow owner.
+3. If the challenge opens defect promotion, cross-surface governance judgment, removal judgment, or patch-worthiness, route to `review-verification` and resume this verification only after the review owner returns a current basis.
+4. If the target survives with no material change, it is converged.
+5. If repeated challenge adds no new defect, evidence, or correction path, `HOLD`.
+6. Workflow-owned Codex convergence loops stay with the workflow owner.
 
 Only converged work proceeds as verified.
 
@@ -190,4 +178,5 @@ HOLD-REASON:
 - `SV-RESULT: narrow-to-verified-scope` opens claim narrowing.
 - `INFERENCE/UNVERIFIED` opens claim downgrade or evidence correction.
 - `reopen-work-planning` opens `work-planning`.
+- Defect-promotion, governance-judgment, removal, or patch-worthiness gaps open `review-verification`; confirmed recurrence-barrier need opens `governance-change`.
 - `HOLD` records verification owner, blocker, and next safe evidence step.

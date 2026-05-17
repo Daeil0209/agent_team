@@ -1,6 +1,6 @@
-# self-growth-sequence: Human-Readable Packet Owners
+# governance-change: Human-Readable Packet Owners
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/self-growth-sequence/SKILL.md
+SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md

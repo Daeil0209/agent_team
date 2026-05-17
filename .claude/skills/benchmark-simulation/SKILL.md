@@ -65,7 +65,7 @@ Trivial surfaces skip benchmark only when the active workflow or planning owner 
 
 ### Reference Map
 After `Skill(benchmark-simulation)` is loaded, load trigger-specific references directly.
-- `references/capability-benchmark.md`: self-growth/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
+- `references/capability-benchmark.md`: governance-change/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
 - It also covers external-reference, visual/UX, and workflow-product benchmark extensions.
 - `references/observation-protocol.md`: multi-modal reference observation, image-aware evidence handling, quantitative observation, and subjective-observation discipline.
 - `references/search-quality.md`: search query design, source quality ladder, corroboration, negative-search discipline, and search-depth bound.
@@ -228,8 +228,8 @@ Hand off after the next owner can tell whether the benchmark is:
 Weak comparison frame downgrades or holds benchmark output.
 Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
 When benchmark evidence supports a downstream owner:
-- hand off confirmed recurring specialist capability gaps to `self-growth-sequence` for recurrence-barrier or capability-gap ownership
-- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `update-upgrade-sequence`
+- hand off confirmed recurring specialist capability gaps to `governance-change` for recurrence-barrier or capability-gap ownership
+- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `governance-change`
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Operational Discipline
 - Comparative output with no fair baseline or external calibration stays explicitly low-confidence.

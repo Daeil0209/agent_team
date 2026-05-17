@@ -58,7 +58,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/governance-depth.md`: project/request tier classification, governance-depth fields, and scaling guardrails.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
-- `references/codex-independent-review.md`: configured independent-review trigger, packet, team-lead adjudication, fail-open, and authority/footprint limits.
+- `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`: configured independent-review skill, common contract lookup, `WP-CONSULT` route-freeze handling, team-lead adjudication, fail-open, and authority/footprint limits.
 
 If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopened owner.
 
@@ -172,7 +172,7 @@ Freeze when material:
 - team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`
 - Configured independent review: `CODEX-INDEPENDENT-REVIEW-BASIS`
 
-Configured independent-review detail stays in `references/codex-independent-review.md`.
+Configured independent-review detail stays in `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail and the active concurrent-agent cap stay in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record the applied cap basis on this surface before dispatch can open.
 Planning opens one next owner/action before execution, dispatch, or reporting.

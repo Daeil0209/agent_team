@@ -28,7 +28,7 @@ User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
   - planning
   - dispatch
   - benchmark
-  - self-growth
+  - governance-change
   - interrupt
   - status
   - review
@@ -99,23 +99,21 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `Monitoring Sequence` is a standard sequence.
 - `Change Sequence` is a standard support sequence.
 - `Closeout Sequence` is a standard sequence.
-- `Self-Growth Sequence` is a standard sequence.
-- `Update/Upgrade Sequence` is a standard sequence.
+- `Governance Change Sequence` is a standard sequence.
 - `session-boot` owns boot readiness.
 - `session-boot` owns session-start readiness.
 - `session-boot` owns monitoring readiness.
 - `session-boot` owns runtime-entry readiness.
 - `session-boot` owns recovery readiness.
 - `session-closeout` owns closeout truth.
-- `update-upgrade-sequence` owns routine asset maintenance.
-- `self-growth-sequence` owns recurrence-barrier hardening.
-- `self-growth-sequence` owns `Change Sequence` patch mechanics.
+- `governance-change` owns routine asset maintenance and recurrence-barrier hardening.
+- `governance-change` owns `Change Sequence` patch mechanics.
 - Reopen the last valid owner when the next owner is unclear.
 - Reopen the last valid owner when the next action is unclear.
 - Planning routes to execution, dispatch, owner synthesis, or `SV-RESULT`.
 - Treat dispatch as nonterminal evidence.
 - Treat benchmarking as nonterminal evidence.
-- Treat self-growth as nonterminal evidence.
+- Treat governance-change as nonterminal evidence.
 - Treat interrupt handling as nonterminal evidence.
 - Treat status reporting as nonterminal evidence.
 - Treat review as evidence for acceptance path.

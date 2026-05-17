@@ -28,7 +28,7 @@ Communication Plane output never satisfies a user report.
 Communication Plane payload is consumed by the receiving owner, not by the user.
 
 ### Procedure Plane
-Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and self-growth.
+Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and governance-change.
 Procedure state is internal evidence.
 Procedure state never satisfies a user report.
 Procedure owner artifacts stay internal unless this law admits a report.
@@ -80,7 +80,7 @@ These are never user reports:
 - dispatch topology, lane count, route choice, staffing shape, runtime setup, monitoring, idle, receipt, ack, status, cleanup, or phase-context signals
 - individual lane/shard arrival, partial lane/shard completion, partial convergence, all-lanes counters, per-shard findings summaries, and in-flight synthesis notes
 - `dispatch-ack`, `scope-pressure`, `completion`, `hold|blocker`, assignment packets, packet corrections, phase-transition packets, shutdown requests, task rows, task output, runtime ledgers, and retained-output paths
-- skill loading, methodology application, review-verification packet fields, SV records, retro-apply notes, self-growth notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
+- skill loading, methodology application, review-verification packet fields, SV records, retro-apply notes, governance-change notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
 - statements that exist only to say work is starting, continuing, being monitored, being dispatched, being corrected, or being verified
 
 The user may explicitly request any internal material. That explicit request admits only the requested material and does not convert future internal material into reports.
@@ -134,4 +134,4 @@ This reference owns user-report admissibility, non-reportable content, and the u
 Other documents may state local transport-owner boundaries and cite this reference.
 Other documents must not restate user-report admissibility criteria, non-reportable content lists, or report-shape limits.
 Other documents must not convert Communication Plane payload into user reports.
-Conflicting wording resolves to this reference and routes to `self-growth-sequence` for owner-local cleanup.
+Conflicting wording resolves to this reference and routes to `governance-change` for owner-local cleanup.

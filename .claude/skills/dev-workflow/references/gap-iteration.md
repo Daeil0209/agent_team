@@ -19,7 +19,7 @@ Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap d
 - Gap Classification
 - Iteration Protocol Detail
 - Gap-State Packet
-- Gap Detection Self-Growth
+- Gap Detection Governance Change
 - Resolve Next Owner And Action
 
 ## YAGNI Scope Review
@@ -144,7 +144,7 @@ Preserve reviewer, tester, and validator state as the owning state.
 Treat local gap-detection classification as contribution evidence.
 Close a re-classified gap state only through the owning downstream agent.
 
-## Gap Detection Self-Growth
+## Gap Detection Governance Change
 Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repeated phase drift, repeated bottlenecking after decomposition, or repeated source-only substitution appears.
 
 ## Resolve Next Owner And Action
@@ -155,4 +155,4 @@ Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repea
 - Cleared blocking gaps open validator ingress when final acceptance remains validator-required.
 - Fresh or still-current validator `PASS` opens Final Acceptance Review by acceptance path.
 - Repeated same-class blocking gap opens root-cause classification.
-- Repeated missed-gap pattern opens `self-growth-sequence`.
+- Repeated missed-gap pattern opens `governance-change`.

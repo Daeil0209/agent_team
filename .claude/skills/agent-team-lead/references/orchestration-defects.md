@@ -10,8 +10,8 @@ Consolidates orchestration defect classes only.
 Each entry names the trigger, the owning rule, and the smallest correction owner.
 This file hosts no orphan rule; every class points to an existing owner surface.
 Treat defect classification as route evidence.
-Self-growth path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
-Adding a new defect class requires `update-upgrade-sequence` plus owner-rule citation.
+`governance-change` recurrence-hardening path applies only after `[HARDEN]` confirms recurrence and narrowest correct owner.
+Adding a new defect class requires `governance-change` plus owner-rule citation.
 
 ### Skipped Owner Chain
 - Trigger: bypassing an active triggered owner skill/sequence before lookup, review-tool use, judgment, dispatch, mutation, or report.
@@ -63,7 +63,7 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 - Owning rule: `agents/team-lead.md` RPA-7 and `.claude/reference/user-reporting-law.md`.
 - Correction owner: suppress non-admitted user-facing prose and keep Communication Plane and Procedure Plane payload internal.
 - Correction owner: reapply `agents/team-lead.md` RPA-7 before any retry on the same visible surface.
-- Recurrence owner: after protected work integrity is secure, route repeated same-class emission to `self-growth-sequence` as `[PROC-HABIT]` hardening.
+- Recurrence owner: after protected work integrity is secure, route repeated same-class emission to `governance-change` as `[PROC-HABIT]` hardening.
 
 ### Routine Status Stop
 - Trigger: emitting user-facing `PHASE-RESULT` during same-segment continuation work.
@@ -84,4 +84,4 @@ Adding a new defect class requires `update-upgrade-sequence` plus owner-rule cit
 ## Resolve Next Owner And Action
 - A defect trigger opens its named correction owner.
 - A correction owner executes the named correction action.
-- A recurring defect opens self-growth classification after `[HARDEN]` confirms recurrence.
+- A recurring defect opens `governance-change` recurrence-hardening classification after `[HARDEN]` confirms recurrence.

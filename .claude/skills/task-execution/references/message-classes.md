@@ -64,7 +64,7 @@ Reporting Plane may cite only the user-relevant outcome admitted by `.claude/ref
 Communication payload carries the detail required by the receiving owner through the active envelope plus governed carriers.
 Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, task state, or retained-output contract.
 Do not shrink, omit, or distort receiver-required detail for user-display reasons.
-When Claude Code can render `SendMessage` on a user-visible screen, `ack` and `completion` state signals use only the header/preview line; message/body slots must be blank or whitespace-only.
+When Claude Code can render `SendMessage` on a user-visible screen, `ack` and `completion` state signals place the signal text in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space, and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
@@ -84,7 +84,7 @@ A receiving owner consumes the governed carrier before acting; a screen-visible 
 This contract does not reduce Communication Plane payload capacity.
 Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
 A receipt event is one host-visible header/preview state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
-The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; message/body slots stay blank or whitespace-only as a host-envelope constraint, not report prose.
+The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; envelope shape is governed by Transport Payload above.
 When assignment receipt is unsafe, lacks decisive basis, or is blocked, the receiving owner sends `scope-pressure` or `hold|blocker` instead of `dispatch-ack`.
 Valid `dispatch-ack` makes the lane `ACTIVE` for that assignment execution block.
 The lane continues work until one closing class is sent.
@@ -164,7 +164,7 @@ Every class below is Communication Plane transport. The descriptions name when t
   - completion-grade candidate only
   - requires converged lane-owned work
   - screen-rendered `SendMessage` header/preview is one state signal only: `completion task <TASK-ID>` when task tracking is active, otherwise `completion`
-  - message/body slots must be blank or whitespace-only
+  - envelope shape governed by Transport Payload above
   - no files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, completion narrative, path-substitution rationale, next-step prose, or retained-output contents in the `SendMessage` render
   - synthesis-ready only when the retained carrier satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
 - `hold|blocker`

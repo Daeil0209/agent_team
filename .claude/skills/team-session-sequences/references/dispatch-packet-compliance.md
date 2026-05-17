@@ -45,10 +45,10 @@ Cross-lane packet schema, common message classes, field format, and packet prefl
 
 Free-form descriptions in controlled-value fields are packet defects. Use the canonical value first, then put explanation in a separate detail or presence field.
 
-Governance-sensitive `developer` packets keep the human-readable governance packet contract in `.claude/skills/self-growth-sequence/references/human-readable-packet-owners.md`. The shared cross-lane dispatch baseline, common packet fields, message classes, and packet preflight are owned by `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md`. Hooks remain last-resort runtime guards or warning surfaces only.
+Governance-sensitive `developer` packets keep the human-readable governance packet contract in `.claude/skills/governance-change/references/human-readable-packet-owners.md`. The shared cross-lane dispatch baseline, common packet fields, message classes, and packet preflight are owned by `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md`. Hooks remain last-resort runtime guards or warning surfaces only.
 
 ## Resolve Next Owner And Action
 - Valid controlled values return to `task-execution` packet preflight.
 - Free-form controlled-value content opens packet correction.
 - Wording divergence opens the owning source reference named in this file.
-- Governance-sensitive developer packet shaping opens `.claude/skills/self-growth-sequence/references/human-readable-packet-owners.md`.
+- Governance-sensitive developer packet shaping opens `.claude/skills/governance-change/references/human-readable-packet-owners.md`.

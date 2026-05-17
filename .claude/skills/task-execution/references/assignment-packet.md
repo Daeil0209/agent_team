@@ -99,7 +99,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 
 Preflight outcome names:
 - `packet-correction`: the missing or malformed packet value already exists in the frozen basis and the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary remain unchanged. Correct the packet and rerun preflight before sending.
-- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `self-growth-sequence`.
+- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `governance-change`.
 - `route-replan`: the missing, contradictory, or stale basis is absent from the frozen basis or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
 - `parallel-continue`: the affected surface is blocked or being corrected while unrelated independent surfaces remain inside the same frozen parallel route. Continue unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 

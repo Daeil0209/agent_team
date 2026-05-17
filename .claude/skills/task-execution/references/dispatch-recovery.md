@@ -8,7 +8,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 # task-execution: Dispatch Recovery
 ## Dispatch Interruption Recovery
-Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth; it does not replace `work-planning`, `self-verification`, `session-boot`, `self-growth-sequence`, or lane execution.
+Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth; it does not replace `work-planning`, `self-verification`, `session-boot`, `governance-change`, or lane execution.
 
 Required recovery record:
 - `INTERRUPT-POINT`
@@ -42,9 +42,9 @@ Recovery rules:
 - A same-target packet correction to a responsive live target opens a correction-response window. Do not shutdown or replace that target until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - A parallel group is not "running" while any target remains `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
-- A phase-transition packet, shutdown request, or self-growth sidecar must not erase the suspended dispatch surface.
+- A phase-transition packet, shutdown request, or governance-change sidecar must not erase the suspended dispatch surface.
 - If `CORRECTION-OUTCOME: route-replan`, the resume owner is `work-planning`.
-- If the defect itself meets the `self-growth-sequence` entry gate, open `self-growth-sequence` first.
+- If the defect itself meets the `governance-change` entry gate, open `governance-change` first.
 - Leave a resume owner/action for the suspended work before closure or return.
 - If recovery would change lane, owner, work surface, proof/acceptance chain, parallel grouping, or packet required skills, reopen `work-planning` instead of repairing inside `task-execution`.
 
@@ -68,4 +68,4 @@ A compacted agent has lost the assignment-grade packet context but retains its a
 - Duplicate-send risk opens `HOLD` or `session-boot` recovery.
 - Agent compaction opens assignment-packet reissue from the frozen route.
 - Route-changing recovery opens `work-planning`.
-- Self-growth-triggering recovery defect opens `self-growth-sequence` before suspended dispatch closure.
+- Recurrence-hardening recovery defect opens `governance-change` before suspended dispatch closure.

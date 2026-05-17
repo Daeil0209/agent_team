@@ -17,7 +17,7 @@ When a material cue applies, select `benchmark-simulation` or record a valid def
 - **T3. Known external solution space exists**: industry standards, established design systems, public reference implementations are known to address this problem class.
 - **T4. Verification methodology selection** materially affects acceptance quality.
 - **T5. Iteration of previously-shipped surface** where iteration must avoid known anti-patterns.
-- **T6. Capability-evolution claim**: when a self-growth round claims the team will be better at a capability after the round.
+- **T6. Capability-growth claim**: when a governance-change round claims the team will be better at a capability after the round.
 
 ## Conditional Cues
 - **C1. Prior session evidence is purely model-prior** on a material decision.

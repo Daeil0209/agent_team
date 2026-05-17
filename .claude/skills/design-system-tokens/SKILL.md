@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / self-growth / regression-guard blocks when present
+  5. owner-local structural feedback / governance-change / regression-guard blocks when present
 - Reference-owned sections live in `references/platform-implementation.md`.
 - Those sections include platform tools, implementation examples, and checklist detail.
 - Reference duplication into `SKILL.md` requires documented justification.

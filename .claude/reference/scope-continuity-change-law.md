@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Self-Growth"
+SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Governance Change"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ---
