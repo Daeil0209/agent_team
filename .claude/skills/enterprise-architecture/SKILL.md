@@ -72,4 +72,3 @@ Keep checklist tables and anti-pattern catalogs in `references/architecture-revi
 ## Role-Scoped Structural Feedback
 - Challenge weak layer boundaries, bounded-context drift, missing design-doc gates, or anti-pattern normalization.
 - State which boundary or readiness gate is broken and the smallest corrective rewrite.
-- Silence when enterprise architecture structure is weak is a lane failure.

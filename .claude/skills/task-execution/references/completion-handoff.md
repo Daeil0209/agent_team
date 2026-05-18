@@ -16,8 +16,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 This spine names content that the producing lane must provide to team-lead through a retained carrier.
 `completion` is Communication Plane transport, not a user report.
 For team-agent runtime, the screen-rendered `SendMessage` header/preview is one state signal, not the completion spine.
-The state signal is `completion task <TASK-ID>` when task tracking is active, otherwise `completion`.
-Envelope shape for the state signal is owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; do not restate the envelope rule here.
+State signal text and envelope shape are owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: completion`:
@@ -114,12 +113,12 @@ The method record covers:
 - `USER-SURFACE-PROOF-METHOD`
 - `TOOL-PATH-USED`
 - `TOOL-EXECUTION-EVIDENCE`
-- `OPERATOR-NAIVE-COMPREHENSION-AUDIT` for any completion whose surface includes rendered UI.
+- `OPERATOR-NAIVE-COMPREHENSION-AUDIT` for any completion whose user-decisive surface is operator-facing rendered UI (browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance).
   Report a first-time-user walkthrough verdict per AC-supporting surface element (labels, controls, data displays, charts, gauges that bear acceptance weight).
   Each verdict is `clear`, `partially-clear:<reason>`, or `unclear:<reason>`.
   Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner.
   Minor non-AC labels appear as a single `routine: clear` summary unless a defect is observed.
-- `IMAGE-INSPECTION-RECORD` for any completion whose surface includes rendered UI.
+- `IMAGE-INSPECTION-RECORD` for any completion whose user-decisive surface is operator-facing rendered UI (browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance).
   List each screenshot or full-page image cited in support of an AC verdict, Final Acceptance Review (FAR) claim, or visual-conformance assertion.
   Cite the design-stated expectation each image proves.
   State the per-image visual verdict after opening the image directly via the multimodal `Read` tool.
@@ -142,7 +141,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Every agent completion is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
 - Do not repeat the state signal across header/preview/body.
-- Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, or any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
+- Do not include any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
 - Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Completion exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.

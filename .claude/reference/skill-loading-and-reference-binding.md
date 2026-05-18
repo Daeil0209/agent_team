@@ -16,6 +16,7 @@ User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 
 ## Consume When
 - An owner document is loaded in the active owner context.
+- Before a `Skill(<skill>)` tool call.
 - A rule names a skill.
 - A rule names a reference.
 - A packet carries `REQUIRED-SKILLS`.
@@ -55,9 +56,12 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 
 ## Skill Rules
 - Skills load only when required by the active owner path.
+- Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
+- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path and why answer, `Read`, or `Grep` is insufficient.
+- Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents by `Read` or `Grep` unless the requested outcome also requires that skill's execution artifact.
 - Skill load means `Skill(<skill>)`.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS`.
+- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS` only when the active owner path needs that skill's execution method or named artifact.
 - Agent role names are not valid skill names.
 - Lane agent-specific skills use `agent-<lane>` names.
 - Team-lead procedure skill uses `agent-team-lead`.
@@ -110,8 +114,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - The assigned lane hands off blocked recommendation basis.
 
 ## Reference Binding
-- A trigger-bound reference is mandatory when its trigger is active.
-- A loaded owner document is mandatory when it is present in the active owner context.
+- Trigger-bound reference and loaded-owner-document mandatoriness is owned by `.claude/reference/procedure-and-ownership-law.md` `## Rules`.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
 - Loading, naming, quoting, or summarizing a governance document is not consumption.
 - Before action, report, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
@@ -119,19 +122,17 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Missing material applied-rule mapping stops action and opens applied-rule correction.
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
-- A trigger-bound reference carries `SOURCE-ANCHOR`.
-- A trigger-bound reference carries `SOURCE-RULES`.
+- A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
 - Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
+- Missing this section blocks completion and opens reference correction.
 - A method-detail reference returns applied method basis through the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
 - Procedure-bearing classification covers sequence, dispatch, lifecycle, mutation, review, proof, validation, acceptance, stop, gate, and route behavior.
 - Method-detail classification covers skill-owned methods, checklists, field schemas, matrices, protocols, and examples inside an already opened owner path.
 - Lookup-only classification covers terms, lists, source facts, and controlled values inside an already opened owner path.
 - A method-detail reference that opens independent owner/path behavior is procedure-bearing.
-- Procedure-bearing reference completion requires a local `Resolve Next Owner And Action` section.
-- Treat an unconsumed trigger-required reference as completion blocker.
-- Treat missing applied-rule mapping as execution blocker.
+- Unconsumed-trigger-required-reference and missing-applied-rule-mapping blocker rules are owned by this `## Reference Binding` section; `.claude/CLAUDE.md` `## Reference Binding` carries the top-doctrine anchor.
 - Reference consumption must be recorded in the owner-local packet, completion carrier, proof, verdict, or `Skill(self-verification)` record when material.
 - Load references only through trigger-bound consumption.
 - Treat `@imports` as context organization.

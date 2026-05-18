@@ -25,18 +25,19 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 3. `COMPLETION-STOP-CONDITION`
 4. `DERIVED-DEFAULTS`
 5. `REQUEST-BOUND-PACKET-FIELDS`
-6. `CLAIM-CEILING` when material
-7. `ROUTING-SIGNAL`
-8. `NEXT-CONSEQUENTIAL-ACTION`
-9. `DISPATCH-BLOCKERS`
-10. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
-11. `EXECUTION-READINESS-BASIS`
-12. `AGENT-MAP`
-13. `PARALLEL-GROUPS`
-14. `LANE-REQUIRED-SKILLS-MAP`
-15. `SKILL-RECOMMENDATIONS`
-16. `ACTIVE-WORKFLOW` when present
-17. `ACTIVE-SEQUENCE` when present
+6. `TEAM-LEAD-WORK-PLAN`
+7. `CLAIM-CEILING` when material
+8. `ROUTING-SIGNAL`
+9. `NEXT-CONSEQUENTIAL-ACTION`
+10. `DISPATCH-BLOCKERS`
+11. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
+12. `EXECUTION-READINESS-BASIS`
+13. `AGENT-MAP`
+14. `PARALLEL-GROUPS`
+15. `LANE-REQUIRED-SKILLS-MAP`
+16. `SKILL-RECOMMENDATIONS`
+17. `ACTIVE-WORKFLOW` when present
+18. `ACTIVE-SEQUENCE` when present
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
@@ -45,6 +46,7 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 - Missing or contradictory `COMPLETION-STOP-CONDITION` reopens `work-planning` when packet assembly, receiving-lane execution, report gating, or completion truth depends on it.
 - Missing or contradictory `DERIVED-DEFAULTS` reopens `work-planning` when packet assembly, proof surface, or receiving-lane execution depends on it.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
+- `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` must be concrete when additional-agent routing is host-authorized.
 - If they are not mandatory but `task-execution` can consume the route, each must carry explicit `not-applicable:<basis>`.
@@ -58,6 +60,7 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 - Does not adjudicate configured-review points.
 - Does not turn `fail-open:*` into a blocker unless `work-planning` already marked the route blocked.
 - If a team-lead dispatch route lacks required `CODEX-INDEPENDENT-REVIEW-BASIS`, stop and reopen `work-planning`.
+- `NEXT-CONSEQUENTIAL-ACTION` traces to the first executable row of `TEAM-LEAD-WORK-PLAN`; failed trace opens `work-planning`.
 - If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-independent-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.

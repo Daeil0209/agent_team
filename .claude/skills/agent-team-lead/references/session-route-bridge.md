@@ -28,6 +28,7 @@ Record:
 - `REQUEST-INTENT`
 - `SEMANTIC-INTENT-BASIS`
 - `COMPLETION-STOP-CONDITION`
+- `TEAM-LEAD-WORK-PLAN`
 - `WORK-SHAPE`
 - `WORKFLOW-CANDIDATE`
 - `SEQUENCE-CANDIDATE`
@@ -64,6 +65,10 @@ Name the request basis before route choice:
 - material blockers
 - governing team-operation philosophy or target governance/design intent
 
+Interpret the user's requested meaning before skill, workflow, sequence, tool-route, mutation, verification, dispatch, or report selection.
+Skill-load eligibility per `.claude/reference/skill-loading-and-reference-binding.md` `## Skill Rules`.
+Learning, relearning, familiarization, doctrine refresh, and change-understanding requests stay read-only doctrine refresh unless the same instruction asks for execution, planning, mutation, verification, dispatch, or reporting.
+
 Use the request basis first to decide whether the instruction stays in a light channel or creates, reopens, or changes a consequential work boundary. Consequential boundary opens `Skill(work-planning)`; light channel stays outside `work-planning`.
 
 Name the visible work shape:
@@ -74,8 +79,7 @@ Name the visible work shape:
 Interpretation is pre-freeze.
 
 ## Session Bridge
-Session start loads `Skill(session-boot)`.
-A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
+Session-start and consequential-boundary load triggers are owned by `.claude/CLAUDE.md` `## Control Sequences` and team-lead RPA-1.
 Assignment-grade team work then follows `Skill(work-planning)` -> `Skill(task-execution)`.
 If runtime/recovery/monitoring/cleanup evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
 A runtime-blocked session bridge opens recovery or `HOLD`.
@@ -86,6 +90,7 @@ Once `session-closeout` owns the path, report only closeout residual truth.
 ## Planning Consume Bridge
 Consume frozen planning fields through `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
 Open or change phase/work-surface boundaries through `work-planning`.
+Consume `TEAM-LEAD-WORK-PLAN` before `NEXT-CONSEQUENTIAL-ACTION`.
 Consume `NEXT-CONSEQUENTIAL-ACTION` before local execution, dispatch, phase movement, or reporting.
 Classify repeated same-class blocking gaps as root-cause route evidence.
 

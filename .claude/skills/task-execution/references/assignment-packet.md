@@ -16,12 +16,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Assignment-grade means `SendMessage` that assigns, reroutes, or reuses bounded work for an existing live team member.
 Team-scoped `Agent` creates or reattaches the member address; it is not assignment-grade work delivery.
 Shutdown requests, phase-transition packets, and status probes are not assignment-grade.
-Standalone `Agent` is not a configured lane-work substitute under this governance.
 
 Runtime shape terms:
-- `standalone Agent` is legacy or fallback host evidence outside team-agent runtime.
-- No `TeamCreate`, team mailbox state, `dispatch-ack`, or health-cron monitoring.
-- Not configured lane dispatch.
+- standalone `Agent` semantics owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` and `## Team-Agent-Only Lane Dispatch`.
 - `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
 - Assignment-grade work begins only after `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` reaches that exact live member address.
 - Task rows provide `TASK-ID` identity; work delivery uses assignment-grade `SendMessage.to`.
@@ -55,8 +52,8 @@ Executable surfaces include browser-ui, cli, runtime, server, app, and api.
 `task-execution` carries this doctrine-owned packet discipline.
 Tester raises `scope-pressure` or `hold|blocker` when omission makes truthful proof impossible.
 Conditional carve-out has two conditions:
-- proof is genuinely static-render with no runtime dependency
-- single surface with no scenario variation
+- proof is fully pre-rendered with no live process, browser session, server, or runtime fetch required to inspect the proof surface
+- single surface with no scenario, environment, or input variation
 When the carve-out applies, mark `ENV-BASIS: not-applicable (<reason>)` and `SCENARIO-SCOPE: not-applicable (<reason>)`.
 Silent omission is forbidden.
 `PROOF-TARGET`, `PROOF-EXPECTATION`, and `PROOF-SURFACE` alone are not sufficient for executable proof.
@@ -88,8 +85,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - request-bound start-closure fields from `.claude/skills/task-execution/references/request-bound-fields.md`; every material axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `DERIVED-DEFAULTS`, `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane phase context, coverage obligations, assigned surfaces, acceptance basis, decisive surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities when material
 - finding counts are retained evidence, not dispatch scope
-- Completion contracts request only the canonical state signal in upward `SendMessage` per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
-- Completion contracts must not request retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file-read counts, findings counts, per-class totals, excerpts, evidence summaries, execution plans, operational notes, future-action prose, or duplicate header/body state signals in upward `SendMessage`.
+- Completion contracts request only the canonical state signal in upward `SendMessage` per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; do not request other content in upward `SendMessage`.
 - Receiver-required completion payload travels in the retained carrier per `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine.
 - These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:
   - parallel shard dispatches with large shared context use one complete shared retained context plus per-shard packets that carry the required packet floor and point to that context; short means no duplicate large context, not reduced receiver-required basis; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
@@ -97,7 +93,8 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - a receiving lane that receives such a packet without the path sends `hold|blocker`
 - for review/test/validation/completion packets, acceptance scope must come from the frozen request, plan, design, or upstream defer record; implemented files/routes/screens/sections populate `ACTIVE-SLICE` only, never substitute for `SCOPE-BASELINE`
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
-- Convenient-subset, inherited server-state, or already-running endpoint packets route to correction from the frozen basis or reopen the owner.
+- Convenient-subset, inherited server-state, already-running endpoint, or wave-narrowed-without-`SCOPE-BASELINE`-union-record packets route to correction from the frozen basis or reopen the owner.
+Multi-wave wave packets consume `SCOPE-BASELINE` union rules in `.claude/skills/work-planning/references/planning-record-fields.md`.
 - `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction dispatch.
 
 Preflight outcome names:

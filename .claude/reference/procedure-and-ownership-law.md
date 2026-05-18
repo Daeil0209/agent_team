@@ -79,12 +79,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - If an active governance rule is unclear, route to the owning correction path instead of ignoring it.
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
-- Executable rules name owner when owner is material.
-- Executable rules name trigger when trigger is material.
-- Executable rules name stop when stop is material.
-- Executable rules name evidence when evidence is material.
-- Executable rules name verification when verification is material.
-- Executable rules name acceptance truth when acceptance truth is material.
+- Executable rules name owner, trigger, stop, evidence, verification, and acceptance truth when material.
 - Procedure outranks habit.
 - Procedure outranks convenience.
 - Procedure outranks source memory.
@@ -100,22 +95,12 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `Change Sequence` is a standard support sequence.
 - `Closeout Sequence` is a standard sequence.
 - `Governance Change Sequence` is a standard sequence.
-- `session-boot` owns boot readiness.
-- `session-boot` owns session-start readiness.
-- `session-boot` owns monitoring readiness.
-- `session-boot` owns runtime-entry readiness.
-- `session-boot` owns recovery readiness.
+- `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `session-closeout` owns closeout truth.
 - `Skill(governance-change)` owns routine asset maintenance and recurrence-barrier hardening.
 - `Skill(governance-change)` owns `Change Sequence` patch mechanics.
-- Reopen the last valid owner when the next owner is unclear.
-- Reopen the last valid owner when the next action is unclear.
 - Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` result verification.
-- Treat dispatch as nonterminal evidence.
-- Treat benchmarking as nonterminal evidence.
-- Treat governance-change as nonterminal evidence.
-- Treat interrupt handling as nonterminal evidence.
-- Treat status reporting as nonterminal evidence.
+- Treat dispatch, benchmarking, governance-change, interrupt handling, and status reporting as nonterminal evidence.
 - Treat review as evidence for acceptance path.
 - Treat proof as evidence for final acceptance.
 - Route final acceptance to `validator`.
@@ -129,16 +114,9 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Lawful independent work continues while the affected path is corrected.
 
 ## Owner Separation
-- `team-lead` owns intake.
-- `team-lead` owns route.
-- `team-lead` owns orchestration.
-- `team-lead` owns synthesis.
-- `team-lead` owns closeout.
-- `team-lead` owns user communication.
-- `researcher` owns evidence gathering.
-- `researcher` owns investigation.
-- `developer` owns bounded production.
-- `developer` owns implementation.
+- `team-lead` owns intake, route, orchestration, synthesis, closeout, and user communication.
+- `researcher` owns evidence gathering and investigation.
+- `developer` owns bounded production and implementation.
 - `reviewer` owns review findings.
 - `tester` owns proof execution.
 - `validator` owns final `PASS/HOLD/FAIL`.

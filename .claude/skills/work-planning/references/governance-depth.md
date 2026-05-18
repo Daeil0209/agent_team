@@ -52,36 +52,11 @@ Rules:
 ### Checkpoint Semantics
 Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input becomes relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
 Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
-## Quality Metrics Table
-| Metric | Description | Use |
-|---|---|---|
-| **Design-implementation match score** | How well does the code match the design doc? (0-100 per file or component) | Feed into team-lead's decision to iterate, escalate, or proceed to acceptance |
-| **Coverage indicator** | Percentage of design requirements with corresponding implementation | Identify unimplemented surfaces before routing to acceptance chain |
-### Governance Trust Score (Input Signal)
-A composite score gives team-lead a quantitative view of project quality trends. This is an INPUT SIGNAL. Tier and approval-gate changes require owner judgment and direct evidence.
-**5 Components (100-point scale):**
-| Component | Weight | Measures |
-|---|---|---|
-| Phase completion rate | 25 pts | How often do development phases complete with no rollback? |
-| Quality check pass rate | 25 pts | What percentage of reviews/tests pass on first attempt? |
-| Error recovery rate | 20 pts | When issues occur, how quickly and cleanly are they resolved? |
-| Iteration efficiency | 15 pts | How many iteration cycles needed before acceptance? (fewer = better) |
-| Scope stability | 15 pts | How often does scope change after plan approval? (less change = better) |
-**Score Interpretation (calibration only):**
-| Range | Signal | Team-Lead Action |
-|---|---|---|
-| 86-100 | Strong execution | Reduce oversight only after direct evidence confirms routine low-risk work |
-| 71-85 | Healthy | Standard governance appropriate |
-| 51-70 | Needs attention | Increase checkpoint frequency, review depth |
-| 31-50 | Concerning | Full governance pipeline for all work, root cause analysis |
-| 0-30 | Critical | Pause and reassess project approach with user |
-**Rules:**
-- Score guides tier review.
-- Score changes are reported to team-lead as trend signals.
-- Team-lead uses score alongside direct evidence and user feedback
-- Score calculation happens at phase transitions, not continuously
-- If score and direct evidence disagree, direct evidence wins
+## Direct-Evidence Discipline
+- Governance-depth tier is a sizing aid for review/proof/acceptance defaults; it does not override direct evidence.
+- Design-implementation match and coverage-of-promised-surfaces remain reviewer and validator concerns under `references/deliverable-defaults.md` and CLAUDE.md `## Acceptance`; team-lead uses direct evidence (review findings, proof results, validator verdicts, frozen `SCOPE-BASELINE` coverage), not a numeric heuristic, to iterate, escalate, or proceed.
+- Oversight reduction requires direct evidence that the proof and acceptance floors remain satisfied; it never derives from a composite quality score.
 
 ## Resolve Next Owner And Action
-- Return governance tier signals, scoring trend, direct-evidence conflicts, and oversight recommendations to the active `work-planning` path.
+- Return governance tier signals, direct-evidence conflicts, and oversight recommendations to the active `work-planning` path.
 - If scaling changes phase gates, checkpoint frequency, lane use, or review depth, reopen the owning planning path before execution continues.

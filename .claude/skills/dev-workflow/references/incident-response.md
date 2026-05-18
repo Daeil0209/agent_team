@@ -33,7 +33,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 - Developer proposes root cause, bounded file/surface change, fix risk, and verification plan.
 - Team-lead reviews the proposal before routing execution.
 - P0/P1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
-- Explicit user approval before modification is required only when the proposed action is destructive, security-sensitive, externally committed, or a policy choice.
+- User-escalation triggers are owned by `.claude/CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]`.
 
 4. Apply and verify
 - Developer applies the reviewed bounded fix.

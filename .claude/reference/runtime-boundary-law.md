@@ -86,7 +86,15 @@ Stop before treating non-owner tool output as:
 - A stopped non-owner tool route opens the owner procedure that actually owns the claim.
 
 ## Runtime Boundary Rules
-- Hooks are last-resort runtime guards.
+- `[HOOK-LAST]` (canonical: `.claude/CLAUDE.md` `Core Laws 5`) governs this section.
+- Hook stdout JSON must validate against the Claude Code hook output schema for the matched event; emit empty stdout when the event's accepted `hookSpecificOutput` shape is not verified against `.claude/reference/official-claude-code-reference.md` or live harness behavior, and rely on file/state side effects only.
+- Adding an unverified JSON shape to hook stdout is a recurrence-class defect that returns to this rule for narrowing or silent fallback.
+- Hooks block only actions that must never happen: destructive (data loss, irreversible state mutation, runtime corruption), security-critical (secret exposure, sandbox escape), or session-stability-breaking (e.g., `tmux kill-*` against an active session). Positive-pattern or doctrine-shape enforcement (e.g., forcing a specific `TaskUpdate` field set, requiring a specific packet field, restricting valid `SendMessage` content classes) is owned by lane self-quality contracts via the trio (`Skill(governance-change)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses), not by hooks.
+- A hook that blocks legitimate doctrine-compliant variations (generic Claude Code tool patterns, valid worker-to-lead transport, allowed packet shapes, normal in-progress task signals) is over-broad blocking per `.claude/CLAUDE.md` `Core Laws 4` "Over-broad blocking is a defect" and returns to narrowing or removal at the narrowest hook surface.
+- `[HOOK-LAYER-CACHE]` Mid-session removal of a positive-pattern hook applies both the `.claude/settings.json` matcher deletion and a file-level `exit 0` trim at the top of the hook script body by the same governance-change patch.
+- Wiring removal alone leaves cached-settings agents firing the hook because Claude Code caches `.claude/settings.json` at agent spawn time.
+- `[HOOK-AUTHOR-DUTY]` A new or modified hook script body consumes the negative-only-filter test (does the body block only destructive, security-critical, or session-stability-breaking actions?) before commit and records the test result in the governance-change record.
+- Positive-pattern, doctrine-shape, or compliance-field enforcement is invalid hook body content per `[HOOK-LAST]` and routes to the lane trio (`Skill(governance-change)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses) for correction.
 - These ownership surfaces stay with owner procedures:
   - planning ownership
   - routing ownership

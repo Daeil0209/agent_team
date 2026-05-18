@@ -39,23 +39,28 @@ These files are wired directly from `../settings.json`.
 
 - `agent-activity-monitor.sh`
 - `compliance-supervisor.sh`
-- `dispatch-proof-gate.sh`
-- `dispatch-sizing-gate.sh`
 - `permission-request-gate.sh`
-- `runtime-entry-gate.sh`
 - `session-end.sh`
 - `session-start.sh`
-- `spawn-prompt-screen-safety.sh`
 - `sv-gate.sh`
 - `sv-tracker.sh`
-- `task-completed-gate.sh`
-- `task-created-gate.sh`
-- `task-start-gate.sh`
+- `tmux-kill-block.sh`
 - `track-runtime-lifecycle.sh`
 - `track-worker-transport.sh`
 - `user-prompt-gate.sh`
-- `validate-task-target.sh`
 - `worker-lifecycle-sync.sh`
+
+## Legacy Hooks
+These hook scripts remain in `./` for traceability but their bodies are file-level no-op (`exit 0` at top, with a 9-line comment block pointing to the disable basis) per `.claude/reference/runtime-boundary-law.md` `## Runtime Boundary Rules` (negative-only-filter doctrine — positive-pattern doctrine-shape enforcement is owned by the lane trio: `Skill(governance-change)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses, plus downstream reviewer/validator independent gates). Their `settings.json` matchers were removed in the same governance-change patch. The Hook-Last Review Ledger does not list legacy hooks because a disabled body cannot fulfill a "Protected failure" claim. Each file is preserved for traceability and potential future narrowing to a negative-only filter.
+
+- `dispatch-proof-gate.sh`
+- `dispatch-sizing-gate.sh`
+- `runtime-entry-gate.sh`
+- `spawn-prompt-screen-safety.sh`
+- `task-completed-gate.sh`
+- `task-created-gate.sh`
+- `task-start-gate.sh`
+- `validate-task-target.sh`
 
 ## Hook-Last Review Ledger
 This ledger is the current manifest review record for active blocking guardrails.
@@ -78,18 +83,10 @@ review before activation.
 | Hook | Protected failure | Narrowness and recovery record |
 | --- | --- | --- |
 | `agent-activity-monitor.sh` | live agent activity, heartbeat, browser proof activity, and runtime pressure signals becoming invisible or stale | Activity/runtime state surface only, with a narrow Playwright proof edge; recover through status read, monitoring, reroute, or session-runtime recovery rather than assuming progress. |
-| `user-prompt-gate.sh` | prompt-derived delete approval, closeout intent, and boot-complete marker becoming stale or invisible | UserPromptSubmit only; no `additionalContext`, no status/stall recovery context, and no hard-deny. Silently resets or records user-approved delete roots, syncs explicit closeout/cancel state, and closes the boot marker only when procedure-state is ready. `runtime-entry-gate.sh` can deny new `Agent` while explicit closeout state is active. Recover through explicit closeout cancellation, owner skill routing, or claim narrowing. |
+| `user-prompt-gate.sh` | prompt-derived delete approval, closeout intent, and boot-complete marker becoming stale or invisible | UserPromptSubmit only; no `additionalContext`, no status/stall recovery context, and no hard-deny. Silently resets or records user-approved delete roots, syncs explicit closeout/cancel state, and closes the boot marker only when procedure-state is ready. Recover through explicit closeout cancellation, owner skill routing, or claim narrowing. |
 | `permission-request-gate.sh` | repeat prompts for bounded structured edits that normal PreToolUse gates already allowed | PermissionRequest-only auto-allow surface; non-matching requests fall back to Claude Code permission handling. |
-| `task-start-gate.sh` | active team runtime dispatch/reuse without session-boot basis, unaddressable team-agent dispatch, worker first-receipt bypass, closed-task replay, non-completion task-row mutation, invalid worker task closure, or teardown intent without the owning closeout path | Broad core/Web matcher plus narrow Codex/Playwright MCP edges; `TeamDelete` with active closeout state passes through without shutdown-order blocking. Lead-addressed `ack`/`completion` screen hygiene runs before worker-session recognition: the visible state signal is one header/preview `ack task <id>` / `completion task <id>`, and message/body slots are blank or whitespace-only. Worker receipt hard-deny is limited to tools that are not a first upward outcome while receipt is pending; `scope-pressure` and `hold\|blocker` remain open escape paths. Completion also requires immediate same-task `TaskUpdate(status=completed)` runtime closure and blocks same-task post-completion replay. This hook preserves Communication Plane detail in assignment/task/retained carriers and blocks screen-polluting receipt text. Reporting leakage is governed by `.claude/reference/user-reporting-law.md` and retained-carrier discipline. Recover through `session-boot`, strict first receipt, addressable team-member dispatch, `session-closeout`, owner correction, or narrowed result truth. |
 | `sv-gate.sh` | browser proof without current planning basis | Narrow Playwright proof edge only; use silent tracking when denial would prevent ledger repair; recover through work-planning or claim narrowing. |
-| `runtime-entry-gate.sh` | team-runtime dispatch before session boot/runtime-entry basis is valid, `SendMessage` to a non-roster target that would ghost-dispatch, or non-closeout `TeamDelete` before current-session live process-backed teammates terminate | Runtime/dispatch tools only; task bookkeeping is owned by task-state hooks. `SendMessage` hard-deny is limited to exact non-delivery risk, and `TeamDelete` live-teammate hard-deny applies only outside active closeout state. Recover through `session-boot`, exact live member name, current-session team-scoped Agent creation, `session-closeout`, or a frozen lead-local non-agent path. |
-| `dispatch-sizing-gate.sh` | exact duplicate live target spawn (task-state corruption), oversized packet, mixed-purpose agent packet, or hidden merge risk | `Agent` only; hard-deny live target name collision (would corrupt task-state). Standby overlap, cleanup-pending replacement, and recoverable packet gaps warn (not deny) per `[HOOK-LAST]` and the over-broad-blocking rule; route through packet repair, cleanup/reuse recovery, or lane `hold\|blocker`. Cleanup-pending downgrade rationale: pending cleanup decisions are recoverable completion defects, not corruption-class danger. |
-| `dispatch-proof-gate.sh` | assignment proof, acceptance, packet-basis gaps, or screen-polluting completion detail becoming invisible before dispatch | `Agent` plus assignment-grade `SendMessage`; screen-polluting completion-detail requests hard-deny, contract gaps warn, generic packet-floor gaps log warning, free-form non-assignment notes exit without warning, and packet repair stays with `task-execution`. |
-| `spawn-prompt-screen-safety.sh` | spawn prompt violations of `message-classes.md` Team Member Startup Recognition becoming live agent startup leakage | `Agent` only; hard-deny is limited to direct startup-leak primes, with per-spawn audit logging. Recovery follows the owner rule: member creation uses role plus screen-safety only; assignment/control transport happens after member creation. |
-| `task-created-gate.sh` | task creation without a usable subject or description | TaskCreate surface only; hard-denies only empty subject or description because that would create an unusable task-state row. Recover by creating a task packet with non-empty subject and description. Bounded-scope and completion coordinates remain non-blocking owner instructions unless a stricter owner requires them. |
-| `task-completed-gate.sh` | task completion claim without identity, completion-grade transport, task match, required procedure markers, minimum evidence, cleanup truth, or claimed user-surface proof basis | Task completion surface only; closure-critical gaps block completion; non-blocking quality hints warn; recover by updating evidence/open-surface state or leaving the task incomplete. |
 | `worker-lifecycle-sync.sh` | teammate idle, completion, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; adds suppressed runtime context only when runtime state has a new lead-relevant idle or cleanup fact. It does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
-| `validate-task-target.sh` | task mutation against wrong, stale, inferred, or weakly identified task target | Task mutation surface only; hard-denies `TaskUpdate`/`TaskStop` on missing, stale, or agent-reference task ids. Read-only task lookup/output is not hooked here. Recover by using an exact task id from `TaskList`, `task_assignment`, or returned task mutation evidence. |
 | `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer retained-scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands only; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
 
 ## Compliance Supervisor Boundaries

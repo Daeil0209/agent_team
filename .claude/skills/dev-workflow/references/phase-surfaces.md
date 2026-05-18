@@ -81,7 +81,7 @@ auto-inject: false
   - benchmark / information-representation packet:
     - Phase 2 owns the benchmark-required decision for detailed design.
     - Require `benchmark-simulation` before design freeze when external references can materially improve information representation, visual structure, workflow pattern, methodology choice, domain pattern, or design element selection.
-    - Benchmark-required surfaces include dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, diagrams, document layouts, governance/procedure representations, monitoring surfaces, and any design where layout, hierarchy, typography, color, ratio, or information grouping materially affects receiver comprehension.
+    - Benchmark-required surfaces are scoped by the cue table in `.claude/skills/benchmark-simulation/references/self-initiated-discovery.md`; the named pattern classes (dashboards, gauges, charts, dense tables, multi-step forms, decks, reports, diagrams, document layouts, governance/procedure representations, monitoring surfaces) trigger by default. Other surfaces trigger only when a cue from that reference materially fires.
     - Benchmark capture uses external sites, public examples, authoritative docs, standards, reference UIs, images, and demos when those sources are the best available task input.
     - Concrete characteristics fed into the canonical design artifact via abstraction-fit-adapt include information elements, layout hierarchy, table/chart/card patterns, font size, spacing, ratio, hierarchy, color contrast, label patterns, navigation affordance, workflow states, anti-patterns, and standards constraints.
     - Visual or rendered acceptance also feeds the extracted characteristics into the `visual-composition` packet.
@@ -118,8 +118,13 @@ auto-inject: false
 - Practical work-tool deliverables require review and proof against the frozen work-tool pattern packet when that packet materially shaped plan or design; operator workflow, persistence, import/export, generated-artifact, and proof-oracle coverage stay decisive.
 - Knowledge-analysis, report-automation, and engineering-calculation deliverables require review and proof against the frozen evidence-method or engineering oracle; claim-evidence, formula, unit, tolerance, and standards-conformance proof stay decisive when material.
 - For web/UI deliverables:
-  - tester proof path = frozen browser-proof path on the browser interaction surface; Playwright CLI is the default repeatable proof profile when available, and unavailable CLI requires explicit blocked/fallback evidence
-  - validator final acceptance path = browser-proof confirmation on the same resolved interaction/control inventory; Playwright MCP is the default final browser/UI acceptance profile when available to the validator lane, and unused available MCP blocks PASS/FAR until justified by unavailable evidence or a frozen narrower tool contract
+  - tester proof path = repeatable browser-driver proof on the frozen browser interaction surface
+  - tester proof capability examples include Playwright, Cypress, or a project-frozen equivalent
+  - the selected tool freezes in the proof packet
+  - blocked or fallback evidence is recorded when no repeatable browser-driver is feasible
+  - validator final acceptance path = browser-proof confirmation on the same resolved interaction/control inventory
+  - Playwright MCP is the default final browser/UI acceptance profile when available to the validator lane
+  - unused available MCP blocks PASS/FAR until justified by unavailable evidence or a frozen narrower tool contract
   - Rendered Image Evidence Rule: rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface; capture an image per acceptance-relevant feature/state, or full-page/full-design-area image for whole-surface claims. Each reviewer, tester, validator, or team-lead synthesis owner who cites an image for an AC verdict, FAR claim, or visual-conformance assertion opens that image directly via the multimodal `Read` tool and compares it with the design-stated expectation for the AC, named element, state, or behavior.
   - Rendered image inspection records glyph sanity, clipping, overlap, hidden controls, readable hierarchy, missing media, browser console/runtime-error status when material, and concrete visual deltas such as font size, spacing, ratio, alignment, color, or label clarity. Cite-path-only evidence, capture-without-open, or opened images not checked against the design-stated expectation are not rendered acceptance evidence.
   - expected populated states must prove non-empty user-meaningful DOM; expected empty states must trace why they are empty rather than treating emptiness as proof

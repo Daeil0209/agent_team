@@ -35,8 +35,7 @@ Rendered composition → `visual-composition`.
 - Escalate when software design is blocked by unresolved workflow rules.
 - `visual-composition` — rendered composition
 - Require workflow concept and macro layout contracts before freezing UI-bearing boundaries.
-- Intentional local restatement: keep downstream lane contract in this file even when similar wording exists elsewhere.
-- For visualized or rendered page-read artifacts, text review and capture-render/page-image review remain separate acceptance surfaces.
+- Rendered-image evidence requirement follows `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
 - When multiple specialist skills are active, follow specialist controlling order.
 - Software-architecture governs the architecture portion only.
 - `reviewer` — architecture defect and acceptance-risk finding owner
@@ -92,8 +91,7 @@ Expert behavior means the software can be built without discovering its core con
 - Name which boundary/contract/state model/failure path is broken.
 - Name why it harms correctness or maintainability.
 - Name the smallest corrective rewrite.
-- Silence when software design structure is weak is a lane failure.
-- `peer advice` is allowed for bounded interface/contract alignment.
+- Peer advisory feedback flows only through team-lead-routed bounded advisory packets per `.claude/skills/task-execution/references/message-classes.md`; direct lane-to-lane "peer advice" channels are not authorized.
 - Bounded intervention preserves explicit cross-file ownership and boundary changes.
 ## Operational Discipline
 - Every module boundary and interface contract must be evaluated against declared purpose before freezing.

@@ -56,4 +56,3 @@ Formula-heavy human-facing outputs still need both math review and rendered revi
 ## Role-Scoped Structural Feedback
 - Challenge weak derivation order, notation, proof assumptions, or equation contracts.
 - State which derivation edge is broken and the smallest corrective rewrite.
-- Silence when mathematical structure is weak is a lane failure.

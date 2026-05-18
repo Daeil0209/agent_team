@@ -70,7 +70,7 @@ The selected patch direction is invalid when the consumed execution surface cann
 The selected patch direction is invalid when the destination owner is not on the failing execution path.
 
 ## Resolve Next Owner And Action
-- Confirmed review packet returns to the triggering owner or opens the next owner/action named by `Skill(review-verification)` Step 14.
+- Confirmed review packet returns to the triggering owner with the next owner/action named by `Skill(review-verification)` Step 14; standalone full workflow opens that owner/action.
 - Missing evidence opens researcher, reviewer, local inspection, or `HOLD`.
 - Patch-worthy governance asset change opens the named patch sequence or production owner.
 - Confirmed recurrence-barrier need opens `Skill(governance-change)`.

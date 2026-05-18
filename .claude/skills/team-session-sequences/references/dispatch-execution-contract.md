@@ -9,8 +9,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 # team-session-sequences: Dispatch Execution Contract
 - During explicit team-runtime sessions, non-exempt agent lanes run in background.
-- Foreground execution requires a current runtime-configured exemption.
-- Use the current runtime-configured foreground exemptions instead of hardcoding an informal exception list in session behavior.
+- Foreground execution requires a current runtime-configured exemption; the exemption list is owned by `.claude/hooks/lib/hook-policy.sh`.
+- Consult that owner surface for current exemptions instead of hardcoding an informal exception list in session behavior.
 - When a dispatched lane requires explicit write authority under runtime policy, supply the required execution mode rather than relying on foreground execution as a shortcut.
 - Request-bound work interprets dispatch design in this fixed order: request-fit packet -> deliverable shape -> phase intent -> staffing choice.
 - TOC, shard count, and runtime convenience must not redefine the document class.
@@ -42,8 +42,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   - `PLAN-STEP: <active plan step>`
   - `ACCEPTANCE-RISK: low|meaningful|high|critical`
   - `REVIEW-OWNER: reviewer`
-  - `PROOF-OWNER: tester|not-needed`
-  - `ACCEPTANCE-OWNER: reviewer|validator`
+  - `PROOF-OWNER: tester|not-applicable:<basis>`
+  - `ACCEPTANCE-OWNER: reviewer|validator|not-applicable:<basis>`
 - For request-bound document work routed to `developer`, default `PLAN-STEP` values are `draft` and `merge-integration`.
 - `CHANGE-SPEC` names whether the agent owns first answer-first drafting or integration of existing shard outputs.
 - For `ACCEPTANCE-RISK: meaningful|high|critical`, preserve the full downstream gate map explicitly: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator`.

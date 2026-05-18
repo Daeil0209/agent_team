@@ -80,9 +80,7 @@ Human-consumed artifacts need native-capable or format-faithful rendered/runtime
 On user-facing rendered surfaces, exercise operator-naive comprehension as part of proof.
 View as a first-time user with no prior specification, design, or domain context.
 Confirm each label, control, and data display communicates its meaning self-explanatorily.
-Open each captured screenshot or full-page image cited in support of an acceptance-criterion (AC) verdict or finding directly via the multimodal `Read` tool as part of self-walkthrough.
-Capturing a screenshot without opening it for inspection proves nothing about the rendered surface.
-Routine non-AC baseline captures stay cite-only when they neither support a verdict nor evidence a defect.
+AC-verdict and finding screenshot self-walkthrough follows the multimodal-Read rule in `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 Source-only, API-only, smoke, page-load, render-only, or DOM-presence/CSS-class assertion evidence proves source conformance only.
 User-surface proof requires rendered evidence plus operator-naive comprehension.
 Source/read evidence can prove source-read artifacts when the frozen proof surface is the document text itself.

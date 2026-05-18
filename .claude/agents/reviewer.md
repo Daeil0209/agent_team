@@ -57,9 +57,7 @@ Visual/rendered review follows the reviewer reference.
 On user-facing rendered surfaces, run an operator-naive Feynman walkthrough.
 View each surface as a first-time user with no prior specification, design, or domain context.
 Confirm every label, control, data display, and visual element communicates its meaning self-explanatorily at first glance.
-Open every screenshot or full-page capture cited in support of an acceptance-criterion (AC) verdict, finding, or visual-conformance assertion directly via the multimodal `Read` tool.
-Cite-path-only review on AC-supporting evidence proves nothing about the rendered surface.
-Routine non-AC baseline captures stay cite-only when they neither support a verdict nor evidence a defect.
+AC-verdict, finding, and visual-conformance-assertion screenshot inspection follows the multimodal-Read rule in `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 Source/DOM/text-only review proves source conformance only.
 Rendered fitness requires rendered evidence plus operator-naive comprehension.
 Missing/unsafe review basis, hidden skill planning, missing rendered/tool evidence, implementation/proof/validation smuggling, overbroad surface, or parallel collapse is not local improvisation.

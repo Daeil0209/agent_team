@@ -83,7 +83,7 @@ Required benchmark dimensions when relevant:
 Treat flattened cardinality, collapsed project-type behavior, or happy-path-only certification as benchmark failures when a stronger competing structure exists.
 
 ## External-Reference Benchmark Extension
-External-reference benchmarking is the team's primary capability-evolution mechanism. Without it, design quality is bounded by model prior knowledge and plateaus. With abstraction-fit-adapt mastered, every design decision draws on world-evolving best practices synthesized to destination context. Per CLAUDE.md `[EVI-ASSUM]` evidence hierarchy: external authoritative > prior session > model prior > intuition.
+External-reference benchmarking applies the `[EVI-ASSUM]` evidence hierarchy in `CLAUDE.md` `## Core Laws` 2 to design and methodology decisions.
 
 Required protocol per external reference consulted:
 - **Source provenance**: cite URL or canonical reference; uncited memory is `HOLD` not `evidence`

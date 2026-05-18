@@ -19,6 +19,7 @@ Runtime-detail triggers:
 - startup or resume must inspect current-session continuity, runtime snapshot, roster, cleanup state, stale state, dispatch state, or recovery state
 - active delegated runtime must classify monitoring, cleanup need, stall, stale, runtime-pressure, compaction recovery, dispatch-state recovery, or runtime recovery
 - a `SessionStart`, hook, task, runtime ledger, agent completion, or `.runtime/procedure-state.json` signal changes the next session-boot owner/action
+- compaction resume, `runtime-entry-gate` `BLOCKED: runtime marker missing`, or stale `tmuxPaneId` for a frozen target opens runtime-integrity classification per `references/runtime-state-detail.md` `## Runtime Integrity Detection Triggers`, `## Runtime Integrity Defect Classification`, and `## Per-Class Reconciliation Action`
 
 Runtime-detail non-triggers:
 - clean startup with no runtime state, no recovery state, no monitoring state, and no consequential action needing runtime truth
@@ -40,7 +41,6 @@ Session boot is loaded after the team-lead Startup Contract consumes `.claude/re
 Before any boot, resume, or monitoring prose, preserve and apply that already-consumed `.claude/reference/user-reporting-law.md`.
 Do not re-consume `.claude/reference/user-reporting-law.md` during clean startup.
 If the Startup Contract did not consume `.claude/reference/user-reporting-law.md` before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
-Session start loads `Skill(session-boot)`.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.
@@ -161,14 +161,10 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 - Apply Proactive Team-Composition Reassessment per `references/runtime-state-detail.md` `## Proactive Team-Composition Reassessment` (canonical trigger, full question set, release rule, bottleneck-defect rule, and non-reactive monitoring requirement).
 - Use bidirectional coordination actively during monitoring.
 - Keep diagnostic/evidence work on the delegated evidence lane instead of absorbing it into lead-local convenience work.
-- Detect stall-without-progress proactively.
-- Silence before `dispatch-ack` is a recovery target.
-- Silence after `dispatch-ack` needs progress evidence or recovery handling.
-- In parallel dispatch, an unacknowledged or unstarted target is a recovery target, not group-running evidence.
-- Use `references/runtime-state-detail.md` `Stall-Without-Progress Rule` for classification, one-shot follow-up, frozen re-check window, replacement, shutdown, and user-surface reporting detail.
+- Detect stall-without-progress proactively per `references/runtime-state-detail.md` `## Stall-Without-Progress Rule` (classification, one-shot follow-up, frozen re-check window, replacement, shutdown, and user-surface reporting detail).
 
 See `references/runtime-state-detail.md` for:
-- `Agent Lifecycle States`
+- `Agent Work States`
 - `Runtime Signals (Not Governance States)`
 - `Supervisor Decisions on Turn-Ended Signals`
 - `Message-First Runtime Cleanup Rule`

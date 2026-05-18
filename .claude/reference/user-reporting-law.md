@@ -110,9 +110,10 @@ Host-rendered tool rows, lane transport rows, teammate wake events, and lane lif
 If the user explicitly asks status, answer with the narrowest truthful status under Report Shape.
 Silent close means zero assistant-authored visible body content; do not substitute filler.
 If the turn has no required tool call and would otherwise be empty, take a Procedure Plane tool action (read, verify, advance) the active owner path requires.
+After a process state report, the active owner takes the next truthful action in the same turn per `.claude/CLAUDE.md` `[AUTO-PROC]`.
 
 ## Report Shape
-`verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane or multi-shard verified result requires the all-required-output gate above plus current `Skill(self-verification)` verification on the synthesized claim.
+`verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane, multi-shard, or multi-wave verified result requires the all-required-output gate above plus current `Skill(self-verification)` verification on the synthesized claim.
 `user-action blocker` reports the blocked user decision/action and the smallest safe next step.
 `explicit status answer` uses the narrowest truthful form.
 Binary status questions get one yes/no sentence plus only a user-action blocker when present.
@@ -123,6 +124,8 @@ Dispatch status uses the narrowest proven truth label from `.claude/skills/task-
 Synthesis barrier and multi-lane status answers report only the user-relevant waiting condition unless the user requests a specific internal field.
 Status answers omit internal topology, packet, shard, ack/completion, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field is requested.
 `closeout residual` reports only residual state that affects the user.
+Wave-PASS, partial-wave-PASS, or any mid-deliverable verified-result report is not a session-close report.
+Session-close framing requires explicit user closeout initiation.
 
 `FINAL` requires zero-residual deliverable convergence or explicit owner-deferred/out-of-scope basis.
 `PHASE-RESULT` is allowed only when the phase result is a stopped, verified user-relevant result and no same-segment internal action can continue.

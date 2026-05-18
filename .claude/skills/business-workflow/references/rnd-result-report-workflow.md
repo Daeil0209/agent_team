@@ -12,18 +12,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Use this reference for automated generation of R&D result reports, completion reports, and final reports against a prior proposal or plan.
 
 ## Plan-To-Report State Machine
-For document generation pipeline architecture, use `.claude/skills/document-automation/references/document-generation-detail.md`.
-business-workflow owns the business rules and generation levels for result reports.
-Result report generation follows this state sequence:
-1. Input capture.
-2. Gap analysis.
-3. Adaptive content generation.
-4. Text-first draft.
-5. Visualization review.
-6. Visualization integration.
-7. Compression and volume adjustment.
-8. Template conformance check.
-Page count is a hard output constraint.
+business-workflow owns the business rules: input capture, gap analysis, fact-vs-design tagging, expected-effects basis, and page-count hard constraint.
+Generation state machine (text-first → visualization → compression → conformance) is owned by `.claude/skills/document-automation/references/result-report-generation.md`.
+Document generation pipeline architecture is owned by `.claude/skills/document-automation/references/document-generation-detail.md`.
 
 ## Adaptive Generation Level
 Adaptive generation levels are owned by `.claude/skills/document-automation/references/result-report-generation.md`.

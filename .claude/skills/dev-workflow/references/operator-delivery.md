@@ -7,7 +7,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 auto-inject: false
 
 Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
-Covered rounds: R21 operator on-ramp completeness, R23 operator-OS coverage, R27 termination symmetric pair, and R31 mental-model alignment.
+Covered `[USER-DELIVERY-FIT]` axes: operator on-ramp completeness, operator-OS coverage, termination symmetric pair, and mental-model alignment.
+Section anchors `R21`/`R23`/`R27`/`R31` index this file's subsections only; they are not external rule identifiers.
 This contract activates through:
 - `dev-workflow` during Phase 1 and Phase 2
 - `work-planning` directly for user-runnable executables before implementation, proof, or acceptance when `dev-workflow` is not active
@@ -46,11 +47,11 @@ For executable user-runnable deliverables, the deliverable MUST ship with:
 
 ### Local Web App Launcher Requirements
 Local-only web apps must satisfy this contract regardless of stack:
-- single-action operator launch (e.g., double-click) chains environment setup, server start, and browser open as one operation;
-- only the browser surface is visible to the operator (server console, dev banner, and reloader/debug surfaces are hidden);
-- closing the browser triggers symmetric server termination (heartbeat-based watchdog or equivalent);
-- the UI provides an explicit operator exit affordance;
-- production-only flags are set (debug/reloader off; technical "development server" warnings suppressed).
+- single-action operator launch chains environment setup, server start, and operator surface open as one operation;
+- only operator-intended surfaces are visible (developer-facing console, banner, reloader, and debug surfaces are hidden);
+- closing the operator surface produces clean termination of all spawned processes;
+- explicit operator exit affordance exists on the operator surface;
+- no development-server warnings reach the operator.
 
 Tech-stack-specific patterns (Flask + VBS + `pythonw.exe`, Node + nw.js, Tauri, Bun, Electron, etc.) are implementation instructions owned by the developer/researcher lane, not governance.
 
@@ -77,12 +78,14 @@ For Windows primary operators, proof starts from the Windows launch surface.
 WSL/Linux proof is support evidence only unless proven equivalent for the exact operator action.
 Single-OS launch is sufficient only when `PRIMARY-USER` resolves to one OS through a named institutional context, explicit hardware/runtime constraint, explicit user statement, or concrete current-environment evidence.
 
-When operator OS is ambiguous, multi-OS, or unknown (general distribution, multi-team operator base, public release, no OS-narrowing field in the request), the launch path MUST cover every reasonable operator OS through the same single-action entry constraint:
+When operator OS is ambiguous and the request signals general distribution, multi-team operator base, or public release, the launch path must cover every operator OS named by that evidence OR record an explicit narrowing rationale in CP1/CP2.
+Absence of OS evidence defaults to the operator's current-environment OS, not all-OS coverage.
+Multi-OS launch coverage uses the same single-action entry constraint per OS:
 - Windows: native launcher, installer, or shortcut
 - macOS: native launcher or app bundle
 - Linux: desktop entry or executable launcher
 
-Defaulting to one OS by producer convenience when operator OS is not derivable from `PRIMARY-USER` is itself a delivery defect.
+Defaulting to one OS by producer convenience when operator OS is derivable from `PRIMARY-USER` evidence is a delivery defect.
 The operator does not need to:
 - translate a Windows-only instruction on macOS
 - learn `chmod +x` for a Linux-only shell script unless that burden was explicitly frozen as acceptable

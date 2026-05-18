@@ -69,14 +69,13 @@ Capture only the decisive business packet:
 - dangerous negative checks
 - unresolved decision points and next owner/action per surface
 ## Handoff Boundary
-Hand off after downstream owners can implement or review from explicit purpose, authority, mutation rules, and reconciliation behavior.
-
-Keep unresolved authority or approval conflicts explicit.
-Expose authority, approval, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions, or `hold|blocker` with next owner/action.
-Continue without user escalation only when every observed case preserves original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
-Record the chosen representation and evidence basis before handoff.
-Ask the user only when representation would choose an irreversible policy, discard observed data, change authority, or hide an approval blocker.
-Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference or `references/allocation-participation-workflow.md` when material.
+- Hand off after downstream owners can implement or review from explicit purpose, authority, mutation rules, and reconciliation behavior.
+- Keep unresolved authority or approval conflicts explicit.
+- Expose authority, approval, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions, or `hold|blocker` with next owner/action.
+- Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
+- Record the chosen representation and evidence basis before handoff.
+- User-escalation triggers are owned by `.claude/CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]`.
+- Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference or `references/allocation-participation-workflow.md` when material.
 ## Operational Discipline
 - Extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.
 - Audience, authority tier, and operational setting are mandatory inputs.

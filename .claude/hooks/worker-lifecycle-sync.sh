@@ -293,7 +293,15 @@ switch (classification) {
   default:
     ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
 }
-process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "TeammateIdle", additionalContext: ctx }, suppressOutput: true }));
+// Intentional silent stdout: the Claude Code TeammateIdle hookSpecificOutput schema
+// is not documented in .claude/reference/official-claude-code-reference.md, and the
+// prior shape ({hookSpecificOutput:{hookEventName:"TeammateIdle",additionalContext:ctx},
+// suppressOutput:true}) was rejected by the harness with "Hook JSON output validation
+// failed — (root): Invalid input" on every idle event. Context-injection via stdout is
+// abandoned until a verified schema lands; file/state side effects above remain the
+// hook's effective output. The `ctx` variable is still constructed so future schema
+// verification can re-enable the write with a minimal change here.
+void ctx;
 NODE
 
     exit 0

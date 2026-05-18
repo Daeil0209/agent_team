@@ -51,7 +51,7 @@ A governance patch is not patch-ready until the consuming owner records:
 - preserved meaning
 - protected procedure preservation result
 - changed meaning
-- selected consumed owner surface
+- selected consumed owner surface with `EXISTING-OWNER-ENUMERATION:` evidence per `## Stop`
 - destination owner
 - consumed-layer basis
 - generalization basis
@@ -67,7 +67,12 @@ Grouped field records are valid only when they name the covered fields and the s
 Compact records are invalid when they hide changed meaning, moved ownership, weakened procedure force, broken reference integrity, or a nontrivial generalization decision.
 
 ## Stop
-Stop before appending when existing owner text can be tightened, replaced, trimmed, merged, re-homed, or deleted (canonical removal-first chain; full operation semantics in `## Minimal Governance Rules`).
+Stop before appending when existing owner text can be tightened, replaced, trimmed, merged, re-homed, or deleted per `## Minimal Governance Rules`.
+Stop before appending when `EXISTING-OWNER-ENUMERATION:` is absent, partial, or unrecorded on the consuming owner.
+`EXISTING-OWNER-ENUMERATION:` records every consumed owner surface on the failing execution path.
+`EXISTING-OWNER-ENUMERATION:` records every adjacent surface carrying related rules, fields, or sections.
+Each enumeration candidate is classified `adopt:<tighten|replace|trim|merge|re-home|delete>:<basis>` or `reject:<cited-basis>`.
+Stop before append review when any proposed governance sentence bundles two or more rules or actions per `## Minimal Governance Rules`.
 Stop before mutation when source-to-destination meaning remains unreconstructed.
 Stop before mutation when an existing valid procedure, gate, owner path, or state transition would be weakened.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
@@ -104,12 +109,7 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
   - merge existing text when merge preserves owner boundary
   - re-home existing text when another owner is precise
   - delete existing text when it is obsolete, duplicate, or harmful
-- Governance edits preserve or sharpen:
-  - clarity
-  - execution force
-  - owner boundary
-  - required gates
-  - existing valid procedure paths
+- Governance edits preserve or sharpen the common preservation baseline owned by `.claude/reference/scope-continuity-change-law.md` `## Preservation Rules`.
 - Patch placement starts from the failing execution path.
 - Patch the narrowest owner surface that is actually loaded, read, or enforced on that path.
 - Do not treat edits to unconsumed, stale, or merely indexed documents as closure.
@@ -145,7 +145,7 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
 - Use governance-change `recurrence-hardening` mode only for recurrence-barrier hardening.
 - Treat non-compliance as an adherence defect.
 - Harden adherence instead of adding duplicate doctrine for non-compliance.
-- Structural governance patches load `Skill(review-verification)` before mutation when its trigger applies.
-- Cross-surface governance patches load `Skill(review-verification)` before mutation when its trigger applies.
+- Structural or cross-surface governance patches consume `Skill(governance-change)` `REVIEW-VERIFICATION-NEED`.
+- Material `REVIEW-VERIFICATION-NEED` entries load `Skill(review-verification):<bounded-question>` before mutation.
 - Recurrence-barrier patch execution follows `.claude/skills/governance-change/references/change-patch-method.md`.
 - Routine asset patch execution follows the owning `Skill(governance-change)` Asset Change mode.

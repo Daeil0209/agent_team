@@ -45,6 +45,8 @@ Direct reference inspection of `.claude/skills/task-execution/**` does not satis
 Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by current `Skill(self-verification)` result verification executed in the active session.
 Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct reference inspection of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
 A previous result-verification pass is reused only while the verified surface, evidence basis, open surfaces, and claim strength remain unchanged; new scope, stronger claim, materially changed claim, out-of-loop mutation, dispatch/reuse, synthesis report, proof/acceptance change, or phase change resets the pass.
+Stop before any `Skill(<skill>)` load when the interpreted requested outcome or runtime-owned trigger does not create that skill's active execution owner path.
+Skill-load eligibility per `.claude/reference/skill-loading-and-reference-binding.md` `## Skill Rules`.
 Stop before loading or opening a lower-trigger owner skill (such as `Skill(task-execution)`) when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first. Read-class evidence tools required by `work-planning` `## Corpus Measurement Gate` are not lower-trigger tools and stay lawful inside the work-planning boundary.
 
 ## Resolve Next Owner And Action

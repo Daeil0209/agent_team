@@ -21,11 +21,7 @@ Before any work:
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
-On assignment-grade work receipt, classify the packet before execution:
-- bounded single-target or tightly coupled deep research -> `execute`
-- safe inferred question boundary without owner, phase, proof, acceptance, deliverable, evidence-boundary, source-family, decision-target, downstream-consumer, or authority-threshold change -> `reconstruct-with-inference`
-- hidden multi-target, mixed drafting/implementation/acceptance ownership, shardable overload, or hidden prerequisite -> `scope-pressure`
-- materially ambiguous decision target, evidence boundary, downstream consumer, or question surface -> `hold|blocker`
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
 `scope-pressure` and `hold|blocker` are stop states, not notes.
 ### User-Perspective Gate
@@ -40,7 +36,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the researcher detail contract in `references/researcher-lane-detail.md`.
 - When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
-- Before research discovery, classify the received packet as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
+- Classify the received packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before research discovery.
 - `scope-pressure` and `hold|blocker` stop evidence work. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis and the smallest truthful evidence boundary.
 - Required decisive basis: `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`, `REQUIRED-SKILLS`, and the smallest truthful evidence boundary.
 - For write-producing research, missing, contradictory, stale, unrelated, or out-of-scope `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is `hold|blocker` or `scope-pressure`, not `reconstruct-with-inference`.
@@ -75,7 +71,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark-simulation supplies method; researcher output remains evidence input and does not move route, proof, or final-acceptance ownership.
 ### 4. Retry Guard
-- Materially similar failed research pass requires a new query, source family, access path, narrowed boundary, or changed evidence route.
+- Common Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
+- Researcher-specific material change includes new query, source family, access path, or narrowed boundary.
 - If no new evidence route exists, escalate with `hold|blocker`.
 ### 5. Gather Evidence
 - Search repository-local evidence first when it exists.

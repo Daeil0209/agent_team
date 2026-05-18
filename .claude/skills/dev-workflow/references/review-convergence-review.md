@@ -20,13 +20,13 @@ Use only inside active `dev-workflow` when reviewer-owned review materially dete
 - Resolve Next Owner And Action
 
 ## Authority
-Codex MCP is the current configured independent-review adapter for reviewer-grade independent review.
+Configured independent-review adapter for reviewer-grade independent review lives at `.claude/skills/codex-independent-review/SKILL.md`.
 Codex output is independent reviewer-grade evidence, not review verdict authority.
 team-lead owns reconciliation and workflow cursor truth.
 The configured reviewer lane owns its result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
-Material correction consumes `Skill(review-verification)` named lenses for owner-boundary, coherence-integrity, skill-consumption, and negative-risk as applied or `not-material:<basis>` before relying on the corrected review surface.
+Material correction consumes `Skill(review-verification)` named lenses (owner-boundary, coherence-integrity, skill-consumption, negative-risk) per the lens-consumption pattern owned by `.claude/skills/dev-workflow/SKILL.md` `## Workflow Core Law` 4.
 
 Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for review-convergence review.
 Review-convergence consumes `Skill(review-verification)`; reviewer, validator, and Codex review packets carry applicable named lenses as review criteria when their output controls advancement, redispatch, or completion truth.

@@ -12,7 +12,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `request-fit-plan`: freezes intent, deliverable, user, reference use, burden cues, material blockers, and packet-carry fields.
 - `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner/action.
 - `lead-local-plan`: freezes one local item with no final-arbitration trigger, required local skills, stop point, and evidence limit.
-- `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, cleanup/proof/acceptance readiness, and dispatch blockers.
+- `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, cleanup/proof/acceptance readiness, and dispatch blockers for the dispatch phase of the team-lead work plan.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
 - `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.
 - `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition without transferring planning ownership.
@@ -25,7 +25,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - Lower-level lane plans use the matching target as primary.
 - `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-based, burden-sensitive, or dependent on user-surface proof or original wording.
 - `lead-local-plan` is valid only for one named item with no final-arbitration trigger, no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
-- `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`.
+- `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`; it carries the dispatch phase inside the team-lead work plan and termination plan.
 - If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
 - `blocker-clear-plan` is valid only when the clearing move preserves every `work-planning` boundary-change axis and next action.

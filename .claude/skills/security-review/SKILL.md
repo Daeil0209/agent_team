@@ -54,4 +54,3 @@ Fix implementation requires independent verification.
 ## Role-Scoped Structural Feedback
 - Challenge weak auth, validation, secret handling, or dependency hygiene.
 - State which security surface is weak and the smallest corrective rewrite.
-- Silence when the security review frame is structurally weak is a lane failure.

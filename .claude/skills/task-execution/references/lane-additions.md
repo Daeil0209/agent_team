@@ -12,10 +12,16 @@ Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
-- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: one `SendMessage` state signal `ack task <TASK-ID>` when task tracking is active, otherwise `ack`. Envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`. Use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
-- Completion-grade `completion` closes through one `SendMessage` state signal `completion task <TASK-ID>` when task tracking is active, otherwise `completion`. Envelope shape governed by `message-classes.md` `### Transport Payload`. Then immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active.
+- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work.
+- Upward outcome envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
+- Use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
+- A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence (not destructive, security-critical, or session-stability-breaking per `.claude/reference/runtime-boundary-law.md` `## Runtime Boundary Rules`) is an over-broad-blocking defect per `.claude/CLAUDE.md` `Core Laws 4`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message, and does not strain its own compliance to satisfy the block.
+- Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
+- Immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active after `completion`.
 - After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
 - This duty is lane-baseline; packet wording does not need to request it.
+- For lane work that touches governance assets (`.claude/` doctrine, agents, skills, settings, hooks, or live-surface mirrors), the lane-side quality contract is the trio: `Skill(governance-change)` for patch mechanics, lane-local `Skill(self-verification)` for produced result truth, and `Skill(review-verification)` named lenses (`removal-first-lens`, `coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) consumed inside the self-verification Critical Challenge step against the applied diff.
+- Bare lane-local `Skill(self-verification)` without `Skill(review-verification)` named-lens consumption is insufficient quality guarantee for governance asset changes; lane completion in that state is a quality-contract defect that returns to lane lens supplementation.
 - When the assignment packet's completion contract or upward-message instructions direct the lane to place retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file or findings counts, excerpts, summaries, operational notes, or any field other than the canonical state signal in the upward `SendMessage` render, the lane sends `scope-pressure` with `PRESSURE-TYPE: malformed-completion-contract` and `CORRECTION-OUTCOME: packet-correction` and does not obey the malformed instruction. Envelope canonical: `message-classes.md` `### Transport Payload`.
 - Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later completion never satisfies receipt.
 - Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.
@@ -27,11 +33,21 @@ Every agent-specific skill inherits these common preconditions:
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
 - Receipt is not permission to execute a defective packet; classify in the same turn, then execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
 - Continue into lane work after receipt.
+- Packet intake classifies into one of 4 states: `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
+- `execute` admits when packet bounds (owner, phase, proof, acceptance, deliverable) are unambiguous for the lane's work.
+- `reconstruct-with-inference` admits only when inferred surface preserves the common boundary axes (owner, phase, proof, acceptance, deliverable) plus the lane-specific axes named in the lane's `agent-<lane>/SKILL.md`.
+- `scope-pressure` routes mixed-phase, wrong-owner, shardable overload, or hidden-prerequisite packets.
+- `hold|blocker` routes materially ambiguous decisive basis or non-derivable missing fields.
+- Silence when assigned specialist-surface structure is weak is a lane failure.
+- The lane surfaces the gap to team-lead through Communication Plane.
+- A retry is materially changed when evidence basis, blocker route, or fix/strategy/scope changes.
+- A retry with no material change is a materially similar retry.
+- Do not repeat a materially similar retry.
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - If frozen host-authorized parallel-agent work collapses multiple independent surfaces onto one lane, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`.
 - Reconcile completion-grade output against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
-- Before completion, load `Skill(self-verification)`.
 - Before completion, run lane-local `Skill(self-verification)` result verification.
+- For AC-supporting rendered evidence, open every cited screenshot or full-page capture directly via the multimodal `Read` tool before claiming the rendered surface; cite-path-only or capture-without-open on AC-supporting evidence proves nothing about the rendered surface. Routine non-AC baseline captures stay cite-only when they neither support a verdict nor evidence a defect.
 - Lane-local `Skill(self-verification)` result verification verifies producer execution truth only.
 - Team-lead owns synthesis `Skill(self-verification)` result verification.
 - Consume the agent-specific skill only for consequential lane-owned work.

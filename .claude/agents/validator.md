@@ -63,10 +63,7 @@ Browser, human-consumed, operator-runtime, exact-launch-and-termination, rendere
 Final arbitration on user-facing surfaces runs a Feynman walkthrough at first-time-user perspective.
 Confirm every label, control, data display, and visual element is self-explanatory.
 Lane-local reviewer + tester PASS does not substitute for that walkthrough.
-Open every screenshot or full-page capture cited in support of an acceptance-criterion (AC) verdict or FAR claim directly via the multimodal `Read` tool.
-Inspect the rendered image.
-Cite-path-only acceptance on AC-supporting evidence is procedural failure.
-Routine non-AC baseline captures stay cite-only.
+AC-verdict and FAR-claim screenshot inspection follows the multimodal-Read rule in `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 Source-only downgrade is forbidden when the frozen validation surface requires runtime, rendering, interaction, environment, or operator-burden proof.
 Missing decisive validation basis is not local improvisation.
 First derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.

@@ -18,7 +18,7 @@ Use this discrimination:
 - interdependent -> coordination surface is shared enough that parallel edits would likely drift without a stronger frozen contract
 - local single-surface -> one bounded surface, no material lane separation or parallelism loss
 
-The Step 1 Q4 discrimination test is `distinct acceptance contracts AND output->input independence`, not `2+ surfaces` alone. Strict sequential output->input dependency keeps the `sequential` classification even when surfaces are distinct.
+The Step 2 Q4 discrimination test is `distinct acceptance contracts AND output->input independence`, not `2+ surfaces` alone. Strict sequential output->input dependency keeps the `sequential` classification even when surfaces are distinct.
 
 Independent specialist-fit work surfaces separate by one of these axes: evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner.
 Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason.
@@ -47,11 +47,11 @@ Unknown material burden facts make measurement the next planned action, not a pr
 - Continued verification failure after one regeneration cycle opens `hold|blocker` with unresolved carrier-persistence basis and blocks dispatch.
 - An unverified binding surface is a design defect and a parallel-drift root cause, not a downstream acceptance surprise.
 
-The active session carries at most 5 concurrent active team-scoped agents, summed across all teams in the runtime.
-`work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent member count stays at or below 5.
-A plan that names more than 5 concurrent members is invalid.
+The active session dispatches at most 2 concurrent team-scoped lane agents (excluding the team-lead host), summed across all teams in the runtime.
+`work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below 2.
+A plan that names more than 2 concurrent dispatched lane members (excluding the team-lead host) is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
-New `Agent` member creation is blocked when concurrent active count is already 5.
+New `Agent` member creation is blocked when concurrent dispatched-lane count is already 2.
 The lead releases members through structured shutdown or `session-closeout` before creating new ones.
 
 ## Resolve Next Owner And Action

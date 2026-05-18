@@ -8,7 +8,7 @@ auto-inject: false
 
 Use this file when field-level semantics, allowed values, the internal planning record, `not-applicable` bases, serial reasons, or bounded correction rules are material.
 Field floors are route-relevant, not universal ceremony.
-Do not require a field that no current owner, workflow, sequence, dispatch path, or report gate consumes.
+Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an explicit cited consumer-absence basis is required before treating any listed mandatory field as not-required.
 
 `PROJECT-TIER`, `ACTIVE-REQUEST-TIER`, and `TIER-RAISE-REASON` field semantics are produced by `references/governance-depth.md` and consumed here.
 
@@ -28,6 +28,14 @@ Do not require a field that no current owner, workflow, sequence, dispatch path,
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, team-operation philosophy, target governance/design intent, priority order, route class, owner choice, and next action.
 - `COMPLETION-STOP-CONDITION` is mandatory for consequential plans and must derive from the user instruction, deliverable type, proof/acceptance defaults, and active workflow or sequence exit law.
 - It names the smallest practical closure condition a reasonable owner can verify, the evidence that proves closure, and the condition that keeps the owner open or routes `HOLD`.
+- `TEAM-LEAD-WORK-PLAN` is mandatory for consequential plans and must name the material phases, owner for each phase, action, stop/evidence, verification or review need, iteration or re-entry condition, and termination plan.
+- `TEAM-LEAD-WORK-PLAN` is authored by `team-lead` and carries the procedure that `team-lead` will execute, route, monitor, synthesize, verify, and close.
+- `TEAM-LEAD-WORK-PLAN` derives from the user instruction and chosen route; `COMPLETION-STOP-CONDITION` supplies its final closure row.
+- Each phase row records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane owner, or `HOLD:<basis>`.
+- Place `Skill(governance-change)` at a planned governance asset change or recurrence-barrier hardening row.
+- Place `Skill(review-verification)` under `Skill(self-verification)` for produced synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
+- Place `Skill(review-verification)` under `Skill(governance-change)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
+- A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
 - `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `Skill(review-verification)` promotion basis.
@@ -35,6 +43,16 @@ Do not require a field that no current owner, workflow, sequence, dispatch path,
 - When the frozen request, plan, MVP, release, or phase contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, `REQUEST-BOUND-PACKET-FIELDS` must include row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES`.
 - Baseline rows name proofable feature, workflow, surface, control, data, artifact, or reader/operator expectations; module, epic, or screen labels are parent headings only.
 - Implemented artifacts cannot be used later to invent the completion scope.
+- Multi-wave routes record per-wave `SCOPE-BASELINE` against the frozen deliverable scope.
+- Multi-wave routes record the `SCOPE-BASELINE` union state as `full-coverage`, `partial-with-deferral`, or `partial-with-HOLD`.
+- Deliverable-scope delta from a wave's `SCOPE-BASELINE` records under `DEFERRED-SURFACES` with named owner-deferral upstream record path or `HOLD` with cited blocker.
+- Missing multi-wave `SCOPE-BASELINE` union record blocks wave-2-onward dispatch-ready freeze.
+- Missing multi-wave `SCOPE-BASELINE` union record blocks wave-PASS framed as deliverable-completion in user-facing reports.
+- Wave PASS cannot redefine deliverable scope as that wave's `SCOPE-BASELINE`.
+- Multi-wave routes classify each wave's system-damage potential as `safe`, `cautionary`, or `risky`.
+- Wave ordering places `safe` first, `cautionary` next, `risky` last.
+- For `risky` waves, team-lead prepares positive-effect and negative-effect analysis before user-selection.
+- User-selection on `risky` waves is operator-policy-choice per `.claude/CLAUDE.md` `[NO-NEEDLESS-ASK]`.
 - When `DERIVED-DEFAULTS` names a receiver job, consumption path, or decisive proof surface for downstream review, proof, validation, or acceptance, `REQUEST-BOUND-PACKET-FIELDS` must include `TARGET-INTENT-BASIS`, `USER-SURFACE`, and `USER-SURFACE-PROOF-PATH`.
 - When plan, design, or workflow state freezes Receiver-Surface Contract, Consumption Chain, Boundary Register, or Evidence-Quality Matrix, `REQUEST-BOUND-PACKET-FIELDS` must preserve their cited identities for `task-execution` packet basis.
 - When reference-use triggers and downstream lanes depend on it, `REQUEST-BOUND-PACKET-FIELDS` must preserve cited reference identities or `DEVIATION-FROM-REFERENCE` basis. Downstream reference-use identity belongs inside `REQUEST-BOUND-PACKET-FIELDS`.
@@ -94,6 +112,7 @@ Methodology instructions go to `SKILL-RECOMMENDATIONS`.
 Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, cleanup, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
+- `EXECUTION-READINESS-BASIS: ready:<basis>` requires the next owner/action to match the first executable row of `TEAM-LEAD-WORK-PLAN`.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is mandatory only after configured independent-review trigger evaluation is material or required by the active workflow.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead trigger handling, adjudication, or fail-open truth.
 - Configured-review output is not authority.
@@ -107,7 +126,7 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
-- `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `task-execution`, exact blocker-clear move, or exact authorization request, not an implied "inspect more".
+- `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `task-execution`, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
 - If execution reveals a new consequential local item that is not frozen here, stop and reopen `work-planning`.
 - A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
 - That bounded correction exception ends immediately when execution reveals a moved `work-planning` boundary-change axis or route ambiguity.
@@ -123,6 +142,7 @@ COMPLETION-STOP-CONDITION:
 DERIVED-DEFAULTS:
 CLAIM-CEILING:
 REQUEST-BOUND-PACKET-FIELDS:
+TEAM-LEAD-WORK-PLAN:
 PROJECT-TIER:
 ACTIVE-REQUEST-TIER:
 TIER-RAISE-REASON:

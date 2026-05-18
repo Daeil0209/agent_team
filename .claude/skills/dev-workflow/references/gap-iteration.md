@@ -114,7 +114,7 @@ Per-cycle gap detection contribution after authoritative corrected output and be
 
 Reviewer quick-check stays blocking-only and delta-scoped.
 Unclear delta raises `scope-pressure` and preserves delta scope.
-Each corrected output consumes `Skill(review-verification)` named lenses as applied or `not-material:<basis>` before reviewer quick-check, tester re-verification, validator ingress, or completion truth uses that output.
+Each corrected output consumes `Skill(review-verification)` named lenses per the lens-consumption pattern owned by `.claude/skills/dev-workflow/SKILL.md` `## Workflow Core Law` 4 before reviewer quick-check, tester re-verification, validator ingress, or completion truth uses that output.
 Tester re-verifies affected surfaces before stale interaction rows.
 Validator re-validates affected acceptance surfaces when final acceptance remains validator-required.
 A prior validator `PASS` is stale for surfaces changed by correction until validator marks them current or issues a fresh `PASS`.

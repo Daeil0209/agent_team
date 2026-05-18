@@ -50,7 +50,7 @@ Receivers return `scope-pressure` when a packet omits material `EXCLUDED-SOURCES
 `SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
 Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
 Do not replace it with literal task wording or target purpose alone.
-If the carried semantic basis conflicts with the user instruction, cited artifact intent, or governing design philosophy, the receiving lane returns `scope-pressure` or `hold|blocker`.
+If the carried semantic basis conflicts with the user instruction, cited artifact intent, or `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, the receiving lane returns `scope-pressure` or `hold|blocker`.
 
 `COMPLETION-STOP-CONDITION` names the practical closure condition and evidence burden for the assigned surface.
 If it is missing, weaker than the requested deliverable, or not evidence-verifiable for the receiving lane, the lane returns `scope-pressure` or `hold|blocker`.

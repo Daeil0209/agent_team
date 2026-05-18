@@ -44,7 +44,7 @@ Score each module or function on 5 questions (1 point each):
 | Switch on enum with inline logic | Plugin or strategy interface |
 Classify detected anti-patterns through reviewer severity and the refactoring matrix.
 Report metric-only RFP signals as risk evidence.
-Use `REVIEW-STATE: hold` or `MESSAGE-CLASS: hold|blocker` only when acceptance, maintainability, or change-safety harm is demonstrated.
+Use `MESSAGE-CLASS: hold|blocker` (per `task-execution/references/message-classes.md`) only when acceptance, maintainability, or change-safety harm is demonstrated.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|

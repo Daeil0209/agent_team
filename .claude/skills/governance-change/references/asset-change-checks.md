@@ -12,13 +12,13 @@ Use this file for ordinary team-system asset changes, skill introduction, specia
 Mapping keys such as `PRIMARY-OWNER`, `SOURCE-ANCHOR`, `SOURCE-RULES`, `LOAD-POLICY`, and `REPORTING-CURTAIN` are structural metadata; classify only missing, wrong, or divergent mapping as defects.
 Where a runtime setting or threshold must remain configurable, keep one owner for the literal value and make every other document reference that owner.
 Preserve approved structural hierarchies, role procedure hierarchy, skill Structural Contract, reference maps, and connection mappings.
-New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require `Skill(review-verification)` before execution.
+New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains record `Skill(review-verification):<bounded-question>` before execution.
 When reducing context footprint, prove moved meaning remains reachable through an owning trigger or direct reference path.
 Record remaining migration, affected-surface, in-flight-output, or prior-verdict gaps instead of assuming completion.
 
 Material defect promotion is owned by `Skill(review-verification)`.
 This reference supplies asset-change evidence only.
-Literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains evidence until `Skill(review-verification)` proves `confirmed-defect`.
+Literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains evidence until `Skill(review-verification):<bounded-question>` proves `confirmed-defect`.
 Intended protection preserves the protection and reduces only avoidable burden.
 
 ## Skill Introduction

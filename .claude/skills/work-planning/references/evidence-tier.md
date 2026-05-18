@@ -16,10 +16,7 @@ A feasible, materially-relevant higher-tier source is mandatory.
 Deferring a higher-tier source requires an explicit frozen reason.
 Settling for a lower tier while a higher tier is feasible-and-relevant is a planning-evidence defect.
 
-Strict tier discipline applies to design, visual, UX, interaction, structural, methodology, and governance-hardening decisions.
-External practice in those domains can move faster than model prior knowledge.
-Planning that stays inside model prior knowledge when current external practice is feasible-and-relevant is "frog-in-well" reasoning.
-Frog-in-well reasoning bounds quality by the model's prior state.
+Strict tier discipline applies to design, visual, UX, interaction, structural, methodology, and governance-hardening decisions where external practice can move faster than model prior knowledge.
 
 The canonical escalation path is `researcher` lane + `benchmark-simulation` skill + WebSearch/WebFetch or equivalent authoritative external-reference research.
 Missing that path when materially relevant is a planning-evidence defect.

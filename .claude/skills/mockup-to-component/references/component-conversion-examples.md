@@ -64,7 +64,8 @@ When tool choice, current UI practice, licensing, accessibility, or production a
 - [ ] Color palette decided (Primary / Secondary / Accent)
 - [ ] Typography selected (Heading / Body fonts)
 - [ ] Layout pattern chosen (Bento Grid, standard grid, etc.)
-**Trend Reference Examples** (apply selectively with current evidence): Bento Grid, Glassmorphism, Dark Mode First, Skeleton Loading, WCAG 2.1.
+**Trend Reference Examples** (apply selectively with current evidence): Bento Grid, Glassmorphism, Dark Mode First, Skeleton Loading.
+**Accessibility Baseline** (not selective): WCAG 2.1 applies to every operator-facing UI deliverable; ground compliance in current evidence per the line above.
 ## JSON Data Simulation
 JSON mock files serve dual purpose: power dynamic content in the HTML mockup and define the API schema contract for backend implementation.
 ```javascript

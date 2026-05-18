@@ -35,8 +35,6 @@ Capability recovery investigation produces setup or diagnostic input only.
 - You reconcile their outputs
 - This skill bridges only the blocked external-tool surface and returns evidence or blocker truth to the current owner.
 - This skill never overrides team-lead routing, task-execution dispatch, reviewer findings, tester proof, validator acceptance, or active workflow gates.
-- Intentional local restatement: keep the downstream lane contract in this file even when similar wording exists elsewhere.
-- Preserve this owner-local contract unless an equivalent owner-local contract remains here.
 - `reviewer` — downstream review finding owner for integration-side defects, weak assumptions, and blocked merge quality
 - `tester` — downstream runnable-proof owner when the bridge, launcher path, or external interaction must be exercised directly
 - `validator` — downstream final verdict owner
@@ -107,15 +105,10 @@ Required rules:
 - keep permission, credential, and quota scope narrow
 - verify with the smallest decisive real-tool or real-network proof
 - leave a usable blocked-state record instead of a vague tool complaint
-- interactive login, token repair, credential mutation, destructive package actions, paid/licensed installs, persistent service/daemon installs, and security-setting changes require the owning approval path
-- these actions require explicit user approval in the packet
-- non-damaging setup inside a frozen allowed-setup boundary proceeds when required
-- examples: standard fonts, browser runtime/cache, or equivalent tool prerequisites needed for frozen proof
-- non-damaging allowed setup proceeds through the bounded setup path
-- use the smallest path and record fallback/cleanup truth
+- Approval-required actions, allowed-setup boundary, and the approval/proceed split are owned by `references/integration-bridge-detail.md`; use the smallest path and record fallback/cleanup truth.
 - prefer a quieter or safer local-first path when it becomes credible
 - if the bridge opens a console, helper process, client session, or proxy, define and verify cleanup after the decisive check
-- `CLAUDE.md` `## Acceptance` still applies: simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` or blocked
+- Simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` (a bridge-local claim status distinct from the validator verdict tokens defined in `CLAUDE.md` `## Acceptance`) or blocked; validator authority remains with `validator` per CLAUDE.md `## Acceptance`.
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or setup requests when external capability need is unclear or unjustified.
 - Also challenge unclear or unjustified bridge scope, fallback behavior, verification method, or rollback discipline.
@@ -124,9 +117,8 @@ Required rules:
 - Name why it risks blocked delivery or environment drift.
 - Name the smallest corrective rewrite.
 - Avoidable local-first tasks stay local-first.
-- Silence when the external bridge contract is structurally weak is a lane failure.
 ## Operational Discipline
 - Integration serves the end-user workflow and technical endpoint path.
 - User-visible integration is designed from user perspective first.
 - Surface hidden integration constraints (rate limits, timeout behaviors, retry policies, user-visible error clarity) before bridge design, not after failure.
-- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or `UNVERIFIED` per `CLAUDE.md` `## Acceptance`.
+- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or bridge-local `UNVERIFIED` (validator verdict tokens remain owned by CLAUDE.md `## Acceptance`).

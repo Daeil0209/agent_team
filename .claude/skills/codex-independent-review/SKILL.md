@@ -52,14 +52,12 @@ Required triggers:
 
 Risk-triggered review also applies when:
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
-- lead-local can substitute for a configured lane
-- planning target is `team-dispatch-readiness-plan`
-- parallel fit affects correctness, bottleneck risk, runtime footprint, or staffing
-- workflow, sequence, acceptance path, packet readiness, proof path, tool/setup, cleanup, or parallel grouping is material
-- artifact, report, proof result, governance surface, or final evidence packet controls downstream dispatch, validation, acceptance, or user-facing completion
+- lead-local would substitute for a configured lane
+- parallel fit affects correctness or bottleneck risk
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or owner-evidence route
 
-Skip only for light, receipt/status/cleanup/clarification-only, no-trigger consequential work, or a target-specific owner reference that records `not-applicable:<basis>`.
+Skip when no risk-triggered axis applies.
+Record skip basis in `CODEX-INDEPENDENT-REVIEW-BASIS`.
 For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only when no planning, design, material review, risk, route, artifact-convergence, final-acceptance, or workflow boundary is being frozen, revised, or used for advancement.
 Pre-`work-planning` external review output is not planning evidence.
 

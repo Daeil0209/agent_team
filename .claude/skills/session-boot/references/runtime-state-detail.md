@@ -38,6 +38,11 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 - Workflow Continuity Bridge
 - Proactive Team-Composition Reassessment
 - Stall-Without-Progress Rule
+- Runtime Integrity Defect Classification
+- Runtime Integrity Detection Triggers
+- Per-Class Reconciliation Action
+- Operator-Approval Gate
+- Runtime Integrity Reporting
 - Runtime Cleanup Rules
 - Resolve Next Owner And Action
 
@@ -173,12 +178,13 @@ Semantic ownership split:
 Canonical classes:
 - lane work state: `ACTIVE`, `STANDBY`
 - cleanup or routing classification: `SHUTDOWN-PENDING`, `blocked`, `stale`, `validation-waiting`, `residue`
-- runtime recovery classification: `dispatch-pending-no-ack`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-cleanup`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
+- runtime recovery classification: `dispatch-pending-no-ack`, `dispatch-ack-no-start`, `ack-late`, `working-permission-pending`, `working-transport-missing`, `working-blocked`, `not-working-awaiting-cleanup`, `active-stall`, `unclaimed-dispatch-failure`, `pipeline-ready-idle`
 - team runtime state: `active`, `inactive`
 - team dispatch state: `none`, `pending`, `claimed`
 
 Runtime recovery classification meanings:
 - `dispatch-pending-no-ack`: assignment send evidence exists and the target lacks valid `dispatch-ack`.
+- `dispatch-ack-no-start`: `dispatch-ack` received but no same-segment agent-start evidence exists; same-assignment execution follow-up required.
 - `ack-late`: `dispatch-ack` arrived after follow-up or stale suspicion and must be reconciled with current assignment truth.
 - `working-permission-pending`: target is active and blocked on permission.
 - `working-transport-missing`: side-effect or activity evidence exists but required Communication Plane transport is missing.
@@ -241,13 +247,13 @@ Rules:
 - Producer-lane agents on a surface still inside the active validation chain (review -> test -> validate) remain `STANDBY` while validation routing resolves.
 - Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.
-- Waiting for the user to identify team-composition defects is itself a defect. This includes parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, and agent-charter mismatch.
+- Waiting for the user to identify monitoring-detectable defects (parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, agent-charter mismatch, or agent stall) is itself a defect; non-destructive runtime recovery is team-lead owned.
 
 ## Stall-Without-Progress Rule
-`assignment-sent-no-ack` is dispatch pending only: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
+`dispatch-pending-no-ack` is dispatch pending only: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
 `dispatch-ack` with no same-segment agent-start evidence is `dispatch-ack-no-start`: trigger same-assignment execution follow-up immediately in the same monitoring turn.
 Parallel dispatch is active monitoring, not passive waiting.
-The group cannot be reported as running while any intended target is `assignment-sent-no-ack` or `dispatch-ack-no-start`.
+The group cannot be reported as running while any intended target is `dispatch-pending-no-ack` or `dispatch-ack-no-start`.
 Recover the affected target and keep unaffected independent targets moving.
 
 After agent-start evidence exists, choose the shortest task-specific re-check interval.
@@ -256,15 +262,61 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `assignment-sent-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
 2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
 3. Do not stack more assignment/correction packets into a silent inbox.
 4. At the re-check window, inspect current activity/side-effect evidence. Preserve active agents in lane execution; when both response and activity evidence are absent, dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
 5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/user-reporting-law.md` admits a report; explicit status answers omit ack counts, target names, packet fields, and recovery mechanics unless specifically requested.
 
-Waiting for the user to identify agent stalls is itself a monitoring defect. Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around.
-Non-destructive runtime recovery is team-lead owned.
-Do not ask the user to choose among routine nudge, replacement, redistribution, or shutdown of stalled teammates.
+Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Do not ask the user to choose among routine nudge, replacement, redistribution, or shutdown of stalled teammates.
+
+## Runtime Integrity Defect Classification
+Three runtime-integrity defect domains are classified separately, detected together at the same trigger gate, and reconciled to one consistent live state.
+
+### Domain 1: Agent Operation (process/config/pane parity)
+- Class A: a live claude process whose `--team-name <team>` and `--agent-id <id>` are not present in `~/.claude/teams/<team>/config.json` members.
+- Class B: a `config.json` member entry whose `tmuxPaneId` is missing, references a non-existent pane, or references a pane with no descendant claude process.
+- Class C: a live tmux pane that has no descendant claude process under its `pane_pid`.
+- Class D: an orphan `/tmp/tmux-$(id -u)/claude-swarm-*` socket file whose `tmux -L <name> list-sessions` returns no live server.
+
+### Domain 2: UI Synchronization (display ↔ governance parity)
+- Class E: Claude Code teammate UI displays a member that is absent from `config.json` because UI reads live process inventory and `config.json` records the governance-tracked roster only; UI ≠ governance roster is the surfaced defect.
+- Class F: `TaskList` host response returns a task id that is absent from `~/.claude/tasks/<team>/<id>.json` on-disk store; highwatermark-only id without persisted record is the surfaced defect.
+- UI/host display state is read-only evidence; governance reconciliation flows from disk truth (`config.json`, `~/.claude/tasks/<team>/`, live process inventory) to a single resolved state.
+
+### Domain 3: Messaging And Communication (channel completeness)
+- Class G: a teammate produced work-product evidence on disk (verdict, completion artifact, retained-output) without sending the canonical completion-class `SendMessage` back to `team-lead`; disk-only completion is incomplete completion handoff per `.claude/skills/task-execution/references/completion-handoff.md`.
+- Class H: a teammate received an assignment-grade `SendMessage`, marked it `read: true`, then idled without sending `dispatch-ack`, `scope-pressure`, `hold|blocker`, or any progress class; mailbox-consumed-without-channel-response is missing receipt.
+- Class I: a `SendMessage` succeeds at the inbox-write surface but the receiver process is non-responsive (idle without further turn execution) for the bounded receipt window; inbox-arrival ≠ teammate work-trigger is the surfaced defect.
+
+## Runtime Integrity Detection Triggers
+- Compaction resume opens runtime-integrity classification before consequential dispatch, reuse, assignment-grade `SendMessage`, or `TeamCreate`.
+- `runtime-entry-gate` `BLOCKED: runtime marker missing` after auto-recovery failure opens runtime-integrity classification.
+- Pre-dispatch readiness check that finds stale `tmuxPaneId` for a frozen target opens runtime-integrity classification.
+- UI display count ≠ `config.json` member count opens Domain 2 classification.
+- Missing teammate completion `SendMessage` after retained-output appears on disk opens Domain 3 classification.
+- Two or more sequential teammate idle notifications without `dispatch-ack` or work product opens Domain 3 classification.
+
+## Per-Class Reconciliation Action
+- Class A: re-attach the live process to the roster by team-scoped `Agent` re-spawn under a fresh live name when the lane is still required; otherwise terminate the live process by `kill <pid>` after explicit operator approval.
+- Class B: remove the dead member entry from `config.json`; re-spawn the lane via team-scoped `Agent` when the lane is still required by the frozen route.
+- Class C: run `tmux -L <socket> kill-pane -t <paneId>` on the dead pane, then remove the associated config entry; re-spawn the lane when still required.
+- Class D: unlink the orphan socket file only after confirming `tmux -L <name> list-sessions` fails; never unlink a socket whose server responds.
+- Class E: bring UI and governance roster into parity by either re-attaching the live process via Class A action or removing the surplus live process via approved `kill <pid>`; UI count must equal `config.json` member count post-reconciliation.
+- Class F: discard the phantom task id; treat retained-output disk evidence as the canonical completion record for the affected work surface; do not retry `TaskUpdate` on the phantom id.
+- Class G: team-lead consumes the on-disk retained-output as the canonical completion record; team-lead records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-change)` patch consideration; future dispatch packets restate the explicit completion-channel requirement.
+- Class H: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class I.
+- Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or `HOLD` per `.claude/skills/task-execution/references/dispatch-recovery.md`.
+
+## Operator-Approval Gate
+- Class A `kill <pid>`, Class E `kill <pid>`, and Class I structured shutdown are destructive and require explicit operator approval before execution.
+- Class B `config.json` member-entry removal, Class C `kill-pane`, Class D socket unlink, Class F phantom-id discard, Class G disk-completion consumption, and Class H receipt-follow-up are non-destructive runtime hygiene and execute inside `session-boot` or `task-execution` recovery without user prompts.
+
+## Runtime Integrity Reporting
+- Classification, per-class action plan, and applied-reconciliation record are internal Procedure Plane evidence.
+- Class A, Class E, and Class I destructive cleanup surface as a `HOLD` with exact action (`kill <pid>`, `tmux kill-pane`, `shutdown_request`) plus approval request per `.claude/reference/user-reporting-law.md`.
+- Domain 2 reconciliation result surfaces as a status answer when the user explicitly references a UI display ≠ governance roster mismatch per `.claude/reference/user-reporting-law.md`.
+- Completed automatic non-destructive reconciliation stays internal unless `.claude/reference/user-reporting-law.md` admits a status answer.
 
 ## Runtime Cleanup Rules
 - Choose shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.

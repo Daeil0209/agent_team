@@ -122,9 +122,7 @@ Drift reopens `work-planning`.
 - Re-home explicitly verifies handoff, evidence, gate, owner-boundary, and reporting-truth continuity.
 - Classify duplicate doctrine as protected local restatement only when it has a named owner and direct-consumption or isolation-safety basis.
 - Resolve divergent duplicate doctrine to the precise owner.
-- Scope/change review tightens weaker duplicate doctrine when tightening preserves meaning.
-- Scope/change review re-homes weaker duplicate doctrine when another owner is precise.
-- Scope/change review removes weaker duplicate doctrine when its meaning is duplicate or obsolete.
+- Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/minimal-governance-change-law.md` `## Change Rules`.
 - Role-specific content stays out of shared doctrine when a more precise owner exists.
 
 ## Retroactive Application Rules

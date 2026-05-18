@@ -12,9 +12,8 @@ Use when the document mode is proposal, plan, grant, or execution-control.
 ## Proposal/Plan/Grant
 - Separate explicit requirements from inferred evaluation intent.
 - Keep requirements and inferred evaluation intent visible.
-- For R&D proposals, consume the `business-workflow` proposal rule packet for announcement or RFP decomposition, organizational strategy parameters, fact-vs-design labels, and narrative dependency basis.
-- Require organizational strategy capture: current situation, strategic motivation, focus item, roadmap position, and desired outcome type.
-- Flag missing organizational strategy capture as intake gap.
+- Consume business-workflow proposal-rule packet (required fields per `.claude/skills/business-workflow/references/rnd-proposal-workflow.md` `## Organizational Strategy Parameters`).
+- Flag `missing-strategy-capture` when that packet is absent.
 - Design full logic and section dependency first.
 - Compress to target page or length after full logic design.
 - Document-generation order: requirement reading -> evaluator-intent inference -> benchmark-pattern intake -> strategy capture -> build-vs-emphasis target -> logic-line design -> drafting -> visual selection -> page-fit compression.

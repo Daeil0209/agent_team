@@ -36,24 +36,14 @@ Stop before the next Final Acceptance Review (FAR) until the assigned owner cons
 
 ## Resolve Next Owner And Action
 - A missing correction packet opens validator correction-packet retrieval.
-- These changed routes open `work-planning`:
-  - changed-scope route
-  - changed-owner-map route
-  - changed-route route
-  - changed-proof-chain route
-  - changed-acceptance-chain route
+- Any root-cause-axis change (the Stop section enumeration: scope, owner map, route, proof chain, or acceptance chain) reopens `work-planning`.
 - A stopped route to the next Final Acceptance Review (FAR) opens assigned-owner correction-evidence consumption.
 
 ## Routing Rules
 - Design-level root cause routes to the active workflow design-correction phase.
 - Implementation root cause routes to the active workflow production-correction phase.
 - Operator-delivery root cause routes to the active workflow production-correction phase.
-- These changes reopen `work-planning`:
-  - changed scope
-  - changed owner map
-  - changed route
-  - changed proof chain
-  - changed acceptance chain
+- Root-cause-axis changes reopen `work-planning` per the Stop section enumeration.
 
 ## Evidence Rules
 - Validator evidence is correction basis.

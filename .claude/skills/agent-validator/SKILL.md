@@ -6,7 +6,7 @@ PRIMARY-OWNER: validator
 ---
 ## Structural Contract
 - Sharpens only its owned validation surface.
-- Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
+- Structural Contract internal gates: Scope & Quality Gate, PASS Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Validation Inputs, Validation Workflow, Blocked Validation, Active Communication Protocol
 - PRIMARY-OWNER: validator
 - New content must attach to an owning gate, precondition, workflow, or communication block.
@@ -20,17 +20,11 @@ Before any work:
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
-On assignment-grade work receipt, classify the packet before execution:
-- bounded verdict-only arbitration -> execute
-- assignment-grade validator correction packet after `FINAL-REJECT` -> execute bounded correction-basis analysis
-- safely inferable missing detail uses `reconstruct-with-inference` only when core boundaries remain unchanged.
-- Core boundaries are owner, phase, proof burden, acceptance burden, deliverable shape, validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, and verdict burden.
-- Materially required decision surface, user-facing acceptance basis, and upstream defer basis must also remain unchanged.
-- mixed phase-intent, missing-owner closure, shardable verdict overload, or hidden prerequisite -> `scope-pressure`
-- non-derivable materially ambiguous expectation sources, review/test state, materially required decision surface, or validation surface -> `hold|blocker`
-- non-derivable missing decisive evidence on the acceptance-critical surface -> `hold|blocker`
-### User-Perspective Gate
-Validator-local PASS gate only; team-lead still owns routing and cleanup decisions.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; validator-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, verdict burden, decision surface, user-facing acceptance basis, and upstream defer basis.
+Assignment-grade validator correction packet after `FINAL-REJECT` executes bounded correction-basis analysis.
+### PASS Gate
+Validator-local PASS gate only.
+Team-lead owns routing and cleanup decisions.
 PASS requires retained evidence on the assigned target's decisive surface.
 The decisive surface is the surface where the intended receiver runs, reads, operates, decides from, learns from, or presents the deliverable.
 Validation target type selects the evidence profile:
@@ -40,11 +34,7 @@ Validation target type selects the evidence profile:
 - `governance` or `report`: source/read integrity, rule force, owner boundary, cross-reference truth, claim truth, and reader clarity evidence.
 - `human-consumed-artifact`: native-capable or format-faithful rendered evidence for layout, pagination, formulas, media, and reader burden when those are in scope.
 - `proof-result` or `review-output`: method validity, surface match, claim strength, unresolved contradiction, and evidence-to-verdict support.
-For executable interactive software, every frozen `SCOPE-BASELINE` feature/surface/control in the claimed acceptance scope must be directly exercised by tester evidence or classified as blocked, disproven, or upstream-deferred with frozen-record citation.
-When `CORE-WORKFLOW-CLOSURE` applies, PASS requires tester evidence that assigned rows used row-matched closure-defect probes and retained postcondition evidence.
-Workflow-completion, reliability, or user-ready PASS requires material hard-test probe evidence, not only normal success-path proof.
-Partial, blocked, or missing decisive-surface evidence withholds PASS on the affected target.
-Lower-level support evidence is rejected as PASS evidence when the assigned target requires direct receiver-surface evidence.
+Per-target conditional PASS requirements live in `references/validator-lane-detail.md` `## PASS Prohibition Detail` and `### Operator-Exhaustive Integrity And Rendered Quality`.
 
 ## Preconditions
 - Use only after team-lead assigns a bounded validation surface.
@@ -129,36 +119,19 @@ Keep authoritative versus supplemental sources explicit.
 - For each decisive expectation, keep a trace: expectation -> evidence anchor -> surface -> upstream owner -> verdict class.
 - Keep these classes explicit rather than flattening weak evidence into a soft pass.
 ### 6. Final Acceptance Gate
-Canonical PASS prohibitions are owned by `references/validator-lane-detail.md` `## PASS Prohibition Detail`; the workflow rules below apply that canonical at verdict time.
-- `PASS`: all decisive expectations met, no blocking findings, evidence sufficient.
-- `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, or missing required workflow basis.
-- `FAIL`: fundamental mismatch on the decisive acceptance surface.
-- PASS requires every decisive expectation to have traceable evidence on the same acceptance surface claimed by the verdict.
-- Tester `ready`, indirect proof, smoke proof, or uninspected screenshots cannot satisfy direct-required user-facing evidence.
-- Requested deliverable remains the acceptance baseline.
-- If user-facing acceptance depends on any of these, PASS requires explicit reconciliation:
-  - exact launch artifact
-  - core completion path
-  - interaction coverage
-  - burden contract
-- Executable workflow-completion PASS requires exact launch artifact execution closure.
-- For executable user-facing or workflow-completion verdicts, PASS requires every frozen `SCOPE-BASELINE` feature/surface/control path closed.
-- When `CORE-WORKFLOW-CLOSURE` applies, PASS requires every row matched or upstream-deferred by the owning upstream record.
-- When `CORE-WORKFLOW-CLOSURE` applies, PASS requires executed closure-defect probe and retained postcondition evidence for every direct-required row in claimed scope.
-- Workflow-completion, reliability, or user-ready PASS requires material hard-test probes for each decisive workflow or data-state family.
-- Blocked or unproven applicable `CORE-WORKFLOW-CLOSURE` rows withhold PASS.
-- Subset-anchor PASS is procedurally invalid.
-- When executable, operator-runtime, or workflow-completion acceptance depends on them, PASS requires stop/cleanup, clean relaunch, access path, resource cleanup, demo-data preview, operator-OS fit, and project-artifact hygiene closure.
-- If decisive coverage is incomplete, issue `HOLD` or a non-PASS verified-scope report instead of calling workflow complete.
-- Subset acceptance is PASS-eligible only when the subset was already frozen by request, plan, design, or upstream defer record.
-- Executable interactive web/UI deliverables require browser-surface proof on the real user interaction inventory for PASS.
-- Browser-surface gap closes through browser-surface proof.
-- PASS requires per-row inspected console/runtime/network error evidence for each claimed user-facing row whose error surface is material to that row's acceptance; this row-level check is distinct from the canonical verdict-level inspection in `references/validator-lane-detail.md` PASS Prohibition Detail.
-- Rendered documents or runtime-bearing artifacts require decisive evidence on the actual reader/runtime surface for PASS when that is where usefulness is experienced.
-- For source/read documents, PASS depends on the changed source/read surface plus integrity checks required by the frozen acceptance basis.
+Canonical PASS prohibitions, per-row inspection rules, decisive-surface evidence requirements, and subset-handling are owned by `references/validator-lane-detail.md` `## PASS Prohibition Detail`; consume that reference at verdict time.
+Apply `Skill(review-verification)` before issuing PASS/HOLD/FAIL per the trigger below:
+- Run full workflow (Steps 1-14) when the validation target is governance-asset change, multi-lane review synthesis, audit-grade verdict, defect classification, or patch-worthiness judgment. Cite the returned `review_verification_packet` fields `COHERENCE-RESULT`, `INTEGRITY-RESULT`, `NEGATIVE-RISK-RESULT`, and `PATCH-WORTHINESS` in the verdict.
+- Run named lenses (`coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) when the verdict materially depends on cross-surface coherence, negative risk, or patch fit. Cite each consumed lens result in the verdict.
+- Skip lens application only when the validation target is single-surface direct evidence (e.g., a UI button click producing a captured screenshot) with no cross-surface, governance, or patch-worthiness dependency; record skip basis in the verdict.
+Verdict labels:
+- `PASS`: all decisive expectations met on the decisive surface, no blocking findings, evidence sufficient; when the trigger above fires, the `review_verification_packet` Step 5 Critical Review Gate defeaters are tested and disproven.
+- `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
+- `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
+- Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.
 ### 7. Retest And Self-Check
-- State what evidence, acceptance condition, or upstream state changed before repeating a materially similar verdict pass.
-- Materially similar verdict pass requires changed evidence, changed blocker route, or changed validation surface.
+- Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
+- Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
 ### 8. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before validator-specific completion additions below.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.

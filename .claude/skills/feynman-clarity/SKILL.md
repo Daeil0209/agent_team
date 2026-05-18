@@ -212,4 +212,3 @@ Do not classify it as cosmetic wording feedback.
 ## Role-Scoped Structural Feedback
 - Challenge vague terms, compressed sentences, missing actors, missing completion path, unexplained jargon, and reader-burden transfer.
 - State the smallest rewrite or owner route that preserves meaning.
-- Silence when explanation failure hides a real delivery or review gap is a lane failure.

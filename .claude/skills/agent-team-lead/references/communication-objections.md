@@ -16,11 +16,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - scope-pressure
 
 ## Message-Class Truth
-- Treat `phase-transition-control` as workflow control.
-- Route `dispatch-ack` to dispatch-state tracking.
-- Route `status` to internal progress tracking.
-- Treat `MESSAGE-CLASS: completion` as completion-grade candidate after convergence and verification.
-- `scope-pressure` is structured objection to the current packet, staffing shape, or frozen burden basis.
+Consume message-class semantics from `.claude/skills/task-execution/references/message-classes.md`.
 
 ## Communication Hard Rules
 - Assignment-grade dispatch proves receipt-level dispatch state.
@@ -42,18 +38,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Keep paths active only when the frozen `parallel-fit` basis proves distinct acceptance contracts and output-to-input independence.
 - If the blocker changes shared source-of-truth, owner, proof, acceptance, staffing, or parallel grouping, reopen `work-planning` before continuing affected paths.
 - Consume `BLOCKER-TYPE`, `BLOCKER-BASIS`, and `SAFE-NEXT-STEP` exactly.
-- Resolve information requests through:
-  - corrected packet
-  - reopened `work-planning`
-  - proven user-owned blocker
-- Corrected packet requires the same:
-  - frozen owner
-  - phase
-  - deliverable
-  - proof/acceptance chain
-  - staffing shape
-  - agent boundary
-  - parallel grouping
+- Classification, corrected-packet axes, and `CORRECTION-OUTCOME` semantics: `.claude/skills/task-execution/references/message-classes.md` Agent Information Request Consumption and `.claude/skills/task-execution/references/scope-pressure.md`.
 - Provide explicit basis before asking the agent to proceed:
   - design intent
   - proof surface
@@ -88,24 +73,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Reopen `work-planning` when `PRESSURE-TYPE` from `.claude/skills/task-execution/references/scope-pressure.md` shows boundary, owner, phase, parallel, acceptance, proof, decision, or deliverable mismatch.
 - Classify single-agent collapse of intended parallel work as distribution-planning defect.
 - Restore parallel shape through `work-planning`.
-- Packet correction requires:
-  - `CORRECTION-OUTCOME: packet-correction`
-  - the same frozen owner
-  - the same phase
-  - the same deliverable
-  - the same proof/acceptance chain
-  - the same staffing shape
-  - the same agent boundary
-  - the same parallel grouping
-  - the required verification gate
+- Classification, corrected-packet axes, and `CORRECTION-OUTCOME` semantics: `.claude/skills/task-execution/references/message-classes.md` Agent Information Request Consumption and `.claude/skills/task-execution/references/scope-pressure.md`.
 - Treat multiple aligned objections as stronger planning evidence.
 - Unresolved objections block positive completion, synthesis-triggered redispatch, and completion-style transporting.
 - Unresolved objections keep the blocked lane on a concrete resolution path.
 - `CORRECTION-OUTCOME: parallel-continue` keeps unrelated independent lanes moving when lawful.
-- Map changed evidence/proof surface to `proof-surface-mismatch`.
-- Map these to `hidden-prerequisite`:
-  - missing setup
-  - missing tooling
-- Map distinct setup owner to `owner-split`.
-- Preserve `PRESSURE-TYPE` and `CORRECTION-OUTCOME` values from `.claude/skills/task-execution/references/scope-pressure.md`.
 - If pressure identifies a tool/evidence gap but lacks candidate-tool research, treat researcher tool-selection as the next evidence owner unless the packet already proves the correct tool or the issue is a proven user-owned blocker.

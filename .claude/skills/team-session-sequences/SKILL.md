@@ -27,11 +27,11 @@ PRIMARY-OWNER: team-lead
 Index session-level sequence names and lead-side dispatch detail when a sequence is materially active.
 Runtime spine, closeout spine, packet schema, message law, and cleanup truth stay with their owning skills.
 
-Use the exact sequence names defined in `.claude/CLAUDE.md`:
-- `Boot Sequence` (on-demand: session-boot skill)
-- `Session-Start Sequence` (on-demand: session-boot skill)
-- `Monitoring Sequence`
-- `Closeout Sequence` (on-demand: session-closeout skill)
+Use the exact sequence names defined in their owning skills:
+- `Boot Sequence` — defined in `.claude/skills/session-boot/SKILL.md`
+- `Session-Start Sequence` — defined in `.claude/skills/session-boot/SKILL.md`
+- `Monitoring Sequence` — defined in `.claude/skills/session-boot/SKILL.md` `## Monitoring Sequence`
+- `Closeout Sequence` — defined in `.claude/skills/session-closeout/SKILL.md`
 
 Use these procedures when the corresponding sequence is `materially active` per `.claude/skills/session-boot/SKILL.md ## Sequence Activation Discipline`.
 
@@ -62,13 +62,9 @@ Closeout state rules live in `Skill(session-closeout)`.
 When the current runtime is ambiguous, the lead resolves that ambiguity per session-boot `Mode Split` before production fan-out.
 
 
-## Boot Sequence
+## Boot Sequence / Session-Start Sequence
 
-Trigger opens `Skill(session-boot)` Boot Sequence. This index stops after naming that owner; hooks provide observation evidence only.
-
-## Session-Start Sequence
-
-Trigger opens `Skill(session-boot)` Session-Start Sequence. This index stops after naming that owner; hooks provide observation evidence only.
+Triggers for `Boot Sequence` and `Session-Start Sequence` open `Skill(session-boot)`. This index stops after naming that owner; hooks provide observation evidence only.
 
 ## Monitoring Sequence
 
@@ -92,7 +88,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 
 ## Closeout Sequence
 
-Trigger opens `Skill(session-closeout)` Closeout Sequence. This index stops after naming that owner; hooks provide observation evidence only.
+Closeout triggers open `Skill(session-closeout)`. This index stops after naming that owner; hooks provide observation evidence only.
 
 ## Resolve Next Owner And Action
 - A boot trigger opens `session-boot`.

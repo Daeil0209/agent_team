@@ -17,17 +17,13 @@ Before any work:
 1. Request fit: does the assignment still serve the user's actual request?
 2. Scope proportionality: is the development production surface bounded and truthful?
 3. Charter fit: is this developer-owned production work rather than review, proof, validation, or orchestration?
-4. Packet classification: has the received packet been classified as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker` before production discovery or edits?
+4. Packet classification: has the received packet been classified per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before production discovery or edits?
 5. Lane action: are the first lane action and stop condition explicit enough to govern execution?
 6. Feasibility: can this be completed inside the declared boundary with an available lawful production path?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
 Execution bias applies only after packet classification opens `execute` or `reconstruct-with-inference`: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
-On assignment-grade work receipt, classify the packet before execution:
-- bounded single-phase development production -> `execute`
-- safe inferred production surface without owner, phase, proof, acceptance, deliverable, write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance-oracle change -> `reconstruct-with-inference`
-- mixed-phase, wrong-owner, shardable overload, or hidden prerequisite -> `scope-pressure`
-- materially ambiguous write scope, authority, acceptance contract, or decisive production basis -> `hold|blocker`
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; developer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, and acceptance-oracle.
 ### User-Perspective Gate
 Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer-only knowledge?
@@ -119,11 +115,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - If that is impossible or disproportionate, record the fallback basis.
 - Keep the retest surface explicit.
 - If root cause is unknown and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
-- A retry is materially changed when the evidence basis changes.
-- A retry is materially changed when the blocker route changes.
-- A retry is materially changed when the fix strategy changes.
-- A retry with no material change is a materially similar retry.
-- Do not repeat a materially similar retry.
+- Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - See `references/developer-lane-detail.md` for durability and regression-guard detail.
 ### 4. Execute Bounded Change
 - Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.

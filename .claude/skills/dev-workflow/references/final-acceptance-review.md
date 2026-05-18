@@ -42,7 +42,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `OPEN-SURFACES`: remaining surfaces with frozen upstream deferral or frozen out-of-scope basis
 
 ## Parallel Evaluation
-team-lead starts own-review and Codex MCP independent review in parallel from the same frozen packet when the configured-review trigger is material or already frozen for this closure surface.
+team-lead starts own-review and Codex MCP independent review in parallel from the same frozen packet when `CODEX-INDEPENDENT-REVIEW-BASIS` is frozen as `triggered:*` for this closure surface, or when FAR closure surface validator-required acceptance materially depends on it.
 Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.

@@ -10,20 +10,14 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
 - Add peer top-level sections only after governance review.
 - Keep benchmark method detail, scoring tables, comparison templates, search protocols, and captured evidence caches in direct files under `references/`.
-- Spine-trigger anchors remain in body as owner-required triggers, not detail.
-- Spine-trigger anchors include External-Reference Methodology, Multi-Modal Observation Discipline, Owner-Initiated Benchmark Cues, and Composition with Design Capability Stack.
-- They also include Smart Composition Recipe, Verification Methodology Composition, Capability-Evolution Loop, Pattern Lifecycle Staging, and Axis-Coverage Discipline.
+- Top-level sections that name owner-required triggers (External-Reference Methodology, Multi-Modal Observation Discipline, Owner-Initiated Benchmark Cues, Composition with Design Capability Stack, Capability-Evolution Loop) remain in this SKILL.md spine. Their named subsections (Smart Composition Recipe, Verification Methodology Composition, Pattern Lifecycle Staging, Axis-Coverage Discipline) stay as subsections under their parent top-level section.
 ## Identity
 You are the benchmark-simulation + external-reference research specialist capability.
 - Conditional benchmark lens when a claim depends on before/after comparison, lean-team choice, routing competitiveness, or capability-hardening fairness.
 - Also covers benchmark input for design / visual / UX / interaction / structural / methodology decisions when external references materially inform deliverable shape.
 - External references include best-practice, public examples, multi-modal references, and industry standards.
-- External-site access is a benchmark input path when task-needed design, domain, pattern, standard, workflow, verification, or methodology information is not already grounded.
+- External-site access is a benchmark input path when a `references/self-initiated-discovery.md` cue materially fires and the needed information cannot be supplied by prior session evidence or external authoritative reference already at hand.
 - Multi-modal references include text, image, layout, ratio, typography, color, and table form.
-- Use as the team capability-evolution mechanism.
-- External-reference multi-modal benchmarking raises the design / methodology quality ceiling beyond model prior knowledge.
-- The mechanism is the abstraction-fit-adapt synthesis cycle.
-- Mastery compounds the team's design vocabulary, anti-pattern catalog, and adaptive fit-judgment over time.
 - Material relevance is handled through `SKILL-RECOMMENDATIONS` or the lane-selected skill basis.
 - Not the ordinary planning owner for routine delivery.
 ## Authority
@@ -34,14 +28,10 @@ You are the benchmark-simulation + external-reference research specialist capabi
 - `work-tool-patterns` — consumes benchmark comparison output when external evidence materially changes practical tool-family shape, operator-surface contract, or pattern-level proof oracle
 - `validator` — final pass/fail owner
 - `researcher` — upstream comparative evidence lane when benchmark-light groundwork already exists
-- support overlay only
-- benchmark output can challenge a route, claim, or promotion decision
-- benchmark output supports the primary specialist chain
 ## Purpose
 Load when the active contract needs scenario benchmarking, team-shape comparison, external-reference design or methodology synthesis, verification-method benchmarking, or capability-hardening comparison rather than a single concrete execution plan.
 
 The active workflow or planning owner owns mandatory benchmark selection.
-When selected for detailed design or methodology work, benchmark-simulation is a strong external-reference capture and pattern-extraction method, not a phase owner.
 Use external sites, public examples, authoritative docs, standards, reference UIs, images, and demos when they are the best available source for task-needed input.
 Capture usable destination-fit information, not source styling.
 Captured information includes information elements, layout hierarchy, table/chart/card patterns, visual ratios, labels, interaction cues, workflow states, anti-patterns, and standards constraints.
@@ -113,15 +103,7 @@ Collecting only the text excerpt leaves most evidence unused.
 For visual / structural / UX decisions, text-only evidence is a fidelity defect.
 That defect is "frog-in-well" reasoning bounded to model prior knowledge.
 
-Required modalities per reference:
-Use what the source supplies.
-See `references/observation-protocol.md` for per-modality discipline.
-- **Text**: design rationale, principle articulation, user-research findings, anti-pattern callouts
-- **Image / screenshot**: full layout capture, isolated component capture, before/after pairs, density-state captures
-- **Quantitative measurement**: font-size ratio (heading:body, primary:secondary), image-to-text ratio, whitespace ratio, color count, grid module count, action-density-per-region
-- **Structural form**: table layout (column count, header treatment, alignment, separator), grid system, navigation pattern, form-flow pattern
-- **Color, spacing, typography**: color semantic mapping (alert / success / neutral), spacing rhythm (4 / 8 / 12 / 16 base), typographic scale
-- **Interactive / behavioral**: animation, transition, state change (infer motion from documented behavior or demo videos when source is static)
+Required modalities per reference: use what the source supplies. Per-modality discipline (text, image/screenshot, quantitative measurement, structural form, color/spacing/typography, interactive/behavioral) is owned by `references/observation-protocol.md`.
 
 A reference observation is incomplete if it documents only one modality on a multi-modal decision. Downstream consumers cannot make a fit-judgment without the modalities the destination depends on.
 
@@ -156,16 +138,11 @@ Examples: test framework selection, proof tooling, coverage strategy, correction
 - synthesize verification approach from fitting patterns + reject misfits
 - compose with `tester` lane for execution and `validator` lane for final acceptance
 
-Use this verification-methodology lens when the active owner path selects `benchmark-simulation` and the verification choice is novel, disputed, high-risk, reusable, or lacks an already-frozen proven local default and materially affects acceptance quality.
+Use this verification-methodology lens when the active owner path selects `benchmark-simulation` and the verification-methodology trigger list in `references/verification-methodology.md` materially fires.
 Skip when prior session already froze the verification basis from external evidence or when tester/validator uses an already-frozen proven local default cited in the packet, lane rule, or acceptance surface.
 See `references/verification-methodology.md` for protocol.
 
-**Result-level verification mandate**: per CLAUDE.md `[USER-SURFACE]`, design output must be verified at the rendered/operating result level.
-Examples: real browser interaction and real reader/operator surface.
-User-surface proof uses rendered/runtime evidence.
-The composition's value is realized only when the rendered/operating deliverable matches the design synthesis intent.
-`dev-workflow` gap iteration operates on result-level diff, not source-level diff.
-Source-only verification when result-level is feasible is a verification defect for visual-UI deliverables.
+Acceptance fidelity follows `CLAUDE.md` `[USER-SURFACE]` and `dev-workflow` `Rendered Image Evidence Rule`.
 
 When dispatching this skill, lead pre-names sibling skills the receiving lane must compose with.
 Base that composition on the selected recipe in `references/design-stack-composition.md`.
@@ -176,10 +153,6 @@ Benchmark-full is required when routing, promotion, or sustainable team shape ma
 `promotion` means upgrading benchmark-supported evidence into routing authority, durable pattern or capability adoption, blocking force, or acceptance-strength influence.
 
 ## Capability-Evolution Loop
-Every benchmark cycle produces the decision packet.
-Capability-growth cycles also deposit durable artifacts into the team's evolving design or methodology vocabulary.
-Capability-catalog fields belong to durable capability benchmark cycles.
-Durable artifacts include positive pattern catalog, anti-pattern catalog, strength preservation memory, confidence-rated synthesis claims, and reference provenance ledger.
 Catalog entries require cited evidence, destination fit, and lifecycle state.
 Lifecycle states are `Assess`, `Trial`, `Adopt`, and `Hold`.
 `Hold` preserves a rejected or failed-fit pattern with its fit-failure reason.
@@ -238,4 +211,3 @@ Benchmark output is next-owner evidence, not direct patch authority, skill-routi
 ## Role-Scoped Structural Feedback
 - Challenge weak comparison frames, unfair baselines, or forced conclusions.
 - State which scenario, metric, or fairness condition is broken and the smallest corrective rewrite.
-- Silence when benchmark framing is structurally weak is a lane failure.

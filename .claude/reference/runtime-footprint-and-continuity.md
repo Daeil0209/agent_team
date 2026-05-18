@@ -38,14 +38,14 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 
 ## Captured Local Hook Posture
-As captured on 2026-04-29, `.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, self-verification, runtime-entry, dispatch sizing/proof, and compliance supervision.
+Before classifying current hook posture, density, or improvement, read live `.claude/settings.json` and apply measured latency, context, or runtime evidence. Classify the live posture as `high-footprint guardrail debt` until measured evidence proves runtime-footprint improvement, then narrowed.
 
-Classify this as high-footprint guardrail debt until measured evidence proves runtime-footprint improvement.
+### Baseline Capture (2026-04-29)
+`.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, self-verification, runtime-entry, dispatch sizing/proof, and compliance supervision.
 
 Rules:
 - Broaden a blocking hook only after the full Hook-Last Footprint Review above.
 - Treat missing itemized ledger records as `UNVERIFIED`.
-- Claim current hook posture, density, or improvement only after reading live `.claude/settings.json` and using measured latency, context, or runtime evidence.
 - When a broad hook blocks a legitimate lane action, classify over-broad blocking as a defect and repair the narrowest owner surface before adding hook logic.
 - Before narrowing an existing matcher, publish a per-tool side-effect map citing the hook script body and the protected ledgers/sequence-markers each removed tool currently writes; classify each removed tool as `no-side-effect`, `side-effect-replaced-elsewhere`, or `protected-side-effect-blocks-removal`.
 - Removed warning code does not prove the matcher is dead.

@@ -36,11 +36,7 @@ Codex checks the draft freeze for:
 - acceptance, proof, skill-map, or carry-forward gaps that would make dispatch unsafe
 
 ## WP-CONSULT Handling
-Every valid point returned by successful `WP-CONSULT` requires team-lead adjudication before the planning basis is complete.
-- Accept only by changing the affected planning field or blocker basis.
-- Reject only by citing doctrine, user instruction, evidence, or frozen request basis.
-- Generic "noted" rationale is invalid.
-- Unadjudicated valid points leave `work-planning` incomplete.
+Adjudicate every valid `WP-CONSULT` point per `.claude/skills/codex-independent-review/references/common-contract.md` Handling rules before the planning basis is complete.
 
 Freeze one:
 - `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`

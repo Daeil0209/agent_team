@@ -81,6 +81,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 
 ## Hard Stops
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
+- Consequential planning names the team-lead work plan before `NEXT-CONSEQUENTIAL-ACTION`; the next action executes the first row and carries the remaining rows as internal continuation.
 - Planning opens one next owner/action before:
   - execution
   - dispatch
@@ -120,9 +121,10 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - route ambiguity
   - stronger claim
 - Same-phase same-artifact workflow iteration is not new when every Activation Trigger boundary remains unchanged.
+- Multi-wave patch routes consume `SCOPE-BASELINE` union rules in `.claude/skills/work-planning/references/planning-record-fields.md`.
 
 ## Post-Planning Gate
-1. Open exactly one next owner/action.
+1. Open exactly one next owner/action from the frozen team-lead work plan.
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent, stale, or wrong-boundary.
@@ -133,17 +135,15 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 9. Consume the named owner before phase movement.
 10. Consume the named owner before mutation.
 11. Rerun stale owner consumption to outcome before downstream movement.
-12. Source lookup does not satisfy named-owner consumption.
-13. Remembered procedure text does not satisfy named-owner consumption.
-14. Non-owner review input does not satisfy named-owner consumption.
-15. Unchecked owner summary does not satisfy named-owner consumption.
-16. `team-routing candidate` opens `task-execution`.
-17. `ambiguous-route` opens `task-execution`.
-18. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
-19. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
-20. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
-21. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
-22. Reopen `work-planning` when the next action is missing, vague, contradicted, or unconsumed.
+12. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/skill-loading-and-reference-binding.md` `## Reference Binding`.
+13. `team-routing candidate` opens `task-execution`.
+14. `ambiguous-route` opens `task-execution`.
+15. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
+17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
+18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
+19. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
+20. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

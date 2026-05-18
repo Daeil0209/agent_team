@@ -21,11 +21,7 @@ Before any work:
 5. Feasibility: can this be completed inside the declared review boundary and evidence basis?
 6. Target-intent fit: can the review name the artifact, program, report, governance, or document intent that defines fit?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
-On assignment-grade work receipt, classify the packet before execution:
-- bounded single-phase review -> `execute`
-- safe inferred review target and evidence basis without owner, phase, proof, acceptance, deliverable, expectation source, scope baseline, closure/oracle row, evidence authority, or review-boundary change -> `reconstruct-with-inference`
-- mixed-phase, wrong-owner, shardable overload, hidden prerequisite, or same-surface challenge overload -> `scope-pressure`
-- materially ambiguous review target, evidence basis, prerequisite state, or acceptance surface -> `hold|blocker`
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; reviewer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged expectation source, scope baseline, closure/oracle row, evidence authority, and review-boundary.
 ### User-Perspective Gate
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer knowledge?

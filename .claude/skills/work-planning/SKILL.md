@@ -13,12 +13,13 @@ PRIMARY-OWNER: team-lead
 - Section 4 is Step 1.
 - Section 5 is Step 2.
 - Section 6 is Step 3.
-- Section 7 is Internal Planning Record.
-- Section 8 is Progress Update Surface.
-- Section 9 is Post-Planning Gate.
-- Section 10 is Resolve Next Owner And Action.
+- Section 7 is Step 4.
+- Section 8 is Internal Planning Record.
+- Section 9 is Progress Update Surface.
+- Section 10 is Post-Planning Gate.
+- Section 11 is Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
-- Step names: Request-Fit Intake, Choose Planning Target, Q1-Q5 Work Analysis, Freeze Scope And Route.
+- Step names: Request-Fit Intake, Choose Planning Target, Q1-Q5 Work Analysis, Build Team-Lead Work Plan, Freeze Scope And Route.
 - PRIMARY-OWNER: team-lead
 
 ## Purpose
@@ -26,12 +27,14 @@ Freeze the smallest complete plan basis before consequential action.
 Own planning freeze only.
 Execution, dispatch, review, proof, validation, user-facing final reporting, and agent packets move to the named owner.
 
-Procedure spine:
-1. Freeze request fit.
-2. Choose one planning target.
-3. Run Q1-Q5.
-4. Freeze only the fields required by the chosen target and route.
-5. Open exactly one next owner/action.
+Procedure spine (Steps 0-4):
+1. Freeze request fit. (Step 0)
+2. Choose one planning target. (Step 1)
+3. Run Q1-Q5. (Step 2)
+4. Build the team-lead work plan, including termination plan. (Step 3)
+5. Freeze only the fields required by the chosen target, route, and work plan. (Step 4)
+
+Post-planning handoff: open the first next owner/action from that work plan per `## Post-Planning Gate`.
 
 Missing, vague, contradicted, or overclaimed basis blocks execution.
 Output `HOLD`, blocker-clear, or reopened owner.
@@ -71,13 +74,11 @@ Active runtime, recovery, monitoring, cleanup, or unresolved session-start readi
 Also load for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
 `work-planning` activation and freeze are proven only by actual `Skill(work-planning)` load plus the required freeze.
-Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside draft fields are context only; they do not prove `work-planning` activation or freeze.
+Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, and outside draft fields are context only; they do not prove `work-planning` activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
-Governance defect judgment routes through `Skill(review-verification)`.
-Governance removal judgment routes through `Skill(review-verification)`.
-Preservation analysis routes through `Skill(review-verification)`.
+Governance defect, removal, and preservation judgment is planned as a bounded review/verification row: synthesized-result judgment goes through `Skill(self-verification)` first; governance patch judgment goes through `Skill(governance-change)` and its `REVIEW-VERIFICATION-NEED`.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
 A moved boundary-change axis reopens `work-planning`.
@@ -93,7 +94,6 @@ Freeze these before route judgment:
 - reference use
 - burden cues
 - proof
-- defaults
 - `DERIVED-DEFAULTS`
 - blockers
 - request-bound packet fields
@@ -148,7 +148,17 @@ User-surface law:
 - If truthful proof or acceptance needs a missing user-facing surface or tool path, freeze a bounded discovery/setup owner or blocker.
 - Use source-only evidence only when it truthfully matches the user-facing proof surface.
 
-## Step 3: Freeze Scope And Route
+## Step 3: Build Team-Lead Work Plan
+Before freeze, `team-lead` builds the work plan it will execute or route.
+The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
+For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
+Place each conditional owner at its material trigger point; place `Skill(governance-change)` at governance asset change or recurrence-barrier hardening.
+`Skill(self-verification)` verifies the actual result surface produced by `team-lead` or a lane before reporting, `Skill(review-verification)`, governance-asset `Skill(governance-change)`, or redispatch.
+`Skill(review-verification)` runs under `Skill(self-verification)` for synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
+`Skill(review-verification)` runs under `Skill(governance-change)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
+The plan names a practical termination path derived from the user's instruction.
+
+## Step 4: Freeze Scope And Route
 Freeze only what the selected planning target requires.
 See `references/planning-record-fields.md` for field values, conditional fields, `not-applicable` rules, serial reasons, bounded corrections, and the record template.
 Load `references/planning-record-fields.md` before freezing `AGENT-MAP`, `PARALLEL-GROUPS`, `EXECUTION-READINESS-BASIS`, or any other dispatch-ready field.
@@ -160,6 +170,7 @@ Always freeze:
 - `COMPLETION-STOP-CONDITION`
 - `DERIVED-DEFAULTS`
 - `REQUEST-BOUND-PACKET-FIELDS`
+- `TEAM-LEAD-WORK-PLAN`
 - `ACTION-CLASS`
 - `ROUTING-SIGNAL`
 - `EXECUTION-READINESS-BASIS`
@@ -177,7 +188,7 @@ Freeze when material:
 Configured independent-review detail stays in `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail and the active concurrent-agent cap stay in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record the applied cap basis on this surface before dispatch can open.
-Planning opens one next owner/action before execution, dispatch, or reporting.
+Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
@@ -199,7 +210,7 @@ Keep the planning record internal.
 
 ## Post-Planning Gate
 After planning, apply `references/boundary-gates.md` Post-Planning Gate.
-Open exactly one next owner/action.
+Open the first next owner/action from `TEAM-LEAD-WORK-PLAN`.
 Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed.
 
 ## Resolve Next Owner And Action

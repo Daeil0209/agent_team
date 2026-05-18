@@ -26,8 +26,7 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition.
-- `dispatch-ack` is the team-lead tracking signal that the lane is `ACTIVE` for the assigned execution block.
-- `completion` is the team-lead tracking signal that the lane is `STANDBY` and eligible for reuse when ownership fit and context fit remain truthful.
+- `ACTIVE`/`STANDBY` tracking-signal semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
 - Receiving `idle_notification` without a preceding completion transport from the agent is a completion failure (T2).
 - Receiving completion transport marks `STANDBY` directly.
 

@@ -9,10 +9,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 # Reference Material
 ## Responsibilities: Reference Protocols
 ### Analytical Solution Verification Protocol
-Note: The exactness test and integrating factor decision tree below are exemplars for ODEs.
-Apply the same rigor to other analytical solution families.
-Other analytical families include Laplace transforms, Fourier series, PDE separation of variables, and eigenvalue problems.
-The same-rigor checklist covers: step justification, HOLD on unverified existence/uniqueness, and back-substitution validation.
+Non-ODE analytical families (Laplace transforms, Fourier series, PDE separation of variables, eigenvalue problems) verify with the same-rigor checklist: step justification per `## Derivation Rigor Standards`; HOLD on unverified existence/uniqueness; back-substitution validation per family.
 #### ODE Exactness Verification
 **Exactness test checklist:**
 1. Identify M(x,y) and N(x,y) from the form M dx + N dy = 0
@@ -43,13 +40,13 @@ The same-rigor checklist covers: step justification, HOLD on unverified existenc
 - General solution must include arbitrary constant(s) with physical/mathematical interpretation
 - Particular solutions require explicit statement of which initial/boundary condition determines the constant
 ### Mathematical Defect Severity Classification
-Defect handling still uses the shared blocking, acceptance, and reporting contract from `CLAUDE.md`, especially `## Acceptance` and `## Communication`. The table below is a mathematical local impact classification used to describe defect character and escalation examples. The shared governance contract remains controlling.
+Severity rubric inherits the Critical/Major/Minor/Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
+Defect-record fields inherit `CLAUDE.md` `## Acceptance` and `## Communication`.
 | Impact Class | Mathematical Context | Examples |
 |---|---|---|
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
 | **Minor** | Presentation/notation issue with correctness preserved | Notation inconsistency, conventional symbol choice, formatting of equation |
-Defect records must record defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
 ### Mathematical Assumption Governance
 Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations

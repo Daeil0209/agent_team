@@ -16,6 +16,8 @@ auto-inject: false
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan audit. Use `Skill(self-verification)` plan audit only when the change plan is disputed; otherwise use result verification for Post-Verify.
 Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Prerequisite D. Each Change Sequence step (1-7) consumes the current cumulative live state of target and adjacent owner surfaces, including every session-applied patch up to this step's execution time.
+Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and invalidate the step record.
 
 1. `Classify + Plan`
 - Classify the change type and scope before editing.
@@ -35,7 +37,7 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 5. `Content Review`
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
-- Developer defect-seeking self-review is sufficient for trivial single-line fixes.
+- Outside `Skill(governance-change)`, developer defect-seeking self-review is sufficient for trivial single-line fixes. Inside `Skill(governance-change)`, every change consumes `Skill(review-verification)` fresh per parent skill rules; quick-hardening narrows review scope to a single named-lens, not load skip.
 - Recurrence-hardening patch Draft starts from the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
 - The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
 - Reviewer and Codex input are evidence.
@@ -53,18 +55,15 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Apply only the reviewed, bounded, and policy-compliant change.
 
 7. `Post-Verify`
-- Re-check the resulting diff and governing semantics after execution.
-- Use the post-execution live owner documents as the current governance basis for post-verification, affected-surface audit, and follow-on review.
-- When running simulation, smoke, or review verification, use the post-execution live owner documents, not memory, pre-patch snapshots, stale mirrors, or prior verdicts.
-- Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts.
-- If that basis is absent or unproved, treat the agent result as non-authoritative and verify the live owner documents locally or redispatch with a self-contained packet carrying the existing basis.
-- Use the resulting diff as change evidence.
-- Treat pre-execution snapshots and prior verdicts as baseline or preservation evidence only; memory-only recall is not governance evidence.
-- When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
-- A verified sub-batch, patch log, or partial applied set is not convergence while same-request patch groups, review owners, proof owners, validation owners, or dispatch owners remain open.
-- After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or owning upstream deferral applies.
-- Load the `self-verification` skill and execute Critical Challenge before declaring the change verified.
-- Failed Post-Verify result verification reopens the smallest Change Sequence correction; a newly exposed material review question returns to Step 5 before further mutation.
+- 7a. Re-check the resulting diff and governing semantics against the post-execution live owner documents (not memory, pre-patch snapshots, stale mirrors, or prior verdicts).
+- 7b. Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts; absent that basis, treat the agent result as non-authoritative and verify locally or redispatch with a self-contained packet.
+- 7c. When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
+- 7d. A verified sub-batch, patch log, or partial applied set is not convergence while same-request patch groups, review owners, proof owners, validation owners, or dispatch owners remain open.
+- 7e. After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or owning upstream deferral applies.
+- 7f. Load `Skill(self-verification)` AND `Skill(review-verification)` fresh on the post-execute live owner surfaces. Pre-Draft loads of either skill do not carry forward across patch execution per `.claude/skills/self-verification/SKILL.md` `Activation Trigger` reset rule and `.claude/skills/review-verification/SKILL.md` `## Activation` reset rule. No verified-result claim, completion-style label, or user-facing positive report on the changed surface may be emitted before both fresh loads return current outcomes.
+- Reopen granularity: failed 7a-7c reopens at Step 6 Execute.
+- Reopen granularity: failed 7d-7e reopens at Step 5 Content Review.
+- Reopen granularity: failed 7f reopens at the surface named by the failed verification.
 
 ## Change Constraints
 - Plan review is not content review.

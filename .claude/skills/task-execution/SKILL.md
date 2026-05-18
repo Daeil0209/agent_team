@@ -44,7 +44,7 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Load `Skill(task-execution)` only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent, stale, or wrong-boundary.
+Load `Skill(task-execution)` only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent or out-of-boundary per the boundary-change-axis test in `.claude/skills/work-planning/references/boundary-gates.md` `## Boundary-Change Axes`.
 If already loaded for the same session and current dispatch owner, consume the loaded skill and execute the dispatch move without another `Skill(task-execution)` call.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.

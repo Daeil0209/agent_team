@@ -27,9 +27,7 @@ The chain expands through concept fit, detailed structure, implementation or pro
 The chain converges into the final user-consumed surface or an explicit deferred receiver surface.
 Each stage carries forward the information needed by the next stage.
 The carried information covers why the deliverable exists, what is in scope, which internal parts connect, what data/example/method makes it usable, what proves it, and what remains open.
-Implementation is the widest work stage.
 Implementation adds necessary internal detail or parallel branches only when each branch traces back to request intent and forward to proof or user use.
-Verification and completion converge the widened work back to the named usable receiver path.
 Disconnected information, hidden assumptions, orphaned components, implausible user flow, or feature behavior without a coherent receiver scenario remains an `OPEN-SURFACES` item.
 Such items can also reopen the owning design, implementation, proof, or acceptance path.
 

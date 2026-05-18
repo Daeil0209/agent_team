@@ -89,14 +89,15 @@ Receiver-required execution detail travels through the assignment packet, phase-
 A receipt event is one host-visible header/preview state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
 The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; envelope shape is governed by Transport Payload above.
 Receipt class boundary: a packet that is `safely-executable-with-correction` (one bounded correction preserves owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, and parallel grouping) emits `dispatch-ack` first and then a separate `scope-pressure` in the same turn. A packet that is `unsafe-cannot-execute` (no bounded correction restores truthful execution; missing or incoherent `WORK-SURFACE`, missing/non-open required `TASK-ID`, missing decisive basis, blocked environment, or unsafe ambiguity) suppresses `dispatch-ack` and emits only `scope-pressure` or `hold|blocker`. Two receipt classes do not coexist on the same packet; classify before emitting.
-Valid `dispatch-ack` makes the lane `ACTIVE` for that assignment execution block.
+Lane work states (`ACTIVE`/`STANDBY`) and dispatch-ack/completion transition semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
 The lane continues work until one closing class is sent.
 The closing classes are `completion`, `scope-pressure`, `hold|blocker`, and `HOLD`.
-`completion` makes the lane `STANDBY` and eligible for reuse when ownership fit and context fit remain truthful.
 Closed work reopens only through distinct bounded `assignment`, `reuse`, or `reroute`.
 Same `TASK-ID` / `WORK-SURFACE` / `RETAINED-OUTPUT-PATH` replay is duplicate packet noise; team-lead consumes the retained carrier or sends distinct bounded work.
 After a closing class, the lane stays silent for that closed work.
-Closed-work replay is not a new unsafe receipt; it must not emit `status`, `clarification`, `hold|blocker`, or `completion`.
+Closed-work replay must not emit `status`, `clarification`, duplicate `completion`, or duplicate `dispatch-ack`.
+A closed lane that discovers genuine post-completion defect evidence emits a distinct bounded `MESSAGE-CLASS: hold|blocker` naming the new evidence.
+Team-lead routes the new evidence through corrected packet, reopened planning, or owner correction.
 The lane drives its own continuation between intra-block turn boundaries without waiting for another team-lead prompt.
 A valid `dispatch-ack` clears receipt only; it does not prove agent-start, progress, work quality, completion, or acceptance.
 Do not emit readiness, context-loaded, awaiting-assignment, skill-loading, file-read plan, retained-output plan, next-action, or progress messages from inside that block.

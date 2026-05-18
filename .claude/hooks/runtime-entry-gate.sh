@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Hook body disabled per .claude/reference/runtime-boundary-law.md ## Runtime Boundary Rules
+# (negative-only-filter doctrine: hooks block only destructive, security-critical, or
+# session-stability-breaking actions; positive-pattern doctrine-shape enforcement is
+# owned by the lane trio — Skill(governance-change) + Skill(self-verification) +
+# Skill(review-verification) named lenses — and downstream reviewer/validator gates).
+# settings.json matcher was removed in the same governance-change patch; this file-level
+# no-op handles cached-settings agents that loaded settings.json before the wiring change.
+# File preserved for traceability and potential future narrowing to a negative-only filter.
+exit 0
+
 source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
@@ -301,6 +311,12 @@ fi
 # Block this to preserve runtime truth; pass through when config or member list cannot be
 # resolved, and bypass for shutdown_request cleanup messages.
 if [[ "$TOOL_NAME" == "SendMessage" && -s "$TEAM_RUNTIME_ACTIVE_FILE" && -n "$TOOL_RECIPIENT_NAME" ]]; then
+  # Lead session is the caller itself, not pane-backed; worker -> lead transport
+  # must never be blocked by paneId absence (otherwise shutdown_response, completion,
+  # dispatch-ack, scope-pressure, and hold|blocker silently die at this gate).
+  if [[ "$TOOL_RECIPIENT_NAME" == "team-lead" ]]; then
+    exit 0
+  fi
   if [[ "$TOP_TYPE" != "shutdown_request" && "$MESSAGE_TYPE" != "shutdown_request" ]]; then
     if _rtg_live_cfg="$(active_team_config_live 2>/dev/null)" && [[ -n "$_rtg_live_cfg" && -f "$_rtg_live_cfg" ]]; then
       _rtg_member_list="$(team_config_live_member_names "$_rtg_live_cfg" | paste -sd, - 2>/dev/null || true)"

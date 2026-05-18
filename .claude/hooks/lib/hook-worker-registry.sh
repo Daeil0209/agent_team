@@ -1185,7 +1185,9 @@ tmux_pane_has_agent_process() {
   pane_pid="$(tmux_cmd display-message -t "$pane_id" -p '#{pane_pid}' 2>/dev/null || true)"
   [[ "$pane_pid" =~ ^[0-9]+$ ]] || return 1
 
-  PANE_PID="$pane_pid" ps -eo pid=,ppid=,comm=,args= 2>/dev/null | awk '
+  # `PANE_PID="$pane_pid" ps ... | awk` only sets PANE_PID for `ps`; pipeline subshells
+  # do not inherit it into awk. Pass via `awk -v` so the live-descendant check works.
+  ps -eo pid=,ppid=,comm=,args= 2>/dev/null | awk -v PANE_PID="$pane_pid" '
     {
       pid=$1
       ppid=$2
@@ -1195,8 +1197,8 @@ tmux_pane_has_agent_process() {
       text[pid]=comm " " $0
     }
     END {
-      if (ENVIRON["PANE_PID"] == "") exit 1
-      live[ENVIRON["PANE_PID"]]=1
+      if (PANE_PID == "") exit 1
+      live[PANE_PID]=1
       changed=1
       while (changed) {
         changed=0

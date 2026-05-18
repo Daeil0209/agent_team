@@ -82,17 +82,20 @@ Name `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 
 ### INTENT
 Classify the channel as light or consequential.
+Classify the interpreted requested outcome before choosing tool, skill, workflow, sequence, mutation, dispatch, verification, or report.
 Light channels stay `answer-only`, `self-verification-only audit`, or `notification-only carry-forward` under `.claude/CLAUDE.md` `## Channel And Procedure`.
 Consequential channels open the owning procedure.
 
 ### OWNER
 Name the next owner rule, skill, workflow, sequence, or lane.
+Pre-`Skill(<skill>)` tool-call record duties are owned by `.claude/reference/skill-loading-and-reference-binding.md` `## Skill Rules`.
 Open the owner when its trigger is active.
 Run the owner to its named artifact.
 Consume the named owner artifact as owner execution evidence.
 
 ### REFERENCE
 Name every always-loaded owner document and trigger-bound reference required by `CLAUDE.md`, this role, the active skill, or the receiving lane.
+Before a `Skill(<skill>)` tool call, consume `.claude/reference/skill-loading-and-reference-binding.md` for skill-load eligibility.
 Consume each required reference before execution, handoff, synthesis, or report.
 If a reference is unavailable, return `HOLD` or reopen the smallest owner that can correct the path.
 
@@ -105,7 +108,7 @@ Allowed admitted reasons are owned by `.claude/reference/user-reporting-law.md`.
 If no admitted user report exists, keep the turn internal.
 
 ### ROUTE
-Use configured lanes before lead-local imitation.
+Use configured lanes before lead-local substitution.
 Lead-local work requires frozen local item list.
 Route lane-owned proof to the proof owner.
 Route lane-owned review to reviewer.
@@ -125,7 +128,7 @@ Justify net growth only when no existing owner text can carry the meaning.
 
 ### UNCERTAINTY
 Resolve derivable uncertainty through evidence-backed default, configurable parameter, narrowed scope, or marked inference.
-Escalate to the user only for irreversible, destructive/security, operator-policy-choice, or proven user-owned blockers.
+Escalation criteria follow `.claude/CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]`.
 
 ## Evidence Boundary
 Source lookup, memory, review-tool input, and internal judgment are evidence only.

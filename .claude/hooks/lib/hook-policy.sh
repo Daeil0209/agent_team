@@ -192,16 +192,33 @@ set_default_export RUNTIME_REAP_MAX_PROCESSES "24"
 set_default_export RUNTIME_REAP_COOLDOWN_SECONDS "120"
 set_default_export RUNTIME_TMUX_SOCKET_DIR "/tmp/tmux-$(id -u)"
 
-# Resolve active claude-swarm tmux socket name
+# Resolve active claude-swarm tmux socket name.
+# Stale orphan socket files accumulate under /tmp/tmux-$(uid)/claude-swarm-*; the `-S` test
+# alone matches them too. Prefer the socket whose name matches an ancestor claude PID, and
+# otherwise verify the socket has an actually-responding tmux server before selecting it.
 resolve_tmux_socket_name() {
   if [[ -n "${TMUX:-}" ]]; then
     basename "$(printf '%s' "$TMUX" | cut -d',' -f1)"
     return 0
   fi
+  local _sock_dir="/tmp/tmux-$(id -u)"
+  local _pid _name
+  # Walk ancestor PIDs; first match claude-swarm-<ancestor_pid> wins.
+  _pid="$PPID"
+  while [[ -n "$_pid" && "$_pid" != "0" && "$_pid" != "1" ]]; do
+    if [[ -S "$_sock_dir/claude-swarm-$_pid" ]] && tmux -L "claude-swarm-$_pid" list-sessions >/dev/null 2>&1; then
+      printf 'claude-swarm-%s' "$_pid"
+      return 0
+    fi
+    _pid="$(ps -o ppid= -p "$_pid" 2>/dev/null | tr -d ' ')"
+  done
+  # Fallback: pick the first socket with a live, responding tmux server.
   local _sock
-  for _sock in "/tmp/tmux-$(id -u)"/claude-swarm-*; do
-    if [[ -S "$_sock" ]]; then
-      basename "$_sock"
+  for _sock in "$_sock_dir"/claude-swarm-*; do
+    [[ -S "$_sock" ]] || continue
+    _name="$(basename "$_sock")"
+    if tmux -L "$_name" list-sessions >/dev/null 2>&1; then
+      printf '%s' "$_name"
       return 0
     fi
   done

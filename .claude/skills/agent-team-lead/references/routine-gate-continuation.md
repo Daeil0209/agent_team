@@ -42,6 +42,11 @@ After the answer, resume the current owner action unless the user redirects or a
 - A stopped partial-arrival prose route continues monitoring, retained-carrier consumption, merge, correction, or synthesis.
 
 ## Continuation Rules
+- Process state self-report consumes `.claude/CLAUDE.md` `[AUTO-PROC]` continuation rules.
+- Material context-budget pressure does not end the turn or session.
+- Retained carriers under the canonical output root are the safe persistence path against auto-compact loss.
+- Active owner prepares auto-compact handoff state (retained carrier completeness, owner-deferral upstream record, resume-action specification) while continuing the active path.
+- Stopping work due to context-budget pressure is invalid.
 - Resume these surfaces by executing the next owner/action:
   - satisfied gates
   - phase transitions

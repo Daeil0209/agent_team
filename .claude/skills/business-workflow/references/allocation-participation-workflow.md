@@ -76,13 +76,8 @@ The business workflow packet records:
 - Populated-state proof uses representative data for every material workflow path.
 
 ## Proof Oracle
+- Proof oracle for this domain extends `CORE-WORKFLOW-CLOSURE` row types in `.claude/skills/dev-workflow/references/phase-surfaces.md` Phase 2 Design Surface with allocation-specific instances (participation, labor cost, period selection, reconciliation totals, import/export reconciliation).
 - Proof uses representative workbook or seeded data when spreadsheet meaning determines acceptance.
-- Proof covers create-disposition for in-scope master entities, including delete, clear, archive, deactivate, or frozen no-disposition basis.
-- Proof covers edit-save-reload for in-scope mutable rows.
-- Proof covers input-to-recompute for participation, labor cost, budget total, balance, warning, and status fields.
-- Proof covers inspection, action, or navigation from each in-scope displayed record, metric, card, row, icon, and button to its destination or explicit display-only basis.
-- Proof covers entity-to-related-entity links in both meaningful directions.
-- Proof covers import, reconciliation, export, and reload when they are in scope.
 - Proof records each uncovered oracle row as blocked, deferred by upstream record, or out-of-scope by frozen basis.
 
 ## Resolve Next Owner And Action

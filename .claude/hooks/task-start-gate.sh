@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Hook body disabled per .claude/reference/runtime-boundary-law.md ## Runtime Boundary Rules
+# (negative-only-filter doctrine: hooks block only destructive, security-critical, or
+# session-stability-breaking actions; positive-pattern doctrine-shape enforcement is
+# owned by the lane trio — Skill(governance-change) + Skill(self-verification) +
+# Skill(review-verification) named lenses — and downstream reviewer/validator gates).
+# settings.json matcher was removed in the same governance-change patch; this file-level
+# no-op handles cached-settings agents that loaded settings.json before the wiring change.
+# File preserved for traceability and potential future narrowing to a negative-only filter.
+exit 0
+
 source "$(dirname "$0")/hook-config.sh"
 
 INPUT="$(cat)"
@@ -1332,10 +1342,17 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
   fi
 fi
 
-if [[ "$TOOL_NAME" == "TaskUpdate" ]] && ! taskupdate_is_completion_closure_payload; then
-  deny_tool_use "BLOCKED: TaskUpdate is completion-closure only. Use status=completed for the exact completed task; do not set owner, assignee, in_progress, subject, description, metadata, or block fields."
-  exit 0
-fi
+# TaskUpdate shape enforcement (completion-closure only) removed per operator
+# directive 2026-05-19 and CLAUDE.md `[HOOK-LAST]` negative-only-filter philosophy.
+# TaskUpdate doctrine ("completion-closure only" per task-execution/references/
+# runtime-dispatch-law.md and CLAUDE.md ## Conditional Rules) stays in effect for
+# lane self-restraint via the trio quality contract (governance-change +
+# self-verification + review-verification named lenses); a hook positive-filtering
+# generic Claude Code TaskUpdate patterns was bottlenecking lanes without
+# preventing any destructive action (setting in_progress/owner/etc. on a task row
+# is non-doctrine but not harmful). The helper `taskupdate_is_completion_closure_payload`
+# stays defined for any future negative-filter use (e.g., blocking destructive
+# field-clobbering on closed tasks) but is no longer invoked here.
 
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]] && ! session_id_is_known_worker "$SESSION_ID"; then
   if boot_infra_tool_allowed "$TOOL_NAME" "$COMMAND" "$SKILL_NAME_NORM"; then

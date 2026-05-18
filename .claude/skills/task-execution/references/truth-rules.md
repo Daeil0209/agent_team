@@ -8,7 +8,7 @@ LOAD-POLICY: on-demand reference only
 # task-execution: Truth Rules
 - team-agent runtime creation success = `team exists`
 - team-scoped `Agent` success = `member-created`; it is not `dispatch pending` and creates no `dispatch-ack` debt
-- assignment-grade `SendMessage` success to an exact live member with verified open executable task state in the active task namespace when tracking is active = `assignment-sent-no-ack` (`dispatch pending`)
+- assignment-grade `SendMessage` success to an exact live member with verified open executable task state in the active task namespace when tracking is active = `dispatch-pending-no-ack` (`dispatch pending`)
 - assignment-grade `SendMessage` with missing, foreign, pre-team, guessed, or unverified task identity is a packet defect, not dispatch truth
 - open executable task state means `pending`, `in_progress`, or equivalent open state; it excludes completed, closed, cancelled, missing, and unknown ids
 - standalone `Agent` success, if encountered as legacy, fallback, or accidental host evidence, = fallback evidence only, not team-runtime `dispatch pending`, live roster membership, runtime state, or later `SendMessage` addressability

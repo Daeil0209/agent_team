@@ -23,6 +23,8 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ### Reference Map
 - Load direct files in `Reference-Owned Workflow Sections` when their triggers are active.
 - Load triggered references directly.
+
+### Workflow Scope
 - Governs team-lead orchestration across multi-phase development lifecycle.
 - Lane dispatch retains task-execution evidence-bearing handoff discipline.
 - Preserve named phase gates, lane-owned authoring, evidence-bearing handoff, and governed cross-lane communication.
@@ -31,10 +33,8 @@ Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the 
 Activation requires the frozen workflow route.
 
 Activation requires configured independent-review handling for plan, design, and material review stages.
-The current configured implementation is Codex MCP through `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
-`CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for trigger handling, adjudication, or fail-open truth; it does not grant external-review authority.
-`work-planning` must freeze it as `triggered:*`, `fail-open:*`, or `skipped:no-material-independent-review-trigger:<basis>` under the skip rule in `Skill(codex-independent-review)`.
-If it is missing, invalidly skipped, or skipped despite a material trigger, reopen `work-planning`.
+Configured adapter, `CODEX-INDEPENDENT-REVIEW-BASIS` semantics, skip rule, trigger handling, adjudication, and fail-open truth live in `.claude/skills/codex-independent-review/SKILL.md`.
+Missing, invalidly skipped, or skipped-despite-material-trigger `CODEX-INDEPENDENT-REVIEW-BASIS` reopens `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
 Field consumption detail stays with `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
@@ -60,7 +60,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Stall recognition (including user status questions) resumes by tool-call execution.
 - Convergence loops, status questions, interrupts, rejection routes, and routine review offers continue through the next owner/action by tool-call execution.
 - If a verified phase handoff or convergence record fixes the next phase boundary, team-lead bridges directly without user confirmation.
-- Reopen `work-planning` only when a boundary changes or becomes untrue.
+- Reopen `work-planning` when a Boundary-Change Axis moves per `.claude/skills/work-planning/references/boundary-gates.md`.
 
 ### 3. Lane Separation And Parallel Flow
 - For Phase 1 (Plan) and Phase 2 (Design), team-lead solely owns planning, design, and canonical plan/design document authoring.
@@ -237,11 +237,8 @@ After `Skill(dev-workflow)` is loaded, load triggered references directly.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.
 
 Reference trigger rule:
-- `references/phase-gates.md` is mandatory when clearing, contesting, or changing a phase entry, phase exit, transition gate, checkpoint gate, workflow completion, or workflow `HOLD`.
-- `references/artifact-convergence-review.md` is mandatory when a canonical plan/design artifact is produced or materially revised and the next phase materially depends on it for scope, risk, architecture, proof, acceptance, or downstream work; low-risk/no-new-decision artifacts record `not-applicable:<basis>`.
-- `references/review-convergence-review.md` is mandatory when material reviewer-owned review determines Phase 4/5 advancement, validator ingress, redispatch, or completion truth.
-- `references/final-acceptance-review.md` is mandatory when validator PASS is used for workflow `Complete`, or when `FINAL-REJECT` is recorded or consumed.
-- Any other listed reference is mandatory when its trigger is active.
+- Each reference under `references/` declares its own mandatory-load trigger at its top block.
+- Phase advancement requires every reference whose own trigger fires.
 - If a mandatory reference cannot load, `HOLD` or reopen the owning path.
 - Advancement requires loaded owner basis.
 - A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, phase-result reporting, or user review.
@@ -263,7 +260,6 @@ Continuity files record only owner-required state.
 ## Related Skills
 - Related skill selection is owned by `work-planning` trigger fields, lane-detail specialist matrices, and lawful phase-local refinement.
 - `dev-workflow` consumes material specialist outputs as phase contract inputs; complete skill catalog ownership stays with the owning skill surfaces.
-- Related skills refine the current phase without changing lane, proof, or acceptance ownership.
 
 ## Delivery Spine
 - Freeze the receiver surface before production inherits the contract.

@@ -65,7 +65,7 @@ Run this checklist before accepting any enterprise architecture work. All items 
 - [ ] Security documentation current: auth flow documented, RBAC model explicit, secret management policy stated
 - [ ] Configuration externalized: no hardcoded environment-specific values in code
 - [ ] Inter-service communication patterns documented: sync vs async decision explicit, retry and timeout policies stated
-**Failing 1 or more items:** return blocked architecture evidence with the failed items listed and corrective actions specified. Architecture approval requires resolved layer violations.
+**Failing 1 or more items:** return blocked architecture-review evidence with the failed items listed and corrective actions specified. Architecture-review evidence release requires resolved layer violations; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## Acceptance`.
 ## Pre-Production Checklist
 Before declaring enterprise work production-ready, all items must pass or carry explicit blocked-state evidence with owner and timeline.
 - [ ] All quality checks pass: code review complete, security scan clean, architecture compliance verified
@@ -76,7 +76,7 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 - [ ] Security scan completed: dependency audit run, secret detection clean, no known critical CVEs unaddressed
 - [ ] Load testing completed if applicable: baseline and peak load results recorded
 - [ ] Documentation updated: API docs current, architecture diagrams match implementation, runbooks exist
-**Failing 1 or more items:** production readiness is blocked. Each failing item requires an owner, corrective action, and completion target before the production-ready claim resumes.
+**Failing 1 or more items:** production-readiness evidence is blocked. Each failing item requires an owner, corrective action, and completion target before the production-readiness claim resumes; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## Acceptance`.
 ## Anti-Pattern Detection
 | Anti-Pattern | Symptoms | Correction |
 |---|---|---|
@@ -118,7 +118,7 @@ For all infrastructure changes (database schema, message queue topology, network
 3. **Change plan with rollback** — document the forward change steps and the rollback procedure; rollback must be tested before production
 4. **Staging verification** — apply to staging environment, run affected integration tests, confirm monitoring shows expected behavior
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
-**Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 governance block.
+**Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 deployment block per `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework` (T0-T3 anchor reused for infrastructure-change governance).
 
 ## Resolve Next Owner And Action
 - Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.

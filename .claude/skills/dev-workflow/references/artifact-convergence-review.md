@@ -21,13 +21,13 @@ Use only inside active `dev-workflow` after `work-planning` selected the workflo
 - Resolve Next Owner And Action
 
 ## Authority
-Codex MCP is the current configured independent-review adapter for design-coherence review.
+Configured independent-review adapter for design-coherence review lives at `.claude/skills/codex-independent-review/SKILL.md`.
 Codex output is independent design-coherence evidence, not workflow phase authority.
 team-lead owns phase design, configured-review consumption, reconciliation, `REDESIGN-PLAN` synthesis, and phase cursor truth.
 Codex findings return to `team-lead` as configured-review input; team-lead adjudicates them and synthesizes one coherent phase basis.
 For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-edits the document directly.
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
-Material artifact revision consumes `Skill(review-verification)` named lenses for design-intent, owner-boundary, coherence-integrity, skill-consumption, and negative-risk as applied or `not-material:<basis>` before relying on the corrected artifact.
+Material artifact revision consumes `Skill(review-verification)` named lenses (design-intent, owner-boundary, coherence-integrity, skill-consumption, negative-risk) per the lens-consumption pattern owned by `.claude/skills/dev-workflow/SKILL.md` `## Workflow Core Law` 4.
 User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
 Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for artifact-convergence review.

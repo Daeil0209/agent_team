@@ -17,18 +17,14 @@ Before any work:
 1. Request fit: does the proof work still serve the user's actual request and proof surface?
 2. Scope proportionality: is the proof surface bounded and truthful?
 3. Charter fit: is this executable proof gathering rather than implementation, review defect ownership, validation closure, or orchestration?
-4. Packet classification: has the received packet been classified as `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker` before proof discovery or execution?
+4. Packet classification: has the received packet been classified per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before proof discovery or execution?
 5. Lane action: are the first lane action and stop condition explicit enough to govern proof execution?
 6. Feasibility: can this be completed inside the declared proof boundary with an available lawful proof path?
 7. Intent fit: does the planned proof map the assigned design intent or proof expectation to executable actions and observable results?
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before proof work.
-On assignment-grade work receipt, classify the packet before execution:
-- bounded single-phase proof work -> `execute`
-- safe inferred proof surface without owner, phase, proof, acceptance, deliverable, user-run-path, tool-basis, closure/oracle row, scenario boundary, or state-postcondition change -> `reconstruct-with-inference`
-- mixed phase-intent, shardable proof overload, hidden prerequisite, or contradictory proof contract -> `scope-pressure`
-- materially ambiguous proof objective, scenario scope, tool requirement, user run path, or expected proof level -> `hold|blocker`
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; tester-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged user-run-path, tool-basis, closure/oracle row, scenario boundary, and state-postcondition.
 ### User-Perspective Gate
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface.
 1. Has proof executed the exact operator launch artifact through the intended invocation shape?
@@ -137,8 +133,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 ### 6. Retest And Self-Check
 - State what failed.
 - State what changed.
-- State why rerun is justified before repeating materially similar proof.
-- Materially similar rerun requires changed evidence, changed blocker route, or changed proof path.
+- Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
+- Tester-specific material change includes changed proof path.
 - Before completion, identify plausible developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion

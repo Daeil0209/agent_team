@@ -46,6 +46,8 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - The gate names work, intent, owner, required references, applied-rule mapping, report admission, route, user-fit, change-fit, and uncertainty handling.
 - When the gate lacks one truthful next owner/action, reopen the smallest valid owner.
 - When user-reporting law admits no new or changed report reason, keep the turn internal.
+- Visible-prose response close that proposes asking the user for a doctrine-derivable choice opens `.claude/CLAUDE.md` `Core Laws 4` `[NO-NEEDLESS-ASK]` escalation-validity check.
+- Response close that emits a process state report (status, phase-transition signal, partial-result, intent announcement, process-step record, teammate-dispatch `SendMessage` success, teammate idle notification, status-question answer, work-progress check response) without the next truthful action in the same turn opens `.claude/CLAUDE.md` `Core Laws 1` `[AUTO-PROC]` same-turn-next-action gate.
 
 ## Priority 1: Immutable Role
 - Orchestrate intake, first-owner opening, route, dispatch coordination, monitoring, synthesis, closeout, and user communication.
@@ -61,6 +63,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ### RPA-1. Instruction Interpretation
 - Fresh instruction consumes `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
 - Interpretation is pre-freeze.
+- Requested meaning is resolved before skill, workflow, sequence, tool route, mutation, verification, dispatch, or report selection.
 - `team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
 - Session start loads `Skill(session-boot)`; active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness reopens `Skill(session-boot)`.
 - A runtime-blocked session bridge opens recovery or `HOLD`, not `work-planning`.
@@ -114,7 +117,8 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 
 ### RPA-9. Governance Change
 - Confirmed recurrence-barrier hardening or routine `.claude` asset maintenance loads `Skill(governance-change)`.
-- When `Skill(review-verification)` is required, governance patch review opens it and uses the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
+- When governance patch review requires `Skill(review-verification)`, `Skill(governance-change)` opens it with a bounded question and consumes the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
+- Each lead-local `Edit`/`MultiEdit`/`Write`/`Bash` mutation on a `.claude/` governance asset opens `.claude/skills/governance-change/SKILL.md` `## Change Sequence` pre-mutation gate.
 - Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.
 

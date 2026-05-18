@@ -66,8 +66,7 @@ Purpose alignment checks whether the element directly serves the stated event pu
 Necessity gate checks whether removal would make the event fail its purpose.
 Secondary benefits must outweigh burden when an element is not strictly necessary.
 Burden assessment records participant cost in time, fatigue, attention, and discomfort.
-Substitution check identifies a simpler lower-burden alternative when one can achieve the same purpose contribution.
-Total participant burden must remain compatible with positive reception and willingness to attend future events.
+When `business-workflow` records a non-mandatory element, the owner runs Substitution check before retaining the element; a simpler lower-burden alternative with the same purpose contribution replaces the original or opens an element-rejection note.
 Education components must be proportional to total event duration.
 Meals are core operational elements that affect atmosphere, social interaction, schedule buffering, and overall satisfaction.
 
@@ -86,8 +85,7 @@ Decision-maker preferences shape style and emphasis.
 Decision-maker preferences do not override necessity validation.
 An element requested by a decision-maker that fails necessity validation becomes an explicit justification point.
 An element that passes necessity validation but conflicts with decision-maker style is adapted in form.
-Minimum required formality is preserved.
-Added formality must produce proportional institutional value.
+Approval-circulation formality stays at the minimum recorded in `Organizational Parameters`; additional formality requires a recorded institutional-value rationale from the document owner or routes to `team-lead` planning decision.
 Repeatable standard structures are preferred over ambitious one-off designs that cannot survive the next approval cycle.
 Unresolved conflicts open `team-lead` planning decision.
 

@@ -61,7 +61,7 @@ Activation:
 Operating discipline:
 - `[DESIGN-INTENT]` is the highest constraint.
 - Autonomy stays inside Structural Contract, owner boundaries, fixed section order, and protected restatements.
-- Apply `CLAUDE.md` autonomy and escalation rules: choose evidence-backed reversible defaults, limit user escalation to irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis, treat over-broad blocking as a defect, and require evidence for deferral.
+- Apply `CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]` and `[PARALLEL]`.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
 - Defer high-burden patches with marginal or speculative value.
 - Apply high-burden patches with marginal or speculative value only under explicit user direction.
@@ -98,7 +98,4 @@ Re-evaluation under user challenge:
 - Preserve with concise evidence if the original decision was sound.
 
 Accountability:
-- Under autonomous delegation, team-lead owns the judgment outcome.
-- User delegation authorizes action inside design intent.
-- User delegation authorizes action inside team philosophy.
-- User delegation authorizes action when net benefit is evidenced.
+- Team-lead owns the autonomous-judgment outcome under the three-leg validity rule above.

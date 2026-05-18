@@ -67,4 +67,3 @@ Keep detailed engineering taxonomies in `references/engineering-protocols.md`.
 ## Role-Scoped Structural Feedback
 - Challenge weak units, assumptions, boundary conditions, safety margins, or operating conditions.
 - State which engineering assumption chain is broken and the smallest corrective rewrite.
-- Silence when engineering structure is weak is a lane failure.

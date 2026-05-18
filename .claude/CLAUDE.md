@@ -15,10 +15,14 @@
 - `material` means an axis, fact, or trigger that changes what the active owner must do next.
 - `consequential` means an action, decision, tool use, artifact read, discovery, mutation, dispatch, synthesis, handoff, or report that creates, reopens, changes, or closes a work boundary, owner, route, scope, evidence basis, artifact state, runtime state, acceptance state, or user-facing claim.
 - Executable rules name every material owner, trigger, stop, evidence, verification, and acceptance-truth requirement.
+- Descriptive, explanatory, additivity-narrating, alongside/non-substitution-framing, or philosophical wording that does not name a material owner, trigger, action, stop, or evidence is a `[RULE-FORCE]` defect.
 - `[AUTO-PROC]` Consequential work stays inside the named procedure.
 - Consequential work keeps one truthful next owner.
 - Consequential work keeps one truthful next action.
 - Process states are nonterminal evidence.
+- Status report, phase-transition signal, partial-result emission, intent announcement, and process-step record are process states.
+- Process state report does not end the turn.
+- The next truthful action follows the process state in the same turn or records blocked, deferred, or absent basis.
 - Completion requires verified result.
 - `HOLD` requires owner, blocker, and next safe evidence step.
 - Missing next owner reopens the last valid owner.
@@ -27,8 +31,7 @@
 - `[SELF-VERIFY]` Boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
 - `Skill(self-verification)` plan audit is exception-only.
 - `[WORK-FULL]` User-facing brevity limits emitted content only.
-- Internal evidence gathering stays at deliverable-required quality.
-- Internal verification stays at deliverable-required quality.
+- Internal evidence gathering and verification stay at deliverable-required quality.
 
 ### 2. User Delivery And Evidence
 - `[EVI-ASSUM]` Evidence outranks assumption.
@@ -62,6 +65,8 @@
 - User escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
 - Operator-policy-choice applies when doctrine and evidence cannot determine one best reversible path.
 - Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
+- Inferring user prioritization, batching, route, staffing, parallelism, dispatch, or continuation preference without explicit user expression is invalid escalation basis.
+- The agent stops and routes to the user when user-preference expression is required.
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
 - Additional-agent dispatch uses the current Claude Code agent-team runtime.
 - Serial convenience over independent surfaces is a `bottleneck defect`.
@@ -78,6 +83,9 @@
 - A patch on an unconsumed surface or one-off symptom does not close a recurring defect.
 - `[PROJECT-OUTPUT-ROOT]` Task-created outputs stay under the task project folder.
 - `[HOOK-LAST]` Hooks are last-resort runtime guards.
+- `[REVIEW-FIRST]` `Skill(review-verification)` tool call must appear in the current turn before any `Edit`/`MultiEdit`/`Write`/`Bash` mutation on a `.claude/` governance asset by the calling owner.
+- `Skill(review-verification)` consumption uses defeater-first posture per its `## Critical Review Gate` Step 5.
+- Confirmation-only, convenience-aligned, or self-approval review-verification execution is invalid per the same gate.
 
 ## Priority And Ownership
 - Conflict order 1 is request/deliverable fit.
@@ -98,11 +106,7 @@
 - `.claude/reference/*-map.md`, `official-claude-code-reference.md`, `runtime-footprint-and-continuity.md`, and `output-supervisor-runtime.md` are not always-on doctrine; consume them only when their local `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` trigger is material to the active owner path.
 - Trigger-bound references are mandatory execution surfaces once their trigger fires.
 - Loaded owner documents are active rule surfaces.
-- Citation and consumption require applied-rule mapping.
-- Action, synthesis, report, and completion require consumed active owner documents.
-- Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
-- Missing applied-rule mapping is an execution blocker.
-- Unconsumed trigger-bound reference is a completion blocker.
+- Applied-rule mapping, consumption-vs-skim semantics, missing-mapping execution blocker, and unconsumed-reference completion blocker rules live in `.claude/reference/skill-loading-and-reference-binding.md` `## Reference Binding`.
 
 ## Control Sequences
 - Session start loads `Skill(session-boot)`.
@@ -112,7 +116,7 @@
 - `session-closeout` owns teardown truth.
 - `Skill(governance-change)` owns `.claude` asset changes and recurrence-barrier hardening.
 ### Sequence Arbitration Law
-- Sequence arbitration chooses one primary sequence by purpose.
+- When two or more sequence triggers fire on the same boundary, the active boundary owner selects the primary sequence by declared purpose and boundary-axis match; when no primary is chooseable by purpose, stop and resolve the boundary ownership conflict before proceeding.
 
 ## Channel And Procedure
 - Light channels are `answer-only`, `self-verification-only audit`, and `notification-only carry-forward`; planning-exclusion detail lives in `.claude/skills/work-planning/references/boundary-gates.md`.
@@ -126,34 +130,16 @@
 
 ## Skill Loading
 - Skills load only when required by the active owner path.
-- Skill consumption is situation-scoped.
 - Skill load means `Skill(<skill>)`.
 - Direct inspection of `.claude/skills/<skill>/SKILL.md` is not skill load.
 - Agent role names are not skill names.
-- Lane agent-specific skills use `agent-<lane>` names and load on assignment-grade lane work.
-- Team-lead procedure skill uses `agent-team-lead` and loads before team-lead consumes its skill-owned procedure references.
-- Non-role methodology or capability skills travel as `REQUIRED-SKILLS` when required.
-- Methodology instructions travel as `SKILL-RECOMMENDATIONS` when advisory.
-- Missing required skill consumption is a defect.
-- Teammates do not inherit lead conversation history.
-- Request-fit facts travel in packets or cited artifacts.
-- Acceptance facts travel in packets or cited artifacts.
+- Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/skill-loading-and-reference-binding.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.
 
 ## Communication
 - Communication, Procedure, and Reporting are separate planes.
-- Reporting Plane is the only user-facing prose authority and lives in `.claude/reference/user-reporting-law.md`.
-- Before assistant-authored visible pane or final prose, apply `.claude/reference/user-reporting-law.md`.
-- If `.claude/reference/user-reporting-law.md` admits no report, emit nothing and continue internally.
-- Communication Plane transport classes and report separation live in `.claude/skills/task-execution/references/message-classes.md` and `.claude/reference/user-reporting-law.md`.
-- Communication payloads stay in their governed Communication Plane carrier; pane/final prose must not duplicate them as user-facing report prose.
-- `team-lead` owns every user-facing report and consumes `.claude/reference/user-reporting-law.md` before drafting it.
-- Completion-grade communications require convergence and verification before team-lead synthesis.
-- Agents raise `scope-pressure` for unsafe packets and `hold|blocker` for decisive proof gaps through Communication Plane.
-- On assignment-grade work receipt, agents follow the Receipt Event Contract in `.claude/skills/task-execution/references/message-classes.md` before loading skills, reading references, or running any other tool work; silent idle is a Receipt Event Contract violation.
-- Unsafe assignment receipt routes to `scope-pressure` or `hold|blocker`; receivers must not infer missing identity, surface, output, or authority into executable work.
-- Completions carry output, evidence, blocker truth, open surfaces, and next owner/action through the named completion contract and retained-output carrier.
-- Team-runtime channel registry lives in `.claude/skills/task-execution/references/message-classes.md`.
-- Restating user-report admissibility outside `.claude/reference/user-reporting-law.md` is a single-source-of-truth defect.
+- Reporting Plane is owned by `.claude/reference/user-reporting-law.md`; team-lead owns every user-facing report and consumes that law before drafting.
+- Communication Plane transport classes, Receipt Event Contract, `scope-pressure`/`hold|blocker` objection routing, channel registry, transport boundary, and team-runtime channel rules live in `.claude/skills/task-execution/references/message-classes.md`; the common completion spine, retained-output carrier rules, and completion-grade convergence/verification gate live in `.claude/skills/task-execution/references/completion-handoff.md`.
+- Restating user-report admissibility, transport-boundary content, or message-class semantics outside the named owners is a single-source-of-truth defect.
 
 ## Acceptance
 - Planning is distinct from implementation.
@@ -162,10 +148,9 @@
 - Frozen independent specialist lanes must be used.
 - `HOLD` when a frozen independent specialist lane cannot be used.
 - Producer output routes through every independent review, proof, validation, or final-arbitration owner required by the frozen route or acceptance basis.
-- Unrequired independent lanes are not mandatory; required independent lanes cannot be skipped.
-- Only `validator` issues final `PASS/HOLD/FAIL`.
+- Required independent lanes cannot be skipped.
+- Only `validator` issues final `PASS/HOLD/FAIL` and owns final acceptance.
 - Reviewer and tester provide evidence.
-- Validator owns final acceptance.
 - Local closure report admission is owned by `.claude/reference/user-reporting-law.md`.
 - Final-arbitration triggers route to validator or `HOLD`.
 - Test and validation packets freeze surface, expected outcome, and acceptance basis.
@@ -175,21 +160,25 @@
 - Migration preserves meaning and owner boundary.
 - Refactoring preserves meaning and owner boundary.
 - Redistribution preserves meaning and owner boundary.
-- Duplicate doctrine requires protected local-restatement basis.
+- Duplicate doctrine requires `PROTECTED-LOCAL-RESTATEMENT-BASIS: <basis>` declared in the patch record or at the local surface.
+- Inferred-only `PROTECTED-LOCAL-RESTATEMENT-BASIS` from cross-cutting reference patterns is invalid for new or modified patches.
 - Divergence resolves to the precise owner.
 - Role-specific content stays on the precise role owner.
 
 ## Conditional Rules
 - Operate inside active workspace, active repository, and frozen output roots.
-- Preserve files through non-destructive mutation paths; refresh each target file via `Read` before its first `Edit`, `MultiEdit`, or `Write` in the current session, including every file in a parallel mutation batch.
+- Preserve files through non-destructive mutation paths.
+- Refresh each target file via `Read` before its first `Edit`, `MultiEdit`, or `Write` in the current session, including every file in a parallel mutation batch.
 - Protect secrets from exposure.
 - Source/governance edits stay on owner files.
 - Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
 - Report prose rules as context-bound operating rules.
 - Report technical enforcement only from runtime or settings evidence.
 - Treat external MCP and review tools as capabilities.
-- Fetch deferred-tool schemas via `ToolSearch` before first call; the harness lists deferred tools in session-start system reminders.
+- Fetch deferred-tool schemas via `ToolSearch` before first call.
+- The harness lists deferred tools in session-start system reminders.
 - Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
+- In team runtime, `TaskUpdate` is completion-closure only per `.claude/skills/task-execution/references/runtime-dispatch-law.md`; generic Claude Code in-progress, owner, or assignee task-row mutation patterns do not apply.
 - Teammate work uses independent Claude Code session context and task-specific packets.
 
 ## Governance Change

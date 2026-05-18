@@ -87,12 +87,7 @@ This surface does not restate, override, or replace that law.
 ## Claim Control
 Dispatch remains internal unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
 Status answer content shape stays with `.claude/reference/user-reporting-law.md`.
-Runtime signals are evidence only.
-Receipt signals are evidence only.
-Status signals are evidence only.
-Control signals are evidence only.
-Hook signals are evidence only.
-Partial-lane signals are evidence only.
+Runtime, receipt, status, control, hook, and partial-lane signals are evidence only.
 Evidence-only signals are not reportable results.
 When basis cannot support the outgoing claim:
 - narrow the claim if basis is weaker than claim strength

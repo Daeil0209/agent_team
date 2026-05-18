@@ -16,10 +16,7 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 - Final Acceptance Review (FAR) `FINAL-REJECT` has occurred and the next synthesis consumes correction evidence.
 
 ## Screen Boundary
-Lane `completion` transports are not user reports even when rendered on screen.
-Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
-Arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `Skill(self-verification)` result verification; it never opens a user-facing shard summary.
-If no admitted user report exists after a lane transport, team-lead emits no pane/final prose.
+Transport-vs-report boundary is owned by `.claude/reference/user-reporting-law.md` and `.claude/skills/task-execution/references/message-classes.md` `## Communication Plane Law`; synthesis consumes those owners.
 
 ## All-Required-Output Barrier
 For a multi-lane, multi-shard, reviewer fan-out, proof fan-out, or validator-routed route, team-lead freezes the required output set from the active plan, dispatch record, task state, or route packet.
@@ -64,6 +61,7 @@ Raw lane convergence, shard counts, candidate totals, and retained-output presen
 Synthesis starts discard-first: exclude, merge, downgrade, or preserve each candidate before promotion.
 
 ## Stop
+Stop before user-facing prose on lane-completion arrival; arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `Skill(self-verification)` result verification.
 Stop positive synthesis when:
 - the input is not completion-grade
 - material open surfaces remain
