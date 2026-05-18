@@ -12,13 +12,13 @@ Use this file for ordinary team-system asset changes, skill introduction, specia
 Mapping keys such as `PRIMARY-OWNER`, `SOURCE-ANCHOR`, `SOURCE-RULES`, `LOAD-POLICY`, and `REPORTING-CURTAIN` are structural metadata; classify only missing, wrong, or divergent mapping as defects.
 Where a runtime setting or threshold must remain configurable, keep one owner for the literal value and make every other document reference that owner.
 Preserve approved structural hierarchies, role procedure hierarchy, skill Structural Contract, reference maps, and connection mappings.
-New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require `review-verification` before execution.
+New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains require `Skill(review-verification)` before execution.
 When reducing context footprint, prove moved meaning remains reachable through an owning trigger or direct reference path.
 Record remaining migration, affected-surface, in-flight-output, or prior-verdict gaps instead of assuming completion.
 
 Material defect promotion is owned by `Skill(review-verification)`.
 This reference supplies asset-change evidence only.
-Literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains evidence until `review-verification` proves `confirmed-defect`.
+Literal contradiction, repeated sentence, heavy gate, hook burden, deletion permission, or plausible misuse remains evidence until `Skill(review-verification)` proves `confirmed-defect`.
 Intended protection preserves the protection and reduces only avoidable burden.
 
 ## Skill Introduction
@@ -57,7 +57,7 @@ When approving developer-side specialist skill use, send `SKILL-AUTH: lane=devel
 For MCP or external-tool capability updates, verify asset-set coherence: project-root `.mcp.json`, `.claude/settings.json`, role tool authorization, hook/settings posture, and owning skill trigger/authority.
 A mismatch is an update blocker or explicit deferred owner.
 
-Promotion from non-blocking rule or fail-open use to blocking authority, SV-stage use, worker-lane use, custom wrapper use, or persistent metric automation requires measured benefit, authority/footprint review, and user-visible rollback or fail-open semantics before activation.
+Promotion from non-blocking rule or fail-open use to blocking authority, self-verification-stage use, worker-lane use, custom wrapper use, or persistent metric automation requires measured benefit, authority/footprint review, and user-visible rollback or fail-open semantics before activation.
 
 Hook/settings runtime-enforcement expansion requires Hook-Last preflight before execution.
 Required basis covers non-hook failure, non-hook insufficiency, exact matcher or payload condition, recovery path, false-positive/regression check, `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry, and explicit operator approval.
@@ -65,7 +65,7 @@ Missing basis routes to doctrine-only, owner-rule-only, or `HOLD`.
 Runtime enforcement edits are forbidden without the required basis.
 
 ## Resolve Next Owner And Action
-- Completed asset checks return evidence to `governance-change`.
+- Completed asset checks return evidence to this skill.
 - Missing structural preservation opens patch redesign.
 - Broken mapping chain opens owner/reference correction.
 - Runtime setting or threshold owner conflict opens single-owner correction.

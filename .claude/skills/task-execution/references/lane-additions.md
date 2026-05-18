@@ -12,10 +12,11 @@ Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
-- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: one host-visible `SendMessage` state signal `ack task <TASK-ID>` when task tracking is active, otherwise `ack`. Place that state-signal text in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content. Use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
-- Completion-grade `completion` closes through one host-visible `SendMessage` state signal `completion task <TASK-ID>` when task tracking is active, otherwise `completion`. Same envelope rule as the `dispatch-ack` line above: state-signal text in `summary` only; `message` empty or a single ASCII space with no other content. Then immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active.
+- Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work: one `SendMessage` state signal `ack task <TASK-ID>` when task tracking is active, otherwise `ack`. Envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`. Use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
+- Completion-grade `completion` closes through one `SendMessage` state signal `completion task <TASK-ID>` when task tracking is active, otherwise `completion`. Envelope shape governed by `message-classes.md` `### Transport Payload`. Then immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active.
 - After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
 - This duty is lane-baseline; packet wording does not need to request it.
+- When the assignment packet's completion contract or upward-message instructions direct the lane to place retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file or findings counts, excerpts, summaries, operational notes, or any field other than the canonical state signal in the upward `SendMessage` render, the lane sends `scope-pressure` with `PRESSURE-TYPE: malformed-completion-contract` and `CORRECTION-OUTCOME: packet-correction` and does not obey the malformed instruction. Envelope canonical: `message-classes.md` `### Transport Payload`.
 - Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later completion never satisfies receipt.
 - Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.
 - Execution-block internals (skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, progress notes) stay inside the block.
@@ -29,15 +30,16 @@ Every agent-specific skill inherits these common preconditions:
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - If frozen host-authorized parallel-agent work collapses multiple independent surfaces onto one lane, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`.
 - Reconcile completion-grade output against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
-- Before completion, load `self-verification`.
-- Before completion, run lane-local `SV-RESULT`.
-- Lane-local `SV-RESULT` verifies producer execution truth only.
-- Team-lead owns synthesis `SV-RESULT`.
+- Before completion, load `Skill(self-verification)`.
+- Before completion, run lane-local `Skill(self-verification)` result verification.
+- Lane-local `Skill(self-verification)` result verification verifies producer execution truth only.
+- Team-lead owns synthesis `Skill(self-verification)` result verification.
 - Consume the agent-specific skill only for consequential lane-owned work.
 - Receipt, status, shutdown, phase, or clarification messages do not activate it unless they assign or reopen work.
 - Once consumed, the agent-specific skill outranks packet capability skills inside the lane.
 - Run capability fit through these axes:
   - `SEMANTIC-INTENT-BASIS`
+  - `COMPLETION-STOP-CONDITION`
   - `DERIVED-DEFAULTS`
   - `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`
   - assigned surface

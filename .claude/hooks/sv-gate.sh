@@ -30,7 +30,7 @@ WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 case "$TOOL_NAME" in
   mcp__playwright__browser_*)
     if [[ ! -f "$WP_MARKER" ]]; then
-      printf '[%s] SV-GATE WARN: Playwright user-surface tool before observed work-planning (session: %s)\n' \
+      printf '[%s] USER-SURFACE-PROOF-GATE WARN: Playwright user-surface tool before observed work-planning (session: %s)\n' \
         "$(date '+%Y-%m-%d %H:%M:%S')" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
       exit 0
     fi

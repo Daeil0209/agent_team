@@ -28,7 +28,7 @@ Reason must be one of: `no-acceptance-surface`, `operational-only`, `research-on
 - User explicitly requested validation that was not completed
 ## Agent Cleanup Resolution
 Before closeout completion, each teammate must be resolved as structured shutdown path, terminated, `STANDBY` with an owning validation or correction route, or non-live residue.
-During session teardown, `standby` means eligible for automatic structured `shutdown_request`.
+During session teardown, a canonical `STANDBY` teammate with no remaining validation, correction, or reuse route becomes eligible for automatic structured `shutdown_request`. Canonical `STANDBY` semantics (reuse-eligible when ownership fit and context fit remain truthful) are owned by `.claude/skills/session-boot/references/runtime-state-detail.md`; closeout does not redefine `STANDBY`.
 During active closeout, `TeamDelete` proceeds without a shutdown-order error; unresolved live-agent truth remains warning, hold, or residue truth.
 A roster entry with no live agent-process proof is residue, not a live teammate. `TeamDelete` uses live-process proof only.
 Structured shutdown request shape is owned by `.claude/skills/task-execution/references/message-classes.md`.

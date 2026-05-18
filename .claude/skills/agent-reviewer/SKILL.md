@@ -85,12 +85,12 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.
 - Check whether each apparent defect is a true defect or an intended protection for the target intent.
 - Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS` bridge axes; a technically supported conclusion that misses any of them is a review finding.
-- Removal, reduction, simplification, or optimization recommendations remain review evidence unless the team-lead `review-verification` defect-promotion path promotes them.
+- Removal, reduction, simplification, or optimization recommendations remain review evidence unless the team-lead `Skill(review-verification)` defect-promotion path promotes them.
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
 - Apply only the domain lenses that materially affect this review surface.
 ### 7. Classify Findings
 - Every finding states severity, evidence anchor, impact, owner, and fix direction.
-- Governance defect, removal, patch-worthiness, or correction-priority labels remain candidate evidence under the frozen claim ceiling until the team-lead `review-verification` defect-promotion path promotes them.
+- Governance defect, removal, patch-worthiness, or correction-priority labels remain candidate evidence under the frozen claim ceiling until the team-lead `Skill(review-verification)` defect-promotion path promotes them.
 - That candidate ceiling does not weaken ordinary acceptance review; blocking acceptance findings remain blocking under severity mapping.
 - Repeated wording stays candidate evidence until local consuming-surface need is disproven on each affected surface.
 - Distinguish blocking from non-blocking findings explicitly.

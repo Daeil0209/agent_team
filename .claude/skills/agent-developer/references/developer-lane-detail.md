@@ -160,6 +160,6 @@ Support overlays defer to earlier controlling contracts.
 - `scope-pressure` opens team-lead packet correction, setup/research routing, owner split, or replanning.
 - `hold|blocker` opens team-lead blocker resolution.
 - Completed production opens producer self-review.
-- Passed producer self-review opens lane-local `SV-RESULT`.
-- Lane-local `SV-RESULT` opens completion.
+- Passed producer self-review opens lane-local `Skill(self-verification)` result verification.
+- Lane-local result verification opens completion.
 - Completion open surfaces route to the smallest named next owner/action.

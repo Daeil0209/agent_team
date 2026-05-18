@@ -11,7 +11,7 @@ auto-inject: false
 - Benchmark conclusions must declare provenance. If benchmark inputs are not directly inspectable or credibly cited, downgrade to `HOLD`, `UNVERIFIED`, or simulator-only status.
 - Default preparation sequence: benchmark -> cross-check and anti-hallucination confirmation -> concrete modification proposal -> pre-edit loss-risk gate -> bounded modification -> verification -> only then bounded optimization.
 - Early investigation and benchmark stages identify the actual deficiency and determine whether recurrence hardening or capability growth is warranted. Do not jump from a recurring symptom into edits.
-- External-tool capability promotion claims require three items before the capability moves from non-blocking rule use to blocking, SV-stage, worker-lane, or automation use:
+- External-tool capability promotion claims require three items before the capability moves from non-blocking rule use to blocking, self-verification-stage, worker-lane, or automation use:
   - measured benefit on the relevant route
   - explicit authority/footprint delta
   - rollback or fail-open path

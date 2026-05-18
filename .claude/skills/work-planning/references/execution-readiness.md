@@ -23,7 +23,7 @@ For team-routed or dispatch-capable paths, readiness must cover:
 
 An unknown but material readiness category records the blocker and freezes the smallest blocker-clear owner.
 Passing such a gap downstream is forbidden.
-Parallel readiness requires cited or SV-verified measured burden facts.
+Parallel readiness requires cited or self-verification-verified measured burden facts.
 Unknown material burden means `blocked:<measurement-owner-and-basis>`, not `ready:*`.
 
 For team-agent runtime paths, readiness also accounts for teammate context isolation.

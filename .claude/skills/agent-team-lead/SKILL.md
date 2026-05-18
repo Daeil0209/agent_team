@@ -1,6 +1,6 @@
 ---
 name: agent-team-lead
-description: Team-lead-specific procedure skill for lead-owned orchestration, route bridging, communication objections, synthesis, reporting staging, interrupt/autonomy, and orchestration defect routing.
+description: Team-lead-specific procedure skill for lead-owned orchestration, route bridging, communication objections, synthesis, reporting staging, and interrupt/autonomy.
 user-invocable: false
 PRIMARY-OWNER: team-lead
 ---
@@ -15,7 +15,7 @@ PRIMARY-OWNER: team-lead
 - Load when `.claude/agents/team-lead.md` opens a team-lead procedure trigger that names a reference in this skill.
 - Load before consuming any reference under `.claude/skills/agent-team-lead/references/`.
 - Do not load for lane-owned assignment work unless team-lead procedure control is the active owner path.
-- This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, or `governance-change`.
+- This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, or `Skill(governance-change)`.
 
 ## Reference Map
 - Pre-action gate: `references/pre-action-gate.md`
@@ -31,7 +31,6 @@ PRIMARY-OWNER: team-lead
 - Reporting surface rules: `references/reporting-surface-rules.md`
 - Routine continuation: `references/routine-gate-continuation.md`
 - Interrupt/autonomy: `references/interrupt-autonomy.md`
-- Orchestration defects: `references/orchestration-defects.md`
 
 ## Lead Procedure Routing
 - Active team-lead triggers consume the exact reference named by `.claude/agents/team-lead.md`.

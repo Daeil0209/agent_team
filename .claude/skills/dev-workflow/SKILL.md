@@ -54,7 +54,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change forces `HOLD` and owner re-entry.
 
 ### 2. Phase Boundary Cycle
-- Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> SV-RESULT -> exit law or correct owner`.
+- Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> Skill(self-verification) result verification -> exit law or correct owner`.
 - Phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, and phase-result reporting all share one precondition: team-lead consumes `references/phase-gates.md` plus every mandatory reference named by the active gate.
 - A satisfied phase boundary is consumed in the same turn by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
 - Stall recognition (including user status questions) resumes by tool-call execution.
@@ -78,6 +78,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Keep planning, dispatch, monitoring, synthesis, verification, and reporting gates active inside phase sequencing.
 - Same-artifact convergence stays inside `artifact-convergence-review` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
 - Same-review-surface convergence stays inside `review-convergence-review` under the same unchanged-boundary rule.
+- Every dev-workflow result review or correction pass consumes `Skill(review-verification)`: team-lead uses the full workflow or named lenses, reviewer/validator/Codex packets name the applicable lenses, and `not-material:<basis>` is required before phase movement, redispatch, validation ingress, or completion truth can rely on the reviewed surface.
 - `task-execution` owns correction dispatch or reuse when another lane must revise.
 - The phase owner owns integrated redesign planning and decision correction.
 - For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document.
@@ -156,7 +157,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch
 - inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden
 **Execution law**: cross-surface drift after PASS-attempt returns to Phase 2 correction.
-**Execution law**: missed-catch classification selects workflow repair, owner correction, or `governance-change`.
+**Execution law**: missed-catch classification selects workflow repair, owner correction, or `Skill(governance-change)`.
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
@@ -200,7 +201,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
 **Execution law**: validator cross-surface integration verification is required before PASS.
 **Execution law**: per-surface quality without cross-surface coherence is incomplete review.
-**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `governance-change` on the narrowest owner surface.
+**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-change)` on the narrowest owner surface.
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.

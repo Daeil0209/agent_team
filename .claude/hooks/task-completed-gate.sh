@@ -61,14 +61,14 @@ const parseClaimedPendingRows = (filePath, statusIndex) => {
 const markerStateForSession = (sessionId, logDir) => {
   const resolvedSessionId = trimText(sessionId);
   if (!resolvedSessionId) {
-    return { sessionId: "", wpTimestamp: "", svResultPresent: false };
+    return { sessionId: "", wpTimestamp: "", resultVerificationPresent: false };
   }
   const wpMarker = path.join(logDir, `.wp-loaded-${resolvedSessionId}`);
-  const svResultMarker = path.join(logDir, `.sv-result-loaded-${resolvedSessionId}`);
+  const resultVerificationMarker = path.join(logDir, `.sv-result-loaded-${resolvedSessionId}`);
   return {
     sessionId: resolvedSessionId,
     wpTimestamp: readIfExists(wpMarker),
-    svResultPresent: fs.existsSync(svResultMarker)
+    resultVerificationPresent: fs.existsSync(resultVerificationMarker)
   };
 };
 
@@ -76,7 +76,7 @@ const markerStateScore = (state) => {
   if (!state) return 0;
   let score = 0;
   if (state.wpTimestamp) score += 1;
-  if (state.svResultPresent) score += 4;
+  if (state.resultVerificationPresent) score += 4;
   return score;
 };
 
@@ -196,7 +196,7 @@ try {
   const evidenceState =
     markerStates.find((state) => state.sessionId && state.sessionId === preferredEvidenceSessionId) ||
     sortedMarkerStates[0] ||
-    { sessionId: sessionId, wpTimestamp: "", svResultPresent: false };
+    { sessionId: sessionId, wpTimestamp: "", resultVerificationPresent: false };
   const evidenceSender = normalize((latest && latest.senderName) || teammateName);
   const evidenceIsWorker = Boolean(
     (evidenceState.sessionId && workerSessionIdLookup.has(evidenceState.sessionId)) ||
@@ -229,7 +229,7 @@ try {
     ["resourceCleanup", "RESOURCE-CLEANUP"],
     ["convergencePass", "CONVERGENCE-PASS"],
     ["producerSelfReviewPass", "PRODUCER-SELF-REVIEW-PASS"],
-    ["laneLocalSvResult", "LANE-LOCAL-SV-RESULT"]
+    ["laneLocalResultVerification", "LANE-LOCAL-RESULT-VERIFICATION"]
   ];
   for (const [key, label] of requiredFieldMap) {
     if (!fields[key]) missingFields.push(label);
@@ -267,7 +267,7 @@ try {
     taskSubject,
     evidenceSessionId: trimText(evidenceState.sessionId || ""),
     wpTimestamp: trimText(evidenceState.wpTimestamp || ""),
-    svResultPresent: Boolean(evidenceState.svResultPresent),
+    resultVerificationPresent: Boolean(evidenceState.resultVerificationPresent),
     exactTaskTransportPresent: Boolean(latestExactTask),
     explicitTaskIdFieldPresent: latest ? Boolean(latest.taskIdFieldPresent) : false,
     latestAgentType: latest ? String(latest.agentType || "") : "",
@@ -305,7 +305,7 @@ try {
     taskSubject: "",
     evidenceSessionId: "",
     wpTimestamp: "",
-    svResultPresent: false,
+    resultVerificationPresent: false,
     exactTaskTransportPresent: false,
     explicitTaskIdFieldPresent: false,
     latestAgentType: "",
@@ -354,7 +354,7 @@ const fieldValues = [
   parsed.taskSubject || "",
   parsed.evidenceSessionId || "",
   parsed.wpTimestamp || "",
-  parsed.svResultPresent ? "true" : "false",
+  parsed.resultVerificationPresent ? "true" : "false",
   parsed.exactTaskTransportPresent ? "true" : "false",
   parsed.explicitTaskIdFieldPresent ? "true" : "false",
   parsed.latestAgentType || "",
@@ -393,7 +393,7 @@ TASK_ID="${TASK_COMPLETED_FIELDS[2]-}"
 TASK_SUBJECT="${TASK_COMPLETED_FIELDS[3]-}"
 EVIDENCE_SESSION_ID="${TASK_COMPLETED_FIELDS[4]-}"
 WP_TIMESTAMP="${TASK_COMPLETED_FIELDS[5]-}"
-SV_RESULT_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
+RESULT_VERIFICATION_PRESENT="${TASK_COMPLETED_FIELDS[6]-false}"
 EXACT_TASK_TRANSPORT_PRESENT="${TASK_COMPLETED_FIELDS[7]-false}"
 EXPLICIT_TASK_ID_FIELD_PRESENT="${TASK_COMPLETED_FIELDS[8]-false}"
 LATEST_AGENT_TYPE="$(printf '%s' "${TASK_COMPLETED_FIELDS[9]-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
@@ -439,8 +439,8 @@ if [[ -z "$WP_TIMESTAMP" && "$EVIDENCE_IS_WORKER" != "true" ]]; then
   FAILURES+=("No observed work-planning load for session ${EVIDENCE_SESSION_ID:-unknown}. Load work-planning via Skill first.")
 fi
 
-if [[ "$SV_RESULT_PRESENT" != "true" ]]; then
-  FAILURES+=("No observed self-verification sequence marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load self-verification, run SV-RESULT against the exact completion claim and evidence basis, then retry completion.")
+if [[ "$RESULT_VERIFICATION_PRESENT" != "true" ]]; then
+  FAILURES+=("No observed self-verification sequence marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load Skill(self-verification), run result verification against the exact completion claim and evidence basis, then retry completion.")
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then
@@ -477,7 +477,7 @@ if [[ -n "$TASK_ID" && "$EXACT_TASK_TRANSPORT_PRESENT" != "true" ]]; then
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS PRODUCER-SELF-REVIEW-PASS LANE-LOCAL-SV-RESULT USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
+  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS PRODUCER-SELF-REVIEW-PASS LANE-LOCAL-RESULT-VERIFICATION USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
     if missing_field_present "$field_name"; then
       FAILURES+=("Missing completion-carrier safety field: ${field_name}.")
     fi

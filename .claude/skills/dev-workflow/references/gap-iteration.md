@@ -114,6 +114,7 @@ Per-cycle gap detection contribution after authoritative corrected output and be
 
 Reviewer quick-check stays blocking-only and delta-scoped.
 Unclear delta raises `scope-pressure` and preserves delta scope.
+Each corrected output consumes `Skill(review-verification)` named lenses as applied or `not-material:<basis>` before reviewer quick-check, tester re-verification, validator ingress, or completion truth uses that output.
 Tester re-verifies affected surfaces before stale interaction rows.
 Validator re-validates affected acceptance surfaces when final acceptance remains validator-required.
 A prior validator `PASS` is stale for surfaces changed by correction until validator marks them current or issues a fresh `PASS`.
@@ -155,4 +156,4 @@ Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repea
 - Cleared blocking gaps open validator ingress when final acceptance remains validator-required.
 - Fresh or still-current validator `PASS` opens Final Acceptance Review by acceptance path.
 - Repeated same-class blocking gap opens root-cause classification.
-- Repeated missed-gap pattern opens `governance-change`.
+- Repeated missed-gap pattern opens `Skill(governance-change)`.

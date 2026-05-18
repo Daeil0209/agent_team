@@ -18,7 +18,7 @@ Use this reference when team-lead synthesizes lane outputs or decides redispatch
 ## Screen Boundary
 Lane `completion` transports are not user reports even when rendered on screen.
 Team-lead must not summarize, translate, rank, celebrate, or narrate an arriving lane transport in pane/final prose.
-Arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `SV-RESULT`; it never opens a user-facing shard summary.
+Arrival opens silent retained-carrier consumption, synthesis, contradiction handling, reuse, cleanup, redispatch, or `Skill(self-verification)` result verification; it never opens a user-facing shard summary.
 If no admitted user report exists after a lane transport, team-lead emits no pane/final prose.
 
 ## All-Required-Output Barrier
@@ -49,12 +49,13 @@ Record:
 - contradictions
 - frozen delivery contract comparison
 - next executable owner/action or `HOLD`
-- `SV-RESULT` status when synthesis controls reporting or redispatch
+- `Skill(self-verification)` result-verification status when synthesis controls `Skill(review-verification)`, `Skill(governance-change)`, reporting, or redispatch
 - applicable per-claim basis when synthesis emits findings, patterns, rankings, defect labels, patch recommendations, or redispatch basis
 
 ## Verification Gate
-Before team-lead reports a synthesized analysis result, team-lead loads `Skill(self-verification)` and executes `SV-RESULT` on that exact analysis result.
-The gate remains open without current `SV-RESULT` evidence from an actually-loaded `Skill(self-verification)` run; `SV-RESULT` blocks authored inside the synthesis carrier, retained outputs, or report drafts do not satisfy the gate.
+Before team-lead uses lane-produced, multi-source, or synthesized analysis for `Skill(review-verification)`, `Skill(governance-change)`, redispatch, mutation, or user-facing report, team-lead loads `Skill(self-verification)` and verifies that exact analysis result plus proposed next owner/action.
+When multi-lane candidate analysis will open `Skill(review-verification)`, team-lead first synthesizes the evidence-only candidate map, then loads `Skill(self-verification)` to verify that synthesized map and proposed review target/next owner.
+The gate remains open without current result-verification evidence from an actually-loaded `Skill(self-verification)` run; self-verification-shaped blocks authored inside the synthesis carrier, retained outputs, or report drafts do not satisfy the gate.
 Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification unless the configured or assigned independent surface records unavailable, blocked, not-applicable, or `fail-open:*` basis from its owner.
 Do not silently downgrade the gate; unavailable independent verification keeps claim strength conservative and records the unavailable or fail-open basis.
 Independent verification routes include reviewer/validator, Codex independent review, and equivalent independent proof surfaces.
@@ -73,13 +74,13 @@ Stop positive synthesis when:
 - quality, evidence, independent review, proof, validation, Codex independent review, Final Acceptance Review (FAR) gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
 - a meaning-dependent synthesis claim uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`
 - `[RETRO-APPLY]` affected prior evidence remains stale or unclassified
-Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign defect status, patch-worthiness, or correction priority only through current `review-verification` defect-promotion basis.
+Classify raw finding counts, candidate lists, shard labels, and multi-lane convergence as evidence; assign defect status, patch-worthiness, or correction priority only through current `Skill(review-verification)` defect-promotion basis.
 
 Per-claim basis is internal synthesis evidence.
 For each emitted synthesis claim, record the applicable items:
 - active rule or design-intent basis
 - claim ceiling
-- `review-verification` defect-promotion basis when the claim assigns defect status, correction priority, ranking, or patch-worthiness
+- `Skill(review-verification)` defect-promotion basis when the claim assigns defect status, correction priority, ranking, or patch-worthiness
 - non-finding route basis when the claim assigns redispatch force
 - `SEMANTIC-INTENT-BASIS` fit when the claim depends on user, team, design, governance, or artifact meaning
 - protected-function preservation analysis when the claim criticizes protected procedure, owner boundary, evidence, review, proof, validation, Final Acceptance Review (FAR) gate, or restatement function
@@ -100,7 +101,7 @@ Failed per-claim basis routes to claim narrowing, finding reclassification, `OPE
 ## Allowed Inputs
 Synthesis is allowed only from `MESSAGE-CLASS: completion`.
 Consume the completion-handoff common spine and any lane-specific fields needed for the synthesized claim.
-For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and current `review-verification` defect-promotion basis.
+For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-BASIS` and current `Skill(review-verification)` defect-promotion basis.
 
 ## Hard Rules
 - Apply `CLAUDE.md` Communication message-class truth before synthesis.
@@ -117,10 +118,10 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 - Positive closure compares against the frozen request/plan delivery contract.
 - Positive synthesis claims only the scope supported by Evidence-Quality Matrix rows, `FROZEN-CONTRACT-STATUS`, and retained open-surface state.
 - Full-corpus, exhaustive, or `FINAL` synthesis requires required shard outputs and inspected corpus state to be integrated, owner-deferred, or out-of-scope with cited basis.
-- Team-lead synthesis preserves the finding class assigned by `review-verification` defect-promotion path.
+- Team-lead synthesis preserves the finding class assigned by `Skill(review-verification)` defect-promotion path.
 - Do not promote a non-`confirmed-defect` finding class to `confirmed-defect` during synthesis.
 - Do not promote researcher-only evidence to review finding, patch-worthiness, or confirmed defect without downstream review-classification basis.
-- Reviewer governance defect, removal, or patch-worthiness outputs remain candidate evidence until `review-verification` defect-promotion path records promotion basis.
+- Reviewer governance defect, removal, or patch-worthiness outputs remain candidate evidence until `Skill(review-verification)` defect-promotion path records promotion basis.
 - Treat these convergence patterns as packet-limited evidence:
   - multi-lane convergence from the same narrowed packet
   - Claude+Codex convergence from the same convenience-built packet
@@ -132,9 +133,9 @@ For defect, removal, or patch-worthiness claims, also consume `SEMANTIC-INTENT-B
 
 ## Redispatch Rules
 - Every non-final synthesis resolves to one next executable owner/action, bounded redispatch basis, or `HOLD`.
-- If synthesis points to a next lane, run `SV-RESULT` on the synthesized result and proposed next owner/action before redispatch.
-- `SV-RESULT` on strengthened synthesis verifies the per-claim basis actually used for every emitted synthesis claim.
-- A generic `SV-RESULT` label without per-claim basis verification is stale or narrower than the outgoing synthesis claim.
+- If synthesis points to `Skill(review-verification)`, `Skill(governance-change)`, or a next lane, load `Skill(self-verification)` and verify the synthesized result plus proposed next owner/action before opening that owner.
+- Result verification on strengthened synthesis verifies the per-claim basis actually used for every emitted synthesis claim.
+- A generic self-verification label without per-claim basis verification is stale or narrower than the outgoing synthesis claim.
 - If synthesis touches existing-artifact integrity, apply `[DESIGN-INTENT]`.
 - Apply `.claude/skills/work-planning/references/cross-continuity.md` before consuming parallel-lane completions.
 - Completion evidence of parallel collapse, idle preservation, missed parallel-fit, missed downstream-prep parallel-fit, or agent-charter mismatch loads `Skill(session-boot)` Monitoring Sequence reassessment before redispatch.

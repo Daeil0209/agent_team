@@ -31,7 +31,7 @@ Use it whenever a result might be reported as:
   - packaging proof
   - reader-surface proof
 - The deliverable is executable software.
-- These outputs might rely on an implemented subset:
+- These outputs are about to claim an implemented subset matches the frozen requested deliverable:
   - completion
   - validation
   - final report

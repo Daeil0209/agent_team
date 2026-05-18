@@ -132,7 +132,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Procedure-bearing reference completion requires a local `Resolve Next Owner And Action` section.
 - Treat an unconsumed trigger-required reference as completion blocker.
 - Treat missing applied-rule mapping as execution blocker.
-- Reference consumption must be recorded in the owner-local packet, completion carrier, proof, verdict, or `SV-RESULT` when material.
+- Reference consumption must be recorded in the owner-local packet, completion carrier, proof, verdict, or `Skill(self-verification)` record when material.
 - Load references only through trigger-bound consumption.
 - Treat `@imports` as context organization.
 - Measure launch context footprint independently from `@imports` organization.

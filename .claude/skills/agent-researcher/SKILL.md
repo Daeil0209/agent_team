@@ -118,7 +118,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against its bridge axes.
 - If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - Research output is evidence input to downstream owners, not implementation, validation, patch-worthiness, confirmed-defect authority, or defect promotion.
-- Defect, removal, or patch-worthiness promotion routes to the team-lead `review-verification` defect-promotion path.
+- Defect, removal, or patch-worthiness promotion routes to the team-lead `Skill(review-verification)` defect-promotion path.
 - Use `candidate`, `evidence-only`, `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction`.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 

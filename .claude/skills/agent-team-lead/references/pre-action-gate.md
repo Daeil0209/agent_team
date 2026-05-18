@@ -65,7 +65,7 @@ Stop before mutation until `[GOV-MIN]` is applied.
 - A stopped stale-gate route reopens this gate.
 - A stopped pre-action prose route continues internal execution.
 - A stopped tool-adjacent prose route continues through the current owner tool action without prose.
-- A stopped lane-arrival prose route opens retained-carrier consumption, all-required-output barrier tracking, monitoring, synthesis, or `SV-RESULT`.
+- A stopped lane-arrival prose route opens retained-carrier consumption, all-required-output barrier tracking, monitoring, synthesis, or `Skill(self-verification)` result verification.
 - A stopped mutation route opens `[GOV-MIN]` inspection.
 
 ## Same-Segment Reuse
@@ -77,12 +77,12 @@ Stop before mutation until `[GOV-MIN]` is applied.
 ### WORK
 Name the exact requested deliverable.
 Name the requested coverage.
-Name `SEMANTIC-INTENT-BASIS` when user concern, anti-goal, team-operation philosophy, governance/design intent, or priority order affects the next action.
+Name `SEMANTIC-INTENT-BASIS` when user concern, anti-goal, team-operation philosophy, governance/design intent, or priority order affects channel class, owner choice, or next action.
 Name `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 
 ### INTENT
 Classify the channel as light or consequential.
-Light channels stay `answer-only`, `SV-only audit`, or `notification-only carry-forward` under `.claude/CLAUDE.md` `## Channel And Procedure`.
+Light channels stay `answer-only`, `self-verification-only audit`, or `notification-only carry-forward` under `.claude/CLAUDE.md` `## Channel And Procedure`.
 Consequential channels open the owning procedure.
 
 ### OWNER
@@ -133,4 +133,4 @@ Consume owner skills through their triggers.
 Consume references through their triggers.
 Route proof to the proof owner.
 Route validation to validator.
-Run `SV-RESULT` when the outgoing claim requires it.
+Load `Skill(self-verification)` and run result verification when the outgoing claim requires it.

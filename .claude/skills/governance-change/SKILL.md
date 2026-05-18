@@ -15,18 +15,23 @@ Own recurrence-barrier hardening after a behavioral, procedural, or capability d
 Own ordinary asset maintenance when no confirmed recurrence defect exists.
 
 Adjacent owners:
-- `review-verification` owns material defect, removal, cross-surface governance, negative-risk, and patch-worthiness judgment.
-- `self-verification` owns final claim, result, completion, and reporting verification.
+- `Skill(review-verification)` owns material defect, removal, cross-surface governance, negative-risk, and patch-worthiness judgment.
+- `Skill(self-verification)` owns final claim, result, completion, and reporting verification.
 - `work-planning` owns fresh or reopened consequential change-boundary freeze.
 - `task-execution` owns assignment-grade team dispatch and packet truth.
 - `session-boot` and `session-closeout` keep runtime readiness and teardown truth.
 
-Governance-change does not create a second review path.
-Governance-change does not create a second result-verification path.
-Governance-change executes only from a current owner, trigger, action, stop, and evidence basis.
+This skill does not create a second review path.
+This skill does not create a second result-verification path.
+`team-lead` executes `Skill(governance-change)` only from a current owner, trigger, action, stop, and evidence basis.
+This skill's entry, mode selection, records, and patch progress stay Procedure Plane.
+User-facing change-result prose opens this skill's Post-Verify `Skill(self-verification)` gate before `team-lead` RPA-7 and `.claude/reference/user-reporting-law.md`.
 
 ## Activation
-Load this skill when any of these surfaces needs creation, modification, deletion, splitting, merging, re-homing, reclassification, compression, migration, or runtime-enforcement change:
+Load this skill only when the verified next owner/action is governance asset change or recurrence-barrier hardening.
+Do not load this skill for ordinary task execution, ordinary analysis, ordinary deliverable correction, ordinary code/content change, or result verification unless the correction changes a governance asset or installs a team-operation recurrence barrier.
+
+Governance asset change means creation, modification, deletion, splitting, merging, re-homing, reclassification, compression, migration, or runtime-enforcement change to one of:
 - doctrine
 - agents
 - skills
@@ -36,14 +41,14 @@ Load this skill when any of these surfaces needs creation, modification, deletio
 - live-surface mirrors
 - other team-system governance assets
 
-Load this skill when evidence confirms or plausibly indicates a team-operation defect from justified user correction, self-detected process failure, hook signal, runtime/process error, repeated missed-catch, or confirmed capability gap.
+Recurrence-barrier hardening means evidence confirms or plausibly indicates a team-operation defect from justified user correction, self-detected process failure, hook signal, runtime/process error, repeated missed-catch, or confirmed capability gap and the correction requires a governance asset barrier.
 
 Select one active mode:
 - `recurrence-hardening`: defect classification and recurrence-barrier path for a confirmed or plausible behavioral, procedural, or capability defect; barrier installation requires confirmed defect basis and recurrence path.
 - `asset-change`: ordinary non-defect asset maintenance, skill introduction, specialist routing change, settings/hook change, migration, compression, or capability refinement.
 
-If the material defect, removal, or patch-worthiness basis is missing, open `review-verification` before Draft.
-If the outgoing result or report claim is not verified, open `self-verification` after Post-Verify.
+After `Skill(governance-change)` entry, open `Skill(review-verification)` before Draft when material defect, removal, cross-surface governance, patch-worthiness, owner-surface, or negative-risk basis is required for the patch.
+If the outgoing result or report claim is not verified, open `Skill(self-verification)` after Post-Verify.
 Destructive, security-sensitive, runtime-enforcement expansion, or operator-policy-choice changes require explicit operator approval.
 
 ## Reference Map
@@ -76,7 +81,7 @@ Structural hardening covers architecture-level changes, owner re-home, cross-doc
 
 Required order for standard and structural hardening:
 1. Identify trigger source, defect class, impacted path, intended design, causal basis, recurrence path, likely owner, consumed owner path, and required barrier class.
-2. Consume `review-verification` for standard hardening, structural hardening, material ownership ambiguity, cross-lane capability impact, or any patch surface above the quick exception.
+2. Consume `Skill(review-verification)` for standard hardening, structural hardening, material ownership ambiguity, cross-lane capability impact, or any patch surface above the quick exception.
 3. Adjudicate the owner surface explicitly.
 4. Keep the hardening role-scoped unless the recurrence path proves a shared owner.
 5. Execute through `Change Sequence`.
@@ -116,14 +121,14 @@ Use `references/change-patch-method.md` for detailed step order and constraints.
 
 Hard surface:
 - Load `work-planning` only at a fresh or reopened change boundary.
-- Use `SV-PLAN` only when the change plan is disputed.
-- For material governance judgment, missing required `review-verification` output blocks Draft, Execute, and convergence.
+- Use `Skill(self-verification)` plan audit only when the change plan is disputed.
+- For material governance judgment, missing required `Skill(review-verification)` output blocks Draft, Execute, and convergence.
 - Review changed content, not just the plan.
 - Execute only the reviewed, bounded, policy-compliant change.
 - Governance-sensitive execution follows `references/change-patch-method.md` Step 5b.
 - Hook/settings runtime-enforcement expansion follows `references/asset-change-checks.md` Hook-Last preflight and explicit operator approval.
 - Post-verify resulting diff, owner semantics, live references, information preservation, affected consumed surfaces, and in-flight/prior-verdict impact when material.
-- Load `self-verification` for Post-Verify result closure before consequential reporting.
+- Load `Skill(self-verification)` for Post-Verify changed-result closure before consequential reporting.
 
 ## Patch Execution Method
 Detailed patch mechanics are owned by `references/change-patch-method.md`.
@@ -133,10 +138,10 @@ Ordinary asset-change patches preserve the live asset contract without inventing
 ## Resolve Next Owner And Action
 - Confirmed recurrence defect opens `Recurrence Hardening`.
 - Ordinary team-system asset maintenance opens `Asset Change`.
-- Material defect, removal, governance judgment, negative risk, or patch-worthiness gap opens `review-verification`.
+- Material defect, removal, governance judgment, negative risk, or patch-worthiness gap opens `Skill(review-verification)`.
 - Patch execution opens `Change Sequence`.
 - Missing triggered reference basis opens blocker-clear, owner reopening, or `HOLD`.
 - Runtime-enforcement expansion opens Hook-Last preflight and operator approval.
 - Failed post-verify opens the smallest owner correction.
-- Verified change opens `self-verification` before consequential reporting.
+- Verified change opens `Skill(self-verification)`; after result verification, resume the open Change Sequence or verified `RESUME-ACTION` before consequential reporting.
 - Converged recurrence barrier opens the verified `RESUME-ACTION`.

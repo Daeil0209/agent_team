@@ -57,8 +57,8 @@ TARGET_PATHS="$(printf '%s\n' "${FIELDS[@]:7}")"
 SESSION_ID="$(recover_session_id "$SESSION_ID")"
 SKILL_NAME_NORM="$(printf '%s' "$SKILL_NAME_RAW" | tr '[:upper:]' '[:lower:]')"
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
-SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
-SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
+RESULT_VERIFICATION_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
+RESULT_VERIFICATION_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
 TASK_EXECUTION_MARKER="$LOG_DIR/.task-execution-loaded-${SESSION_ID}"
 # session-boot marker: active runtime requires monitoring before fresh dispatch.
@@ -103,7 +103,7 @@ self_growth_required_for_session() {
   identity_present_in_file "$SELF_GROWTH_PENDING_FILE" "$session_id"
 }
 
-completion_grade_sendmessage_missing_sv_result() {
+completion_grade_sendmessage_missing_result_verification() {
   [[ "$TOOL_NAME" == "SendMessage" ]] || return 1
 
   if ! INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
@@ -133,7 +133,7 @@ NODE
   then
     return 1
   fi
-  [[ -f "$SV_RESULT_MARKER" ]] && return 1
+  [[ -f "$RESULT_VERIFICATION_MARKER" ]] && return 1
   return 0
 }
 
@@ -1375,7 +1375,7 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
     deny_tool_use "BLOCKED: worker TaskUpdate is limited to immediate status=completed closure for the same TASK-ID after a valid completion signal."
     exit 0
   fi
-  if completion_grade_sendmessage_missing_sv_result; then
+  if completion_grade_sendmessage_missing_result_verification; then
     exit 0
   fi
   exit 0
@@ -1446,7 +1446,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
           exit 0
         fi
         # Hook-last carve-out: specialist skill consults may continue after prior result verification.
-        if [[ -f "$SV_CONVERGED_MARKER" ]]; then
+        if [[ -f "$RESULT_VERIFICATION_CONVERGED_MARKER" ]]; then
           exit 0
         fi
         ;;
@@ -1458,7 +1458,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         ;;
       Edit|MultiEdit|Write|NotebookEdit)
         # Hook-last carve-out: bounded file-edit continuation may proceed after prior result verification.
-        if [[ -f "$SV_CONVERGED_MARKER" ]]; then
+        if [[ -f "$RESULT_VERIFICATION_CONVERGED_MARKER" ]]; then
           exit 0
         fi
         ;;

@@ -67,13 +67,7 @@ Grouped field records are valid only when they name the covered fields and the s
 Compact records are invalid when they hide changed meaning, moved ownership, weakened procedure force, broken reference integrity, or a nontrivial generalization decision.
 
 ## Stop
-Stop before appending when existing owner text can be:
-- tightened
-- replaced
-- trimmed
-- merged
-- re-homed
-- deleted
+Stop before appending when existing owner text can be tightened, replaced, trimmed, merged, re-homed, or deleted (canonical removal-first chain; full operation semantics in `## Minimal Governance Rules`).
 Stop before mutation when source-to-destination meaning remains unreconstructed.
 Stop before mutation when an existing valid procedure, gate, owner path, or state transition would be weakened.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
@@ -154,4 +148,4 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
 - Structural governance patches load `Skill(review-verification)` before mutation when its trigger applies.
 - Cross-surface governance patches load `Skill(review-verification)` before mutation when its trigger applies.
 - Recurrence-barrier patch execution follows `.claude/skills/governance-change/references/change-patch-method.md`.
-- Routine asset patch execution follows the owning `governance-change` Asset Change mode.
+- Routine asset patch execution follows the owning `Skill(governance-change)` Asset Change mode.

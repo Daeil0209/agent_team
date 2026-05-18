@@ -51,13 +51,14 @@ The consuming owner records:
 - output root
 - source owner files
 - governance owner files
-- generated-output placement
+- file-output admission basis, planned downstream consumer, and generated-output placement
 - protected filesystem surfaces
 - escalation basis when required
 - non-destructive confirmation
 
 ## Stop
-Stop before file output when no safe canonical output root is frozen.
+Stop before file output unless the file supports cross-agent shared work, explicit user-requested output, retained evidence, or planned durable continuation basis that a later owner will consume.
+Stop before admitted file output when no safe canonical output root is frozen.
 Stop before editing protected settings without the owning update path.
 Stop before destructive mutation unless both are true:
 - the user explicitly requested it
@@ -73,7 +74,7 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
 - A stopped interpreter-mutation route opens direct owner-file mutation through the structured edit path.
 
 ## Output-Root Rules
-- Task-created outputs stay under the task project folder:
+- Admitted task-created outputs stay under the task project folder:
   - deliverables
   - evidence
   - logs

@@ -26,7 +26,7 @@ Use `references/phase-transition-control.md` without loading this skill when the
 
 Boundary:
 - `work-planning` owns scope freeze, mode freeze, and frozen next action
-- `self-verification` owns exception-only `SV-PLAN` and phase/stage-end `SV-RESULT`
+- `Skill(self-verification)` owns exception-only plan audit and phase/stage-end result verification
 - `session-boot` owns runtime monitoring and post-dispatch agent-state observation
 - `team-lead` owns synthesis, closeout, and user-facing reporting
 
@@ -117,7 +117,7 @@ Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
-- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `governance-change`.
+- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-change)`.
 - `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
 - When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
@@ -172,7 +172,7 @@ The runtime truth ladder is owned by `references/truth-rules.md`. Apply it at ev
 Reporting consequences:
 - Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
 - User-requested dispatch status reports only the user-relevant waiting condition.
-- Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, and covered by the required `SV-RESULT` or independent verification route.
+- Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, and covered by required `Skill(self-verification)` result verification or the independent verification route.
 
 Recovery reconciliation:
 - A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
@@ -184,28 +184,28 @@ Recovery reconciliation:
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
-Interruption includes user correction, governance-change trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
+Interruption includes user correction, `Skill(governance-change)` trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
 
 Rules:
 - pre-open interruption resumes the last valid active owner: `work-planning`, active workflow, or `self-verification`
 - if the interruption happened after clean move-out, the current owner handles recovery
-- use any dispatch recovery record only as evidence for `session-boot`, lane execution, team-lead synthesis, or `SV-RESULT`
+- use any dispatch recovery record only as evidence for `session-boot`, lane execution, team-lead synthesis, or `Skill(self-verification)` result verification
 - resume from the last proven dispatch truth, not memory, intent, or packet text
 - resend an assignment-grade packet only when send evidence is absent and duplicate side-effect risk has been checked
 - stronger agent-start or completion truth requires stronger evidence than `team exists`, `dispatch pending`, or `dispatch-ack`
 - if the interruption moves any `work-planning` boundary-change axis, reopen `work-planning`
-- if a behavioral or procedural defect meets the `governance-change` entry gate, open `governance-change`
+- if a behavioral or procedural defect meets the `Skill(governance-change)` entry gate, open `Skill(governance-change)`
 - the suspended dispatch surface still requires `RESUME-OWNER` and verified `RESUME-ACTION` before closure or return
 - partial dispatch maps to recovery or resume truth only
 ## Resolve Next Owner And Action
 After the execution move:
 - fallback standalone returned results, if already present, go to `team-lead` synthesis as bounded evidence only
-- then `self-verification (SV-RESULT)` runs before phase/stage-end reporting or synthesis-triggered redispatch
+- then `Skill(self-verification)` runs result verification before phase/stage-end reporting or synthesis-triggered redispatch
 - fallback standalone results stay outside team-runtime monitoring
 - `session-boot` owns monitoring and agent-state interpretation
 - agent lanes own execution and completion packets
 - `team-lead` owns synthesis after agent outputs arrive
-- `self-verification` reopens as `SV-RESULT` before phase/stage-end consequential reporting, completion claim, or synthesis-triggered re-dispatch
+- `Skill(self-verification)` reopens for result verification before phase/stage-end consequential reporting, completion claim, or synthesis-triggered re-dispatch
 
 Canonical sequence:
 1. `work-planning`
@@ -214,7 +214,7 @@ Canonical sequence:
 4. `session-boot` runtime observation
 5. agent execution
 6. team-lead synthesis
-7. `SV-RESULT`
+7. `Skill(self-verification)` result verification
 8. user report or downstream consequential re-dispatch
 
 ## Move-Out Boundary

@@ -17,7 +17,7 @@ This spine names content that the producing lane must provide to team-lead throu
 `completion` is Communication Plane transport, not a user report.
 For team-agent runtime, the screen-rendered `SendMessage` header/preview is one state signal, not the completion spine.
 The state signal is `completion task <TASK-ID>` when task tracking is active, otherwise `completion`.
-The state-signal text appears in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
+Envelope shape for the state signal is owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; do not restate the envelope rule here.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: completion`:
@@ -38,20 +38,20 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
   - final-pass convergence: last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`.
   - Producer self-review removes producer-owned defects before handoff.
   - Producer self-review is not self-approval or independent acceptance.
-- `LANE-LOCAL-SV-RESULT` — `self-verification` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
+- `LANE-LOCAL-RESULT-VERIFICATION` — loaded `Skill(self-verification)` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
-Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the host-visible header/preview state signal through `SendMessage`.
-Any inline payload, label, or report text placed in the `SendMessage` tool's `message` parameter for a `completion` state signal is malformed screen-rendered transport.
+Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
+Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
 After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-SV-RESULT`.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-RESULT-VERIFICATION`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
-If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes governance-change cleanup.
+If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-change)` cleanup.
 
 Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
-Lane completion does not claim team-lead `SV-RESULT`.
-Team-lead synthesizes only completion-grade lane outputs, then runs `SV-RESULT` on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
+Lane completion does not claim team-lead `Skill(self-verification)` result verification.
+Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for result verification on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
@@ -142,7 +142,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Every agent completion is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
 - Do not repeat the state signal across header/preview/body.
-- Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, or retained-output contents in the `SendMessage` render.
+- Do not inline files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, path-substitution rationale, completion narrative, retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, or any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
 - Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Completion exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.

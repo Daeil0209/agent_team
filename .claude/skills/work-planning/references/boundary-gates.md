@@ -30,8 +30,8 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Same-artifact revision loops stay with the active workflow owner when all boundaries stay unchanged.
 - `answer-only` is a direct answer with no tool use, artifact judgment, route change, dispatch, mutation, acceptance, or stronger claim.
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
-- `SV-only audit` verifies an already-frozen plan or result claim without dispatch, mutation, acceptance, or report expansion.
-- `SV-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
+- `self-verification-only audit` verifies an already-frozen plan or result claim without dispatch, mutation, acceptance, or report expansion.
+- `self-verification-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `notification-only carry-forward` uses `.claude/CLAUDE.md` `## Channel And Procedure` definition and stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
   - receipt-only messages
@@ -139,7 +139,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 15. Unchecked owner summary does not satisfy named-owner consumption.
 16. `team-routing candidate` opens `task-execution`.
 17. `ambiguous-route` opens `task-execution`.
-18. Load `self-verification` in `SV-PLAN` mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+18. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
 19. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
 20. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
 21. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.

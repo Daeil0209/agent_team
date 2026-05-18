@@ -72,10 +72,10 @@ Use `task-execution` message, truth, scope-pressure, phase-transition, and clean
 Never downgrade `hold|blocker`.
 ### RPA-3. Completion Contract
 On production completion, run producer self-review.
-Then run lane-local `SV-RESULT`.
+Then run lane-local `Skill(self-verification)` result verification.
 `MESSAGE-CLASS: completion` payload includes:
 - `PRODUCER-SELF-REVIEW-PASS`
-- `LANE-LOCAL-SV-RESULT`
+- `LANE-LOCAL-RESULT-VERIFICATION`
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md`.
 Satisfy developer completion detail in `.claude/skills/agent-developer/references/developer-lane-detail.md`.
 Transport lane-local execution truth only: changed surface, evidence basis, executed checks, blocked/unrun checks, `PREREQ-STATE: complete|partial|missing`, open surfaces, and `LANE-NEXT-CANDIDATE`.

@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 1 [RULE-FORCE], [AUTO-PROC], [PROC-HABIT], [PLAN-SV]; Priority And Ownership; Channel And Procedure; Communication"
+SOURCE-RULES: "Core Laws 1 [RULE-FORCE], [AUTO-PROC], [PROC-HABIT], [SELF-VERIFY]; Priority And Ownership; Channel And Procedure; Communication"
 LOAD-POLICY: on-demand reference only
 ---
 # Common Doctrine Reference: Procedure And Ownership
@@ -106,11 +106,11 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `session-boot` owns runtime-entry readiness.
 - `session-boot` owns recovery readiness.
 - `session-closeout` owns closeout truth.
-- `governance-change` owns routine asset maintenance and recurrence-barrier hardening.
-- `governance-change` owns `Change Sequence` patch mechanics.
+- `Skill(governance-change)` owns routine asset maintenance and recurrence-barrier hardening.
+- `Skill(governance-change)` owns `Change Sequence` patch mechanics.
 - Reopen the last valid owner when the next owner is unclear.
 - Reopen the last valid owner when the next action is unclear.
-- Planning routes to execution, dispatch, owner synthesis, or `SV-RESULT`.
+- Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` result verification.
 - Treat dispatch as nonterminal evidence.
 - Treat benchmarking as nonterminal evidence.
 - Treat governance-change as nonterminal evidence.
@@ -122,8 +122,8 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Route implementation to `developer`.
 - Treat rejection handling as correction-routing evidence.
 - Same-boundary iterations consume the frozen boundary.
-- Route `SV-PLAN` to exception plan audits.
-- Consequential boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> SV-RESULT`.
+- Route `Skill(self-verification)` plan audit only to exception plan audits.
+- Consequential boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
 - The lightest truthful channel is valid only when it satisfies the evidence burden.
 - Missing basis routes to the smallest correcting owner.
 - Lawful independent work continues while the affected path is corrected.

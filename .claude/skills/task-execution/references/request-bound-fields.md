@@ -19,6 +19,7 @@ A packet is start-ready when every material axis needed for the receiving lane t
 The contract axes are:
 - original request intent, required deliverable, audience, excluded scope, and excluded sources
 - semantic intent bridge per `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`
+- completion stop condition per `planning-record-fields.md` `COMPLETION-STOP-CONDITION`
 - deliverable defaults per `planning-record-fields.md` `DERIVED-DEFAULTS`: deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces
 - target intent and protected user outcome
 - scope baseline, active slice, and deferred surfaces
@@ -36,6 +37,7 @@ When truthful lane execution depends on the original request shape, the assignme
 - `REQUEST-INTENT`
 - `CORE-QUESTION`
 - `SEMANTIC-INTENT-BASIS`
+- `COMPLETION-STOP-CONDITION`
 - `REQUIRED-DELIVERABLE`
 - `PRIMARY-AUDIENCE`
 - `EXCLUDED-SCOPE`
@@ -49,6 +51,9 @@ Receivers return `scope-pressure` when a packet omits material `EXCLUDED-SOURCES
 Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
 Do not replace it with literal task wording or target purpose alone.
 If the carried semantic basis conflicts with the user instruction, cited artifact intent, or governing design philosophy, the receiving lane returns `scope-pressure` or `hold|blocker`.
+
+`COMPLETION-STOP-CONDITION` names the practical closure condition and evidence burden for the assigned surface.
+If it is missing, weaker than the requested deliverable, or not evidence-verifiable for the receiving lane, the lane returns `scope-pressure` or `hold|blocker`.
 
 When truthful lane execution depends on why the target artifact exists or what it must preserve, the assignment packet must also carry:
 - `TARGET-INTENT-BASIS`

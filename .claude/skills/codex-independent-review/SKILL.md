@@ -20,7 +20,7 @@ Use this skill only through an active owner path.
 ## Authority
 **Coverage:** Codex MCP adapter selection, common packet contract, tool discipline, target-specific review routing, fail-open truth, returned-point schema, and team-lead adjudication discipline.
 
-**Adjacent owners hold:** planning freeze, workflow phase authority, assignment dispatch, production, review findings, test proof, validation verdict, `SV-PLAN`, `SV-RESULT`, external-tool recovery, and user-facing reporting.
+**Adjacent owners hold:** planning freeze, workflow phase authority, assignment dispatch, production, review findings, test proof, validation verdict, `Skill(self-verification)` plan audit, `Skill(self-verification)` result verification, external-tool recovery, and user-facing reporting.
 
 Configured-review output is evidence.
 Configured-review output is not authority.
@@ -105,4 +105,4 @@ Load only the references whose trigger is active:
 - Rejected points record cited doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
 - Codex MCP access failure records `fail-open:<reason>` on the owning configured-review record.
 - Unadjudicated valid points keep the owning path open.
-- Unsupported post-route-freeze expansion opens the owning `governance-change` path.
+- Unsupported post-route-freeze expansion opens the owning `Skill(governance-change)` path.

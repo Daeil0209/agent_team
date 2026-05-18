@@ -23,7 +23,7 @@ deletion, `.claude` governance shell mutation or wholesale overwrite,
 runtime/team-state corruption, exact task-state corruption, read-only reference
 mutation, and interpreter-based mutation of protected filesystem surfaces that
 bypasses structured edit surfaces.
-- Procedure gaps, planning/SV order gaps, packet-quality gaps, review-tool absence, output-root instructions, and recoverable completion defects are not hard-deny causes unless they directly create one of those reserved dangers.
+- Procedure gaps, planning/self-verification order gaps, packet-quality gaps, review-tool absence, output-root instructions, and recoverable completion defects are not hard-deny causes unless they directly create one of those reserved dangers.
 - Hooks specify prohibitions, not allow-lists. Default for any unspecified shell or tool action is allow; deny only specific reserved dangers using narrow, target-scoped checks (outside-workspace targets, protected relative paths, catastrophic system targets, governance shell mutation, secrets/credentials surfaces). A broad "deny unless approved" pattern is an over-broad-blocking defect candidate.
 - Over-broad hook blocking is repaired at the hook surface by narrowing the prohibition. Never substitute agent-side adherence rules, user re-confirmation flows, allow-list arming, or descriptive-pattern arming for prohibition narrowing — those move friction onto the user without removing the over-broad block and recreate the same bottleneck.
 - Do not add a new hook when adherence to an existing doctrine, skill, or role
@@ -71,7 +71,7 @@ before adding more hook logic.
 MCP tools are not broadly hook-blocked by default. Configured independent-review tools have one narrow
 pre-`work-planning` warning edge: pre-planning external-review output is not
 `CODEX-INDEPENDENT-REVIEW-BASIS` and cannot authorize route, proof, acceptance, dispatch, or
-mutation. Playwright has one narrow browser user-surface proof edge for planning/SV
+mutation. Playwright has one narrow browser user-surface proof edge for planning/self-verification
 preflight. Broader `mcp__*` matcher expansion requires this ledger's Hook-Last
 review before activation.
 

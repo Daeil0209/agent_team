@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Interrupt handling preserves original-task ownership.
 Interrupt handling keeps the original task as resume target.
 
-`governance-change` interrupt uses a stacked interrupt frame.
+`Skill(governance-change)` interrupt uses a stacked interrupt frame.
 Cleanup interrupt uses a stacked interrupt frame.
 Defect-fix interrupt uses a stacked interrupt frame.
 Hook patch interrupt uses a stacked interrupt frame.
@@ -33,7 +33,7 @@ Rules:
 - Status or progress questions expose the stall.
 - Route status answers through `.claude/reference/user-reporting-law.md` `## Report Shape`.
 - Continue through the same verified `RESUME-ACTION`.
-- Use `SV-RESULT` only before reporting or handoff.
+- Use `Skill(self-verification)` result verification only before reporting or handoff.
 - The resumed scope must match the original task.
 - Valid `RESUME-ACTION` values are executable actions only: continue from the corrected state, reopen `work-planning`, dispatch the next owner/action, or report `HOLD` with owner, blocker, and next safe action.
 - Resume after interrupt convergence because the user already requested the original task.

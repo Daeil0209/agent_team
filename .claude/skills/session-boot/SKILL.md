@@ -171,7 +171,7 @@ See `references/runtime-state-detail.md` for:
 - `Agent Lifecycle States`
 - `Runtime Signals (Not Governance States)`
 - `Supervisor Decisions on Turn-Ended Signals`
-- `Message-First Lifecycle Rule`
+- `Message-First Runtime Cleanup Rule`
 - `Reuse Rule`
 - `Health-Check Standard`
 - `Stale-Response Rule`

@@ -27,10 +27,12 @@ team-lead owns phase design, configured-review consumption, reconciliation, `RED
 Codex findings return to `team-lead` as configured-review input; team-lead adjudicates them and synthesizes one coherent phase basis.
 For Phase 1/2 canonical artifacts (plan / design), team-lead authors and self-edits the document directly.
 For Phase 3+ sub-artifact convergence with a separate assigned producer, the producer owns document writing or revision inside the frozen owner basis, and `task-execution` owns assignment-grade correction dispatch.
+Material artifact revision consumes `Skill(review-verification)` named lenses for design-intent, owner-boundary, coherence-integrity, skill-consumption, and negative-risk as applied or `not-material:<basis>` before relying on the corrected artifact.
 User-facing convergence reporting is silent by default; if needed, report only one short next-action, dispatch-pending, or blocker line.
 
 Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for artifact-convergence review.
 `CODEX-INDEPENDENT-REVIEW-BASIS` remains the team-lead trigger, adjudication, or fail-open record; Codex output alone never satisfies it.
+Artifact-convergence review consumes `Skill(review-verification)`; team-lead own-review records applied named lenses, and Codex packets carry those lens names as review criteria.
 
 `REDESIGN-PLAN` validity requires four named contents in order:
 1. redesigned decisions
@@ -55,6 +57,7 @@ Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline
 Every packet includes:
 - `.claude/CLAUDE.md`
 - `.claude/skills/codex-independent-review/references/common-contract.md`
+- `.claude/skills/review-verification/SKILL.md`
 - `.claude/skills/dev-workflow/SKILL.md`
 - `.claude/skills/dev-workflow/references/phase-gates.md`
 - `.claude/skills/dev-workflow/references/phase-surfaces.md`
@@ -75,6 +78,7 @@ Missing required path records `fail-open:blocked_by_config`.
 5. team-lead records own-review basis before reading or using Codex output.
 6. team-lead own-review basis carries:
    - inspected surfaces
+   - applied `Skill(review-verification)` lenses
    - material specialist skills or `none`
    - challenge axes
    - plausible defects or `none`
@@ -148,14 +152,14 @@ Phase advancement requires:
 - deferred low issues have later phase and owner
 - downstream artifact status is current, intentionally held, or explicitly stale
 - owner-decidable defaults and routine phase advancement route to the next owner/action
-- `SV-RESULT` verifies the reconciled claim
+- `Skill(self-verification)` runs result verification to verify the reconciled claim
 
 After `converged` or `resolved-divergence` phase-gate artifact resolution satisfies Phase advancement requirements, execute `next owner/action` as phase advancement, next phase boundary `work-planning`, or the named downstream owner.
 User-facing review/proceed prompts are valid only when the user already requested review, explicit approval is required, or a verified user-owned blocker exists; otherwise keep review offers internal and execute the next owner/action.
 
 Route-level `CODEX-INDEPENDENT-REVIEW-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
-For phase-gate material artifacts, lawful fail-open requires fallback reviewer-style artifact inspection plus conservative `SV-RESULT`.
+For phase-gate material artifacts, lawful fail-open requires fallback reviewer-style artifact inspection plus conservative `Skill(self-verification)` result verification.
 If Codex reports non-ready, close only by `resolved-divergence` grounded in doctrine, artifact evidence, or frozen request basis.
 Codex non-ready state is evidence, not veto.
 
@@ -219,5 +223,5 @@ A conditional status of `missing`, `stale`, or `hold` blocks phase advancement a
 - Missing output record blocks phase advancement and next-phase dispatch.
 - `converged` or `resolved-divergence` output opens the recorded next owner/action.
 - `non-converged` output opens correction, fallback review, or `HOLD`.
-- Lawful `fail-open` opens fallback artifact inspection plus conservative `SV-RESULT`.
+- Lawful `fail-open` opens fallback artifact inspection plus conservative `Skill(self-verification)` result verification.
 - Stale downstream artifact opens revise, regenerate, or `HOLD`.

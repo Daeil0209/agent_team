@@ -1124,7 +1124,7 @@ fi
 	        case "$TOOL_NAME" in
 	          Write|NotebookEdit)
 	            if [[ -e "$CANONICAL_PATH" ]]; then
-	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/MultiEdit instead; Update/Upgrade Sequence + SV-PLAN/SV-RESULT discipline required."
+	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/MultiEdit instead; governance-change and Skill(self-verification) discipline required."
 	              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
 	              exit 0
 	            fi

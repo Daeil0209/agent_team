@@ -51,7 +51,7 @@ Pick exactly one output surface from:
 Pre-report suppression is owned by `.claude/reference/user-reporting-law.md`; this surface does not restate it.
 Additional team-lead-specific stops:
 Stop before `FINAL` when residual deliverable convergence remains open under `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
-Stop before `verified result` when `SV-RESULT` is:
+Stop before `verified result` when `Skill(self-verification)` result verification is:
 - missing
 - stale
 - narrower than the outgoing claim
@@ -59,20 +59,20 @@ Stop before `verified result` when `SV-RESULT` is:
 ## Resolve Next Owner And Action
 - A stopped output prose route continues internal execution.
 - A stopped output `FINAL` route opens residual queue processing.
-- A stopped `verified result` route opens `SV-RESULT`.
+- A stopped `verified result` route opens `Skill(self-verification)` result verification.
 
 ## MID-FLIGHT
 `MID-FLIGHT` executes required tool calls without status prose.
 User-facing prose during `MID-FLIGHT` requires admission by `.claude/reference/user-reporting-law.md`.
 The following signals are not admitted prose by themselves: lane transport arrival, retained-output availability, shard completion, partial convergence, candidate counts, findings counts, hook notes, and agent notes.
 Partial fan-out state cannot become `PHASE-RESULT`.
-Partial fan-out remains Procedure Plane until all-required-output integration and required `SV-RESULT` close.
+Partial fan-out remains Procedure Plane until all-required-output integration and required `Skill(self-verification)` result verification close.
 Report content follows `.claude/reference/user-reporting-law.md`; this surface does not restate that allowlist.
 
 ## PHASE-RESULT
 `PHASE-RESULT` is a staging label only after `.claude/reference/user-reporting-law.md` admits a phase-result report.
 Content shape and allowed fields stay with user-reporting law.
-Current `SV-RESULT` is required before reporting analyzed, evaluated, or synthesized consequential content.
+Current `Skill(self-verification)` result verification is required before reporting analyzed, evaluated, or synthesized consequential content.
 
 ## FINAL
 `FINAL` is a staging label only after `.claude/reference/user-reporting-law.md` admits a verified result or closeout residual.

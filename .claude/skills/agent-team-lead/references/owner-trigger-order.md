@@ -42,10 +42,10 @@ Stop before dispatch when `work-planning`, primary sequence owner, or `Skill(tas
 Stop before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or structured `shutdown_request` when the active session has not loaded `Skill(task-execution)`.
 Once loaded in a session, `Skill(task-execution)` is reused across later `work-planning` iterations and same-session dispatch moves without reload; only the `Skill(task-execution)` Activation rule classifies the existing basis stale or wrong-boundary and authorizes another load.
 Direct reference inspection of `.claude/skills/task-execution/**` does not satisfy this load requirement.
-Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by a current `Skill(self-verification)` `SV-RESULT` pass executed in the active session.
-Internal reasoning, narrative "SV-style" wording, written SV-shaped tables, defeater-style language in the draft, or direct reference inspection of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
-A previously executed `SV-RESULT` is reused only while the verified surface, evidence basis, open surfaces, and claim strength remain unchanged; new scope, stronger claim, materially changed claim, out-of-loop mutation, dispatch/reuse, synthesis report, proof/acceptance change, or phase change resets the pass.
-Stop before lower-trigger tools when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first.
+Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by current `Skill(self-verification)` result verification executed in the active session.
+Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct reference inspection of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
+A previous result-verification pass is reused only while the verified surface, evidence basis, open surfaces, and claim strength remain unchanged; new scope, stronger claim, materially changed claim, out-of-loop mutation, dispatch/reuse, synthesis report, proof/acceptance change, or phase change resets the pass.
+Stop before loading or opening a lower-trigger owner skill (such as `Skill(task-execution)`) when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first. Read-class evidence tools required by `work-planning` `## Corpus Measurement Gate` are not lower-trigger tools and stay lawful inside the work-planning boundary.
 
 ## Resolve Next Owner And Action
 - A stopped lower-trigger route opens the higher trigger owner.
@@ -68,8 +68,8 @@ After the current session-start artifact is current, trigger 3 does not reopen t
 ## Named Artifacts
 - `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
 - `Skill(work-planning)` emits frozen-fields record.
-- `Skill(review-verification)` emits `review_verification_packet`.
-- `Skill(self-verification)` emits `SV-RESULT` or `SV-PLAN`.
+- `Skill(review-verification)` returns internal `review_verification_packet`.
+- `Skill(self-verification)` emits an internal plan-audit or result-verification record.
 - `Skill(task-execution)` emits dispatch-ready packet, dispatch-pending truth, or correction route.
 - `Skill(governance-change)` emits asset-change or recurrence-hardening patch basis and post-verify result.
 - `Skill(session-closeout)` emits closeout residual truth or teardown completion.

@@ -28,10 +28,9 @@ Coverage also includes routed setup/auth/quota/credential-repair investigation f
 Capability recovery investigation produces setup or diagnostic input only.
 **Adjacent owners hold:** canonical planning, live dispatch, broad implementation, artifact merge governance, review findings, runnable proof, final validation, final reporting, silent login, and unapproved credential mutation.
 ## Agent Relationships
-- `team-lead` — sole planning and top-level routing owner by default
+- `team-lead` — planning, top-level routing, drift control, reuse discipline, modular integrity, merge-governance correction, and final closeout compression for this bridge lifecycle
 - `task-execution` — owns live team-agent runtime dispatch when a frozen host-authorized route uses one
 - Dispatch ownership stays with its owner
-- `team-lead` — owns drift control, reuse discipline, modular integrity, and merge-governance correction
 - `developer` and approved specialist skills — bounded production owners
 - You reconcile their outputs
 - This skill bridges only the blocked external-tool surface and returns evidence or blocker truth to the current owner.
@@ -41,7 +40,6 @@ Capability recovery investigation produces setup or diagnostic input only.
 - `reviewer` — downstream review finding owner for integration-side defects, weak assumptions, and blocked merge quality
 - `tester` — downstream runnable-proof owner when the bridge, launcher path, or external interaction must be exercised directly
 - `validator` — downstream final verdict owner
-- `team-lead` — final closeout compression
 ## Purpose
 Load when truthful delivery depends on a bounded external API, connector, client, or tool path.
 Use it when no credible ordinary local workflow can replace that path.

@@ -15,6 +15,7 @@ Use this reference when a satisfied gate, status question, phase transition, or 
 - A converged synthesis is unreported.
 - User asks for status during in-flight work.
 - A routine milestone such as commit, push, or build occurs inside a larger deliverable.
+- A partial patch batch, patch-application log, or applied-patch recap occurs while a larger governance-change queue remains open.
 
 ## Required Output
 Record:
@@ -61,10 +62,14 @@ After the answer, resume the current owner action unless the user redirects or a
   - intermediate commit
   - intermediate push
   - intermediate build
+  - partial patch batch
+  - patch-application log
+  - applied-patch recap
 - Continue these deliverables in the same segment:
   - multi-round deliverables through the next round
   - multi-batch deliverables through the next batch
 - For routine milestones, continue through the next owner/action in the same segment.
+- Do not convert remaining same-request patch groups into backlog unless an owning upstream deferral, explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Treat lane/shard arrival, single-lane completion, partial fan-out completion, and retained-output availability as routine internal milestones.
 - Surface routine milestones on explicit user request only, and then only as a compact waiting condition without shard inventories unless specifically requested.
 

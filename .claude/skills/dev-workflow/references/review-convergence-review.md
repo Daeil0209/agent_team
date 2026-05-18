@@ -26,8 +26,10 @@ team-lead owns reconciliation and workflow cursor truth.
 The configured reviewer lane owns its result.
 Producer owns correction.
 Tester and validator authority remain unchanged.
+Material correction consumes `Skill(review-verification)` named lenses for owner-boundary, coherence-integrity, skill-consumption, and negative-risk as applied or `not-material:<basis>` before relying on the corrected review surface.
 
 Configured independent-review authority boundary is owned by `.claude/skills/codex-independent-review/SKILL.md`; this reference consumes that boundary for review-convergence review.
+Review-convergence consumes `Skill(review-verification)`; reviewer, validator, and Codex review packets carry applicable named lenses as review criteria when their output controls advancement, redispatch, or completion truth.
 
 ## Trigger
 Run when all are true:
@@ -50,6 +52,7 @@ Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline
 Every packet includes:
 - `.claude/CLAUDE.md`
 - `.claude/skills/codex-independent-review/references/common-contract.md`
+- `.claude/skills/review-verification/SKILL.md`
 - `.claude/agents/reviewer.md`
 - `.claude/skills/agent-reviewer/SKILL.md`
 - `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md`
@@ -67,9 +70,10 @@ Missing decisive reviewer-facing fields are not guessed.
 ## Blind Dual Review
 1. Start the configured reviewer lane through `task-execution`.
 2. Start Codex MCP independent review from the same frozen reviewer packet fields without waiting for reviewer handoff.
-3. First Codex packet excludes configured reviewer lane findings, reviewer verdict, team-lead verdict, and suggested fixes.
-4. team-lead must not use Codex findings to rewrite the configured reviewer lane packet for the same pass.
-5. After both outputs exist, team-lead reconciles both point-by-point.
+3. Reviewer and Codex packets name the applicable `Skill(review-verification)` lenses.
+4. First Codex packet excludes configured reviewer lane findings, reviewer verdict, team-lead verdict, and suggested fixes.
+5. team-lead must not use Codex findings to rewrite the configured reviewer lane packet for the same pass.
+6. After both outputs exist, team-lead reconciles both point-by-point.
 
 Codex axes derive from artifact, user outcome, downstream consumers, evidence burden, reviewer doctrine, and phase gate.
 Codex axes include user-perspective checks.
@@ -100,7 +104,7 @@ After each correction, rerun configured reviewer lane and Codex MCP independent 
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
-For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `SV-RESULT`.
+For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `Skill(self-verification)` result verification.
 Fail-open cannot claim Codex concurrence or bypass reviewer, tester, validator, stale-artifact classification, or claim narrowing.
 
 ## Convergence
@@ -116,7 +120,7 @@ Exact wording can differ.
 Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
 Codex disagreement is evidence, not veto.
-`SV-RESULT` verifies phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
+`Skill(self-verification)` runs result verification to verify phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop.
 team-lead executes the output-record next owner/action without user-facing review/proceed prompts.
 The exception is explicit approval or a verified user-owned blocker.
@@ -145,13 +149,13 @@ Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 ## Output Record
 Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record. Review-convergence additions:
 - review target identity and configured reviewer lane state: `ready|hold|blocked`
-- whether `SV-RESULT` covered the synthesized claim
+- whether `Skill(self-verification)` result verification covered the synthesized claim
 
 ## Resolve Next Owner And Action
 - Accepted material findings open correction requirements.
 - Resolved review convergence opens the output-record next owner/action.
 - Missing or false continuation values make the result discussion-only and reopen the review convergence route.
-- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `SV-RESULT`.
+- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `Skill(self-verification)` result verification.
 - Stale artifact or proof result opens stale-surface correction before advancement.
 - Boundary-changing review result reopens `work-planning`.
 - Repeated unresolved disagreement opens `HOLD`.

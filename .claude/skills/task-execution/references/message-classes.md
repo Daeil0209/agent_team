@@ -64,7 +64,10 @@ Reporting Plane may cite only the user-relevant outcome admitted by `.claude/ref
 Communication payload carries the detail required by the receiving owner through the active envelope plus governed carriers.
 Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, task state, or retained-output contract.
 Do not shrink, omit, or distort receiver-required detail for user-display reasons.
-When `SendMessage` can render on a user-visible screen, `ack` and `completion` state signals place the signal text in the `SendMessage` tool's `summary` parameter only; the tool's `message` parameter is empty or a single ASCII space, and must not repeat the state-signal text, `MESSAGE-CLASS` label, or any other content.
+When `SendMessage` can render on a user-visible screen, the `summary` parameter contains exactly the state-signal text (`ack task <TASK-ID>` or `ack`, `completion task <TASK-ID>` or `completion`) and no additional fields, paths, counts, coverage labels, OPEN-SURFACES, excerpts, summaries, or prose.
+The `message` parameter is empty or a single ASCII space and carries no other content.
+`SendMessage` render means the combined `summary` plus `message` display; both halves obey this canonical state-signal envelope rule.
+This is the single canonical envelope rule for `ack` and `completion` state signals; other owner surfaces cite this rule and must not restate its content.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
@@ -85,7 +88,7 @@ This contract does not reduce Communication Plane payload capacity.
 Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
 A receipt event is one host-visible header/preview state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
 The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; envelope shape is governed by Transport Payload above.
-When assignment receipt is unsafe, lacks decisive basis, or is blocked, the receiving owner sends `scope-pressure` or `hold|blocker` instead of `dispatch-ack`.
+Receipt class boundary: a packet that is `safely-executable-with-correction` (one bounded correction preserves owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, and parallel grouping) emits `dispatch-ack` first and then a separate `scope-pressure` in the same turn. A packet that is `unsafe-cannot-execute` (no bounded correction restores truthful execution; missing or incoherent `WORK-SURFACE`, missing/non-open required `TASK-ID`, missing decisive basis, blocked environment, or unsafe ambiguity) suppresses `dispatch-ack` and emits only `scope-pressure` or `hold|blocker`. Two receipt classes do not coexist on the same packet; classify before emitting.
 Valid `dispatch-ack` makes the lane `ACTIVE` for that assignment execution block.
 The lane continues work until one closing class is sent.
 The closing classes are `completion`, `scope-pressure`, `hold|blocker`, and `HOLD`.

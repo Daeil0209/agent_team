@@ -11,10 +11,10 @@ source "$(dirname "$0")/hook-config.sh"
 # completion is recorded later when runtime setup succeeds or task planning
 # begins; host-authorized runtime entry still belongs to TeamCreate and runtime-entry
 # enforcement.
-# lead sv-result marker = self-verification load observed after work-planning and at least one post-planning action.
-# worker sv-result marker = lane-local self-verification load observed in the worker session; planning basis belongs to the received packet.
+# lead result-verification marker = self-verification load observed after work-planning and at least one post-planning action.
+# worker result-verification marker = lane-local self-verification load observed in the worker session; planning basis belongs to the received packet.
 # Markers prove required sequence shape only; Critical Challenge remains procedural work.
-# wp marker = work-planning loaded (new task, clears both sv phase markers)
+# wp marker = work-planning loaded (new task clears both result-verification markers)
 
 INPUT="$(cat)"
 
@@ -42,12 +42,12 @@ skill_marker_name() {
 }
 
 WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
-SV_RESULT_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
+RESULT_VERIFICATION_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
 TASK_EXECUTION_MARKER="$LOG_DIR/.task-execution-loaded-${SESSION_ID}"
-# Session-scoped planning-plus-SV marker survives per-turn resets.
+# Session-scoped planning-plus-result-verification marker survives per-turn resets.
 # Exact claim verification remains procedural.
-SV_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
+RESULT_VERIFICATION_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 # Session-scoped session-boot marker; consumed by dispatch gates when active
 # runtime requires monitoring before fresh consequential dispatch.
 SB_LOADED_MARKER="$LOG_DIR/.sb-loaded-${SESSION_ID}"
@@ -97,10 +97,10 @@ case "$SKILL_NAME" in
     ;;
   *self-verification*)
     if [[ -n "$WORKER_NAME" ]]; then
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$RESULT_VERIFICATION_MARKER"
     elif [[ -f "$WP_MARKER" && -f "$POST_WP_ACTION_MARKER" ]]; then
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_RESULT_MARKER"
-      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SV_CONVERGED_MARKER"
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$RESULT_VERIFICATION_MARKER"
+      date -u '+%Y-%m-%dT%H:%M:%SZ' > "$RESULT_VERIFICATION_CONVERGED_MARKER"
       clear_lead_planning_required "$SESSION_ID"
     fi
     SUPPRESS_DISPLAY=1
@@ -112,9 +112,9 @@ case "$SKILL_NAME" in
   *work-planning*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$WP_MARKER"
     clear_lead_planning_required "$SESSION_ID"
-    # New task started — clear SV markers to require fresh stage-end verification.
-    rm -f "$SV_RESULT_MARKER"
-    rm -f "$SV_CONVERGED_MARKER"
+    # New task started; clear result-verification markers to require fresh stage-end verification.
+    rm -f "$RESULT_VERIFICATION_MARKER"
+    rm -f "$RESULT_VERIFICATION_CONVERGED_MARKER"
     rm -f "$POST_WP_ACTION_MARKER"
     rm -f "$TASK_EXECUTION_MARKER"
     if [[ -z "$WORKER_NAME" ]]; then

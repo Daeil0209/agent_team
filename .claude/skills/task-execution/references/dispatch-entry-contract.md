@@ -22,25 +22,27 @@ Before this skill acts, the lead must already have:
 Consume only dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
 1. `REQUEST-FIT-BASIS`
 2. `SEMANTIC-INTENT-BASIS`
-3. `DERIVED-DEFAULTS`
-4. `REQUEST-BOUND-PACKET-FIELDS`
-5. `CLAIM-CEILING` when material
-6. `ROUTING-SIGNAL`
-7. `NEXT-CONSEQUENTIAL-ACTION`
-8. `DISPATCH-BLOCKERS`
-9. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
-10. `EXECUTION-READINESS-BASIS`
-11. `AGENT-MAP`
-12. `PARALLEL-GROUPS`
-13. `LANE-REQUIRED-SKILLS-MAP`
-14. `SKILL-RECOMMENDATIONS`
-15. `ACTIVE-WORKFLOW` when present
-16. `ACTIVE-SEQUENCE` when present
+3. `COMPLETION-STOP-CONDITION`
+4. `DERIVED-DEFAULTS`
+5. `REQUEST-BOUND-PACKET-FIELDS`
+6. `CLAIM-CEILING` when material
+7. `ROUTING-SIGNAL`
+8. `NEXT-CONSEQUENTIAL-ACTION`
+9. `DISPATCH-BLOCKERS`
+10. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
+11. `EXECUTION-READINESS-BASIS`
+12. `AGENT-MAP`
+13. `PARALLEL-GROUPS`
+14. `LANE-REQUIRED-SKILLS-MAP`
+15. `SKILL-RECOMMENDATIONS`
+16. `ACTIVE-WORKFLOW` when present
+17. `ACTIVE-SEQUENCE` when present
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
 - A field outside packet assembly, runtime dispatch, receiving-lane execution, workflow, or active report gates is not dispatch-entry floor.
 - Missing or contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
+- Missing or contradictory `COMPLETION-STOP-CONDITION` reopens `work-planning` when packet assembly, receiving-lane execution, report gating, or completion truth depends on it.
 - Missing or contradictory `DERIVED-DEFAULTS` reopens `work-planning` when packet assembly, proof surface, or receiving-lane execution depends on it.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.

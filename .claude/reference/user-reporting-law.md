@@ -69,18 +69,19 @@ Uncertainty means not admitted.
    - the user explicitly asked for status
    - closeout residual truth must be surfaced
 3. Report content contains only user-relevant outcome, blocker, requested status, or residual truth.
-4. Before analyzed, evaluated, synthesized, produced, strengthened, phase/stage-end, or completion-result claims, load `Skill(self-verification)` and execute `SV-RESULT` on the exact outgoing claim.
+4. Before analyzed, evaluated, synthesized, produced, strengthened, phase/stage-end, or completion-result claims, load `Skill(self-verification)` and verify the exact outgoing claim.
 5. When the active route uses multiple lanes, shards, reviewers, proof owners, or validators, every required output is completion-grade, consumed from its retained carrier, integrated, and either accepted, explicitly owner-deferred, out-of-scope with basis, or blocking with a user-action blocker.
 6. No Communication Plane or Procedure Plane payload is included as report content.
 
-If any required lane/shard output is pending, unintegrated, contradictory, or only screen-visible, suppress the report and continue monitoring, carrier consumption, correction, synthesis, or `SV-RESULT` internally.
+If any required lane/shard output is pending, unintegrated, contradictory, or only screen-visible, suppress the report and continue monitoring, carrier consumption, correction, synthesis, or `Skill(self-verification)` internally.
 
 ## Non-Reportable Content
 These are never user reports:
 - dispatch topology, lane count, route choice, staffing shape, runtime setup, monitoring, idle, receipt, ack, status, cleanup, or phase-context signals
 - individual lane/shard arrival, partial lane/shard completion, partial convergence, all-lanes counters, per-shard findings summaries, and in-flight synthesis notes
 - `dispatch-ack`, `scope-pressure`, `completion`, `hold|blocker`, assignment packets, packet corrections, phase-transition packets, shutdown requests, task rows, task output, runtime ledgers, and retained-output paths
-- skill loading, methodology application, review-verification packet fields, SV records, retro-apply notes, governance-change notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
+- skill loading, methodology application, review-verification packet fields, self-verification records, retro-apply notes, governance-change notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
+- patch-application logs, applied-patch recaps, wave recaps, backlog lists, dispatch plans, and remaining-patch inventories while the same requested deliverable still has an executable owner/action
 - statements that exist only to say work is starting, continuing, being monitored, being dispatched, being corrected, or being verified
 
 The user may explicitly request any internal material. That explicit request admits only the requested material and does not convert future internal material into reports.
@@ -89,7 +90,7 @@ The user may explicitly request any internal material. That explicit request adm
 Tool-adjacent prose is visible pane/final text before, between, or after tool calls.
 Do not emit tool-adjacent prose for startup contract application, owner-trigger opening, skill loading, reference consumption, planning freeze, corpus measurement, Codex or reviewer adjudication, packet drafting, directory creation, task updates, dispatch preparation, monitoring, or recovery while Procedure Plane or Communication Plane can continue.
 Host-rendered rows from required `Skill(...)` or owner tool calls are tool evidence, not assistant-authored report prose.
-Examples of suppressed tool-adjacent prose include `Opening the highest active owner trigger`, `Consuming user-reporting-law`, `Consuming output-surface-law`, `Consuming work-planning`, `Boot closes`, `Corpus measured`, `Sharding plan`, `Plan freeze`, `Internal plan freeze`, `Required mode`, `Internal planning record is frozen`, `Codex returned`, `adjudicating now`, `planning freeze complete`, `opening task-execution`, `I'll set up`, `dispatching now`, `loading`, `starting`, `will report`, `findings to`, `shard arrived`, `audit complete`, `4/7 complete`, per-shard findings summaries, single-character filler such as `.`, `_`, or punctuation placeholders, and whitespace-only filler.
+Examples include any classifier-only wording that paraphrases one of the categories above (`Boot closes`, `dispatching now`, `4/7 complete`, per-shard summary, etc.) plus single-character or whitespace-only filler.
 When the user asks why an expected action did not happen, follow the `explicit status answer` shape under `## Report Shape`.
 
 ## Transport Boundary
@@ -105,15 +106,13 @@ Lane agents must not project ACK, startup, execution plan, file-read, route, evi
 If no report is admitted, emit nothing and continue through the owning Procedure Plane or Communication Plane action.
 
 ## Silent Continuation
-Host-rendered tool rows, lane transport rows, and teammate wake events do not require assistant-authored filler prose.
-Lane arrival, idle, cleanup, monitoring, same-state wake, retained-carrier consumption, and synthesis queue events continue internally.
+Host-rendered tool rows, lane transport rows, teammate wake events, and lane lifecycle events (arrival, idle, cleanup, monitoring, same-state wake, retained-carrier consumption, synthesis queue) continue internally without assistant-authored filler prose.
 If the user explicitly asks status, answer with the narrowest truthful status under Report Shape.
-Silent close means zero assistant-authored visible body content.
-Single-character or whitespace-only filler such as `.`, ` `, `_`, or punctuation placeholders is tool-adjacent prose under `## Tool-Adjacent Prose Suppression`; do not substitute filler for silent close.
-If runtime constraints require some content because the turn has no tool call, take a Procedure Plane tool action that the active owner path requires (read, verify, advance) rather than emit narrative-shaped filler.
+Silent close means zero assistant-authored visible body content; do not substitute filler.
+If the turn has no required tool call and would otherwise be empty, take a Procedure Plane tool action (read, verify, advance) the active owner path requires.
 
 ## Report Shape
-`verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane or multi-shard verified result requires the all-required-output gate above plus current `SV-RESULT` on the synthesized claim.
+`verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane or multi-shard verified result requires the all-required-output gate above plus current `Skill(self-verification)` verification on the synthesized claim.
 `user-action blocker` reports the blocked user decision/action and the smallest safe next step.
 `explicit status answer` uses the narrowest truthful form.
 Binary status questions get one yes/no sentence plus only a user-action blocker when present.
@@ -134,4 +133,4 @@ This reference owns user-report admissibility, non-reportable content, and the u
 Other documents may state local transport-owner boundaries and cite this reference.
 Other documents must not restate user-report admissibility criteria, non-reportable content lists, or report-shape limits.
 Other documents must not convert Communication Plane payload into user reports.
-Conflicting wording resolves to this reference and routes to `governance-change` for owner-local cleanup.
+Conflicting wording resolves to this reference and routes to `Skill(governance-change)` for owner-local cleanup.

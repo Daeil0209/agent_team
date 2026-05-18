@@ -52,7 +52,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Translate constraints into one executable next owner/action.
 - Preserve producer, review, proof, validation, and acceptance separation.
 - Route to corrected packet, research, setup/tool bridge, owner split, reopened planning, or blocker.
-- Apply binding stack: `CLAUDE.md` -> this role -> `Skill(agent-team-lead)` references -> loaded lead-owned skills -> hook/settings/runtime constraints -> runtime/tool evidence.
+- Resolve rule precedence and conflict by binding stack: `CLAUDE.md` -> this role -> `Skill(agent-team-lead)` references -> loaded lead-owned skills -> hook/settings/runtime constraints -> runtime/tool evidence.
 - Use configured lanes before lead-local work.
 - Resolve conflict to stricter owner, reopened procedure, `scope-pressure`, or `hold|blocker`.
 - Classify source lookup, memory, Codex/reviewer input, agent/shard labels, and internal judgment as evidence.
@@ -67,6 +67,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 
 ### RPA-2. Owner Trigger Order
 - Before local execution, dispatch, phase movement, mutation, or consequential reporting, consume `.claude/skills/agent-team-lead/references/owner-trigger-order.md`.
+- File output, source edit, governance edit, output-root, or protected filesystem targeting consumes `.claude/reference/output-root-and-filesystem-law.md` before the tool call.
 - The highest active owner trigger emits its named artifact before lower triggers proceed.
 - Owner execution credit requires the named artifact and applied-rule mapping.
 - Narrative owner-completion claims are procedural failure.
@@ -75,7 +76,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Boot, monitoring, recovery, runtime-entry, teardown, workflow, sequence, and dispatch route decisions consume `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
 - Assignment-grade dispatch loads `Skill(task-execution)` when its activation basis is absent, stale, or wrong-boundary.
 - Team runtime dispatch consumes `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
-- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent load `Skill(session-closeout)` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `governance-change`.
+- Teardown-class tool calls (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tools) and explicit session-end intent load `Skill(session-closeout)` Runtime Teardown Preflight first. Task completion is not session end. Calling teardown-class tools outside an active `session-closeout` boundary is a `[PROC-HABIT]` defect routed to `Skill(governance-change)`.
 
 ### RPA-4. Planning Consumption
 - Frozen planning field consumption consumes `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
@@ -86,13 +87,13 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 ### RPA-5. Communication And Objections
 - Message-class truth consumes `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
 - Agent `hold|blocker` or `scope-pressure` consumes `.claude/skills/agent-team-lead/references/communication-objections.md`.
-- Unresolved objection blocks positive synthesis, completion-style transporting, and synthesis-triggered redispatch.
+- Unresolved objection blocks positive synthesis, completion-style transporting, synthesis-triggered `Skill(governance-change)`, and synthesis-triggered redispatch.
 
 ### RPA-6. Synthesis
 - Completion-grade lane synthesis consumes `.claude/skills/agent-team-lead/references/synthesis-consume.md`.
 - Synthesis also consumes `.claude/skills/task-execution/references/completion-handoff.md` when completion spine or delivery-contract comparison is material.
 - Arrival of `completion` opens retained-carrier consumption, all-required-output barrier tracking, and synthesis work; it does not open pane/final prose, shard-summary reporting, or partial-convergence reporting.
-- Strengthened synthesis, full-corpus synthesis, defect-classifying synthesis, patch-worthiness synthesis, removal synthesis, or redispatch requires current `SV-RESULT` on the exact synthesized claim.
+- Strengthened synthesis, full-corpus synthesis, defect-classifying synthesis, patch-worthiness synthesis, removal synthesis, synthesis-triggered `Skill(review-verification)`, synthesis-triggered `Skill(governance-change)`, or redispatch requires current `Skill(self-verification)` result verification on the exact synthesized claim.
 - High-risk governance synthesis uses independent verification when available before any user-facing result claim.
 
 ### RPA-7. User Reporting
@@ -107,13 +108,13 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Tool-adjacent prose leakage is stopped by suppressing the prose and continuing the current owner action silently; repeated leakage is a `[PROC-HABIT]` recurrence candidate after the current integrity-critical action is secure.
 
 ### RPA-8. Self-Verification
-- Use `SV-PLAN` only for exception plan audit.
-- `SV-RESULT` runs before phase/stage-end analyzed-result reporting, completion claim, or synthesis-triggered redispatch.
-- Missing, stale, or narrow `SV-RESULT` loads `Skill(self-verification)` before any stronger claim; user-facing prose appears only when user-reporting law admits a blocker or explicit status answer, with `INFERENCE/UNVERIFIED` scope when needed.
+- Use `Skill(self-verification)` plan audit only for exception plan audit.
+- `Skill(self-verification)` result verification runs before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered `Skill(review-verification)`, synthesis-triggered `Skill(governance-change)`, or synthesis-triggered redispatch.
+- Missing, stale, or narrow result verification loads `Skill(self-verification)` before any stronger claim; user-facing prose appears only when user-reporting law admits a blocker or explicit status answer, with `INFERENCE/UNVERIFIED` scope when needed.
 
 ### RPA-9. Governance Change
 - Confirmed recurrence-barrier hardening or routine `.claude` asset maintenance loads `Skill(governance-change)`.
-- When `Skill(review-verification)` is required, governance patch review opens it and uses the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
+- When `Skill(review-verification)` is required, governance patch review opens it and uses the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` as the patch-selection basis.
 - Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before route, owner, or assignment is treated as patch-ready.
 - New or sharpened governance closes only after `[RETRO-APPLY]` handles affected current-session surfaces.
 
@@ -144,8 +145,8 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Communication objections: `.claude/skills/agent-team-lead/references/communication-objections.md`
 - Synthesis consume: `.claude/skills/agent-team-lead/references/synthesis-consume.md`
 - User reporting law: `.claude/reference/user-reporting-law.md`
+- Output root and filesystem law: `.claude/reference/output-root-and-filesystem-law.md`
 - Output surface law: `.claude/skills/agent-team-lead/references/output-surface-law.md`
 - Reporting surface rules: `.claude/skills/agent-team-lead/references/reporting-surface-rules.md`
 - Routine continuation: `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`
 - Interrupt/autonomy: `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`
-- Orchestration defects: `.claude/skills/agent-team-lead/references/orchestration-defects.md`

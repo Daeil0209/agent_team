@@ -21,7 +21,7 @@ Do not use configured independent review as:
 - a substitute for `work-planning`
 - a substitute for `task-execution`
 - a substitute for `reviewer`, `tester`, or `validator`
-- a substitute for `SV-PLAN` or `SV-RESULT`
+- a substitute for `Skill(self-verification)` plan audit or result verification
 - a user-facing report
 - a blocker by itself
 - a dispatch, validation, final acceptance, login, file mutation, credential repair, or settings/hook edit owner

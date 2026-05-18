@@ -27,6 +27,7 @@ Reporting curtain inheritance:
 Record:
 - `REQUEST-INTENT`
 - `SEMANTIC-INTENT-BASIS`
+- `COMPLETION-STOP-CONDITION`
 - `WORK-SHAPE`
 - `WORKFLOW-CANDIDATE`
 - `SEQUENCE-CANDIDATE`
@@ -43,7 +44,7 @@ Stop before team dispatch when task-execution packet preflight is missing.
 Stop before correction dispatch after Final Acceptance Review (FAR) `FINAL-REJECT` until the assigned-validator correction packet is consumed.
 Stop before route execution when:
 - loaded owner documents lack applied-rule mapping
-- governance, analysis, critique, review, validation, or patch work lacks `SEMANTIC-INTENT-BASIS` or contradicts the user correction, team-operation philosophy, or target governance/design intent
+- the selected route lacks a request basis that supports its channel class, owner, next action, and user-fit effect
 
 ## Resolve Next Owner And Action
 - A stopped dispatch route loads `Skill(session-boot)` for boot or runtime-entry.
@@ -53,17 +54,17 @@ Stop before route execution when:
 - A stopped applied-rule route opens loaded-document consumption.
 
 ## Fresh Instruction Interpretation
-Name the thin request basis:
-- intent
-- user concern signal and anti-goal
+Name the request basis before route choice:
+- requested interaction type, intended outcome, and completion stop condition
+- user concern signal, anti-goal, and stated priority order
 - concrete deliverable
 - primary user
 - reference use
-- burden cues
-- quality cues
+- burden and quality cues
 - material blockers
 - governing team-operation philosophy or target governance/design intent
-- priority order when the user states one — examples include quality, evidence, autonomy, silence, speed, removal-first, acceptance integrity, or other operator-named priority axes
+
+Use the request basis first to decide whether the instruction stays in a light channel or creates, reopens, or changes a consequential work boundary. Consequential boundary opens `Skill(work-planning)`; light channel stays outside `work-planning`.
 
 Name the visible work shape:
 - work type

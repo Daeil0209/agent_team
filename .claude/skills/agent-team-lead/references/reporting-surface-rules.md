@@ -37,12 +37,12 @@ These team-lead prose surfaces use this same report shape:
 Record shape only after user-reporting law admits the report:
 - admitted report reason
 - output surface
-- SV status when required
+- self-verification status when required
 - evidence basis included
 - open surfaces omitted or included by rule
 
 ## Stop
-Stop before reporting when `SV-RESULT` is required and missing.
+Stop before reporting when required `Skill(self-verification)` result verification is missing.
 Stop before `FINAL` when residual deliverable convergence remains open under `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
 Stop before basis expansion by default.
 Basis expansion is allowed only for:
@@ -50,7 +50,7 @@ Basis expansion is allowed only for:
 - blocker-required detail
 
 ## Resolve Next Owner And Action
-- A stopped reporting route opens `SV-RESULT`.
+- A stopped reporting route opens `Skill(self-verification)` result verification.
 - A stopped `FINAL` route opens the residual queue, synthesis merge, proof, acceptance, owner-deferral, or out-of-scope action named by the open item.
 - A stopped basis-expansion route emits the compact report shape.
 

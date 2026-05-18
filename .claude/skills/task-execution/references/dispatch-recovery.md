@@ -8,7 +8,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 
 # task-execution: Dispatch Recovery
 ## Dispatch Interruption Recovery
-Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth; it does not replace `work-planning`, `self-verification`, `session-boot`, `governance-change`, or lane execution.
+Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth; it does not replace `work-planning`, `self-verification`, `session-boot`, `Skill(governance-change)`, or lane execution.
 
 Required recovery record:
 - `INTERRUPT-POINT`
@@ -29,7 +29,7 @@ Required recovery record:
 | `dispatch-ack-no-start` | receipt only. ack-only idle is not work. | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify stale only after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
 | `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Do not return to `task-execution` unless replanning freezes a new assignment. |
 | `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Do not convert configured lane work into standalone retry. Do not claim completion. |
-| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Run `self-verification (SV-RESULT)` before reporting or redispatch. It does not create team-runtime completion. |
+| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load `Skill(self-verification)` for result verification before reporting or redispatch. It does not create team-runtime completion. |
 
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
@@ -42,9 +42,9 @@ Recovery rules:
 - A same-target packet correction to a responsive live target opens a correction-response window. Do not shutdown or replace that target until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - A parallel group is not "running" while any target remains `assignment-sent-no-ack` or `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
-- A phase-transition packet, shutdown request, or governance-change sidecar must not erase the suspended dispatch surface.
+- A phase-transition packet, shutdown request, or `Skill(governance-change)` sidecar must not erase the suspended dispatch surface.
 - If `CORRECTION-OUTCOME: route-replan`, the resume owner is `work-planning`.
-- If the defect itself meets the `governance-change` entry gate, open `governance-change` first.
+- If the defect itself meets the `Skill(governance-change)` entry gate, open `Skill(governance-change)` first.
 - Leave a resume owner/action for the suspended work before closure or return.
 - If recovery would change lane, owner, work surface, proof/acceptance chain, parallel grouping, or packet required skills, reopen `work-planning` instead of repairing inside `task-execution`.
 
@@ -68,4 +68,4 @@ A compacted agent has lost the assignment-grade packet context but retains its a
 - Duplicate-send risk opens `HOLD` or `session-boot` recovery.
 - Agent compaction opens assignment-packet reissue from the frozen route.
 - Route-changing recovery opens `work-planning`.
-- Recurrence-hardening recovery defect opens `governance-change` before suspended dispatch closure.
+- Recurrence-hardening recovery defect opens `Skill(governance-change)` before suspended dispatch closure.

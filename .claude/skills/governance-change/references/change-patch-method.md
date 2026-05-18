@@ -14,7 +14,7 @@ auto-inject: false
 
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
-Prerequisite B. Do not run routine plan SV. Use exception-only `SV-PLAN` only when the change plan is disputed; otherwise reserve `SV-RESULT` for Post-Verify.
+Prerequisite B. Do not run routine plan audit. Use `Skill(self-verification)` plan audit only when the change plan is disputed; otherwise use result verification for Post-Verify.
 Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 1. `Classify + Plan`
@@ -36,10 +36,10 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
 - Developer defect-seeking self-review is sufficient for trivial single-line fixes.
-- Recurrence-hardening patch Draft starts from the emitted `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
+- Recurrence-hardening patch Draft starts from the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
 - The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
 - Reviewer and Codex input are evidence.
-- The emitted packet is the review-consumption record.
+- The returned internal packet is the review-consumption record.
 - Acceptance judgment uses evidence, not author intent.
 
 5b. `Execution Gate`
@@ -61,7 +61,10 @@ Prerequisite C. Governance patch placement, generalization, and patch-ready reco
 - Use the resulting diff as change evidence.
 - Treat pre-execution snapshots and prior verdicts as baseline or preservation evidence only; memory-only recall is not governance evidence.
 - When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
+- A verified sub-batch, patch log, or partial applied set is not convergence while same-request patch groups, review owners, proof owners, validation owners, or dispatch owners remain open.
+- After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or owning upstream deferral applies.
 - Load the `self-verification` skill and execute Critical Challenge before declaring the change verified.
+- Failed Post-Verify result verification reopens the smallest Change Sequence correction; a newly exposed material review question returns to Step 5 before further mutation.
 
 ## Change Constraints
 - Plan review is not content review.
@@ -226,13 +229,13 @@ See `.claude/skills/governance-change/references/human-readable-packet-owners.md
 
 ## Resolve Next Owner And Action
 - Completed patch design opens the owning patch execution path.
-- Completed retroactive audit opens governance-change closeout.
+- Completed retroactive audit opens this sequence's closeout.
 - Affected current-session surface opens fix, invalidation, or deferred-by-owner record.
 - Stale prior verdict opens fresh re-verification before downstream use.
 - Missing retroactive audit keeps the hardening round open.
 - Missing owner surface opens governance architecture mapping.
 - Semantic overlap opens replace, trim, re-home, or protected restatement decision.
 - Missing skill blocks only the affected downstream surface and opens skill update or introduction.
-- Hook/settings enforcement expansion opens `governance-change` Hook-Last preflight.
+- Hook/settings enforcement expansion opens `Skill(governance-change)` Hook-Last preflight.
 - Post-change material redundancy opens bounded optimization.
-- Preserved patch basis returns to governance-change sequence verification.
+- Preserved patch basis returns to this sequence's verification.

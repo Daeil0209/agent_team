@@ -24,8 +24,8 @@
 - Missing next owner reopens the last valid owner.
 - Missing next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit.
-- `[PLAN-SV]` Boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> SV-RESULT`.
-- `SV-PLAN` is exception-only plan audit.
+- `[SELF-VERIFY]` Boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
+- `Skill(self-verification)` plan audit is exception-only.
 - `[WORK-FULL]` User-facing brevity limits emitted content only.
 - Internal evidence gathering stays at deliverable-required quality.
 - Internal verification stays at deliverable-required quality.
@@ -91,7 +91,7 @@
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
-- Lead-local user-facing final report requires `SV-RESULT`.
+- Lead-local user-facing final report requires current `Skill(self-verification)` result verification.
 
 ## Reference Binding
 - `.claude/reference/*-law.md` files are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
@@ -110,18 +110,18 @@
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
-- `governance-change` owns `.claude` asset changes and recurrence-barrier hardening.
+- `Skill(governance-change)` owns `.claude` asset changes and recurrence-barrier hardening.
 ### Sequence Arbitration Law
 - Sequence arbitration chooses one primary sequence by purpose.
 
 ## Channel And Procedure
-- Light channels are `answer-only`, `SV-only audit`, and `notification-only carry-forward`; planning-exclusion detail lives in `.claude/skills/work-planning/references/boundary-gates.md`.
+- Light channels are `answer-only`, `self-verification-only audit`, and `notification-only carry-forward`; planning-exclusion detail lives in `.claude/skills/work-planning/references/boundary-gates.md`.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, report permission, and claim strength.
 - Consequential channels are `bounded local consequential work` and `team-routed complex work`.
 - Discovery, route shaping, dispatch, mutation, artifact judgment, or stronger claim leaves light/control.
 - Boundary-change axes reopen `work-planning`.
 - Consequential flow opens one truthful next owner/action at a time.
-- Active workflow phases follow the loaded workflow's declared order; `[PLAN-SV]` follows Core Laws 1.
+- Active workflow phases follow the loaded workflow's declared order; `[SELF-VERIFY]` follows Core Laws 1.
 - Hook/runtime signals do not become proof, validation, acceptance, dispatch truth, or owner completion.
 
 ## Skill Loading
@@ -195,4 +195,4 @@
 ## Governance Change
 - Sequence Arbitration Law governs governance-change routing.
 - `[HARDEN]` governs recurrence-barrier correction scope.
-- Open `governance-change` after quality, evidence, ownership, and acceptance integrity are secure.
+- Open `Skill(governance-change)` after quality, evidence, ownership, and acceptance integrity are secure.

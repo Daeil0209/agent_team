@@ -40,7 +40,7 @@ Boundary:
 - `team-lead` owns thin instruction reading and channel opening.
 - `work-planning` owns consequential freeze and target selection.
 - workflow/sequence skills own their active phase after this freeze.
-- `self-verification` owns `SV-PLAN` and `SV-RESULT`.
+- `Skill(self-verification)` owns plan audit and result verification.
 - `task-execution` owns host-authorized dispatch and packet truth.
 - the planning record is internal carry-forward, not the agent packet.
 
@@ -75,17 +75,18 @@ Priority 0 text, progress, task-plan UI, route notes, Codex calls, and outside d
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
-Governance defect judgment routes through `review-verification`.
-Governance removal judgment routes through `review-verification`.
-Preservation analysis routes through `review-verification`.
+Governance defect judgment routes through `Skill(review-verification)`.
+Governance removal judgment routes through `Skill(review-verification)`.
+Preservation analysis routes through `Skill(review-verification)`.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
 A moved boundary-change axis reopens `work-planning`.
 
 ## Step 0: Request-Fit Intake
 Freeze these before route judgment:
-- intent
+- requested interaction type and intended outcome
 - `SEMANTIC-INTENT-BASIS`
+- `COMPLETION-STOP-CONDITION`
 - deliverable
 - coverage and exhaustiveness
 - primary user
@@ -100,7 +101,7 @@ Freeze these before route judgment:
 `CONCRETE-DELIVERABLE` and `PRIMARY-USER` determine deliverable type, delivery shape, defaults, and type triggers.
 `DERIVED-DEFAULTS` determine receiver job, consumption path, decisive proof surface, and request-bound packet fields.
 
-Full intake is mandatory when semantic intent, reference use, corrected intent, delivery burden, user-surface proof, or original wording affects execution.
+Full intake is mandatory when semantic intent, original or corrected wording, reference use, delivery burden, user-surface proof, concern signal, anti-goal, priority order, or completion stop condition affects route class, owner choice, or next action.
 The user-defined work scope is binding.
 Samples, spot-checks, representative review, or finding-count quotas require explicit scope basis.
 If artifact boundaries are unknown, freeze discovery as a planning fact and next owner/action before exploration.
@@ -128,7 +129,7 @@ Frozen boundary also updates through owner-local correction that preserves every
 
 ## Step 2: Q1-Q5 Work Analysis
 Before scope freeze, answer:
-1. What is the real purpose, including the user concern signal and anti-goal when expressed?
+1. What is the real purpose and completion stop condition, including the user concern signal and anti-goal when expressed?
 2. What work type or types are present?
 3. What governing workflow, sequence, or methodology owns each type?
 4. Are streams local single-surface, independent, sequential, or interdependent?
@@ -156,6 +157,7 @@ Missing applied `planning-record-fields.md` basis blocks dispatch-ready planning
 Always freeze:
 - `REQUEST-FIT-BASIS`
 - `SEMANTIC-INTENT-BASIS`
+- `COMPLETION-STOP-CONDITION`
 - `DERIVED-DEFAULTS`
 - `REQUEST-BOUND-PACKET-FIELDS`
 - `ACTION-CLASS`

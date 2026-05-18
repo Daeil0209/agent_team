@@ -43,7 +43,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 
 5. Post-incident record
 - Record what happened, root cause, fix applied, time or cycles to resolution, and whether a recurrence barrier is needed.
-- If prevention was possible and the missed check is recurring or material, open `governance-change` recurrence-hardening mode on the narrowest owner surface.
+- If prevention was possible and the missed check is recurring or material, open `Skill(governance-change)` recurrence-hardening mode on the narrowest owner surface.
 
 ## Incident Phase Cursor Context
 Phase transitions during incident response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/references/phase-transition-control.md`. Do not author a parallel notification format here.
@@ -63,5 +63,5 @@ Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live w
 - Verified fix opens reviewer regression check.
 - Failed fix returns to fix proposal.
 - Three failed attempts open escalation instead of iteration.
-- Recurring or material missed prevention opens `governance-change`.
+- Recurring or material missed prevention opens `Skill(governance-change)`.
 - Verified incident resolution returns to the active dev-workflow phase cursor.

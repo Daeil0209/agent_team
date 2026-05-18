@@ -37,6 +37,7 @@ Every assignment-grade work packet carries:
 - `REQUIRED-SKILLS`
 - open executable `TASK-ID` from the active task namespace when task tracking is active
 - `SEMANTIC-INTENT-BASIS` from the frozen planning/request-bound basis.
+- `COMPLETION-STOP-CONDITION` from the frozen planning basis.
 - `TARGET-INTENT-BASIS` per `CLAUDE.md` `[DESIGN-INTENT]`.
 - `CLAIM-CEILING` for analysis, critique, governance judgment, review, validation, or patch-worthiness packets. Allowed values are `evidence-only candidates`, `review findings`, `validation verdict input`, and `patch-worthiness classification`. Missing claim ceiling means returned items stay evidence-only until reviewer/review-verification/team-lead synthesis lawfully classifies them.
 - `WRITE-SCOPE` carries bounded write authority as one or more allowed write-path prefixes for the receiving lane.
@@ -68,7 +69,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
 - for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
 - assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, move detail to task state or retained carriers and keep the packet's required floor plus carrier pointer
-- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
 - for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch planned-but-not-returned task ids are invalid packet identity
 - when creating that `TASK-ID`, call `TaskCreate` with top-level non-empty `subject` and `description`; missing `subject` or `description` is tool-envelope invalid and sends zero assignment-grade `SendMessage` calls
 - assignment packets must not instruct lanes to claim task rows with `TaskUpdate.owner`, `assignee`, or `status=in_progress`; `SendMessage.to` carries the assigned member
@@ -87,7 +88,9 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - request-bound start-closure fields from `.claude/skills/task-execution/references/request-bound-fields.md`; every material axis frozen by planning or workflow is carried, marked `not-applicable:<basis>` where allowed, or routed to `packet-correction` / `route-replan`
 - the carried axes include `DERIVED-DEFAULTS`, `REQUEST-BOUND-PACKET-FIELDS`, `SKILL-RECOMMENDATIONS`, governance tier fields, lane phase context, coverage obligations, assigned surfaces, acceptance basis, decisive surface/proof/tool/setup/run-path/burden/decision/validation/environment/scenario fields, and cited Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix identities when material
 - finding counts are retained evidence, not dispatch scope
-- assignment or completion contracts must not request final upward messages with counts, excerpts, file-read totals, execution plans, retained-output contents, future-action prose, or duplicate header/body state signals; request retained-output completion payload plus the completion state signal only.
+- Completion contracts request only the canonical state signal in upward `SendMessage` per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
+- Completion contracts must not request retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file-read counts, findings counts, per-class totals, excerpts, evidence summaries, execution plans, operational notes, future-action prose, or duplicate header/body state signals in upward `SendMessage`.
+- Receiver-required completion payload travels in the retained carrier per `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine.
 - These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:
   - parallel shard dispatches with large shared context use one complete shared retained context plus per-shard packets that carry the required packet floor and point to that context; short means no duplicate large context, not reduced receiver-required basis; do not serialize large self-contained packet drafting when `PARALLEL-DISPATCH-LOCK` is open
   - completion packets
@@ -99,7 +102,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 
 Preflight outcome names:
 - `packet-correction`: the missing or malformed packet value already exists in the frozen basis and the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary remain unchanged. Correct the packet and rerun preflight before sending.
-- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `governance-change`.
+- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `Skill(governance-change)`.
 - `route-replan`: the missing, contradictory, or stale basis is absent from the frozen basis or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
 - `parallel-continue`: the affected surface is blocked or being corrected while unrelated independent surfaces remain inside the same frozen parallel route. Continue unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 

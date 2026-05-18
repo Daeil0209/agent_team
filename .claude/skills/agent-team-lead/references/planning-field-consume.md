@@ -36,38 +36,43 @@ Stop before team-agent runtime dispatch when receiving lanes depend on lead-only
 Read only fields consumed by the current next owner/action, in this relative order:
 1. `REQUEST-FIT-BASIS`
 2. `SEMANTIC-INTENT-BASIS`
-3. `DERIVED-DEFAULTS`
-4. `REQUEST-BOUND-PACKET-FIELDS`
-5. `CLAIM-CEILING` when material
-6. `PROJECT-TIER`
-7. `ACTIVE-REQUEST-TIER`
-8. `TIER-RAISE-REASON`
-9. `ACTIVE-WORKFLOW`
-10. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling is material or workflow-required
-11. `ACTIVE-SEQUENCE`
-12. `ROUTING-SIGNAL`
-13. `NEXT-CONSEQUENTIAL-ACTION`
-14. `DISPATCH-BLOCKERS` / `HOLD-CONDITIONS`
-15. `EXECUTION-READINESS-BASIS`
-16. `LEAD-LOCAL-REQUIRED-SKILLS` / `LANE-REQUIRED-SKILLS-MAP` from `.claude/skills/work-planning/references/planning-record-fields.md`
-17. `AGENT-MAP` / `PARALLEL-GROUPS` when routed
+3. `COMPLETION-STOP-CONDITION`
+4. `DERIVED-DEFAULTS`
+5. `REQUEST-BOUND-PACKET-FIELDS`
+6. `CLAIM-CEILING` when material
+7. `PROJECT-TIER`
+8. `ACTIVE-REQUEST-TIER`
+9. `TIER-RAISE-REASON`
+10. `ACTIVE-WORKFLOW`
+11. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling is material or workflow-required
+12. `ACTIVE-SEQUENCE`
+13. `ROUTING-SIGNAL`
+14. `NEXT-CONSEQUENTIAL-ACTION`
+15. `DISPATCH-BLOCKERS` / `HOLD-CONDITIONS`
+16. `EXECUTION-READINESS-BASIS`
+17. `LEAD-LOCAL-REQUIRED-SKILLS` / `LANE-REQUIRED-SKILLS-MAP` from `.claude/skills/work-planning/references/planning-record-fields.md`
+18. `AGENT-MAP` / `PARALLEL-GROUPS` when routed
 
 ## Reaction Rules
 - `answer-only` means answer only.
 - A field outside the current owner path is not a preflight floor.
 - Do not reopen `work-planning` for a field that no current local execution, workflow, sequence, dispatch, or report owner consumes.
+- Team-lead decision basis is the consumed frozen scope, route, owner map, proof chain, acceptance chain, parallel-fit basis, and active-route mandatory fields.
+- Developer-level expansion starts inside that consumed basis.
 - Missing request-fit basis reopens `work-planning`.
 - Stale request-fit basis reopens `work-planning`.
 - Contradictory request-fit basis reopens `work-planning`.
-- Missing `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
-- Contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
+- `SEMANTIC-INTENT-BASIS` that cannot support the selected route class, owner choice, and next action reopens `work-planning`.
+- Missing, stale, contradictory, or non-evidence-backed `COMPLETION-STOP-CONDITION` reopens `work-planning`.
+- `COMPLETION-STOP-CONDITION` that cannot support the selected next action, report gate, or `HOLD` route reopens `work-planning`.
+- Valid `COMPLETION-STOP-CONDITION` is instruction-derived, practical, evidence-verifiable, and at least as complete as the requested deliverable; otherwise reopen `work-planning`.
 - Missing `DERIVED-DEFAULTS` reopens `work-planning` when deliverable type, receiver job, proof surface, or request-bound packet fields depend on it.
 - Stale `DERIVED-DEFAULTS` reopens `work-planning`.
 - Contradictory `DERIVED-DEFAULTS` reopens `work-planning`.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Stale `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
-- Missing tier basis reopens `work-planning` per `references/governance-depth.md`.
+- Missing tier basis reopens `work-planning` per `.claude/skills/work-planning/references/governance-depth.md`.
 - Contradictory tier basis reopens `work-planning`.
 - Stale tier basis reopens `work-planning`.
 - Weaker-than-floor tier basis reopens `work-planning`.

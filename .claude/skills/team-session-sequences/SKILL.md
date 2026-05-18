@@ -33,7 +33,7 @@ Use the exact sequence names defined in `.claude/CLAUDE.md`:
 - `Monitoring Sequence`
 - `Closeout Sequence` (on-demand: session-closeout skill)
 
-Use these procedures when the corresponding sequence is materially in play.
+Use these procedures when the corresponding sequence is `materially active` per `.claude/skills/session-boot/SKILL.md ## Sequence Activation Discipline`.
 
 ### Reporting Curtain Inheritance
 This sequence index governs sequence lookup, not report admission.

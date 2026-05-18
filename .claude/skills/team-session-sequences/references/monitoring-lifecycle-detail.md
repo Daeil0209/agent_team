@@ -101,7 +101,7 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
-- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root (`./projects/`).
+- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root per `.claude/reference/output-root-and-filesystem-law.md` (default `claude_doc/<work-name>/`).
 
 ## Runtime Pressure
 - Consume `session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.

@@ -228,8 +228,8 @@ Hand off after the next owner can tell whether the benchmark is:
 Weak comparison frame downgrades or holds benchmark output.
 Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
 When benchmark evidence supports a downstream owner:
-- hand off confirmed recurring specialist capability gaps to `governance-change` for recurrence-barrier or capability-gap ownership
-- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `governance-change`
+- hand off confirmed recurring specialist capability gaps to `Skill(governance-change)` for recurrence-barrier or capability-gap ownership
+- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `Skill(governance-change)`
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Operational Discipline
 - Comparative output with no fair baseline or external calibration stays explicitly low-confidence.
