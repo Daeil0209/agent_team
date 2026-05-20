@@ -21,6 +21,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 Use this reference before each consequential action segment.
 The gate prevents team-lead from reporting, dispatching, or patching before owner, evidence, and user-fit are named.
 
+Non-overlap boundary with `.claude/skills/agent-team-lead/references/owner-trigger-order.md`:
+- This reference owns the per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and the stop-before-action rule when any field is not named truthfully.
+- Trigger-priority selection across multiple active owner triggers, named-artifact emission, and per-skill stop conditions live at `owner-trigger-order.md`; this gate consumes that selection through the `OWNER` field rather than restating trigger order here.
+
 Reporting curtain inheritance:
 - This reference records an internal gate result only.
 - Gate fields, route checks, user-fit checks, uncertainty checks, and report-admission checks are not user-facing prose.

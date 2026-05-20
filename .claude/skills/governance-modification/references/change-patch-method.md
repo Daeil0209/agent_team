@@ -34,6 +34,7 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - For governance wording changes, identify evasion, ambiguity, semantic conflict, bottleneck, and over-broad-blocking risk before Draft.
 - For top-doctrine execution changes, identify the mapped core-law executable-detail owner before Draft.
 - For core-law execution-detail changes, identify trigger-bound owner guidance need before Draft.
+- Do not draft from the edited layer alone; inspect the mapped layer and triggered consuming owner surfaces before recording coverage or `not-material:<basis>`.
 
 3. `Route + Adjudicate`
 - Confirm placement and ownership using the Single Writer Principle.
@@ -96,7 +97,7 @@ See `.claude/skills/governance-modification/references/decision-and-repair.md` f
 
 ### Required operating rules
 - For confirmed recurrence-hardening patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
-- Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
+- Default patch direction is `removal-first`: classify the challenged surface as removal-default before mutation; retention requires protected-function-loss evidence. When retention applies, choose the narrowest preserving operation that strengthens an existing owner-local rule, gate, checklist, packet, or reference chain.
 - Satisfy `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate` before drafting or mutating.
 - Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
 - Do not weaken an already-correct path just to land the hardening.

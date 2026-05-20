@@ -69,6 +69,7 @@ Local duties must not weaken or replace this gate.
 For `quick update` or `quick hardening`, the Patch-Ready record may be compact only when owner surface, write scope, and meaning preservation are unambiguous.
 Direct-consumption relevance records the consuming owner, target reference, active decision axis, and concrete behavior changed by the target.
 Direct-consumption relevance is invalid when the target exists only for discoverability, citation convenience, broad traceability, reverse-linking, or possible future use.
+Upper-to-core and core-to-trigger-bound results are invalid when recorded from the edited file alone; the consuming owner must inspect the changed layer, mapped layer, and triggered consuming owner surfaces that can execute the changed meaning.
 `not-material:<basis>` for core-to-trigger-bound guidance must cite inspected consuming surfaces or complete mapped core-law coverage.
 Minimum-executable-information result records whether the patch is complete enough to execute and small enough to avoid non-executed burden.
 Compact records still cover every gate field as an exact value, `unchanged:<basis>`, or `not-applicable:<basis>`.

@@ -40,10 +40,10 @@ It never weakens `.claude/reference/reporting-user-reporting-law.md` report admi
 
 ## Activation
 Load at the main session's fresh start, resume, pause-return, or active-runtime recovery/monitoring re-entry.
-Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/reporting-user-reporting-law.md`.
-Before any boot, resume, or monitoring prose, preserve and apply that already-consumed `.claude/reference/reporting-user-reporting-law.md`.
-Do not re-consume `.claude/reference/reporting-user-reporting-law.md` during clean startup.
-If the Startup Contract did not consume `.claude/reference/reporting-user-reporting-law.md` before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
+Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/reporting-core-law.md` and its triggered `.claude/reference/reporting-user-reporting-law.md`.
+Before any boot, resume, or monitoring prose, preserve and apply those already-consumed reporting references.
+Do not re-consume those reporting references during clean startup.
+If the Startup Contract did not consume the reporting core law and triggered user-reporting law before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.

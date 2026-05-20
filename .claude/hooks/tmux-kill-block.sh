@@ -48,7 +48,7 @@ if command -v python3 >/dev/null 2>&1; then
   # `python3 -c "$(cat <<'PY' ... PY)"` keeps stdin free for the piped JSON envelope.
   # `python3 - <<'PY'` would steal stdin and the JSON payload would never reach python.
   MATCH="$(printf '%s' "$INPUT" | python3 -c "$(cat <<'PY'
-import sys, json, re
+import sys, json, re, shlex
 
 try:
     data = json.load(sys.stdin)
@@ -60,31 +60,80 @@ cmd = ""
 if isinstance(ti, dict):
     cmd = ti.get("command", "") or ""
 
-# Match `tmux <tokens>* kill-<sub>` across the command body.
-# - boundary before tmux: start of string, or any non-word/non-path character
-#   (covers `;`, `|`, `&&`, `$(`, backticks, quotes, redirections, newlines).
-# - optional whitespace-separated tokens between tmux and the subcommand. Tokens
-#   cannot contain command separators (`;`, `|`, `&`) or whitespace; this admits
-#   flag-only forms (`-2`, `-CC`) AND flag-plus-value pairs (`-L socket-name`,
-#   `-S /tmp/sock`, `-f path/to/conf`) by consuming each as a separate token.
-# - subcommand: any `kill-<letters/dashes>` form (covers kill-session, kill-server,
-#   kill-pane, kill-window, kill-client, plus any future kill-* variant).
-# - separator-aware: `tmux ls; echo kill-server` does NOT match because the
-#   token loop refuses to cross `;` `|` `&`, so the second clause stays separate.
-pat = re.compile(
-    r'(?:^|[^A-Za-z0-9_/])tmux\s+(?:[^\s;|&\n]+\s+)*kill-[a-z][a-z-]*',
-    re.IGNORECASE,
-)
-if pat.search(cmd):
+kill_subcommand = re.compile(r'^kill-[a-z][a-z-]*$', re.IGNORECASE)
+separators = {';', '|', '||', '&&', '&'}
+tmux_value_opts = {'-L', '-S', '-f', '-c'}
+
+def tokenize(shell_cmd):
+    lex = shlex.shlex(shell_cmd, posix=True, punctuation_chars=True)
+    lex.whitespace_split = True
+    lex.commenters = ''
+    return list(lex)
+
+def command_segments(tokens):
+    seg = []
+    for tok in tokens + [';']:
+        if tok in separators:
+            if seg:
+                yield seg
+                seg = []
+        else:
+            seg.append(tok)
+
+def skip_command_prefix(seg, i):
+    while i < len(seg) and re.match(r'^[A-Za-z_][A-Za-z0-9_]*=.*$', seg[i]):
+        i += 1
+    if i < len(seg) and seg[i] in {'command', 'exec'}:
+        i += 1
+    if i < len(seg) and seg[i] == 'sudo':
+        i += 1
+        while i < len(seg) and seg[i].startswith('-'):
+            opt = seg[i]
+            i += 1
+            if opt in {'-u', '-g', '-h', '-p', '-C', '-T'} and i < len(seg):
+                i += 1
+    return i
+
+def tmux_segment_is_kill(seg):
+    i = skip_command_prefix(seg, 0)
+    if i >= len(seg) or seg[i] != 'tmux':
+        return False
+    i += 1
+    while i < len(seg) and seg[i].startswith('-'):
+        opt = seg[i]
+        i += 1
+        if opt in tmux_value_opts and i < len(seg):
+            i += 1
+    return i < len(seg) and bool(kill_subcommand.match(seg[i]))
+
+def shell_c_segment_is_kill(seg):
+    i = skip_command_prefix(seg, 0)
+    if i >= len(seg) or seg[i] not in {'sh', 'bash', 'zsh'}:
+        return False
+    i += 1
+    while i < len(seg) and seg[i].startswith('-'):
+        opt = seg[i]
+        i += 1
+        if 'c' in opt.lstrip('-') and i < len(seg):
+            return contains_tmux_kill(seg[i])
+    return False
+
+def contains_tmux_kill(shell_cmd):
+    try:
+        tokens = tokenize(shell_cmd)
+    except Exception:
+        return False
+    return any(tmux_segment_is_kill(seg) or shell_c_segment_is_kill(seg) for seg in command_segments(tokens))
+
+if contains_tmux_kill(cmd):
     print("MATCH")
 PY
 )")"
 else
-  # Fallback bash matcher (best-effort; mirrors the python regex above; less robust
-  # on multi-line commands because grep -E without -z treats newlines as separators).
+  # Fallback bash matcher (best-effort; requires tmux to start a command segment).
   if printf '%s' "$INPUT" \
       | tr '\r' ' ' \
-      | grep -E -i -q '(^|[^A-Za-z0-9_/])tmux[[:space:]]+([^[:space:];|&]+[[:space:]]+)*kill-[a-z][a-z-]*'; then
+      | grep -E -i -q '(^|[;|&][[:space:]]*)tmux[[:space:]]+([^[:space:];|&]+[[:space:]]+)*kill-[a-z][a-z-]*'; then
     MATCH="MATCH"
   else
     MATCH=""

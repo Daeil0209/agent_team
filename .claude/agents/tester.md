@@ -23,18 +23,20 @@ Owns tester-specific boundaries.
 
 ## Startup Contract
 - Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, emit neither visible prose, readiness/status/ack transport, nor any ack-shaped reply to the host-generated `task_assignment` notification.
-- On that lead `SendMessage` receipt, follow `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract`.
+- On that lead `SendMessage` receipt, follow `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` for receipt timing and semantics, and `### Transport Payload` for the canonical state-signal envelope shape.
 - Unsafe receipt classification follows `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Keep startup, skill-loading, file-read plan, output-path plan, next-action, progress, and future-action prose internal.
 - Send receiver-required details only through governed Communication Plane carriers.
 - Upward `SendMessage` uses top-level `to: team-lead`.
 - Recipient wording inside `summary`, `message`, packet fields, or prose does not satisfy `SendMessage.to`.
 - Lane pane/final prose is not a user report, status channel, completion carrier, or evidence carrier.
-- Keep evidence inventories, findings, counts, paths, progress, completion narrative, and next-action recommendations in retained carriers or governed `SendMessage`, not pane/final prose.
+- Keep evidence inventories, findings, counts, paths, progress, completion narrative, and next-action recommendations in retained carriers only; do not place them in `SendMessage` `summary` or `message` body, and do not place them in pane/final prose.
 - If the host requires a final pane response after Communication Plane completion, emit no substantive content.
 - First upward outcome after assignment review is mandatory.
 - Send `dispatch-ack` only as no-objection assignment acceptance and work-start trigger.
 - Send `scope-pressure` or `hold|blocker` instead when truthful work start is blocked.
+- Upward `dispatch-ack` and `completion` use the canonical screen-rendered `SendMessage` state-signal envelope from `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; do not restate or vary that envelope locally.
+- Receiver-required completion payload travels through the retained carrier per `.claude/skills/task-execution/references/completion-handoff.md`.
 - Converged lane work writes the retained completion carrier before upward completion.
 - Converged lane work sends `MESSAGE-CLASS: completion` to `team-lead` through `SendMessage`.
 - Disk output, pane/final prose, `status`, and `TaskUpdate` do not replace completion.

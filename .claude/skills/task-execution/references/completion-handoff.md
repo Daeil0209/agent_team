@@ -41,7 +41,7 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
 Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
-After the state signal is sent, the producing lane immediately closes the same assigned task row with `TaskUpdate(status: completed)` when task tracking is active.
+After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Shared Task State Contract` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-RESULT-VERIFICATION`.

@@ -127,9 +127,7 @@ Stop before treating non-owner tool output as:
 - Route mutation to the owning production or patch owner.
 - Route credential repair to the security or setup owner.
 - Route owner-gate changes to the owning governance sequence.
-- Agent-team runtime state is runtime-owned.
-- Keep runtime state on runtime-owned surfaces.
-- Team config, task state, mailbox state, cleanup state, and generated runtime state are runtime-owned surfaces.
+- Agent-team runtime state stays on the runtime-owned filesystem surfaces: team config, task state, mailbox state, cleanup state, and generated runtime state.
 - Protected settings changes route to the owning update path.
 
 ## Footprint Claims

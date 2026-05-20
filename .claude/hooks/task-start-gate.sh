@@ -1345,7 +1345,7 @@ fi
 # TaskUpdate shape enforcement (completion-closure only) removed per operator
 # directive 2026-05-19 and `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]` negative-only-filter philosophy.
 # TaskUpdate doctrine ("completion-closure only" per task-execution/references/
-# runtime-dispatch-law.md and CLAUDE.md ## 8. Environment Configuration Philosophy) stays in effect for
+# message-classes.md ### Shared Task State Contract and CLAUDE.md ## 8. Environment Configuration Philosophy) stays in effect for
 # lane self-restraint via the trio quality contract (Skill(governance-modification) +
 # self-verification + review-verification named lenses); a hook positive-filtering
 # generic Claude Code TaskUpdate patterns was bottlenecking lanes without

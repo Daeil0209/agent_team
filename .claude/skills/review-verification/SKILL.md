@@ -169,18 +169,11 @@ Use `UNVERIFIED` when the live owner surface, design intent, or evidence basis w
 Use absolute zero-risk language only when the frozen acceptance basis makes absolute closure truthful.
 Otherwise use `no identified negative risk on inspected surfaces`.
 
-## Reporting Principle
-Review-verification is internal process work governed by `.claude/reference/reporting-user-reporting-law.md`.
-The `review_verification_packet`, defeater records, evidence basis, open surfaces, classification fields, and convergence state are Procedure Plane records.
-Report this skill as used only when it was actually loaded and applied to the current target.
-A `Skill(review-verification)` tool call must appear in the current turn before any review-verification claim.
-Absence of `Skill(review-verification)` tool call in the current turn invalidates the load or applied claim.
-Inline reasoning, checklist wording, memory, summary awareness, prior-session carry-forward, or "review-verification-style" language is not skill execution.
-Each Steps 1-14 record must cite live owner surface evidence (file path, line range, section anchor, or exact-quote excerpt) plus specific finding/verdict before the next step opens.
-Skim, summary awareness, expected-wording memory, or prior-session carry-forward does not satisfy step consumption.
-
-## Reporting Surface
-User-facing prose admission is owned by `.claude/reference/reporting-user-reporting-law.md`; consume it first, then consume triggered team-lead reporting references only after it admits the report.
+## Reporting
+Review-verification is internal process work governed by `.claude/reference/reporting-user-reporting-law.md`; the `review_verification_packet`, defeater records, evidence basis, open surfaces, classification fields, and convergence state are Procedure Plane records.
+Report this skill as used only when it was actually loaded and applied to the current target; a `Skill(review-verification)` tool call must appear in the current turn before any review-verification claim, and inline reasoning, checklist wording, memory, summary awareness, prior-session carry-forward, or "review-verification-style" language is not skill execution.
+Each Steps 1-14 record cites live owner surface evidence (file path, line range, section anchor, or exact-quote excerpt) plus specific finding/verdict before the next step opens; skim, summary awareness, expected-wording memory, or prior-session carry-forward does not satisfy step consumption.
+User-facing prose admission consumes `.claude/reference/reporting-user-reporting-law.md` first, then triggered team-lead reporting references only after it admits the report.
 `review_verification_packet` is current-turn internal evidence; persist to a retained carrier only on explicit user request, explicit calling-owner requirement, or named downstream owner/action that requires retained consumption.
 
 ## Review Workflow

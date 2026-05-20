@@ -95,6 +95,8 @@ These are never user reports:
 - patch-application logs, applied-patch recaps, wave recaps, backlog lists, dispatch plans, and remaining-patch inventories while the same requested deliverable still has an executable owner/action
 - statements that exist only to say work is starting, continuing, being monitored, being dispatched, being corrected, or being verified
 
+Format does not change reportability. The categories above apply by content semantics, not by visual format. Internal Procedure Plane content remains non-reportable whether it appears as descriptive prose, narrative summary, header-labeled blocks (`SELF-VERIFICATION:`, `review_verification_packet`, or any similar header-prefixed carrier block), field dumps (one-field-per-line listings), evidence rows, classification fields, packet fields, defeater records, per-claim basis, raw counts, candidate lists, retained-carrier contents, or any other surface form of the same internal content.
+
 The user may explicitly request any internal material. That explicit request admits only the requested material and does not convert future internal material into reports.
 
 ## Tool-Adjacent Prose Suppression

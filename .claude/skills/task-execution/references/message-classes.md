@@ -53,7 +53,7 @@ No governed payload field can replace `SendMessage.to`.
 | Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, silent phase-context consumption, or shutdown evidence |
 | Agent-to-lead transport | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, completion, or blocked transport | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
 | Direct teammate interaction | teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
-| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, status update, read, output read, or stop; never assignment delivery | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | task correction, task identity recovery, retained-output `Read`, completion status closure, or exact task stop |
+| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, status update, read, output read, or stop; never assignment delivery | this file `### Shared Task State Contract` | task correction, task identity recovery, retained-output `Read`, completion status closure, or exact task stop |
 
 Task tools are task-state channels.
 Agent communication uses `SendMessage` or teammate UI.
@@ -95,6 +95,19 @@ Summaries are routing aids only; they do not replace exact packet, task, or reta
 When exact wording, full evidence, result inventory, counts, excerpts, or operational notes are needed, carry them in task state or retained-output and send the pointer through the owning message class.
 A receiving owner consumes the governed carrier before acting; a screen-visible envelope or excerpt is not sufficient basis when the governed carrier is required.
 
+### Shared Task State Contract
+Team-lead owns shared task-state use for planned team-runtime assignment through `task-execution`.
+Task tracking is active when team-lead uses the shared task list as the planned assignment identity surface for team-runtime work.
+When task tracking is active, team-lead creates or verifies the task row after current-session team runtime registration and before assignment-grade `SendMessage`.
+`TaskCreate` uses top-level non-empty `subject` and `description`.
+The task row supplies `TASK-ID` identity only.
+`SendMessage.to` carries the live worker target and assignment delivery.
+Task rows are not assignment-owner, assignee, or in-progress tracking surfaces.
+Immediately after `completion` transport, the normal team-runtime `TaskUpdate` mutation sets `status: completed` on the same assigned task.
+Task-scoped tools use exact task identity from `task_assignment`, `TaskList`, `TaskGet`, returned task mutation evidence, or the task file.
+Unknown, guessed, pre-team, lead-local, next-numeric, same-batch planned-but-not-returned, completed, closed, cancelled, or missing ids are not executable assignment identity.
+`TaskOutput` and retained-output reads may use completed task identity only as evidence retrieval, not as a new assignment basis.
+
 ### Receipt Event Contract
 `dispatch-ack` is the assignment acceptance and work-start trigger inside the Communication Plane.
 This contract does not reduce Communication Plane payload capacity.
@@ -129,8 +142,7 @@ The owning message class, packet, completion packet, phase-transition packet, or
 Plain text in a pane is observation evidence only until resent through the required transport or retained carrier.
 A pane/final response containing `MESSAGE-CLASS`, `DISPATCH-ACK`, `COMPLETION-HANDOFF`, or equivalent transport headers is malformed raw Communication Plane leakage and does not satisfy receipt, completion, status, pressure, or blocker transport.
 If an agent cannot use the required transport tool, visible text is not a substitute transport and the lead resolves missing receipt through monitoring/recovery.
-Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
-`TaskCreate` requires top-level non-empty `subject` and `description`.
+Task identity, `TaskCreate` field requirements, executable assignment identity, and `TaskUpdate` closure are owned by `### Shared Task State Contract`.
 Use `Read` on the background task output path when the runtime provides that path.
 
 ### Team Member Startup Recognition

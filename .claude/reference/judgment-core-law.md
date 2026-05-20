@@ -23,4 +23,3 @@ When this core law is consumed, use this file as the representative law and load
 - Local closure report admission is owned by `.claude/reference/reporting-user-reporting-law.md`.
 - Final-arbitration triggers route to validator or `HOLD`.
 - Test and validation packets freeze surface, expected outcome, and acceptance basis.
-Detailed acceptance rules live in `.claude/reference/design-delivery-evidence-acceptance-law.md`.

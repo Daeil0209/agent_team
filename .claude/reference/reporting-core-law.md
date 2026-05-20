@@ -14,7 +14,9 @@ When this core law is consumed, use this file as the representative law and load
 ## Reporting Plane Law
 - Reporting Plane is owned by `.claude/reference/reporting-user-reporting-law.md`.
 - `team-lead` owns every user-facing report and consumes that law before drafting.
+- Report admissibility follows content semantics, not visual format.
+- Detailed non-reportable forms are owned by `.claude/reference/reporting-user-reporting-law.md` `## Non-Reportable Content`.
 - The common completion spine, retained-output carrier rules, and completion-grade convergence/verification gate live in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Restating user-report admissibility, transport-boundary content, or message-class semantics outside the named owners is a single-source-of-truth defect.
-- Report prose rules as context-bound operating rules.
+- Treat report prose rules as context-bound operating rules.
 - Report technical enforcement only from runtime or settings evidence.

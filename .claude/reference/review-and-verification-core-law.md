@@ -12,7 +12,7 @@ When this core law is consumed, use this file as the representative law and load
 
 ## Review Gate Law
 - `[REVIEW-FIRST]` `Skill(review-verification)` tool call must appear in the current turn before any `Edit`/`MultiEdit`/`Write`/`Bash` mutation on a `.claude/` governance asset by the calling owner.
-- `Skill(review-verification)` consumption uses defeater-first posture per its `## Critical Review Gate` Step 5.
+- `Skill(review-verification)` consumption uses defeater-first posture per its `### 5. Critical Review Gate`.
 - Confirmation-only, convenience-aligned, or self-approval review-verification execution is invalid per the same gate.
 - Review-verification gates consequential governance judgment before mutation.
 - Review-verification does not own file mutation, final validation, or acceptance.
@@ -64,4 +64,3 @@ When this core law is consumed, use this file as the representative law and load
 - Completion requires verified result.
 - User-facing brevity limits emitted content only.
 - Internal evidence gathering and verification stay at deliverable-required quality.
-Detailed decisive evidence and proof-surface rules live in `.claude/reference/design-delivery-evidence-acceptance-law.md`.

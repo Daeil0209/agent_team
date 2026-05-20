@@ -53,6 +53,7 @@ After `Skill(governance-modification)` entry, `team-lead` consumes `Skill(review
 Standard or structural update consumes the full workflow.
 Quick update consumes a single named lens per `Skill(review-verification)` `## Named Lane Lens Index`.
 `REVIEW-VERIFICATION-NEED` records the chosen lens for quick update or `full-workflow` for standard/structural update.
+When a change can affect top doctrine, mapped core-law executable detail, or trigger-bound owner-reference guidance, `REVIEW-VERIFICATION-NEED` includes `governance-continuity-lens` or `full-workflow` before Draft.
 `owner-local-sufficient:<basis>` is invalid for governance asset changes inside `Skill(governance-modification)`.
 Every governance asset change consumes `Skill(review-verification)`.
 After Post-Verify, open `Skill(self-verification)` for the outgoing changed-result or report claim.
@@ -134,18 +135,8 @@ The `Change Sequence` is the standard controlled path for rule, code, config, ho
 Use `references/change-patch-method.md` for detailed step order and constraints.
 
 Hard surface:
-- Load `work-planning` only at a fresh or reopened change boundary.
-- Use `Skill(self-verification)` plan audit only when the change plan is disputed.
-- Consume the recorded `Skill(review-verification):<bounded-question>` output per `Activation` per-change-tier rule before Draft, Execute, and convergence.
-- The `Skill(review-verification)` tool call must appear in the current turn before any `Edit`/`MultiEdit`/`Write`/`Bash` mutation on a `.claude/` governance asset by the calling owner (team-lead or lane).
-- Post-hoc `Skill(review-verification)` on already-applied patches is recurrence-class defect per `.claude/CLAUDE.md` `## 5. Modification Philosophy` and does not satisfy this gate.
+- Consume `references/change-patch-method.md` `## Change Sequence Required Order` for Prerequisites A-D, Steps 1-7, and reopen-granularity rules; the in-turn pre-mutation `Skill(review-verification)` tool-call requirement, post-hoc-review recurrence-defect rule, and post-verify `Skill(self-verification)` rule are owned there.
 - The failed pre-mutation order returns to recurrence-hardening at the narrowest calling-owner surface.
-- Review changed content, not just the plan.
-- Execute only the reviewed, bounded, policy-compliant change.
-- Governance-sensitive execution follows `references/change-patch-method.md` Step 5b.
-- Hook/settings runtime-enforcement expansion follows `references/asset-change-checks.md` Hook-Last preflight and explicit operator approval.
-- Post-verify resulting diff, owner semantics, live references, information preservation, affected consumed surfaces, and in-flight/prior-verdict impact; record and consume `Skill(review-verification):<bounded-question>` when that check exposes material coherence, owner-surface, removal, patch-worthiness, or negative-risk judgment.
-- Load `Skill(self-verification)` for changed-result closure after post-verify and any required `Skill(review-verification)` re-engagement converge, before consequential reporting.
 
 ## Patch Execution Method
 Detailed patch mechanics are owned by `references/change-patch-method.md`.
@@ -161,4 +152,5 @@ Ordinary asset-change patches preserve the live asset contract without inventing
 - Runtime-enforcement expansion opens Hook-Last preflight and operator approval.
 - Failed Post-Verify auto-reopens Change Sequence at the earliest invalidated step at the current cumulative live state without user authorization, subject to `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` escalation criteria; the iteration loop continues until Post-Verify converges or an escalation-class blocker is recorded.
 - Verified change opens `Skill(self-verification)`; after result verification, resume the open Change Sequence or verified `RESUME-ACTION` before consequential reporting.
+- Verified change alone does not close an interrupting governance change; closure requires the verified `RESUME-ACTION`, reopened original owner, or `HOLD`.
 - Converged recurrence barrier opens the verified `RESUME-ACTION`.

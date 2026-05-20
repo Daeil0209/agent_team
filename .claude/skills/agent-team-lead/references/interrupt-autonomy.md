@@ -22,6 +22,7 @@ Rules:
 - For compaction, pause-return, handoff, or long interruption risk, make the resume record reconstructable from the active owner record, task/workflow state, dispatch recovery record, current-session runtime authorities, changed owner surface, or explicit `HOLD`/follow-up ownership.
 - Keep continuity records on the active owner record, task/workflow state, changed owner surface, or explicit `HOLD`/follow-up ownership.
 - After the interrupt converges, verify `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute the `RESUME-ACTION`.
+- A corrective interrupt is not closed until the verified `RESUME-ACTION` is executed, the original owner is reopened, or a legitimate non-resume termination is recorded.
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Status or progress questions expose the stall.

@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Fixed section order: Structural Contract, Activation, Reference Map, Lead Procedure Routing, Resolve Next Owner And Action.
 
 ## Activation
-- Load at fresh main-session startup after `.claude/CLAUDE.md`, `.claude/agents/team-lead.md`, and `.claude/reference/reporting-user-reporting-law.md` are consumed.
+- Load at fresh main-session startup after `.claude/CLAUDE.md`, `.claude/agents/team-lead.md`, `.claude/reference/reporting-core-law.md`, and its triggered `.claude/reference/reporting-user-reporting-law.md` are consumed.
 - Load before Priority 0, RPA, or any lead-owned procedure movement.
 - Load at most once per Claude session unless this skill text changes or the session changes.
 - Later lead-owned procedure triggers consume the current same-session loaded `agent-team-lead` skill and the exact trigger-bound reference.

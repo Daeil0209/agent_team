@@ -71,11 +71,6 @@
 - Reference consumption requires direct effect on the active owner action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness decision.
 - Existence, discoverability, citation convenience, broad traceability, and reverse-linking do not prove reference consumption.
 - Communication Plane governs internal transport, channel classes, teammate messaging, and runtime message routing.
-- Assignment-grade lane work requires a first upward outcome after packet review.
-- `dispatch-ack` means no-objection work-start.
-- Lane completion requires a retained completion carrier.
-- Lane completion requires `MESSAGE-CLASS: completion` to `team-lead`.
-- Runtime status, task state, disk output, pane text, and final prose do not replace completion transport.
 - Communication transport detail stays on `.claude/skills/task-execution/references/message-classes.md`.
 - Tool capability, runtime, settings, and hooks stay under Environment Configuration Philosophy.
 - Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
@@ -118,9 +113,6 @@
 - `no-compression` keeps same-subject repeated-pattern wording in one sentence when only peer object terms differ under the same owner, action pattern, and governing role.
 - `no-compression` also keeps same-subject repeated-pattern wording in one sentence when every listed trigger, stop, evidence, exception, or acceptance term has the same governing role.
 - Split bundled wording when one clause can pass and another clause can fail independently.
-- `upper-lower execution-drive` preserves direct-execution continuity from orchestration to tool call.
-- `executable-imperative` writes rules as positive owner-action directives and pairs hazardous-action stops with the valid replacement action or next owner.
-- `minimum-executable-information` governs governance proposal, planning, and implementation content.
 - Modification preserves core information and avoids unnecessary document growth or procedural complexity.
 - Modification treats missing execution-critical information as an under-specified defect.
 - Modification treats extra non-executed procedure, example, condition, or context burden as an over-specified defect.
@@ -146,6 +138,7 @@
 - Communication, Procedure, and Reporting stay separate planes.
 - User-facing reports use only admitted reporting surfaces.
 - User-facing reporting excludes internal orchestration unless explicitly requested and admitted.
+- User-facing report admissibility follows content semantics, not visual format.
 - Technical enforcement is reported only from runtime or settings evidence.
 - Restating reporting or transport semantics outside named owners is a single-source-of-truth defect.
 - Primary owner link: `team-lead` owns user-facing report admission and prose for this philosophy.

@@ -14,13 +14,7 @@ When this core law is consumed, use this file as the representative law and load
 
 ## Modification Law
 - Operator-emphasized keyword definitions are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
-- Core enforcement keywords are operator-emphasized and cross-session binding.
-- Core keyword 1: `removal-first` per `[GOV-MIN]` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete; deletion is valid only when meaning is duplicate, obsolete, harmful, or preserved elsewhere.
-- Core keyword 2: `consumed-surface` per `[HARDEN]` lands patches on the document that affected agents actually load and consume at the decision moment, so the rule reaches its enforcement point and rule execution force is maximized.
-- Core keyword 3: `no-compression` per `[GOV-MIN]` separates independently testable meanings instead of splitting repeated peer terms.
-- Core keyword 4: `upper-lower execution-drive` per `[AUTO-PROC]` same-turn direct-execution drive maintains unbroken drive continuity from upper orchestration to lower direct-execution tools so rule execution force does not weaken at any handoff or tool call, enabling automatic execution without sequence breaks.
-- Core keyword 5: `executable-imperative` per `[RULE-FORCE]` writes rules as positive owner-action directives by default; stop/prohibition wording is valid for live hazardous actions only when it also names the valid replacement action or next owner.
-- Core keyword 6: `minimum-executable-information` per `[GOV-MIN]` and `[RULE-FORCE]` keeps only the smallest complete information set required for the active owner to execute the rule truthfully.
+- Patch-design decisions test every operator-emphasized keyword from that owner: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, and `minimum-executable-information`.
 - `team-lead` cites the operator-emphasized keywords at every patch-design decision.
 - Every dispatched lane agent cites the operator-emphasized keywords at every governance-asset patch-design decision.
 - Every `Skill(governance-modification)` consumer cites the operator-emphasized keywords at every patch-design decision.
@@ -58,7 +52,7 @@ When this core law is consumed, use this file as the representative law and load
 - Direct-consumption relevance means the consuming owner uses the target to decide action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness.
 - A reference path added for existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is removed, re-homed to the owning source-to-destination map, or replaced with the exact consumed owner surface.
 - Patch-ready review records direct-consumption relevance through `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
-- Sequence Arbitration Law governs governance-modification routing.
+- When governance-modification routing overlaps another sequence, `.claude/reference/work-execution-core-law.md` `## Procedure And Ownership Law` primary-sequence rule governs routing.
 - `[HARDEN]` governs recurrence-barrier correction scope.
 - Open `Skill(governance-modification)` after quality, evidence, ownership, and acceptance integrity are secure.
 

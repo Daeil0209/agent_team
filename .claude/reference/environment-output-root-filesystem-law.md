@@ -105,16 +105,7 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
 - Send protected settings changes to the owning update path.
 - Source edits stay on source owner files.
 - Governance edits stay on governance owner files.
-- These surfaces are runtime-owned:
-  - team config
-  - task state
-  - mailbox state
-  - cleanup state
-- Keep these on runtime-owned surfaces:
-  - task state
-  - mailbox state
-  - cleanup state
-  - generated runtime state
+- Runtime-owned filesystem surfaces (team config, task state, mailbox state, cleanup state, generated runtime state) are enumerated canonically at `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`; keep generated runtime content on those surfaces.
 - `claude_doc/<work-name>/` contents are protected work-artifact carriers, distinct from runtime-owned surfaces and from `.claude/` governance text.
 - Hooks, settings rules, and runtime cleanup must not delete, move, or block `claude_doc/<work-name>/` lifecycle without explicit user-approved teardown.
 - Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review per `.claude/hooks/MANIFEST.md` and `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]`.

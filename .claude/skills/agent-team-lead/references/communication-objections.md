@@ -35,7 +35,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Route `external-tool-bridge` or setup owner for capability gaps.
 - Correct the packet when basis is missing.
 - Split ownership when another lane is needed.
-- Return the next executable path to developer after correction.
+- Return the next executable path to the blocked lane or owning correction route after correction.
 - Repeat the resolution loop until the user instruction is completed.
 - Report `HOLD` when evidence proves a genuine:
   - impossible condition

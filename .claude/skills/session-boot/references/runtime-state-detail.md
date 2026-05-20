@@ -307,8 +307,8 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class C: run `tmux -L <socket> kill-pane -t <paneId>` on the dead pane, then remove the associated config entry; re-spawn the lane when still required.
 - Class D: unlink the orphan socket file only after confirming `tmux -L <name> list-sessions` fails; never unlink a socket whose server responds.
 - Class E: bring UI and governance roster into parity by either re-attaching the live process via Class A action or removing the surplus live process via approved `kill <pid>`; UI count must equal `config.json` member count post-reconciliation.
-- Class F: discard the phantom task id; treat retained-output disk evidence as the canonical completion record for the affected work surface; do not retry `TaskUpdate` on the phantom id.
-- Class G: team-lead consumes the on-disk retained-output as the canonical completion record; team-lead records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration; future dispatch packets restate the explicit completion-channel requirement.
+- Class F: discard the phantom task id; treat retained-output disk evidence as evidence for the affected work surface only; do not retry `TaskUpdate` on the phantom id.
+- Class G: team-lead consumes the on-disk retained-output as production evidence only, opens missing completion-transport recovery or keeps the surface open, and records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration.
 - Class H: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class I.
 - Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or `HOLD` per `.claude/skills/task-execution/references/dispatch-recovery.md`.
 

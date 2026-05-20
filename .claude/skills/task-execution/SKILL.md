@@ -98,9 +98,8 @@ Own the actual execution move:
 - reuse a suitable live or standby agent when that is the frozen path
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
-- run the task-state and packet final check before sending
-- reject any planned `TaskCreate` lacking top-level non-empty `subject` and `description` before the tool call
-- reject any planned pre-completion `TaskUpdate`, `owner`, `assignee`, or `in_progress` task-row mutation before the tool call
+- run `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract` and packet final check before sending
+- reject any planned task-state tool call that violates that contract before the tool call
 - confirm retained-output carriers with silent success commands; failed checks surface only through the owning blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - Carry `DERIVED-DEFAULTS`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, and request-bound packet fields only from the frozen planning basis or active workflow owner's phase-local refinement.

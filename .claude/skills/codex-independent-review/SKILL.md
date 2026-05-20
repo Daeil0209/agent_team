@@ -18,13 +18,7 @@ The active tool is `mcp__codex__codex` when configured independent review is req
 Use this skill only through an active owner path.
 
 ## Authority
-**Coverage:** Codex MCP adapter selection, common packet contract, tool discipline, target-specific review routing, fail-open truth, returned-point schema, and team-lead adjudication discipline.
-
-**Adjacent owners hold:** planning freeze, workflow phase authority, assignment dispatch, production, review findings, test proof, validation verdict, `Skill(self-verification)` plan audit, `Skill(self-verification)` result verification, external-tool recovery, and user-facing reporting.
-
-Configured-review output is evidence.
-Configured-review output is not authority.
-This skill never blocks, dispatches, validates, accepts, logs in, changes files, repairs credentials, edits settings/hooks, or replaces owner verification.
+Coverage, adjacent-owner boundaries, evidence-only output rule, and non-substitution rule (no block, dispatch, validate, accept, login, file mutation, credential repair, or settings/hook edit) live canonically at `references/common-contract.md` `## Common Contract` and `## Tool Discipline`.
 
 ## Agent Relationships
 - `team-lead` owns configured-review activation, packet truth, point adjudication, convergence record updates, and user-facing claim boundaries.

@@ -72,7 +72,9 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - Shard only when each shard's write scope is explicit and disjoint before the first developer dispatch.
 
 ## Task Identity And Communication
-- Task-scoped tools such as `TaskGet`, `TaskUpdate`, `TaskOutput`, and `TaskStop` take the task id from the explicit `task_assignment` packet.
+- Shared task-state creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract`.
+- Monitoring and task-control use exact task ids from that contract's approved identity sources.
+- `task_assignment` is task-identity evidence only; the authoritative assignment packet remains the lead `SendMessage` body or retained task-execution carrier.
 - Agent names and `agentId@team` values are agent identifiers only.
 - Agent-scoped communication uses `SendMessage(to: "<exact-live-member-name>")` for agent control.
 - Keep agent identifiers separate from task identifiers.

@@ -8,8 +8,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 
 # task-execution: Dispatch Entry Contract
 
-Load after `Skill(task-execution)` is active by actual skill load or current same-session activation basis and before any dispatch, reuse, blocker-clear, or packet assembly move.
-Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` does not satisfy this entry condition.
+Load after `Skill(task-execution)` is active per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation` and before any dispatch, reuse, blocker-clear, or packet assembly move.
 
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
@@ -32,13 +31,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
-- `AGENT-MAP` and `PARALLEL-GROUPS` must be concrete when additional-agent routing is host-authorized.
-- `ACTIVE-CONCURRENT-AGENT-CAP` must be concrete when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable.
-- `task-execution` consumes the frozen cap and does not infer or raise it from runtime convenience.
-- If planned concurrent nonblocked groups exceed `ACTIVE-CONCURRENT-AGENT-CAP`, stop and reopen `work-planning`.
-- If they are not mandatory but `task-execution` can consume the route, each must carry explicit `not-applicable:<basis>`.
-- Valid `not-applicable` bases are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route that `work-planning` kept dispatch-owned without authorizing an agent dispatch move yet.
-- `not-applicable` is invalid once an authorized agent dispatch move exists.
+- `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, exceed-stop rule, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path.
 - File-only, guessed, or pre-`work-planning` measurement is not dispatch-ready.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for configured independent-review handling.
@@ -68,7 +61,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`.
-- Task identity comes from `task_assignment`, `TaskList`, `TaskGet`, or returned task mutation evidence.
+- Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract`.
 - Agent name alone is not task identity.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.

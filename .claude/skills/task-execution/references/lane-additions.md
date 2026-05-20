@@ -20,14 +20,14 @@ Every agent-specific skill inherits these common preconditions:
 - Lane upward `SendMessage` sets top-level `to: team-lead`.
 - A recipient named only in visible text, `summary`, `message`, or packet fields does not satisfy the tool envelope.
 - Missing `SendMessage.to` is an envelope defect, not a compliance retry loop.
-- Before any `MESSAGE-CLASS: dispatch-ack` or `MESSAGE-CLASS: completion` `SendMessage`, the producing lane verifies the render matches the canonical state-signal envelope owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; mismatch (extra wording in `summary`; any body content beyond empty or single ASCII space) is a producer self-review defect that blocks the `SendMessage` and routes to packet-correction.
+- Producer self-review verifies the canonical state-signal envelope per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` before any `MESSAGE-CLASS: dispatch-ack` or `MESSAGE-CLASS: completion` `SendMessage`; failure blocks that `SendMessage` and opens packet-correction.
 - Use `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when the lane cannot truthfully start the assigned work as written.
 - A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence (not destructive, security-critical, or session-stability-breaking per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`) is an over-broad-blocking defect per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message, and does not strain its own compliance to satisfy the block.
 - Converged lane work must hand off to `team-lead` through `.claude/skills/task-execution/references/completion-handoff.md`.
 - The handoff requires both the retained carrier containing the common completion spine and `MESSAGE-CLASS: completion` sent to `team-lead` through `SendMessage`.
 - Disk output, pane/final prose, `status`, and `TaskUpdate` do not replace the required completion handoff.
 - Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
-- Immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active after `completion`.
+- Immediately apply the same assigned-task `TaskUpdate` closure required by `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract` when task tracking is active after `completion`.
 - After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
 - This duty is lane-baseline; packet wording does not need to request it.
 - For lane work that touches governance assets (`.claude/` doctrine, agents, skills, settings, hooks, or live-surface mirrors), the lane-side quality contract is the trio plus the operator-emphasized keyword self-check.

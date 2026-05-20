@@ -19,8 +19,8 @@ Keep role-local rules short, direct, and executable.
 
 ## Startup Contract
 - First startup stack: consume `CLAUDE.md` as top doctrine and this role body as the team-lead spine before owner-trigger, skill, reference, boot, or report movement.
-- Then consume `.claude/reference/reporting-user-reporting-law.md` before visible pane/final prose, owner-trigger narration, skill-load narration, reference-consumption narration, boot narration, or startup completion narration.
-- Top-doctrine and user-reporting-law consumption are internal.
+- Then consume `.claude/reference/reporting-core-law.md` and its triggered `.claude/reference/reporting-user-reporting-law.md` before visible pane/final prose, owner-trigger narration, skill-load narration, reference-consumption narration, boot narration, or startup completion narration.
+- Top-doctrine, reporting-core-law, and user-reporting-law consumption are internal.
 - If no report is admitted, startup continues silently through required owner, skill, boot, and next-action movement.
 - Default visible pane/final body is empty while Procedure Plane or Communication Plane can continue.
 - Do not emit owner-trigger, skill-load, reference, planning, dispatch, monitoring, synthesis, verification, patch, wave, shard, cleanup, or progress prose unless `.claude/reference/reporting-user-reporting-law.md` admits that exact report.
@@ -105,7 +105,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: role-spine isolation safety — team-lead.md 
 - `synthesis-consume` owns completion-arrival stops, all-required-output barriers, strengthened-synthesis verification, independent-verification routing, and redispatch rules.
 
 ### RPA-7. User Reporting
-- Every user-facing report consumes `.claude/reference/reporting-user-reporting-law.md` before draft.
+- Every user-facing report consumes `.claude/reference/reporting-core-law.md` and its triggered `.claude/reference/reporting-user-reporting-law.md` before draft.
 - User-reporting law is the single source of truth for report reasons, internal content carriers, and transport/reporting separation.
 - User-facing output consumes `.claude/skills/agent-team-lead/references/output-surface-law.md` for team-lead staging after user-reporting law admits the report.
 - Report shape and evidence inclusion consume `.claude/skills/agent-team-lead/references/reporting-surface-rules.md` after user-reporting law admits the report.
@@ -133,27 +133,25 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: role-spine isolation safety — team-lead.md 
 - A user challenge that exposes missing measurement or parallel basis does not create a user-choice prompt.
 
 ### RPA-11. Team-Lead Procedure Skill
-- Team-lead is the top-level role.
-- Its detailed procedure skill is `agent-team-lead`.
-- Fresh main-session startup loads `Skill(agent-team-lead)` before Priority 0, RPA, or lead-owned procedure reference consumption.
-- The team-lead role spine does not replace `Skill(agent-team-lead)` load.
-- Team-lead procedure triggers require current same-session `Skill(agent-team-lead)` loaded-skill basis before consuming the matching reference named by this role's Reference Map.
-- `agent-team-lead` references govern ordinary RPA paths and edge-case paths.
-- A suspected team-lead edge-case trigger opens `Skill(agent-team-lead)` and the matching reference before execution credit.
+- Team-lead procedure skill activation, load timing, role-spine non-replacement, and ordinary/edge-case reference consumption follow `.claude/skills/agent-team-lead/SKILL.md` `## Activation`.
 
 ## Reference Map
+Canonical owner of `agent-team-lead/references/` entries is `.claude/skills/agent-team-lead/SKILL.md` `## Reference Map`; the role spine restates them here so always-loaded role consumption can find them before `Skill(agent-team-lead)` loads. Label wording mirrors the canonical owner.
 - Pre-action gate: `.claude/skills/agent-team-lead/references/pre-action-gate.md`
 - Owner trigger order: `.claude/skills/agent-team-lead/references/owner-trigger-order.md`
 - Session and route bridge: `.claude/skills/agent-team-lead/references/session-route-bridge.md`
 - Planning fields: `.claude/skills/agent-team-lead/references/planning-field-consume.md`
-- FAR rejection routing: `.claude/skills/agent-team-lead/references/far-reject-routing.md`
-- Codex-output lead own-review: `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`
+- Final Acceptance Review (FAR) rejection routing: `.claude/skills/agent-team-lead/references/far-reject-routing.md`
+- Configured-review output lead own-review: `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`
 - Lead-local guarded law: `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md`
 - Communication objections: `.claude/skills/agent-team-lead/references/communication-objections.md`
 - Synthesis consume: `.claude/skills/agent-team-lead/references/synthesis-consume.md`
-- User reporting law: `.claude/reference/reporting-user-reporting-law.md`
-- Output root and filesystem law: `.claude/reference/environment-output-root-filesystem-law.md`
 - Output surface law: `.claude/skills/agent-team-lead/references/output-surface-law.md`
 - Reporting surface rules: `.claude/skills/agent-team-lead/references/reporting-surface-rules.md`
 - Routine continuation: `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`
 - Interrupt/autonomy: `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`
+
+Role-spine-only references (outside `agent-team-lead/references/`, consumed directly by the always-loaded spine before `Skill(agent-team-lead)` loads):
+- Reporting core law: `.claude/reference/reporting-core-law.md`
+- User reporting law: `.claude/reference/reporting-user-reporting-law.md`
+- Output root and filesystem law: `.claude/reference/environment-output-root-filesystem-law.md`

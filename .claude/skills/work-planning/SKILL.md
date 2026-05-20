@@ -198,8 +198,7 @@ Configured independent-review detail stays in `Skill(codex-independent-review)` 
 Hard-stop detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail stays in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record `ACTIVE-CONCURRENT-AGENT-CAP` on this surface before dispatch can open.
 Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
-Team-routed or ambiguous dispatch opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-When a current same-session loaded `task-execution` basis exists, planning opens loaded `task-execution` consumption of the current frozen route instead of another skill load.
+Team-routed or ambiguous dispatch opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.

@@ -137,9 +137,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 11. Consume the named owner before mutation.
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
-14. `team-routing candidate` opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-15. `ambiguous-route` opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-16. A valid same-session loaded `task-execution` basis opens loaded `task-execution` consumption instead of another skill load.
+14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 17. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
 18. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
 19. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.

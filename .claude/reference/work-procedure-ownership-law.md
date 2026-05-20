@@ -81,13 +81,9 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
 - Executable rules name owner, trigger, stop, evidence, verification, and acceptance truth when material.
-- Procedure outranks habit.
-- Procedure outranks convenience.
-- Procedure outranks source memory.
-- Procedure outranks model confidence.
+- Procedure outranks habit, convenience, source memory, and model confidence.
 - Consequential work stays inside the named procedure currently open.
-- The active path keeps one truthful next owner.
-- The active path keeps one truthful next action.
+- The active path keeps one truthful next owner and one truthful next action.
 
 ## Sequence Registry
 - `Boot Sequence` is a standard sequence.

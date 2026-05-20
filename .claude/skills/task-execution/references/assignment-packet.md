@@ -22,7 +22,7 @@ Runtime shape terms:
 - standalone `Agent` semantics owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` and `## Team-Agent-Only Lane Dispatch`.
 - `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
 - Assignment-grade work begins only after `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` reaches that exact live member address.
-- Task rows provide `TASK-ID` identity; work delivery uses assignment-grade `SendMessage.to`.
+- Task-row identity and `SendMessage.to` delivery split follows `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract`.
 - `team member address` is the exact live process-backed roster name. A configured role label is not a `SendMessage.to` address unless the roster contains that exact member with live pane proof.
 - `teammate context` is independent. A teammate loads project context such as `CLAUDE.md`, configured MCP servers, and available skills, and receives the lead's spawn/assignment prompt; it does not inherit the lead's conversation history. Assignment packets must therefore be self-contained enough for the receiving lane to act without reconstructing prior chat.
 - `visible teammate response` is not an assignment, receipt, completion, status, pressure, blocker, or shutdown channel. It is UI rendering only. Screen-rendered `SendMessage` state signals are governed by `.claude/skills/task-execution/references/message-classes.md`.
@@ -85,9 +85,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - missing `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
 - contradictory `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
 - a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `completion` without retained carrier, permits `completion` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
-- for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch planned-but-not-returned task ids are invalid packet identity
-- when creating that `TASK-ID`, call `TaskCreate` with top-level non-empty `subject` and `description`; missing `subject` or `description` is tool-envelope invalid and sends zero assignment-grade `SendMessage` calls
-- assignment packets must not instruct lanes to claim task rows with `TaskUpdate.owner`, `assignee`, or `status=in_progress`; `SendMessage.to` carries the assigned member
+- when task tracking is active, consume `message-classes.md` `### Shared Task State Contract` for `TASK-ID`, `TaskCreate`, task-row non-owner, and `TaskUpdate` completion-closure rules
 - invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
 - analysis or defect-audit `CLAIM-CEILING`: the packet states whether the receiver returns evidence-only candidates, review findings, validation verdict input, or patch-worthiness classification; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskCreate` result has returned before dependent dispatch or task mutation

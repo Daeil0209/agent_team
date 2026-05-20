@@ -27,8 +27,7 @@ When this core law is consumed, use this file as the representative law and load
 - Process states are nonterminal evidence.
 - Status report, phase-transition signal, partial-result emission, intent announcement, and process-step record are process states.
 - `HOLD` requires owner, blocker, and next safe evidence step.
-- Missing next owner reopens the last valid owner.
-- Missing next action reopens the last valid owner.
+- Missing next owner or next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit, convenience, source memory, and model confidence.
 - Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
 - `Skill(self-verification)` plan audit is exception-only per `.claude/skills/self-verification/SKILL.md` `## Activation Trigger` plan-audit conditions.
@@ -95,7 +94,7 @@ When this core law is consumed, use this file as the representative law and load
 - Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.
 - Non-core trigger-bound `.claude/reference/*-law.md` detail references are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
 - `.claude/reference/*-map.md`, `environment-official-claude-code-source-cache.md`, `environment-runtime-footprint-continuity.md`, and `environment-output-curtain-runtime.md` are not always-on doctrine.
-- Consume non-always-on references only when their local `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` trigger is material to the active owner path.
+- For the map/runtime references named above, `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` supplies eligibility; it does not override the `SOURCE-ANCHOR`/`SOURCE-RULES`/`Consume When` gate for non-core law references.
 - Reference consumption is valid only when the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness decision.
 - Reference path existence, search convenience, broad traceability, reverse-linking, or non-triggered background relevance leaves the target unconsumed.
 - A claimed reference with a direct-consumption relevance gap stops execution, completion, and positive synthesis until `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding` supplies an applied-rule mapping or removes the target from the active surface.
@@ -109,8 +108,7 @@ When this core law is consumed, use this file as the representative law and load
 - Assignment-grade lane receipt requires a first upward outcome after packet review.
 - Valid first upward outcomes are `dispatch-ack`, `scope-pressure`, and `hold|blocker`.
 - `dispatch-ack` means no-objection assignment acceptance and work-start trigger.
-- Converged lane work requires a retained completion carrier.
-- Converged lane work requires `MESSAGE-CLASS: completion` to `team-lead`.
+- Converged lane work requires both a retained completion carrier and `MESSAGE-CLASS: completion` to `team-lead`.
 - Runtime status, task state, disk output, pane text, final prose, and visible teammate output do not replace required completion transport.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, report permission, and claim strength.
 

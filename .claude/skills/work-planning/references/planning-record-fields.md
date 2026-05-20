@@ -69,9 +69,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, and `DISPATCH-BLOCKERS` are mandatory for consequential `team-lead` plans.
 - `LEAD-LOCAL-WORK-ITEMS` is mandatory when `ROUTING-SIGNAL` is `lead-local candidate`.
 - `LEAD-LOCAL-REQUIRED-SKILLS` is mandatory when `ROUTING-SIGNAL` is `lead-local candidate` and the acting subject needs any non-owner skill to complete the frozen local path truthfully.
-- `ACTIVE-CONCURRENT-AGENT-CAP` is mandatory when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable.
-- `ACTIVE-CONCURRENT-AGENT-CAP` records the active value and cap basis from `parallel-fit.md`.
-- A user-stated maximum must be preserved in the cap basis even when a lower runtime or host ceiling controls the active value.
+- `ACTIVE-CONCURRENT-AGENT-CAP` is mandatory when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable; cap rules (active value, cap basis enumeration, user-maximum preservation, default host-safe ceiling) live canonically at `.claude/skills/work-planning/references/parallel-fit.md`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when routing is team-routed or becomes team-routed after one named blocker-clear move.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when additional-agent routing is host-authorized.
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` consumes the route, record `not-applicable:<basis>` instead of leaving the field blank.
@@ -134,9 +132,7 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
 - `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
-- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to loaded `task-execution` consumption when it records `same-session-loaded:task-execution`.
-- Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is not a valid `same-session-loaded` basis.
+- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 - If execution reveals a new consequential local item that is not frozen here, stop and reopen `work-planning`.
 - A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
 - That bounded correction exception ends immediately when execution reveals a moved `work-planning` boundary-change axis or route ambiguity.

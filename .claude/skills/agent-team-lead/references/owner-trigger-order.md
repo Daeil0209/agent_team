@@ -12,6 +12,10 @@ Use this reference to decide which owner opens first when several triggers are a
 The goal is one executable next owner/action.
 Treat procedural narration as nonterminal evidence.
 
+Non-overlap boundary with `.claude/skills/agent-team-lead/references/pre-action-gate.md`:
+- This reference owns trigger-priority selection across multiple active owner triggers, named-artifact emission, per-skill stop conditions, and same-boundary continuation rules.
+- Per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and the stop-before-action rule when any field is not named truthfully live at `pre-action-gate.md`; this reference is consumed through the gate's `OWNER` field rather than restating gate fields here.
+
 Reporting curtain inheritance:
 - This reference produces Procedure Plane records only.
 - Trigger order, named artifacts, consumption status, and next-owner/action are internal control facts.
