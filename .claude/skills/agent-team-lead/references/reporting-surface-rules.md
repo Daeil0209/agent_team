@@ -2,7 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communication; Reference Binding"
+SOURCE-RULES: "RPA-7 report shape and evidence inclusion; Reporting Philosophy; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Reporting Surface Rules
 
@@ -18,7 +19,7 @@ SOURCE-RULES: "RPA-7 report shape and evidence inclusion; CLAUDE.md Communicatio
 - Evidence Basis
 
 ## Purpose
-Use this reference only after `.claude/reference/user-reporting-law.md` admits a user-facing team-lead report. It keeps admitted reports compact, evidence-bounded, and free of Communication Plane or Procedure Plane payload.
+Use this reference only after `.claude/reference/reporting-user-reporting-law.md` admits a user-facing team-lead report. It keeps admitted reports compact, evidence-bounded, and free of Communication Plane or Procedure Plane payload.
 These team-lead prose surfaces use this same report shape:
 - terminal-visible prose
 - pane-visible prose
@@ -43,7 +44,7 @@ Record shape only after user-reporting law admits the report:
 
 ## Stop
 Stop before reporting when required `Skill(self-verification)` result verification is missing.
-Stop before `FINAL` when residual deliverable convergence remains open under `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`, `.claude/skills/agent-team-lead/references/synthesis-consume.md`, or the active acceptance/proof owner.
+Stop before `FINAL` per `.claude/skills/agent-team-lead/references/output-surface-law.md` `## Stop` (canonical FINAL-residual stop owner).
 Stop before basis expansion by default.
 Basis expansion is allowed only for:
 - explicit user detail request
@@ -55,19 +56,19 @@ Basis expansion is allowed only for:
 - A stopped basis-expansion route emits the compact report shape.
 
 ## Primary Report Surface
-Report admissibility and allowed report reasons are owned by `.claude/reference/user-reporting-law.md`.
+Report admissibility and allowed report reasons are owned by `.claude/reference/reporting-user-reporting-law.md`.
 This section records only the chosen admitted reason and report shape.
 On any open lead-owned path, execute silently in the same turn.
 Agent signals are Communication Plane transport and are not report surfaces.
 
 ## Shape Binding
-Report shape, allowed reasons, and non-reportable content are owned by `.claude/reference/user-reporting-law.md`.
+Report shape, allowed reasons, and non-reportable content are owned by `.claude/reference/reporting-user-reporting-law.md`.
 This reference does not restate `PHASE-RESULT`, `FINAL`, status, blocker, or closeout allowlists.
 Use this reference only to record the admitted report's compact evidence basis after user-reporting law admits the report.
 Incomplete shard, corpus, synthesis, validation, or defect-classification surfaces stay outside positive wording by the reporting law and the active synthesis/acceptance owner.
 
 ## Internal Content
-Internal-content suppression is owned by `.claude/reference/user-reporting-law.md`.
+Internal-content suppression is owned by `.claude/reference/reporting-user-reporting-law.md`.
 Report only the user-reporting-law-admitted reason in the compact output shape.
 
 Treat these labels as internal-content labels:

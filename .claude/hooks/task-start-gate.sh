@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Hook body disabled per .claude/reference/runtime-boundary-law.md ## Runtime Boundary Rules
+# Hook body disabled per .claude/reference/work-runtime-boundary-law.md ## Runtime Boundary Rules
 # (negative-only-filter doctrine: hooks block only destructive, security-critical, or
 # session-stability-breaking actions; positive-pattern doctrine-shape enforcement is
-# owned by the lane trio — Skill(governance-change) + Skill(self-verification) +
+# owned by the lane trio — Skill(governance-modification) + Skill(self-verification) +
 # Skill(review-verification) named lenses — and downstream reviewer/validator gates).
-# settings.json matcher was removed in the same governance-change patch; this file-level
+# settings.json matcher was removed in the same governance patch; this file-level
 # no-op handles cached-settings agents that loaded settings.json before the wiring change.
 # File preserved for traceability and potential future narrowing to a negative-only filter.
 exit 0
@@ -1204,7 +1204,7 @@ lead_preplanning_reference_allowed() {
     *"/.claude/agents/team-lead.md"*|*".claude/agents/team-lead.md"*|*"agents/team-lead.md"*)
       return 0
       ;;
-    *"/.claude/reference/user-reporting-law.md"*|*".claude/reference/user-reporting-law.md"*|*"reference/user-reporting-law.md"*)
+    *"/.claude/reference/reporting-user-reporting-law.md"*|*".claude/reference/reporting-user-reporting-law.md"*|*"reference/reporting-user-reporting-law.md"*)
       return 0
       ;;
     *"/.claude/skills/agent-team-lead/references/pre-action-gate.md"*|*".claude/skills/agent-team-lead/references/pre-action-gate.md"*|*"skills/agent-team-lead/references/pre-action-gate.md"*)
@@ -1343,10 +1343,10 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
 fi
 
 # TaskUpdate shape enforcement (completion-closure only) removed per operator
-# directive 2026-05-19 and CLAUDE.md `[HOOK-LAST]` negative-only-filter philosophy.
+# directive 2026-05-19 and `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]` negative-only-filter philosophy.
 # TaskUpdate doctrine ("completion-closure only" per task-execution/references/
-# runtime-dispatch-law.md and CLAUDE.md ## Conditional Rules) stays in effect for
-# lane self-restraint via the trio quality contract (governance-change +
+# runtime-dispatch-law.md and CLAUDE.md ## 8. Environment Configuration Philosophy) stays in effect for
+# lane self-restraint via the trio quality contract (Skill(governance-modification) +
 # self-verification + review-verification named lenses); a hook positive-filtering
 # generic Claude Code TaskUpdate patterns was bottlenecking lanes without
 # preventing any destructive action (setting in_progress/owner/etc. on a task row

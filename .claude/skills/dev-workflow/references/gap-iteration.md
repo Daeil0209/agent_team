@@ -1,9 +1,9 @@
 # dev-workflow: Gap Detection And Iteration
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap detection, Phase 5 iteration protocol, and rendered/user-surface gap feedback.
@@ -156,4 +156,4 @@ Open workflow hardening when repeated missed gaps, repeated YAGNI failure, repea
 - Cleared blocking gaps open validator ingress when final acceptance remains validator-required.
 - Fresh or still-current validator `PASS` opens Final Acceptance Review by acceptance path.
 - Repeated same-class blocking gap opens root-cause classification.
-- Repeated missed-gap pattern opens `Skill(governance-change)`.
+- Repeated missed-gap pattern opens `Skill(governance-modification)`.

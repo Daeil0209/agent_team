@@ -2,10 +2,10 @@
 name: reviewer-reference
 PRIMARY-OWNER: reviewer
 SOURCE-ANCHOR: .claude/skills/agent-reviewer/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Reviewer Reference
 ## Contents
@@ -107,10 +107,7 @@ Use this surface map:
 - Software implementation, maintainability, architecture-coded contract, and security review: `code-quality-review`, `security-review`.
 
 When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
-Run `feynman-clarity` when target intent materially affects review truth.
-Run `feynman-clarity` when protected function materially affects review truth.
-Run `feynman-clarity` when reader action materially affects review truth.
-Run `feynman-clarity` when explanation failure materially affects review truth.
+Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.
 These are review lenses; findings use normal severity and are blocking when severity warrants it.
 Remediation stays with the producing owner.
 
@@ -145,7 +142,7 @@ Remediation stays with the producing owner.
 - `execute` opens reviewer-owned review work.
 - `reconstruct-with-inference` opens reviewer-owned review work with marked inference.
 - Blocking review finding opens producer correction through team-lead.
-- `REVIEW-STATE: ready` opens reviewer completion.
+- Reviewer-local `REVIEW-STATE: ready` opens reviewer `MESSAGE-CLASS: completion` emission (post-completion downstream routing per SKILL.md `## Resolve Next Owner And Action`).
 - `REVIEW-STATE: hold` opens team-lead basis, evidence, tool, or upstream-state correction.
 - `REVIEW-STATE: blocked` opens team-lead replanning, rerouting, or upstream correction.
 - Runnable proof need opens tester routing.

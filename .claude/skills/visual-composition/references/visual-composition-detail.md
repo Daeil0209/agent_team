@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/visual-composition/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Reference Material
@@ -20,7 +20,10 @@ Rules:
 - This role owns the layout consequence.
 - Audience-variant rule: when a schedule serves multiple audiences, visual format type differs per audience when reader job differs.
 - Unchanged operator-density schedule to participants = candidate `format_class_mismatch`.
-**Word/HWP Image Constraints**: single image must not exceed ~one-third of page area; every figure requires descriptive caption; placement must not break surrounding text flow. Violations: `poor_proportion` (oversized) or `weak_hierarchy` (missing caption/broken flow).
+**Word/HWP Image Constraints**:
+- Single image must not exceed ~one-third of page area (violation: `poor_proportion`).
+- Every figure requires descriptive caption (violation: `weak_hierarchy`).
+- Placement must not break surrounding text flow (violation: `weak_hierarchy`).
 **Visual Role Separation**: each visual element must serve exactly one purpose. A table simultaneously acting as schedule, role matrix, and status tracker = role separation violation; split or redesign to single reading task.
 ### Visual-Type Taxonomy and Composition Standards
 **General Visual-Type Role Taxonomy**: **table** = comparison/structured lookup; **graph/chart** = trend, magnitude, or change; **diagram/image** = process flow, structural relationship, or spatial arrangement; **timeline** = continuous-flow or parallel-overlap temporal sequencing; **Gantt chart** = dependency-chain and phased-sequencing schedule. When type doesn't match stated purpose, re-type or remove. Schedule-class decision rule: parallel tracks or dependencies require timeline/Gantt evaluation — table alone fails the justification gate.
@@ -57,7 +60,12 @@ Role-appropriate visual types for research reports, technology surveys, patent l
 - **technology taxonomy diagram** — hierarchical/network diagram of classification relationships; must pass legibility floor when exceeding 12 nodes
 - **comparison matrix table** — feature/criterion comparison; justified when 3+ entities on 4+ dimensions
 **Research Diagram Legibility Floor**: diagrams with 12+ nodes must pass: minimum readable label size at target viewing distance, no overlapping node labels, edge crossings minimized. Failure = `diagram_text_unreadable`; blocks visual-ready handoff until redesigned or split.
-**Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy. `confirmed` stays explicit; `conflicting` renders as **contested** when a shorter label is needed; `inferred`/`unconfirmed` group as **unverified** only when legend maps back to canonical statuses. Use shading, icon, or label — not color alone. Absent status marking in a mixed-confirmation table = `weak_hierarchy`.
+**Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy.
+- `confirmed` stays explicit.
+- `conflicting` renders as **contested** when a shorter label is needed.
+- `inferred`/`unconfirmed` group as **unverified** only when legend maps back to canonical statuses.
+- Use shading, icon, or label — not color alone.
+- Absent status marking in a mixed-confirmation table = `weak_hierarchy`.
 ## Visualization Production Sequence Gate
 Visual insertion must occur after the text content draft is reviewable. Premature visual placement — inserting figures before text draft is complete = `render_contract_mismatch` defect; blocks visual-ready handoff until sequencing corrected.
 ## Visual Tone for Document-Class Deliverables

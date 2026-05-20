@@ -3,6 +3,7 @@ name: agent-reviewer
 description: Agent-specific reviewer lane skill for consequential reviewer-owned acceptance-critical review assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: reviewer
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned review surface.
@@ -21,7 +22,8 @@ Before any work:
 5. Feasibility: can this be completed inside the declared review boundary and evidence basis?
 6. Target-intent fit: can the review name the artifact, program, report, governance, or document intent that defines fit?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
-On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; reviewer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged expectation source, scope baseline, closure/oracle row, evidence authority, and review-boundary.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
+Reviewer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged expectation source, scope baseline, closure/oracle row, evidence authority, and review-boundary.
 ### User-Perspective Gate
 Apply this gate whenever the artifact will be read, run, installed, or operated by a user or operator.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer knowledge?
@@ -113,5 +115,5 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Completion uses `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
-- `REVIEW-STATE: ready` opens proof, validation, correction, or team-lead synthesis by the frozen route.
+- Downstream of reviewer `MESSAGE-CLASS: completion` with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).
 - `REVIEW-STATE: hold|blocked` opens the named blocker owner/action before acceptance continues.

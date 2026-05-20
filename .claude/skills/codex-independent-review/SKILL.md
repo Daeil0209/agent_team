@@ -3,7 +3,7 @@ name: codex-independent-review
 description: Run configured Codex MCP independent review as evidence for planning, artifact convergence, review convergence, final acceptance reconciliation, or owner-defined checks without replacing owner authority.
 user-invocable: false
 PRIMARY-OWNER: team-lead
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Owns only the configured independent-review adapter contract.
@@ -103,4 +103,4 @@ Load only the references whose trigger is active:
 - Rejected points record cited doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
 - Codex MCP access failure records `fail-open:<reason>` on the owning configured-review record.
 - Unadjudicated valid points keep the owning path open.
-- Unsupported post-route-freeze expansion opens the owning `Skill(governance-change)` path.
+- Unsupported post-route-freeze expansion opens the owning `Skill(governance-modification)` path.

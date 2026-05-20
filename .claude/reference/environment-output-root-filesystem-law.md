@@ -1,23 +1,23 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 5 [PROJECT-OUTPUT-ROOT]; Conditional Rules filesystem clauses"
+SOURCE-RULES: "Environment Configuration Philosophy; Work Execution Philosophy output-root and filesystem clauses"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Common Doctrine Reference: Output Root And Filesystem Boundary
 
 ## Source Binding
-This reference is trigger-bound detail for `CLAUDE.md` `[PROJECT-OUTPUT-ROOT]` and Conditional Rules filesystem clauses.
+This reference is trigger-bound detail for `.claude/reference/work-execution-core-law.md` `[PROJECT-OUTPUT-ROOT]` and Environment Configuration Philosophy filesystem clauses.
 This reference owns:
 - file-output placement
 - source edit boundaries
 - governance edit boundaries
 - non-destructive filesystem discipline
-These enforcement surfaces stay with `.claude/reference/runtime-boundary-law.md`:
+These enforcement surfaces stay with `.claude/reference/work-runtime-boundary-law.md`:
 - hook enforcement
 - settings enforcement
-Governance-text patch selection stays with `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Governance-text patch selection stays with `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Purpose
 Use this reference when work:
@@ -117,4 +117,4 @@ Stop before hiding protected filesystem mutation behind interpreter snippets.
   - generated runtime state
 - `claude_doc/<work-name>/` contents are protected work-artifact carriers, distinct from runtime-owned surfaces and from `.claude/` governance text.
 - Hooks, settings rules, and runtime cleanup must not delete, move, or block `claude_doc/<work-name>/` lifecycle without explicit user-approved teardown.
-- Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review per `.claude/hooks/MANIFEST.md` and CLAUDE.md `[HOOK-LAST]`.
+- Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review per `.claude/hooks/MANIFEST.md` and `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]`.

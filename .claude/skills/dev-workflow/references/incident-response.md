@@ -1,9 +1,9 @@
 # dev-workflow: Incident Response
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use this reference when P0/P1 severity, implementation regression, unexpected failure, launch-path failure, or incident-related phase transition appears inside `dev-workflow`.
@@ -33,7 +33,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 - Developer proposes root cause, bounded file/surface change, fix risk, and verification plan.
 - Team-lead reviews the proposal before routing execution.
 - P0/P1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
-- User-escalation triggers are owned by `.claude/CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]`.
+- User-escalation triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 
 4. Apply and verify
 - Developer applies the reviewed bounded fix.
@@ -43,7 +43,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 
 5. Post-incident record
 - Record what happened, root cause, fix applied, time or cycles to resolution, and whether a recurrence barrier is needed.
-- If prevention was possible and the missed check is recurring or material, open `Skill(governance-change)` recurrence-hardening mode on the narrowest owner surface.
+- If prevention was possible and the missed check is recurring or material, open `Skill(governance-modification)` recurrence-hardening mode on the narrowest owner surface.
 
 ## Incident Phase Cursor Context
 Phase transitions during incident response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/references/phase-transition-control.md`. Do not author a parallel notification format here.
@@ -63,5 +63,5 @@ Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live w
 - Verified fix opens reviewer regression check.
 - Failed fix returns to fix proposal.
 - Three failed attempts open escalation instead of iteration.
-- Recurring or material missed prevention opens `Skill(governance-change)`.
+- Recurring or material missed prevention opens `Skill(governance-modification)`.
 - Verified incident resolution returns to the active dev-workflow phase cursor.

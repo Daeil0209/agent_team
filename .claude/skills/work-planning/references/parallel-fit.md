@@ -1,9 +1,9 @@
 # Work-Planning Parallel Fit
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Independent bounded work must be identified as parallel-fit when it can reduce risk, latency, or context pressure. For 2+ independent specialist-fit work surfaces, multi-agent staffing is the default unless a serial reason is explicitly stronger than the parallel benefit.
@@ -24,6 +24,8 @@ Independent specialist-fit work surfaces separate by one of these axes: evidence
 Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason.
 Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
 
+PROTECTED-LOCAL-RESTATEMENT-BASIS: planning-vs-runtime split — the binding-surface verification rule below is also enforced runtime-side at `.claude/skills/task-execution/references/dispatch-entry-contract.md` `## Field Rules` and `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Parallel And Reuse Law`. Planning-side declares the verification rule (freeze-time); runtime-side enforces it pre-`TeamCreate`/`Agent`/`SendMessage`. Both surfaces are required because verification happens at two distinct operational moments.
+
 Parallel split law:
 - Choose semantic boundaries first, then balance expected burden.
 - File count alone is never a sufficient burden basis for document, governance, codebase, or mixed-size corpus work.
@@ -38,7 +40,7 @@ Unknown material burden facts make measurement the next planned action, not a pr
 - Actual additional-agent dispatch follows the active host runtime's authorization model.
 - Parallel production requires a frozen binding surface before dispatch.
 - The frozen binding surface freezes the shared source-of-truth, interface or format contract, dependency boundaries, ownership boundaries, merge owner, and acceptance/proof chain.
-- A materialized binding surface (external file or shared retained carrier) is staged under the canonical path from `.claude/reference/output-root-and-filesystem-law.md` (default `claude_doc/<work-name>/`).
+- A materialized binding surface (external file or shared retained carrier) is staged under the canonical path from `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 - Before each parallel assignment-send segment, the lead verifies the carrier's on-disk presence and non-empty content matching the frozen basis through a read-class tool.
 - A write-tool success response alone does not satisfy verification.
 - First-verification observes absent-or-empty content while creation evidence exists waits a bounded propagation window of a few seconds.
@@ -47,12 +49,19 @@ Unknown material burden facts make measurement the next planned action, not a pr
 - Continued verification failure after one regeneration cycle opens `hold|blocker` with unresolved carrier-persistence basis and blocks dispatch.
 - An unverified binding surface is a design defect and a parallel-drift root cause, not a downstream acceptance surprise.
 
-The active session dispatches at most 2 concurrent team-scoped lane agents (excluding the team-lead host), summed across all teams in the runtime.
-`work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below 2.
-A plan that names more than 2 concurrent dispatched lane members (excluding the team-lead host) is invalid.
+`ACTIVE-CONCURRENT-AGENT-CAP` is the maximum concurrent team-scoped lane-agent count allowed for the active plan, excluding the team-lead host.
+`work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
+The cap basis records every applicable ceiling: explicit user maximum, current runtime/session configuration, host capability limit, and default basis.
+The active value is the lowest applicable ceiling.
+A user-stated maximum is a binding ceiling and must stay recorded even when a lower runtime or host ceiling controls the active value.
+When no explicit user or runtime ceiling is available, the default host-safe ceiling is 2.
+`work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below `ACTIVE-CONCURRENT-AGENT-CAP`.
+A plan that names more concurrent dispatched lane members than `ACTIVE-CONCURRENT-AGENT-CAP` is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
-New `Agent` member creation is blocked when concurrent dispatched-lane count is already 2.
-The lead releases members through structured shutdown or `session-closeout` before creating new ones.
+New `Agent` member creation is blocked when concurrent dispatched-lane count is already at `ACTIVE-CONCURRENT-AGENT-CAP`.
+The lead evaluates same-lane live or standby reuse before release or new member creation.
+Release-before-create applies only when reuse-fit fails, the live or standby member is dead-or-unavailable for the new assignment, the lane is no longer needed, or `session-closeout` owns teardown.
+If cap blocks new member creation and reuse-fit holds, the next move is reuse-via-`SendMessage`.
 
 ## Resolve Next Owner And Action
 - Independent specialist-fit surfaces open team-routed parallel planning.
@@ -62,4 +71,4 @@ The lead releases members through structured shutdown or `session-closeout` befo
 - Material burden imbalance opens split refinement.
 - Frozen parallel groups return to `AGENT-MAP` and `PARALLEL-GROUPS`.
 - Missing parallel binding surface blocks dispatch readiness.
-- Ready host-authorized additional-agent route opens `task-execution`; runtime creation, reuse, and member execution are consumed there from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- Ready host-authorized additional-agent route opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary; runtime creation, reuse, and member execution are consumed there from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.

@@ -2,7 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-7 status, satisfied gates, phase transitions, and routine milestones; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-7 status, satisfied gates, phase transitions, and routine milestones; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Routine Gate Continuation
 
@@ -15,7 +16,7 @@ Use this reference when a satisfied gate, status question, phase transition, or 
 - A converged synthesis is unreported.
 - User asks for status during in-flight work.
 - A routine milestone such as commit, push, or build occurs inside a larger deliverable.
-- A partial patch batch, patch-application log, or applied-patch recap occurs while a larger governance-change queue remains open.
+- A partial patch batch, patch-application log, or applied-patch recap occurs while a larger governance modification queue remains open.
 
 ## Required Output
 Record:
@@ -31,8 +32,8 @@ Stop before unsolicited status prose when continuing the active path is possible
 Stop before lane/shard arrival or partial-convergence prose when monitoring, retained-carrier consumption, merge, correction, or synthesis can continue.
 
 ## Status And Why Continuation
-Status answers follow `.claude/reference/user-reporting-law.md` `## Report Shape`.
-Answers to why an expected action did not happen follow `.claude/reference/user-reporting-law.md` `## Report Shape`.
+Status answers follow `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
+Answers to why an expected action did not happen follow `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 After the answer, resume the current owner action unless the user redirects or a user-action blocker is proven.
 
 ## Resolve Next Owner And Action
@@ -42,11 +43,10 @@ After the answer, resume the current owner action unless the user redirects or a
 - A stopped partial-arrival prose route continues monitoring, retained-carrier consumption, merge, correction, or synthesis.
 
 ## Continuation Rules
-- Process state self-report consumes `.claude/CLAUDE.md` `[AUTO-PROC]` continuation rules.
+- Process state self-report consumes `.claude/reference/work-execution-core-law.md` `[AUTO-PROC]` continuation rules.
 - Material context-budget pressure does not end the turn or session.
 - Retained carriers under the canonical output root are the safe persistence path against auto-compact loss.
 - Active owner prepares auto-compact handoff state (retained carrier completeness, owner-deferral upstream record, resume-action specification) while continuing the active path.
-- Stopping work due to context-budget pressure is invalid.
 - Resume these surfaces by executing the next owner/action:
   - satisfied gates
   - phase transitions
@@ -58,7 +58,7 @@ After the answer, resume the current owner action unless the user redirects or a
   - a satisfied phase boundary remains unconsumed
   - a converged synthesis is unreported
 - On a paused path, resume by executing.
-- On a completed boundary with zero paused lead-owned action, route the status answer through `.claude/reference/user-reporting-law.md`.
+- On a completed boundary with zero paused lead-owned action, route the status answer through `.claude/reference/reporting-user-reporting-law.md`.
 - That status answer terminates the turn only when no same-segment execution remains open.
 - Surface review/proceed prompts for user-requested review, explicit approval requirements, or verified user-owned blockers.
 
@@ -94,7 +94,7 @@ Continue execution until:
 - the user explicitly redirects
 
 ## Surface Limit
-Routine reporting follows `.claude/reference/user-reporting-law.md`.
+Routine reporting follows `.claude/reference/reporting-user-reporting-law.md`.
 Clean routine transitions produce no user-facing prose.
-Routine milestones, lane/shard arrivals, partial convergence, satisfied gates, phase transitions, dispatch state, and monitoring state stay Procedure Plane unless `.claude/reference/user-reporting-law.md` admits a report.
+Routine milestones, lane/shard arrivals, partial convergence, satisfied gates, phase transitions, dispatch state, and monitoring state stay Procedure Plane unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
 After `session-closeout` owns the path, late outputs narrow residual truth only.

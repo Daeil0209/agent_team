@@ -2,7 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-2 Owner Trigger Order; Reference Binding; Procedure And Ownership"
+SOURCE-RULES: "RPA-2 Owner Trigger Order; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Owner Trigger Order
 
@@ -15,7 +16,7 @@ Reporting curtain inheritance:
 - This reference produces Procedure Plane records only.
 - Trigger order, named artifacts, consumption status, and next-owner/action are internal control facts.
 - They do not authorize boot, progress, status, trigger, artifact, or route prose.
-- Visible prose remains blocked unless `.claude/reference/user-reporting-law.md` admits a report.
+- Visible prose remains blocked unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
 
 ## Consume When
 - A named owner skill or sequence trigger is active.
@@ -38,15 +39,18 @@ Stop before lower-trigger work until a higher trigger emits its named artifact.
 Stop before owner execution credit until loaded owner text has applied-rule mapping.
 Stop before reporting when the required artifact is stale or only described narratively.
 Stop before task work when session-start readiness is unresolved.
+Stop before executing any required primary skill owner when actual `Skill(<skill>)` load or current same-session loaded-skill basis for the same owner boundary is absent, stale, wrong-boundary, or weaker than the named skill's freshness rule.
+Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` does not satisfy required primary skill activation.
+Reuse same-session loaded-skill basis only while the owner boundary, trigger, active work surface, proof burden, acceptance burden, claim strength, and named skill freshness rule stay satisfied.
 Stop before dispatch when `work-planning`, primary sequence owner, or `Skill(task-execution)` is required but absent from the active session.
 Stop before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or structured `shutdown_request` when the active session has not loaded `Skill(task-execution)`.
 Once loaded in a session, `Skill(task-execution)` is reused across later `work-planning` iterations and same-session dispatch moves without reload; only the `Skill(task-execution)` Activation rule classifies the existing basis stale or wrong-boundary and authorizes another load.
-Direct reference inspection of `.claude/skills/task-execution/**` does not satisfy this load requirement.
+Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/task-execution/**` does not satisfy this load requirement.
 Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by current `Skill(self-verification)` result verification executed in the active session.
-Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct reference inspection of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
+Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
 A previous result-verification pass is reused only while the verified surface, evidence basis, open surfaces, and claim strength remain unchanged; new scope, stronger claim, materially changed claim, out-of-loop mutation, dispatch/reuse, synthesis report, proof/acceptance change, or phase change resets the pass.
 Stop before any `Skill(<skill>)` load when the interpreted requested outcome or runtime-owned trigger does not create that skill's active execution owner path.
-Skill-load eligibility per `.claude/reference/skill-loading-and-reference-binding.md` `## Skill Rules`.
+Skill-load eligibility per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 Stop before loading or opening a lower-trigger owner skill (such as `Skill(task-execution)`) when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first. Read-class evidence tools required by `work-planning` `## Corpus Measurement Gate` are not lower-trigger tools and stay lawful inside the work-planning boundary.
 
 ## Resolve Next Owner And Action
@@ -73,7 +77,7 @@ After the current session-start artifact is current, trigger 3 does not reopen t
 - `Skill(review-verification)` returns internal `review_verification_packet`.
 - `Skill(self-verification)` emits an internal plan-audit or result-verification record.
 - `Skill(task-execution)` emits dispatch-ready packet, dispatch-pending truth, or correction route.
-- `Skill(governance-change)` emits asset-change or recurrence-hardening patch basis and post-verify result.
+- `Skill(governance-modification)` emits asset-change or recurrence-hardening patch basis and post-verify result.
 - `Skill(session-closeout)` emits closeout residual truth or teardown completion.
 
 ## Artifact Discipline
@@ -93,6 +97,6 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 
 ## Status And Interruption
 Status questions expose stalled execution.
-If the boundary is already complete, route the answer through `.claude/reference/user-reporting-law.md` `## Report Shape`.
+If the boundary is already complete, route the answer through `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.
 Interrupt work uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.

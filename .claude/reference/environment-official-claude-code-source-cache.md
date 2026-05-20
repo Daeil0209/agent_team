@@ -2,12 +2,12 @@
 doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Reference Binding; Conditional Rules; Skill Loading"
+SOURCE-RULES: "Environment Configuration Philosophy; official behavior alignment; skill/reference consumption"
 captured: 2026-05-12
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
-# Official Claude Code Reference Cache
+# Official Claude Code Source Cache
 
 ## Purpose
 Use this cached source map when checking whether local agent-team governance follows Claude Code's documented configuration and team-operation model.
@@ -23,10 +23,10 @@ Not always-loaded context. Refresh from official docs when current product behav
 - Primary consumer: `team-lead`.
 - Use only for official-document alignment checks, governance design reviews, and disputes where current Claude Code behavior matters.
 - `CLAUDE.md` cites this cache as evidence location only; the cache is not part of always-on top doctrine.
-- Lane agents do not load this file by default. `team-lead` packetizes only the relevant official-source facts when a lane needs them.
+- Lane agents do not consume this section by default. `team-lead` packetizes only the relevant official-source facts when a lane needs them.
 
 ## Source Map
-### Agent Teams
+## Agent Teams
 Source: https://code.claude.com/docs/en/agent-teams
 
 Cached facts:
@@ -46,13 +46,10 @@ Cached facts:
 - Current limitations include no nested teams, fixed lead, one team per session, task-status lag, slow shutdown, and in-process teammate resume/rewind gaps.
 
 Governance implications:
-- Team-lead orchestration, corrected assignment packets, teammate messaging, and re-dispatch after constraints are consistent with documented agent-team operation.
-- Constraint reports from a teammate are lead coordination input, not final completion.
-- Parallel or independent work is represented as team work when the task shape benefits from multiple perspectives or concurrent execution.
-- Assignment packets must not rely on lead-only conversation history because teammates do not inherit it.
-- Team runtime routing must preserve official limitations instead of hiding them behind local procedure labels.
+- Constraint reports from a teammate are lead coordination input, not final completion; `.claude/skills/task-execution/references/message-classes.md` `## Upward Message Classes` owns the operative rule when this implication affects routing.
+- Team runtime routing must preserve official limitations instead of hiding them behind local procedure labels; `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` owns the operative rule when this implication affects dispatch.
 
-### Agent Definition Files
+## Agent Definition Files
 Source: https://code.claude.com/docs/en/sub-agents
 
 Cached facts:
@@ -68,12 +65,11 @@ Cached facts:
 - Team coordination tools remain available to teammates even when the subagent definition restricts ordinary tools.
 
 Governance implications:
-- Keep role files focused because their Markdown body is instruction context for the teammate.
 - Do not preload agent-specific skills through agent frontmatter when context footprint matters; prefer on-demand agent-specific skill loading in role instructions.
 - Tool allowlists and disallowlists belong in agent frontmatter when they define role capability.
 - Do not treat subagent `skills` or `mcpServers` frontmatter as a reliable teammate-runtime contract.
 
-### Skills
+## Skills
 Source: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 Source: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
 Source: https://code.claude.com/docs/en/skills
@@ -92,13 +88,10 @@ Cached facts:
 - If a skill and command share a name, the skill takes precedence.
 
 Governance implications:
-- Move detailed procedure and source notes out of always-loaded doctrine into on-demand skills or reference files.
-- Keep high-frequency role files and agent-specific skills concise; put detailed edge-case mechanics into direct reference files such as `references/*.md` rather than nested lookup chains.
-- Executable governance owner, source, and reporting rules live in the skill body or owned reference.
 - Use `user-invocable: false` for governance skills that are model-invoked rather than user-facing commands.
 - Do not treat absence of `.claude/commands/` as a defect when the project uses equivalent skills.
 
-### Hooks
+## Hooks
 Source: https://code.claude.com/docs/en/hooks
 
 Cached facts:
@@ -113,11 +106,9 @@ Cached facts:
 - Hook changes in settings can require review/reload behavior before they affect an active session.
 
 Governance implications:
-- Hooks are valid for deterministic guardrails and runtime feedback, but they carry security and operational risk.
-- Hooks do not replace agent-team judgment, planning, role ownership, or positive execution discipline.
-- Use hooks for last-resort blocking of prohibited actions or runtime integrity checks, not for normal task routing.
+- Hooks are valid for deterministic guardrails and runtime feedback, but they carry security and operational risk; `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy` and `.claude/reference/work-runtime-boundary-law.md` own operative hook-last rules when this implication affects hook governance.
 
-### Memory, Rules, And Settings
+## Memory, Rules, And Settings
 Source: https://code.claude.com/docs/en/memory
 Source: https://code.claude.com/docs/en/settings
 
@@ -133,7 +124,6 @@ Cached facts:
 - Array settings merge across scopes with de-duplication instead of whole-array replacement.
 
 Governance implications:
-- Keep always-on doctrine concise and move repeatable procedures into skills or scoped rules.
 - Do not claim `@imports` reduce launch context footprint; use them for organization, not lazy loading.
 - Do not claim `CLAUDE.md` prose alone hard-enforces a behavior; use settings, permissions, sandbox, or hooks for technical enforcement.
 - Keep project-shared team standards in `.claude/` project scope and machine-specific experimentation in local scope.

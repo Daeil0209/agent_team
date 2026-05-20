@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 Final Acceptance Review (FAR) FINAL-REJECT correction routing; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-4 Final Acceptance Review (FAR) FINAL-REJECT correction routing; Work Execution Philosophy; Judgment Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Final Acceptance Review (FAR) FINAL-REJECT Correction Routing
 

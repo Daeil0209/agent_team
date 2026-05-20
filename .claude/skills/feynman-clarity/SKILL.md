@@ -4,7 +4,7 @@ description: Apply Feynman-style explainability review to plans, designs, report
 user-invocable: false
 PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback and governance-change blocks when present
+  5. owner-local structural feedback and governance modification blocks when present
 - Keep this skill methodology-only.
 - Authority stays limited to clarity.
 - Strengthen, split, merge, trim, or replace unclear wording before adding new doctrine.
@@ -77,9 +77,7 @@ Reveal:
 
 ## Boundary
 - Preserve required meaning while simplifying.
-- Evidence review stays with its owner.
-- Technical correctness review stays with its owner.
-- User-surface proof stays with its owner.
+- Evidence review, technical correctness review, and user-surface proof stay with their respective owners.
 - Beginner prose applies only when the audience or deliverable requires it.
 - Examples preserve generic rule scope.
 - Resolve ordinary clarity, naming, ordering, and rewrite choices from artifact and evidence.
@@ -182,10 +180,7 @@ Hand off when the receiver can tell:
 - who owns each remaining gap
 - whether the artifact is clearer without weaker claims
 
-Active owner reports `hold|blocker` when:
-- the artifact cannot be explained without inventing meaning
-- the artifact cannot be explained without hiding missing evidence
-- the artifact cannot be explained without deleting a required obligation
+Active owner reports `hold|blocker` when the artifact cannot be explained without inventing meaning, hiding missing evidence, or deleting a required obligation.
 
 ## Codex Review Consumption
 Codex applies this skill only as a review lens inside a team-lead-owned packet.

@@ -3,6 +3,7 @@ name: agent-validator
 description: Agent-specific validator lane skill for consequential validator-owned final evidence-based validation or PASS/HOLD/FAIL verdict assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: validator
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned validation surface.
@@ -20,7 +21,8 @@ Before any work:
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
-On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; validator-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, verdict burden, decision surface, user-facing acceptance basis, and upstream defer basis.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
+Validator-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, verdict burden, decision surface, user-facing acceptance basis, and upstream defer basis.
 Assignment-grade validator correction packet after `FINAL-REJECT` executes bounded correction-basis analysis.
 ### PASS Gate
 Validator-local PASS gate only.
@@ -121,11 +123,12 @@ Keep authoritative versus supplemental sources explicit.
 ### 6. Final Acceptance Gate
 Canonical PASS prohibitions, per-row inspection rules, decisive-surface evidence requirements, and subset-handling are owned by `references/validator-lane-detail.md` `## PASS Prohibition Detail`; consume that reference at verdict time.
 Apply `Skill(review-verification)` before issuing PASS/HOLD/FAIL per the trigger below:
-- Run full workflow (Steps 1-14) when the validation target is governance-asset change, multi-lane review synthesis, audit-grade verdict, defect classification, or patch-worthiness judgment. Cite the returned `review_verification_packet` fields `COHERENCE-RESULT`, `INTEGRITY-RESULT`, `NEGATIVE-RISK-RESULT`, and `PATCH-WORTHINESS` in the verdict.
+- Run full workflow (Steps 1-14) when the validation target is governance-asset change, multi-lane review synthesis, cross-shard audit synthesis verdict (governance-corpus audit, recurring-defect-pattern review, or other cross-shard synthesized verdict), defect classification, or patch-worthiness judgment. Cite the returned `review_verification_packet` fields `COHERENCE-RESULT`, `INTEGRITY-RESULT`, `NEGATIVE-RISK-RESULT`, and `PATCH-WORTHINESS` in the verdict.
 - Run named lenses (`coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) when the verdict materially depends on cross-surface coherence, negative risk, or patch fit. Cite each consumed lens result in the verdict.
 - Skip lens application only when the validation target is single-surface direct evidence (e.g., a UI button click producing a captured screenshot) with no cross-surface, governance, or patch-worthiness dependency; record skip basis in the verdict.
 Verdict labels:
-- `PASS`: all decisive expectations met on the decisive surface, no blocking findings, evidence sufficient; when the trigger above fires, the `review_verification_packet` Step 5 Critical Review Gate defeaters are tested and disproven.
+- `PASS`: all decisive expectations met on the decisive surface, no blocking findings, evidence sufficient.
+- When the `Skill(review-verification)` trigger above fires, `PASS` additionally requires the `review_verification_packet` Step 5 Critical Review Gate defeaters tested and disproven.
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
 - Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.

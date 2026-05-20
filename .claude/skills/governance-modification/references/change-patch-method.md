@@ -1,9 +1,9 @@
-# governance-change: Change And Patch Method Detail
+# governance-modification: Change And Patch Method Detail
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-ANCHOR: .claude/skills/governance-modification/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 ## Contents
@@ -15,7 +15,10 @@ auto-inject: false
 ## Change Sequence Required Order
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan audit. Use `Skill(self-verification)` plan audit only when the change plan is disputed; otherwise use result verification for Post-Verify.
-Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Prerequisite C2. Every candidate patch passes a binding self-check against the operator-emphasized keywords per `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
+Prerequisite C2a. The self-check tests under-specification, over-specification, evasion, ambiguity, semantic conflict, bottleneck burden, and over-broad blocking.
+Prerequisite C3. A candidate patch failing any keyword check is rejected before Draft.
 Prerequisite D. Each Change Sequence step (1-7) consumes the current cumulative live state of target and adjacent owner surfaces, including every session-applied patch up to this step's execution time.
 Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and invalidate the step record.
 
@@ -27,6 +30,10 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - Identify the target document's authoring principles: Structural Contract, fixed section order, priority hierarchy, numbering conventions, mapping chains, and design intent. These are binding constraints on any proposed change.
 - Check viability, structural fit, overlap risk, and whether the target document is the correct owner.
 - Verify that the proposed change complies with the target document's own authoring rules.
+- For governance wording changes, identify the minimum executable information needed before Draft.
+- For governance wording changes, identify evasion, ambiguity, semantic conflict, bottleneck, and over-broad-blocking risk before Draft.
+- For top-doctrine execution changes, identify the mapped core-law executable-detail owner before Draft.
+- For core-law execution-detail changes, identify trigger-bound owner guidance need before Draft.
 
 3. `Route + Adjudicate`
 - Confirm placement and ownership using the Single Writer Principle.
@@ -37,7 +44,7 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 5. `Content Review`
 - Review the actual changed content rather than only the plan.
 - For non-trivial changes, route to the reviewer lane.
-- Outside `Skill(governance-change)`, developer defect-seeking self-review is sufficient for trivial single-line fixes. Inside `Skill(governance-change)`, every change consumes `Skill(review-verification)` fresh per parent skill rules; quick-hardening narrows review scope to a single named-lens, not load skip.
+- Outside `Skill(governance-modification)`, developer defect-seeking self-review is sufficient for trivial single-line fixes. Inside `Skill(governance-modification)`, every change consumes `Skill(review-verification)` fresh per parent skill rules; quick-hardening narrows review scope to a single named-lens, not load skip.
 - Recurrence-hardening patch Draft starts from the returned internal `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN` on doctrine, role, skill, spine, hook, or reference surfaces.
 - The narrow single-file quick-hardening wording-fix exception (defined by the parent skill) records owner-surface citation.
 - Reviewer and Codex input are evidence.
@@ -46,7 +53,7 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 
 5b. `Execution Gate`
 - For governance-sensitive modifications, complete the reviewed change path before Execute.
-  Governance-sensitive surfaces include CLAUDE.md `## Priority And Ownership` and `## Change And Preservation`.
+  Governance-sensitive surfaces include `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` and `## 5. Modification Philosophy`; also include `## 4. Review And Verification Philosophy` and `## 6. Judgment Philosophy` when the patch changes review, proof, validation, acceptance, or verdict behavior.
   Explicit user approval is required for destructive or security-sensitive action.
   Reviewed non-destructive governance changes proceed autonomously except hook/settings runtime enforcement expansion, which uses the Hook-Last operator-approval gate.
 - For non-governance changes: proceed directly to Execute.
@@ -59,8 +66,8 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - 7b. Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts; absent that basis, treat the agent result as non-authoritative and verify locally or redispatch with a self-contained packet.
 - 7c. When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
 - 7d. A verified sub-batch, patch log, or partial applied set is not convergence while same-request patch groups, review owners, proof owners, validation owners, or dispatch owners remain open.
-- 7e. After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or owning upstream deferral applies.
-- 7f. Load `Skill(self-verification)` AND `Skill(review-verification)` fresh on the post-execute live owner surfaces. Pre-Draft loads of either skill do not carry forward across patch execution per `.claude/skills/self-verification/SKILL.md` `Activation Trigger` reset rule and `.claude/skills/review-verification/SKILL.md` `## Activation` reset rule. No verified-result claim, completion-style label, or user-facing positive report on the changed surface may be emitted before both fresh loads return current outcomes.
+- 7e. After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or deferral per `[USER-DELIVERY-FIT]` lawful basis applies.
+- 7f. Load `Skill(self-verification)` fresh on the post-execute live owner surfaces. Re-engage `Skill(review-verification)` fresh only when the post-execute check exposes material coherence, removal, patch-worthiness, negative-risk, owner-surface, or governance-judgment questions. Pre-Draft loads do not carry forward across patch execution for result-verification or newly material review questions.
 - Reopen granularity: failed 7a-7c reopens at Step 6 Execute.
 - Reopen granularity: failed 7d-7e reopens at Step 5 Content Review.
 - Reopen granularity: failed 7f reopens at the surface named by the failed verification.
@@ -76,21 +83,21 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - Lifecycle state order is `ACTIVE` -> `DEPRECATED` -> `RETIRED` -> `MERGED`.
 - New rules start as `ACTIVE`.
 - The execution gate in step 5b governs governance-sensitive execution. See step 5b above.
-- Runtime permission bypass, hook approval, and pre-authorized governance-change dispatch do not waive review separation.
+- Runtime permission bypass, hook approval, and pre-authorized governance modification dispatch do not waive review separation.
 - They also do not waive preservation checks.
 - They also do not waive the destructive/safety gate.
-- High-traffic governance surfaces named by `CLAUDE.md` `## Priority And Ownership` and `## Change And Preservation` require session revalidation and baseline anchoring before modification resumes after interruption.
+- High-traffic governance surfaces named by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` and `## 5. Modification Philosophy` require session revalidation and baseline anchoring before modification resumes after interruption. Review, proof, validation, acceptance, or verdict patches also anchor against `## 4. Review And Verification Philosophy` and `## 6. Judgment Philosophy`.
 
 ## Patch Execution Method
 Use this method for team-system asset patches that must remain understandable without hidden session memory. It refines patch mechanics; it does not decide the primary sequence owner.
 
 ### Patch classification map
-See `.claude/skills/governance-change/references/decision-and-repair.md` for patch classification.
+See `.claude/skills/governance-modification/references/decision-and-repair.md` for patch classification.
 
 ### Required operating rules
 - For confirmed recurrence-hardening patches, treat the patch as bounded recurrence-barrier installation, not content accumulation. The patch must close a confirmed recurrence path without opening unrelated scope.
 - Default patch direction is to strengthen an existing owner-local rule, gate, checklist, packet, or reference chain.
-- Satisfy `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before drafting or mutating.
+- Satisfy `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate` before drafting or mutating.
 - Hook-Last-approved runtime edges remain under the hook/settings expansion gate.
 - Do not weaken an already-correct path just to land the hardening.
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
@@ -98,6 +105,8 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
   - defect basis, design-intent basis, causal basis, and recurrence path
   - `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface
   - consumed-layer basis and generalization basis
+  - minimum-executable-information result
+  - behavior-weakening wording result
   - positive execution path, recovery path, enforcement tier, protected meaning, and proposed edit operation
 - If any item is unclear, inspect or hold instead of editing by intuition.
 - The positive execution path states the valid owner, trigger, evidence, next action, and user/operator burden after the patch lands.
@@ -118,8 +127,10 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
 - The packet adds a one-sentence rationale in `CHANGE-BOUNDARY`.
 - A follow-on patch adds the missing declared-intent surface when scope allows.
 - Classify the failure mode before choosing text.
-- Failure modes are `missing-owner`, `weak-owner`, `wrong-owner`, `non-compliance`, `weak-enforcement`, and `capability-gap`.
-- Use `.claude/skills/governance-change/references/decision-and-repair.md` for allowed and prohibited responses.
+- Failure modes are `missing-owner`, `weak-owner`, `wrong-owner`, `mapping-gap`, `specification-mismatch`, `non-compliance`, `weak-enforcement`, and `capability-gap`.
+- Failure mode `mapping-gap` applies when a rule exists at one governance layer but its required mapped execution detail or triggered consuming guidance is absent.
+- Failure mode `specification-mismatch` applies when governance wording is under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking for its executing owner.
+- Use `.claude/skills/governance-modification/references/decision-and-repair.md` for allowed and prohibited responses.
 - Choose the smallest edit operation that preserves protected meaning: `tighten`, `replace`, `re-home`, `merge`, `append`, or `delete`.
 - Append only when no existing owner slot can absorb the meaning cleanly.
 - Delete only when the removed meaning is proven duplicate, obsolete, or preserved elsewhere.
@@ -132,15 +143,18 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
 - Preserve protected local restatements with a named owner and direct-consumption or isolation-safety basis.
 - When the failure mode is `non-compliance`, harden adherence through a clearer trigger, checklist, packet field, self-verification gate, or Hook-Last-approved runtime edge instead of duplicate doctrine.
 - Review the proposed changed content, not only the plan, before execution.
-- Check owner fit, structural fit, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
+- Check owner fit, structural fit, minimum executable information, positive execution path clarity, information-loss risk, adjacent-document overlap, boundary overreach, and enforcement false-positive risk.
 - Verification must prove both sides of the patch.
   The recurrence path is blocked or explicitly assigned.
   The positive execution path remains visible and executable.
+  The governance wording is neither under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, nor over-broad-blocking for its executing owner.
+  Top-doctrine execution changes have mapped core-law executable detail or recorded existing-detail coverage.
+  Core-law execution-detail changes have trigger-bound owner guidance or recorded not-material basis.
   The existing design remains closed.
   No unique meaning is lost.
   No cross-reference is dead.
   No owner boundary is weakened.
-  No previously working behavior, acceptance path, or runtime truth surface regresses.
+  No positively-working function regresses (any rule, procedure, owner-action path, acceptance surface, runtime behavior, or downstream-consumption path that currently produces its intended outcome must remain intact post-patch).
 - If verification finds a defect in the patch, do not close with partial improvement.
   Reopen the smallest invalidated step.
   Revise the patch.
@@ -159,7 +173,7 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
 - Route meaning to the owning surface.
   - shared doctrine -> `CLAUDE.md`
   - file-scoped governance overlay with mandatory `paths:` frontmatter -> files under `.claude/rules/*.md`
-  - role identity, boundaries, output contract, completion condition -> matching agent file
+  - role identity, boundaries, output contract, completion condition -> matching agent file without `PRIMARY-OWNER` metadata
   - repeatable workflow/checklist -> matching `SKILL.md`
   - runtime enforcement or state -> settings, hooks, or runtime owner file
 - Do not place always-on doctrine in `.claude/rules/*.md` files. If the content loads unconditionally, route it into `CLAUDE.md` or the correct owner-local surface instead.
@@ -171,13 +185,14 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
 - When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution.
 - Keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
 - Treat the consuming lane as the default skill-up owner.
+- Agent role files do not declare `PRIMARY-OWNER`; skill ownership metadata stays on `SKILL.md` and reference surfaces.
 - Each specialist skill declares its `PRIMARY-OWNER`.
 - Each specialist skill declares `SECONDARY-CONSUMER` when present in SKILL.md frontmatter.
 - Each specialist skill restates those fields in its Structural Contract when local readability requires it.
 - The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
-  - developer-owned specialists and their controlling order: `skills/agent-developer/references/developer-lane-detail.md` § Specialist Skill Loading.
-  - reviewer-owned specialists: `skills/agent-reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
-  - tester-owned specialists: `skills/agent-tester/references/tester-lane-detail.md` § Specialist Skill Loading.
+  - developer-owned specialists and their controlling order: `.claude/skills/agent-developer/references/developer-lane-detail.md` § Specialist Skill Loading.
+  - reviewer-owned specialists: `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.
+  - tester-owned specialists: `.claude/skills/agent-tester/references/tester-lane-detail.md` § Specialist Skill Loading.
 - Treat common-skill hardening differently from specialist skill-up.
   - Common-skill patches still require one primary owner, never diffuse co-ownership.
   - Inspectors propose wording, challenge defects, and review the patch, but the primary owner performs the final direct edit for the shared procedure surface.
@@ -192,7 +207,11 @@ See `.claude/skills/governance-change/references/decision-and-repair.md` for pat
 ### Retroactive Application Phase
 Doctrine landing is incomplete until the new or sharpened rule is applied to current-session surfaces it directly governs or contradicts.
 Before a governance-hardening round closes, audit current-session artifacts, in-flight agent output, prior verdicts, active acceptance state, and live deliverable surfaces only when the new rule directly governs or contradicts them.
-Required closeout surface: audited surfaces with result `unaffected`, `fixed`, `invalidated`, or `deferred by owning upstream record`; defect inventory and proposed fixes; same-chain fix dispatches or explicit deferral with named follow-up owner, boundary, and closure basis; stale prior verdicts blocked from downstream use until fresh re-verification.
+Required closeout surface includes the following items.
+- Audited surfaces with result `unaffected`, `fixed`, `invalidated`, or `deferred per [USER-DELIVERY-FIT] lawful basis`.
+- Defect inventory and proposed fixes.
+- Same-chain fix dispatches or explicit deferral with named follow-up owner, boundary, and closure basis (deferral itself must satisfy `[USER-DELIVERY-FIT]` lawful basis).
+- Stale prior verdicts blocked from downstream use until fresh re-verification.
 Rounds hardening dashboard, verification, launcher, monitoring, governance migration, or similar recurring surfaces require the same retroactive audit.
 Closing without that audit is a `[RETRO-APPLY]` defect.
 The recurrence path already exists in the surfaces the new rule targets.
@@ -209,7 +228,7 @@ The recurrence path already exists in the surfaces the new rule targets.
 ### Hook And Enforcement
 - Keep deny reasons and owner-document prose human-readable when hooks enforce the contract.
 - Hook enforcement is a runtime guard, not a substitute for owner-document prose. The model-facing rule must remain in the correct owner surface; hooks only check or block its observable edges.
-- Hook/settings edits that broaden runtime enforcement use `.claude/skills/governance-change/references/asset-change-checks.md` Hook-Last preflight; otherwise keep the issue owner-rule-only or `HOLD`.
+- Hook/settings edits that broaden runtime enforcement use `.claude/skills/governance-modification/references/asset-change-checks.md` Hook-Last preflight; otherwise keep the issue owner-rule-only or `HOLD`.
 - Keep governance-flow hook enforcement separate from settings-deny secret protection. `settings.json` `permissions.deny` is for hard credential and secret paths; runtime hooks technically guard observable governance procedure edges.
 - Promote a rule to hard-block only when the enforcement basis is objective, deterministic, low-friction, and available from the current tool payload or current session state.
 - If a rule depends on semantic interpretation, broad repo inspection, process-wide runtime scanning, or materially elevated false-positive risk, keep it `owner-rule-only` or `doctrine-only` until the meaning is packetized into exact fields.
@@ -218,23 +237,23 @@ The recurrence path already exists in the surfaces the new rule targets.
 - For non-destructive/non-security patches, choose the narrowest valid enforcement tier internally.
 - Ask the user only when destructive, security-sensitive, operator-policy-choice, or objectively undecidable.
 - When supervising doctrine, agent, skill, or hook patches, preserve owner-local boundary contracts and acceptance-gate restatements when they keep a file understandable in isolation.
-- Do not let optimization, compression, rewrite, or governance-change directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
+- Do not let optimization, compression, rewrite, or governance modification directives erase protected common contracts that multiple owner files need for local readability and safe downstream use.
 - For governance-sensitive patches, keep the patch class, owner surfaces, preserved meaning, and verification basis explicit.
 - Another model must be able to continue safely from repository state alone.
 - Do not rely on a dedicated patch-ledger file.
 
 ### Human-readable packet owners
-See `.claude/skills/governance-change/references/human-readable-packet-owners.md` for field catalogs.
+See `.claude/skills/governance-modification/references/human-readable-packet-owners.md` for field catalogs.
 
 ## Resolve Next Owner And Action
 - Completed patch design opens the owning patch execution path.
 - Completed retroactive audit opens this sequence's closeout.
-- Affected current-session surface opens fix, invalidation, or deferred-by-owner record.
+- Affected current-session surface opens fix, invalidation, or deferral-per-`[USER-DELIVERY-FIT]`-lawful-basis record.
 - Stale prior verdict opens fresh re-verification before downstream use.
 - Missing retroactive audit keeps the hardening round open.
 - Missing owner surface opens governance architecture mapping.
 - Semantic overlap opens replace, trim, re-home, or protected restatement decision.
 - Missing skill blocks only the affected downstream surface and opens skill update or introduction.
-- Hook/settings enforcement expansion opens `Skill(governance-change)` Hook-Last preflight.
+- Hook/settings enforcement expansion opens `Skill(governance-modification)` Hook-Last preflight.
 - Post-change material redundancy opens bounded optimization.
 - Preserved patch basis returns to this sequence's verification.

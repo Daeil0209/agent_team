@@ -2,36 +2,16 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-5 Communication And Objections; CLAUDE.md Communication; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-5 Communication And Objections; Reporting Philosophy; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # team-lead: Communication And Objection Detail
 
 ## Contents
-- Message-Class Truth
-- Communication Hard Rules
-- Resolve Next Owner And Action
 - hold|blocker
 - scope-pressure
-
-## Message-Class Truth
-Consume message-class semantics from `.claude/skills/task-execution/references/message-classes.md`.
-
-## Communication Hard Rules
-- Assignment-grade dispatch proves receipt-level dispatch state.
-- Agent completion records `STANDBY` immediately and opens retained-carrier synthesis.
-- Same-surface follow-on requires distinct new bounded work through `assignment`, `reuse`, or `reroute`.
-- Duplicate packet replay, already-completed confirmation, and packet expansion after completion do not open `status`, `clarification`, or repeated completion transport.
-- Team-lead does not send duplicate assignment, reuse, reroute, or expanded packet text to a lane that already handed off the same `TASK-ID`.
-- Use one primary downward message class per agent per segment.
-- Send assignment-grade work and standalone `phase-transition-control` in separate execution segments.
-
-## Resolve Next Owner And Action
-- A `hold|blocker` opens corrected packet, reopened `work-planning`, setup/tool owner, or proven user-owned blocker classification.
-- A `scope-pressure` opens packet correction, `work-planning`, or parallel continuation by `CORRECTION-OUTCOME`.
-- A duplicate post-completion signal opens retained-carrier consumption or distinct bounded work.
-- A message-class conflict opens message-class split.
+- Resolve Next Owner And Action
 
 ## hold|blocker
 - Treat `hold|blocker` as hard stop on the unsafe affected path.
@@ -79,3 +59,10 @@ Consume message-class semantics from `.claude/skills/task-execution/references/m
 - Unresolved objections keep the blocked lane on a concrete resolution path.
 - `CORRECTION-OUTCOME: parallel-continue` keeps unrelated independent lanes moving when lawful.
 - If pressure identifies a tool/evidence gap but lacks candidate-tool research, treat researcher tool-selection as the next evidence owner unless the packet already proves the correct tool or the issue is a proven user-owned blocker.
+
+## Resolve Next Owner And Action
+- Consume message-class semantics from `.claude/skills/task-execution/references/message-classes.md`.
+- A `hold|blocker` opens corrected packet, reopened `work-planning`, setup/tool owner, or proven user-owned blocker classification.
+- A `scope-pressure` opens packet correction, `work-planning`, or parallel continuation by `CORRECTION-OUTCOME`.
+- A duplicate post-completion signal opens retained-carrier consumption or distinct bounded work.
+- A message-class conflict opens message-class split.

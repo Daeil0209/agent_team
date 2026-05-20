@@ -1,9 +1,9 @@
 # Work-Planning Reference Use
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 This rule fires when the planning target involves any of:

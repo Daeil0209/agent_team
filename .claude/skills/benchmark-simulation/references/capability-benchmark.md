@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/benchmark-simulation/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # benchmark-simulation: Capability And Product Benchmark Extensions
@@ -35,7 +35,7 @@ Required rules:
 - treat inability to defend a specialization advantage against a simpler path as a competitiveness finding, not merely a neutral observation
 - treat unauthorized capture of another role's charter-core assets as an overlap regression, not as evidence of healthy improvement
 - when a fix-ownership contest is benchmarked, compare candidate roles on durable ownership fit, overlap burden, throughput effect, and evidence-backed success probability rather than on ambition alone
-- use `benchmark-light` by default for governance-change comparison claims, and escalate to `benchmark-full` when routing, promotion, or durable ownership is materially at stake
+- use `benchmark-light` by default for governance modification comparison claims, and escalate to `benchmark-full` when routing, promotion, or durable ownership is materially at stake
 - if a benchmark depends on uncited external comparisons, vague recollection, or non-inspectable examples, return `HOLD` or mark the result simulator-only instead of issuing a clean comparative verdict
 - if the result remains simulator-only or simulator-unconfirmed after comparison, do not let it masquerade as capability-growth execution readiness
 
@@ -83,7 +83,7 @@ Required benchmark dimensions when relevant:
 Treat flattened cardinality, collapsed project-type behavior, or happy-path-only certification as benchmark failures when a stronger competing structure exists.
 
 ## External-Reference Benchmark Extension
-External-reference benchmarking applies the `[EVI-ASSUM]` evidence hierarchy in `CLAUDE.md` `## Core Laws` 2 to design and methodology decisions.
+External-reference benchmarking applies the evidence hierarchy in `.claude/CLAUDE.md` `## 4. Review And Verification Philosophy` to design and methodology decisions.
 
 Required protocol per external reference consulted:
 - **Source provenance**: cite URL or canonical reference; uncited memory is `HOLD` not `evidence`

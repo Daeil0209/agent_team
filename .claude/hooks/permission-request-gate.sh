@@ -75,8 +75,9 @@ const safeRelativeDocSurface = (relativePath) => {
   const rel = relativePath.replace(/\\/g, "/");
   if (rel === ".claude/CLAUDE.md") return true;
   if (/^\.claude\/agents\/[^/]+\.md$/.test(rel)) return true;
-  if (/^\.claude\/rules\/[^/]+\.md$/.test(rel)) return true;
+  if (/^\.claude\/reference\/[^/]+\.md$/.test(rel)) return true;
   if (/^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(rel)) return true;
+  if (/^\.claude\/skills\/[^/]+\/references\/[^/]+\.md$/.test(rel)) return true;
   return false;
 };
 

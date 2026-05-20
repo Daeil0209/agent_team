@@ -3,7 +3,7 @@ name: dev-workflow
 description: Run structured development workflow with phase gates, checkpoint resolution, iterative quality convergence, gap detection, and YAGNI review. Use when a development project needs phase-based orchestration from discovery through acceptance and iteration.
 user-invocable: false
 PRIMARY-OWNER: team-lead
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned workflow surface.
@@ -23,6 +23,9 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 ### Reference Map
 - Load direct files in `Reference-Owned Workflow Sections` when their triggers are active.
 - Load triggered references directly.
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/detailed-design-core-law.md`: load when the workflow freezes, consumes, revises, or advances design intent, target-intent basis, phase boundary, or design drift.
+- `.claude/reference/work-execution-core-law.md`: load when the workflow advances an owner/action, dispatches, synthesizes, handles convergence, manages phase progress, or closes a workflow execution boundary.
 
 ### Workflow Scope
 - Governs team-lead orchestration across multi-phase development lifecycle.
@@ -87,7 +90,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ### 5. User-Surface Closure And Acceptance
 - Executable user-facing software requires reviewer plus tester in Phase 4.
-- Phase 4/5 evidence closes the whole frozen deliverable contract per `CLAUDE.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
+- Phase 4/5 evidence closes the whole frozen deliverable contract per `.claude/reference/design-definition-core-law.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
 - Validator-required chains close through `references/final-acceptance-review.md`.
 - Bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
 
@@ -157,7 +160,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch
 - inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden
 **Execution law**: cross-surface drift after PASS-attempt returns to Phase 2 correction.
-**Execution law**: missed-catch classification selects workflow repair, owner correction, or `Skill(governance-change)`.
+**Execution law**: missed-catch classification selects workflow repair, owner correction, or `Skill(governance-modification)`.
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
@@ -201,7 +204,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
 **Execution law**: validator cross-surface integration verification is required before PASS.
 **Execution law**: per-surface quality without cross-surface coherence is incomplete review.
-**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-change)` on the narrowest owner surface.
+**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-modification)` on the narrowest owner surface.
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.

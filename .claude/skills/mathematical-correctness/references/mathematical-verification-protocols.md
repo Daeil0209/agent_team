@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/mathematical-correctness/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Reference Material
@@ -41,14 +41,14 @@ Non-ODE analytical families (Laplace transforms, Fourier series, PDE separation 
 - Particular solutions require explicit statement of which initial/boundary condition determines the constant
 ### Mathematical Defect Severity Classification
 Severity rubric inherits the Critical/Major/Minor/Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
-Defect-record fields inherit `CLAUDE.md` `## Acceptance` and `## Communication`.
+Defect-record fields inherit `.claude/CLAUDE.md` `## 6. Judgment Philosophy` and `## 7. Reporting Philosophy`.
 | Impact Class | Mathematical Context | Examples |
 |---|---|---|
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
 | **Minor** | Presentation/notation issue with correctness preserved | Notation inconsistency, conventional symbol choice, formatting of equation |
 ### Mathematical Assumption Governance
-Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
+Assumption Governance still follows the blocking-vs-disclosed gate in `.claude/CLAUDE.md` `## 6. Judgment Philosophy`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations
 - **Major**: smoothness/continuity requirements, parameter ranges, independence conditions, linearity approximations — document with source; if unresolved and materially relevant to correctness or verification, treat them as blocking
 - **Minor**: notation conventions, variable naming, coordinate system choice — proceeds after explicit disclosure and proportionate impact control

@@ -2,10 +2,10 @@
 name: tester-reference
 PRIMARY-OWNER: tester
 SOURCE-ANCHOR: .claude/skills/agent-tester/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Tester Reference
 ## Contents
@@ -43,7 +43,8 @@ When a tester role or skill says "tester additions" or "tester detail", consume 
   - `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE`, and `ENV-COVERAGE` for Windows primary operator proof
   - `WINDOWS-EQUIVALENCE-BASIS` only when proof runs outside Windows but claims Windows sufficiency
 - Tester proves the Windows launch surface through the frozen Windows path or a proven-equivalent interop path.
-- WSL/Linux execution is support evidence; it leaves Windows launch, termination, and clean re-launch as blocked proof unless `WINDOWS-EQUIVALENCE-BASIS` proves the exact operator action.
+- WSL/Linux execution is support evidence.
+- It leaves Windows launch, termination, and clean re-launch as `blocked` unless `WINDOWS-EQUIVALENCE-BASIS` proves the exact operator action.
 
 ## UI Intent Proof Matrix
 For UI/browser proof, build the proof around the designed behavior, not around page availability.
@@ -79,7 +80,8 @@ Rules:
 - Browser/UI proof inspects the console/runtime/network error surface after navigation and material mutations; uncaptured or uninspected errors leave the affected row open.
 - Hard-test proof selects bounded extreme or adversarial probes from the assigned risk.
 - Probe families include: empty/null data, malformed or duplicate input, very large or limit-sized input, special characters or locale/time values, rapid double-submit, repeated add/delete, edit-then-delete, refresh/back during mutation, stale tab/session, interrupted network/server/storage, conflicting updates, malformed import, and corrupted persisted state.
-- A successful API response does not prove UI consumption; UI proof must exercise the consumer path, expected populated or empty data state, visible postcondition, and browser console/runtime-error surface.
+- A successful API response does not prove UI consumption.
+- UI proof must exercise the consumer path, expected populated or empty data state, visible postcondition, and browser console/runtime-error surface.
 - Practical work-tool or business-workflow proof must consume the frozen pattern or workflow oracle; without that oracle, report `blocked` or `out-of-scope by dispatch`, not `matches-expectation`.
 - Source inspection can prove a source-read artifact when the frozen proof target is the document text itself.
 - Prefer user-facing locators such as role, label, text, placeholder, and test id when test ids are part of the app contract.
@@ -158,7 +160,7 @@ Specialist lenses complement tester execution authority and do not replace user-
   - cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `WINDOWS-EQUIVALENCE-BASIS`) per `.claude/skills/task-execution/references/request-bound-fields.md` when proof spans multiple environments or claims single-env cross-env sufficiency
 - `matched` is reserved for true contract alignment on that exact surface.
 - `TEST-STATE: ready` requires every assigned proof row to have an explicit proof classification; it does not turn disproven, blocked, indirect-only, or uncovered rows into passing evidence.
-- Direct-required executable user-facing rows need direct proof, executed closure-defect probe, and retained postcondition evidence; indirect proof can support diagnosis or narrowing only.
+- Direct-required executable user-facing rows need `directly proven` classification, executed closure-defect probe, and retained postcondition evidence; indirect evidence can support diagnosis or narrowing only.
 - User-ready, reliability, or workflow-completion completion needs material hard-test probe status; absent hard-test evidence narrows the proof claim to normal-path or smoke coverage.
 - For a Windows primary operator surface, completion names `WINDOWS-LAUNCH-SURFACE`; `RUN-PATH-STATUS: matched` requires Windows native or proven-equivalent interop launch evidence.
 - For dev-workflow visual or rendered proof, consume `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; `matched` requires the Evidence-Quality Matrix row, capture matrix, capture scope, glyph sanity result, and inspected defect classes to be named in the completion or evidence anchor.

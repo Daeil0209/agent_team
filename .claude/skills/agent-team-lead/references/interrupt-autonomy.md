@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-10 Interrupt And Autonomy; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-10 Interrupt And Autonomy; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # team-lead: Interrupt And Autonomy Detail
@@ -12,13 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 Interrupt handling preserves original-task ownership.
 Interrupt handling keeps the original task as resume target.
 
-`Skill(governance-change)` interrupt uses a stacked interrupt frame.
-Cleanup interrupt uses a stacked interrupt frame.
-Defect-fix interrupt uses a stacked interrupt frame.
-Hook patch interrupt uses a stacked interrupt frame.
-Doctrine sharpening interrupt uses a stacked interrupt frame.
-Runtime housekeeping interrupt uses a stacked interrupt frame.
-User-corrective interrupt uses a stacked interrupt frame.
+These interrupt classes use a stacked interrupt frame: `Skill(governance-modification)`, cleanup, defect-fix, hook patch, doctrine sharpening, runtime housekeeping, and user-corrective interrupts.
 
 Rules:
 - The original task's frozen scope remains the active resume target.
@@ -31,7 +25,7 @@ Rules:
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Status or progress questions expose the stall.
-- Route status answers through `.claude/reference/user-reporting-law.md` `## Report Shape`.
+- Route status answers through `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 - Continue through the same verified `RESUME-ACTION`.
 - Use `Skill(self-verification)` result verification only before reporting or handoff.
 - The resumed scope must match the original task.
@@ -48,7 +42,7 @@ Autonomy is delegated authority under doctrine.
 Autonomous judgment improves team-operation quality.
 
 It is valid only when all three legs hold:
-1. philosophy alignment with `CLAUDE.md` Core Laws and Conditional Rules
+1. philosophy alignment with `.claude/CLAUDE.md` numbered philosophy sections
 2. evidence basis such as grep, code trace, cross-reference, or hook-parser inspection
 3. net benefit to the team-operation system, with burden vs value clearly favoring application
 
@@ -61,7 +55,7 @@ Activation:
 Operating discipline:
 - `[DESIGN-INTENT]` is the highest constraint.
 - Autonomy stays inside Structural Contract, owner boundaries, fixed section order, and protected restatements.
-- Apply `CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]` and `[PARALLEL]`.
+- Apply `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
 - Defer high-burden patches with marginal or speculative value.
 - Apply high-burden patches with marginal or speculative value only under explicit user direction.
@@ -73,7 +67,7 @@ Operating discipline:
 - Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
 - Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
-- A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance-change cycles.
+- A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance modification cycles.
 - Step-to-step continuation inside such a plan is autonomous; plan freeze authorizes the whole sequence.
 - The lead proceeds from each completed-and-verified step to the next planned step without intermediate user query.
 - Step-selection prose after a completed step is a `[NO-NEEDLESS-ASK]` violation when the next step is named by the plan.

@@ -3,6 +3,7 @@ name: team-session-sequences
 description: Provide session-sequence index and lead-side dispatch/detail lookup for team runtime. Use when packet readiness, dispatch sequencing, runtime monitoring, upward completion, or parallel shard merge discipline is active.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 ## Structural Contract
@@ -37,7 +38,7 @@ Use these procedures when the corresponding sequence is `materially active` per 
 
 ### Reporting Curtain Inheritance
 This sequence index governs sequence lookup, not report admission.
-User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
+User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Sequence Activation Discipline
 

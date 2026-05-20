@@ -3,6 +3,7 @@ name: agent-tester
 description: Agent-specific tester lane skill for consequential tester-owned proof assignments that require test execution or verification. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: tester
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned proof surface.
@@ -24,7 +25,8 @@ Before any work:
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before proof work.
-On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; tester-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged user-run-path, tool-basis, closure/oracle row, scenario boundary, and state-postcondition.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
+Tester-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged user-run-path, tool-basis, closure/oracle row, scenario boundary, and state-postcondition.
 ### User-Perspective Gate
 Apply this gate whenever the task claims a user workflow, operator workflow, or human-facing completion surface.
 1. Has proof executed the exact operator launch artifact through the intended invocation shape?
@@ -86,7 +88,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 ### 2. Choose The Smallest Credible Test Set
 - Cover critical path and highest-risk paths first.
 - Add negative, boundary, and error cases proportional to risk.
-- For workflow-completion, reliability, or user-ready claims, happy-path proof alone is insufficient; include bounded hard-test probes that target extreme but plausible inputs, rapid repetition, interruption/retry, out-of-order steps, stale sessions, corrupted/imported data, empty/null states, and high-volume or limit conditions.
+- For workflow-completion, reliability, or user-ready claims, happy-path proof alone is insufficient.
+- Include bounded hard-test probes that target extreme but plausible inputs, rapid repetition, interruption/retry, out-of-order steps, stale sessions, corrupted/imported data, empty/null states, and high-volume or limit conditions.
 - If the frozen packet authorizes only smoke or happy-path proof, label the result as smoke or partial proof and withhold completion-strength language.
 - For executable user-facing software, "smallest credible" covers frozen `SCOPE-BASELINE` user-visible controls inside the assigned `ACTIVE-SLICE`.
 - Each assigned `CORE-WORKFLOW-CLOSURE` row needs at least one direct closure-defect probe selected from `references/tester-lane-detail.md`; skipped probes are `blocked`, `out-of-scope by dispatch`, or `OPEN-SURFACES`, not covered.
@@ -99,7 +102,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Record exact commands, outputs, exit codes, or observed interaction evidence.
 - When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in completion.
 - Retained evidence identity requires project-owned retained paths; `/tmp` fixture paths are scratch context only.
-- Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, assigned interaction scope, and `USER-RUN-PATH` only when run-path burden is frozen.
+- Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, and assigned interaction scope.
+- Keep the executed path explicit against `USER-RUN-PATH` only when run-path burden is frozen.
 - When a precise oracle is unavailable or impractical, use property, invariant, round-trip, differential, or metamorphic checks when they fit the assigned proof surface.
 - When the assigned proof surface is browser interaction, prove it on that browser surface.
 - Use user-facing locators and web-first assertions when using Playwright CLI.
@@ -119,14 +123,15 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - For executable interactive software, keep route/view evidence and post-action state explicit for each exercised control.
 - Assigned browser-level or interaction-level proof surface stays decisive over rendered or server-only evidence.
 ### 5. Classify Proof
-- Every tested surface must end as exactly one of:
-  - direct proof
-  - indirect proof
-  - blocked proof
-  - disproof
+- Every assigned proof surface or in-scope feature/control must end as exactly one of:
+  - directly proven
+  - disproven
+  - blocked
+  - out-of-scope by dispatch
+- Indirect evidence is support evidence only; it does not close a proof surface or interaction-coverage row.
 - `Partial proof` is a report-level qualifier only.
-- Use it only as a report-level qualifier when the assigned proof surface mixes direct/indirect proof with blocked or uncovered portions.
-- Map each uncovered portion to `blocked proof` or `out-of-scope by dispatch`.
+- Use it only as a report-level qualifier when the assigned proof surface mixes directly proven, disproven, blocked, or out-of-scope portions.
+- Map each uncovered portion to `blocked` or `out-of-scope by dispatch`.
 - `out-of-scope by dispatch` is proof-slice truth only. `SCOPE-BASELINE` row deferral or closure requires that row in upstream `DEFERRED-SURFACES`.
 - Every reported proof surface must keep expected versus observed result explicit.
 - `TEST-STATE: ready` means the proof report is complete for downstream decision, not that the product passed; disproven, indirect-only, blocked, uncovered, or out-of-scope rows still travel as non-passing evidence.
@@ -148,14 +153,14 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - See `references/tester-lane-detail.md` for tester-specific completion detail.
 
 ## Proof Classification
-- `Direct proof`: executed check on the assigned decisive surface, expected behavior observed, required material closure-defect probe executed, and required postcondition evidence retained. Direct proof covers only the executed scenario; user-ready or reliability claims also require material hard-test probe evidence.
-- `Indirect proof`: inferred from related executed evidence; it is support evidence only and cannot close direct-required user-facing `SCOPE-BASELINE` or `CORE-WORKFLOW-CLOSURE` rows.
-- `Blocked proof`: required execution did not complete.
-- `Disproof`: executed check, failing behavior observed.
+- `Directly proven`: executed check on the assigned decisive surface, expected behavior observed, required material closure-defect probe executed, and required postcondition evidence retained. Directly proven covers only the executed scenario; user-ready or reliability claims also require material hard-test probe evidence.
+- `Indirect evidence`: inferred from related executed evidence; it is support evidence only and cannot close direct-required user-facing `SCOPE-BASELINE`, `CORE-WORKFLOW-CLOSURE`, proof surface, or interaction-coverage rows.
+- `Blocked`: required execution did not complete.
+- `Disproven`: executed check, failing behavior observed.
 
 ## Active Communication Protocol
-- Tester-specific blocker: blocked proof path, material ambiguity, unsafe packet, or wrong staffing shape.
-- Use exact `MESSAGE-CLASS: hold|blocker` for blocked proof.
+- Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
+- Use exact `MESSAGE-CLASS: hold|blocker` for `blocked` proof classification.
 - Completion uses `completion` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action

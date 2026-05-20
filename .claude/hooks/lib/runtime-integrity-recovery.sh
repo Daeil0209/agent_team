@@ -6,11 +6,11 @@
 #
 # Public functions:
 #   runtime_integrity_classify <team_name>
-#       Print one defect per line: `CLASS=<A|B|C|D|E|F|G|H|I>\tDETAIL=<text>`
+#       Print one hook-detectable defect per line: `CLASS=<A|B|C|D|E|F>\tDETAIL=<text>`
 #   runtime_integrity_reconcile_nondestructive <team_name>
-#       Apply Class B/C/D/F automatic cleanup. Class A/E/G/H/I left for operator/team-lead.
+#       Apply Class B/C/D/F automatic cleanup. Class A/E left for operator/team-lead.
 #   runtime_integrity_destructive_report <team_name>
-#       Print HOLD-formatted lines for Class A/E/I requiring operator approval.
+#       Print HOLD-formatted lines for hook-detectable Class A/E requiring operator approval.
 #
 # All emissions are stderr-safe for hook composition; stdout reserved for structured output.
 

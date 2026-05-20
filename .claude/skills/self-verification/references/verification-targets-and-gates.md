@@ -1,14 +1,14 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/self-verification/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Self-Verification Reference
 Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis claim check, material same-lane self-certification risk, or expanded output record.
-For material defect, removal, cross-surface governance, or patch-worthiness detail, record the next review judgment: `owner-local-sufficient:<basis>`, `Skill(review-verification):<bounded-question>`, `Skill(governance-change):<governance-change-basis>`, redispatch, or report.
+For material defect, removal, cross-surface governance, or patch-worthiness detail, record the next review judgment: `owner-local-sufficient:<basis>`, `Skill(review-verification):<bounded-question>`, `Skill(governance-modification):<governance-modification-basis>`, redispatch, or report.
 `Skill(review-verification):<bounded-question>` consumes `.claude/skills/review-verification/references/governance-review-gates.md`.
 
 ## Contents
@@ -59,13 +59,13 @@ When a trigger fires, using only the compact spine is insufficient for positive 
 Use every lens that materially applies to the target. Omission of an applicable triggered lens is verification failure.
 
 - Request-fit lens: what did the user actually ask for, forbid, de-prioritize, or emphasize?
-- Semantic-fit lens: what user concern, anti-goal, failure history, team-operation philosophy, target intent, or priority order shaped the request?
+- Semantic-fit lens: what user concern, anti-goal, failure history, active philosophy section or keyword, target intent, or priority order shaped the request?
 - Acceptance-fit lens: what acceptance surface matters?
 - Result-fit lens: does the current plan/result satisfy the explicit request, frozen semantic intent, material target intent, and acceptance surface?
 - Claim/evidence lens: what is the exact claim, what evidence supports it, what evidence would defeat it, and what residual uncertainty remains?
 - Counter-bias lens: if this conclusion is convenient for the current actor, what alternative explanation, overlooked evidence, owner-separation need, acceptance downgrade, or disconfirming test would a skeptical independent lane raise?
 - Requirement/rationale lens: why must this item exist, what parent need or self-derived decision justifies it, what assumption makes it valid, and what breaks if it is removed?
-- Review-routing lens: which next review judgment fits the produced result: `owner-local-sufficient:<basis>`, `Skill(review-verification):<bounded-question>`, `Skill(governance-change):<governance-change-basis>`, redispatch, report, or `HOLD`?
+- Review-routing lens: which next review judgment fits the produced result: `owner-local-sufficient:<basis>`, `Skill(review-verification):<bounded-question>`, `Skill(governance-modification):<governance-modification-basis>`, redispatch, report, or `HOLD`?
 - Detailed-design/mechanism lens: which lower-level unit, input, output, state transition, data flow, control flow, algorithm, interface, dependency, timing constraint, and error path make the intended behavior happen?
 - Data/domain engineering lens: what business meaning, bounded context, producer, consumer, source of truth, lifecycle, lineage, transformation, cardinality, required/omitted state, invariant, CRUD/process coverage, and data-quality rule make this data valid and useful?
 - Software development lens: are module boundaries cohesive, coupling controlled, contracts explicit, configuration and concurrency/idempotency risks handled, and errors observable and recoverable?
@@ -79,7 +79,7 @@ When exception-only `plan-audit` is loaded before consequential action, verify:
 - top-level `team-lead` plans carry `TEAM-LEAD-WORK-PLAN` rows for material phase, owner, action, stop/evidence, review/verification judgment, iteration, and termination
 - if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
-- `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `task-execution`, exact authorization request, exact blocker-clear move, or `HOLD`
+- `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `Skill(task-execution)` when activation basis is absent/stale/wrong-boundary, loaded `task-execution` consumption with current same-session basis, exact authorization request, exact blocker-clear move, or `HOLD`
 - readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
 - routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis must be measured or cited.
@@ -118,7 +118,7 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - separate observation, inference, judgment, and recommendation
 - cite or name the evidence surface that supports each controlling claim
 - actively search for the strongest contrary interpretation or evidence that would defeat the conclusion
-- record `Skill(governance-change):<governance-change-basis>` when the verified produced result requires governance asset change or recurrence-barrier hardening
+- record `Skill(governance-modification):<governance-modification-basis>` when the verified produced result requires governance asset change or recurrence-barrier hardening
 - record `Skill(review-verification):<bounded-question>` when the verified produced result needs material defect labels, removal judgments, cross-surface governance judgments, or patch recommendations
 - record `owner-local-sufficient:<basis>` when the active owner can correct, narrow, route, or report the produced result without extra review
 - after `review-verification` returns, verify only whether the outgoing claim matches that review packet
@@ -134,7 +134,7 @@ For changed doctrine, skills, agents, hooks, code, configs, references, or produ
 - Verify that the reported scope matches the frozen request and changed artifact identity.
 - Verify that the claim is backed by retained evidence, live paths, or current diff.
 - Verify that unresolved review, proof, or acceptance surfaces remain open instead of being reported as closed.
-- For design-intent, owner-boundary, information-preservation, cross-reference, duplicate-doctrine, or patch-worthiness judgment outside an active `Skill(governance-change)` patch loop, record `Skill(review-verification):<bounded-question>` and consume `.claude/skills/review-verification/references/governance-review-gates.md`; inside that loop, return to its `REVIEW-VERIFICATION-NEED` gate.
+- For design-intent, owner-boundary, information-preservation, cross-reference, duplicate-doctrine, or patch-worthiness judgment outside an active `Skill(governance-modification)` patch loop, record `Skill(review-verification):<bounded-question>` and consume `.claude/skills/review-verification/references/governance-review-gates.md`; inside that loop, return to its `REVIEW-VERIFICATION-NEED` gate.
 
 A result that passes claim-strength but lacks the required next review judgment is not converged.
 
@@ -158,7 +158,7 @@ Rules:
 Synthesized conclusions do not inherit verification automatically.
 
 Self-verification-specific synthesis duties:
-- if synthesis selects governance asset change or recurrence-barrier hardening as next owner/action, record `Skill(governance-change):<governance-change-basis>` and verify that route.
+- if synthesis selects governance asset change or recurrence-barrier hardening as next owner/action, record `Skill(governance-modification):<governance-modification-basis>` and verify that route.
 - route finding promotion to `Skill(review-verification):<bounded-question>` before any `confirmed-defect`, removal, or patch-worthiness claim leaves this skill.
 - if the synthesis points to redispatch, run result verification on the synthesized result before re-dispatch.
 - if synthesis touches existing-artifact integrity, apply design-intent verification before reporting a positive result.
@@ -212,7 +212,7 @@ This detail block is internal handoff only. Do not expose it to the user unless 
 - `INFERENCE/UNVERIFIED` opens evidence gathering, claim narrowing, or truthful report by active owner.
 - `HOLD` opens blocker reporting with owner and blocker.
 - `reopen-work-planning` opens `work-planning`.
-- Produced-result governance asset change or recurrence-barrier hardening opens `Skill(governance-change)`.
+- Produced-result governance asset change or recurrence-barrier hardening opens `Skill(governance-modification)`.
 - Material defect, removal, cross-surface governance, or patch-worthiness gap opens `Skill(review-verification):<bounded-question>`.
 - Synthesis verification gap opens conflict reconciliation before reporting or redispatch.
 - Lead-local verification resource debt opens cleanup or explicit blocker before closure.

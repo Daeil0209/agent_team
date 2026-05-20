@@ -1,17 +1,19 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Dispatch Entry Contract
 
-Load after `Skill(task-execution)` is active and before any dispatch, reuse, blocker-clear, or packet assembly move.
+Load after `Skill(task-execution)` is active by actual skill load or current same-session activation basis and before any dispatch, reuse, blocker-clear, or packet assembly move.
+Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` does not satisfy this entry condition.
 
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
+- actual `Skill(task-execution)` load or `same-session-loaded:task-execution:<owner-boundary-basis>` for the same dispatch owner boundary
 - current boundary `work-planning`
 - the current frozen workflow or sequence owner already opened when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is present
 - a frozen additional-agent route or ambiguous dispatch route
@@ -19,25 +21,7 @@ Before this skill acts, the lead must already have:
 - `session-boot` supplies current-runtime readiness or recovery classification only when live runtime truth can change the next owner/action
 
 ## Consumed Frozen Fields
-Consume only dispatch-relevant frozen fields in this order. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
-1. `REQUEST-FIT-BASIS`
-2. `SEMANTIC-INTENT-BASIS`
-3. `COMPLETION-STOP-CONDITION`
-4. `DERIVED-DEFAULTS`
-5. `REQUEST-BOUND-PACKET-FIELDS`
-6. `TEAM-LEAD-WORK-PLAN`
-7. `CLAIM-CEILING` when material
-8. `ROUTING-SIGNAL`
-9. `NEXT-CONSEQUENTIAL-ACTION`
-10. `DISPATCH-BLOCKERS`
-11. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling was frozen or required by the current route
-12. `EXECUTION-READINESS-BASIS`
-13. `AGENT-MAP`
-14. `PARALLEL-GROUPS`
-15. `LANE-REQUIRED-SKILLS-MAP`
-16. `SKILL-RECOMMENDATIONS`
-17. `ACTIVE-WORKFLOW` when present
-18. `ACTIVE-SEQUENCE` when present
+Consume only dispatch-relevant frozen fields in the order and conditionals owned by `.claude/skills/work-planning/references/planning-record-fields.md` `## Allowed Values`. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
@@ -49,6 +33,9 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 - `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` must be concrete when additional-agent routing is host-authorized.
+- `ACTIVE-CONCURRENT-AGENT-CAP` must be concrete when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable.
+- `task-execution` consumes the frozen cap and does not infer or raise it from runtime convenience.
+- If planned concurrent nonblocked groups exceed `ACTIVE-CONCURRENT-AGENT-CAP`, stop and reopen `work-planning`.
 - If they are not mandatory but `task-execution` can consume the route, each must carry explicit `not-applicable:<basis>`.
 - Valid `not-applicable` bases are limited to a dispatch-owned blocker-clear move or an ambiguous dispatch route that `work-planning` kept dispatch-owned without authorizing an agent dispatch move yet.
 - `not-applicable` is invalid once an authorized agent dispatch move exists.
@@ -66,7 +53,7 @@ Consume only dispatch-relevant frozen fields in this order. A consumed field mus
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.
 - A frozen route lacking measured burden basis stops dispatch and reopens `work-planning`.
-- A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `work-planning` or `parallel-fit`.
+- A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `.claude/skills/work-planning/references/parallel-fit.md`. PROTECTED-LOCAL-RESTATEMENT-BASIS: runtime-side enforcement of the planning-side verification rule; runtime preflight stops dispatch when planning-side verification is missing.
 - Missing on-disk verification stops runtime creation, packet assembly, reuse, `SendMessage`, and `Agent`; the route reopens `work-planning`.
 - If `PARALLEL-GROUPS: none` serializes multi-surface work without a measured dependency or serial-burden basis, stop and reopen `work-planning`.
 - If the next move asks the user to choose route, staffing, parallelism, or dispatch options that doctrine and evidence can settle, stop and reopen `work-planning` or continue with the evidence-backed route.

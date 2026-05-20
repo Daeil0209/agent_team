@@ -2,10 +2,10 @@
 name: developer-reference
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/agent-developer/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Developer Reference
 ## Contents
@@ -44,7 +44,10 @@ Owner fields use `not-applicable:<basis>` only when the frozen surface has no ma
 ## Completion Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
-Production discovery and edits are forbidden until the packet is classified as `execute` or `reconstruct-with-inference`. Developer must use the first lawful executable path that can satisfy the user instruction. `scope-pressure` and `hold|blocker` stop only the unsafe current path; they open the team-lead resolution loop, not task abandonment.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment phrase below restates `.claude/agents/developer.md` lines 49-58 and `.claude/skills/agent-developer/SKILL.md` for developer-lane defense-in-depth consumption.
+Production discovery and edits are forbidden until the packet is classified as `execute` or `reconstruct-with-inference`.
+Developer must use the first lawful executable path that can satisfy the user instruction.
+`scope-pressure` and `hold|blocker` stop only the unsafe current path; they open the team-lead resolution loop, not task abandonment.
 
 Minimum decisive production basis:
 - `PLAN-STATE`

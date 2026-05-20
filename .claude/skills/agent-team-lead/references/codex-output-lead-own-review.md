@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 configured independent-review output or same-boundary correction; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-4 configured independent-review output or same-boundary correction; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Configured-Review Output Lead Own-Review Discipline
 
@@ -44,14 +44,5 @@ Stop before relay until team-lead adjudicates the output.
 - Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
 - Team-lead own-review consumes material specialist skills before convergence acceptance.
 - Team-lead reconciliation consumes material specialist skills before redispatch.
-- Prior carry-forward is non-current context only.
-- Landing confirmation is non-current context only.
-- Spot-check is non-current context only.
-- Configured-review result relay is non-current context only.
-- Consensus wording is non-current context only.
+- Prior carry-forward, landing confirmation, spot-check, configured-review result relay, and consensus wording are non-current context; they must not satisfy own-review convergence.
 - Lawful fail-open applies only when the owning reference names it.
-- Rubber-stamp acceptance is a defect.
-- Unexplained rejection is a defect.
-- Configured-review-led relay is a defect.
-- Consensus treatment is a defect.
-- Pre-owner carry-forward is a defect.

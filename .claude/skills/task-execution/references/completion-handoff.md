@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Completion
@@ -46,7 +46,7 @@ That task-state mutation is internal runtime closure; it is not user reporting a
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-RESULT-VERIFICATION`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
-If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-change)` cleanup.
+If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
 Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
 Lane completion does not claim team-lead `Skill(self-verification)` result verification.
@@ -54,7 +54,7 @@ Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
-When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the completion cites the frozen `RETAINED-OUTPUT-PATH` under the canonical output root from `.claude/reference/output-root-and-filesystem-law.md` (default `claude_doc/<work-name>/`).
+When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the completion cites the frozen `RETAINED-OUTPUT-PATH` under the canonical output root from `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the completion must cite a retained path inside the frozen output root. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
 `/tmp`, shell scrollback, transient pane output, and deleted scratch files are execution context only, not retained evidence.
 Conversation-only output is valid only when the packet names conversation as the output surface.
@@ -64,20 +64,28 @@ Use `INFERENCE` only when reconstructed safely from request, plan, design, Struc
 Use concrete task, artifact, expectation, evidence, and next-owner wording.
 Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.
+- Finding outputs use the state ladder from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`: `candidate-evidence`, `candidate-classified`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
 - Raw finding counts, repeated or similar labels, same words on different classification axes, multi-lane convergence, and candidate lists are evidence only; they are not conflict, severity, priority, patch-worthiness, or confirmed-defect proof.
+- Raw candidate counts stay separate from confirmed-defect counts, patch-worthy counts, patch-ready counts, rejected counts, and open-candidate counts.
 - Researcher outputs supply evidence and candidate classifications only unless a downstream review owner reclassifies them through this basis.
+- Bare `CONFIRMED` is not a valid finding state; use the exact ladder state supported by evidence.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, regression risk, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.
 - Quality, evidence, independent review, proof, validation, Codex independent review, and Final Acceptance Review (FAR) gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
 - Only `patch-worthiness: must-fix|narrow-fix` with proof that correction will not remove a stronger protected function is patch-dispatch basis; `observe|no-patch` stays retained context.
 - Common finding-class taxonomy is shared by reviewer, review-verification, and validator-input findings:
+  - `candidate-evidence`: observed evidence without defect authority.
+  - `candidate-classified`: candidate evidence mapped to proposed class, severity, owner, and inspected source surface without defect authority.
   - `confirmed-defect`: live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction.
+  - `patch-worthy`: `confirmed-defect` plus protected-function preservation, user-outcome impact, regression-risk basis, smallest owner, selected operation type, and rejected non-defect alternatives.
+  - `patch-ready`: `patch-worthy` plus patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
   - `risk-hypothesis`: plausible risk lacks enough proof for patch dispatch.
   - `design-tradeoff`: intentional protection with a cost.
   - `duplication`: repeated meaning without protected local-restatement basis, after proving correction will not remove a stronger protected function.
   - `protected-restatement`: repeated meaning with a named owner and direct-consumption or isolation-safety basis.
   - `non-issue`: evidence disproves the concern.
   - `unverified`: evidence basis incomplete.
+  - `rejected:<basis>`: umbrella state for `protected-restatement`, `design-tradeoff`, `non-issue`, `risk-hypothesis`, `unverified`, or `not-material:<basis>` when filtering rejects promotion.
 
 `RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at completion.
 Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes.
@@ -139,6 +147,9 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 
 ## Common Lane Completion Law
 - Every agent completion is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
+- Every agent completion goes to `team-lead` through `SendMessage` with `MESSAGE-CLASS: completion`.
+- Every agent completion also provides the retained carrier containing the common completion spine.
+- Completion is not valid when either the retained carrier or the `SendMessage` completion state signal is missing.
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
 - Do not repeat the state signal across header/preview/body.
 - Do not include any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.

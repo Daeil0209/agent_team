@@ -3,7 +3,7 @@ name: visual-composition
 description: Own presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
 user-invocable: false
 PRIMARY-OWNER: developer
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance-change / regression-guard blocks when present
+  5. owner-local structural feedback / governance modification / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 ### Reference Map
@@ -87,7 +87,7 @@ Expert behavior means the operator can understand the surface quickly without de
 - if the surface is attractive but operator sequence is still guesswork, it is not ready
 **Visual Defect Taxonomy**:
 Defect types: `tiny_text`, `overlap_collision`, `awkward_wrap`, `weak_hierarchy`, `top_heavy_layout`, `decorative_noise`, `poor_proportion`, `diagram_text_unreadable`, `insufficient_whitespace`, `feature_missing`.
-Defect-record fields inherit `CLAUDE.md` `## Acceptance` and `## Communication`.
+Defect-record fields inherit `.claude/CLAUDE.md` `## 6. Judgment Philosophy` and `## 7. Reporting Philosophy`.
 Severity rubric inherits `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 Record "none observed yet" for recurrence if not yet seen.
 
@@ -111,8 +111,6 @@ Post-compression flattening = `weak_hierarchy` variant.
 Scan-order must be defensible.
 Following natural gaze path, reader encounters purpose before rationale.
 Reader encounters rationale before detail.
-> For Document-Class Visualization Discipline, see `references/visual-composition-detail.md`
-> For Visualization Production Sequence Gate, see `references/visual-composition-detail.md`
 ## Visualization Acceptance Gate
 Every proposed visual element must pass a justification gate before inclusion:
 1. **Clarity test** — does this visual make a specific piece of information faster to understand than surrounding text alone? If not, fails.
@@ -121,10 +119,6 @@ Failure classification: clarity failure = `decorative_noise`.
 Failure classification: redundancy failure = `narrative_redundancy`.
 Failed visuals must be removed, merged into the element they duplicate, or redesigned to serve a distinct reading task.
 Visual-failing surfaces exit as blocking visual findings.
-> For Visual Tone for Document-Class Deliverables, see `references/visual-composition-detail.md`
-> For Surface-Promotion And Decision-Point Extension, see `references/visual-composition-detail.md`
-> For Workflow-Product Surface Extension, see `references/visual-composition-detail.md`
-> For Operational Management UI Composition Rules, see `references/visual-composition-detail.md`
 ## Dashboard Design + Spec Authoring Discipline
 > Owner-local visual-composition detail for dashboard, monitoring, chart, and UI spec deliverables.
 > Active when this skill is loaded for any visual / UI / chart / dashboard deliverable design or spec authoring.
@@ -168,4 +162,3 @@ Omitted material spec items stay `OPEN-SURFACES` until corrected or deferred by 
 - Dense review surfaces must have explicit scan path and priority grouping before visual-ready handoff.
 - Raw form or table accumulation is not acceptable evidence of usability.
 ---
-> For Workflow Tool Design Patterns, see `references/visual-composition-detail.md`

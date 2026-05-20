@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 1 [RULE-FORCE], [AUTO-PROC], [PROC-HABIT], [SELF-VERIFY]; Priority And Ownership; Channel And Procedure; Communication"
+SOURCE-RULES: "Work Execution Philosophy; Review And Verification Philosophy result-verification boundary; Reporting Philosophy communication-plane boundary"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Common Doctrine Reference: Procedure And Ownership
 
@@ -14,7 +15,7 @@ Use it to:
 
 ## Reporting Curtain Inheritance
 This reference governs procedure movement, not report admission.
-User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
+User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Consume When
 - A task moves beyond `answer-only`.
@@ -28,7 +29,7 @@ User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
   - planning
   - dispatch
   - benchmark
-  - governance-change
+  - governance-modification
   - interrupt
   - status
   - review
@@ -76,7 +77,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - A loaded owner document rule is mandatory while that owner context is active.
 - A trigger-bound reference rule is mandatory while its trigger is active.
 - Do not weaken active governance rules into lower-force labels.
-- If an active governance rule is unclear, route to the owning correction path instead of ignoring it.
+- If an active governance rule is unclear, over-specified, evasion-enabling, semantically conflicting, scope-abuse-prone, or bottleneck-forming, route to the owning correction path instead of ignoring or applying the weak form.
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
 - Executable rules name owner, trigger, stop, evidence, verification, and acceptance truth when material.
@@ -84,7 +85,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Procedure outranks convenience.
 - Procedure outranks source memory.
 - Procedure outranks model confidence.
-- Autonomous work stays inside the named procedure currently open.
+- Consequential work stays inside the named procedure currently open.
 - The active path keeps one truthful next owner.
 - The active path keeps one truthful next action.
 
@@ -97,10 +98,10 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `Governance Change Sequence` is a standard sequence.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `session-closeout` owns closeout truth.
-- `Skill(governance-change)` owns routine asset maintenance and recurrence-barrier hardening.
-- `Skill(governance-change)` owns `Change Sequence` patch mechanics.
+- `Skill(governance-modification)` owns routine asset maintenance and recurrence-barrier hardening.
+- `Skill(governance-modification)` owns `Change Sequence` patch mechanics.
 - Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` result verification.
-- Treat dispatch, benchmarking, governance-change, interrupt handling, and status reporting as nonterminal evidence.
+- Treat dispatch, benchmarking, `governance-modification`, interrupt handling, and status reporting as nonterminal evidence.
 - Treat review as evidence for acceptance path.
 - Treat proof as evidence for final acceptance.
 - Route final acceptance to `validator`.
@@ -114,6 +115,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - Lawful independent work continues while the affected path is corrected.
 
 ## Owner Separation
+PROTECTED-LOCAL-RESTATEMENT-BASIS: detail-reference parallel owner-listing — per-owner duty lines restate `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` owner-boundary meaning because this section must read as a parallel comparison of all six configured owner duties; deletion of any single owner line would break the parallel structure and the cross-owner separation rules below.
 - `team-lead` owns intake, route, orchestration, synthesis, closeout, and user communication.
 - `researcher` owns evidence gathering and investigation.
 - `developer` owns bounded production and implementation.

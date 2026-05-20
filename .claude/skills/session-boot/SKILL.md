@@ -3,6 +3,7 @@ name: session-boot
 description: "Run lead-session boot, runtime-readiness gates, monitoring, runtime cleanup interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime cleanup truth is active."
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned runtime surface.
@@ -12,6 +13,8 @@ PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
 - Runtime-state tables, cleanup mappings, boot-window detail, compaction recovery detail, monitoring detail, and schema detail belong in `references/runtime-state-detail.md`.
 ### Reference Map
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/environment-configuration-core-law.md`: load when runtime readiness, session-start recovery, monitoring, cleanup interpretation, official behavior, tool capability, hook signal, or runtime footprint changes the next owner/action.
 - `references/runtime-state-detail.md`: active-runtime observation, recovery, cleanup, stale/stall, runtime-pressure, compaction-recovery, and monitoring detail only for the explicit triggers named below.
 - Routine startup does not consume this reference unless the minimal gate detects material runtime detail.
 
@@ -33,21 +36,21 @@ Runtime-detail load decision:
 4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 
 Runtime-detail consumption stays inside the Procedure Plane.
-It never weakens `.claude/reference/user-reporting-law.md` report admissibility and never admits boot, monitoring, route, or runtime prose.
+It never weakens `.claude/reference/reporting-user-reporting-law.md` report admissibility and never admits boot, monitoring, route, or runtime prose.
 
 ## Activation
 Load at the main session's fresh start, resume, pause-return, or active-runtime recovery/monitoring re-entry.
-Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/user-reporting-law.md`.
-Before any boot, resume, or monitoring prose, preserve and apply that already-consumed `.claude/reference/user-reporting-law.md`.
-Do not re-consume `.claude/reference/user-reporting-law.md` during clean startup.
-If the Startup Contract did not consume `.claude/reference/user-reporting-law.md` before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
+Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/reporting-user-reporting-law.md`.
+Before any boot, resume, or monitoring prose, preserve and apply that already-consumed `.claude/reference/reporting-user-reporting-law.md`.
+Do not re-consume `.claude/reference/reporting-user-reporting-law.md` during clean startup.
+If the Startup Contract did not consume `.claude/reference/reporting-user-reporting-law.md` before this skill loaded, stop visible prose and route the defect to the active team-lead startup owner before boot narration.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Do not load `references/runtime-state-detail.md`, do not inspect runtime ledgers, and do not emit boot prose.
 Run `Session-Start Sequence` as the baseline.
 Run `Boot Sequence` when boot is incomplete.
 Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, cleanup interpretation, or runtime recovery is required.
-Every boot information check remains internal unless `.claude/reference/user-reporting-law.md` admits a report.
+Every boot information check remains internal unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
 Boot checks can change runtime owner/action; they cannot create boot, status, progress, or summary prose permission.
 If boot evidence and visible-prose pressure conflict, keep boot evidence internal and continue the Procedure Plane path.
 
@@ -108,7 +111,7 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 - A sequence is `materially active` when its state can change the next owner, next action, blocker, recovery, monitoring, cleanup, or dispatch truth.
 - Record the active session sequence in the internal continuity carrier when it is materially active.
 - Record the current phase, checkpoint, or blocking step in the owning internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
-- Do not use boot, phase, checkpoint, continuity, or sequence names as pane-visible progress prose; visible output follows `.claude/reference/user-reporting-law.md` only.
+- Do not use boot, phase, checkpoint, continuity, or sequence names as pane-visible progress prose; visible output follows `.claude/reference/reporting-user-reporting-law.md` only.
 - Sequence switches require an explicit active-sequence transition in the internal carrier.
 - Defined session procedures follow the owning basis or stay on `HOLD`.
 
@@ -150,10 +153,7 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 - Phase advancement, redistribution, synthesis, and completion claims stay with `team-lead` plus the active workflow owner.
 - Completion-grade agent outputs observed through runtime channels return to `team-lead` for synthesis and the next verification gate.
 - Workflow advancement requires owning-procedure synthesis.
-- After completion-grade output, record `STANDBY` and keep synthesis, validation, reuse, or cleanup as the next owner/action.
-- Reuse uses assignment-grade bounded work; standby follows completion; shutdown uses structured `shutdown_request`.
-- Normalize any shutdown intent to structured `SendMessage` `{"type":"shutdown_request"}`.
-- Wait for confirmed termination evidence.
+- Completion-grade → `STANDBY` → synthesis/validation/reuse/cleanup transitions and structured `shutdown_request` semantics: canonical owner `references/runtime-state-detail.md`; consume that owner for the rule body before action selection.
 - Closeout teardown remains owned by `session-closeout`.
 - If monitoring exposes bottleneck collapse, owner vacuum, repeated runtime churn, missing agent-start evidence, or stalled phase consumption, surface workflow continuity pressure.
 - Return corrective ownership to `team-lead` plus the active workflow owner.

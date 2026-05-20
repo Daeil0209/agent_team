@@ -5,13 +5,13 @@
 # Reason: `tmux kill-session`, `tmux kill-server`, `tmux kill-pane`, `tmux kill-window`
 # inside an active Claude Code agent-team session destabilises the host session and
 # can crash it ("세션 튕겨나간다"). Doctrine and self-restraint alone cannot guarantee
-# the agent will never issue these commands; per CLAUDE.md `[HOOK-LAST]` this is a
+# the agent will never issue these commands; per `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]` this is a
 # last-resort runtime guard installed at the narrowest enforcement surface.
 #
 # Safe teardown paths instead:
 #   - per-member shutdown via `SendMessage` `{"type":"shutdown_request"}` plus the
 #     receiver-side `shutdown_response` `approve:true` (per task-execution
-#     references/message-classes.md and the SendMessage tool protocol).
+#     .claude/skills/task-execution/references/message-classes.md and the SendMessage tool protocol).
 #   - whole-team teardown via `Skill(session-closeout)` Runtime Teardown Preflight
 #     followed by `TeamDelete` from inside that boundary.
 #
@@ -23,7 +23,7 @@
 set -euo pipefail
 INPUT="$(cat)"
 
-REASON='tmux kill-* commands are blocked by explicit operator policy (session-stability protection). Use SendMessage shutdown_response (receiver-side protocol) per task-execution/references/message-classes.md, or Skill(session-closeout) Runtime Teardown Preflight followed by TeamDelete, for safe teardown.'
+REASON='tmux kill-* commands are blocked by explicit operator policy (session-stability protection). Use SendMessage shutdown_response (receiver-side protocol) per .claude/skills/task-execution/references/message-classes.md, or Skill(session-closeout) Runtime Teardown Preflight followed by TeamDelete, for safe teardown.'
 
 emit_deny() {
   # Emit the canonical PreToolUse deny JSON; reason is embedded as a JSON string.

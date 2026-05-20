@@ -3,6 +3,7 @@ name: agent-developer
 description: Agent-specific developer lane skill for consequential developer-owned production assignments — Phase 3+ implementation production, governance patch edits, and bounded supporting document production. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: developer
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned production surface.
@@ -23,7 +24,8 @@ Before any work:
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
 Execution bias applies only after packet classification opens `execute` or `reconstruct-with-inference`: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
-On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; developer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, and acceptance-oracle.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
+Developer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged write-scope, source-of-truth, closure row, disposition path, consumer/recompute path, and acceptance-oracle.
 ### User-Perspective Gate
 Apply this gate when the artifact is user-facing or acceptance depends on real start/use.
 1. Can the intended user or operator find and invoke the exact launch artifact without developer-only knowledge?
@@ -41,7 +43,6 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, bounded development production surface, source-of-truth, material closure row, disposition path, consumer/recompute path, and acceptance oracle are inferable without changing the assignment boundary, reconstruct the working packet explicitly and mark inferred pieces as inference.
 - If write scope, authority, acceptance contract, production-phase basis, or decisive production basis is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
-- See `references/developer-lane-detail.md` for packet field tables, SKILL-AUTH detail, specialist matrix, completion-completeness detail, and defect-fix execution detail.
 
 ## Escalation Triggers
 - These boundaries are modules:
@@ -87,12 +88,14 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Name the first lane action.
 - Name the stop condition.
 - Production proceeds only on `execute` or `reconstruct-with-inference`.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment rule chain restates `.claude/agents/developer.md` lines 49-58 and `references/developer-lane-detail.md` lines 47-48 because developer lane consumes these rules in isolation context when encountering a constraint during production; defense-in-depth restatement.
 - `scope-pressure` and `hold|blocker` stop only the unsafe current path.
 - They open the team-lead resolution loop.
 - They are not task abandonment.
 - Send them immediately to `team-lead` via `SendMessage`.
   - Include exact constraint, attempted or available path, why current execution cannot continue truthfully, and smallest next executable step.
-  - Use `references/developer-lane-detail.md` as the controlling packet-field catalog for decisive basis, multiple-surface additions, executable launcher contract, user-facing surface, and path-bounded `WRITE-SCOPE`; do not maintain a second field list here.
+  - Use `references/developer-lane-detail.md` as the controlling packet-field catalog for decisive basis, multiple-surface additions, executable launcher contract, user-facing surface, and path-bounded `WRITE-SCOPE`.
+  - Do not maintain a second field list inside this skill body.
 - Reconstruct only when safe without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle.
 - Mark inferred pieces explicitly.
 - If production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary, stop only the blocked path.
@@ -121,7 +124,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Preserve existing architecture and conventions unless the packet explicitly authorizes structural change.
 - Prefer explicit naming, explicit control flow, and explicit error handling.
 - Keep production work inside the frozen change boundary.
-- For governance patch edits, consume `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
+- For governance patch edits, consume `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
+- For governance patch edits, satisfy `.claude/skills/task-execution/references/lane-additions.md` lane-side governance patch quality contract.
 - If the assigned governance target is unconsumed, return `scope-pressure` unless the same bounded change makes it consumed.
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 5. Pre-Completion Integrity

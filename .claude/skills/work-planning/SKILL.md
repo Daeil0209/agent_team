@@ -3,6 +3,7 @@ name: work-planning
 description: Freeze request fit, route, workflow, parallel fit, and skill basis before consequential action.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned procedure surface.
@@ -50,6 +51,11 @@ Boundary:
 ### Reference Map
 Load every listed reference whose trigger is active.
 Triggered references are mandatory before positive route freeze.
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/design-definition-core-law.md`: load when freezing request fit, deliverable, user burden, completion shape, or user-surface closure basis.
+- `.claude/reference/detailed-design-core-law.md`: load when freezing target intent, design boundary, existing-artifact basis, design drift, or current-session continuity basis.
+- `.claude/reference/work-execution-core-law.md`: load when freezing route, next owner/action, parallel fit, escalation basis, skill/reference basis, or execution readiness.
+- `.claude/reference/judgment-core-law.md`: load when freezing proof owner, validation owner, acceptance owner, final-arbitration risk, or independent-lane separation.
 - `references/planning-targets.md`: target definitions, required basis, and target-switch rules.
 - `references/boundary-gates.md`: activation scope, corpus measurement, boundary axes, hard stops, and post-planning gates.
 - `references/reference-use.md`: reference-based planning and source-deviation risk.
@@ -67,7 +73,7 @@ If a needed reference cannot be loaded, freeze `HOLD`, blocker-clear, or reopene
 
 ## Activation Trigger
 `team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
-`material` follows `CLAUDE.md` Core Laws 1; consequential boundary changes are tested through `references/boundary-gates.md` Boundary-Change Axes.
+`material` follows `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; consequential boundary changes are tested through `references/boundary-gates.md` Boundary-Change Axes.
 Session start routes to `Skill(session-boot)`.
 Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
 Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.
@@ -78,7 +84,7 @@ Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, 
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard stops, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
-Governance defect, removal, and preservation judgment is planned as a bounded review/verification row: synthesized-result judgment goes through `Skill(self-verification)` first; governance patch judgment goes through `Skill(governance-change)` and its `REVIEW-VERIFICATION-NEED`.
+Governance defect, removal, and preservation judgment is planned as a bounded review/verification row: synthesized-result judgment goes through `Skill(self-verification)` first; governance patch judgment goes through `Skill(governance-modification)` and its `REVIEW-VERIFICATION-NEED`.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
 A moved boundary-change axis reopens `work-planning`.
@@ -139,7 +145,8 @@ Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence,
 
 Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
-- Load `references/parallel-fit.md` before freezing any `AGENT-MAP` or `PARALLEL-GROUPS`.
+- Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`.
+- Freeze `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
 - A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
 - Additional-agent dispatch freezes the team-agent runtime route basis; runtime creation or reuse execution is decided later by `task-execution` from `runtime-dispatch-law.md`.
@@ -152,10 +159,10 @@ User-surface law:
 Before freeze, `team-lead` builds the work plan it will execute or route.
 The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
 For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
-Place each conditional owner at its material trigger point; place `Skill(governance-change)` at governance asset change or recurrence-barrier hardening.
-`Skill(self-verification)` verifies the actual result surface produced by `team-lead` or a lane before reporting, `Skill(review-verification)`, governance-asset `Skill(governance-change)`, or redispatch.
+Place each conditional owner at its material trigger point; place `Skill(governance-modification)` at governance asset change or recurrence-barrier hardening.
+`Skill(self-verification)` verifies the actual result surface produced by `team-lead` or a lane before reporting, `Skill(review-verification)`, governance-asset `Skill(governance-modification)`, or redispatch.
 `Skill(review-verification)` runs under `Skill(self-verification)` for synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
-`Skill(review-verification)` runs under `Skill(governance-change)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
+`Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
 
 ## Step 4: Freeze Scope And Route
@@ -182,13 +189,15 @@ Freeze when material:
 - workflow/sequence: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`
 - analysis/critique/judgment: `CLAIM-CEILING`
 - lead-local: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`
-- team-routed/ambiguous/dispatch-capable: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`
+- team-routed/ambiguous/dispatch-capable: `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`
 - Configured independent review: `CODEX-INDEPENDENT-REVIEW-BASIS`
 
 Configured independent-review detail stays in `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
 Hard-stop detail stays in `references/boundary-gates.md`.
-Parallel dispatch-cap detail and the active concurrent-agent cap stay in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record the applied cap basis on this surface before dispatch can open.
+Parallel dispatch-cap detail stays in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record `ACTIVE-CONCURRENT-AGENT-CAP` on this surface before dispatch can open.
 Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
+Team-routed or ambiguous dispatch opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
+When a current same-session loaded `task-execution` basis exists for the same dispatch owner boundary, planning opens `task-execution` consumption of that basis instead of another skill load.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
@@ -201,11 +210,11 @@ Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
-Follow `.claude/reference/user-reporting-law.md`.
+Follow `.claude/reference/reporting-user-reporting-law.md`.
 Planning progress is silent while the next owner/action can run in the same segment.
 Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
 Do not expose internal planning or dispatch-preparation detail while the next owner can run.
-If execution is stopped, emit only a report admitted by `.claude/reference/user-reporting-law.md`.
+If execution is stopped, emit only a report admitted by `.claude/reference/reporting-user-reporting-law.md`.
 Keep the planning record internal.
 
 ## Post-Planning Gate
@@ -216,7 +225,8 @@ Reopen `work-planning` when the frozen target, route, readiness basis, or next a
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
-- A team-routed or ambiguous route opens `task-execution`.
+- A team-routed or ambiguous route opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary.
+- A team-routed or ambiguous route opens loaded `task-execution` consumption when the same-session activation basis is current for the same dispatch owner boundary.
 - A missing freeze field reopens `work-planning`.
 - A blocker-clear plan opens the named blocker-clear move.
 - `HOLD` records planning owner, blocker, and next safe evidence step.

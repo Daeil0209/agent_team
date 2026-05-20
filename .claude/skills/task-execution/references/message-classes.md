@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Message Classes
@@ -19,8 +20,15 @@ LOAD-POLICY: on-demand reference only
 - `task-execution` translates that frozen basis into agent-facing packets.
 - Agents receive bounded agent-facing packets derived from the frozen internal planning basis.
 - One agent, one execution segment, one primary downward message class.
+- Every `SendMessage` call sets the recipient in the top-level `to` parameter before payload detail.
+- Lane-to-lead `SendMessage` sets `to: team-lead`.
+- Lead-to-lane `SendMessage` sets `to` to the exact live process-backed member name.
+- Recipient text inside `summary`, `message`, `content`, `description`, packet fields, or prose does not satisfy `to`.
+- Missing or blank top-level `to` is tool-envelope invalid; correct the envelope before another `SendMessage`.
 - In team-agent runtime, official upward delivery requires `SendMessage` with a valid `MESSAGE-CLASS`.
 - Every fresh assignment-grade `SendMessage` in team-agent runtime requires a first upward outcome unless upward transport was classified unsupported before dispatch.
+- A first upward `dispatch-ack` means the lane reviewed the assignment packet, accepts it without objection, and starts the assigned work.
+- A first upward `scope-pressure` or `hold|blocker` means the lane cannot truthfully start the assigned work as written.
 - Unsupported upward transport is a dispatch-shape blocker before assignment send, not an after-the-fact excuse for silent idle.
 - Treat plain-text output, pane output, and agent final prose as observation evidence only.
 - Delivery proof, ledger evidence, cleanup evidence, and synthesis-ready completion require resend through `SendMessage`.
@@ -36,6 +44,8 @@ LOAD-POLICY: on-demand reference only
 The team-runtime data path has five channel families.
 Each family names its tool surface, payload shape, owner reference, and next-action rule.
 Tool envelope fields are actual top-level tool parameters only; governance packet fields live inside the tool's `prompt`, `message`, or `description` body, never as XML-style pseudo-parameters or packet lines inside another envelope field.
+`SendMessage.to` is an actual top-level tool parameter.
+No governed payload field can replace `SendMessage.to`.
 
 | Family | Tool surface | Payload shape | Owner reference | Next-action rule |
 |---|---|---|---|---|
@@ -51,14 +61,14 @@ Agent communication uses `SendMessage` or teammate UI.
 ## Communication Plane Law
 This file owns agent-to-agent and agent-to-lead transport classes.
 It does not own user-facing reporting.
-User-facing reporting is owned by `.claude/reference/user-reporting-law.md`.
+User-facing reporting is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ### Plane Boundary
 `SendMessage`, teammate UI, `dispatch-ack`, `status`, `scope-pressure`, `completion`, `hold|blocker`, assignment packets, phase-transition packets, shutdown requests, task rows, task output, runtime ledgers, and retained-output pointers are Communication Plane transport.
 Communication Plane transport is addressed to an internal owner.
 Communication Plane transport never satisfies a user report.
 Procedure Plane consumes transport evidence before synthesis, correction, recovery, or validation movement.
-Reporting Plane may cite only the user-relevant outcome admitted by `.claude/reference/user-reporting-law.md`.
+Reporting Plane may cite only the user-relevant outcome admitted by `.claude/reference/reporting-user-reporting-law.md`.
 
 ### Transport Payload
 Communication payload carries the detail required by the receiving owner through the active envelope plus governed carriers.
@@ -83,12 +93,18 @@ When exact wording, full evidence, result inventory, counts, excerpts, or operat
 A receiving owner consumes the governed carrier before acting; a screen-visible envelope or excerpt is not sufficient basis when the governed carrier is required.
 
 ### Receipt Event Contract
-`dispatch-ack` is the assignment receipt event inside the Communication Plane.
+`dispatch-ack` is the assignment acceptance and work-start trigger inside the Communication Plane.
 This contract does not reduce Communication Plane payload capacity.
 Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
 A receipt event is one host-visible header/preview state signal: `ack task <TASK-ID>` when task tracking is active, otherwise `ack`.
 The receiving owner interprets that state signal as `MESSAGE-CLASS: dispatch-ack`; envelope shape is governed by Transport Payload above.
-Receipt class boundary: a packet that is `safely-executable-with-correction` (one bounded correction preserves owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, and parallel grouping) emits `dispatch-ack` first and then a separate `scope-pressure` in the same turn. A packet that is `unsafe-cannot-execute` (no bounded correction restores truthful execution; missing or incoherent `WORK-SURFACE`, missing/non-open required `TASK-ID`, missing decisive basis, blocked environment, or unsafe ambiguity) suppresses `dispatch-ack` and emits only `scope-pressure` or `hold|blocker`. Two receipt classes do not coexist on the same packet; classify before emitting.
+Before `dispatch-ack`, the lane inspects the assignment packet for `WORK-SURFACE`, required task state, lane authority, required skills, decisive basis, and blocker truth.
+`dispatch-ack` means the lane accepts the packet as currently executable without team-lead correction, replan, authority change, or blocker clearance.
+`dispatch-ack` triggers lane intake and assigned work inside the same assignment execution block.
+A packet executable only through safe lane-local inference may emit `dispatch-ack` only when the inference changes no owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, scope, source authority, closure row, disposition, consumer/recompute path, display-only status, or acceptance oracle.
+A packet requiring team-lead correction before truthful start suppresses `dispatch-ack` and emits `scope-pressure`.
+A packet blocked by missing or incoherent `WORK-SURFACE`, missing/non-open required `TASK-ID`, missing decisive basis, blocked environment, missing authority, or unsafe ambiguity suppresses `dispatch-ack` and emits `hold|blocker`.
+`dispatch-ack`, `scope-pressure`, and `hold|blocker` do not coexist as first outcomes for the same packet.
 Lane work states (`ACTIVE`/`STANDBY`) and dispatch-ack/completion transition semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
 The lane continues work until one closing class is sent.
 The closing classes are `completion`, `scope-pressure`, `hold|blocker`, and `HOLD`.
@@ -99,7 +115,7 @@ Closed-work replay must not emit `status`, `clarification`, duplicate `completio
 A closed lane that discovers genuine post-completion defect evidence emits a distinct bounded `MESSAGE-CLASS: hold|blocker` naming the new evidence.
 Team-lead routes the new evidence through corrected packet, reopened planning, or owner correction.
 The lane drives its own continuation between intra-block turn boundaries without waiting for another team-lead prompt.
-A valid `dispatch-ack` clears receipt only; it does not prove agent-start, progress, work quality, completion, or acceptance.
+A valid `dispatch-ack` clears receipt and establishes no-objection assignment acceptance; it does not prove later progress, work quality, completion, or acceptance.
 Do not emit readiness, context-loaded, awaiting-assignment, skill-loading, file-read plan, retained-output plan, next-action, or progress messages from inside that block.
 
 ### Communication Integrity
@@ -146,15 +162,16 @@ Termination proof is live-roster absence, `teammate_terminated`, or hook/runtime
 Every class below is Communication Plane transport. The descriptions name when to use the class; payload carries receiver-required execution truth and uses retained-output or task carriers when size, evidence retention, or reuse requires it.
 
 - `dispatch-ack`
-  - receipt event; follows `Receipt Event Contract`
-  - use when fresh assignment-grade work has coherent `WORK-SURFACE` and required task state
+  - acceptance and work-start trigger; follows `Receipt Event Contract`
+  - use only after the lane reviews the fresh assignment-grade packet and finds coherent `WORK-SURFACE`, required task state, lane authority, required skills, decisive basis, and no blocker requiring team-lead action
   - first upward outcome is mandatory: `dispatch-ack`, `scope-pressure`, or `hold|blocker`
-  - after sending, continue inside the same assignment execution block across subsequent tool turns, or send a separate `scope-pressure` / `hold|blocker`
+  - after sending, continue inside the same assignment execution block across subsequent tool turns
+  - newly discovered blockers after accepted intake use separate `scope-pressure` or `hold|blocker`
   - missing/incoherent `WORK-SURFACE` uses `hold|blocker`
   - missing/non-open required `TASK-ID` uses `scope-pressure` or `hold|blocker`
   - missing fields route to `scope-pressure` or `hold|blocker`
-  - if one bounded packet correction preserves the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary, send a separate `scope-pressure` in the same turn
-  - if the defect prevents truthful execution even with narrow correction, send a separate `hold|blocker` in the same turn
+  - if one bounded packet correction is required before truthful start, suppress `dispatch-ack` and send `scope-pressure`
+  - if the defect prevents truthful execution even with narrow correction, suppress `dispatch-ack` and send `hold|blocker`
   - if the packet remains executable after explicit same-boundary inference that does not invent scope, closure rows, source authority, disposition, consumer/recompute, display-only, or acceptance-oracle basis, continue lane work and mark the inference
   - blocker text travels through separate `scope-pressure` or `hold|blocker`
 - `status`
@@ -166,6 +183,8 @@ Every class below is Communication Plane transport. The descriptions name when t
   - use when the agent rejects the packet as written while packet correction or replanning remains viable
 - `completion`
   - completion-grade candidate only
+  - use only after converged lane work has written the retained carrier required by `completion-handoff.md`
+  - send to `team-lead` through `SendMessage`
   - requires converged lane-owned work
   - screen-rendered `SendMessage` header/preview is one state signal only: `completion task <TASK-ID>` when task tracking is active, otherwise `completion`
   - envelope shape governed by Transport Payload above

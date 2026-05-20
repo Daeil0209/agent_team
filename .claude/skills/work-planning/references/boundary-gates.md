@@ -1,9 +1,9 @@
 # Work-Planning Boundary Gates
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use this file when activation scope, corpus measurement, same-boundary exclusion, boundary-change axes, hard stops, or post-planning gate detail is material.
@@ -32,7 +32,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
 - `self-verification-only audit` verifies an already-frozen plan or result claim without dispatch, mutation, acceptance, or report expansion.
 - `self-verification-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
-- `notification-only carry-forward` uses `.claude/CLAUDE.md` `## Channel And Procedure` definition and stays outside planning unless it assigns, reopens, or changes consequential work.
+- `notification-only carry-forward` uses `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` channel definition and stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
   - receipt-only messages
   - cleanup-only messages
@@ -80,7 +80,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - A moved axis reopens `work-planning`.
 
 ## Hard Stops
-- `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `task-execution`, blocker-clear move, authorization request, or `HOLD`.
+- `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, blocker-clear move, authorization request, or `HOLD`.
 - Consequential planning names the team-lead work plan before `NEXT-CONSEQUENTIAL-ACTION`; the next action executes the first row and carries the remaining rows as internal continuation.
 - Planning opens one next owner/action before:
   - execution
@@ -128,22 +128,24 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent, stale, or wrong-boundary.
-5. Run the named owner to its named outcome when absent, stale, or wrong-boundary.
-6. Consume the named owner before lead-local action.
-7. Consume the named owner before `task-execution`.
-8. Consume the named owner before user reporting.
-9. Consume the named owner before phase movement.
-10. Consume the named owner before mutation.
-11. Rerun stale owner consumption to outcome before downstream movement.
-12. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/skill-loading-and-reference-binding.md` `## Reference Binding`.
-13. `team-routing candidate` opens `task-execution`.
-14. `ambiguous-route` opens `task-execution`.
-15. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
-16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
-17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
-18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
-19. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
-20. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
+5. Load a named skill owner only through `Skill(<skill>)`; `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal does not satisfy the load.
+6. Run the named owner to its named outcome when absent, stale, or wrong-boundary.
+7. Consume the named owner before lead-local action.
+8. Consume the named owner before `task-execution`.
+9. Consume the named owner before user reporting.
+10. Consume the named owner before phase movement.
+11. Consume the named owner before mutation.
+12. Rerun stale owner consumption to outcome before downstream movement.
+13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
+14. `team-routing candidate` opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
+15. `ambiguous-route` opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
+16. A valid same-session loaded `task-execution` basis opens loaded `task-execution` consumption instead of another skill load.
+17. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+18. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
+19. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
+20. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
+21. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
+22. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

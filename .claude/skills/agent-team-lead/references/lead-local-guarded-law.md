@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 Lead-local candidate work; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-4 Lead-local candidate work; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Lead-Local Guarded Law
 
@@ -65,9 +65,9 @@ Read-only diagnostic, audit, and analytical reports stay lead-local only when al
 - no independent interface or format boundary
 - no independent proof burden
 - no independent correction owner
-- a `measured` footprint record under `.claude/reference/runtime-footprint-and-continuity.md` `## Runtime Footprint Claims` shows no context-size, latency, or runtime-burden benefit from fan-out
+- a `measured` footprint record under `.claude/reference/environment-runtime-footprint-continuity.md` `## Runtime Footprint Claims` shows no context-size, latency, or runtime-burden benefit from fan-out
 
-Otherwise apply `[PARALLEL]` and route through `task-execution`.
+Otherwise apply `[PARALLEL]` and route through `Skill(task-execution)` activation or valid loaded `task-execution` consumption.
 
 ## Guarded-Local Rules
 - Start local work from explicit `LEAD-LOCAL-WORK-ITEMS`.

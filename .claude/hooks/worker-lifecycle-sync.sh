@@ -294,7 +294,7 @@ switch (classification) {
     ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
 }
 // Intentional silent stdout: the Claude Code TeammateIdle hookSpecificOutput schema
-// is not documented in .claude/reference/official-claude-code-reference.md, and the
+// is not documented in .claude/reference/environment-official-claude-code-source-cache.md, and the
 // prior shape ({hookSpecificOutput:{hookEventName:"TeammateIdle",additionalContext:ctx},
 // suppressOutput:true}) was rejected by the harness with "Hook JSON output validation
 // failed — (root): Invalid input" on every idle event. Context-injection via stdout is

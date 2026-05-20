@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 Planning Consumption; Reference Binding; Procedure And Ownership"
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+SOURCE-RULES: "RPA-4 Planning Consumption; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # team-lead: Planning Field Consume
 
@@ -33,26 +33,7 @@ Stop before team-agent runtime dispatch when receiving lanes depend on lead-only
 - A stopped team-agent dispatch route opens packet fact transfer.
 
 ## Field Order
-Read only fields consumed by the current next owner/action, in this relative order:
-1. `REQUEST-FIT-BASIS`
-2. `SEMANTIC-INTENT-BASIS`
-3. `COMPLETION-STOP-CONDITION`
-4. `DERIVED-DEFAULTS`
-5. `REQUEST-BOUND-PACKET-FIELDS`
-6. `TEAM-LEAD-WORK-PLAN`
-7. `CLAIM-CEILING` when material
-8. `PROJECT-TIER`
-9. `ACTIVE-REQUEST-TIER`
-10. `TIER-RAISE-REASON`
-11. `ACTIVE-WORKFLOW`
-12. `CODEX-INDEPENDENT-REVIEW-BASIS` when configured independent-review handling is material or workflow-required
-13. `ACTIVE-SEQUENCE`
-14. `ROUTING-SIGNAL`
-15. `NEXT-CONSEQUENTIAL-ACTION`
-16. `DISPATCH-BLOCKERS` / `HOLD-CONDITIONS`
-17. `EXECUTION-READINESS-BASIS`
-18. `LEAD-LOCAL-REQUIRED-SKILLS` / `LANE-REQUIRED-SKILLS-MAP` from `.claude/skills/work-planning/references/planning-record-fields.md`
-19. `AGENT-MAP` / `PARALLEL-GROUPS` when routed
+Read only fields consumed by the current next owner/action, in the order and conditionals owned by `.claude/skills/work-planning/references/planning-record-fields.md` `## Allowed Values`. Consumer surfaces (this file and `.claude/skills/task-execution/references/dispatch-entry-contract.md`) follow that canonical order without restating the field list.
 
 ## Reaction Rules
 - A field outside the current owner path is not a preflight floor.

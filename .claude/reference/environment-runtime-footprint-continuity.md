@@ -2,15 +2,15 @@
 doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Minimal Governance And Runtime Footprint; Conditional Rules; Reference Binding"
+SOURCE-RULES: "Environment Configuration Philosophy; runtime footprint; hook-last continuity"
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
-# Runtime Footprint And Continuity Reference
+# Runtime Footprint And Continuity
 
 ## Purpose
-Use this file only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims.
+Use this section only when a governance decision concerns hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims.
 Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skills, settings, hooks, or runtime evidence.
 
 ## Resolve Next Owner And Action
@@ -22,7 +22,7 @@ Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skil
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
 - Use during governance design review, hook-density review, runtime-footprint claims, continuity-file disputes, and context-footprint audits.
-- Lane agents receive only packetized facts from this file when the assigned lane needs them.
+- Lane agents receive only packetized facts from this section when the assigned lane needs them.
 
 ## Hook-Last Footprint Review
 Hooks are valid runtime guardrails, but they are the last resort.
@@ -40,7 +40,7 @@ If any item is missing, do not add, broaden, or defend blocking enforcement as v
 ## Captured Local Hook Posture
 Before classifying current hook posture, density, or improvement, read live `.claude/settings.json` and apply measured latency, context, or runtime evidence. Classify the live posture as `high-footprint guardrail debt` until measured evidence proves runtime-footprint improvement, then narrowed.
 
-### Baseline Capture (2026-04-29)
+## Baseline Capture (2026-04-29)
 `.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, self-verification, runtime-entry, dispatch sizing/proof, and compliance supervision.
 
 Rules:

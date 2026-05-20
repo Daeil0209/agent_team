@@ -1,12 +1,14 @@
 # dev-workflow: Artifact Convergence Review
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use only inside active `dev-workflow` after `work-planning` selected the workflow and a canonical artifact exists or was materially revised.
+
+PROTECTED-LOCAL-RESTATEMENT-BASIS: artifact-coherence-class review-procedure body — this file owns Phase 1/2 artifact convergence; `review-convergence-review.md` owns Phase 4/5 reviewer-grade convergence. Both files carry parallel Authority + Packet + Dual-Review + Reconciliation + Convergence + Stop structures because each phase-trigger consumes its own file in isolation; the parallel structure is intentional defense-in-depth, not duplication.
 
 ## Contents
 - Authority

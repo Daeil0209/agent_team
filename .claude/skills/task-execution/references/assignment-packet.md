@@ -1,14 +1,15 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Assignment Packet
 ## Contents
 - Downward Assignment Base Packet
+- Receipt And Completion Contract
 - Session Cross-Continuity Packet Check
 - Resolve Next Owner And Action
 
@@ -35,7 +36,8 @@ Every assignment-grade work packet carries:
 - open executable `TASK-ID` from the active task namespace when task tracking is active
 - `SEMANTIC-INTENT-BASIS` from the frozen planning/request-bound basis.
 - `COMPLETION-STOP-CONDITION` from the frozen planning basis.
-- `TARGET-INTENT-BASIS` per `CLAUDE.md` `[DESIGN-INTENT]`.
+- `RECEIPT-COMPLETION-CONTRACT`
+- `TARGET-INTENT-BASIS` per `.claude/reference/detailed-design-core-law.md` `[DESIGN-INTENT]`.
 - `CLAIM-CEILING` for analysis, critique, governance judgment, review, validation, or patch-worthiness packets. Allowed values are `evidence-only candidates`, `review findings`, `validation verdict input`, and `patch-worthiness classification`. Missing claim ceiling means returned items stay evidence-only until reviewer/review-verification/team-lead synthesis lawfully classifies them.
 - `WRITE-SCOPE` carries bounded write authority as one or more allowed write-path prefixes for the receiving lane.
 - Receiving lanes include reviewer, validator, tester, researcher, and any non-developer lane that produces a retained-output artifact.
@@ -45,6 +47,16 @@ Every assignment-grade work packet carries:
 - Missing `WRITE-SCOPE` on a write-producing lane packet defaults to the frozen `RETAINED-OUTPUT-PATH` only.
 - Ambiguous `WRITE-SCOPE` routes to `scope-pressure`.
 - Missing or contradictory `RETAINED-OUTPUT-PATH` on a write-producing packet is not inferable by project-folder convention; the receiver returns `hold|blocker` before evidence work.
+
+### Receipt And Completion Contract
+`RECEIPT-COMPLETION-CONTRACT` is mandatory for assignment-grade work packets.
+It binds the receiver's first upward outcome and final handoff.
+It must require `dispatch-ack`, `scope-pressure`, or `hold|blocker` as the first upward outcome after packet review.
+It must define `dispatch-ack` as no-objection assignment acceptance and work-start trigger.
+It must require `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when truthful start is blocked.
+It must require converged lane work to write the retained completion carrier required by `.claude/skills/task-execution/references/completion-handoff.md`.
+It must require converged lane work to send `MESSAGE-CLASS: completion` to `team-lead` through `SendMessage`.
+It must forbid disk output, pane/final prose, `status`, or `TaskUpdate` from replacing the completion handoff.
 
 ### Tester Executable-Proof Schema Floor
 For tester assignment-grade dispatch where the proof surface is executable, `ENV-BASIS` and `SCENARIO-SCOPE` are required schema floor.
@@ -63,10 +75,16 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - tool-envelope validity per `message-classes.md` before packet-body checks
+- every planned `SendMessage` has a non-empty top-level `to` parameter before send
+- a target written only inside `summary`, `message`, `content`, `description`, or packet fields does not satisfy `SendMessage.to`
+- missing or blank `SendMessage.to` sends zero assignment-grade `SendMessage` calls and opens tool-envelope correction
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
 - for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
 - assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, move detail to task state or retained carriers and keep the packet's required floor plus carrier pointer
-- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `RECEIPT-COMPLETION-CONTRACT`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- missing `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
+- contradictory `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
+- a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `completion` without retained carrier, permits `completion` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
 - for team-agent runtime, `TASK-ID` must be verified after current-session `TeamCreate` success and before assignment-grade `SendMessage`; pre-team, lead-local, guessed, next-numeric, or same-batch planned-but-not-returned task ids are invalid packet identity
 - when creating that `TASK-ID`, call `TaskCreate` with top-level non-empty `subject` and `description`; missing `subject` or `description` is tool-envelope invalid and sends zero assignment-grade `SendMessage` calls
 - assignment packets must not instruct lanes to claim task rows with `TaskUpdate.owner`, `assignee`, or `status=in_progress`; `SendMessage.to` carries the assigned member
@@ -99,7 +117,7 @@ Multi-wave wave packets consume `SCOPE-BASELINE` union rules in `.claude/skills/
 
 Preflight outcome names:
 - `packet-correction`: the missing or malformed packet value already exists in the frozen basis and the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary remain unchanged. Correct the packet and rerun preflight before sending.
-- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `Skill(governance-change)`.
+- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `Skill(governance-modification)`.
 - `route-replan`: the missing, contradictory, or stale basis is absent from the frozen basis or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
 - `parallel-continue`: the affected surface is blocked or being corrected while unrelated independent surfaces remain inside the same frozen parallel route. Continue unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 

@@ -1,23 +1,23 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/engineering-grounding/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Reference Material
 ## Responsibilities: Reference Detail
 ### Engineering Defect Severity Classification
 Severity rubric inherits the Critical/Major/Minor/Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
-Defect-record fields inherit `CLAUDE.md` `## Acceptance` and `## Communication`.
+Defect-record fields inherit `.claude/CLAUDE.md` `## 6. Judgment Philosophy` and `## 7. Reporting Philosophy`.
 | Impact Class | Engineering Context | Examples |
 |---|---|---|
 | **Critical** | Safety margin violated, unit error, spec contradiction | Safety factor below minimum, unit mismatch in calculation, design exceeds rated limits, unguarded hardware errata |
 | **Major** | Spec not referenced, important constraint missing | Assumption lacking datasheet citation, missing operating condition bound, thermal budget unverified, timing budget exceeded |
 | **Minor** | Style/convention issue not affecting function | Unit notation style, significant figures convention, diagram labeling preference |
 ### Engineering Assumption Governance
-Assumption Governance still follows the blocking-vs-disclosed gate in `CLAUDE.md` `## Acceptance`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
+Assumption Governance still follows the blocking-vs-disclosed gate in `.claude/CLAUDE.md` `## 6. Judgment Philosophy`. The `Critical/Major/Minor` labels below are an engineering-local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: hardware behavior claims, material properties at operating conditions, interface timing, safety-rated parameters — must anchor to specification citation; unresolved critical assumptions are blocking
 - **Major**: environmental conditions, load profiles, duty cycles, component tolerances beyond datasheet — document with source; if unresolved and they materially affect core logic, deliverables, or verification, treat them as blocking
 - **Minor**: modeling simplifications with bounded error, display precision, cosmetic parameters — proceeds only when explicitly disclosed and kept proportionate to their impact

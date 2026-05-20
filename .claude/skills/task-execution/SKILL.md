@@ -3,6 +3,7 @@ name: task-execution
 description: Use after work-planning freezes host-authorized additional-agent dispatch. Governs assignment-grade packets, moves, and truth.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned dispatch surface.
@@ -32,7 +33,9 @@ Boundary:
 
 ### Reference Map
 After `Skill(task-execution)` is loaded, load trigger-specific references named below.
-- `references/assignment-packet.md`: assignment-grade packet floor, packet preflight, field format, skill loading, and cross-continuity packet checks.
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/work-execution-core-law.md`: load for assignment-grade dispatch, packet assembly, runtime send truth, handoff, communication-plane movement, or dispatch recovery.
+- `references/assignment-packet.md`: assignment-grade packet floor, receipt/completion contract, packet preflight, field format, skill loading, and cross-continuity packet checks.
 - `references/dispatch-entry-contract.md`: consumed planning fields, concrete-vs-not-applicable rules, execution readiness entry checks, and information movement rule.
 - `references/request-bound-fields.md`: request-intent, exact user wording, governance tier, user-surface, proof/tool/setup, run-path, burden, decision, validation, environment, and scenario fields.
 - `references/message-classes.md`: Communication Plane law, canonical channel registry, upward message classes, receipt spine, structured shutdown request, information-request consumption, and blocker/pressure routing.
@@ -46,6 +49,8 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 ## Activation
 Load `Skill(task-execution)` only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent or out-of-boundary per the boundary-change-axis test in `.claude/skills/work-planning/references/boundary-gates.md` `## Boundary-Change Axes`.
 If already loaded for the same session and current dispatch owner, consume the loaded skill and execute the dispatch move without another `Skill(task-execution)` call.
+`task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution:<owner-boundary-basis>` for the same dispatch owner boundary.
+Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only and never creates `task-execution` activation basis.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
 Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, runtime-cleanup state, and phase-transition-only state stay with their current owner.
@@ -53,14 +58,16 @@ Missing actual `work-planning` freeze discards the attempted dispatch path and r
 ## Entry Contract
 Use `references/dispatch-entry-contract.md` before this skill acts.
 Hard surface:
+- This skill must be active by actual `Skill(task-execution)` load or current same-session activation basis before dispatch-bound binding-surface materialization, packet assembly, `TeamCreate`, `Agent`, assignment-grade `SendMessage`, reuse, or blocker-clear movement.
 - Required prior owners: current boundary `work-planning`, any frozen workflow/sequence owner, and a frozen additional-agent or ambiguous dispatch route.
 - New agent dispatch also requires dispatch-runtime execution proof consumed from `references/runtime-dispatch-law.md`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
+- Assignment-grade packets require `RECEIPT-COMPLETION-CONTRACT` before `SendMessage`.
 - `blocked:<basis>` enters only for a dispatch-owned blocker-clear move.
 - Missing, contradictory, stale, or route-unfit `not-applicable` route fields reopen `work-planning`.
 - Missing measured burden basis required by `work-planning` or `parallel-fit` reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
-- A frozen `AGENT-MAP` or `PARALLEL-GROUPS` that would exceed the active concurrent-agent cap defined by `work-planning/references/parallel-fit.md` is dispatch-invalid.
-- Missing applied concurrent-agent cap basis on a team-routed parallel freeze reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
+- Missing frozen `ACTIVE-CONCURRENT-AGENT-CAP` on a team-routed, ambiguous, or dispatch-capable route reopens `work-planning` before `TeamCreate`, `Agent`, `SendMessage`, reuse, or packet assembly.
+- A frozen `AGENT-MAP` or `PARALLEL-GROUPS` that would exceed the active concurrent-agent cap defined by `.claude/skills/work-planning/references/parallel-fit.md` is dispatch-invalid.
 - `PARALLEL-GROUPS: none` on multi-surface work is dispatch-invalid unless the frozen basis proves dependency or serial burden stronger than parallel.
 - Route, staffing, parallelism, or dispatch option prompts to the user are not dispatch actions unless a proven user-owned blocker is frozen.
 - Packet repair inside `task-execution` is limited to values already frozen by the owning path.
@@ -101,6 +108,10 @@ Own the actual execution move:
 
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
+- Reject any `SendMessage` plan whose top-level `to` parameter is missing or blank.
+- Correct a missing `SendMessage.to` as a tool-envelope defect; do not retry the same malformed call.
+- Reject assignment-grade `SendMessage` when the packet lacks `RECEIPT-COMPLETION-CONTRACT`.
+- Reject assignment-grade `SendMessage` when `RECEIPT-COMPLETION-CONTRACT` contradicts first-outcome or completion-handoff law.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
 - For `Agent` member creation, the spawn prompt is member creation only: role/member identity plus screen-safety.
 - Use the canonical team-member spawn prompt template: `Member: <name>. Role: <lane>. Screen-safety: no visible prose from this member-creation prompt.`
@@ -117,23 +128,8 @@ Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
-- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-change)`.
-- `TeamCreate` is team-agent runtime creation, not standalone `Agent` dispatch.
-- When team runtime is required, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
-- When team runtime is active, delegated lane `Agent` satisfies member creation only when it is team-scoped with the resolved active `team_name` and concrete `name`.
-- Planned team-routed `Agent` dispatch always uses top-level `team_name` plus concrete `name`; do not try standalone `Agent` first and then retry team-scoped dispatch after it fails.
-- If any `TeamCreate`, `Agent`, or assignment-grade `SendMessage` returns a host or hook `BLOCKED` result before agent-start evidence, stop the remaining same-shape dispatch attempts.
-- Consume the blocker text immediately, identify the failed preflight or owner, correct that cause, then retry only the corrected dispatch path.
-- Do not continue, batch, or repeat the blocked shape after the first `BLOCKED` result.
-- If the blocker changes `AGENT-MAP`, `PARALLEL-GROUPS`, route shape, or dispatch readiness, reopen `work-planning` before redispatch.
-- Same-target packet-correction escalation follows the `dispatch-recovery` correction-response window before shutdown or replacement.
-- A blocked pre-agent-start dispatch batch is not partial-parallel-failure recovery; that recovery begins only after at least one intended target has valid dispatch-side truth to preserve.
-- A team-scoped `Agent` launch creates or reattaches the member address only; send assignment-grade `SendMessage` to that exact member before treating the target as dispatched, running, or ack-pending.
-- Role is responsibility.
-- Live process-backed member name is address.
-- `SendMessage.to` must match the live process-backed roster exactly.
-- If the role is absent, create the member with team-scoped `Agent`.
-- Standalone host evidence remains fallback classification only.
+- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-modification)`.
+- `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, standalone-fallback classification, blocker-shape stop rule) are owned by `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.
 - Configured lanes, frozen `PARALLEL-GROUPS`, lane separation, proof/acceptance separation, and packet skill-field law outrank reuse or dispatch convenience.
 - Assignment-grade `SendMessage` uses `MESSAGE-CLASS: assignment`.
 - Phase-transition control `SendMessage` uses `MESSAGE-CLASS: phase-transition-control`.
@@ -158,11 +154,11 @@ Branch rule:
 - if a branch requires new route judgment, new work surface decomposition, or changed ownership, reopen `work-planning` first
 ## Step 3: Dispatch Truth
 Dispatch truth is Procedure Plane and Communication Plane state.
-User-facing reporting is owned only by `.claude/reference/user-reporting-law.md`.
+User-facing reporting is owned only by `.claude/reference/reporting-user-reporting-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
 Tool-adjacent progress prose is forbidden while dispatch, monitoring, recovery, merge, synthesis, or locked parallel dispatch can continue.
 Transport dispatch state through `message-classes.md`; do not convert dispatch state into a user report.
-Report to the user only when `.claude/reference/user-reporting-law.md` admits a user-facing report.
+Report to the user only when `.claude/reference/reporting-user-reporting-law.md` admits a user-facing report.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
 When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, do not insert extra reference reads, Codex/review passes, lead-side `TaskUpdate` mutations, packet rewrites after `references/assignment-packet.md` preflight has passed, monitoring, or user-facing prose before the dispatch/reuse attempt for every frozen nonblocked group.
 Do not narrate `PARALLEL-DISPATCH-LOCK`, allowed move lists, retained-output setup, or dispatch preparation to the user; execute the allowed move.
@@ -179,12 +175,13 @@ Recovery reconciliation:
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.
+- Missing `dispatch-ack` after that follow-up and absent activity evidence classifies the target as dead-or-unavailable for the current assignment.
 - `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.
 - Keep unaffected independent targets moving while the affected target is recovered.
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
-Interruption includes user correction, `Skill(governance-change)` trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
+Interruption includes user correction, `Skill(governance-modification)` trigger, compaction/resume, permission/runtime stop, cleanup, and phase-transition interruption.
 
 Rules:
 - pre-open interruption resumes the last valid active owner: `work-planning`, active workflow, or `self-verification`
@@ -194,7 +191,7 @@ Rules:
 - resend an assignment-grade packet only when send evidence is absent and duplicate side-effect risk has been checked
 - stronger agent-start or completion truth requires stronger evidence than `team exists`, `dispatch pending`, or `dispatch-ack`
 - if the interruption moves any `work-planning` boundary-change axis, reopen `work-planning`
-- if a behavioral or procedural defect meets the `Skill(governance-change)` entry gate, open `Skill(governance-change)`
+- if a behavioral or procedural defect meets the `Skill(governance-modification)` entry gate, open `Skill(governance-modification)`
 - the suspended dispatch surface still requires `RESUME-OWNER` and verified `RESUME-ACTION` before closure or return
 - partial dispatch maps to recovery or resume truth only
 ## Resolve Next Owner And Action

@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Runtime Dispatch Law
@@ -64,8 +65,11 @@ Target-resolution preflight is mandatory before the tool call:
 - Task rows provide `TASK-ID` identity; worker targeting and assignment delivery use assignment-grade `SendMessage.to`.
 - In this team runtime, generic task-tool start/owner affordances do not apply: task rows are not assignment-owner, assignee, or in-progress tracking surfaces; `TaskUpdate` is completion-closure only.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
+- Runtime dispatch follows frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
+- Before any same-segment parallel dispatch or reuse batch, count current concurrent dispatched-lane members plus planned nonblocked assignment targets.
+- A batch that would exceed frozen `ACTIVE-CONCURRENT-AGENT-CAP` reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
-- Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/user-reporting-law.md` admits an explicit status answer.
+- Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/reporting-user-reporting-law.md` admits an explicit status answer.
 - When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
 - Parallel `Agent` batch dispatch is not a trial step; every `Agent` call in the batch must pass target-resolution, team-scope, and canonical spawn-prompt screen-safety preflight before the batch is sent.
 - Ordinary team-scoped member creation uses the canonical prompt template from `message-classes.md`; alternate prompt text is a preflight exception, not the default.
@@ -78,18 +82,25 @@ Target-resolution preflight is mandatory before the tool call:
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open must not emit listing, count, probe, diagnostic output, or user-facing prose.
 - Moves outside the allowed lock moves are forbidden until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
 - Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
-- Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/user-reporting-law.md`.
+- Do not narrate the lock, allowed move list, retained-output setup, or dispatch preparation; the next visible non-tool prose is only a report admitted by `.claude/reference/reporting-user-reporting-law.md`.
 - Packet size or self-contained packet burden is not a reason to delay dispatch or omit receiver-required basis; put complete shared context in a retained carrier and send required-floor shard packets that point to it.
-- A user challenge about missing parallel dispatch answers the cause through `.claude/reference/user-reporting-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.
+- A user challenge about missing parallel dispatch answers the cause through `.claude/reference/reporting-user-reporting-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.
 - A parallel execution segment then reconciles every intended target before it moves out.
 - Assignment-grade `SendMessage` success arms a per-target receipt barrier keyed by the exact live process-backed member name.
 - Assignment-send success is `dispatch pending` only; it is not `agent started`, `running`, progress, or completion.
 - The receipt barrier clears only through official Communication Plane evidence: valid `dispatch-ack`, `scope-pressure`, `hold|blocker`, completion-grade `completion`, failed-send truth, replacement truth, or explicit `HOLD`.
 - Pane/final prose, teammate UI chatter, host-native rendered rows, inbox read state, and role labels do not clear the receipt barrier.
 - Valid target states after assignment send are `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`. `member-created` without assignment is `team-created-no-assignment` and immediately opens assignment-grade `SendMessage` on the same frozen route; it is not monitoring, fallback dispatch, or operator-policy-choice when the frozen route remains unchanged.
-- A target with no receipt or no start evidence enters `dispatch-recovery`; replacement or shutdown follows only after the required follow-up, frozen re-check wait, and absent response/activity evidence.
-- Reuse a live or standby agent before unnecessary new spawn only when reuse preserves the frozen parallel shape, lane separation, and acceptance/proof separation.
-- Do not reuse one agent when that would collapse independent frozen shards into a single-agent critical path.
+- A target with no `dispatch-ack` enters `dispatch-recovery` as missing assignment acceptance.
+- Replacement, redistribution, or shutdown follows after the required follow-up, frozen re-check wait, and absent response/activity evidence classify that target as dead-or-unavailable for the current assignment.
+- A target with `dispatch-ack` but no later activity evidence enters `dispatch-recovery` as no-start after acceptance.
+- Before new `Agent` member creation, `task-execution` evaluates live or standby same-lane reuse when such a member exists.
+- Reuse-fit holds when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, and active cap.
+- When reuse-fit holds, `task-execution` sends assignment-grade reuse-via-`SendMessage`.
+- When reuse-fit holds, `task-execution` does not send `shutdown_request` before same-lane assignment.
+- New `Agent` member creation opens only when no live or standby fit exists, the target is dead-or-unavailable for the assignment, the lane is absent, or reuse-fit fails by named basis.
+- `shutdown_request` before same-lane new member creation is valid only after reuse-fit fails, the target is dead-or-unavailable, the lane is no longer needed, or active `session-closeout` owns teardown.
+- Do not reuse one agent when reuse would collapse independent frozen shards into a single-agent critical path.
 - Lane-owned work must stay on the configured lane, not a generic helper path.
 - Recoverable packet or target gaps route to packet correction, team-scoped creation, route replan, or lane `hold|blocker`.
 - They do not route to hook-controlled blocking.
@@ -115,7 +126,7 @@ The failed K is retried or reassigned to surviving M without reopening `work-pla
 - The failure happened before agent-start evidence on the failed K.
 - Surviving M can truthfully cover failed K's surface without packet shape change.
 
-Otherwise reopen `work-planning` for redistribution per `CLAUDE.md` `## Communication` single-agent-collapse rule.
+Otherwise reopen `work-planning` for redistribution per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 
 ## Resolve Next Owner And Action
 - Valid runtime creation, lane dispatch, or reuse returns to `task-execution` Step 3 Dispatch Truth.

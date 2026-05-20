@@ -3,7 +3,7 @@ PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/business-workflow/SKILL.md
 SOURCE-RULES: "domain-rule-catalog.md routed Schedule Planning Domain Rules"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Schedule Planning Workflow Rules
@@ -58,10 +58,11 @@ Schedule generation follows this dependency chain:
 1. Purpose classification.
 2. Audience identification.
 3. Constraint capture.
-4. Element arrangement.
-5. Feasibility validation.
-6. Version separation.
-7. Compression.
+4. Representation/tooling selection (table, timeline, gantt, checklist, split-version per audience/dependency-shape/change-rate/misread-risk).
+5. Element arrangement.
+6. Feasibility validation.
+7. Version separation.
+8. Compression.
 Validation gates outrank generation speed.
 
 ## Change Management

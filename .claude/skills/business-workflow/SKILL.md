@@ -5,7 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -74,7 +74,7 @@ Capture only the decisive business packet:
 - Expose authority, approval, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions, or `hold|blocker` with next owner/action.
 - Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
 - Record the chosen representation and evidence basis before handoff.
-- User-escalation triggers are owned by `.claude/CLAUDE.md` Core Laws 4 `[NO-NEEDLESS-ASK]`.
+- User-escalation triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 - Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference or `references/allocation-participation-workflow.md` when material.
 ## Operational Discipline
 - Extract hidden operational rules, approval waits, exception paths, and organizational constraints before downstream generation.

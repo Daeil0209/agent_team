@@ -4,7 +4,7 @@ description: Use benchmark and external-reference comparison for scenario/team-s
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: researcher
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -49,13 +49,11 @@ Trivial surfaces skip benchmark only when the active workflow or planning owner 
 - choose a lean default path plus scenario-specific overrides
 - active owner reports `hold|blocker` when:
   - no fair baseline exists
-  - evidence is too weak for a routing claim
-  - evidence is too weak for a promotion claim
-  - evidence is too weak for a capability-advance claim
+  - evidence is too weak for a routing, promotion, or capability-advance claim
 
 ### Reference Map
 After `Skill(benchmark-simulation)` is loaded, load trigger-specific references directly.
-- `references/capability-benchmark.md`: governance-change/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
+- `references/capability-benchmark.md`: governance modification/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
 - It also covers external-reference, visual/UX, and workflow-product benchmark extensions.
 - `references/observation-protocol.md`: multi-modal reference observation, image-aware evidence handling, quantitative observation, and subjective-observation discipline.
 - `references/search-quality.md`: search query design, source quality ladder, corroboration, negative-search discipline, and search-depth bound.
@@ -86,10 +84,7 @@ Each class requires different citation discipline.
   Quote them as non-closing evidence only.
   They are starting material for synthesis, not closing evidence.
 
-Citing a principle-class reference as if it were a standard-class is a methodology defect.
-That mistake treats identity declaration as empirical proof.
-Citing a standard-class reference as if it were a principle is the opposite defect.
-That mistake invites re-interpretation of a numeric threshold.
+Citing a principle-class reference as standard-class, or a standard-class reference as principle-class, is a methodology defect.
 
 When a source claims research-grounding without linking to the underlying study, sample, or findings, downgrade from `evidence` to `assertion`.
 Examples of research-grounding claims: "rigorous research", "user-led", "evidence-based".
@@ -97,11 +92,7 @@ Lower one tier on the source quality ladder.
 Research-artifact accessibility is the discriminator between research-class and principle-class.
 
 ### Multi-Modal Observation Discipline
-External evidence is rarely text-only.
-The web is rich with multi-modal information.
-Collecting only the text excerpt leaves most evidence unused.
 For visual / structural / UX decisions, text-only evidence is a fidelity defect.
-That defect is "frog-in-well" reasoning bounded to model prior knowledge.
 
 Required modalities per reference: use what the source supplies. Per-modality discipline (text, image/screenshot, quantitative measurement, structural form, color/spacing/typography, interactive/behavioral) is owned by `references/observation-protocol.md`.
 
@@ -142,7 +133,7 @@ Use this verification-methodology lens when the active owner path selects `bench
 Skip when prior session already froze the verification basis from external evidence or when tester/validator uses an already-frozen proven local default cited in the packet, lane rule, or acceptance surface.
 See `references/verification-methodology.md` for protocol.
 
-Acceptance fidelity follows `CLAUDE.md` `[USER-SURFACE]` and `dev-workflow` `Rendered Image Evidence Rule`.
+Acceptance fidelity follows `.claude/reference/review-and-verification-core-law.md` `[USER-SURFACE]` and `dev-workflow` `Rendered Image Evidence Rule`.
 
 When dispatching this skill, lead pre-names sibling skills the receiving lane must compose with.
 Base that composition on the selected recipe in `references/design-stack-composition.md`.
@@ -201,8 +192,8 @@ Hand off after the next owner can tell whether the benchmark is:
 Weak comparison frame downgrades or holds benchmark output.
 Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
 When benchmark evidence supports a downstream owner:
-- hand off confirmed recurring specialist capability gaps to `Skill(governance-change)` for recurrence-barrier or capability-gap ownership
-- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `Skill(governance-change)`
+- hand off confirmed recurring specialist capability gaps to `Skill(governance-modification)` for recurrence-barrier or capability-gap ownership
+- hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `Skill(governance-modification)`
 Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
 ## Operational Discipline
 - Comparative output with no fair baseline or external calibration stays explicitly low-confidence.

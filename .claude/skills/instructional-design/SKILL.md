@@ -3,7 +3,7 @@ name: instructional-design
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, scaffolding, and pedagogical clarity. Use when teaching, training, onboarding, learner-facing explanation, worked examples, or instructional readability materially affect implementation or review.
 user-invocable: false
 PRIMARY-OWNER: developer
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -33,11 +33,7 @@ Load when the output must teach, train, or onboard effectively rather than merel
 - define teaching clarity, pacing, scaffolding, and explanation-object boundaries
 - require readable equations, diagrams, legends, annotations, and stepwise worked examples when material
 - identify likely confusion points where the learner needs visible geometry, state, workflow, or causal relations beyond text alone
-- active owner reports `hold|blocker` when:
-  - credible learner comprehension is absent because sequencing remains unreadable
-  - credible learner comprehension is absent because diagrams remain unreadable
-  - credible learner comprehension is absent because equations remain unreadable
-  - credible learner comprehension is absent because step logic remains unreadable
+- active owner reports `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remains unreadable.
 ## Boundary
 - Own learning structure.
 - activate on text-first reports when they are explicitly learner-facing
@@ -56,11 +52,7 @@ It covers prerequisite map, concept cascade, confusion points, required readabil
 Route unresolved blockers explicitly to `mathematical-correctness`, `visual-composition`, `reviewer`, or `tester`.
 Learner-facing visual or rendered page-read artifacts still need both text/instruction review and capture-render review.
 
-Before dense fill, keep lesson concept explicit.
-Keep page or slide role explicit.
-Keep explanation object explicit.
-Keep prerequisite map explicit.
-Keep reveal order explicit.
+Before dense fill, keep lesson concept, page/slide role, explanation object, prerequisite map, and reveal order explicit.
 Keep longer pedagogical catalogs and worked-example detail in `references/pedagogy-detail.md`.
 ## Operational Discipline
 - Learner burden is the primary constraint; over-dense teaching material is a structural defect.

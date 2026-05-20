@@ -4,7 +4,7 @@ description: Define 3-layer design token architecture, token naming, layer consu
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: reviewer
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance-change / regression-guard blocks when present
+  5. owner-local structural feedback / governance modification / regression-guard blocks when present
 - Reference-owned sections live in `references/platform-implementation.md`.
 - Those sections include platform tools, implementation examples, and checklist detail.
 - Reference duplication into `SKILL.md` requires documented justification.

@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/document-automation/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # document-automation: Operational Plans And Schedules
@@ -14,7 +14,7 @@ Use when the document is an operational plan, schedule, timetable, resource plan
 - Distinguish notice-facing variants from execution-control variants.
 - Choose representation by audience, dependency shape, change rate, and misread risk.
 - Representation options include table, timeline, gantt, checklist, and split-version.
-- Generation order: mode/audience -> constraints/resources -> representation/tooling -> arrangement -> feasibility review -> version split.
+- Generation order canonical owner: `.claude/skills/business-workflow/references/schedule-planning-workflow.md` `## Generation State Machine` (8-step superset including representation/tooling step 4 + version separation + compression). Document-automation consumes that canonical sequence; any document-drafting-specific addendum (e.g., visual layout polish at compression stage) carries `PROTECTED-LOCAL-RESTATEMENT-BASIS: document-drafting variant` and lives below this line.
 - Place buffers by risk segment.
 - Risk segments include post-travel, pre-transition, post-meal, multi-person movement, and external-variable periods.
 - Execution-control minimum field set: activity, time, responsible person, location, preparation items, prerequisites, status, and approval state.

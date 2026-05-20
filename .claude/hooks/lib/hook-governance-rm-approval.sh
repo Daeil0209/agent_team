@@ -3,7 +3,7 @@
 # marker pattern.
 #
 # Allows narrow single-file rm of governance-restricted .claude/ surfaces
-# (hooks/, agents/, rules/, CLAUDE.md, settings*.json) when the target is
+# (hooks/, agents/, skills/, reference/, CLAUDE.md, settings*.json) when the target is
 # explicitly listed in $USER_APPROVED_DELETE_ROOTS_FILE.
 #
 # Strictly single-file: no recursion, no globs, no compound, no pipe/redirect/

@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: developer
 SOURCE-ANCHOR: .claude/skills/enterprise-architecture/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Reference Material
@@ -65,7 +65,7 @@ Run this checklist before accepting any enterprise architecture work. All items 
 - [ ] Security documentation current: auth flow documented, RBAC model explicit, secret management policy stated
 - [ ] Configuration externalized: no hardcoded environment-specific values in code
 - [ ] Inter-service communication patterns documented: sync vs async decision explicit, retry and timeout policies stated
-**Failing 1 or more items:** return blocked architecture-review evidence with the failed items listed and corrective actions specified. Architecture-review evidence release requires resolved layer violations; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## Acceptance`.
+**Failing 1 or more items:** return blocked architecture-review evidence with the failed items listed and corrective actions specified. Architecture-review evidence release requires resolved layer violations; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## 6. Judgment Philosophy`.
 ## Pre-Production Checklist
 Before declaring enterprise work production-ready, all items must pass or carry explicit blocked-state evidence with owner and timeline.
 - [ ] All quality checks pass: code review complete, security scan clean, architecture compliance verified
@@ -76,7 +76,7 @@ Before declaring enterprise work production-ready, all items must pass or carry 
 - [ ] Security scan completed: dependency audit run, secret detection clean, no known critical CVEs unaddressed
 - [ ] Load testing completed if applicable: baseline and peak load results recorded
 - [ ] Documentation updated: API docs current, architecture diagrams match implementation, runbooks exist
-**Failing 1 or more items:** production-readiness evidence is blocked. Each failing item requires an owner, corrective action, and completion target before the production-readiness claim resumes; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## Acceptance`.
+**Failing 1 or more items:** production-readiness evidence is blocked. Each failing item requires an owner, corrective action, and completion target before the production-readiness claim resumes; final acceptance authority remains with `validator` per `.claude/CLAUDE.md` `## 6. Judgment Philosophy`.
 ## Anti-Pattern Detection
 | Anti-Pattern | Symptoms | Correction |
 |---|---|---|

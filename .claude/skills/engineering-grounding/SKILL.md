@@ -5,7 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -36,11 +36,7 @@ Load when applied engineering realism, units, or operating constraints materiall
 - keep spec-anchored assumptions explicit
 - keep timing budgets explicit when timing matters
 - keep trade-off documentation explicit when competing metrics are in play
-- active owner reports `hold|blocker` when:
-  - credible assumptions are absent
-  - credible operating conditions are absent
-  - credible constraints are absent
-  - credible evidence is absent
+- active owner reports `hold|blocker` when credible assumptions, operating conditions, constraints, or evidence are absent.
 ## Boundary
 - mathematical correctness checking stays with its owner
 - engineering requirements require evidence

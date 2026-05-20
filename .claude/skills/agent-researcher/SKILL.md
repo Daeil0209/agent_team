@@ -3,6 +3,7 @@ name: agent-researcher
 description: Agent-specific researcher lane skill for consequential researcher-owned evidence gathering or investigation assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: researcher
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned evidence surface.
@@ -21,7 +22,8 @@ Before any work:
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
-On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake; researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
+On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
+Researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
 `scope-pressure` and `hold|blocker` are stop states, not notes.
 ### User-Perspective Gate

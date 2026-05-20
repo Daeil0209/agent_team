@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Reference Binding; Skill Loading"
+SOURCE-RULES: "Work Execution Philosophy"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Common Doctrine Reference: Skill Loading And Reference Binding
 
@@ -12,7 +13,7 @@ Use it to make loaded documents and references mandatory execution surfaces inst
 
 ## Reporting Curtain Inheritance
 This reference governs skill loading and reference binding, not report admission.
-User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
+User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Consume When
 - An owner document is loaded in the active owner context.
@@ -28,11 +29,13 @@ User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
 ## Required Output
 The consuming owner records:
 - loaded skill or reference path
+- loaded-skill basis as `Skill(<skill>)` or `same-session-loaded:<skill>:<owner-boundary-basis>`
 - trigger that required it
 - applied rules
 - blocked or unavailable rules
-- effect on work, packet, proof, completion, or verdict
+- effect on action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
+Reference consumption requires direct effect on the active action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness; existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is insufficient.
 
 ## Stop
 Stop before execution when:
@@ -42,6 +45,8 @@ Stop before execution when:
 - a required skill is non-fitting
 - a required skill is outside the frozen boundary
 - a loaded document lacks applied-rule mapping
+Stop before execution when a cited reference lacks direct-consumption relevance.
+Stop before positive synthesis when a cited reference lacks direct-consumption relevance.
 Stop before completion when a trigger-required reference remains unconsumed.
 Stop before completion when applied or blocked skill/reference basis is missing.
 
@@ -49,20 +54,26 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - A stopped required-skill route opens skill availability correction.
 - A stopped required-reference route opens reference consumption.
 - A stopped applied-rule route opens loaded-document consumption.
+- A stopped direct-consumption relevance route removes the cited reference, replaces it with the exact consumed owner surface, or records the applied-rule mapping that proves consumption.
 - A stopped completion route opens applied-basis recording.
 - Procedure-bearing reference missing a local `Resolve Next Owner And Action` section opens reference correction.
 - A method-detail reference returns applied method basis to the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
 
 ## Skill Rules
-- Skills load only when required by the active owner path.
 - Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
-- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path and why answer, `Read`, or `Grep` is insufficient.
+- Primary skill links become required skills only when their trigger creates the active owner path.
+- Required skill activation is satisfied only by actual `Skill(<skill>)` load or a current same-session loaded-skill basis for the same owner boundary unless the named skill requires stricter freshness.
+- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` is inspection only and does not create loaded-skill basis.
+- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection may support eligibility but never satisfies activation.
 - Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents by `Read` or `Grep` unless the requested outcome also requires that skill's execution artifact.
-- Skill load means `Skill(<skill>)`.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS` only when the active owner path needs that skill's execution method or named artifact.
-- Agent role names are not valid skill names.
+- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
+- Agent role names are not skill names.
+- Agent role files identify the role through frontmatter `name`, heading, and role-local boundary prose.
+- Agent role files do not carry `PRIMARY-OWNER` metadata.
+- Always-loaded role files keep identity, authority, trigger skeleton, mandatory reference links, decisive stop conditions, and next-owner routing.
+- Situation-specific procedure detail stays in trigger-bound skill references that the active owner path consumes.
 - Lane agent-specific skills use `agent-<lane>` names.
 - Team-lead procedure skill uses `agent-team-lead`.
 - Team-lead procedure references live under `.claude/skills/agent-team-lead/references/` and are skill-owned surfaces.
@@ -72,6 +83,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
   - active owner role
   - Common Lane-Core Preconditions when the loaded owner is a lane
 - Loaded skills sharpen owner behavior only within their owner stops.
+- A named skill's stricter freshness rule outranks same-session loaded-skill reuse.
 - Lane agent-specific skills load on assignment-grade lane work.
 - These messages load agent-specific skills only when they assign or reopen work:
   - receipt messages
@@ -114,8 +126,9 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - The assigned lane hands off blocked recommendation basis.
 
 ## Reference Binding
-- Trigger-bound reference and loaded-owner-document mandatoriness is owned by `.claude/reference/procedure-and-ownership-law.md` `## Rules`.
+- Trigger-bound reference and loaded-owner-document mandatoriness is owned by `.claude/reference/work-procedure-ownership-law.md` `## Rules`.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
+- Direct-consumption relevance means the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness.
 - Loading, naming, quoting, or summarizing a governance document is not consumption.
 - Before action, report, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
 - `applied` means the rule changed, confirmed, stopped, or routed concrete behavior.
@@ -132,10 +145,10 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Method-detail classification covers skill-owned methods, checklists, field schemas, matrices, protocols, and examples inside an already opened owner path.
 - Lookup-only classification covers terms, lists, source facts, and controlled values inside an already opened owner path.
 - A method-detail reference that opens independent owner/path behavior is procedure-bearing.
-- Unconsumed-trigger-required-reference and missing-applied-rule-mapping blocker rules are owned by this `## Reference Binding` section; `.claude/CLAUDE.md` `## Reference Binding` carries the top-doctrine anchor.
+- Unconsumed-trigger-required-reference and missing-applied-rule-mapping blocker rules are owned by this `## Reference Binding` section; `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` carries the top-doctrine anchor.
 - Reference consumption must be recorded in the owner-local packet, completion carrier, proof, verdict, or `Skill(self-verification)` record when material.
 - Load references only through trigger-bound consumption.
 - Treat `@imports` as context organization.
 - Measure launch context footprint independently from `@imports` organization.
-- Official-source cache lives in `.claude/reference/official-claude-code-reference.md`.
+- Official-source cache lives in `.claude/reference/environment-official-claude-code-source-cache.md`.
 - Refresh official docs when current product behavior matters.

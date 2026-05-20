@@ -3,6 +3,7 @@ name: session-closeout
 description: Close team-lead sessions with teardown truth, runtime cleanup, residual disclosure, and continuity preservation. Use when explicit closeout, session ending, runtime shutdown, or residual state handoff is active.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned closeout surface.
@@ -12,18 +13,21 @@ PRIMARY-OWNER: team-lead
 - Owns the closeout spine only.
 - State schema, hold conditions, and detailed agent cleanup requirements belong in `references/closeout-state-detail.md` or the runtime cleanup owner.
 ### Reference Map
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/environment-configuration-core-law.md`: load when teardown, runtime cleanup, residual runtime truth, hook-maintained closeout state, or runtime-owned continuity changes the closeout owner/action.
 - `references/closeout-state-detail.md`: closeout state schema, hold conditions, residual truth, and detailed agent cleanup requirements.
 
 ## Activation
-Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any teardown-class tool call (`TeamDelete`, `CronDelete`, equivalent runtime-teardown tool).
-Calling a teardown-class tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `Skill(governance-change)`; the hook runtime guard is enforcement evidence, not authorization.
+Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any session-teardown tool call (`TeamDelete`, `CronDelete`, equivalent session-runtime teardown tool).
+Structured lane-member release during team-routed work is not session teardown and follows `task-execution` reuse-fit and cleanup law.
+Calling a session-teardown tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `Skill(governance-modification)`; the hook runtime guard is enforcement evidence, not authorization.
 Reviewer / agent task completion is not session end; teardown requires user-directed intent or proven session-closing basis.
 Hook feedback can surface teardown state but is not authority.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
 
 ### Reporting Curtain Inheritance
 This skill governs session closeout, not report admission.
-User-facing prose is owned by `.claude/reference/user-reporting-law.md`.
+User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Runtime Teardown Preflight
 Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.
@@ -61,7 +65,7 @@ Keep closeout narrow:
 6. Bounded teardown only while new runtime evidence changes the result.
 7. No repeated teardown on the same evidence and no ad hoc runtime surgery.
 8. Let `SessionEnd` finish continuity capture and clear runtime-owned transient residue.
-9. Run team-lead-owned supervisor-effectiveness review only when the user asked for it, a real teardown/management defect occurred, or governance-change work is active.
+9. Set `supervisorReviewState: required` only when the user asked for closeout-management review, a real teardown/management defect occurred, or `Skill(governance-modification)` work is active; set it `completed` after team-lead records the review result.
 10. End with concise operator-facing closeout only when blocked, warning-bearing, explicitly requested, or review-triggered.
 11. Otherwise clean closeout stays silent or one-line.
 

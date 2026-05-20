@@ -4,7 +4,7 @@ description: Turn benchmark-backed practical work-tool patterns into reusable pr
 user-invocable: false
 PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: team-lead
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -55,10 +55,7 @@ It keeps governance burden proportional to product-pattern proof.
 - make first-run, resume, save/load, import/export, generated-output, and completion artifacts explicit when material
 - define the pattern-level proof oracle so review, test, and validation do not infer completion from the implemented subset
 - reject patterns that fit the source example but not the destination user, scale, constraints, or domain
-- active owner reports `hold|blocker` when:
-  - credible tool family is unavailable from evidence
-  - credible operator surface is unavailable from evidence
-  - credible pattern-level proof oracle is unavailable from evidence
+- active owner reports `hold|blocker` when credible tool family, operator surface, or pattern-level proof oracle is unavailable from evidence.
 ## Activation
 Activate when the frozen scope materially includes any of:
 - practical personal or team internal software tool
@@ -109,21 +106,10 @@ Stronger business, evidence, architecture, document, engineering, math, visual, 
 - Treat ad-hoc family selection that lacks benchmark or destination-fit basis as a defect.
 - Tighten an existing pattern family before authoring a new family.
 - Operator-surface contract (single-action launch, hidden non-operator surfaces, symmetric termination, explicit exit affordance) is verdict-critical when the deliverable runs locally for the operator.
-- Persistence contract is explicit in the pattern packet.
-- Import contract is explicit in the pattern packet.
-- Export contract is explicit in the pattern packet.
-- Hidden state is a tool-pattern defect.
-- Missing resume path is a tool-pattern defect.
-- Missing import/export path is a tool-pattern defect.
-- Completion that lacks an artifact is a tool-pattern defect.
+- Persistence, import, and export contracts are explicit in the pattern packet.
+- Hidden state, missing resume path, missing import/export path, and completion without artifact are tool-pattern defects.
 - Proof-oracle fitness is acceptance-critical.
 - Every pattern packet names the oracle that closes the in-scope visible workflow, calculation, or validation against the frozen `SCOPE-BASELINE`.
 ## Role-Scoped Structural Feedback
-- Challenge sheet-shaped UI when the user asked for an operational tool.
-- Challenge disconnected report generation when the user asked for an operational tool.
-- Challenge hidden state when the user asked for an operational tool.
-- Challenge missing resume path when the user asked for an operational tool.
-- Challenge missing import/export path when the user asked for an operational tool.
-- Challenge completion that lacks an artifact when the user asked for an operational tool.
-- Challenge demo-only proof when the user asked for an operational tool.
+- When the user asked for an operational tool, challenge sheet-shaped UI, disconnected report generation, hidden state, missing resume path, missing import/export path, completion without artifact, and demo-only proof.
 - State the broken tool pattern, why it harms operator use or proof, and the smallest corrective pattern rewrite.

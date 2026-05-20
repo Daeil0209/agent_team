@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 3 [DESIGN-INTENT], [PRES-FIRST], [RETRO-APPLY]; Change And Preservation; Governance Change"
+SOURCE-RULES: "Detailed Design Philosophy; Modification Philosophy; Work Execution Philosophy continuity and change boundary"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Common Doctrine Reference: Scope, Continuity, And Change
 
@@ -48,7 +48,7 @@ Use it when work:
 The consuming owner records:
 - target artifact
 - cited design intent
-- applicable `Core Laws` axes
+- applicable core-law axes
 - affected owner surfaces
 - preserved meaning
 - changed meaning
@@ -63,7 +63,7 @@ Stop before positive synthesis until all are carried forward:
 - sibling outputs
 - acceptance contracts
 Stop before removal until source-to-destination meaning is reconstructed.
-Governance text removal also satisfies `.claude/reference/minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Governance text removal also satisfies `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Resolve Next Owner And Action
 - A stopped judgment route opens live-owner-surface inspection.
@@ -73,14 +73,14 @@ Governance text removal also satisfies `.claude/reference/minimal-governance-cha
 
 ## Design-Intent Rules
 - Consequential work starts from the target artifact's cited design intent.
-- Consequential work also starts from cited applicable `Core Laws` axes.
+- Consequential work also starts from cited applicable core-law axes.
 - Existing-artifact judgment carries both as `TARGET-INTENT-BASIS`.
 - Receivers consume `TARGET-INTENT-BASIS` before lane work.
 - Receivers raise `scope-pressure` when `TARGET-INTENT-BASIS` is missing or unsafe.
 - Original creation uses `TARGET-INTENT-BASIS: not-applicable:<reason>` only when no existing artifact exists.
 
 ## Scope-Abuse Rules
-Scope-abuse trigger exists when a route, dispatch, synthesis, report, completion, or acceptance claim omits, substitutes, infers, or defaults required material.
+Scope-abuse trigger exists when a route, dispatch, governance proposal, patch, mutation, active-rule application, synthesis, report, completion, or acceptance claim omits, substitutes, infers, or defaults required material.
 Required material is a material request, plan, `TARGET-INTENT-BASIS`, evidence basis, or acceptance requirement.
 Route to correction when the unsafe move is:
 - `silent omission`: required material is absent from the packet, synthesis, judgment, or report.
@@ -109,30 +109,16 @@ Before dispatch, synthesis, phase movement, or consequential user-facing output,
 Drift reopens `work-planning`.
 
 ## Preservation Rules
-- Migration, refactoring, reduction, and re-home edits preserve or sharpen the common baseline:
-  - clarity
-  - execution force
-  - owner boundary
-  - required gates
-  - existing valid procedure paths
+- Scope-continuity consumers use `.claude/reference/modification-core-law.md` `### Preservation Rules` as the canonical common baseline.
+- Local scope/change edits preserve or sharpen that baseline across meaning, clarity, execution force, owner boundary, required gates, and existing valid procedure paths.
 - Operation-specific emphasis does not narrow the common baseline.
 - Migration explicitly verifies clarity preservation.
 - Refactoring explicitly verifies action and execution-force preservation.
 - Reduction explicitly verifies stop-condition preservation.
 - Re-home explicitly verifies handoff, evidence, gate, owner-boundary, and reporting-truth continuity.
-- Classify duplicate doctrine as protected local restatement only when it has a named owner and direct-consumption or isolation-safety basis.
-- Resolve divergent duplicate doctrine to the precise owner.
-- Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/minimal-governance-change-law.md` `## Change Rules`.
+- Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/modification-minimal-governance-change-law.md` `## Change Rules`.
 - Role-specific content stays out of shared doctrine when a more precise owner exists.
 
 ## Retroactive Application Rules
-- Land new doctrine after affected current-session surfaces are handled.
-- Land sharpened doctrine after affected current-session surfaces are handled.
-- Fix affected artifacts through the owning upstream record.
-- Invalidate affected artifacts through the owning upstream record.
-- Defer affected artifacts through the owning upstream record.
-- Treat affected prior verdicts as stale until fresh re-verification.
-- Treat affected PASS labels as stale until fresh re-verification.
-- Treat affected handoffs as stale until fresh re-verification.
-- Treat affected closures as stale until fresh re-verification.
-- Keep explicitly unaffected surfaces active after recorded unaffected classification.
+- Retroactive application is owned by `.claude/reference/modification-core-law.md` `### Retroactive Application Rules`.
+- Scope-continuity consumers record affected current-session artifacts, stale verdicts, carry-forward evidence, and next owner/action before synthesis or mutation.

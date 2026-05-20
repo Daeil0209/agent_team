@@ -1,10 +1,10 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # team-session-sequences: Parallel Shard And Merge Protocol
@@ -23,10 +23,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
 - Once the frozen parent packet and the set of completion-cleared shards support useful progress, that owner opens bounded drafting or integration on that cleared set.
 - Later shard arrivals fold into explicit follow-up merge work.
 - Missing inputs remain visible.
-- Each shard dispatch must stay bounded.
-- Each shard dispatch states what part of the parent work it owns.
-- Each shard dispatch states what it must not absorb.
-- Each shard dispatch states the required completion form.
+- Each shard dispatch stays bounded and explicitly states what part of the parent work it owns, what it must not absorb, and the required completion form.
 - The merge owner must not reconstruct shard intent from prose.
 - Each shard completion carries at minimum:
   - shard id or equivalent surface label

@@ -47,7 +47,7 @@ is_governance_restricted_write_path() {
   [[ -n "$candidate_path" ]] || return 1
 
   case "$candidate_path" in
-    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/skills/*|*/.claude/hooks/*|*/.claude/rules/*|*/.claude/reference/*)
+    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/skills/*|*/.claude/hooks/*|*/.claude/reference/*)
       return 0
       ;;
     *)
@@ -1124,7 +1124,7 @@ fi
 	        case "$TOOL_NAME" in
 	          Write|NotebookEdit)
 	            if [[ -e "$CANONICAL_PATH" ]]; then
-	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/MultiEdit instead; governance-change and Skill(self-verification) discipline required."
+	              emit_deny "Governance reference materials must not be Write/NotebookEdit on EXISTING files (wholesale rewrite blocks diff review). Use structured Edit/MultiEdit instead; Skill(governance-modification) and Skill(self-verification) discipline required."
 	              log_violation "$TOOL_NAME" "$CANONICAL_PATH" "references-wholesale-write" || true
 	              exit 0
 	            fi

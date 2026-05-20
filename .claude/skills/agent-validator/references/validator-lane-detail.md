@@ -2,10 +2,10 @@
 name: validator-reference
 PRIMARY-OWNER: validator
 SOURCE-ANCHOR: .claude/skills/agent-validator/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Validator Reference
 ## Role-Spine Completion
@@ -91,7 +91,7 @@ Specialist output is verdict evidence, not final authority. PASS still requires 
 
 ## PASS Prohibition Detail
 PASS is prohibited when any decisive acceptance surface remains:
-- indirect-only where direct proof is required
+- indirect-only evidence where directly proven classification is required
 - blocked
 - mismatched
 - partially matched
@@ -108,7 +108,7 @@ PASS is prohibited when any decisive acceptance surface remains:
 - `ACCEPTANCE-RECONCILIATION` is explicit only when review truth, proof truth, user-facing acceptance, and burden/run-path evidence have been reconciled on the same decisive surface.
 - Contradictory upstream evidence stays `HOLD` until explicitly reconciled; do not silently prefer the optimistic lane.
 - If tester or reviewer evidence is weaker than the requested verdict, downgrade the verdict rather than upgrading the evidence.
-- For direct-required user-facing rows, indirect tester proof remains `partial`, `not assessable`, or support evidence unless a frozen acceptance oracle explicitly permits indirect proof for that row.
+- For direct-required user-facing rows, indirect tester evidence remains `partial`, `not assessable`, or support evidence unless a frozen acceptance oracle explicitly permits indirect evidence for that row.
 
 ## Operator-Runtime Verification Protocol
 Use this section when validation has operator-runtime cross-environment dependency, executable user-facing program burden, exact launch/termination path, or no-operator-labor risk.
@@ -208,9 +208,7 @@ When the auto-test harness execution context differs structurally from the opera
 Treating an execution-context delta as harmless without re-test or explicit flag is a verification-lane defect equivalent to silent PASS. "Would work in operator interactive flow" is inference, not verified result. Cross-environment generalization from a single tested environment requires both `EQUIVALENCE-DECLARATION` (structural basis) and `ENV-COVERAGE` (covered surface) per `.claude/skills/task-execution/references/request-bound-fields.md`; absent either, the cross-environment claim is `INFERENCE/UNVERIFIED` for non-tested environments.
 
 ### Synthesis Discipline
-Team-lead synthesis of an agent PASS verdict must challenge any "testing artifact" or "would work in operator flow" framing in the agent evidence basis. If the agent did not eliminate the execution-context delta, synthesized claim strength cannot exceed `INFERENCE/UNVERIFIED` for the affected sub-surface, regardless of the agent verdict label.
-
-Skipping operator-environment E2E for the launch or termination path, or generalizing developer-side simulator PASS to an operator-environment claim, is itself a verification defect, not a closure event.
+Team-lead synthesis rules for agent PASS verdicts (challenge "testing artifact" / "would work in operator flow" framing; INFERENCE/UNVERIFIED ceiling on uneliminated execution-context delta; operator-environment E2E skip as verification defect) are owned by `.claude/skills/agent-team-lead/references/synthesis-consume.md` `## Synthesis-Discipline For Validator PASS Verdicts`; consume that owner before classifying validator PASS evidence during synthesis.
 
 ## Final-Arbitration Trigger Definitions
 Use these definitions when deciding whether final arbitration is required.
@@ -269,7 +267,9 @@ Validator states route-relevant evidence without freezing route. team-lead class
 - If available evidence is useful but not sufficient for PASS, keep it and downgrade truthfully to `HOLD`, `partial`, `mismatched`, or `blocked` rather than softening into pass-like language.
 - For visual or rendered acceptance, `DECISIVE-EXPECTATION-TRACE` must map expectation -> route/page/screen-state -> viewport/capture scope -> evidence anchor -> inspected defect classes -> upstream owner -> verdict class. Missing trace, partial matrix, or unreadable rendered text blocks PASS for that surface.
 - PASS cites only Evidence-Quality Matrix supported scope.
-- cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments; equivalence claimed without observable basis is a verification defect equivalent to silent PASS, and absent or partial equivalence makes the affected sub-surface `HOLD` or `INFERENCE/UNVERIFIED`, not PASS.
+- Use cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments.
+- Equivalence claimed without observable basis is a verification defect equivalent to silent PASS.
+- Absent or partial equivalence makes the affected sub-surface `HOLD` or `INFERENCE/UNVERIFIED`, not PASS.
 
 ## Resolve Next Owner And Action
 - `PASS` opens team-lead acceptance synthesis or Final Acceptance Review by frozen route.

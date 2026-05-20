@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # work-planning: Governance Depth
@@ -54,7 +54,7 @@ Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This ski
 Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
 ## Direct-Evidence Discipline
 - Governance-depth tier is a sizing aid for review/proof/acceptance defaults; it does not override direct evidence.
-- Design-implementation match and coverage-of-promised-surfaces remain reviewer and validator concerns under `references/deliverable-defaults.md` and CLAUDE.md `## Acceptance`; team-lead uses direct evidence (review findings, proof results, validator verdicts, frozen `SCOPE-BASELINE` coverage), not a numeric heuristic, to iterate, escalate, or proceed.
+- Design-implementation match and coverage-of-promised-surfaces remain reviewer and validator concerns under `references/deliverable-defaults.md` and `.claude/CLAUDE.md` `## 6. Judgment Philosophy`; team-lead uses direct evidence (review findings, proof results, validator verdicts, frozen `SCOPE-BASELINE` coverage), not a numeric heuristic, to iterate, escalate, or proceed.
 - Oversight reduction requires direct evidence that the proof and acceptance floors remain satisfied; it never derives from a composite quality score.
 
 ## Resolve Next Owner And Action

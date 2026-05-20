@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/CLAUDE.md Communication
-SOURCE-RULES: "Communication/Procedure/Reporting plane separation; user-facing report single source of truth"
+SOURCE-ANCHOR: .claude/CLAUDE.md
+SOURCE-RULES: "Reporting Philosophy; Work Execution Philosophy communication-plane boundary"
 LOAD-POLICY: mandatory before any user-facing report
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # User Reporting Law
 
@@ -20,6 +21,13 @@ More checked information means more internal evidence to classify, not more user
 When any document says `visible`, `report`, `status`, `progress`, `summary`, `next action`, `result`, or similar wording, resolve it through this law before prose reaches the user.
 If this law does not admit the prose, the information stays in the owning internal carrier.
 
+## Default Screen Curtain
+Assistant-authored visible prose defaults to silence while Procedure Plane or Communication Plane can continue.
+Intermediate owner triggers, skill loads, reference reads, route choices, dispatch state, wave state, shard state, evidence inventories, findings counts, patch logs, verification notes, monitoring state, and cleanup state stay in internal carriers.
+The ordinary user-visible surface is a compact verified-result summary after convergence.
+Before convergence, visible prose is admitted only for explicit status answer, user-action blocker, or closeout residual under this law.
+Screen silence never deletes internal evidence, required transport, retained carriers, or receiver-required payload.
+
 ## Plane Separation
 ### Communication Plane
 Communication Plane moves information between agents, tasks, runtime state, ledgers, and retained files.
@@ -28,7 +36,7 @@ Communication Plane output never satisfies a user report.
 Communication Plane payload is consumed by the receiving owner, not by the user.
 
 ### Procedure Plane
-Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and governance-change.
+Procedure Plane executes planning, dispatch, monitoring, review, proof, validation, synthesis, self-verification, closeout, and `governance-modification`.
 Procedure state is internal evidence.
 Procedure state never satisfies a user report.
 Procedure owner artifacts stay internal unless this law admits a report.
@@ -39,11 +47,12 @@ Reporting Plane is the only plane that writes user-facing prose.
 Lanes do not report to the user.
 Methodology skills do not report to the user.
 Task-execution message classes do not report to the user.
+Lane pane/final prose is not a Reporting Plane surface.
 
 
 ## Runtime Enforcement Boundary
 This law defines report admissibility; it does not by itself control Claude Code host-native UI rows.
-Optional supervised curtain behavior is defined in `.claude/reference/output-supervisor-runtime.md`.
+Optional supervised curtain behavior is defined in `.claude/reference/environment-output-curtain-runtime.md`.
 When supervised curtain runtime is active, discretionary child screen text is hidden from the supervised report surface and user report rendering comes only from structurally released report proposals after this law admits a report.
 
 ## Consume When
@@ -71,7 +80,9 @@ Uncertainty means not admitted.
 3. Report content contains only user-relevant outcome, blocker, requested status, or residual truth.
 4. Before analyzed, evaluated, synthesized, produced, strengthened, phase/stage-end, or completion-result claims, load `Skill(self-verification)` and verify the exact outgoing claim.
 5. When the active route uses multiple lanes, shards, reviewers, proof owners, or validators, every required output is completion-grade, consumed from its retained carrier, integrated, and either accepted, explicitly owner-deferred, out-of-scope with basis, or blocking with a user-action blocker.
-6. No Communication Plane or Procedure Plane payload is included as report content.
+6. When the report names candidates, findings, defects, patch-worthiness, patch readiness, or counts, `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` has classified each reported item and count.
+7. Raw candidate counts, confirmed-defect counts, patch-worthy counts, patch-ready counts, rejected counts, and open-candidate counts stay separate in report prose when count reporting is admitted.
+8. No Communication Plane or Procedure Plane payload is included as report content.
 
 If any required lane/shard output is pending, unintegrated, contradictory, or only screen-visible, suppress the report and continue monitoring, carrier consumption, correction, synthesis, or `Skill(self-verification)` internally.
 
@@ -80,7 +91,7 @@ These are never user reports:
 - dispatch topology, lane count, route choice, staffing shape, runtime setup, monitoring, idle, receipt, ack, status, cleanup, or phase-context signals
 - individual lane/shard arrival, partial lane/shard completion, partial convergence, all-lanes counters, per-shard findings summaries, and in-flight synthesis notes
 - `dispatch-ack`, `scope-pressure`, `completion`, `hold|blocker`, assignment packets, packet corrections, phase-transition packets, shutdown requests, task rows, task output, runtime ledgers, and retained-output paths
-- skill loading, methodology application, review-verification packet fields, self-verification records, retro-apply notes, governance-change notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
+- skill loading, methodology application, review-verification packet fields, self-verification records, retro-apply notes, governance modification notes, hook signals, ledgers, raw inventories, candidate counts, findings lists, excerpts, evidence packs, and alternative-route lists
 - patch-application logs, applied-patch recaps, wave recaps, backlog lists, dispatch plans, and remaining-patch inventories while the same requested deliverable still has an executable owner/action
 - statements that exist only to say work is starting, continuing, being monitored, being dispatched, being corrected, or being verified
 
@@ -110,7 +121,7 @@ Host-rendered tool rows, lane transport rows, teammate wake events, and lane lif
 If the user explicitly asks status, answer with the narrowest truthful status under Report Shape.
 Silent close means zero assistant-authored visible body content; do not substitute filler.
 If the turn has no required tool call and would otherwise be empty, take a Procedure Plane tool action (read, verify, advance) the active owner path requires.
-After a process state report, the active owner takes the next truthful action in the same turn per `.claude/CLAUDE.md` `[AUTO-PROC]`.
+After a process state report, the active owner takes the next truthful action in the same turn per `.claude/reference/work-execution-core-law.md` `[AUTO-PROC]`.
 
 ## Report Shape
 `verified result` reports the result first and includes only the highest-impact verification basis or canonical artifact path when material. Multi-lane, multi-shard, or multi-wave verified result requires the all-required-output gate above plus current `Skill(self-verification)` verification on the synthesized claim.
@@ -136,4 +147,4 @@ This reference owns user-report admissibility, non-reportable content, and the u
 Other documents may state local transport-owner boundaries and cite this reference.
 Other documents must not restate user-report admissibility criteria, non-reportable content lists, or report-shape limits.
 Other documents must not convert Communication Plane payload into user reports.
-Conflicting wording resolves to this reference and routes to `Skill(governance-change)` for owner-local cleanup.
+Conflicting wording resolves to this reference and routes to `Skill(governance-modification)` for owner-local cleanup.

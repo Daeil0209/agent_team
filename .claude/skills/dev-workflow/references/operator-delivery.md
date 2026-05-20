@@ -1,12 +1,12 @@
 # dev-workflow: Operator On-Ramp And Termination Discipline
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
-Implements `CLAUDE.md` `[USER-DELIVERY-FIT]`.
+Implements `.claude/reference/design-definition-core-law.md` `[USER-DELIVERY-FIT]`.
 Covered `[USER-DELIVERY-FIT]` axes: operator on-ramp completeness, operator-OS coverage, termination symmetric pair, and mental-model alignment.
 Section anchors `R21`/`R23`/`R27`/`R31` index this file's subsections only; they are not external rule identifiers.
 This contract activates through:

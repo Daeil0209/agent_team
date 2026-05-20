@@ -1,12 +1,12 @@
-# governance-change: Benchmark Protocol Detail
+# governance-modification: Benchmark Protocol Detail
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-ANCHOR: .claude/skills/governance-modification/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
-- Comparative governance-change, reusable-ownership, and quality-hardening claims default to benchmark-first discipline.
+- Comparative governance modification, reusable-ownership, and quality-hardening claims default to benchmark-first discipline.
 - The baseline and comparison surface are named before any hardening claim hardens into routing or ownership.
 - Benchmark conclusions must declare provenance. If benchmark inputs are not directly inspectable or credibly cited, downgrade to `HOLD`, `UNVERIFIED`, or simulator-only status.
 - Default preparation sequence: benchmark -> cross-check and anti-hallucination confirmation -> concrete modification proposal -> pre-edit loss-risk gate -> bounded modification -> verification -> only then bounded optimization.
@@ -16,7 +16,7 @@ auto-inject: false
   - explicit authority/footprint delta
   - rollback or fail-open path
 - `BENCHMARK-PROVENANCE: simulator-only` or `CROSS-CHECK-STATUS: simulator-unconfirmed` is still a benchmark-stage `HOLD`, not edit authorization.
-- When a governance-change round claims advancement, keep the current readiness label, visible evidence delta, throughput or neighbor-regression visibility, and follow-on optimization closure explicit in the active sequence packet before the round is handed back for lead judgment.
+- When a `Skill(governance-modification)` round claims advancement, keep the current readiness label, visible evidence delta, throughput or neighbor-regression visibility, and follow-on optimization closure explicit in the active sequence packet before the round is handed back for lead judgment.
 
 ## Resolve Next Owner And Action
 - Benchmark-proven deficiency opens modification proposal.

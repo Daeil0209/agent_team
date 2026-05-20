@@ -1,10 +1,10 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/team-session-sequences/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 REFERENCE-OWNER: team-session-sequences
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # team-session-sequences: Monitoring And Runtime Cleanup Detail
@@ -42,8 +42,8 @@ If the teammate must be terminated, send `SendMessage(to: "<agent-name>", messag
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
 
 ## Message-First Runtime Cleanup Rule
-- Consume `session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
-- Completion transport shape is owned by `task-execution/references/completion-handoff.md`.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
+- Completion transport shape is owned by `.claude/skills/task-execution/references/completion-handoff.md`.
 - Immediate reuse sends distinct bounded work promptly; otherwise the lane remains `STANDBY` until reuse or cleanup.
 - Runtime task lists, mailbox state, and team config are runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
 - An agent-targeted `shutdown_request` is teammate cleanup, not evidence that the whole session is entering `Closeout Sequence`.
@@ -55,8 +55,7 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - Previous-session remembered agents are continuity artifacts, not runtime shutdown targets in a later session.
 
 ## Reuse Rule
-- New dispatch rebuilds context.
-- Reuse or standby is valid only when ownership fit and context fit remain truthful per `session-boot/references/runtime-state-detail.md`.
+Reuse / standby semantics canonical owner: `.claude/skills/session-boot/references/runtime-state-detail.md` `## Reuse Rule`. Lead-side monitoring-action extensions below.
 - Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
 - Treat `standby` as already set by valid `completion`; choose no message when no immediate reuse, correction, or shutdown is needed.
 
@@ -88,7 +87,7 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
-- Consume `session-boot/references/runtime-state-detail.md` for canonical health-check activation semantics.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical health-check activation semantics.
 - The configured cron cadence and stale thresholds are defined in `hook-policy.sh`; treat that file as the single literal owner.
 - Direct oversight, event-triggered agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all agents are standby.
@@ -100,10 +99,10 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 - Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
-- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root per `.claude/reference/output-root-and-filesystem-law.md` (default `claude_doc/<work-name>/`).
+- Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root per `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 
 ## Runtime Pressure
-- Consume `session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.
 - When hard runtime pressure or unresolved orphan residue exists, stop new `Agent` fan-out until explicit recovery clears that pressure.
 - Routine orphan scans report residue; they do not kill processes or rewrite team cleanup truth.
 - Runtime-pressure handling must not invent session closeout authority or bypass message-first cleanup decisions for current live agents.

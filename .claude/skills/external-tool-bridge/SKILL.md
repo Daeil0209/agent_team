@@ -3,7 +3,7 @@ name: external-tool-bridge
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, cleanup truth, and blocked-condition reporting while adjacent role ownership stays intact. Use when an external API, connector, MCP path, browser/client automation, or bridge setup materially blocks truthful delivery.
 user-invocable: false
 PRIMARY-OWNER: developer
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance-change / regression-guard blocks when present
+  5. owner-local structural feedback / governance modification / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 - Reference-owned pre-verification, integration failure, blocked-report, auth bridge, and data pipeline bridge details live in `references/integration-bridge-detail.md`.
@@ -105,10 +105,12 @@ Required rules:
 - keep permission, credential, and quota scope narrow
 - verify with the smallest decisive real-tool or real-network proof
 - leave a usable blocked-state record instead of a vague tool complaint
-- Approval-required actions, allowed-setup boundary, and the approval/proceed split are owned by `references/integration-bridge-detail.md`; use the smallest path and record fallback/cleanup truth.
+- Approval-required actions, allowed-setup boundary, and the approval/proceed split are owned by `references/integration-bridge-detail.md`.
+- Use the smallest path and record fallback/cleanup truth.
 - prefer a quieter or safer local-first path when it becomes credible
 - if the bridge opens a console, helper process, client session, or proxy, define and verify cleanup after the decisive check
-- Simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` (a bridge-local claim status distinct from the validator verdict tokens defined in `CLAUDE.md` `## Acceptance`) or blocked; validator authority remains with `validator` per CLAUDE.md `## Acceptance`.
+- Simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` (a bridge-local claim status distinct from the validator verdict tokens governed by `.claude/CLAUDE.md` `## 6. Judgment Philosophy`) or blocked.
+- Validator authority remains with `validator` per `.claude/CLAUDE.md` `## 6. Judgment Philosophy`.
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or setup requests when external capability need is unclear or unjustified.
 - Also challenge unclear or unjustified bridge scope, fallback behavior, verification method, or rollback discipline.
@@ -121,4 +123,5 @@ Required rules:
 - Integration serves the end-user workflow and technical endpoint path.
 - User-visible integration is designed from user perspective first.
 - Surface hidden integration constraints (rate limits, timeout behaviors, retry policies, user-visible error clarity) before bridge design, not after failure.
-- Integration test results reflect actual execution; mocked simulations report as simulations only and exit as blocked or bridge-local `UNVERIFIED` (validator verdict tokens remain owned by CLAUDE.md `## Acceptance`).
+- Integration test results reflect actual execution.
+- Mocked simulations report as simulations only and exit as blocked or bridge-local `UNVERIFIED` (validator verdict tokens remain owned by `.claude/CLAUDE.md` `## 6. Judgment Philosophy`).

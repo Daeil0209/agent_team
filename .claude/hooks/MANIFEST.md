@@ -2,9 +2,9 @@
 doc-type: hook-governance-ledger
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 5 [HOOK-LAST]; Reference Binding; governance-change hook/settings owner"
+SOURCE-RULES: "Environment Configuration Philosophy; Work Execution Philosophy reference binding; `Skill(governance-modification)` hook/settings owner"
 LOAD-POLICY: on-demand hook governance ledger
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Hook Manifest
 
@@ -28,7 +28,7 @@ bypasses structured edit surfaces.
 - Over-broad hook blocking is repaired at the hook surface by narrowing the prohibition. Never substitute agent-side adherence rules, user re-confirmation flows, allow-list arming, or descriptive-pattern arming for prohibition narrowing — those move friction onto the user without removing the over-broad block and recreate the same bottleneck.
 - Do not add a new hook when adherence to an existing doctrine, skill, or role
 surface is the real fix.
-- Treat `claude_doc/<work-name>/` as a protected work-artifact carrier per `.claude/reference/output-root-and-filesystem-law.md`; hook-side deletion, write-rejection, move, or other interference against `claude_doc/` is an over-broad-blocking defect candidate unless the action is explicit user-approved teardown.
+- Treat `claude_doc/<work-name>/` as a protected work-artifact carrier per `.claude/reference/environment-output-root-filesystem-law.md`; hook-side deletion, write-rejection, move, or other interference against `claude_doc/` is an over-broad-blocking defect candidate unless the action is explicit user-approved teardown.
 - Every hook script must be classified as active, support, absorbed, legacy, or
 runtime artifact.
 - Every active `settings.json` hook command must carry an explicit `timeout`.
@@ -51,7 +51,14 @@ These files are wired directly from `../settings.json`.
 - `worker-lifecycle-sync.sh`
 
 ## Legacy Hooks
-These hook scripts remain in `./` for traceability but their bodies are file-level no-op (`exit 0` at top, with a 9-line comment block pointing to the disable basis) per `.claude/reference/runtime-boundary-law.md` `## Runtime Boundary Rules` (negative-only-filter doctrine — positive-pattern doctrine-shape enforcement is owned by the lane trio: `Skill(governance-change)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses, plus downstream reviewer/validator independent gates). Their `settings.json` matchers were removed in the same governance-change patch. The Hook-Last Review Ledger does not list legacy hooks because a disabled body cannot fulfill a "Protected failure" claim. Each file is preserved for traceability and potential future narrowing to a negative-only filter.
+These hook scripts remain in `./` for traceability.
+- Their bodies are file-level no-op with `exit 0` at top.
+- Their comment blocks point to the disable basis per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`.
+- Positive-pattern doctrine-shape enforcement is owned by the lane trio: `Skill(governance-modification)`, `Skill(self-verification)`, and `Skill(review-verification)` named lenses.
+- Downstream reviewer and validator independent gates remain intact.
+- Their `settings.json` matchers were removed in the same governance patch.
+- The Hook-Last Review Ledger does not list legacy hooks because a disabled body cannot fulfill a "Protected failure" claim.
+- Each file is preserved for traceability and potential future narrowing to a negative-only filter.
 
 - `dispatch-proof-gate.sh`
 - `dispatch-sizing-gate.sh`
@@ -86,6 +93,7 @@ review before activation.
 | `user-prompt-gate.sh` | prompt-derived delete approval, closeout intent, and boot-complete marker becoming stale or invisible | UserPromptSubmit only; no `additionalContext`, no status/stall recovery context, and no hard-deny. Silently resets or records user-approved delete roots, syncs explicit closeout/cancel state, and closes the boot marker only when procedure-state is ready. Recover through explicit closeout cancellation, owner skill routing, or claim narrowing. |
 | `permission-request-gate.sh` | repeat prompts for bounded structured edits that normal PreToolUse gates already allowed | PermissionRequest-only auto-allow surface; non-matching requests fall back to Claude Code permission handling. |
 | `sv-gate.sh` | browser proof without current planning basis | Narrow Playwright proof edge only; use silent tracking when denial would prevent ledger repair; recover through work-planning or claim narrowing. |
+| `tmux-kill-block.sh` | active-session instability from `tmux kill-*` commands | Bash-only hard-deny for exact `tmux kill-*` command forms. Recover through per-member `SendMessage` shutdown protocol or `Skill(session-closeout)` Runtime Teardown Preflight followed by `TeamDelete`. |
 | `worker-lifecycle-sync.sh` | teammate idle, completion, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; adds suppressed runtime context only when runtime state has a new lead-relevant idle or cleanup fact. It does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
 | `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer retained-scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands only; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
 
@@ -95,16 +103,16 @@ review before activation.
 - Recover by narrowing the command target, using structured edit for governance content, or using non-secret/redacted evidence.
 
 ## Hook Dependencies
-Active hooks call or source these files. `hook-config.sh` and `hook-config-core.sh` are critical bootstrap dependencies.
+Active hook bootstrap dependencies are sourced or executed by settings-wired hooks. `hook-config.sh` and `hook-config-core.sh` are critical bootstrap dependencies.
 Update callers in the same patch before removing any listed file.
 
-- `hook-config.sh`
-- `hook-config-core.sh`
-- `cleanup-orphan-runtime.sh`
-- `runtime-pressure-scan.sh`
-- `health-check.sh`
-- `lib/*.sh`
-- `lib/*.js`
+- `hook-config.sh`: sourced by settings-wired active hooks except `permission-request-gate.sh`.
+- `hook-config-core.sh`: sourced by `permission-request-gate.sh`.
+- `lib/*.sh`: sourced through `hook-config.sh`, `hook-config-core.sh`, `track-runtime-lifecycle.sh`, `track-worker-transport.sh`, or `worker-lifecycle-sync.sh` when the active hook needs that library.
+- `lib/*.js`: executed by active hook scripts or sourced hook libraries for JSON parsing, command parsing, or generated-command policy checks.
+- `health-check.sh`: runtime helper invoked by a tracked health-check cron when active; `track-runtime-lifecycle.sh` recognizes health-check cron commands.
+- `runtime-pressure-scan.sh`: runtime helper called by `health-check.sh` and legacy-disabled `runtime-entry-gate.sh`.
+- `cleanup-orphan-runtime.sh`: runtime helper called by `health-check.sh` and legacy-disabled `runtime-entry-gate.sh`; it calls `runtime-pressure-scan.sh`.
 
 ## Absorbed Scripts
 Absorbed scripts must not remain as runnable top-level hook surfaces. Their

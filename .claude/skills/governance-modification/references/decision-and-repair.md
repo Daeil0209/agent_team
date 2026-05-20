@@ -1,9 +1,9 @@
-# governance-change: Decision And Repair Detail
+# governance-modification: Decision And Repair Detail
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-ANCHOR: .claude/skills/governance-modification/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use this reference for recurrence-hardening trigger interpretation, causal analysis, owner-surface choice, failure-mode response, patch classification, high-traffic surface protection, and constraint checks.
@@ -12,7 +12,7 @@ Use this reference for recurrence-hardening trigger interpretation, causal analy
 | Trigger Type | Default Interpretation | Required Action |
 |---|---|---|
 | justified user correction | authoritative classification signal | open classification immediately; stabilize active request; harden recurrence path only when behavioral/procedural defect basis and recurrence path are confirmed |
-| self-detected behavioral defect | real defect unless disproven by stronger evidence | open governance-change recurrence-hardening immediately; do not wait for user confirmation |
+| self-detected behavioral defect | real defect unless disproven by stronger evidence | open `Skill(governance-modification)` recurrence-hardening immediately; do not wait for user confirmation |
 | repeated missed-catch / recurrence | capability or boundary weakness | escalate beyond local patch into checklist, routing, hook, or authority hardening |
 | blocked execution due to missing reusable skill | capability gap | use Capability-Gap Fast Path with explicit owner and verification |
 
@@ -42,6 +42,8 @@ If the causal basis cannot identify a prevention point, keep the round on `HOLD`
 | `missing-owner` | No current owner surface governs the recurring behavior. | Assign one owner surface, then add the narrowest rule, skill gate, packet field, or Hook-Last-approved runtime edge needed to close the gap. | Keep ownership on the assigned owner surface. |
 | `weak-owner` | The right owner exists, but its wording, gate, checklist, or packet is too weak to prevent recurrence. | Tighten or replace the owning block; add a checklist or packet requirement only when wording alone will not surface the duty. | Keep the correction on the existing owner block. |
 | `wrong-owner` | The behavior is governed from the wrong document, lane, or runtime surface. | Re-home the meaning to the correct owner and leave an owner-reference only when local readability requires it. | Preserve unique meaning through source-to-destination trace. |
+| `mapping-gap` | A rule exists at one governance layer, but its mapped execution detail or triggered consuming guidance is missing. | Add, re-home, or tighten the missing mapped detail at the narrowest owner; record `not-material:<basis>` when a lower layer is not needed. | Preserve the top-doctrine -> core-law -> trigger-bound reference chain without adding unused links. |
+| `specification-mismatch` | A governance rule is too broad, too narrow, evasive, ambiguous, conflicting, bottleneck-forming, or too detailed without execution effect. | Add missing executable information, make the valid action explicit, or remove non-executed burden through the narrowest preserving edit. | Keep only the minimum executable information on the executing owner surface. |
 | `non-compliance` | The rule already exists; the failure came from not following it. | Harden adherence through trigger visibility, checklist discipline, packet requirements, self-verification gates, or Hook-Last-approved runtime edge. | Address why the existing rule was missed. |
 | `weak-enforcement` | Doctrine exists, but runtime or packet surfaces lack reliable obligation exposure. | Add or refine packet fields or owner instructions first; add or refine hook logic only as a Hook-Last-approved runtime edge. | Semantic judgment becomes a hard block only after fields or low-friction evidence exist. |
 | `capability-gap` | No reusable skill, reference, or lane procedure can handle the recurring work credibly. | Use Capability-Gap Fast Path; update an existing owner when sufficient, create a new skill only after the category gate. | Reserve new skills for reusable capability gaps. |
@@ -56,7 +58,7 @@ Do not place a rule where it is merely convenient.
 | Governance need | Primary owner surface |
 |---|---|
 | Shared philosophy, priority, top-level ownership, preservation law | `.claude/CLAUDE.md` |
-| Team-lead trigger, route, orchestration, synthesis, reporting, interruption, governance-change adjudication | `.claude/agents/team-lead.md` |
+| Team-lead trigger, route, orchestration, synthesis, reporting, interruption, governance modification adjudication | `.claude/agents/team-lead.md` |
 | Detailed team-lead edge cases that would bloat the role spine | Direct references named by `.claude/agents/team-lead.md` |
 | Lane charter, always-loaded receipt trigger, stop rule, and lane-owned completion duty | `.claude/agents/<lane>.md` |
 | Lane execution procedure, lane-local gates, and direct pointer to detail references | `.claude/skills/agent-<lane>/SKILL.md` |

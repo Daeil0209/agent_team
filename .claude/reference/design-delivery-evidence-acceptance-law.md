@@ -1,8 +1,9 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Core Laws 2 [EVI-ASSUM], [USER-SURFACE], [USER-DELIVERY-FIT], [FUNCTIONAL-CLOSURE], [USER-CONVENIENCE]; Acceptance"
+SOURCE-RULES: "Design Definition Philosophy; Review And Verification Philosophy; Judgment Philosophy"
 LOAD-POLICY: on-demand reference only
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 # Common Doctrine Reference: Delivery, Evidence, And Acceptance
 
@@ -64,7 +65,6 @@ Stop final acceptance when:
 - A stopped final-acceptance route opens validator routing.
 
 ## Evidence Rules
-- Evidence outranks assumption.
 - Use indirect evidence for diagnosis.
 - Verification stays where the user:
   - runs the deliverable
@@ -90,8 +90,6 @@ Stop final acceptance when:
 - Dynamic behavior requires executed user action and retained postcondition evidence.
 
 ## Delivery-Fit Rules
-- Completion requires the frozen requested deliverable.
-- Completion requires user burden to be satisfied.
 - Completion uses owner deferral only through the owning upstream record.
 - Owner deferral names:
   - deferred item
@@ -100,7 +98,6 @@ Stop final acceptance when:
   - next action
 - Downstream missing implementation, proof, or acceptance evidence cannot create deferral; it leaves the row open or blocked.
 - Record implemented subset coverage against the requested deliverable.
-- Classify half-delivered artifacts as defects.
 - Type-fit defaults live in `.claude/skills/work-planning/references/deliverable-defaults.md`.
 
 ## CORE-WORKFLOW-CLOSURE
@@ -133,7 +130,7 @@ Prove user-surface behavior on the user surface.
 - Reviewer evidence feeds validation.
 - Tester evidence feeds validation.
 - `validator` owns final acceptance and issues final `PASS/HOLD/FAIL`.
-- Local closure report admission is owned by `.claude/reference/user-reporting-law.md`.
+- Local closure report admission is owned by `.claude/reference/reporting-user-reporting-law.md`.
 - Local closure is valid only when no final-arbitration trigger applies.
 - Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md` `## Final-Arbitration Trigger Definitions`.
 - Acceptance compares against the frozen delivery contract.

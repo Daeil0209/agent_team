@@ -1,9 +1,9 @@
 # Work-Planning Execution Readiness
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 `EXECUTION-READINESS-BASIS` is the planning-level readiness contract.
@@ -48,7 +48,8 @@ Losing the planned parallel path while it changes staffing truth, independent-su
 
 ## Resolve Next Owner And Action
 - Ready basis opens the frozen next owner/action.
-- Team-routed ready basis opens `task-execution`.
+- Team-routed ready basis opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary.
+- Team-routed ready basis opens loaded `task-execution` consumption when same-session activation basis is current for the same dispatch owner boundary.
 - Blocked basis opens the named blocker-clear owner or `HOLD`.
 - Unknown material readiness category opens blocker-clear or route correction before dispatch.
 - Route-changing readiness gap reopens `work-planning`.

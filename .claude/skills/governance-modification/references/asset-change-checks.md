@@ -1,18 +1,21 @@
-# governance-change: Asset Change Checks
+# governance-modification: Asset Change Checks
 PRIMARY-OWNER: team-lead
-SOURCE-ANCHOR: .claude/skills/governance-change/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-ANCHOR: .claude/skills/governance-modification/SKILL.md
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 Use this file for ordinary team-system asset changes, skill introduction, specialist routing, Hook-Last preflight, and MCP/external-tool asset coherence.
 
 ## Update Checks
-Mapping keys such as `PRIMARY-OWNER`, `SOURCE-ANCHOR`, `SOURCE-RULES`, `LOAD-POLICY`, and `REPORTING-CURTAIN` are structural metadata; classify only missing, wrong, or divergent mapping as defects.
+On skill, reference, and declared metadata-owner surfaces, mapping keys such as `PRIMARY-OWNER`, `SOURCE-ANCHOR`, `SOURCE-RULES`, `LOAD-POLICY`, and `REPORTING-CURTAIN` are structural metadata; classify only missing, wrong, or divergent mapping as defects.
 Where a runtime setting or threshold must remain configurable, keep one owner for the literal value and make every other document reference that owner.
 Preserve approved structural hierarchies, role procedure hierarchy, skill Structural Contract, reference maps, and connection mappings.
 New top-level sections, orphaned procedure blocks, orphaned reference blocks, or broken mapping chains record `Skill(review-verification):<bounded-question>` before execution.
+Upper-to-core executable-detail gaps and core-to-trigger-bound guidance gaps record `Skill(review-verification):governance-continuity-lens` before execution.
+Under-specified governance and over-specified governance record `Skill(review-verification):minimum-executable-information-lens` before execution.
+Evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance records `Skill(review-verification):minimum-executable-information-lens` before execution.
 When reducing context footprint, prove moved meaning remains reachable through an owning trigger or direct reference path.
 Record remaining migration, affected-surface, in-flight-output, or prior-verdict gaps instead of assuming completion.
 
@@ -41,6 +44,7 @@ Approval packet names category, expected reuse pattern, existing-owner overlap r
 ## Specialist Routing
 Specialist capabilities live as skills under `.claude/skills/<skill-id>/SKILL.md`.
 Agent role files stay role identity, boundary, and stop-condition surfaces.
+Agent role files use frontmatter `name`, heading, lane identity, boundary, and stop-condition rules instead of `PRIMARY-OWNER` metadata.
 Authorization packets name `skill-id` and bind it to target lane plus blocked surface.
 Specialist-skill authorization binds a blocked lane to bounded specialist aid.
 Common-skill ownership binds a shared procedure surface to one primary owner plus named impacted lanes.

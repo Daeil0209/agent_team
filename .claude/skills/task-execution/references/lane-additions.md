@@ -1,26 +1,46 @@
 ---
 PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # task-execution: Lane-Specific Additions
 ## Common Lane-Core Preconditions
 Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
+- Producer self-review means the assigned lane's defect-seeking check of its own lane-owned output before completion; it is not acceptance, validation, or permission to skip independent owners.
+- For non-developer lanes, producer self-review applies only to the lane-owned report, proof, verdict, evidence carrier, or review output and routes discovered out-of-lane defects to the owning path.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet, not the full internal planning record.
 - Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work.
+- `dispatch-ack` is valid only after packet review confirms no objection to starting the assigned work.
 - Upward outcome envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
-- Use `scope-pressure` / `hold|blocker` when receipt cannot be accepted safely.
-- A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence (not destructive, security-critical, or session-stability-breaking per `.claude/reference/runtime-boundary-law.md` `## Runtime Boundary Rules`) is an over-broad-blocking defect per `.claude/CLAUDE.md` `Core Laws 4`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message, and does not strain its own compliance to satisfy the block.
+- Lane upward `SendMessage` sets top-level `to: team-lead`.
+- A recipient named only in visible text, `summary`, `message`, or packet fields does not satisfy the tool envelope.
+- Missing `SendMessage.to` is an envelope defect, not a compliance retry loop.
+- Before any `MESSAGE-CLASS: dispatch-ack` or `MESSAGE-CLASS: completion` `SendMessage`, the producing lane verifies the render matches the canonical state-signal envelope owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; mismatch (extra wording in `summary`; any body content beyond empty or single ASCII space) is a producer self-review defect that blocks the `SendMessage` and routes to packet-correction.
+- Use `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when the lane cannot truthfully start the assigned work as written.
+- A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence (not destructive, security-critical, or session-stability-breaking per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`) is an over-broad-blocking defect per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message, and does not strain its own compliance to satisfy the block.
+- Converged lane work must hand off to `team-lead` through `.claude/skills/task-execution/references/completion-handoff.md`.
+- The handoff requires both the retained carrier containing the common completion spine and `MESSAGE-CLASS: completion` sent to `team-lead` through `SendMessage`.
+- Disk output, pane/final prose, `status`, and `TaskUpdate` do not replace the required completion handoff.
 - Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Immediately call `TaskUpdate(status: completed)` for the same assigned task when task tracking is active after `completion`.
 - After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
 - This duty is lane-baseline; packet wording does not need to request it.
-- For lane work that touches governance assets (`.claude/` doctrine, agents, skills, settings, hooks, or live-surface mirrors), the lane-side quality contract is the trio: `Skill(governance-change)` for patch mechanics, lane-local `Skill(self-verification)` for produced result truth, and `Skill(review-verification)` named lenses (`removal-first-lens`, `coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) consumed inside the self-verification Critical Challenge step against the applied diff.
+- For lane work that touches governance assets (`.claude/` doctrine, agents, skills, settings, hooks, or live-surface mirrors), the lane-side quality contract is the trio plus the operator-emphasized keyword self-check.
+- Trio member 1: `Skill(governance-modification)` patch mechanics.
+- Trio member 2: lane-local `Skill(self-verification)` produced result truth.
+- Trio member 3: consume `Skill(review-verification)` named lenses `removal-first-lens`, `coherence-integrity-lens`, `minimum-executable-information-lens`, `negative-risk-lens`, and `patch-worthiness-lens` on the proposed patch before mutation.
+- The lane adds `governance-continuity-lens` before mutation when the proposed patch can change top-doctrine intent, mapped core-law executable detail, or trigger-bound owner-reference guidance.
+- Post-execute lane-local `Skill(self-verification)` may recheck the applied diff but does not satisfy the pre-mutation `Skill(review-verification)` gate.
+- Operator-emphasized keyword self-check applies per `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
+- Operator-emphasized keyword self-check covers under-specification, over-specification, evasion, ambiguity, semantic conflict, bottleneck burden, and over-broad blocking.
+- A candidate patch failing any keyword check is rejected before mutation.
+- Lane direct-execution drive (`Edit`/`MultiEdit`/`Write`/`Bash`/`SendMessage`) does not decay between consecutive bounded lane actions inside the assigned packet boundary per `.claude/reference/work-execution-core-law.md` `[AUTO-PROC]`.
+- Lane continues to the next executable lane action in the same turn until completion, blocker, or scope-pressure.
 - Bare lane-local `Skill(self-verification)` without `Skill(review-verification)` named-lens consumption is insufficient quality guarantee for governance asset changes; lane completion in that state is a quality-contract defect that returns to lane lens supplementation.
 - When the assignment packet's completion contract or upward-message instructions direct the lane to place retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file or findings counts, excerpts, summaries, operational notes, or any field other than the canonical state signal in the upward `SendMessage` render, the lane sends `scope-pressure` with `PRESSURE-TYPE: malformed-completion-contract` and `CORRECTION-OUTCOME: packet-correction` and does not obey the malformed instruction. Envelope canonical: `message-classes.md` `### Transport Payload`.
 - Agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, or later completion never satisfies receipt.
@@ -31,6 +51,11 @@ Every agent-specific skill inherits these common preconditions:
 - Never use report suppression or visible-row hygiene to omit, distort, or weaken assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
+- When lane work names candidates, findings, defects, removal, patch-worthiness, patch readiness, or issue counts, consume `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` and `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` before classifying or completing the output.
+- Lane outputs may maximize candidate recall, but they preserve `candidate-evidence` or `candidate-classified` state until the assigned lane has authority and evidence to promote the item.
+- Lane outputs do not report raw candidate volume as confirmed defect volume.
+- Lane outputs use `confirmed-defect`, `patch-worthy`, or `patch-ready` only when the consumed promotion basis proves that exact state.
+- This finding-state duty is lane-baseline; packet wording does not need to request it.
 - Receipt is not permission to execute a defective packet; classify in the same turn, then execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
 - Continue into lane work after receipt.
 - Packet intake classifies into one of 4 states: `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.

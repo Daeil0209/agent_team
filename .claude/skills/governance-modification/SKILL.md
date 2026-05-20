@@ -1,8 +1,9 @@
 ---
-name: governance-change
+name: governance-modification
 description: Govern team-system asset changes and install recurrence barriers.
 user-invocable: false
 PRIMARY-OWNER: team-lead
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only governance change, recurrence hardening, and team-system asset mutation.
@@ -24,9 +25,9 @@ Adjacent owners:
 
 This skill does not create a second review path.
 This skill does not create a second result-verification path.
-`team-lead` executes `Skill(governance-change)` only from a current owner, trigger, action, stop, and evidence basis.
+`team-lead` executes `Skill(governance-modification)` only from a current owner, trigger, action, stop, and evidence basis.
 This skill's entry, mode selection, records, and patch progress stay Procedure Plane.
-User-facing change-result prose opens this skill's Post-Verify `Skill(self-verification)` gate before `team-lead` RPA-7 and `.claude/reference/user-reporting-law.md`.
+User-facing change-result prose opens this skill's Post-Verify `Skill(self-verification)` gate before `team-lead` RPA-7 and `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Activation
 Load this skill for a verified next owner/action of governance asset change or recurrence-barrier hardening.
@@ -48,18 +49,23 @@ Select one active mode:
 - `recurrence-hardening`: defect classification and recurrence-barrier path triggered by a Recurrence Hardening Trigger Matrix row in `references/decision-and-repair.md`; barrier installation requires confirmed defect basis and recurrence path.
 - `asset-change`: ordinary non-defect asset maintenance, skill introduction, specialist routing change, settings/hook change, migration, compression, or capability refinement.
 
-After `Skill(governance-change)` entry, `team-lead` consumes `Skill(review-verification)` fresh per the change tier.
+After `Skill(governance-modification)` entry, `team-lead` consumes `Skill(review-verification)` fresh per the change tier.
 Standard or structural update consumes the full workflow.
 Quick update consumes a single named lens per `Skill(review-verification)` `## Named Lane Lens Index`.
 `REVIEW-VERIFICATION-NEED` records the chosen lens for quick update or `full-workflow` for standard/structural update.
-`owner-local-sufficient:<basis>` is invalid for governance asset changes inside `Skill(governance-change)`.
+`owner-local-sufficient:<basis>` is invalid for governance asset changes inside `Skill(governance-modification)`.
 Every governance asset change consumes `Skill(review-verification)`.
 After Post-Verify, open `Skill(self-verification)` for the outgoing changed-result or report claim.
 Destructive, security-sensitive, runtime-enforcement expansion, or operator-policy-choice changes require explicit operator approval.
-Lane-side governance asset-change (developer lane applying frozen patch design): lane-local `Skill(self-verification)` consumes `Skill(review-verification)` named lenses (`removal-first-lens`, `coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) inside its Critical Challenge step against the applied diff; the trio (`Skill(governance-change)` patch mechanics, lane-local `Skill(self-verification)`, named lenses) is the lane-side quality contract for governance asset changes — packet-design enforcement of this trio is owned by `.claude/skills/task-execution/references/assignment-packet.md` Packet Preflight + `.claude/skills/task-execution/references/lane-additions.md` review-verification lane lens naming rule.
+Lane-side governance asset-change: `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` owns the quality contract.
+Pre-mutation lane checks consume `Skill(governance-modification)` patch mechanics and `Skill(review-verification)` named lenses on the proposed patch.
+Post-execute lane checks consume lane-local `Skill(self-verification)` for produced result truth.
 
 ## Reference Map
 Load only the reference whose trigger is active.
+- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
+- `.claude/reference/modification-core-law.md`: load for governance asset creation, modification, deletion, splitting, merging, re-homing, reclassification, compression, migration, or recurrence-barrier hardening.
+- `.claude/reference/environment-configuration-core-law.md`: load for settings, hooks, runtime-enforcement, official-behavior, tool-capability, or runtime-footprint asset changes.
 - `references/decision-and-repair.md`: trigger interpretation, causal analysis, failure-mode response, owner-surface choice, patch classification, high-traffic surfaces, and constraints.
 - `references/asset-change-checks.md`: ordinary asset update checks, skill introduction gate, specialist routing, configurable-value ownership, Hook-Last preflight, and MCP/external-tool asset coherence.
 - `references/capability-gap-fast-path.md`: missing reusable-skill fast path and default rapid-skill routing.
@@ -88,7 +94,7 @@ Structural hardening covers architecture-level changes, owner re-home, cross-doc
 
 Required order for standard and structural hardening:
 1. Identify trigger source, defect class, impacted path, intended design, causal basis, recurrence path, likely owner, consumed owner path, and required barrier class.
-2. Consume `Skill(review-verification)` fresh for every governance asset change inside `Skill(governance-change)`. Quick-hardening narrows the review scope to a single named-lens per `Skill(review-verification)` `## Named Lane Lens Index`; it does not skip skill load or workflow execution.
+2. Consume `Skill(review-verification)` fresh for every governance asset change inside `Skill(governance-modification)`. Quick-hardening narrows the review scope to a single named-lens per `Skill(review-verification)` `## Named Lane Lens Index`; it does not skip skill load or workflow execution.
 3. Adjudicate the owner surface explicitly.
 4. Keep the hardening role-scoped unless the recurrence path proves a shared owner.
 5. Execute through `Change Sequence`.
@@ -132,7 +138,7 @@ Hard surface:
 - Use `Skill(self-verification)` plan audit only when the change plan is disputed.
 - Consume the recorded `Skill(review-verification):<bounded-question>` output per `Activation` per-change-tier rule before Draft, Execute, and convergence.
 - The `Skill(review-verification)` tool call must appear in the current turn before any `Edit`/`MultiEdit`/`Write`/`Bash` mutation on a `.claude/` governance asset by the calling owner (team-lead or lane).
-- Post-hoc `Skill(review-verification)` on already-applied patches is recurrence-class defect per `.claude/CLAUDE.md` `Core Laws 5` `[HARDEN]` and does not satisfy this gate.
+- Post-hoc `Skill(review-verification)` on already-applied patches is recurrence-class defect per `.claude/CLAUDE.md` `## 5. Modification Philosophy` and does not satisfy this gate.
 - The failed pre-mutation order returns to recurrence-hardening at the narrowest calling-owner surface.
 - Review changed content, not just the plan.
 - Execute only the reviewed, bounded, policy-compliant change.
@@ -153,6 +159,6 @@ Ordinary asset-change patches preserve the live asset contract without inventing
 - Patch execution opens `Change Sequence`.
 - Missing triggered reference basis opens blocker-clear, owner reopening, or `HOLD`.
 - Runtime-enforcement expansion opens Hook-Last preflight and operator approval.
-- Failed Post-Verify auto-reopens Change Sequence at the earliest invalidated step at the current cumulative live state without user authorization, subject to `CLAUDE.md` `[NO-NEEDLESS-ASK]` escalation criteria; the iteration loop continues until Post-Verify converges or an escalation-class blocker is recorded.
+- Failed Post-Verify auto-reopens Change Sequence at the earliest invalidated step at the current cumulative live state without user authorization, subject to `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` escalation criteria; the iteration loop continues until Post-Verify converges or an escalation-class blocker is recorded.
 - Verified change opens `Skill(self-verification)`; after result verification, resume the open Change Sequence or verified `RESUME-ACTION` before consequential reporting.
 - Converged recurrence barrier opens the verified `RESUME-ACTION`.

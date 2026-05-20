@@ -1,9 +1,9 @@
 # Work-Planning Cross-Continuity Gates
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 auto-inject: false
 
 For consequential work where prior patches, confirmed corrections, recurrence barriers, decisions, contract freezes, lane-charter changes, sibling outputs, or acceptance-contract changes can affect current route invariants, cross-continuity is mandatory at five gates:

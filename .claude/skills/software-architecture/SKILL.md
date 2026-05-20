@@ -5,7 +5,7 @@ user-invocable: false
 PRIMARY-OWNER: developer
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -13,7 +13,7 @@ REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
   2. `Authority`
   3. `Agent Relationships`
   4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance-change / regression-guard blocks when present
+  5. owner-local structural feedback / governance modification / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 ### Reference Map

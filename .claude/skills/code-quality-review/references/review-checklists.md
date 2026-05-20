@@ -1,9 +1,9 @@
 ---
 PRIMARY-OWNER: reviewer
 SOURCE-ANCHOR: .claude/skills/code-quality-review/SKILL.md
-SOURCE-RULES: "Parent skill Reference Map; Reference Binding; active owner path"
+SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
 # Code Quality — Reference Material
@@ -44,7 +44,7 @@ Score each module or function on 5 questions (1 point each):
 | Switch on enum with inline logic | Plugin or strategy interface |
 Classify detected anti-patterns through reviewer severity and the refactoring matrix.
 Report metric-only RFP signals as risk evidence.
-Use `MESSAGE-CLASS: hold|blocker` (per `task-execution/references/message-classes.md`) only when acceptance, maintainability, or change-safety harm is demonstrated.
+Use `MESSAGE-CLASS: hold|blocker` (per `.claude/skills/task-execution/references/message-classes.md`) only when acceptance, maintainability, or change-safety harm is demonstrated.
 ## 5. Refactoring Priority Matrix
 | Priority | Trigger Threshold | Action |
 |---|---|---|
