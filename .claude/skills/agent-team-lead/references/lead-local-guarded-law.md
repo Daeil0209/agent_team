@@ -67,7 +67,7 @@ Read-only diagnostic, audit, and analytical reports stay lead-local only when al
 - no independent correction owner
 - a `measured` footprint record under `.claude/reference/environment-runtime-footprint-continuity.md` `## Runtime Footprint Claims` shows no context-size, latency, or runtime-burden benefit from fan-out
 
-Otherwise apply `[PARALLEL]` and route through `Skill(task-execution)` activation or valid loaded `task-execution` consumption.
+Otherwise apply `[PARALLEL]` and route through one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption according to current session state.
 
 ## Guarded-Local Rules
 - Start local work from explicit `LEAD-LOCAL-WORK-ITEMS`.

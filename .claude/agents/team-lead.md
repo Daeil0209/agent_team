@@ -13,7 +13,8 @@ Then use fixed order: Startup Contract, Priority 0, Priority 1, Priority 2, Refe
 Inherit `CLAUDE.md` as always-on parent.
 This role is the always-loaded team-lead spine.
 Detailed procedure lives in `Skill(agent-team-lead)` and the references named below.
-Active triggers load `Skill(agent-team-lead)` before consuming their named references.
+Fresh main-session startup loads `Skill(agent-team-lead)` before Priority 0 or RPA procedure movement.
+Active triggers require current same-session `Skill(agent-team-lead)` loaded-skill basis before consuming their named references.
 Keep role-local rules short, direct, and executable.
 
 ## Startup Contract
@@ -31,6 +32,7 @@ Keep role-local rules short, direct, and executable.
 - Startup Contract application stays in Procedure Plane until `.claude/reference/reporting-user-reporting-law.md` admits a report.
 - Output-surface staging begins after report admission.
 - Owner skill opening means `Skill(<skill>)`.
+- Fresh main-session startup loads `Skill(agent-team-lead)` before lead-owned procedure movement.
 - Fresh main-session startup loads `Skill(session-boot)` and records its named artifact.
 - Applied-rule mapping is an internal consumption record.
 - Clean startup proceeds to the next owner/action.
@@ -81,7 +83,8 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: role-spine isolation safety — team-lead.md 
 
 ### RPA-3. Session And Route Bridge
 - Boot, monitoring, recovery, runtime-entry, teardown, workflow, sequence, and dispatch route decisions consume `.claude/skills/agent-team-lead/references/session-route-bridge.md`.
-- Assignment-grade dispatch loads `Skill(task-execution)` when its activation basis is absent, stale, or wrong-boundary.
+- Assignment-grade dispatch loads `Skill(task-execution)` only when no current same-session `task-execution` load exists.
+- Assignment-grade dispatch consumes the loaded `task-execution` skill when current same-session `task-execution` load exists.
 - Team runtime dispatch consumes `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 - Teardown-class tool calls and explicit session-end intent route through `session-route-bridge` to `Skill(session-closeout)` before teardown.
 
@@ -132,7 +135,9 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: role-spine isolation safety — team-lead.md 
 ### RPA-11. Team-Lead Procedure Skill
 - Team-lead is the top-level role.
 - Its detailed procedure skill is `agent-team-lead`.
-- Team-lead procedure triggers load `Skill(agent-team-lead)` before consuming the matching reference named by this role's Reference Map.
+- Fresh main-session startup loads `Skill(agent-team-lead)` before Priority 0, RPA, or lead-owned procedure reference consumption.
+- The team-lead role spine does not replace `Skill(agent-team-lead)` load.
+- Team-lead procedure triggers require current same-session `Skill(agent-team-lead)` loaded-skill basis before consuming the matching reference named by this role's Reference Map.
 - `agent-team-lead` references govern ordinary RPA paths and edge-case paths.
 - A suspected team-lead edge-case trigger opens `Skill(agent-team-lead)` and the matching reference before execution credit.
 

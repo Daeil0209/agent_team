@@ -29,7 +29,7 @@ User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md
 ## Required Output
 The consuming owner records:
 - loaded skill or reference path
-- loaded-skill basis as `Skill(<skill>)` or `same-session-loaded:<skill>:<owner-boundary-basis>`
+- loaded-skill basis as `Skill(<skill>)` or the named skill's same-session loaded-skill token
 - trigger that required it
 - applied rules
 - blocked or unavailable rules
@@ -63,7 +63,8 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 ## Skill Rules
 - Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
 - Primary skill links become required skills only when their trigger creates the active owner path.
-- Required skill activation is satisfied only by actual `Skill(<skill>)` load or a current same-session loaded-skill basis for the same owner boundary unless the named skill requires stricter freshness.
+- Required skill activation is satisfied only by actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
+- When a primary skill trigger fires, skipping activation is classified as a Work Execution Philosophy violation.
 - `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` is inspection only and does not create loaded-skill basis.
 - Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection may support eligibility but never satisfies activation.
 - Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents by `Read` or `Grep` unless the requested outcome also requires that skill's execution artifact.
@@ -77,13 +78,15 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Lane agent-specific skills use `agent-<lane>` names.
 - Team-lead procedure skill uses `agent-team-lead`.
 - Team-lead procedure references live under `.claude/skills/agent-team-lead/references/` and are skill-owned surfaces.
-- `agent-team-lead` loads when the team-lead role opens lead-owned procedure triggers.
+- The top-level `team-lead` session loads `Skill(agent-team-lead)` at fresh main-session startup before lead-owned procedure movement.
+- `agent-team-lead` also loads before lead-owned procedure triggers when no current same-session `agent-team-lead` load exists.
+- Same-session `agent-team-lead` reuse follows `.claude/skills/agent-team-lead/SKILL.md` `## Activation`.
 - Loaded skills inherit:
   - `CLAUDE.md`
   - active owner role
   - Common Lane-Core Preconditions when the loaded owner is a lane
 - Loaded skills sharpen owner behavior only within their owner stops.
-- A named skill's stricter freshness rule outranks same-session loaded-skill reuse.
+- A named skill's freshness rule governs same-session loaded-skill reuse.
 - Lane agent-specific skills load on assignment-grade lane work.
 - These messages load agent-specific skills only when they assign or reopen work:
   - receipt messages

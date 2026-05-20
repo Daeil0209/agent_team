@@ -10,8 +10,6 @@ Independent bounded work must be identified as parallel-fit when it can reduce r
 
 Additional-agent work freezes the team-agent runtime route basis, not a runtime execution move.
 
-Standalone `Agent` is not configured lane dispatch.
-
 Use this discrimination:
 - independent -> distinct acceptance contracts and output-to-input independence
 - sequential -> one surface's output is the necessary input to the next surface
@@ -71,4 +69,4 @@ If cap blocks new member creation and reuse-fit holds, the next move is reuse-vi
 - Material burden imbalance opens split refinement.
 - Frozen parallel groups return to `AGENT-MAP` and `PARALLEL-GROUPS`.
 - Missing parallel binding surface blocks dispatch readiness.
-- Ready host-authorized additional-agent route opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary; runtime creation, reuse, and member execution are consumed there from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- Ready host-authorized additional-agent route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists; runtime creation, reuse, and member execution are consumed through loaded `task-execution` from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.

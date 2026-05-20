@@ -21,6 +21,7 @@ Reporting curtain inheritance:
 - A fresh instruction arrives.
 - Boot, monitoring, recovery, or teardown can be active.
 - A route can be lead-local, team-routed, workflow-owned, or sequence-owned.
+- `Agent` tool use is being considered as evidence gathering, member creation, reuse, or dispatch.
 - A frozen `NEXT-CONSEQUENTIAL-ACTION` must be consumed.
 - Final Acceptance Review (FAR) `FINAL-REJECT` requires correction routing.
 
@@ -49,6 +50,7 @@ Structured lane-member release during team-routed work is not session teardown.
 Stop before route execution when:
 - loaded owner documents lack applied-rule mapping
 - the selected route lacks a request basis that supports its channel class, owner, next action, and user-fit effect
+- the selected route treats standalone `Agent` as lane work, assignment-grade dispatch, reuse, receipt, monitoring, or completion transport
 
 ## Resolve Next Owner And Action
 - A stopped dispatch route loads `Skill(session-boot)` for boot or runtime-entry.
@@ -78,11 +80,13 @@ Interpretation is pre-freeze.
 
 ## Session Bridge
 Session-start and consequential-boundary load triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`, `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy`, and team-lead RPA-1.
-Assignment-grade team work then follows `Skill(work-planning)` -> `Skill(task-execution)` activation or valid loaded `task-execution` consumption.
+Assignment-grade team work then follows `Skill(work-planning)` -> one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption.
 If runtime/recovery/monitoring/cleanup evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
 A runtime-blocked session bridge opens recovery or `HOLD`.
-Route assignment-grade dispatch to `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
-Route assignment-grade dispatch to loaded `task-execution` consumption when current same-session activation basis is valid for the same dispatch owner boundary.
+Route assignment-grade dispatch to `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+Route assignment-grade dispatch to loaded `task-execution` consumption when current same-session `task-execution` basis exists.
+Route evidence-only standalone `Agent` consideration as lead-local evidence gathering, not team dispatch.
+Route any configured lane work, receipt requirement, reuse, monitoring, or completion handoff through team-routed `Skill(task-execution)`.
 Route explicit session teardown to `Skill(session-closeout)`.
 Route lane-member release during team-routed work through `task-execution` only after reuse-fit failure, dead-or-unavailable target, or lane no-longer-needed basis.
 Task completion is not session end.
@@ -101,8 +105,8 @@ Lead-local candidate work consumes `.claude/skills/agent-team-lead/references/le
 Lead-local route execution follows that reference's direct work conditions, break conditions, and next-owner routing.
 
 ## Team-Routed Bridge
-`team-routing candidate` and `ambiguous-route` enter `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary.
-`team-routing candidate` and `ambiguous-route` enter loaded `task-execution` consumption only when current same-session activation basis is valid for the same dispatch owner boundary.
+`team-routing candidate` and `ambiguous-route` enter `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+`team-routing candidate` and `ambiguous-route` enter loaded `task-execution` consumption when current same-session `task-execution` basis exists.
 Task-execution translates the frozen route into assignment-grade packets.
 Apply `.claude/skills/agent-team-lead/references/planning-field-consume.md` Lead-Only Context Guard before dispatch.
 Team runtime details use `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
@@ -110,7 +114,7 @@ Same-lane follow-on work, wave transition, replacement, and redispatch consume `
 
 ## Final Acceptance Review (FAR) FINAL-REJECT Bridge
 Final Acceptance Review (FAR) `FINAL-REJECT` opens `far-reject-routing` classification first.
-Enter `Skill(task-execution)` activation or valid loaded `task-execution` consumption only for bounded correction dispatch after team-lead route classification.
+Enter one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption only for bounded correction dispatch after team-lead route classification.
 Validator correction packet is correction basis.
 Team-lead classification chooses design, implementation/operator-delivery, or replanning route.
 Detailed routing lives in `.claude/skills/agent-team-lead/references/far-reject-routing.md`.

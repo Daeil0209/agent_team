@@ -14,7 +14,6 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 - `TeamCreate` establishes team-agent runtime only when no current-session team registration exists.
 - Team-agent runtime is required when the frozen route names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, runtime monitoring, or continuity beyond lead-local work.
 - Repeated `TeamCreate` is not the path to satisfy these requirements; one runtime serves all of them.
-- Standalone `Agent` is not configured lane dispatch.
 - If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
 - If current-session team registration exists without live panes, recover through `session-boot` and reattach needed lanes with team-scoped `Agent` on the existing team.
 - For new team runtime, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
@@ -44,7 +43,6 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 - Configured role labels (`validator`, `reviewer`, `tester`, `developer`, `researcher`) are addresses only when the roster contains that exact member with live pane proof.
 - A needed configured lane not yet present in the team runtime is added as a team member via `Agent` with `team_name` and `name`.
 - Assignment-grade work then flows via `SendMessage` to that exact member.
-- Already-existing standalone `Agent` evidence is fallback evidence only.
 - Fallback evidence is not team-member runtime state, `dispatch-ack`, assignment delivery, or later `SendMessage` addressability.
 
 Target-resolution preflight is mandatory before the tool call:

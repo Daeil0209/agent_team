@@ -117,10 +117,12 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 
 ## Mode Split
 Two agent-execution modes must stay separate:
-- `standalone Agent`: legacy or fallback host evidence only; not configured lane dispatch.
+- `standalone Agent`: legacy or fallback host evidence only; not configured lane dispatch or lane work.
 - `team-agent runtime`: coordinated teammate execution with shared task/mailbox coordination and monitoring.
 
 Require the explicit team-agent runtime path when the frozen route is parallel-fit, names `PARALLEL-GROUPS`, or needs shared team runtime.
+Each runtime-specific condition below independently requires team-agent runtime when true.
+Do not weaken one true condition by weighing it against a false condition.
 At least one runtime-specific condition must be true:
 - the frozen route is parallel-fit or names `PARALLEL-GROUPS`
 - the frozen route names team-agent runtime, shared mailbox/task state, or monitoring continuity
@@ -138,7 +140,7 @@ Otherwise stay lead-local only when frozen route, ownership boundaries, and proo
 Required team runtime stands despite runtime friction.
 
 The first dispatch-runtime execution move is the runtime escalation boundary; assignment starts only through assignment-grade `SendMessage`.
-Satisfy the runtime-readiness gate before that boundary if the work no longer remains lead-local or standalone.
+Satisfy the runtime-readiness gate before that boundary if the work no longer remains lead-local or evidence-only standalone.
 If runtime is needed and current-session runtime is absent or not ready, return that classification as runtime evidence.
 
 ## Monitoring Sequence

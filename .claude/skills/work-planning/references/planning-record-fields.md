@@ -20,6 +20,9 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 ## Allowed Values
 - `ACTION-CLASS` must be one of `lead-local`, `team-routed`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
 - `ROUTING-SIGNAL` must be one of `lead-local candidate`, `team-routing candidate`, `ambiguous-route`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
+- No `ACTION-CLASS` or `ROUTING-SIGNAL` value represents standalone `Agent` as a work route.
+- Lawful standalone `Agent` evidence use records as `lead-local candidate` with an evidence-only `LEAD-LOCAL-WORK-ITEMS` basis.
+- Any route needing configured lane work, assignment-grade work, receipt, reuse, monitoring, or completion handoff records `team-routing candidate` or `ambiguous-route`.
 - `DISPATCH-BLOCKERS` must be `[]`, `blocked:<owner-and-basis>`, or `authorization-required:<basis>`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for configured independent-review handling and must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
@@ -131,8 +134,8 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
 - `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
-- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
-- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` may point to loaded `task-execution` consumption only when it records `same-session-loaded:task-execution:<owner-boundary-basis>`.
+- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to loaded `task-execution` consumption when it records `same-session-loaded:task-execution`.
 - Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is not a valid `same-session-loaded` basis.
 - If execution reveals a new consequential local item that is not frozen here, stop and reopen `work-planning`.
 - A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
@@ -173,7 +176,7 @@ DISPATCH-BLOCKERS:
 ## Resolve Next Owner And Action
 - Complete planning record opens `NEXT-CONSEQUENTIAL-ACTION`.
 - `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner.
-- Team-routed ready basis opens `Skill(task-execution)` activation or valid loaded `task-execution` consumption.
+- Team-routed ready basis opens one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption according to current session state.
 - Frozen workflow or sequence basis opens the named owner before deeper execution.
 - `EXECUTION-READINESS-BASIS: blocked:<owner-and-basis>` opens blocker-clear or `HOLD`.
 - Missing mandatory field keeps `work-planning` open.

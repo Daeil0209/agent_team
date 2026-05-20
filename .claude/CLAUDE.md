@@ -44,6 +44,8 @@
 - The active owner classifies independent bounded work as parallel-fit when lawful parallel work reduces risk, latency, or context pressure.
 - Work-planning freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - `ACTIVE-CONCURRENT-AGENT-CAP` applies explicit user maximum, runtime/session ceiling, and host capability limit as the dispatch ceiling.
+- Additional-agent lane work uses the team-agent runtime route.
+- Standalone `Agent` output is evidence-only and never satisfies lane dispatch, receipt, reuse, monitoring, or completion transport.
 - Team-routed follow-on work evaluates same-lane live or standby agent reuse before shutdown or new member creation.
 - Same-lane reuse is valid only when frozen parallel shape, lane separation, and acceptance/proof separation stay preserved.
 - Serial convenience over independent surfaces is a `bottleneck defect`.
@@ -55,10 +57,14 @@
 - File and secret handling preserves the active workspace and user safety.
 - Source files and governance files are modified through non-destructive paths on their owner files.
 - Agent role files declare role identity, lane boundary, and stop conditions, not `PRIMARY-OWNER` metadata.
+- Top-level Claude Code host session is `team-lead`.
+- The top-level `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
+- `.claude/agents/team-lead.md` is the role spine and does not replace `Skill(agent-team-lead)` procedure consumption.
 - Skills load only when required by the active owner path.
 - Primary skill links are trigger-bound owner surfaces, not always-on preload surfaces.
-- Required skill activation is actual `Skill(<skill>)` load or a current same-session loaded-skill basis for the same owner boundary unless the named skill requires stricter freshness.
+- Required skill activation is actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
 - Direct reading, searching, listing, summarizing, or reference-map traversal of skill-owned files is inspection only and never satisfies required skill activation.
+- Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Trigger-bound references become mandatory execution surfaces when their trigger fires.
 - Loaded owner documents are active rule surfaces.
 - Applied-rule mapping separates consumed evidence from skimmed or remembered context.
@@ -72,7 +78,7 @@
 - Runtime status, task state, disk output, pane text, and final prose do not replace completion transport.
 - Communication transport detail stays on `.claude/skills/task-execution/references/message-classes.md`.
 - Tool capability, runtime, settings, and hooks stay under Environment Configuration Philosophy.
-- Primary skill links: `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
+- Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
 - Executable detail lives in `.claude/reference/work-execution-core-law.md`.
 
 ## 4. Review And Verification Philosophy
@@ -119,6 +125,8 @@
 - Modification treats missing execution-critical information as an under-specified defect.
 - Modification treats extra non-executed procedure, example, condition, or context burden as an over-specified defect.
 - Modification rejects candidate wording that enables owner evasion, leaves multiple plausible actions, creates semantic conflict, or adds a bottleneck unrelated to required evidence or procedure.
+- Common execution intent moves to top doctrine and mapped core law before lower owner surfaces add situation-specific detail.
+- Lower duplicate wording stays only with protected local-restatement basis, direct-consumption relevance, or isolation-safety need.
 - Modification removes, re-homes, or replaces reference paths that exist only for discoverability, citation convenience, broad traceability, or reverse-linking.
 - Primary skill link: `Skill(governance-modification)` for governance asset mutation.
 - Executable detail lives in `.claude/reference/modification-core-law.md`.

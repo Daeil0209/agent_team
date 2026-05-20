@@ -14,8 +14,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Fixed section order: Structural Contract, Activation, Reference Map, Lead Procedure Routing, Resolve Next Owner And Action.
 
 ## Activation
-- Load when `.claude/agents/team-lead.md` opens a team-lead procedure trigger that names a reference in this skill.
-- Load before consuming any reference under `.claude/skills/agent-team-lead/references/`.
+- Load at fresh main-session startup after `.claude/CLAUDE.md`, `.claude/agents/team-lead.md`, and `.claude/reference/reporting-user-reporting-law.md` are consumed.
+- Load before Priority 0, RPA, or any lead-owned procedure movement.
+- Load at most once per Claude session unless this skill text changes or the session changes.
+- Later lead-owned procedure triggers consume the current same-session loaded `agent-team-lead` skill and the exact trigger-bound reference.
+- When `.claude/agents/team-lead.md` opens a team-lead procedure trigger that names a reference in this skill, consume the current same-session loaded `agent-team-lead` skill or load it first if absent.
+- Current same-session `agent-team-lead` loaded-skill basis is required before consuming any reference under `.claude/skills/agent-team-lead/references/`.
+- The team-lead role spine alone does not satisfy this skill load.
 - Do not load for lane-owned assignment work unless team-lead procedure control is the active owner path.
 - This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, or `Skill(governance-modification)`.
 

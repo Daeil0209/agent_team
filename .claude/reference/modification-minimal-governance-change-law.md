@@ -133,6 +133,8 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
 - Patch placement starts from the failing execution path.
 - Patch the narrowest owner surface that is actually loaded, read, or enforced on that path.
 - Do not treat edits to unconsumed, stale, or merely indexed documents as closure.
+- Before adding lower-surface repetition to fix missed behavior, test whether top doctrine or mapped core law is weak.
+- Repair the weak top/core anchor before adding local detail unless isolation safety or a distinct execution moment requires local wording.
 - Generalize the correction to the same owner/trigger/action/stop/evidence class.
 - Limit to an instance-only fix only when evidence proves the defect cannot recur as a class.
 - Per `.claude/reference/modification-core-law.md` `[GOV-MIN]` and this reference's `## Minimal Governance Rules`, split bundled sentences before:

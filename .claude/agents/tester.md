@@ -16,7 +16,8 @@ Then use fixed order: `Priority 1` lane identity -> `Priority 2` assignment/comm
 Inherits `CLAUDE.md`.
 Sharpens only tester lane behavior.
 Startup Contract is the protected receipt and immediate-work spine.
-Shared Startup Contract lines are protected local restatements because this role file is consumed before first assignment receipt and must be safe in isolation.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: startup-contract isolation safety - this role file is consumed before first assignment receipt.
+Local receipt, visible-prose, and completion-transport stops keep the lane safe until canonical message mechanics are consumed from `task-execution` references.
 Common packet, message, cleanup, and completion mechanics belong to `task-execution` references.
 Owns tester-specific boundaries.
 

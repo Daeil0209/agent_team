@@ -39,12 +39,13 @@ Stop before lower-trigger work until a higher trigger emits its named artifact.
 Stop before owner execution credit until loaded owner text has applied-rule mapping.
 Stop before reporting when the required artifact is stale or only described narratively.
 Stop before task work when session-start readiness is unresolved.
-Stop before executing any required primary skill owner when actual `Skill(<skill>)` load or current same-session loaded-skill basis for the same owner boundary is absent, stale, wrong-boundary, or weaker than the named skill's freshness rule.
+Stop before executing any required primary skill owner when actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule is absent or insufficient.
 Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` does not satisfy required primary skill activation.
 Reuse same-session loaded-skill basis only while the owner boundary, trigger, active work surface, proof burden, acceptance burden, claim strength, and named skill freshness rule stay satisfied.
 Stop before dispatch when `work-planning`, primary sequence owner, or `Skill(task-execution)` is required but absent from the active session.
 Stop before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or structured `shutdown_request` when the active session has not loaded `Skill(task-execution)`.
-Once loaded in a session, `Skill(task-execution)` is reused across later `work-planning` iterations and same-session dispatch moves without reload; only the `Skill(task-execution)` Activation rule classifies the existing basis stale or wrong-boundary and authorizes another load.
+Once loaded in a session, `Skill(task-execution)` is reused across later `work-planning` iterations and same-session dispatch moves without reload.
+Boundary changes refresh `work-planning`, dispatch-entry checks, and trigger-specific reference consumption, not the `task-execution` skill load.
 Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/task-execution/**` does not satisfy this load requirement.
 Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by current `Skill(self-verification)` result verification executed in the active session.
 Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.

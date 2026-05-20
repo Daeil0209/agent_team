@@ -127,9 +127,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 1. Open exactly one next owner/action from the frozen team-lead work plan.
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
-4. Load the named owner when absent, stale, or wrong-boundary.
+4. Load the named owner when absent or insufficient under that owner's freshness rule.
 5. Load a named skill owner only through `Skill(<skill>)`; `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal does not satisfy the load.
-6. Run the named owner to its named outcome when absent, stale, or wrong-boundary.
+6. Run the named owner to its named outcome when required by that owner's freshness rule.
 7. Consume the named owner before lead-local action.
 8. Consume the named owner before `task-execution`.
 9. Consume the named owner before user reporting.
@@ -137,8 +137,8 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 11. Consume the named owner before mutation.
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
-14. `team-routing candidate` opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
-15. `ambiguous-route` opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
+14. `team-routing candidate` opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+15. `ambiguous-route` opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
 16. A valid same-session loaded `task-execution` basis opens loaded `task-execution` consumption instead of another skill load.
 17. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
 18. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.

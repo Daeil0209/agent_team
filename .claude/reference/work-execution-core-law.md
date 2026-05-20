@@ -67,7 +67,8 @@ When this core law is consumed, use this file as the representative law and load
 
 ## Parallelism And Bottleneck Law
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
-- Additional-agent dispatch uses the current Claude Code agent-team runtime.
+- Additional-agent lane work uses the current Claude Code agent-team runtime.
+- Standalone `Agent` output is fallback evidence only and does not satisfy lane dispatch, receipt, reuse, monitoring, or completion transport.
 - `work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - The cap basis records explicit user maximum when present, current runtime/session ceiling when present, host capability limit, and default basis.
 - Additional-agent plans cannot exceed the frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
@@ -80,11 +81,15 @@ When this core law is consumed, use this file as the representative law and load
 ## Skill And Reference Consumption Law
 - Skills load only when required by the active owner path.
 - Primary skill links are trigger-bound owner surfaces, not always-on preload surfaces.
-- Required skill activation is actual `Skill(<skill>)` load or a current same-session loaded-skill basis for the same owner boundary unless the named skill requires stricter freshness.
+- Required skill activation is actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
 - Skill load means `Skill(<skill>)`.
 - Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/<skill>/**` is inspection only and never creates loaded-skill basis.
+- Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Agent role names are not skill names.
 - Agent role files declare role identity, lane boundary, and stop conditions, not `PRIMARY-OWNER` metadata.
+- Top-level Claude Code host session is `team-lead`.
+- The top-level `team-lead` session loads `Skill(agent-team-lead)` after the role spine is consumed and before lead-owned procedure movement.
+- The `team-lead` role spine does not satisfy `Skill(agent-team-lead)` procedure consumption.
 - Always-loaded role surfaces carry identity, authority, trigger skeleton, mandatory reference links, decisive stop conditions, and next-owner routing.
 - Trigger-bound references carry situation-specific procedure detail only when their active owner path consumes them.
 - Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.

@@ -48,8 +48,8 @@ Losing the planned parallel path while it changes staffing truth, independent-su
 
 ## Resolve Next Owner And Action
 - Ready basis opens the frozen next owner/action.
-- Team-routed ready basis opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary.
-- Team-routed ready basis opens loaded `task-execution` consumption when same-session activation basis is current for the same dispatch owner boundary.
+- Team-routed ready basis opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+- Team-routed ready basis opens loaded `task-execution` consumption when same-session `task-execution` basis exists.
 - Blocked basis opens the named blocker-clear owner or `HOLD`.
 - Unknown material readiness category opens blocker-clear or route correction before dispatch.
 - Route-changing readiness gap reopens `work-planning`.

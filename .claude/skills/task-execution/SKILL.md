@@ -21,7 +21,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - PRIMARY-OWNER: team-lead
 ## Purpose
 Own host-authorized additional-agent execution after planning is complete.
-Load only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
+Load at most once per Claude session, and only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
 When active, it owns dispatch packet assembly, dispatch-bound binding-surface materialization, send truth, runtime creation/launch, and dispatch interruption state.
 Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
@@ -47,9 +47,10 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Load `Skill(task-execution)` only when the current path is already frozen for host-authorized additional-agent dispatch and the current loaded `task-execution` basis is absent or out-of-boundary per the boundary-change-axis test in `.claude/skills/work-planning/references/boundary-gates.md` `## Boundary-Change Axes`.
-If already loaded for the same session and current dispatch owner, consume the loaded skill and execute the dispatch move without another `Skill(task-execution)` call.
-`task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution:<owner-boundary-basis>` for the same dispatch owner boundary.
+Load `Skill(task-execution)` at most once per Claude session when the first frozen host-authorized dispatch, reuse, blocker-clear, or standalone-result classification path requires it and no current same-session `task-execution` load exists.
+After current same-session `task-execution` load exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded skill instead of another `Skill(task-execution)` call.
+Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; boundary changes do not make `task-execution` require another skill load.
+`task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session.
 Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only and never creates `task-execution` activation basis.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
@@ -127,6 +128,7 @@ Packet final check:
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight that authorizes `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
+- Planned `Agent` inside a team-routed path is team-scoped member creation only.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
 - Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-modification)`.
 - `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, standalone-fallback classification, blocker-shape stop rule) are owned by `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.

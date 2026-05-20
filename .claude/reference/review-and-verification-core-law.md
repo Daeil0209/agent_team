@@ -47,6 +47,7 @@ When this core law is consumed, use this file as the representative law and load
 - Minimum executable information is the smallest complete rule content needed to change or confirm owner action, trigger, stop, evidence, verification, acceptance truth, routing, or patch-readiness.
 - Under-specified governance omits material executable information and leaves the active owner unable to act, stop, verify, route, or claim completion truthfully.
 - Over-specified governance adds non-executed procedure, example, condition, explanation, or context that increases consumption burden without changing execution.
+- Lower-surface repetition that masks weak top/core consumption is over-specified until review proves protected restatement, direct-consumption relevance, or isolation-safety need.
 - Confirmed under-specified governance or over-specified governance is an execution-force defect.
 - Positive no-defect claims stop until under-specified or over-specified governance is corrected.
 - Positive governance integrity, patch-worthiness, and completion claims carry explicit precise-owner assignment for any out-of-scope under-specified or over-specified defect.

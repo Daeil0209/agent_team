@@ -57,6 +57,9 @@ No governed payload field can replace `SendMessage.to`.
 
 Task tools are task-state channels.
 Agent communication uses `SendMessage` or teammate UI.
+Standalone `Agent` is not a Communication Plane channel family.
+Standalone `Agent` cannot carry assignment delivery, receipt, status, `scope-pressure`, `hold|blocker`, completion, reuse, or task-state truth.
+Already-produced standalone `Agent` output is fallback evidence consumed by `team-lead`, not lane transport.
 
 ## Communication Plane Law
 This file owns agent-to-agent and agent-to-lead transport classes.

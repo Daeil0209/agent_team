@@ -10,6 +10,10 @@ Team operating rule: additional-agent lane work uses the team-agent runtime rout
 `task-execution` owns `TeamCreate`, team-scoped `Agent`, assignment send, and reuse execution through `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
 Standalone `Agent` supplies fallback or non-authoritative evidence only.
+Standalone `Agent` is not a third work route.
+Standalone `Agent` is not configured lane work, assignment-grade work, review/proof/validation separation, receipt transport, reuse, monitoring, or completion handoff.
+If standalone `Agent` is considered for evidence-only use, freeze it as lead-local evidence gathering with a concrete evidence purpose and no lane-state promise.
+If the requested deliverable needs a lane owner, independent specialist surface, receipt, reuse, monitoring, or completion handoff, freeze team-agent runtime route or reopen route planning.
 
 Lead-local or single-lane routing fits sequential chains, same-file edits, dependency-coupled steps, quick targeted changes, and latency-sensitive single-surface work.
 
@@ -22,5 +26,6 @@ Team-agent runtime preserves route freeze, owner separation, proof ownership, an
 ## Resolve Next Owner And Action
 - Team-fit work opens team-routed `work-planning`.
 - Non-team-fit work opens lead-local or single-lane routing.
+- Evidence-only standalone consideration returns to lead-local evidence-gathering classification.
 - Route ambiguity opens evidence gathering inside `work-planning`.
 - Two-lane dependent deliverable freezes team-routed multi-lane work.

@@ -41,6 +41,9 @@ When this core law is consumed, use this file as the representative law and load
 - Correct behavior-weakening governance at the narrowest consumed owner surface.
 - A governance patch that adds or changes top-doctrine execution intent updates the mapped core law with matching executable detail or records why existing core-law detail already covers it.
 - A governance patch that adds or changes core-law executable detail updates trigger-bound owner references only when the active owner path needs situation-specific guidance.
+- A governance patch must not compensate for a weak top or mapped core-law rule by spreading repeated lower-surface detail.
+- Move common execution intent to top doctrine and mapped core law before adding, keeping, or expanding lower situation-specific detail.
+- Keep lower duplicate wording only when it has protected local-restatement basis, direct-consumption relevance, or isolation-safety need.
 - Each governance sentence carries one independent rule or action.
 - Different peer terms alone are not split basis.
 - Keep same-subject repeated-pattern wording in one sentence when only peer object terms differ under the same owner, action pattern, and governing role.

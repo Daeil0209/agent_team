@@ -146,6 +146,8 @@ Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence,
 Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
 - Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`.
+- Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, or teammate coordination.
+- Classify considered `Agent` tool use as lead-local evidence-only standalone use or team-agent runtime route before route freeze.
 - Freeze `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
 - A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
@@ -196,8 +198,8 @@ Configured independent-review detail stays in `Skill(codex-independent-review)` 
 Hard-stop detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail stays in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record `ACTIVE-CONCURRENT-AGENT-CAP` on this surface before dispatch can open.
 Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
-Team-routed or ambiguous dispatch opens `Skill(task-execution)` when no current same-session loaded `task-execution` basis exists for the same dispatch owner boundary.
-When a current same-session loaded `task-execution` basis exists for the same dispatch owner boundary, planning opens `task-execution` consumption of that basis instead of another skill load.
+Team-routed or ambiguous dispatch opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+When a current same-session loaded `task-execution` basis exists, planning opens loaded `task-execution` consumption of the current frozen route instead of another skill load.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
@@ -225,8 +227,8 @@ Reopen `work-planning` when the frozen target, route, readiness basis, or next a
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
-- A team-routed or ambiguous route opens `Skill(task-execution)` when activation basis is absent, stale, or wrong-boundary.
-- A team-routed or ambiguous route opens loaded `task-execution` consumption when the same-session activation basis is current for the same dispatch owner boundary.
+- A team-routed or ambiguous route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
+- A team-routed or ambiguous route opens loaded `task-execution` consumption when the same-session `task-execution` basis exists.
 - A missing freeze field reopens `work-planning`.
 - A blocker-clear plan opens the named blocker-clear move.
 - `HOLD` records planning owner, blocker, and next safe evidence step.

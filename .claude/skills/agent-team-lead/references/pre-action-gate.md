@@ -97,7 +97,7 @@ Consequential channels open the owning procedure.
 Name the next owner rule, skill, workflow, sequence, or lane.
 Pre-`Skill(<skill>)` tool-call record duties are owned by `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 Open the owner when its trigger is active.
-When the owner is a skill, owner opening requires actual `Skill(<skill>)` load or current same-session loaded-skill basis for the same owner boundary unless the named skill requires stricter freshness.
+When the owner is a skill, owner opening requires actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule.
 Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of skill-owned files does not satisfy owner opening.
 Run the owner to its named artifact.
 Consume the named owner artifact as owner execution evidence.
