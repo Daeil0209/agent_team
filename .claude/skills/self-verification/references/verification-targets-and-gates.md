@@ -4,7 +4,7 @@ SOURCE-ANCHOR: .claude/skills/self-verification/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Self-Verification Reference
 Load only after `Skill(self-verification)` triggers a detailed target profile, challenge lens, evidence calibration, harness/proof check, synthesis claim check, material same-lane self-certification risk, or expanded output record.
@@ -26,7 +26,7 @@ For material defect, removal, cross-surface governance, or patch-worthiness deta
 - Verification Output Detail
 
 ## Target Profiles
-Use these profiles inside `plan-audit` or `result-verification`; do not create a third verification mode.
+Use only these profiles inside `plan-audit` or `result-verification`.
 
 | Profile | Use when | Typical mode |
 |---|---|---|
@@ -53,7 +53,7 @@ Load this reference when any condition below is true:
 - evidence is partial, conflicting, unstored, not user-surface, or weaker than the claim
 - lead-local work involves launch, runtime, smoke test, process spawn, generated artifact, screenshot/log/report, or operator-surface simulation
 
-When a trigger fires, using only the compact spine is insufficient for positive convergence. The actor must identify plausible defeaters before confirmation. If the reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owner that can supply the missing basis.
+When a trigger fires, positive convergence requires more than the compact spine. The actor must identify plausible defeaters before confirmation. When reference consultation is unavailable, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owner that can supply the missing basis.
 
 ## Challenge Lens Catalog
 Use every lens that materially applies to the target. Omission of an applicable triggered lens is verification failure.
@@ -80,7 +80,7 @@ When exception-only `plan-audit` is loaded before consequential action, verify:
 - if the `work-planning` reference-use trigger fired, citation or deviation basis is present in `REQUEST-FIT-BASIS` and any material request-bound packet fields before this detail gate opens
 - top-level `team-lead` plans also carry coherent `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, `EXECUTION-READINESS-BASIS`, and mandatory `ACTIVE-WORKFLOW` or `ACTIVE-SEQUENCE` basis when applicable
 - `NEXT-CONSEQUENTIAL-ACTION` names the first frozen local item, workflow/sequence owner, `Skill(task-execution)` when activation basis is absent/stale/wrong-boundary, loaded `task-execution` consumption with current same-session basis, exact authorization request, exact blocker-clear move, or `HOLD`
-- readiness does not require the next owner to rediscover material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, or next action
+- readiness provides the next owner with material packet schema, request-bound fields, lane skills, user-surface proof, tool/setup, run-path, environment, lifecycle, parallel grouping, proof owner, acceptance owner, and next action
 - routes eligible to enter `task-execution` have coherent `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and `SKILL-RECOMMENDATIONS` under `work-planning` mandatory and `not-applicable` rules
 - `PARALLEL-GROUPS` burden basis must be measured or cited.
 - File-count alone, guessed, or pre-`work-planning` basis is not valid.
@@ -92,12 +92,12 @@ When exception-only `plan-audit` is loaded before consequential action, verify:
 - Accept requires field/value change.
 - Reject requires grounded rationale.
 - Codex output alone is not the basis.
-- team-agent runtime routes do not depend on lead-only conversation history or implied upstream decisions instead of packet fields, task/workflow state, or cited artifacts
-- delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and stop condition
+- team-agent runtime routes use packet fields, task/workflow state, or cited artifacts instead of lead-only conversation history or implied upstream decisions
+- delegated lane-local plans verify received assignment packet, owned work surface, required skills, first lane action, and routing/closure condition
 - team-lead workspace discovery, repository search, file reads, runtime probing, or external lookup is the frozen `NEXT-CONSEQUENTIAL-ACTION` or a verified `LEAD-LOCAL-WORK-ITEMS` entry
 - phase-local skill refinement remains explainable as a refinement of the frozen phase purpose rather than a replacement for it
 
-Reject and reopen when a plan hides a route-replan condition as packet correction, serializes unaffected independent surfaces by convenience, tries unauthorized additional-agent dispatch, treats progress/task-plan UI/skill-name/skill-read as completed planning, or depends on implied remainder.
+Reopen planning when a plan hides a route-replan condition as packet correction, serializes unaffected independent surfaces by convenience, tries unauthorized additional-agent dispatch, treats progress/task-plan UI/skill-name/skill-read as completed planning, or depends on implied remainder.
 
 ## Result-Verification Detailed Gate
 Before consequential reporting, handoff, closure claim, synthesis-triggered redispatch, or completion-style language, verify:
@@ -105,7 +105,7 @@ Before consequential reporting, handoff, closure claim, synthesis-triggered redi
 - concise verification basis
 - open surfaces and unverified items
 - whether the result is produced, synthesized, inferred, or externally evidenced
-- whether the current analysis/evaluation/synthesis report draft or exact outgoing consequential claim is covered by this `Skill(self-verification)` result-verification run; prior analysis, memory, checklist language, or inline "self-verification-style" reasoning does not qualify
+- whether the current analysis/evaluation/synthesis report draft or exact outgoing consequential claim is covered by this `Skill(self-verification)` result-verification run; qualification requires current result-verification rather than prior analysis, memory, checklist language, or inline "self-verification-style" reasoning
 - whether the result matches request fit, semantic intent, material target intent, detailed mechanism, data/domain meaning, lifecycle/lineage, interface contracts, proof evidence, and unresolved failure modes when those surfaces are part of the claim
 - whether final prose strengthens the claim beyond the verified surface
 - whether final prose exceeds Evidence-Quality Matrix supported scope, `FROZEN-CONTRACT-STATUS`, or retained `OPEN-SURFACES` state when those artifacts are material
@@ -118,13 +118,13 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - separate observation, inference, judgment, and recommendation
 - cite or name the evidence surface that supports each controlling claim
 - actively search for the strongest contrary interpretation or evidence that would defeat the conclusion
-- record `Skill(governance-modification):<governance-modification-basis>` when the verified produced result requires governance asset change or recurrence-barrier hardening
+- record `Skill(governance-modification):<governance-modification-basis>` when the review-verified produced result requires governance asset change or recurrence-barrier hardening
 - record `Skill(review-verification):<bounded-question>` when the verified produced result needs material defect labels, removal judgments, cross-surface governance judgments, or patch recommendations
 - record `owner-local-sufficient:<basis>` when the active owner can correct, narrow, route, or report the produced result without extra review
 - For governance audit, doctrine cleanup, or defect-sweep results, `owner-local-sufficient:<basis>` can close only evidence-only candidate discovery or lane-local first-pass classification; binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-worthiness, patch-readiness, or patch/no-patch selection records `Skill(review-verification):<bounded-question>`.
 - after `review-verification` returns, verify only whether the outgoing claim matches that review packet
 - mark partial coverage as partial instead of generalizing to the whole system
-- do not treat fluent explanation, internal confidence, or repeated wording as evidence
+- treat fluent explanation, internal confidence, and repeated wording as non-evidence
 - when reference material exists, verify that the conclusion follows the reference rather than a convenient substitute
 - if the analysis becomes the basis for action, reopen `work-planning` before action; use `plan-audit` only when the action plan itself is disputed
 
@@ -156,10 +156,10 @@ Rules:
 - Screenshot existence, DOM text, or source text alone is not enough.
 
 ## Synthesis Verification
-Synthesized conclusions do not inherit verification automatically.
+Synthesized conclusions require current verification before positive use.
 
 Self-verification-specific synthesis duties:
-- if synthesis selects governance asset change or recurrence-barrier hardening as next owner/action, record `Skill(governance-modification):<governance-modification-basis>` and verify that route.
+- if synthesis selects governance asset change or recurrence-barrier hardening as next owner/action, first route required defect-promotion or patch-worthiness judgment to `Skill(review-verification):<bounded-question>`, then record `Skill(governance-modification):<governance-modification-basis>` and verify that route after the review-verified basis exists.
 - route finding promotion to `Skill(review-verification):<bounded-question>` before any `confirmed-defect`, removal, or patch-worthiness claim leaves this skill.
 - for governance audit or defect-sweep candidate maps, verify candidate-map integrity, lane-local candidate-state preservation, and proposed review target, then route binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-worthiness, patch-readiness, or patch/no-patch selection to `Skill(review-verification):<bounded-question>`.
 - if the synthesis points to redispatch, run result verification on the synthesized result before re-dispatch.
@@ -171,7 +171,7 @@ If agent outputs conflict, coverage is partial, or the synthesized conclusion ou
 
 ## Lead-Local Completion Discipline
 When team-lead initiates lead-local verification or a "run-it-myself" check such as launch script execution, server polling, smoke testing, browser opening, operator action simulation, artifact rendering, or generated-output inspection:
-- verification must run through to the user-facing acceptance surface or stop on an explicit blocker
+- verification runs through to the user-facing acceptance surface or routes an explicit blocker
 - partial evidence must be labeled `INFERENCE/UNVERIFIED`, not reported as a verified result
 - if a process is spawned, verification is not complete until the relevant surface is confirmed and spawned processes/resources are cleaned up, or an explicit blocker names the partial evidence and next action
 - cleanup claims require enough detail to know what resource was opened and what evidence shows it is closed or not applicable
@@ -185,7 +185,7 @@ Use the narrowest truthful result:
 - `HOLD` when material evidence, owner, scope, proof, acceptance, or contradiction prevents truthful progress
 - `reopen-work-planning` when scope, route, owner, proof basis, acceptance chain, or next action is invalidated
 
-Do not use optimistic wording to bridge from partial evidence to completion. If claim strength exceeds evidence strength, the claim is wrong even when the likely outcome is favorable.
+Use claim wording at evidence strength. If claim strength exceeds evidence strength, the claim is wrong even when the likely outcome is favorable.
 
 ## Verification Output Detail
 Use the compact `SKILL.md` output format for ordinary gates. When a reference trigger is active, add only the material fields below to the internal record:
@@ -206,7 +206,7 @@ SKILL-BASIS-STATUS:
 OWNER-SEPARATION-STATUS:
 ```
 
-This detail block is internal handoff only. Do not expose it to the user unless the user explicitly requests the internal verification trace.
+This detail block is internal handoff only. Expose it to the user only when the user explicitly requests the internal verification trace.
 
 ## Resolve Next Owner And Action
 - `verified-result` returns to the requesting owner for truthful reporting or next action.
@@ -214,7 +214,7 @@ This detail block is internal handoff only. Do not expose it to the user unless 
 - `INFERENCE/UNVERIFIED` opens evidence gathering, claim narrowing, or truthful report by active owner.
 - `HOLD` opens blocker reporting with owner and blocker.
 - `reopen-work-planning` opens `work-planning`.
-- Produced-result governance asset change or recurrence-barrier hardening opens `Skill(governance-modification)`.
+- Review-verified produced-result governance asset change or recurrence-barrier hardening opens `Skill(governance-modification)`.
 - Material defect, removal, cross-surface governance, or patch-worthiness gap opens `Skill(review-verification):<bounded-question>`.
 - Synthesis verification gap opens conflict reconciliation before reporting or redispatch.
 - Lead-local verification resource debt opens cleanup or explicit blocker before closure.

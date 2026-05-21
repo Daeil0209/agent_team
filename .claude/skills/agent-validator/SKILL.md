@@ -3,7 +3,7 @@ name: agent-validator
 description: Agent-specific validator lane skill for consequential validator-owned final evidence-based validation or PASS/HOLD/FAIL verdict assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: validator
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned validation surface.
@@ -124,7 +124,8 @@ Keep authoritative versus supplemental sources explicit.
 Canonical PASS prohibitions, per-row inspection rules, decisive-surface evidence requirements, and subset-handling are owned by `references/validator-lane-detail.md` `## PASS Prohibition Detail`; consume that reference at verdict time.
 Apply `Skill(review-verification)` before issuing PASS/HOLD/FAIL per the trigger below:
 - Run full workflow (Steps 1-14) when the validation target is governance-asset change, multi-lane review synthesis, cross-shard audit synthesis verdict (governance-corpus audit, recurring-defect-pattern review, or other cross-shard synthesized verdict), defect classification, or patch-worthiness judgment. Cite the returned `review_verification_packet` fields `COHERENCE-RESULT`, `INTEGRITY-RESULT`, `NEGATIVE-RISK-RESULT`, and `PATCH-WORTHINESS` in the verdict.
-- Run named lenses (`coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) when the verdict materially depends on cross-surface coherence, negative risk, or patch fit. Cite each consumed lens result in the verdict.
+- Run named lenses (`coherence-integrity-lens`, `negative-risk-lens`, `patch-worthiness-lens`) when the verdict materially depends on cross-surface coherence, negative risk, or bounded patch-fit evidence. Cite each consumed lens result in the verdict.
+- Named lenses do not decide patch-worthiness, patch-readiness, or patch/no-patch.
 - Skip lens application only when the validation target is single-surface direct evidence (e.g., a UI button click producing a captured screenshot) with no cross-surface, governance, or patch-worthiness dependency; record skip basis in the verdict.
 Verdict labels:
 - `PASS`: all decisive expectations met on the decisive surface, no blocking findings, evidence sufficient.
@@ -132,7 +133,7 @@ Verdict labels:
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
 - Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.
-### 7. Retest And Self-Check
+### 7. Retest And Result Verification
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
 ### 8. Completion
@@ -156,7 +157,7 @@ Verdict labels:
 - Missing decisive evidence before a truthful verdict pass can run is `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
 - A missing field triggers `MESSAGE-CLASS: hold|blocker` only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - Derivable gaps are reconstructed with marked inference.
-- Partly derivable gaps narrow the verdict surface and remain open.
+- Partly derivable gaps issue `VERDICT: HOLD` with covered scope and open surfaces unless the narrowed subset was frozen or upstream-deferred.
 - Send it to `team-lead` via `SendMessage`.
 - Include exact missing fields, blocker basis, and safe next step.
 

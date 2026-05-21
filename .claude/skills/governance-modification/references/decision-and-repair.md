@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/governance-modification/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Use this reference for recurrence-hardening trigger interpretation, causal analysis, owner-surface choice, failure-mode response, patch classification, high-traffic surface protection, and constraint checks.
@@ -12,29 +12,31 @@ Use this reference for recurrence-hardening trigger interpretation, causal analy
 | Trigger Type | Default Interpretation | Required Action |
 |---|---|---|
 | justified user correction | authoritative classification signal | open classification immediately; stabilize active request; harden recurrence path only when behavioral/procedural defect basis and recurrence path are confirmed |
-| self-detected behavioral defect | real defect unless disproven by stronger evidence | open `Skill(governance-modification)` recurrence-hardening immediately; do not wait for user confirmation |
+| self-detected behavioral defect | candidate defect evidence until current review-verification promotion confirms defect state | open classification immediately; stabilize active request; install recurrence barrier only when confirmed defect basis and recurrence path are current |
 | repeated missed-catch / recurrence | capability or boundary weakness | escalate beyond local patch into checklist, routing, hook, or authority hardening |
 | blocked execution due to missing reusable skill | capability gap | use Capability-Gap Fast Path with explicit owner and verification |
 
-First occurrence does not mean "ignore until repeated."
 First occurrence opens classification immediately.
 Repetition raises hardening depth.
 Durable hardening still requires confirmed defect basis and recurrence path.
 
 ## Causal Analysis
 Use when the visible failure is known but the actual prevention point is not yet obvious.
-Do not patch from symptom alone.
+Patch from the causal prevention point.
+Patch-surface selection starts from the failed decision point rather than the visible symptom, last-loaded file, blocked tool, error text, or apology narrative.
+For wrong-skill-load defects, identify the earliest route or trigger-selection surface that selected the wrong owner before editing the wrongly loaded skill; editing the wrongly loaded skill alone is valid only when its activation guard is the earliest consumed prevention point.
 
 Required reconstruction:
-1. Name the intended governing surface: doctrine, team-lead role, lane role, agent-specific skill, workflow skill, session skill, packet/reference file, hook, settings, or runtime state.
-2. Name the actual execution point where the duty failed to surface, bind, stop, or route behavior.
-3. Name the evidence that proves the failure mode instead of relying on memory, preference, or hindsight.
-4. Classify the primary failure mode using the matrix below.
-5. Name the recurrence path in operational terms: what future trigger, packet, handoff, verification step, hook signal, or owner transition would repeat the miss.
-6. Name the smallest barrier that blocks that recurrence path without creating a parallel operating model.
+1. Name the visible symptom surface and whether it is the prevention point or only evidence.
+2. Name the intended governing surface: doctrine, team-lead role, lane role, agent-specific skill, workflow skill, session skill, packet/reference file, hook, settings, or runtime state.
+3. Name the actual decision or execution point where the duty failed to surface, bind, interrupt hazardous behavior, or route behavior.
+4. Name the evidence that proves the failure mode instead of relying on memory, preference, or hindsight.
+5. Classify the primary failure mode using the matrix below.
+6. Name the recurrence path in operational terms: what future trigger, packet, handoff, verification step, hook signal, or owner transition would repeat the miss.
+7. Name the smallest barrier that blocks that recurrence path without creating a parallel operating model.
 
 If the causal basis remains only a hypothesis, the patch must stay reversible, narrowly scoped, and explicitly marked as hypothesis-supported.
-If the causal basis cannot identify a prevention point, keep the round on `HOLD` or assign bounded follow-up ownership.
+When the causal basis lacks an identified prevention point, route the round to `HOLD` or assign bounded follow-up ownership.
 
 ## Failure Mode Response Matrix
 | Failure Mode | Default Meaning | Required Response | Owner Boundary |
@@ -43,7 +45,7 @@ If the causal basis cannot identify a prevention point, keep the round on `HOLD`
 | `weak-owner` | The right owner exists, but its wording, gate, checklist, or packet is too weak to prevent recurrence. | Tighten or replace the owning block; add a checklist or packet requirement only when wording alone will not surface the duty. | Keep the correction on the existing owner block. |
 | `wrong-owner` | The behavior is governed from the wrong document, lane, or runtime surface. | Re-home the meaning to the correct owner and leave an owner-reference only when local readability requires it. | Preserve unique meaning through source-to-destination trace. |
 | `mapping-gap` | A rule exists at one governance layer, but its mapped execution detail or triggered consuming guidance is missing. | Add, re-home, or tighten the missing mapped detail at the narrowest owner; record `not-material:<basis>` when a lower layer is not needed. | Preserve the top-doctrine -> core-law -> trigger-bound reference chain without adding unused links. |
-| `specification-mismatch` | A governance rule is too broad, too narrow, evasive, ambiguous, conflicting, bottleneck-forming, or too detailed without execution effect. | Add missing executable information, make the valid action explicit, or remove non-executed burden through the narrowest preserving edit. | Keep only the minimum executable information on the executing owner surface. |
+| `specification-mismatch` | A governance rule is under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking for its executing owner. | Add missing executable information, make the valid action explicit, or remove over-broad-blocking and non-executed burden through the narrowest preserving edit. | Keep only the minimum executable information on the executing owner surface. |
 | `non-compliance` | The rule already exists; the failure came from not following it. | Harden adherence through trigger visibility, checklist discipline, packet requirements, self-verification gates, or Hook-Last-approved runtime edge. | Address why the existing rule was missed. |
 | `weak-enforcement` | Doctrine exists, but runtime or packet surfaces lack reliable obligation exposure. | Add or refine packet fields or owner instructions first; add or refine hook logic only as a Hook-Last-approved runtime edge. | Semantic judgment becomes a hard block only after fields or low-friction evidence exist. |
 | `capability-gap` | No reusable skill, reference, or lane procedure can handle the recurring work credibly. | Use Capability-Gap Fast Path; update an existing owner when sufficient, create a new skill only after the category gate. | Reserve new skills for reusable capability gaps. |
@@ -53,14 +55,14 @@ A patch can involve more than one failure mode, but one primary mode must govern
 
 ## Governance Architecture Map
 Use this map to choose the owner surface before drafting.
-Do not place a rule where it is merely convenient.
+Place each rule only on the owner surface that carries the failing execution path.
 
 | Governance need | Primary owner surface |
 |---|---|
 | Shared philosophy, priority, top-level ownership, preservation law | `.claude/CLAUDE.md` |
 | Team-lead trigger, route, orchestration, synthesis, reporting, interruption, governance modification adjudication | `.claude/agents/team-lead.md` |
 | Detailed team-lead edge cases that would bloat the role spine | Direct references named by `.claude/agents/team-lead.md` |
-| Lane charter, always-loaded receipt trigger, stop rule, and lane-owned completion duty | `.claude/agents/<lane>.md` |
+| Lane charter, always-loaded receipt trigger, routing/closure rule, and lane-owned completion duty | `.claude/agents/<lane>.md` |
 | Lane execution procedure, lane-local gates, and direct pointer to detail references | `.claude/skills/agent-<lane>/SKILL.md` |
 | Lane packet additions, specialist matrices, tool/proof detail, and handoff field detail | `.claude/skills/agent-<lane>/references/*.md` |
 | Packet schema, message classes, cleanup truth, dispatch preflight, completion spine | `.claude/skills/task-execution/references/assignment-packet.md`, `.claude/skills/task-execution/references/message-classes.md`, `.claude/skills/task-execution/references/truth-rules.md`, and `.claude/skills/task-execution/references/completion-handoff.md` |
@@ -74,7 +76,7 @@ Do not place a rule where it is merely convenient.
 | Official-source cache or preservation traceability | `.claude/reference/` |
 
 Reference files are lookup surfaces, not hidden always-on doctrine.
-A `SKILL.md` spine keeps activation trigger, owner, stop rule, and direct reference loading.
+A `SKILL.md` spine keeps activation trigger, owner, routing/closure rule, and direct reference loading.
 
 ## Patch Classification
 - `hardening patch`: strengthens an existing owner with clearer doctrine, boundary, gate, or evidence rules
@@ -90,10 +92,10 @@ For failure-mode-specific responses, use the matrix above.
 
 1. If the failure is a missing lookup detail, add it to the owning direct `references/*.md` file and keep the active `SKILL.md` spine small but mandatory.
 2. If the failure is a packet or handoff omission, add or tighten the packet field in the packet owner before adding prose-only reminders.
-3. Deterministic runtime evidence with low false-positive risk allows hook/settings enforcement only after the semantic owner is correct and non-hook adherence hardening is insufficient.
-4. If no existing lane, skill, or reference can handle the recurring work, use Capability-Gap Fast Path; do not create a new skill for a one-off need.
+3. Deterministic runtime evidence with low false-positive risk opens hook/settings enforcement only after the semantic owner is correct and non-hook adherence hardening is insufficient.
+4. Use Capability-Gap Fast Path when recurring work lacks an existing lane, skill, or reference; create a new skill only for a proven reusable capability category.
 
-Before closure, verify: no dead cross-reference, no owner-boundary drift, no weakened proof or acceptance path, no duplicate competing procedure, and no hidden always-loaded context increase.
+Before closure, verify live cross-references, stable owner boundary, preserved proof and acceptance path, single governing procedure, and unchanged always-loaded context burden.
 
 ## High-Traffic Governance Surfaces
 High-traffic governance surfaces require session revalidation, baseline anchoring, and bounded change scope before modification resumes after interruption.

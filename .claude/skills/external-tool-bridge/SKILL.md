@@ -2,7 +2,7 @@
 name: external-tool-bridge
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, cleanup truth, and blocked-condition reporting while adjacent role ownership stays intact. Use when an external API, connector, MCP path, browser/client automation, or bridge setup materially blocks truthful delivery.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -25,7 +25,8 @@ You are the external-tool-bridge specialist capability.
 **Coverage:** bounded external capability, bridge packet quality, bridge-produced integration reconciliation, bridge-local real-tool evidence, fallback or cleanup truth, and integration-risk escalation.
 Coverage also includes routed setup/auth/quota/credential-repair investigation for external tool capability recovery.
 Capability recovery investigation produces setup or diagnostic input only.
-**Adjacent owners hold:** canonical planning, live dispatch, broad implementation, artifact merge governance, review findings, runnable proof, final validation, final reporting, silent login, and unapproved credential mutation.
+**Adjacent owners hold:** canonical planning, live dispatch, broad implementation, artifact merge governance, review findings, runnable proof, final validation, and final reporting.
+**Prohibited self-actions:** silent login and unapproved credential mutation.
 ## Agent Relationships
 - `team-lead` — planning, top-level routing, drift control, reuse discipline, modular integrity, merge-governance correction, and final closeout compression for this bridge lifecycle
 - `task-execution` — owns live team-agent runtime dispatch when a frozen host-authorized route uses one
@@ -84,11 +85,12 @@ Also activate when an external review/tool path records one of these conditions:
 - Also carry the smallest truthful boundary and expected return owner.
 - When the bridge supports a request-bound artifact or operator workflow, keep `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, and `EXCLUDED-SCOPE` explicit.
 ## Outputs
-Preferred output: `./projects/{project_name}/integration_bridge_note.md`
+Preferred output: `claude_doc/<work-name>/integration_bridge_note.md` per `.claude/reference/environment-output-root-filesystem-law.md` `## Output-Root Rules`.
 Folded target: the integration-owned section of the current authoritative planning artifact when a separate file is unnecessary.
-Treat `{project_name}` as a valid placeholder when the active packet or existing artifact root already defines that project path.
-If no project-root path is already defined, report in conversation or fold into the current authoritative plan surface.
-Directory choice comes from frozen project root or explicit path.
+`<work-name>` comes from the owning `work-planning` freeze; the active packet or existing artifact root may define a different canonical project root, in which case use that root.
+If no project-root path is already defined, return the bridge packet to the current owner or fold it into the current authoritative plan surface.
+User-facing bridge prose routes through `team-lead` and `.claude/reference/reporting-prohibition-law.md`.
+Directory choice comes from the canonical output root, frozen project root, or explicit path.
 Capture only the decisive bridge packet.
 It must include required capability, why local-first was insufficient, verification path, fallback or blocked condition, and rollback or cleanup expectation.
 It must also include bridge status (`verified`, `blocked`, or `fallback-used`), real-tool evidence basis, cleanup outcome, and the exact next owner/action that can resume truthful work.

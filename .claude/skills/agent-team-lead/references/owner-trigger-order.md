@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-2 Owner Trigger Order; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-4 Owner Trigger Order; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Owner Trigger Order
 
@@ -13,14 +13,14 @@ The goal is one executable next owner/action.
 Treat procedural narration as nonterminal evidence.
 
 Non-overlap boundary with `.claude/skills/agent-team-lead/references/pre-action-gate.md`:
-- This reference owns trigger-priority selection across multiple active owner triggers, named-artifact emission, per-skill stop conditions, and same-boundary continuation rules.
-- Per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and the stop-before-action rule when any field is not named truthfully live at `pre-action-gate.md`; this reference is consumed through the gate's `OWNER` field rather than restating gate fields here.
+- This reference owns trigger-priority selection across multiple active owner triggers, named-artifact emission, per-skill routing requirements, and same-boundary continuation rules.
+- Per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and missing-field routing live at `pre-action-gate.md`; this reference is consumed through the gate's `OWNER` field rather than restating gate fields here.
 
 Reporting curtain inheritance:
 - This reference produces Procedure Plane records only.
 - Trigger order, named artifacts, consumption status, and next-owner/action are internal control facts.
-- They do not authorize boot, progress, status, trigger, artifact, or route prose.
-- Visible prose remains blocked unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
+- Visible boot, progress, status, trigger, artifact, or route prose requires a `.claude/reference/reporting-prohibition-law.md` narrow report exception.
+- If no narrow report exception exists, continue through the selected next owner/action internally.
 
 ## Consume When
 - A named owner skill or sequence trigger is active.
@@ -38,31 +38,31 @@ Record the highest active trigger and its named artifact:
 - `CONSUMPTION-STATUS`
 - `NEXT-OWNER-ACTION`
 
-## Stop
-Stop before lower-trigger work until a higher trigger emits its named artifact.
-Stop before owner execution credit until loaded owner text has applied-rule mapping.
-Stop before reporting when the required artifact is stale or only described narratively.
-Stop before task work when session-start readiness is unresolved.
-Stop before executing any required primary skill owner when actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule is absent or insufficient.
-Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` does not satisfy required primary skill activation.
+## Routing Gate
+Lower-trigger work requires higher-trigger named artifact emission.
+Owner execution credit requires loaded owner text with applied-rule mapping.
+Reporting requires a current required artifact beyond narrative description.
+Task work requires resolved session-start readiness.
+Required primary skill owner execution requires actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule.
+Required primary skill activation requires actual skill load basis; direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` is inspection only.
 Reuse same-session loaded-skill basis only while the owner boundary, trigger, active work surface, proof burden, acceptance burden, claim strength, and named skill freshness rule stay satisfied.
-Stop before dispatch when `work-planning`, primary sequence owner, or `Skill(task-execution)` is required but absent from the active session.
-Stop before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or structured `shutdown_request` when the active session has not loaded `Skill(task-execution)`.
+Dispatch first loads `work-planning`, the primary sequence owner, or `Skill(task-execution)` when that owner is required and absent from the active session.
+`TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, and structured `shutdown_request` first load `Skill(task-execution)` when the active session lacks a current `task-execution` basis.
 Once loaded in a session, `Skill(task-execution)` is reused across later `work-planning` iterations and same-session dispatch moves without reload.
 Boundary changes refresh `work-planning`, dispatch-entry checks, and trigger-specific reference consumption, not the `task-execution` skill load.
-Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/task-execution/**` does not satisfy this load requirement.
-Stop before phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, or any user-facing positive-result claim when the outgoing claim is not covered by current `Skill(self-verification)` result verification executed in the active session.
-Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, or direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/self-verification/**` does not satisfy this load requirement; the actual skill must be loaded and the gate must run on the exact outgoing claim.
+Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only for this load requirement.
+Phase/stage-end analyzed-result reporting, completion claim, synthesis-triggered redispatch, and user-facing positive-result claims require current `Skill(self-verification)` result verification executed in the active session on the exact outgoing claim.
+Internal reasoning, narrative "self-verification-style" wording, written verification-shaped tables, defeater-style language in the draft, and direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/self-verification/**` are inspection or draft artifacts only; the actual skill must be loaded and the gate must run on the exact outgoing claim.
 A previous result-verification pass is reused only while the verified surface, evidence basis, open surfaces, and claim strength remain unchanged; new scope, stronger claim, materially changed claim, out-of-loop mutation, dispatch/reuse, synthesis report, proof/acceptance change, or phase change resets the pass.
-Stop before any `Skill(<skill>)` load when the interpreted requested outcome or runtime-owned trigger does not create that skill's active execution owner path.
+`Skill(<skill>)` loads only when the interpreted requested outcome or runtime-owned trigger creates that skill's active execution owner path.
 Skill-load eligibility per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
-Stop before loading or opening a lower-trigger owner skill (such as `Skill(task-execution)`) when `work-planning` is the highest active trigger; open only `Skill(work-planning)` first. Read-class evidence tools required by `work-planning` `## Corpus Measurement Gate` are not lower-trigger tools and stay lawful inside the work-planning boundary.
+When `work-planning` is the highest active trigger, load `Skill(work-planning)` first before opening lower-trigger owner skills such as `Skill(task-execution)`. Read-class evidence tools required by `work-planning` `## Corpus Measurement Gate` stay lawful inside the work-planning boundary.
 
 ## Resolve Next Owner And Action
-- A stopped lower-trigger route opens the higher trigger owner.
-- A stopped owner-execution-credit route opens loaded-document consumption.
-- A stopped reporting route opens artifact refresh.
-- A stopped dispatch route loads `Skill(work-planning)` or the primary sequence skill owner.
+- A lower-trigger gap opens the higher trigger owner.
+- An owner-execution-credit gap opens loaded-document consumption.
+- A reporting gap opens artifact refresh.
+- A dispatch gap loads `Skill(work-planning)` or the primary sequence skill owner.
 
 ## Trigger Order
 Consume the highest active trigger first:
@@ -74,7 +74,7 @@ Consume the highest active trigger first:
 6. `Skill(task-execution)` for assignment-grade dispatch
 7. `Skill(self-verification)` for required report or redispatch gate
 
-After the current session-start artifact is current, trigger 3 does not reopen trigger 2 unless trigger 2 is independently active.
+After the current session-start artifact is current, trigger 3 reopens trigger 2 only when trigger 2 is independently active.
 
 ## Named Artifacts
 - `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
@@ -102,6 +102,6 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 
 ## Status And Interruption
 Status questions expose stalled execution.
-If the boundary is already complete, route the answer through `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
+If the boundary is already complete, route the answer through `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.
 Interrupt work uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.

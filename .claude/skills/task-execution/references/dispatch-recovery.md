@@ -3,12 +3,12 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # task-execution: Dispatch Recovery
 ## Dispatch Interruption Recovery
-Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth; it does not replace `work-planning`, `self-verification`, `session-boot`, `Skill(governance-modification)`, or lane execution.
+Use this table only when `task-execution` was active or had not yet moved out cleanly. It records dispatch side-effect truth while `work-planning`, `self-verification`, `session-boot`, `Skill(governance-modification)`, and lane execution keep their ownership.
 
 Required recovery record:
 - `INTERRUPT-POINT`
@@ -27,23 +27,23 @@ Required recovery record:
 | `team-created-no-assignment` | `member-created` only | `session-boot` if runtime readiness is uncertain; otherwise `task-execution` sends the next assignment-grade `SendMessage` |
 | `dispatch-pending-no-ack` | assignment sent, no acceptance | `session-boot`: send one same-assignment receipt follow-up after current dispatch check. Keep unaffected parallel targets moving. Classify the target as dead-or-unavailable for the current assignment after that follow-up fails and assigned-surface activity/side-effect evidence is absent. |
 | `dispatch-ack-no-start` | assignment accepted, no later activity | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify the target as stalled or dead-or-unavailable after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
-| `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Do not return to `task-execution` unless replanning freezes a new assignment. |
-| `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Do not convert configured lane work into standalone retry. Do not claim completion. |
-| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load `Skill(self-verification)` for result verification before reporting or redispatch. It does not create team-runtime completion. |
+| `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Return to `task-execution` only when replanning freezes a new assignment. |
+| `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Configured lane work stays on the configured lane route, and completion claims require completion-grade evidence. |
+| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load `Skill(self-verification)` for result verification before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
 
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
 - Unknown send state is not safe to resend. First check the current dispatch authority; if still unknown, use `HOLD` or `session-boot` recovery rather than duplicate assignment.
-- Missing receipt and no-start recovery are exact-target liveness drives; do not send group-level probes when one target is unresolved.
-- Do not report ack counts, missing target names, inbox read state, nudges, replacement consideration, or no-start classification to the user while Procedure Plane or Communication Plane recovery can continue.
-- Do not stack repeated assignment or correction messages into a target with no agent-originated receipt, start, blocker, or progress.
-- The one bounded follow-up asks for the missing receipt, start evidence, `scope-pressure`, or `hold|blocker`; do not resend assignment content unless prior send evidence is absent or duplicate side-effect risk is ruled out.
+- Missing receipt and no-start recovery are exact-target liveness drives; probe the unresolved target only.
+- Ack counts, missing target names, inbox read state, nudges, replacement consideration, and no-start classification stay internal while Procedure Plane or Communication Plane recovery can continue.
+- Repeated assignment or correction messages stay out of a target with no agent-originated receipt, start, blocker, or progress.
+- The one bounded follow-up asks for the missing receipt, start evidence, `scope-pressure`, or `hold|blocker`; resend assignment content only when prior send evidence is absent or duplicate side-effect risk is ruled out.
 - After one bounded follow-up, wait for response, agent-start, blocker, or assigned-surface activity until the `session-boot` re-check window.
 - Missing response and missing activity after that window is dead-or-unavailable recovery for the affected target, not another packet retry.
-- A same-target packet correction to a responsive live target opens a correction-response window. Do not shutdown or replace that target until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
-- A parallel group is not "running" while any target remains `dispatch-pending-no-ack` or `dispatch-ack-no-start`.
+- A same-target packet correction to a responsive live target opens a correction-response window. Shutdown or replacement waits until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
+- Parallel group "running" status requires every target to be past `dispatch-pending-no-ack` and `dispatch-ack-no-start`.
 - Recover only the affected target unless the frozen parallel grouping itself is invalid.
-- A phase-transition packet, shutdown request, or `Skill(governance-modification)` sidecar must not erase the suspended dispatch surface.
+- A phase-transition packet, shutdown request, or `Skill(governance-modification)` sidecar preserves the suspended dispatch surface.
 - If `CORRECTION-OUTCOME: route-replan`, the resume owner is `work-planning`.
 - If the defect itself meets the `Skill(governance-modification)` entry gate, open `Skill(governance-modification)` first.
 - Leave a resume owner/action for the suspended work before closure or return.
@@ -56,8 +56,9 @@ A compacted agent has lost the assignment-grade packet context but retains its a
 - It includes `BLOCKER-TYPE: context-loss-after-compaction`.
 - It includes `BLOCKER-BASIS: prior packet context not in working memory`.
 - It includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
-- Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet (or a corrected version if the underlying scope changed) so the agent can resume.
-- Agent does NOT improvise the lost context; do not reconstruct the assignment from gist or partial memory.
+- Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet or a same-boundary packet correction so the agent can resume.
+- Packet correction during compaction recovery preserves the previously frozen scope, route, proof/acceptance chain, parallel grouping, and required-skill basis.
+- Agent reports the context-loss blocker; assignment context returns through packet redelivery rather than gist or partial-memory reconstruction.
 - Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.
 - If the prior frozen scope is no longer truthful, team-lead reopens `work-planning` instead of redelivering. That is a fresh planning event, not compaction recovery.
 

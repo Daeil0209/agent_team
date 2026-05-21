@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Hard gates verified by team-lead before phase advancement or dispatch.
@@ -17,14 +17,14 @@ Hard gates verified by team-lead before phase advancement or dispatch.
 | Phase 3 -> Phase 4 | developer handoff includes `OUTPUT-SURFACE`, changed surfaces, checks, `ACTIVE-SLICE`, `SCOPE-BASELINE` coverage/stale rows, and `FROZEN-CONTRACT-STATUS`; executable handoff also carries the produced launcher, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and blocked or unrun operator-delivery checks; parallel production satisfies the parent `SKILL.md` Phase 3 merge-owner exit law. |
 | Phase 4/FAR reject -> Phase 2 | CP5 or validator-authored correction packet classifies at least one blocking gap as design-level under unchanged scope |
 | Phase 4/FAR reject -> Phase 5 | CP5 or validator-authored correction packet classifies a blocking or significant gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract |
-| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control and every `CORE-WORKFLOW-CLOSURE` row, including executable operator-delivery axes when applicable, is implemented, proven, or explicitly deferred by original frozen request/plan/design. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
+| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control and every applicable `CORE-WORKFLOW-CLOSURE` row, including executable operator-delivery axes when applicable, is implemented, proven, or explicitly deferred by original frozen request/plan/design. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
 
 Additional gate law:
 - Phase advancement requires completion-grade evidence, not artifact existence alone
 - Carry-forward acceptance evidence is valid only when the original proof matched the same frozen scope, user surface, launch/read path, environment or equivalence basis, and acceptance chain. Otherwise it is stale for the affected surface and must be re-proven, narrowed, or reopened before advancement.
 - Phase/workflow completion requires `SCOPE-BASELINE` reconciliation. Evidence over an `ACTIVE-SLICE` cannot be widened into full-scope completion while any frozen baseline item is missing, stubbed, placeholder-only, unproven, or silently deferred.
 - Any artifact convergence fail-open is not Codex review resolution; for phase-gate material artifacts it requires conservative `Skill(self-verification)` result verification plus documented fallback review before advancement
-- Route-level `CODEX-INDEPENDENT-REVIEW-BASIS`, developer self-review, discussion-only Codex output, or an unspined Codex call never satisfies artifact-level convergence.
+- Route-level `CODEX-INDEPENDENT-REVIEW-BASIS`, developer lane-local `Skill(self-verification)`, discussion-only Codex output, or an unspined Codex call never satisfies artifact-level convergence.
 - Missing artifact-level convergence blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and phase-result reporting.
 - Any review-convergence fail-open is not Codex agreement; for material review surfaces it requires configured reviewer lane synthesis, documented fallback review basis, and `Skill(self-verification)` result verification before advancement or completion
 - For material Phase 4/5 review surfaces, review-convergence trigger status must be explicit. Silent non-trigger, discussion-only Codex output, or unspined Codex calls do not satisfy the gate.

@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "Priority 0: Pre-Action Gate; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Pre-Action Gate
 
@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Purpose
 - Consume When
 - Required Output
-- Stop
+- Routing Gate
 - Resolve Next Owner And Action
 - Same-Segment Reuse
 - Gate Fields
@@ -22,15 +22,15 @@ Use this reference before each consequential action segment.
 The gate prevents team-lead from reporting, dispatching, or patching before owner, evidence, and user-fit are named.
 
 Non-overlap boundary with `.claude/skills/agent-team-lead/references/owner-trigger-order.md`:
-- This reference owns the per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and the stop-before-action rule when any field is not named truthfully.
-- Trigger-priority selection across multiple active owner triggers, named-artifact emission, and per-skill stop conditions live at `owner-trigger-order.md`; this gate consumes that selection through the `OWNER` field rather than restating trigger order here.
+- This reference owns the per-segment gate fields (`WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, `UNCERTAINTY`) and missing-field routing.
+- Trigger-priority selection across multiple active owner triggers, named-artifact emission, and per-skill routing requirements live at `owner-trigger-order.md`; this gate consumes that selection through the `OWNER` field rather than restating trigger order here.
 
 Reporting curtain inheritance:
 - This reference records an internal gate result only.
-- Gate fields, route checks, user-fit checks, uncertainty checks, and report-admission checks are not user-facing prose.
-- `REPORT-ADMISSION` records whether `.claude/reference/reporting-user-reporting-law.md` admits a report.
-- `REPORT-ADMISSION` never creates a separate report path.
-- If no report is admitted, continue the current owner action silently.
+- Gate fields, route checks, user-fit checks, uncertainty checks, and report-prohibition checks remain internal control evidence.
+- `REPORT-ADMISSION` is the compatibility field name for the reporting-prohibition result.
+- `REPORT-ADMISSION` preserves the current owner route and records only a narrow report exception granted by reporting-prohibition law.
+- If no narrow report exception exists, continue the current owner action silently.
 
 ## Consume When
 - A user request requires any channel beyond `answer-only`.
@@ -38,7 +38,7 @@ Reporting curtain inheritance:
   - use tools
   - mutate files
   - dispatch or message an agent
-  - prepare a report admitted by `.claude/reference/reporting-user-reporting-law.md`
+  - prepare a report excepted by `.claude/reference/reporting-prohibition-law.md`
 
 ## Required Output
 Record an internal gate result with these fields:
@@ -53,31 +53,31 @@ Record an internal gate result with these fields:
 - `CHANGE-FIT`
 - `UNCERTAINTY`
 
-## Stop
-Stop before action when:
-- any required field is not named truthfully
-- applied-rule mapping is missing for active owner documents
-Stop before reusing the gate when work, owner, route, report admission, mutation boundary, or uncertainty changed.
-Stop before user-facing prose until `.claude/reference/reporting-user-reporting-law.md` admits a new or changed report reason.
-Stop before user-facing prose on lane/shard arrival, partial completion, partial convergence, retained-output availability, or findings-count visibility.
+## Routing Gate
+Action requires every required field named truthfully and active owner documents carrying applied-rule mapping.
+Gate reuse requires unchanged work, owner, route, report-prohibition result, mutation boundary, and uncertainty.
+User-facing prose requires `.claude/reference/reporting-prohibition-law.md` narrow exception for a new or changed report reason.
+Lane/shard arrival, partial completion, partial convergence, retained-output availability, and findings-count visibility route to internal continuation before user-facing prose.
 Lane/shard arrival, partial completion, partial convergence, retained-output availability, and findings-count visibility open synthesis or monitoring, not reporting.
-Stop before tool-adjacent progress prose.
-Stop before asking the user for a doctrine-derivable choice; resolve through evidence-backed default, owner route, or a valid escalation exception.
-Stop before process-state prose without a same-turn truthful next owner/action.
-Stop before mutation until `[GOV-MIN]` is applied.
+Tool-adjacent progress prose routes to the current owner tool action without prose.
+Doctrine-derivable choices resolve through evidence-backed default, owner route, or a valid escalation exception.
+Process-state prose requires a same-turn truthful next owner/action or reporting-prohibition-law-excepted status, blocker, or verified result.
+Answer-only, status, yes/no, verification, explanation, audit, or explicit hold-conversation instructions preserve mutation closed unless mutation authorization already exists.
+Mutation requires `[GOV-MIN]` application.
 
 ## Resolve Next Owner And Action
 - A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)` through `session-route-bridge`.
 - Unresolved session-start, active runtime, recovery, monitoring, or cleanup evidence loads `Skill(session-boot)`.
-- A stopped action route opens the missing gate field.
-- A stopped applied-rule route opens loaded-document consumption.
-- A stopped stale-gate route reopens this gate.
-- A stopped pre-action prose route continues internal execution.
-- A stopped tool-adjacent prose route continues through the current owner tool action without prose.
-- A stopped doctrine-derivable-choice route executes the evidence-backed default, owner route, or valid escalation exception.
-- A stopped process-state route continues the current owner action or emits only a reporting-law-admitted status, blocker, or verified result.
-- A stopped lane-arrival prose route opens retained-carrier consumption, all-required-output barrier tracking, monitoring, synthesis, or `Skill(self-verification)` result verification.
-- A stopped mutation route opens `[GOV-MIN]` inspection.
+- Missing action fields open the missing gate field.
+- Missing applied-rule mapping opens loaded-document consumption.
+- Stale gate fields reopen this gate.
+- Non-excepted pre-action prose continues internal execution.
+- Tool-adjacent prose continues through the current owner tool action without prose.
+- Doctrine-derivable choice executes the evidence-backed default, owner route, or valid escalation exception.
+- Process-state prose gaps continue the current owner action or emit only a reporting-prohibition-law-excepted status, blocker, or verified result.
+- Light-channel mutation gaps emit the narrow-exception answer or audit result and preserve discovered gaps as evidence only.
+- Lane-arrival prose gaps open retained-carrier consumption, all-required-output barrier tracking, monitoring, synthesis, or `Skill(self-verification)` result verification.
+- Mutation gaps open `[GOV-MIN]` inspection.
 
 ## Same-Segment Reuse
 - A gate remains current while `WORK`, `INTENT`, `OWNER`, `REFERENCE`, `APPLIED-RULE-MAPPING`, `REPORT-ADMISSION`, `ROUTE`, `USER-FIT`, `CHANGE-FIT`, and `UNCERTAINTY` remain true.
@@ -95,6 +95,7 @@ Name `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 Classify the channel as light or consequential.
 Classify the interpreted requested outcome before choosing tool, skill, workflow, sequence, mutation, dispatch, verification, or report.
 Light channels stay `answer-only`, `self-verification-only audit`, or `notification-only carry-forward` under `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
+Verification or defect-filtering questions remain light-channel unless the user asks to apply, patch, correct, dispatch, validate, or continue an already frozen execution boundary.
 Consequential channels open the owning procedure.
 
 ### OWNER
@@ -102,7 +103,7 @@ Name the next owner rule, skill, workflow, sequence, or lane.
 Pre-`Skill(<skill>)` tool-call record duties are owned by `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 Open the owner when its trigger is active.
 When the owner is a skill, owner opening requires actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule.
-Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of skill-owned files does not satisfy owner opening.
+Direct `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of skill-owned files is inspection only for owner opening.
 Run the owner to its named artifact.
 Consume the named owner artifact as owner execution evidence.
 
@@ -116,9 +117,10 @@ If a reference is unavailable, return `HOLD` or reopen the smallest owner that c
 Map each loaded document's active rules to action, stop, evidence, owner, or next-action effect.
 
 ### REPORT-ADMISSION
-Apply `.claude/reference/reporting-user-reporting-law.md` to classify Reporting Plane admission.
-Allowed admitted reasons are owned by `.claude/reference/reporting-user-reporting-law.md`.
-If no admitted user report exists, keep the turn internal.
+`REPORT-ADMISSION` is the compatibility field name for Reporting Plane prohibition/exception classification.
+Apply `.claude/reference/reporting-prohibition-law.md` to classify the reporting-prohibition result.
+Narrow exception reasons are owned by `.claude/reference/reporting-prohibition-law.md`.
+If no narrow report exception exists, keep the turn internal.
 
 ### ROUTE
 Use configured lanes before lead-local substitution.
@@ -144,7 +146,7 @@ Justify net growth only when no existing owner text can carry the meaning.
 
 ### UNCERTAINTY
 Resolve derivable uncertainty through evidence-backed default, configurable parameter, narrowed claim strength, or marked inference.
-Uncertainty handling must not narrow frozen deliverable scope, `SCOPE-BASELINE`, completion stop, promotion coverage, patch-loop coverage, or validation scope without explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis.
+Uncertainty handling preserves frozen deliverable scope, `SCOPE-BASELINE`, completion closure, promotion coverage, patch-loop coverage, and validation scope unless explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis changes them.
 Escalation criteria follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 
 ## Evidence Boundary

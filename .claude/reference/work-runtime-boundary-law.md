@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Environment Configuration Philosophy; Work Execution Philosophy runtime-boundary and over-broad-blocking rules"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Runtime Boundary
 
@@ -53,46 +53,52 @@ The consuming owner records:
 - owner procedure that remains responsible
 - blocker or follow-up owner when material
 
-## Stop
-Stop before hook changes when the risk belongs to:
+## Routing Gate
+Hook changes route to the smallest non-runtime correction owner when risk belongs to:
 - doctrine
 - skill
 - packet
 - owner report
 - task state
-Stop before settings changes when the risk belongs to:
+Settings changes route to the owning update path when risk belongs to:
 - doctrine
 - skill
 - packet
 - owner report
 - task state
-Stop before editing protected settings without the owning update path.
-Stop before runtime-footprint claims without measured evidence.
-Stop before treating tool availability as:
+Protected settings edits require the owning update path.
+Runtime-footprint claims require measured evidence.
+Tool availability routes to the owner procedure for:
 - proof
 - validation
 - acceptance
 - dispatch truth
 - owner completion
-Stop before treating hook/runtime signals as proof, validation, acceptance, dispatch truth, or owner completion.
-Stop before treating non-owner tool output as:
+Hook/runtime signals route proof, validation, acceptance, dispatch truth, and owner completion claims to the owning procedure.
+Non-owner tool output routes these claims to the owning procedure:
 - a blocker
 - a mutator
 - validator
 - acceptance owner
 
 ## Resolve Next Owner And Action
-- A stopped hook route opens the smallest non-runtime correction owner.
-- A stopped settings route opens the owning update path.
-- A stopped runtime-footprint claim opens measurement or narrows the claim to `UNVERIFIED`.
-- A stopped tool-signal route opens the owner procedure that actually owns the claim.
-- A stopped non-owner tool route opens the owner procedure that actually owns the claim.
+- Hook-risk gaps open the smallest non-runtime correction owner.
+- Settings-risk gaps open the owning update path.
+- Runtime-footprint claim gaps open measurement or narrow the claim to `UNVERIFIED`.
+- Tool-signal gaps open the owner procedure that actually owns the claim.
+- Non-owner tool output gaps open the owner procedure that actually owns the claim.
 
 ## Runtime Boundary Rules
 - Hook-last rules from `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy` govern this section.
 - Hook stdout JSON must validate against the Claude Code hook output schema for the matched event; emit empty stdout when the event's accepted `hookSpecificOutput` shape is not verified against `.claude/reference/environment-official-claude-code-source-cache.md` or live harness behavior, and rely on file/state side effects only.
 - Adding an unverified JSON shape to hook stdout is a recurrence-class defect that returns to this rule for narrowing or silent fallback.
 - Hooks block only actions that must never happen: destructive (data loss, irreversible state mutation, runtime corruption), security-critical (secret exposure, sandbox escape), or session-stability-breaking (e.g., `tmux kill-*` against an active session).
+- Tool-issued `tmux kill-*` is a categorical hard-deny runtime surface.
+- A blocked `tmux kill-*` selection routes to cooperative shutdown, session-closeout, or non-tmux owner recovery.
+- Non-tmux forceful runtime termination such as `kill <pid>` requires explicit operator approval plus the narrow runtime cleanup owner.
+- Cooperative `shutdown_request` stays in routine runtime cleanup when a runtime cleanup owner selects a live process-backed teammate for cleanup.
+- A settings-wired hook records cooperative cleanup evidence and runtime roster state after a worker sends `shutdown_response`.
+- General cleanup uses cooperative `shutdown_request`, explicit operator-approved non-tmux force cleanup, or `session-closeout`.
 - Positive-pattern or doctrine-shape enforcement (e.g., forcing a specific `TaskUpdate` field set, requiring a specific packet field, restricting valid `SendMessage` content classes) is owned by lane self-quality contracts via the trio (`Skill(governance-modification)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses), not by hooks.
 - A hook that blocks legitimate doctrine-compliant variations (generic Claude Code tool patterns, valid worker-to-lead transport, allowed packet shapes, normal in-progress task signals) is over-broad blocking per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` and returns to narrowing or removal at the narrowest hook surface.
 - `[HOOK-LAYER-CACHE]` Mid-session removal of a positive-pattern hook applies both the `.claude/settings.json` matcher deletion and a file-level `exit 0` trim at the top of the hook script body by the same governance patch.

@@ -3,7 +3,7 @@ name: benchmark-simulation
 description: Use benchmark and external-reference comparison for scenario/team-shape choices, design/UX/structural/methodology synthesis, verification-method selection, and capability-growth evidence.
 user-invocable: false
 SECONDARY-CONSUMER: researcher
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -170,7 +170,8 @@ Silent axis skip blocks `decision-ready`.
 - request-fit basis when the benchmark will influence a request-bound routing or decision surface
 - explicit benchmark packet fields: `BENCHMARK-MODE`, `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`, and provenance or cross-check state when available
 ## Outputs
-Deliver benchmark findings in conversation by default unless the contract explicitly asks for files.
+Return benchmark findings to the current owner as an internal benchmark packet unless the contract explicitly asks for files.
+User-facing benchmark prose routes through `team-lead` and `.claude/reference/reporting-prohibition-law.md`.
 
 Capture only the decisive benchmark packet:
 - scenarios and comparison candidates

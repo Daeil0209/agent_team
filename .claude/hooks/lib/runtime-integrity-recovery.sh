@@ -8,7 +8,7 @@
 #   runtime_integrity_classify <team_name>
 #       Print one hook-detectable defect per line: `CLASS=<A|B|C|D|E|F>\tDETAIL=<text>`
 #   runtime_integrity_reconcile_nondestructive <team_name>
-#       Apply Class B/C/D/F automatic cleanup. Class A/E left for operator/team-lead.
+#       Apply Class B/D/F automatic cleanup. Class C tmux-pane termination stays unavailable.
 #   runtime_integrity_destructive_report <team_name>
 #       Print HOLD-formatted lines for hook-detectable Class A/E requiring operator approval.
 #
@@ -190,15 +190,13 @@ with open('$cfg','w') as f: json.dump(c,f,indent=2)
     fi
   done < <(runtime_integrity_classify "$team" 2>/dev/null)
 
-  # Class C: kill orphan panes (config-referenced)
+  # Class C: tmux-pane termination is prohibited by operator policy.
   while IFS=$'\t' read -r class detail; do
     if [[ "$class" == "CLASS=C" ]]; then
       local orphan_pane
       orphan_pane="$(echo "$detail" | sed -nE 's/.*pane=([^ ]+).*/\1/p')"
-      if [[ -n "$orphan_pane" && -n "$socket" ]]; then
-        tmux -L "$socket" kill-pane -t "$orphan_pane" 2>/dev/null \
-          && applied_count=$((applied_count+1)) \
-          && printf 'APPLIED: class=C killed-pane=%s\n' "$orphan_pane"
+      if [[ -n "$orphan_pane" ]]; then
+        printf 'SKIPPED: class=C tmux-kill-prohibited pane=%s\n' "$orphan_pane"
       fi
     fi
   done < <(runtime_integrity_classify "$team" 2>/dev/null)

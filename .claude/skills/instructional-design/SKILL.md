@@ -2,7 +2,7 @@
 name: instructional-design
 description: Design instruction-oriented materials that balance expert intent, learner comprehension, sequencing, scaffolding, and pedagogical clarity. Use when teaching, training, onboarding, learner-facing explanation, worked examples, or instructional readability materially affect implementation or review.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
@@ -35,10 +35,9 @@ Load when the output must teach, train, or onboard effectively rather than merel
 - active owner reports `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remains unreadable.
 ## Boundary
 - Own learning structure.
-- activate on text-first reports when they are explicitly learner-facing
 - learner profile and prerequisite floor require basis when material
 ## Activation
-Activate when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, onboarding workflow, or explanation artifact where learner comprehension materially affects acceptance.
+Activate when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, onboarding workflow, text-first learner-facing report, or other explanation artifact where learner comprehension materially affects acceptance.
 ## Inputs
 - instructional requirements
 - learner profile and prerequisite level

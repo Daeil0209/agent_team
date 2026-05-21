@@ -2,7 +2,7 @@
 name: dev-workflow
 description: Run structured development workflow with phase gates, checkpoint resolution, iterative quality convergence, gap detection, and YAGNI review. Use when a development project needs phase-based orchestration from discovery through acceptance and iteration.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned workflow surface.
@@ -22,7 +22,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ### Reference Map
 - Load direct files in `Reference-Owned Workflow Sections` when their triggers are active.
 - Load triggered references directly.
-- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
 - `.claude/reference/detailed-design-core-law.md`: load when the workflow freezes, consumes, revises, or advances design intent, target-intent basis, phase boundary, or design drift.
 - `.claude/reference/work-execution-core-law.md`: load when the workflow advances an owner/action, dispatches, synthesizes, handles convergence, manages phase progress, or closes a workflow execution boundary.
 
@@ -198,7 +197,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4.
 **Execution law**: tester applies smallest truthful proof default per `agents/tester.md`.
 **Execution law**: validator applies highest-fidelity proof default per `agents/validator.md`.
-**Execution law**: missing decisive user-surface tooling freezes bounded setup or stops on `hold|blocker`.
+**Execution law**: missing decisive user-surface tooling freezes bounded setup or routes to `hold|blocker`.
 **Execution law**: parallel production requires explicit cross-surface contextual coherence review.
 **Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
 **Execution law**: validator cross-surface integration verification is required before PASS.
@@ -212,7 +211,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 ## Phase 5: Iteration
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
 **Owner lanes**: correcting owner named by CP5 or validator-authored `FINAL-REJECT` packet -> reviewer/tester re-evidence as required -> validator when final acceptance is still required
-**Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict input, and explicit remaining gap state
+**Canonical output**: corrected-output evidence, re-review/re-proof evidence, validator verdict or validator-ingress basis, Final Acceptance Review entry basis when validator `PASS` is current, and explicit remaining gap state
 **Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery.
 **Entry law**: that classification must stay inside the unchanged Phase 1/2 delivery contract.
 **Entry law**: design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
@@ -265,7 +264,7 @@ Continuity files record only owner-required state.
 
 ## Delivery Spine
 - Freeze the receiver surface before production inherits the contract.
-- Carry `SCOPE-BASELINE`, user surface, proof path, and skill basis into downstream packets.
+- Carry `TARGET-INTENT-BASIS`, applicable core-law axes when material, `SCOPE-BASELINE`, user surface, proof path, and skill basis into downstream packets.
 - Prove the artifact on the real run/read/operate/decide/learn/present surface.
 - Treat retained artifacts as evidence only after the relevant defect classes are inspected.
 - Keep acceptance fresh: correction after rejection returns through the owning review, proof, validation, and final-acceptance chain.

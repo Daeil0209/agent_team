@@ -3,7 +3,7 @@ name: agent-developer
 description: Agent-specific developer lane skill for consequential developer-owned production assignments â€” Phase 3+ implementation production, governance patch edits, and bounded supporting document production. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: developer
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned production surface.
@@ -130,11 +130,11 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
-- Run producer self-review cycles on the changed surface immediately on production completion by trying to break or disprove the changed surface across request fit, target intent, production craft baseline, selected skill lenses, and normal/failure path defects. Confirmation-only self-review is invalid.
-- Correct bounded developer-owned defects found by each producer self-review pass before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
-- Repeat producer self-review while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
-- Complete only after producer self-review finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
-- Producer self-review never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
+- Run lane-local `Skill(self-verification)` result verification on the changed surface immediately on production completion.
+- Correct bounded developer-owned defects found by result verification before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
+- Repeat lane-local `Skill(self-verification)` result verification while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
+- Complete only after lane-local `Skill(self-verification)` result verification finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
+- Lane-local `Skill(self-verification)` never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before developer-specific completion additions below.
@@ -142,7 +142,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.
 - This lets team-lead route research, setup, packet correction, or another owner and return execution to developer.
-- Keep applied changes, producer self-review basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
+- Keep applied changes, lane-local `Skill(self-verification)` basis, executed checks, blocked/unrun checks, assumptions, and request-fit boundary explicit.
 - See `references/developer-lane-detail.md` for developer-specific completion detail.
 
 ## Changeset Separation

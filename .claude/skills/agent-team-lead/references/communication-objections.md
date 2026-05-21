@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-5 Communication And Objections; Reporting Philosophy; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-10 Communication Objections; Reporting Philosophy; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # team-lead: Communication And Objection Detail
@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Resolve Next Owner And Action
 
 ## hold|blocker
-- Treat `hold|blocker` as hard stop on the unsafe affected path.
+- Treat `hold|blocker` as hard routing on the unsafe affected path.
 - Keep paths active only when the frozen `parallel-fit` basis proves distinct acceptance contracts and output-to-input independence.
 - If the blocker changes shared source-of-truth, owner, proof, acceptance, staffing, or parallel grouping, reopen `work-planning` before continuing affected paths.
 - Consume `BLOCKER-TYPE`, `BLOCKER-BASIS`, and `SAFE-NEXT-STEP` exactly.

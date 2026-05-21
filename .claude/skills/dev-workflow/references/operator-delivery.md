@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Implements `.claude/reference/design-definition-core-law.md` `[USER-DELIVERY-FIT]`.
@@ -125,7 +125,9 @@ It does not ask only whether a close path exists.
 Failing this mental-model alignment check is a delivery-fit defect even when the underlying close mechanism passes verification.
 
 ## Closure Re-entry Law
-Any missing, broken, unverified, or mismatched closure item forces `FINAL-REJECT`; executable user-facing `FINAL-ACCEPT` and completion are unavailable.
+Any missing, broken, unverified, or mismatched closure item blocks executable user-facing `FINAL-ACCEPT` and completion.
+During Final Acceptance Review, the blocking item records `FINAL-REJECT`.
+Before Final Acceptance Review entry, the blocking item opens the narrowest repair, proof, correction, or `HOLD` route below.
 Closure items:
 - exact launch artifact
 - native setup/build/run chain when material
@@ -153,4 +155,4 @@ Scope narrowing becomes user-owned only after team-side proof paths are proven i
 - Changed deliverable shape, operator OS, proof chain, acceptance chain, or user requirement opens `work-planning`.
 - Unavailable team-side proof path opens bounded setup/tool proof path or `HOLD`.
 - Proven infeasible team-side proof with user-owned condition opens user-owned blocker.
-- Operator-delivery `FINAL-REJECT` returns to CP5 route classification.
+- Operator-delivery `FINAL-REJECT` recorded during Final Acceptance Review returns to CP5 route classification.

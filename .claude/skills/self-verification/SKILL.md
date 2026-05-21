@@ -2,7 +2,7 @@
 name: self-verification
 description: Verify the actual result surface produced by team-lead or a lane before analyzed-result reporting, completion claim, `Skill(review-verification)`, governance-asset `Skill(governance-modification)`, or redispatch. Use on the produced plan artifact, synthesis, patch result, proof result, or lane result being routed or reported.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned verification surface.
@@ -22,6 +22,7 @@ Analysis, diagnosis, advice, artifact-change, proof, synthesis, and completion c
 Boundary:
 - self-verification can narrow, block, reopen, route, or downgrade a claim
 - self-verification verifies the work product produced by the current team-lead or lane owner; modification design and patch execution stay with their owner skills
+- Routine receipt, startup readiness, and `dispatch-ack` are Communication Plane state signals, not produced-result verification targets.
 - self-verification records the next review judgment for the produced result: `owner-local-sufficient:<basis>`, `Skill(review-verification):<bounded-question>`, `Skill(governance-modification):<governance-modification-basis>`, redispatch, or report
 - independent `reviewer`, `tester`, or `validator` owners still close required independent surfaces
 - materially risky or acceptance-grade same-lane positive closure routes to the required independent owner before closure
@@ -29,18 +30,17 @@ Boundary:
 
 ### Reference Map
 - Exception-only `plan-audit` stays in this spine.
-- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
 - `.claude/reference/judgment-core-law.md`: load when verifying proof, validation, acceptance, final-arbitration readiness, independent-lane requirement, or verdict-routing truth.
 - `.claude/reference/review-and-verification-core-law.md`: load when verifying an outgoing result, completion claim, synthesized review result, or redispatch basis that depends on evidence quality or verification truth.
 - Load `references/verification-targets-and-gates.md` whenever any trigger in its `## Reference Load Triggers` matches the current claim or surface.
 - Step 2 mandatory review-verification escalation records and opens `Skill(review-verification):<bounded-question>` plus `.claude/skills/review-verification/references/governance-review-gates.md` before `Skill(governance-modification)`, redispatch, or reporting.
-- If a triggered reference cannot be consulted, use `HOLD`, `INFERENCE/UNVERIFIED`, or reopen the owning path.
+- Unavailable triggered references route to `HOLD`, `INFERENCE/UNVERIFIED`, or reopened owning path.
 
 ## Reporting Principle
-Self-verification is internal process work governed by `.claude/reference/reporting-user-reporting-law.md`.
+Self-verification is internal process work governed by `.claude/reference/reporting-prohibition-law.md`.
 Plan-audit and result-verification records, challenge notes, evidence basis, open surfaces, verification fields, and convergence state are Procedure Plane records.
-User-facing output exposes only the verification outcome or concise verification basis that `.claude/reference/reporting-user-reporting-law.md` admits.
-Expose residual risk, open surfaces, or unverified items only when `.claude/reference/reporting-user-reporting-law.md` admits that exact report surface.
+User-facing output exposes only the verification outcome or concise verification basis that `.claude/reference/reporting-prohibition-law.md` grants as a narrow exception.
+Expose residual risk, open surfaces, or unverified items only when `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for that exact report surface.
 
 Expose internal templates or labelled self-verification fields only on explicit request.
 Report this skill as used only when it was actually loaded and applied to the current target.
@@ -70,7 +70,7 @@ Choose mode and material target profiles before verifying.
 
 `plan-audit` minimum targets:
 - produced frozen plan artifact, route, `NEXT-CONSEQUENTIAL-ACTION`, readiness basis, owner path, and first allowed move
-- lane-local assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and stop condition
+- lane-local assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, and routing/closure condition
 
 Result-verification minimum targets:
 - exact produced result surface
@@ -129,11 +129,11 @@ Rules:
 - positive synthesis requires one reconciled verified surface
 - partial, conflicting, unstored, indirect, source-only-for-user-surface, or weaker-than-claim evidence becomes `INFERENCE/UNVERIFIED`, narrowed scope, `HOLD`, or replanning
 - Defect promotion requires current `Skill(review-verification)` defect-promotion basis.
-- Self-verification checks the outgoing claim against that basis; it does not create an alternate promotion path.
+- Self-verification checks the outgoing claim against that basis; promotion authority remains with the defect-promotion path.
 - If that basis is missing, downgrade, narrow, or `HOLD` instead of authorizing patch dispatch.
-- A verified produced result that identifies team-operation defect correction or recurrence-barrier work opens `Skill(governance-modification)` for governance asset change; `Skill(governance-modification)` consumes `Skill(review-verification)` before Draft for material patch design or mutation-readiness judgment.
+- A review-verified produced result that identifies team-operation defect correction or recurrence-barrier work opens `Skill(governance-modification)` for governance asset change; `Skill(governance-modification)` consumes `Skill(review-verification)` before Draft for material patch design or mutation-readiness judgment.
 - Treat raw finding counts, candidate lists, researcher-only evidence, and same-packet multi-lane convergence as evidence basis only, not classification authority.
-- For governance audit candidate maps, self-verification verifies candidate-map integrity, lane-local state preservation (`candidate-evidence`, `candidate-classified`, or lane-local `rejected:<basis>`), and next owner/action only; it does not create binding filtering, final rejection, promotion, priority, removal, patch-worthiness, or patch-readiness authority.
+- For governance audit candidate maps, self-verification verifies candidate-map integrity, lane-local state preservation (`candidate-evidence`, `candidate-classified`, or lane-local `rejected:<basis>`), and next owner/action only; binding filtering, final rejection, promotion, priority, removal, patch-worthiness, and patch-readiness authority remain with their owning path.
 - Verify finding reports against `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 - If an outgoing report collapses raw candidates into confirmed defects, patch-worthy defects, or patch-ready defects without promotion basis, narrow the report to candidate inventory or reopen `Skill(review-verification)`.
 - If an outgoing report uses bare `CONFIRMED`, require exact ladder state wording before reporting.
@@ -148,7 +148,7 @@ Use the reference for detailed gates, evidence calibration, behavior proof, arti
 3. Record the next review judgment for the produced result.
 4. Use `owner-local-sufficient:<basis>` only when no Step 2 escalation trigger is present; candidate discovery may use it only for Step 3 evidence-only states.
 5. Use `Skill(review-verification):<bounded-question>` for every mandatory review-verification escalation trigger; resume only after the review owner returns a current basis.
-6. Use `Skill(governance-modification):<governance-modification-basis>` when the converged produced result confirms governance asset change or recurrence-barrier need.
+6. Use `Skill(governance-modification):<governance-modification-basis>` when the review-verified produced result confirms governance asset change or recurrence-barrier need.
 7. If the target survives with no material change, it is converged.
 8. If repeated challenge adds no new defect, evidence, or correction path, `HOLD`.
 9. Workflow-owned Codex convergence loops stay with the workflow owner.
@@ -198,5 +198,5 @@ HOLD-REASON:
 - Non-converged result-verification (`narrow-to-verified-scope`, `INFERENCE/UNVERIFIED`, `reopen-work-planning`, or `HOLD` with recoverable basis) auto-reopens the calling owner's smallest invalidated step at the current cumulative live state.
 - The calling owner executes the iteration without user authorization unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
 - The iteration loop continues until `verified-result` converges or `HOLD` records an escalation-class blocker.
-- Produced-result confirmation of governance asset change or recurrence-barrier need opens `Skill(governance-modification)`; other defect-promotion, governance-judgment, removal, or patch-worthiness gaps open `Skill(review-verification):<bounded-question>`; same-request open review, proof, validation, `Skill(governance-modification)`, or redispatch owners execute or dispatch unless a user-action blocker or approval gate applies.
+- Review-verified produced-result confirmation of governance asset change or recurrence-barrier need opens `Skill(governance-modification)`; other defect-promotion, governance-judgment, removal, or patch-worthiness gaps open `Skill(review-verification):<bounded-question>`; same-request open review, proof, validation, `Skill(governance-modification)`, or redispatch owners execute or dispatch unless a user-action blocker or approval gate applies.
 - `HOLD` records verification owner, blocker, and next safe evidence step.

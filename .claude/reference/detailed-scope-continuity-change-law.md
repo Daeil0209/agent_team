@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Detailed Design Philosophy; Modification Philosophy; Work Execution Philosophy continuity and change boundary"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Scope, Continuity, And Change
 
@@ -17,14 +17,8 @@ Use it when work:
 - reports on an existing artifact
 
 ## Consume When
-- Work judges an existing artifact.
-- Work modifies governance text.
-- Work modifies role text.
-- Work modifies skill text.
-- Work modifies reference text.
-- Work modifies hook text.
-- Work modifies setting text.
-- Work modifies runtime-adjacent text.
+- Work judges, modifies, migrates, reduces, or reports on an existing artifact.
+- Work changes governance, role, skill, reference, hook, setting, or runtime-adjacent text.
 - Packet drift from original request is possible.
 - Handoff drift from original request is possible.
 - Synthesis drift from original request is possible.
@@ -45,39 +39,42 @@ Use it when work:
 - A change moves text between owner surfaces.
 
 ## Required Output
-The consuming owner records:
+The consuming owner records these fields for every consumption:
 - target artifact
 - cited design intent
 - applicable core-law axes
+- next owner/action
+
+The consuming owner records these fields when structure, scope, meaning movement, mutation, migration, reduction, re-home, reporting, or owner-surface effect is material:
 - affected owner surfaces
 - preserved meaning
 - changed meaning
-- stale verdicts or carry-forward evidence
-- next owner/action
 
-## Stop
-Stop before judgment when live owner surfaces remain uninspected.
-Stop before mutation when target intent remains unreconstructed.
-Stop before positive synthesis until all are carried forward:
+The consuming owner records stale verdicts or carry-forward evidence when current-session continuity can affect artifacts, in-flight outputs, prior verdicts, or active acceptance.
+
+## Continuity Routing Gate
+Judgment requires inspected live owner surfaces.
+Mutation requires reconstructed target intent.
+Positive synthesis requires carry-forward of:
 - same-session changes
 - sibling outputs
 - acceptance contracts
-Stop before removal until source-to-destination meaning is reconstructed.
+Removal requires reconstructed source-to-destination meaning.
 Governance text removal also satisfies `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Resolve Next Owner And Action
-- A stopped judgment route opens live-owner-surface inspection.
-- A stopped mutation route opens target-intent reconstruction.
-- A stopped synthesis route opens cross-continuity carry-forward.
-- A stopped removal route opens source-to-destination reconstruction.
+- Judgment gaps open live-owner-surface inspection.
+- Mutation gaps open target-intent reconstruction.
+- Synthesis gaps open cross-continuity carry-forward.
+- Removal gaps open source-to-destination reconstruction.
 
 ## Design-Intent Rules
 - Consequential work starts from the target artifact's cited design intent.
 - Consequential work also starts from cited applicable core-law axes.
-- Existing-artifact judgment carries both as `TARGET-INTENT-BASIS`.
+- Existing-artifact judgment, mutation, migration, reduction, and reporting carry both as `TARGET-INTENT-BASIS`.
 - Receivers consume `TARGET-INTENT-BASIS` before lane work.
 - Receivers raise `scope-pressure` when `TARGET-INTENT-BASIS` is missing or unsafe.
-- Original creation uses `TARGET-INTENT-BASIS: not-applicable:<reason>` only when no existing artifact exists.
+- Original creation applies `.claude/reference/detailed-design-core-law.md` `## Design Intent And Scope Law` before recording concrete or `not-applicable` `TARGET-INTENT-BASIS`.
 
 ## Scope-Abuse Rules
 Scope-abuse trigger exists when a route, dispatch, governance proposal, patch, mutation, active-rule application, synthesis, report, completion, or acceptance claim omits, substitutes, infers, or defaults required material.
@@ -111,7 +108,7 @@ Drift reopens `work-planning`.
 ## Preservation Rules
 - Scope-continuity consumers use `.claude/reference/modification-core-law.md` `### Preservation Rules` as the canonical common baseline.
 - Local scope/change edits preserve or sharpen that baseline across meaning, clarity, execution force, owner boundary, required gates, and existing valid procedure paths.
-- Operation-specific emphasis does not narrow the common baseline.
+- Operation-specific emphasis keeps the common baseline active.
 - Migration explicitly verifies clarity preservation.
 - Refactoring explicitly verifies action and execution-force preservation.
 - Reduction explicitly verifies stop-condition preservation.

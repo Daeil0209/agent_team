@@ -2,7 +2,7 @@
 name: visual-composition
 description: Own presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -65,7 +65,8 @@ Stay active only when rendered quality is part of acceptance.
 Inputs: active request source, canonical contract, execution plan, rendered artifact or runnable UI when available.
 Also include business-workflow or architecture packets when the visual layer depends on them.
 For request-bound or document-class work, include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`, and format class before freezing layout judgments.
-Output default: concise visual-composition packet in conversation unless the packet names a file target.
+Output default: concise visual-composition packet to the current owner unless the packet names a file target.
+User-facing visual-composition prose routes through `team-lead` and `.claude/reference/reporting-prohibition-law.md`.
 Required elements: surface inventory with declared role, evidence surface (`render`, `source`, `screenshot`, `viewport`, or `blocked`), layout rules, dense-state and viewport risks, and visual defect taxonomy entries.
 Also include cleared blockers, remaining blockers, retest conditions, and downstream acceptance state.
 ## Handoff Boundary

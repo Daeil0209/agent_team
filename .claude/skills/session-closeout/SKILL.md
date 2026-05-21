@@ -2,7 +2,7 @@
 name: session-closeout
 description: Close team-lead sessions with teardown truth, runtime cleanup, residual disclosure, and continuity preservation. Use when explicit closeout, session ending, runtime shutdown, or residual state handoff is active.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned closeout surface.
@@ -11,21 +11,21 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Owns the closeout spine only.
 - State schema, hold conditions, and detailed agent cleanup requirements belong in `references/closeout-state-detail.md` or the runtime cleanup owner.
 ### Reference Map
-- For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
 - `.claude/reference/environment-configuration-core-law.md`: load when teardown, runtime cleanup, residual runtime truth, hook-maintained closeout state, or runtime-owned continuity changes the closeout owner/action.
 - `references/closeout-state-detail.md`: closeout state schema, hold conditions, residual truth, and detailed agent cleanup requirements.
 
 ## Activation
 Load this skill when explicit user-directed session end or confirmed teardown intent is active, OR before any session-teardown tool call (`TeamDelete`, `CronDelete`, equivalent session-runtime teardown tool).
-Structured lane-member release during team-routed work is not session teardown and follows `task-execution` reuse-fit and cleanup law.
+Agent/member cleanup wording without explicit session-end intent routes to `task-execution` runtime cleanup through `.claude/skills/agent-team-lead/references/session-route-bridge.md` and `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+If an owner consumed `Skill(session-closeout)` from agent-cleanup wording alone, classify the owner action as a `[PROC-HABIT]` scope-expansion defect and open `Skill(governance-modification)`.
 Calling a session-teardown tool outside an active `session-closeout` boundary is a `[PROC-HABIT]` procedural defect routed to `Skill(governance-modification)`; the hook runtime guard is enforcement evidence, not authorization.
 Reviewer / agent task completion is not session end; teardown requires user-directed intent or proven session-closing basis.
 Hook feedback can surface teardown state but is not authority.
 Product-delivery closeout for executable deliverables belongs to `dev-workflow` operator-delivery before session teardown.
 
 ### Reporting Curtain Inheritance
-This skill governs session closeout, not report admission.
-User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
+This skill governs session closeout, not report exceptions.
+User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Runtime Teardown Preflight
 Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears down session runtime.
@@ -35,7 +35,7 @@ Run this before `TeamDelete`, `CronDelete`, or any runtime mutation that tears d
 2. Preserve the closeout truth that would be harder to recover after runtime mutation: acceptance state, unresolved blockers, live-agent output, and residual state.
 3. Account for each live process-backed teammate as terminated, shutdown, held, or still live.
 4. Mutate runtime state only when it will not erase closeout truth that has not yet been preserved or carried forward.
-5. If runtime deletion fails and only non-live residue remains, stop retries and carry that residue into truthful closeout output instead of improvising teardown repair work.
+5. If runtime deletion fails and only non-live residue remains, end retries and carry that residue into truthful closeout output instead of improvising teardown repair work.
 
 ## Closeout Sequence
 `Closeout Sequence` is mandatory whenever the session is explicitly ending or a confirmed teardown handoff requires runtime shutdown.
@@ -57,8 +57,8 @@ Keep closeout narrow:
 ### Required invariants
 1. Load `session-closeout`; its hook state marks explicit closeout intent before session-level `shutdown_request`, monitor deletion, or runtime teardown.
 2. Integrate agent outputs only enough to preserve unresolved acceptance, blocker, handoff, or residual-state truth.
-3. Shutdown, hold, or residue-account live teammates; shutdown and `TeamDelete` order is incidental once required closeout truth is preserved or carried forward.
-4. If any live process-backed teammate still has unresolved output or blocker truth after runtime deletion, report warning-bearing closeout or `HOLD`.
+3. Preserve unresolved teammate output or blocker truth, then resolve each live process-backed teammate through structured shutdown, termination proof, `HOLD`, or non-live residue classification before `TeamDelete`.
+4. If any live process-backed teammate lacks termination proof, report warning-bearing closeout or `HOLD` and leave `TeamDelete` uncalled.
 5. Keep continuity handling minimal during teardown.
 6. Bounded teardown only while new runtime evidence changes the result.
 7. No repeated teardown on the same evidence and no ad hoc runtime surgery.
@@ -76,7 +76,7 @@ Keep closeout narrow:
 ### Closeout constraints
 - Session-end intent comes from explicit closeout or teardown basis.
 - New agent dispatch stays outside closeout.
-- During active closeout, `TeamDelete` is allowed without a shutdown-order error; unresolved live-agent truth is carried as warning, hold, or residue.
+- During active closeout, `TeamDelete` opens only after each live process-backed teammate has termination proof or non-live residue classification and unresolved live-agent truth is preserved or carried forward.
 - Runtime cleanup is lead-owned.
 - Teammate cleanup truth stays lead-owned.
 - Team config, task list, mailbox, and cleanup state stay runtime-owned.

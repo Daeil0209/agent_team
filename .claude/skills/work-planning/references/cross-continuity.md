@@ -3,11 +3,11 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 For consequential work where prior patches, confirmed corrections, recurrence barriers, decisions, contract freezes, lane-charter changes, sibling outputs, or acceptance-contract changes can affect current route invariants, cross-continuity is mandatory at five gates:
-- planning-time before parallel route freeze
+- planning-time before consequential route freeze
 - dispatch-time while constructing assignment-grade packets
 - phase-movement before opening the next phase or owner
 - synthesis-time before consuming lane handoffs or review convergence
@@ -23,10 +23,10 @@ At planning-time, check whether prior same-session decisions or doctrine patches
 
 A prior invariant affecting the current route gets incorporated into the frozen route or recorded as a blocker.
 A current route contradicting a prior invariant reopens `work-planning`.
-Do not proceed by assuming the contradiction will be solved at integration.
-Prior-output exclusion and non-shape-defining consultation rules are owned by `.claude/skills/work-planning/references/boundary-gates.md` `## Hard Stops`.
+Resolve contradictions through invariant incorporation, reopened `work-planning`, or blocker classification before integration.
+Prior-output exclusion and non-shape-defining consultation rules are owned by `.claude/skills/work-planning/references/boundary-gates.md` `## Hard Routing Gates`.
 
-At synthesis-time, parallel outputs are reconciled against prior session invariants and sibling-lane outputs.
+At synthesis-time, lane outputs, sibling outputs, and review convergence are reconciled against prior session invariants.
 Silent contradiction is `cross-continuity drift`.
 Cross-continuity drift reopens the owning planning path instead of being smoothed into a positive synthesis.
 

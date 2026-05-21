@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Work Execution Philosophy"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Skill Loading And Reference Binding
 
@@ -12,8 +12,8 @@ This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loadi
 Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
 
 ## Reporting Curtain Inheritance
-This reference governs skill loading and reference binding, not report admission.
-User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
+This reference governs skill loading and reference binding, not report exceptions.
+User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Consume When
 - An owner document is loaded in the active owner context.
@@ -37,25 +37,23 @@ The consuming owner records:
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
 Reference consumption requires direct effect on the active action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness; existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is insufficient.
 
-## Stop
-Stop before execution when:
-- a required skill is unavailable
-- a required skill is lane-mismatched
-- a required skill is contradictory
-- a required skill is non-fitting
-- a required skill is outside the frozen boundary
-- a loaded document lacks applied-rule mapping
-Stop before execution when a cited reference lacks direct-consumption relevance.
-Stop before positive synthesis when a cited reference lacks direct-consumption relevance.
-Stop before completion when a trigger-required reference remains unconsumed.
-Stop before completion when applied or blocked skill/reference basis is missing.
+## Routing Gate
+Execution requires:
+- required skills available
+- required skills lane-fitting
+- required skills noncontradictory
+- required skills fitting the active owner path
+- required skills inside the frozen boundary
+- loaded documents carrying applied-rule mapping
+Execution, positive synthesis, and completion require cited references to carry direct-consumption relevance.
+Completion requires every trigger-required reference consumed and every material skill/reference basis recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
 
 ## Resolve Next Owner And Action
-- A stopped required-skill route opens skill availability correction.
-- A stopped required-reference route opens reference consumption.
-- A stopped applied-rule route opens loaded-document consumption.
-- A stopped direct-consumption relevance route removes the cited reference, replaces it with the exact consumed owner surface, or records the applied-rule mapping that proves consumption.
-- A stopped completion route opens applied-basis recording.
+- Required-skill gaps open skill availability correction.
+- Required-reference gaps open reference consumption.
+- Applied-rule gaps open loaded-document consumption.
+- Direct-consumption relevance gaps remove the cited reference, replace it with the exact consumed owner surface, or record the applied-rule mapping that proves consumption.
+- Completion-basis gaps open applied-basis recording.
 - Procedure-bearing reference missing a local `Resolve Next Owner And Action` section opens reference correction.
 - A method-detail reference returns applied method basis to the parent skill workflow.
 - A lookup-only reference returns consumed facts to the active consuming owner.
@@ -63,17 +61,17 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 ## Skill Rules
 - Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
 - Primary skill links become required skills only when their trigger creates the active owner path.
-- Required skill activation is satisfied only by actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
+- Required skill activation and loaded-skill basis are satisfied only by actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
 - When a primary skill trigger fires, skipping activation is classified as a Work Execution Philosophy violation.
-- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` is inspection only and does not create loaded-skill basis.
-- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection may support eligibility but never satisfies activation.
+- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only.
+- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection supports eligibility only.
 - Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents by `Read` or `Grep` unless the requested outcome also requires that skill's execution artifact.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
 - Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
 - Agent role names are not skill names.
 - Agent role files identify the role through frontmatter `name`, heading, and role-local boundary prose.
-- Agent role files do not carry `PRIMARY-OWNER` metadata.
-- Always-loaded role files keep identity, authority, trigger skeleton, mandatory reference links, decisive stop conditions, and next-owner routing.
+- Agent role files keep `PRIMARY-OWNER` metadata absent.
+- Always-loaded role files keep identity, authority, trigger skeleton, mandatory reference links, decisive routing conditions, and next-owner routing.
 - Situation-specific procedure detail stays in trigger-bound skill references that the active owner path consumes.
 - Lane agent-specific skills use `agent-<lane>` names.
 - Team-lead procedure skill uses `agent-team-lead`.
@@ -85,7 +83,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
   - `CLAUDE.md`
   - active owner role
   - Common Lane-Core Preconditions when the loaded owner is a lane
-- Loaded skills sharpen owner behavior only within their owner stops.
+- Loaded skills sharpen owner behavior only within their owner routing boundary.
 - A named skill's freshness rule governs same-session loaded-skill reuse.
 - Lane agent-specific skills load on assignment-grade lane work.
 - These messages load agent-specific skills only when they assign or reopen work:
@@ -112,7 +110,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 - Required-skill intake order is validate, then load/apply or block.
 - Validate each `REQUIRED-SKILLS` entry for availability, lane fit, owner authority, boundary fit, and required lens or field shape before loading.
 - Invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed required-skill entries record `blocked:<basis>` and route through the owning packet-correction, `scope-pressure`, or `hold|blocker` path.
-- A blocked required-skill entry is not optional, not local improvisation permission, and not a valid-skill missed-execution confession.
+- A blocked required-skill entry routes through packet-correction, `scope-pressure`, or `hold|blocker` with its `blocked:<basis>` record.
 - For each valid, material, lane-executable `REQUIRED-SKILLS` entry, the receiving lane must:
   - load each `REQUIRED-SKILLS` entry before execution
   - apply each `REQUIRED-SKILLS` entry at the first material work surface where the skill can shape the assigned result
@@ -133,7 +131,7 @@ Stop before completion when applied or blocked skill/reference basis is missing.
   - load material recommendations before the work surface they shape
 - Recommendation intake order is classify, then load material recommendations or record `not-material:<basis>` / `blocked:<basis>`.
 - Invalid, lane-mismatched, contradictory, outside-boundary, owner-reserved, malformed, or full-workflow-only recommendations record `blocked:<basis>` and route through the owning correction path when they affect truthful execution.
-- Non-fitting recommendations that do not affect truthful execution record `not-material:<basis>` before completion.
+- Non-fitting recommendations with no truthful-execution effect record `not-material:<basis>` before completion.
 - Silent recommendation skipping is a completion blocker.
 - The assigned lane applies material recommendations at the first material work surface where the skill can shape the assigned result.
 - The assigned lane hands off applied recommendation basis.
@@ -141,12 +139,15 @@ Stop before completion when applied or blocked skill/reference basis is missing.
 
 ## Reference Binding
 - Trigger-bound reference and loaded-owner-document mandatoriness is owned by `.claude/reference/work-procedure-ownership-law.md` `## Rules`.
+- A trigger-active pointer from a Reference Map, rule text, packet field, or loaded owner document opens a bounded consumption handoff for the governed action or claim.
+- The active owner resolves that handoff by recording `applied`, `not-material:<basis>`, or `blocked:<basis>` and mapping each material active rule to the concrete action, stop, evidence, owner, or route.
+- Valid consumption uses live loaded surface evidence and applied-rule mapping; summary, memory, local confidence, and broad familiarity remain background context only.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
 - Direct-consumption relevance means the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness.
 - Loading, naming, quoting, or summarizing a governance document is not consumption.
 - Before action, report, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
-- `applied` means the rule changed, confirmed, stopped, or routed concrete behavior.
-- Missing material applied-rule mapping stops action and opens applied-rule correction.
+- `applied` means the rule changed, confirmed, or routed concrete behavior.
+- Missing material applied-rule mapping opens applied-rule correction before action.
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.

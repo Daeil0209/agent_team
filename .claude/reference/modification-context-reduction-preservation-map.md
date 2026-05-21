@@ -5,7 +5,7 @@ SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Modification Philosophy; information preservation; source-to-destination traceability"
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 topology-updated: 2026-05-20
 ---
 # Context Reduction Preservation Map
@@ -34,7 +34,7 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Skill loading, required-skill handling, methodology guidance, and reference binding detail lives in `.claude/reference/work-skill-reference-binding-law.md`.
 - Runtime boundary, hook-last, settings/tool capability, external capability, runtime-owned surface, and footprint-claim boundary detail lives in `.claude/reference/work-runtime-boundary-law.md` and `.claude/reference/environment-runtime-footprint-continuity.md`.
 - Output-root, source-edit, governance-edit, protected settings, `claude_doc/<work-name>/`, and filesystem boundary detail lives in `.claude/reference/environment-output-root-filesystem-law.md`.
-- User-facing reporting admissibility and report shape lives in `.claude/reference/reporting-user-reporting-law.md`.
+- User-facing report prohibition, narrow exception, and report shape lives in `.claude/reference/reporting-prohibition-law.md`.
 - Optional supervised report rendering and curtain proof lives in `.claude/reference/environment-output-curtain-runtime.md`.
 - Official Claude Code source facts live in `.claude/reference/environment-official-claude-code-source-cache.md`.
 - Minimal governance patch selection, Patch-Ready Gate, source-to-destination trace, and hardening rules live in `.claude/reference/modification-minimal-governance-change-law.md`.

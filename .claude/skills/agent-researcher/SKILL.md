@@ -3,7 +3,7 @@ name: agent-researcher
 description: Agent-specific researcher lane skill for consequential researcher-owned evidence gathering or investigation assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: researcher
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned evidence surface.
@@ -118,7 +118,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 - If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - Research output is evidence input to downstream owners, not implementation, validation, patch-worthiness, confirmed-defect authority, or defect promotion.
 - Defect, removal, or patch-worthiness promotion routes to the team-lead `Skill(review-verification)` defect-promotion path.
-- Use `candidate`, `evidence-only`, `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction`.
+- Use common finding-state ladder terms for candidate outputs: `candidate-evidence`, `candidate-classified`, or lane-local `rejected:<basis>`.
+- Record `risk-hypothesis`, `static-contradiction`, or `observed-operational-friction` as evidence class or proposed defect class inside that state, not as a replacement finding state.
 - When the surface is discovery or requirements clarification, state whether the result supports planning only, design refinement, or remains insufficient.
 
 ## Active Communication Protocol

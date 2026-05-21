@@ -2,7 +2,7 @@
 name: team-meeting
 description: Own a critical marathon meeting for an operator-provided agenda. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and operator acceptance.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## 1. Purpose
@@ -99,7 +99,7 @@ Repeated objection advances through changed solution content, changed evidence, 
 
 Operator may set an opinion-round limit at meeting opening.
 The marathon default continues until full consent on every item.
-Per-item iteration stops after every critic clears material objections on that item.
+Per-item iteration closes after every critic clears material objections on that item.
 
 ### 3-5. MEETING-AUDIT-CRITERIA
 This section is the meeting's audit regulation.
@@ -181,8 +181,8 @@ Each transition below opens the next owner/action in the same turn per `.claude/
 - Draft ready → Section 3-4 Opinion Round.
 - Opinions received → drafter revision.
 - Material objection remains → dissent-to-solution conversion in Section 3-4.
-- Material objections cleared → Section 3-5 Solution Check.
-- Solution Check passed → Section 3-7 Operator Gate.
+- Material objections cleared → Section 3-5 MEETING-AUDIT-CRITERIA.
+- MEETING-AUDIT-CRITERIA passed → Section 3-7 Operator Gate.
 - Operator accept → named downstream owner per Section 4-1.
 - Operator reject or modify → smallest affected step.
 - Correctness blocker unresolved → next opinion round or `HOLD`.

@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 ## Contents
@@ -27,6 +27,7 @@ auto-inject: false
 - Minimum canonical contents:
   - verbatim `USER-INSTRUCTION`
   - executive summary
+  - `TARGET-INTENT-BASIS` for the planned artifact, program, report, document, or governance purpose, with cited design intent, applicable core-law axes, material scope boundary, and any allowed `not-applicable` basis
   - Receiver-Surface Contract: WHY / PRIMARY-RECEIVER / RECEIVER-JOB / CONSUMPTION-ENVIRONMENT / RISK / SUCCESS / SCOPE / DELIVERY, including row-granular frozen `SCOPE-BASELINE` rows that map to proofable features, workflows, surfaces, controls, data, artifacts, or reader/operator expectations, plus the run/read/operate/decide/learn/present path; executable deliverables also freeze `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, and `BURDEN-CONTRACT`
   - Consumption Chain for material output flow from source or setup through final receiver use
   - Reference Fit Summary when a reference exists
@@ -48,6 +49,7 @@ auto-inject: false
 - Design options count scales by project tier: Lightweight 1, Standard 2, Precision 3
 - Minimum design contents authored by team-lead from frozen decisions:
   - inherited `USER-INSTRUCTION`
+  - `TARGET-INTENT-BASIS` continuation with applicable core-law axes, material solution-structure basis, scope boundary, affected owner surfaces, and drift stop
   - selected option and rationale
   - component and responsibility map
   - interface, format, source-of-truth, and dependency surface
@@ -59,7 +61,7 @@ auto-inject: false
     - `ENTRY-OPEN-PATH`: exact user action, artifact, prerequisite, environment, and first open/start path
     - `VISIBLE-SURFACE-INVENTORY`: user-visible windows/pages/files and producer-only surfaces that stay hidden or non-primary
     - `FIRST-USE-STATE`: initial visible state, empty/demo/imported state, and minimum useful information before user configuration
-    - `CORE-WORKFLOW-CLOSURE`: enumerate every user-visible action and its mandatory paired completion.
+      - `CORE-WORKFLOW-CLOSURE`: enumerate every applicable executable user-facing software action and its mandatory paired completion.
       Required pair types:
       - create/import/upsert→disposition: every created, imported, or upserted item has an allowed disposition path: delete, clear, archive, void, deactivate, restrict, or frozen no-disposition basis.
       - edit→save+reload+consumer-persist: every edit control has a save whose result persists across reload and every in-scope visible consumer of the changed fact.
@@ -67,7 +69,7 @@ auto-inject: false
       - displayed-surface→inspection/action/navigation: every displayed record, metric, card, row, icon, or button names its inspection, action, arrival surface, or explicit display-only basis.
       - entity/aggregate→authority trace: every material relation, derived value, or displayed aggregate surfaces as an authority-fit source trace and related-entity path, unless a frozen not-applicable basis states why no user decision or action depends on that path.
       Each row names trigger surface, paired completion surface, source authority, disposition, consumer/recompute, inspection/action/navigation, or display-only basis as applicable.
-      Phase 3 entry for a user-visible action requires a `CORE-WORKFLOW-CLOSURE` row.
+        Phase 3 entry for an executable user-facing software action requires a `CORE-WORKFLOW-CLOSURE` row.
       The design must add the row or explicitly defer it via frozen-record citation.
     - `DATA-CONTENT-STATE`: sample, fixture, imported, saved, reloaded, reset, and real-data states that affect usefulness
     - `FAILURE-RECOVERY-SURFACE`: user-readable error message, technical log location, safe fallback, and next user action
@@ -103,7 +105,7 @@ auto-inject: false
 - CP4 scope summary must make lane decomposition explicit: parallel-default production surfaces, first parallel dispatch segment, later-segment parallel-fit basis, bounded specialist-fit work surfaces, dependency boundaries, Boundary Register rows, surface-to-agent map, merge ownership
 - An independent, nonblocked work surface whose required input is already frozen in the Phase 2 implementation-binding internal detail bundle enters the first parallel dispatch segment; a later segment requires sequential or interdependent classification from the frozen parallel-fit basis
 - Developer handoff must include `OUTPUT-SURFACE`, changed surfaces, executed checks, row-mapped `SCOPE-BASELINE` coverage/delta, `DESIGN-ROW-IMPL-MATRIX`, and `FROZEN-CONTRACT-STATUS`.
-- `DESIGN-ROW-IMPL-MATRIX` maps every Phase 2 design-stated entity, route, template, and `CORE-WORKFLOW-CLOSURE` row to an exact implementation path or `not-implemented:<frozen-defer-citation>`.
+- `DESIGN-ROW-IMPL-MATRIX` maps every Phase 2 design-stated entity, route, template, and applicable `CORE-WORKFLOW-CLOSURE` row to an exact implementation path or `not-implemented:<frozen-defer-citation>`.
 - Silent omission of any design row blocks Phase 3 → 4 transition.
 - For executable user-facing surfaces, the handoff also names the implemented launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, clean re-launch status, and blocked or unrun operator-delivery checks.
 - Parallel production advancement follows `Skill(dev-workflow)` Phase 3 merge-owner exit law.

@@ -4,7 +4,7 @@ description: Review enterprise-scale architecture with Clean Architecture bounda
 user-invocable: false
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

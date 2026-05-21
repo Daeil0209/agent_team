@@ -4,7 +4,7 @@ description: Provide high-confidence software design instructions for implementa
 user-invocable: false
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -60,7 +60,7 @@ Start only after purpose and output class are explicit; require a business-rule 
 - Business workflow packet and relevant reference material or legacy code when present
 - For request-bound work: include the frozen request-fit basis and controlling business-workflow packet before freezing state or module boundaries
 ## Outputs
-Preferred: `./projects/{project_name}/software_architecture_packet.md` or folded into authoritative plan.
+Preferred: `claude_doc/<work-name>/software_architecture_packet.md` per `.claude/reference/environment-output-root-filesystem-law.md` `## Output-Root Rules`, or folded into authoritative plan.
 New directory requires project-root plan surface.
 Capture only the decisive packet.
 It must include major modules, authoritative and derived state, persistence/restore contract, import/export boundary, risky invariants, failure/recovery expectations, and next owner/action per unresolved surface.

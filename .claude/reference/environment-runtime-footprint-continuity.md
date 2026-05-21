@@ -5,7 +5,7 @@ SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Environment Configuration Philosophy; runtime footprint; hook-last continuity"
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Runtime Footprint And Continuity
 

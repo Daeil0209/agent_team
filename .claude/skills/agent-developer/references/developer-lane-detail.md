@@ -5,7 +5,7 @@ SOURCE-ANCHOR: .claude/skills/agent-developer/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Developer Reference
 ## Contents
@@ -115,8 +115,8 @@ Developer lane specialist skills:
 - support overlays: `benchmark-simulation`, `external-tool-bridge`
 
 Secondary-consumer specialist support:
-- clarity self-review: `feynman-clarity` for developer-owned plan, design, specification, completion, governance, or document production when receiver comprehension is decisive
-- bounded code-quality self-review: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before completion
+- clarity result-verification support: `feynman-clarity` for developer-owned plan, design, specification, completion, governance, or document production when receiver comprehension is decisive
+- bounded code-quality result-verification support: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before completion
 
 Use this controlling order when multiple controlling specialists are active on one blocked surface:
 - `business-workflow`
@@ -131,9 +131,9 @@ Use this controlling order when multiple controlling specialists are active on o
 `benchmark-simulation` is a support overlay.
 `external-tool-bridge` is a support overlay.
 Support overlays defer to earlier controlling contracts.
-`feynman-clarity` is a developer producer self-review lens.
+`feynman-clarity` is developer lane-local `Skill(self-verification)` support when receiver comprehension is decisive.
 `feynman-clarity` leaves reviewer-owned independent clarity review intact.
-`code-quality-review` is a developer self-review lens only.
+`code-quality-review` is developer lane-local `Skill(self-verification)` support only.
 `code-quality-review` leaves reviewer-owned independent code-quality review intact.
 
 ## Durability Gate
@@ -162,7 +162,6 @@ Support overlays defer to earlier controlling contracts.
 - `reconstruct-with-inference` opens developer-owned production work with marked inference.
 - `scope-pressure` opens team-lead packet correction, setup/research routing, owner split, or replanning.
 - `hold|blocker` opens team-lead blocker resolution.
-- Completed production opens producer self-review.
-- Passed producer self-review opens lane-local `Skill(self-verification)` result verification.
+- Completed production opens lane-local `Skill(self-verification)` result verification.
 - Lane-local result verification opens completion.
 - Completion open surfaces route to the smallest named next owner/action.

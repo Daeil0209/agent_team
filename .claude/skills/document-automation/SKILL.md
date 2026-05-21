@@ -2,7 +2,7 @@
 name: document-automation
 description: Design and implement reference-based document automation flows that preserve structure, formatting intent, reader job, and bounded generation quality. Use when document generation, template cloning, report automation, or evidence-safe drafting materially affects implementation or review.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed section order: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

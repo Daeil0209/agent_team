@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Work Execution Philosophy; Review And Verification Philosophy result-verification boundary; Reporting Philosophy communication-plane boundary"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Procedure And Ownership
 
@@ -14,8 +14,8 @@ Use it to:
 - attach every consequential path to one truthful owner and next action
 
 ## Reporting Curtain Inheritance
-This reference governs procedure movement, not report admission.
-User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
+This reference governs procedure movement, not report exceptions.
+User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Consume When
 - A task moves beyond `answer-only`.
@@ -50,20 +50,20 @@ The consuming owner records one of these outcomes:
 - explicit redirect
 - next executable owner/action
 
-## Stop
-Stop before reporting completion when no outcome above can be named truthfully.
-Stop before local substitution when a configured lane owns the next:
+## Routing Gate
+Completion reporting requires one truthful outcome from `## Required Output`.
+Configured lane ownership routes local substitution to that lane for the next:
 - proof function
 - review function
 - validation function
 - implementation function
 - acceptance function
-Stop before dispatch when the packet would rely on lead-only conversation history.
+Dispatch requires a packet that carries the receiver-required basis instead of lead-only conversation history.
 
 ## Resolve Next Owner And Action
-- A stopped completion route opens outcome classification.
-- A stopped local-substitution route opens the configured lane owner.
-- A stopped dispatch route opens packet correction.
+- Missing completion outcome opens outcome classification.
+- Configured-lane ownership opens the configured lane owner.
+- Lead-only packet basis opens packet correction.
 - The consuming owner must leave one next executable owner/action.
 - If no next owner/action is lawful, report `HOLD`.
 - The `HOLD` names:
@@ -76,7 +76,7 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - A rule in an active governance document is a mandatory operating rule.
 - A loaded owner document rule is mandatory while that owner context is active.
 - A trigger-bound reference rule is mandatory while its trigger is active.
-- Do not weaken active governance rules into lower-force labels.
+- Active governance rules keep their executable force.
 - If an active governance rule is unclear, over-specified, evasion-enabling, semantically conflicting, scope-abuse-prone, or bottleneck-forming, route to the owning correction path instead of ignoring or applying the weak form.
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
@@ -138,6 +138,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: detail-reference parallel owner-listing — p
 - Handoffs carry:
   - output
   - evidence
+  - material upstream review, verification, synthesis, validation, rejection, and correction-ready basis
   - blocker truth
   - open surfaces
   - next owner/action

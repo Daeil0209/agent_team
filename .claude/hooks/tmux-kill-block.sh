@@ -9,8 +9,8 @@
 # last-resort runtime guard installed at the narrowest enforcement surface.
 #
 # Safe teardown paths instead:
-#   - per-member shutdown via `SendMessage` `{"type":"shutdown_request"}` plus the
-#     receiver-side `shutdown_response` `approve:true` (per task-execution
+#   - per-member shutdown via `SendMessage` `{"type":"shutdown_request"}`
+#     to the exact live member selected by the runtime cleanup owner (per
 #     .claude/skills/task-execution/references/message-classes.md and the SendMessage tool protocol).
 #   - whole-team teardown via `Skill(session-closeout)` Runtime Teardown Preflight
 #     followed by `TeamDelete` from inside that boundary.
@@ -23,7 +23,7 @@
 set -euo pipefail
 INPUT="$(cat)"
 
-REASON='tmux kill-* commands are blocked by explicit operator policy (session-stability protection). Use SendMessage shutdown_response (receiver-side protocol) per .claude/skills/task-execution/references/message-classes.md, or Skill(session-closeout) Runtime Teardown Preflight followed by TeamDelete, for safe teardown.'
+REASON='tmux kill-* commands are blocked by explicit operator policy (session-stability protection). Use SendMessage shutdown_request to the exact live member per .claude/skills/task-execution/references/message-classes.md, or Skill(session-closeout) Runtime Teardown Preflight followed by TeamDelete, for safe teardown.'
 
 emit_deny() {
   # Emit the canonical PreToolUse deny JSON; reason is embedded as a JSON string.

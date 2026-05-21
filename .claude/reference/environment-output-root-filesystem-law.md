@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Environment Configuration Philosophy; Work Execution Philosophy output-root and filesystem clauses"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Output Root And Filesystem Boundary
 
@@ -51,27 +51,27 @@ The consuming owner records:
 - output root
 - source owner files
 - governance owner files
-- file-output admission basis, planned downstream consumer, and generated-output placement
+- file-output placement basis, planned downstream consumer, and generated-output placement
 - protected filesystem surfaces
 - escalation basis when required
 - non-destructive confirmation
 
-## Stop
-Stop before file output unless the file supports cross-agent shared work, explicit user-requested output, retained evidence, or planned durable continuation basis that a later owner will consume.
-Stop before admitted file output when no safe canonical output root is frozen.
-Stop before editing protected settings without the owning update path.
-Stop before destructive mutation unless both are true:
-- the user explicitly requested it
-- the destructive-approval path is lawful
-Stop before hiding protected filesystem mutation behind interpreter snippets.
+## Routing Gate
+File output requires support for cross-agent shared work, explicit user-requested output, retained evidence, or planned durable continuation basis that a later owner will consume.
+Admitted file output requires a frozen safe canonical output root.
+Protected settings edits require the owning update path.
+Destructive mutation requires both:
+- explicit user request
+- lawful destructive-approval path
+Protected filesystem mutation uses direct owner-file mutation through the structured edit path.
 
 ## Resolve Next Owner And Action
-- A stopped output route opens canonical output-root derivation.
-- A stopped settings route opens the owning update path.
-- A stopped destructive route opens:
+- Missing output-root basis opens canonical output-root derivation.
+- Protected-settings edits open the owning update path.
+- Destructive mutation gaps open:
   - explicit user approval
   - non-destructive redesign when redesign is lawful
-- A stopped interpreter-mutation route opens direct owner-file mutation through the structured edit path.
+- Interpreter-mutation risk opens direct owner-file mutation through the structured edit path.
 
 ## Output-Root Rules
 - Admitted task-created outputs stay under the task project folder:

@@ -1204,7 +1204,7 @@ lead_preplanning_reference_allowed() {
     *"/.claude/agents/team-lead.md"*|*".claude/agents/team-lead.md"*|*"agents/team-lead.md"*)
       return 0
       ;;
-    *"/.claude/reference/reporting-user-reporting-law.md"*|*".claude/reference/reporting-user-reporting-law.md"*|*"reference/reporting-user-reporting-law.md"*)
+    *"/.claude/reference/reporting-prohibition-law.md"*|*".claude/reference/reporting-prohibition-law.md"*)
       return 0
       ;;
     *"/.claude/skills/agent-team-lead/references/pre-action-gate.md"*|*".claude/skills/agent-team-lead/references/pre-action-gate.md"*|*"skills/agent-team-lead/references/pre-action-gate.md"*)

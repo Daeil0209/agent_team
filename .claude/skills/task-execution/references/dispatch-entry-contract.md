@@ -3,7 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # task-execution: Dispatch Entry Contract
@@ -24,35 +24,36 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 
 ## Field Rules
 - Missing, stale, or contradictory request-fit basis reopens `work-planning`.
-- A field outside packet assembly, runtime dispatch, receiving-lane execution, workflow, or active report gates is not dispatch-entry floor.
+- Dispatch-entry floor applies only to fields inside packet assembly, runtime dispatch, receiving-lane execution, workflow, or active report gates.
 - Missing or contradictory `SEMANTIC-INTENT-BASIS` reopens `work-planning`.
+- Missing or contradictory material `TARGET-INTENT-BASIS` reopens `work-planning` when packet assembly, receiving-lane execution, review, proof, validation, synthesis, report gating, or completion truth depends on target purpose, existing-artifact integrity, design or scope fit, or protected outcome.
 - Missing or contradictory `COMPLETION-STOP-CONDITION` reopens `work-planning` when packet assembly, receiving-lane execution, report gating, or completion truth depends on it.
 - Missing or contradictory `DERIVED-DEFAULTS` reopens `work-planning` when packet assembly, proof surface, or receiving-lane execution depends on it.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
 - `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
-- `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, exceed-stop rule, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
+- `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, cap-exceed routing, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path.
-- File-only, guessed, or pre-`work-planning` measurement is not dispatch-ready.
+- Dispatch readiness requires measurement from the frozen planning path rather than file-only, guessed, or pre-`work-planning` measurement.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for configured independent-review handling.
 - `task-execution` consumes the frozen `triggered:*`, `fail-open:*`, or `skipped:*` truth.
-- Does not call the configured independent reviewer.
-- Does not adjudicate configured-review points.
-- Does not turn `fail-open:*` into a blocker unless `work-planning` already marked the route blocked.
-- If a team-lead dispatch route lacks required `CODEX-INDEPENDENT-REVIEW-BASIS`, stop and reopen `work-planning`.
+- Configured independent reviewer calls stay with the configured independent-review owner.
+- Configured-review point adjudication stays with the owning adjudication path.
+- `fail-open:*` remains fail-open truth unless `work-planning` already marked the route blocked.
+- A team-lead dispatch route lacking required `CODEX-INDEPENDENT-REVIEW-BASIS` reopens `work-planning`.
 - `NEXT-CONSEQUENTIAL-ACTION` traces to the first executable row of `TEAM-LEAD-WORK-PLAN`; failed trace opens `work-planning`.
-- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-independent-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values stop and reopen `work-planning`.
+- If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-independent-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values reopen `work-planning`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.
-- A frozen route lacking measured burden basis stops dispatch and reopens `work-planning`.
-- A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `.claude/skills/work-planning/references/parallel-fit.md`. PROTECTED-LOCAL-RESTATEMENT-BASIS: runtime-side enforcement of the planning-side verification rule; runtime preflight stops dispatch when planning-side verification is missing.
-- Missing on-disk verification stops runtime creation, packet assembly, reuse, `SendMessage`, and `Agent`; the route reopens `work-planning`.
-- If `PARALLEL-GROUPS: none` serializes multi-surface work without a measured dependency or serial-burden basis, stop and reopen `work-planning`.
-- If the next move asks the user to choose route, staffing, parallelism, or dispatch options that doctrine and evidence can settle, stop and reopen `work-planning` or continue with the evidence-backed route.
-- If a field required by the frozen route is missing, contradictory, or marked `not-applicable` without an allowed basis, stop and reopen `work-planning`.
-- Stop before dispatch when the assigned output requires detailed internal material and no retained-output path or non-visible carrier is available.
-- Stop before dispatch when the packet assigns task-state mutation to a receiver without the required task-state tool.
+- A frozen route lacking measured burden basis reopens `work-planning`.
+- A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `.claude/skills/work-planning/references/parallel-fit.md`. PROTECTED-LOCAL-RESTATEMENT-BASIS: runtime-side enforcement of the planning-side verification rule; runtime preflight requires planning-side verification before dispatch.
+- Missing on-disk verification reopens `work-planning` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
+- `PARALLEL-GROUPS: none` on multi-surface work requires a measured dependency or serial-burden basis; missing basis reopens `work-planning`.
+- Route, staffing, parallelism, or dispatch options that doctrine and evidence can settle reopen `work-planning` or continue with the evidence-backed route.
+- A field required by the frozen route that is missing, contradictory, or marked `not-applicable` without an allowed basis reopens `work-planning`.
+- Assigned output requiring detailed internal material requires a retained-output path or non-visible carrier before dispatch.
+- Task-state mutation assignment requires the receiver to have the required task-state tool before dispatch.
 
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
@@ -62,10 +63,10 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, and `TaskList`; `TaskOutput` and `TaskStop` are background-task inspection/control, not task-list identity.
 - Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
-- Agent name alone is not task identity.
+- Task identity requires the contract-owned task basis rather than agent name alone.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
-- Visible teammate pane/final text is never the official message channel and must not contain ACK, completion, status, blocker, findings, counts, paths, or `MESSAGE-CLASS` blocks.
+- Official message-channel payload keeps ACK, completion, status, blocker, findings, counts, paths, and `MESSAGE-CLASS` blocks out of visible teammate pane/final text.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.

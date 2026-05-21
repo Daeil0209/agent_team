@@ -3,7 +3,7 @@ name: agent-tester
 description: Agent-specific tester lane skill for consequential tester-owned proof assignments that require test execution or verification. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: tester
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned proof surface.
@@ -81,7 +81,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Map retained postcondition evidence after the action.
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
-- Missing packet-backed or safe-inference-backed map stops proof work.
+- Missing packet-backed or safe-inference-backed map opens `MESSAGE-CLASS: hold|blocker` before proof work.
 - Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `MESSAGE-CLASS: hold|blocker`.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
 - If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
@@ -115,7 +115,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Choose the smallest truthful tool path.
 - Keep the choice bounded by the packet's discovery/setup objective.
 - Environment work stays bounded to the packet's discovery/setup objective.
-- Failed narrow search for a truthful executable path inside the frozen boundary stops proof work and sends the tool/evidence-gap request to `team-lead` via `SendMessage`.
+- Failed narrow search for a truthful executable path inside the frozen boundary sends the tool/evidence-gap request to `team-lead` via `SendMessage` before proof work continues.
 - If execution drifts to a weaker path, downgrade the proof state immediately instead of continuing with `matched` assumptions.
 ### 4. Cover Human-Facing Surfaces
 - For documents, page-read, or office-format artifacts, keep rendered evidence explicit when human-visible acceptance depends on it.
@@ -135,7 +135,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - `out-of-scope by dispatch` is proof-slice truth only. `SCOPE-BASELINE` row deferral or closure requires that row in upstream `DEFERRED-SURFACES`.
 - Every reported proof surface must keep expected versus observed result explicit.
 - `TEST-STATE: ready` means the proof report is complete for downstream decision, not that the product passed; disproven, indirect-only, blocked, uncovered, or out-of-scope rows still travel as non-passing evidence.
-### 6. Retest And Self-Check
+### 6. Retest And Result Verification
 - State what failed.
 - State what changed.
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.

@@ -3,7 +3,7 @@ name: agent-reviewer
 description: Agent-specific reviewer lane skill for consequential reviewer-owned acceptance-critical review assignments. Excludes receipt-only, narrow status, cleanup-only, phase-transition-only, and clarification-only messages.
 user-invocable: false
 PRIMARY-OWNER: reviewer
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned review surface.
@@ -59,7 +59,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 2. Review Pass Guard
 - Materially similar review pass requires changed evidence, changed scope, or unresolved-defect escalation.
 ### 3. Select Review Lens
-- Plans: check request fit, owner boundary, route logic, hidden prerequisites, parallel-fit, proof/acceptance chain, stop conditions, and completion completeness.
+- Plans: check request fit, owner boundary, route logic, hidden prerequisites, parallel-fit, proof/acceptance chain, routing conditions, and completion completeness.
 - Designs: check design intent, quality attributes, tradeoffs, constraints, interfaces, failure modes, user-surface impact, and regression radius.
 - Implementations: check design fit, `SCOPE-BASELINE` coverage, functionality, complexity, tests, maintainability, security where in scope, and integration context.
 - Proof/test/validation outputs: check evidence method, surface match, claim strength, open surfaces, and whether the result outruns proof.
@@ -95,7 +95,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Blocking findings include contract breach, missing decisive evidence, user/reader/operator-surface failure, skipped required gate, or unsupported acceptance claim.
 - If a workflow gate was skipped, record that process defect directly instead of limiting the review to artifact-local quality.
 - Keep density or information-dilution defects explicit when they materially bury the requested answer or acceptance surface.
-### 8. Retest And Self-Check
+### 8. Retest And Result Verification
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
 ### 9. Completion

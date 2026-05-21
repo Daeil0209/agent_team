@@ -3,7 +3,7 @@ name: feynman-clarity
 description: Apply Feynman-style explainability review to plans, designs, reports, specifications, governance text, and other deliverables. Use when clear understanding, receiver comprehension, explanation quality, or simplification without meaning loss materially affects implementation or review.
 user-invocable: false
 SECONDARY-CONSUMER: developer
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -21,7 +21,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 You are the Feynman-clarity specialist capability.
 - Conditional explainability-review lens when a deliverable must be understandable before it can be trusted, used, reviewed, or implemented.
 - Primary owner is `reviewer`.
-- `developer` uses this skill for bounded self-review before handoff when clarity proof is material.
+- `developer` uses this skill as lane-local `Skill(self-verification)` support before handoff when clarity proof is material.
 - Codex consumes this lens only through team-lead-owned review packets.
 - Codex remains non-authoritative evidence for this skill.
 

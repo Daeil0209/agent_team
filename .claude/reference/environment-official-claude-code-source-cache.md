@@ -2,10 +2,10 @@
 doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Environment Configuration Philosophy; official behavior alignment; skill/reference consumption"
+SOURCE-RULES: "Environment Configuration Philosophy; Work Execution Philosophy official behavior alignment; skill/reference consumption"
 captured: 2026-05-21
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Official Claude Code Source Cache
 
@@ -127,6 +127,7 @@ Governance implications:
 - Do not claim `@imports` reduce launch context footprint; use them for organization, not lazy loading.
 - Do not claim `CLAUDE.md` prose alone hard-enforces a behavior; use settings, permissions, sandbox, or hooks for technical enforcement.
 - Keep project-shared team standards in `.claude/` project scope and machine-specific experimentation in local scope.
+- Treat `.claude/rules/` as an official capability fact only; this repository has no live `.claude/rules/` owner surface unless a structural governance change introduces that directory and its consumption path.
 
 ## Use Rule
 When a governance patch claims official-document alignment, cite the relevant source section from this cache in the internal basis.

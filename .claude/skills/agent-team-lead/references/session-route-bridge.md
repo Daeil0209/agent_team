@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-1 Instruction Interpretation; RPA-3 Session And Route Bridge; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-1 Instruction Interpretation; RPA-2 Consequential Boundary; RPA-3 Runtime Readiness Blocker; RPA-6 Session And Route Bridge; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Session And Route Bridge
 
@@ -14,8 +14,8 @@ It keeps team-lead from treating setup, boot, planning, or dispatch as completio
 Reporting curtain inheritance:
 - This reference produces Procedure Plane records only.
 - Its required output is not user-facing prose, status, progress, summary, or result.
-- Route, boot, planning, dispatch, and readiness facts stay internal unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
-- If route evidence is current and no report is admitted, continue through the next owner/action silently.
+- Route, boot, planning, dispatch, and readiness facts stay internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception.
+- If route evidence is current and no report exception is granted, continue through the next owner/action silently.
 
 ## Consume When
 - A fresh instruction arrives.
@@ -40,25 +40,25 @@ Record:
 - `REFERENCE-CONSUMED`
 - `APPLIED-RULE-MAPPING`
 
-## Stop
-Stop before dispatch until required boot/runtime-entry is complete.
-Stop before local execution when `work-planning` boundary is missing, stale, contradictory, or changed.
-Stop before team dispatch when task-execution packet preflight is missing.
-Stop before correction dispatch after Final Acceptance Review (FAR) `FINAL-REJECT` until the assigned-validator correction packet is consumed.
-Stop before session-teardown tool calls outside an active `Skill(session-closeout)` boundary.
-Structured lane-member release during team-routed work is not session teardown.
-Stop before route execution when:
-- loaded owner documents lack applied-rule mapping
-- the selected route lacks a request basis that supports its channel class, owner, next action, and user-fit effect
-- the selected route treats standalone `Agent` as lane work, assignment-grade dispatch, reuse, receipt, monitoring, or completion transport
+## Routing Gate
+Dispatch requires completed boot/runtime-entry when that entry is required.
+Local execution requires current `work-planning` boundary.
+Team dispatch requires task-execution packet preflight.
+Correction dispatch after Final Acceptance Review (FAR) `FINAL-REJECT` requires assigned-validator correction packet consumption.
+Session-teardown tool calls require an active `Skill(session-closeout)` boundary.
+Structured lane-member release during team-routed work stays outside session teardown.
+Route execution requires:
+- loaded owner documents carrying applied-rule mapping
+- selected route carrying a request basis that supports its channel class, owner, next action, and user-fit effect
+- selected route treating standalone `Agent` as fallback evidence only
 
 ## Resolve Next Owner And Action
-- A stopped dispatch route loads `Skill(session-boot)` for boot or runtime-entry.
-- A stopped local-execution route loads `Skill(work-planning)`.
-- A stopped team-dispatch route loads `Skill(task-execution)` packet preflight.
-- A stopped correction-dispatch route opens assigned-validator correction-packet consumption.
-- A stopped session-teardown route loads `Skill(session-closeout)` Runtime Teardown Preflight.
-- A stopped applied-rule route opens loaded-document consumption.
+- Dispatch gaps load `Skill(session-boot)` for boot or runtime-entry.
+- Local-execution gaps load `Skill(work-planning)`.
+- Team-dispatch gaps load `Skill(task-execution)` packet preflight.
+- Correction-dispatch gaps open assigned-validator correction-packet consumption.
+- Session-teardown gaps load `Skill(session-closeout)` Runtime Teardown Preflight.
+- Applied-rule gaps open loaded-document consumption.
 
 ## Fresh Instruction Interpretation
 Name the request basis before route choice using the intake items owned by `.claude/skills/work-planning/SKILL.md` `## Step 0: Request-Fit Intake`. This pre-freeze interpretation surface consumes the same intake items that `work-planning` later freezes.
@@ -66,6 +66,8 @@ Name the request basis before route choice using the intake items owned by `.cla
 Interpret the user's requested meaning before skill, workflow, sequence, tool-route, mutation, verification, dispatch, or report selection.
 Skill-load eligibility per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 Learning, relearning, familiarization, doctrine refresh, and change-understanding requests stay read-only doctrine refresh unless the same instruction asks for execution, planning, mutation, verification, dispatch, or reporting.
+Status, yes/no, verification, explanation, or audit questions stay light-channel unless the same instruction asks for correction, mutation, dispatch, validation, cleanup, or execution.
+Discovered gaps during a light-channel answer remain answer evidence and require a separate mutation-authorized owner path before governance asset change.
 
 Use the request basis first to decide whether the instruction stays in a light channel or creates, reopens, or changes a consequential work boundary.
 Consequential boundary opens `Skill(work-planning)`.
@@ -79,7 +81,9 @@ Name the visible work shape:
 Interpretation is pre-freeze.
 
 ## Session Bridge
-Session-start and consequential-boundary load triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`, `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy`, and team-lead RPA-1.
+Session-start load triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`, `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy`, and team-lead RPA-1.
+Consequential-boundary load triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` and team-lead RPA-2.
+Runtime-readiness blockers are owned by `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy` and team-lead RPA-3.
 Assignment-grade team work then follows `Skill(work-planning)` -> one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption.
 If runtime/recovery/monitoring/cleanup evidence is absent, record `runtime-ready: clean` internally without runtime-detail consumption or visible prose.
 A runtime-blocked session bridge opens recovery or `HOLD`.
@@ -87,10 +91,11 @@ Route assignment-grade dispatch to `Skill(task-execution)` only when no current 
 Route assignment-grade dispatch to loaded `task-execution` consumption when current same-session `task-execution` basis exists.
 Route evidence-only standalone `Agent` consideration as lead-local evidence gathering, not team dispatch.
 Route any configured lane work, receipt requirement, reuse, monitoring, or completion handoff through team-routed `Skill(task-execution)`.
-Route explicit session teardown to `Skill(session-closeout)`.
-Route lane-member release during team-routed work through `task-execution` only after reuse-fit failure, dead-or-unavailable target, or lane no-longer-needed basis.
-Task completion is not session end.
-Calling session-teardown tools outside an active `Skill(session-closeout)` boundary is a `[PROC-HABIT]` defect routed to `Skill(governance-modification)`.
+Route explicit session teardown or session-end intent to `Skill(session-closeout)`.
+Route user-directed lane-member cleanup through `task-execution` unless explicit session-end intent creates a `Skill(session-closeout)` trigger.
+Route lane-member release during team-routed work through `task-execution` when reuse-fit fails, the target is dead-or-unavailable, the lane or member is no longer needed, or the user explicitly directs named lane/member cleanup.
+Task completion keeps the session route active unless explicit session-end intent is present.
+Session-teardown tool calls require an active `Skill(session-closeout)` boundary; violations route to `Skill(governance-modification)` as `[PROC-HABIT]`.
 Once `session-closeout` owns the path, report only closeout residual truth.
 
 ## Planning Consume Bridge

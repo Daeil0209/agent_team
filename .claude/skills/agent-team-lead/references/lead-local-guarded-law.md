@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 Lead-local candidate work; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-8 Lead-local candidate work; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Lead-Local Guarded Law
 
@@ -26,18 +26,18 @@ Record:
 - evidence limit
 - break condition result
 
-## Stop
-Stop before lead-local execution unless all direct work conditions hold.
-Stop when local execution reveals new owner, new surface, hidden consequential step, or stronger claim.
-Stop when a lane-owned proof, validation, review, implementation, or acceptance function appears.
+## Routing Gate
+Lead-local execution requires all direct work conditions.
+New owner, new surface, hidden consequential step, or stronger claim revealed during local execution opens the owning route before further local execution.
+Lane-owned proof, validation, review, implementation, or acceptance function opens the lane route before further local execution.
 
 ## Resolve Next Owner And Action
-- A stopped lead-local route opens `work-planning`.
+- A lead-local route gap opens `work-planning`.
 - A new owner opens that owner.
 - A new surface opens `work-planning`.
 - A hidden consequential step opens `work-planning`.
 - A stronger claim opens `work-planning`.
-- A stopped lane-owned function reopens `.claude/skills/agent-team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
+- A lane-owned function gap reopens `.claude/skills/agent-team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
 
 ## Direct Work Conditions
 Lead-local execution is allowed only when all hold:

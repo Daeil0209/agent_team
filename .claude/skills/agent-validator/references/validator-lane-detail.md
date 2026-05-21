@@ -5,7 +5,7 @@ SOURCE-ANCHOR: .claude/skills/agent-validator/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Validator Reference
 ## Role-Spine Completion
@@ -44,7 +44,7 @@ When a validator role or skill says "validator additions" or "validator detail",
 If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
 If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
-If only part of the basis is derivable, narrow the verdict to a non-PASS verified-scope report and report the unverified scope, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
+If only part of the basis is derivable, issue `VERDICT: HOLD` and carry covered scope plus unverified scope in `SCOPE-COVERAGE` and `OPEN-SURFACES`, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
 
 If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 Do not replace decisive runtime, rendered, interaction, environment, or operator-burden evidence with source-only evidence.
@@ -68,7 +68,8 @@ Use only the lenses that materially affect the assigned validation surface.
   - Hostile conditions include: malformed data, extreme values, rapid repeated actions, interrupted flows, stale sessions, conflicting state, corrupted imports, high volume, and weird-but-valid user input.
 - Tester `TEST-STATE: ready` is a completeness signal for the proof report, not a positive verdict; consume its row-level classifications before PASS/HOLD/FAIL.
 - Scope-baseline challenge: identify whether the verdict claims more than the proven `ACTIVE-SLICE`.
-- Unresolved `SCOPE-BASELINE` rows force `HOLD` or a non-PASS verified-scope report.
+- Unresolved `SCOPE-BASELINE` rows force `HOLD`.
+- Useful partial evidence travels in `SCOPE-COVERAGE` and `OPEN-SURFACES`.
 - PASS for narrowed scope is allowed only when that subset was frozen or deferred by the owning upstream record.
 - Quality model scan: use functional suitability, performance, compatibility/interoperability, usability/interaction capability, reliability, security, maintainability, portability/adaptability, and stakeholder value as prompts for missing acceptance dimensions when material.
 - User-visible behavior discipline: prefer proof from what the user sees, does, opens, runs, or decides from; implementation-only evidence supports diagnosis but does not prove user acceptance.
@@ -118,9 +119,9 @@ If that broader surface is unavailable, report it in `OPEN-SURFACES` or return `
 
 ### Operator-Exhaustive Integrity And Rendered Quality
 For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix.
-The matrix enumerates every `CORE-WORKFLOW-CLOSURE` row.
+The matrix enumerates every applicable `CORE-WORKFLOW-CLOSURE` row.
 The matrix traces each row to retained tester evidence.
-Partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows the verdict or forces `HOLD`, not PASS.
+Partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows `PASS` only when the subset was frozen or upstream-deferred; otherwise it forces `HOLD`, not PASS.
 The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
 Static screenshot or initial-render evidence cannot satisfy dynamic rows.
 For edit-save-reload, create/import/upsert-disposition, mutation-dependent recompute, displayed-surface inspection/action/navigation, entity or aggregate authority trace, import/export, or workflow-state rows, validator checks the executed user action, retained postcondition evidence, and row-matched closure-defect probe status.
@@ -186,7 +187,7 @@ Required attempts before declaring the operator environment unreachable:
 - Reverse interop via `wsl.exe` from Windows or `powershell.exe -Command` from WSL for Windows-API-level checks.
 - Any other available tool bridge that can exercise the operator-runtime surface without requiring operator labor.
 
-Only after all such auto-test paths are tested and proven infeasible does the lane document an operator-test checklist as reference documentation. The checklist cannot support PASS; unresolved operator-runtime proof remains `HOLD` or a non-PASS narrowed verdict on the affected acceptance surface.
+Only after all such auto-test paths are tested and proven infeasible does the lane document an operator-test checklist as reference documentation. The checklist cannot support PASS; unresolved operator-runtime proof remains `HOLD` on the affected acceptance surface.
 
 Asking the operator to "double-click and report results" as a closure precondition is a verification-lane design defect. The operator is the deliverable recipient, not the team's co-tester.
 

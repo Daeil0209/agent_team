@@ -4,7 +4,7 @@ description: Translate spreadsheet or operations-heavy workflows into explicit b
 user-invocable: false
 model: opus
 effort: medium
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.

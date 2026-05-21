@@ -4,7 +4,7 @@ SOURCE-ANCHOR: .claude/skills/review-verification/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
 auto-inject: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Review-Verification Reference: Governance Review Gates
 Load only after `Skill(review-verification)` triggers detailed claim review, artifact-change review, synthesis and finding-promotion review, or patch-worthiness review.
@@ -22,7 +22,7 @@ For analysis, diagnosis, consistency review, risk analysis, causal explanation, 
 - Name the evidence surface that supports each controlling claim.
 - Search for the strongest contrary interpretation or evidence that would defeat the conclusion.
 - Mark partial coverage as partial instead of generalizing to the whole corpus.
-- Do not treat fluent explanation, internal confidence, repeated wording, or label similarity as evidence.
+- Treat fluent explanation, internal confidence, repeated wording, and label similarity as non-evidence.
 - Verify that the conclusion follows the inspected reference rather than a convenient substitute.
 - Route action-changing conclusions back through the owning planning or sequence gate.
 
@@ -36,12 +36,12 @@ For doctrine, skill, agent, hook, code, config, reference, or produced-artifact 
 - Verify that execution-changing top-doctrine text has mapped core-law executable detail or recorded existing-detail coverage.
 - Verify that execution-changing core-law text has required trigger-bound owner guidance or recorded not-material basis.
 - Verify that governance text is neither under-specified nor over-specified for its executing owner.
-- Verify that governance text does not create evasion, residual ambiguity, semantic conflict, bottleneck, or over-broad blocking on its executing owner path.
+- Verify that governance text keeps the executing owner path free of evasion, residual ambiguity, semantic conflict, bottleneck, and over-broad blocking.
 - Anchor the reason for change in the review packet, change packet, failure-mode tag, recurrence tag, or owner-local rationale.
 - Reject duplicate doctrine when adherence hardening to an existing owner-local rule is the real fix.
 
 ## Synthesis And Finding-Promotion Review
-Synthesized conclusions do not inherit finding authority automatically.
+Synthesized conclusions require current finding authority before positive use.
 
 Before positive synthesis:
 - Consume completion-grade or otherwise evidence-bearing surfaces, not receipt, status, progress, file presence, or partial runtime signals.
@@ -50,9 +50,10 @@ Before positive synthesis:
 - Classify each item through `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` before using defect, patch-worthiness, patch-readiness, severity, or count language.
 - Keep occurrence counts separate from root-cause counts.
 - Keep raw candidate counts separate from confirmed-defect, patch-worthy, patch-ready, rejected, and open-candidate counts.
+- Record per-item finding-state inventory before any downstream correction, routing, mutation, validation, reporting, or closure uses the synthesis.
 - Preserve common finding classes until promotion evidence is current.
-- Do not promote `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, or `unverified` findings to `confirmed-defect` during synthesis.
-- Do not use bare `CONFIRMED`; name the exact finding-state ladder state.
+- Keep `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, and `unverified` findings in their current finding-state ladder state during synthesis.
+- Name the exact finding-state ladder state instead of bare `CONFIRMED`.
 - Preserve open surfaces instead of flattening them into a clean conclusion.
 - Keep claim strength limited to the weakest material unresolved surface.
 - Keep final wording inside the supported evidence scope when the evidence matrix or retained open surface is material.
@@ -79,18 +80,20 @@ Patch-worthiness requires current proof of:
 
 Patch readiness additionally requires current proof of patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
 Patch-worthiness without those fields remains `patch-worthy`, not `patch-ready`.
-The selected patch direction is invalid when a stronger narrower alternative remains untested.
-The selected patch direction is invalid when removal, trim, merge, re-home, replace, or tighten can preserve the rule with less burden than append.
-The selected patch direction is invalid when the consumed execution surface cannot carry the corrected rule.
-The selected patch direction is invalid when the destination owner is not on the failing execution path.
-The selected patch direction is invalid when it leaves under-specified or over-specified governance on the executing owner surface.
-The selected patch direction is invalid when it leaves evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance on the executing owner surface.
-The selected patch direction is invalid when it leaves an upper-to-core gap open without mapped core-law executable detail or recorded existing-detail coverage.
-The selected patch direction is invalid when it leaves a core-to-trigger-bound gap open without required triggered owner guidance or valid `not-material:<basis>`.
+The selected patch direction is patch-ready only when:
+- every stronger narrower alternative is tested or rejected by current evidence
+- removal, trim, merge, re-home, replace, or tighten is selected whenever it preserves the rule with less burden than append
+- the consumed execution surface can carry the corrected rule
+- the destination owner sits on the failing execution path
+- the executing owner surface has specified governance at the needed detail level
+- the executing owner surface is free of evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking governance
+- upper-to-core execution changes have mapped core-law executable detail or recorded existing-detail coverage
+- core-to-trigger-bound execution changes have required triggered owner guidance or valid `not-material:<basis>`
 
 ## Resolve Next Owner And Action
 - Confirmed review packet returns to the triggering owner with the next owner/action named by `Skill(review-verification)` Step 14; standalone full workflow opens that owner/action.
 - Missing evidence opens researcher, reviewer, local inspection, or `HOLD`.
-- Patch-worthy governance asset change opens the named patch sequence or production owner.
+- Patch-ready governance asset change opens the named patch sequence or production owner for mutation.
+- Patch-worthy governance asset change without patch-ready basis opens patch-readiness completion on the current review or governance-modification path, not mutation.
 - Confirmed recurrence-barrier need opens `Skill(governance-modification)`.
 - Consequential reporting after review opens `Skill(self-verification)`.

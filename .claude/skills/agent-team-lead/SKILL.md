@@ -3,7 +3,7 @@ name: agent-team-lead
 description: Team-lead-specific procedure skill for lead-owned orchestration, route bridging, communication objections, synthesis, reporting staging, and interrupt/autonomy.
 user-invocable: false
 PRIMARY-OWNER: team-lead
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only team-lead-owned procedure detail.
@@ -14,15 +14,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Fixed section order: Structural Contract, Activation, Reference Map, Lead Procedure Routing, Resolve Next Owner And Action.
 
 ## Activation
-- Load at fresh main-session startup after `.claude/CLAUDE.md`, `.claude/agents/team-lead.md`, `.claude/reference/reporting-core-law.md`, and its triggered `.claude/reference/reporting-user-reporting-law.md` are consumed.
+- Load at fresh main-session startup after `.claude/CLAUDE.md`, `.claude/agents/team-lead.md`, `.claude/reference/reporting-core-law.md`, and its triggered `.claude/reference/reporting-prohibition-law.md` are consumed.
 - Load before Priority 0, RPA, or any lead-owned procedure movement.
 - Load at most once per Claude session unless this skill text changes or the session changes.
 - Later lead-owned procedure triggers consume the current same-session loaded `agent-team-lead` skill and the exact trigger-bound reference.
 - When `.claude/agents/team-lead.md` opens a team-lead procedure trigger that names a reference in this skill, consume the current same-session loaded `agent-team-lead` skill or load it first if absent.
 - Current same-session `agent-team-lead` loaded-skill basis is required before consuming any reference under `.claude/skills/agent-team-lead/references/`.
-- The team-lead role spine alone does not satisfy this skill load.
-- Do not load for lane-owned assignment work unless team-lead procedure control is the active owner path.
-- This skill does not replace `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, or `Skill(governance-modification)`.
+- Initial `Skill(agent-team-lead)` load establishes the same-session loaded-skill basis; the team-lead role spine alone does not establish it.
+- Load for lane-owned assignment work only when team-lead procedure control is the active owner path.
+- `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, and `Skill(governance-modification)` keep their owner gates.
 
 ## Reference Map
 - Pre-action gate: `references/pre-action-gate.md`
@@ -35,16 +35,16 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Communication objections: `references/communication-objections.md`
 - Synthesis consume: `references/synthesis-consume.md`
 - Output surface law: `references/output-surface-law.md`
-- Reporting surface rules: `references/reporting-surface-rules.md`
+- Reporting prohibition rules: `references/reporting-prohibition-rules.md`
 - Routine continuation: `references/routine-gate-continuation.md`
 - Interrupt/autonomy: `references/interrupt-autonomy.md`
 
 ## Lead Procedure Routing
 - Active team-lead triggers consume the exact reference named by `.claude/agents/team-lead.md`.
 - Reference consumption requires applied-rule mapping before action, synthesis, report, redispatch, mutation, or completion claim.
-- `.claude/agents/team-lead.md` keeps always-loaded role identity, authority, trigger skeleton, mandatory reference links, decisive stops, and next-owner routing.
+- `.claude/agents/team-lead.md` keeps always-loaded role identity, authority, trigger skeleton, mandatory reference links, decisive routing conditions, and next-owner routing.
 - Situation-specific lead procedure detail stays in this skill's trigger-bound references.
-- A missing, stale, or unconsumed required reference stops the action and opens the missing reference consumption path.
+- A missing, stale, or unconsumed required reference opens the missing reference consumption path before action.
 
 ## Resolve Next Owner And Action
 - Satisfied reference consumption returns to the active team-lead procedure action.

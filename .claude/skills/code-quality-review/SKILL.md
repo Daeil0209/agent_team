@@ -1,9 +1,9 @@
 ---
 name: code-quality-review
-description: Review implementation structure with SOLID checks, duplication taxonomy, reusability, extensibility, and refactoring priority. Use when code quality, maintainability, bounded refactoring, or developer producer self-review materially affects acceptance.
+description: Review implementation structure with SOLID checks, duplication taxonomy, reusability, extensibility, and refactoring priority. Use when code quality, maintainability, bounded refactoring, or developer lane-local `Skill(self-verification)` materially affects acceptance.
 user-invocable: false
 SECONDARY-CONSUMER: developer
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Fixed owner pattern:
@@ -21,13 +21,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 You are the code-quality-review specialist capability.
 - Reviewer-primary specialist skill for deep code quality review.
 - Covers SOLID principles, duplication classification, reusability, extensibility patterns, and refactoring prioritization.
-- `developer` loads it for bounded self-review when code-quality risk materially affects handoff truth.
+- `developer` loads it as lane-local `Skill(self-verification)` support when code-quality risk materially affects handoff truth.
 ## Authority
 **Coverage:** code-structure review, SOLID and duplication taxonomy findings, refactoring priority judgment, and implementation-level maintainability challenge.
 **Adjacent owners hold:** implementation fixes, broad architecture ownership, and final verdict authority.
 ## Agent Relationships
 - `reviewer` — primary owner
-- `developer` — fix owner and producer self-review consumer when code quality materially affects handoff truth
+- `developer` — fix owner and lane-local `Skill(self-verification)` consumer when code quality materially affects handoff truth
 - `enterprise-architecture` — escalate when the issue is architecture-level rather than implementation-level
 - `validator` — final verdict owner after fixes and proof
 ## Purpose

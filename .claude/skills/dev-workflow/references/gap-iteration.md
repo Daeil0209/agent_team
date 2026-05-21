@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Use this reference for Phase 1 YAGNI review, Phase 4 design-implementation gap detection, Phase 5 iteration protocol, and rendered/user-surface gap feedback.
@@ -33,8 +33,10 @@ Procedure:
    - IMPROVE: improves the result while remaining outside core-blocking scope
    - DEFER: nice-to-have
    - OUT: out of current scope
-4. Remove DEFER and OUT items from current plan scope.
-5. Record removed items as future backlog.
+4. Classify DEFER and OUT rows as scope-removal candidates.
+5. Move a DEFER or OUT row out of current plan scope only when the frozen request, plan, design, explicit user instruction, or `[USER-DELIVERY-FIT]` lawful owner-deferral basis permits narrowed current scope.
+6. Keep unsupported DEFER or OUT rows in current scope, route scope correction through `work-planning`, or record truthful `HOLD` when the basis is missing.
+7. Record only lawfully removed rows as future backlog; the backlog record is evidence, not completion or deferral authority.
 
 Advance to CP2 only after scope inflation review is complete.
 Treat unreviewed scope inflation as compounding risk across design, implementation, review, proof, and validation.

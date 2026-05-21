@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/dev-workflow/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Use only inside active `dev-workflow` after `work-planning` selected the workflow and a canonical artifact exists or was materially revised.
@@ -43,7 +43,7 @@ Artifact-convergence review consumes `Skill(review-verification)`; team-lead own
 4. derived producer instructions
 A section edit list, addendum, framing note, or renamed patch list is not a valid `REDESIGN-PLAN` or producer-dispatch basis.
 Producer dispatch names the team-lead `REDESIGN-PLAN` as basis, not Codex findings.
-Invalid `REDESIGN-PLAN` dispatch stops that producer path.
+Invalid `REDESIGN-PLAN` dispatch routes that producer path to correction.
 Produced output is diagnostic only until valid `REDESIGN-PLAN` redispatch replaces it.
 
 ## Trigger
@@ -88,8 +88,8 @@ Missing required path records `fail-open:blocked_by_config`.
    - next-phase risk
 7. The first Codex packet in a pass uses canonical paths per `Packet`.
 8. The first Codex packet excludes team-lead findings, verdict, and suggested fixes.
-9. Artifact-producer or developer self-review is input only.
-10. Artifact-producer or developer self-review never satisfies team-lead own-review basis.
+9. Artifact-producer or developer lane-local `Skill(self-verification)` is input only.
+10. Artifact-producer or developer lane-local `Skill(self-verification)` never satisfies team-lead own-review basis.
 11. Codex reviews design coherence, missing content, owner-boundary fit, downstream consistency, proof/acceptance sufficiency, and phase-gate readiness.
 12. Codex derives artifact-specific axes from artifact, user goal, doctrine, downstream consumers, domain/data meaning, proof burden, and phase gate.
 13. Codex axes include user-perspective checks.

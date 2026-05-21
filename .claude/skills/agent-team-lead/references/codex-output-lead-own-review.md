@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 configured independent-review output or same-boundary correction; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-8 configured independent-review output or same-boundary correction; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Configured-Review Output Lead Own-Review Discipline
 
@@ -25,17 +25,17 @@ Record:
 - rejected configured-review points
 - unresolved configured-review gaps
 
-## Stop
-Stop before positive freeze until same-pass team-lead own-review is present.
-Stop before convergence until same-pass team-lead own-review is present.
-Stop before accepting configured-review agreement when the governing reference only permits fail-open.
-Stop before relay until team-lead adjudicates the output.
+## Routing Gate
+Positive freeze requires same-pass team-lead own-review.
+Convergence requires same-pass team-lead own-review.
+Configured-review agreement requires a governing reference that permits agreement rather than fail-open only.
+Relay requires team-lead adjudication of the output.
 
 ## Resolve Next Owner And Action
-- A stopped freeze route opens same-pass team-lead own-review.
-- A stopped convergence route opens same-pass team-lead own-review.
-- A stopped configured-review agreement route opens governing-reference check.
-- A stopped relay route opens team-lead adjudication.
+- A freeze gap opens same-pass team-lead own-review.
+- A convergence gap opens same-pass team-lead own-review.
+- A configured-review agreement gap opens governing-reference check.
+- A relay gap opens team-lead adjudication.
 
 ## Rules
 - Treat every same-boundary correction pass as a new configured-review pass.
@@ -44,5 +44,5 @@ Stop before relay until team-lead adjudicates the output.
 - Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
 - Team-lead own-review consumes material specialist skills before convergence acceptance.
 - Team-lead reconciliation consumes material specialist skills before redispatch.
-- Prior carry-forward, landing confirmation, spot-check, configured-review result relay, and consensus wording are non-current context; they must not satisfy own-review convergence.
+- Prior carry-forward, landing confirmation, spot-check, configured-review result relay, and consensus wording are non-current context; own-review convergence requires current same-pass team-lead own-review.
 - Lawful fail-open applies only when the owning reference names it.

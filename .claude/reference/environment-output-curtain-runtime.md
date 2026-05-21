@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Reporting Philosophy; Environment Configuration Philosophy; optional curtain controls user report rendering only"
 LOAD-POLICY: mandatory when supervised user-report rendering or output-curtain operation is material
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Output Curtain Runtime
 
@@ -27,8 +27,8 @@ All ordinary child process screen text is hidden from that supervised report sur
 Hidden child screen text is not a replacement carrier, not a redacted artifact, and not a separate internal record.
 
 ## Release Gate
-`.claude/reference/reporting-user-reporting-law.md` owns whether a report may be proposed.
-The curtain release gate only verifies structural release conditions: schema, active `run_id`, allowed admit reason, valid report id, non-empty visible text, size limit, and terminal-control safety.
+`.claude/reference/reporting-prohibition-law.md` owns whether a report may be proposed.
+The curtain release gate only verifies structural release conditions: schema, active `run_id`, valid narrow exception reason, valid report id, non-empty visible text, size limit, and terminal-control safety.
 The gate is not a content classifier for internal Communication Plane messages.
 The gate must not mutate internal payloads into user reports.
 
@@ -36,7 +36,7 @@ The gate must not mutate internal payloads into user reports.
 If the curtain runtime fails, the supervised report surface fails closed and emits no child screen text.
 Direct `claude` native startup does not activate the curtain.
 If the operator uses normal Claude Code native UI, host-native display remains governed by Claude Code behavior and the model-side reporting law; it is not proof of curtain failure.
-In native UI, agent-authored prose leakage violates `.claude/reference/reporting-user-reporting-law.md` report admissibility; it is not supervised curtain proof.
+In native UI, agent-authored prose leakage violates `.claude/reference/reporting-prohibition-law.md` report-prohibition criteria; it is not supervised curtain proof.
 Use a configured supervised-renderer executable only after verifying that the path exists and is executable.
 If no supervised-renderer executable is installed, supervised curtain operation is unavailable; report `HOLD` or `UNVERIFIED` instead of claiming curtain proof.
 
@@ -44,3 +44,9 @@ If no supervised-renderer executable is installed, supervised curtain operation 
 The decisive proof for the curtain is user-visible stdout/stderr from the supervised renderer.
 Passing evidence requires that child stdout/stderr can contain forbidden progress text while supervised stdout/stderr remains empty unless an explicit report proposal is structurally released.
 Proof capture of child output is verification-only and must be requested explicitly; production default does not store child screen text.
+
+## Resolve Next Owner And Action
+- Passing curtain proof returns to the reporting owner with the proven supervised-renderer basis.
+- Curtain unavailability or failed proof returns `HOLD` or `UNVERIFIED` to the reporting or environment owner.
+- Content-admission questions return to `.claude/reference/reporting-prohibition-law.md`.
+- Renderer path, executable, hook, settings, or runtime-enforcement changes open `Skill(governance-modification)` after environment configuration review.

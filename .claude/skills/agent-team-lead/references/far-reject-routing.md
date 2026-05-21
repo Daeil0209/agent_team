@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-4 Final Acceptance Review (FAR) FINAL-REJECT correction routing; Work Execution Philosophy; Judgment Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-8 Final Acceptance Review (FAR) FINAL-REJECT correction routing; Work Execution Philosophy; Judgment Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Final Acceptance Review (FAR) FINAL-REJECT Correction Routing
 
@@ -23,26 +23,25 @@ Record:
 - active workflow basis
 - selected next executable owner/action
 
-## Stop
-Stop before correction dispatch when:
-- validator correction packet is missing
-- root cause changes:
+## Routing Gate
+Correction dispatch requires validator correction packet and unchanged root-cause axes:
   - scope
   - owner map
   - route
   - proof chain
   - acceptance chain
-Stop before the next Final Acceptance Review (FAR) until the assigned owner consumes correction evidence.
+The next Final Acceptance Review (FAR) requires assigned-owner correction-evidence consumption.
 
 ## Resolve Next Owner And Action
 - A missing correction packet opens validator correction-packet retrieval.
-- Any root-cause-axis change (the Stop section enumeration: scope, owner map, route, proof chain, or acceptance chain) reopens `work-planning`.
-- A stopped route to the next Final Acceptance Review (FAR) opens assigned-owner correction-evidence consumption.
+- Any root-cause-axis change (scope, owner map, route, proof chain, or acceptance chain) reopens `work-planning`.
+- Next-Final-Acceptance-Review gaps open assigned-owner correction-evidence consumption.
 
 ## Routing Rules
 - Design-level root cause routes to the active workflow design-correction phase.
 - Implementation root cause routes to the active workflow production-correction phase.
 - Operator-delivery root cause routes to the active workflow production-correction phase.
+- `undetermined:<basis>` root cause opens root-cause clarification from the active workflow basis before correction dispatch.
 - Root-cause-axis changes reopen `work-planning` per the Stop section enumeration.
 
 ## Evidence Rules

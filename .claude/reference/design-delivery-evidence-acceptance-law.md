@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Design Definition Philosophy; Review And Verification Philosophy; Judgment Philosophy"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Common Doctrine Reference: Delivery, Evidence, And Acceptance
 
@@ -51,18 +51,18 @@ The consuming owner records:
 - open surfaces
 - claim strength
 
-## Stop
-Stop positive completion when:
-- requested content, function, format, data/example/use instructions, run/read path, or user burden remains missing
-- the decisive user surface remains unproven
-Stop final acceptance when:
-- validator rules require a verdict
-- final-arbitration trigger rules require a verdict
+## Completion Routing Gate
+Positive completion requires:
+- requested content, function, format, data/example/use instructions, run/read path, and user burden satisfied
+- decisive user surface proven
+Final acceptance verdict always routes to `validator`.
+Local verified-result closure is a reporting exception only when no final-arbitration trigger applies.
+Local verified-result closure does not issue final `PASS/HOLD/FAIL`.
 
 ## Resolve Next Owner And Action
-- A stopped delivery route opens missing-deliverable correction.
-- A stopped user-surface route opens decisive-surface proof.
-- A stopped final-acceptance route opens validator routing.
+- Missing-deliverable gaps open missing-deliverable correction.
+- Unproven user-surface gaps open decisive-surface proof.
+- Final-acceptance verdict needs open validator routing.
 
 ## Evidence Rules
 - Use indirect evidence for diagnosis.
@@ -96,7 +96,7 @@ Stop final acceptance when:
   - owner
   - reason
   - next action
-- Downstream missing implementation, proof, or acceptance evidence cannot create deferral; it leaves the row open or blocked.
+- Downstream missing implementation, proof, or acceptance evidence leaves the row open or blocked.
 - Record implemented subset coverage against the requested deliverable.
 - Type-fit defaults live in `.claude/skills/work-planning/references/deliverable-defaults.md`.
 
@@ -130,7 +130,7 @@ Prove user-surface behavior on the user surface.
 - Reviewer evidence feeds validation.
 - Tester evidence feeds validation.
 - `validator` owns final acceptance and issues final `PASS/HOLD/FAIL`.
-- Local closure report admission is owned by `.claude/reference/reporting-user-reporting-law.md`.
-- Local closure is valid only when no final-arbitration trigger applies.
+- Local closure report exception is owned by `.claude/reference/reporting-prohibition-law.md`.
+- Local verified-result closure is valid only when no final-arbitration trigger applies and the report avoids final acceptance or `PASS/HOLD/FAIL` wording.
 - Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md` `## Final-Arbitration Trigger Definitions`.
 - Acceptance compares against the frozen delivery contract.

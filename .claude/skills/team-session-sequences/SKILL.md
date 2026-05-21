@@ -2,7 +2,7 @@
 name: team-session-sequences
 description: Provide session-sequence index and lead-side dispatch/detail lookup for team runtime. Use when packet readiness, dispatch sequencing, runtime monitoring, upward completion, or parallel shard merge discipline is active.
 user-invocable: false
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## Structural Contract
@@ -35,8 +35,8 @@ Use the exact sequence names defined in their owning skills:
 Use these procedures when the corresponding sequence is `materially active` per `.claude/skills/session-boot/SKILL.md ## Sequence Activation Discipline`.
 
 ### Reporting Curtain Inheritance
-This sequence index governs sequence lookup, not report admission.
-User-facing prose is owned by `.claude/reference/reporting-user-reporting-law.md`.
+This sequence index governs sequence lookup, not report exceptions.
+User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Sequence Activation Discipline
 
@@ -63,7 +63,7 @@ When the current runtime is ambiguous, the lead resolves that ambiguity per sess
 
 ## Boot Sequence / Session-Start Sequence
 
-Triggers for `Boot Sequence` and `Session-Start Sequence` open `Skill(session-boot)`. This index stops after naming that owner; hooks provide observation evidence only.
+Triggers for `Boot Sequence` and `Session-Start Sequence` open `Skill(session-boot)`. This index names that owner only; hooks provide observation evidence only.
 
 ## Monitoring Sequence
 
@@ -87,7 +87,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 
 ## Closeout Sequence
 
-Closeout triggers open `Skill(session-closeout)`. This index stops after naming that owner; hooks provide observation evidence only.
+Closeout triggers open `Skill(session-closeout)`. This index names that owner only; hooks provide observation evidence only.
 
 ## Resolve Next Owner And Action
 - A boot trigger opens `session-boot`.

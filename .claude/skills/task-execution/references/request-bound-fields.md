@@ -3,7 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # task-execution: Request-Bound Conditional Packet Fields
@@ -43,13 +43,13 @@ When truthful lane execution depends on the original request shape, the assignme
 - `EXCLUDED-SCOPE`
 - `EXCLUDED-SOURCES`
 
-`EXCLUDED-SOURCES` names source classes or paths the receiver must not use.
+`EXCLUDED-SOURCES` names source classes or paths excluded from receiver use.
 When the user rejects prior history, prior audit artifacts, prior findings, prior shard reports, or prior inventory, `EXCLUDED-SOURCES` must carry that no-history constraint.
 Receivers return `scope-pressure` when a packet omits material `EXCLUDED-SOURCES` or when the assigned carrier appears derived from an excluded source.
 
 `SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
 Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
-Do not replace it with literal task wording or target purpose alone.
+Semantic basis remains distinct from literal task wording or target purpose alone.
 If the carried semantic basis conflicts with the user instruction, cited artifact intent, or `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, the receiving lane returns `scope-pressure` or `hold|blocker`.
 
 `COMPLETION-STOP-CONDITION` names the practical closure condition and evidence burden for the assigned surface.
@@ -64,7 +64,7 @@ Program work uses program intent and user-workflow intent.
 Report and document work use reader, question, conclusion, evidence, and action intent.
 Review, proof, validation, and completion work use the target intent that defines fit and closure.
 Safe inference from a named source (request, plan, design, Structural Contract, cited artifact, or frozen scope) marks the basis as `INFERENCE` and proceeds.
-Safe inference must not invent scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, or acceptance oracle that the named source does not specify.
+Safe inference stays within scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, and acceptance oracle specified by the named source.
 Non-inferable basis uses `scope-pressure` or `hold|blocker`.
 `TARGET-INTENT-BASIS` states protected purpose and user outcome.
 Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.
@@ -73,12 +73,14 @@ When a frozen plan, MVP, release, or phase scope contains one or more promised f
 - `SCOPE-BASELINE`
 - `ACTIVE-SLICE`
 - `DEFERRED-SURFACES`
+- `CORE-WORKFLOW-CLOSURE` when executable user-facing software actions are in scope
 
 `SCOPE-BASELINE` is the authoritative in-scope list at proofable row granularity.
 Each baseline row names a feature, workflow, surface, control, data, artifact, or reader/operator expectation that can be mapped to evidence.
 Module, epic, or screen labels are parent headings only.
 `ACTIVE-SLICE` is the subset assigned in the current packet.
 `DEFERRED-SURFACES` is valid only when original frozen request/plan/design explicitly deferred or excluded those row-granular items.
+`CORE-WORKFLOW-CLOSURE` rows name applicable user-visible executable software actions and their paired completion surfaces.
 An unimplemented baseline item remains open, not out-of-scope by dispatch.
 
 When exact instruction wording materially affects acceptance, decision-fit, or request-fit review, the packet must additionally carry:
@@ -90,9 +92,9 @@ When planning or the active workflow already froze methodology instructions for 
 
 `SKILL-RECOMMENDATIONS` is mandatory when frozen by `work-planning` or the active workflow owner, and lane-scoped instruction only inside the already bounded lane surface.
 It never creates lane ownership, authorizes agent-specific skill listing, or changes proof/acceptance ownership.
-If missing from the frozen planning/workflow basis, do not invent it during dispatch.
+If missing from the frozen planning/workflow basis, keep it absent and route through the owning correction path.
 
-Do not leave these request-fit or methodology fields only in linked-path references when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
+Carry these request-fit or methodology fields in the packet when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
 When upstream planning froze reference-based citation or deviation basis, carry it as cited request-bound or artifact basis, not as a standalone `REFERENCE-USE` packet field.
 
 When frozen governance depth materially changes staffing, checkpoint, review, proof, or acceptance burden for the receiving lane, the assignment packet must also carry:
@@ -102,7 +104,7 @@ When frozen governance depth materially changes staffing, checkpoint, review, pr
 
 `PROJECT-TIER` is the floor.
 `ACTIVE-REQUEST-TIER` can stay at that floor or raise above it for the current request.
-The packet must not silently rewrite the project floor.
+The packet preserves the project floor explicitly.
 Tier can avoid unnecessary over-governance.
 Tier must never downshift decisive user-surface proof or acceptance integrity.
 
@@ -113,7 +115,7 @@ When proof or acceptance depends on the real user-facing surface rather than sou
 - `SURFACE-EQUIVALENCE-BASIS` when the frozen proof path is not the obvious native/default tool for that surface
 
 `USER-SURFACE` names what the user actually experiences: browser interaction, source-read governance/report/documentation text, rendered page-read document, office document, spreadsheet runtime, PDF reader surface, HWP/HWPX reader/editor surface, operator console, or another concrete user-consumed surface.
-Do not force tester or validator to rediscover that surface from gist.
+Carry the surface explicitly so tester or validator can avoid gist-based rediscovery.
 When frozen upstream, Receiver-Surface Contract, Consumption Chain, Boundary Register, and Evidence-Quality Matrix travel as cited packet basis.
 Packet writers preserve citation identity for those artifacts.
 
@@ -126,7 +128,7 @@ If the exact tool is not yet frozen, the packet can instead freeze a bounded dis
 
 Keep assignment autonomy without vague or unbounded tool hunting.
 When that boundary includes environment/tool setup, carry the setup safety classification from `work-planning`: `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`. `allowed-setup` is not a user confirmation gate; `approval-required` must name the damage-capable/destructive/security/credential/paid/persistent-service/policy reason.
-For browser-ui proof or acceptance, an exact `TOOL-REQUIREMENT` and the full bounded discovery/setup bundle are alternatives at dispatch time. Do not force both unless the workflow truly needs both.
+For browser-ui proof or acceptance, an exact `TOOL-REQUIREMENT` and the full bounded discovery/setup bundle are alternatives at dispatch time. Carry both only when the workflow truly needs both.
 
 When the frozen proof or acceptance path covers multiple environments, platforms, browsers, or deployment contexts, or when a single-environment proof is claimed cross-environment sufficient, the packet must also carry:
 - `ENV-COVERAGE`: the bounded list of environments, platforms, browsers, or deployment contexts in scope for this proof or acceptance pass
@@ -148,9 +150,9 @@ WSL/Linux execution does not satisfy Windows launch proof by itself.
   - Launch path defines proof.
   - Operator burden defines acceptance.
   - Omission is a packet defect.
-  - `task-execution`, tester, and validator must not absorb that defect by guesswork.
+  - `task-execution`, tester, and validator route that defect instead of absorbing it by guesswork.
 - **CONDITIONAL (use `not-applicable` if omitted)** when the deliverable surface is a non-runnable rendered static artifact and run-path burden plus operator workflow burden are outside the frozen acceptance surface.
-- **NOT a permission-graded field**. Executable user-facing surfaces cannot skip these fields; the delivery contract treats them as schema floor.
+- **NOT a permission-graded field**. Executable user-facing surfaces carry these fields as delivery-contract schema floor.
 
 Tester/validator completion status fields such as `PROOF-SURFACE-MATCH`, `RUN-PATH-STATUS`, `CORE-WORKFLOW-STATUS`, `INTERACTION-COVERAGE-STATUS`, and `BURDEN-STATUS` stay explicit; use `not-applicable:<basis>` instead of omission when a status axis was not part of the frozen surface.
 
@@ -164,8 +166,8 @@ When `VALIDATION-SURFACE` already names the single decisive user-facing acceptan
 
 When the assigned surface is office-format, page-read, or other rendered human-facing material where reader-visible usefulness is part of acceptance, keep the rendered chain explicit instead of implying it:
 - `developer/document-automation -> tester -> reviewer -> validator` when risk is meaningful
-- rendered evidence supports human-visible usefulness only; it does not replace wording, logic, request-fit, proof, or verdict ownership
-- if the current toolchain cannot truthfully exercise the decisive user surface, freeze one bounded next step only: explicit tool discovery/acquisition/setup via `external-tool-bridge` or the appropriate setup owner, or `hold|blocker`. Do not quietly downgrade to source-only checking.
+- rendered evidence supports human-visible usefulness only; wording, logic, request-fit, proof, and verdict ownership remain separately owned
+- if the current toolchain lacks a truthful exercise path for the decisive user surface, freeze one bounded next step only: explicit tool discovery/acquisition/setup via `external-tool-bridge` or the appropriate setup owner, or `hold|blocker`. Source-only downgrade is invalid unless frozen as the decisive surface.
 
 ## Resolve Next Owner And Action
 - Complete start closure contract opens assignment packet preflight.

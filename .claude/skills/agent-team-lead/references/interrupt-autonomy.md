@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-10 Interrupt And Autonomy; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-17 Interrupt And Autonomy; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # team-lead: Interrupt And Autonomy Detail
@@ -26,7 +26,7 @@ Rules:
 - Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
 - Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
 - Status or progress questions expose the stall.
-- Route status answers through `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
+- Route status answers through `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
 - Continue through the same verified `RESUME-ACTION`.
 - Use `Skill(self-verification)` result verification only before reporting or handoff.
 - The resumed scope must match the original task.
@@ -59,7 +59,7 @@ Operating discipline:
 - Apply `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
 - Defer high-burden patches with marginal or speculative value.
-- This high-burden deferral rule does not apply to user-requested `patch-ready` rows or frozen `SCOPE-BASELINE` rows.
+- User-requested `patch-ready` rows and frozen `SCOPE-BASELINE` rows keep their owning completion route outside this high-burden deferral rule.
 - Apply high-burden patches with marginal or speculative value only under explicit user direction.
 - Defer with documented evidence.
 - If a hook, gate, or guard blocks legitimate work, first narrow the blocking mechanism through the owning change sequence.
@@ -69,14 +69,15 @@ Operating discipline:
 - Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
 - Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
+- `[NO-NEEDLESS-ASK]` governs owner-decidable choices inside existing authority; status, yes/no, verification, explanation, audit, or explicit hold-conversation channels stay non-mutating unless the user instruction or current frozen execution boundary already authorizes mutation.
 - Deferral that changes frozen deliverable scope, `SCOPE-BASELINE`, completion stop, review-promotion coverage, patch-loop coverage, or validation scope is operator-policy-choice unless explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis is already recorded.
 - A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance modification cycles.
 - Step-to-step continuation inside such a plan is autonomous; plan freeze authorizes the whole sequence.
 - The lead proceeds from each completed-and-verified step to the next planned step without intermediate user query.
 - Step-selection prose after a completed step is a `[NO-NEEDLESS-ASK]` violation when the next step is named by the plan.
 - The lead pauses only for an in-plan blocker or one of the listed exception classes.
-- User challenge that proves missing route, measurement, or parallel basis opens the correcting owner; it does not open an option list for the user.
-- User-facing prose that asks for choice, permission, direction, or follow-up sequencing without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation.
+- User challenge that proves missing route, measurement, parallel basis, or doctrine-derived correction opens the correcting owner.
+- User-facing prose that asks for choice, permission, direction, or follow-up sequencing, or declares a self-created `HOLD`/waiting state, without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation.
 - The team-lead executes the evidence-backed default in the same turn instead of emitting the violating prose.
 
 ## Resolve Next Owner And Action

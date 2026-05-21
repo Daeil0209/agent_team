@@ -3,7 +3,7 @@ PRIMARY-OWNER: task-execution
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # task-execution: Completion
@@ -23,6 +23,7 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `TASK-ID` when task tracking is active
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
+- `UPSTREAM-DECISION-BASIS-CONSUMPTION`
 - `EVIDENCE-BASIS`
 - `VERIFIED-DATA-FEEDBACK`
 - `OPEN-SURFACES`
@@ -33,30 +34,25 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `SKILL-FIELD-CONSUMPTION` records each non-empty, material, invalid, or blocked `REQUIRED-SKILLS` entry as `applied` or `blocked:<basis>` and every carried `SKILL-RECOMMENDATIONS` entry as `applied`, `not-material:<basis>`, or `blocked:<basis>`; use `not-applicable:<basis>` only when the packet carried no skill fields and no material skill was discovered during lane work
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
-- `PRODUCER-SELF-REVIEW-PASS` records:
-  - defeater lenses applied
-  - disconfirming checks attempted
-  - defects found and fixed by the producer in-pass
-  - final-pass convergence: last pass found no producer-owned defect, or remaining items routed to `OPEN-SURFACES` / `scope-pressure` / `hold|blocker`.
-  - Producer self-review removes producer-owned defects before handoff.
-  - Producer self-review is not self-approval or independent acceptance.
 - `LANE-LOCAL-RESULT-VERIFICATION` — loaded `Skill(self-verification)` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
 `VERIFIED-DATA-FEEDBACK` records every material returned fact, count, finding, state label, recommendation, or verdict input with its evidence basis and verification state.
 Use `not-applicable:<basis>` only when the assignment requested no material returned data and the lane returns no material data.
 Unsupported, inferred, stale, memory-only, or uninspected data is not verified feedback; place it in `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 
+`UPSTREAM-DECISION-BASIS-CONSUMPTION` records each material upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis consumed, superseded by current basis, blocked, or marked `not-applicable:<basis>`.
+Completion without `UPSTREAM-DECISION-BASIS-CONSUMPTION` is not completion-grade when upstream decision basis affected the assignment.
+
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
 Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
 After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Assignment Delivery Contract` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `VERIFIED-DATA-FEEDBACK`, `PRODUCER-SELF-REVIEW-PASS`, and `LANE-LOCAL-RESULT-VERIFICATION`.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, and `LANE-LOCAL-RESULT-VERIFICATION`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
-Lane completion claims producer self-review convergence only for producer-owned defect reduction before handoff.
-Lane completion does not claim team-lead `Skill(self-verification)` result verification.
+Team-lead `Skill(self-verification)` result verification remains separate from lane completion.
 Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for result verification on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
@@ -79,7 +75,10 @@ Common finding basis:
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, regression risk, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.
 - Quality, evidence, independent review, proof, validation, Codex independent review, and Final Acceptance Review (FAR) gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
-- Only `patch-worthiness: must-fix|narrow-fix` with proof that correction will not remove a stronger protected function is patch-dispatch basis; `observe|no-patch` stays retained context.
+- `patch-worthy` or `patch-ready` is the finding-state ladder authority for patch dispatch.
+- `PATCH-URGENCY: must-fix|narrow-fix` is a dispatch-priority subfield only after `patch-worthy` or `patch-ready` is proven.
+- Patch dispatch also requires proof that correction will not remove a stronger protected function.
+- `PATCH-DISPOSITION: observe|no-patch` stays retained context and does not dispatch mutation.
 - Common finding-class taxonomy is shared by reviewer, review-verification, and validator-input findings:
   - `candidate-evidence`: observed evidence without defect authority.
   - `candidate-classified`: candidate evidence mapped to proposed class, severity, owner, and inspected source surface without defect authority.
@@ -121,7 +120,7 @@ Team-lead consumes the retained carrier for synthesis, routing, validation, corr
 Correction dispatch follows `OPEN-SURFACES`, `LANE-NEXT-CANDIDATE`, or the validator correction packet.
 Re-dispatch the producer for producer-owned correction.
 Reuse sends another assignment-grade packet.
-Shutdown sends `shutdown_request` when validation ACCEPT is recorded, the surface is out of the frozen plan, or closeout owns the path.
+Shutdown sends `shutdown_request` when validator `PASS` or workflow `FINAL-ACCEPT` closes the lane surface, a user-accepted or originally frozen out-of-scope basis excludes the lane surface, or closeout owns the path.
 Wait for confirmed termination evidence on shutdowns.
 
 User-surface proof or user-surface acceptance claims on an executed surface require the completion-grade transport to keep the exercised method explicit.
@@ -148,8 +147,8 @@ The method record covers:
   Routine baseline captures that neither support a verdict nor evidence a defect cite path-only without per-image verdict.
 
 Report decisive user-surface work with the concrete proof method and execution evidence actually used.
-Completion-grade transport requires requested content, functions, format, user-facing path, reader/operator burden, `CORE-WORKFLOW-CLOSURE` coverage, and acceptance surface to be matched, verified, frozen-narrowed, or frozen-deferred.
-Anchoring on the implemented subset instead of the frozen `CORE-WORKFLOW-CLOSURE` coverage is procedural failure.
+Completion-grade transport states whether requested content, functions, format, user-facing path, reader/operator burden, applicable `CORE-WORKFLOW-CLOSURE` rows, and acceptance surface are matched, verified, `not-applicable:<basis>`, explicitly user-accepted as out-of-scope, lawfully owner-deferred through upstream record, or open/blocked in `OPEN-SURFACES` or `HOLD`.
+Anchoring on the implemented subset instead of the applicable frozen `CORE-WORKFLOW-CLOSURE` coverage is procedural failure.
 Executable completion-grade transport requires the exact operator launch artifact plus invocation evidence, stop/cleanup path, clean re-launch basis, access URL/port when applicable, and project-artifact hygiene status.
 `ACTIVE-SLICE` evidence becomes phase, MVP, release, or workflow completion only after reconciliation against `SCOPE-BASELINE`.
 Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPEN-SURFACES`.
@@ -160,11 +159,11 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Every agent completion also provides the retained carrier containing the common completion spine.
 - Completion is not valid when either the retained carrier or the `SendMessage` completion state signal is missing.
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
-- Do not repeat the state signal across header/preview/body.
-- Do not include any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
-- Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, `SCOPE-COVERAGE`, `VERIFIED-DATA-FEEDBACK`, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
+- Render the state signal once across header/preview/body.
+- Include only the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
+- Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `SCOPE-COVERAGE`, `VERIFIED-DATA-FEEDBACK`, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Missing `SCOPE-COVERAGE` makes the completion spine incomplete when the lane output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
-- Wave, sample, priority-tier, or representative-slice completion stays scoped to `ACTIVE-SLICE`; it cannot state or imply full-scope completion, validation, promotion, rejection, or patch selection unless `SCOPE-COVERAGE` covers the frozen `SCOPE-BASELINE`.
+- Wave, sample, priority-tier, or representative-slice completion stays scoped to `ACTIVE-SLICE`; full-scope completion, validation, promotion, rejection, or patch selection requires `SCOPE-COVERAGE` over the frozen `SCOPE-BASELINE`.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Completion exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.
 - `LANE-NEXT-CANDIDATE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.

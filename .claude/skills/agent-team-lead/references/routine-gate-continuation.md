@@ -2,8 +2,8 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-7 status, satisfied gates, phase transitions, and routine milestones; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+SOURCE-RULES: "RPA-13 status, satisfied gates, phase transitions, and routine milestones; Work Execution Philosophy"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Routine Gate Continuation
 
@@ -25,26 +25,26 @@ Record:
 - whether output is internal or user-facing
 - residual queue status
 
-## Stop
-Stop before `FINAL` when residual queue is non-empty.
-Stop before asking to proceed when the next owner/action is lead-owned and non-destructive.
-Stop before unsolicited status prose when continuing the active path is possible in the same segment.
-Stop before lane/shard arrival or partial-convergence prose when monitoring, retained-carrier consumption, merge, correction, or synthesis can continue.
+## Pause-Route Duties
+- A non-empty residual queue routes the pre-`FINAL` path to residual queue processing.
+- A lead-owned non-destructive next owner/action executes through the active owner path.
+- Same-segment active-path continuation stays in Procedure Plane when user-facing status prose is not explicitly requested.
+- Lane/shard arrival or partial-convergence evidence routes to monitoring, retained-carrier consumption, merge, correction, or synthesis while those actions remain live.
 
 ## Status And Why Continuation
-Status answers follow `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
-Answers to why an expected action did not happen follow `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
+Status answers follow `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
+Answers to why an expected action did not happen follow `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
 After the answer, resume the current owner action unless the user redirects or a user-action blocker is proven.
 
 ## Resolve Next Owner And Action
-- A stopped routine `FINAL` route opens residual queue processing.
-- A stopped proceed-prompt route executes the lead-owned next owner/action.
-- A stopped unsolicited status-prose route continues the active path in the same segment.
-- A stopped partial-arrival prose route continues monitoring, retained-carrier consumption, merge, correction, or synthesis.
+- A routine `FINAL` route with residual queue opens residual queue processing.
+- A lead-owned proceed-prompt route executes the lead-owned next owner/action.
+- A status-prose route with same-segment continuation continues the active path in the same segment.
+- A partial-arrival prose route continues monitoring, retained-carrier consumption, merge, correction, or synthesis.
 
 ## Continuation Rules
 - Process state self-report consumes `.claude/reference/work-execution-core-law.md` `[AUTO-PROC]` continuation rules.
-- Material context-budget pressure does not end the turn or session.
+- Material context-budget pressure routes to retained-carrier preparation, next safe action, or truthful `HOLD`.
 - Retained carriers under the canonical output root are the safe persistence path against auto-compact loss.
 - Active owner prepares auto-compact handoff state (retained carrier completeness, owner-deferral upstream record, resume-action specification) while continuing the active path.
 - Resume these surfaces by executing the next owner/action:
@@ -58,7 +58,7 @@ After the answer, resume the current owner action unless the user redirects or a
   - a satisfied phase boundary remains unconsumed
   - a converged synthesis is unreported
 - On a paused path, resume by executing.
-- On a completed boundary with zero paused lead-owned action, route the status answer through `.claude/reference/reporting-user-reporting-law.md`.
+- On a completed boundary with zero paused lead-owned action, route the status answer through `.claude/reference/reporting-prohibition-law.md`.
 - That status answer terminates the turn only when no same-segment execution remains open.
 - Surface review/proceed prompts for user-requested review, explicit approval requirements, or verified user-owned blockers.
 
@@ -74,10 +74,11 @@ After the answer, resume the current owner action unless the user redirects or a
   - multi-round deliverables through the next round
   - multi-batch deliverables through the next batch
 - For routine milestones, continue through the next owner/action in the same segment.
-- Do not convert remaining same-request patch groups into backlog unless an owning upstream deferral, explicit cancellation, explicit redirect, or proven user-owned blocker exists.
-- Owning upstream deferral is valid only when it satisfies `[USER-DELIVERY-FIT]`; lead-authored waves, batches, samples, priority tiers, context budget, runtime burden, or tool-call pressure do not create it.
+- Remaining same-request patch groups stay in the residual queue and drive the next owner/action until owning upstream deferral, explicit cancellation, explicit redirect, or proven user-owned blocker exists.
+- Owning upstream deferral is valid only when it satisfies `[USER-DELIVERY-FIT]`; lead-authored waves, batches, samples, priority tiers, context budget, runtime burden, and tool-call pressure keep continuation on the next owner/action.
 - Treat lane/shard arrival, single-lane completion, partial fan-out completion, and retained-output availability as routine internal milestones.
 - Surface routine milestones on explicit user request only, and then only as a compact waiting condition without shard inventories unless specifically requested.
+- Any residual same-request work item drives same-request continuation through the next owner/action until the residual queue is empty, lawfully deferred, explicitly cancelled/redirected by the user, or blocked by truthful `HOLD`.
 
 ## Final Convergence
 `FINAL` requires zero residual deliverable convergence.
@@ -88,7 +89,7 @@ A residual queue item closes through:
 - cited out-of-scope proof
 - owning synthesis, proof, validation, or acceptance integration
 Owner deferral closes a residual queue item only with explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis.
-An open residual queue blocks `FINAL`.
+`FINAL` opens only when the residual queue is empty, lawfully deferred, explicitly cancelled/redirected, or blocked by truthful `HOLD`.
 Continue execution until:
 - the queue is empty
 - a true blocker emerges
@@ -96,7 +97,7 @@ Continue execution until:
 - the user explicitly redirects
 
 ## Surface Limit
-Routine reporting follows `.claude/reference/reporting-user-reporting-law.md`.
+Routine reporting follows `.claude/reference/reporting-prohibition-law.md`.
 Clean routine transitions produce no user-facing prose.
-Routine milestones, lane/shard arrivals, partial convergence, satisfied gates, phase transitions, dispatch state, and monitoring state stay Procedure Plane unless `.claude/reference/reporting-user-reporting-law.md` admits a report.
+Routine milestones, lane/shard arrivals, partial convergence, satisfied gates, phase transitions, dispatch state, and monitoring state stay Procedure Plane unless `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception.
 After `session-closeout` owns the path, late outputs narrow residual truth only.

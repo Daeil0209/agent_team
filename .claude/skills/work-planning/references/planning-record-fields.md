@@ -3,7 +3,7 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 Use this file when field-level semantics, allowed values, the internal planning record, `not-applicable` bases, serial reasons, or bounded correction rules are material.
@@ -27,8 +27,11 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for configured independent-review handling and must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
-- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording plus deliverable, user/audience, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
+- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording plus `CONCRETE-DELIVERABLE`, `PRIMARY-USER`, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, active philosophy section or keyword with direct owner/action/stop/evidence/routing/burden effect, target governance/design intent, priority order, route class, owner choice, and next action.
+- `TARGET-INTENT-BASIS` is mandatory when the plan judges, modifies, migrates, reduces, reports on, reviews, proves, validates, or dispatches work for an existing artifact or existing-governance surface.
+- `TARGET-INTENT-BASIS` is mandatory when a target artifact, program, report, document, governance surface, proof path, acceptance path, or downstream lane needs target purpose or protected outcome.
+- `TARGET-INTENT-BASIS` records cited design intent, applicable core-law axes, target purpose, material solution-structure or scope-boundary basis, affected owner surfaces, drift stop, or `not-applicable:<basis>` allowed by `.claude/reference/detailed-design-core-law.md`.
 - `COMPLETION-STOP-CONDITION` is mandatory for consequential plans and must derive from the user instruction, deliverable type, proof/acceptance defaults, and active workflow or sequence exit law.
 - It names the smallest practical closure condition a reasonable owner can verify, the evidence that proves closure, and the condition that keeps the owner open or routes `HOLD`.
 - Valid terminal states are deliverable closure, explicit user-accepted deferral, lawful owner deferral under `[USER-DELIVERY-FIT]`, or `HOLD` with truthful blocker.
@@ -36,19 +39,20 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `TEAM-LEAD-WORK-PLAN` is mandatory for consequential plans and must name the material phases, owner for each phase, action, stop/evidence, verification or review need, iteration or re-entry condition, and termination plan.
 - `TEAM-LEAD-WORK-PLAN` is authored by `team-lead` and carries the procedure that `team-lead` will execute, route, monitor, synthesize, verify, and close.
 - `TEAM-LEAD-WORK-PLAN` derives from the user instruction and chosen route; `COMPLETION-STOP-CONDITION` supplies its final closure row.
+- Each phase row carries `UPSTREAM-DECISION-BASIS` as the material reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis it consumes, passes forward, supersedes, or marks `not-applicable:<basis>`.
 - Each phase row records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane owner, or `HOLD:<basis>`.
 - Place `Skill(governance-modification)` at a planned governance asset change or recurrence-barrier hardening row.
 - Place `Skill(review-verification)` under `Skill(self-verification)` for produced synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 - A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
-- A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly accepted as deferred/out-of-scope, or blocked by a truthful `HOLD`.
+- A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly user-accepted as deferred/out-of-scope, lawfully owner-deferred, or blocked by a truthful `HOLD`.
 - Governance defect or removal audit plans keep review-promotion rows distinct from lead synthesis rows.
 - Governance patch plans keep the governance-modification change loop open until every same-request `patch-ready` row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
 - `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `Skill(review-verification)` promotion basis.
 - `REQUEST-BOUND-PACKET-FIELDS` is mandatory as `[]` or the exact request-bound fields that `task-execution` must carry into downstream assignment packets.
-- When the frozen request, plan, MVP, release, or phase contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, `REQUEST-BOUND-PACKET-FIELDS` must include row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES`.
+- When the frozen request, plan, MVP, release, or phase contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, `REQUEST-BOUND-PACKET-FIELDS` must include row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, and applicable `CORE-WORKFLOW-CLOSURE` rows for executable user-facing software.
 - Baseline rows name proofable feature, workflow, surface, control, data, artifact, or reader/operator expectations; module, epic, or screen labels are parent headings only.
 - Implemented artifacts cannot be used later to invent the completion scope.
 - Multi-wave routes record per-wave `SCOPE-BASELINE` against the frozen deliverable scope.
@@ -107,7 +111,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 | knowledge-analysis-output (market / technology / patent / literature / standards analysis supports a decision, report, or downstream artifact) | researcher for source-family method and evidence packet; document-automation when a reader-facing report or generated document is produced |
 | evidence-bound-generation-program (program ingests sources and generates reports, analyses, or decision artifacts) | researcher evidence schema + document-automation generation contract + software-architecture implementation contract |
 | engineering-calculation-or-design-tool (formula, standard, unit, tolerance, or operating-condition correctness determines acceptance) | engineering-grounding and mathematical-correctness for developer-owned design/production; oracle basis for review, proof, and validation lanes |
-| receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned producer self-review and reviewer-owned clarity review |
+| receiver-comprehension-decisive (next owner / reader / decider acts from this artifact alone) | feynman-clarity for developer-owned lane-local `Skill(self-verification)` and reviewer-owned clarity review |
 | executable-on-receiver-runtime (deliverable runs on operator's actual environment) | operator-delivery reference (loaded by dev-workflow at Phase 1/2/4/5) |
 
 This table is the trigger floor.
@@ -141,17 +145,18 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
 - `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
 - Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
-- If execution reveals a new consequential local item that is not frozen here, stop and reopen `work-planning`.
+- If execution reveals a new consequential local item that is not frozen here, reopen `work-planning`.
 - A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
 - That bounded correction exception ends immediately when execution reveals a moved `work-planning` boundary-change axis or route ambiguity.
-- Do not treat the full planning record as the outbound agent message. Downstream agent communication must receive a bounded assignment packet derived from this freeze by `task-execution`.
+- Downstream agent communication receives a bounded assignment packet derived from this freeze by `task-execution`; the full internal planning record stays in team-lead carry-forward.
 
 ## Internal Planning Record Template
-Hold this record in current-turn context only. Do not print it to the user, mirror it to a continuity file, or forward it as an agent packet.
+Hold this record in current-turn context only. User-facing output, continuity files, and agent packets receive admitted or bounded derived surfaces instead of this full record.
 
 ```
 REQUEST-FIT-BASIS:
 SEMANTIC-INTENT-BASIS:
+TARGET-INTENT-BASIS:
 COMPLETION-STOP-CONDITION:
 DERIVED-DEFAULTS:
 CLAIM-CEILING:

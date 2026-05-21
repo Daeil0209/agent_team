@@ -6,23 +6,6 @@ source "$(dirname "$0")/lib/hook-tool-response.sh"
 
 INPUT="$(cat)"
 
-schedule_current_pane_shutdown() {
-  local tmux_ref="${TMUX:-}"
-  local pane_id="${TMUX_PANE:-}"
-  local socket_path=""
-
-  [[ -n "$tmux_ref" && -n "$pane_id" ]] || return 0
-  command -v tmux >/dev/null 2>&1 || return 0
-
-  socket_path="$(printf '%s' "$tmux_ref" | cut -d',' -f1)"
-  [[ -n "$socket_path" ]] || return 0
-
-  (
-    sleep 1
-    tmux -S "$socket_path" kill-pane -t "$pane_id" >/dev/null 2>&1 || true
-  ) >/dev/null 2>&1 &
-}
-
 _track_update_worker_idle_notice_locked() {
   local worker_name="${1:?agent name required}"
   local target_file="$WORKER_IDLE_NOTICE_FILE"
@@ -257,7 +240,6 @@ if [[ "$TOP_TYPE" == "shutdown_response" || "$NESTED_TYPE" == "shutdown_response
   if [[ "$SENDER_IS_WORKER" == "true" && -n "$SENDER_NAME" ]]; then
     clear_worker_idle_notice "$SENDER_NAME"
     remove_worker_everywhere "$SENDER_NAME"
-    schedule_current_pane_shutdown
   fi
   exit 0
 fi

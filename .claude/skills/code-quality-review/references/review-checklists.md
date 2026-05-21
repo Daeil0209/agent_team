@@ -3,14 +3,15 @@ PRIMARY-OWNER: reviewer
 SOURCE-ANCHOR: .claude/skills/code-quality-review/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 # Code Quality — Reference Material
 Reference checklists, tables, and catalogs for `code-quality-review`.
 Read this file explicitly when needed; it is not auto-injected on Skill load.
-# Code Quality Deep Review
-## 1. SOLID Principles Checklist
+
+## Code Quality Deep Review
+### 1. SOLID Principles Checklist
 Concrete, actionable per-principle checks before accepting implementation work:
 - **SRP (Single Responsibility):** A class/function fails SRP when it has more than one reason to change. A compound name containing "and" is a split trigger only when it bundles independent change reasons, actor responsibilities, persistence/UI/domain concerns, or lifecycle states. Descriptive compound names are SRP evidence only; split only when the responsibility boundary is proven.
 - **OCP (Open/Closed):** Can behavior be extended without modifying existing code? Are there hardcoded if/else chains for type dispatch? If yes → refactor to extension point.

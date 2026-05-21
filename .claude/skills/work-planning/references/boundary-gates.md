@@ -3,10 +3,10 @@ PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/work-planning/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
-REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
-Use this file when activation scope, corpus measurement, same-boundary exclusion, boundary-change axes, hard stops, or post-planning gate detail is material.
+Use this file when activation scope, corpus measurement, same-boundary exclusion, boundary-change axes, hard routing gates, or post-planning gate detail is material.
 
 ## Corpus Measurement Gate
 - Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
@@ -14,7 +14,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
 - Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
 - Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
-- Do not block a lawful measurement command only to hide host-native tool output.
+- Run lawful measurement commands when they supply required work evidence, even when host-native tool output is visible.
 - Reporting discipline controls assistant-authored prose; it does not reduce or suppress measurement evidence required for the work.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
@@ -42,11 +42,17 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Analysis result ends the exclusion when it moves a boundary-change axis.
 
 ## Boundary-Change Axes
-- Boundary-change axes are owner/phase, surface/artifact, deliverable, proof/acceptance chain, route/dispatch shape, staffing/parallel shape, skill basis, and user requirement.
+- Boundary-change axes are owner/phase, design basis, surface/artifact, deliverable, proof/acceptance chain, route/dispatch shape, staffing/parallel shape, skill basis, and user requirement.
 - The owner/phase axis moves when:
   - owner lane changes
   - workflow phase changes
   - sequence owner changes
+- The design-basis axis moves when:
+  - `TARGET-INTENT-BASIS` changes
+  - cited design intent changes
+  - applicable core-law axes change
+  - solution-structure basis changes
+  - scope boundary or drift stop changes
 - The surface/artifact axis moves when:
   - target artifact changes
   - user surface changes
@@ -81,7 +87,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Same-boundary correction requires every axis to cite the current frozen value.
 - A moved axis reopens `work-planning`.
 
-## Hard Stops
+## Hard Routing Gates
 - `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, blocker-clear move, authorization request, or `HOLD`.
 - Consequential planning names the team-lead work plan before `NEXT-CONSEQUENTIAL-ACTION`; the next action executes the first row and carries the remaining rows as internal continuation.
 - Planning opens one next owner/action before:
@@ -155,5 +161,5 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Measurement gaps open bounded corpus measurement.
 - Boundary-change findings reopen `work-planning`.
 - Same-boundary findings return to the active workflow owner.
-- Hard-stop failure opens `HOLD`, blocker-clear, or reopened owner.
+- Hard routing-gate failure opens `HOLD`, blocker-clear, or reopened owner.
 - Completed post-planning gate opens the named next owner/action.
