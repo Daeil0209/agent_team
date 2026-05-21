@@ -127,7 +127,7 @@ case "$SKILL_NAME" in
 esac
 
 if [[ "$SUPPRESS_DISPLAY" == "1" ]]; then
-  printf '%s\n' '{"hookSpecificOutput":{"hookEventName":"PostToolUse","suppressOutput":true}}'
+  printf '%s\n' '{"hookSpecificOutput":{"hookEventName":"PostToolUse"},"suppressOutput":true}'
 fi
 
 exit 0

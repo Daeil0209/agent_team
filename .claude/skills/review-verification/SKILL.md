@@ -1,8 +1,7 @@
 ---
 name: review-verification
-description: Return bounded review packets for team-lead-controlled callers that need live design-intent, coherence, procedure-adherence, skill-consumption, execution-force, negative-risk, or patch-worthiness judgment before correction, routing, mutation, or closure.
+description: Return bounded review packets for active callers that need live design-intent, coherence, procedure-adherence, skill-consumption, execution-force, negative-risk, or patch-worthiness judgment before correction, routing, mutation, or closure.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
@@ -50,11 +49,12 @@ When another owner consumes this skill, review-verification returns only the bou
 - `Skill(governance-modification)` - calls this skill for governance patch design, mutation readiness, and material post-change coherence, then consumes the returned packet inside the change sequence.
 
 ## Purpose
-Use this skill when a team-lead-controlled or validator-controlled caller supplies a bounded review question for exhaustive review, dev-workflow correction review, design-intent analysis, coherence analysis, skill-consumption fit judgment, toxic-rule judgment, removal judgment, or patch-readiness judgment. Validator runs the full workflow before issuing PASS/HOLD/FAIL on governance-asset change, multi-lane review synthesis, audit-grade verdict, defect classification, or patch-worthiness validation targets.
+Use this skill when an active owner path supplies an authorized bounded review question for exhaustive review, dev-workflow correction review, design-intent analysis, coherence analysis, skill-consumption fit judgment, toxic-rule judgment, removal judgment, or patch-readiness judgment. Validator runs the full workflow before issuing PASS/HOLD/FAIL on governance-asset change, multi-lane review synthesis, audit-grade verdict, defect classification, or patch-worthiness validation targets.
 
 Default review mode is exhaustive across the frozen target corpus.
 User-narrowed scope defines the bounded corpus when the user explicitly narrows the review.
 Incomplete exhaustive inspection blocks `FINAL`, full-corpus, and no-open-surface claims.
+Priority tiers, samples, waves, or representative slices narrow only the inspected claim unless the frozen corpus is fully promoted or the user explicitly narrows scope.
 Report uninspected surfaces as `OPEN-SURFACES`; downgrade to `UNVERIFIED` when partial inspection still supports a narrowed claim, or to `HOLD` when corpus boundary, design-intent basis, or owner surface cannot be inspected.
 
 Prevent these failures:
@@ -76,11 +76,11 @@ Prevent these failures:
 - For any listed `.claude/reference/*-core-law.md`, also consume that core law's triggered `## Reference Map` subreferences.
 - `.claude/reference/review-and-verification-core-law.md`: load when the bounded review question concerns evidence quality, verification truth, live intent, coherence, execution force, negative risk, or patch-worthiness judgment.
 - `.claude/reference/judgment-core-law.md`: load when the bounded review question concerns acceptance readiness, final-arbitration readiness, independent-lane separation, verdict support, or `PASS/HOLD/FAIL` judgment risk.
-- `.claude/reference/modification-core-law.md`: load when the bounded review question concerns governance patch design, removal-first choice, compression, consumed owner surface, mutation readiness, or meaning preservation.
+- `.claude/reference/modification-core-law.md`: load when the bounded review question concerns governance patch design, removal-first choice, simplification, compression, consumed owner surface, mutation readiness, or meaning preservation.
 - `references/governance-review-gates.md`: detailed claim review, artifact-change review, synthesis and finding-promotion review, and patch-worthiness review gates.
 
 ## Activation
-Full workflow path: the team-lead-controlled or validator-controlled calling owner activates this skill for cross-surface review synthesis and runs the numeric workflow at the authorized claim scope.
+Full workflow path: `team-lead` or bounded `validator` owner activates this skill for cross-surface review synthesis and runs the numeric workflow at the authorized claim scope.
 Defect-promotion path: the full workflow path when the target promotes defect, removal, patch-worthiness, or correction-priority labels.
 Validator caller path: `validator` runs the full workflow before issuing PASS/HOLD/FAIL when the assigned validation target is governance-asset change, multi-lane review synthesis, audit-grade verdict, defect classification, or patch-worthiness judgment; validator cites the returned `review_verification_packet` fields in the verdict.
 Packetization lens path: `team-lead`, a loaded meeting procedure, or another authorized owner uses this skill to name exact downstream lane or participant lenses; the receiver consumes only those packet fields unless `team-lead` or `validator` retains the full workflow path.
@@ -94,8 +94,9 @@ Activation triggers when the active authorized caller, assignment packet, or mee
 - dev-workflow result review or correction reliance that controls phase movement, redispatch, validation ingress, or completion truth
 - design intent, team philosophy, or owner-boundary judgment
 - negative-risk, no-regression, or safety judgment
-- removal-centered optimization or bottleneck/toxic-rule detection
+- removal-centered optimization, simplification, or bottleneck/toxic-rule detection
 - patch-worthiness or improvement-candidate selection
+- governance audit or defect-sweep binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-readiness, or patch/no-patch selection
 
 For ordinary code review, the active review owner records the applicable named lens or full workflow when the reviewed surface needs cross-surface integrity, design-intent, or risk-balance judgment.
 
@@ -115,7 +116,7 @@ Packetization lens lane packets may name only these bounded `review-verification
 - `skill-consumption-lens`: test whether a material skill method is reachable from the triggered consuming surface, named in the packet or owner path when required, applied before the claim, and recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` with its effect on the intended outcome.
 - `coherence-integrity-lens`: test adjacent live owner surfaces for contradiction, stale duplicate wording, broken reference, or missing destination owner.
 - `governance-continuity-lens`: test top-doctrine to mapped core-law executable detail and core-law to trigger-bound owner-reference guidance when governance meaning changes execution.
-- `minimum-executable-information-lens`: test whether governance text has the smallest complete executable information, no non-executed burden, and no evasion-enabling, ambiguous, conflicting, or bottleneck-forming wording.
+- `minimum-executable-information-lens`: apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` `minimum-executable-information`, including direct executable wording, execution-critical field preservation, non-executed burden removal, and direct simplification when simplification is claimed.
 - `negative-risk-lens`: test meaning loss, weaker procedure, added burden, user-surface regression, runtime side effect, and reuse failure.
 - `removal-first-lens`: classify the challenged consumed surface as removal-default before mutation; record retention-exception only when `.claude/reference/modification-minimal-governance-change-law.md` proves removal would lose protected function.
 - `patch-worthiness-lens`: test confirmed-defect basis, protected-function preservation, smallest owner, operation type, and no stronger narrower alternative.
@@ -159,7 +160,7 @@ Required fields:
 
 `PROCEDURE-EXECUTION-RESULT` records `skill-consumption-lens` results when skill consumption materially affects outcome, proof, acceptance, or procedure execution.
 `COHERENCE-RESULT` records `governance-continuity-lens` upper-to-core and core-to-trigger-bound results when governance meaning changes execution.
-`COHERENCE-RESULT` records `minimum-executable-information-lens` under-specified and over-specified results when governance wording controls execution.
+`COHERENCE-RESULT` records `minimum-executable-information-lens` under-specified, over-specified, and direct simplification results when governance wording controls execution.
 `COHERENCE-RESULT` records evasion-enabling, ambiguous, conflicting, and bottleneck-forming results when governance wording controls execution.
 `PATCH-WORTHINESS` records open upper-to-core gaps or corrected upper-to-core coverage before positive patch-worthiness.
 `PATCH-WORTHINESS` records core-to-trigger-bound gaps, corrected guidance, or valid core-to-trigger-bound `not-material:<basis>` before positive patch-worthiness.
@@ -188,6 +189,7 @@ Patch sequence handoff eligibility requires:
 Narrative claims of completed steps do not satisfy this gate.
 Rerun from the earliest skipped step after a procedural failure.
 If a mutation already exists before handoff eligibility, treat the current diff as the review target, route it through Steps 1-14, and execute only the corrected eligible patch path.
+This is corrective review only; it does not satisfy the missed pre-mutation review requirement, erase the recurrence-class defect, or bypass the failed pre-mutation route owned by `Skill(governance-modification)`.
 
 This skill has one workflow; every use follows this numeric order at the authorized claim scope.
 Bounded named-lens consumption narrows target, corpus, required fields, and claim ceiling.
@@ -230,6 +232,8 @@ Combine shard or local findings into one evidence map.
 Classify findings from owner semantics and operating effect.
 Use the finding-state ladder from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 Keep high-recall discovery in `candidate-evidence` or `candidate-classified` until filtering proves promotion.
+Treat binding candidate rejection, ranking, prioritization, correction-priority, removal, patch-readiness, and patch/no-patch selection as filtering work inside this defect-promotion path.
+For exhaustive, full-corpus, whole-folder, or governance-audit scope, run promotion across the frozen corpus or keep unpromoted items open; do not present tier-only or sample-only filtering as corpus-wide promotion.
 Promote evidence-only observations only when the common finding basis proves `confirmed-defect`; defect, removal, patch-worthiness, and correction-priority promotion use this defect-promotion path.
 After `confirmed-defect`, decide `patch-worthy` only when protected-function preservation, smallest owner, selected operation type, regression risk, and rejection of `protected-restatement`, `design-tradeoff`, and `non-issue` are current.
 After `patch-worthy`, decide `patch-ready` only when current patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis are current.
@@ -281,6 +285,7 @@ Split bundled sentences per `.claude/reference/modification-minimal-governance-c
 Use direct executable wording naming owner, trigger, action, stop, and evidence per `.claude/reference/work-execution-core-law.md` `[RULE-FORCE]`.
 Replace ambiguous terms with explicit owner, trigger, action, stop, and evidence terms.
 Delete descriptive, explanatory, additivity-narrating, alongside/non-substitution-framing, or philosophical wording when direct executable wording preserves the rule; do not retain such wording as patch padding.
+Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` `minimum-executable-information` simplification; reject a simplification patch that does not directly express the owner action or directly reduce procedure steps, branch paths, consumed documents, or repeated consumption points without losing execution-critical fields.
 `REMOVAL-FIRST-PATCH-DESIGN` records the Patch-Ready Gate result:
 - failing execution path
 - consumed execution surface that carries the rule action
@@ -326,7 +331,7 @@ Before live patch execution, verify the structural contract.
 Verify fixed order.
 Verify protected local restatement.
 Verify source-to-destination meaning.
-Verify minimum executable information.
+Verify minimum executable information and direct simplification result.
 Verify no evasion-enabling, ambiguous, conflicting, or bottleneck-forming wording remains on the patched execution path.
 Verify top-doctrine to mapped core-law executable detail when execution meaning changed.
 Verify core-law to trigger-bound owner-reference guidance when situation-specific guidance is material.

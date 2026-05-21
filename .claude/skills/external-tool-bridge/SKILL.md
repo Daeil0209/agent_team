@@ -2,7 +2,6 @@
 name: external-tool-bridge
 description: Handle bounded external-tool or external-service bridging, setup verification, fallback capture, cleanup truth, and blocked-condition reporting while adjacent role ownership stays intact. Use when an external API, connector, MCP path, browser/client automation, or bridge setup materially blocks truthful delivery.
 user-invocable: false
-PRIMARY-OWNER: developer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

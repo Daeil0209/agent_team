@@ -30,6 +30,8 @@ When this core law is consumed, use this file as the representative law and load
 - Missing next owner or next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit, convenience, source memory, and model confidence.
 - Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
+- Frozen `COMPLETION-STOP-CONDITION` and `SCOPE-BASELINE` remain binding until deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker.
+- Lead-authored wave, batch, sample, priority tier, context limit, runtime limit, or convenience plan cannot redefine frozen completion or scope.
 - `Skill(self-verification)` plan audit is exception-only per `.claude/skills/self-verification/SKILL.md` `## Activation Trigger` plan-audit conditions.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
@@ -44,6 +46,7 @@ When this core law is consumed, use this file as the representative law and load
 - `task-execution` owns assignment-grade team dispatch.
 - `session-closeout` owns teardown truth.
 - `Skill(governance-modification)` owns `.claude` asset changes and recurrence-barrier hardening.
+- Before `.claude` governance asset mutation, the active owner opens `Skill(governance-modification)`; mutation without that active path is a Work Execution Philosophy violation and routes to `Skill(governance-modification)` or recurrence hardening.
 - When two or more sequence triggers fire on the same boundary, the active boundary owner selects the primary sequence by declared purpose and boundary-axis match.
 - When no primary is chooseable by purpose, stop and resolve the boundary ownership conflict before proceeding.
 - Light channels are `answer-only`, `self-verification-only audit`, and `notification-only carry-forward`.
@@ -62,6 +65,9 @@ When this core law is consumed, use this file as the representative law and load
 - Operator-policy-choice applies when doctrine and evidence cannot determine one best reversible path.
 - Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
 - Inferring user prioritization, batching, route, staffing, parallelism, dispatch, or continuation preference without explicit user expression is invalid escalation basis.
+- Status, count, or yes/no questions are reporting requests; they do not create or change continuation, route, staffing, parallelism, dispatch, validation, cleanup, or task-mutation authorization.
+- Self-directed scope reduction, sample-only completion, tier-only completion, wave-only completion, or partial-with-deferral is invalid unless explicit user instruction or `[USER-DELIVERY-FIT]` lawful deferral basis is recorded.
+- Resource, context, runtime, turn, response-length, or tool-call pressure that prevents the next safe action opens `HOLD` or user-action blocker; it does not open completion, deferral, dispatch, or validation.
 - The agent stops and routes to the user when user-preference expression is required.
 
 ## Parallelism And Bottleneck Law
@@ -71,10 +77,11 @@ When this core law is consumed, use this file as the representative law and load
 - `work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - The cap basis records explicit user maximum when present, current runtime/session ceiling when present, host capability limit, and default basis.
 - Additional-agent plans cannot exceed the frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
+- Active cap count includes live or standby lane members until shutdown or termination evidence removes them from the active roster.
 - Same-lane follow-on work evaluates live or standby member reuse before shutdown or new member creation.
 - Reuse-fit holds only when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, and active cap.
 - Shutdown before same-lane new member creation requires reuse-fit failure, dead-or-unavailable target, lane absence, lane no-longer-needed basis, or active `session-closeout` teardown.
-- Serial convenience over independent surfaces is a `bottleneck defect`.
+- Serial convenience over independent surfaces is a `bottleneck defect` only when it causes the top-doctrine bottleneck delay pattern without dependency, evidence, safety, verification, or acceptance basis.
 - Over-broad blocking is a defect.
 
 ## Skill And Reference Consumption Law

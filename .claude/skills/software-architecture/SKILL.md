@@ -2,7 +2,6 @@
 name: software-architecture
 description: Provide high-confidence software design instructions for implementation architecture, modular boundaries, state models, interfaces, and hard logic paths. Use when software structure, module contracts, persistence boundaries, or architecture decisions materially affect implementation or review.
 user-invocable: false
-PRIMARY-OWNER: developer
 model: opus
 effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md

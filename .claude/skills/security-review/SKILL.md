@@ -2,7 +2,6 @@
 name: security-review
 description: Review security risk with OWASP checklist, detection patterns, dependency risk, and severity framework. Use when authentication, authorization, secrets, input handling, dependency security, exposure, or security-sensitive behavior materially affects implementation or review.
 user-invocable: false
-PRIMARY-OWNER: reviewer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

@@ -59,6 +59,7 @@ Operating discipline:
 - Apply `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 - Default to applying value-adding bounded patches when evidence and net benefit are clear.
 - Defer high-burden patches with marginal or speculative value.
+- This high-burden deferral rule does not apply to user-requested `patch-ready` rows or frozen `SCOPE-BASELINE` rows.
 - Apply high-burden patches with marginal or speculative value only under explicit user direction.
 - Defer with documented evidence.
 - If a hook, gate, or guard blocks legitimate work, first narrow the blocking mechanism through the owning change sequence.
@@ -68,6 +69,7 @@ Operating discipline:
 - Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
 - Resolve derivable answers through active doctrine and evidence.
 - Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
+- Deferral that changes frozen deliverable scope, `SCOPE-BASELINE`, completion stop, review-promotion coverage, patch-loop coverage, or validation scope is operator-policy-choice unless explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis is already recorded.
 - A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance modification cycles.
 - Step-to-step continuation inside such a plan is autonomous; plan freeze authorizes the whole sequence.
 - The lead proceeds from each completed-and-verified step to the next planned step without intermediate user query.

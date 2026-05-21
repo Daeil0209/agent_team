@@ -2,7 +2,6 @@
 name: work-tool-patterns
 description: Turn benchmark-backed practical work-tool patterns into reusable product structure, operator-surface contracts, persistence/import/export expectations, and proof oracles. Use when personal or team internal tools, dashboards, workflow apps, analysis tools, report automation, calculation helpers, or spreadsheet migrations need operational product-pattern structure.
 user-invocable: false
-PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---

@@ -2,7 +2,6 @@
 name: benchmark-simulation
 description: Use benchmark and external-reference comparison for scenario/team-shape choices, design/UX/structural/methodology synthesis, verification-method selection, and capability-growth evidence.
 user-invocable: false
-PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: researcher
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---

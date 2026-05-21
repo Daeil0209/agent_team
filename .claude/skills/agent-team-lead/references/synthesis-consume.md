@@ -53,6 +53,7 @@ Record:
 ## Verification Gate
 Before team-lead uses lane-produced, multi-source, or synthesized analysis for `Skill(review-verification)`, `Skill(governance-modification)`, redispatch, mutation, or user-facing report, team-lead loads `Skill(self-verification)` and verifies that exact analysis result plus proposed next owner/action.
 When multi-lane candidate analysis will open `Skill(review-verification)`, team-lead first synthesizes the evidence-only candidate map, then loads `Skill(self-verification)` to verify that synthesized map and proposed review target/next owner.
+When an operator-directed governance audit or defect sweep returns high-recall candidates, team-lead self-verifies only candidate-map integrity, lane-local candidate-state preservation, and the proposed review target; binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-worthiness, patch-readiness, or patch/no-patch selection cannot be `owner-local-sufficient` and opens `Skill(review-verification):<bounded-question>`.
 The gate remains open without current result-verification evidence from an actually-loaded `Skill(self-verification)` run; self-verification-shaped blocks authored inside the synthesis carrier, retained outputs, or report drafts do not satisfy the gate.
 Full-corpus, multi-shard, defect-classifying, patch-worthiness, removal, or high-risk governance judgment requires independent verification unless the configured or assigned independent surface records unavailable, blocked, not-applicable, or `fail-open:*` basis from its owner.
 Do not silently downgrade the gate; unavailable independent verification keeps claim strength conservative and records the unavailable or fail-open basis.
@@ -72,6 +73,7 @@ Stop positive synthesis when:
 - the conclusion outruns the reconciled verified surface
 - required shard or lane outputs are missing, late, pending, unintegrated, contradictory, only screen-visible, or not explicitly deferred/out-of-scope
 - any emitted finding, pattern, ranking item, class bucket, defect group, patch recommendation, or redispatch basis lacks applicable per-claim basis
+- a promotion, stamp, closure, or skill-applied claim relies on procedural wording, skill names, labels, tool-call presence, reviewer-style language, or synthesis wording instead of current execution records at the same claim scope
 - quality, evidence, independent review, proof, validation, Codex independent review, Final Acceptance Review (FAR) gates, protected restatements, or owner-boundary repetitions are criticized without protected-function preservation analysis
 - a meaning-dependent synthesis claim uses literal wording or target-purpose evidence while omitting or contradicting the frozen `SEMANTIC-INTENT-BASIS`
 - `[RETRO-APPLY]` affected prior evidence remains stale or unclassified

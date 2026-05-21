@@ -24,10 +24,13 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
 - `EVIDENCE-BASIS`
+- `VERIFIED-DATA-FEEDBACK`
 - `OPEN-SURFACES`
 - `FROZEN-CONTRACT-STATUS`
+- `SCOPE-COVERAGE` records covered `SCOPE-BASELINE` rows, actual `ACTIVE-SLICE`, carried `DEFERRED-SURFACES`, and open baseline rows.
 - `LANE-NEXT-CANDIDATE`
 - `PLANNING-BASIS: loaded`
+- `SKILL-FIELD-CONSUMPTION` records each non-empty, material, invalid, or blocked `REQUIRED-SKILLS` entry as `applied` or `blocked:<basis>` and every carried `SKILL-RECOMMENDATIONS` entry as `applied`, `not-material:<basis>`, or `blocked:<basis>`; use `not-applicable:<basis>` only when the packet carried no skill fields and no material skill was discovered during lane work
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
 - `PRODUCER-SELF-REVIEW-PASS` records:
@@ -39,12 +42,16 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
   - Producer self-review is not self-approval or independent acceptance.
 - `LANE-LOCAL-RESULT-VERIFICATION` — loaded `Skill(self-verification)` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
 
+`VERIFIED-DATA-FEEDBACK` records every material returned fact, count, finding, state label, recommendation, or verdict input with its evidence basis and verification state.
+Use `not-applicable:<basis>` only when the assignment requested no material returned data and the lane returns no material data.
+Unsupported, inferred, stale, memory-only, or uninspected data is not verified feedback; place it in `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
+
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
 Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
-After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Shared Task State Contract` when task tracking is active.
+After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Assignment Delivery Contract` when task tracking is active.
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `PRODUCER-SELF-REVIEW-PASS` and `LANE-LOCAL-RESULT-VERIFICATION`.
+Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `VERIFIED-DATA-FEEDBACK`, `PRODUCER-SELF-REVIEW-PASS`, and `LANE-LOCAL-RESULT-VERIFICATION`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
@@ -97,6 +104,8 @@ Examples of transient invocations are one-off linter, single-pass test harness, 
 
 Lane docs require bounded additions only when they preserve this common result spine.
 Completion names selected methodology or capability skills, material direct references applied or blocked, material tool/proof capability used or blocked, and work-surface basis.
+Completion without `VERIFIED-DATA-FEEDBACK` is not completion-grade when the assignment requested or the lane returns material facts, counts, findings, state labels, recommendations, or verdict inputs.
+Completion without `SKILL-FIELD-CONSUMPTION` is not completion-grade when the assignment packet carried non-empty `REQUIRED-SKILLS`, any `SKILL-RECOMMENDATIONS`, or any invalid, blocked, or material skill-field entry.
 If a material specialist skill, direct reference, or decisive tool was omitted, unavailable, or only named without shaping the work, the gap stays in `OPEN-SURFACES` or routes through `scope-pressure` / `hold|blocker` instead of completion-ready transport.
 Team-lead reviews that basis against the completed work and sends correction to the owning lane when direction drifts.
 When material, `EVIDENCE-BASIS` names the Evidence-Quality Matrix rows supporting the completion claim.
@@ -153,7 +162,9 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
 - Do not repeat the state signal across header/preview/body.
 - Do not include any field other than the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
-- Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
+- Transport only lane-local execution truth in the retained carrier: the surface actually examined or changed, `SCOPE-COVERAGE`, `VERIFIED-DATA-FEEDBACK`, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
+- Missing `SCOPE-COVERAGE` makes the completion spine incomplete when the lane output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
+- Wave, sample, priority-tier, or representative-slice completion stays scoped to `ACTIVE-SLICE`; it cannot state or imply full-scope completion, validation, promotion, rejection, or patch selection unless `SCOPE-COVERAGE` covers the frozen `SCOPE-BASELINE`.
 - Verdict or `PASS` language remains scoped to the transported lane evidence; wider acceptance, route closure, and broader user-surface proof require team-lead synthesis and the owning acceptance route.
 - Completion exposes quality-relevant open surfaces clearly enough that the downstream owner can act without rediscovery.
 - `LANE-NEXT-CANDIDATE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.

@@ -2,7 +2,6 @@
 name: codex-independent-review
 description: Run configured Codex MCP independent review as evidence for planning, artifact convergence, review convergence, final acceptance reconciliation, or owner-defined checks without replacing owner authority.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

@@ -2,7 +2,6 @@
 name: mockup-to-component
 description: Convert UI mockups into framework-ready component boundaries, slots, props, token bridges, and data/interface contracts. Use when mockup-based UI work needs implementation-ready component structure.
 user-invocable: false
-PRIMARY-OWNER: developer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

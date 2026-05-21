@@ -60,8 +60,8 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - agent -> `team-lead` uses message-class transports (`dispatch-ack`, `status`, `scope-pressure`, `completion`, exact `hold|blocker`).
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
-- Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, and `TaskStop`.
-- Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract`.
+- Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, and `TaskList`; `TaskOutput` and `TaskStop` are background-task inspection/control, not task-list identity.
+- Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
 - Agent name alone is not task identity.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.

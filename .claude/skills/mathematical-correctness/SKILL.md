@@ -2,7 +2,6 @@
 name: mathematical-correctness
 description: Protect mathematical correctness, derivation fidelity, notation clarity, assumptions, and problem-sequencing quality. Use when derivations, formulas, quantitative explanations, numerical results, or math-sensitive automation materially affect implementation or review.
 user-invocable: false
-PRIMARY-OWNER: developer
 model: opus
 effort: high
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md

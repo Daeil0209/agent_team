@@ -75,6 +75,7 @@ After the answer, resume the current owner action unless the user redirects or a
   - multi-batch deliverables through the next batch
 - For routine milestones, continue through the next owner/action in the same segment.
 - Do not convert remaining same-request patch groups into backlog unless an owning upstream deferral, explicit cancellation, explicit redirect, or proven user-owned blocker exists.
+- Owning upstream deferral is valid only when it satisfies `[USER-DELIVERY-FIT]`; lead-authored waves, batches, samples, priority tiers, context budget, runtime burden, or tool-call pressure do not create it.
 - Treat lane/shard arrival, single-lane completion, partial fan-out completion, and retained-output availability as routine internal milestones.
 - Surface routine milestones on explicit user request only, and then only as a compact waiting condition without shard inventories unless specifically requested.
 
@@ -86,6 +87,7 @@ A residual queue item closes through:
 - owning upstream deferral
 - cited out-of-scope proof
 - owning synthesis, proof, validation, or acceptance integration
+Owner deferral closes a residual queue item only with explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis.
 An open residual queue blocks `FINAL`.
 Continue execution until:
 - the queue is empty

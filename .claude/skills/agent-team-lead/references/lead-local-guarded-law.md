@@ -76,7 +76,7 @@ Otherwise apply `[PARALLEL]` and route through one-time same-session `Skill(task
 - If a new surface appears, reopen `work-planning`.
 - If route ambiguity appears, reopen `work-planning`.
 - If a stronger claim appears, reopen `work-planning`.
-- Lead-local required skills must be loaded and applied before local work.
+- Lead-local required skills must be loaded before local work and applied at the first material work surface where they can shape the result.
 - A lead-local specialist skill must declare `SECONDARY-CONSUMER: team-lead` or have another frozen lawful support basis.
 - When a named local required skill is unavailable, reopen `work-planning`.
 - When `work-planning` leaves the skill gap unresolved, report `HOLD`.

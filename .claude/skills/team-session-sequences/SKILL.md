@@ -2,7 +2,6 @@
 name: team-session-sequences
 description: Provide session-sequence index and lead-side dispatch/detail lookup for team runtime. Use when packet readiness, dispatch sequencing, runtime monitoring, upward completion, or parallel shard merge discipline is active.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 
@@ -20,7 +19,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Session doctrine attaches to an owning sequence or gate block.
 - Keep long packet tables, sizing rules, shard/merge detail, and completion field catalogs in direct files under `references/`.
 - Keep the mandatory trigger, owner, and stop rule in this spine.
-- PRIMARY-OWNER: team-lead
 - Fixed close section: `Resolve Next Owner And Action`
 
 # Team Session Sequences

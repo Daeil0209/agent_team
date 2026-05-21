@@ -130,6 +130,7 @@ After a process state report, the active owner takes the next truthful action in
 `user-action blocker` reports the blocked user decision/action and the smallest safe next step.
 `explicit status answer` uses the narrowest truthful form.
 Binary status questions get one yes/no sentence plus only a user-action blocker when present.
+Binary status questions do not create or change Procedure Plane authorization; do not infer continuation, route, staffing, dispatch, validation, cleanup, or task mutation from the question itself.
 When the user asks why an expected action did not happen, answer only with the violated rule/owner, direct procedural cause, and current correction owner/action.
 Runtime-excuse wording such as `turn boundary`, `same turn`, `system-imposed`, file/read/edit counts, batching strategy, or similar host/tool mechanics is not a direct procedural cause.
 Do not include self-accusation, excuses, intent promises, proceed prompts, or internal packet burden narrative.

@@ -20,6 +20,11 @@ When this core law is consumed, use this file as the representative law and load
 ## Candidate Filtering And Promotion Law
 - Candidate discovery maximizes recall for evidence collection.
 - Candidate discovery does not establish defect truth, severity truth, priority truth, patch-worthiness, or patch readiness.
+- Governance audit binding filtering, cross-surface rejection, ranking, prioritization, removal judgment, correction-priority judgment, and patch/no-patch selection are promotion-filtering work, not candidate discovery.
+- Lane-local first-pass classification or `rejected:<basis>` inside the assigned surface remains candidate evidence until review-verification or team-lead synthesis lawfully consumes it.
+- Team-lead synthesis lawfully promotes only from current `Skill(review-verification)` defect-promotion basis for the same corpus; otherwise it preserves candidate state.
+- For exhaustive, full-corpus, whole-folder, or governance-audit scope, promotion, rejection, ranking, prioritization, patch/no-patch, and count claims cover the frozen corpus or explicitly report open unpromoted candidates.
+- Sample-only, tier-only, or wave-only filtering can support only the inspected narrowed claim; it cannot support full-corpus completion, no-open-surface, final patch inventory, or validator-ready claims.
 - Review-verification uses the finding-state ladder: `candidate-evidence`, `candidate-classified`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
 - `candidate-evidence` records an observed rule, wording, behavior, output, or runtime signal without defect authority.
 - `candidate-classified` maps candidate evidence to a proposed defect class, severity, owner, and inspected source surface without defect authority.
@@ -54,7 +59,7 @@ When this core law is consumed, use this file as the representative law and load
 - Review-verification tests proposed or existing governance for evasion-enabling, ambiguous, conflicting, or bottleneck-forming wording when the wording controls owner action or procedure execution.
 - Evasion-enabling governance lets an owner avoid a required action, evidence step, verification step, route, blocker, or completion truth.
 - Ambiguous or conflicting governance leaves multiple plausible next actions or incompatible owner duties on the same active path.
-- Bottleneck-forming governance serializes independent work, blocks reversible action, or adds non-required approval, evidence, or routing burden without a governing risk basis.
+- Bottleneck-forming governance applies the top-doctrine `bottleneck defect` definition to governance wording that controls owner action or procedure execution and lacks evidence, safety, verification, acceptance-truth, or required-procedure-force benefit.
 - Confirmed evasion-enabling, ambiguous, conflicting, or bottleneck-forming governance is an execution-force defect.
 - Positive governance integrity, patch-worthiness, no-defect, and completion claims stop until behavior-weakening governance is corrected or assigned to the precise owner.
 

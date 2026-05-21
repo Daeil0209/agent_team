@@ -19,6 +19,6 @@ When this core law is consumed, use this file as the representative law and load
 - Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
 - `[HOOK-LAST]` hooks are last-resort runtime guards.
 - Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
-- Shared task-list creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract`.
+- Shared task-list creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
 - Generic Claude Code in-progress, owner, or assignee task-row mutation patterns do not apply.
 - Teammate work uses independent Claude Code session context and task-specific packets.

@@ -2,7 +2,6 @@
 name: task-execution
 description: Use after work-planning freezes host-authorized additional-agent dispatch. Governs assignment-grade packets, moves, and truth.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
@@ -18,7 +17,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Section 8 is Resolve Next Owner And Action.
 - Section 9 is Move-Out Boundary.
 - Reference Map stays inside Purpose.
-- PRIMARY-OWNER: team-lead
 ## Purpose
 Own host-authorized additional-agent execution after planning is complete.
 Load at most once per Claude session, and only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
@@ -98,7 +96,7 @@ Own the actual execution move:
 - reuse a suitable live or standby agent when that is the frozen path
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
-- run `.claude/skills/task-execution/references/message-classes.md` `### Shared Task State Contract` and packet final check before sending
+- run `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` and packet final check before sending
 - reject any planned task-state tool call that violates that contract before the tool call
 - confirm retained-output carriers with silent success commands; failed checks surface only through the owning blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
@@ -108,8 +106,8 @@ Own the actual execution move:
 
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
-- Reject any `SendMessage` plan whose top-level `to` parameter is missing or blank.
-- Correct a missing `SendMessage.to` as a tool-envelope defect; do not retry the same malformed call.
+- Reject any `TaskCreate` or `SendMessage` plan that fails `references/message-classes.md` `### Assignment Delivery Contract`.
+- Correct assignment-delivery tool-envelope defects before retry; do not repeat the same malformed call.
 - Reject assignment-grade `SendMessage` when the packet lacks `RECEIPT-COMPLETION-CONTRACT`.
 - Reject assignment-grade `SendMessage` when `RECEIPT-COMPLETION-CONTRACT` contradicts first-outcome or completion-handoff law.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
@@ -144,6 +142,7 @@ Dispatch law:
 
 Inside the frozen routed state, treat these as the only valid next actions:
 - `TeamCreate`
+- `TaskCreate` under `references/message-classes.md` `### Assignment Delivery Contract` when task tracking is active
 - `reuse-via-SendMessage`
 - `Agent` member creation
 - assignment-grade `SendMessage`
@@ -172,12 +171,12 @@ Reporting consequences:
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, and covered by required `Skill(self-verification)` result verification or the independent verification route.
 
 Recovery reconciliation:
-- A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or explicit `HOLD`.
+- A dispatch segment is not complete while any target lacks `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or team-lead-recorded Procedure Plane `HOLD`.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.
 - Missing `dispatch-ack` after that follow-up and absent activity evidence classifies the target as dead-or-unavailable for the current assignment.
-- `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.
+- `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or team-lead-recorded Procedure Plane `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.
 - Keep unaffected independent targets moving while the affected target is recovered.
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.

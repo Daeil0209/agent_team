@@ -91,7 +91,6 @@ Stop before dispatch when the packet would rely on lead-only conversation histor
 - `Monitoring Sequence` is a standard sequence.
 - `Change Sequence` is a standard support sequence.
 - `Closeout Sequence` is a standard sequence.
-- `Governance Change Sequence` is a standard sequence.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `session-closeout` owns closeout truth.
 - `Skill(governance-modification)` owns routine asset maintenance and recurrence-barrier hardening.

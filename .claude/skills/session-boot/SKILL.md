@@ -2,14 +2,12 @@
 name: session-boot
 description: "Run lead-session boot, runtime-readiness gates, monitoring, runtime cleanup interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime cleanup truth is active."
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned runtime surface.
 - Fixed top-level section order after Structural Contract: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence` -> `Resolve Next Owner And Action`.
 - Reference Map stays inside Structural Contract.
-- PRIMARY-OWNER: team-lead
 - Owns the runtime spine only.
 - Runtime-state tables, cleanup mappings, boot-window detail, compaction recovery detail, monitoring detail, and schema detail belong in `references/runtime-state-detail.md`.
 ### Reference Map

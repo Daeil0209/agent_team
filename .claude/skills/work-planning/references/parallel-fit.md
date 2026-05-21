@@ -56,9 +56,11 @@ When no explicit user or runtime ceiling is available, the default host-safe cei
 `work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below `ACTIVE-CONCURRENT-AGENT-CAP`.
 A plan that names more concurrent dispatched lane members than `ACTIVE-CONCURRENT-AGENT-CAP` is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
+Concurrent dispatched-lane count includes live or standby members until shutdown or termination evidence removes them from the active roster.
 New `Agent` member creation is blocked when concurrent dispatched-lane count is already at `ACTIVE-CONCURRENT-AGENT-CAP`.
 The lead evaluates same-lane live or standby reuse before release or new member creation.
 Release-before-create applies only when reuse-fit fails, the live or standby member is dead-or-unavailable for the new assignment, the lane is no longer needed, or `session-closeout` owns teardown.
+If a no-longer-needed live or standby lane blocks required new member creation under the cap, release-before-create is the next planned move before new member creation.
 If cap blocks new member creation and reuse-fit holds, the next move is reuse-via-`SendMessage`.
 
 ## Resolve Next Owner And Action

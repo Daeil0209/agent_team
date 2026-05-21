@@ -2,7 +2,6 @@
 name: code-quality-review
 description: Review implementation structure with SOLID checks, duplication taxonomy, reusability, extensibility, and refactoring priority. Use when code quality, maintainability, bounded refactoring, or developer producer self-review materially affects acceptance.
 user-invocable: false
-PRIMARY-OWNER: reviewer
 SECONDARY-CONSUMER: developer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---

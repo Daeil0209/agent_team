@@ -2,7 +2,6 @@
 name: engineering-grounding
 description: Ground engineering-facing deliverables in domain constraints, practical assumptions, units, operating conditions, and applied reasoning quality. Use when engineering realism, unit paths, constraints, standards, or applied domain plausibility materially affect implementation or review.
 user-invocable: false
-PRIMARY-OWNER: developer
 model: opus
 effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md

@@ -2,7 +2,6 @@
 name: business-workflow
 description: Translate spreadsheet or operations-heavy workflows into explicit business rules, states, authority, reconciliation, and validation logic. Use when software delivery depends on event planning, R&D proposal, result report, schedule planning, budget/allocation/participation, or project-local operational workflow semantics.
 user-invocable: false
-PRIMARY-OWNER: developer
 model: opus
 effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md

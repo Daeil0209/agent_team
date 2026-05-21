@@ -2,13 +2,11 @@
 name: governance-modification
 description: Govern team-system asset changes and install recurrence barriers.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only governance change, recurrence hardening, and team-system asset mutation.
 - Fixed top-level section order after Structural Contract: Purpose, Activation, Reference Map, Recurrence Hardening, Asset Change, Change Sequence, Patch Execution Method, Resolve Next Owner And Action.
-- PRIMARY-OWNER: team-lead
 
 ## Purpose
 Own controlled changes to `.claude` team-system assets.
@@ -136,6 +134,11 @@ Use `references/change-patch-method.md` for detailed step order and constraints.
 
 Hard surface:
 - Consume `references/change-patch-method.md` `## Change Sequence Required Order` for Prerequisites A-D, Steps 1-7, and reopen-granularity rules; the in-turn pre-mutation `Skill(review-verification)` tool-call requirement, post-hoc-review recurrence-defect rule, and post-verify `Skill(self-verification)` rule are owned there.
+- Before any governance file mutation, record `PRE-MUTATION-BASIS` from `references/change-patch-method.md`; missing basis stops mutation.
+- When execution force is equal, use tighten, replace, trim, merge, re-home, or delete before adding a procedure, field, taxonomy, mode, or owner model.
+- When a same-request patch set has multiple `patch-ready` rows, the `Change Sequence` repeats until every row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
+- Priority tiers, batches, or sub-batches control order only; they do not terminate the same-request patch loop.
+- Skill asset changes keep `PRIMARY-OWNER` only on agent-specific `SKILL.md` files as lane identity; non-agent `SKILL.md` files do not carry it.
 - The failed pre-mutation order returns to recurrence-hardening at the narrowest calling-owner surface.
 
 ## Patch Execution Method

@@ -109,13 +109,20 @@ Stop before completion when applied or blocked skill/reference basis is missing.
   - phase basis
 - Packetize required methodology or capability skills as `REQUIRED-SKILLS`.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties.
-- The receiving lane must:
+- Required-skill intake order is validate, then load/apply or block.
+- Validate each `REQUIRED-SKILLS` entry for availability, lane fit, owner authority, boundary fit, and required lens or field shape before loading.
+- Invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed required-skill entries record `blocked:<basis>` and route through the owning packet-correction, `scope-pressure`, or `hold|blocker` path.
+- A blocked required-skill entry is not optional, not local improvisation permission, and not a valid-skill missed-execution confession.
+- For each valid, material, lane-executable `REQUIRED-SKILLS` entry, the receiving lane must:
   - load each `REQUIRED-SKILLS` entry before execution
-  - apply each `REQUIRED-SKILLS` entry before execution
-  - record applied or blocked basis for each `REQUIRED-SKILLS` entry before completion
+  - apply each `REQUIRED-SKILLS` entry at the first material work surface where the skill can shape the assigned result
+  - record applied basis before completion
+- The receiving lane records blocked basis for each invalid, unavailable, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, malformed, or unavailable required-skill entry before surfacing the correction path.
 - Classify missing required skill consumption as:
   - a packet defect when the packet omitted it
-  - a lane defect when the lane ignored it
+  - a packet defect when the packet carried an invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed entry
+  - a lane defect when a valid, material, lane-executable entry was ignored or completed without applied or blocked basis
+  - an additional lane defect when the lane accepted, executed, or completed after a blocked entry without surfacing the packet defect
 
 ## Methodology Guidance
 - Packetize methodology instructions as `SKILL-RECOMMENDATIONS`.
@@ -123,8 +130,12 @@ Stop before completion when applied or blocked skill/reference basis is missing.
   - classify every carried recommendation as applied, not-material, or blocked before completion
   - record the basis for each recommendation classification
   - select material recommendations
-  - load material recommendations before lane work
-- The assigned lane applies material recommendations before lane work.
+  - load material recommendations before the work surface they shape
+- Recommendation intake order is classify, then load material recommendations or record `not-material:<basis>` / `blocked:<basis>`.
+- Invalid, lane-mismatched, contradictory, outside-boundary, owner-reserved, malformed, or full-workflow-only recommendations record `blocked:<basis>` and route through the owning correction path when they affect truthful execution.
+- Non-fitting recommendations that do not affect truthful execution record `not-material:<basis>` before completion.
+- Silent recommendation skipping is a completion blocker.
+- The assigned lane applies material recommendations at the first material work surface where the skill can shape the assigned result.
 - The assigned lane hands off applied recommendation basis.
 - The assigned lane hands off blocked recommendation basis.
 

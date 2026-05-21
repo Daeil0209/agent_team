@@ -2,14 +2,12 @@
 name: session-closeout
 description: Close team-lead sessions with teardown truth, runtime cleanup, residual disclosure, and continuity preservation. Use when explicit closeout, session ending, runtime shutdown, or residual state handoff is active.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned closeout surface.
 - Fixed top-level section order after Structural Contract: `Activation` -> `Runtime Teardown Preflight` -> `Closeout Sequence` -> `Resolve Next Owner And Action`.
 - Reference Map stays inside Structural Contract.
-- PRIMARY-OWNER: team-lead
 - Owns the closeout spine only.
 - State schema, hold conditions, and detailed agent cleanup requirements belong in `references/closeout-state-detail.md` or the runtime cleanup owner.
 ### Reference Map

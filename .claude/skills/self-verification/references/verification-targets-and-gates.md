@@ -121,6 +121,7 @@ For AI analysis, diagnosis, consistency review, risk analysis, causal explanatio
 - record `Skill(governance-modification):<governance-modification-basis>` when the verified produced result requires governance asset change or recurrence-barrier hardening
 - record `Skill(review-verification):<bounded-question>` when the verified produced result needs material defect labels, removal judgments, cross-surface governance judgments, or patch recommendations
 - record `owner-local-sufficient:<basis>` when the active owner can correct, narrow, route, or report the produced result without extra review
+- For governance audit, doctrine cleanup, or defect-sweep results, `owner-local-sufficient:<basis>` can close only evidence-only candidate discovery or lane-local first-pass classification; binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-worthiness, patch-readiness, or patch/no-patch selection records `Skill(review-verification):<bounded-question>`.
 - after `review-verification` returns, verify only whether the outgoing claim matches that review packet
 - mark partial coverage as partial instead of generalizing to the whole system
 - do not treat fluent explanation, internal confidence, or repeated wording as evidence
@@ -160,6 +161,7 @@ Synthesized conclusions do not inherit verification automatically.
 Self-verification-specific synthesis duties:
 - if synthesis selects governance asset change or recurrence-barrier hardening as next owner/action, record `Skill(governance-modification):<governance-modification-basis>` and verify that route.
 - route finding promotion to `Skill(review-verification):<bounded-question>` before any `confirmed-defect`, removal, or patch-worthiness claim leaves this skill.
+- for governance audit or defect-sweep candidate maps, verify candidate-map integrity, lane-local candidate-state preservation, and proposed review target, then route binding filtering, final rejection, promotion, ranking, prioritization, correction-priority, removal, patch-worthiness, patch-readiness, or patch/no-patch selection to `Skill(review-verification):<bounded-question>`.
 - if the synthesis points to redispatch, run result verification on the synthesized result before re-dispatch.
 - if synthesis touches existing-artifact integrity, apply design-intent verification before reporting a positive result.
 

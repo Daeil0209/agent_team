@@ -2,7 +2,6 @@
 name: work-planning
 description: Freeze request fit, route, workflow, parallel fit, and skill basis before consequential action.
 user-invocable: false
-PRIMARY-OWNER: team-lead
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract
@@ -21,7 +20,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - Section 11 is Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
 - Step names: Request-Fit Intake, Choose Planning Target, Q1-Q5 Work Analysis, Build Team-Lead Work Plan, Freeze Scope And Route.
-- PRIMARY-OWNER: team-lead
 
 ## Purpose
 Freeze the smallest complete plan basis before consequential action.
@@ -110,6 +108,7 @@ Freeze these before route judgment:
 Full intake is mandatory when semantic intent, original or corrected wording, reference use, delivery burden, user-surface proof, concern signal, anti-goal, priority order, or completion stop condition affects route class, owner choice, or next action.
 The user-defined work scope is binding.
 Samples, spot-checks, representative review, or finding-count quotas require explicit scope basis.
+For exhaustive, full-corpus, whole-folder, or governance-audit work, samples, waves, and priority tiers are order controls only unless the user explicitly narrows scope.
 If artifact boundaries are unknown, freeze discovery as a planning fact and next owner/action before exploration.
 
 ## Step 1: Choose Planning Target
@@ -166,6 +165,9 @@ Place each conditional owner at its material trigger point; place `Skill(governa
 `Skill(review-verification)` runs under `Skill(self-verification)` for synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
 `Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
+The termination path names only deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker as terminal states.
+Lead-authored waves, batches, samples, or priority tiers never satisfy the termination path while requested scope, review promotion, patch rows, validation, or accepted deferral remains open.
+Governance defect or removal audits with patch scope name separate rows for corpus-wide promotion and the governance-modification patch loop; lead synthesis alone does not replace either row.
 
 ## Step 4: Freeze Scope And Route
 Freeze only what the selected planning target requires.

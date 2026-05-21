@@ -2,7 +2,6 @@
 name: enterprise-architecture
 description: Review enterprise-scale architecture with Clean Architecture boundaries, bounded contexts, service contracts, production-readiness gates, and anti-pattern detection. Use when multi-service boundaries, externally committed deployment readiness, or enterprise design traceability materially affect implementation or review.
 user-invocable: false
-PRIMARY-OWNER: developer
 model: opus
 effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md

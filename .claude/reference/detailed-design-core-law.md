@@ -14,6 +14,7 @@ When this core law is consumed, use this file as the representative law and load
 - `[DESIGN-INTENT]` Existing-artifact work and existing-governance judgment start from cited design intent.
 - Existing-artifact work starts from cited applicable core-law references.
 - Existing-artifact packets carry `TARGET-INTENT-BASIS`.
+- When solution structure is material, `TARGET-INTENT-BASIS` carries the structure basis, affected owner surfaces, boundary fit, and drift stop.
 - Scope-abuse signals route to correction per `.claude/reference/detailed-scope-continuity-change-law.md` `## Scope-Abuse Rules`.
 - Current-session continuity applies before consequential movement.
 - Drift reopens `work-planning`.

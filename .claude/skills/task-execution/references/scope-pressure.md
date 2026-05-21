@@ -20,6 +20,7 @@ Canonical `PRESSURE-TYPE` values:
 - `proof-surface-mismatch`
 - `decision-surface-mismatch`
 - `deliverable-shape-mismatch`
+- `malformed-completion-contract`
 
 Use `parallel-split-needed` when nominally parallel or independently staffable work lets two or more independent tasks or surfaces collapse onto one agent strongly enough that the agent becomes the schedule bottleneck.
 Use `boundary-too-wide` when the packet already exceeds the smallest truthful lane-owned boundary even before throughput evidence accumulates.

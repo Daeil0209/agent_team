@@ -16,6 +16,7 @@ auto-inject: false
 Prerequisite A. Load `work-planning` only at a fresh or reopened change boundary. Same-boundary patch repair consumes the active boundary.
 Prerequisite B. Do not run routine plan audit. Use `Skill(self-verification)` plan audit only when the change plan is disputed; otherwise use result verification for Post-Verify.
 Prerequisite C. Governance patch placement, generalization, and patch-ready record consume `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Prerequisite C1. Before Draft, record `PRE-MUTATION-BASIS`: active sequence, triggered skills/references, current cumulative live state, review-verification status, modification-keyword status, consumed-surface access proof, Patch-Ready Gate status, and next legal step; `review-verification status` means a current-turn `Skill(review-verification)` tool-call-backed packet before governance mutation, and post-hoc review or proof on already-applied governance patches is a recurrence-class defect that does not satisfy this prerequisite.
 Prerequisite C2. Every candidate patch passes a binding self-check against the operator-emphasized keywords per `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 Prerequisite C2a. The self-check tests under-specification, over-specification, evasion, ambiguity, semantic conflict, bottleneck burden, and over-broad blocking.
 Prerequisite C3. A candidate patch failing any keyword check is rejected before Draft.
@@ -35,6 +36,8 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - For top-doctrine execution changes, identify the mapped core-law executable-detail owner before Draft.
 - For core-law execution-detail changes, identify trigger-bound owner guidance need before Draft.
 - Do not draft from the edited layer alone; inspect the mapped layer and triggered consuming owner surfaces before recording coverage or `not-material:<basis>`.
+- `PRE-MUTATION-BASIS` is a procedure and access proof, not a plan label or citation list. It must show the active governance-modification sequence, triggered skills/references, current cumulative live state including session-applied patches, how the affected owner reaches the patch landing surface, consumed or blocked status, and next legal step before Draft.
+- Review-verification, operator-emphasized keyword self-check, consumed-surface access proof, and Patch-Ready Gate status are cumulative gates; none replaces the others.
 
 3. `Route + Adjudicate`
 - Confirm placement and ownership using the Single Writer Principle.
@@ -67,6 +70,7 @@ Pre-session, pre-prior-patch, or memory-based baselines are stale evidence and i
 - 7b. Parallel-agent verification counts only when the packet or returned evidence proves the agent used the post-execution live owner documents or received the resulting diff and owner-document basis as preserved artifacts; absent that basis, treat the agent result as non-authoritative and verify locally or redispatch with a self-contained packet.
 - 7c. When the change moves, compresses, replaces, or redistributes doctrine, confirm that unique meaning was preserved and the destination owner is explicit.
 - 7d. A verified sub-batch, patch log, or partial applied set is not convergence while same-request patch groups, review owners, proof owners, validation owners, or dispatch owners remain open.
+- 7d1. When same-request `patch-ready` rows remain, convergence requires the next row to be applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`; priority tier or batch boundary is not closure.
 - 7e. After a verified sub-batch or Post-Verify result verification, execute or dispatch the next same-request owner/action unless explicit cancellation, explicit redirect, proven user-owned blocker, destructive/security/operator-approval gate, or deferral per `[USER-DELIVERY-FIT]` lawful basis applies.
 - 7f. Load `Skill(self-verification)` fresh on the post-execute live owner surfaces. Re-engage `Skill(review-verification)` fresh only when the post-execute check exposes material coherence, removal, patch-worthiness, negative-risk, owner-surface, or governance-judgment questions. Pre-Draft loads do not carry forward across patch execution for result-verification or newly material review questions.
 - Reopen granularity: failed 7a-7c reopens at Step 6 Execute.
@@ -104,6 +108,7 @@ See `.claude/skills/governance-modification/references/decision-and-repair.md` f
 - This method refines `Change Sequence` Step 1 through Step 3; it does not replace the `Change Sequence`, review separation, execution gate, or post-verify requirements.
 - Before drafting, freeze:
   - defect basis, design-intent basis, causal basis, and recurrence path
+  - `PRE-MUTATION-BASIS`: active sequence, triggered skills/references, current cumulative live state, review-verification status, modification-keyword status, consumed-surface access proof, Patch-Ready Gate status, and next legal step
   - `PATCH-CLASS`, `BASELINE-CLASS`, and owner surface
   - consumed-layer basis and generalization basis
   - minimum-executable-information result
@@ -186,10 +191,10 @@ See `.claude/skills/governance-modification/references/decision-and-repair.md` f
 - When a missing reusable skill blocks credible completion, complete the skill update or introduction before the blocked downstream task resumes normal execution.
 - Keep the pause scoped to the blocked downstream surface rather than stalling unrelated safe work.
 - Treat the consuming lane as the default skill-up owner.
-- Agent role files do not declare `PRIMARY-OWNER`; skill ownership metadata stays on `SKILL.md` and reference surfaces.
-- Each specialist skill declares its `PRIMARY-OWNER`.
-- Each specialist skill declares `SECONDARY-CONSUMER` when present in SKILL.md frontmatter.
-- Each specialist skill restates those fields in its Structural Contract when local readability requires it.
+- Agent-specific `SKILL.md` files may keep `PRIMARY-OWNER` as lane identity; non-agent `SKILL.md` files do not carry `PRIMARY-OWNER`.
+- Specialist skill ownership is resolved by consuming lane, skill description, `SKILL-AUTH`, `SKILL-RECOMMENDATIONS`, and owning lane detail references, not by non-agent `SKILL.md` `PRIMARY-OWNER` metadata.
+- Each specialist skill may declare `SECONDARY-CONSUMER` when present in `SKILL.md` frontmatter.
+- Each specialist skill restates consumer or ordering facts in its Structural Contract when local readability requires it.
 - The owning role file or lane detail reference enumerates its specialists and the cross-specialist controlling order applicable within that role:
   - developer-owned specialists and their controlling order: `.claude/skills/agent-developer/references/developer-lane-detail.md` § Specialist Skill Loading.
   - reviewer-owned specialists: `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` § Specialist Skill Loading.

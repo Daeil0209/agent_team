@@ -105,7 +105,7 @@ Insufficient completion examples:
 - `SKILL-AUTH` is for explicit routing/traceability. `SKILL-RECOMMENDATIONS` is for methodology instructions inside an already bounded development production surface.
 - Developer lane evaluation selects recommended or lane-local specialist skills for the production surface.
 
-Specialist skills with `PRIMARY-OWNER: developer`:
+Developer lane specialist skills:
 - practical work-tool product patterns: `work-tool-patterns`
 - business and operations: `business-workflow`
 - architecture: `software-architecture`, `enterprise-architecture`

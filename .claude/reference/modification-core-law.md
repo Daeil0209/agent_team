@@ -13,16 +13,14 @@ When this core law is consumed, use this file as the representative law and load
 - `.claude/reference/detailed-scope-continuity-change-law.md`: load when migration, reduction, re-home, redistribution, preservation, or owner-boundary continuity is material.
 
 ## Modification Law
-- Operator-emphasized keyword definitions are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
-- Patch-design decisions test every operator-emphasized keyword from that owner: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, and `minimum-executable-information`.
-- `team-lead` cites the operator-emphasized keywords at every patch-design decision.
-- Every dispatched lane agent cites the operator-emphasized keywords at every governance-asset patch-design decision.
-- Every `Skill(governance-modification)` consumer cites the operator-emphasized keywords at every patch-design decision.
-- Every `Skill(review-verification)` consumer cites the operator-emphasized keywords at every patch-design decision.
+- Operator-emphasized keyword definitions and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
+- Core-law tag bindings (unique executable detail not in `.claude/CLAUDE.md` `## 5. Modification Philosophy`): `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`.
+- Governance-asset patch-design decisions test and cite every operator-emphasized keyword from that owner.
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
 - Removal-first edit selection tries tighten, replace, trim, merge, re-home, or delete before append.
 - Removal-first edit selection keeps governance documents at the smallest complete size that preserves protected procedure force.
 - Removal-first edit selection keeps procedures at the smallest complete complexity that preserves protected procedure force.
+- `minimum-executable-information` simplification uses direct executable wording and strengthens execution force by directly reducing procedure steps, branch paths, consumed documents, or repeated consumption points when protected procedure force and execution-critical fields remain preserved.
 - Removal-first edit selection preserves core information required to identify material owner, trigger, action, stop, evidence, verification, acceptance truth, and protected procedure force.
 - Governance proposal, planning, and implementation content includes owner, trigger, action, stop, evidence, verification, acceptance truth, routing, or patch-readiness only when the item changes execution.
 - Under-specified governance omits material information required for the active owner to act, stop, verify, route, or claim completion truthfully.
@@ -31,7 +29,7 @@ When this core law is consumed, use this file as the representative law and load
 - Governance patch design rejects evasion-enabling, ambiguous, conflicting, or bottleneck-forming wording before Draft.
 - Evasion-enabling wording lets the owner avoid a required action, evidence step, verification step, route, blocker, or completion truth.
 - Ambiguous or conflicting wording leaves multiple plausible next actions or incompatible duties on the same active path.
-- Bottleneck-forming wording serializes independent work, blocks reversible action, or adds non-required approval, evidence, or routing burden without a governing risk basis.
+- Bottleneck-forming wording follows the top-doctrine `bottleneck defect` definition and is rejected before Draft when it lacks evidence, safety, verification, acceptance-truth, or required-procedure-force benefit.
 - Correct behavior-weakening governance at the narrowest consumed owner surface.
 - A governance patch that adds or changes top-doctrine execution intent updates the mapped core law with matching executable detail or records why existing core-law detail already covers it.
 - A governance patch that adds or changes core-law executable detail updates trigger-bound owner references only when the active owner path needs situation-specific guidance.
@@ -74,7 +72,6 @@ When this core law is consumed, use this file as the representative law and load
 - Duplicate doctrine requires `PROTECTED-LOCAL-RESTATEMENT-BASIS: <basis>` declared in the patch record or at the local surface.
 - Inferred-only `PROTECTED-LOCAL-RESTATEMENT-BASIS` from cross-cutting reference patterns is invalid for new or modified patches.
 - Classify duplicate doctrine as protected local restatement only when it has a named owner and direct-consumption or isolation-safety basis.
-- Divergence resolves to the precise owner.
 - Resolve divergent duplicate doctrine to the precise owner.
 - Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/modification-minimal-governance-change-law.md` `## Change Rules`.
 - Role-specific content stays on the precise role owner.

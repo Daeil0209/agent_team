@@ -39,6 +39,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 - `MESSAGE-CLASS: completion` is positive-state transport only.
 - `scope-pressure` is the structured objection path when the packet is directionally valid but unsafe as written.
 - `hold|blocker` is the blocked path when truthful execution remains blocked after the narrow packet-correction route is exhausted.
+- Uppercase `HOLD` is Procedure Plane owner state; lane upward transport uses `MESSAGE-CLASS: hold|blocker` when transport is available.
 
 ## Canonical Channel Registry
 The team-runtime data path has five channel families.
@@ -53,9 +54,10 @@ No governed payload field can replace `SendMessage.to`.
 | Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, silent phase-context consumption, or shutdown evidence |
 | Agent-to-lead transport | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, completion, or blocked transport | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
 | Direct teammate interaction | teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
-| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`, `TaskOutput`, `TaskStop` | task row creation, status update, read, output read, or stop; never assignment delivery | this file `### Shared Task State Contract` | task correction, task identity recovery, retained-output `Read`, completion status closure, or exact task stop |
+| Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList` | task row creation, status update, read, or list; never assignment delivery | this file `### Assignment Delivery Contract` | task correction, task identity recovery, retained-output `Read`, or completion status closure |
+| Background task inspection/control | `TaskOutput`, `TaskStop` | background task output read or stop; never assignment delivery or completion truth | `runtime-dispatch-law.md`; this file `### Assignment Delivery Contract` | fallback evidence retrieval, background-task stop truth, or retained-output `Read` when available |
 
-Task tools are task-state channels.
+Task-list tools are task-state channels; background task tools are runtime inspection/control channels.
 Agent communication uses `SendMessage` or teammate UI.
 Standalone `Agent` is not a Communication Plane channel family.
 Standalone `Agent` cannot carry assignment delivery, receipt, status, `scope-pressure`, `hold|blocker`, completion, reuse, or task-state truth.
@@ -95,8 +97,10 @@ Summaries are routing aids only; they do not replace exact packet, task, or reta
 When exact wording, full evidence, result inventory, counts, excerpts, or operational notes are needed, carry them in task state or retained-output and send the pointer through the owning message class.
 A receiving owner consumes the governed carrier before acting; a screen-visible envelope or excerpt is not sufficient basis when the governed carrier is required.
 
-### Shared Task State Contract
-Team-lead owns shared task-state use for planned team-runtime assignment through `task-execution`.
+### Assignment Delivery Contract
+Team-lead owns assignment delivery for planned team-runtime work through `task-execution`.
+Assignment delivery joins shared task-state identity and assignment `SendMessage` delivery under one contract.
+Do not restate `TaskCreate` or `SendMessage` tool-envelope field requirements on lower packet surfaces; lower surfaces consume this contract before tool calls.
 Task tracking is active when team-lead uses the shared task list as the planned assignment identity surface for team-runtime work.
 When task tracking is active, team-lead creates or verifies the task row after current-session team runtime registration and before assignment-grade `SendMessage`.
 `TaskCreate` uses top-level non-empty `subject` and `description`.
@@ -123,7 +127,7 @@ A packet blocked by missing or incoherent `WORK-SURFACE`, missing/non-open requi
 `dispatch-ack`, `scope-pressure`, and `hold|blocker` do not coexist as first outcomes for the same packet.
 Lane work states (`ACTIVE`/`STANDBY`) and dispatch-ack/completion transition semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
 The lane continues work until one closing class is sent.
-The closing classes are `completion`, `scope-pressure`, `hold|blocker`, and `HOLD`.
+The closing transport classes are `completion`, `scope-pressure`, and `hold|blocker`.
 Closed work reopens only through distinct bounded `assignment`, `reuse`, or `reroute`.
 Same `TASK-ID` / `WORK-SURFACE` / `RETAINED-OUTPUT-PATH` replay is duplicate packet noise; team-lead consumes the retained carrier or sends distinct bounded work.
 After a closing class, the lane stays silent for that closed work.
@@ -142,7 +146,7 @@ The owning message class, packet, completion packet, phase-transition packet, or
 Plain text in a pane is observation evidence only until resent through the required transport or retained carrier.
 A pane/final response containing `MESSAGE-CLASS`, `DISPATCH-ACK`, `COMPLETION-HANDOFF`, or equivalent transport headers is malformed raw Communication Plane leakage and does not satisfy receipt, completion, status, pressure, or blocker transport.
 If an agent cannot use the required transport tool, visible text is not a substitute transport and the lead resolves missing receipt through monitoring/recovery.
-Task identity, `TaskCreate` field requirements, executable assignment identity, and `TaskUpdate` closure are owned by `### Shared Task State Contract`.
+Task identity, `TaskCreate` field requirements, executable assignment identity, and `TaskUpdate` closure are owned by `### Assignment Delivery Contract`.
 Use `Read` on the background task output path when the runtime provides that path.
 
 ### Team Member Startup Recognition

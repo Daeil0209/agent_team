@@ -15,7 +15,7 @@ set -euo pipefail
 # owned by the lane trio — Skill(governance-modification) + Skill(self-verification) +
 # Skill(review-verification) named lenses — and downstream reviewer/validator gates).
 # settings.json matcher was removed in the same governance patch; this file-level
-# no-op handles cached-settings agents that loaded settings.json before the wiring change.
+# no-op handles already-started agents or local hook harness state after the wiring change.
 # File preserved for traceability and potential future narrowing to a negative-only filter.
 exit 0
 

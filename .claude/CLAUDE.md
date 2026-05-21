@@ -48,14 +48,20 @@
 - Standalone `Agent` output is evidence-only and never satisfies lane dispatch, receipt, reuse, monitoring, or completion transport.
 - Team-routed follow-on work evaluates same-lane live or standby agent reuse before shutdown or new member creation.
 - Same-lane reuse is valid only when frozen parallel shape, lane separation, and acceptance/proof separation stay preserved.
-- Serial convenience over independent surfaces is a `bottleneck defect`.
+- A `bottleneck defect` is an avoidable delay pattern that causes repeated correction loops, invalid retries, ambiguous next-action stalls, or execution errors from over-detailed non-executed rules; procedure count alone is not a bottleneck basis.
 - Over-broad blocking is a defect.
 - The active owner carries the frozen owner action into direct execution, ordinary tool use, mutation, dispatch, and file work until the user-requested deliverable is closed or truthfully blocked.
+- Lead-authored waves, batches, samples, or priority tiers change execution order only; they do not narrow frozen deliverable scope, corpus coverage, required promotion, patch-loop coverage, validation scope, or completion stop.
+- Self-directed partial completion is invalid.
+- Deferral requires explicit user instruction or lawful owner-deferral basis.
+- A truthful blocker opens `HOLD`, not deferral, completion, or backlog conversion.
+- Resource, context, runtime, turn, response-length, or tool-call pressure routes to the next safe action or `HOLD` with blocker; it never justifies self-directed deferral.
 - Same-turn execution persistence remains intact inside direct execution boundaries.
 - Ordinary tool use executes the current owner action.
 - Task-created outputs stay under the task project folder.
 - File and secret handling preserves the active workspace and user safety.
 - Source files and governance files are modified through non-destructive paths on their owner files.
+- Governance asset mutation starts only after `Skill(governance-modification)` is active; direct file mutation before that skill path is a Work Execution Philosophy violation.
 - Agent role files declare role identity, lane boundary, and stop conditions, not `PRIMARY-OWNER` metadata.
 - Top-level Claude Code host session is `team-lead`.
 - The top-level `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
@@ -63,6 +69,7 @@
 - Skills load only when required by the active owner path.
 - Primary skill links are trigger-bound owner surfaces, not always-on preload surfaces.
 - Required skill activation is actual `Skill(<skill>)` load or a current same-session loaded-skill basis under the named skill's freshness rule.
+- Recommended or discovered material skills are used when they fit the active owner path.
 - Direct reading, searching, listing, summarizing, or reference-map traversal of skill-owned files is inspection only and never satisfies required skill activation.
 - Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Trigger-bound references become mandatory execution surfaces when their trigger fires.
@@ -106,7 +113,8 @@
 - Core keyword 3: `no-compression` separates independently testable meanings instead of splitting repeated peer terms.
 - Core keyword 4: `upper-lower execution-drive` maintains unbroken drive continuity from upper orchestration to lower direct-execution tools so rule execution force does not weaken at any handoff or tool call, enabling automatic execution without sequence breaks.
 - Core keyword 5: `executable-imperative` writes rules as positive owner-action directives by default; stop/prohibition wording is valid for live hazardous actions only when it also names the valid replacement action or next owner.
-- Core keyword 6: `minimum-executable-information` keeps the smallest complete rule content that lets the active owner identify the executable duty without carrying non-executed detail.
+- Core keyword 6: `minimum-executable-information` keeps the smallest complete, directly expressed rule content that lets the active owner identify the owner action, trigger, stop, evidence, and executable duty without carrying non-executed detail.
+- `minimum-executable-information` simplification clarifies executable rules and strengthens execution force by directly reducing procedure count, branch count, consumed document count, or repeated consumption points when protected procedure force and execution-critical fields stay equal or stronger.
 - `team-lead`, dispatched lane agents, `Skill(governance-modification)` consumers, and `Skill(review-verification)` consumers cite the operator-emphasized keywords at governance-asset patch-design decisions.
 - Compression is allowed only when the shorter surface is equal or stronger in action, owner, trigger, stop, evidence, verification, acceptance truth, and actual cross-reference coherence.
 - `no-compression` splits sentences that compress multiple independently testable meanings into one sentence.
@@ -116,7 +124,7 @@
 - Modification preserves core information and avoids unnecessary document growth or procedural complexity.
 - Modification treats missing execution-critical information as an under-specified defect.
 - Modification treats extra non-executed procedure, example, condition, or context burden as an over-specified defect.
-- Modification rejects candidate wording that enables owner evasion, leaves multiple plausible actions, creates semantic conflict, or adds a bottleneck unrelated to required evidence or procedure.
+- Modification rejects candidate wording that enables owner evasion, leaves multiple plausible actions, creates semantic conflict, or creates a `bottleneck defect` unrelated to required evidence, safety, verification, acceptance, or procedure force.
 - Common execution intent moves to top doctrine and mapped core law before lower owner surfaces add situation-specific detail.
 - Lower duplicate wording stays only with protected local-restatement basis, direct-consumption relevance, or isolation-safety need.
 - Modification removes, re-homes, or replaces reference paths that exist only for discoverability, citation convenience, broad traceability, or reverse-linking.

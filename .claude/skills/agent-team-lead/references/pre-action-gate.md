@@ -143,7 +143,8 @@ Apply tighten, replace, trim, merge, re-home, or delete before appending.
 Justify net growth only when no existing owner text can carry the meaning.
 
 ### UNCERTAINTY
-Resolve derivable uncertainty through evidence-backed default, configurable parameter, narrowed scope, or marked inference.
+Resolve derivable uncertainty through evidence-backed default, configurable parameter, narrowed claim strength, or marked inference.
+Uncertainty handling must not narrow frozen deliverable scope, `SCOPE-BASELINE`, completion stop, promotion coverage, patch-loop coverage, or validation scope without explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis.
 Escalation criteria follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 
 ## Evidence Boundary

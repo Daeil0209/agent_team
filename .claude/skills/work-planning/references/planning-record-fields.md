@@ -31,6 +31,8 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, active philosophy section or keyword with direct owner/action/stop/evidence/routing/burden effect, target governance/design intent, priority order, route class, owner choice, and next action.
 - `COMPLETION-STOP-CONDITION` is mandatory for consequential plans and must derive from the user instruction, deliverable type, proof/acceptance defaults, and active workflow or sequence exit law.
 - It names the smallest practical closure condition a reasonable owner can verify, the evidence that proves closure, and the condition that keeps the owner open or routes `HOLD`.
+- Valid terminal states are deliverable closure, explicit user-accepted deferral, lawful owner deferral under `[USER-DELIVERY-FIT]`, or `HOLD` with truthful blocker.
+- Lead-authored wave, batch, sample, priority tier, context limit, runtime limit, turn limit, response-length limit, or tool-call pressure is not a terminal state.
 - `TEAM-LEAD-WORK-PLAN` is mandatory for consequential plans and must name the material phases, owner for each phase, action, stop/evidence, verification or review need, iteration or re-entry condition, and termination plan.
 - `TEAM-LEAD-WORK-PLAN` is authored by `team-lead` and carries the procedure that `team-lead` will execute, route, monitor, synthesize, verify, and close.
 - `TEAM-LEAD-WORK-PLAN` derives from the user instruction and chosen route; `COMPLETION-STOP-CONDITION` supplies its final closure row.
@@ -39,6 +41,9 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Place `Skill(review-verification)` under `Skill(self-verification)` for produced synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 - A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
+- A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly accepted as deferred/out-of-scope, or blocked by a truthful `HOLD`.
+- Governance defect or removal audit plans keep review-promotion rows distinct from lead synthesis rows.
+- Governance patch plans keep the governance-modification change loop open until every same-request `patch-ready` row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
 - `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `Skill(review-verification)` promotion basis.
@@ -49,6 +54,9 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Multi-wave routes record per-wave `SCOPE-BASELINE` against the frozen deliverable scope.
 - Multi-wave routes record the `SCOPE-BASELINE` union state as `full-coverage`, `partial-with-deferral`, or `partial-with-HOLD`.
 - Deliverable-scope delta from a wave's `SCOPE-BASELINE` records under `DEFERRED-SURFACES` with named owner-deferral upstream record path or `HOLD` with cited blocker.
+- `partial-with-deferral` is valid only when every deferred surface has explicit user acceptance, user-stated boundary, or `[USER-DELIVERY-FIT]` lawful owner-deferral basis.
+- Lead-authored wave, batch, sample, priority tier, resource pressure, or planning convenience cannot create `partial-with-deferral`.
+- `partial-with-deferral` does not satisfy deliverable completion for the originally requested scope unless the user explicitly accepts the narrowed scope.
 - Missing multi-wave `SCOPE-BASELINE` union record blocks wave-2-onward dispatch-ready freeze.
 - Missing multi-wave `SCOPE-BASELINE` union record blocks wave-PASS framed as deliverable-completion in user-facing reports.
 - Wave PASS cannot redefine deliverable scope as that wave's `SCOPE-BASELINE`.

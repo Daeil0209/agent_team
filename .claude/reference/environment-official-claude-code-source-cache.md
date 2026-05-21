@@ -3,7 +3,7 @@ doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Environment Configuration Philosophy; official behavior alignment; skill/reference consumption"
-captured: 2026-05-12
+captured: 2026-05-21
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---

@@ -2,7 +2,6 @@
 name: log-based-qa
 description: Verify runtime behavior with structured JSON logs, request IDs, Docker log monitoring, and traceable log evidence. Use as required tester proof support when the frozen proof surface names logs; use as corroborating tester support when runtime signals can confirm or defeat another frozen proof surface.
 user-invocable: false
-PRIMARY-OWNER: tester
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

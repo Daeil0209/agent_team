@@ -55,6 +55,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - output kind changes
   - content contract changes
   - scope baseline changes
+  - lead-authored wave, batch, sample, priority tier, or deferral would exclude a frozen scope row
 - The proof/acceptance chain axis moves when:
   - proof burden changes
   - acceptance owner changes
@@ -76,6 +77,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
   - priority changes
   - burden changes
   - scope changes
+  - completion stop condition changes
 - Same-boundary correction requires every axis to cite the current frozen value.
 - A moved axis reopens `work-planning`.
 
@@ -100,6 +102,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Non-shape-defining consultation records `prior-output-consulted:no-derivation` and continues from current live sources; it cannot change route, packet, taxonomy, finding shape, workflow, methodology, or conclusion without explicit prior-output use.
 - Prior outputs are not a replacement deliverable, user choice, route source, or methodology source unless explicit prior-output use was requested.
 - Missing required bounded corpus measurement from any Corpus Measurement Gate work type blocks dispatch-ready planning.
+- A plan that lets lead-authored waves, batches, samples, priority tiers, or resource pressure terminate requested scope blocks dispatch-ready planning.
+- A plan that merges lead synthesis with required defect-promotion review for governance audit blocks dispatch-ready planning.
+- A plan that lacks a loop over all same-request `patch-ready` rows blocks dispatch-ready planning when patching is in scope.
 - Dispatch-ready planning includes:
   - `team-dispatch-readiness-plan`
   - `AGENT-MAP`
@@ -138,12 +143,13 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
-17. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
-18. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
-19. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
-20. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
-21. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
-22. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
+15. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
+17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
+18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
+19. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
+20. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
+21. Trace the termination row to the frozen `COMPLETION-STOP-CONDITION` and every `SCOPE-BASELINE` row; failed trace reopens `work-planning`.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

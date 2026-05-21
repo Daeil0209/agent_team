@@ -2,7 +2,6 @@
 name: visual-composition
 description: Own presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
 user-invocable: false
-PRIMARY-OWNER: developer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
 ## Structural Contract

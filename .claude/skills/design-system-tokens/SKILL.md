@@ -2,7 +2,6 @@
 name: design-system-tokens
 description: Define 3-layer design token architecture, token naming, layer consumption, and cross-platform token management. Use when design-system consistency, theme control, component-layer discipline, or cross-platform UI tokens materially affect implementation or review.
 user-invocable: false
-PRIMARY-OWNER: developer
 SECONDARY-CONSUMER: reviewer
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---

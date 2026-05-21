@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Modification Philosophy"
+SOURCE-RULES: "Modification Philosophy; Work Execution Philosophy; Environment Configuration Philosophy"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ---
@@ -10,6 +10,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-user-reporting-law.md
 ## Source Binding
 This reference is trigger-bound detail for `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 This reference supplies governance modification detail for removal-first edit selection, narrow owner hardening, and information preservation.
+Work Execution and Environment Configuration consume this reference only for governance-text patch readiness, removal-first selection, hardening scope, or patch-owner selection named by their Reference Map.
 These rules stay with runtime-boundary owners:
 - hook rules
 - settings rules
@@ -47,6 +48,7 @@ A governance patch is not patch-ready until the consuming owner records:
 - changed owner files
 - source rule or source meaning
 - failing execution path
+- `PRE-MUTATION-BASIS` with active sequence, triggered skills/references, current cumulative live state, review-verification status, modification-keyword status, consumed-surface access proof, Patch-Ready Gate status, and next legal step
 - edit operation
 - preserved meaning
 - protected procedure preservation result
@@ -61,11 +63,15 @@ A governance patch is not patch-ready until the consuming owner records:
 - core-to-trigger-bound guidance result when situation-specific guidance is material
 - reference integrity result
 - direct-consumption relevance for each added or changed reference path
-- post-change verification basis
+- post-change verification plan
 This gate is the canonical governance patch standard.
+Completed post-change verification is a post-mutation closure duty, not a pre-mutation patch-ready prerequisite.
 Other owner surfaces cite this gate for patch selection.
 Other owner surfaces may add owner-local route, review, execution, proof, or handoff duties.
 Local duties must not weaken or replace this gate.
+`PRE-MUTATION-BASIS` records the lawful governance-modification path before patch design: active sequence, required skills, triggered references, current cumulative live state including session-applied patches, consumed surface access, consumed or blocked status, and next legal step.
+`PRE-MUTATION-BASIS` is invalid when it is post-hoc, missing required review-verification status, missing modification-philosophy keyword status, missing consumed-surface access proof, missing Patch-Ready Gate status, or recorded only as intention without consumed/blocked evidence.
+Review-verification, modification-philosophy keyword checks, consumed-surface proof, and source-to-destination preservation are cumulative patch-readiness duties.
 For `quick update` or `quick hardening`, the Patch-Ready record may be compact only when owner surface, write scope, and meaning preservation are unambiguous.
 Direct-consumption relevance records the consuming owner, target reference, active decision axis, and concrete behavior changed by the target.
 Direct-consumption relevance is invalid when the target exists only for discoverability, citation convenience, broad traceability, reverse-linking, or possible future use.
@@ -78,6 +84,7 @@ Compact records are invalid when they hide changed meaning, moved ownership, wea
 
 ## Stop
 Stop before appending when existing owner text can be tightened, replaced, trimmed, merged, re-homed, or deleted per `## Minimal Governance Rules`.
+Stop before appending when merge or re-home can reduce procedure steps, branch paths, consumed documents, or repeated consumption points without losing execution-critical information.
 Stop before appending when `EXISTING-OWNER-ENUMERATION:` is absent, partial, or unrecorded on the consuming owner.
 `EXISTING-OWNER-ENUMERATION:` records every consumed owner surface on the failing execution path.
 `EXISTING-OWNER-ENUMERATION:` records every adjacent surface carrying related rules, fields, or sections.
@@ -85,7 +92,8 @@ Each enumeration candidate is classified `adopt:<tighten|replace|trim|merge|re-h
 Stop before append review when any proposed governance sentence bundles two or more rules or actions per `## Minimal Governance Rules`.
 Stop before mutation when proposed governance wording is under-specified for the active owner action, trigger, stop, evidence, verification, acceptance truth, routing, or patch-readiness.
 Stop before mutation when proposed governance wording is over-specified with non-executed procedure, example, condition, explanation, or context burden.
-Stop before mutation when proposed governance wording enables evasion, leaves ambiguous next action, creates semantic conflict, forms a bottleneck, or broadens blocking without required risk basis.
+Stop before mutation when proposed governance wording enables evasion, leaves ambiguous next action, creates semantic conflict, forms a repeated-error or over-detail execution bottleneck, or broadens blocking without required risk basis.
+Stop before Draft when `PRE-MUTATION-BASIS` is absent, post-hoc, edited-file-only, missing current cumulative live-state basis, missing required skill/reference status, missing required review-verification status, missing modification-philosophy keyword status, missing consumed-surface access proof, or missing the next legal step.
 Stop before mutation when source-to-destination meaning remains unreconstructed.
 Stop before mutation when an existing valid procedure, gate, owner path, or state transition would be weakened.
 Stop before calling governance defective when `[GOV-MIN]` remains unapplied.
@@ -122,7 +130,7 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
 - Behavior-weakening wording is corrected by making the valid action explicit or removing the non-executed burden.
 - Obsolete concepts leave active consumed surfaces through delete, replace, trim, merge, or re-home.
 - A live runtime artifact that can still emit an obsolete token is mapped to the valid replacement action without keeping that token in the normal schema.
-- Prohibition-only wording does not close a governance defect unless a current hazardous action remains live and the rule also names the valid replacement action.
+- Prohibition-only wording does not close a governance defect unless a current hazardous action remains live and the rule also names the valid replacement action or next owner.
 - Before adding doctrine:
   - tighten existing text
   - replace existing text when replacement preserves meaning
@@ -132,7 +140,7 @@ Stop before duplicating patch-selection rules on an adjacent surface when citati
   - delete existing text when it is obsolete, duplicate, or harmful
 - Governance edits preserve or sharpen the canonical common preservation baseline in `.claude/reference/modification-core-law.md` `### Preservation Rules`.
 - Patch placement starts from the failing execution path.
-- Patch the narrowest owner surface that is actually loaded, read, or enforced on that path.
+- Patch the narrowest owner surface that is actually consumed or technically enforced on that path.
 - Do not treat edits to unconsumed, stale, or merely indexed documents as closure.
 - Before adding lower-surface repetition to fix missed behavior, test whether top doctrine or mapped core law is weak.
 - Repair the weak top/core anchor before adding local detail unless isolation safety or a distinct execution moment requires local wording.
