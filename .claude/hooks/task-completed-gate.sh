@@ -450,7 +450,7 @@ if [[ -z "$WP_TIMESTAMP" && "$EVIDENCE_IS_WORKER" != "true" ]]; then
 fi
 
 if [[ "$RESULT_VERIFICATION_PRESENT" != "true" ]]; then
-  FAILURES+=("No observed self-verification sequence marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load Skill(self-verification), run result verification against the exact completion claim and evidence basis, then retry completion.")
+  FAILURES+=("No observed self-verification sequence marker for session ${EVIDENCE_SESSION_ID:-unknown}. Load Skill(self-verification), run PASS-1 coverage and PASS-2 review-verification on the produced completion surface set, then retry completion.")
 fi
 
 if [[ -z "$LATEST_CLASS" ]]; then

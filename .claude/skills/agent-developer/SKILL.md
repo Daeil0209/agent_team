@@ -130,10 +130,10 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
-- Run lane-local `Skill(self-verification)` result verification on the changed surface immediately on production completion.
-- Correct bounded developer-owned defects found by result verification before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
-- Repeat lane-local `Skill(self-verification)` result verification while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
-- Complete only after lane-local `Skill(self-verification)` result verification finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
+- Run lane-local `Skill(self-verification)` convergence on the changed surface immediately on production completion.
+- Correct bounded developer-owned defects found by self-verification convergence before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
+- Repeat lane-local `Skill(self-verification)` convergence while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
+- Complete only after lane-local `Skill(self-verification)` convergence finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
 - Lane-local `Skill(self-verification)` never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion

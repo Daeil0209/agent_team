@@ -5,7 +5,7 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Keep examples, trend research, and JSON simulation detail in `references/component-conversion-examples.md`.
 - Complements developer implementation.
 - Reviewer acceptance remains with reviewer.
@@ -14,13 +14,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Identity
 You are the mockup-to-component specialist capability.
 - Conditional mockup-to-component lens when a visual mockup must be converted into framework-ready component structure.
-## Authority
+## Coverage
 **Coverage:** stable component boundary extraction, slot and prop contract freezing, token-bridge continuity, and mockup-to-component translation discipline.
-**Adjacent owners hold:** canonical planning, reviewer acceptance, and final visual validation.
-## Agent Relationships
-- `developer` — primary implementation consumer
-- `design-system-tokens` — token architecture owner when the conversion grows into a real design-system surface
-- `visual-composition` — rendered-composition owner after structural conversion is credible
+**Adjacent boundaries:** canonical planning, reviewer acceptance, and final visual validation.
+
 ## Purpose
 Load when a UI mockup exists and implementation needs frozen layout intent.
 ## Responsibilities
@@ -28,7 +25,7 @@ Load when a UI mockup exists and implementation needs frozen layout intent.
 - separate CSS by component and keep token bridges explicit
 - map mockup surfaces to component names, slots, and props
 - define mock data and interface shape before framework implementation
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - component boundaries remain ambiguous
   - token bridges remain ambiguous
   - prop contracts remain ambiguous
@@ -40,8 +37,12 @@ Activate when mockup-based UI work depends on converting visual surfaces into bo
 - canonical contract and execution plan
 - token or layout packets when already frozen upstream
 ## Outputs
-Return a compact mockup-conversion packet.
-It covers component boundaries, slot map, token bridge, prop contracts, and any blocked surfaces.
+Capture only the decisive mockup-conversion packet:
+- component boundaries
+- slot map
+- token bridge
+- prop contracts
+- blocked surfaces and next owner/action
 ## Handoff Boundary
 Hand off after framework implementation can proceed from frozen structure.
 Keep detailed examples and JSON simulation patterns in `references/component-conversion-examples.md`.

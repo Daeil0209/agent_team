@@ -2,57 +2,53 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-8 Planning Consumption; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
+SOURCE-RULES: "request-fit; design-intent; frozen-planning-fields; route-continuity; lead-only-fact-transfer-readiness"
 ---
 # team-lead: Planning Field Consume
 
 ## Purpose
-Consume route-relevant frozen planning fields before local execution, dispatch, phase movement, or reporting.
+Consume only the frozen planning fields needed for the current next owner/action before local execution, dispatch, phase movement, or reporting-law-admitted user-facing prose.
+Stop the current action when the consumed plan no longer supports it.
 
 ## Consume When
-- `work-planning` has emitted frozen fields.
-- A route, local execution path, workflow, sequence, dispatch, or report depends on those fields.
-- A field is stale, contradictory, missing, or weaker than the governing floor.
+- A local execution path, workflow, sequence, dispatch, or reporting-law-admitted user-facing prose depends on frozen `work-planning` fields.
+- `TEAM-LEAD-WORK-PLAN`, `NEXT-CONSEQUENTIAL-ACTION`, route class, claim ceiling, readiness, continuity, or lead-only fact-transfer readiness can change the next action.
+- A consumed field is missing, stale, contradictory, or weaker than the governing floor.
 
-## Required Output
-Record:
-- field order consumed
-- stale or missing fields
-- reopened owner when needed
-- planned next executable owner/action
+## Consumption Result
+Record only the material result needed by the active owner:
+- consumed field basis
+- blocking field and reason
+- next executable owner/action
 
-## Routing Gate
-Execution requires every consumed required field current, noncontradictory, and at or above the floor.
-Dispatch requires cross-continuity basis.
-Team-agent runtime dispatch requires receiving lanes to get the needed facts through packet fields, task/workflow state, or cited artifacts.
+## Decision Gate
+- Execute only when every consumed field required by the current next owner/action is current, noncontradictory, and at or above the floor.
+- Reopen `work-planning` when the current action lacks a frozen planning basis or the consumed basis no longer supports the action.
+- Apply `Cross-Continuity` before `task-execution`.
+- Apply `Lead-Only Context Guard` before team-agent runtime dispatch.
 
 ## Resolve Next Owner And Action
-- Execution gaps open `work-planning`.
-- Dispatch gaps open cross-continuity basis recovery.
-- Team-agent dispatch gaps open packet fact transfer.
+- Passing consumption returns to the active next owner/action.
+- Missing, stale, contradictory, or weaker-than-floor consumed fields reopen `work-planning`.
+- Cross-continuity gaps reopen `work-planning`.
+- Lead-only context gaps block dispatch and route through `Lead-Only Context Guard`.
 
-## Field Order
-Read only fields consumed by the current next owner/action, in the order and conditionals owned by `.claude/skills/work-planning/references/planning-record-fields.md` `## Allowed Values`. Consumer surfaces (this file and `.claude/skills/task-execution/references/dispatch-entry-contract.md`) follow that canonical order without restating the field list.
+## Canonical Field Ownership
+Consume field order, allowed values, required conditions, `not-applicable` bases, field floors, and triggered field-owner references through `.claude/skills/work-planning/references/planning-record-fields.md` `## Allowed Values`.
+This reference does not redefine planning-field meaning.
+Consumer surfaces use the canonical field owner, then act on the consumed result.
 
 ## Reaction Rules
 - Preflight floor applies only to fields inside the current owner path.
-- Fields outside every current local execution, workflow, sequence, dispatch, or report owner stay outside `work-planning` reopening.
+- Fields outside every current local execution, workflow, sequence, dispatch, or reporting-law-admitted user-facing prose owner stay outside `work-planning` reopening.
 - Team-lead decision basis is the consumed frozen scope, route, owner map, proof chain, acceptance chain, parallel-fit basis, and active-route mandatory fields.
-- Developer-level expansion starts inside that consumed basis.
-- For every consumed planning field, missing, stale, contradictory, or weaker-than-floor basis reopens `work-planning`.
-- `SEMANTIC-INTENT-BASIS` unsupported for the selected route class, owner choice, and next action reopens `work-planning`.
-- `COMPLETION-STOP-CONDITION` reopens `work-planning` when it is non-evidence-backed, unsupported for the selected next action, report gate, or `HOLD` route, or less complete than the requested deliverable; valid form is instruction-derived, practical, evidence-verifiable, and at least as complete as the requested deliverable.
-- `DERIVED-DEFAULTS` reopens only when deliverable type, receiver job, proof surface, or request-bound packet fields depend on it.
-- `TEAM-LEAD-WORK-PLAN` reopens only when local execution, dispatch, synthesis, reporting, or termination depends on it.
+- Downstream expansion stays inside the consumed basis; moved scope, owner, proof, acceptance, route, or claim boundary reopens `work-planning`.
+- A consumed field whose canonical floor does not support the selected route class, owner choice, next action, reporting-law gate, `HOLD` route, or claim strength reopens `work-planning`.
+- Consume `TEAM-LEAD-WORK-PLAN` only when local execution, dispatch, synthesis, reporting-law-admitted user-facing prose, or termination depends on it.
 - `NEXT-CONSEQUENTIAL-ACTION` must trace to the first executable row of `TEAM-LEAD-WORK-PLAN`; failed trace reopens `work-planning`.
-- Missing material `CLAIM-CEILING` reopens `work-planning`.
-- Consume frozen tier basis per `.claude/skills/work-planning/references/governance-depth.md` before staffing, checkpoint, review, proof, or acceptance sizing.
-- Pre-`work-planning` configured independent-review basis reopens `work-planning`.
-- `triggered:*` requires active adjudication.
-- Treat `fail-open:*` as configured-review-unavailable evidence.
-- Required `PARALLEL-GROUPS` carries boundary, non-overlap, and measured/cited burden basis.
-- File-only, guessed, or pre-`work-planning` parallel measurement reopens `work-planning`.
+- Claims stay at or below the consumed `CLAIM-CEILING`; a required stronger claim reopens `work-planning`.
+- Frozen tier, configured independent-review, parallel-fit, and execution-readiness fields consume their canonical field owners before staffing, dispatch, checkpoint, review, proof, acceptance, or reporting-law-admitted user-facing prose.
+- Pre-`work-planning`, file-only, guessed, unadjudicated, or weaker-than-canonical bases cannot authorize the current action.
 - Named `ACTIVE-WORKFLOW` opens the workflow owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Active `ACTIVE-SEQUENCE` opens the sequence owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 - `EXECUTION-READINESS-BASIS` that is missing or blocked reopens `work-planning` unless `NEXT-CONSEQUENTIAL-ACTION` names a verified same-route blocker-clear move.
@@ -69,9 +65,11 @@ Missing cross-continuity basis reopens `work-planning`.
 Contradictory cross-continuity basis reopens `work-planning`.
 
 ## Lead-Only Context Guard
-Before team-agent runtime dispatch, confirm receiving lanes have every material lead-context fact.
+Before team-agent runtime dispatch, confirm receiving lanes have or will receive every material lead-context fact through a governed transfer path.
 Material facts travel as:
 - packet fields
 - task state
 - workflow state
 - cited artifacts
+Missing material fact transfer blocks dispatch and opens packet-field correction inside `task-execution` when `task-execution` is active or is the frozen `NEXT-CONSEQUENTIAL-ACTION`.
+Missing material fact transfer reopens `work-planning` when `task-execution` is not active or frozen next, or when the missing fact changes scope, owner, route, proof, acceptance, or claim boundary.

@@ -15,7 +15,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Operator-emphasized keyword names and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 - This core law owns executable keyword definitions, patch-design tests, preservation rules, duplicate handling, and source-to-destination continuity.
 - Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`.
-- Governance modification records the current 1-4 basis before patch design: request fit, mutation authorization, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
+- Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
 - `removal-first` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete while preserving required information.
 - `consumed-surface` lands patches on the document the affected owner actually consumes at the failing decision moment.
 - `no-compression` separates independently testable meanings and keeps same-owner repeated peer terms together when they share one governing role.
@@ -62,7 +62,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A reference path added for existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is removed, re-homed to the owning source-to-destination map, or replaced with the exact consumed owner surface.
 - Patch-ready review records direct-consumption relevance through `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 - When governance-modification routing overlaps another sequence, `.claude/reference/work-execution-core-law.md` `## Procedure And Ownership Law` primary-sequence rule governs routing.
-- Governance mutation requires mutation authorization from the current user instruction or an active frozen execution boundary; question, audit, review, verification, gap discovery, defect recognition, or report exception is not sufficient authorization.
 - `[HARDEN]` governs recurrence-barrier correction scope.
 - Open `Skill(governance-modification)` after quality, evidence, ownership, and acceptance integrity are secure.
 
@@ -92,6 +91,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ### Retroactive Application Rules
 - Land new doctrine after affected current-session surfaces are handled.
 - Land sharpened doctrine after affected current-session surfaces are handled.
+- Record affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred per lawful owner-deferral basis`.
 - Fix affected artifacts through the owning upstream record.
 - Invalidate affected artifacts through the owning upstream record.
 - Defer affected artifacts through the owning upstream record.
@@ -100,10 +100,11 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Treat affected handoffs as stale until fresh re-verification.
 - Treat affected closures as stale until fresh re-verification.
 - Keep explicitly unaffected surfaces active after recorded unaffected classification.
+- Keep repository-state continuation evidence on consumed owner surfaces, packet fields, retained carriers, or verification records instead of detached patch ledgers.
 
 ## Resolve Next Owner And Action
 - Governance asset creation, modification, deletion, split, merge, re-home, compression, migration, settings, hook, or runtime-enforcement change opens `Skill(governance-modification)`.
-- Missing patch authorization, owner surface, direct-consumption relevance, source-to-destination trace, review-verification basis, preservation basis, or verification basis opens the earliest invalidated `Skill(governance-modification)` change-sequence step.
+- Missing patch owner surface, direct-consumption relevance, source-to-destination trace, review-verification basis, preservation basis, or verification basis opens the earliest invalidated `Skill(governance-modification)` change-sequence step.
 - Top-doctrine execution changes open the mapped core-law update or existing-detail coverage record before lower-surface mutation.
 - Core-law executable-detail changes open trigger-bound owner-reference guidance only when the active owner path needs situation-specific guidance.
 - Confirmed behavior-weakening governance opens narrowest consumed-surface correction.

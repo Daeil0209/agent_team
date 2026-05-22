@@ -5,28 +5,23 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Keep log format details, Docker patterns, thresholds, and templates in `references/log-qa-patterns.md`.
 - Complements `tester`.
-- Tester execution authority remains with tester.
 ### Reference Map
 - `references/log-qa-patterns.md`: log formats, Docker patterns, thresholds, templates, and runtime-signal QA patterns.
 ## Identity
 You are the log-based-qa specialist capability.
 - Conditional runtime-signal lens when logs are the most truthful available verification surface.
-## Authority
+## Coverage
 **Coverage:** log-based runtime observation method, request-traceability expectations, and observability-quality challenge.
-**Adjacent owners hold:** ordinary implementation, planning, and final verdict authority.
-## Agent Relationships
-- `tester` — primary execution owner
-- Extends the tester lane.
-- `developer` — observability-fix owner when runtime signal is missing or malformed
-- `validator` — final verdict owner after proof is credible
+**Adjacent boundaries:** ordinary implementation, planning, and final verdict.
+
 ## Purpose
-Load as required tester-owned proof support when the frozen proof surface names logs or freezes logs as decisive because executable assertions are absent or impractical.
+Load as required tester proof support when the frozen proof surface names logs or freezes logs as decisive because executable assertions are absent or impractical.
 Load as corroborating tester support when runtime logs can confirm or defeat another frozen proof surface.
 Runtime logs support proof when they can confirm or defeat a frozen behavior, state transition, request path, error path, or runtime invariant.
-Corroborating log use does not replace the frozen proof surface, user-surface proof, tester execution authority, or validator verdict.
+Corroborating log use does not replace the frozen proof surface, user-surface proof, tester execution, or validator verdict.
 ## Responsibilities
 - prefer log-based QA when runtime signal is more decisive than writing a new harness
 - require success-path logging, structured payloads, and end-to-end request IDs
@@ -43,10 +38,13 @@ Activate in corroboration mode when the frozen proof surface stays user-facing o
 - expected user flows or runtime scenarios
 - observability assumptions already frozen in the packet
 ## Outputs
-Return a log-QA packet.
-It captures exercised flows, decisive log evidence, request IDs, unexpected statuses, latency anomalies, and blocked observability gaps.
+Capture only the decisive log-QA packet:
+- exercised flow
+- decisive log evidence with request ID
+- unexpected status or blocker
+- next owner/action
 ## Handoff Boundary
-Hand off after downstream owners can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
+Hand off after downstream path can tell whether the runtime signal is decisive, missing, or structurally untrustworthy.
 Keep long templates and threshold tables in `references/log-qa-patterns.md`.
 ## Operational Discipline
 - Log findings need corroboration across layers using request ID propagation.

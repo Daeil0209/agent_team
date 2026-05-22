@@ -38,10 +38,10 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Optional supervised report rendering and curtain proof lives in `.claude/reference/environment-output-curtain-runtime.md`.
 - Official Claude Code source facts live in `.claude/reference/environment-official-claude-code-source-cache.md`.
 - Minimal governance patch selection, Patch-Ready Gate, source-to-destination trace, and hardening rules live in `.claude/reference/modification-minimal-governance-change-law.md`.
-- Governance asset mutation, recurrence hardening, asset-change mode, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references reached through that skill's `## Reference Map`.
+- Governance asset mutation, recurrence hardening, asset-change mode, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references named by that skill's Step 2.
 - Review-verification workflow and governance review gates live in `.claude/skills/review-verification/SKILL.md` and `.claude/skills/review-verification/references/governance-review-gates.md`.
-- Self-verification target profiles, challenge lenses, artifact-change verification, and synthesis verification live in `.claude/skills/self-verification/SKILL.md` and `.claude/skills/self-verification/references/verification-targets-and-gates.md`.
-- Team-lead role spine stays in `.claude/agents/team-lead.md`; detailed lead procedure lives in `.claude/skills/agent-team-lead/SKILL.md` and references reached through that skill's `## Reference Map`.
+- Self-verification two-pass outbound gate procedure lives in `.claude/skills/self-verification/SKILL.md`.
+- Team-lead role spine stays in `.claude/agents/team-lead.md`; detailed lead procedure lives in `.claude/skills/agent-team-lead/SKILL.md` and references reached through that skill's `# Consume Trigger References`.
 - Lane role spines stay in `.claude/agents/<lane>.md`; lane packet fields, specialist matrices, proof/review/verdict details, and completion detail live in `.claude/skills/agent-<lane>/SKILL.md` and matching lane-detail references.
 - Assignment packet, dispatch truth, runtime dispatch, message classes, scope-pressure, truth ladder, phase-transition, and completion-handoff detail lives in `.claude/skills/task-execution/SKILL.md` and references reached through that skill's `## Reference Map`.
 - Work-planning fields, planning targets, boundary gates, evidence tiers, deliverable defaults, parallel fit, team-runtime fit, execution readiness, governance depth, and cross-continuity detail lives in `.claude/skills/work-planning/SKILL.md` and references reached through that skill's `## Reference Map`.
@@ -70,16 +70,16 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 
 | Scenario | Required outcome after compression |
 | --- | --- |
-| Fresh consequential request | `session-boot` opens first when runtime readiness triggers; otherwise `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` result verification runs before analyzed-result reporting or completion. |
+| Fresh consequential request | `session-boot` opens first when runtime readiness triggers; otherwise `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` convergence runs before analyzed-result reporting or completion. |
 | Light answer-only request | No agent-specific skill, workflow, dispatch, or governance detail loads by habit. |
 | Read-only diagnostic, audit, or analytical work | Lead-local is valid only under direct-work limits; team fan-out requires frozen context-footprint or independent-evidence basis. |
-| Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and result verification before analyzed-result reporting or completion. |
+| Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |
 | Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; standalone `Agent` is fallback evidence only, not team-runtime dispatch. |
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |
 | Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, or user-facing blocker; never smooth into progress, completion, or agent reluctance. |
 | Packet correction | Lawful only inside the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |
 | Completion synthesis | Only completion-grade `MESSAGE-CLASS: completion` plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
-| Final arbitration | Formal `PASS/HOLD/FAIL` belongs to `validator`; local verified-result closure is valid only when no final-arbitration trigger applies. |
+| Final arbitration | Formal `PASS/HOLD/FAIL` belongs to `validator`; local `final verified result` closure is valid only when no final-arbitration trigger applies. |
 | Runtime/cleanup truth | Dispatch, receipt, agent-start, progress, completion, standby, cleanup, and acceptance remain distinct. |
 | Hook/runtime footprint claim | Separate official legality from local `[HOOK-LAST]` philosophy; measured claims need runtime evidence, otherwise report `design-level` or `UNVERIFIED`. |
 | Context reduction or migration | Live reference check, duplicate-overlap audit, current source-to-destination index, and imperative-force check are required before closure. |

@@ -46,6 +46,8 @@
 - Team-agent dispatch, receipt, reuse, monitoring, and completion transport use the team-agent runtime; same-lane follow-on work evaluates live or standby reuse before cleanup or new member creation.
 - Governance hierarchy work proceeds top-down through mapped execution layers, and `.claude` governance mutation starts only inside active `Skill(governance-modification)`.
 - Skill activation requires actual `Skill(<skill>)` load or current same-session loaded-skill basis; trigger-active pointers are recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` on the governed path.
+- Loaded skill owner resolves in this order: the loaded procedure skill's explicit owner/phase/sequence owner first; otherwise the agent that loaded the skill executes that skill's method as the owner for that skill path.
+- Non-agent specialist skills do not declare independent ownership or authority; they declare coverage, method, packet, and handoff boundaries for the loading agent or active procedure owner.
 - Communication Plane, task output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
 - Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
 - Executable detail lives in `.claude/reference/work-execution-core-law.md`.
@@ -61,7 +63,7 @@
 - Under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance is an execution-force defect when it weakens truthful next-action selection or required procedure execution.
 - Review-verification output is evidence for correction and patch readiness, not file mutation authority.
 - Review-verification outputs that affect downstream correction, routing, mutation, validation, or closure must be carried into the next owner surface before that owner executes.
-- Primary skill links: `Skill(review-verification)` for review packets; `Skill(self-verification)` for outgoing result verification.
+- Primary skill links: `Skill(review-verification)` for review packets; `Skill(self-verification)` for outgoing produced work-product convergence.
 - Executable detail lives in `.claude/reference/review-and-verification-core-law.md`.
 
 ## 5. Modification Philosophy

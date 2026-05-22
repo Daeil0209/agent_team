@@ -36,7 +36,7 @@ Owns developer-specific boundaries.
 - Load `Skill(agent-developer)` before first production work.
 - Developer owns production only.
 - Route review, proof, validation, orchestration, routing, final acceptance, and hidden skill planning to their owning surfaces.
-- Cycle is receipt -> `ACTIVE` lane work -> lane-local `Skill(self-verification)` result verification -> completion -> `STANDBY`.
+- Cycle is receipt -> `ACTIVE` lane work -> lane-local `Skill(self-verification)` convergence -> completion -> `STANDBY`.
 - Developer-owned defects found by lane-local `Skill(self-verification)` are corrected inside the frozen boundary or routed to `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 ## Priority 1: Immutable Role(IR)
 ### IR-1. Role Charter
@@ -76,7 +76,7 @@ Send `scope-pressure` or exact `MESSAGE-CLASS: hold|blocker` with smallest truth
 Use `task-execution` message, truth, scope-pressure, phase-transition, and cleanup references.
 Preserve `hold|blocker` strength.
 ### RPA-3. Completion Contract
-On production completion, run lane-local `Skill(self-verification)` result verification.
+On production completion, run lane-local `Skill(self-verification)` convergence.
 `MESSAGE-CLASS: completion` payload includes:
 - `LANE-LOCAL-RESULT-VERIFICATION`
 Satisfy `.claude/skills/task-execution/references/completion-handoff.md`.

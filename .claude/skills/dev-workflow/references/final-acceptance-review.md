@@ -174,10 +174,10 @@ Source-read outputs add:
 Reject-first decision order: if any material instruction, baseline row, acceptance axis, `CORE-WORKFLOW-CLOSURE` row, or executable user-facing operator-delivery axis lacks retained matched evidence, record `FINAL-REJECT` before `FINAL-ACCEPT` or workflow `Complete`.
 Subset-anchor own-review (anchoring on implemented routes/templates instead of the design's `CORE-WORKFLOW-CLOSURE` rows) is automatic FINAL-REJECT.
 FAR own-review compares retained matched-evidence axes against original instruction-trace and frozen plan/design acceptance rows directly; validator-narrowed PASS-scope without frozen-record passage citation is automatic FINAL-REJECT-CANDIDATE on the excluded axis.
-FAR own-review, validator-result consumption, and Codex fallback review consume applicable `Skill(review-verification)` named lenses before `FINAL-ACCEPT` or correction dispatch relies on the reviewed surface.
-Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `Skill(self-verification)` result verification on the `FINAL-ACCEPT` record.
-`FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input for `far-reject-routing`; enter `task-execution` only for assigned correction dispatch after team-lead classification.
-Codex unavailable status records `fail-open:<reason>` with fallback closure-inspection basis and conservative `Skill(self-verification)` result verification; validator `PASS` identity remains the acceptance prerequisite.
+FAR own-review, validator-result consumption, and Codex fallback review consume applicable `Skill(review-verification)` named lenses before `FINAL-ACCEPT` or correction/re-evidence dispatch relies on the reviewed surface.
+Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `Skill(self-verification)` convergence on the `FINAL-ACCEPT` record.
+`FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input for `far-reject-routing`; enter `task-execution` only for assigned correction or re-evidence dispatch after team-lead classification.
+Codex unavailable status records `fail-open:<reason>` with fallback closure-inspection basis and conservative `Skill(self-verification)` convergence; validator `PASS` identity remains the acceptance prerequisite.
 
 `FINAL-ACCEPT` record carries:
 - validator `PASS` identity
@@ -208,20 +208,21 @@ Codex unavailable status records `fail-open:<reason>` with fallback closure-insp
 ## Reject Route
 Assigned validator writes the correction packet using active validator-lane-detail reference.
 `FINAL-REJECT` keeps the active `dev-workflow` acceptance loop open; it is not workflow completion, user-decision wait, or a new top-level task.
-task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction route.
-team-lead direct execution of production, test, or validation correction work without validator-authored correction packet routing through task-execution is lane-bypass; treat as procedural failure equivalent to silent self-certification.
+task-execution routes `FINAL-REJECT` follow-on work through the validator-authored correction packet before the owning correction or re-evidence route.
+team-lead direct execution of production, test, validation correction, or re-evidence work without validator-authored correction packet routing through task-execution is lane-bypass; treat as procedural failure equivalent to silent self-certification.
 Validator correction packet names root-cause class, correction owner surface, required evidence, and revalidation target; it is evidence for route classification, not route freeze.
-team-lead classifies the owning correction route per `.claude/skills/dev-workflow/references/checkpoints.md` CP5 Auto-resolve priority before dispatch.
-After the owning correction route returns a corrected artifact, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the corrected artifact when executable user-facing.
+team-lead classifies the owning correction or re-evidence route per `.claude/skills/dev-workflow/references/checkpoints.md` CP5 Auto-resolve priority before dispatch.
+After the owning correction or re-evidence route returns a corrected artifact or re-evidence result, applicable Phase 4/5 review, test, validation, and operator-delivery closure rerun on the affected surface when executable user-facing.
 The fresh validator `PASS` from that rerun is the next Final Acceptance Review entry identity.
 
 ## Resolve Next Owner And Action
 - Reject-first gap opens `FINAL-REJECT`.
-- `FINAL-REJECT` opens `far-reject-routing` classification; correction dispatch enters `task-execution` only after team-lead route classification.
+- `FINAL-REJECT` opens `far-reject-routing` classification; correction or re-evidence dispatch enters `task-execution` only after team-lead route classification.
 - Validator correction packet opens CP5 route classification.
 - CP5 design-level classification opens Phase 2 correction.
+- CP5 proof/acceptance-chain evidence gap inside unchanged axes opens Phase 4 review/proof/validation re-evidence.
 - CP5 implementation or operator-delivery classification opens Phase 5 correction.
-- Corrected artifact opens applicable Phase 4/5 review, proof, validation, and operator-delivery rerun.
+- Corrected artifact or re-evidence result opens applicable Phase 4/5 review, proof, validation, and operator-delivery rerun.
 - Fresh validator `PASS` opens a new Final Acceptance Review entry.
-- Clean reject-first result opens `FINAL-ACCEPT` after current `Skill(self-verification)` result verification.
+- Clean reject-first result opens `FINAL-ACCEPT` after current `Skill(self-verification)` convergence.
 - `FINAL-ACCEPT` opens workflow `Complete`.

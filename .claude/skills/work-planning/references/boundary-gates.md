@@ -30,8 +30,8 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Same-artifact revision loops stay with the active workflow owner when all boundaries stay unchanged.
 - `answer-only` is a direct answer with no tool use, artifact judgment, route change, dispatch, mutation, acceptance, or stronger claim.
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
-- `self-verification-only audit` verifies an already-frozen plan or result claim without dispatch, mutation, acceptance, or report expansion.
-- `self-verification-only audit` stays outside planning unless it assigns, reopens, or changes consequential work.
+- Verification/status audit stays outside planning only while it does not assign correction, dispatch, mutation, acceptance, report expansion, or a changed work boundary.
+- `Skill(self-verification)` opens only as the produced work-product outbound gate after the producing owner has a surface awaiting handoff.
 - `notification-only carry-forward` uses `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` channel definition and stays outside planning unless it assigns, reopens, or changes consequential work.
 - These light/control messages stay outside planning unless they assign, reopen, or change consequential work:
   - receipt-only messages
@@ -149,7 +149,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
-15. Load `Skill(self-verification)` in plan-audit mode only for an explicit plan-audit target or disputed frozen-plan readiness.
+15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
 16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
 17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
 18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.

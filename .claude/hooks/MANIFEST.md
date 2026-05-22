@@ -86,6 +86,8 @@ pre-`work-planning` warning edge: pre-planning external-review output is not
 mutation. Playwright has one narrow browser user-surface proof edge for planning/self-verification
 preflight. Broader `mcp__*` matcher expansion requires this ledger's Hook-Last
 review before activation.
+Blocking hook/settings runtime-enforcement expansion also requires explicit
+operator approval before activation; the ledger record names the approval basis.
 
 | Hook | Protected failure | Narrowness and recovery record |
 | --- | --- | --- |

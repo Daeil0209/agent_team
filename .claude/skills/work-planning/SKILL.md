@@ -5,7 +5,7 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned procedure surface.
+- Sharpens only its procedure surface.
 - Fixed top-level section order starts after Structural Contract.
 - Section 1 is Purpose.
 - Section 2 is Activation Trigger.
@@ -23,7 +23,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Purpose
 Freeze the smallest complete plan basis before consequential action.
-Own planning freeze only.
+Run planning freeze only.
 Execution, dispatch, review, proof, validation, user-facing final reporting, and agent packets move to the named owner.
 
 Procedure spine (Steps 0-4):
@@ -39,11 +39,11 @@ Missing, vague, contradicted, or overclaimed basis blocks execution.
 Output `HOLD`, blocker-clear, or reopened owner.
 
 Boundary:
-- `team-lead` owns thin instruction reading and channel opening.
-- `work-planning` owns consequential freeze and target selection.
-- workflow/sequence skills own their active phase after this freeze.
-- `Skill(self-verification)` owns plan audit and result verification.
-- `task-execution` owns host-authorized dispatch and packet truth.
+- `team-lead` handles thin instruction reading and channel opening.
+- `work-planning` handles consequential freeze and target selection.
+- workflow/sequence skills handle their active phase after this freeze.
+- `Skill(self-verification)` handles the producer outbound gate for produced work-product coverage and review-verification convergence.
+- `task-execution` handles frozen dispatch and packet truth.
 - the planning record is internal carry-forward, not the agent packet.
 
 ### Reference Map
@@ -56,7 +56,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/planning-targets.md`: target definitions, required basis, and target-switch rules.
 - `references/boundary-gates.md`: activation scope, corpus measurement, boundary axes, hard routing gates, and post-planning gates.
 - `references/reference-use.md`: reference-based planning and source-deviation risk.
-- `references/evidence-tier.md`: authority, benchmarks, and model-prior downgrade risk.
+- `references/evidence-tier.md`: coverage, benchmarks, and model-prior downgrade risk.
 - `references/deliverable-defaults.md`: proof, review, validation, user burden, and acceptance defaults by deliverable type.
 - `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, serial basis, and the active concurrent-agent cap.
 - `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
@@ -64,7 +64,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/governance-depth.md`: project/request tier classification, governance-depth fields, and scaling guardrails.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
-- `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`: configured independent-review skill, common contract lookup, `WP-CONSULT` route-freeze handling, team-lead adjudication, fail-open, and authority/footprint limits.
+- `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`: configured independent-review skill, common contract lookup, `WP-CONSULT` route-freeze handling, team-lead adjudication, fail-open, and coverage/footprint limits.
 
 Unavailable needed references route to `HOLD`, blocker-clear, or reopened owner.
 
@@ -121,7 +121,7 @@ Also load it for material:
 - required basis
 - lead-local legitimacy
 - team-dispatch readiness
-- workflow/sequence ownership
+- workflow/sequence route
 - blocker-clear scope
 - delegated-lane boundary scope
 
@@ -129,13 +129,13 @@ Use `references/boundary-gates.md` for boundary-change axes.
 A moved axis reopens planning at that boundary.
 Frozen boundary means the current binding values for every axis plus the selected planning target and required basis.
 Frozen boundary updates only through reopened `work-planning`.
-Frozen boundary also updates through owner-local correction that preserves every axis.
+Frozen boundary also updates through skill-local correction that preserves every axis.
 
 ## Step 2: Q1-Q5 Work Analysis
 Before scope freeze, answer:
 1. What is the real purpose and completion stop condition, including the user concern signal and anti-goal when expressed?
 2. What work type or types are present?
-3. What governing workflow, sequence, or methodology owns each type?
+3. What governing workflow, sequence, or methodology handles each type?
 4. Are streams local single-surface, independent, sequential, or interdependent?
 5. Which supporting skills are needed inside each stream?
 
@@ -159,10 +159,10 @@ User-surface law:
 Before freeze, `team-lead` builds the work plan it will execute or route.
 The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
 The work plan names the upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis each material phase consumes or passes forward.
-For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
+For each material phase, `team-lead` records the review/verification judgment as `skill-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
 Place each conditional owner at its material trigger point; place `Skill(governance-modification)` at governance asset change or recurrence-barrier hardening.
-`Skill(self-verification)` verifies the actual result surface produced by `team-lead` or a lane before reporting, `Skill(review-verification)`, governance-asset `Skill(governance-modification)`, or redispatch.
-`Skill(review-verification)` runs under `Skill(self-verification)` for synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
+`Skill(self-verification)` verifies the produced work-product surface set from `team-lead` or a lane through PASS-1 coverage and PASS-2 review-verification before reporting, governance-asset `Skill(governance-modification)`, or redispatch.
+`Skill(review-verification)` runs inside `Skill(self-verification)` Step 3 for the produced work-product surface set and returned PASS-2 packet.
 `Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
 The termination path names only deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker as terminal states.

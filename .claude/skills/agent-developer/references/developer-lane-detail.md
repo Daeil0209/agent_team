@@ -30,14 +30,22 @@ When a developer role or skill says "developer additions" or "developer detail",
 | Active `dev-workflow` Phase 3+ supporting plan/design sub-artifact | `ACTIVE-WORKFLOW: dev-workflow`, `CURRENT-PHASE`, `WORK-SURFACE`, `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`, and `SCOPE-BASELINE`/`ACTIVE-SLICE` when the artifact freezes or changes multi-surface scope |
 | Implementation edit | `PLAN-STATE`, `PLAN-STEP`, `CHANGE-SPEC`, `CHANGE-BOUNDARY`, `DONE-CONDITION`, `ACCEPTANCE-RISK`, `REVIEW-OWNER`, `PROOF-OWNER`, `ACCEPTANCE-OWNER`, `AGENT-FIT`, `SCOPE-MATCH`, `PRIOR-ANALYSIS`; `SCOPE-BASELINE`/`ACTIVE-SLICE` when implementation claims current-scope completion; `USER-RUN-PATH`, `BURDEN-CONTRACT`, `ENV-COVERAGE`, launch artifact, `PRIMARY-OPERATOR-OS`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, and setup/shutdown/clean-relaunch contract when executable; `WRITE-SCOPE` when writes are path-bounded |
 | Meaningful/high/critical risk | surface-driven acceptance chain (split rules below) |
+| Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, merge-integration, or bounded correction surface |
+| Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
+| Governance-patch | All `All developer-owned production` fields plus the governance-patch additions below; not a standalone packet |
 
 Acceptance-chain rules for the Meaningful/high/critical risk row:
 - `REVIEW-OWNER: reviewer` is required.
 - `PROOF-OWNER: tester` only when executable, rendered, runtime, interaction, or user-surface proof is material; otherwise `PROOF-OWNER: not-applicable:<basis>`.
 - `ACCEPTANCE-OWNER: validator` only when final-arbitration trigger or acceptance basis requires validator verdict; otherwise `ACCEPTANCE-OWNER: not-applicable:<reviewer-closeable/local-verified-result basis>`.
-| Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, merge-integration, or bounded correction surface |
-| Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
-| Governance-patch | All `All developer-owned production` fields plus `TASK-CLASS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`; not a standalone packet. `PRIOR-ANALYSIS` must cite upstream researcher/reviewer evidence when governance audit, review, or defect classification is material; otherwise use `PRIOR-ANALYSIS: not-applicable:<basis>`. |
+
+Governance-patch additions:
+- Required fields: `TASK-CLASS: governance-patch`, `REQUEST-FIT-BASIS`, `TARGET-INTENT-BASIS`, `PRE-MUTATION-BASIS`, `REVIEW-VERIFICATION-BASIS`, `CHANGE-BOUNDARY`, `WRITE-SCOPE`, `BASELINE-CLASS`, and `EDIT-OPERATION`.
+- `BASELINE-CLASS` values: `preserved-asset`, `improvement-target`, or `stability-anchor`.
+- `EDIT-OPERATION` values: `tighten`, `replace`, `trim`, `merge`, `re-home`, `delete`, or `append-with-EXISTING-OWNER-ENUMERATION`.
+- Meaning migration requires `CHANGE-BOUNDARY` to include source-meaning inventory, destination rationale, and cross-reference update list.
+- High-traffic governance surfaces add `SESSION-REVALIDATION: current-session-repo` and `BASELINE-ANCHOR: captured`.
+- `PRIOR-ANALYSIS` cites upstream researcher/reviewer evidence when governance audit, review, or defect classification is material; otherwise use `PRIOR-ANALYSIS: not-applicable:<basis>`.
 
 Owner fields use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
 
@@ -115,8 +123,8 @@ Developer lane specialist skills:
 - support overlays: `benchmark-simulation`, `external-tool-bridge`
 
 Secondary-consumer specialist support:
-- clarity result-verification support: `feynman-clarity` for developer-owned plan, design, specification, completion, governance, or document production when receiver comprehension is decisive
-- bounded code-quality result-verification support: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before completion
+- clarity self-verification convergence support: `feynman-clarity` for developer-owned plan, design, specification, completion, governance, or document production when receiver comprehension is decisive
+- bounded code-quality self-verification convergence support: `code-quality-review` for developer-owned implementation or refactoring surfaces when SOLID, duplication, reuse, or maintainability risk must be challenged before completion
 
 Use this controlling order when multiple controlling specialists are active on one blocked surface:
 - `business-workflow`
@@ -162,6 +170,6 @@ Support overlays defer to earlier controlling contracts.
 - `reconstruct-with-inference` opens developer-owned production work with marked inference.
 - `scope-pressure` opens team-lead packet correction, setup/research routing, owner split, or replanning.
 - `hold|blocker` opens team-lead blocker resolution.
-- Completed production opens lane-local `Skill(self-verification)` result verification.
-- Lane-local result verification opens completion.
+- Completed production opens lane-local `Skill(self-verification)` convergence.
+- Lane-local self-verification convergence opens completion.
 - Completion open surfaces route to the smallest named next owner/action.

@@ -126,7 +126,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - Contract-truth preflight anchors verification packets to the frozen baseline, exact launch/read artifact, operator invocation, termination, cleanup, and defer basis.
 - Convenient-subset, inherited server-state, already-running endpoint, or wave-narrowed-without-`SCOPE-BASELINE`-union-record packets route to correction from the frozen basis or reopen the owner.
 Multi-wave wave packets consume `SCOPE-BASELINE` union rules in `.claude/skills/work-planning/references/planning-record-fields.md`.
-- `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction dispatch.
+- `FINAL-REJECT` follow-on packet preflight preserves frozen acceptance scope and carries the validator-authored correction packet in `EXECUTION-READINESS-BASIS` before correction or re-evidence dispatch.
 
 Preflight outcome names:
 - `packet-correction`: the missing or malformed packet value already exists in the frozen basis and the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary remain unchanged. Correct the packet and rerun preflight before sending.

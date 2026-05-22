@@ -84,7 +84,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
 - Lock state, lawful move list, retained-output setup, and dispatch preparation stay internal; visible non-tool prose appears only as a report granted a narrow exception by `.claude/reference/reporting-prohibition-law.md`.
 - Packet size or self-contained packet burden is not a reason to delay dispatch or omit receiver-required basis; put complete shared context in a retained carrier and send required-floor shard packets that point to it.
-- A user challenge about missing parallel dispatch answers the cause through `.claude/reference/reporting-prohibition-law.md` Tool-Adjacent Prose Suppression and then resumes the locked dispatch action unless the user redirects.
+- A user challenge about missing parallel dispatch answers the cause only through `.claude/reference/reporting-prohibition-law.md`, then resumes the locked dispatch action unless the user redirects.
 - A parallel execution segment then reconciles every intended target before it moves out.
 - Assignment-grade `SendMessage` success arms a per-target receipt barrier keyed by the exact live process-backed member name.
 - Assignment-send success is `dispatch pending` only; it is not `agent started`, `running`, progress, or completion.

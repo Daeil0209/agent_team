@@ -1,14 +1,14 @@
 ---
 name: team-meeting
-description: Own a critical marathon meeting for an operator-provided agenda. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and operator acceptance.
+description: Run a critical marathon meeting for an operator-provided agenda. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and operator acceptance.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## 1. Purpose
-Own a critical marathon meeting for the operator's agenda.
+Run a critical marathon meeting for the operator's agenda.
 Turn the agenda into a fully consensus-converged solution through drafter writing and critic opinion.
-Keep procedures owned by `task-execution`, `Skill(governance-modification)`, or other named owners with those owners throughout the meeting.
+Keep procedures on `task-execution`, `Skill(governance-modification)`, or other named procedure paths throughout the meeting.
 Require unanimous participant consent for every solution item before the operator gate.
 End the meeting after full consent and operator acceptance.
 Drafter treats dissent as solution material.
@@ -28,9 +28,9 @@ The meeting keeps the fixed drafter and at least one critic.
 Operator specifies which agents fill the critic roles at meeting opening.
 
 All participants use `Skill(review-verification)` as a bounded critical lens.
-Participants use the lens to find defects, risks, missing evidence, owner-boundary problems, and better alternatives.
-Treat lens authority as bounded critique authority.
-Keep final acceptance, mutation authority, and full-workflow authority with their named owners.
+Participants use the lens to find defects, risks, missing evidence, boundary problems, and better alternatives.
+Treat lens coverage as bounded critique coverage.
+Keep final acceptance, mutation rules, and full-workflow checks on their named procedure paths.
 The lens operates as free-form critical thinking during the meeting.
 Use the standalone `Skill(review-verification)` workflow for formal `review_verification_packet`, verdict table, and review record outputs.
 Default lenses: `design-intent-lens`, `coherence-integrity-lens`, `owner-boundary-lens`.

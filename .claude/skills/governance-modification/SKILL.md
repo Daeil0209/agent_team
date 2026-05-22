@@ -4,159 +4,96 @@ description: Govern team-system asset changes and install recurrence barriers.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
-## Structural Contract
-- Sharpens only governance change, recurrence hardening, and team-system asset mutation.
-- Fixed top-level section order after Structural Contract: Purpose, Activation, Reference Map, Recurrence Hardening, Asset Change, Change Sequence, Patch Execution Method, Resolve Next Owner And Action.
 
-## Purpose
-Own controlled changes to `.claude` team-system assets.
-Control how `team-lead` plans, reviews, executes, verifies, and closes governance document modification.
-Own recurrence-barrier hardening after a behavioral, procedural, or capability defect is confirmed.
-Own ordinary asset maintenance when no confirmed recurrence defect exists.
+# Flow Overview
+```mermaid
+flowchart TD
+    Step1[Load Skill] --> Step2[Change Boundary] --> Step3[review-verification] --> Step4[Change Sequence Design] --> Step5[self-verification] --> Step6[Handoff or Next Work] --> END([AUTO-PROC])
+```
 
-Adjacent owners:
-- `Skill(review-verification)` owns material defect, removal, cross-surface governance, negative-risk, and patch-worthiness judgment.
-- `Skill(self-verification)` owns final claim, result, completion, and reporting verification.
-- `work-planning` owns fresh or reopened consequential change-boundary freeze.
-- `task-execution` owns assignment-grade team dispatch and packet truth.
-- `session-boot` and `session-closeout` keep runtime readiness and teardown truth.
-
-Review remains owned by `Skill(review-verification)`.
-Result verification remains owned by `Skill(self-verification)`.
-`team-lead` executes `Skill(governance-modification)` only from a current owner, trigger, action, stop, and evidence basis.
-Valid entry records current request fit, mutation authorization, `TARGET-INTENT-BASIS`, active owner/action boundary, and review-verification basis before mutation.
-This skill's entry, mode selection, records, and patch progress stay Procedure Plane.
-User-facing change-result prose opens this skill's Post-Verify `Skill(self-verification)` gate before `team-lead` RPA-7 and `.claude/reference/reporting-prohibition-law.md`.
-
-## Activation
-Load this skill for a verified next owner/action of governance asset change or recurrence-barrier hardening.
-Ordinary task execution, ordinary analysis, ordinary deliverable correction, ordinary code/content change, and result verification stay with their active owners; this skill opens when that correction changes a governance asset or installs a team-operation recurrence barrier.
-
-Governance asset change means creation, modification, deletion, splitting, merging, re-homing, reclassification, compression, migration, or runtime-enforcement change to one of:
-- doctrine
-- agents
-- skills
-- settings
-- hooks
-- enabled project-root `.mcp.json`
-- live-surface mirrors
-- other team-system governance assets
-
-Recurrence-hardening classification starts when evidence confirms or candidate-classifies a team-operation defect from justified user correction, self-detected process failure, hook signal, runtime/process error, repeated missed-catch, or confirmed capability gap and the correction may require a governance asset barrier.
-Recurrence-barrier installation requires confirmed defect basis, current review-verification finding-state basis, and recurrence path.
-
-Select one active mode:
-- `recurrence-hardening`: defect classification and recurrence-barrier path triggered by a Recurrence Hardening Trigger Matrix row in `references/decision-and-repair.md`; barrier installation requires confirmed defect basis and recurrence path.
-- `asset-change`: ordinary non-defect asset maintenance, skill introduction, specialist routing change, settings/hook change, migration, compression, or capability refinement.
-
-After `Skill(governance-modification)` entry, `team-lead` consumes `Skill(review-verification)` fresh per the change tier.
-Standard or structural update consumes the full workflow.
-Quick update consumes a single named lens per `Skill(review-verification)` `## Named Lane Lens Index`.
-`REVIEW-VERIFICATION-NEED` records the chosen lens for quick update or `full-workflow` for standard/structural update.
-When a change can affect top doctrine, mapped core-law executable detail, or trigger-bound owner-reference guidance, `REVIEW-VERIFICATION-NEED` includes `governance-continuity-lens` or `full-workflow` before Draft.
-Patch-surface selection records the execution-continuity path required by `.claude/reference/work-execution-core-law.md` governance hierarchy order.
-Lower-surface-only repair stays blocked until that path proves isolation-safety or a distinct execution moment.
-Governance asset changes inside `Skill(governance-modification)` require the recorded `Skill(review-verification)` basis; `owner-local-sufficient:<basis>` routes to correction.
-Every governance asset change consumes `Skill(review-verification)`.
-After Post-Verify, open `Skill(self-verification)` for the outgoing changed-result or report claim.
-Destructive, security-sensitive, runtime-enforcement expansion, or operator-policy-choice changes require explicit operator approval.
-Lane-side governance asset-change: `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` owns the quality contract.
-Pre-mutation lane checks consume `Skill(governance-modification)` patch mechanics and `Skill(review-verification)` named lenses on the proposed patch.
-Post-execute lane checks consume lane-local `Skill(self-verification)` for produced result truth.
-
-## Reference Map
+# Reference Map
 Load only the reference whose trigger is active.
-- `.claude/reference/modification-core-law.md`: load for governance asset creation, modification, deletion, splitting, merging, re-homing, reclassification, compression, migration, or recurrence-barrier hardening.
-- `.claude/reference/environment-configuration-core-law.md`: load for settings, hooks, runtime-enforcement, official-behavior, tool-capability, or runtime-footprint asset changes.
-- `references/decision-and-repair.md`: trigger interpretation, causal analysis, failure-mode response, owner-surface choice, patch classification, high-traffic surfaces, and constraints.
-- `references/asset-change-checks.md`: ordinary asset update checks, skill introduction gate, specialist routing, configurable-value ownership, Hook-Last preflight, and MCP/external-tool asset coherence.
-- `references/capability-gap-fast-path.md`: missing reusable-skill fast path and default rapid-skill routing.
-- `references/benchmark-protocol.md`: benchmark-first preparation and capability-promotion comparison gates.
-- `references/human-readable-packet-owners.md`: semantic packet catalog for governance patch dispatch.
-- `references/change-patch-method.md`: Change Sequence detail, patch mechanics, retroactive application, meaning routing, file/runtime hygiene, and hook enforcement rules.
+- `.claude/reference/modification-core-law.md`: load for Modification Philosophy keyword gates, preservation rules, source-to-destination continuity, and retroactive current-session handling.
+- `.claude/reference/modification-minimal-governance-change-law.md`: load for Patch-Ready Gate, removal-first edit selection, consumed-surface routing, and minimum executable information checks.
 
-Triggered-reference load failure routes to `HOLD` or reopens the owner that can supply the basis.
+# Step 1: Load Skill
+Load `Skill(governance-modification)`.
 
-## Recurrence Hardening
-Protect active request correctness and safety before durable hardening.
-Harden the narrowest owner-local surface that blocks the recurrence without creating a parallel operating model.
-Explanation alone is not hardening.
+# Step 2: Change Boundary
+Freeze change boundary:
+- `REQUEST-FIT-BASIS`
+- `TARGET-INTENT-BASIS`
+- active path/action boundary
+- target `.claude` asset or asset set
 
-Record the applicable carrier.
-Quick hardening records `REQUEST-FIT-BASIS`, `MUTATION-AUTHORIZATION-BASIS`, `TARGET-INTENT-BASIS`, `FINDING-STATE-BASIS`, `DEFECT-BASIS`, `DESIGN-INTENT-BASIS`, `OWNER-SURFACE`, `CHANGE-BOUNDARY`, `VERIFICATION-BASIS`, `CONVERGENCE-STATUS`, and `RESUME-ACTION`.
-Standard and structural hardening record `REQUEST-FIT-BASIS`, `MUTATION-AUTHORIZATION-BASIS`, `TARGET-INTENT-BASIS`, `FINDING-STATE-BASIS`, `DEFECT-BASIS`, `DESIGN-INTENT-BASIS`, `CAUSAL-BASIS`, `FAILURE-MODE`, `RECURRENCE-PATH`, `PREVENTION-POINT`, `REVIEW-VERIFICATION-NEED`, `OWNER-SURFACE`, `EXECUTION-CONTINUITY-BASIS`, `BARRIER-TYPE`, `CHANGE-BOUNDARY`, `VERIFICATION-BASIS`, `CONVERGENCE-STATUS`, `SUSPENDED-WORK-SURFACE`, `RESUME-OWNER`, `RESUME-CONDITION`, `RESUME-ACTION`, and `FOLLOW-ON-OPTIMIZATION`.
-When active work is interrupted, record `SUSPENDED-WORK-SURFACE`, last safe state, `RESUME-OWNER`, `RESUME-CONDITION`, and candidate `RESUME-ACTION` before the interruption becomes invisible.
+# Step 3: review-verification
+Load `Skill(review-verification)` and call with bounded design question:
+- target: Step 2 target asset or asset set
+- scope: mode, tier, problem basis, correction direction, consumed target surface, removal-first design, direct-consumption relevance, negative risk, patch-worthiness, patch-readiness, mutation readiness
 
-Quick hardening applies only to same-owner typo fixes, terminology normalization, dead-text removal, duplicate trim, pointer correction, or wording clarification when owner surface, write scope, meaning preservation, consumed path, and Patch-Ready compact-record eligibility are unambiguous.
-Quick hardening preserves rule force, owner boundary, trigger, stop, evidence, acceptance, runtime effect, recurrence path, and consumed owner path.
-If recurrence, owner ambiguity, cross-surface impact, new rule meaning, runtime enforcement, or acceptance impact appears, upgrade before execution.
+Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
+Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, and `NEXT-OWNER-ACTION`.
+Reject post-hoc review on already-applied governance patches; route the order failure to recurrence-hardening at the narrowest failed pre-mutation path.
 
-Standard hardening covers behavioral rule changes, executable-rule force/trigger/stop/evidence changes, new constraints, and recurrence barriers.
-Structural hardening covers architecture-level changes, owner re-home, cross-document impact, runtime-enforcement expansion, or capability-boundary changes.
+# Step 4: Change Sequence Design
+Write `CHANGE-SEQUENCE-DESIGN` only from `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN`.
 
-Required order for standard and structural hardening:
-1. Identify trigger source, visible symptom surface, failed decision point, earliest prevention point, defect class, impacted path, intended design, causal basis, recurrence path, likely owner, consumed owner path, execution-continuity path, and required barrier class.
-2. Consume `Skill(review-verification)` fresh for every governance asset change inside `Skill(governance-modification)`. Quick-hardening narrows the review scope to a single named-lens per `Skill(review-verification)` `## Named Lane Lens Index` while still loading the skill and executing the workflow.
-3. Adjudicate the owner surface explicitly.
-4. Keep the hardening role-scoped unless the recurrence path proves a shared owner.
-5. Execute through `Change Sequence`.
-6. Install the recurrence barrier on the correct owner surface.
-7. Apply retroactive current-session surfaces governed or contradicted by the new rule.
-8. Make a bounded follow-on optimization decision.
-9. Close only with current verification basis, explicit open surfaces, and verified resume action or `HOLD`.
+Each design item records:
+- `PROBLEM-BASIS`
+- `CONSUMED-TARGET-SURFACE`
+- `EDIT-OPERATION`
+- `PRESERVED-MEANING`
+- `PRE-MUTATION-BASIS`
+- `NEXT-OWNER-ACTION`
 
-## Asset Change
-Use `asset-change` mode for ordinary team-system asset maintenance when no confirmed recurrence defect controls the change.
-Asset-change mode still uses the same `Change Sequence`.
-Asset-change mode still preserves owner boundary, live consumption path, protected procedure force, and information traceability.
+Derive `PRE-MUTATION-BASIS` from `.claude/reference/modification-minimal-governance-change-law.md` and `# Patch Execution Method`.
+Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `.claude/reference/modification-core-law.md`: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`.
+Keep Step 4 design-only; route file mutation through Step 6.
 
-Record `ASSET-CHANGE-BASIS` with request-fit basis, mutation-authorization basis, `TARGET-INTENT-BASIS`, target asset, owner surface, change type, update tier, triggered references, affected surfaces, source-to-destination trace when meaning moves, execution-continuity path when changed meaning controls execution, finding-state basis when material, verification basis, and open surfaces.
-Record `REVIEW-VERIFICATION-NEED` for each asset-change row before Draft.
+# Step 5: self-verification
+Load `Skill(self-verification)` on the produced `CHANGE-SEQUENCE-DESIGN`.
+Call with produced-output kind `governance-asset-change`.
+Let `Skill(self-verification)` handle failure, correction packet construction, and repeated correction until convergence or `HOLD`.
 
-Change types:
-- `ordinary asset maintenance`
-- `capability introduction`
-- `external-tool/MCP integration`
-- `compression`
-- `migration`
-- `settings/hook change`
-- `runtime enforcement expansion`
-- `specialist-routing change`
+# Step 6: Handoff or Next Work
+Hand off only self-verified `CHANGE-SEQUENCE-DESIGN` items.
+If patch execution is next, execute or hand off through `# Patch Execution Method` with `PRE-MUTATION-BASIS`.
+If same-request design rows remain, continue the next row through Step 2.
+If a recurrence barrier design converged, carry verified `RESUME-ACTION`.
+If the governance design interrupted another procedure path, reopen that path with the verified design basis.
+Return converged governance-modification state silently to the calling owner when no same-request executable owner/action remains.
 
-Update tiers:
-- `quick update`: same-owner typo, dead-text deletion, duplicate trim, pointer correction, terminology normalization, or wording clarification that preserves rule force, owner, trigger, stop, evidence, acceptance, runtime effect, live references, and consumed path.
-- `standard update`: ordinary governance, role, skill, or reference edits inside the same owner family without moving ownership, expanding runtime enforcement, changing acceptance authority, or migrating meaning across owner surfaces.
-- `structural update`: owner re-home, migration, compression with destination-owner change, skill introduction, skill split or merge, specialist-routing change, external-tool/MCP integration, settings/hook change, runtime enforcement expansion, acceptance/validation authority change, or cross-surface structural impact.
+# Patch Execution Method
+Use this section to prepare `PRE-MUTATION-BASIS` during Step 4.
+Execute patches through this section only after Step 4 design and Step 5 self-verification converge.
 
-Unknown, mixed, or disputed tiers upgrade to the highest material tier before mutation.
-Use `references/asset-change-checks.md` for triggered structural checks, skill introduction, specialist routing, Hook-Last preflight, and MCP/external-tool asset coherence.
+## Preconditions
+- Current owner/action boundary, `REQUEST-FIT-BASIS`, `TARGET-INTENT-BASIS`, and target `.claude` asset set are recorded.
+- `PRE-MUTATION-BASIS` is recorded before mutation and may be prepared from this section during Step 4.
+- `Skill(review-verification)` supplied the current mutation-readiness or patch-worthiness basis required by the change tier.
+- The patch target is the consumed owner surface that can execute the changed meaning.
 
-## Change Sequence
-The `Change Sequence` is the standard controlled path for rule, code, config, hook, agent, skill, reference, and governance asset changes.
-Use `references/change-patch-method.md` for detailed step order and constraints.
+## Execution
+- Patch from the current live file state; stale baselines, remembered content, and pre-session copies are evidence only.
+- Apply only reviewed, bounded, policy-compliant edits.
+- Prefer tighten, replace, trim, merge, re-home, or delete before append.
+- For moved meaning, record source meaning, destination rationale, changed references, and preserved execution-critical fields.
+- For deletion, verify the deleted meaning is duplicate, obsolete, harmful, or preserved on the destination owner surface.
+- For recurrence or capability-gap repair, patch the existing consumed surface when it can carry the barrier.
+- Create or expand a governance surface only when the review-verified path proves no existing consumed surface can carry the required barrier or reusable capability.
+- For blocking hook/settings runtime-enforcement expansion, use Hook-Last review, `.claude/hooks/MANIFEST.md` ledger entry, and explicit operator approval before activation.
+- For MCP or external-tool capability changes, preserve official-behavior alignment, capability boundary, fallback, and cleanup truth on the owning environment/runtime surface.
 
-Hard surface:
-- Consume `references/change-patch-method.md` `## Change Sequence Required Order` for Prerequisites A-D, Steps 1-7, and reopen-granularity rules; the in-turn pre-mutation `Skill(review-verification)` tool-call requirement, post-hoc-review recurrence-defect rule, and post-verify `Skill(self-verification)` rule are owned there.
-- Before any governance file mutation, record `PRE-MUTATION-BASIS` from `references/change-patch-method.md`; when basis is missing, the legal next action is basis capture, owner reopening, or truthful `HOLD`.
-- When execution force is equal, use tighten, replace, trim, merge, re-home, or delete before adding a procedure, field, taxonomy, mode, or owner model.
-- When a same-request patch set has multiple `patch-ready` rows, the `Change Sequence` repeats until every row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
-- Priority tiers, batches, or sub-batches control order only; the same-request patch loop remains active.
-- Skill asset changes keep `PRIMARY-OWNER` only on agent-specific `SKILL.md` files as lane identity; non-agent `SKILL.md` files keep that field absent.
-- The failed pre-mutation order returns to recurrence-hardening at the narrowest calling-owner surface.
+## Post-Verify
+- Verify the resulting diff, owner semantics, live references, information preservation, affected consumed surfaces, and in-flight or prior-verdict impact.
+- Classify affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred per lawful owner-deferral basis`.
+- Treat affected prior verdicts, PASS labels, handoffs, or closures as stale until fresh re-verification.
+- Keep team-operation continuity through retained carriers, packet fields, consumed owner surfaces, or verification records.
+- Reopen `Skill(review-verification)` when post-verification exposes material coherence, owner-surface, negative-risk, removal, or patch-worthiness risk.
+- Load `Skill(self-verification)` on the changed-result or resume-action claim before closure, reporting, or handoff.
 
-## Patch Execution Method
-Detailed patch mechanics are owned by `references/change-patch-method.md`.
-Confirmed recurrence-hardening patches install a bounded recurrence barrier without content accumulation.
-Ordinary asset-change patches preserve the live asset contract without inventing recurrence basis.
-
-## Resolve Next Owner And Action
-- Confirmed recurrence defect opens `Recurrence Hardening`.
-- Ordinary team-system asset maintenance opens `Asset Change`.
-- Material defect, removal, governance judgment, negative risk, or patch-worthiness gap opens `Skill(review-verification):<bounded-question>` inside the current change row.
-- Patch execution opens `Change Sequence`.
-- Missing triggered reference basis opens blocker-clear, owner reopening, or `HOLD`.
-- Runtime-enforcement expansion opens Hook-Last preflight and operator approval.
-- Failed Post-Verify auto-reopens Change Sequence at the earliest invalidated step at the current cumulative live state without user authorization, subject to `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` escalation criteria; the iteration loop continues until Post-Verify converges or an escalation-class blocker is recorded.
-- Verified change opens `Skill(self-verification)`; after result verification, resume the open Change Sequence or verified `RESUME-ACTION` before consequential reporting.
-- Interrupting governance change closure requires the verified `RESUME-ACTION`, reopened original owner, or `HOLD` after the verified change.
-- Converged recurrence barrier opens the verified `RESUME-ACTION`.
+# Output Format
+```
+GOVERNANCE-MODIFICATION:
+CONVERGENCE-STATE:
+```

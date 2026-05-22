@@ -53,7 +53,7 @@ Silent deviation is a silent-PASS class defect.
 - `task-execution` does not require a standalone `REFERENCE-USE` packet field.
 - `task-execution` rejects assignment-grade dispatch when the packet needs a reference-based basis and the material citation or deviation identity is absent from request-bound packet fields or cited artifact basis.
 - Citation specificity must match trigger scope before dispatch that consumes the reference-based plan.
-- `Skill(self-verification)` plan audit opens only when the plan's citation basis is disputed.
+- A disputed plan citation basis reopens `work-planning` reference-use correction or the owning review path; `Skill(self-verification)` remains a produced work-product outbound gate.
 - Reviewer and validator lanes verify spec-vs-reference compliance when the cited reference or deviation basis is material to their assigned surface, claim, or acceptance basis.
 - Missing material reference basis is packet or planning debt, not lane rediscovery by habit.
 

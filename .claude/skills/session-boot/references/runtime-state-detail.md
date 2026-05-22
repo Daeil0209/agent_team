@@ -267,7 +267,7 @@ Corrective protocol:
 2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
 3. Keep additional assignment/correction packets out of a silent inbox.
 4. At the re-check window, inspect current response and activity/side-effect evidence. Preserve active agents in lane execution. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
-5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; explicit status answers omit ack counts, target names, packet fields, and recovery mechanics unless specifically requested.
+5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows that law's `## Report Shape`.
 
 Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among routine nudge, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
 

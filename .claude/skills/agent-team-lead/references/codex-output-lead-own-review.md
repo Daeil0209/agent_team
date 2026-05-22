@@ -2,38 +2,35 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-8 configured independent-review output or same-boundary correction; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
+SOURCE-RULES: "procedure/evidence-over-memory; stale-basis-correction; consumed-surface; minimum-executable-information; configured-review-result; same-pass-own-review; convergence-adjudication"
 ---
 # team-lead: Configured-Review Output Lead Own-Review Discipline
 
 ## Purpose
-Use this reference when configured independent-review output or same-boundary correction output risks being treated as convergence without same-pass team-lead own-review.
-The current configured independent-review output source is Codex MCP unless the tool owner is explicitly migrated.
+Configured independent-review result is evidence only; consume this reference before team-lead uses configured-review or same-boundary correction result for freeze, convergence, relay, completion, carry-forward, or redispatch.
 
 ## Consume When
-- Configured independent-review output shapes planning, artifact judgment, review, redesign, or correction.
-- A same-boundary correction pass repeats after Codex input.
-- Team-lead is about to accept configured-review consensus, relay configured-review output, or carry forward prior own-review.
+- Configured independent-review result shapes planning, artifact judgment, review, redesign, or correction.
+- A same-boundary correction pass repeats after configured-review input.
+- Team-lead is about to accept configured-review consensus, relay configured-review result, freeze from it, claim convergence from it, carry forward prior own-review, complete from it, or redispatch from it.
 
 ## Required Output
 Record:
 - configured-review pass identity
 - same-pass team-lead own-review basis
-- material specialist skills consumed
+- material skill/reference basis consumed for accepted, rejected, and unresolved points
 - accepted configured-review points
 - rejected configured-review points
 - unresolved configured-review gaps
 
 ## Routing Gate
-Positive freeze requires same-pass team-lead own-review.
-Convergence requires same-pass team-lead own-review.
+Freeze, convergence, completion, or redispatch from configured-review result requires same-pass team-lead own-review.
 Configured-review agreement requires a governing reference that permits agreement rather than fail-open only.
-Relay requires team-lead adjudication of the output.
+Relay requires team-lead adjudication of the result.
+Defect, patch-worthiness, patch-readiness, removal, or correction-priority claims require current `Skill(review-verification)` promotion basis.
 
 ## Resolve Next Owner And Action
-- A freeze gap opens same-pass team-lead own-review.
-- A convergence gap opens same-pass team-lead own-review.
+- A freeze, convergence, completion, or redispatch gap opens same-pass team-lead own-review.
 - A configured-review agreement gap opens governing-reference check.
 - A relay gap opens team-lead adjudication.
 
@@ -41,8 +38,6 @@ Relay requires team-lead adjudication of the output.
 - Treat every same-boundary correction pass as a new configured-review pass.
 - Satisfy own-review only with same-pass team-lead defect-seeking review that names accepted points, rejected points, and unresolved gaps.
 - Treat prior-pass own-review as non-current context.
-- Team-lead plan/design/redesign consumes material specialist skills before basis freeze.
-- Team-lead own-review consumes material specialist skills before convergence acceptance.
-- Team-lead reconciliation consumes material specialist skills before redispatch.
-- Prior carry-forward, landing confirmation, spot-check, configured-review result relay, and consensus wording are non-current context; own-review convergence requires current same-pass team-lead own-review.
+- Team-lead plan/design/redesign, own-review, and reconciliation consume only material skill/reference basis needed to classify configured-review points before freeze, convergence acceptance, completion, or redispatch.
+- Carry-forward, landing confirmation, spot-check, relay, and consensus wording do not satisfy same-pass own-review.
 - Lawful fail-open applies only when the owning reference names it.

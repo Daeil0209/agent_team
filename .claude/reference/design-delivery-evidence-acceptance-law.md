@@ -56,8 +56,8 @@ Positive completion requires:
 - requested content, function, format, data/example/use instructions, run/read path, and user burden satisfied
 - decisive user surface proven
 Final acceptance verdict always routes to `validator`.
-Local verified-result closure is a reporting exception only when no final-arbitration trigger applies.
-Local verified-result closure does not issue final `PASS/HOLD/FAIL`.
+Local `final verified result` closure is a reporting exception only when no final-arbitration trigger applies.
+Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
 
 ## Resolve Next Owner And Action
 - Missing-deliverable gaps open missing-deliverable correction.
@@ -121,7 +121,7 @@ Each row names:
 - acceptance owner
 
 An uncovered row is a defect.
-An uncovered row blocks validator `PASS` and local verified-result closure.
+An uncovered row blocks validator `PASS` and local `final verified result` closure.
 Prove dynamic rows with executed user action.
 Prove UI consumption through the UI surface.
 Prove user-surface behavior on the user surface.
@@ -131,6 +131,6 @@ Prove user-surface behavior on the user surface.
 - Tester evidence feeds validation.
 - `validator` owns final acceptance and issues final `PASS/HOLD/FAIL`.
 - Local closure report exception is owned by `.claude/reference/reporting-prohibition-law.md`.
-- Local verified-result closure is valid only when no final-arbitration trigger applies and the report avoids final acceptance or `PASS/HOLD/FAIL` wording.
+- Local `final verified result` closure is valid only when no final-arbitration trigger applies and the report avoids final acceptance or `PASS/HOLD/FAIL` wording.
 - Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md` `## Final-Arbitration Trigger Definitions`.
 - Acceptance compares against the frozen delivery contract.

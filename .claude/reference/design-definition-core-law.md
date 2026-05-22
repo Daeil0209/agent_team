@@ -21,7 +21,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Half-delivered artifacts are defects.
 - `[FUNCTIONAL-CLOSURE]` Executable user-facing software actions close through applicable `CORE-WORKFLOW-CLOSURE` rows.
 - Uncovered applicable `CORE-WORKFLOW-CLOSURE` rows are defects.
-- Uncovered applicable `CORE-WORKFLOW-CLOSURE` rows block validator `PASS` and local verified-result closure.
+- Uncovered applicable `CORE-WORKFLOW-CLOSURE` rows block validator `PASS` and local `final verified result` closure.
 - `[USER-CONVENIENCE]` Use the evidence-backed path that reduces user burden.
 
 ## Resolve Next Owner And Action

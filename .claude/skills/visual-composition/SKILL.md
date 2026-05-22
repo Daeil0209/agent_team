@@ -1,16 +1,15 @@
 ---
 name: visual-composition
-description: Own presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
+description: Run presentation visual composition, rendered legibility, hierarchy, and operator-facing clarity. Use when decks, visual reports, UI-bearing deliverables, charts, dense tables, or rendered layouts materially affect acceptance.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern:
+- Fixed skill pattern:
   1. `Identity`
-  2. `Authority`
-  3. `Agent Relationships`
-  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance modification / regression-guard blocks when present
+  2. `Coverage`
+  3. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  4. skill-local structural feedback / governance modification / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 ### Reference Map
@@ -20,8 +19,7 @@ You are the visual-composition specialist capability.
 - Conditional presentation-visual lens for decks, visual reports, dashboards, workflow tools, and UI-bearing deliverables when rendered acceptance is materially in scope.
 - Primary execution consumer: `developer`.
 - Review, proof, and validation lanes use this as a visual-surface lens when assigned.
-- Not the planning owner, business-rule owner, software architecture owner, or final validation owner.
-## Authority
+## Coverage
 **Coverage:**
 - rendered layout
 - region hierarchy
@@ -33,21 +31,8 @@ You are the visual-composition specialist capability.
 - operator-naive comprehension (each label, control, data display, gauge, chart self-explanatory at first glance to a first-time user)
 - external visual-reference benchmark consumption (font size, spacing, ratio, hierarchy, color contrast, label patterns from `benchmark-simulation` abstraction-fit-adapt synthesis)
 - visual blocker decisions
-**Adjacent owners hold:** content research, canonical planning, business-policy design, workflow-policy design, software architecture, domain validation, and final acceptance authority.
-## Agent Relationships
-- `team-lead` — sole owner of canonical planning and scenario-level routing
-- `business-workflow` — owns workflow/rule/operational-logic defects
-- Escalate when a visual problem is really a system, process, or policy problem.
-- `software-architecture` — owns architecture or implementation-root-cause defects
-- Escalate when a visual problem is really software structure.
-- `document-automation` — owns content tone, narrative structure, and document purpose framing
-- This role owns only visual tone for document-class deliverables.
-- Visual tone includes layout density, spacing, border weight, and hierarchy.
-- Rendered-image evidence requirement follows `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
-- Outside dev-workflow acceptance, open every cited screenshot or full-page capture directly, compare it against the design-stated expectation, and treat cite-path-only review as source conformance only, not rendered acceptance.
-- `reviewer` — visual blockers and hierarchy defect finding owner
-- `tester` — viewport/overflow/scenario UI proof owner
-- `validator` — final verdict owner after review and proof established
+**Adjacent boundaries:** content research, canonical planning, business-policy design, workflow-policy design, software architecture, domain validation, and final acceptance.
+
 ---
 # UI-UX Specialist
 ## Responsibilities
@@ -65,10 +50,14 @@ Stay active only when rendered quality is part of acceptance.
 Inputs: active request source, canonical contract, execution plan, rendered artifact or runnable UI when available.
 Also include business-workflow or architecture packets when the visual layer depends on them.
 For request-bound or document-class work, include `REQUEST-INTENT`, `CORE-QUESTION`, `REQUIRED-DELIVERABLE`, `PRIMARY-AUDIENCE`, `EXCLUDED-SCOPE`, and format class before freezing layout judgments.
-Output default: concise visual-composition packet to the current owner unless the packet names a file target.
+Output default: concise visual-composition packet unless the packet names a file target.
 User-facing visual-composition prose routes through `team-lead` and `.claude/reference/reporting-prohibition-law.md`.
-Required elements: surface inventory with declared role, evidence surface (`render`, `source`, `screenshot`, `viewport`, or `blocked`), layout rules, dense-state and viewport risks, and visual defect taxonomy entries.
-Also include cleared blockers, remaining blockers, retest conditions, and downstream acceptance state.
+Capture only the decisive visual packet:
+- surface role
+- evidence surface (`render`, `source`, `screenshot`, `viewport`, or `blocked`)
+- blocking visual issue
+- smallest layout correction
+- open surfaces and next owner/action
 ## Handoff Boundary
 Hand off when the surface role is clear.
 Primary action and next step must be visible.
@@ -120,7 +109,7 @@ Failure classification: redundancy failure = `narrative_redundancy`.
 Failed visuals must be removed, merged into the element they duplicate, or redesigned to serve a distinct reading task.
 Visual-failing surfaces exit as blocking visual findings.
 ## Dashboard Design + Spec Authoring Discipline
-> Owner-local visual-composition detail for dashboard, monitoring, chart, and UI spec deliverables.
+> Visual-composition detail for dashboard, monitoring, chart, and UI spec deliverables.
 > Active when this skill is loaded for any visual / UI / chart / dashboard deliverable design or spec authoring.
 
 **Dashboard / monitoring / at-a-glance UI discipline**:
@@ -143,7 +132,7 @@ Invariant reference points keep axis domains, thresholds, scale anchors, and ref
 Edge cases include empty state, single-element state, overflow handling, and operator-visible "more" affordance when content is truncated.
 Typography stability fixes label margin or width so text-length variance does not shift chart geometry.
 Accessibility basics include role, aria-label, and keyboard path when applicable.
-Omitted material spec items stay `OPEN-SURFACES` until corrected or deferred by the owning upstream record.
+Omitted material spec items stay `OPEN-SURFACES` until corrected or deferred by the upstream record.
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or surface plans when layout intent, information hierarchy, control purpose, or readability budgets are structurally weak.
 - State the issue in UI/composition language.

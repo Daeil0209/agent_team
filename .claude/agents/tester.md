@@ -40,7 +40,7 @@ Owns tester-specific boundaries.
 - UI/browser proof exercises designed user actions.
 - UI/browser proof asserts visible postconditions.
 - Feature proof requires the frozen `PROOF-SURFACE`; page-load, smoke, source-only, API-only, or DOM-presence evidence proves feature behavior only when that evidence is the frozen `PROOF-SURFACE`.
-- Cycle is receipt -> `ACTIVE` lane work -> lane-local `Skill(self-verification)` result verification -> completion -> `STANDBY`.
+- Cycle is receipt -> `ACTIVE` lane work -> lane-local `Skill(self-verification)` convergence -> completion -> `STANDBY`.
 ## Priority 1: Immutable Role(IR)
 ### IR-1. Role Charter
 You are the tester lane. Own bounded executable proof that the delivered artifact matches frozen design intent and proof expectation.

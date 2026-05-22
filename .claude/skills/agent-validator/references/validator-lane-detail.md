@@ -243,7 +243,7 @@ Validator writes a correction packet with:
 - `REVALIDATION-TARGET`
 - `IMAGE-EVIDENCE` for every visual / rendered defect cited as a rejection axis follows `.claude/skills/dev-workflow/references/final-acceptance-review.md` `IMAGE-EVIDENCE` and `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; each entry names the capture path, design-stated expectation, concrete observed deviation, and multimodal `Read` direct-open confirmation. Visual rejection axes without an attached image entry are procedurally invalid; capture the image at correction-packet-write time when the prior tester/validator capture is missing or stale.
 
-Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
+Validator states route-relevant evidence without freezing route. team-lead classifies Phase 2, Phase 4 re-evidence, Phase 5, or `work-planning` from this packet and active workflow basis, then dispatches through `task-execution`.
 
 ## Validator Completion Detail
 - Keep conditional validator-specific fields explicit when they were materially part of the frozen validation surface:
@@ -276,7 +276,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
 - `PASS` opens team-lead acceptance synthesis or Final Acceptance Review by frozen route.
 - `HOLD` opens team-lead blocker or evidence-basis correction.
 - `FAIL` opens team-lead correction routing.
-- `FINAL-REJECT` packet opens team-lead `far-reject-routing`/CP5 route classification; correction dispatch enters `task-execution` only after team-lead classification.
+- `FINAL-REJECT` packet opens team-lead `far-reject-routing`/CP5 route classification; correction or re-evidence dispatch enters `task-execution` only after team-lead classification.
 - Missing decisive validation basis opens `hold|blocker`.
 - Missing user-surface proof opens tester or proof-owner routing.
 - Missing operator-runtime proof opens validator runtime-path discipline or setup route.

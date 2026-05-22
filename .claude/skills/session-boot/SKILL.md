@@ -5,10 +5,10 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned runtime surface.
+- Sharpens only its runtime procedure surface.
 - Fixed top-level section order after Structural Contract: `Activation` -> `Boot Sequence` -> `Session-Start Sequence` -> `Sequence Activation Discipline` -> `Mode Split` -> `Monitoring Sequence` -> `Resolve Next Owner And Action`.
 - Reference Map stays inside Structural Contract.
-- Owns the runtime spine only.
+- Handles the runtime spine only.
 - Runtime-state tables, cleanup mappings, boot-window detail, compaction recovery detail, monitoring detail, and schema detail belong in `references/runtime-state-detail.md`.
 ### Reference Map
 - `.claude/reference/environment-configuration-core-law.md`: load when runtime readiness, session-start recovery, monitoring, cleanup interpretation, official behavior, tool capability, hook signal, or runtime footprint changes the next owner/action.
@@ -48,15 +48,15 @@ Run `Session-Start Sequence` as the baseline.
 Run `Boot Sequence` when boot is incomplete.
 Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, cleanup interpretation, or runtime recovery is required.
 Every boot information check remains internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception.
-Boot checks can change runtime owner/action; visible boot, status, progress, or summary prose permission remains reporting-law-owned.
+Boot checks can change runtime owner/action; visible boot, status, progress, or summary prose routes through reporting law.
 If boot evidence and visible-prose pressure conflict, keep boot evidence internal and continue the Procedure Plane path.
 
 Answer-only text that needs no tool can remain light.
 While session-boot is active, runtime-readiness, recovery, monitoring, cleanup, or dispatch-state tool work waits for the matching session-boot classification.
 
 Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
-Runtime-ready and clean boot outcomes are internal move-out facts unless they create a blocker, required user action, or explicit status answer.
-Open the next owner/action that can run in the same segment before any reporting-law-excepted boot summary.
+Runtime-ready and clean boot outcomes are internal move-out facts unless `.claude/reference/reporting-prohibition-law.md` admits blocker or status prose.
+Open the next owner/action that can run in the same segment before any reporting-law-excepted boot prose.
 
 ## Boot Sequence
 `Boot Sequence` is the bounded entry path for lead-session boot and explicit team-agent runtime readiness.
@@ -64,19 +64,19 @@ Run the team-agent runtime branch only for runtime readiness, recovery, or entry
 Classify runtime-ready, runtime-required, runtime-blocked, monitoring-required, or recovery-required here.
 Active `Boot Sequence` emits runtime-readiness classification before runtime-dependent action.
 
-`startup-volatile control residue` means startup-era runtime, hook, task, or continuity observations that are not live continuity authority unless rechecked for the current session.
+`startup-volatile control residue` means startup-era runtime, hook, task, or continuity observations that are not live continuity basis unless rechecked for the current session.
 
 Official runtime limits are boot facts, not preferences.
 Agent teams require explicit runtime availability.
-One lead owns one team for that session.
-Nested team spawning stays outside teammate authority.
+One lead handles one team for that session.
+Nested team spawning stays outside teammate scope.
 Resume/rewind can fail to restore in-process teammates.
 If any limit affects the next consequential step, classify it during boot/recovery.
 Classify runtime limits before runtime-dependent action proceeds.
 
 ### Required order
 1. Reset startup-volatile control residue without purging valid continuity or explicit closeout intent.
-2. Read inherited continuity from the effective current-session authority.
+2. Read inherited continuity from the effective current-session basis.
 3. Re-check planning continuity only when the imminent runtime work depends on that plan.
 4. Resolve whether existing explicit team-agent runtime is ready, absent, recoverable, or rejected.
 5. Runtime-required or recovery-required classification is runtime evidence for the frozen next owner/action.
@@ -94,7 +94,7 @@ If both run, share the continuity read instead of repeating it.
 
 ### Required checks
 1. Establish active context and inherited state with minimal startup scope.
-2. Identify incomplete work, active blockers, current ownership, and pending acceptance gates.
+2. Identify incomplete work, active blockers, current active path, and pending acceptance gates.
 3. Verify runtime-relevant continuity validity before runtime-dependent action.
 4. Distinguish live process-backed runtime agents from remembered continuity or config-residue agents.
 5. Resolve current management mode and runtime mode for the next work phase.
@@ -107,10 +107,10 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 ## Sequence Activation Discipline
 - A sequence is `materially active` when its state can change the next owner, next action, blocker, recovery, monitoring, cleanup, or dispatch truth.
 - Record the active session sequence in the internal continuity carrier when it is materially active.
-- Record the current phase, checkpoint, or blocking step in the owning internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
+- Record the current phase, checkpoint, or blocking step in the matching internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
 - Keep boot, phase, checkpoint, continuity, and sequence names internal as procedure state; visible output follows `.claude/reference/reporting-prohibition-law.md` only.
 - Sequence switches require an explicit active-sequence transition in the internal carrier.
-- Defined session procedures follow the owning basis or stay on `HOLD`.
+- Defined session procedures follow the governing basis or stay on `HOLD`.
 
 ## Mode Split
 Two agent-execution modes must stay separate:
@@ -133,7 +133,7 @@ This requirement records runtime need only; session-boot emits runtime evidence 
 Preserved agent context is a reuse signal only.
 Frozen independent work surfaces, `PARALLEL-GROUPS`, and required role separation keep their staffing shape.
 
-Otherwise stay lead-local only when frozen route, ownership boundaries, and proof/acceptance separation allow it.
+Otherwise stay lead-local only when frozen route, route boundaries, and proof/acceptance separation allow it.
 Required team runtime stands despite runtime friction.
 
 The first dispatch-runtime execution move is the runtime escalation boundary; assignment starts only through assignment-grade `SendMessage`.
@@ -144,19 +144,19 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 `Monitoring Sequence` is the active-runtime re-entry path during delegated operation.
 
 ### Monitoring responsibilities
-- Track lane health, no-progress risk, ownership drift, stalled agents, merge collisions, and runtime pressure.
+- Track lane health, no-progress risk, route drift, stalled agents, merge collisions, and runtime pressure.
 - Monitor canonical team/runtime truth classes without collapsing receipt-level dispatch into agent-start evidence.
 - Runtime signals classify agent/runtime truth only.
-- Workflow progression, checkpoint resolution, and completion claims stay with their owning procedure.
+- Workflow progression, checkpoint resolution, and completion claims stay with their governing procedure.
 - When a governing workflow such as `dev-workflow` is active, monitor runtime in service of the active phase cursor only.
 - Phase advancement, redistribution, synthesis, and completion claims stay with `team-lead` plus the active workflow owner.
 - Completion-grade agent outputs observed through runtime channels return to `team-lead` for synthesis and the next verification gate.
-- Workflow advancement requires owning-procedure synthesis.
-- Completion-grade → `STANDBY` → synthesis/validation/reuse/cleanup transitions and structured `shutdown_request` semantics: canonical owner `references/runtime-state-detail.md`; consume that owner for the rule body before action selection.
-- Closeout teardown remains owned by `session-closeout`.
+- Workflow advancement requires governing-procedure synthesis.
+- Completion-grade → `STANDBY` → synthesis/validation/reuse/cleanup transitions and structured `shutdown_request` semantics: canonical source `references/runtime-state-detail.md`; consume that source for the rule body before action selection.
+- Closeout teardown remains with `session-closeout`.
 - If monitoring exposes bottleneck collapse, owner vacuum, repeated runtime churn, missing agent-start evidence, or stalled phase consumption, surface workflow continuity pressure.
-- Return corrective ownership to `team-lead` plus the active workflow owner.
-- If nominal parallel work collapses onto one agent strongly enough to create a schedule bottleneck, classify it as a distribution-planning defect and return corrective ownership to `team-lead` for boundary-change correction.
+- Return corrective path to `team-lead` plus the active workflow path.
+- If nominal parallel work collapses onto one agent strongly enough to create a schedule bottleneck, classify it as a distribution-planning defect and return corrective path to `team-lead` for boundary-change correction.
 - Apply Proactive Team-Composition Reassessment per `references/runtime-state-detail.md` `## Proactive Team-Composition Reassessment` (canonical trigger, full question set, release rule, bottleneck-defect rule, and non-reactive monitoring requirement).
 - Use bidirectional coordination actively during monitoring.
 - Keep diagnostic/evidence work on the delegated evidence lane instead of absorbing it into lead-local convenience work.

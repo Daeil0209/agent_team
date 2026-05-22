@@ -40,8 +40,8 @@ Structured shutdown request shape is owned by `.claude/skills/task-execution/ref
 
 ## Resolve Next Owner And Action
 - `cleanupEligibility: ready` returns to session-closeout completion.
-- `closeoutDisposition: hold` reports `HOLD` with residual owner and blocker.
-- `cleanupEligibility: blocked` with preserved residual truth reports warning-bearing closeout.
-- Live teammate residue opens shutdown resolution or warning-bearing closeout.
+- `closeoutDisposition: hold` routes `HOLD` with residual owner and blocker through `.claude/reference/reporting-prohibition-law.md`.
+- `cleanupEligibility: blocked` with preserved residual truth routes warning-bearing closeout through `.claude/reference/reporting-prohibition-law.md`.
+- Live teammate residue opens shutdown resolution or reporting-law-routed warning-bearing closeout.
 - Validation debt returns to the owning validation or acceptance path.
 - Runtime cleanup debt returns to session-closeout teardown.

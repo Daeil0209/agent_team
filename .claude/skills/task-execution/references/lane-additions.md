@@ -10,7 +10,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Common Lane-Core Preconditions
 Every agent-specific skill inherits these common preconditions:
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
-- Lane-local result checking before completion is `Skill(self-verification)` result verification.
+- Lane-local result checking before completion is `Skill(self-verification)` convergence.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Receive the agent-facing packet; the full internal planning record stays with `team-lead`.
 - Fresh assignment-grade receipt has a mandatory first upward outcome before first lane work.
@@ -58,6 +58,7 @@ Every agent-specific skill inherits these common preconditions:
 - Report suppression and visible-row hygiene preserve complete, undistorted assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
+- Before a lane uses actual skill load, officially preloaded skill basis, same-session loaded-skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
 - For each trigger-active pointer governing the assigned lane action or completion claim, record `applied`, `not-material:<basis>`, or `blocked:<basis>` per `.claude/reference/work-skill-reference-binding-law.md`.
 - Consume `UPSTREAM-DECISION-BASIS` before first lane work when the packet carries or should carry prior reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready output.
 - If material `UPSTREAM-DECISION-BASIS` is missing, stale, contradictory, or not consumable, send `scope-pressure` or `hold|blocker` and request a consumable upstream basis.
@@ -88,12 +89,12 @@ Every agent-specific skill inherits these common preconditions:
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - If frozen host-authorized parallel-agent work collapses multiple independent surfaces onto one lane, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`.
 - Reconcile completion-grade output against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
-- Before completion, run lane-local `Skill(self-verification)` result verification.
+- Before completion, run lane-local `Skill(self-verification)` convergence.
 - Completion records `UPSTREAM-DECISION-BASIS-CONSUMPTION`; missing consumption blocks completion-grade handoff when upstream decision basis was material.
 - Lane-local `Skill(self-verification)` must include `VERIFIED-DATA-FEEDBACK` when the lane returns material data; missing or unsupported material data blocks completion-grade feedback.
 - For AC-supporting rendered evidence, open every cited screenshot or full-page capture directly via the multimodal `Read` tool before claiming the rendered surface; AC-supporting proof requires the opened rendered surface. Routine non-AC baseline captures stay cite-only when they are unrelated to verdict support and defect evidence.
-- Lane-local `Skill(self-verification)` result verification verifies producer execution truth only.
-- Team-lead owns synthesis `Skill(self-verification)` result verification.
+- Lane-local `Skill(self-verification)` convergence verifies producer execution truth only.
+- Team-lead owns synthesis `Skill(self-verification)` convergence.
 - Consume the agent-specific skill only for consequential lane-owned work.
 - Receipt, status, shutdown, phase, or clarification messages activate it only when they assign or reopen work.
 - Once consumed, the agent-specific skill outranks packet capability skills inside the lane.

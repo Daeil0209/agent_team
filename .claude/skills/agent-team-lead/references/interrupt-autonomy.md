@@ -2,98 +2,55 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-17 Interrupt And Autonomy; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
+SOURCE-RULES: "resume-frame; no-needless-ask; challenge-recheck; exception-escalation; continuation"
 ---
 
-# team-lead: Interrupt And Autonomy Detail
+# team-lead: Interrupt And Autonomy
 
-## Interrupt-Resume Detail
-Interrupt handling preserves original-task ownership.
-Interrupt handling keeps the original task as resume target.
+## Purpose
+Preserve the live same-request owner path through interrupts.
+Execute evidence-backed reversible defaults inside the active boundary without needless user queries.
+Recheck challenged conclusions before correction or preservation.
 
-These interrupt classes use a stacked interrupt frame: `Skill(governance-modification)`, cleanup, defect-fix, hook patch, doctrine sharpening, runtime housekeeping, and user-corrective interrupts.
+## Consume When
+- A live same-request task is interrupted by correction, governance mutation, runtime housekeeping, cleanup, or user-corrective input.
+- A user status/progress question or challenge targets an interrupted or interrupt-blocked path while a same-request owner/action remains open.
+- The user explicitly delegates autonomy, grants pre-approval, asks for stabilization without stopping, or frames sustained autonomy.
+- Team-lead would ask for choice, permission, direction, sequencing, continuation, or waiting state inside existing authority.
 
-Rules:
-- The original task's frozen scope remains the active resume target.
-- The resume target stays active until convergence, explicit user cancellation, explicit user redirect to a new top-level task, or proven user-owned blocker.
-- Before entering an interrupt-handling sub-task, capture an interrupt frame record with task identity, frozen scope, last completed step, `RESUME-OWNER`, `RESUME-CONDITION`, candidate `RESUME-ACTION`, and `RECOVERY-EVIDENCE`.
-- Keep the record internal during the same reasoning frame when it stays reconstructable without extra artifacts.
-- For compaction, pause-return, handoff, or long interruption risk, make the resume record reconstructable from the active owner record, task/workflow state, dispatch recovery record, current-session runtime authorities, changed owner surface, or explicit `HOLD`/follow-up ownership.
-- Keep continuity records on the active owner record, task/workflow state, changed owner surface, or explicit `HOLD`/follow-up ownership.
-- After the interrupt converges, verify `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute the `RESUME-ACTION`.
-- A corrective interrupt is not closed until the verified `RESUME-ACTION` is executed, the original owner is reopened, or a legitimate non-resume termination is recorded.
-- Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, staffing, proof/acceptance chain, or user requirement.
-- Treat `waiting for user` as false until explicit cancellation, explicit redirect, or proven user-owned blocker exists.
-- Status or progress questions expose the stall.
-- Route status answers through `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
-- Continue through the same verified `RESUME-ACTION`.
-- Use `Skill(self-verification)` result verification only before reporting or handoff.
-- The resumed scope must match the original task.
-- Valid `RESUME-ACTION` values are executable actions only: continue from the corrected state, reopen `work-planning`, dispatch the next owner/action, or report `HOLD` with owner, blocker, and next safe action.
-- Resume after interrupt convergence because the user already requested the original task.
-- Preserve the original task after interrupt convergence.
-- Start unrelated work only after explicit redirect.
-- Legitimate non-resume terminations are exactly: explicit user cancellation, explicit redirect to a new top-level task, or proven user-owned blocker.
-- Each non-resume termination must be reported as the named exception with the resume target preserved or formally released.
-- Multi-level interrupts stack LIFO: deepest clears first, original task resumes last.
+## Record
+Record only the active row for the current trigger.
+- Resume frame: resume target, last safe state, `RESUME-OWNER`, `RESUME-CONDITION`, executable `RESUME-ACTION`, and `RECOVERY-EVIDENCE`.
+- Autonomy basis: active boundary, evidence-backed default, exception check, and next owner/action.
+- Challenge basis: challenged conclusion, original basis, rechecked evidence, and correction-or-preservation action.
+- Termination basis: explicit cancellation, explicit redirect, or proven user-owned blocker.
 
-## Autonomous Judgment Detail
-Autonomy is delegated authority under doctrine.
-Autonomous judgment improves team-operation quality.
+## Interrupt Resume Procedure
+1. Capture the resume frame before an interrupt can obscure the original owner path.
+2. Keep the original task as resume target until convergence, explicit cancellation, explicit redirect, or proven user-owned blocker.
+3. Resolve nested interrupts LIFO.
+4. After interrupt convergence, confirm `RESUME-CONDITION` against `RECOVERY-EVIDENCE`, then execute `RESUME-ACTION`.
+5. Reopen `work-planning` only when the interrupt changed owner, surface, deliverable, route, proof/acceptance chain, staffing, or user requirement.
+6. Status prose during an active interrupt consumes `.claude/reference/reporting-prohibition-law.md`; after admitted prose, continue through the confirmed `RESUME-ACTION` unless a termination basis exists.
 
-It is valid only when all three legs hold:
-1. philosophy alignment with `.claude/CLAUDE.md` numbered philosophy sections
-2. evidence basis such as grep, code trace, cross-reference, or hook-parser inspection
-3. net benefit to the team-operation system, with burden vs value clearly favoring application
+## Autonomy Procedure
+1. Inside the active boundary, choose the evidence-backed reversible default when doctrine and evidence identify one.
+2. Ask the user or `HOLD` only for irreversible, destructive, security-sensitive, operator-policy-choice, explicit cancellation, explicit redirect, proven user-owned blocker, or in-plan blocker basis.
+3. Do not create waiting, deferral, or follow-up-choice prompts from preference, convenience, or uncertainty that evidence can resolve.
+4. Continue the frozen multi-step plan to the next executable owner/action after the current step satisfies its owning path.
+5. Route non-autonomy effects through their owning path; this reference does not replace `work-planning`, `task-execution`, `Skill(governance-modification)`, `Skill(self-verification)`, `Skill(review-verification)`, or validator authority.
 
-Activation:
-- explicit autonomous-action instruction
-- pre-approval
-- "stabilization without stopping"
-- sustained-autonomy framing
-
-Operating discipline:
-- `[DESIGN-INTENT]` is the highest constraint.
-- Autonomy stays inside Structural Contract, owner boundaries, fixed section order, and protected restatements.
-- Apply `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
-- Default to applying value-adding bounded patches when evidence and net benefit are clear.
-- Defer high-burden patches with marginal or speculative value.
-- User-requested `patch-ready` rows and frozen `SCOPE-BASELINE` rows keep their owning completion route outside this high-burden deferral rule.
-- Apply high-burden patches with marginal or speculative value only under explicit user direction.
-- Defer with documented evidence.
-- If a hook, gate, or guard blocks legitimate work, first narrow the blocking mechanism through the owning change sequence.
-- Run reviewer separation post-application. If a reviewer surfaces a critical or design-intent finding, revert or improve in the same round.
-- Executable, destructive, security-sensitive, or externally committed paths still require validator PASS where acceptance law requires it.
-- Surface deferred items as active recommendations with explicit options.
-- Continue mid-stabilization until reviewer-verified clean state, proven user-owned blocker, or convergence.
-- Resolve derivable answers through active doctrine and evidence.
-- Derivable next-action choices — route, staffing, parallelism, dispatch, continuation, scope follow-up, sequencing, deferral — execute without user query unless irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker criteria apply.
-- `[NO-NEEDLESS-ASK]` governs owner-decidable choices inside existing authority; status, yes/no, verification, explanation, audit, or explicit hold-conversation channels stay non-mutating unless the user instruction or current frozen execution boundary already authorizes mutation.
-- Deferral that changes frozen deliverable scope, `SCOPE-BASELINE`, completion stop, review-promotion coverage, patch-loop coverage, or validation scope is operator-policy-choice unless explicit user acceptance or `[USER-DELIVERY-FIT]` lawful basis is already recorded.
-- A frozen multi-step plan covers governance patch sequences, parallel-fit dispatches, workflow phase advances, and multi-patch governance modification cycles.
-- Step-to-step continuation inside such a plan is autonomous; plan freeze authorizes the whole sequence.
-- The lead proceeds from each completed-and-verified step to the next planned step without intermediate user query.
-- Step-selection prose after a completed step is a `[NO-NEEDLESS-ASK]` violation when the next step is named by the plan.
-- The lead pauses only for an in-plan blocker or one of the listed exception classes.
-- User challenge that proves missing route, measurement, parallel basis, or doctrine-derived correction opens the correcting owner.
-- User-facing prose that asks for choice, permission, direction, or follow-up sequencing, or declares a self-created `HOLD`/waiting state, without naming one of those exception classes as its basis is itself a `[NO-NEEDLESS-ASK]` violation.
-- The team-lead executes the evidence-backed default in the same turn instead of emitting the violating prose.
+## User Challenge Procedure
+1. Treat the challenged conclusion as unverified until rechecked.
+2. Reconstruct the original basis and compare it against current doctrine, evidence, and active boundary.
+3. Open the correcting owner when the basis is missing, stale, speculative, contradictory, or routed to the wrong owner.
+4. Preserve the decision only when current evidence still supports it; then continue the next executable owner/action.
 
 ## Resolve Next Owner And Action
-- An interrupt frame opens the deepest active resume action.
-- A status challenge opens stall exposure and same-turn continuation.
-- A user challenge opens re-evaluation.
-- A blocked stabilization opens reviewer-verified clean state, proven user-owned blocker, or convergence path.
-
-Re-evaluation under user challenge:
-- Treat the current challenged conclusion as an unverified draft until the re-examination completes.
-- Treat the challenge as evidence to re-examine.
-- Reconstruct the original reasoning.
-- Classify it as evidence-based or speculation-based.
-- Re-verify against philosophy, evidence, and net benefit.
-- Self-correct if speculation drove the original decision.
-- Preserve with concise evidence if the original decision was sound.
-
-Accountability:
-- Team-lead owns the autonomous-judgment outcome under the three-leg validity rule above.
+- If an interrupt can obscure resume and no frame exists, capture the minimum resume frame, then continue the interrupt path.
+- An active interrupt frame opens the deepest confirmed `RESUME-ACTION`.
+- A status challenge opens admitted status exposure and same-turn continuation through the selected next executable owner/action.
+- A user challenge opens `User Challenge Procedure`.
+- Valid autonomous-decision basis opens evidence-backed default execution.
+- Exception-class basis opens user escalation or `HOLD` with owner, blocker, and next safe action.
+- Non-autonomy side effects open the owning skill, reference, lane, or `work-planning`.

@@ -91,7 +91,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Evidence Law
 - `[EVI-ASSUM]` Evidence outranks assumption.
 - `[USER-SURFACE]` Verification stays on the user's decisive surface.
-- Completion requires verified result.
+- Completion requires a verified work-result basis.
 - Verification evidence requires the named verification owner; verification-shaped prose, carrier fields, or checklist text without that owner are invalid verification evidence.
 - User-facing brevity limits emitted content only.
 - Internal evidence gathering and verification stay at deliverable-required quality.

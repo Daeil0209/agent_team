@@ -7,7 +7,7 @@ effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Keep checklist tables, anti-pattern catalogs, and infrastructure pattern detail in `references/architecture-review-detail.md`.
 - Code-quality review remains in `.claude/skills/code-quality-review/SKILL.md`.
 ### Reference Map
@@ -16,16 +16,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 You are the enterprise-architecture specialist capability.
 - Conditional enterprise-architecture lens when delivery quality depends on clean layer separation, bounded-context design, service communication contracts, or production-readiness standards.
 - Single-application internal layer separation belongs to `software-architecture`.
-## Authority
+## Coverage
 **Coverage:** layer separation correctness, architecture review/readiness gates, anti-pattern detection, inter-service communication pattern choice, infrastructure change protocol, and document-first design discipline.
-**Adjacent owners hold:** canonical planning, business-policy design, rendered composition, mathematical proof, and final validation.
-## Agent Relationships
-- `team-lead` — planning, staffing, and escalation owner
-- `software-architecture` — internal module-boundary and state-model owner
-- `business-workflow` — business-rule owner
-- `reviewer`, `tester`, `validator` — downstream acceptance chain
-- `dev-workflow` — workflow phase owner
-- Provides specialist instructions inside the workflow as a support overlay.
+**Adjacent boundaries:** canonical planning, business-policy design, rendered composition, mathematical proof, and final validation.
+
 ## Purpose
 Load when enterprise-scale work depends on credible layer separation, bounded contexts, service contracts, design-document traceability, or production-readiness discipline.
 ## Responsibilities
@@ -33,14 +27,14 @@ Load when enterprise-scale work depends on credible layer separation, bounded co
 - require design documents before implementation on materially risky or multi-service changes
 - detect anti-pattern normalization, layer leakage, and architecture-vs-implementation drift
 - keep explicit that verification, direction, and quality bar must exist before enterprise-scale implementation proceeds
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - readiness is too weak for safe enterprise delivery
   - design traceability is too weak for safe enterprise delivery
   - boundary credibility is too weak for safe enterprise delivery
 ## Activation
 Activate only when at least one activation condition is true.
 Condition 1: the work crosses 2+ services with independent deployment lifecycles.
-Independent deployment lifecycles require separate deployable artifacts and independent release/rollback, runtime environment, scaling/SLO, or operational ownership.
+Independent deployment lifecycles require separate deployable artifacts and independent release/rollback, runtime environment, scaling/SLO, or operational responsibility.
 Condition 2: bounded-context boundary review across services is the active deliverable.
 Condition 3: a production-readiness gate fires before externally-committed deploy.
 Single-application architecture review belongs to `software-architecture`.
@@ -53,8 +47,12 @@ Team-lead escalates if scope grows.
 - architecture or design documents
 - business and software packets when architecture depends on them
 ## Outputs
-Return an enterprise-architecture packet.
-It covers layer rules, service contracts, readiness gates, active anti-pattern risks, and the next owner/action per blocked surface.
+Capture only the decisive enterprise-architecture packet:
+- layer rules
+- service contracts
+- readiness gates
+- active anti-pattern risks
+- open surfaces and next owner/action
 ## Handoff Boundary
 Route implementation divergence, missing design-doc traceability, security deferral, and production-readiness gaps explicitly upward.
 Keep checklist tables and anti-pattern catalogs in `references/architecture-review-detail.md`.

@@ -5,20 +5,20 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned workflow surface.
-- Fixed owner pattern:
+- Sharpens only its workflow procedure surface.
+- Fixed skill pattern:
   1. `Activation Criteria`
   2. `Workflow Core Law`
   3. Phase sections (Phase 0-5) in order
-  4. Reference-owned workflow sections (active references in `references/`):
+  4. Reference detail workflow sections (active references in `references/`):
      - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Review`, `Review Convergence Review`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
      - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Governance Change And Structural Feedback`
 - New top-level phase definitions require governance review.
 - Keep exact phase names stable when referenced by doctrine or dispatch packets.
-- Phase sections own only phase charter, owner, canonical output, and entry/exit law.
+- Phase sections handle only phase charter, owner, canonical output, and entry/exit law.
 - Checkpoint detail, document templates, comparison tables, gap methodology, ambiguity-handling prompts, and operator-delivery edge cases belong to direct files under `references/`.
-- New workflow rules must attach to an owning phase, checkpoint, gate, or local orchestration section.
+- New workflow rules must attach to a governing phase, checkpoint, gate, or local orchestration section.
 ### Reference Map
 - Load direct files in `Reference-Owned Workflow Sections` when their triggers are active.
 - Load triggered references directly.
@@ -28,7 +28,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ### Workflow Scope
 - Governs team-lead orchestration across multi-phase development lifecycle.
 - Lane dispatch retains task-execution evidence-bearing handoff discipline.
-- Preserve named phase gates, lane-owned authoring, evidence-bearing handoff, and governed cross-lane communication.
+- Preserve named phase gates, lane authoring, evidence-bearing handoff, and governed cross-lane communication.
 ## Activation Criteria
 Enter only when `work-planning` freezes `ACTIVE-WORKFLOW: dev-workflow` and the current owner transfers control here.
 Activation requires the frozen workflow route.
@@ -49,14 +49,14 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 
 ## Workflow Core Law
 ### 1. Cursor And Owner Truth
-- Phase authority follows the frozen owner map; team-lead owns the workflow cursor from activation until complete, explicit cancel, `HOLD`, or closeout transfer.
+- Phase coverage follows the frozen owner map; team-lead handles the workflow cursor from activation until complete, explicit cancel, `HOLD`, or closeout transfer.
 - A phase advances only through team-lead synthesis of the current phase surface.
 - Checkpoints follow `references/checkpoints.md`.
 - Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change forces `HOLD` and owner re-entry.
 
 ### 2. Phase Boundary Cycle
-- Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> Skill(self-verification) result verification -> exit law or correct owner`.
-- Phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, and phase-result reporting all share one precondition: team-lead consumes `references/phase-gates.md` plus every mandatory reference named by the active gate.
+- Every new phase boundary or changed work-surface boundary runs one cycle: `work-planning -> execution/dispatch -> synthesis -> Skill(self-verification) convergence -> exit law or correct owner`.
+- Phase advancement, next-phase dispatch, CP escalation that consumes the current artifact, and reporting-law-admitted user-facing prose all share one precondition: team-lead consumes `references/phase-gates.md` plus every mandatory reference named by the active gate.
 - A satisfied phase boundary is consumed in the same turn by executing or dispatching the next owner/action, `HOLD`/re-handoff, explicit blocker, or explicit cancel.
 - Stall recognition (including user status questions) resumes by tool-call execution.
 - Convergence loops, status questions, interrupts, rejection routes, and routine review offers continue through the next owner/action by tool-call execution.
@@ -64,15 +64,15 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Reopen `work-planning` when a Boundary-Change Axis moves per `.claude/skills/work-planning/references/boundary-gates.md`.
 
 ### 3. Lane Separation And Parallel Flow
-- For Phase 1 (Plan) and Phase 2 (Design), team-lead solely owns planning, design, and canonical plan/design document authoring.
+- For Phase 1 (Plan) and Phase 2 (Design), team-lead solely handles planning, design, and canonical plan/design document authoring.
 - Where the workflow names a separate phase owner and artifact producer, keep them separate.
 - Phase owner consumes material specialist skills, freezes decisions, and cites basis.
 - Assigned artifact producer writes from that frozen basis.
 - Developer's dev-workflow lane begins at Phase 3 implementation.
-- Review, proof, validation, routing, and acceptance stay with their owning lanes.
+- Review, proof, validation, routing, and acceptance stay with their assigned lanes.
 - Phase-local skill refinement stays inside the frozen lane map, deliverable shape, and proof/acceptance chain.
 - Reopen `work-planning` when phase pressure creates a new lane, independent work surface, deliverable shape, or proof/acceptance owner.
-- `session-boot` monitors delegated runtime; team-lead owns phase advancement, redistribution, and workflow re-entry.
+- `session-boot` monitors delegated runtime; team-lead handles phase advancement, redistribution, and workflow re-entry.
 - Serial waiting, merge backlog, stalled owner motion, or single-agent overload in nominal parallel work is a workflow bottleneck defect.
 
 ### 4. Convergence And Evidence
@@ -80,8 +80,8 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Same-artifact convergence stays inside `artifact-convergence-review` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
 - Same-review-surface convergence stays inside `review-convergence-review` under the same unchanged-boundary rule.
 - Every dev-workflow result review or correction pass consumes `Skill(review-verification)`: team-lead uses the full workflow or named lenses, reviewer/validator/Codex packets name the applicable lenses, and `not-material:<basis>` is required before phase movement, redispatch, validation ingress, or completion truth can rely on the reviewed surface.
-- `task-execution` owns correction dispatch or reuse when another lane must revise.
-- The phase owner owns integrated redesign planning and decision correction.
+- `task-execution` handles correction dispatch or reuse when another lane must revise.
+- The phase owner handles integrated redesign planning and decision correction.
 - For Phase 1/2 canonical artifacts, team-lead applies `REDESIGN-PLAN` edits directly to the canonical document.
 - For Phase 3+ surfaces with a separate assigned producer, the producer updates the document from the redesign plan or reports a blocker.
 - Re-review returns to the same convergence loop after correction.
@@ -90,7 +90,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Executable user-facing software requires reviewer plus tester in Phase 4.
 - Phase 4/5 evidence closes the whole frozen deliverable contract per `.claude/reference/design-definition-core-law.md` `[USER-DELIVERY-FIT]`, not only the parts that already work.
 - Validator-required chains close through `references/final-acceptance-review.md`.
-- Bounded non-executable paths with no final-arbitration trigger report only `verified result` through the frozen acceptance path.
+- Bounded non-executable paths with no final-arbitration trigger reach user-facing closure only through reporting-law `final verified result` after the frozen acceptance path passes.
 
 ## Phase 0: Discovery (Conditional)
 **Purpose**: Resolve missing requirements or reference-fit ambiguity before plan writing begins.
@@ -100,11 +100,11 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: discovery shape per `references/phase-surfaces.md` Phase 0 Discovery Basis (`single` / `lead-boundary-read-then-shards` / `immediate-shards`).
 **Exit law**: only verified findings or labeled inferences enter CP1.
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
-**Exit law**: implementation or design freeze requires its owning phase.
+**Exit law**: implementation or design freeze requires its governing phase.
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
-**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-owned blocker.
+**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-action blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
-**Exit law**: user questions become CP1 open questions or a proven user-owned blocker with next owner/action.
+**Exit law**: user questions become CP1 open questions or a proven user-action blocker with next owner/action.
 
 ## Phase 1: Plan
 **Purpose**: Produce the canonical feature plan surface.
@@ -112,7 +112,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Canonical output**: `docs/01-plan/features/{feature}.plan.md` unless project config names another canonical path
 **Entry law**: Phase 0 output, if activated, must already be synthesized enough for CP1. Otherwise the request-fit basis must be stable
 **Execution law**: team-lead Phase 1 execution:
-- owns planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, canonical plan artifact direction, and canonical plan document authoring
+- handles planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, canonical plan artifact direction, and canonical plan document authoring
 - authors the canonical plan document directly from the frozen Phase 1 design basis
 - receives accepted Codex or team-lead review findings through artifact-convergence and applies valid `REDESIGN-PLAN` edits directly to the canonical plan document
 - treats the canonical plan artifact as the plan surface
@@ -122,14 +122,14 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
 **Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
 **Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-review.md` only when the canonical plan artifact materially controls next-phase scope, risk, architecture, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
-**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`; field schema is owned by `references/artifact-convergence-review.md` Output Record.
+**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`; field schema lives in `references/artifact-convergence-review.md` Output Record.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead owns:
+**Execution law**: team-lead handles:
 - the decision-level Phase 2 design basis and records it
 - canonical design document authoring
 **Execution law**: the design basis covers:
@@ -171,7 +171,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
   - is design-coherence level
   - is not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`
 **Exit law**: field schema:
-- is owned by `references/artifact-convergence-review.md` Output Record
+- lives in `references/artifact-convergence-review.md` Output Record
 - includes internal detail bundle status and material specialist contract status when specialist output shapes implementation, proof, or acceptance
 
 ## Phase 3: Implementation
@@ -179,7 +179,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: developer
 **Canonical output**: changed production surfaces plus an explicit developer handoff
 **Entry law**: Phase 2 closure record exists, CP3 is resolved, and team-lead CP4 translates the Phase 2 implementation-binding internal detail bundle into implementation scope and lane decomposition.
-**Execution law**: team-lead CP4 fixes parallel-default production ownership with bounded specialist-fit work surfaces, explicit dependency boundaries, surface-to-agent map, and explicit merge ownership.
+**Execution law**: team-lead CP4 fixes parallel-default production responsibility with bounded specialist-fit work surfaces, explicit dependency boundaries, surface-to-agent map, and explicit merge responsibility.
 **Execution law**: every independent, nonblocked CP4 surface whose needed input is already present in the Phase 2 implementation-binding internal detail bundle enters the first parallel dispatch segment.
 **Execution law**: later dispatch segments are valid only for surfaces classified sequential or interdependent by the frozen parallel-fit basis, with exact dependency or interdependence recorded.
 **Exit law**: developer handoff names:
@@ -203,10 +203,10 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Execution law**: validator cross-surface integration verification is required before PASS.
 **Execution law**: per-surface quality without cross-surface coherence is incomplete review.
 **Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-modification)` on the narrowest owner surface.
-**Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — is owned by `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
+**Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — lives in `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.
-**Exit law**: non-validator closure is limited to bounded non-executable paths with no final-arbitration trigger and reports only `verified result`.
+**Exit law**: non-validator closure is limited to bounded non-executable paths with no final-arbitration trigger and reaches user-facing closure only through reporting-law `final verified result` after the frozen acceptance path passes.
 
 ## Phase 5: Iteration
 **Purpose**: Fix CP5-contracted gaps until corrected output is usable on the decisive user surface, then re-verify affected and stale acceptance surfaces.
@@ -231,18 +231,18 @@ After `Skill(dev-workflow)` is loaded, load triggered references directly.
 - `references/phase-surfaces.md`: phase artifact minimums, option counts, implementation-surface, and Phase 4 user-surface proof defaults.
 - `references/phase-gates.md`: phase transition hard gates and cursor consumption law.
 - `references/artifact-convergence-review.md`: configured independent-review assisted dual-review convergence for canonical plan/design artifacts and implementation-binding Phase 2 detail; external review remains non-authoritative.
-- `references/review-convergence-review.md`: configured independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-owned review surfaces; external review remains non-authoritative.
-- `references/final-acceptance-review.md`: team-lead closure reconciliation with configured independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL` authority.
+- `references/review-convergence-review.md`: configured independent-review assisted reviewer-grade convergence for material Phase 4/5 reviewer-grade review surfaces; external review remains non-authoritative.
+- `references/final-acceptance-review.md`: team-lead closure reconciliation with configured independent-review support for validator-required chains after validator PASS; validator retains final `PASS/HOLD/FAIL`.
 - `references/incident-response.md`: T0/T1 workflow incident response and launch-path failure rule.
 - `references/gap-iteration.md`: YAGNI, gap dimensions, user-readiness proof, iteration convergence, and escalation.
 - `references/operator-delivery.md`: executable deliverable launch/termination symmetry, operator OS coverage, demonstration data, and mental-model alignment.
 
 Reference trigger rule:
-- Each reference under `references/` declares its own mandatory-load trigger at its top block.
-- Phase advancement requires every reference whose own trigger fires.
-- If a mandatory reference cannot load, `HOLD` or reopen the owning path.
+- Each reference under `references/` declares its mandatory-load trigger at its top block.
+- Phase advancement requires every reference whose trigger fires.
+- If a mandatory reference cannot load, `HOLD` or reopen the governing path.
 - Advancement requires loaded owner basis.
-- A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, phase-result reporting, or user review.
+- A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, reporting-law-admitted user-facing prose, or user review.
 
 ## Resolve Next Owner And Action
 Resolve the phase cursor in the same turn by tool-call execution: dispatch or execute the next phase, place the workflow on `HOLD` or re-handoff, record an explicit blocker, or explicitly cancel the next stage.
@@ -256,18 +256,18 @@ If the same agent also receives new bounded work in that segment, carry the need
 
 Record every phase transition in workspace-root `.runtime/procedure-state.json`.
 Phase-internal scaffolding stays in current-cycle internal context.
-Continuity files record only owner-required state.
+Continuity files record only required owner/action state.
 
 ## Related Skills
-- Related skill selection is owned by `work-planning` trigger fields, lane-detail specialist matrices, and lawful phase-local refinement.
-- `dev-workflow` consumes material specialist outputs as phase contract inputs; complete skill catalog ownership stays with the owning skill surfaces.
+- Related skill selection follows `work-planning` trigger fields, lane-detail specialist matrices, and lawful phase-local refinement.
+- `dev-workflow` consumes material specialist outputs as phase contract inputs; complete skill catalog boundaries stay with the skill surfaces.
 
 ## Delivery Spine
 - Freeze the receiver surface before production inherits the contract.
 - Carry `TARGET-INTENT-BASIS`, applicable core-law axes when material, `SCOPE-BASELINE`, user surface, proof path, and skill basis into downstream packets.
 - Prove the artifact on the real run/read/operate/decide/learn/present surface.
 - Treat retained artifacts as evidence only after the relevant defect classes are inspected.
-- Keep acceptance fresh: correction after rejection returns through the owning review, proof, validation, and final-acceptance chain.
+- Keep acceptance fresh: correction after rejection returns through the governing review, proof, validation, and final-acceptance chain.
 
 Executable launch, shutdown, operator-OS, demo-data, and mental-model detail lives in `references/operator-delivery.md`.
 

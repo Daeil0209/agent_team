@@ -34,6 +34,8 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 4. Recovery path: a lawful next owner or retry path is stated; a blocked user/agent is not left guessing.
 5. False-positive review: known legitimate actions that might be blocked are listed, exempted, downgraded to silent tracking, or explicitly accepted as risk.
 6. Footprint review: record affected hook event, matcher count, script size trend, matched-tool side-effect map, and whether the change adds latency to high-frequency tool paths.
+7. Hook-Last ledger: record the expansion in `.claude/hooks/MANIFEST.md` before activation.
+8. Operator approval: record explicit operator approval for blocking hook/settings runtime-enforcement expansion, or `not-applicable:<basis>` when the change does not expand blocking enforcement.
 
 If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 

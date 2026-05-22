@@ -11,10 +11,10 @@ source "$(dirname "$0")/hook-config.sh"
 # completion is recorded later when runtime setup succeeds or task planning
 # begins; host-authorized runtime entry still belongs to TeamCreate and runtime-entry
 # enforcement.
-# lead result-verification marker = self-verification load observed after work-planning and at least one post-planning action.
-# worker result-verification marker = lane-local self-verification load observed in the worker session; planning basis belongs to the received packet.
-# Markers prove required sequence shape only; Critical Challenge remains procedural work.
-# wp marker = work-planning loaded (new task clears both result-verification markers)
+# lead self-verification convergence marker = self-verification load observed after work-planning and at least one post-planning action.
+# worker self-verification convergence marker = lane-local self-verification load observed in the worker session; planning basis belongs to the received packet.
+# Markers prove required sequence shape only; PASS-1/PASS-2 convergence remains procedural work.
+# wp marker = work-planning loaded (new task clears both self-verification convergence markers)
 
 INPUT="$(cat)"
 
@@ -45,8 +45,8 @@ WP_MARKER="$LOG_DIR/.wp-loaded-${SESSION_ID}"
 RESULT_VERIFICATION_MARKER="$LOG_DIR/.sv-result-loaded-${SESSION_ID}"
 POST_WP_ACTION_MARKER="$LOG_DIR/.post-wp-action-${SESSION_ID}"
 TASK_EXECUTION_MARKER="$LOG_DIR/.task-execution-loaded-${SESSION_ID}"
-# Session-scoped planning-plus-result-verification marker survives per-turn resets.
-# Exact claim verification remains procedural.
+# Session-scoped planning-plus-self-verification convergence marker survives per-turn resets.
+# Produced work-product convergence remains procedural.
 RESULT_VERIFICATION_CONVERGED_MARKER="$LOG_DIR/.sv-converged-${SESSION_ID}"
 # Session-scoped session-boot marker; consumed by dispatch gates when active
 # runtime requires monitoring before fresh consequential dispatch.
@@ -112,7 +112,7 @@ case "$SKILL_NAME" in
   *work-planning*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$WP_MARKER"
     clear_lead_planning_required "$SESSION_ID"
-    # New task started; clear result-verification markers to require fresh stage-end verification.
+    # New task started; clear self-verification convergence markers to require fresh stage-end verification.
     rm -f "$RESULT_VERIFICATION_MARKER"
     rm -f "$RESULT_VERIFICATION_CONVERGED_MARKER"
     rm -f "$POST_WP_ACTION_MARKER"

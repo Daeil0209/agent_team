@@ -1,7 +1,7 @@
 ---
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
-SOURCE-RULES: "Work Execution Philosophy; Review And Verification Philosophy result-verification boundary; Reporting Philosophy communication-plane boundary"
+SOURCE-RULES: "Work Execution Philosophy; Review And Verification Philosophy self-verification convergence boundary; Reporting Philosophy communication-plane boundary"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -44,7 +44,7 @@ User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Required Output
 The consuming owner records one of these outcomes:
-- `verified result`
+- `verified work-result basis`
 - `HOLD`
 - explicit cancel
 - explicit redirect
@@ -95,7 +95,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - `session-closeout` owns closeout truth.
 - `Skill(governance-modification)` owns routine asset maintenance and recurrence-barrier hardening.
 - `Skill(governance-modification)` owns `Change Sequence` patch mechanics.
-- Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` result verification.
+- Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` convergence.
 - Treat dispatch, benchmarking, `governance-modification`, interrupt handling, and status reporting as nonterminal evidence.
 - Treat review as evidence for acceptance path.
 - Treat proof as evidence for final acceptance.
@@ -103,8 +103,8 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - Route implementation to `developer`.
 - Treat rejection handling as correction-routing evidence.
 - Same-boundary iterations consume the frozen boundary.
-- Route `Skill(self-verification)` plan audit only to exception plan audits.
-- Consequential boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
+- Route `Skill(self-verification)` only to produced work-product outbound gates; plan-readiness gaps reopen `work-planning` or the owning review path.
+- Consequential boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
 - The lightest truthful channel is valid only when it satisfies the evidence burden.
 - Missing basis routes to the smallest correcting owner.
 - Lawful independent work continues while the affected path is corrected.

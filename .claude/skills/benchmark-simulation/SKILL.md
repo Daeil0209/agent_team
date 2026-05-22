@@ -6,10 +6,10 @@ SECONDARY-CONSUMER: researcher
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Add peer top-level sections only after governance review.
 - Keep benchmark method detail, scoring tables, comparison templates, search protocols, and captured evidence caches in direct files under `references/`.
-- Top-level sections that name owner-required triggers (External-Reference Methodology, Multi-Modal Observation Discipline, Owner-Initiated Benchmark Cues, Composition with Design Capability Stack, Capability-Evolution Loop) remain in this SKILL.md spine. Their named subsections (Smart Composition Recipe, Verification Methodology Composition, Pattern Lifecycle Staging, Axis-Coverage Discipline) stay as subsections under their parent top-level section.
+- Top-level sections that name trigger-required surfaces (External-Reference Methodology, Multi-Modal Observation Discipline, Self-Initiated Benchmark Cues, Composition with Design Capability Stack, Capability-Evolution Loop) remain in this SKILL.md spine. Their named subsections (Smart Composition Recipe, Verification Methodology Composition, Pattern Lifecycle Staging, Axis-Coverage Discipline) stay as subsections under their parent top-level section.
 ## Identity
 You are the benchmark-simulation + external-reference research specialist capability.
 - Conditional benchmark lens when a claim depends on before/after comparison, lean-team choice, routing competitiveness, or capability-hardening fairness.
@@ -18,26 +18,21 @@ You are the benchmark-simulation + external-reference research specialist capabi
 - External-site access is a benchmark input path when a `references/self-initiated-discovery.md` cue materially fires and the needed information cannot be supplied by prior session evidence or external authoritative reference already at hand.
 - Multi-modal references include text, image, layout, ratio, typography, color, and table form.
 - Material relevance is handled through `SKILL-RECOMMENDATIONS` or the lane-selected skill basis.
-- Not the ordinary planning owner for routine delivery.
-## Authority
+## Coverage
 **Coverage:** benchmark framing, fairness notes, baseline choice, comparison axes, regression visibility, and lean-team choice.
-**Adjacent owners hold:** ordinary delivery planning, `work-tool-patterns` practical tool patterning, implementation, and final validation.
-## Agent Relationships
-- `team-lead` — ordinary execution and routing owner
-- `work-tool-patterns` — consumes benchmark comparison output when external evidence materially changes practical tool-family shape, operator-surface contract, or pattern-level proof oracle
-- `validator` — final pass/fail owner
-- `researcher` — upstream comparative evidence lane when benchmark-light groundwork already exists
+**Adjacent boundaries:** ordinary delivery planning, `work-tool-patterns` practical tool patterning, implementation, and final validation.
+
 ## Purpose
 Load when the active contract needs scenario benchmarking, team-shape comparison, external-reference design or methodology synthesis, verification-method benchmarking, or capability-hardening comparison rather than a single concrete execution plan.
 
-The active workflow or planning owner owns mandatory benchmark selection.
+The active workflow or planning path handles mandatory benchmark selection.
 Use external sites, public examples, authoritative docs, standards, reference UIs, images, and demos when they are the best available source for task-needed input.
 Capture usable destination-fit information, not source styling.
 Captured information includes information elements, layout hierarchy, table/chart/card patterns, visual ratios, labels, interaction cues, workflow states, anti-patterns, and standards constraints.
 Run `benchmark-simulation` once per benchmark-required surface before the canonical design freezes.
 Extract concrete characteristics via abstraction-fit-adapt.
 Feed extracted characteristics into the canonical design artifact and, when visual or rendered acceptance is material, into the `visual-composition` packet.
-Trivial surfaces skip benchmark only when the active workflow or planning owner records the skip basis.
+Trivial surfaces skip benchmark only when the active workflow or planning path records the skip basis.
 ## Responsibilities
 - define the benchmark surface and fair comparison basis
 - gather external-site and reference evidence needed for the active task when local or prior evidence is insufficient
@@ -46,7 +41,7 @@ Trivial surfaces skip benchmark only when the active workflow or planning owner 
 - compare destination design vs. external best-practice references via abstraction-fit-adapt cycle (see `External-Reference Methodology` below)
 - make throughput, bottleneck, acceptance, and regression tradeoffs explicit
 - choose a lean default path plus scenario-specific overrides
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - no fair baseline exists
   - evidence is too weak for a routing, promotion, or capability-advance claim
 
@@ -58,13 +53,13 @@ After `Skill(benchmark-simulation)` is loaded, load trigger-specific references 
 - `references/search-quality.md`: search query design, source quality ladder, corroboration, negative-search discipline, and search-depth bound.
 - `references/research-search-strategy.md`: researcher search modes, search loop, benchmark evaluation, and external grounding references for search capability.
 - `references/verification-methodology.md`: verification-methodology benchmark triggers, target sources, synthesis output, and lane composition.
-- `references/self-initiated-discovery.md`: owner-initiated benchmark cues plus mandatory selection or deferral discipline.
+- `references/self-initiated-discovery.md`: self-initiated benchmark cues plus mandatory selection or deferral discipline.
 - `references/design-stack-composition.md`: design capability stack recipes and composition defects.
 - `references/cited-evidence-cache.md`: captured external reference families, source classifications, synthesis, and open surfaces.
 
 ## External-Reference Methodology
 Load `references/capability-benchmark.md` `External-Reference Benchmark Extension` when external-reference benchmarking is material.
-That reference owns source provenance, abstraction-fit-adapt protocol, fit judgment, reject logging, confidence rating, anti-pattern flags, strength preservation, and synthesis output.
+That reference handles source provenance, abstraction-fit-adapt protocol, fit judgment, reject logging, confidence rating, anti-pattern flags, strength preservation, and synthesis output.
 Use `references/observation-protocol.md` for multi-modal reference observation.
 Use `references/search-quality.md` for source quality, corroboration, negative search, and search depth.
 Direct-copy output is invalid.
@@ -75,7 +70,7 @@ External references split into two structurally distinct classes.
 Each class requires different citation discipline.
 - **Standard-class references**: W3C, WCAG, ISO, ANSI, regulatory body specs, framework-official testing guides.
   These carry numeric compliance contracts and explicit thresholds.
-  Cite them literally with tier-1 authority.
+  Cite them literally with tier-1 coverage.
   They are evidence at face.
 - **Principle-class references**: Material/Carbon/HIG/Polaris design principles, Nielsen Norman heuristics, design-system identity declarations.
   These carry synthesized methodology.
@@ -93,30 +88,30 @@ Research-artifact accessibility is the discriminator between research-class and 
 ### Multi-Modal Observation Discipline
 For visual / structural / UX decisions, text-only evidence is a fidelity defect.
 
-Required modalities per reference: use what the source supplies. Per-modality discipline (text, image/screenshot, quantitative measurement, structural form, color/spacing/typography, interactive/behavioral) is owned by `references/observation-protocol.md`.
+Required modalities per reference: use what the source supplies. Per-modality discipline (text, image/screenshot, quantitative measurement, structural form, color/spacing/typography, interactive/behavioral) lives in `references/observation-protocol.md`.
 
 A reference observation is incomplete if it documents only one modality on a multi-modal decision. Downstream consumers cannot make a fit-judgment without the modalities the destination depends on.
 
-### Owner-Initiated Benchmark Cues
+### Self-Initiated Benchmark Cues
 When external benchmarking may materially improve a visual, structural, methodology, or capability-growth decision, consume `references/self-initiated-discovery.md`.
-That reference owns the mandatory cue list and deferral discipline for `SKILL-RECOMMENDATIONS` or lane-selected skill basis.
+That reference handles the mandatory cue list and deferral discipline for `SKILL-RECOMMENDATIONS` or lane-selected skill basis.
 
 See `references/self-initiated-discovery.md` for trigger detail and `references/search-quality.md` for search-design discipline.
 ## Activation
 Activate when:
 - the operator explicitly asks for scenario benchmarking, team-composition comparison, or capability benchmarking
-- the active owner or assigned lane selects benchmark evidence for before/after proof, routing advantage, external design synthesis, methodology choice, or capability growth
+- the active path or assigned lane selects benchmark evidence for before/after proof, routing advantage, external design synthesis, methodology choice, or capability growth
 
 ## Composition with Design Capability Stack
 Load `references/design-stack-composition.md` when a visual, UX, interaction, layout, or rendered design deliverable materially needs sibling design capabilities.
-That reference owns the phase-aligned recipes, sibling skill stack, composition defects, output shape, and next owner/action.
+That reference handles the phase-aligned recipes, sibling skill stack, composition defects, output shape, and next owner/action.
 Carry the selected recipe and material sibling skills into `SKILL-RECOMMENDATIONS` or the applied skill basis.
 
 ### Smart Composition Recipe
 Use `references/design-stack-composition.md` for Recipe A-D selection.
 Name materially active sibling phases.
 Omit inactive sibling phases.
-Composition requires an explicit owner and phase basis.
+Composition requires an explicit route and phase basis.
 
 ### Verification Methodology Composition
 The abstraction-fit-adapt cycle applies to **verification methodology** itself.
@@ -128,7 +123,7 @@ Examples: test framework selection, proof tooling, coverage strategy, correction
 - synthesize verification approach from fitting patterns + reject misfits
 - compose with `tester` lane for execution and `validator` lane for final acceptance
 
-Use this verification-methodology lens when the active owner path selects `benchmark-simulation` and the verification-methodology trigger list in `references/verification-methodology.md` materially fires.
+Use this verification-methodology lens when the active path selects `benchmark-simulation` and the verification-methodology trigger list in `references/verification-methodology.md` materially fires.
 Skip when prior session already froze the verification basis from external evidence or when tester/validator uses an already-frozen proven local default cited in the packet, lane rule, or acceptance surface.
 See `references/verification-methodology.md` for protocol.
 
@@ -140,7 +135,7 @@ Base that composition on the selected recipe in `references/design-stack-composi
 Use `BENCHMARK-MODE: light|full` exactly as frozen in the packet.
 Benchmark-light is the default comparative discipline.
 Benchmark-full is required when routing, promotion, or sustainable team shape materially depends on the result.
-`promotion` means upgrading benchmark-supported evidence into routing authority, durable pattern or capability adoption, blocking force, or acceptance-strength influence.
+`promotion` means upgrading benchmark-supported evidence into routing force, durable pattern or capability adoption, blocking force, or acceptance-strength influence.
 
 ## Capability-Evolution Loop
 Catalog entries require cited evidence, destination fit, and lifecycle state.
@@ -170,31 +165,27 @@ Silent axis skip blocks `decision-ready`.
 - request-fit basis when the benchmark will influence a request-bound routing or decision surface
 - explicit benchmark packet fields: `BENCHMARK-MODE`, `BENCHMARK-BASIS`, `BENCHMARK-SURFACE`, `BENCHMARK-AXIS`, and provenance or cross-check state when available
 ## Outputs
-Return benchmark findings to the current owner as an internal benchmark packet unless the contract explicitly asks for files.
+Use an internal benchmark packet unless the contract explicitly asks for files.
 User-facing benchmark prose routes through `team-lead` and `.claude/reference/reporting-prohibition-law.md`.
 
 Capture only the decisive benchmark packet:
-- scenarios and comparison candidates
-- baseline fairness notes
-- major comparison axes and tradeoffs
-- evidence type and provenance
-- captured source basis and modality
-- extracted task-usable information or patterns
-- destination-fit judgment and rejected misfits
-- lean-team choice or explicit `hold|blocker`
-- immediate downstream owner and next action class
+- benchmark surface and comparison basis
+- decisive evidence source and modality
+- extracted task-usable pattern
+- destination-fit judgment
+- open surfaces and next owner/action
 ## Handoff Boundary
-Hand off after the next owner can tell whether the benchmark is:
+Hand off after the downstream path can tell whether the benchmark is:
 - decision-ready
 - proposal-ready
 - or still blocked on fairness or evidence quality
 
 Weak comparison frame downgrades or holds benchmark output.
-Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream owner/action it informs or `hold|blocker`.
-When benchmark evidence supports a downstream owner:
-- hand off confirmed recurring specialist capability gaps to `Skill(governance-modification)` for recurrence-barrier or capability-gap ownership
+Unless the user requested a benchmark report as the final deliverable, benchmark output closes only by naming the downstream path/action it informs or `hold|blocker`.
+When benchmark evidence supports a downstream path:
+- hand off confirmed recurring specialist capability gaps to `Skill(governance-modification)` for recurrence-barrier or capability-gap handling
 - hand off ordinary specialist skill maintenance, pattern expansion, or capability refinement with no confirmed recurrence to `Skill(governance-modification)`
-Benchmark output is next-owner evidence, not direct patch authority, skill-routing authority, proof execution, or final acceptance.
+Benchmark output is next-owner evidence, not direct patch force, skill-routing force, proof execution, or final acceptance.
 ## Operational Discipline
 - Comparative output with no fair baseline or external calibration stays explicitly low-confidence.
 - Benchmark claims need corroboration or explicit cross-check status before being decision-ready.

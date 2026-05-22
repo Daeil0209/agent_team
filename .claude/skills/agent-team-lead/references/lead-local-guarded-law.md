@@ -2,89 +2,46 @@
 PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
-SOURCE-RULES: "RPA-8 Lead-local candidate work; Work Execution Philosophy"
-REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
+SOURCE-RULES: "frozen-local-action; local-limit; drift-exit; owner-route"
 ---
 # team-lead: Lead-Local Guarded Law
 
 ## Purpose
-Use this reference when team-lead might execute work locally instead of routing to a configured lane.
+Let team-lead execute only the frozen lead-local or same-route blocker-clear action.
+Exit lead-local immediately when the action needs a different owner, wider boundary, stronger claim, lane function, or material parallelism.
+This reference blocks only the frozen local action; unrelated lawful owner paths continue under their own basis.
 
 ## Consume When
-- `ROUTING-SIGNAL` is `lead-local candidate`.
-- Work is read-only diagnostic, audit, or analytical.
-- Local execution reveals a new work item or stronger claim.
-- A same-route blocker-clear move is proposed.
+- `NEXT-CONSEQUENTIAL-ACTION` points to a frozen `lead-local candidate` first local item or exact same-route blocker-clear move.
+- Team-lead is about to perform local diagnostic, audit, analysis, evidence-only standalone `Agent` use, or same-route blocker-clear work.
+- Local execution shows drift from the frozen local action.
 
-## Required Output
-Record:
-- local item
-- excluded lane-owned surfaces
-- required local skills
-- first action
-- stop point
-- evidence limit
-- break condition result
+## Record
+Record only the active row:
+- frozen local action or blocker-clear move
+- surface, evidence limit, claim ceiling, required-skill status, and stop point
+- drift signal and next owner/action when drift appears
 
-## Routing Gate
-Lead-local execution requires all direct work conditions.
-New owner, new surface, hidden consequential step, or stronger claim revealed during local execution opens the owning route before further local execution.
-Lane-owned proof, validation, review, implementation, or acceptance function opens the lane route before further local execution.
+## Lead-Local Procedure
+1. Confirm `planning-field-consume` supplies a current `ROUTING-SIGNAL: lead-local candidate` or `ROUTING-SIGNAL: blocker-clear`.
+2. Confirm the frozen local action names the exact item or blocker-clear move, one surface, evidence limit, claim ceiling, required-skill status, and stop point.
+3. Execute only that frozen action until its stop point.
+4. Keep evidence and claims inside the frozen limit.
+5. Load only the required skills named for the first material surface; missing or stale required-skill basis exits lead-local.
+6. Use non-owner specialist skills only when the frozen support basis permits team-lead consumption.
+7. Treat read-only diagnostic, audit, analysis, or standalone `Agent` use as lead-local only while it creates no independent evidence family, decision target, production/source-of-truth/interface boundary, proof burden, or correction owner.
+8. At the stop point, return to the active team-lead plan or named replanning boundary before any next local action.
+
+## Drift Exit
+Exit lead-local when the action would create a new item, new surface, new owner, route ambiguity, hidden consequential step, stronger claim, material parallel-fit, required-skill gap, lane-owned proof/review/validation/implementation/acceptance, or destructive/security/external/final-acceptance burden.
+Context-size, latency, or runtime-burden benefit that changes owner route counts as material parallel-fit.
+After drift, take no further local tool call, report, claim, or continuation until `Resolve Next Owner And Action` selects the next owner/action.
 
 ## Resolve Next Owner And Action
-- A lead-local route gap opens `work-planning`.
-- A new owner opens that owner.
-- A new surface opens `work-planning`.
-- A hidden consequential step opens `work-planning`.
-- A stronger claim opens `work-planning`.
-- A lane-owned function gap reopens `.claude/skills/agent-team-lead/references/pre-action-gate.md` `### ROUTE` for next-owner selection.
-
-## Direct Work Conditions
-Lead-local execution is allowed only when all hold:
-- one bounded surface
-- no frozen independent lane owner
-- no material review/proof/validator separation
-- no meaningful parallelism loss
-- no executable acceptance burden
-- no destructive acceptance burden
-- no security-sensitive acceptance burden
-- no claim stronger than lead-local evidence can verify
-- complete `LEAD-LOCAL-WORK-ITEMS`
-- frozen `LEAD-LOCAL-REQUIRED-SKILLS`
-- named first local item
-- named stop point
-
-## Read-Only Analytical Conditions
-Read-only diagnostic, audit, and analytical reports stay lead-local only when all hold:
-- one bounded surface
-- no independent evidence-family separation
-- no independent decision target
-- no independent document section
-- no independent production surface
-- no independent source-of-truth boundary
-- no independent interface or format boundary
-- no independent proof burden
-- no independent correction owner
-- a `measured` footprint record under `.claude/reference/environment-runtime-footprint-continuity.md` `## Runtime Footprint Claims` shows no context-size, latency, or runtime-burden benefit from fan-out
-
-Otherwise apply `[PARALLEL]` and route through one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption according to current session state.
-
-## Guarded-Local Rules
-- Start local work from explicit `LEAD-LOCAL-WORK-ITEMS`.
-- Local execution stays inside frozen local item list.
-- If a new item appears, reopen `work-planning`.
-- If a new surface appears, reopen `work-planning`.
-- If route ambiguity appears, reopen `work-planning`.
-- If a stronger claim appears, reopen `work-planning`.
-- Lead-local required skills must be loaded before local work and applied at the first material work surface where they can shape the result.
-- A lead-local specialist skill must declare `SECONDARY-CONSUMER: team-lead` or have another frozen lawful support basis.
-- When a named local required skill is unavailable, reopen `work-planning`.
-- When `work-planning` leaves the skill gap unresolved, report `HOLD`.
-- Consume required skills before continuation.
-
-## Team-Routing Guard
-If `team-routing candidate` is frozen, carry required methodology or capability skills from the `LANE-REQUIRED-SKILLS-MAP` defined by `.claude/skills/work-planning/references/planning-record-fields.md`.
-If `ambiguous-route` is frozen, carry required methodology or capability skills from lawful phase-local refinement.
-Lane ownership triggers agent-specific skill loading.
-Packet skill listing carries methodology or capability required skills.
-Use `REQUIRED-SKILLS: []` to record absence of upstream required-skill basis.
+- If the local procedure fits, execute the frozen action.
+- If the stop point is reached, return to the next row of the active team-lead plan or the blocker-clear plan's named replanning boundary.
+- Missing, stale, contradictory, or weaker planning fields reopen `work-planning`.
+- A frozen new owner routes to that owner; an unfrozen owner, item, surface, route ambiguity, hidden consequential step, or material parallel-fit reopens `work-planning`.
+- Lane-owned proof, review, validation, implementation, or acceptance routes through `Skill(task-execution)` when frozen, or `work-planning` when not frozen.
+- Required-skill gap opens the named skill when the boundary permits it; otherwise reopen `work-planning` or `HOLD`.
+- Claim beyond the frozen evidence limit opens claim narrowing, `Skill(self-verification)`, or `Skill(review-verification)` according to claim type.

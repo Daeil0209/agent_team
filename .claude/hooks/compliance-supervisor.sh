@@ -46,8 +46,19 @@ is_governance_restricted_write_path() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
 
+  # Restrict wholesale Write/NotebookEdit to genuinely stable high-traffic
+  # governance surfaces only. `.claude/skills/*` (skill SKILL.md and references)
+  # and `.claude/hooks/*` (hook scripts) are routine redesign targets whose
+  # wholesale rewrite is reviewed through Skill(governance-modification)
+  # Change Sequence + Skill(review-verification) procedure rather than by
+  # tool-shape blocking; treating them as restricted is over-broad-blocking per
+  # `.claude/reference/work-execution-core-law.md` `## Parallelism And
+  # Bottleneck Law` and `.claude/reference/review-and-verification-core-law.md`
+  # `## Minimum Executable Information Law`. Top doctrine (CLAUDE.md), settings,
+  # agent role spines, and reference core laws remain restricted because they
+  # are stable doctrine surfaces, not routine redesign targets.
   case "$candidate_path" in
-    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/skills/*|*/.claude/hooks/*|*/.claude/reference/*)
+    */.claude/CLAUDE.md|*/.claude/settings.json|*/.claude/settings.*.json|*/.claude/agents/*|*/.claude/reference/*)
       return 0
       ;;
     *)
@@ -138,7 +149,17 @@ is_governance_reference_path() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
 
-  [[ "$candidate_path" == */.claude/reference/* || "$candidate_path" == */.claude/skills/*/references/* ]]
+  # Restrict reference-wholesale-write to core-law references under
+  # `.claude/reference/*` only. Skill trigger-bound references under
+  # `.claude/skills/*/references/*` are routine redesign targets whose
+  # wholesale rewrite is reviewed through Skill(governance-modification)
+  # Change Sequence + Skill(review-verification) procedure, not by
+  # tool-shape blocking. Treating skill references as restricted is
+  # over-broad-blocking per `.claude/reference/work-execution-core-law.md`
+  # `## Parallelism And Bottleneck Law` and
+  # `.claude/reference/review-and-verification-core-law.md`
+  # `## Minimum Executable Information Law`.
+  [[ "$candidate_path" == */.claude/reference/* ]]
 }
 
 is_secret_or_credential_path() {
@@ -318,15 +339,76 @@ command_is_narrow_nonrestricted_claude_file_rm() {
     fi
     [[ -n "$target" ]] || return 1
     printf '%s' "$target" | grep -qE '\.claude/' || return 1
-    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|hooks/|rules/|reference/|skills/[^/]+/references/)' && return 1
+    # Restrict narrow-rm carve-out to stable doctrine surfaces only.
+    # `.claude/skills/*` (skill SKILL.md and references) and `.claude/hooks/*`
+    # are routine redesign targets whose file removal is reviewed through
+    # Skill(governance-modification) Change Sequence + Skill(review-verification)
+    # procedure rather than by tool-shape blocking. Treating them as
+    # restricted-rm is over-broad-blocking per
+    # `.claude/reference/work-execution-core-law.md` `## Parallelism And
+    # Bottleneck Law`. Top doctrine (CLAUDE.md), settings, agent role spines,
+    # rules, and reference core laws remain restricted.
+    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|rules/|reference/)' && return 1
   done < <(printf '%s\n' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
   return 0
+}
+
+# Returns 0 (true) iff some explicit output-redirect target token in subcmd
+# resolves under .claude/. Approximate static analysis: extract the token
+# immediately following `>` or `>>` and match against workspace-absolute or
+# cwd-relative .claude/ prefixes. Used by subcommand_is_mutating_shell to
+# gate redirect-only classification so read-only .claude/ enumeration whose
+# output is redirected outside .claude/ is not falsely treated as governance
+# mutation. Mutating exec keywords (rm/mv/cp/install/touch/mkdir/rmdir/chmod/
+# chown/tee/sed -i/perl -i) and dynamic-expansion redirect targets remain
+# governed by their own predicates upstream and downstream of this check.
+subcommand_redirect_targets_governance() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+  local workspace_root target
+  workspace_root="$(resolve_project_root 2>/dev/null)"
+  # Dynamic-expansion redirect targets (`$VAR`, `$(...)`, backticks) defeat
+  # static analysis; conservatively treat such cases as governance-targeting.
+  if printf '%s' "$subcmd" | grep -oE '[>][>]?[[:space:]]*[^[:space:]|;&]+' \
+      | grep -qE '(\$|`)'; then
+    return 0
+  fi
+  for target in $(printf '%s' "$subcmd" \
+      | grep -oE '[>][>]?[[:space:]]*[^[:space:]|;&]+' \
+      | sed -E 's/^[>]+[[:space:]]*//'); do
+    [[ -n "$target" ]] || continue
+    if [[ -n "$workspace_root" && "$target" == "$workspace_root/.claude/"* ]]; then
+      return 0
+    fi
+    case "$target" in
+      .claude/*|./.claude/*) return 0 ;;
+    esac
+  done
+  return 1
 }
 
 subcommand_is_mutating_shell() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
-  printf '%s' "$subcmd" | grep -Eiq "${HOOK_MUTATING_SHELL_COMMAND_PATTERN}|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]"
+  # Mutating exec keywords classify as mutation regardless of textual target;
+  # their bounded carve-outs and target-deny gates apply downstream.
+  if printf '%s' "$subcmd" | grep -Eiq "${HOOK_MUTATING_SHELL_COMMAND_PATTERN}"; then
+    return 0
+  fi
+  # Redirect operators (`: >`, ` > `, ` >> `) classify as mutation only when
+  # the redirect target resolves under .claude/. Read-only enumeration of
+  # .claude/ whose output is redirected outside .claude/ (canonical work
+  # artifact root claude_doc/<work-name>/ per environment-output-root-
+  # filesystem-law) is not governance-surface mutation, and over-broad
+  # classification here is a confirmed defect per CLAUDE.md `## 4. Review
+  # And Verification Philosophy` and review-and-verification-core-law
+  # `## Minimum Executable Information Law`.
+  if printf '%s' "$subcmd" \
+      | grep -Eq '(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
+    subcommand_redirect_targets_governance "$subcmd"
+    return $?
+  fi
+  return 1
 }
 
 # Bounded .claude relocation/structure carve-out: mv only to trusted archive

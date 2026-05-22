@@ -1,34 +1,29 @@
 ---
 name: security-review
-description: Review security risk with OWASP checklist, detection patterns, dependency risk, and severity framework. Use when authentication, authorization, secrets, input handling, dependency security, exposure, or security-sensitive behavior materially affects implementation or review.
+description: Review security risk with OWASP checklist, detection patterns, dependency risk, and severity framework. Use when authentication, access-control, secrets, input handling, dependency security, exposure, or security-sensitive behavior materially affects implementation or review.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Keep OWASP detail, severity framework, dependency security, and allowed/blocked practices in `references/security-review-detail.md`.
 - Classifies findings.
-- Fix implementation remains with the owning implementation lane.
+- Fix implementation routes to the implementation lane.
 ### Reference Map
 - `references/security-review-detail.md`: OWASP detail, severity framework, dependency security, and allowed/blocked practices.
 ## Identity
 You are the security-review specialist capability.
-- Structured security-review owner when security-sensitive code or runtime surfaces materially affect acceptance.
-## Authority
+## Coverage
 **Coverage:** security vulnerability detection patterns, OWASP checklist execution, threat severity classification, and security-specific review findings.
-**Adjacent owners hold:** implementation fixes, final acceptance verdicts, and general code-quality-review ownership.
-## Agent Relationships
-- `team-lead` — activation and routing owner
-- `developer` — fix owner
-- `tester` — downstream proof owner when security fixes require executable verification
-- `validator` — final verdict owner
+**Adjacent boundaries:** implementation fixes, final acceptance verdicts, and general code-quality review.
+
 ## Purpose
 Load when security-sensitive code, configuration, or runtime surfaces materially affect review acceptance.
 ## Responsibilities
 - identify security-sensitive surfaces
 - run the OWASP checklist and detection-pattern scans
 - classify findings as T0-T3 with corroborated evidence
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - any T0/T1 exists
   - T2 count crosses the blocking threshold
 - route fixes to `developer` and require re-review after fixes
@@ -39,10 +34,14 @@ Load when security-sensitive surfaces are in scope for the active review task.
 - code, config, dependency, or runtime surfaces under security review
 - explicit threat or environment context when available
 ## Outputs
-Return a structured security-findings packet.
-It must include file path, line, OWASP category, defect description, bounded fix, and explicit gate decision.
+Capture only the decisive security-findings packet:
+- file path and line
+- OWASP category
+- defect description
+- bounded fix
+- gate decision
 ## Handoff Boundary
-Hand off after the next owner can tell whether the surface is blocked.
+Hand off after the next path can tell whether the surface is blocked.
 The handoff must name:
 - what class of vulnerability exists
 - what bounded fix path must be re-reviewed

@@ -6,13 +6,12 @@ SECONDARY-CONSUMER: reviewer
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern:
+- Fixed skill pattern:
   1. `Identity`
-  2. `Authority`
-  3. `Agent Relationships`
-  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance modification / regression-guard blocks when present
-- Reference-owned sections live in `references/platform-implementation.md`.
+  2. `Coverage`
+  3. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  4. skill-local structural feedback / governance modification / regression-guard blocks when present
+- Reference detail sections live in `references/platform-implementation.md`.
 - Those sections include platform tools, implementation examples, and checklist detail.
 - Reference duplication into `SKILL.md` requires documented justification.
 - Platform-specific library installation steps belong in project-local documentation.
@@ -21,13 +20,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Identity
 You are the design-system-tokens specialist capability.
 - Conditional design-system token lens when cross-platform consistency, theme control, or component-layer discipline materially affects acceptance.
-## Authority
+## Coverage
 **Coverage:** token architecture, layer boundaries, token naming discipline, and token-to-component consumption rules.
-**Adjacent owners hold:** platform-specific installation steps, broad UI composition policy, and final validation authority.
-## Agent Relationships
-- `developer` — primary implementation owner
-- `reviewer` — downstream design-system consistency review owner
-- `mockup-to-component` — upstream conversion owner when the starting point is a visual mockup
+**Adjacent boundaries:** platform-specific installation steps, broad UI composition policy, and final validation.
+
 ## Purpose
 Load when a design system needs a stable token architecture.
 ## Responsibilities
@@ -37,7 +33,7 @@ Load when a design system needs a stable token architecture.
 - keep core components free of composite logic
 - make composites consume Layer 2 component contracts instead of raw tokens
 - import Layer 1 primitives from `mockup-to-component` CSS variables when that upstream packet already exists
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - credible token boundaries are absent
   - credible layer-consumption rules are absent
 ## Activation
@@ -48,8 +44,12 @@ Activate when setting up a new design system, standardizing inconsistent tokens,
 - upstream `mockup-to-component` or UI packets when present
 - canonical contract and execution plan
 ## Outputs
-Return a token-architecture packet.
-It covers Layer 1 primitives, Layer 2 core components, Layer 3 composites, consumption rules, and blocked surfaces.
+Capture only the decisive token packet:
+- Layer 1 primitives
+- Layer 2 core components
+- Layer 3 composites
+- consumption rules
+- blocked surfaces and next owner/action
 ## Handoff Boundary
 Hand off after downstream implementation can consume tokens from the packet-defined layer rules.
 Keep platform tools, examples, and checklist detail in `references/platform-implementation.md`.

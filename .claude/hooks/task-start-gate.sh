@@ -1213,9 +1213,6 @@ lead_preplanning_reference_allowed() {
     *"/.claude/skills/agent-team-lead/references/owner-trigger-order.md"*|*".claude/skills/agent-team-lead/references/owner-trigger-order.md"*|*"skills/agent-team-lead/references/owner-trigger-order.md"*)
       return 0
       ;;
-    *"/.claude/skills/agent-team-lead/references/session-route-bridge.md"*|*".claude/skills/agent-team-lead/references/session-route-bridge.md"*|*"skills/agent-team-lead/references/session-route-bridge.md"*)
-      return 0
-      ;;
     *)
       return 1
       ;;
@@ -1462,7 +1459,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         if [[ -f "$WP_MARKER" ]]; then
           exit 0
         fi
-        # Hook-last carve-out: specialist skill consults may continue after prior result verification.
+        # Hook-last carve-out: specialist skill consults may continue after prior self-verification convergence.
         if [[ -f "$RESULT_VERIFICATION_CONVERGED_MARKER" ]]; then
           exit 0
         fi
@@ -1474,7 +1471,7 @@ if ! runtime_sender_session_is_worker "$SESSION_ID"; then
         fi
         ;;
       Edit|MultiEdit|Write|NotebookEdit)
-        # Hook-last carve-out: bounded file-edit continuation may proceed after prior result verification.
+        # Hook-last carve-out: bounded file-edit continuation may proceed after prior self-verification convergence.
         if [[ -f "$RESULT_VERIFICATION_CONVERGED_MARKER" ]]; then
           exit 0
         fi

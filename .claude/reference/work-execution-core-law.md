@@ -31,12 +31,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - When target intent, solution structure, scope boundary, proof path, or acceptance path changes, the active owner reopens `work-planning` before downstream movement.
 - Process states are nonterminal evidence.
 - Status report, phase-transition signal, partial-result emission, intent announcement, and process-step record are process states.
-- Owner-local result checking that affects handoff, completion, reporting, redispatch, or stronger claims opens `Skill(self-verification)` result verification.
+- Owner-local result checking that affects handoff, completion, reporting, redispatch, or stronger claims opens `Skill(self-verification)` convergence.
 - Completion-grade `LANE-LOCAL-RESULT-VERIFICATION` requires actual `Skill(self-verification)` loaded-skill basis; narrative checks, carrier-field text, and checklist-shaped prose route to completion correction.
 - `HOLD` requires owner, blocker, and next safe evidence step.
 - Missing next owner or next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit, convenience, source memory, and model confidence.
-- Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification) result verification`.
+- Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
 - Frozen `COMPLETION-STOP-CONDITION` and `SCOPE-BASELINE` remain binding until deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker.
 - Team-lead plans must keep every material phase connected to a next executable owner/action until deliverable closure, lawful deferral, or `HOLD`.
 - Whole-work completion requires every frozen requested stage to be closed, lawfully owner-deferred, or blocked by truthful `HOLD`.
@@ -50,14 +50,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Downstream plans, assignment packets, correction packets, reuse packets, reroute packets, phase-transition packets, validation packets, and completion carriers must carry each material upstream review, verification, synthesis, validation, rejection, open-surface, blocker, or correction-ready basis that changes the next owner action, stop, evidence, claim ceiling, or acceptance truth.
 - Execution, phase movement, completion, validation, and positive synthesis require the material upstream decision basis or a current superseding basis; dropping, summarizing away, reinterpreting, or replacing that basis opens packet correction, owner correction, or `HOLD`.
 - Frozen completion and scope stay binding across lead-authored wave, batch, sample, priority tier, context limit, runtime limit, or convenience plans.
-- `Skill(self-verification)` plan audit is exception-only per `.claude/skills/self-verification/SKILL.md` `## Activation Trigger` plan-audit conditions.
+- `Skill(self-verification)` is the producer-owned outbound gate for produced work-product surfaces; plan readiness disputes reopen `work-planning` or the owning review path.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
 - `team-lead` owns intake, route, orchestration, synthesis, closeout, and user communication.
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
-- Lead-local user-facing final report requires current `Skill(self-verification)` result verification.
+- Lead-local user-facing final report requires current `Skill(self-verification)` convergence.
 - Session start loads `Skill(session-boot)`.
 - A current instruction that creates, reopens, or changes a consequential work boundary loads `Skill(work-planning)`.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
@@ -67,7 +67,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Before `.claude` governance asset mutation, the active owner opens `Skill(governance-modification)`; missing active path routes to `Skill(governance-modification)` or recurrence hardening as a Work Execution Philosophy violation.
 - When two or more sequence triggers fire on the same boundary, the active boundary owner selects the primary sequence by declared purpose and boundary-axis match.
 - When no primary is chooseable by purpose, resolve the boundary ownership conflict before proceeding.
-- Light channels are `answer-only`, `self-verification-only audit`, and `notification-only carry-forward`.
+- Light channels are `answer-only`, verification/status audit that does not assign correction or change a work boundary, and `notification-only carry-forward`.
 - Planning-exclusion detail lives in `.claude/skills/work-planning/references/boundary-gates.md`.
 - Consequential channels are `bounded local consequential work` and `team-routed complex work`.
 - Discovery, route shaping, dispatch, mutation, artifact judgment, or stronger claim leaves light/control.
@@ -83,8 +83,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Operator-policy-choice applies when doctrine and evidence leave no single best reversible path.
 - Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
 - User-prioritization, batching, route, staffing, parallelism, dispatch, or continuation-preference escalation requires explicit user expression.
-- Status, count, yes/no, verification, or explanation questions are reporting or audit requests; continuation, route, staffing, parallelism, dispatch, validation, cleanup, artifact mutation, task mutation, and governance asset mutation authorization require matching execution authority.
-- `[NO-NEEDLESS-ASK]` resolves choices only inside an authorized execution boundary; mutation authority requires matching user instruction or active frozen execution boundary.
+- Status, count, yes/no, verification, or explanation questions are reporting or audit requests; continuation, route, staffing, parallelism, dispatch, validation, cleanup, artifact mutation, task mutation, and governance asset mutation require matching execution path.
+- `[NO-NEEDLESS-ASK]` resolves choices only inside the active execution boundary; mutation uses the matching execution path.
 - Scope reduction, sample-only completion, tier-only completion, wave-only completion, or partial-with-deferral requires explicit user instruction or recorded `[USER-DELIVERY-FIT]` lawful deferral basis.
 - Resource, context, runtime, turn, response-length, or tool-call pressure routes to the next safe action or `HOLD` with blocker; deferral, completion, dispatch, and validation require their own lawful basis.
 - The agent routes to the user when user-preference expression is required.
@@ -107,14 +107,16 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Skill And Reference Consumption Law
 - Skills load only when required by the active owner path.
 - Primary skill links load through their active owner-path triggers.
-- Required skill activation and loaded-skill basis require actual `Skill(<skill>)` load or current same-session loaded-skill basis under the named skill's freshness rule.
-- Skill load means `Skill(<skill>)`; direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only.
+- Required skill activation and loaded-skill basis require actual `Skill(<skill>)` load, officially applied frontmatter `skills` preload, or current same-session loaded-skill basis under the named skill's freshness rule.
+- Skill load means `Skill(<skill>)` or officially applied frontmatter `skills` preload; direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only.
 - Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Agent role names remain role identifiers.
-- Agent role files declare role identity, lane boundary, and routing conditions; skill ownership metadata stays on skill assets.
+- Loaded skill owner resolution uses this order: explicit owner, phase owner, or sequence owner declared by a loaded procedure skill; then the agent that loaded the skill when the loaded skill does not declare a procedure owner for the current action.
+- Non-agent specialist skills state coverage, method, packet, and handoff boundaries only; they do not declare independent ownership, authority, or mutation permission.
+- Agent role files declare role identity, lane boundary, and routing conditions.
 - Top-level Claude Code host session is `team-lead`.
-- The top-level `team-lead` session loads `Skill(agent-team-lead)` after the role spine is consumed and before lead-owned procedure movement.
-- `Skill(agent-team-lead)` procedure consumption requires actual skill activation after the `team-lead` role spine is consumed.
+- The top-level agent-team `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
+- `agent-team-lead` procedure consumption requires actual `Skill(agent-team-lead)` activation or current same-session loaded-skill basis.
 - Always-loaded role surfaces carry identity, authority, trigger skeleton, mandatory reference links, decisive routing conditions, and next-owner routing.
 - Trigger-bound references carry situation-specific procedure detail only when their active owner path consumes them.
 - Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.

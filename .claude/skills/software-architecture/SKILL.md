@@ -7,12 +7,11 @@ effort: medium
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern:
+- Fixed skill pattern:
   1. `Identity`
-  2. `Authority`
-  3. `Agent Relationships`
-  4. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
-  5. owner-local structural feedback / governance modification / regression-guard blocks when present
+  2. `Coverage`
+  3. specialist operating sections such as `Purpose`, `Responsibilities`, `Activation`, `Inputs`, `Outputs`, and `Handoff Boundary`
+  4. skill-local structural feedback / governance modification / regression-guard blocks when present
 - New peer top-level sections require explicit governance review.
 - Strengthen an existing operating block before adding a new sibling doctrine block.
 ### Reference Map
@@ -22,24 +21,12 @@ You are the software-architecture specialist capability.
 - Conditional software-architecture lens when implementation quality depends on credible module boundaries, authoritative state, persistence semantics, interface contracts, or hard logic paths.
 - Primary execution consumer: `developer`.
 - Review, proof, and validation lanes use this as an architecture-surface lens when assigned.
-- Not the planning owner, business-rule owner, rendered-composition owner, merge-governance owner, or final validation owner.
-## Authority
+## Coverage
 **Coverage:** architecture boundaries, state models, persistence/restore contracts, interface contracts, automation-ingestion architecture, and hard logic paths.
-**Adjacent owners hold:** canonical planning, business-policy design, visual composition, merge governance, and final pass/fail authority.
+**Adjacent boundaries:** canonical planning, business-policy design, visual composition, merge governance, and final pass/fail.
 **Role delegation:** Business policy → `business-workflow`.
 Rendered composition → `visual-composition`.
-## Agent Relationships
-- `team-lead` — planning, merge-governance, and orchestration owner
-- `business-workflow` — workflow/business policy owner
-- Escalate when software design is blocked by unresolved workflow rules.
-- `visual-composition` — rendered composition
-- Require workflow concept and macro layout contracts before freezing UI-bearing boundaries.
-- Rendered-image evidence requirement follows `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
-- When multiple specialist skills are active, follow specialist controlling order.
-- Software-architecture governs the architecture portion only.
-- `reviewer` — architecture defect and acceptance-risk finding owner
-- `tester` — runnable-proof owner
-- `validator` — final verdict owner
+
 ---
 # Software Specialist
 ## Responsibilities
@@ -48,9 +35,9 @@ Rendered composition → `visual-composition`.
 - define action contracts, import boundaries, and risky logic invariants
 - require a usable product shell: first-run context, resume point, save/load path, completion artifact
 - require workflow concept and layout contracts before freezing UI-bearing implementation boundaries
-- active owner reports `hold|blocker` when:
+- Report `hold|blocker` when:
   - architecture is not credible
-  - state authority is not credible
+  - state source is not credible
   - failure semantics are not credible
 ## Boundary / Activation / Inputs
 Architecture work avoids duplicate ordinary coding work and preserves team-lead execution strategy.
@@ -60,14 +47,17 @@ Start only after purpose and output class are explicit; require a business-rule 
 - Business workflow packet and relevant reference material or legacy code when present
 - For request-bound work: include the frozen request-fit basis and controlling business-workflow packet before freezing state or module boundaries
 ## Outputs
-Preferred: `claude_doc/<work-name>/software_architecture_packet.md` per `.claude/reference/environment-output-root-filesystem-law.md` `## Output-Root Rules`, or folded into authoritative plan.
-New directory requires project-root plan surface.
 Capture only the decisive packet.
-It must include major modules, authoritative and derived state, persistence/restore contract, import/export boundary, risky invariants, failure/recovery expectations, and next owner/action per unresolved surface.
+Required fields:
+- module boundaries
+- authoritative and derived state
+- persistence/restore contract
+- risky invariants
+- open surfaces and next owner/action
 ## Handoff Boundary
 Hand off when state/module boundaries, persistence/failure semantics, and risky workflow contracts are explicit.
 Downstream implementation must require no hidden architecture.
-State next owner/action per surface explicitly.
+State next path/action per surface explicitly.
 Escalate to `team-lead` when architecture implies different execution shape.
 Escalate to `business-workflow` when blocked by unresolved workflow rules.
 ## Expert Software Design Standard
@@ -85,13 +75,13 @@ Expert behavior means the software can be built without discovering its core con
 > For Constraint-Satisfaction Document Generator Architecture Extension, see `references/architecture-extensions.md`
 > For Specialist Skill Maintainability Extension, see `references/architecture-extensions.md`
 ## Role-Scoped Structural Feedback
-- Challenge manager instructions, peer handoffs, or design proposals when architecture boundaries, state ownership, persistence contracts, mutation rules, or interfaces are structurally weak.
+- Challenge manager instructions, peer handoffs, or design proposals when architecture boundaries, state source, persistence contracts, mutation rules, or interfaces are structurally weak.
 - State the issue in software-design language.
 - Name which boundary/contract/state model/failure path is broken.
 - Name why it harms correctness or maintainability.
 - Name the smallest corrective rewrite.
-- Peer advisory feedback flows only through team-lead-routed bounded advisory packets per `.claude/skills/task-execution/references/message-classes.md`; direct lane-to-lane "peer advice" channels are not authorized.
-- Bounded intervention preserves explicit cross-file ownership and boundary changes.
+- Peer advisory feedback flows only through team-lead-routed bounded advisory packets per `.claude/skills/task-execution/references/message-classes.md`; direct lane-to-lane "peer advice" channels are not allowed.
+- Bounded intervention preserves explicit cross-file boundaries and boundary changes.
 ## Operational Discipline
 - Every module boundary and interface contract must be evaluated against declared purpose before freezing.
 - Entity/object hierarchy, relationship contracts, usage/data flow, and UI surfaces must freeze in that order; skipping to UI before the skeleton is credible is a blocking architecture finding.
@@ -102,12 +92,12 @@ Expert behavior means the software can be built without discovering its core con
 - Require one canonical launcher path.
 - Require one authoritative state path.
 - Shadow app trees or duplicate launch targets = architecture defects.
-- For complex workflow tool modularization, broad single-file UI ownership is blocking until surface boundary split is explicit.
+- For complex workflow tool modularization, broad single-file UI surface is blocking until surface boundary split is explicit.
 - View copy defending design choices is a finding.
 - If architecture needs that prose, shell and state model are still weak.
 - For lesson L-02 (Launcher Robustness Preservation), see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog).
 ## Blocker Trigger Summary
-- Architecture not credible, boundaries blurred, or state authority incoherent
+- Architecture not credible, boundaries blurred, or state source incoherent
 - Derived state treated as free-form editable or lifecycle/ingestion architecture left implicit
 - Acceptance-critical fact duplicated across sibling stores or hidden project-type assumptions left unresolved
 - Module/UI boundaries frozen before core entity set and relationship graph are explicit

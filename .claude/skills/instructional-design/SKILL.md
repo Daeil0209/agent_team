@@ -5,25 +5,18 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Fixed owner pattern: `Identity` -> `Authority` -> `Agent Relationships` -> specialist operating sections -> owner-local feedback blocks.
+- Fixed skill pattern: `Identity` -> `Coverage` -> specialist operating sections -> skill-local feedback blocks.
 - Add peer top-level sections only after governance review.
 - Keep pedagogical catalogs, worked-example detail, and domain-specific learning patterns in `references/pedagogy-detail.md`.
 ### Reference Map
 - `references/pedagogy-detail.md`: pedagogical catalogs, worked-example detail, and domain-specific learning patterns.
 ## Identity
 You are the instructional-design specialist capability.
-- Instructional-comprehension owner when the output must teach effectively rather than merely summarize accurately.
-- Activated by the active owner path when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, or learner-facing explanation artifact.
-## Authority
+- Activated by the active path when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, or learner-facing explanation artifact.
+## Coverage
 **Coverage:** instructional sequence, prerequisite ordering, pacing, scaffolding, explanation-object clarity, pedagogical density judgment, and learner-facing readability requirements.
-**Adjacent owners hold:** canonical planning, domain-truth validation, final rendered layout polish, and final validation.
-## Agent Relationships
-- `team-lead` — planning and routing owner
-- `researcher` — strong instructional references and evidence thresholds
-- `visual-composition` — rendered composition owner
-- `mathematical-correctness` — pure derivation or notation correctness owner
-- `document-automation` — template fidelity and document-automation owner when both pedagogy and structure matter
-- `reviewer`, `tester`, `validator` — downstream acceptance chain
+**Adjacent boundaries:** canonical planning, domain-truth validation, final rendered layout polish, and final validation.
+
 ## Purpose
 Load when the output must teach, train, or onboard effectively rather than merely summarize accurately.
 ## Responsibilities
@@ -32,9 +25,9 @@ Load when the output must teach, train, or onboard effectively rather than merel
 - define teaching clarity, pacing, scaffolding, and explanation-object boundaries
 - require readable equations, diagrams, legends, annotations, and stepwise worked examples when material
 - identify likely confusion points where the learner needs visible geometry, state, workflow, or causal relations beyond text alone
-- active owner reports `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remains unreadable.
+- Report `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remains unreadable.
 ## Boundary
-- Own learning structure.
+- Run learning structure.
 - learner profile and prerequisite floor require basis when material
 ## Activation
 Activate when the deliverable is learner-facing: teaching deck, training pack, instructional guideline, onboarding workflow, text-first learner-facing report, or other explanation artifact where learner comprehension materially affects acceptance.
@@ -44,8 +37,12 @@ Activate when the deliverable is learner-facing: teaching deck, training pack, i
 - domain context
 - request-fit basis when deliverable shape materially affects pedagogy
 ## Outputs
-Return an instructional packet.
-It covers prerequisite map, concept cascade, confusion points, required readability gates, and the next owner/action per unresolved surface.
+Capture only the decisive instructional packet:
+- prerequisite map
+- concept cascade
+- confusion points
+- readability gates
+- unresolved surfaces and next owner/action
 ## Handoff Boundary
 Route unresolved blockers explicitly to `mathematical-correctness`, `visual-composition`, `reviewer`, or `tester`.
 Learner-facing visual or rendered page-read artifacts still need both text/instruction review and capture-render review.

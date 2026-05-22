@@ -106,7 +106,7 @@ After each correction, rerun configured reviewer lane and Codex MCP independent 
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
-For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `Skill(self-verification)` result verification.
+For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `Skill(self-verification)` convergence.
 Fail-open cannot claim Codex concurrence or bypass reviewer, tester, validator, stale-artifact classification, or claim narrowing.
 
 ## Convergence
@@ -122,7 +122,7 @@ Exact wording can differ.
 Material conclusion must match.
 If disagreement remains, close only by `resolved-divergence` grounded in doctrine and evidence.
 Codex disagreement is evidence, not veto.
-`Skill(self-verification)` runs result verification to verify phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
+`Skill(self-verification)` runs convergence on phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop.
 team-lead executes the output-record next owner/action without user-facing review/proceed prompts.
 The exception is explicit approval or a verified user-owned blocker.
@@ -151,13 +151,13 @@ Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
 ## Output Record
 Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record. Review-convergence additions:
 - review target identity and configured reviewer lane state: `ready|hold|blocked`
-- whether `Skill(self-verification)` result verification covered the synthesized claim
+- whether `Skill(self-verification)` convergence covered the synthesized claim
 
 ## Resolve Next Owner And Action
 - Accepted material findings open correction requirements.
 - Resolved review convergence opens the output-record next owner/action.
 - Missing or false continuation values make the result discussion-only and reopen the review convergence route.
-- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `Skill(self-verification)` result verification.
+- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `Skill(self-verification)` convergence.
 - Stale artifact or proof result opens stale-surface correction before advancement.
 - Boundary-changing review result reopens `work-planning`.
 - Repeated unresolved disagreement opens `HOLD`.

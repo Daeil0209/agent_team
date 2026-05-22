@@ -34,7 +34,7 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `SKILL-FIELD-CONSUMPTION` records each non-empty, material, invalid, or blocked `REQUIRED-SKILLS` entry as `applied` or `blocked:<basis>` and every carried `SKILL-RECOMMENDATIONS` entry as `applied`, `not-material:<basis>`, or `blocked:<basis>`; use `not-applicable:<basis>` only when the packet carried no skill fields and no material skill was discovered during lane work
 - `CONVERGENCE-PASS`
 - `RESOURCE-CLEANUP`
-- `LANE-LOCAL-RESULT-VERIFICATION` — loaded `Skill(self-verification)` mode, verified surface, verification basis, claim strength, allowed next action. Verifies producer execution truth only.
+- `LANE-LOCAL-RESULT-VERIFICATION` — loaded `Skill(self-verification)` convergence state, PASS-1 coverage basis, PASS-2 review-verification packet basis, correction-loop status, and allowed handoff or next action. Verifies producer execution truth only.
 
 `VERIFIED-DATA-FEEDBACK` records every material returned fact, count, finding, state label, recommendation, or verdict input with its evidence basis and verification state.
 Use `not-applicable:<basis>` only when the assignment requested no material returned data and the lane returns no material data.
@@ -52,8 +52,8 @@ Team-lead accepts completion-grade transport only when the assignment, task stat
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
-Team-lead `Skill(self-verification)` result verification remains separate from lane completion.
-Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for result verification on the exact synthesized outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
+Team-lead `Skill(self-verification)` convergence remains separate from lane completion.
+Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for convergence on the synthesized work-product surface set and outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.

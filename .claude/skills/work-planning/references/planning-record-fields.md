@@ -42,7 +42,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Each phase row carries `UPSTREAM-DECISION-BASIS` as the material reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis it consumes, passes forward, supersedes, or marks `not-applicable:<basis>`.
 - Each phase row records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane owner, or `HOLD:<basis>`.
 - Place `Skill(governance-modification)` at a planned governance asset change or recurrence-barrier hardening row.
-- Place `Skill(review-verification)` under `Skill(self-verification)` for produced synthesized-result defect, removal, cross-surface governance, patch-worthiness, or correction judgment.
+- Place `Skill(review-verification)` inside `Skill(self-verification)` Step 3 when the produced work-product surface set needs PASS-2 critical review.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 - A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
 - A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly user-accepted as deferred/out-of-scope, lawfully owner-deferred, or blocked by a truthful `HOLD`.
