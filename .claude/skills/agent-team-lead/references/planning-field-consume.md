@@ -10,6 +10,8 @@ SOURCE-RULES: "request-fit; design-intent; frozen-planning-fields; route-continu
 Consume only the frozen planning fields needed for the current next owner/action before local execution, dispatch, phase movement, or reporting-law-admitted user-facing prose.
 Stop the current action when the consumed plan no longer supports it.
 
+PROTECTED-LOCAL-RESTATEMENT-BASIS: planning-consumption atomic-check — Reaction Rules, Cross-Continuity, and Lead-Only Context Guard colocated for atomic team-lead consultation at pre-dispatch and per planning-field consumption. Destinations (`.claude/skills/work-planning/references/cross-continuity.md`, `.claude/skills/task-execution/references/assignment-packet.md` Cross-Continuity Packet Check, `.claude/skills/work-planning/references/planning-record-fields.md`) are trigger-loaded; in-line application here preserves dispatch-readiness check atomicity.
+
 ## Consume When
 - A local execution path, workflow, sequence, dispatch, or reporting-law-admitted user-facing prose depends on frozen `work-planning` fields.
 - `TEAM-LEAD-WORK-PLAN`, `NEXT-CONSEQUENTIAL-ACTION`, route class, claim ceiling, readiness, continuity, or lead-only fact-transfer readiness can change the next action.

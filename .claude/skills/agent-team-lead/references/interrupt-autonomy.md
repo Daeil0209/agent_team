@@ -34,6 +34,7 @@ Record only the active row for the current trigger.
 6. Status prose during an active interrupt consumes `.claude/reference/reporting-prohibition-law.md`; after admitted prose, continue through the confirmed `RESUME-ACTION` unless a termination basis exists.
 
 ## Autonomy Procedure
+PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy Procedure colocated for atomic team-lead consultation at every autonomy/escalation decision moment. `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (`[NO-NEEDLESS-ASK]`) defines the general rule; this surface applies it as procedural steps for team-lead at the decision moment without per-decision cross-reference traversal.
 1. Inside the active boundary, choose the evidence-backed reversible default when doctrine and evidence identify one.
 2. Ask the user or `HOLD` only for irreversible, destructive, security-sensitive, operator-policy-choice, explicit cancellation, explicit redirect, proven user-owned blocker, or in-plan blocker basis.
 3. Do not create waiting, deferral, or follow-up-choice prompts from preference, convenience, or uncertainty that evidence can resolve.

@@ -70,17 +70,18 @@ Every agent-specific skill inherits these common preconditions:
 - Lane outputs report raw candidate volume and confirmed defect volume as separate counts.
 - Lane outputs use `confirmed-defect`, `patch-worthy`, or `patch-ready` only when the consumed promotion basis proves that exact state.
 - This finding-state duty executes as lane baseline without packet wording.
-- Receipt opens same-turn packet classification; after classification, execute, reconstruct safely, or send a separate `scope-pressure` / `hold|blocker`.
-- Continue into lane work after receipt.
+- Receipt opens same-turn packet classification before lane work.
+- Continue into lane work only after packet intake classifies as `execute` or lawful `reconstruct-with-inference`; `scope-pressure` and `hold|blocker` stop lane work and send the upward outcome.
 - Packet intake classifies into one of 4 states: `execute`, `reconstruct-with-inference`, `scope-pressure`, or `hold|blocker`.
 - `execute` applies when packet bounds (owner, phase, proof, acceptance, deliverable) are unambiguous for the lane's work.
 - `reconstruct-with-inference` applies only when inferred surface preserves the common boundary axes (owner, phase, proof, acceptance, deliverable) plus the lane-specific axes named in the lane's `agent-<lane>/SKILL.md`.
-- `scope-pressure` routes mixed-phase, wrong-owner, shardable overload, or hidden-prerequisite packets.
+- `scope-pressure` routes mixed-phase, wrong-owner, shardable overload, hidden-prerequisite, or packet-field-vs-skill-law-conflict packets per `.claude/reference/work-skill-reference-binding-law.md` precedence stack.
 - `hold|blocker` routes materially ambiguous decisive basis or non-derivable missing fields.
 - Skill-field intake precedes first lane work.
 - Classify every `REQUIRED-SKILLS` entry as `valid-loaded`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every valid material entry to `applied` or `blocked:<basis>`.
 - Classify every `SKILL-RECOMMENDATIONS` entry as `material-loaded`, `not-material:<basis>`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every material entry to `applied` or `blocked:<basis>`.
 - Lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, malformed, or full-workflow-only required-skill entries are blocked packet facts; return `scope-pressure` or `hold|blocker` instead of treating them as optional local omissions.
+- When packet or retained-context wording offers equivalent checks, proxy lens mappings, inline PASS wording, or checklist prose in place of actual `Skill(review-verification)` packet/lens basis, send `scope-pressure` before lane work or completion.
 - Silence when assigned specialist-surface structure is weak is a lane failure.
 - The lane surfaces the gap to team-lead through Communication Plane.
 - A retry is materially changed when evidence basis, blocker route, or fix/strategy/scope changes.
@@ -89,11 +90,12 @@ Every agent-specific skill inherits these common preconditions:
 - Preserve global routing, staffing, and acceptance ownership from packet basis.
 - If frozen host-authorized parallel-agent work collapses multiple independent surfaces onto one lane, send `scope-pressure` with `PRESSURE-TYPE: parallel-split-needed` and `CORRECTION-OUTCOME: route-replan`.
 - Reconcile completion-grade output against the common end closure contract in `.claude/skills/task-execution/references/completion-handoff.md`.
-- Before completion, run lane-local `Skill(self-verification)` convergence.
+- Before completion, load and run lane-local `Skill(self-verification)` convergence on the exact produced result, outgoing claim, and retained completion carrier.
 - Completion records `UPSTREAM-DECISION-BASIS-CONSUMPTION`; missing consumption blocks completion-grade handoff when upstream decision basis was material.
-- Lane-local `Skill(self-verification)` must include `VERIFIED-DATA-FEEDBACK` when the lane returns material data; missing or unsupported material data blocks completion-grade feedback.
+- Lane-local `Skill(self-verification)` convergence verifies producer-owned result truth at the applicable frozen claim strength, including `CLAIM-CEILING` when the packet carries one.
+- PASS-2 remains blocked until the lane has a current `review_verification_packet` from actual `Skill(review-verification)` Step 14 for the exact produced result and outgoing claim; evidence-only claim ceilings narrow authority only and never replace PASS-2.
+- Packet quantitative scope specs (`PASS-2-MANDATE` lens count, `REVIEW-VERIFICATION-LENSES` enumeration, `COMPLETION-STOP-CONDITION` axis count, similar) are MINIMUM lane coverage within the same assigned review question, target, corpus, scope, claim ceiling, and lane authority, not maximum; lane extends without new packet authorization when produced-surface risk profile, domain breadth, or upstream evidence indicates deeper application of assigned named lenses, additional defeater enumeration, or coverage axis extension within that same bounded scope is material per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` substantive failure-mode probing rule, records the extension basis and exact applied lenses in the retained carrier, and treats packet-as-ceiling interpretation as the failure mode that `Skill(self-verification)` Step 3 PASS-2 fails on shallow verification; extension that would change target, corpus, bounded question, scope, claim ceiling, owner authority, or binding promotion/patch-selection authority requires `scope-pressure`, route-replan, or full-workflow activation per `.claude/skills/review-verification/SKILL.md` `## Activation` bounded-packet-evidence rule, not self-authorization.
 - For AC-supporting rendered evidence, open every cited screenshot or full-page capture directly via the multimodal `Read` tool before claiming the rendered surface; AC-supporting proof requires the opened rendered surface. Routine non-AC baseline captures stay cite-only when they are unrelated to verdict support and defect evidence.
-- Lane-local `Skill(self-verification)` convergence verifies producer execution truth only.
 - Team-lead owns synthesis `Skill(self-verification)` convergence.
 - Consume the agent-specific skill only for consequential lane-owned work.
 - Receipt, status, shutdown, phase, or clarification messages activate it only when they assign or reopen work.
@@ -119,7 +121,8 @@ Every agent-specific skill inherits these common preconditions:
 - A non-fitting, lane-mismatched, contradictory, or outside-boundary required entry is a packet or route defect.
 - A required entry defect routes to packet correction or replacement-basis handling before local skill omission.
 - Lane dispatch names `review-verification` through assigned lenses or routes full-workflow activation to the authorized owner.
-- A lane dispatch that needs `review-verification` names one exact lens from `Skill(review-verification)` `## Named Lane Lens Index`.
+- A lane dispatch that needs `review-verification` names the exact assigned lens or lenses from `Skill(review-verification)` `## Named Lane Lens Index`.
+- For aliases, proxy mappings, inferred equivalence, shortened names, or omitted `-lens` suffixes, send `scope-pressure` with `CORRECTION-OUTCOME: packet-correction`.
 - Full `review-verification` workflow routes to `team-lead`.
 - A bare full-workflow skill entry is a packet defect when the skill reserves full activation to another owner.
 - If the lane already accepted or completed after receiving bare `REQUIRED-SKILLS: [review-verification]`, the lane defect is failure to surface the packet defect before work, not failure to run a full workflow it did not own.
@@ -131,8 +134,9 @@ Every agent-specific skill inherits these common preconditions:
 - Capability fit requires applying the fitting skill to the work surface.
 - Lane claims require loaded-and-applied skill evidence on the assigned work surface or `not-material:<basis>` / `blocked:<basis>`; packet wording, skill names, labels, tool-call presence, style language, and procedure-shaped text remain background signals.
 - When a selected capability skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.
-- During lane work, a newly discovered skill or tool need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
-- Lane-local refinement applies the skill or tool immediately inside that boundary and records the basis in completion.
+- During lane work, a newly discovered skill need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
+- During lane work, a newly discovered tool need opens `Skill(tool-acquisition)` when the current toolset cannot satisfy the assigned surface and the need stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
+- Lane-local refinement applies the skill or verified tool path immediately inside that boundary and records the basis in completion.
 - A discovered need that changes any boundary above routes to `scope-pressure` / `hold|blocker` or reopened planning.
 - If a required skill, decisive tool, rendered/runtime surface, or domain method is missing, unavailable, or outside the packet boundary, send `scope-pressure` / `hold|blocker` with the smallest correcting owner instead of downgrading quality.
 - `CLAUDE.md`, role boundaries, `task-execution`, `work-planning`, and `self-verification` remain higher authority.

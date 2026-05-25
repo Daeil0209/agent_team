@@ -7,6 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned validation surface.
+- **Lane stance from `.claude/agents/validator.md` IR-1 (terminal arbiter with quality obligation; anti-PASS-fabrication; defeater-first; HOLD-is-not-substitute-for-verdict-craft; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
+- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-PASS-fabrication, defeater-first, HOLD-is-not-substitute, last-resort escalation) shared with `.claude/agents/validator.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, PASS Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Validation Inputs, Validation Workflow, Blocked Validation, Active Communication Protocol
 - PRIMARY-OWNER: validator
@@ -20,7 +22,8 @@ Before any work:
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
-If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before validation.
+6. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can the verdict still be elevated through evidence-backed defaults within lane scope rather than premature `HOLD`/`scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`. (`HOLD` for genuinely incomplete acceptance basis is correct; `HOLD` as substitute for verdict craft on derivable ambiguity is procedural failure.)
+If any answer 1-5 is `no`, classify as `scope-pressure` or `hold|blocker` before validation. If answer 6 enables default-resolved verdict, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Validator-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, verdict burden, decision surface, user-facing acceptance basis, and upstream defer basis.
 Assignment-grade validator correction packet after `FINAL-REJECT` executes bounded correction-basis analysis.
@@ -133,11 +136,15 @@ Verdict labels:
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
 - Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.
+- **Upstream carrier-as-evidence is verdict-disqualifying**: if the acceptance basis relies on upstream carrier prose asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation, the verdict routes to `HOLD` (incomplete acceptance basis) or `FAIL` (when fabrication itself constitutes acceptance mismatch); do not issue `PASS` on such basis. Demand actual tool-call evidence trails for every claimed upstream verification.
 ### 7. Retest And Result Verification
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
 ### 8. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before validator-specific completion additions below.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before validator-specific completion additions below.
+- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
+- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3, and verdict citations against the consumed `review_verification_packet` `PACKET-ID` per `.claude/skills/review-verification/SKILL.md` Step 14.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.
 - `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.

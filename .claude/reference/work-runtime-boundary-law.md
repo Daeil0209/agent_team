@@ -74,6 +74,8 @@ Tool availability routes to the owner procedure for:
 - acceptance
 - dispatch truth
 - owner completion
+Bounded local tool discovery/setup that materially blocks the active owner path routes through `Skill(tool-acquisition)` under that owner procedure.
+External API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work routes through `Skill(external-tool-bridge)` or the named setup/security owner.
 Hook/runtime signals route proof, validation, acceptance, dispatch truth, and owner completion claims to the owning procedure.
 Non-owner tool output routes these claims to the owning procedure:
 - a blocker
@@ -86,6 +88,7 @@ Non-owner tool output routes these claims to the owning procedure:
 - Settings-risk gaps open the owning update path.
 - Runtime-footprint claim gaps open measurement or narrow the claim to `UNVERIFIED`.
 - Tool-signal gaps open the owner procedure that actually owns the claim.
+- Bounded local tool discovery/setup that materially blocks the active owner path opens `Skill(tool-acquisition)` under that owner procedure.
 - Non-owner tool output gaps open the owner procedure that actually owns the claim.
 
 ## Runtime Boundary Rules
@@ -93,7 +96,6 @@ Non-owner tool output routes these claims to the owning procedure:
 - Hook stdout JSON must validate against the Claude Code hook output schema for the matched event; emit empty stdout when the event's accepted `hookSpecificOutput` shape is not verified against `.claude/reference/environment-official-claude-code-source-cache.md` or live harness behavior, and rely on file/state side effects only.
 - Adding an unverified JSON shape to hook stdout is a recurrence-class defect that returns to this rule for narrowing or silent fallback.
 - Hooks block only actions that must never happen: destructive (data loss, irreversible state mutation, runtime corruption), security-critical (secret exposure, sandbox escape), or session-stability-breaking (e.g., `tmux kill-*` against an active session).
-- Tool-issued `tmux kill-*` is a categorical hard-deny runtime surface.
 - A blocked `tmux kill-*` selection routes to cooperative shutdown, session-closeout, or non-tmux owner recovery.
 - Non-tmux forceful runtime termination such as `kill <pid>` requires explicit operator approval plus the narrow runtime cleanup owner.
 - Cooperative `shutdown_request` stays in routine runtime cleanup when a runtime cleanup owner selects a live process-backed teammate for cleanup.

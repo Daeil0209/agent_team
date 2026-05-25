@@ -1315,7 +1315,7 @@ if [[ -z "$TOOL_NAME" || -z "$SESSION_ID" ]]; then
 fi
 
 if sendmessage_malformed_visible_state_signal_to_lead; then
-  deny_tool_use "BLOCKED: malformed visible state signal. Put ack/completion only in the SendMessage header/preview; message/body slots must be blank or whitespace-only. Keep detail in task state or retained carriers."
+  deny_tool_use "BLOCKED: malformed rendered transport envelope. Put ack/completion only in the canonical no-detail SendMessage summary/header slot when the runtime requires a visible transport token; message/body slots must be blank or whitespace-only. Keep detail in task state or retained carriers."
   exit 0
 fi
 
@@ -1368,14 +1368,14 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
       exit 0
     fi
     if [[ "$TOOL_NAME" == "SendMessage" ]]; then
-      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must be one host-visible header/preview state signal: 'ack task <id>' when task tracking is active, otherwise 'ack'. Message/body slots must be blank or whitespace-only. Keep MESSAGE-CLASS, WORK-SURFACE, ACK-STATUS, paths, and packet detail in internal carriers. Use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+      deny_tool_use "BLOCKED: worker receipt is pending. First upward outcome must use the canonical no-detail SendMessage summary/header token 'ack task <id>' when task tracking is active, otherwise 'ack', only when the runtime requires a visible transport token. Message/body slots must be blank or whitespace-only. Keep MESSAGE-CLASS, WORK-SURFACE, ACK-STATUS, paths, and packet detail in internal carriers. Use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
     if worker_dispatch_ack_gate_active_for_session "$SESSION_ID" "$WORKER_NAME"; then
-      deny_tool_use "BLOCKED: worker receipt is pending. Send one host-visible header/preview 'ack task <id>' or 'ack' to team-lead before Skill, Read, Bash, discovery, proof, or lane work; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+      deny_tool_use "BLOCKED: worker receipt is pending. Send the canonical no-detail SendMessage summary/header token 'ack task <id>' or 'ack' to team-lead before Skill, Read, Bash, discovery, proof, or lane work when the runtime requires a visible transport token; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
       exit 0
     fi
-    deny_tool_use "BLOCKED: worker receipt is pending. Send one host-visible header/preview 'ack task <id>' or 'ack' to team-lead before first lane work; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
+    deny_tool_use "BLOCKED: worker receipt is pending. Send the canonical no-detail SendMessage summary/header token 'ack task <id>' or 'ack' to team-lead before first lane work when the runtime requires a visible transport token; message/body slots must be blank or whitespace-only; use scope-pressure or hold|blocker only when receipt cannot be accepted safely."
     exit 0
   fi
   if worker_sendmessage_reopens_closed_task; then

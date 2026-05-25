@@ -93,7 +93,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - `Closeout Sequence` is a standard sequence.
 - `session-boot` owns boot, session-start, monitoring, runtime-entry, and recovery readiness.
 - `session-closeout` owns closeout truth.
-- `Skill(governance-modification)` owns routine asset maintenance and recurrence-barrier hardening.
+- `Skill(governance-modification)` owns current governance asset-change rows and confirmed recurrence-barrier hardening.
 - `Skill(governance-modification)` owns `Change Sequence` patch mechanics.
 - Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` convergence.
 - Treat dispatch, benchmarking, `governance-modification`, interrupt handling, and status reporting as nonterminal evidence.
@@ -104,7 +104,6 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - Treat rejection handling as correction-routing evidence.
 - Same-boundary iterations consume the frozen boundary.
 - Route `Skill(self-verification)` only to produced work-product outbound gates; plan-readiness gaps reopen `work-planning` or the owning review path.
-- Consequential boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
 - The lightest truthful channel is valid only when it satisfies the evidence burden.
 - Missing basis routes to the smallest correcting owner.
 - Lawful independent work continues while the affected path is corrected.

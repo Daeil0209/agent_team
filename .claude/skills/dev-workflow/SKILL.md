@@ -35,7 +35,7 @@ Activation requires the frozen workflow route.
 
 Activation requires configured independent-review handling for plan, design, and material review stages.
 Configured adapter, `CODEX-INDEPENDENT-REVIEW-BASIS` semantics, skip rule, trigger handling, adjudication, and fail-open truth live in `.claude/skills/codex-independent-review/SKILL.md`.
-Missing, invalidly skipped, or skipped-despite-material-trigger `CODEX-INDEPENDENT-REVIEW-BASIS` reopens `work-planning`.
+Missing `CODEX-INDEPENDENT-REVIEW-BASIS`, skip recorded without satisfying the valid-skip conditions defined at `.claude/skills/codex-independent-review/SKILL.md` `## Activation`, or skipped-despite-material-trigger reopens `work-planning`.
 Unchecked development routes reopen `work-planning`.
 
 Field consumption detail stays with `.claude/skills/agent-team-lead/references/planning-field-consume.md`.

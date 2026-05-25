@@ -7,6 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned proof surface.
+- **Lane stance from `.claude/agents/tester.md` IR-1 (runtime prover with quality obligation; anti-narrative-substitution; anti-self-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
+- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-narrative-substitution, anti-self-fabrication, last-resort escalation) shared with `.claude/agents/tester.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Testing Workflow, Proof Classification, Active Communication Protocol
 - PRIMARY-OWNER: tester
@@ -24,7 +26,8 @@ Before any work:
 7. Intent fit: does the planned proof map the assigned design intent or proof expectation to executable actions and observable results?
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
-If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before proof work.
+10. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can proof still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
+If any answer 1-9 is `no`, classify as `scope-pressure` or `hold|blocker` before proof work. If answer 10 enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Tester-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged user-run-path, tool-basis, closure/oracle row, scenario boundary, and state-postcondition.
 ### User-Perspective Gate
@@ -98,6 +101,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Also use them for weak oracles, regression risk, or security exposure.
 - Adequate coverage maps to in-scope user, interaction, state, and data dimensions.
 ### 3. Execute Direct Checks
+- **Refuse narrative substitution**: narrative assertion, source-only inspection, page-load checks, DOM presence, or other surrogate evidence cannot substitute for executed proof on the frozen `PROOF-SURFACE`. Demand actual tool-call execution traces (Bash output, browser navigation, screenshot, runtime artifact) for every claimed proof.
 - Run actual commands.
 - Record exact commands, outputs, exit codes, or observed interaction evidence.
 - When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in completion.
@@ -143,7 +147,10 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Before completion, identify plausible developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before tester-specific completion additions below.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before tester-specific completion additions below.
+- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
+- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Proof PASS in completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) corrupts validator and team-lead synthesis.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Keep tester-specific proof-match and run-path status fields explicit and truthful.
 - Use `not-applicable` instead of omission when a status axis was not part of the frozen surface.

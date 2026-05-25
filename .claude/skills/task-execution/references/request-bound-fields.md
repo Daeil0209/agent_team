@@ -128,6 +128,7 @@ If the exact tool is not yet frozen, the packet can instead freeze a bounded dis
 
 Keep assignment autonomy without vague or unbounded tool hunting.
 When that boundary includes environment/tool setup, carry the setup safety classification from `work-planning`: `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`. `allowed-setup` is not a user confirmation gate; `approval-required` must name the damage-capable/destructive/security/credential/paid/persistent-service/policy reason.
+When a new tool path must be found, acquired, installed, configured, or verified, the active owner or lane consumes `Skill(tool-acquisition)` with this bounded field set. External API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work routes from there to `Skill(external-tool-bridge)`.
 For browser-ui proof or acceptance, an exact `TOOL-REQUIREMENT` and the full bounded discovery/setup bundle are alternatives at dispatch time. Carry both only when the workflow truly needs both.
 
 When the frozen proof or acceptance path covers multiple environments, platforms, browsers, or deployment contexts, or when a single-environment proof is claimed cross-environment sufficient, the packet must also carry:
@@ -167,7 +168,7 @@ When `VALIDATION-SURFACE` already names the single decisive user-facing acceptan
 When the assigned surface is office-format, page-read, or other rendered human-facing material where reader-visible usefulness is part of acceptance, keep the rendered chain explicit instead of implying it:
 - `developer/document-automation -> tester -> reviewer -> validator` when risk is meaningful
 - rendered evidence supports human-visible usefulness only; wording, logic, request-fit, proof, and verdict ownership remain separately owned
-- if the current toolchain lacks a truthful exercise path for the decisive user surface, freeze one bounded next step only: explicit tool discovery/acquisition/setup via `external-tool-bridge` or the appropriate setup owner, or `hold|blocker`. Source-only downgrade is invalid unless frozen as the decisive surface.
+- if the current toolchain lacks a truthful exercise path for the decisive user surface, freeze one bounded next step only: `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, the appropriate setup owner, or `hold|blocker`. Source-only downgrade is invalid unless frozen as the decisive surface.
 
 ## Resolve Next Owner And Action
 - Complete start closure contract opens assignment packet preflight.
@@ -175,5 +176,5 @@ When the assigned surface is office-format, page-read, or other rendered human-f
 - Missing packet field that changes owner, phase, staffing, proof, acceptance, or deliverable shape opens `route-replan`.
 - Missing decisive user surface opens packet correction or validation/proof route correction.
 - Missing executable run path or burden contract opens packet correction before tester or validator dispatch.
-- Missing truthful tool path opens bounded tool discovery, `external-tool-bridge`, or `hold|blocker`.
+- Missing truthful tool path opens `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, or `hold|blocker`.
 - Rendered human-facing usefulness opens the rendered delivery chain named in this reference.

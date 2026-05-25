@@ -34,7 +34,7 @@ Load when enterprise-scale work depends on credible layer separation, bounded co
 ## Activation
 Activate only when at least one activation condition is true.
 Condition 1: the work crosses 2+ services with independent deployment lifecycles.
-Independent deployment lifecycles require separate deployable artifacts and independent release/rollback, runtime environment, scaling/SLO, or operational responsibility.
+Independent deployment lifecycles require both (a) separate deployable artifacts AND (b) at least one of: independent release/rollback, independent runtime environment, independent scaling/SLO, or independent operational responsibility.
 Condition 2: bounded-context boundary review across services is the active deliverable.
 Condition 3: a production-readiness gate fires before externally-committed deploy.
 Single-application architecture review belongs to `software-architecture`.

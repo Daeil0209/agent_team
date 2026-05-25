@@ -7,6 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned production surface.
+- **Lane stance from `.claude/agents/developer.md` IR-1 (production craftsman with quality obligation; anti-self-fabrication; constraint-as-resolution-trigger; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
+- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward â€” active framing content (quality obligation, anti-self-fabrication, constraint-as-resolution-trigger, last-resort escalation) shared with `.claude/agents/developer.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Escalation Triggers, Development Production Workflow, Changeset Separation, Technical Standards, Active Communication Protocol
 - PRIMARY-OWNER: developer
@@ -21,7 +23,8 @@ Before any work:
 4. Packet classification: has the received packet been classified per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before production discovery or edits?
 5. Lane action: are the first lane action and stop condition explicit enough to govern execution?
 6. Feasibility: can this be completed inside the declared boundary with an available lawful production path?
-If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before production.
+7. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can production still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
+If any answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before production. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
 Execution bias applies only after packet classification opens `execute` or `reconstruct-with-inference`: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
@@ -131,13 +134,17 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 ### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
 - Run lane-local `Skill(self-verification)` convergence on the changed surface immediately on production completion.
+- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records in the carrier without actual same-turn tool-call evidence is self-fabrication. As primary producer, self-fabrication corrupts every downstream verification gate that consumes your completion as upstream basis.
 - Correct bounded developer-owned defects found by self-verification convergence before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
 - Repeat lane-local `Skill(self-verification)` convergence while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
 - Complete only after lane-local `Skill(self-verification)` convergence finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
 - Lane-local `Skill(self-verification)` never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before developer-specific completion additions below.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before developer-specific completion additions below.
+- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
+- **PASS records require evidence citations** per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3; assertion-only completion carrier is fabrication and disqualifies handoff.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.

@@ -41,13 +41,9 @@
 - Evidence-backed reversible defaults resolve derivable ambiguity; user escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
 - Frozen scope, completion stop, corpus coverage, required promotion, patch-loop coverage, validation scope, and whole-work stage closure stay binding across waves, batches, samples, priority tiers, resource pressure, and response boundaries.
 - Open same-request stages remain live execution duties; the active owner executes, dispatches, verifies, or routes the next required stage until closure, lawful deferral, explicit user cancellation/redirect, or truthful `HOLD`.
-- Correction and iteration chains preserve the frozen acceptance path; cleared gaps open required re-review, re-proof, validator ingress, and Final Acceptance Review when the chain is validator-required.
-- Final, closeout, and turn-ending prose require one closure basis: zero live same-request executable owner/action, explicit user cancellation/redirect, lawful owner deferral, or truthful `HOLD`.
 - Team-agent dispatch, receipt, reuse, monitoring, and completion transport use the team-agent runtime; same-lane follow-on work evaluates live or standby reuse before cleanup or new member creation.
 - Governance hierarchy work proceeds top-down through mapped execution layers, and `.claude` governance mutation starts only inside active `Skill(governance-modification)`.
 - Skill activation requires actual `Skill(<skill>)` load or current same-session loaded-skill basis; trigger-active pointers are recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` on the governed path.
-- Loaded skill owner resolves in this order: the loaded procedure skill's explicit owner/phase/sequence owner first; otherwise the agent that loaded the skill executes that skill's method as the owner for that skill path.
-- Non-agent specialist skills do not declare independent ownership or authority; they declare coverage, method, packet, and handoff boundaries for the loading agent or active procedure owner.
 - Communication Plane, task output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
 - Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
 - Executable detail lives in `.claude/reference/work-execution-core-law.md`.
@@ -56,6 +52,7 @@
 - Review And Verification Philosophy reviews live intent, upstream basis, evidence, coherence, negative risk, patch worthiness, and modification quality before strong claims or consequential patches.
 - Missing, stale, contradicted, or unconsumed governing basis opens the smallest correction owner before positive claim.
 - Evidence outranks assumption, process state, status signal, model confidence, convenience, and verification-shaped prose.
+- Verification depth is substantive failure-mode probing of produced-result truth, not procedural completion of verification steps; disprove the preferred conclusion before positive verification claim, and treat procedural completion without explicit disproof-attempt evidence as verification-shaped prose.
 - Verification stays on the user's decisive surface and requires the named verification owner before completion claims.
 - Review And Verification separates candidate discovery, promotion filtering, confirmed-defect judgment, patch-worthiness, patch-readiness, final rejection, patch/no-patch selection, and reportable issue selection.
 - Governance defect reports and review packets preserve raw candidates, candidate-classified items, confirmed defects, patch-worthy defects, patch-ready defects, rejected findings, no-patch bases, and open candidates as distinct states.
@@ -69,10 +66,12 @@
 ## 5. Modification Philosophy
 - Modification Philosophy modifies governance assets through removal-first maintenance, information preservation, source-to-destination traceability, and narrow owner hardening without unnecessary document growth or procedural complexity.
 - Governance modification records current 1-4 basis before patch design and mutation.
-- Operator-emphasized keywords are cross-session binding: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, and `minimum-executable-information`.
+- Operator-emphasized keywords are cross-session binding: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`, `dimensional-independence`, and `comprehension-as-execution-force`.
 - Governance patch design cites and satisfies each material keyword through `.claude/reference/modification-core-law.md`.
 - Distributed common execution meaning consolidates to its single owner surface: shared intent to top doctrine, executable detail to mapped core law, and situation-specific detail only to triggered owner surfaces.
 - Lower duplicate wording is removed unless protected local-restatement basis, direct-consumption relevance, or isolation-safety need is recorded.
+- Governance patches declare a target dimension (top doctrine / mapped core law / identity / operational / runtime) and must not cause text changes or behavioral changes in other dimensions; identity-layer text must not name specific functional elements by exact identifier.
+- Reader comprehension is part of execution force; governance text is durational reader-execution material, so misunderstanding-inducing wording that causes proven executable-action impedance is execution-impedance defect, subordinate to `removal-first` and `minimum-executable-information` discipline. A patch that adds documentation, restates existing rules, or introduces structural complexity without changing executable owner action is not a comprehension-friction fix. Defect-candidate promotion that identifies textual features causing comprehension misalignment AND traces to proven executable-action impedance (wrong owner selection, wrong next action, stale information consumption, or failed boundary verification) is sufficient evidence of comprehension-friction defect; promotion that traces only to documentation preference, theoretical concern, or stylistic dissatisfaction without proven executable-action impedance is promoter error, not comprehension-friction signal.
 - Primary skill link: `Skill(governance-modification)` for governance asset mutation.
 - Executable detail lives in `.claude/reference/modification-core-law.md`.
 
@@ -90,6 +89,7 @@
 - Reporting Philosophy controls user-facing report prohibition, narrow exception handling, and prose.
 - Communication, Procedure, and Reporting stay separate planes.
 - Assistant-authored visible prose stays prohibited unless the reporting-prohibition law grants a narrow exception.
+- Any assistant-authored content that can render to the user is governed by the reporting-prohibition law regardless of plane label, tool or channel, message class, state-signal name, or intended internal receiver.
 - User-facing reporting excludes internal orchestration unless explicitly requested and excepted by the reporting-prohibition law.
 - Final-result report shape follows `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
 - Report prohibition and narrow exceptions follow content semantics, not visual format.
@@ -104,5 +104,5 @@
 - Team runtime behavior follows Claude Code agent-team behavior.
 - Teammate work uses independent Claude Code session context and task-specific packets.
 - Hooks are last-resort runtime guards.
-- Primary skill links: `Skill(session-boot)` for runtime readiness; `Skill(task-execution)` for lane-member runtime cleanup and structured shutdown inside active team runtime; `Skill(session-closeout)` for teardown truth; `Skill(governance-modification)` for hook/settings asset changes.
+- Primary skill links: `Skill(session-boot)` for runtime readiness; `Skill(tool-acquisition)` for bounded tool discovery/setup; `Skill(external-tool-bridge)` for external capability bridging; `Skill(task-execution)` for lane-member runtime cleanup and structured shutdown inside active team runtime; `Skill(session-closeout)` for teardown truth; `Skill(governance-modification)` for hook/settings asset changes.
 - Executable detail lives in `.claude/reference/environment-configuration-core-law.md`.

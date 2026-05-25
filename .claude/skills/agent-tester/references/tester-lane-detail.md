@@ -172,6 +172,6 @@ Specialist lenses complement tester execution authority and do not replace user-
 - Directly proven surface opens tester completion.
 - Disproven surface opens proof-failure completion.
 - Blocked proof surface opens `scope-pressure` or `hold|blocker`.
-- Missing decisive tool path opens bounded tool discovery or setup route through team-lead.
+- Missing decisive tool path opens `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, packet correction, or setup route through team-lead.
 - Untruthful validator contract opens `TEST-STATE: hold` or `TEST-STATE: blocked`.
 - Completed proof completion opens reviewer, validator, correction owner, or team-lead synthesis by frozen route.

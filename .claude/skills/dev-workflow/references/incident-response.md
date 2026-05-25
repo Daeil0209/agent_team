@@ -24,6 +24,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
   - P1: governance block, core feature broken, launch-path failure, or work that must be fixed before continuation
   - P2: quality gate defect that can be fixed in the current iteration cycle
   - P3: issue to record and schedule
+- T-labels at adjacent surfaces (checkpoints, dev-workflow trigger-bound references, monitoring-lifecycle-detail) map to P-labels: T0 = P0, T1 = P1, T2 = P2; the same severity definitions apply.
 
 2. Impact analysis
 - Name affected components, services, workflows, users, downstream work, and regression risk.

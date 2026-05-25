@@ -27,8 +27,9 @@ Capability recovery investigation produces setup or diagnostic input only.
 **Prohibited self-actions:** silent login and unapproved credential mutation.
 
 ## Purpose
-Load when truthful delivery depends on a bounded external API, connector, client, or tool path.
+Load when truthful delivery depends on a bounded external API, connector, client, or external bridge path.
 Use it when no credible ordinary local workflow can replace that path.
+Use `Skill(tool-acquisition)` for ordinary local tool discovery, allowed setup, and tool-path verification before external bridge risk exists.
 Canonical examples include routed Codex MCP review recovery after `mcp_unavailable`, `auth_error`, or `quota` fail-open.
 Other bounded MCP/API/browser bridge setup also belongs here.
 ## Scope Guardrail
@@ -59,6 +60,7 @@ Also activate when an external review/tool path records one of these conditions:
 - `tool_unavailable`
 - `config_missing`
 - setup blocker
+Also activate when `Skill(tool-acquisition)` routes external API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work here.
 `work-planning` routes the bounded recovery task here.
 ## Inputs
 - active request source

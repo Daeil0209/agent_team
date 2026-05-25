@@ -16,6 +16,7 @@ Load when a caller supplies a bounded review question whose requested scope requ
 Run all applicable steps for binding promotion, final rejection, patch/no-patch, patch-worthiness synthesis, patch-readiness, verdict support, or mutation-readiness review.
 Use named lenses only as bounded packet evidence; they do not expand beyond the assigned review question.
 Reset for a new target, corpus, findings set, patch design, diff, bounded question, or scope; stale packets, summaries, memory, and pre-patch snapshots do not carry forward.
+A `review_verification_packet` exists only after current `Skill(review-verification)` activation reaches Step 14 for the exact target, corpus, bounded question, and scope; named-lens claims exist only for exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
 
 ## Reference Map
 - Load `.claude/reference/review-and-verification-core-law.md` for evidence quality, verification truth, live intent, coherence, execution force, negative risk, finding-state, or patch-worthiness.
@@ -25,6 +26,7 @@ Reset for a new target, corpus, findings set, patch design, diff, bounded questi
 
 ## Named Lane Lens Index
 Accept only these `REVIEW-VERIFICATION-LENSES`: `design-intent-lens`, `owner-boundary-lens`, `procedure-adherence-lens`, `skill-consumption-lens`, `coherence-integrity-lens`, `governance-continuity-lens`, `minimum-executable-information-lens`, `negative-risk-lens`, `removal-first-lens`, `patch-worthiness-lens`.
+For aliases, proxy mappings, inferred equivalence, shortened names, or omitted `-lens` suffixes, return `PROCEDURE-EXECUTION-RESULT: blocked:invalid-review-verification-lens` and `NEXT-OWNER-ACTION: packet-correction`.
 Use named lenses to narrow target, corpus, required fields, and claim ceiling.
 Mark out-of-lens fields `not-applicable:<claim-scope-basis>`.
 Run all applicable steps for three or more lenses.
@@ -32,6 +34,7 @@ Reject bare `REQUIRED-SKILLS: [review-verification]` for a non-lead participant 
 
 ## Packet
 Return internal `review_verification_packet` with:
+- `PACKET-ID` — caller-supplied identifier when present, otherwise `REVIEW-TARGET` + activation context (turn or timestamp marker); used by downstream verification gates to cite this packet
 - `REVIEW-TARGET`
 - `PROCEDURE-EXECUTION-RESULT`
 - `COHERENCE-RESULT`
@@ -75,9 +78,12 @@ Keep raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-
 Reject bare `CONFIRMED`; use exact ladder state.
 
 ### 5. Critical Review Gate
+PROTECTED-LOCAL-RESTATEMENT-BASIS: critical-review-gate atomic-defeater-test — defeater enumeration colocated here for atomic test at every Critical Review Gate execution. `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law` defines under/over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking as execution-force defects; this surface enumerates them together with additional review-verification-specific defeaters (protected-function loss, source-to-destination gap, runtime/tool/user-surface failure, stronger narrower alternative, etc.) for one-shot defeater-first sweep at Step 5 execution.
 Try to disprove the preferred conclusion before any packet, synthesis, bestness, no-defect, no-regression, patch-worthiness, route, completion, or closure claim leaves review-verification.
 Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
-Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater.
+For source-to-destination gap review, trace every material hop in the claim chain, including source surface, producer output, synthesis, and outgoing claim when those surfaces are present.
+Keep any untraced material hop as an open defeater.
+Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule: (a) the named failure mode being probed, (b) the observable evidence that would defeat the preferred positive claim if found, and (c) the actual search record naming surface searched and finding. This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the per-defeater evidence surface and is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per receiver applicability; shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
 Block the requested positive review result while any material defeater is open or confirmed without lawful owner deferral.
 Return confirmed defeaters to Step 2 or Step 6.
 
@@ -118,6 +124,8 @@ Return post-patch changed-result convergence to the executing patch sequence's P
 ### 12. Classify Findings
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, evidence surface, owner, and open next owner when applicable.
+For material defeaters that produced or supported a positive verification claim, the `FINDING-STATE-INVENTORY` entry must carry the 3-component disproof-attempt evidence per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`: (a) named failure mode probed, (b) observable evidence that would defeat the preferred positive claim if found, and (c) actual search record naming surface searched and finding.
+Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where material-defeater entries lack these three components or carry shorthand-only evidence surface.
 
 ### 13. Decide Patch Worthiness
 Record protected function, negative operating effect, user-outcome impact, regression risk, smallest owner, operation type, and tested rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.
@@ -126,6 +134,7 @@ Do not authorize mutation from incomplete patch-ready proof; keep the current la
 
 ### 14. Next-Owner Routing
 Return `review_verification_packet` only after all required steps are current for the requested target, corpus, patch design, and diff.
+The returned packet is the canonical citable artifact for the requested review question; downstream verification gates (e.g., `Skill(self-verification)` Step 3 `PASS-2`) cite this packet by `PACKET-ID`, by `REVIEW-TARGET` + verdict summary (`PROCEDURE-EXECUTION-RESULT` / `PATCH-WORTHINESS`), or by full-content reference.
 Return the smallest truthful next owner/action: triggering owner, `researcher`, `reviewer`, `developer`, `tester`, `validator`, `Skill(governance-modification)`, `Skill(self-verification)`, or `HOLD`.
 Use `Skill(governance-modification)` for governance asset update or confirmed recurrence-barrier hardening.
 Use `Skill(self-verification)` before consequential reporting, completion claims, synthesis-triggered `Skill(governance-modification)`, or synthesis-triggered redispatch.

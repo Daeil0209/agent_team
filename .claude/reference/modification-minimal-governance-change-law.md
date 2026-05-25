@@ -186,4 +186,4 @@ Adjacent-surface patch-selection duplication is replaced by citation to this gat
 - Harden adherence instead of adding duplicate doctrine for non-compliance.
 - Structural or cross-surface governance patches consume `Skill(governance-modification)` `REVIEW-VERIFICATION-NEED`.
 - Material `REVIEW-VERIFICATION-NEED` entries load `Skill(review-verification):<bounded-question>` before mutation.
-- Recurrence-barrier and routine asset patch execution follow `.claude/skills/governance-modification/SKILL.md` Steps 4-6 and `# Patch Execution Method`.
+- Recurrence-barrier and asset-change patch execution follow `.claude/skills/governance-modification/SKILL.md` Steps 4-6 and `# Patch Execution Method`.

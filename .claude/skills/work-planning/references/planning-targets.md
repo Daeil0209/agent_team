@@ -11,7 +11,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 ## Target Definitions
 - `request-fit-plan`: freezes intent, deliverable, user, reference use, burden cues, material blockers, and packet-carry fields.
 - `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner/action.
-- `lead-local-plan`: freezes one local item with no final-arbitration trigger, required local skills, stop point, and evidence limit.
+- `lead-local-plan`: freezes one local item with no final-arbitration trigger (validator `PASS/HOLD/FAIL` need or independent review/proof/validation separation per `.claude/reference/judgment-core-law.md`), required local skills, stop point, and evidence limit.
 - `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, cleanup/proof/acceptance readiness, and dispatch blockers for the dispatch phase of the team-lead work plan.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
 - `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.

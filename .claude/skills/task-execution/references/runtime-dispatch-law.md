@@ -12,13 +12,14 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 
 ## Team Runtime Shape
 - `TeamCreate` establishes team-agent runtime only when no current-session team registration exists.
-- Team-agent runtime is required when the frozen route names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, runtime monitoring, or continuity beyond lead-local work.
+- Team-agent runtime is required when the frozen route is parallel-fit for independent specialist work or names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, runtime monitoring, or continuity beyond lead-local work.
 - Repeated `TeamCreate` is not the path to satisfy these requirements; one runtime serves all of them.
 - If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
 - If current-session team registration exists without live panes, recover through `session-boot` and reattach needed lanes with team-scoped `Agent` on the existing team.
 - For new team runtime, `TeamCreate` must succeed before any team-scoped `Agent` member creation.
 - For current-session recovery, `session-boot` must precede team-scoped reattach.
 - `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
+- For deferred team-runtime tool schemas, consume `.claude/reference/work-runtime-boundary-law.md` and fetch the schema via `ToolSearch` before the first `TeamCreate`, team-scoped `Agent`, or assignment-grade `SendMessage`; deferred visibility is not new-tool acquisition, runtime unavailability, or standalone fallback basis.
 
 ## Runtime Entry Evidence Boundary
 - `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and cleanup truth.
@@ -35,9 +36,11 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 - When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), team-scoped `Agent` uses `team_name` and `name` to create or reattach a live member addressable by `SendMessage`.
 - Planned team-routed `Agent` dispatch is never standalone; missing top-level `team_name` or `name` is a preflight blocker before the host `Agent` call.
 - Assignment-grade work delivery uses `SendMessage` after team-scoped `Agent` creates or reattaches the live member address.
-- Standalone `Agent` shape (`Agent` without `team_name`) is fallback evidence only.
-- Standalone `Agent` bypasses team continuity, cleanup visibility, reuse, and inter-agent coordination.
-- An already-happened standalone `Agent` result is treated only as fallback evidence.
+- Standalone `Agent` shape (`Agent` without `team_name`) is fallback evidence only for already-produced or lead-local evidence-only output.
+- Standalone `Agent` bypasses team continuity, cleanup visibility, reuse, inter-agent coordination, receipt, and completion transport.
+- Operational burden, context size, setup friction, or coordination overhead is not a standalone fallback basis for configured lane work, frozen `PARALLEL-GROUPS`, multi-surface audit work, or required review/proof/validation separation.
+- When those surfaces remain required, choose team-scoped `Agent` plus assignment-grade `SendMessage`, reopen `work-planning` for cap, shard, or serial-route change, or record `HOLD` for a proven runtime blocker.
+- An already-happened standalone `Agent` result is treated only as bounded fallback evidence.
 - Role is responsibility; live process-backed member name is address.
 - The assignment-delivery address must match the current live process-backed roster exactly per `message-classes.md` `### Assignment Delivery Contract`.
 - Configured role labels (`validator`, `reviewer`, `tester`, `developer`, `researcher`) are addresses only when the roster contains that exact member with live pane proof.
@@ -78,7 +81,8 @@ Target-resolution preflight is mandatory before the tool call:
 - Tool-call envelope shape (parameter tag form, namespace prefix, required-parameter presence, attribute names) must be verified call-by-call against the first validated call's exact envelope before send; same-class copy-paste without per-call shape verification is the named batch-preflight failure mode.
 - A hook `BLOCKED` result, host `InputValidationError`, or `Invalid tool parameters` rejection on any call of a batch is batch-preflight-failure evidence; correct the failed preflight cause before retrying that dispatch shape.
 - While `PARALLEL-DISPATCH-LOCK` is open, every move must directly create, verify, send, or repair the next dispatch state for a frozen nonblocked group.
-- Allowed lock moves are only: required `TeamCreate`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; silent retained-output directory or shared-carrier creation when the frozen packet requires it; or `hold|blocker`/`scope-pressure` for a proven dispatch blocker.
+- Allowed lock moves are only: required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; or silent retained-output directory or shared-carrier creation when the frozen packet requires it.
+- Narrow blocker exception: `hold|blocker` or `scope-pressure` for a proven dispatch blocker is the only lawful exit from lock-move execution; it is not one of the lock moves listed above but the lawful abandonment of the lock when execution cannot proceed.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open stays silent and emits no listing, count, probe, diagnostic output, or user-facing prose.
 - `PARALLEL-DISPATCH-LOCK` contains only lawful lock moves until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
 - Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.

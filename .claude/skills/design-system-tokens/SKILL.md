@@ -32,7 +32,7 @@ Load when a design system needs a stable token architecture.
 - keep the token vocabulary as the single source of truth for color, typography, spacing, radius, and shadow primitives
 - keep core components free of composite logic
 - make composites consume Layer 2 component contracts instead of raw tokens
-- import Layer 1 primitives from `mockup-to-component` CSS variables when that upstream packet already exists
+- import Layer 1 primitives from `mockup-to-component` CSS variables as seed material when that upstream packet exists at initial design-system-tokens freeze; after freeze, design-system-tokens is canonical and post-freeze `mockup-to-component` primitives are not re-imported (the temporal precedence resolves the apparent conflict with the line above's single-source-of-truth rule)
 - Report `hold|blocker` when:
   - credible token boundaries are absent
   - credible layer-consumption rules are absent

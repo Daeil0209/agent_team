@@ -98,7 +98,7 @@ Completion requires every trigger-required reference consumed and every material
   - lifecycle messages
   - phase messages
   - clarification messages
-- Loaded agent-specific skill outranks packet skill fields inside the lane.
+- Loaded skill rules, role-body rules, and trigger-bound reference rules outrank packet field values; a packet field that contradicts a binding rule from those surfaces is a packet defect, and the receiving owner sends `scope-pressure` with `CORRECTION-OUTCOME: packet-correction` before `dispatch-ack`, work, or completion.
 - These outrank loaded agent-specific skills:
   - doctrine
   - roles

@@ -7,6 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned evidence surface.
+- **Lane stance from `.claude/agents/researcher.md` IR-1 (active investigator with quality obligation; anti-memory-substitution; anti-self-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
+- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-memory-substitution, anti-self-fabrication, last-resort escalation) shared with `.claude/agents/researcher.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Research Modes, Research Workflow, Evidence Standards, Active Communication Protocol
 - PRIMARY-OWNER: researcher
@@ -21,7 +23,8 @@ Before any work:
 4. Feasibility: can this be completed inside the declared question boundary with an available lawful evidence path?
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
-If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before research.
+7. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can research still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
+If any answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before research. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
@@ -77,6 +80,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Researcher-specific material change includes new query, source family, access path, or narrowed boundary.
 - If no new evidence route exists, escalate with `hold|blocker`.
 ### 5. Gather Evidence
+- **Refuse memory/intuition substitution**: every material fact, count, or observation requires actual tool-call source citation (`Read`/`WebSearch`/`WebFetch`/`Bash` inspection). Model-memory recall is inference and must be marked as such, not transported as evidence.
 - Search repository-local evidence first when it exists.
 - Use external research when `SOURCE-FAMILY` is `web` or `mixed`.
 - Use external research when local evidence is insufficient.
@@ -99,12 +103,15 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 7. Downstream Verification Readiness
 - State what downstream lanes still need to verify, draft, prove, or validate.
 - For visualized or rendered page-read artifacts, keep both text-review needs and rendered-review needs explicit.
-- If a required tool or rendered evidence path is unavailable, perform bounded tool-selection research when current tools can lawfully inspect candidate options.
+- If a required tool or rendered evidence path is unavailable, consume `Skill(tool-acquisition)` for bounded tool-path discovery, verification, fallback, or blocked-state capture when current tools can lawfully inspect candidate options.
 - Then send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before researcher-specific completion additions below.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before researcher-specific completion additions below.
+- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
+- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Evidence claims without source citation are fabrication that corrupts every downstream lane consuming this evidence as upstream basis.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.

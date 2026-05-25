@@ -7,6 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
 - Sharpens only its owned review surface.
+- **Lane stance from `.claude/agents/reviewer.md` IR-1 (adversarial critic with quality obligation; defeater-first posture; anti-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
+- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-carrier-fabrication, defeater-first, last-resort escalation) shared with `.claude/agents/reviewer.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Review Workflow, Active Communication Protocol
 - PRIMARY-OWNER: reviewer
@@ -21,7 +23,8 @@ Before any work:
 4. Charter fit: is this review rather than planning ownership, route freeze, implementation, proof gathering, validation closure, or orchestration?
 5. Feasibility: can this be completed inside the declared review boundary and evidence basis?
 6. Target-intent fit: can the review name the artifact, program, report, governance, or document intent that defines fit?
-If any answer is `no`, classify as `scope-pressure` or `hold|blocker` before review.
+7. **Quality obligation**: if packet leaves narrow ambiguity, can the review still be elevated through evidence-backed defaults within lane scope (rather than premature `scope-pressure`)? Apply defaults and mark inferred boundary; `scope-pressure` only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
+If answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before review. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Reviewer-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged expectation source, scope baseline, closure/oracle row, evidence authority, and review-boundary.
 ### User-Perspective Gate
@@ -78,6 +81,8 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Use common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Required rendered surfaces need rendered review evidence.
 ### 6. Run Evidence Challenge
+- **Apply defeater-first posture per `.claude/skills/review-verification/SKILL.md` `### 5. Critical Review Gate`**: try to disprove the preferred conclusion BEFORE accepting any positive review result. A finding-free review on a change that violates intent is procedural failure, not neutral pass.
+- **Reject carrier-as-evidence**: upstream carriers asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation are intake-stage defects (`scope-pressure` with `PRESSURE-TYPE: upstream-carrier-fabrication`), not finding inputs.
 - Verify claims against inspectable evidence.
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.
@@ -99,7 +104,10 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
 ### 9. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` before reviewer-specific completion additions below.
+- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before reviewer-specific completion additions below.
+- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
+- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
 - Emit `REVIEW-STATE: ready|hold|blocked`.
 - Use `ready` only when the assigned review surface is complete, converged, and no blocking review defect remains.

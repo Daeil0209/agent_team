@@ -48,6 +48,7 @@ Load `Skill(task-execution)` at most once per Claude session when the first froz
 After current same-session `task-execution` load exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded skill instead of another `Skill(task-execution)` call.
 Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; current same-session `task-execution` load basis remains reusable under the activation rule.
 `task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session.
+Same-session-loaded `task-execution` basis becomes stale per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` staleness rule (session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or active path needs unconsumed trigger-specific detail); stale basis reloads `Skill(task-execution)` or consumes the exact trigger-specific reference before action.
 Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only; activation basis requires actual skill load or current same-session loaded-skill basis.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
@@ -120,6 +121,7 @@ Packet final check:
 - Hook denial is enforcement evidence. A hook `BLOCKED` result proves the preflight was missed.
 - Assignment-grade work begins only through `SendMessage` after the live member address exists.
 - The detailed Team Member Startup Recognition rule stays in `references/message-classes.md`; this `SKILL.md` surface carries the executable preflight floor.
+- Dispatches that will receive completion-grade carriers invoke Step 3 `Completion acceptance` upon receipt; the assigned lane's verification work must satisfy the citation requirements named there (`Skill(review-verification)` `PACKET-ID`, `Skill(self-verification)` tool-call evidence) for the completion to pass.
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
@@ -169,14 +171,19 @@ Reporting consequences:
 - User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and may cite only the user-relevant waiting condition it admits.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, and admitted by `.claude/reference/reporting-prohibition-law.md`.
 
+Completion acceptance:
+- `MESSAGE-CLASS: completion` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
+- Verify the retained carrier exists and contains every required completion payload field; field-presence check is necessary but not sufficient, field-value truth (actual evidence citation) is the acceptance gate.
+- For carrier-asserted `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`/`Skill(...) loaded` claims, verify each cites actual tool-call evidence per `Skill(self-verification)` Step 1 and Step 3 citation requirements.
+- For carrier-asserted review-verification basis (`REVIEW-PACKET-CITATION`, packet consumption claims), verify each cites the `review_verification_packet` `PACKET-ID` or content reference per `Skill(review-verification)` Step 14 citation form.
+- Carrier-as-evidence fabrication (PASS, skill-load, or packet-citation assertion without actual evidence) is a procedural defect; reject the completion-grade transport, mark the assigned task non-converged, and route correction via distinct bounded `assignment`, `reuse`, or `reroute` to the producing lane with `INPUT-FINDINGS` naming the carrier defect.
+- Carrier-truth fabrication is not a packet defect; reopen `work-planning` only when the fabrication exposes a moved boundary axis.
+
 Recovery reconciliation:
 - A dispatch segment becomes complete only after every target has `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or team-lead-recorded Procedure Plane `HOLD`.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
-- Missing `dispatch-ack` after current dispatch check triggers one same-assignment receipt follow-up through `session-boot` before stale, replacement, or shutdown recovery.
-- Missing `dispatch-ack` after that follow-up and absent activity evidence classifies the target as dead-or-unavailable for the current assignment.
-- `dispatch-ack` without agent-start, blocker, scope-pressure, failure, or team-lead-recorded Procedure Plane `HOLD` after the receipt segment triggers one same-assignment execution follow-up through `session-boot`.
-- Keep unaffected independent targets moving while the affected target is recovered.
+- Per-interruption-point recovery procedures (missing-`dispatch-ack` follow-up, `dispatch-ack`-without-agent-start follow-up, dead-or-unavailable classification, unaffected-target movement) live in `references/dispatch-recovery.md` `## Dispatch Interruption Recovery`; SKILL.md consumes that reference for the executable detail at every recovery decision.
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.

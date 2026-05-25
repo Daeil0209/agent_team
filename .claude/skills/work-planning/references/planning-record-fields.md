@@ -27,7 +27,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for configured independent-review handling and must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
-- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording plus `CONCRETE-DELIVERABLE`, `PRIMARY-USER`, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
+- `REQUEST-FIT-BASIS` is mandatory for consequential plans and must preserve the verbatim user instruction wording (or a cited path:line basis when the user instruction is canonically retained in a session-bound retained carrier) plus `CONCRETE-DELIVERABLE`, `PRIMARY-USER`, proof direction, blocker truth, and triggered reference-use citation or deviation basis.
 - `SEMANTIC-INTENT-BASIS` is mandatory for consequential plans and must bridge request intent, user concern signal, user anti-goal, user-stated quality cues, active philosophy section or keyword with direct owner/action/stop/evidence/routing/burden effect, target governance/design intent, priority order, route class, owner choice, and next action.
 - `TARGET-INTENT-BASIS` is mandatory when the plan judges, modifies, migrates, reduces, reports on, reviews, proves, validates, or dispatches work for an existing artifact or existing-governance surface.
 - `TARGET-INTENT-BASIS` is mandatory when a target artifact, program, report, document, governance surface, proof path, acceptance path, or downstream lane needs target purpose or protected outcome.
@@ -39,9 +39,10 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `TEAM-LEAD-WORK-PLAN` is mandatory for consequential plans and must name the material phases, owner for each phase, action, stop/evidence, verification or review need, iteration or re-entry condition, and termination plan.
 - `TEAM-LEAD-WORK-PLAN` is authored by `team-lead` and carries the procedure that `team-lead` will execute, route, monitor, synthesize, verify, and close.
 - `TEAM-LEAD-WORK-PLAN` derives from the user instruction and chosen route; `COMPLETION-STOP-CONDITION` supplies its final closure row.
+- Each phase row records the opened closure unit its stop/evidence closes; category, pattern, theme, summary, wave, batch, priority, or work-item rows are valid as organization or follow-on mapping only, unless the frozen phase opened that row as its own closure unit.
 - Each phase row carries `UPSTREAM-DECISION-BASIS` as the material reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis it consumes, passes forward, supersedes, or marks `not-applicable:<basis>`.
 - Each phase row records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane owner, or `HOLD:<basis>`.
-- Place `Skill(governance-modification)` at a planned governance asset change or recurrence-barrier hardening row.
+- Place `Skill(governance-modification)` only at a planned governance asset-change row or confirmed recurrence-barrier hardening row.
 - Place `Skill(review-verification)` inside `Skill(self-verification)` Step 3 when the produced work-product surface set needs PASS-2 critical review.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 - A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
@@ -49,7 +50,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Governance defect or removal audit plans keep review-promotion rows distinct from lead synthesis rows.
 - Governance patch plans keep the governance-modification change loop open until every same-request `patch-ready` row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
 - `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
-- `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use `evidence-only candidates`, `review findings`, `validation verdict input`, or `patch-worthiness classification`.
+- `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use one allowed value from `.claude/skills/task-execution/references/assignment-packet.md` `CLAIM-CEILING` allowed-values enumeration.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `Skill(review-verification)` promotion basis.
 - `REQUEST-BOUND-PACKET-FIELDS` is mandatory as `[]` or the exact request-bound fields that `task-execution` must carry into downstream assignment packets.
 - When the frozen request, plan, MVP, release, or phase contains one or more promised features, workflows, surfaces, controls, data expectations, artifacts, or reader/operator outcomes, `REQUEST-BOUND-PACKET-FIELDS` must include row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, and applicable `CORE-WORKFLOW-CLOSURE` rows for executable user-facing software.
@@ -129,6 +130,7 @@ Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, cleanup, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
 - `EXECUTION-READINESS-BASIS: ready:<basis>` requires the next owner/action to match the first executable row of `TEAM-LEAD-WORK-PLAN`.
+- For team-routed, ambiguous-route, independent specialist-fit, additional-agent, or dispatch-capable routes, `EXECUTION-READINESS-BASIS: ready:<basis>` must include the frozen team-runtime route basis from `team-runtime-fit.md`; missing, standalone-only, or lead-local evidence-only basis is not `ready` when assignment-grade lane work, receipt, reuse, monitoring, completion handoff, or independent specialist separation is required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is mandatory only after configured independent-review trigger evaluation is material or required by the active workflow.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead trigger handling, adjudication, or fail-open truth.
 - Configured-review output is not authority.

@@ -16,7 +16,7 @@ Before this skill acts, the lead must already have:
 - current boundary `work-planning`
 - the current frozen workflow or sequence owner already opened when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is present
 - a frozen additional-agent route or ambiguous dispatch route
-- frozen additional-agent runtime route basis when new agent dispatch is required
+- frozen team-runtime route basis from `work-planning` readiness for any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, reuse, blocker-clear, or packet assembly move on a team-agent route
 - `session-boot` supplies current-runtime readiness or recovery classification only when live runtime truth can change the next owner/action
 
 ## Consumed Frozen Fields
@@ -33,6 +33,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, cap-exceed routing, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
+- `task-execution` consumes the frozen team-runtime route basis together with `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP`; it must not infer team-runtime eligibility from tool visibility, convenience, or standalone `Agent` output.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path.
 - Dispatch readiness requires measurement from the frozen planning path rather than file-only, guessed, or pre-`work-planning` measurement.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for configured independent-review handling.

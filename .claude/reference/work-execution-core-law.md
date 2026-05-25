@@ -37,7 +37,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Missing next owner or next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure outranks habit, convenience, source memory, and model confidence.
 - Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
-- Frozen `COMPLETION-STOP-CONDITION` and `SCOPE-BASELINE` remain binding until deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker.
+- Frozen `COMPLETION-STOP-CONDITION`, `SCOPE-BASELINE`, and opened closure units remain binding until deliverable closure, lawful owner deferral, explicit user-narrowed out-of-scope basis, or `HOLD` with truthful blocker.
+- An opened closure unit is the finest row, item, case, candidate, finding, proof row, validation row, patch row, or completion-stop row opened by the frozen request, plan, packet, lane carrier, synthesis inventory, or review basis.
+- The active owner resolves each opened closure unit at that same unit by completion, current-review rejection where that state is valid, lawful owner deferral, explicit user-narrowed out-of-scope basis, or truthful `HOLD`.
+- Category/theme aggregation, representative slices, summary counts, open labels, waves, batches, priority tiers, and work-item mapping close only the organization or follow-on unit explicitly opened as their own closure unit per `SCOPE-BASELINE` or `COMPLETION-STOP-CONDITION` row; finer source units remain open until their own closure state is recorded.
 - Team-lead plans must keep every material phase connected to a next executable owner/action until deliverable closure, lawful deferral, or `HOLD`.
 - Whole-work completion requires every frozen requested stage to be closed, lawfully owner-deferred, or blocked by truthful `HOLD`.
 - Stage evidence names the completed stage and carries every remaining material downstream stage as `OPEN-SURFACES`, next owner/action, lawful deferral, or blocker.
@@ -76,6 +79,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Active workflow phases follow the loaded workflow's declared order.
 - Result-verification boundary follows Procedure And Ownership Law.
 
+## Material And Materiality Law
+- `material` and `materially` as qualifiers in governance text identify content that controls the active owner's next action, evidence requirement, claim ceiling, acceptance truth, or routing.
+- Material applicability test: a difference, condition, effect, or attribute is material when the active user instruction explicitly names it, when the cited governing basis names it as decision-controlling, or when the inspected target surface shows it as evidence affecting finding-state ladder advancement.
+- Where material applicability cannot be established by the test above at the consumption surface, the active owner records the qualifier consumption as `not-material:<basis>` and proceeds without the qualifier-gated action.
+- `material` and `materially` are never operator-judgment-only qualifiers; application requires evidence-backed anchor from the material applicability test.
+
 ## Autonomy And Escalation Law
 - `[NO-NEEDLESS-ASK]` Choose the evidence-backed best solution.
 - Derivable ambiguity uses reversible defaults.
@@ -83,6 +92,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Operator-policy-choice applies when doctrine and evidence leave no single best reversible path.
 - Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
 - User-prioritization, batching, route, staffing, parallelism, dispatch, or continuation-preference escalation requires explicit user expression.
+- Operator-policy-choice does not apply when an evidence-backed reversible default exists, when the decision is derivable from user instruction wording, when the active owner can resolve from cited doctrine plus evidence within the same execution boundary, or when scope/classification/labeling adjustments are within the active owner's recorded authority.
+- Labeling such decisions as operator-policy-choice is an evasion-vector defect; the active owner applies the evidence-backed default instead of escalating.
 - Status, count, yes/no, verification, or explanation questions are reporting or audit requests; continuation, route, staffing, parallelism, dispatch, validation, cleanup, artifact mutation, task mutation, and governance asset mutation require matching execution path.
 - `[NO-NEEDLESS-ASK]` resolves choices only inside the active execution boundary; mutation uses the matching execution path.
 - Scope reduction, sample-only completion, tier-only completion, wave-only completion, or partial-with-deferral requires explicit user instruction or recorded `[USER-DELIVERY-FIT]` lawful deferral basis.
@@ -134,11 +145,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Communication Plane Law
 - Communication, Procedure, and Reporting are separate planes.
 - Communication Plane transport classes, Receipt Event Contract, `scope-pressure`/`hold|blocker` objection routing, channel registry, transport boundary, and team-runtime channel rules live in `.claude/skills/task-execution/references/message-classes.md`.
+- Communication Plane labels do not exempt renderable assistant-authored text from `.claude/reference/reporting-prohibition-law.md`; receiver-required detail travels in governed carriers, not visible envelopes.
 - Assignment-grade lane receipt requires a first upward outcome after packet review.
 - First upward outcome validity and `dispatch-ack` work-start semantics are consumed from `.claude/skills/task-execution/references/message-classes.md`.
 - Converged lane work requires both a retained completion carrier and `MESSAGE-CLASS: completion` to `team-lead`.
 - Required completion transport uses the retained completion carrier and `MESSAGE-CLASS: completion`; runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals.
-- `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, report permission, and claim strength.
+- `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, visible-prose admission, and claim strength.
 
 ## Execution Progress Law
 - Process state report opens the next truthful action in the same turn.
@@ -162,5 +174,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Boundary, route, staffing, scope, proof, validation, mutation, or acceptance movement opens the named owning skill, workflow, lane, or `work-planning` when the boundary changed.
 - Assignment-grade dispatch opens `Skill(task-execution)` and its triggered references.
 - Runtime readiness, monitoring, cleanup, or runtime-boundary evidence opens `Skill(session-boot)`, `Skill(session-closeout)`, `Skill(task-execution)`, or the mapped runtime reference according to the active cleanup or teardown basis.
+- Missing truthful tool path, current-toolset gap, or bounded local tool discovery/setup that materially blocks the active owner path opens `Skill(tool-acquisition)`; external bridge risk opens `Skill(external-tool-bridge)`.
 - Governance asset mutation opens `Skill(governance-modification)` before mutation.
 - User-facing report attempts open `.claude/reference/reporting-core-law.md` and `.claude/reference/reporting-prohibition-law.md`.

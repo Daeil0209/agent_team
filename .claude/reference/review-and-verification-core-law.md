@@ -35,10 +35,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Team-lead synthesis lawfully promotes only from current `Skill(review-verification)` defect-promotion basis for the same corpus; otherwise it preserves candidate state.
 - Lawful team-lead synthesis for final rejection, cross-surface rejection, promotion, ranking, prioritization, patch-readiness, or patch/no-patch selection means team-lead consumes a current `Skill(review-verification)` defect-promotion basis; team-lead synthesis does not create an independent promotion path.
 - Promoted, rejected, open-candidate, patch-worthy, patch-ready, and no-patch bases remain upstream decision bases for downstream correction, mutation, validation, and reporting until a current `Skill(review-verification)` basis or lawful team-lead synthesis of that basis supersedes them.
-- For exhaustive, full-corpus, whole-folder, or governance-audit scope, promotion, rejection, ranking, prioritization, patch/no-patch, and count claims cover the frozen corpus or explicitly report open unpromoted candidates.
+- For exhaustive, full-corpus, whole-folder, or governance-audit scope, promotion, rejection, ranking, prioritization, patch/no-patch, and count claims use the opened closure unit from the frozen basis.
+- When the frozen claim or deliverable opens promotion filtering, each opened candidate remains open until it is promoted, rejected by current `Skill(review-verification)` basis, covered by lawful owner deferral, excluded by explicit user-narrowed out-of-scope basis, or blocked by truthful `HOLD`.
+- Open-candidate reporting remains valid only as open-surface reporting with state, evidence basis, and next owner/action; category/theme convergence or an open-unpromoted label is not closure.
 - Corpus inspection coverage records inspection-stage evidence only; defect-identification, defect-promotion, patch-worthiness, patch-readiness, mutation, and post-verify each require their own current closure basis when the frozen request includes them.
-- A full governance audit-plus-patch deliverable stays open while any inspected candidate remains unpromoted, any confirmed defect lacks patch-worthiness judgment, any patch-worthy defect lacks patch-ready basis, or any patch-ready row remains unapplied, unverified, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
-- Each open audit-plus-patch stage opens the next filtering, judgment, mutation, verification, or correction owner in the same request chain.
+- A governance audit deliverable whose frozen scope includes defect promotion stays open while any opened candidate lacks promotion, current-review rejection, lawful owner deferral, explicit user-narrowed out-of-scope basis, or truthful `HOLD`.
+- A governance audit-plus-patch deliverable also stays open while any confirmed defect lacks patch-worthiness judgment, any patch-worthy defect lacks patch-ready basis, or any patch-ready row remains unapplied, unverified, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
+- Each open governance-audit or audit-plus-patch stage opens the next filtering, judgment, mutation, verification, or correction owner in the same request chain.
 - Sample-only, tier-only, or wave-only filtering supports the inspected narrowed claim only; full-corpus completion, no-open-surface, final patch inventory, and validator-ready claims require frozen-corpus coverage.
 - Review-verification uses the finding-state ladder: `candidate-evidence`, `candidate-classified`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
 - `candidate-evidence` records an observed rule, wording, behavior, output, or runtime signal without defect authority.
@@ -51,6 +54,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Raw candidate counts, repeated labels, similar wording, multi-lane convergence, and researcher outputs remain inventory evidence unless this ladder promotes them.
 - Bare `CONFIRMED` is not a finding state; records use the exact ladder state that matches the evidence.
 - Any review packet, lane carrier, synthesis, or user-facing defect report that carries candidates, findings, defects, removal, patch-worthiness, patch-readiness, rejection, no-patch, or finding counts records the exact per-item ladder state and keeps raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-ready, rejected, no-patch, and open-candidate counts separate when counts are material.
+- `CLAIM-CEILING` limits finding-state, verdict, or claim-strength authority.
+- `CLAIM-CEILING` does not reduce evidence inspection, source-truth verification, basis-fit verification, or material-defeater testing required for the outgoing claim.
 
 ## Owner Boundary And Skill Consumption Law
 - Review-verification tests owner-boundary and skill-consumption fit when a claim, packet, patch, route, verdict input, or completion depends on who owns the action or which skill/reference must shape the result.
@@ -87,12 +92,22 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Over-broad-blocking governance blocks, stalls, or downgrades a valid owner action, continuation, dispatch, verification, mutation, report exception, or completion path beyond the evidence, safety, verification, acceptance-truth, or required-procedure-force need.
 - Confirmed evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance is an execution-force defect.
 - Positive governance integrity, patch-worthiness, no-defect, and completion claims require behavior-weakening governance to be corrected or assigned to the precise owner.
+- Subjective-judgment qualifiers in governance text (`proven`, `credible`, `heavyweight`, `over-dense`, `equal-weight`, `self-explanatory`, `trivial`, `genuine`, and similar terms whose application depends on operator judgment without anchored test) require an operational anchor at the consumption surface or a cited canonical definition.
+- Operational anchor takes one of these forms: cited threshold (numeric or named), cited operational test (binary or multi-step procedure), cited multi-axis comparison (N-of-M criteria match), or cited binary decision criterion.
+- Subjective-judgment qualifier without operational anchor and without cited canonical definition is an under-specified execution-force defect at the consumption surface.
+- Positive no-defect, governance integrity, patch-worthiness, and completion claims for any surface containing a subjective-judgment qualifier require either an operational anchor at that surface or a cited canonical definition.
+- Reader comprehension is part of execution force; governance text is durational reader-execution material, so misunderstanding-inducing wording that causes proven executable-action impedance is a continuous execution-impedance defect, subordinate to `removal-first` and `minimum-executable-information` discipline.
+- Defect-candidate promotion by any reviewer (including self in audit, review, or re-reading) that identifies textual features causing comprehension misalignment — vocabulary overlap masking different operational meaning, closed-list "only" framing that hides exception salience, identifier ambiguity without scope qualifier, structural tension between criterion and enumeration, or similar comprehension-friction features — AND traces to proven executable-action impedance (wrong owner selection, wrong next action, stale information consumption, or failed boundary verification) is sufficient evidence of comprehension-friction defect at that surface.
+- A patch that would add documentation, restate existing rules, or introduce new structural complexity without changing executable owner action is not a comprehension-friction fix; such promotion is promoter preference, not comprehension-friction signal, and the candidate is rejected per `removal-first` discipline.
+- Rejection on procedural-force valid grounds (showing procedural intent is intact) does not close the comprehension-friction classification only when misunderstanding-inducing textual features remain AND proven executable-action impedance is documented; absent executable-action impedance proof, the classification closes as promoter error.
 
 ## Evidence Law
 - `[EVI-ASSUM]` Evidence outranks assumption.
 - `[USER-SURFACE]` Verification stays on the user's decisive surface.
 - Completion requires a verified work-result basis.
 - Verification evidence requires the named verification owner; verification-shaped prose, carrier fields, or checklist text without that owner are invalid verification evidence.
+- Verification depth requires substantive failure-mode probing of produced-result truth; convenience-shaped output such as per-axis enumeration, lens-step completion, defeater-list ticking, or scope-coverage tally without explicit disproof-attempt evidence on the most likely failure modes for the produced-result class is verification-shaped prose and fails `Skill(self-verification)` Step 3 PASS-2, `Skill(review-verification)` `### 5. Critical Review Gate`, validator Final Acceptance Review, and every other producer outbound verification surface.
+- Disproof-attempt evidence requires the named failure mode being probed, the observable evidence that would defeat the preferred positive claim if found, and the actual search record naming surface searched and finding; shorthand such as `tested`, `disproven`, `defeater enumerated`, or `not material` without these three components is verification-shaped prose and fails the same gates.
 - User-facing brevity limits emitted content only.
 - Internal evidence gathering and verification stay at deliverable-required quality.
 

@@ -10,7 +10,7 @@ SOURCE-RULES: "owner-trigger-priority; skill-activation; artifact-discipline; re
 Consume this reference when several owner triggers are active.
 Select one executable next owner/action.
 Treat procedural narration as nonterminal evidence.
-Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` only when the selected next action can drift in owner, route, report permission, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
+Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` only when the selected next procedure action can drift in owner, route, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
 Keep trigger order, named artifacts, consumption status, and next-owner/action internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception.
 When no narrow report exception exists, continue through the selected next owner/action internally.
 
@@ -33,12 +33,13 @@ Record the highest active trigger and its named artifact:
 ## Routing Gate
 Lower-trigger work requires higher-trigger named artifact emission.
 Owner execution credit requires loaded owner text with applied-rule mapping.
-Reporting requires a current required artifact beyond narrative description.
+Reporting artifact gaps refresh the required artifact only; report admission stays with `.claude/reference/reporting-prohibition-law.md`.
 Task work requires resolved session-start readiness.
 Skill activation follows `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 Dispatch-trigger work opens `Skill(work-planning)`, the primary sequence owner, or `Skill(task-execution)` as named by the active trigger.
 Same-session `task-execution` reuse stays valid only while the dispatch boundary and trigger-specific reference consumption stay current.
 Positive result, completion, report, or redispatch gates open `Skill(self-verification)` on the produced surface and intended claim.
+Governance-modification activation requires a current owner/action basis; inspection, audit, proposal-only, review, reporting, and expected later patch need do not outrank planning, review-verification, self-verification, or the active procedure owner.
 
 ## Resolve Next Owner And Action
 - A lower-trigger gap opens the higher trigger owner.
@@ -55,6 +56,7 @@ Consume the highest active trigger first:
 5. frozen workflow or sequence skill owner
 6. `Skill(task-execution)` for assignment-grade dispatch
 7. `Skill(self-verification)` for required report or redispatch gate
+8. `Skill(governance-modification)` when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action after required `Skill(self-verification)` convergence
 
 After the current session-start artifact is current, trigger 3 reopens trigger 2 only when trigger 2 is independently active.
 
@@ -78,6 +80,7 @@ Owner rerun triggers:
 - target, corpus, route, patch design, or diff changed
 
 ## Same-Boundary Continuation
+PROTECTED-LOCAL-RESTATEMENT-BASIS: pre-planning atomic-check — Same-Boundary Continuation rules colocated for atomic team-lead consultation before invoking `Skill(work-planning)`. `.claude/skills/work-planning/references/boundary-gates.md` defines boundary-change axes; this surface applies them at the pre-planning decision moment when `work-planning` may not yet be loaded.
 Same-boundary iterations consume the frozen boundary.
 Keep ordinary same-boundary correction inside the frozen boundary.
 Reopen planning when owner, phase, deliverable shape, proof chain, acceptance chain, staffing shape, or user requirement changes.
@@ -85,5 +88,5 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 ## Status And Interruption
 Routine in-flight status uses `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
 Interrupted or interrupt-blocked path status/challenge uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
-If the boundary is already complete, route the answer through `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
+If the boundary is already complete, route any answer through `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first; use `## Report Shape` only after admission, otherwise suppress prose and continue the owning path or truthful `HOLD`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.

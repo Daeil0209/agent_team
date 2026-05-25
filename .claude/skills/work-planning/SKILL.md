@@ -76,12 +76,14 @@ Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, 
 Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.
 Also load for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
-`work-planning` activation and freeze are proven only by actual `Skill(work-planning)` load plus the required freeze.
+`work-planning` activation and freeze are proven by actual `Skill(work-planning)` load plus the required freeze, or by current same-session loaded `work-planning` basis when every boundary-change axis per `references/boundary-gates.md` remains unchanged.
 Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, and outside draft fields are context only; actual `Skill(work-planning)` load plus required freeze proves activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard routing gates, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
-Governance defect, removal, and preservation judgment is planned as a bounded review/verification row: synthesized-result judgment goes through `Skill(self-verification)` first; governance patch judgment goes through `Skill(governance-modification)` and its `REVIEW-VERIFICATION-NEED`.
+Governance defect, removal, and preservation judgment is planned as bounded review/verification rows.
+Synthesized-result judgment goes through `Skill(self-verification)` first.
+Governance patch design and mutation go through `Skill(governance-modification)` and its `REVIEW-VERIFICATION-NEED` only after a current review basis verifies governance asset-change or recurrence-barrier need.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
 A moved boundary-change axis reopens `work-planning`.
@@ -144,30 +146,33 @@ Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence,
 Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
 - Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`.
-- Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, or teammate coordination.
-- Classify considered `Agent` tool use as lead-local evidence-only standalone use or team-agent runtime route before route freeze.
+- Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, teammate coordination, independent specialist-fit surfaces, or additional-agent routing.
+- Classify considered `Agent` tool use, independent specialist-fit surfaces, or additional-agent routing through `references/team-runtime-fit.md` before route freeze: assignment-grade or lane work freezes team-agent runtime route; lawful evidence-only standalone use freezes a lead-local evidence purpose with no lane-state promise.
 - Freeze `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
 - A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
 - Additional-agent dispatch freezes the team-agent runtime route basis; runtime creation or reuse execution is decided later by `task-execution` from `runtime-dispatch-law.md`.
+- Dispatch-ready planning is invalid when independent specialist-fit, parallel-fit, configured lane work, or additional-agent routing is present without a frozen team-runtime route basis; lawful lead-local evidence-only standalone use is valid only when none of those team-runtime disqualifiers is active.
 
 User-surface law:
-- If truthful proof or acceptance needs a missing user-facing surface or tool path, freeze a bounded discovery/setup owner or blocker.
+- If truthful proof or acceptance is blocked by a missing user-facing surface or tool path, freeze one bounded next step: `Skill(tool-acquisition)` for local discovery/setup, `Skill(external-tool-bridge)` for external bridge risk, the named setup owner, or blocker with bounded discovery/setup fields.
 - Use source-only evidence only when it truthfully matches the user-facing proof surface.
 
 ## Step 3: Build Team-Lead Work Plan
 Before freeze, `team-lead` builds the work plan it will execute or route.
 The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
+Each material phase names the opened closure unit it closes; category, pattern, theme, summary, wave, batch, priority, or work-item rows are valid as organization or follow-on mapping unless the frozen phase opened that row as its own closure unit.
 The work plan names the upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis each material phase consumes or passes forward.
-For each material phase, `team-lead` records the review/verification judgment as `skill-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
-Place each conditional owner at its material trigger point; place `Skill(governance-modification)` at governance asset change or recurrence-barrier hardening.
+For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
+Place each conditional owner at its material trigger point; place `Skill(governance-modification)` only when the plan's current next owner/action is governance asset change or confirmed recurrence-barrier hardening.
+Keep governance audit, candidate discovery, defect promotion, and proposal-only rows with planning, review, verification, or the active procedure owner.
 `Skill(self-verification)` verifies the produced work-product surface set from `team-lead` or a lane through PASS-1 coverage and PASS-2 review-verification before reporting, governance-asset `Skill(governance-modification)`, or redispatch.
 `Skill(review-verification)` runs inside `Skill(self-verification)` Step 3 for the produced work-product surface set and returned PASS-2 packet.
 `Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
 The termination path names only deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker as terminal states.
-Lead-authored waves, batches, samples, or priority tiers satisfy execution order only while requested scope, review promotion, patch rows, validation, or accepted deferral remains open.
-Governance defect or removal audits with patch scope require separate rows for corpus-wide promotion and the governance-modification patch loop.
+Lead-authored waves, batches, samples, priority tiers, category rows, pattern rows, theme rows, summaries, or work-item rows satisfy organization, ordering, or follow-on execution only; they do not replace a finer opened closure unit or permit phase closure without preserving source-unit coverage.
+Governance defect or removal audits keep corpus inspection, review-promotion, and lead synthesis as separate rows; patch scope adds a separate governance-modification patch-loop row.
 
 ## Step 4: Freeze Scope And Route
 Freeze only what the selected planning target requires.

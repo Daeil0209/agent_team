@@ -83,7 +83,7 @@ Stronger business, evidence, architecture, document, engineering, math, visual, 
 - Tighten an existing pattern family before authoring a new family.
 - Operator-surface contract (single-action launch, hidden non-operator surfaces, symmetric termination, explicit exit affordance) is verdict-critical when the deliverable runs locally for the operator.
 - Persistence, import, and export contracts are explicit in the pattern packet.
-- Hidden state, missing resume path, missing import/export path, and completion without artifact are tool-pattern defects.
+- Hidden state, missing resume path, missing import/export path, and completion without artifact are tool-pattern defects unless the pattern packet declares `PATTERN-FAMILY: ephemeral-one-shot` with frozen single-execution intent, no persistence/resume/carryover need from the request, and explicit completion-evidence emission that does not require a persisted artifact.
 - Proof-oracle fitness is acceptance-critical.
 - Every pattern packet names the oracle that closes the in-scope visible workflow, calculation, or validation against the frozen `SCOPE-BASELINE`.
 ## Role-Scoped Structural Feedback

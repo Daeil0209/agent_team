@@ -13,6 +13,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `.claude/reference/work-runtime-boundary-law.md`: load when hook/settings enforcement, runtime signal, tool signal, external capability, or runtime-owned surface boundaries affect the execution path.
 - `.claude/reference/modification-minimal-governance-change-law.md`: load when governance-text patch selection is material to hook, settings, runtime, or tool-capability changes.
 - `.claude/reference/environment-output-root-filesystem-law.md`: load when project output-root placement, generated files, source edits, governance edits, or filesystem boundaries are material.
+- `Skill(tool-acquisition)`: load when current toolset limits, missing tool path, or bounded setup materially blocks the active owner path.
+- `Skill(external-tool-bridge)`: load when tool recovery requires external API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work.
 - `Skill(task-execution)` -> `references/message-classes.md`: consume through active `Skill(task-execution)` when shared task-list identity, structured `shutdown_request`, Communication Plane runtime-cleanup transport, or termination proof affects runtime cleanup truth.
 - `Skill(task-execution)` -> `references/runtime-dispatch-law.md`: consume through active `Skill(task-execution)` when lane-member cleanup, reuse-before-cleanup, structured shutdown routing, or active-team runtime cleanup affects the next owner/action.
 
@@ -33,7 +35,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Resolve Next Owner And Action
 - Official Claude Code behavior, documented team-runtime behavior, or source freshness dependence opens `.claude/reference/environment-official-claude-code-source-cache.md` or official-source refresh.
 - Hook, settings, runtime signal, tool signal, external capability, or runtime-owned boundary gaps open `.claude/reference/work-runtime-boundary-law.md`.
+- Missing tool path or current-toolset gap that materially blocks the active owner path opens `Skill(tool-acquisition)`; external bridge risk opens `Skill(external-tool-bridge)`.
 - Output placement, generated-file, source-edit, governance-edit, or filesystem-boundary gaps open `.claude/reference/environment-output-root-filesystem-law.md`.
 - Runtime cleanup using structured communication opens active `Skill(task-execution)` consumption of `references/message-classes.md` and `references/runtime-dispatch-law.md`.
 - Teardown truth opens `Skill(session-closeout)`.
-- Settings, hook, runtime-enforcement, or governance asset changes open `Skill(governance-modification)`.
+- A current owner/action for settings, hook, runtime-enforcement, or governance asset change opens `Skill(governance-modification)`.

@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: developer
+PRIMARY-OWNER: external-tool-bridge
 SOURCE-ANCHOR: .claude/skills/external-tool-bridge/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only

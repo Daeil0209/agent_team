@@ -9,25 +9,30 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 # Structural Contract
 - Resolve active team-lead triggers to required owner skills, references, and next actions.
+- Produce active trigger → owning skill/reference resolution only; do not execute the resolved owner's work directly.
+- Keep this fixed order after Structural Contract: Activation, Boundary, Reference Binding, Startup Contract Procedure, Operating Philosophy Procedure, Trigger Skeleton Procedure, Consume Trigger References, Resolve Next Owner And Action.
+- Always consume the resolved owner's gate before lead-local execution; resolved owners keep their own activation gates.
 
 
 # Activation
+PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/refresh rules for `agent-team-lead` colocated here for atomic consultation at every skill activation, reuse decision, and consultation moment. Generic rules in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` use `<skill>` placeholder; in-line substitution at consultation time adds overhead at this high-frequency atomic check. Both surfaces are required because the general rule defines the pattern while this surface applies it without per-use substitution.
 - Activate before lead-owned procedure movement.
 - Reuse same-session `agent-team-lead` basis only while the invoked skill body still supplies the rule needed for the active lead-owned procedure path.
 - Treat `agent-team-lead` basis as stale when the session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active lead-owned path needs an unconsumed trigger-specific reference.
 - Stale or uncertain `agent-team-lead` basis must not drive action; reload `Skill(agent-team-lead)` when this skill body is needed, or consume the exact triggered reference when reference detail is sufficient.
 - Consume fresh same-session `agent-team-lead` basis before any `.claude/skills/agent-team-lead/references/` reference.
 - Load for lane-owned assignment work only when team-lead procedure control is the active owner path.
+
+
+# Boundary
 - `work-planning`, `task-execution`, `session-boot`, `session-closeout`, `self-verification`, and `Skill(governance-modification)` keep their owner gates.
 
 
 # Reference Binding
-- Record each material loaded skill or reference as `applied`, `not-material:<basis>`, or `blocked:<basis>` before action, synthesis, report, redispatch, mutation, validation routing, or completion claim.
-- Missing, stale, or unconsumed required references open the exact reference consumption path.
+- Follow `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 
 
 # Startup Contract Procedure
-- Fresh main-session startup loads `Skill(agent-team-lead)` and `Skill(session-boot)` before lead-owned procedure movement.
 - Owner trigger ordering, named-artifact emission, and narrative-claim discipline are owned by `owner-trigger-order`.
 
 
@@ -36,37 +41,38 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Fresh instruction interpretation chooses light answer or consequential boundary.
 - Execution, correction, mutation, dispatch, validation, cleanup, or changed work boundary opens `Skill(work-planning)`.
 - Planning consumption uses `planning-field-consume` before local execution, dispatch, phase movement, or reporting-law-admitted user-facing prose.
-- When consumed planning fields identify `ROUTING-SIGNAL: lead-local candidate` or `ROUTING-SIGNAL: blocker-clear` and `NEXT-CONSEQUENTIAL-ACTION` names the first local item or exact blocker-clear move, consume `lead-local-guarded-law` before that local execution; unconsumed gate blocks only that frozen local action.
+- Local execution requires `lead-local-guarded-law` consumption when consumed planning fields identify `ROUTING-SIGNAL: lead-local candidate` or `ROUTING-SIGNAL: blocker-clear` and `NEXT-CONSEQUENTIAL-ACTION` names the first local item or exact blocker-clear move.
+- Unconsumed `lead-local-guarded-law` gate blocks only that frozen local action.
 - Boundary changes reopen the owning skill, sequence, reference, or lane.
 
 ## Continuity And Completion
-- Multi-lane or multi-shard synthesis uses `synthesis-consume` to classify every handed opinion into `rejected`, `common`, or `undeterminable`; synthesis closes only when final bucket member counts equal the handed opinion inventory.
+- Multi-lane or multi-shard synthesis uses `synthesis-consume` after completion-grade synthesis input admission; closure conditions (admitted-case count parity, duplicate collapse, correlation-analysis work-item mapping) are owned by `synthesis-consume`.
 - Routine gates, phase transitions, partial arrivals, and residual queues consume `routine-gate-continuation` before final or status prose.
 
 ## Synthesis And Reporting
 - Synthesis consumes `synthesis-consume`; completion-grade lane input follows active `Skill(task-execution)` and `.claude/skills/task-execution/references/completion-handoff.md` when completion spine, delivery contract, or whole-work completion truth is material.
-- Produced work-product reporting, completion, governance-change entry, and redispatch claims consume `Skill(self-verification)` before action or prose.
+- Produced work-product reporting, completion, governance-change entry, and redispatch claims load and run `Skill(self-verification)` before action or prose.
 
 ## Governance And Conflict
-- `Skill(governance-modification)` opens for recurrence-barrier hardening or routine `.claude` asset maintenance.
+- Open `Skill(governance-modification)` only when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action.
+- Keep inspection, audit, proposal, candidate discovery, review, reporting, and expected later patch need with the current planning, review, verification, or active procedure owner.
 - Interrupt/resume preserves the original task as resume target until lawful termination or verified resume.
 - Interrupt/resume, user challenge, autonomous delegation, stabilization, or no-needless-ask risk consumes `interrupt-autonomy`.
-- Before synthesis or reporting names candidates, findings, defects, patch-worthiness, patch readiness, or issue counts, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 
 ## Operational Control
-- Configured lane work uses the team runtime through `Skill(task-execution)`.
-- Standalone `Agent` is lead-local fallback evidence only.
-- Team-agent dispatch, receipt, reuse, monitoring, completion transport, and runtime cleanup stay on their owning runtime path before synthesis, redispatch, closeout, or report.
-- Deliverable closeout and session teardown stay separate; explicit teardown opens `Skill(session-closeout)` with residual truth preservation.
+- Team-agent dispatch and runtime path use `Skill(task-execution)`; standalone `Agent` is fallback evidence only.
+- Deliverable closeout and session teardown stay separate per `Skill(session-closeout)`.
 
 
 # Trigger Skeleton Procedure
 ## Lead Procedure
-- When a lead-owned action can drift in owner, route, report permission, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `.claude/skills/agent-team-lead/references/pre-action-gate.md`.
+- When a lead-owned procedure action can drift in owner, route, report admission boundary, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `pre-action-gate`.
 
 ## Owning Skills
+This subsection is the detailed superset of team-lead routing; `agents/team-lead.md` `# Trigger Skeleton` carries the always-loaded critical subset.
 - Consequential boundary opens `Skill(work-planning)`.
 - Runtime readiness blocker opens `Skill(session-boot)` or `HOLD`.
+- Missing truthful tool path, current-toolchain gap, or bounded local tool discovery/setup that materially blocks the active owner path opens `Skill(tool-acquisition)`; external bridge risk opens `Skill(external-tool-bridge)`.
 - Workflow-bound implementation progress opens `Skill(dev-workflow)`.
 - Owner trigger ordering consumes `owner-trigger-order` for highest active trigger and named artifact before local execution, dispatch, phase movement, mutation, or consequential reporting.
 - Filesystem targeting consumes `.claude/reference/environment-output-root-filesystem-law.md` before file/output/protected-filesystem tool calls.
@@ -78,25 +84,27 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Synthesis and redispatch from synthesized results consume `synthesis-consume`.
 - Evidence quality, owner separation, acceptance risk, final-arbitration readiness, defect classification, or patch-worthiness opens `Skill(review-verification)`.
 - Final acceptance, final arbitration, or `PASS/HOLD/FAIL` verdict execution opens `validator` and `Skill(agent-validator)`.
-- Governance change entry loads `Skill(governance-modification)` for recurrence-barrier hardening or routine `.claude` asset maintenance.
+- Governance change entry loads `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load the skill.
 - Interrupt/autonomy trigger consumes `interrupt-autonomy`.
 
 ## User-Facing Reports
-- Report prohibition consumes `.claude/reference/reporting-core-law.md` and `.claude/reference/reporting-prohibition-law.md` for every user-facing report attempt.
+- Reporting consumption controls visible-prose admission and the reporting law's named next owner/action only; it does not replace route, dispatch, recovery, mutation, verification, synthesis, or completion owner duties.
+- After admitted report prose or a rejected report attempt, execute the next owner/action named by the reporting law; when the reporting law names no new owner/action, resume the prior live owner/action unless the user instruction redirected the work or a truthful `HOLD` is recorded.
 - Report evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists; routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
 
 
 # Consume Trigger References
-- Consume `pre-action-gate` as `.claude/skills/agent-team-lead/references/pre-action-gate.md`.
-- Consume `owner-trigger-order` as `.claude/skills/agent-team-lead/references/owner-trigger-order.md`.
-- Consume `planning-field-consume` as `.claude/skills/agent-team-lead/references/planning-field-consume.md`.
-- Consume `far-reject-routing` as `.claude/skills/agent-team-lead/references/far-reject-routing.md`.
-- Consume `codex-output-lead-own-review` as `.claude/skills/agent-team-lead/references/codex-output-lead-own-review.md`.
-- Consume `lead-local-guarded-law` as `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md`.
-- Consume `synthesis-consume` as `.claude/skills/agent-team-lead/references/synthesis-consume.md`.
-- Consume `reporting-prohibition-rules` as `.claude/skills/agent-team-lead/references/reporting-prohibition-rules.md`.
-- Consume `routine-gate-continuation` as `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
-- Consume `interrupt-autonomy` as `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
+Short names below resolve to `.claude/skills/agent-team-lead/references/<name>.md`; this skill's body uses short names for own-folder references and full paths for references outside this skill folder.
+- `pre-action-gate`
+- `owner-trigger-order`
+- `planning-field-consume`
+- `far-reject-routing`
+- `codex-output-lead-own-review`
+- `lead-local-guarded-law`
+- `synthesis-consume`
+- `reporting-prohibition-rules`
+- `routine-gate-continuation`
+- `interrupt-autonomy`
 
 
 # Resolve Next Owner And Action

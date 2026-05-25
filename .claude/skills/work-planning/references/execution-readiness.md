@@ -16,6 +16,7 @@ For team-routed or dispatch-capable paths, readiness must cover:
 - lane skill map
 - user-surface/proof/tool/setup/run-path/environment fields
 - lane work-state and reuse or cleanup readiness
+- team-runtime route basis from `team-runtime-fit.md`; use an explicit lead-local evidence-only standalone basis only when no configured lane, assignment-grade lane, independent specialist separation, receipt, reuse, monitoring, or completion handoff is frozen
 - parallel grouping with burden-balance basis, or serial reason
 - proof owner
 - acceptance owner

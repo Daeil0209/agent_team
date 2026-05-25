@@ -90,7 +90,7 @@ Codex reviews missed negative space, evidence overreach, owner-action gaps, stal
 Codex must not generate user questions for owner-decidable defaults.
 
 ## Reconciliation
-Classify each material point:
+Classify each material point (`material point` = configured reviewer lane finding or Codex valid point per `.claude/skills/codex-independent-review/references/common-contract.md` `## Point Schema`):
 - `COMMON`
 - `CLAUDE-ONLY`
 - `CODEX-ONLY`

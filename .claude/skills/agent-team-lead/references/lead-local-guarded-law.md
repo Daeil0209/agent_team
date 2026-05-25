@@ -13,7 +13,7 @@ This reference blocks only the frozen local action; unrelated lawful owner paths
 
 ## Consume When
 - `NEXT-CONSEQUENTIAL-ACTION` points to a frozen `lead-local candidate` first local item or exact same-route blocker-clear move.
-- Team-lead is about to perform local diagnostic, audit, analysis, evidence-only standalone `Agent` use, or same-route blocker-clear work.
+- Team-lead is about to perform a frozen lead-local diagnostic, audit, analysis, evidence-only standalone `Agent` use, or same-route blocker-clear work.
 - Local execution shows drift from the frozen local action.
 
 ## Record
@@ -29,11 +29,11 @@ Record only the active row:
 4. Keep evidence and claims inside the frozen limit.
 5. Load only the required skills named for the first material surface; missing or stale required-skill basis exits lead-local.
 6. Use non-owner specialist skills only when the frozen support basis permits team-lead consumption.
-7. Treat read-only diagnostic, audit, analysis, or standalone `Agent` use as lead-local only while it creates no independent evidence family, decision target, production/source-of-truth/interface boundary, proof burden, or correction owner.
+7. Treat read-only diagnostic, audit, analysis, or explicitly frozen evidence-only standalone `Agent` use as lead-local only while it creates no independent evidence family, decision target, production/source-of-truth/interface boundary, proof burden, or correction owner.
 8. At the stop point, return to the active team-lead plan or named replanning boundary before any next local action.
 
 ## Drift Exit
-Exit lead-local when the action would create a new item, new surface, new owner, route ambiguity, hidden consequential step, stronger claim, material parallel-fit, required-skill gap, lane-owned proof/review/validation/implementation/acceptance, or destructive/security/external/final-acceptance burden.
+Exit lead-local when any `.claude/skills/work-planning/references/boundary-gates.md` `## Boundary-Change Axes` axis moves for the frozen local action, or when the action would create a destructive, security-sensitive, external-bridge, or final-acceptance burden (lead-local-specific additions beyond the boundary-change axes).
 Context-size, latency, or runtime-burden benefit that changes owner route counts as material parallel-fit.
 After drift, take no further local tool call, report, claim, or continuation until `Resolve Next Owner And Action` selects the next owner/action.
 

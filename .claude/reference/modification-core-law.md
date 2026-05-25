@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Modification Law
 - Operator-emphasized keyword names and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 - This core law owns executable keyword definitions, patch-design tests, preservation rules, duplicate handling, and source-to-destination continuity.
-- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`.
+- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`; `dimensional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
 - Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
 - `removal-first` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete while preserving required information.
 - `consumed-surface` lands patches on the document the affected owner actually consumes at the failing decision moment.
@@ -22,6 +22,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `upper-lower execution-drive` preserves direct-execution continuity from top intent through mapped core law, trigger-bound guidance, and tool action.
 - `executable-imperative` writes positive owner-action directives; hazardous-action prohibitions include the valid replacement action or next owner.
 - `minimum-executable-information` keeps the smallest complete rule content needed for owner, trigger, action, stop, evidence, verification, acceptance truth, routing, patch-readiness, and executable duty.
+- `dimensional-independence` requires every governance patch to declare a target dimension from: top doctrine, mapped core law, identity, operational, runtime.
+- A `dimensional-independence`-compliant patch restricts text changes and behavioral changes to the declared dimension; downstream dimensions automatically adapt through existing reference/trigger paths.
+- Identity-layer text under `dimensional-independence` does not name specific functional elements by exact identifier (specific skill names, specific field names, specific operational governance term tokens); generic dimensional terms only.
+- `Skill(review-verification)` Critical Review Gate defeater enumeration tests dimensional-independence violation for every governance patch design alongside under-specification, over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking.
 - Governance-asset patch-design decisions test and cite every operator-emphasized keyword from that owner.
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
 - Removal-first edit selection tries tighten, replace, trim, merge, re-home, or delete before append.
@@ -103,8 +107,9 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Keep repository-state continuation evidence on consumed owner surfaces, packet fields, retained carriers, or verification records instead of detached patch ledgers.
 
 ## Resolve Next Owner And Action
-- Governance asset creation, modification, deletion, split, merge, re-home, compression, migration, settings, hook, or runtime-enforcement change opens `Skill(governance-modification)`.
-- Missing patch owner surface, direct-consumption relevance, source-to-destination trace, review-verification basis, preservation basis, or verification basis opens the earliest invalidated `Skill(governance-modification)` change-sequence step.
+- A current owner/action that creates, modifies, deletes, splits, merges, re-homes, compresses, migrates, changes settings/hooks/runtime enforcement for a governance asset, or installs recurrence-barrier hardening opens `Skill(governance-modification)`.
+- Audit, discovery, proposal-only, review, reporting, and expected later patch need stay with the current owner until that owner names governance asset change or recurrence-barrier hardening as next action.
+- Patch design or mutation requires current Patch-Ready Gate, `PRE-MUTATION-BASIS`, review-verification basis, and finding-state basis; missing patch owner surface, direct-consumption relevance, source-to-destination trace, preservation basis, or verification basis opens the earliest invalidated `Skill(governance-modification)` change-sequence step.
 - Top-doctrine execution changes open the mapped core-law update or existing-detail coverage record before lower-surface mutation.
 - Core-law executable-detail changes open trigger-bound owner-reference guidance only when the active owner path needs situation-specific guidance.
 - Confirmed behavior-weakening governance opens narrowest consumed-surface correction.

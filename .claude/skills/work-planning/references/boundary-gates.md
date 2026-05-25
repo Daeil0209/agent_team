@@ -109,7 +109,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Prior outputs are not a replacement deliverable, user choice, route source, or methodology source unless explicit prior-output use was requested.
 - Missing required bounded corpus measurement from any Corpus Measurement Gate work type blocks dispatch-ready planning.
 - A plan that lets lead-authored waves, batches, samples, priority tiers, or resource pressure terminate requested scope blocks dispatch-ready planning.
-- A plan that merges lead synthesis with required defect-promotion review for governance audit blocks dispatch-ready planning.
+- For governance audit, a plan whose synthesis phase row carries a `Skill(review-verification)` defect-promotion call (instead of separating promotion as a distinct phase row with explicit `Skill(review-verification):<caller-and-question>` basis) blocks dispatch-ready planning.
 - A plan that lacks a loop over all same-request `patch-ready` rows blocks dispatch-ready planning when patching is in scope.
 - Dispatch-ready planning includes:
   - `team-dispatch-readiness-plan`

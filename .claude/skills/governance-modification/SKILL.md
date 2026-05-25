@@ -5,6 +5,12 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
+# Structural Contract
+- Produce governance asset change or confirmed recurrence-barrier hardening only; do not perform inspection, audit, proposal-only review, or non-mutation routing as a substitute.
+- Keep this fixed order after Structural Contract: Flow Overview, Reference Map, Step 1, Step 2, Step 3, Step 4, Step 5, Step 6, Patch Execution Method, Output Format.
+- Keep `# Step 1` through `# Step 6` and `# Patch Execution Method` as canonical anchors; do not rename or renumber.
+- Always run Step 3 (review-verification) and Step 5 (self-verification) before Patch Execution Method.
+
 # Flow Overview
 ```mermaid
 flowchart TD
@@ -17,7 +23,8 @@ Load only the reference whose trigger is active.
 - `.claude/reference/modification-minimal-governance-change-law.md`: load for Patch-Ready Gate, removal-first edit selection, consumed-surface routing, and minimum executable information checks.
 
 # Step 1: Load Skill
-Load `Skill(governance-modification)`.
+Load `Skill(governance-modification)` via actual `Skill(governance-modification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
+Record the load as the same-turn `Skill(governance-modification)` tool-call evidence; this evidence is the basis for downstream Step 3 packet consumption and Step 5 verification.
 
 # Step 2: Change Boundary
 Freeze change boundary:
@@ -44,16 +51,19 @@ Each design item records:
 - `EDIT-OPERATION`
 - `PRESERVED-MEANING`
 - `PRE-MUTATION-BASIS`
+- `REVIEW-PACKET-CITATION` — `review_verification_packet` `PACKET-ID` (or `REVIEW-TARGET` + verdict summary, or full-content reference) that supplied this design item
 - `NEXT-OWNER-ACTION`
 
 Derive `PRE-MUTATION-BASIS` from `.claude/reference/modification-minimal-governance-change-law.md` and `# Patch Execution Method`.
-Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `.claude/reference/modification-core-law.md`: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`.
+Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `.claude/reference/modification-core-law.md`; the canonical operator-emphasized keyword set lives at `.claude/CLAUDE.md` `## 5. Modification Philosophy` (consume the canonical list at design-time rather than an inline restatement that drifts stale).
+Design items lacking `REVIEW-PACKET-CITATION` are carrier prose, not review-verified design; reject and reopen Step 3.
 Keep Step 4 design-only; route file mutation through Step 6.
 
 # Step 5: self-verification
-Load `Skill(self-verification)` on the produced `CHANGE-SEQUENCE-DESIGN`.
-Call with produced-output kind `governance-asset-change`.
+Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation on the produced `CHANGE-SEQUENCE-DESIGN`.
+Call with result-verification target `CHANGE-SEQUENCE-DESIGN`, outgoing governance-change claim, the Step 2 change boundary, and the Step 3 `review_verification_packet` `PACKET-ID` (or content reference) as upstream basis.
 Let `Skill(self-verification)` handle failure, correction packet construction, and repeated correction until convergence or `HOLD`.
+Self-verification `PASS-1`/`PASS-2` records cite this Step 5 invocation and the consumed Step 3 packet; carrier prose asserting "self-verification converged" without these citations is fabrication and blocks Step 6 handoff.
 
 # Step 6: Handoff or Next Work
 Hand off only self-verified `CHANGE-SEQUENCE-DESIGN` items.
@@ -70,10 +80,12 @@ Execute patches through this section only after Step 4 design and Step 5 self-ve
 ## Preconditions
 - Current owner/action boundary, `REQUEST-FIT-BASIS`, `TARGET-INTENT-BASIS`, and target `.claude` asset set are recorded.
 - `PRE-MUTATION-BASIS` is recorded before mutation and may be prepared from this section during Step 4.
-- `Skill(review-verification)` supplied the current mutation-readiness or patch-worthiness basis required by the change tier.
+- `Skill(review-verification)` supplied the current mutation-readiness or patch-worthiness basis required by the change tier; `PRE-MUTATION-BASIS` must cite the actual `review_verification_packet` `PACKET-ID` (or content reference) from Step 3. Carrier prose asserting "review-verification supplied basis" without packet citation is fabrication and blocks mutation.
+- `Skill(self-verification)` Step 5 convergence is recorded with its `Skill(self-verification)` tool-call evidence; carrier-asserted convergence without tool-call evidence is fabrication and blocks mutation.
 - The patch target is the consumed owner surface that can execute the changed meaning.
 
 ## Execution
+PROTECTED-LOCAL-RESTATEMENT-BASIS: patch-execution atomic-check — execution rules colocated here for atomic team-lead consultation at every patch application moment. `.claude/reference/modification-core-law.md` (removal-first edit selection, preservation rules) and `.claude/reference/modification-minimal-governance-change-law.md` (Patch-Ready Gate, Minimal Governance Rules) define the general patch rules; this surface applies them at execution time as a single-load operational check, with skill-specific additions (Hook-Last, MCP/external-tool handling) inline.
 - Patch from the current live file state; stale baselines, remembered content, and pre-session copies are evidence only.
 - Apply only reviewed, bounded, policy-compliant edits.
 - Prefer tighten, replace, trim, merge, re-home, or delete before append.
@@ -85,6 +97,7 @@ Execute patches through this section only after Step 4 design and Step 5 self-ve
 - For MCP or external-tool capability changes, preserve official-behavior alignment, capability boundary, fallback, and cleanup truth on the owning environment/runtime surface.
 
 ## Post-Verify
+PROTECTED-LOCAL-RESTATEMENT-BASIS: post-mutation atomic-check — retroactive-application rules colocated here for atomic team-lead consultation at every patch post-verify moment. `.claude/reference/modification-core-law.md` `### Retroactive Application Rules` defines the general affected-surface classification and stale-verdict treatment; this surface applies them at post-mutation moment with skill-specific verification chain (review-verification reopen + self-verification load) inline.
 - Verify the resulting diff, owner semantics, live references, information preservation, affected consumed surfaces, and in-flight or prior-verdict impact.
 - Classify affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred per lawful owner-deferral basis`.
 - Treat affected prior verdicts, PASS labels, handoffs, or closures as stale until fresh re-verification.

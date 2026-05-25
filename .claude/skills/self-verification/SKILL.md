@@ -5,15 +5,23 @@ user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
+## Structural Contract
+- Produce two-pass convergence (`PASS-1` coverage + `PASS-2` review-verification) on a produced work-product surface; do not mutate, dispatch, validate, report, or substitute the calling owner's work.
+- Keep this fixed order after Structural Contract: Flow Overview, Step 1, Step 2, Step 3, Step 4, Step 5, Step 6, Output Format.
+- Keep `## Step 1` through `## Step 6` as the canonical step anchors; do not rename or renumber.
+- Always run Step 2 (Coverage), Step 3 (review-verification), and Step 4 (Branch) before Step 6 (Handoff).
+- Producer-side outbound gate is the default scope; Step 3 Receiver applicability extends the same PASS-2 criteria to receivers evaluating upstream carrier evidence.
+
 ## Flow Overview
 ```mermaid
 flowchart TD
     Step1[Load Skill] --> Step2[Coverage] -->|record PASS-1| Step3[review-verification] -->|record PASS-2| Step4{Branch} -->|PASS-1 AND PASS-2| Step6[Handoff or Next Work] --> END([AUTO-PROC])
-    Step4 -->|else| Step5[Recorrection] --> Step3
+    Step4 -->|else| Step5[Recorrection] --> Step2
 ```
 
 ## Step 1: Load Skill
-Load `Skill(self-verification)`.
+Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
+Record the load as the same-turn `Skill(self-verification)` tool-call evidence; this evidence is the basis for downstream `PASS-1`/`PASS-2` truth and is required for any later citation that names this load.
 Proceed to Step 2.
 
 ## Step 2: Coverage
@@ -21,20 +29,26 @@ Select frozen-scope basis (first match wins):
 1. `SCOPE-BASELINE` from the active planning record.
 2. `COMPLETION-STOP-CONDITION` + `CONCRETE-DELIVERABLE` + frozen request wording.
 3. Assignment packet `WORK-SURFACE` + `COMPLETION-STOP-CONDITION` (lane producing owner).
+Use the material `TARGET-INTENT-BASIS` from the same active planning or assignment basis when present.
 
 Inventory against frozen scope:
 - every requested deliverable surface
 - every requested coverage axis
+- every material `TARGET-INTENT-BASIS` coverage unit
 - every named completion-stop row
 - every actually-produced result surface awaiting handoff
+- every material returned case, item, finding, fact, count, state label, recommendation, or verdict input awaiting handoff
 
 Map produced surfaces against requested surfaces.
+Map produced surfaces against material `TARGET-INTENT-BASIS` coverage units.
 
 Record `PASS-1`:
-- `pass` — every request item produced AND every coverage axis satisfied.
-- `fail` — explicit missing-surface inventory / unmet axis / out-of-scope addition.
+- `pass` — every request item and every opened closure unit is produced or covered at that unit, with source identity preserved when the surface is an inventory or mapping, and every coverage axis is satisfied.
+- `fail` — explicit missing-surface inventory / unmet axis / missing `TARGET-INTENT-BASIS` coverage unit / out-of-scope addition / opened closure unit covered only by category, pattern, theme, wave, batch, priority, summary, count, or work-item abstraction that does not preserve each finer source unit and its next owner/action.
 
-Defer qualitative judgment (defect, design intent, owner boundary, coherence, integrity, patch-worthiness) to Step 3.
+`PASS-1` is a verifiable evidence record citing the actual Step 1 `Skill(self-verification)` tool-call evidence, the consumed frozen-scope basis (which of the 3 selectors fired), the produced-surface inventory mapped against requested surfaces, and the explicit pass/fail verdict. A `PASS-1` claim without these citations is carrier prose, not verified evidence.
+
+Defer produced-result truth, defect, owner boundary, coherence, integrity, and patch-worthiness judgment to Step 3.
 
 Reject sample-only / tier-only / wave-only / representative-slice coverage when frozen scope demands exhaustive; record `fail` with open-surface inventory unless explicit user-narrowed scope or `[USER-DELIVERY-FIT]` lawful deferral.
 
@@ -42,15 +56,25 @@ Proceed to Step 3.
 
 ## Step 3: review-verification
 Load `Skill(review-verification)` and call with bounded review question:
-- target: produced work-product surface set
-- produced-output kind: `analysis-claim` | `artifact-change` | `synthesis` | `proof-harness` | `handoff-report` | `governance-asset-change`
-- scope: critical exhaustive inspection (defect, coherence, integrity, negative-risk, regression) under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture
+- target: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
+- question: PASS-2 produced-result verification for the exact target, outgoing claim, corpus, scope, and claim ceiling.
+- scope: critical exhaustive inspection of produced-result truth and soundness, evidence fit, defect, coherence, integrity, negative-risk, claim strength, and regression under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture.
+- claim ceiling: frozen `CLAIM-CEILING`; review-verification may classify findings, patch-worthiness, handoff disposition, or correction need only within that ceiling.
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
+PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+When the only basis is carrier form, completion fields, PASS wording, checklist text, inline critical-review prose, equivalent checks, or proxy lens mapping, record `PASS-2: fail` and open Step 5 correction.
+
+Carrier-as-evidence fabrication is the named failure mode: writing `Skill(self-verification) loaded`, `Skill(review-verification) consumed`, `PASS-1 verified`, `PASS-2 cleared`, or equivalent prose into a carrier without actual same-turn tool invocation evidence is fabrication, not verification. Producer self-check and receiver evaluation both reject such carriers and route to Step 5.
 
 Record `PASS-2`:
-- `pass` — Critical Review Gate cleared (material defeaters tested and disproven or owner-deferred) AND `FINDING-STATE-INVENTORY` carries zero `confirmed-defect`, zero `patch-worthy`, zero `patch-ready`, and no open candidate blocking the next action.
-- `fail` — preserve per-item defect inventory from packet. Reject confirmation-only / convenience-aligned execution; re-call with explicit critical posture.
+- `pass` — Critical Review Gate cleared for produced-result truth and soundness plus outgoing claim under the frozen `CLAIM-CEILING` (material defeaters tested and disproven or owner-deferred) AND `FINDING-STATE-INVENTORY` contains no produced-work-product defect or verification-claim defect that remains `confirmed-defect`, `patch-worthy`, `patch-ready`, or open-candidate blocking the next action.
+- `pass` also requires every material returned fact, count, state label, recommendation, verdict input, or other handoff item to be covered by the current `review_verification_packet`, verified retained-carrier feedback, `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
+- `fail` — preserve review packet defects and every returned content item or claim lacking exact state, evidence, or coverage. Reject carrier-only, confirmation-only, or convenience-aligned execution; re-call with explicit critical posture against produced content itself.
+
+`PASS-2` is a verifiable evidence record citing the actual `Skill(review-verification)` Step 14 packet identifier or content reference, the consumed `REVIEW-VERIFICATION-LENSES` when named-lens scope, and the explicit pass/fail verdict. A `PASS-2` claim without packet citation is carrier prose, not verified evidence.
+
+Receiver applicability — when self-verification runs on a synthesis or report that incorporates upstream carrier evidence (lane completion, sub-agent output, prior verified result), the carrier evidence quality is part of `PASS-2` truth. Upstream carrier asserting `Skill(...) loaded` or `PASS-N verified` without actual tool invocation evidence fails `PASS-2` for the downstream synthesis even when downstream internal consistency holds. Receiver routes the failure to Step 5 with `INPUT-FINDINGS` naming the upstream carrier defect.
 
 Reject bare `CONFIRMED`; require exact ladder state.
 
@@ -73,9 +97,10 @@ Route by producing owner:
 - `Skill(governance-modification)` Change Sequence → return correction inventory to that Change Sequence.
 
 Wait for correction completion.
+Rerun Step 2 and every downstream step on the corrected surface; prior `PASS-1` and `PASS-2` do not carry over after correction.
 Reject partial re-check; require corrected surface + coherence radius.
 
-Proceed to Step 3.
+Proceed to Step 2.
 
 ## Step 6: Handoff or Next Work
 Return converged work product silently to calling owner.

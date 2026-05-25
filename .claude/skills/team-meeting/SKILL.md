@@ -77,10 +77,10 @@ Critics name the failed audit criterion when that criterion controls the objecti
 Drafter accepts a useful opinion regardless of its shape.
 Drafter accepts opinions in free-form delivery.
 
-Critics work in parallel when runtime support exists.
+Critics work in parallel when team-agent runtime is active with `ACTIVE-CONCURRENT-AGENT-CAP` at or above critic count and the live process-backed roster includes all critic lanes.
 Each critic delivers opinions independently.
 Apply serial waiting when a critic's opinion depends on another critic's evidence.
-Serial convenience over independent opinions is a bottleneck defect.
+Forced single-lane execution despite available parallel runtime fit — "serial convenience" — is a bottleneck defect.
 
 Drafter reads all opinions together.
 Drafter revises the draft once per round when possible.
@@ -98,7 +98,8 @@ The next round tests the converted solution or rationale.
 Repeated objection advances through changed solution content, changed evidence, or clearer tradeoff framing.
 
 Operator may set an opinion-round limit at meeting opening.
-The marathon default continues until full consent on every item.
+The marathon default continues until full consent on every item or until a default cap is reached.
+Default round cap is five rounds; drafter declares `HOLD` with documented objection-persistence basis when full consent is not reached within the cap, and operator may extend the cap explicitly.
 Per-item iteration closes after every critic clears material objections on that item.
 
 ### 3-5. MEETING-AUDIT-CRITERIA

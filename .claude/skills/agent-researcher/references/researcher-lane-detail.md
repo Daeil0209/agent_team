@@ -89,7 +89,7 @@ Upward assertion must name:
 ## Surface-Specific Evidence Requirements
 - Visual, structural, interaction, and UX decision targets require rendered or multi-modal evidence. Text-only synthesis is a methodology defect unless the visual surface is explicitly unavailable and the completion carrier downgrades confidence.
 - Multi-modal evidence includes image or screenshot capture, layout extraction, quantitative measurement of font, image, whitespace, table form, color, spacing, or typography signals, and rendered page or artifact observation when material.
-- If researcher cannot obtain the required rendered or multi-modal evidence with its toolset, it must run bounded tool-selection research when current tools can lawfully inspect or search candidate options.
+- If researcher cannot obtain the required rendered or multi-modal evidence with its toolset, it consumes `Skill(tool-acquisition)` for bounded tool-path discovery, verification, fallback, or blocked-state capture when current tools can lawfully inspect or search candidate options.
 - The upward request must name: missing evidence surface; required capability; current toolset limit; candidate tools considered; selected tool or program candidate; fit rationale; why text-only evidence is invalid; smallest truthful evidence boundary; setup owner candidate or packet correction.
 - Methodology, governance-hardening, and evolving best-practice decision targets require external authoritative evidence or benchmark synthesis unless infeasible. If infeasible, name the deferral basis and mark the claim as lower confidence.
 - Use `.claude/skills/benchmark-simulation/references/observation-protocol.md` when per-modality discipline is needed.
