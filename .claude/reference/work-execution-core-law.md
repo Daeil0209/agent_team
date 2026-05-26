@@ -17,7 +17,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Procedure And Ownership Law
 - `[RULE-FORCE]` Rules must be executable.
-- `material` means an axis, fact, or trigger that changes what the active owner must do next.
 - `consequential` means an action, decision, tool use, artifact read, discovery, mutation, dispatch, synthesis, handoff, or report that creates, reopens, changes, or closes a work boundary, owner, route, scope, evidence basis, artifact state, runtime state, acceptance state, or user-facing claim.
 - Executable rules name every material owner, trigger, stop, evidence, verification, and acceptance-truth requirement.
 - Executable governance wording names a material owner, trigger, action, stop, or evidence; descriptive, explanatory, additivity-narrating, alongside/non-substitution-framing, or philosophical wording without those fields is a `[RULE-FORCE]` defect.
@@ -46,7 +45,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Stage evidence names the completed stage and carries every remaining material downstream stage as `OPEN-SURFACES`, next owner/action, lawful deferral, or blocker.
 - Any remaining same-request stage opens the next executable owner/action in the same request chain.
 - Correction and iteration chains preserve the frozen acceptance path; cleared gaps open required re-review, re-proof, validator ingress, and Final Acceptance Review when the chain is validator-required.
-- The active owner continues, dispatches, verifies, or routes that next stage until closure, lawful owner deferral, explicit user cancellation/redirect, or truthful `HOLD`.
+- The active owner continues, dispatches, verifies, or routes that next stage until a closure basis applies.
 - Final/turn closure requires one closure basis: zero live same-request executable owner/action, explicit user cancellation/redirect, lawful owner deferral, or truthful `HOLD`.
 - A live same-request executable owner/action drives the next tool call, dispatch, verification, mutation, routing action, or `HOLD` carrier before final prose.
 - Planned continuation path requires an executable next owner/action; status reporting, proceed prompts, wave boundaries, future replanning, context pressure, and response boundaries remain process evidence only.
@@ -137,7 +136,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Primary skill links load through their active owner-path triggers.
 - Loaded skill owner resolution uses this order: explicit owner, phase owner, or sequence owner declared by a loaded procedure skill; then the agent that loaded the skill when the loaded skill does not declare a procedure owner for the current action.
 - Non-agent specialist skills state coverage, method, packet, and handoff boundaries only; they do not declare independent ownership, authority, or mutation permission.
-- Top-level Claude Code host session is `team-lead`.
 - The top-level agent-team `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
 - `agent-team-lead` procedure consumption requires actual `Skill(agent-team-lead)` activation or current same-session loaded-skill basis.
 - Always-loaded role surfaces and trigger-bound references follow `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` for content composition and consumption discipline; that section is the canonical executable detail owner.
@@ -160,7 +158,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Assignment-grade lane receipt requires a first upward outcome after packet review.
 - First upward outcome validity and `dispatch-ack` work-start semantics are consumed from `.claude/skills/task-execution/references/message-classes.md`.
 - Converged lane work requires both a retained completion carrier and `MESSAGE-CLASS: completion` to `team-lead`.
-- Required completion transport uses the retained completion carrier and `MESSAGE-CLASS: completion`; runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals.
+- Runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals only.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, visible-prose admission, and claim strength.
 
 ## Execution Progress Law
@@ -170,7 +168,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - The drive remains active at the execution boundary.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
 - The agent keeps emitting required tool calls while live same-request executable owner/actions remain.
-- Final/turn closure requires one closure basis from this file's `## Procedure And Ownership Law` section (lines 18-79).
+- Final/turn closure requires one closure basis from this file's `## Procedure And Ownership Law` section.
 - Auto-compact, response boundary, or next user input preserves the same live owner/action from the recorded basis and keeps backlog conversion or completion outside the closure path.
 
 ## Output Root And Filesystem Law
