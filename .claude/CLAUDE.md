@@ -14,7 +14,8 @@ PROTECTED-CURTAIN-SURFACE: removal-first / consolidate / tighten / reduce / swee
 - Claude Code official behavior is the compatibility baseline.
 - Governance redesign preserves existing meaning unless an approved governance change explicitly replaces it.
 - Numbered philosophy sections hold operating intent by practical work function.
-- The philosophy chain is downstream consumption, not hierarchy collapse: 1 freezes the user problem, 2 specifies it, 3 executes it, 4 reviews claims against 1-3, 5 modifies governance while preserving 1-4, 6 judges proof and acceptance, 7 reports admitted user-facing surfaces, and 8 controls runtime/environment boundaries.
+- The philosophy chain is downstream consumption, not hierarchy collapse.
+- Philosophy chain axis purposes: 1 freezes the user problem, 2 specifies it, 3 executes it, 4 reviews claims against 1-3, 5 modifies governance while preserving 1-4, 6 judges proof and acceptance, 7 reports admitted user-facing surfaces, and 8 controls runtime/environment boundaries.
 - Philosophy sections keep their own operating intent; relationship detail lives in this contract and executable fields live in mapped core laws.
 - Mapped core-law references carry executable rules for the matching top-doctrine intent.
 - Mapped core laws are the mandatory executable-detail surface for the matching top-doctrine intent; their Reference Map subreferences load only when their triggers are active.
