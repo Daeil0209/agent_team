@@ -61,14 +61,7 @@ auto-inject: false
     - `ENTRY-OPEN-PATH`: exact user action, artifact, prerequisite, environment, and first open/start path
     - `VISIBLE-SURFACE-INVENTORY`: user-visible windows/pages/files and producer-only surfaces that stay hidden or non-primary
     - `FIRST-USE-STATE`: initial visible state, empty/demo/imported state, and minimum useful information before user configuration
-      - `CORE-WORKFLOW-CLOSURE`: enumerate every applicable executable user-facing software action and its mandatory paired completion.
-      Required pair types:
-      - create/import/upsert→disposition: every created, imported, or upserted item has an allowed disposition path: delete, clear, archive, void, deactivate, restrict, or frozen no-disposition basis.
-      - edit→save+reload+consumer-persist: every edit control has a save whose result persists across reload and every in-scope visible consumer of the changed fact.
-      - input/mutation→dependent-recompute/reactivity: every editable value or mutation feeding a sum, total, badge, warning, status, report, export, ledger, or dashboard triggers recompute on the user surface.
-      - displayed-surface→inspection/action/navigation: every displayed record, metric, card, row, icon, or button names its inspection, action, arrival surface, or explicit display-only basis.
-      - entity/aggregate→authority trace: every material relation, derived value, or displayed aggregate surfaces as an authority-fit source trace and related-entity path, unless a frozen not-applicable basis states why no user decision or action depends on that path.
-      Each row names trigger surface, paired completion surface, source authority, disposition, consumer/recompute, inspection/action/navigation, or display-only basis as applicable.
+      - `CORE-WORKFLOW-CLOSURE`: enumerate every applicable executable user-facing software action and its mandatory paired completion per `.claude/reference/design-delivery-evidence-acceptance-law.md` `## CORE-WORKFLOW-CLOSURE` (5 canonical pair-type families: create/import/upsert→disposition; edit→save+reload+consumer-persist; input/mutation→dependent-recompute/reactivity; displayed-surface→inspection/action/navigation; entity/aggregate→authority-trace; see canonical owner for per-row requirements).
         Phase 3 entry for an executable user-facing software action requires a `CORE-WORKFLOW-CLOSURE` row.
       The design must add the row or explicitly defer it via frozen-record citation.
     - `DATA-CONTENT-STATE`: sample, fixture, imported, saved, reloaded, reset, and real-data states that affect usefulness

@@ -53,7 +53,16 @@ Before discovery or setup, carry the minimum packet:
 2. Prefer an already available local or project tool when it satisfies the frozen claim strength.
 3. Search only inside the bounded discovery goal; select candidates only from an existing local path, project-declared dependency manager, official/vendor source, or verified package source.
 4. Classify setup safety before installation or configuration.
-5. Execute setup only when classification is `allowed-setup`: bounded, directly needed, non-damaging, credential-free, non-paid, no persistent service, no security-setting change, project-local or user-local where practical, and reversible where practical.
+5. Execute setup only when classification is `allowed-setup`. Every `allowed-setup` condition below must hold; any failed condition routes to `approval-required` per step 6:
+   - bounded
+   - directly needed
+   - non-damaging
+   - credential-free
+   - non-paid
+   - no persistent service
+   - no security-setting change
+   - project-local or user-local when no manual filesystem-restoration step is needed for cleanup and no persistent state lives outside the bounded work surface
+   - reversible when removal preserves no manual filesystem-restoration debt and no persistent state outside the bounded work surface
 6. Route `approval-required` setup to explicit approval or `HOLD`; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
 7. Verify the selected tool with the smallest decisive real-tool proof that satisfies `TOOL-VERIFICATION-STANDARD`.
 8. Use the verified tool path for the blocked work when the same owner path remains valid; otherwise return a corrected executable path to the blocked owner or lane.

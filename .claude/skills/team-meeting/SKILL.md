@@ -42,6 +42,7 @@ All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluati
 ### 3-1. Activation
 Activate when the operator explicitly asks for a meeting.
 Activate when the operator's agenda needs critical improvement from more than one perspective.
+Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate triggers mandatory consumption (hard design decisions — operator-policy-choice surfaces, constitutional-protected surface mutation, or trade-off-bearing patch design — when convergence-tractable form applies per that rule); skipping team-meeting to escalate trade-off choice directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
 Use the clear single-owner action when it already solves the request.
 
 ### 3-2. Agenda
@@ -110,13 +111,7 @@ Drafter checks every criterion below before accepting a revised item as consent-
 Drafter checks every criterion below before presenting the solution.
 Critics use the same criteria when challenging, accepting, or proposing improvements.
 
-Operator-emphasized meeting compliance criteria — solution passes every keyword per `.claude/CLAUDE.md` `## 5. Modification Philosophy`:
-- removal-first
-- consumed-surface
-- no-compression
-- upper-lower execution-drive
-- executable-imperative
-- minimum-executable-information
+Operator-emphasized meeting compliance criteria — solution passes every operator-emphasized keyword per the canonical 8-keyword list at `.claude/CLAUDE.md` `## 5. Modification Philosophy`. Drafter and critics consume that canonical list directly at audit time.
 
 No-compression source:
 - Apply `CLAUDE.md` `no-compression` definition when deciding whether a sentence is an allowed same-subject repeated-pattern line or a prohibited bundled clause.

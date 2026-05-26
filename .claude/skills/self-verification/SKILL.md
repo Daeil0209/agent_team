@@ -20,6 +20,7 @@ flowchart TD
 ```
 
 ## Step 1: Load Skill
+PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — anti-fabrication tool-invocation rule colocated at every Step 1 invocation moment to defeat carrier-prose substitution at the load decision point. `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` defines the general rule; this surface applies it as the Step 1 atomic check at first execution of self-verification.
 Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
 Record the load as the same-turn `Skill(self-verification)` tool-call evidence; this evidence is the basis for downstream `PASS-1`/`PASS-2` truth and is required for any later citation that names this load.
 Proceed to Step 2.
@@ -52,6 +53,9 @@ Defer produced-result truth, defect, owner boundary, coherence, integrity, and p
 
 Reject sample-only / tier-only / wave-only / representative-slice coverage when frozen scope demands exhaustive; record `fail` with open-surface inventory unless explicit user-narrowed scope or `[USER-DELIVERY-FIT]` lawful deferral.
 
+PROTECTED-LOCAL-RESTATEMENT-BASIS: anti-narrowing operational atomic-check — Anti-Narrowing Law colocated at this skill's coverage-narrowing decision point because narrowing-intent routes through skill-specific `INPUT-COVERAGE-GAPS` + `PASS-1 fail` recorded with frozen-scope 4-tuple; canonical owner is `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`.
+Anti-narrowing extension (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`): the sample/tier/wave/representative-slice rejection above is one named negative case under Anti-Narrowing Law; additional named negative cases also fail PASS-1 (excluding deliverable surfaces from coverage inventory, deferring an opened closure unit to "separate path" without owner direction, scoping-out a finding-class from coverage without owner direction). Narrowing-intent below frozen-scope basis requires `scope-pressure` to the calling owner with 4-tuple (frozen-scope basis, proposed narrower coverage, narrowing rationale, owner-confirm request); record PASS-1 as `fail` with `INPUT-COVERAGE-GAPS` naming the narrowed-out surface until owner-confirm reply received or explicit owner-confirmed narrower coverage frozen. Substantive correctness on silently-narrowed coverage does not cure the procedural-adherence defect.
+
 Proceed to Step 3.
 
 ## Step 3: review-verification
@@ -64,6 +68,8 @@ Load `Skill(review-verification)` and call with bounded review question:
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
 PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
 When the only basis is carrier form, completion fields, PASS wording, checklist text, inline critical-review prose, equivalent checks, or proxy lens mapping, record `PASS-2: fail` and open Step 5 correction.
+
+Target identity for prior-packet reuse: a prior `review_verification_packet` covers the current Step 3 PASS-2 target only when its `REVIEW-TARGET` surface-set fully contains the current Step 3 target's surface-set (produced work-product surface + outgoing claim + every material returned item awaiting handoff). Partial overlap — where the prior packet covers substantive claim but not carrier-structural integrity, or covers some returned items but not others — does NOT satisfy target identity; the current Step 3 requires either supplementary lens-bounded `Skill(review-verification)` execution (`coherence-integrity-lens` + `procedure-adherence-lens` minimum) producing a fresh packet on the uncovered surface-set, or fresh full-steps-1-14 execution on the current target. Citing a prior packet whose `REVIEW-TARGET` does not fully contain the current Step 3 target's surface-set is intra-session target-overlap fabrication per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` cross-target ban.
 
 Carrier-as-evidence fabrication is the named failure mode: writing `Skill(self-verification) loaded`, `Skill(review-verification) consumed`, `PASS-1 verified`, `PASS-2 cleared`, or equivalent prose into a carrier without actual same-turn tool invocation evidence is fabrication, not verification. Producer self-check and receiver evaluation both reject such carriers and route to Step 5.
 

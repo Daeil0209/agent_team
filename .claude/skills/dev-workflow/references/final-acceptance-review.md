@@ -175,7 +175,12 @@ Reject-first decision order: if any material instruction, baseline row, acceptan
 Subset-anchor own-review (anchoring on implemented routes/templates instead of the design's `CORE-WORKFLOW-CLOSURE` rows) is automatic FINAL-REJECT.
 FAR own-review compares retained matched-evidence axes against original instruction-trace and frozen plan/design acceptance rows directly; validator-narrowed PASS-scope without frozen-record passage citation is automatic FINAL-REJECT-CANDIDATE on the excluded axis.
 FAR own-review, validator-result consumption, and Codex fallback review consume applicable `Skill(review-verification)` named lenses before `FINAL-ACCEPT` or correction/re-evidence dispatch relies on the reviewed surface.
-Only after reject-first checks find no blocking gap, `FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity: validator `PASS`, verified operator-delivery closure when executable user-facing, no later `FINAL-REJECT` in the acceptance loop, and team-lead `Skill(self-verification)` convergence on the `FINAL-ACCEPT` record.
+`FINAL-ACCEPT` opens workflow `Complete` from the current Final Acceptance Review entry identity only when ALL of:
+- reject-first checks find no blocking gap;
+- validator `PASS` present;
+- verified operator-delivery closure when deliverable is executable user-facing;
+- no later `FINAL-REJECT` in the acceptance loop;
+- team-lead `Skill(self-verification)` convergence on the `FINAL-ACCEPT` record.
 `FINAL-REJECT` converts its referenced validator `PASS` into rejection-analysis input for `far-reject-routing`; enter `task-execution` only for assigned correction or re-evidence dispatch after team-lead classification.
 Codex unavailable status records `fail-open:<reason>` with fallback closure-inspection basis and conservative `Skill(self-verification)` convergence; validator `PASS` identity remains the acceptance prerequisite.
 

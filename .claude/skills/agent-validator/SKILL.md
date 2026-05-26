@@ -23,7 +23,8 @@ Before any work:
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
 6. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can the verdict still be elevated through evidence-backed defaults within lane scope rather than premature `HOLD`/`scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`. (`HOLD` for genuinely incomplete acceptance basis is correct; `HOLD` as substitute for verdict craft on derivable ambiguity is procedural failure.)
-If any answer 1-5 is `no`, classify as `scope-pressure` or `hold|blocker` before validation. If answer 6 enables default-resolved verdict, proceed with marked inference rather than escalate.
+7. **Anti-narrowing** (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`): is the proposed validation scope identical to or broader than the dispatched `ACTIVE-SLICE` / `WORK-SURFACE` / assignment scope basis? Silent narrowing (excluding sub-elements of the dispatched acceptance target, deferring an in-scope acceptance row to a "separate path" without team-lead direction, sampling/wave/priority narrowing without team-lead-frozen sample/wave/priority basis, scoping-out a finding-class without team-lead direction) is prohibited; classify as `scope-pressure` to team-lead with (a) dispatched scope, (b) proposed narrower scope, (c) narrowing rationale, (d) explicit team-lead-confirm request, and await team-lead reply before validation proceeds. Silent narrowing is procedural failure regardless of whether the validator's narrower verdict would otherwise be substantively correct on the narrower scope.
+Gates 1-5 and 7 are stop-condition gates: if any answers `no`, classify as `scope-pressure` or `hold|blocker` before validation. Gate 6 is the quality-obligation gate (not a stop gate): when it enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Validator-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, user-run path, tool basis, verdict burden, decision surface, user-facing acceptance basis, and upstream defer basis.
 Assignment-grade validator correction packet after `FINAL-REJECT` executes bounded correction-basis analysis.
@@ -65,13 +66,8 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 - Missing decisive-surface tooling routes to `hold|blocker` or `scope-pressure`.
 - Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Do this unless a frozen discovery/setup path already authorizes the exact next step.
-- For executable user-facing programs, operator-exhaustive integrity is verdict-critical.
-- Rendered visual quality is verdict-critical.
-- Operator-runtime is verdict-critical.
-- Exact launch/termination is verdict-critical.
-- Cross-environment basis is verdict-critical.
-- No-operator-labor is verdict-critical.
-- Load `references/validator-lane-detail.md` when these rules affect PASS/HOLD/FAIL truth.
+- For executable user-facing programs, these dimensions are verdict-critical: operator-exhaustive integrity, rendered visual quality, operator-runtime, exact launch/termination, cross-environment basis, and no-operator-labor.
+- Load `references/validator-lane-detail.md` for per-dimension PASS/HOLD/FAIL detail when these rules affect verdict truth.
 - See `references/validator-lane-detail.md` for packet detail, PASS-prohibition detail, reconciliation detail, and completion detail.
 
 ## Validation Inputs
@@ -134,9 +130,14 @@ Verdict labels:
 - `PASS`: all decisive expectations met on the decisive surface, no blocking findings, evidence sufficient.
 - When the `Skill(review-verification)` trigger above fires, `PASS` additionally requires the `review_verification_packet` Step 5 Critical Review Gate defeaters tested and disproven.
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
-- `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
+- `FAIL`: non-correctable mismatch on the decisive acceptance surface — correction within active acceptance boundary cannot reconcile the gap from cited basis.
+- `FAIL` operational test mirrors `HOLD` definition above but inverted: HOLD = correctable, FAIL = non-correctable.
+- `FAIL` also applies when a triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
 - Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.
-- **Upstream carrier-as-evidence is verdict-disqualifying**: if the acceptance basis relies on upstream carrier prose asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation, the verdict routes to `HOLD` (incomplete acceptance basis) or `FAIL` (when fabrication itself constitutes acceptance mismatch); do not issue `PASS` on such basis. Demand actual tool-call evidence trails for every claimed upstream verification.
+- **Upstream carrier-as-evidence is verdict-disqualifying**: if the acceptance basis relies on upstream carrier prose asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation, do not issue `PASS` on such basis.
+- When upstream carrier-as-evidence is present and verification is otherwise satisfiable, the verdict routes to `HOLD` (incomplete acceptance basis).
+- When the upstream fabrication itself constitutes acceptance mismatch, the verdict routes to `FAIL`.
+- The validator demands actual tool-call evidence trails for every claimed upstream verification.
 ### 7. Retest And Result Verification
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
@@ -145,6 +146,8 @@ Verdict labels:
 - Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3, and verdict citations against the consumed `review_verification_packet` `PACKET-ID` per `.claude/skills/review-verification/SKILL.md` Step 14.
+- **Pre-completion fresh verification of verdict carrier** (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law` + `.claude/skills/self-verification/SKILL.md` `## Step 3` target-identity rule): `Skill(self-verification)` Step 3 PASS-2 for the verdict-completion target requires a current `review_verification_packet` whose `REVIEW-TARGET` surface-set fully contains the verdict-carrier target surface-set (verdict file + outgoing PASS/HOLD/FAIL claim + every material returned item). Substantive-claim-only prior packets do NOT satisfy target identity for verdict-carrier completion; if prior packet covers only substantive claim, validator MUST run supplementary lens-bounded `Skill(review-verification)` (`coherence-integrity-lens` + `procedure-adherence-lens` minimum) producing a fresh per-target packet on the carrier-structural surface-set, OR fresh full-steps-1-14 execution on the verdict-carrier target.
+- **High-risk verdict class mandatory external verification** (per `.claude/skills/codex-independent-review/SKILL.md`): for high-risk verdict classes — (i) governance-asset patch acceptance, (ii) anti-fabrication-correction acceptance, (iii) recurrence-barrier-hardening acceptance, (iv) user-direct-correction-response acceptance — validator MUST also invoke `Skill(codex-independent-review)` and cite the returned `CODEX-INDEPENDENT-REVIEW-BASIS` (adjudicated points + `fail-open:<reason>` when applicable) in the verdict carrier. PASS verdict on a high-risk class without cited Codex independent-review basis is `confirmed-defect:missing-external-verification` and routes to HOLD until external verification basis is recorded.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.
 - `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.

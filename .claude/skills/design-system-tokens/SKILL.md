@@ -29,10 +29,10 @@ Load when a design system needs a stable token architecture.
 ## Responsibilities
 - freeze a layered token architecture with a primitive token layer (color/typography/spacing/radius/shadow), an application-level consumption layer (components or aliases), and a documented inheritance rule from primitives to consumers
 - expand to 3 layers (primitives -> core components -> composites) as the default when finer granularity is not required
-- keep the token vocabulary as the single source of truth for color, typography, spacing, radius, and shadow primitives
+- at initial design-system-tokens freeze, seed Layer 1 primitives from `mockup-to-component` CSS variables when that upstream packet exists
+- after initial freeze, design-system-tokens token vocabulary is the single source of truth for color, typography, spacing, radius, and shadow primitives; post-freeze imports from `mockup-to-component` (or any other source) are blocked
 - keep core components free of composite logic
 - make composites consume Layer 2 component contracts instead of raw tokens
-- import Layer 1 primitives from `mockup-to-component` CSS variables as seed material when that upstream packet exists at initial design-system-tokens freeze; after freeze, design-system-tokens is canonical and post-freeze `mockup-to-component` primitives are not re-imported (the temporal precedence resolves the apparent conflict with the line above's single-source-of-truth rule)
 - Report `hold|blocker` when:
   - credible token boundaries are absent
   - credible layer-consumption rules are absent

@@ -85,6 +85,13 @@ The `message` parameter is empty or a single ASCII space and carries no other co
 `SendMessage` render means the combined `summary` plus `message` display; both halves obey this canonical state-signal envelope rule.
 This is the single canonical envelope rule for `ack` and `completion` state signals; other owner surfaces cite this rule and keep local restatement out.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
+For downward assignment delivery `SendMessage`:
+- `message` parameter content rule: carries assignment-packet required-floor fields only, with each field on one line per `references/assignment-packet.md` `### Field Format Discipline`.
+- Overflow routing rule: bulk shared context, full taxonomy text, parenthetical explanation, restated upstream basis, and duplicated retained-carrier content move to the retained carrier referenced via `RETAINED-OUTPUT-PATH` or `UPSTREAM-DECISION-BASIS` and stay out of the rendered body.
+Before every `SendMessage` call, the sender verifies the rendered `summary` plus `message` content against this envelope by direction:
+- Upward state classes use the canonical no-detail state-signal envelope above.
+- Downward assignment delivery uses required-floor packet fields plus retained-carrier pointers per the rules above.
+- Bulk content exceeding the envelope is rejected at write-time and rewritten to canonical envelope plus retained-carrier pointer before send.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
 Screen-rendered transport never satisfies a user report and never carries raw internal inventories.

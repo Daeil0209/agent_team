@@ -29,9 +29,9 @@ Corroborating log use does not replace the frozen proof surface, user-surface pr
 - document issues immediately with traceability evidence
 - route persistent observability debt back to `developer`
 ## Activation
-Activate in required mode when the frozen packet carries `logs-as-decisive-proof` or otherwise names logs as decisive tester proof.
-Activate in required mode for absent executable scripts, or for scripts the frozen packet marks impractical, only after logs are frozen as the decisive proof surface.
-Activate in corroboration mode when the frozen proof surface stays user-facing or executable and runtime logs can confirm or defeat a frozen behavior, state transition, request path, error path, or runtime invariant for that proof.
+Mode classification follows trigger basis (no separate `LOG-QA-MODE` packet field required; lane self-classifies at activation per the triggers below):
+- `required mode` activates when the frozen packet carries `logs-as-decisive-proof` or otherwise names logs as decisive tester proof, OR when executable scripts are absent or the frozen packet marks them impractical AND logs are frozen as the decisive proof surface.
+- `corroboration mode` activates when the frozen proof surface stays user-facing or executable AND runtime logs can confirm or defeat a frozen behavior, state transition, request path, error path, or runtime invariant for that proof.
 ## Inputs
 - active request source
 - runnable environment and log access path

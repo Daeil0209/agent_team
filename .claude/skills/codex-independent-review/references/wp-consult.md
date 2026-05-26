@@ -13,7 +13,7 @@ Also consume `.claude/skills/codex-independent-review/references/common-contract
 ## WP-CONSULT Packet
 `WP-CONSULT` adds these fields to the common packet:
 - `request_summary`
-- `draft_freeze`: `REQUEST-FIT-BASIS`, `SEMANTIC-INTENT-BASIS`, `DERIVED-DEFAULTS`, `REQUEST-BOUND-PACKET-FIELDS`, `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`, `ACTION-CLASS`, `ROUTING-SIGNAL`, `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`, `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`, `NEXT-CONSEQUENTIAL-ACTION`, `DISPATCH-BLOCKERS`
+- `draft_freeze`: every `Always freeze` field plus every material `Freeze when material` field per the canonical work-planning record schema at `.claude/skills/work-planning/references/planning-record-fields.md` (consume that canonical schema rather than this list; field list evolves there and this packet stays in sync automatically).
 - `context_notes`
 - `prior_session_invariants`
 - `doctrine_read_paths`

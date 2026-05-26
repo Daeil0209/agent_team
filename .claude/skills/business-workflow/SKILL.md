@@ -22,7 +22,7 @@ You are the business-workflow specialist capability.
 Load when sheets, manual operations, decision gates, or workflow-heavy tools hide rules that must be extracted before trustworthy implementation or review.
 ## Responsibilities
 - extract entities, lifecycle states, transitions, decision gates, overrides, and generated artifacts
-- for allocation, participation, capacity, or period-based workflow systems, consume `references/allocation-participation-workflow.md` and extract its rule packet before downstream design
+- for domain-specific workflow detail (allocation-participation, event-planning, rnd-proposal, rnd-result-report, schedule-planning, research-report-workflow-boundary), consume `references/domain-rule-catalog.md` to select the narrowest domain reference and extract its rule packet before downstream design
 - separate stable business rules from layout accidents, convenience habits, or one-off exceptions
 - freeze source-of-truth meaning for master, transactional, derived, and exported data
 - define mutation rules: who creates, edits, deletes, restores, reopens, or overrides
@@ -31,7 +31,7 @@ Load when sheets, manual operations, decision gates, or workflow-heavy tools hid
 - preserve undefined but observed labels, policy meanings, and allocation choices as configurable categories, rule tables, or user-editable parameters
 - Record original value, source, meaning, scope, and unresolved state for each preserved ambiguity.
 - Ambiguity that cannot preserve those facts becomes an open question or `hold|blocker` with next owner/action.
-- Report `hold|blocker` when any of these remain too weak for credible delivery:
+- Report `hold|blocker` when any of these remain too weak for credible delivery (operational test: the listed item cannot be enumerated as a discrete named state, named transition, named actor boundary, or named audit-sensitive event):
   - workflow start states
   - workflow end states
   - actor boundaries
@@ -48,7 +48,7 @@ Activate for spreadsheet-to-program migrations, rule-heavy internal tools, finan
 - canonical contract and execution plan when present
 - explicit request-fit basis when reader, operator, or role split materially affects the business packet
 ## Outputs
-Preferred output: `business_workflow_packet`.
+Required output: `business_workflow_packet`.
 
 Capture only the decisive business packet:
 - entities, lifecycle states, and transition rules
@@ -62,7 +62,7 @@ Capture only the decisive business packet:
 - Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
 - Record the chosen representation and evidence basis before handoff.
 - User-escalation triggers follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
-- Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference or `references/allocation-participation-workflow.md` when material.
+- Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference selected from `references/domain-rule-catalog.md` when material.
 ## Operational Discipline
 - Extract hidden operational rules, decision waits, exception paths, and organizational constraints before downstream generation.
 - Audience, operator tier, and operational setting are mandatory inputs.

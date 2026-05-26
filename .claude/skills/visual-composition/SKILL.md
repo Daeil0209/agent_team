@@ -74,20 +74,20 @@ Expert behavior means the operator can understand the surface quickly without de
 - preserve older-viewer and presentation-distance readability
 - redesign structure before shrinking text
 - if the surface is attractive but operator sequence is still guesswork, it is not ready
-**Visual Defect Taxonomy**:
+### Visual Defect Taxonomy
 Defect types: `tiny_text`, `overlap_collision`, `awkward_wrap`, `weak_hierarchy`, `top_heavy_layout`, `decorative_noise`, `poor_proportion`, `diagram_text_unreadable`, `insufficient_whitespace`, `feature_missing`.
 Defect-record fields inherit `.claude/CLAUDE.md` `## 6. Judgment Philosophy` and `## 7. Reporting Philosophy`.
 Severity rubric inherits `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 Record "none observed yet" for recurrence if not yet seen.
 
-**PPT Slide Composition**:
+### PPT Slide Composition
 Each slide must split explanation and visual into complementary roles.
 The two halves must have distinct roles.
 Text-to-image ratio must be balanced per slide.
 Text inside visuals must meet legibility floor.
 A slide where text and visual compete for the same role = `slide_role_conflict`.
 
-**Information Hierarchy and Scan-Order**:
+### Information Hierarchy and Scan-Order
 Before visual-ready handoff, enforce hierarchy readability.
 The document must present visually distinct levels.
 Required levels: purpose block, operational rationale, and detail elements.

@@ -128,10 +128,10 @@ When the same proof surface offers multiple tool profiles at different friction-
 - For source-read governance, report, or documentation artifacts, the source/read document can be the decisive proof surface when rendering is not material.
 - For browser/UI or other scrollable visual surfaces, capture the route/page/screen-state x viewport matrix required by the frozen proof surface; use full-page or full design-area capture for whole-surface claims, and label viewport-only captures as viewport-limited; whole-surface `matched` requires whole-surface capture.
 - Run glyph and legibility sanity on representative user-language strings before layout judgment; placeholder glyph boxes, tofu, or unreadable text must block `matched` proof on that surface.
-- First-glance comprehension assessed when reader-first usefulness matters
-- Package validity and openability verified for office-format artifacts
-- Per-page rendered evidence kept separate from text-level proof for page-read artifacts
-- Rendered evidence kept distinct from wording, logic, and request-fit review
+- Assess first-glance comprehension when reader-first usefulness matters.
+- Verify package validity and openability for office-format artifacts.
+- Keep per-page rendered evidence separate from text-level proof for page-read artifacts.
+- Keep rendered evidence distinct from wording, logic, and request-fit review.
 
 ## Specialist Skill Loading
 Tester lane evaluation selects and applies materially relevant specialist lenses from the proof surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.

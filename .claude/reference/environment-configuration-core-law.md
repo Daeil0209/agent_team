@@ -21,15 +21,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Runtime Boundary Law
 - Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
 - `[HOOK-LAST]` hooks are last-resort runtime guards.
-- Team-lead coordination, shared task lists, teammate messaging, and team cleanup follow Claude Code agent-team behavior.
 - Shared task-list creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
-- Generic Claude Code in-progress, owner, or assignee task-row mutation patterns do not apply.
-- Teammate work uses independent Claude Code session context and task-specific packets.
-- Cooperative `shutdown_request` to a live process-backed teammate is routine runtime cleanup when `task-execution`, `session-boot`, or `session-closeout` owns a cleanup basis.
-- `tmux kill-*` command forms are categorical hard-deny runtime surfaces.
-- Cleanup after a blocked `tmux kill-*` selection uses cooperative shutdown, session-closeout, or non-tmux owner recovery.
-- Non-tmux forceful runtime termination such as `kill <pid>` requires explicit operator approval and the narrow runtime cleanup owner.
-- Hook-owned shutdown-response handling records cooperative cleanup evidence and runtime roster state without `tmux kill-*`.
+- Cooperative `shutdown_request`, `tmux kill-*` hard-deny, blocked-cleanup routing, and `kill <pid>` operator-approval detail are owned by `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`.
 - Agent-authored shell teardown routes to forceful runtime termination law, and closeout truth stays with `session-closeout`.
 
 ## Resolve Next Owner And Action

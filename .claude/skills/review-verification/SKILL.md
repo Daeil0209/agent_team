@@ -17,6 +17,10 @@ Run all applicable steps for binding promotion, final rejection, patch/no-patch,
 Use named lenses only as bounded packet evidence; they do not expand beyond the assigned review question.
 Reset for a new target, corpus, findings set, patch design, diff, bounded question, or scope; stale packets, summaries, memory, and pre-patch snapshots do not carry forward.
 A `review_verification_packet` exists only after current `Skill(review-verification)` activation reaches Step 14 for the exact target, corpus, bounded question, and scope; named-lens claims exist only for exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+Same-session loaded skill basis (per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`) reuse covers the Skill tool load only — it permits skipping a fresh `Skill(review-verification)` tool invocation when staleness conditions in that reference do not fire, but it does NOT carry packet output across targets. Each new target, corpus, findings set, patch design, diff, bounded question, or scope requires fresh Steps 1-14 execution producing a fresh per-target `review_verification_packet`. Citing a prior packet as PASS-2 basis for a different target — in a `Skill(self-verification)` record, validator verdict PASS-2 basis, or any downstream consumption — is carrier-prose-as-evidence fabrication per `Skill(self-verification)` Step 3 anti-fabrication rule.
+
+PROTECTED-LOCAL-RESTATEMENT-BASIS: anti-narrowing operational atomic-check — Anti-Narrowing Law colocated at this skill's narrowing decision point because narrowing-intent routes through skill-specific `PROCEDURE-EXECUTION-RESULT: blocked:caller-confirm-required` packet field with bounded-review-question 4-tuple; canonical owner is `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`.
+Anti-narrowing (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`): the bounded review question, target, requested corpus, evidence burden, and claim ceiling supplied by the caller establish the frozen review scope for this activation; this skill MUST NOT silently narrow review scope below the caller-supplied basis (e.g., inspect narrower corpus subset, apply narrower lens than caller specified, lower claim ceiling, scope-out a finding-class without caller direction). Narrowing-intent requires either explicit caller direction in the bounded review question, or `PROCEDURE-EXECUTION-RESULT: blocked:caller-confirm-required` packet field with 4-tuple (caller-supplied scope, proposed narrower scope, narrowing rationale, caller-confirm request) returned to caller before workflow proceeds under narrower scope; substantive correctness on a silently-narrowed scope does not cure the procedural-adherence defect per Anti-Narrowing Law.
 
 ## Reference Map
 - Load `.claude/reference/review-and-verification-core-law.md` for evidence quality, verification truth, live intent, coherence, execution force, negative risk, finding-state, or patch-worthiness.
@@ -35,6 +39,7 @@ Reject bare `REQUIRED-SKILLS: [review-verification]` for a non-lead participant 
 ## Packet
 Return internal `review_verification_packet` with:
 - `PACKET-ID` — caller-supplied identifier when present, otherwise `REVIEW-TARGET` + activation context (turn or timestamp marker); used by downstream verification gates to cite this packet
+- `WORKFLOW-COVERAGE` — exactly one of: `full-steps-1-14` (Steps 1-14 all executed for the cited target); `lens-bounded:<lens-set>` (named-lens execution per `## Named Lane Lens Index`; Steps 1, 2, 3, 4, 5, 12, 14 executed but Steps 6-9 may be `not-applicable:<basis>` when the bounded question is not patch-design-related); or `gate-only:<gate-name>` (single gate such as Step 5 Critical Review Gate only). Receivers consuming the packet must cite the `WORKFLOW-COVERAGE` value when claiming downstream basis; treating a `lens-bounded` or `gate-only` packet as `full-steps-1-14` basis is carrier-prose-as-evidence fabrication.
 - `REVIEW-TARGET`
 - `PROCEDURE-EXECUTION-RESULT`
 - `COHERENCE-RESULT`
@@ -83,7 +88,13 @@ Try to disprove the preferred conclusion before any packet, synthesis, bestness,
 Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
 For source-to-destination gap review, trace every material hop in the claim chain, including source surface, producer output, synthesis, and outgoing claim when those surfaces are present.
 Keep any untraced material hop as an open defeater.
-Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule: (a) the named failure mode being probed, (b) the observable evidence that would defeat the preferred positive claim if found, and (c) the actual search record naming surface searched and finding. This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the per-defeater evidence surface and is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per receiver applicability; shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
+Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule:
+  - (a) the named failure mode being probed
+  - (b) the observable evidence that would defeat the preferred positive claim if found
+  - (c) the actual search record naming surface searched and finding
+This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the per-defeater evidence surface.
+The 3-component record is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per the receiver-applicability rule at `.claude/skills/self-verification/SKILL.md` `## Step 3` Receiver applicability paragraph.
+Shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
 Block the requested positive review result while any material defeater is open or confirmed without lawful owner deferral.
 Return confirmed defeaters to Step 2 or Step 6.
 
@@ -122,6 +133,7 @@ Route newly found requested-scope defects to the smallest correction owner/path.
 Return post-patch changed-result convergence to the executing patch sequence's Post-Verify `Skill(self-verification)` gate.
 
 ### 12. Classify Findings
+PROTECTED-LOCAL-RESTATEMENT-BASIS: inventory-construction atomic-check — Evidence Law 3-component disproof-attempt rule colocated for atomic test at FINDING-STATE-INVENTORY construction moment (distinct from Step 5 Critical Review Gate atomic moment; Step 12 applies the rule at inventory record-building time). `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` defines the general rule; this surface applies it as the Step 12 atomic check.
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, evidence surface, owner, and open next owner when applicable.
 For material defeaters that produced or supported a positive verification claim, the `FINDING-STATE-INVENTORY` entry must carry the 3-component disproof-attempt evidence per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`: (a) named failure mode probed, (b) observable evidence that would defeat the preferred positive claim if found, and (c) actual search record naming surface searched and finding.

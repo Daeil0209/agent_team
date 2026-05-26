@@ -28,7 +28,7 @@ Required completion payload fields for every completion-grade `MESSAGE-CLASS: co
 - `VERIFIED-DATA-FEEDBACK`
 - `OPEN-SURFACES`
 - `FROZEN-CONTRACT-STATUS`
-- `SCOPE-COVERAGE` records covered `SCOPE-BASELINE` rows, actual `ACTIVE-SLICE`, carried `DEFERRED-SURFACES`, and open baseline rows.
+- `SCOPE-COVERAGE` records covered `SCOPE-BASELINE` rows, actual `ACTIVE-SLICE`, carried `DEFERRED-SURFACES`, and open baseline rows. `SCOPE-COVERAGE` is the lane-side per-completion-carrier field. The team-lead multi-wave aggregation state (`SCOPE-BASELINE union state` per `.claude/skills/work-planning/references/planning-record-fields.md`) is a distinct field owned by team-lead at synthesis time; both reference the frozen `SCOPE-BASELINE` but serve different owners and timings.
 - `LANE-NEXT-CANDIDATE`
 - `PLANNING-BASIS: loaded`
 - `SKILL-FIELD-CONSUMPTION` records each non-empty, material, invalid, or blocked `REQUIRED-SKILLS` entry as `applied` or `blocked:<basis>` and every carried `SKILL-RECOMMENDATIONS` entry as `applied`, `not-material:<basis>`, or `blocked:<basis>`; use `not-applicable:<basis>` only when the packet carried no skill fields and no material skill was discovered during lane work
@@ -49,7 +49,7 @@ After the state signal is sent, the producing lane immediately applies the same 
 That task-state mutation is internal runtime closure; it is not user reporting and carries no completion narrative.
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, and `LANE-LOCAL-RESULT-VERIFICATION`.
-Carrier assertions of `PASS-1`, `PASS-2`, `CONVERGENCE-PASS`, lens application, or verification completion are completion-grade only when they cite actual `Skill(self-verification)` loaded-skill basis and the required or claimed `Skill(review-verification)` packet or lens basis.
+Carrier assertions of verification or PASS-grade evidence in completion handoffs follow the anti-fabrication tool-call-evidence rule at `.claude/skills/self-verification/SKILL.md` `## Step 1` + `## Step 3` and the packet-citation rule at `.claude/skills/review-verification/SKILL.md` `### 14. Next-Owner Routing`.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 

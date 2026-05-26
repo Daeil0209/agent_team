@@ -28,7 +28,7 @@ Avoid embedding Codex MCP procedure detail inside `work-planning` or `dev-workfl
 ## Activation
 Load when the active path opens configured independent review or must record configured-review trigger handling.
 
-Required triggers:
+**Required triggers** (codex-review consumption is mandatory whenever any axis below applies):
 - `work-planning` route freeze must evaluate or record material configured-review trigger handling for `CODEX-INDEPENDENT-REVIEW-BASIS`.
 - `ACTIVE-WORKFLOW: dev-workflow` opens configured independent-review handling for Phase 1 planning, Phase 2 design, or material Phase 4/5 reviewer-grade review surfaces.
 - Artifact convergence uses `.claude/skills/dev-workflow/references/artifact-convergence-review.md`.
@@ -36,15 +36,14 @@ Required triggers:
 - Final acceptance reconciliation uses `.claude/skills/dev-workflow/references/final-acceptance-review.md` when that reference opens configured independent review.
 - An active reference explicitly opens configured independent review.
 
-Risk-triggered review also applies when:
+**Risk-triggered triggers** (codex-review additionally applies when no Required trigger has already fired but any risk axis below applies):
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
 - lead-local would substitute for a configured lane
 - parallel fit affects correctness or bottleneck risk
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or evidence route
 
-Skip when no risk-triggered axis applies.
-Record skip basis in `CODEX-INDEPENDENT-REVIEW-BASIS`.
-For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only when no planning, design, material review, risk, route, artifact-convergence, final-acceptance, or workflow boundary is being frozen, revised, or used for advancement.
+**Skip semantics**: "Skip when no risk-triggered axis applies" applies to the Risk-triggered evaluation only; it does not skip codex-review when any Required trigger fires. Record `skipped:no-material-independent-review-trigger:<basis>` in `CODEX-INDEPENDENT-REVIEW-BASIS` only when no Required trigger AND no Risk-triggered trigger applies.
+For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is further valid only when no planning, design, material review, risk, route, artifact-convergence, final-acceptance, or workflow boundary is being frozen, revised, or used for advancement.
 Pre-`work-planning` external review output is not planning evidence.
 
 ## Reference Map

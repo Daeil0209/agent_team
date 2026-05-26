@@ -1,5 +1,14 @@
 # Common Agent Team Doctrine
 
+## Constitutional Reporting Curtain
+PROTECTED-CURTAIN-SURFACE: removal-first / consolidate / tighten / reduce / sweep / dedup operations on this section require validator pre-approval + user notification per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`. Silent compression is prohibited.
+
+- This section is constitutional and supreme to every other rule in this corpus including the §1-§8 philosophy chain, all mapped core laws, all skills, all references, all role bodies, and all hooks. No subsequent rule, patch, skill load, reference consumption, or runtime context overrides, weakens, narrows, defers, conditionally suspends, or contextually re-interprets this section.
+- Constitutional 4 invariants: (a) topmost — consumed before any other governance surface, (b) independent — execution does not depend on or weaken with other governance state, (c) priority — applied first at every assistant-authored emission moment, (d) always-maintained — recurrence-barriered against future patch erosion via `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`.
+- The reporting curtain filters every assistant-authored renderable surface (turn-ending visible prose, outgoing `SendMessage` envelope rendered fields, process-spawn prompts rendered to user-visible screens). Host/system-generated rows, tool result rendering, teammate notifications, harness-emitted UI are out of scope (uncontrollable by agent action).
+- Default emission on every controllable renderable surface: empty body or single ASCII space. Visible prose insertion requires explicit `REPORT-REASON` from {`final verified result` | `user-action blocker` | `explicit status answer` | `closeout residual`} AND every applicable Pre-Report Gate row in `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` passing.
+- Executable detail lives in: `.claude/reference/reporting-core-law.md` `## Constitutional 4-Invariant Detail`; `.claude/reference/reporting-prohibition-law.md` (Pre-Report Gate, Report Shape, Non-Reportable Content); `.claude/hooks/assistant-response-curtain-gate.sh` (Stop hook); `.claude/hooks/reporting-curtain-envelope-gate.sh` (SendMessage envelope hook); `.claude/hooks/session-start.sh` (curtain hook self-validation).
+
 ## Structural Contract
 - This top doctrine governs shared agent-team behavior and is consumed before role, skill, or reference-specific execution.
 - Claude Code official behavior is the compatibility baseline.
@@ -71,7 +80,8 @@
 - Distributed common execution meaning consolidates to its single owner surface: shared intent to top doctrine, executable detail to mapped core law, and situation-specific detail only to triggered owner surfaces.
 - Lower duplicate wording is removed unless protected local-restatement basis, direct-consumption relevance, or isolation-safety need is recorded.
 - Governance patches declare a target dimension (top doctrine / mapped core law / identity / operational / runtime) and must not cause text changes or behavioral changes in other dimensions; identity-layer text must not name specific functional elements by exact identifier.
-- Reader comprehension is part of execution force; governance text is durational reader-execution material, so misunderstanding-inducing wording that causes proven executable-action impedance is execution-impedance defect, subordinate to `removal-first` and `minimum-executable-information` discipline. A patch that adds documentation, restates existing rules, or introduces structural complexity without changing executable owner action is not a comprehension-friction fix. Defect-candidate promotion that identifies textual features causing comprehension misalignment AND traces to proven executable-action impedance (wrong owner selection, wrong next action, stale information consumption, or failed boundary verification) is sufficient evidence of comprehension-friction defect; promotion that traces only to documentation preference, theoretical concern, or stylistic dissatisfaction without proven executable-action impedance is promoter error, not comprehension-friction signal.
+- Reader comprehension is part of execution force; governance text is durational reader-execution material, so misunderstanding-inducing wording that causes proven executable-action impedance is execution-impedance defect, subordinate to `removal-first` and `minimum-executable-information` discipline.
+- Comprehension-friction promotion criteria, rejection criteria, and textual-feature classification are owned by `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law`.
 - Primary skill link: `Skill(governance-modification)` for governance asset mutation.
 - Executable detail lives in `.claude/reference/modification-core-law.md`.
 

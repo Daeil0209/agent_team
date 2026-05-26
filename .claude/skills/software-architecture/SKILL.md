@@ -35,7 +35,7 @@ Rendered composition → `visual-composition`.
 - define action contracts, import boundaries, and risky logic invariants
 - require a usable product shell: first-run context, resume point, save/load path, completion artifact
 - require workflow concept and layout contracts before freezing UI-bearing implementation boundaries
-- Report `hold|blocker` when:
+- Report `hold|blocker` when (operational test for `not credible`: the listed item cannot be named with explicit module boundary, named authoritative state path, or named failure-mode handler respectively):
   - architecture is not credible
   - state source is not credible
   - failure semantics are not credible
@@ -66,14 +66,8 @@ Expert behavior means the software can be built without discovering its core con
 - define failure/recovery semantics on every success-path surface
 - operator-facing tools need first-run shell, resume path, and finish/export destination
 - prefer label-based or header-based extraction for sheet-like inputs when that contract is inferable
-- For project recurrence-barrier lessons, see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog).
-- Covered lessons: L-01 Module Regression Prohibition, L-04 Resource Acquisition as Architecture Contract, L-05 Latency Budget Decomposition, and L-06 Multi-Dimension Trade-Off Documentation.
-> For Dependency-And-Field Architecture Extension, see `references/architecture-extensions.md`
-> For Coupled-Core Architecture Extension, see `references/architecture-extensions.md`
-> For Operational Management Entity Architecture Extension, see `references/architecture-extensions.md`
-> For Workflow-Product Architecture Extension, see `references/architecture-extensions.md`
-> For Constraint-Satisfaction Document Generator Architecture Extension, see `references/architecture-extensions.md`
-> For Specialist Skill Maintainability Extension, see `references/architecture-extensions.md`
+- For project recurrence-barrier lessons, see `references/architecture-extensions.md` § Project Lessons (Recurrence-Barrier Catalog). Covered lessons: L-01 Module Regression Prohibition, L-04 Resource Acquisition as Architecture Contract, L-05 Latency Budget Decomposition, L-06 Multi-Dimension Trade-Off Documentation.
+- For named architecture extensions, see `references/architecture-extensions.md`: Dependency-And-Field Architecture Extension, Coupled-Core Architecture Extension, Operational Management Entity Architecture Extension, Workflow-Product Architecture Extension, Constraint-Satisfaction Document Generator Architecture Extension, Specialist Skill Maintainability Extension.
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or design proposals when architecture boundaries, state source, persistence contracts, mutation rules, or interfaces are structurally weak.
 - State the issue in software-design language.

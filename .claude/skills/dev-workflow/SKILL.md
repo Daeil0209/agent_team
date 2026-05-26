@@ -73,11 +73,11 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 - Phase-local skill refinement stays inside the frozen lane map, deliverable shape, and proof/acceptance chain.
 - Reopen `work-planning` when phase pressure creates a new lane, independent work surface, deliverable shape, or proof/acceptance owner.
 - `session-boot` monitors delegated runtime; team-lead handles phase advancement, redistribution, and workflow re-entry.
-- Serial waiting, merge backlog, stalled owner motion, or single-agent overload in nominal parallel work is a workflow bottleneck defect.
+- Serial waiting, merge backlog, stalled owner motion, or single-agent overload across surfaces that the frozen `PARALLEL-GROUPS` declares as independent and bounded is a workflow bottleneck defect.
 
 ### 4. Convergence And Evidence
 - Keep planning, dispatch, monitoring, synthesis, verification, and reporting gates active inside phase sequencing.
-- Same-artifact convergence stays inside `artifact-convergence-review` while phase, artifact, owner map, deliverable, staffing, proof/acceptance chain, and user requirement are unchanged.
+- Same-artifact convergence stays inside `artifact-convergence-review` while the same-boundary common fields (phase, owner map, deliverable shape, staffing shape, proof/acceptance chain, user requirement and request-fit basis) plus the artifact-specific addition (canonical artifact or named stale downstream artifact under repair) remain unchanged per `references/artifact-convergence-review.md` `## Same-Boundary Loop`.
 - Same-review-surface convergence stays inside `review-convergence-review` under the same unchanged-boundary rule.
 - Every dev-workflow result review or correction pass consumes `Skill(review-verification)`: team-lead uses the full workflow or named lenses, reviewer/validator/Codex packets name the applicable lenses, and `not-material:<basis>` is required before phase movement, redispatch, validation ingress, or completion truth can rely on the reviewed surface.
 - `task-execution` handles correction dispatch or reuse when another lane must revise.

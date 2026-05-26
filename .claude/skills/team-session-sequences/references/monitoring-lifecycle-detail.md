@@ -89,24 +89,18 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
-- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical health-check activation semantics.
-- The configured cron cadence and stale thresholds are defined in `hook-policy.sh`; treat that file as the single literal owner.
-- Direct oversight, event-triggered agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` `## Health-Check Standard` for canonical health-check activation semantics, cadence/threshold owner, and direct-oversight primacy. This reference adds only the monitoring-action selection rules below for the lead-side monitoring lookup; canonical rule definitions live at the cited owner.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all agents are standby.
 - Replacing the tracked health-check cron is not session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, then perform `CronDelete` and replacement `CronCreate`.
 - If no tracked health-check cron is active, do not create, rotate, or narrate one by ceremony.
 
 ## Stale Response
-- High-confidence stale: investigate quickly. Replacement requires shutdown evidence or an explicit recovery freeze.
-- Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
-- Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` `## Stale-Response Rule` for canonical stale classification, low-confidence-stale handling, and replacement criteria. This reference adds only the monitoring-action extensions below; canonical rule definitions live at the cited owner.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
 - Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root per `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 
 ## Runtime Pressure
-- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical runtime-pressure classification.
-- When hard runtime pressure or unresolved orphan residue exists, stop new `Agent` fan-out until explicit recovery clears that pressure.
-- Routine orphan scans report residue; they do not kill processes or rewrite team cleanup truth.
+- Consume `.claude/skills/session-boot/references/runtime-state-detail.md` `## Runtime-Pressure Rule` for canonical runtime-pressure classification, hard-pressure fan-out block, and routine-orphan-scan rule. This reference adds only the monitoring-action extensions below; canonical rule definitions live at the cited owner.
 - Runtime-pressure handling must not invent session closeout authority or bypass message-first cleanup decisions for current live agents.
 - If orphan historical agents are detected from a previous session, do not send `shutdown_request` to those remembered agent names from the new session. Route explicit orphan-runtime recovery instead.
 

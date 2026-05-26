@@ -19,23 +19,8 @@ Use it when work:
 ## Consume When
 - Work judges, modifies, migrates, reduces, or reports on an existing artifact.
 - Work changes governance, role, skill, reference, hook, setting, or runtime-adjacent text.
-- Packet drift from original request is possible.
-- Handoff drift from original request is possible.
-- Synthesis drift from original request is possible.
-- Packet drift from the plan is possible.
-- Handoff drift from the plan is possible.
-- Synthesis drift from the plan is possible.
-- Packet drift from design is possible.
-- Handoff drift from design is possible.
-- Synthesis drift from design is possible.
-- New doctrine affects current-session artifacts.
-- New doctrine affects in-flight outputs.
-- New doctrine affects prior verdicts.
-- New doctrine affects active acceptance.
-- Sharpened doctrine affects current-session artifacts.
-- Sharpened doctrine affects in-flight outputs.
-- Sharpened doctrine affects prior verdicts.
-- Sharpened doctrine affects active acceptance.
+- Packet, handoff, or synthesis drift from the original request, plan, or design is possible.
+- New or sharpened doctrine affects current-session artifacts, in-flight outputs, prior verdicts, or active acceptance.
 - A change moves text between owner surfaces.
 
 ## Required Output
@@ -60,7 +45,7 @@ Positive synthesis requires carry-forward of:
 - sibling outputs
 - acceptance contracts
 Removal requires reconstructed source-to-destination meaning.
-Governance text removal also satisfies `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
+Governance text removal must additionally satisfy `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
 ## Resolve Next Owner And Action
 - Judgment gaps open live-owner-surface inspection.
@@ -107,14 +92,8 @@ Drift reopens `work-planning`.
 
 ## Preservation Rules
 - Scope-continuity consumers use `.claude/reference/modification-core-law.md` `### Preservation Rules` as the canonical common baseline.
-- Local scope/change edits preserve or sharpen that baseline across meaning, clarity, execution force, owner boundary, required gates, and existing valid procedure paths.
-- Operation-specific emphasis keeps the common baseline active.
-- Migration explicitly verifies clarity preservation.
-- Refactoring explicitly verifies action and execution-force preservation.
-- Reduction explicitly verifies stop-condition preservation.
-- Re-home explicitly verifies handoff, evidence, gate, owner-boundary, and reporting-truth continuity.
-- Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/modification-minimal-governance-change-law.md` `## Change Rules`.
-- Role-specific content stays out of shared doctrine when a more precise owner exists.
+- Local scope/change edits inherit the baseline at the canonical owner without local restatement.
+- Operation-specific emphasis (Migration / Refactoring / Reduction / Re-home verification), weaker-duplicate handling, and role-specific content placement are owned by `.claude/reference/modification-core-law.md` `### Preservation Rules`; scope-continuity consumers consult that canonical owner for the operation-specific verification detail and the duplicate/role-specific rules.
 
 ## Retroactive Application Rules
 - Retroactive application is owned by `.claude/reference/modification-core-law.md` `### Retroactive Application Rules`.

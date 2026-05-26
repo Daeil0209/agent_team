@@ -143,7 +143,7 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - For any route eligible to enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
 - For assignment-grade dispatch, `EXECUTION-READINESS-BASIS` cannot be `ready:<basis>` unless the standard `RECEIPT-COMPLETION-CONTRACT` can be carried by `task-execution` packet assembly.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.
-- `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
+- `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Apply line/byte scale as the default first factor; add additional factors (critical surfaces, reference density, proof/review complexity, synthesis burden) when the initial factor leaves splittable material imbalance per measured criterion. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
 - `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
 - Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
@@ -187,7 +187,7 @@ DISPATCH-BLOCKERS:
 ## Resolve Next Owner And Action
 - Complete planning record opens `NEXT-CONSEQUENTIAL-ACTION`.
 - `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner.
-- Team-routed ready basis opens one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption according to current session state.
+- Team-routed ready basis opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 - Frozen workflow or sequence basis opens the named owner before deeper execution.
 - `EXECUTION-READINESS-BASIS: blocked:<owner-and-basis>` opens blocker-clear or `HOLD`.
 - Missing mandatory field keeps `work-planning` open.

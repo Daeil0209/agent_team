@@ -29,21 +29,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
   - `audit/evidence/review + governance patch execution`
   - `draft + final acceptance review`
   - `review + validation verdict`
-- Do not require a new agent only because the phase changed. When scope remains single-purpose and context reuse is beneficial, continue with the current agent through a bounded follow-up dispatch instead of manufacturing completion overhead.
-- Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when the frozen packet and current evidence already support useful progress.
+- Do not require a new agent only because the phase changed. When the work surface, charter fit, and frozen packet axes are unchanged AND no `scope-pressure` is live on the active agent, continue with the current agent through a bounded follow-up dispatch instead of manufacturing completion overhead.
+- Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when current progress plus late shard absorption preserves frozen `SCOPE-BASELINE` rows AND does not require reopening the `MERGE-OWNER` boundary AND does not introduce a new dependency edge.
 - The designated draft or merge owner continues and then takes a bounded follow-up update for the late shard.
 - The active phase intent stays explicit.
 - Use one foreground scout first only when independence, staffing shape, or boundary quality is still uncertain after the `intent -> deliverable shape -> phase` freeze.
 - When those are already explicit and non-overlapping, immediate parallel fan-out is preferred over scout-first delay.
 - When dispatching `developer` or another implementation lane, keep the designed downstream procedure explicit in the dispatch packet.
 - Do not assume later cleanup will restore downstream procedure.
-- Current standard packet fields:
-  - `PLAN-STATE: ready|approved|updated|revalidated`
-  - `PLAN-STEP: <active plan step>`
-  - `ACCEPTANCE-RISK: low|meaningful|high|critical`
-  - `REVIEW-OWNER: reviewer`
-  - `PROOF-OWNER: tester|not-applicable:<basis>`
-  - `ACCEPTANCE-OWNER: reviewer|validator|not-applicable:<basis>`
+- Current standard packet field controlled values are owned by `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` `## Controlled-Value Fields`; `PLAN-STEP: <active plan step>` is the only execution-contract-specific addition (active plan-step identifier; no controlled-value enumeration).
 - For request-bound document work routed to `developer`, default `PLAN-STEP` values are `draft` and `merge-integration`.
 - `CHANGE-SPEC` names whether the agent owns first answer-first drafting or integration of existing shard outputs.
 - For `ACCEPTANCE-RISK: meaningful|high|critical`, preserve the full downstream gate map explicitly: `REVIEW-OWNER: reviewer`, `PROOF-OWNER: tester`, `ACCEPTANCE-OWNER: validator`.

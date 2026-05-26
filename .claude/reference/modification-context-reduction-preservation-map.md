@@ -72,7 +72,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | --- | --- |
 | Fresh consequential request | `session-boot` opens first when runtime readiness triggers; otherwise `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` convergence runs before analyzed-result reporting or completion. |
 | Light answer-only request | No agent-specific skill, workflow, dispatch, or governance detail loads by habit. |
-| Read-only diagnostic, audit, or analytical work | Lead-local is valid only under direct-work limits; team fan-out requires frozen context-footprint or independent-evidence basis. |
+| Read-only diagnostic, audit, or analytical work | Lead-local is valid only under the lead-local-consequential-work limits in the row below (complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion); team fan-out requires frozen context-footprint or independent-evidence basis. |
 | Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |
 | Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; standalone `Agent` is fallback evidence only, not team-runtime dispatch. |
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |

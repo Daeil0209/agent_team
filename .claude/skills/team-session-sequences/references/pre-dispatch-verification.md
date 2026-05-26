@@ -26,7 +26,7 @@ Dispatch readiness coverage that must be preserved by those owners:
 6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, deferred with owner, or blocked.
 7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless `HOLD`.
 
-Risk-tier record rule (risk-tier maps to governance-depth tier per `.claude/skills/work-planning/references/governance-depth.md`: low-risk ≈ Lightweight, medium-risk ≈ Standard, high-risk ≈ Precision):
+Risk-tier record rule (risk-tier maps 1-to-1 to governance-depth tier per `.claude/skills/work-planning/references/governance-depth.md`: low-risk = Lightweight, medium-risk = Standard, high-risk = Precision):
 - Low-risk bounded inspection satisfies the index through goal alignment plus prior-analysis transfer when no other item is material.
 - Medium-risk dispatch requires all material items to be present in the frozen readiness or packet basis.
 - High-risk dispatch, including governance changes, architecture, deletion, or high-acceptance-risk work, records the readiness basis explicitly in `EXECUTION-READINESS-BASIS`; the dispatch packet carries or cites that basis only.

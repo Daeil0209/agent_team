@@ -140,4 +140,110 @@ if [[ ${#issues[@]} -gt 0 ]]; then
   } >> "$VIOLATION_LOG"
 fi
 
+# --- Curtain Constitutional Self-Check ---
+# PROTECTED-LOCAL-RESTATEMENT-BASIS: see .claude/reference/modification-core-law.md ## Constitutional Curtain Protection for canonical owner and constitutional-curtain-visibility basis.
+# PROTECTED-CURTAIN-SURFACE / DO NOT DISABLE
+# This block is enumerated as constitutionally-protected per
+# .claude/reference/modification-core-law.md ## Constitutional Curtain Protection.
+# Verifies that constitutional curtain enforcement chain remains wired and
+# uneroded after any prior governance patch waves. Mandatory; not skippable by
+# HOOK_HEALTH_SELF_CHECK_MODE.
+# Forensic basis: claude_doc/curtain-constitutional-fix-2026-05-26/forensic-report.md
+# documents 3+ prior reporting-prohibition patch waves eroded by subsequent
+# "Consolidate/Tighten/Reduce/Sweep" commits. Self-validation surfaces erosion
+# at session-start moment instead of next leak observation.
+# Approval basis: 2026-05-26 curtain-constitutional-fix-2026-05-26
+# (user-authorized via "독립적이면서 안전한 보완 패치를 신중하게 진행해").
+
+curtain_issues=()
+
+# (1) Verify constitutional section in CLAUDE.md
+if ! grep -q '^## Constitutional Reporting Curtain$' "$CLAUDE_ROOT/CLAUDE.md" 2>/dev/null; then
+  curtain_issues+=("CLAUDE.md missing '## Constitutional Reporting Curtain' section (constitutional invariant (a) topmost compromised)")
+fi
+
+# (2) Verify constitutional 4-invariant detail in reporting-core-law.md
+if ! grep -q '^## Constitutional 4-Invariant Detail$' "$CLAUDE_ROOT/reference/reporting-core-law.md" 2>/dev/null; then
+  curtain_issues+=("reporting-core-law.md missing '## Constitutional 4-Invariant Detail' section (constitutional invariant (c) priority executable detail compromised)")
+fi
+
+# (3) Verify constitutional curtain protection in modification-core-law.md
+if ! grep -q '^## Constitutional Curtain Protection$' "$CLAUDE_ROOT/reference/modification-core-law.md" 2>/dev/null; then
+  curtain_issues+=("modification-core-law.md missing '## Constitutional Curtain Protection' section (constitutional invariant (d) always-maintained recurrence barrier compromised)")
+fi
+
+# (4) Verify curtain-breach defect class in review-and-verification-core-law.md
+if ! grep -q 'curtain-breach' "$CLAUDE_ROOT/reference/review-and-verification-core-law.md" 2>/dev/null; then
+  curtain_issues+=("review-and-verification-core-law.md missing 'curtain-breach' hard-deny defect class (constitutional invariant (d) audit catch compromised)")
+fi
+
+# (5) Verify SendMessage envelope hook wired in settings.json
+if ! grep -q 'reporting-curtain-envelope-gate.sh' "$CLAUDE_ROOT/settings.json" 2>/dev/null; then
+  curtain_issues+=("settings.json missing reporting-curtain-envelope-gate.sh wiring (SendMessage envelope curtain layer compromised)")
+fi
+
+# (6) Verify Stop response hook wired in settings.json
+if ! grep -q 'assistant-response-curtain-gate.sh' "$CLAUDE_ROOT/settings.json" 2>/dev/null; then
+  curtain_issues+=("settings.json missing assistant-response-curtain-gate.sh wiring on Stop event (main response curtain layer compromised)")
+fi
+
+# (7) Verify both curtain hook scripts exist with non-empty body
+for curtain_hook in reporting-curtain-envelope-gate.sh assistant-response-curtain-gate.sh; do
+  hook_path="$HOOK_DIR/$curtain_hook"
+  if [[ ! -f "$hook_path" ]] || [[ ! -s "$hook_path" ]]; then
+    curtain_issues+=("curtain hook script missing or empty: $curtain_hook")
+  fi
+done
+
+# (8) Verify identity-layer atomic-check clause present in all 6 role files
+for role_file in developer.md researcher.md reviewer.md team-lead.md tester.md validator.md; do
+  role_path="$CLAUDE_ROOT/agents/$role_file"
+  if [[ -f "$role_path" ]]; then
+    if ! grep -q 'Atomic-check procedure (executable at every emission moment)' "$role_path"; then
+      curtain_issues+=("$role_file missing identity-layer atomic-check clause (constitutional invariant (c) priority identity-spawn priming compromised)")
+    fi
+  fi
+done
+
+# (9) Verify PROTECTED-CURTAIN-SURFACE markers on key curtain text surfaces
+for marker_file in CLAUDE.md reference/reporting-core-law.md reference/reporting-prohibition-law.md reference/modification-core-law.md; do
+  marker_path="$CLAUDE_ROOT/$marker_file"
+  if [[ -f "$marker_path" ]]; then
+    if ! grep -q 'PROTECTED-CURTAIN-SURFACE' "$marker_path"; then
+      curtain_issues+=("$marker_file missing PROTECTED-CURTAIN-SURFACE marker (silent removal-first cleanup vector reopened)")
+    fi
+  fi
+done
+
+# (10) Verify canonical PROTECTED-CURTAIN-SURFACE enumeration wording-drift detection
+# Round 3 CP-B install (gov-comprehensive-audit-patch-2026-05-26) — verifies that the
+# canonical Enumerated protected surfaces list at modification-core-law.md
+# ## Constitutional Curtain Protection still contains the expected surface tokens.
+# Wording drift on any expected token triggers additionalContext violation report
+# without auto-normalizing the protected surface (operator-policy-choice routing).
+canonical_enum_check="$CLAUDE_ROOT/reference/modification-core-law.md"
+if [[ -f "$canonical_enum_check" ]]; then
+  for expected_token in 'Constitutional Reporting Curtain' 'reporting-core-law.md' 'reporting-prohibition-law.md' 'Constitutional Curtain Protection' 'curtain-breach' 'Curtained Communication' 'reporting-curtain-envelope-gate.sh' 'assistant-response-curtain-gate.sh' 'curtain-validation block' 'curtain hook wiring'; do
+    if ! grep -qF "$expected_token" "$canonical_enum_check"; then
+      curtain_issues+=("modification-core-law.md ## Constitutional Curtain Protection enumeration drift: expected surface token missing: $expected_token (canonical enumeration drift — Round 3 CP-B audit)")
+    fi
+  done
+fi
+
+if [[ ${#curtain_issues[@]} -gt 0 ]]; then
+  {
+    printf '%s | CURTAIN-CONSTITUTIONAL | VIOLATION\n' "$timestamp"
+    printf '%s\n' "${curtain_issues[@]}"
+  } >> "$HOOK_HEALTH_LOG"
+  {
+    printf '[%s] CURTAIN-CONSTITUTIONAL VIOLATION:\n' "$(date '+%Y-%m-%d %H:%M:%S')"
+    printf -- '- %s\n' "${curtain_issues[@]}"
+    printf 'Restore curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work. Forensic: claude_doc/curtain-constitutional-fix-2026-05-26/forensic-report.md.\n'
+  } >> "$VIOLATION_LOG"
+  # Emit additionalContext to surface violation at session-start
+  printf '\nCURTAIN-CONSTITUTIONAL-FIX VIOLATION DETECTED at session-start:\n'
+  printf -- '- %s\n' "${curtain_issues[@]}"
+  printf 'Required action: restore curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work. Bypass prohibition: constitutional-curtain enforcement is not skippable.\n'
+fi
+
 exit 0

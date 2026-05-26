@@ -77,7 +77,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Boundary-change axes reopen `work-planning`.
 - Consequential flow opens one truthful next owner/action at a time.
 - Active workflow phases follow the loaded workflow's declared order.
-- Result-verification boundary follows Procedure And Ownership Law.
 
 ## Material And Materiality Law
 - `material` and `materially` as qualifiers in governance text identify content that controls the active owner's next action, evidence requirement, claim ceiling, acceptance truth, or routing.
@@ -89,6 +88,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `[NO-NEEDLESS-ASK]` Choose the evidence-backed best solution.
 - Derivable ambiguity uses reversible defaults.
 - User escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
+- `[NO-NEEDLESS-ASK]` Hard design decisions (operator-policy-choice surfaces, constitutional-protected surface mutation, trade-off-bearing patch design) consume `Skill(team-meeting)` multi-perspective convergence before any user-action-blocker escalation that frames trade-off choice as operator burden, when convergence-tractable form applies.
+- Convergence-tractable form requires all 3 conditions: (i) design problem is bounded — single-question or single-design-decision, no external evidence gathering required; (ii) no irreversible commitment within the design — no permanent data loss, no operator-policy-choice the team cannot reverse internally; (iii) the team has sufficient perspective coverage — drafter (team-lead) + ≥2 critics with material lens basis.
+- Skipping `Skill(team-meeting)` to escalate trade-off choice directly when all 3 convergence-tractable conditions hold is a `[NO-NEEDLESS-ASK]` violation; when any condition fails, direct user escalation is lawful per the standard exception classes above. The user notification gate per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection` remains required; meeting convergence raises the quality of the design submitted to the gate rather than bypassing it.
+- `proven user-owned blocker` means (a) named user-owned constraint, (b) evidence the constraint blocks safe continuation, and (c) absence of evidence-backed reversible default within the active boundary; absent any component, the constraint is derivable ambiguity and the active owner applies the reversible default.
 - Operator-policy-choice applies when doctrine and evidence leave no single best reversible path.
 - Operator-policy-choice covers team operating policy, approval posture, runtime enforcement tier, and user-owned governance preference.
 - User-prioritization, batching, route, staffing, parallelism, dispatch, or continuation-preference escalation requires explicit user expression.
@@ -132,8 +135,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Trigger-bound references carry situation-specific procedure detail only when their active owner path consumes them.
 - Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.
 - Non-core trigger-bound `.claude/reference/*-law.md` detail references are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
-- `.claude/reference/*-map.md`, `environment-official-claude-code-source-cache.md`, `environment-runtime-footprint-continuity.md`, and `environment-output-curtain-runtime.md` load through their trigger rules as reference surfaces.
-- For the map/runtime references named above, `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` supplies eligibility while the `SOURCE-ANCHOR`/`SOURCE-RULES`/`Consume When` gate controls non-core law reference consumption.
+- Non-`*-law.md` trigger-bound `.claude/reference/` surfaces (map references, environment-runtime references, environment-cache references, environment-curtain references) load through their own trigger gates as reference surfaces; new references of these classes inherit this carve-out automatically when their `LOAD-POLICY`/`Purpose`/`Consumer And Ownership` gate is declared.
+- For map/runtime/cache/curtain references, `LOAD-POLICY`, `Purpose`, or `Consumer And Ownership` supplies eligibility while the `SOURCE-ANCHOR`/`SOURCE-RULES`/`Consume When` gate controls non-core law reference consumption.
 - Reference consumption is valid only when the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness decision.
 - Reference path existence, search convenience, broad traceability, reverse-linking, or non-triggered background relevance leaves the target unconsumed.
 - A claimed reference with a direct-consumption relevance gap opens applied-rule mapping correction or target removal before execution, completion, or positive synthesis.
@@ -159,7 +162,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - The drive remains active at the execution boundary.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
 - The agent keeps emitting required tool calls while live same-request executable owner/actions remain.
-- Final/turn closure requires one closure basis from `## Procedure And Ownership Law`.
+- Final/turn closure requires one closure basis from this file's `## Procedure And Ownership Law` section (lines 18-79).
 - Auto-compact, response boundary, or next user input preserves the same live owner/action from the recorded basis and keeps backlog conversion or completion outside the closure path.
 
 ## Output Root And Filesystem Law

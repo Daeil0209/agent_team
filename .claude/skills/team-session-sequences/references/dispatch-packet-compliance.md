@@ -13,6 +13,8 @@ This section is a session-side controlled-value and presence-field lookup consum
 Cross-lane packet schema, common message classes, field format, and packet preflight remain owned by `.claude/skills/task-execution/references/assignment-packet.md` and `.claude/skills/task-execution/references/message-classes.md`. Lane-specific packet additions and completion extras are owned by the target lane's agent-specific skill and lane-detail reference. Lane role documents remain always-loaded identity, boundary, and stop-condition spines, not packet catalogs. If wording diverges outside the table values below, consume the owning source named above.
 
 ## Controlled-Value Fields
+"Lane" column below names the **receiving lane** (the lane whose packet carries the field; controlled-value enforcement at recipient's preflight). Emitter-side upward-handoff field ownership lives at `references/upward-handoff.md` (different concept: which lane *produces* the field for upward transport).
+
 | Lane | Field | Rule |
 |------|-------|------|
 | researcher | RESEARCH-MODE | `bounded` \| `deep` \| `sharded` as dispatch-shape context only; never a reasoning or coverage limit |

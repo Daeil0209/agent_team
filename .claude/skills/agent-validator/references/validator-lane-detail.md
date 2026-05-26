@@ -151,10 +151,10 @@ For dev-workflow visual or rendered acceptance, validator consumes `.claude/skil
 Validator must inspect rendered evidence as the acceptance oracle. A screenshot saved but not visually checked for glyph sanity, clipping, overlap, hidden controls, readable hierarchy, and missing media is not rendered-quality evidence.
 
 When the same proof surface offers multiple friction-vs-fidelity profiles, validator defaults to the highest-fidelity profile available.
-Example profile pairs: MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run.
+Example profile pairs: MCP-mediated vs CLI-mediated browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run.
 A packet that freezes a lawful narrower tool overrides the default.
-For browser/UI final acceptance, available Playwright MCP is the default validation profile.
-Unused available MCP blocks PASS unless unavailable evidence or a frozen narrower tool contract is explicit.
+For browser/UI final acceptance, the highest-fidelity available browser-automation profile (currently Playwright MCP when available; CLI-mediated browser control otherwise) is the default validation profile.
+Unused available high-fidelity profile blocks PASS unless unavailable evidence or a frozen narrower tool contract is explicit.
 
 ### R22 - User-Environment E2E Verification
 The launch artifact and termination path MUST be verified end-to-end in the actual operator-runtime environment.

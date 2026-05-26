@@ -124,7 +124,7 @@ At least one runtime-specific condition must be true:
 - the frozen route is parallel-fit or names `PARALLEL-GROUPS`
 - the frozen route names team-agent runtime, shared mailbox/task state, or monitoring continuity
 - role separation across multiple coordinated turns needs shared runtime coordination
-- preserved agent context across multiple tasks materially reduces redispatch burden
+- preserved agent context across multiple tasks materially reduces redispatch burden (this condition justifies team-agent runtime only when reuse is the intended path; per the "Preserved agent context is a reuse signal only" rule below, this condition does NOT override frozen independent work surfaces, `PARALLEL-GROUPS`, or required role separation)
 - teammates need direct inter-agent communication, shared task claiming, competing-hypothesis challenge, or independent cross-layer coordination
 - a single returned subagent result is insufficient to preserve the needed coordination
 
@@ -162,17 +162,7 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 - Keep diagnostic/evidence work on the delegated evidence lane instead of absorbing it into lead-local convenience work.
 - Detect stall-without-progress proactively per `references/runtime-state-detail.md` `## Stall-Without-Progress Rule` (classification, one-shot follow-up, frozen re-check window, replacement, shutdown, and user-surface reporting detail).
 
-See `references/runtime-state-detail.md` for:
-- `Agent Work States`
-- `Runtime Signals (Not Governance States)`
-- `Supervisor Decisions on Turn-Ended Signals`
-- `Message-First Runtime Cleanup Rule`
-- `Reuse Rule`
-- `Health-Check Standard`
-- `Stale-Response Rule`
-- `Runtime-Pressure Rule`
-- `Procedure-State Schema`
-- `Workflow Continuity Bridge`
+See `references/runtime-state-detail.md` for runtime-state vocabulary, lane work-state classifications, runtime-signal taxonomy, cleanup/reuse/health/stale/pressure rules, procedure-state schema, and workflow continuity bridge (the reference's own `## Contents` section enumerates the full chapter list).
 
 ## Resolve Next Owner And Action
 - Runtime-ready returns to the frozen next owner/action.

@@ -14,7 +14,7 @@ Use this reference for automated generation of R&D result reports, completion re
 ## Plan-To-Report State Machine
 business-workflow owns the business rules: input capture, gap analysis, fact-vs-design tagging, expected-effects basis, and page-count hard constraint.
 Generation state machine (text-first → visualization → compression → conformance) is owned by `.claude/skills/document-automation/references/result-report-generation.md`.
-Document generation pipeline architecture is owned by `.claude/skills/document-automation/references/document-generation-detail.md`.
+Document generation pipeline architecture is owned by `.claude/skills/software-architecture/references/architecture-extensions.md` `## Constraint-Satisfaction Document Generator Architecture Extension`.
 
 ## Adaptive Generation Level
 Adaptive generation levels are owned by `.claude/skills/document-automation/references/result-report-generation.md`.

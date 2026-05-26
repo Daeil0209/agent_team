@@ -23,6 +23,7 @@ Load only the reference whose trigger is active.
 - `.claude/reference/modification-minimal-governance-change-law.md`: load for Patch-Ready Gate, removal-first edit selection, consumed-surface routing, and minimum executable information checks.
 
 # Step 1: Load Skill
+PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — anti-fabrication tool-invocation rule colocated at every Step 1 invocation moment to defeat carrier-prose substitution at the load decision point. `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` defines the general rule; this surface applies it as the Step 1 atomic check at first execution of governance-modification.
 Load `Skill(governance-modification)` via actual `Skill(governance-modification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
 Record the load as the same-turn `Skill(governance-modification)` tool-call evidence; this evidence is the basis for downstream Step 3 packet consumption and Step 5 verification.
 

@@ -42,7 +42,7 @@ Unknown material burden facts make measurement the next planned action, not a pr
 - A materialized binding surface (external file or shared retained carrier) is staged under the canonical path from `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 - Before each parallel assignment-send segment, the lead verifies the carrier's on-disk presence and non-empty content matching the frozen basis through a read-class tool.
 - A write-tool success response alone does not satisfy verification.
-- First-verification observes absent-or-empty content while creation evidence exists waits a bounded propagation window of a few seconds.
+- First-verification observes absent-or-empty content while creation evidence exists waits a bounded propagation window of 2-5 seconds (single bounded retry; total wait ≤10 seconds before regeneration cycle).
 - After the propagation window, the lead re-runs the read-class verification.
 - Continued verification failure after the window triggers carrier regeneration from the frozen basis followed by another verification.
 - Continued verification failure after one regeneration cycle opens `hold|blocker` with unresolved carrier-persistence basis and blocks dispatch.
@@ -59,10 +59,7 @@ A plan that names more concurrent dispatched lane members than `ACTIVE-CONCURREN
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 Concurrent dispatched-lane count includes live or standby members until shutdown or termination evidence removes them from the active roster.
 New `Agent` member creation is blocked when concurrent dispatched-lane count is already at `ACTIVE-CONCURRENT-AGENT-CAP`.
-The lead evaluates same-lane live or standby reuse before release or new member creation.
-Release-before-create applies only when reuse-fit fails, the live or standby member is dead-or-unavailable for the new assignment, the lane is no longer needed, or `session-closeout` owns teardown.
-If a no-longer-needed live or standby lane blocks required new member creation under the cap, release-before-create is the next planned move before new member creation.
-If cap blocks new member creation and reuse-fit holds, the next move is reuse-via-`SendMessage`.
+Reuse-fit evaluation, release-before-create rules, and reuse-via-`SendMessage` dispatch sequencing under the cap are owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
 
 ## Resolve Next Owner And Action
 - Independent specialist-fit surfaces open team-routed parallel planning.
@@ -72,4 +69,4 @@ If cap blocks new member creation and reuse-fit holds, the next move is reuse-vi
 - Material burden imbalance opens split refinement.
 - Frozen parallel groups return to `AGENT-MAP` and `PARALLEL-GROUPS`.
 - Missing parallel binding surface blocks dispatch readiness.
-- Ready host-authorized additional-agent route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists; runtime creation, reuse, and member execution are consumed through loaded `task-execution` from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- Ready host-authorized additional-agent route opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`; runtime creation, reuse, and member execution are consumed through loaded `task-execution` from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.

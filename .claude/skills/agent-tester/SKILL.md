@@ -27,7 +27,7 @@ Before any work:
 8. Detection fit: does the planned proof target the likely failure modes for that intent rather than only the easiest happy path?
 9. Hard-test fit: when workflow-completion, reliability, or user-ready behavior is claimed, does proof include bounded extreme, adversarial, repeated, interrupted, malformed, stale, or high-volume probes available to a plausible user or data source?
 10. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can proof still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
-If any answer 1-9 is `no`, classify as `scope-pressure` or `hold|blocker` before proof work. If answer 10 enables default-resolved continuation, proceed with marked inference rather than escalate.
+Gates 1-9 are stop-condition gates: if any answers `no`, classify as `scope-pressure` or `hold|blocker` before proof work. Gate 10 is the quality-obligation gate (not a stop gate): when it enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Tester-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged user-run-path, tool-basis, closure/oracle row, scenario boundary, and state-postcondition.
 ### User-Perspective Gate

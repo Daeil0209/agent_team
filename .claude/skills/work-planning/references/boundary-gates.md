@@ -25,9 +25,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Known-owner status stays outside planning when it does not diagnose, audit, analyze, route, dispatch, mutate, size burden, or support a stronger claim.
 - Planning belongs at boundary creation.
 - Planning does not reopen for every internal correction.
-- Same-artifact correction loops stay with the active workflow owner when all boundaries stay unchanged.
-- Same-artifact review loops stay with the active workflow owner when all boundaries stay unchanged.
-- Same-artifact revision loops stay with the active workflow owner when all boundaries stay unchanged.
+- Same-artifact correction, review, and revision loops stay with the active workflow owner when all boundaries stay unchanged.
 - `answer-only` is a direct answer with no tool use, artifact judgment, route change, dispatch, mutation, acceptance, or stronger claim.
 - `answer-only` stays outside planning unless it assigns, reopens, or changes consequential work.
 - Verification/status audit stays outside planning only while it does not assign correction, dispatch, mutation, acceptance, report expansion, or a changed work boundary.

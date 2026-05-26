@@ -51,6 +51,7 @@ Every assignment-grade work packet carries:
 - Receiving lanes include reviewer, validator, tester, researcher, and any non-developer lane that produces a retained-output artifact.
 - Allowed prefixes are the frozen `RETAINED-OUTPUT-PATH` and `claude_doc/<work-name>/` plus declared sub-paths.
 - Runtime write guards consume the frozen retained carrier registry and allow a non-developer lane write to its own `RETAINED-OUTPUT-PATH`.
+- Non-developer lanes (researcher / reviewer / tester / validator) carry `Edit`/`MultiEdit` for self-correction loops on their own carrier per `Skill(self-verification)` Step 5 Recorrection; `Edit`/`MultiEdit` scope follows the same `WRITE-SCOPE` boundary as `Write`.
 - Paths outside these prefixes are out-of-scope for `Write`, `Edit`, `MultiEdit`, and `Bash` artifact mutation.
 - Missing `WRITE-SCOPE` on a write-producing lane packet defaults to the frozen `RETAINED-OUTPUT-PATH` only.
 - Ambiguous `WRITE-SCOPE` routes to `scope-pressure`.

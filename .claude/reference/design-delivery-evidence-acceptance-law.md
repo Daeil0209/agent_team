@@ -129,7 +129,7 @@ Prove user-surface behavior on the user surface.
 ## Acceptance Rules
 - Reviewer evidence feeds validation.
 - Tester evidence feeds validation.
-- `validator` owns final acceptance and issues final `PASS/HOLD/FAIL`.
+- Final-acceptance ownership and `PASS/HOLD/FAIL` issuance authority per `.claude/reference/judgment-core-law.md` `## Acceptance Law`.
 - Local closure report exception is owned by `.claude/reference/reporting-prohibition-law.md`.
 - Local `final verified result` closure is valid only when no final-arbitration trigger applies and the report avoids final acceptance or `PASS/HOLD/FAIL` wording.
 - Final-arbitration trigger definitions live in `.claude/skills/agent-validator/references/validator-lane-detail.md` `## Final-Arbitration Trigger Definitions`.

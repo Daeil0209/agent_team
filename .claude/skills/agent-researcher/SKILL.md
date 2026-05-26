@@ -24,7 +24,7 @@ Before any work:
 5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 7. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can research still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
-If any answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before research. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
+Gates 1-6 are stop-condition gates: if any answers `no`, classify as `scope-pressure` or `hold|blocker` before research. Gate 7 is the quality-obligation gate (not a stop gate): when it enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
@@ -53,8 +53,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 - See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 
 ## Research Modes
-- `RESEARCH-MODE` indicates `bounded`, `deep`, or `sharded` dispatch shape.
-- Coverage lenses are selected by material evidence need:
+- `RESEARCH-MODE` indicates `bounded`, `deep`, or `sharded` dispatch shape (frozen by team-lead at planning).
+- Coverage lenses are selected by material evidence need; lens-vs-mode are orthogonal (mode = dispatch shape; lens = evidence depth) but with default alignment: `bounded` mode defaults to `bounded-core` lens; `deep` mode defaults to `deep-evidence` lens; `sharded` mode defaults to `sharded-surface` lens; `benchmark-perspective` lens activates regardless of mode when the trigger fires below.
   - `bounded-core`: direct answer path, decisive source anchors, and smallest truthful evidence boundary.
   - `deep-evidence`: contradictions, counterexamples, source-family breadth, freshness, authority, and confidence downgrade.
   - `sharded-surface`: independent question axes, source families, domains, or decision targets.
@@ -71,7 +71,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - When benchmark perspective is active, keep the benchmark comparison frame explicit rather than implied.
 - Classify the search as `lookup`, `learn`, `investigate`, or benchmark-perspective.
 - Select benchmark-perspective when external best practice, methodology selection, comparative evidence, capability hardening, or evolving current practice materially affects the decision target.
-- The material trigger overrides packet mode wording.
+- If a material benchmark-perspective trigger contradicts the packet `RESEARCH-MODE` field frozen by team-lead, send `scope-pressure` with `PRESSURE-TYPE: research-mode-conflict` and `CORRECTION-OUTCOME: packet-correction`; the researcher does not unilaterally change the frozen mode.
 ### 3. Required Skill Consumption And Recommendations
 - Select `benchmark-simulation` when the assigned research surface requires benchmark perspective.
 - Benchmark-simulation supplies method; researcher output remains evidence input and does not move route, proof, or final-acceptance ownership.

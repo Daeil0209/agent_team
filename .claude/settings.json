@@ -34,11 +34,8 @@
       "TaskStop",
       "TeamCreate",
       "TeamDelete",
-      "EnterWorktree",
-      "ExitWorktree",
       "CronCreate",
-      "CronDelete",
-      "CronList"
+      "CronDelete"
     ],
     "ask": [],
     "deny": [
@@ -121,6 +118,27 @@
           {
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/tmux-kill-block.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-envelope-gate.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/assistant-response-curtain-gate.sh",
             "timeout": 5
           }
         ]

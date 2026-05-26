@@ -56,7 +56,7 @@ Activate when the frozen scope materially includes any of:
 - benchmark-simulation synthesis when external examples or best-practice claims materially shape the pattern
 - software architecture, document automation, engineering, math, visual, proof, or validation contracts when already frozen
 ## Outputs
-Preferred output: `work_tool_pattern_packet`.
+Required output: `work_tool_pattern_packet`.
 
 Keep the packet compact:
 - tool family and operator job

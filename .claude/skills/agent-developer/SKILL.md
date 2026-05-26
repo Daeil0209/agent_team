@@ -24,7 +24,7 @@ Before any work:
 5. Lane action: are the first lane action and stop condition explicit enough to govern execution?
 6. Feasibility: can this be completed inside the declared boundary with an available lawful production path?
 7. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can production still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
-If any answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before production. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
+Gates 1-6 are stop-condition gates: if any answers `no`, classify as `scope-pressure` or `hold|blocker` before production. Gate 7 is the quality-obligation gate (not a stop gate): when it enables default-resolved continuation, proceed with marked inference rather than escalate.
 Execution bias applies only after packet classification opens `execute` or `reconstruct-with-inference`: developer must actively find and use the first lawful production path that can satisfy the user instruction.
 Constraints start the team-lead resolution loop.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
@@ -91,7 +91,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Name the first lane action.
 - Name the stop condition.
 - Production proceeds only on `execute` or `reconstruct-with-inference`.
-PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment rule chain restates `.claude/agents/developer.md` lines 49-58 and `references/developer-lane-detail.md` lines 47-48 because developer lane consumes these rules in isolation context when encountering a constraint during production; defense-in-depth restatement.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment rule chain restates `.claude/agents/developer.md` `### IR-2. Non-Negotiable Boundary` constraint-resolution-trigger rule and `references/developer-lane-detail.md` `## Completion Completeness Challenge` stop-not-abandonment phrase because developer lane consumes these rules in isolation context when encountering a constraint during production; defense-in-depth restatement.
 - `scope-pressure` and `hold|blocker` stop only the unsafe current path.
 - They open the team-lead resolution loop.
 - They are not task abandonment.

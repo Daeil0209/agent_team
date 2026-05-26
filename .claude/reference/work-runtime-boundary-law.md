@@ -127,7 +127,7 @@ Non-owner tool output routes these claims to the owning procedure:
 - `settings.json` `permissions.defaultMode: bypassPermissions` is the project operator-policy posture for allowed tools; it removes permission-UI prompts but does not waive destructive, security-sensitive, hook/settings enforcement-expansion, or operator-policy approval rules.
 - Treat external MCP as capability.
 - Treat external review tools as capability.
-- Fetch deferred-tool schemas via `ToolSearch` before first call when a deferred tool is material to the route.
+- Fetch tool schemas via `ToolSearch` before first call when the tool's schema is not currently loaded in the active session AND the tool is material to the route.
 - Runtime-boundary claims keep ownership with the governing role, skill, lane, or sequence.
 - Route blocker decisions to the owning procedure.
 - Route dispatch decisions to the owning procedure.

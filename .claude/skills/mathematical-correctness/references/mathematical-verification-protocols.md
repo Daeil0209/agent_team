@@ -9,6 +9,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # Reference Material
 ## Responsibilities: Reference Protocols
 ### Analytical Solution Verification Protocol
+#### Non-ODE Analytical Families
 Non-ODE analytical families (Laplace transforms, Fourier series, PDE separation of variables, eigenvalue problems) verify with the same-rigor checklist: step justification per `## Derivation Rigor Standards`; HOLD on unverified existence/uniqueness; back-substitution validation per family.
 #### ODE Exactness Verification
 **Exactness test checklist:**

@@ -46,6 +46,13 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy P
 2. Reconstruct the original basis and compare it against current doctrine, evidence, and active boundary.
 3. Open the correcting owner when the basis is missing, stale, speculative, contradictory, or routed to the wrong owner.
 4. Preserve the decision only when current evidence still supports it; then continue the next executable owner/action.
+5. **Self-revision after correction (operational expression of identity attribute (g) Self-revising)**: classify the user correction into one of two cases.
+   - Case (A): the correction points to a rule already codified in upper philosophy (`.claude/CLAUDE.md` §1-8) or mapped core law that the active owner failed to consume or apply. Most user corrections are case (A).
+   - Case (B): the correction reveals a genuine governance gap not covered by existing rules.
+   - Case-A judgment requires explicit citation of the existing-rule surface (`<file>:<line/section>`) that the active owner failed to apply. Absent that citation, the correction is misclassified and the lane defaults to case-B treatment.
+   - For case (A), the correction is a recurrence-barrier installation trigger: identify the narrowest consumed-surface owner where the application failure occurred, then install hardening at that surface (clarify the existing rule's consumption gate, strengthen the trigger condition, tighten the executable-imperative wording, or add an explicit pre-action check) so the same application failure does not require future user correction.
+   - For case (A), do NOT create new over-engineered governance rules, supplemental verification axes, or duplicate definitions when existing rules already cover the correction — that is duplicate-without-basis defect per `.claude/reference/modification-core-law.md` `## Modification Law`.
+   - For case (B), proceed with normal `Skill(governance-modification)` patch design.
 
 ## Resolve Next Owner And Action
 - If an interrupt can obscure resume and no frame exists, capture the minimum resume frame, then continue the interrupt path.

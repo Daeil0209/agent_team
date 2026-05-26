@@ -96,6 +96,17 @@ Use only the lenses that materially affect the assigned surface.
 
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
 
+Cross-vocabulary translation (this is the canonical severity owner; other surfaces translate to/from these tiers):
+
+| Reviewer canonical | Security T0-T3 | Audit schema | Codex independent review | Code-quality RFP |
+|---|---|---|---|---|
+| Critical | T0 | blocking | high | non-mappable (RFP uses size-threshold severity, not blocking tier) |
+| Major | T1 | material | medium (high if user-harm risk) | non-mappable |
+| Minor | T2 (single) / T1-equivalent (cumulative 3+ T2 with exploitability basis) | minor | medium / low | RFP-1 / RFP-2 / RFP-3 per file-size thresholds |
+| Advisory | T3 | n/a (audit lane ceiling = candidate-classified, not advisory) | low | n/a |
+
+Translation rules: (a) Security severity uses T0-T3 per `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; T2 cumulative thresholding aggregates 3+ unresolved T2 findings to T1-equivalent only when cumulative-exploitability basis is documented. (b) Codex packet severity (`high|medium|low` per `.claude/skills/codex-independent-review/references/common-contract.md`) translates to reviewer canonical at team-lead synthesis ingress. (c) Audit-schema severity (`blocking|material|minor` per `claude_doc/governance-defect-audit/shared-context.md` schema) translates at synthesis time. (d) Code-quality RFP-1/RFP-2/RFP-3 thresholds are file-size signals, not severity tiers; they coexist with Minor severity rather than mapping.
+
 ## Specialist Skill Loading
 Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
 Before severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.

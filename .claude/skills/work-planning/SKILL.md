@@ -82,7 +82,7 @@ Use `references/boundary-gates.md` for activation scope, corpus measurement, sam
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
 Governance defect, removal, and preservation judgment is planned as bounded review/verification rows.
-Synthesized-result judgment goes through `Skill(self-verification)` first.
+Synthesized-result judgment goes through `Skill(self-verification)` first; `Skill(self-verification)` Step 3 loads `Skill(review-verification)` for PASS-2 produced-result truth before reporting, governance-asset `Skill(governance-modification)`, or redispatch.
 Governance patch design and mutation go through `Skill(governance-modification)` and its `REVIEW-VERIFICATION-NEED` only after a current review basis verifies governance asset-change or recurrence-barrier need.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
@@ -102,6 +102,7 @@ Freeze these before route judgment:
 - `DERIVED-DEFAULTS`
 - blockers
 - request-bound packet fields
+- Multi-reading enumeration: when the user wording supports more than one reading along owner-coverage, scope-coverage, participant-coverage, or action-coverage axes, enumerate the alternative readings; freeze the reading that maximally covers user-stated goals per `.claude/agents/team-lead.md` `## Intent Comprehension Stance` rule 2; record the rejected reading and the user-stated goal that reading would narrow.
 
 `CONCRETE-DELIVERABLE` and `PRIMARY-USER` determine deliverable type, delivery shape, defaults, and type triggers.
 `DERIVED-DEFAULTS` determine receiver job, consumption path, decisive proof surface, and request-bound packet fields.
@@ -144,15 +145,8 @@ Before scope freeze, answer:
 Hold when purpose, `SEMANTIC-INTENT-BASIS`, work type, owner, workflow/sequence, surface count, or skill basis lacks truthful naming basis.
 
 Parallel law:
-- See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
-- Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`.
-- Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, teammate coordination, independent specialist-fit surfaces, or additional-agent routing.
-- Classify considered `Agent` tool use, independent specialist-fit surfaces, or additional-agent routing through `references/team-runtime-fit.md` before route freeze: assignment-grade or lane work freezes team-agent runtime route; lawful evidence-only standalone use freezes a lead-local evidence purpose with no lane-state promise.
-- Freeze `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
-- Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
-- A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
-- Additional-agent dispatch freezes the team-agent runtime route basis; runtime creation or reuse execution is decided later by `task-execution` from `runtime-dispatch-law.md`.
-- Dispatch-ready planning is invalid when independent specialist-fit, parallel-fit, configured lane work, or additional-agent routing is present without a frozen team-runtime route basis; lawful lead-local evidence-only standalone use is valid only when none of those team-runtime disqualifiers is active.
+- Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`. Independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, serial-basis evidence, cap-exceed routing, and dispatch-ready invalidity rules live there.
+- Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, teammate coordination, independent specialist-fit surfaces, or additional-agent routing. Team-runtime route basis and lawful evidence-only standalone classification live there.
 
 User-surface law:
 - If truthful proof or acceptance is blocked by a missing user-facing surface or tool path, freeze one bounded next step: `Skill(tool-acquisition)` for local discovery/setup, `Skill(external-tool-bridge)` for external bridge risk, the named setup owner, or blocker with bounded discovery/setup fields.
@@ -171,7 +165,8 @@ Keep governance audit, candidate discovery, defect promotion, and proposal-only 
 `Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
 The termination path names only deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker as terminal states.
-Lead-authored waves, batches, samples, priority tiers, category rows, pattern rows, theme rows, summaries, or work-item rows satisfy organization, ordering, or follow-on execution only; they do not replace a finer opened closure unit or permit phase closure without preserving source-unit coverage.
+Lead-authored organizational rows (waves, batches, samples, priority tiers, category rows, pattern rows, theme rows, summaries, work-item rows) satisfy organization, ordering, or follow-on execution only.
+Organizational rows do not replace a finer opened closure unit and do not permit phase closure without preserving source-unit coverage.
 Governance defect or removal audits keep corpus inspection, review-promotion, and lead synthesis as separate rows; patch scope adds a separate governance-modification patch-loop row.
 
 ## Step 4: Freeze Scope And Route
@@ -234,8 +229,7 @@ Reopen `work-planning` when the frozen target, route, readiness basis, or next a
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
-- A team-routed or ambiguous route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-- A team-routed or ambiguous route opens loaded `task-execution` consumption when the same-session `task-execution` basis exists.
+- A team-routed or ambiguous route opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 - A missing freeze field reopens `work-planning`.
 - A blocker-clear plan opens the named blocker-clear move.
 - `HOLD` records planning owner, blocker, and next safe evidence step.

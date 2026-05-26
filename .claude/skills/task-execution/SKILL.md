@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Reference Map stays inside Purpose.
 ## Purpose
 Run frozen additional-agent execution after planning is complete.
-Load at most once per Claude session, and only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
+Load `Skill(task-execution)` at most once per Claude session by default; reload when current session-loaded basis is stale per the staleness rule in `## Activation` below. Load triggers are assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
 When active, it handles dispatch packet assembly, dispatch-bound binding-surface materialization, send truth, runtime creation/launch, and dispatch interruption state.
 Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
@@ -43,8 +43,12 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/dispatch-recovery.md`: interruption points, resume owner/action, duplicate-send prevention, and compaction recovery.
 - `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
+- `.claude/reference/work-skill-reference-binding-law.md`: load for skill staleness rule, packet field vs loaded skill law conflict resolution, applied-rule mapping consumption, and reference binding semantics.
 ## Activation
-Load `Skill(task-execution)` at most once per Claude session when the first frozen dispatch, reuse, blocker-clear, or standalone-result classification path requires it and no current same-session `task-execution` load exists.
+Load `Skill(task-execution)` at most once per Claude session while same-session-loaded basis remains non-stale per the staleness rule below in this file.
+First-load trigger: a frozen dispatch, reuse, blocker-clear, or standalone-result classification path requires `task-execution` AND no current same-session `task-execution` load exists.
+Stale basis reloads the skill per the staleness rule.
+A second load under staleness conditions is not a "second activation".
 After current same-session `task-execution` load exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded skill instead of another `Skill(task-execution)` call.
 Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; current same-session `task-execution` load basis remains reusable under the activation rule.
 `task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session.
@@ -136,7 +140,8 @@ Dispatch law:
 - Runtime cleanup uses structured `shutdown_request`.
 - Match each `SendMessage` to the exact class or structured payload defined by its reference.
 - `SendMessage`, task state, and retained carrier delivery carry assignment-grade teammate output.
-- Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block; `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
+- Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block.
+- `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
 - Details required only by that block stay in its packet, task state, retained carrier, or lane-local context.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.

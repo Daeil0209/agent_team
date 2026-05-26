@@ -4,6 +4,7 @@ SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Reporting Philosophy"
 LOAD-POLICY: mandatory before any user-facing report
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
+PROTECTED-CURTAIN-SURFACE: entire file. Removal-first / consolidate / tighten / reduce / sweep operations require validator pre-approval + user notification per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`.
 ---
 # 7. Reporting Core Law
 ## Reference Map
@@ -14,14 +15,21 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Reporting Plane Law
 - Reporting Plane is owned by `.claude/reference/reporting-prohibition-law.md`.
 - `team-lead` owns every user-facing report attempt and consumes that law before drafting.
-- Report prohibition and narrow exceptions follow content semantics, not visual format.
-- Renderable assistant-authored tool or channel fields are reporting-law surfaces even when they carry Procedure Plane or Communication Plane labels.
 - A work-execution closure basis is necessary for turn-ending prose but never admits visible prose by itself; reporting-prohibition law still decides every renderable user-facing output.
 - Non-reportable forms are owned by `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content`; detailed transport surfaces stay with their named owners.
 - The common completion spine, retained-output carrier rules, and completion-grade convergence/verification gate live in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Restating report prohibition, narrow exceptions, transport-boundary content, or message-class semantics outside the named owners is a single-source-of-truth defect.
 - Report prose rules limit user-facing prose only; they do not limit Procedure Plane or Communication Plane payloads.
-- Report technical enforcement only from runtime or settings evidence.
+- Per `.claude/CLAUDE.md` `## 7. Reporting Philosophy` technical-enforcement evidence rule, user-facing technical-enforcement reports rest only on runtime or settings evidence.
+
+## Constitutional 4-Invariant Detail
+Per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain`, four invariants govern the reporting curtain and have executable detail here.
+- Invariant (a) topmost: any owner consuming governance for an assistant-authored emission decision consumes the constitutional curtain section first, before §1-§8 philosophy chain, before mapped core laws, before skills, before references, before role bodies. Startup contracts citing `.claude/reference/reporting-core-law.md` and `.claude/reference/reporting-prohibition-law.md` before visible prose remain in effect; topmost invariant means the constitutional section of CLAUDE.md is consumed before everything else.
+- Invariant (b) independent: curtain enforcement does not depend on which other governance is loaded, which skill is active, which workflow phase is running, which assignment is in flight, or which user redirect occurred. Curtain stays the same shape across every internal state.
+- Invariant (c) priority: at every controllable emission moment (turn-ending prose, outgoing `SendMessage` rendered envelope, process-spawn prompts), the Pre-Report Gate test is applied first; result determines whether prose composition proceeds.
+- Invariant (d) always-maintained: any governance patch that would affect a Constitutional Curtain Protection enumerated surface requires `Skill(governance-modification)` review-verification packet + validator pre-approval + user notification per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`.
+- Operational anchor for "controllable emission moments": (1) turn-ending main response visible body, (2) `SendMessage` `summary` + `message` rendered to user-visible UI, (3) `Agent` / `TeamCreate` member-creation `prompt` rendered to user-visible UI. Uncontrollable surfaces (tool result rendering, host system reminders, harness-generated rows, teammate notifications routed through host UI) are out of scope.
+- Operational anchor for atomic-test at emission moment: before composing visible prose on a controllable surface, the assistant tests Pre-Report Gate rows 1-9 in `.claude/reference/reporting-prohibition-law.md` against the candidate emission. Candidate is admitted only when `REPORT-REASON` is exactly one of the 4 admitted classes AND every applicable row passes. Otherwise the candidate is suppressed and the assistant continues the active Procedure Plane action.
 
 ## Resolve Next Owner And Action
 - Any user-facing prose attempt opens `.claude/reference/reporting-prohibition-law.md` before drafting.

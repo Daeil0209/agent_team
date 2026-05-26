@@ -50,7 +50,7 @@ Learner-facing visual or rendered page-read artifacts still need both text/instr
 Before dense fill, keep lesson concept, page/slide role, explanation object, prerequisite map, and reveal order explicit.
 Keep longer pedagogical catalogs and worked-example detail in `references/pedagogy-detail.md`.
 ## Operational Discipline
-- Learner burden is the primary constraint; over-dense teaching material is a structural defect.
+- Learner burden is the primary constraint; teaching material that exceeds the frozen `PACING-LIMIT` / `CONCEPTS-PER-UNIT` from `references/pedagogy-detail.md` (default: one new concept per instructional unit) is a structural defect.
 - Overview, core content, and mastery-level detail remain distinct density layers.
 - Every educational visual serves one pedagogical role.
 - Freeze curriculum and lesson structure before bulk content generation.

@@ -24,7 +24,7 @@ Standard response patterns for external service failures:
 - **Circuit breaker**: repeated consecutive failures to the same endpoint with unchanged route stop further attempts. Report service-level block.
 - **Fallback escalation**: when primary bridge fails, attempt fallback path if defined. If no fallback defined, this is a bridge design defect — report it as such
 All failure states must produce a structured blocked-condition report, not a generic error message.
-Allowed setup means bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen proof or delivery path.
+Allowed setup classification is owned by `.claude/skills/work-planning/references/execution-readiness.md` `Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path` rule; bridge work consumes that canonical classification (the bridge-specific examples below remain bridge-domain illustrations of approval-required vs allowed-setup categories).
 Standard font packages, browser runtime/cache, and equivalent local tool prerequisites run under a frozen allowed-setup boundary.
 The following are approval-required or blocked by default:
 - Docker Desktop-class installers

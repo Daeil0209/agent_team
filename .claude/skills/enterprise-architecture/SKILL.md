@@ -27,7 +27,7 @@ Load when enterprise-scale work depends on credible layer separation, bounded co
 - require design documents before implementation on materially risky or multi-service changes
 - detect anti-pattern normalization, layer leakage, and architecture-vs-implementation drift
 - keep explicit that verification, direction, and quality bar must exist before enterprise-scale implementation proceeds
-- Report `hold|blocker` when:
+- Report `hold|blocker` when (operational test for `too weak`: the listed item cannot be enumerated as a named gate, named upstream-to-downstream trace link, or named layer boundary respectively):
   - readiness is too weak for safe enterprise delivery
   - design traceability is too weak for safe enterprise delivery
   - boundary credibility is too weak for safe enterprise delivery

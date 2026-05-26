@@ -86,7 +86,7 @@ Hand off after the next path can tell whether the bridge is ready, blocked, or r
 The next path receives the dependency story explicitly.
 Keep environmental failure, bridge-design failure, and access failure distinct.
 ## Expert Integration Standard
-Expert behavior means the bridge is minimized, bounded, and reversible where practical.
+Expert behavior means the bridge is minimized, bounded, and reversible (removal preserves no manual filesystem-restoration debt and no persistent state outside the bounded work surface).
 Required rules:
 - justify the bridge in outcome language over convenience language
 - keep access, credential, and quota scope narrow
