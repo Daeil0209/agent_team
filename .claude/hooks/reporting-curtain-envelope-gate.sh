@@ -100,7 +100,7 @@ fi
 # upward state class, custom meeting class (critique-request,
 # critique-response, discussion-entry, verdict), peer evidence, or any
 # other non-assignment-delivery class.
-MEETING_LEAK_RE='(FINDING-STATE-LADDER-SUMMARY|FINDING-STATE-INVENTORY|PATCH-WORTHINESS:|META-CONCERN:|OPINION-ROUND PROMPT|DRAFTER MEETING-AUDIT-CRITERIA|MEETING-AUDIT-CRITERIA REASSESSMENT|CITATION-EVIDENCE-INVENTORY|LENSES-APPLIED:|LANE-NEXT-CANDIDATE:|WORKFLOW-COVERAGE:|FOLD-FORWARD:|OPERATOR-DIRECTIVE COMPLIANCE|SELF-VERIFICATION:[[:space:]]*PASS|PASS-1[[:space:]]*pass|PASS-2[[:space:]]*pass|CONVERGENCE-PASS|review_verification_packet|REVIEW-VERIFICATION-LENSES:|PREREQ-STATE:|UPSTREAM-DECISION-BASIS-CONSUMPTION:|VERIFIED-DATA-FEEDBACK:|defeater-test record|raw-candidate:|confirmed-defect:[[:space:]]*[0-9]+|candidate-classified:[[:space:]]*[0-9]+)'
+MEETING_LEAK_RE='(FINDING-STATE-LADDER-SUMMARY|FINDING-STATE-INVENTORY|PATCH-WORTHINESS:|META-CONCERN:|OPINION-ROUND PROMPT|DRAFTER MEETING-AUDIT-CRITERIA|MEETING-AUDIT-CRITERIA REASSESSMENT|CITATION-EVIDENCE-INVENTORY|LENSES-APPLIED:|LANE-NEXT-CANDIDATE:|WORKFLOW-COVERAGE:|FOLD-FORWARD:|OPERATOR-DIRECTIVE COMPLIANCE|SELF-VERIFICATION:[[:space:]]*PASS|PASS-1[[:space:]]*pass|PASS-2[[:space:]]*pass|CONVERGENCE-PASS|review_verification_packet|REVIEW-VERIFICATION-LENSES:|PREREQ-STATE:|UPSTREAM-DECISION-BASIS-CONSUMPTION:|VERIFIED-DATA-FEEDBACK:|defeater-test record|raw-candidate:|confirmed-defect:[[:space:]]*[0-9]+|candidate-classified:[[:space:]]*[0-9]+|OUTPUT-SURFACE:|LANE-LOCAL-RESULT-VERIFICATION:|RESOURCE-CLEANUP:|SCOPE-COVERAGE:|OPERATOR-NAIVE-COMPREHENSION-AUDIT:|IMAGE-INSPECTION-RECORD:|TOOL-EXECUTION-EVIDENCE:|TOOL-PATH-USED:|USER-SURFACE-PROOF-METHOD:|USER-RUN-PATH:|RUN-PATH-STATUS:|INTERACTION-COVERAGE:|BURDEN-STATUS:|BLOCKING-FINDINGS:|REVIEWED-SURFACE:|REVIEW-STATE:|TEST-STATE:|VERDICT:[[:space:]]*(PASS|FAIL|HOLD)|PROOF-VERDICT:|PROOF-RESULT:|PROOF-METHOD:|FROZEN-CONTRACT-STATUS:|SKILL-FIELD-CONSUMPTION:|PLANNING-BASIS:[[:space:]]*loaded|EX-[0-9]+[[:space:]]*(PASS|FAIL|DENIED|ALLOWED)|EVIDENCE-BASIS:[[:space:]]*[A-Z])'
 
 if printf '%s' "$INPUT_JSON" | grep -qE "$MEETING_LEAK_RE"; then
   cat <<'EOF'
@@ -122,7 +122,7 @@ fi
 # curtain-violating. Downward delivery legitimately carries packet floor
 # fields; non-downward bodies must be canonical envelope (empty / single
 # space / short carrier pointer ≤ 3 lines) per the non-state-class rule.
-CURTAIN_BODY_MAX_NL=4
+CURTAIN_BODY_MAX_NL=3
 DOWNWARD_HEADER_RE='"message"[[:space:]]*:[[:space:]]*"MESSAGE-CLASS:[[:space:]]*(assignment|reuse|reroute|phase-transition-control)'
 # Count escaped newlines (\n) inside the JSON-encoded "message" body.
 BODY_NL_COUNT=$(printf '%s' "$INPUT_JSON" | grep -oE '"message"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -oE '\\n' | wc -l)
