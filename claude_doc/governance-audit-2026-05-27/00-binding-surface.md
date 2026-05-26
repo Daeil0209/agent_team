@@ -141,7 +141,7 @@ Output carrier: `claude_doc/governance-audit-2026-05-27/shards/shard-d-domain-an
 Owner: reviewer (shard-e — reuse one member)
 CLAIM-CEILING: evidence-only candidates
 Files:
-- `.claude/hooks/*.sh` (28 hooks, 5,290 lines)
+- `.claude/hooks/*.sh` (27 hooks, 5,290 lines)
 - `.claude/hooks/MANIFEST.md` (154)
 - `.claude/settings.json` (202)
 - `.claude/settings.local.json` (8)

@@ -51,7 +51,7 @@ Use `MESSAGE-CLASS: hold|blocker` (per `.claude/skills/task-execution/references
 |---|---|---|
 | Urgent (RFP-1) | Files >300 lines, nesting >5 levels, same logic in 4+ places | Refactor before next feature when harm is demonstrated; otherwise record urgent risk |
 | High (RFP-2) | Files >200 lines, nesting >4 levels, same logic in 3 places | Refactor in current sprint |
-| Medium (RFP-3) | Complex conditionals, unclear naming, missing type annotations | Schedule refactoring; record as technical debt |
+| Medium (RFP-3) | Cyclomatic complexity >10 or nesting depth >3 in a single function; 2-letter variables or abbreviations without expansion comment; missing type annotations on public interface signatures | Schedule refactoring; record as technical debt |
 | Low | Style inconsistencies, minor naming issues | Record for future cleanup |
 Apply this matrix during review.
 RFP-1 and RFP-2 triggers require explicit owner assignment and resolution path before merge approval.
