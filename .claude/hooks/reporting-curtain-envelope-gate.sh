@@ -90,38 +90,27 @@ if ! printf '%s' "$INPUT_JSON" | grep -qE '"tool_name"[[:space:]]*:[[:space:]]*"
   exit 0
 fi
 
-# Secondary check FIRST (PART A — bulk meeting/critique inventory markers):
-# Any SendMessage body carrying these markers, regardless of MESSAGE-CLASS,
-# is a curtain violation. Markers MUST live in retained carriers per
+# Generalized non-downward body discipline: prior over-specific marker
+# allow-list (PART A) removed per operator directive "패치는 일반화 되어야"
+# (patches must be generalized). The over-specific marker enumeration
+# (FINDING-STATE-LADDER-SUMMARY / PATCH-WORTHINESS / META-CONCERN / etc.)
+# was a brittle whack-a-mole pattern that ALSO false-positive-blocked
+# legitimate canonical short tokens like `VERDICT: PASS` that
 # .claude/skills/task-execution/references/message-classes.md
-# ### Transport Payload non-state-class rule and
-# .claude/skills/team-meeting/SKILL.md ### 3-4a. Meeting Transport
-# Envelope Discipline. Applies regardless of whether the message is
-# upward state class, custom meeting class (critique-request,
-# critique-response, discussion-entry, verdict), peer evidence, or any
-# other non-assignment-delivery class.
-MEETING_LEAK_RE='(FINDING-STATE-LADDER-SUMMARY|FINDING-STATE-INVENTORY|PATCH-WORTHINESS:|META-CONCERN:|OPINION-ROUND PROMPT|DRAFTER MEETING-AUDIT-CRITERIA|MEETING-AUDIT-CRITERIA REASSESSMENT|CITATION-EVIDENCE-INVENTORY|LENSES-APPLIED:|LANE-NEXT-CANDIDATE:|WORKFLOW-COVERAGE:|FOLD-FORWARD:|OPERATOR-DIRECTIVE COMPLIANCE|SELF-VERIFICATION:[[:space:]]*PASS|PASS-1[[:space:]]*pass|PASS-2[[:space:]]*pass|CONVERGENCE-PASS|review_verification_packet|REVIEW-VERIFICATION-LENSES:|PREREQ-STATE:|UPSTREAM-DECISION-BASIS-CONSUMPTION:|VERIFIED-DATA-FEEDBACK:|defeater-test record|raw-candidate:|confirmed-defect:[[:space:]]*[0-9]+|candidate-classified:[[:space:]]*[0-9]+|OUTPUT-SURFACE:|LANE-LOCAL-RESULT-VERIFICATION:|RESOURCE-CLEANUP:|SCOPE-COVERAGE:|OPERATOR-NAIVE-COMPREHENSION-AUDIT:|IMAGE-INSPECTION-RECORD:|TOOL-EXECUTION-EVIDENCE:|TOOL-PATH-USED:|USER-SURFACE-PROOF-METHOD:|USER-RUN-PATH:|RUN-PATH-STATUS:|INTERACTION-COVERAGE:|BURDEN-STATUS:|BLOCKING-FINDINGS:|REVIEWED-SURFACE:|REVIEW-STATE:|TEST-STATE:|VERDICT:[[:space:]]*(PASS|FAIL|HOLD)|PROOF-VERDICT:|PROOF-RESULT:|PROOF-METHOD:|FROZEN-CONTRACT-STATUS:|SKILL-FIELD-CONSUMPTION:|PLANNING-BASIS:[[:space:]]*loaded|EX-[0-9]+[[:space:]]*(PASS|FAIL|DENIED|ALLOWED)|EVIDENCE-BASIS:[[:space:]]*[A-Z])'
+# `### Transport Payload` explicitly cites as canonical envelope examples.
+# Generalized enforcement now lives in PART C (non-downward body allow-list)
+# below: any non-canonical body line in non-downward delivery is rejected
+# by structural rule, not by specific marker name. Downward delivery is
+# producer-authored by team-lead under identity-layer Curtained Communication
+# discipline and the downward packet schema governs body shape semantically.
 
-if printf '%s' "$INPUT_JSON" | grep -qE "$MEETING_LEAK_RE"; then
-  cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage body carries bulk meeting/critique/verification inventory markers (FINDING-STATE-LADDER-SUMMARY, FINDING-STATE-INVENTORY, PATCH-WORTHINESS, META-CONCERN, OPINION-ROUND PROMPT, DRAFTER MEETING-AUDIT-CRITERIA, MEETING-AUDIT-CRITERIA REASSESSMENT, CITATION-EVIDENCE-INVENTORY, LENSES-APPLIED, LANE-NEXT-CANDIDATE, WORKFLOW-COVERAGE, FOLD-FORWARD, OPERATOR-DIRECTIVE COMPLIANCE, SELF-VERIFICATION PASS records, PASS-1/PASS-2/CONVERGENCE-PASS claims, review_verification_packet, REVIEW-VERIFICATION-LENSES, PREREQ-STATE, UPSTREAM-DECISION-BASIS-CONSUMPTION, VERIFIED-DATA-FEEDBACK, defeater-test record, raw-candidate/confirmed-defect/candidate-classified counts) that MUST live in the retained carrier per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule and .claude/skills/team-meeting/SKILL.md '### 3-4a. Meeting Transport Envelope Discipline'. Recover by moving the inventory content to a retained carrier file and resending with canonical envelope: summary = brief class label + round/task pointer (e.g., 'critique-response r5 carrier-only'); message body = 1-3 lines naming the carrier path + brief intent label (e.g., 'CARRIER: claude_doc/.../critique-r5.md', 'STATE: candidate-classified-with-revision'); no inline opinion body, no inventory blocks, no inline rationale."
-  }
-}
-EOF
-  exit 0
-fi
-
-# Secondary check (PART B — bulk-body heuristic for non-downward-delivery
-# messages): any SendMessage whose body has more than CURTAIN_BODY_MAX_NL
-# newlines AND does NOT start with a downward delivery MESSAGE-CLASS
-# (assignment, reuse, reroute, phase-transition-control) is presumed
-# curtain-violating. Downward delivery legitimately carries packet floor
-# fields; non-downward bodies must be canonical envelope (empty / single
-# space / short carrier pointer ≤ 3 lines) per the non-state-class rule.
+# Bulk-body heuristic for non-downward-delivery messages (PART B): any
+# SendMessage whose body has more than CURTAIN_BODY_MAX_NL newlines
+# AND does NOT start with a downward delivery MESSAGE-CLASS (assignment,
+# reuse, reroute, phase-transition-control) is presumed curtain-violating.
+# Downward delivery legitimately carries packet floor fields; non-downward
+# bodies must be canonical envelope (empty / single space / short carrier
+# pointer ≤ 3 lines) per the non-state-class rule.
 CURTAIN_BODY_MAX_NL=3
 DOWNWARD_HEADER_RE='"message"[[:space:]]*:[[:space:]]*"MESSAGE-CLASS:[[:space:]]*(assignment|reuse|reroute|phase-transition-control)'
 # Count escaped newlines (\n) inside the JSON-encoded "message" body.
@@ -133,11 +122,54 @@ if [ "$BODY_NL_COUNT" -gt "$CURTAIN_BODY_MAX_NL" ]; then
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "deny",
-    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage body exceeds canonical envelope shape (>4 newlines) and is NOT a downward delivery class (assignment/reuse/reroute/phase-transition-control). Non-downward SendMessage must be canonical envelope per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule: summary = brief class label + task pointer; message body = empty, single ASCII space, OR ≤3 lines naming a CARRIER path plus brief intent label. Bulk body content (opinion, inventory, rationale, narrative) belongs in the retained carrier referenced by the envelope pointer, not in the SendMessage body. Recover by moving body content to a retained carrier file and resending with the canonical envelope shape."
+    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage body exceeds canonical envelope shape (>3 newlines) and is NOT a downward delivery class (assignment/reuse/reroute/phase-transition-control). Non-downward SendMessage must be canonical envelope per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule: summary = brief class label + task pointer; message body = empty, single ASCII space, OR ≤3 lines naming a CARRIER path plus brief intent label. Bulk body content (opinion, inventory, rationale, narrative) belongs in the retained carrier referenced by the envelope pointer, not in the SendMessage body. Recover by moving body content to a retained carrier file and resending with the canonical envelope shape."
   }
 }
 EOF
     exit 0
+  fi
+fi
+
+# Secondary check (PART C — non-downward-delivery body strict allow-list):
+# For non-downward delivery SendMessage, EVERY non-empty body line MUST start
+# with a canonical curtain-allowed KEY (CARRIER, STATE, ROUND, TURN, WAKE,
+# NEXT, FROM, TO, VERDICT, CRITIQUE, REDIRECT, REPORT-REASON, MESSAGE-CLASS,
+# TASK-ID, RETAINED-OUTPUT-PATH, UPSTREAM-DECISION-BASIS). Lines that contain
+# free-form substantive content (questions, answers, claims, opinions,
+# summaries, narratives) — any line not starting with an allowed KEY — fail
+# the curtain because the host runtime auto-renders teammate-message envelope
+# body into user-visible UI, exposing controllable substance to the user
+# surface. Substantive content MUST live in the retained carrier referenced
+# via CARRIER pointer; the SendMessage body is index-only.
+#
+# Downward delivery (assignment/reuse/reroute/phase-transition-control) is
+# exempt because the body legitimately carries packet floor fields that
+# follow the broader assignment-packet schema; team-lead authors those
+# downward packets and is the producer, not the user-surface consumer.
+NONDOWNWARD_BODY_ALLOWED_RE='^(CARRIER|STATE|ROUND|TURN|WAKE|NEXT|FROM|TO|VERDICT|CRITIQUE|REDIRECT|REPORT-REASON|MESSAGE-CLASS|TASK-ID|RETAINED-OUTPUT-PATH|UPSTREAM-DECISION-BASIS):[[:space:]]'
+
+if ! printf '%s' "$INPUT_JSON" | grep -qE "$DOWNWARD_HEADER_RE"; then
+  # Extract body content from JSON-encoded "message" field
+  BODY_RAW=$(printf '%s' "$INPUT_JSON" | grep -oE '"message"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed -E 's/^"message"[[:space:]]*:[[:space:]]*"//' | sed -E 's/"$//')
+  # Skip allow-list check for empty / single-space body (canonical empty envelope)
+  TRIMMED_BODY=$(printf '%s' "$BODY_RAW" | tr -d '[:space:]')
+  if [ -n "$TRIMMED_BODY" ]; then
+    # Convert escaped \n (JSON-encoded newlines) to actual newlines for line-by-line check
+    BODY_TEXT=$(printf '%s' "$BODY_RAW" | sed 's/\\n/\n/g')
+    # Find any non-empty line that does NOT start with allowed canonical KEY
+    NONCONFORMING_COUNT=$(printf '%s\n' "$BODY_TEXT" | grep -vE "$NONDOWNWARD_BODY_ALLOWED_RE" | grep -vcE '^[[:space:]]*$')
+    if [ "$NONCONFORMING_COUNT" -gt "0" ]; then
+      cat <<'EOF'
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "Reporting-curtain envelope violation: non-downward-delivery SendMessage body contains free-form substantive line(s) — line(s) not starting with a canonical curtain-allowed KEY. Per .claude/CLAUDE.md '## Constitutional Reporting Curtain' + .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule + .claude/skills/team-meeting/SKILL.md '### 3-4a. Discussion Envelope Form', non-downward SendMessage body MUST be empty, single ASCII space, OR consist ONLY of canonical KEY: value lines where KEY is in {CARRIER, STATE, ROUND, TURN, WAKE, NEXT, FROM, TO, VERDICT, CRITIQUE, REDIRECT, REPORT-REASON, MESSAGE-CLASS, TASK-ID, RETAINED-OUTPUT-PATH, UPSTREAM-DECISION-BASIS}. Free-form substantive content (questions, answers, claims, opinions, summaries, narratives, rationale, status-prose) lives in the retained carrier referenced via CARRIER pointer; the SendMessage body is index-only. Host runtime auto-renders teammate-message envelope body into user-visible UI; free-form body content therefore leaks meeting/work substance to the user surface, breaking the curtain. Recover by moving body content to a retained carrier file and resending with KEY-only envelope shape (e.g., 'CARRIER: claude_doc/.../log.md' + 'STATE: r1-T07-appended' + 'WAKE: drafter')."
+  }
+}
+EOF
+      exit 0
+    fi
   fi
 fi
 
