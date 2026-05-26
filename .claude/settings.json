@@ -131,6 +131,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Edit|MultiEdit|Write|SendMessage|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-consequential-action-skill-verification-gate.sh",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Stop": [

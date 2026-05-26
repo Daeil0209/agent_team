@@ -41,6 +41,7 @@ These files are wired directly from `../settings.json`.
 - `assistant-response-curtain-gate.sh`
 - `compliance-supervisor.sh`
 - `permission-request-gate.sh`
+- `pre-consequential-action-skill-verification-gate.sh` — PreToolUse on Edit/MultiEdit/Write/SendMessage/Bash; enforces structural essence-discipline (Skill(governance-modification) load evidence on .claude/* mutation; DISPATCH-AUTHORIZATION-BASIS on assignment-grade SendMessage; tester/validator/reviewer routing on test/proof/validation Bash patterns with codex/read-equivalent/diagnostic carve-outs). Approval basis: team-meeting `team-lead-essence-discipline` r2 4/4 critic CONSENT (carrier: claude_doc/governance-audit-2026-05-27/meetings/team-lead-essence-discipline/draft-r2.md) + Hook-Last review.
 - `reporting-curtain-envelope-gate.sh`
 - `session-end.sh`
 - `session-start.sh`
