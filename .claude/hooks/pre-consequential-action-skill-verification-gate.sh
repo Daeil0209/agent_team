@@ -157,43 +157,27 @@ fi
 
 # ============================================================================
 # Branch 3: Bash test/proof/validation pattern detection
-# Check: command matches test-runner pattern AND not in carve-out
-# Recommend: route to tester / validator lane per §6
+# STATUS: ADVISORY-ONLY pending actor-discrimination integration.
+# Rationale (per codex Pattern C independent review Point 2): PreToolUse
+# hook input does NOT include agent-identity / session-discriminator, so
+# this hook fires identically for team-lead Bash invocations AND for
+# tester/validator lane Bash invocations. Active-deny on tester running
+# pytest as part of its assigned proof execution would block legitimate
+# §6 independent-specialist-lane proof work — a positive-function
+# regression. Until session/agent discriminator is available (proper
+# enforcement requires Claude Code PreToolUse schema exposing agent
+# identity or session role), this branch is advisory-only to preserve
+# positive function while keeping the structural-detection scaffold.
+# Active essence-discipline enforcement on RC-D/RC-I role-separation
+# remains via Branch 2 (DISPATCH-AUTHORIZATION-BASIS gate on assignment-
+# grade SendMessage) + concurrent-patterns.md Pattern A Team-Lead Variant
+# negative-scope boundary discipline.
+# Coverage gap (per codex Point 3): `npm run test` and similar wrapper
+# invocations not in original pattern set; if branch is later promoted
+# from advisory to active, expand patterns to include `(npm|pnpm|yarn)
+# [[:space:]]+(run[[:space:]]+)?test` and similar wrapper shapes.
 # ============================================================================
-if [ "$TOOL_NAME" = "Bash" ]; then
-  # Extract command
-  CMD_TEXT=$(printf '%s' "$INPUT_JSON" | grep -oE '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed -E 's/^"command"[[:space:]]*:[[:space:]]*"//' | sed -E 's/"$//')
-
-  # Carve-out: codex Pattern A
-  if printf '%s' "$CMD_TEXT" | grep -qE '(^|[^a-zA-Z_])codex[[:space:]]'; then
-    exit 0
-  fi
-
-  # Carve-out: --version / --help / -V / -h
-  if printf '%s' "$CMD_TEXT" | grep -qE '\-\-version|\-\-help|[[:space:]]\-V[[:space:]]|[[:space:]]\-h[[:space:]]|[[:space:]]\-V$|[[:space:]]\-h$'; then
-    exit 0
-  fi
-
-  # Test/proof/validation pattern detection (architectural enablement per F-S3)
-  # Split into three patterns to avoid nested-alternation parser confusion in grep -E.
-  TEST_PATTERN_DIRECT='(^|[^a-zA-Z0-9_])(pytest|jest|playwright|vitest|cypress|mocha|wget|nodemon|rspec|phpunit)([[:space:]]|$)'
-  TEST_PATTERN_RUNNER='(^|[^a-zA-Z0-9_])(npm|pnpm|yarn|go|cargo)[[:space:]]+test([[:space:]]|$)'
-  TEST_PATTERN_CURL='(^|[^a-zA-Z0-9_])curl[[:space:]]+(-X[[:space:]]+(POST|PUT|DELETE|PATCH)|--request[[:space:]]+(POST|PUT|DELETE|PATCH))'
-  if printf '%s' "$CMD_TEXT" | grep -qE "$TEST_PATTERN_DIRECT" \
-     || printf '%s' "$CMD_TEXT" | grep -qE "$TEST_PATTERN_RUNNER" \
-     || printf '%s' "$CMD_TEXT" | grep -qE "$TEST_PATTERN_CURL"; then
-    cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Essence-discipline violation: test/proof/validation execution pattern detected in team-lead Bash invocation. Per .claude/skills/codex-independent-review/references/concurrent-patterns.md '## Pattern A — Internal Codex Aid' Negative-Scope Boundary, frozen independent owner work (tester proof execution, validator final arbitration, reviewer review production) is OUTSIDE lead-internal aid scope and MUST route to that owner via Skill(task-execution) dispatch. Detected command appears to be runtime verification/executable test/proof-execution that belongs to a frozen specialist lane. Recover by routing the proof execution to tester or validator lane via assignment-grade SendMessage (with DISPATCH-AUTHORIZATION-BASIS: frozen-independent-lane:<lane>). Carve-outs: codex CLI (Pattern A lead-internal aid), read-equivalent commands (ls/grep/cat/find without execution side-effect), --version/--help diagnostic invocations. This gate enforces F-S3 self-test pattern closure per team-meeting team-lead-essence-discipline r2."
-  }
-}
-EOF
-    exit 0
-  fi
-fi
+# (intentionally advisory-only; no deny emit until actor-discriminator integration)
 
 # Default: allow
 exit 0
