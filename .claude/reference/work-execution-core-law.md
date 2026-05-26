@@ -129,13 +129,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Skill And Reference Consumption Law
 - Skills load only when required by the active owner path.
 - Primary skill links load through their active owner-path triggers.
-- Required skill activation and loaded-skill basis require actual `Skill(<skill>)` load, officially applied frontmatter `skills` preload, or current same-session loaded-skill basis under the named skill's freshness rule.
-- Skill load means `Skill(<skill>)` or officially applied frontmatter `skills` preload; direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only.
-- Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
-- Agent role names remain role identifiers.
 - Loaded skill owner resolution uses this order: explicit owner, phase owner, or sequence owner declared by a loaded procedure skill; then the agent that loaded the skill when the loaded skill does not declare a procedure owner for the current action.
 - Non-agent specialist skills state coverage, method, packet, and handoff boundaries only; they do not declare independent ownership, authority, or mutation permission.
-- Agent role files declare role identity, lane boundary, and routing conditions.
 - Top-level Claude Code host session is `team-lead`.
 - The top-level agent-team `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
 - `agent-team-lead` procedure consumption requires actual `Skill(agent-team-lead)` activation or current same-session loaded-skill basis.
