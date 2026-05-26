@@ -155,17 +155,7 @@ User-surface law:
 Choice-situation law:
 - If Q1-Q5 or any later planning step reveals a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before Step 3 work-plan build or Step 4 freeze.
 
-Essence-evidence law:
-- Before emitting any consequential governance-design proposal, patch design, or critical work-product, the active owner secures independent-evidence of essence-vs-surface discrimination.
-- Independent-evidence path (a): `Skill(review-verification)` bounded review with surface-vs-essence-relevant lenses (`coherence-integrity-lens` + `minimum-executable-information-lens` minimum).
-- Independent-evidence path (b): `Skill(codex-independent-review)` Pattern A team-lead variant background evaluation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` BACKGROUND-DECISION-SUPPORT clause.
-- Independent-evidence path (c): lawful evidence-burden carve-out.
-- Carve-out condition: (a) and (b) are both unavailable with explicit evidence.
-- Carve-out evidence examples (open-set): reviewer-shard cap saturation evidence, codex quota exhaustion evidence, or other concrete unavailability.
-- Under carve-out, the owner proceeds with self-check marked `candidate-only`.
-- Under carve-out, the owner records the carve-out basis.
-- Under carve-out, the owner applies (a) or (b) at next emission.
-- Self-check without recorded carve-out evidence is an essence-evidence defect.
+Essence-evidence law trigger: when Step 3 work-plan build includes consequential governance-design / patch-design / critical work-product emission, consume the canonical Essence-Evidence Law at `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` before plan-build proceeds.
 
 ## Step 3: Build Team-Lead Work Plan
 Before freeze, `team-lead` builds the work plan it will execute or route.

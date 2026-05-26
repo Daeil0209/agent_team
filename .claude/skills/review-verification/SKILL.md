@@ -97,17 +97,8 @@ This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the pe
 The 3-component record is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per the receiver-applicability rule at `.claude/skills/self-verification/SKILL.md` `## Step 3` Receiver applicability paragraph.
 Shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
 Test these additional generalized defeaters when applicable:
-- **Same-category coverage defeater**.
-- When the review target patches a surface that belongs to a category with other same-category surfaces, enumerate every same-category surface.
-- Example same-category sets (open-set, not exhaustive): completion-spine field set, marker pattern set, consumer skill set, lane agent set, hook surface set.
-- Verdict each enumerated surface's applicability against the patch principle.
-- Patching one surface in a category while ignoring same-category siblings is a coverage-survey defect.
-- Record the defect as `confirmed-defect` with the uncovered same-category surface inventory.
-- **Cumulative-input integrity defeater**.
-- When the review target is a produced work-product spanning multiple input cycles (operator directives + critic opinions + prior verification cycles), trace every prior material input.
-- Verify each prior input is reflected in the current produced work-product.
-- Silently dropping prior input is a cumulative-input integrity defect.
-- Record the missing input as `confirmed-defect` with the dropped-input citation.
+- **Same-category coverage defeater**: when the review target patches a surface belonging to a category with same-category siblings (open-set examples: completion-spine field set, marker pattern set, consumer skill set, lane agent set, hook surface set), enumerate every sibling and verdict its applicability against the patch principle; patching one surface while ignoring siblings is a coverage-survey defect recorded as `confirmed-defect` with the uncovered-sibling inventory.
+- **Cumulative-input integrity defeater**: when the review target is a produced work-product spanning multiple input cycles (operator directives + critic opinions + prior verification cycles), trace every prior material input and verify it is reflected in the current produced work-product; silently dropped prior input is a `confirmed-defect` with the dropped-input citation.
 Block the requested positive review result while any material defeater is open or confirmed without lawful owner deferral.
 Return confirmed defeaters to Step 2 or Step 6.
 
