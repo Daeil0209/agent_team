@@ -69,6 +69,22 @@ function firstNonEmptyString(...values) {
   return "";
 }
 
+// Canonical INPUT_JSON parser for hook node scripts. Each settings-wired hook
+// receives tool input as JSON on stdin; the standard bash wrapper passes that
+// JSON through the INPUT_JSON env var to an embedded node script (see
+// `.claude/hooks/MANIFEST.md` `## Hook Dependencies` `Canonical INPUT_JSON
+// Pattern`). `parseInput()` consolidates the try/catch JSON.parse boilerplate
+// that hooks otherwise inline. Returns the parsed object on success, an empty
+// object `{}` on parse failure or missing env. Optional `envName` arg supports
+// non-default env var names (e.g., when a hook stages multiple JSON inputs).
+function parseInput(envName = "INPUT_JSON") {
+  try {
+    return JSON.parse(process.env[envName] || "{}");
+  } catch {
+    return {};
+  }
+}
+
 module.exports = {
   DEFAULT_TEXT_KEYS,
   encode,
@@ -76,4 +92,5 @@ module.exports = {
   flattenValueText,
   joinUniqueText,
   firstNonEmptyString,
+  parseInput,
 };

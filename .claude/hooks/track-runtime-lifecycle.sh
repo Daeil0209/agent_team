@@ -46,10 +46,9 @@ resolve_permission_mode_fields() {
 }
 
 # ─── ROUTE BY TOOL NAME ──────────────────────────────────────────────────────
-TOOL_NAME="$(INPUT_JSON="$INPUT" node -e "
-try {
-  process.stdout.write(JSON.parse(process.env.INPUT_JSON || '{}').tool_name || '');
-} catch {}
+TOOL_NAME="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node -e "
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+process.stdout.write(parseInput().tool_name || '');
 " 2>/dev/null || echo "")"
 
 case "$TOOL_NAME" in

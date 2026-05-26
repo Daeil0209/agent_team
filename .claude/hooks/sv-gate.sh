@@ -8,15 +8,11 @@ source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
 PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { encode } = require(process.env.HOOK_JSON_HELPERS);
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || '{}');
-  const sid = String(input.session_id || 'unknown');
-  const toolName = String(input.tool_name || '');
-  process.stdout.write([sid, toolName].map(encode).join('\n'));
-} catch {
-  process.stdout.write('\n\n');
-}
+const { encode, parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+const sid = String(input.session_id || 'unknown');
+const toolName = String(input.tool_name || '');
+process.stdout.write([sid, toolName].map(encode).join('\n'));
 NODE
 )"
 mapfile -t FIELDS <<<"$PARSED"
