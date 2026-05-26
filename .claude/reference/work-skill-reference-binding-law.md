@@ -59,7 +59,7 @@ Completion requires every trigger-required reference consumed and every material
 - A lookup-only reference returns consumed facts to the active consuming owner.
 
 ## Skill Rules
-- Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
+- Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, procedure words in the user message, or anticipation of future skill need.
 - Primary skill links become required skills only when their trigger creates the active owner path.
 - Required skill activation and loaded-skill basis are satisfied only by actual `Skill(<skill>)` load, officially applied frontmatter `skills` preload, or a current same-session loaded-skill basis under the named skill's freshness rule.
 - Same-session loaded-skill basis is executable only while the invoked skill body still supplies the rule needed for the current owner path.
