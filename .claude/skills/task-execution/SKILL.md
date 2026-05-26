@@ -37,7 +37,7 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/request-bound-fields.md`: request-intent, exact user wording, governance tier, user-surface, proof/tool/setup, run-path, burden, decision, validation, environment, and scenario fields.
 - `references/message-classes.md`: Communication Plane law, canonical channel registry, upward message classes, receipt spine, structured shutdown request, information-request consumption, and blocker/pressure routing.
 - `references/scope-pressure.md`: canonical `scope-pressure` values, required fields, and replan vs packet-correction boundary.
-- `references/truth-rules.md`: runtime truth ladder and user-facing claim limits.
+- Runtime truth ladder and user-facing claim limits consume `references/message-classes.md` `### Receipt Event Contract`, `### Transport Payload`, and `### Assignment Delivery Contract` + `.claude/skills/session-boot/references/runtime-state-detail.md` `## Canonical Runtime-State Model` and `## Agent Work States` + `references/runtime-dispatch-law.md` `## Team Runtime Shape` per the specific truth question; user-facing dispatch status exception consumes `.claude/reference/reporting-prohibition-law.md`.
 - `references/runtime-dispatch-law.md`: team-runtime lane dispatch, TeamCreate sequencing, parallel/reuse law, SendMessage class boundaries, required-skill dispatch law, and partial-parallel-failure recovery.
 - `references/completion-handoff.md`: common completion result spine, resource cleanup, user-surface proof method fields, and lane completion law.
 - `references/dispatch-recovery.md`: interruption points, resume owner/action, duplicate-send prevention, and compaction recovery.

@@ -11,7 +11,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Add peer top-level sections only after governance review.
 - Keep domain-specific workflow extensions and detailed rule catalogs in trigger-specific reference files under `references/`.
 ### Reference Map
-- `references/domain-rule-catalog.md`: selects the domain-specific workflow reference and handles vertical-selection routing.
+Load the narrowest matching domain reference for the assigned workflow vertical; load multiple matched verticals with named reason when applicable.
+- `references/event-planning-workflow.md`: event planning workflows.
+- `references/rnd-proposal-workflow.md`: R&D proposal workflows.
+- `references/rnd-result-report-workflow.md`: R&D result report workflows.
+- `references/schedule-planning-workflow.md`: schedule planning workflows.
+- `references/allocation-participation-workflow.md`: budget, personnel, participation, allocation, period, reconciliation, and spreadsheet-migration workflows.
 ## Identity
 You are the business-workflow specialist capability.
 - Conditional business-workflow lens when delivery depends on hidden rules, actor boundaries, state transitions, persistence meaning, or reconciliation semantics.
@@ -22,7 +27,7 @@ You are the business-workflow specialist capability.
 Load when sheets, manual operations, decision gates, or workflow-heavy tools hide rules that must be extracted before trustworthy implementation or review.
 ## Responsibilities
 - extract entities, lifecycle states, transitions, decision gates, overrides, and generated artifacts
-- for domain-specific workflow detail (allocation-participation, event-planning, rnd-proposal, rnd-result-report, schedule-planning, research-report-workflow-boundary), consume `references/domain-rule-catalog.md` to select the narrowest domain reference and extract its rule packet before downstream design
+- for domain-specific workflow detail (allocation-participation, event-planning, rnd-proposal, rnd-result-report, schedule-planning), select the narrowest matching domain reference from the Reference Map above and extract its rule packet before downstream design; for research-report automation boundary decisions, consume the inline Research Report Workflow Boundary section under `## Boundary` below
 - separate stable business rules from layout accidents, convenience habits, or one-off exceptions
 - freeze source-of-truth meaning for master, transactional, derived, and exported data
 - define mutation rules: who creates, edits, deletes, restores, reopens, or overrides
@@ -40,6 +45,11 @@ Load when sheets, manual operations, decision gates, or workflow-heavy tools hid
 - policy requires evidence
 - UI composition, implementation architecture, and final acceptance stay with adjacent paths
 - sheet layout is evidence, not the business workflow itself
+
+### Research Report Workflow Boundary
+- Use this section when report automation involves business workflow states, approval/mutation authority, source-of-truth separation, audit semantics, reconciliation semantics, configurable rule tables, or operator workflow meaning.
+- Owner boundary: research evidence method → `researcher` `Source-Family Method Floor`; reader structure + generated-document quality → `document-automation`; pipeline software architecture → `software-architecture`; workflow states + approval authority + mutation authority + source-of-truth separation + audit semantics + reconciliation semantics + configurable rule tables + operator workflow meaning → business-workflow.
+- When business-workflow is active, carry the `researcher` evidence packet instead of restating researcher methodology; when no business workflow state or authority surface is material, return to `document-automation`, `researcher`, or `software-architecture`.
 ## Activation
 Activate for spreadsheet-to-program migrations, rule-heavy internal tools, finance or decision flows, and operations systems where hidden workflow rules materially affect delivery.
 ## Inputs
@@ -62,7 +72,7 @@ Capture only the decisive business packet:
 - Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
 - Record the chosen representation and evidence basis before handoff.
 - User-escalation triggers follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
-- Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference selected from `references/domain-rule-catalog.md` when material.
+- Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference selected from the Reference Map above when material.
 ## Operational Discipline
 - Extract hidden operational rules, decision waits, exception paths, and organizational constraints before downstream generation.
 - Audience, operator tier, and operational setting are mandatory inputs.

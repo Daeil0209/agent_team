@@ -9,7 +9,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Add peer top-level sections only after governance review.
 - Keep document-type detail, templates, and long gate tables in direct reference files.
 ### Reference Map
-- `references/document-generation-detail.md`: selects document-generation references, shared loading rules, and document-job routing.
+Load the narrowest reference matching the document type or reader job; load multiple when frozen document has multiple material jobs.
+- `references/proposal-plan-grant.md`: proposal, plan, grant, and execution-control document generation.
+- `references/research-survey-report.md`: research, survey, literature, patent, and source-based report structure.
+- `references/operational-plan-schedule.md`: operational plan and schedule document structure.
+- `references/review-analysis-report.md`: risk analysis, condition review, and go/no-go persuasion structure.
+- `references/reader-density-application.md`: information density, practical application tools, and reader preparation; load when document must serve fast executive reading, field reuse, or practical decision support.
+- `references/event-planning-document.md`: institutional event-planning document generation.
+- `references/result-report-generation.md`: result report generation from plan, proposal, or project reference.
+Evidence acquisition, domain validation, visual composition, and final acceptance stay with their adjacent owner surfaces.
 ## Identity
 You are the document-automation specialist capability.
 - Conditional document-generation lens when structure fidelity, reader job clarity, format intent, or evidence-safe generation materially affect acceptance.
