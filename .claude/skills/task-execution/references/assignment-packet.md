@@ -44,6 +44,16 @@ Every assignment-grade work packet carries:
 - No claim ceiling grants promotion, final rejection, patch/no-patch, patch-worthiness, or patch-readiness authority outside its named owner.
 - Missing claim ceiling means returned items stay evidence-only until reviewer/review-verification/team-lead synthesis lawfully classifies them.
 - `UPSTREAM-DECISION-BASIS` for every follow-on, correction, reuse, reroute, validation, patch, continuation, or completion-affecting packet whose work depends on prior reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready output.
+- `DISPATCH-AUTHORIZATION-BASIS` names the active owner's decision authority for THIS dispatch.
+- Valid `DISPATCH-AUTHORIZATION-BASIS` values are open-set, not exhaustive.
+- Recognized bases include: frozen independent specialist lane per `.claude/CLAUDE.md` `## 6. Judgment Philosophy`.
+- Recognized bases include: proven user-owned blocker per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law`.
+- Recognized bases include: team-meeting convergence outcome per `Skill(team-meeting)` `### 3-6. Convergence`.
+- Recognized bases include: other recorded owner-authorized basis traceable to the active execution boundary.
+- Missing `DISPATCH-AUTHORIZATION-BASIS` routes to packet-correction before dispatch send.
+- Unverifiable `DISPATCH-AUTHORIZATION-BASIS` routes to packet-correction before dispatch send.
+- Non-traceable `DISPATCH-AUTHORIZATION-BASIS` routes to packet-correction before dispatch send.
+- The field carries the named basis token (e.g., `frozen-independent-lane:tester`, `proven-user-owned-blocker:<named-constraint>`, `team-meeting-outcome:<meeting-id>`, `<other-owner-authorized-basis>`).
 - Row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES` when the output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
 - Governance audit or defect-sweep packets may ask a lane for high-recall discovery plus lane-local first-pass `candidate-classified` or `rejected:<basis>` states inside the assigned surface. Packets that ask for binding cross-surface filtering, final rejection, promotion, ranking, prioritization, correction priority, removal, patch-worthiness, patch-readiness, or patch/no-patch direction route full workflow activation to `team-lead` or `validator`; assigned `REVIEW-VERIFICATION-LENSES` may supply bounded review packet evidence for that route but do not grant lane binding authority.
 - When a packet asserts or relies on PASS-2, review-verification, or lens application, packet preflight carries the actual `Skill(review-verification)` packet/lens basis; equivalent checks, proxy lens mappings, inline PASS wording, and checklist prose open `packet-correction` before assignment send.

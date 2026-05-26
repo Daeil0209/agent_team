@@ -41,6 +41,16 @@ The team-lead's invocation of Pattern A (per the Definition section above) carri
 - Pattern A output (team-lead variant) MAY NOT appear in any user-facing reporting surface, any retained synthesis carrier consumed by downstream owners (lane assignments, validator verdict carriers, final reports), any completion-grade transport, any reportable prose admitted by `.claude/reference/reporting-prohibition-law.md`, or any retained carrier or task-state field.
 - Team-lead Pattern A is strictly self-orchestration aid (decision-support, doctrine-consultation, draft-checking). Pattern C remains the only path for "official independent review" producing transported evidence consumed by validator final arbitration or governance-modification basis.
 - Team-lead synthesis carriers MUST cite their own evidence basis (Read/Grep/Bash tool-call evidence, lane completion carriers, validator verdicts, review-verification packets) — NOT Pattern A codex output. Citing Pattern A codex output as synthesis evidence is carrier-as-evidence fabrication per `Skill(self-verification)` Step 3 anti-fabrication rule + Receiver applicability rule + carrier-citation rule per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
+- **Negative-Scope Boundary (Lead-Internal-Aid vs Frozen-Independent-Owner-Work)**.
+- Pattern A team-lead variant scope is bounded by §6 Judgment Philosophy independent-specialist-lane separation.
+- Any work surface that has a frozen independent owner per §6 is OUTSIDE lead-internal aid scope.
+- The owner's frozen-required surface includes (open-set, not exhaustive): review production, proof execution, final acceptance arbitration, or any other lane whose ownership is established by §6 plus the team's frozen route.
+- Frozen-owner work MUST route to that owner via `Skill(task-execution)` dispatch.
+- Lead-internal aid (positive scope: decision-support / doctrine-consultation / draft-checking) operates only on work surfaces without a frozen independent owner.
+- Lead-internal aid never produces outputs that substitute for a frozen owner's work product.
+- Team-lead self-executing frozen-owner work under Pattern A "lead-internal aid" classification is a boundary defect regardless of the specific lane involved.
+- This negative-scope rule is additive to the three existing boundary clauses below (Authority Non-Substitution + Context Limit security + RESOURCE-CLEANUP).
+- Each boundary clause applies independently.
 
 ### Pattern C Team-Lead Parallel-Execution Choice
 
