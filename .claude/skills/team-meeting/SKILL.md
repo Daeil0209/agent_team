@@ -25,6 +25,7 @@ Drafter states the final recommendation.
 Critics read the draft from a critical stance.
 Critics provide improvement opinions.
 The meeting keeps the fixed drafter and at least one critic.
+Total agent participants (drafter + critics) is capped at MAX 5 agents per meeting. The fixed drafter (`team-lead`) plus at most 4 critic agents. The cap preserves real-time discussion latency (each turn round-trip parallelizes across critics; >4 critics degrades convergence quality per cross-critic awareness cost) and respects `ACTIVE-CONCURRENT-AGENT-CAP` runtime burden. Operator may name fewer critics; operator may not exceed 4 critics for a single meeting.
 Operator specifies which agents fill the critic roles at meeting opening.
 
 All participants use `Skill(review-verification)` as a bounded critical lens.
