@@ -72,28 +72,33 @@ Drafter maintains a cumulative enumeration of every operator directive issued du
 
 When discussion produces a consent-converged item, drafter updates the SAME draft carrier with the revised text + broadcasts `draft-update r<N>` notification (canonical Draft-Publication envelope) — no per-round new carrier; one carrier carries cumulative state across revisions, tagged with current revision number.
 
-### 3-4. Synchronized Discussion (short-message turn-by-turn)
-After Draft Publication, participants engage in real-time short-message turn-by-turn discussion via `SendMessage`. The meeting is REAL discussion, not assignment-aggregation: each turn is a brief substantive exchange (question, answer, claim, counter-claim, evidence pointer, agreement/disagreement signal), NOT a carrier-file batch report.
+### 3-4. Synchronized Discussion (carrier-log append turn-by-turn)
+After Draft Publication, participants engage in real-time turn-by-turn discussion via SHORT append-style writes to a SHARED RUNNING DISCUSSION LOG CARRIER, exchanged via canonical carrier-pointer `SendMessage` envelopes. The meeting is REAL discussion (short fast turns), not assignment-aggregation (long batch reports), AND every meeting message uses carrier-only envelope so meeting deliberation content stays in retained carriers and never appears in `SendMessage` rendered body (which would expose to host UI).
 
-Turn form per Section 3-4a (b):
-- Each turn = one `SendMessage` with `summary` = brief turn label (e.g., `discussion-turn r1 Q-to-developer`, `r1-A developer`, `r1-counter critic-A→critic-B`) and `message` body = SUBSTANTIVE short content (≤3 lines). Substantive content includes: question, direct answer, claim, counter-claim, evidence pointer (file:line citation only), agreement/disagreement signal, narrowed tradeoff option.
-- Turn body examples (each is ≤3 line body): `Q: G-11 RC-H evidence?` / `A: F-S2 cognitive 가능; RC-H still hypothesis` / `Counter: S-1 stance level not surface` / `Evidence: draft-r0 line 22-23` / `Agree on (a); disagree on (b)` / `Tradeoff: speed vs coverage` / `Yield to drafter` / `Object: dimensional-independence violation`.
-- NO carrier file per discussion turn (the turn IS the substance); NO inventory markers; NO multi-finding tables; NO PASS/FAIL block; NO operational rationale paragraphs; NO excerpts.
+Substance transport architecture:
+- All discussion substance (questions, answers, claims, counter-claims, evidence pointers, agreement signals, tradeoff options) lives in a SHARED retained carrier file — typically a running discussion log (`discussion-log.md`) co-located with the draft carrier — appended in short turn-by-turn entries.
+- Every meeting `SendMessage` (drafter or critic) uses canonical carrier-pointer envelope per Section 3-4a: `summary` = brief turn label; `message` body = `CARRIER: <log-path>` + `TURN: <turn-id>` + brief `STATE` label, ≤3 lines, NO substantive content inline. The SendMessage IS a notification that a new turn was appended to the log, NOT the turn content itself.
+- Receiving participant reads the LOG (not the envelope body) for substance; the envelope is a wake/index signal only.
+
+Turn append pattern (real-time short turns via carrier append, NOT body content):
+- Each turn appended to `discussion-log.md` is SHORT and SUBSTANTIVE: 1-5 lines of substantive content (question, answer, claim, counter, evidence pointer, agreement signal, tradeoff option) per appended turn entry. Turn entries are atomic; multi-paragraph batch critiques are decomposed into multiple short turn appends, not bundled.
+- Turn entry header carries TURN-ID + AUTHOR + ROUND + TARGET (whole-draft / item / prior-turn-id) + brief CONTENT.
+- Author appends turn entry to log carrier file (`Edit` append or `Write` if first turn), then sends canonical carrier-pointer `SendMessage` to recipient(s) as wake/index signal.
 
 Round structure:
-- Drafter broadcasts a single short turn (question/claim/follow-up) to relevant critics — one `SendMessage` per critic in parallel, canonical envelope short turn.
-- Critics respond in parallel (each with one short turn). Cross-critic challenges are first-class (critic A sends short turn to critic B directly, optionally copying drafter; drafter monitors thread).
-- Drafter consumes all responses, sends next short turn (follow-up question, acceptance, counter, tradeoff narrowing).
-- Round closes when drafter declares item consent-converged OR escalates to next round with new question.
+- Drafter appends short Q turn to discussion-log, broadcasts canonical carrier-pointer envelope to relevant critics (one envelope per critic, parallel).
+- Critics read log (consuming Q + every prior in-round turn entry), each appends short A turn to SAME log, sends canonical carrier-pointer envelope back (drafter receives wake signals; cross-critic dialogue uses critic-to-critic envelope wake to same log).
+- Drafter reads new log entries, appends next short turn (follow-up Q, acceptance, counter, tradeoff narrowing), broadcasts carrier-pointer envelope.
+- Round closes when drafter declares item consent-converged OR escalates to next round.
 
-Real-time turn-trip latency per turn ≈ critic agent processing time (~1-3 min per opus-tier agent); total meeting latency = sum of turns. Parallel-broadcast structure parallelizes per-round latency across critics.
+Real-time turn-trip latency per turn ≈ critic agent processing time (1-3 min per opus-tier agent); total meeting latency = sum of turns. Parallel-broadcast envelopes (each carrier-pointer-only) parallelize per-round latency across critics. Substance never enters envelope body — meeting deliberation stays in the discussion-log carrier (not exposed to host UI render).
 
 Discussion essentials:
-- Cross-critic awareness: each turn-author consumes the prior in-round turn thread before adding a new turn. Isolated turn that ignores prior thread is a meeting-form defect (turn redo within same round).
-- Cross-critic dialogue is first-class meeting content. Critic A's challenge to critic B is welcome and routed normally.
-- Drafter is co-discussant, not aggregator. Drafter participates with own questions, counter-claims, evidence pointers; drafter is NOT "the one who collects the reports".
-- Drafter answers every objection in same round via direct turn (acceptance, counter-evidence pointer, or tradeoff narrowing). Drafter does NOT silently defer; deferral routes to dissent-to-solution conversion in next round.
-- Within-round contradictions blocking solution correctness trigger IMMEDIATE pairwise discussion turn within the same round.
+- Cross-critic awareness: each turn-author reads the discussion-log carrier (every prior in-round turn entry) before appending a new turn. Isolated turn that ignores prior log entries is a meeting-form defect (turn redo within same round).
+- Cross-critic dialogue is first-class meeting content. Critic A's append targeting critic B's prior turn is welcome (TARGET field cites prior TURN-ID); the carrier-pointer envelope wake goes to critic B (optionally to drafter as observer).
+- Drafter is co-discussant, not aggregator. Drafter participates with own appended turns (questions, counter-claims, evidence pointers); drafter is NOT "the one who collects the reports".
+- Drafter answers every objection via direct appended turn (acceptance, counter-evidence pointer, or tradeoff narrowing) within the same round. Drafter does NOT silently defer; deferral routes to dissent-to-solution conversion in next round.
+- Within-round contradictions blocking solution correctness trigger IMMEDIATE pairwise discussion turn (appended to log + wake envelope) within the same round.
 
 Persuasion target options for unresolved objections:
 - revise the item so the objection is satisfied (update draft carrier between rounds per Section 3-3).
@@ -110,18 +115,20 @@ Drafter revises the SHARED draft carrier when consent converges on an item, not 
 
 Operator may set a round limit at meeting opening. Marathon default continues until full consent on every item or until default cap is reached. Default round cap is five rounds; drafter declares `HOLD` with documented objection-persistence basis when full consent is not reached within the cap, and operator may extend the cap explicitly. Per-item iteration closes after every critic clears material objections on that item.
 
-### 3-4a. Discussion Envelope Form
-Every meeting-internal `SendMessage` uses ONE of TWO valid canonical-envelope body shapes per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` non-state-class rule:
+### 3-4a. Discussion Envelope Form (CARRIER-POINTER ONLY for all meeting SendMessage)
+Every meeting-internal `SendMessage` (drafter draft publication, drafter discussion-turn wake notification, critic discussion-turn wake notification, peer critic dialogue wake notification, `critique-request` / `critique-response` / `discussion-entry` / `verdict` / any other meeting class) MUST use the SAME canonical carrier-pointer envelope shape per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` non-state-class rule:
+- `summary` parameter carries a canonical no-detail signal: brief class label plus round/turn pointer (e.g., `draft-publication r0`, `draft-update r3`, `discussion-turn r1 wake-to-developer`, `r1-turn-append critic-A`).
+- `message` body carries CARRIER pointer + minimum index label only — 1-3 lines naming the retained carrier path plus a brief TURN-ID / STATE / ROUND label (e.g., `CARRIER: claude_doc/.../draft-r0.md` + `STATE: published` + `ROUND: r0`; or `CARRIER: claude_doc/.../discussion-log.md` + `TURN: r1-T07` + `STATE: appended`). NO inline substantive content of any kind: no questions, no answers, no claims, no counter-claims, no inline opinion body, no FINDING-STATE-LADDER-SUMMARY, no PATCH-WORTHINESS, no DRAFTER MEETING-AUDIT-CRITERIA REASSESSMENT, no META-CONCERN, no NEXT-OWNER-ACTION block, no SELF-VERIFICATION inventory, no OPEN-SURFACES inventory, no operational rationale, no excerpts, no convergence summary, no cross-critic synthesis.
+- All discussion substance (questions, answers, claims, counter-claims, evidence pointers, agreement signals, tradeoff options, finding inventories, audit-criteria reassessment, META observations, next-owner-action, self-verification record, open surfaces, convergence sketches) lives in the retained carrier (draft carrier OR running discussion-log carrier) referenced via the envelope pointer; the receiving participant consumes that carrier for all decision-affecting body.
 
-(a) **Draft-Publication shape** (used ONCE per draft revision in Section 3-3): `summary` = brief class label (e.g., `draft-publication r0`, `draft-update r3`); `message` body = CARRIER pointer + STATE label only (≤3 lines, e.g., `CARRIER: claude_doc/.../draft-r0.md` + `STATE: published` + `ROUND: r0`). NO inline substantive content; the carrier file IS the publication.
+Why carrier-only universally (not just for batch reports):
+- Host runtime renders teammate-message envelope content (summary + body) into user-visible UI as automatic out-of-curtain-scope behavior. Substantive content inline in `SendMessage` body therefore leaks meeting deliberation to the user surface every turn, regardless of REPORT-REASON status.
+- Carrier files (`Read`-only for receiver) are NOT auto-rendered to user; only the envelope pointer renders. Substance in carrier = user-non-exposed; substance in body = user-exposed (curtain breach).
+- Real-time short-turn dialogue is achieved by SHORT carrier appends (1-5 lines per appended turn entry) + carrier-pointer wake envelopes — not by inlining substance in body. Latency = same as body-inline form (one envelope round-trip per turn); curtain compliance preserved.
 
-(b) **Discussion-Turn shape** (used per turn in Section 3-4): `summary` = brief turn label (e.g., `discussion-turn r1 Q-to-developer`, `r1-A developer`, `r1-counter critic-A→critic-B`); `message` body = short SUBSTANTIVE content (≤3 lines, examples in Section 3-4 above). NO carrier pointer (the turn IS the substance); NO inventory markers; NO enumeration blocks; NO multi-finding tables; NO PASS/FAIL block; NO operational rationale paragraphs; NO excerpts; NO ego prose. If substance does not fit in ≤3 lines the question/answer needs decomposition into multiple turns (each ≤3 lines).
+Inline substantive content in any meeting `SendMessage` body is a Constitutional Reporting Curtain violation per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` AND a meeting-form defect per Section 3-4; the rendered body becomes user-visible host UI content carrying meeting deliberation into the user surface, violating the curtain. Senders MUST author meeting messages with carrier-only delivery from the outset; receivers MUST treat inline-body delivery as carrier-citation defect and route correction.
 
-Bulk inventory body (FINDING-STATE-LADDER-SUMMARY, PATCH-WORTHINESS, META-CONCERN, OPINION-ROUND PROMPT, DRAFTER MEETING-AUDIT-CRITERIA, FINDING-STATE-INVENTORY, CITATION-EVIDENCE-INVENTORY, and other lane-completion-spine field markers per the runtime hook regex) is PROHIBITED in BOTH shapes; such content lives in the SINGLE draft carrier (shape (a) update via Section 3-3) OR is decomposed into multiple short discussion turns (shape (b)).
-
-Inline full-content body in any meeting `SendMessage` (carrier-file-batch-correspondence form, long substantive body exceeding ≤3 lines, body containing inventory markers) is a Constitutional Reporting Curtain violation per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` AND a real-discussion-form violation per Section 3-4; it is treated as a meeting-form defect with mandatory turn redo in shape (a) or shape (b).
-
-Runtime enforcement: `.claude/hooks/reporting-curtain-envelope-gate.sh` PART A rejects bodies carrying inventory markers regardless of MESSAGE-CLASS; PART B rejects non-downward-delivery bodies with >3 newlines. Both apply to meeting `SendMessage`. The hook is the runtime safety net; the primary control is identity-layer Curtained Communication + this Section's discipline + the drafter-and-critics shared commitment to real-discussion form over batch-correspondence anti-form.
+Runtime enforcement: `.claude/hooks/reporting-curtain-envelope-gate.sh` PART A rejects bodies carrying inventory markers regardless of MESSAGE-CLASS; PART B rejects non-downward-delivery bodies with >3 newlines. Both apply to meeting `SendMessage`. The hook is the runtime safety net; the primary control is identity-layer Curtained Communication + this Section's discipline + the drafter-and-critics shared commitment to carrier-only-envelope form so meeting substance stays out of the host-rendered user surface.
 
 ### 3-5. MEETING-AUDIT-CRITERIA
 This section is the meeting's audit regulation.
@@ -195,13 +202,13 @@ Each transition below opens the next owner/action in the same turn per `.claude/
 
 - Agenda clear → Section 3-3 Solution Draft.
 - Agenda ambiguous → clarification or `HOLD`.
-- Draft published (Section 3-3) → Section 3-4 Synchronized Discussion.
-- Discussion turn received → drafter responds via short turn (Section 3-4a (b)); consent-converged item → drafter updates SHARED draft carrier (Section 3-3 update-notification path).
-- Within-round contradiction blocking correctness → immediate pairwise discussion TURN within the same round per Section 3-4.
-- Material objection remains after round-close revision → dissent-to-solution conversion in Section 3-4.
+- Draft published (Section 3-3) → Section 3-4 Synchronized Discussion (running discussion-log carrier opened/appended).
+- New discussion-log turn entry appended → author sends carrier-pointer wake envelope to recipient(s) per Section 3-4a.
+- Wake envelope received → recipient reads discussion-log carrier (every prior in-round turn entry) before appending new turn; consent-converged item → drafter updates SHARED draft carrier (Section 3-3 update-notification path).
+- Within-round contradiction blocking correctness → immediate pairwise discussion TURN appended to log + wake envelope to other party per Section 3-4.
+- Material objection remains after round-close revision → dissent-to-solution conversion (next-round turn appended) per Section 3-4.
 - Material objections cleared → Section 3-5 MEETING-AUDIT-CRITERIA.
-- Meeting `SendMessage` envelope shape violation → reject and resend per Section 3-4a (shape (a) Draft-Publication OR shape (b) Discussion-Turn).
-- Carrier-file batch turn detected (multi-line substantive body per discussion turn, inventory markers, long carrier per turn) → turn redo in shape (b) Discussion-Turn per Section 3-4.
+- Meeting `SendMessage` envelope shape violation (any inline substantive body content) → reject and resend per Section 3-4a (carrier-pointer-only envelope; substance must live in carrier, never in body).
 - MEETING-AUDIT-CRITERIA passed → Section 3-7 Operator Gate.
 - Operator accept → named downstream owner per Section 4-1.
 - Operator reject or modify → smallest affected step.
