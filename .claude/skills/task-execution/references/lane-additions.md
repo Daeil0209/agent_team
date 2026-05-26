@@ -17,6 +17,7 @@ Every agent-specific skill inherits these common preconditions:
 - `dispatch-ack` is the lane-to-team-lead state signal declaring no-objection acceptance; after sending it, the lane starts the assigned work.
 - Before first lane work, compare `WORK-SURFACE`, `CLAIM-CEILING`, and assigned action against carried `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES` when those fields are material.
 - If a packet omits material scope rows needed for the assigned claim, send `scope-pressure` or `hold|blocker` instead of narrowing scope locally.
+- `scope-pressure` and `hold|blocker` are last-resort escalations: apply evidence-backed defaults and quality obligation within lane scope first; premature escalation without exhausting defaults is procedural failure per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
 - Full-scope completion, validation, promotion, rejection, and patch-selection claims require explicit full-scope basis; wave, sample, priority-tier, or representative-slice wording records `ACTIVE-SLICE` only.
 - Upward outcome envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Lane upward `SendMessage` sets top-level `to: team-lead`.
