@@ -152,6 +152,9 @@ User-surface law:
 - If truthful proof or acceptance is blocked by a missing user-facing surface or tool path, freeze one bounded next step: `Skill(tool-acquisition)` for local discovery/setup, `Skill(external-tool-bridge)` for external bridge risk, the named setup owner, or blocker with bounded discovery/setup fields.
 - Use source-only evidence only when it truthfully matches the user-facing proof surface.
 
+Choice-situation law:
+- If Q1-Q5 or any later planning step reveals a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before Step 3 work-plan build or Step 4 freeze.
+
 ## Step 3: Build Team-Lead Work Plan
 Before freeze, `team-lead` builds the work plan it will execute or route.
 The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.

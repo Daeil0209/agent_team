@@ -94,6 +94,9 @@ Keep explicit:
 - whether the next move is team-agent runtime creation, reuse by assignment message, team-scoped member creation, assignment-grade SendMessage, parallel assignment send, or blocker clearance
 - whether the frozen dispatch is single-lane, mirrored, or parallel-sharded
 - the exact serial reason when `PARALLEL-GROUPS` is `none`
+
+Choice-situation law:
+- If Step 1 reveals a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before execution-move selection.
 ## Step 2: Dispatch / Reuse
 Run the actual execution move:
 - create runtime when needed

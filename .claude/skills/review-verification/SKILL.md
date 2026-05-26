@@ -105,6 +105,7 @@ Classify challenged text, section, or document as removal-default before mutatio
 Retain only if removal would lose protected function, owner boundary, recovery path, or execution force.
 Select tighten, replace, trim, merge, re-home, or delete before append if that preserves protected meaning.
 Record `REMOVAL-FIRST-PATCH-DESIGN` with failing path, consumed surface, source meaning, destination owner when moved, minimum-executable-information result, behavior-weakening result, continuity result, adjacent-surface status, selected operation, rejected removals, and retention basis.
+If multiple defensible removal-first patch operations (tighten / replace / trim / merge / re-home / delete) exist for the same failing path per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before `REMOVAL-FIRST-PATCH-DESIGN` row authoring.
 
 ### 7. Pre-Patch Negative-Risk Gate
 Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate.

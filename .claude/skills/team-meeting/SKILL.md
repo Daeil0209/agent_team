@@ -44,6 +44,7 @@ Activate when the operator explicitly asks for a meeting.
 Activate when the operator's agenda needs critical improvement from more than one perspective.
 Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate triggers mandatory consumption (hard design decisions — operator-policy-choice surfaces, constitutional-protected surface mutation, or trade-off-bearing patch design — when convergence-tractable form applies per that rule); skipping team-meeting to escalate trade-off choice directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
 Use the clear single-owner action when it already solves the request.
+Activate when an active owner detects a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (multiple defensible options with material variance in upper-philosophy compliance / user-stated-goal coverage / user burden / trade-off shape / built-in safety, after proven-user-owned-blocker pre-test fails); choice-situation activation is unconditionally mandatory per that rule.
 
 ### 3-2. Agenda
 Drafter freezes the operator's agenda as `MEETING-AGENDA`.
@@ -68,6 +69,7 @@ MAIN RISKS OR TRADEOFFS:
 NEXT ACTION:
 ```
 The draft is concrete enough that the next owner can act.
+Drafter maintains a cumulative enumeration of every operator directive issued during the meeting (initial agenda + every operator pre-critic intervention + every operator post-critic-response intervention) and every accepted critic opinion; this enumeration appears in each revised draft as an `OPERATOR-DIRECTIVE COMPLIANCE CHECK` (or equivalent name) section that traces each prior input to its reflection in the current draft.
 
 ### 3-4. Opinion Round
 Participants deliver opinions to the drafter.
@@ -85,6 +87,7 @@ Forced single-lane execution despite available parallel runtime fit — "serial 
 
 Drafter reads all opinions together.
 Drafter revises the draft once per round when possible.
+Each revision MUST verify cumulative input integration: every prior operator directive and every accepted critic opinion remains reflected in the revised draft. Silently dropping prior input across revisions is a procedure-adherence violation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` and disqualifies the revision from advancing to `### 3-5 MEETING-AUDIT-CRITERIA` convergence-readiness.
 Drafter keeps a brief basis when rejecting a material objection or improvement.
 Drafter triggers pairwise debate when a direct contradiction blocks solution correctness.
 Drafter answers each unresolved objection by proposing the best-current persuasive solution.
@@ -122,6 +125,7 @@ Solution essentials:
 - correctness: material risks, assumptions, and evidence gaps are named.
 - feasibility: the `NEXT ACTION` names an executable owner/action.
 - bottleneck control: independent review or execution keeps parallel order unless evidence dependency requires serial order.
+- cumulative input integration: every prior operator directive and accepted critic opinion is traced + reflected in the current draft via `OPERATOR-DIRECTIVE COMPLIANCE CHECK` enumeration; missing prior input is a failed criterion that returns the solution to revision before `### 3-6` convergence.
 
 Any failed criterion returns the solution to revision before Section 3-6 convergence.
 

@@ -60,6 +60,9 @@ Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `
 Design items lacking `REVIEW-PACKET-CITATION` are carrier prose, not review-verified design; reject and reopen Step 3.
 Keep Step 4 design-only; route file mutation through Step 6.
 
+Choice-situation law:
+- If multiple defensible CHANGE-SEQUENCE-DESIGN row-ordering / row-atomicity / serial-vs-parallel application options exist for the same patch-set per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before design-row selection. Per-row EDIT-OPERATION selection (re-home / delete / split / merge) is owned upstream at `Skill(review-verification)` Step 6 Design Removal-First Patch; that step also consumes the canonical rule when multiple defensible operations exist.
+
 # Step 5: self-verification
 Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation on the produced `CHANGE-SEQUENCE-DESIGN`.
 Call with result-verification target `CHANGE-SEQUENCE-DESIGN`, outgoing governance-change claim, the Step 2 change boundary, and the Step 3 `review_verification_packet` `PACKET-ID` (or content reference) as upstream basis.
