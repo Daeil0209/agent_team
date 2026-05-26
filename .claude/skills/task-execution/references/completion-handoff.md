@@ -95,7 +95,7 @@ Common finding basis:
   - `rejected:<basis>`: umbrella state for `protected-restatement`, `design-tradeoff`, `non-issue`, `risk-hypothesis`, `unverified`, or `not-material:<basis>` when filtering rejects promotion.
 
 `RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at completion.
-Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes.
+Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, codex CLI background process (`codex exec` invoked via `Bash` with `run_in_background: true`; cleanup covers process termination AND output files such as logs, JSON results, or scratch artifacts produced by the codex run), and other port-bound or session-bound processes.
 Transient short-lived invocations are not long-running resources for this field.
 Examples of transient invocations are one-off linter, single-pass test harness, and fixture file already removed.
 - `RESOURCE-CLEANUP: complete` requires explicit enumeration of every long-running resource actually killed (server PID + port, daemon PID, or dev-runner PID) plus a post-cleanup verification that ports and resources are released.

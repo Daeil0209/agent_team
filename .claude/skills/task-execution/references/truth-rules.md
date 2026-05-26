@@ -11,10 +11,8 @@ Runtime-state vocabulary, runtime truth classification, dispatch-pending/ack/sta
 Dispatch-ack receipt semantics, completion transport semantics, one-state-signal envelope, and task-scoped tool identity requirements live at `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract`, `### Transport Payload`, and `### Assignment Delivery Contract`.
 User-facing dispatch status exception lives at `.claude/reference/reporting-prohibition-law.md`; reporting-law-excepted dispatch status cites the narrowest proven truth label from the canonical owners above.
 
-Unique task-execution dispatch-creation truth (not duplicated at canonical owners above):
-- team-scoped `Agent` success = `member-created`; `member-created` is not `dispatch pending` and creates no `dispatch-ack` debt.
-- Missing team-existence evidence opens `TeamCreate` through `task-execution`; team-scoped `Agent` launch creates `member-created` only after team existence is proven; assignment-grade `SendMessage` creates `dispatch pending` only after exact live member addressability is proven.
+Dispatch-creation truth (member-created semantics) canonically owned at `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape`; consume that section for team-scoped Agent success → member-created → assignment-grade SendMessage flow.
 
 ## Resolve Next Owner And Action
 - Active runtime-state, dispatch, ack, recovery, or work-state question consumes the named canonical owner above.
-- `member-created` or `TeamCreate` next-action question consumes this file's unique-content section above.
+- `member-created` or `TeamCreate` next-action question consumes `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape`.

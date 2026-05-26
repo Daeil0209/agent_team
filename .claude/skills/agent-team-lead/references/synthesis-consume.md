@@ -25,6 +25,14 @@ Completion transport, report admission, finding promotion, verification, runtime
 - Multiple cases/results overlap, diverge, contradict, correlate, or feed one downstream decision.
 - Final Acceptance Review (FAR) `FINAL-REJECT` correction evidence enters the next synthesis.
 
+## Carrier-Citation Atomic-Check
+PROTECTED-LOCAL-RESTATEMENT-BASIS: synthesis-input-reading atomic-check — carrier-citation rule colocated at the synthesis input consumption decision moment because synthesis decisions consume completion carriers as upstream-decision-basis at this exact step. Canonical carrier-citation rule lives at `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; this surface applies it at synthesis read time.
+Before treating any cited carrier as `VERIFIED-DATA-FEEDBACK`, `ADMITTED-CASE-INVENTORY`, or upstream-decision-basis for synthesis, run carrier-identification fresh verification:
+- (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
+- (ii) verify the carrier's `PACKET-ID` (or equivalent identifier) matches the expected ID referenced in the dispatch / completion context;
+- (iii) verify the carrier's verdict label, completion class, or cited content matches the synthesis-consumed claim.
+Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness.
+
 ## Synthesis Procedure
 1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.

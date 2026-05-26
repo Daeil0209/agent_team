@@ -129,10 +129,9 @@ Packet final check:
 
 Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
-- Runtime readiness classification may come from `session-boot`, but the preflight required before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
-- Planned `Agent` inside a team-routed path is team-scoped member creation only.
-- A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
-- Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-modification)`.
+- Runtime entry evidence, runtime readiness classification, and dispatch preflight follow `references/runtime-dispatch-law.md` `## Runtime Entry Evidence Boundary` (with `session-boot` supplying runtime-ready/blocked/recovery classification).
+- Planned `Agent` in team-routed path, same-task packet-correction necessity check, and dispatch-shape rules follow `references/runtime-dispatch-law.md` `## Team-Agent-Only Lane Dispatch` + `## SendMessage And Skill Law`.
+- Malformed or missing retained-carrier completion payload routing follows `references/completion-handoff.md` `## Common Completion Result Spine` (producer-routing rule for closed-task correction).
 - `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, standalone-fallback classification, blocker-shape stop rule) live in `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.
 - Configured lanes, frozen `PARALLEL-GROUPS`, lane separation, proof/acceptance separation, and packet skill-field law outrank reuse or dispatch convenience.
 - Assignment-grade `SendMessage` uses `MESSAGE-CLASS: assignment`.

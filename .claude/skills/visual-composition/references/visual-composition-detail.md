@@ -35,11 +35,7 @@ Rules:
 - Available benchmark/reference proposals supply concrete density targets (visuals per page, text-to-visual ratio per section type, whitespace budget) as calibration inputs that override defaults.
 - A visual included only to hit density still fails the justification gate.
 ### Event Planning Document Visual Types
-Role-appropriate visual types for operational planning documents; each must pass visualization justification gate before inclusion:
-- **schedule tables** — time-sequenced activity grids with responsible party, location, status
-- **flow diagrams** — temporal or dependency chains showing event phases and handoffs
-- **venue layouts** — spatial arrangement for setup, movement, logistics
-- **role matrices** — responsibility assignment (who does what, when, with what authority)
+Role-appropriate visual types for operational planning documents; each must pass visualization justification gate before inclusion. Basic event-document visual type selection (schedule tables, flow diagrams, venue layouts, role matrices) is owned by `.claude/skills/document-automation/references/event-planning-document.md` `## Visual Inclusion For Event Documents`. The following types extend basic selection with visual-composition-unique acceptance gates:
 - **movement plans** — participant/resource flow across locations or phases
 - **assignment/logistics tables** — assignment tracking (who, what, where, when, status); required when resource assignments are in scope and no other visual tracks them
 - **preparation checklists** — binary-completion tracking (item, responsible party, status); required when preparatory tasks exist and no other visual tracks completion

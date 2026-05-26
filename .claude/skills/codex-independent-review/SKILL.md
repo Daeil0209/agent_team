@@ -49,6 +49,7 @@ Pre-`work-planning` external review output is not planning evidence.
 ## Reference Map
 Load only the references whose trigger is active:
 - `references/common-contract.md` before every configured Codex MCP review call.
+- `references/concurrent-patterns.md` when dual-pattern parallel codex usage is active (Pattern A lane-internal aid + Pattern C team-lead-orchestrated official independent review).
 - `references/wp-consult.md` for `WP-CONSULT` route-freeze review.
 - `.claude/skills/dev-workflow/references/artifact-convergence-review.md` for artifact convergence review.
 - `.claude/skills/dev-workflow/references/review-convergence-review.md` for reviewer-grade convergence review.

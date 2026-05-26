@@ -46,6 +46,7 @@ Return internal `review_verification_packet` with:
 - `INTEGRITY-RESULT`
 - `NEGATIVE-RISK-RESULT`
 - `FINDING-STATE-INVENTORY`
+- `CITATION-EVIDENCE-INVENTORY` — per `### 12b. Citation Substantiation Gate`; populated when the produced packet carries any outgoing external citation/anchor claim. `not-applicable:no-outgoing-external-citation` when scope contains none.
 - `REMOVAL-FIRST-PATCH-DESIGN`
 - `PATCH-WORTHINESS`
 - `OPEN-SURFACES`
@@ -138,6 +139,18 @@ Use the common finding-class taxonomy from `.claude/skills/task-execution/refere
 Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, evidence surface, owner, and open next owner when applicable.
 For material defeaters that produced or supported a positive verification claim, the `FINDING-STATE-INVENTORY` entry must carry the 3-component disproof-attempt evidence per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`: (a) named failure mode probed, (b) observable evidence that would defeat the preferred positive claim if found, and (c) actual search record naming surface searched and finding.
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where material-defeater entries lack these three components or carry shorthand-only evidence surface.
+
+### 12b. Citation Substantiation Gate
+PROTECTED-LOCAL-RESTATEMENT-BASIS: citation-substantiation atomic-check — distinct from Step 5 Critical Review Gate (defeater-enumeration disproof-attempt) and Step 12 Classify Findings (defect 3-component inventory). Step 12b applies at every outgoing external citation/anchor authoring moment as anti-citation-fabrication enforcement. Canonical carrier-citation rule lives at `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; this surface applies it at packet-population time with the 2-class deterministic test inline.
+For every outgoing external citation/anchor claim in the produced packet, populate `CITATION-EVIDENCE-INVENTORY` with one 3-tuple entry per citation. "Outgoing external citation/anchor" = cited surface is a different file or different carrier than the produced packet itself (cited file path, section name, line:column, PACKET-ID, retained carrier path, or content claim referencing another file). "Internal/structural" citation (exempt) = produced packet's own section header / self-PACKET-ID / produced file's own line:column self-reference.
+Apply the 2-class deterministic test:
+- **Class A (admissible)**: current turn carries a Read/Grep/Bash tool-call against the cited surface AND the cited line/section/PACKET-ID is contained in that tool-call output. Citation immediately admissible.
+- **Class B (deferred Class A, admissible only with explicit citation)**: cited surface was loaded earlier in the same session via a Class-A-qualifying tool-call at turn-N AND (i) staleness check passed per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, (ii) the entry explicitly cites the originating turn-N tool-call evidence (Read/Grep/Bash invocation identifier or retained carrier PACKET-ID + retained path). Class B claims without explicit originating-turn citation are inadmissible.
+- **Not-A-not-B**: citation is inadmissible; the writer MUST execute a fresh Class-A tool-call in the current turn before the citation enters the packet. Carrier prose marking "Class A required" without executing the tool-call is fabrication, not admissibility.
+Each `CITATION-EVIDENCE-INVENTORY` entry records: (a) cited target identifier (file path + section/line/PACKET-ID); (b) freshness class (A or B) + verifying tool-call type and parameters + (Class B only) originating turn-N tool-call evidence citation; (c) observed verbatim content snippet from the tool-call output (Class A) or originating-turn output reference (Class B). Entries missing any of (a)(b)(c) are inadmissible; treat as citation fabrication and fail Step 12b.
+This Gate is distinct from Step 5 (failure-mode disproof) and Step 12 (defect inventory) in purpose — Step 12b probes citation-correctness substantiation, not defeater disproof.
+Bootstrap exemption: this Gate enforces from the patch installing it forward; review-verification packets produced prior to installation are not retroactively reclassified. Bootstrap pattern parallels `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection` bootstrap exemption clauses.
+Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where outgoing-external-citation entries are missing from `CITATION-EVIDENCE-INVENTORY` or lack any required 3-tuple component.
 
 ### 13. Decide Patch Worthiness
 Record protected function, negative operating effect, user-outcome impact, regression risk, smallest owner, operation type, and tested rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.

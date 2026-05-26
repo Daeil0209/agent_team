@@ -73,6 +73,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Synthesis and redispatch from synthesized results consume `synthesis-consume`.
 - Evidence quality, owner separation, acceptance risk, final-arbitration readiness, defect classification, or patch-worthiness opens `Skill(review-verification)`.
 - Final acceptance, final arbitration, or `PASS/HOLD/FAIL` verdict execution opens `validator` and `Skill(agent-validator)`.
+- Validator-issued `FINAL-REJECT` opens team-lead FAR correction routing via `far-reject-routing` for routing-class classification and corrective dispatch.
 - Governance change entry loads `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load the skill.
 - Operator-initiated meeting request, operator-stated multi-perspective convergence agenda, or operator-stated multi-participant discussion-to-consensus need opens `Skill(team-meeting)`.
 - Interrupt/autonomy trigger consumes `interrupt-autonomy`.

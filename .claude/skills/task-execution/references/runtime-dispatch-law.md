@@ -20,6 +20,8 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 - For current-session recovery, `session-boot` must precede team-scoped reattach.
 - `Agent` before its owning entry path is a procedure violation, not a dispatch shape.
 - For deferred team-runtime tool schemas, consume `.claude/reference/work-runtime-boundary-law.md` and fetch the schema via `ToolSearch` before the first `TeamCreate`, team-scoped `Agent`, or assignment-grade `SendMessage`; deferred visibility is not new-tool acquisition, runtime unavailability, or standalone fallback basis.
+- team-scoped `Agent` success = `member-created`; `member-created` is not `dispatch pending` and creates no `dispatch-ack` debt.
+- Missing team-existence evidence opens `TeamCreate` through `task-execution`; team-scoped `Agent` launch creates `member-created` only after team existence is proven; assignment-grade `SendMessage` creates `dispatch pending` only after exact live member addressability is proven.
 
 ## Runtime Entry Evidence Boundary
 - `session-boot` classifies runtime-ready, runtime-blocked, monitoring-required, recovery-required, stale, stall, and cleanup truth.

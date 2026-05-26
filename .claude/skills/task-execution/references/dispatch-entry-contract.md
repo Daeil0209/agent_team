@@ -10,6 +10,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 Load after `Skill(task-execution)` is active per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation` and before any dispatch, reuse, blocker-clear, or packet assembly move.
 
+## Carrier-Citation Atomic-Check
+PROTECTED-LOCAL-RESTATEMENT-BASIS: dispatch-entry carrier-identification atomic-check — carrier-citation rule colocated at the dispatch-entry decision moment because dispatch readiness routinely depends on prior carrier identification (validator verdicts, lane completion carriers, review-verification packets) consumed as upstream-decision-basis. Canonical carrier-citation rule lives at `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; this surface applies it at dispatch-entry preflight time.
+When dispatch readiness depends on prior carrier identification (e.g., prior validator verdict requiring re-dispatch, prior review-verification packet supplying patch-readiness basis, prior lane completion supplying upstream-decision-basis), run carrier-identification fresh verification before recording `EXECUTION-READINESS-BASIS: ready`:
+- (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
+- (ii) verify the carrier's `PACKET-ID` (or `TASK-ID`, `RETAINED-OUTPUT-PATH`, or equivalent identifier) matches the expected ID;
+- (iii) verify the carrier's verdict label, completion class, or cited content matches the dispatch-readiness claim.
+Carrier-by-memory or filename-by-inference dispatch-readiness consumption without (i)+(ii)+(iii) is carrier-citation fabrication; `EXECUTION-READINESS-BASIS: ready` based on such consumption is invalid. Reopen `work-planning` or correct the citation before dispatch proceeds.
+
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
 - actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session

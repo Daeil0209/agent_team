@@ -76,12 +76,7 @@ Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
 - Source-read evidence is decisive only for source-read deliverables.
 - Rendered claims require rendered proof.
 - Runtime claims require runtime proof.
-- Visual claims need proper:
-  - lane evidence
-  - skill evidence
-  - tool evidence
-  - live-document evidence when live-document evidence is the fitting surface
-- UX claims need proper:
+- Visual and UX claims need proper:
   - lane evidence
   - skill evidence
   - tool evidence
