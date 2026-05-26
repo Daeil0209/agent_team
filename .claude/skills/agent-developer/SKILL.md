@@ -6,13 +6,9 @@ PRIMARY-OWNER: developer
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned production surface.
-- **Lane stance from `.claude/agents/developer.md` IR-1 (production craftsman with quality obligation; anti-self-fabrication; constraint-as-resolution-trigger; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
-- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward â€” active framing content (quality obligation, anti-self-fabrication, constraint-as-resolution-trigger, last-resort escalation) shared with `.claude/agents/developer.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Escalation Triggers, Development Production Workflow, Changeset Separation, Technical Standards, Active Communication Protocol
 - PRIMARY-OWNER: developer
-- New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
 - `references/developer-lane-detail.md`: developer packet fields, `SKILL-AUTH`, specialist matrix, durability, regression guard, and completion detail.
 ### Scope & Quality Gate
@@ -38,7 +34,6 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 
 ## Preconditions
 - Use only after team-lead assigns bounded developer-owned production scope.
-- Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the developer detail contract in `references/developer-lane-detail.md`.
 - In active `dev-workflow`, team-lead owns Phase 1 planning design and canonical plan document authoring; Phase 2 design direction/contract and canonical design document authoring.
 - Developer's dev-workflow lane begins at Phase 3 implementation production from the frozen Phase 2 design basis.
@@ -134,17 +129,12 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 ### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
 - Run lane-local `Skill(self-verification)` convergence on the changed surface immediately on production completion.
-- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records in the carrier without actual same-turn tool-call evidence is self-fabrication. As primary producer, self-fabrication corrupts every downstream verification gate that consumes your completion as upstream basis.
 - Correct bounded developer-owned defects found by self-verification convergence before completion when owner, phase, deliverable shape, and acceptance chain stay unchanged.
 - Repeat lane-local `Skill(self-verification)` convergence while a pass finds a developer-owned defect and the next correction has a changed artifact, evidence basis, or fix path.
 - Complete only after lane-local `Skill(self-verification)` convergence finds no remaining developer-owned defect or the remaining issue belongs to another owner, changed boundary, blocked capability, or explicit `OPEN-SURFACES` path.
 - Lane-local `Skill(self-verification)` never replaces reviewer, tester, or validator ownership; non-developer gaps remain `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before developer-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
-- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
-- **PASS records require evidence citations** per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3; assertion-only completion carrier is fabrication and disqualifies handoff.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.

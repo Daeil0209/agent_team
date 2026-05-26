@@ -38,6 +38,9 @@ auto-inject: false
   - Verification Strategy Basis
   - explicit Open Questions
 - team-lead owns Phase 1 planning design, frozen plan basis, and canonical plan document authoring.
+- team-lead Phase 1 execution handles CP1/CP2, open-question policy, YAGNI status, material specialist skill basis, and canonical plan artifact direction; authors the canonical plan document directly from the frozen Phase 1 design basis.
+- team-lead Phase 1 execution receives accepted Codex or team-lead review findings through artifact-convergence and applies valid `REDESIGN-PLAN` edits directly to the canonical plan document.
+- team-lead Phase 1 execution treats the canonical plan artifact as the plan surface.
 
 ## Phase 2 Design Surface
 - Canonical output path: `docs/02-design/features/{feature}.design.md` unless project config states otherwise
@@ -92,6 +95,13 @@ auto-inject: false
 - The bundle reduces Phase 2 burden by splitting detail by lane or surface while team-lead retains design ownership and CP4/Phase 3 consume it as implementation input.
 - For executable, user-facing software deliverables, design must freeze every `SCOPE-BASELINE` feature/surface/control path plus the operator-delivery implementation contract: exact launch artifact, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, launch surface such as `WINDOWS-LAUNCH-SURFACE` when Windows is primary, operator invocation shape, setup/build path, hidden/visible process policy, failure visibility, shutdown/cleanup path, clean re-launch path, infrastructure exposure policy, and the inventory needed for tester first-pass proof, Phase 5 return evidence, and validator final acceptance.
 - If that operator-delivery implementation contract is missing or vague for an in-scope executable surface, the internal detail bundle is not implementation-ready; Phase 3 dispatch for that surface is blocked until Phase 2 correction records the contract or an upstream deferral/exclusion.
+- team-lead Phase 2 execution applies accepted Codex or team-lead review findings through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical design document.
+- Phase 2 execution sequencing: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
+- Internal detail bundle regions driving Phase 3 active parallel dispatch are fully frozen before that dispatch.
+- Vague regions outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch.
+- Vague regions inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden.
+- Cross-surface drift after Phase 4 PASS-attempt returns to Phase 2 correction.
+- Phase 2 missed-catch classification selects workflow repair, owner correction, or `Skill(governance-modification)`.
 
 ## Phase 3 Implementation Surface
 - Implementation starts after team-lead CP4 resolves from the Phase 2 implementation-binding internal detail bundle.
@@ -122,10 +132,20 @@ auto-inject: false
   - unused available MCP blocks PASS/FAR until justified by unavailable evidence or a frozen narrower tool contract
   - Rendered Image Evidence Rule: rendered proof covers the route/page/screen-state/data-state x viewport matrix required by the acceptance surface; capture an image per acceptance-relevant feature/state, or full-page/full-design-area image for whole-surface claims. Each reviewer, tester, validator, or team-lead synthesis owner who cites an image for an AC verdict, FAR claim, or visual-conformance assertion opens that image directly via the multimodal `Read` tool and compares it with the design-stated expectation for the AC, named element, state, or behavior.
   - Rendered image inspection records glyph sanity, clipping, overlap, hidden controls, readable hierarchy, missing media, browser console/runtime-error status when material, and concrete visual deltas such as font size, spacing, ratio, alignment, color, or label clarity. Cite-path-only evidence, capture-without-open, or opened images not checked against the design-stated expectation are not rendered acceptance evidence.
+  - Completion-spine fields driven by Rendered Image Evidence Rule (consumed by completion carriers whose user-decisive surface is operator-facing rendered UI — browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance):
+    - `OPERATOR-NAIVE-COMPREHENSION-AUDIT`: first-time-user walkthrough verdict per AC-supporting surface element (labels, controls, data displays, charts, gauges that bear acceptance weight). Each verdict is `clear`, `partially-clear:<reason>`, or `unclear:<reason>`. Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner. Minor non-AC labels appear as a single `routine: clear` summary unless a defect is observed.
+    - `IMAGE-INSPECTION-RECORD`: list each screenshot or full-page image cited in support of an AC verdict, Final Acceptance Review (FAR) claim, or visual-conformance assertion. Cite the design-stated expectation each image proves. State the per-image visual verdict after opening the image directly via the multimodal `Read` tool. Each verdict is `matches-expectation`, `deviates:<concrete deviation>`, or `inconclusive:<reason>`. `matches-expectation` requires direct inspection of the frozen visual expectations; default rendered-UI axes are font size, spacing, ratio, alignment, color, label clarity, and glyph rendering. `matches-expectation` proves only the captured visual state. Dynamic behavior still requires the relevant Evidence-Quality Matrix row plus executed user action and retained postcondition evidence. Cite-path-only or capture-without-open on AC-supporting evidence is procedural failure. Deviation entries block PASS or route to `OPEN-SURFACES`. Routine baseline captures that neither support a verdict nor evidence a defect cite path-only without per-image verdict.
   - expected populated states must prove non-empty user-meaningful DOM; expected empty states must trace why they are empty rather than treating emptiness as proof
   - operator-naive comprehension definition is owned by `.claude/skills/visual-composition/SKILL.md`; tester records per-element rendered comprehension evidence and validator final-arbitration repeats it independently.
   - when multiple environments are in scope, cross-environment conditional fields per `.claude/skills/task-execution/references/request-bound-fields.md` accompany handoff
 - Reviewer + tester no-gap is necessary but not sufficient when validator-governed acceptance is required
+- Phase 4 execution sequencing: reviewer and tester remain separate; planned proof comes first, exploratory expansion second.
+- Phase 4 tooling routing: missing decisive user-surface tooling freezes bounded setup or routes to `hold|blocker`.
+- Phase 4 parallel production requires explicit cross-surface contextual coherence review.
+- Phase 4 cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
+- Phase 4 validator cross-surface integration verification is required before PASS.
+- Phase 4 per-surface quality without cross-surface coherence is incomplete review.
+- Phase 4 cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-modification)` on the narrowest owner surface.
 
 ## Phase 5 Iteration Discipline
 - Phase 5 consumes the CP5 acceptance-grade correction contract with root-cause classification; raw review/test findings are evidence inputs, not dispatch scope

@@ -6,13 +6,9 @@ PRIMARY-OWNER: validator
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned validation surface.
-- **Lane stance from `.claude/agents/validator.md` IR-1 (terminal arbiter with quality obligation; anti-PASS-fabrication; defeater-first; HOLD-is-not-substitute-for-verdict-craft; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
-- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-PASS-fabrication, defeater-first, HOLD-is-not-substitute, last-resort escalation) shared with `.claude/agents/validator.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, PASS Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Validation Inputs, Validation Workflow, Blocked Validation, Active Communication Protocol
 - PRIMARY-OWNER: validator
-- New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
 - `references/validator-lane-detail.md`: validator packet fields, verdict lenses, PASS prohibitions, reconciliation, operator-runtime/rendered-quality protocols, final-arbitration trigger definitions, final acceptance rejection packet detail, and completion detail.
 ### Scope & Quality Gate
@@ -44,7 +40,6 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 
 ## Preconditions
 - Use only after team-lead assigns a bounded validation surface.
-- Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the validator detail contract in `references/validator-lane-detail.md`.
 - Produced plans and designs are valid validation targets only when they are the assigned acceptance target.
 - Validate them as deliverables.
@@ -142,10 +137,6 @@ Verdict labels:
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
 ### 8. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before validator-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
-- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
-- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3, and verdict citations against the consumed `review_verification_packet` `PACKET-ID` per `.claude/skills/review-verification/SKILL.md` Step 14.
 - **Pre-completion fresh verification of verdict carrier** (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law` + `.claude/skills/self-verification/SKILL.md` `## Step 3` target-identity rule): `Skill(self-verification)` Step 3 PASS-2 for the verdict-completion target requires a current `review_verification_packet` whose `REVIEW-TARGET` surface-set fully contains the verdict-carrier target surface-set (verdict file + outgoing PASS/HOLD/FAIL claim + every material returned item). Substantive-claim-only prior packets do NOT satisfy target identity for verdict-carrier completion; if prior packet covers only substantive claim, validator MUST run supplementary lens-bounded `Skill(review-verification)` (`coherence-integrity-lens` + `procedure-adherence-lens` minimum) producing a fresh per-target packet on the carrier-structural surface-set, OR fresh full-steps-1-14 execution on the verdict-carrier target.
 - **High-risk verdict class mandatory external verification** (per `.claude/skills/codex-independent-review/SKILL.md`): for high-risk verdict classes — (i) governance-asset patch acceptance, (ii) anti-fabrication-correction acceptance, (iii) recurrence-barrier-hardening acceptance, (iv) user-direct-correction-response acceptance — validator MUST also invoke `Skill(codex-independent-review)` and cite the returned `CODEX-INDEPENDENT-REVIEW-BASIS` (adjudicated points + `fail-open:<reason>` when applicable) in the verdict carrier. PASS verdict on a high-risk class without cited Codex independent-review basis is `confirmed-defect:missing-external-verification` and routes to HOLD until external verification basis is recorded. If `mcp__codex__codex` is unavailable at validator lane: (1) attempt routing through team-lead first (team-lead carries the tool per role frontmatter); (2) record `fail-open:tool_unavailable` per `.claude/skills/codex-independent-review/references/common-contract.md` `## Tool Discipline` + `## Handling` fail-open semantics ONLY when team-lead routing is also exhausted (team-lead off-session, MCP tool unavailable team-lead-side, or auth/quota/timeout/parse failure exhausted). Bare `fail-open:tool_unavailable` without team-lead-routing exhaustion is invalid acceptance basis.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.

@@ -9,6 +9,9 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # task-execution: Lane-Specific Additions
 ## Common Lane-Core Preconditions
 Every agent-specific skill inherits these common preconditions:
+- Every agent-specific skill body sharpens only its own lane's owned surface.
+- Every agent-specific skill body applies the lane stance from `.claude/agents/<lane>.md` IR-1 throughout its workflow; the agent-specific skill is the procedural extension of that stance, not a passive worker replacement.
+- Every agent-specific skill body enforces growth discipline per `.claude/reference/modification-core-law.md` `## Modification Law`: new content must attach to an owning gate, precondition, workflow, or communication block.
 - Consume the common base packet from `.claude/skills/task-execution/references/assignment-packet.md`.
 - Lane-local result checking before completion is `Skill(self-verification)` convergence.
 - Classify receipt against the common start closure contract from `.claude/skills/task-execution/references/request-bound-fields.md`.

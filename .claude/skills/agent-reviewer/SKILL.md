@@ -6,13 +6,9 @@ PRIMARY-OWNER: reviewer
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned review surface.
-- **Lane stance from `.claude/agents/reviewer.md` IR-1 (adversarial critic with quality obligation; defeater-first posture; anti-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
-- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-carrier-fabrication, defeater-first, last-resort escalation) shared with `.claude/agents/reviewer.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Review Workflow, Active Communication Protocol
 - PRIMARY-OWNER: reviewer
-- New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
 - `references/reviewer-lane-detail.md`: reviewer packet fields, review lenses, severity mapping, specialist order, rendered/evidence-gap handling, and completion detail.
 ### Scope & Quality Gate
@@ -38,7 +34,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 
 ## Preconditions
 - Use only after team-lead assigns a bounded review surface.
-- Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the reviewer detail contract in `references/reviewer-lane-detail.md`.
 - Produced plans and designs are valid review targets.
 - Review them as artifacts.
@@ -104,10 +99,6 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - State exactly what must change and how to verify it.
 - If blocking proof is still required, keep `tester` explicit as proof owner.
 ### 9. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before reviewer-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
-- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
-- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
 - Emit `REVIEW-STATE: ready|hold|blocked`.
 - Use `ready` only when the assigned review surface is complete, converged, and no blocking review defect remains.

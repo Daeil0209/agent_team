@@ -6,13 +6,9 @@ PRIMARY-OWNER: tester
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned proof surface.
-- **Lane stance from `.claude/agents/tester.md` IR-1 (runtime prover with quality obligation; anti-narrative-substitution; anti-self-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
-- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-narrative-substitution, anti-self-fabrication, last-resort escalation) shared with `.claude/agents/tester.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Testing Workflow, Proof Classification, Active Communication Protocol
 - PRIMARY-OWNER: tester
-- New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
 - `references/tester-lane-detail.md`: tester packet floor, UI proof matrix, detection amplifiers, tool-tier detail, interaction coverage, checklist, and completion detail.
 ### Scope & Quality Gate
@@ -46,7 +42,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 
 ## Preconditions
 - Use only after team-lead assigns a bounded test surface.
-- Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the tester detail contract in `references/tester-lane-detail.md`.
 - When request-fit or promised user workflow materially shapes proof, require the request-bound packet fields plus explicit proof-surface and run-path fields rather than reconstructing them from gist alone.
 - Reconstruct only when proof target, proof expectation, proof surface, environment basis, scenario scope, closure/oracle row, state-postcondition, and decisive evidence basis are anchored in packet or artifact evidence.
@@ -147,10 +142,6 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Before completion, identify plausible developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before tester-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
-- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
-- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Proof PASS in completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) corrupts validator and team-lead synthesis.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
 - Keep tester-specific proof-match and run-path status fields explicit and truthful.
 - Use `not-applicable` instead of omission when a status axis was not part of the frozen surface.

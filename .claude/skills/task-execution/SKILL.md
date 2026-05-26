@@ -171,8 +171,6 @@ Keep runtime setup, packet work, lane choice, receipt handling, and team-state c
 When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, the next actions stay inside the allowed dispatch/reuse moves for every frozen nonblocked group.
 Execute the lawful `PARALLEL-DISPATCH-LOCK` move; user-visible prose appears only through `.claude/reference/reporting-prohibition-law.md`.
 
-The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
-
 Reporting consequences:
 - Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
 - User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and may cite only the user-relevant waiting condition it admits.

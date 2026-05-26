@@ -6,13 +6,9 @@ PRIMARY-OWNER: researcher
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 ## Structural Contract
-- Sharpens only its owned evidence surface.
-- **Lane stance from `.claude/agents/researcher.md` IR-1 (active investigator with quality obligation; anti-memory-substitution; anti-self-fabrication; last-resort escalation) applies throughout this workflow; this SKILL is the procedural extension of that stance, not a passive worker replacement.**
-- PROTECTED-LOCAL-RESTATEMENT-BASIS: lane-stance work-time carry-forward — active framing content (quality obligation, anti-memory-substitution, anti-self-fabrication, last-resort escalation) shared with `.claude/agents/researcher.md` IR-1 is colocated in this SKILL because role-file identity activates at spawn/intake atomic check moment while this SKILL activates at first-work atomic check moment; both moments differ, this surface enforces stance at work-procedure execution time. Role file remains canonical for identity-level questions; this surface applies the stance to procedural execution steps.
 - Structural Contract internal gates: Scope & Quality Gate, User-Perspective Gate
 - Fixed top-level section order after Structural Contract: Preconditions, Research Modes, Research Workflow, Evidence Standards, Active Communication Protocol
 - PRIMARY-OWNER: researcher
-- New content must attach to an owning gate, precondition, workflow, or communication block.
 ### Reference Map
 - `references/researcher-lane-detail.md`: researcher packet fields, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 ### Scope & Quality Gate
@@ -38,7 +34,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 
 ## Preconditions
 - Use only after team-lead assigns a bounded research brief.
-- Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the researcher detail contract in `references/researcher-lane-detail.md`.
 - When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Classify the received packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before research discovery.
@@ -108,10 +103,6 @@ Technically correct but user-inaccessible research is not finish-ready.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion
-- Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before researcher-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
-- Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
-- **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Evidence claims without source citation are fabrication that corrupts every downstream lane consuming this evidence as upstream basis.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.

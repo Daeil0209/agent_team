@@ -130,22 +130,7 @@ The method record covers:
 - `USER-SURFACE-PROOF-METHOD`
 - `TOOL-PATH-USED`
 - `TOOL-EXECUTION-EVIDENCE`
-- `OPERATOR-NAIVE-COMPREHENSION-AUDIT` for any completion whose user-decisive surface is operator-facing rendered UI (browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance).
-  Report a first-time-user walkthrough verdict per AC-supporting surface element (labels, controls, data displays, charts, gauges that bear acceptance weight).
-  Each verdict is `clear`, `partially-clear:<reason>`, or `unclear:<reason>`.
-  Items rated `unclear` block PASS or route to `OPEN-SURFACES` with the responsible owner.
-  Minor non-AC labels appear as a single `routine: clear` summary unless a defect is observed.
-- `IMAGE-INSPECTION-RECORD` for any completion whose user-decisive surface is operator-facing rendered UI (browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance).
-  List each screenshot or full-page image cited in support of an AC verdict, Final Acceptance Review (FAR) claim, or visual-conformance assertion.
-  Cite the design-stated expectation each image proves.
-  State the per-image visual verdict after opening the image directly via the multimodal `Read` tool.
-  Each verdict is `matches-expectation`, `deviates:<concrete deviation>`, or `inconclusive:<reason>`.
-  `matches-expectation` requires direct inspection of the frozen visual expectations. Default rendered-UI axes are font size, spacing, ratio, alignment, color, label clarity, and glyph rendering; consume `.claude/skills/dev-workflow/references/final-acceptance-review.md` only when the active route is `dev-workflow`.
-  `matches-expectation` proves only the captured visual state.
-  Dynamic behavior still requires the relevant Evidence-Quality Matrix row plus executed user action and retained postcondition evidence.
-  Cite-path-only or capture-without-open on AC-supporting evidence is procedural failure.
-  Deviation entries block PASS or route to `OPEN-SURFACES`.
-  Routine baseline captures that neither support a verdict nor evidence a defect cite path-only without per-image verdict.
+- `OPERATOR-NAIVE-COMPREHENSION-AUDIT` and `IMAGE-INSPECTION-RECORD` for completions whose user-decisive surface is operator-facing rendered UI (browser, dashboard, slide deck, dense table, runtime UI, or other operator-consumed visual surface where reader-visible usefulness is part of acceptance) — field schemas, verdict types, and inspection requirements live at `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 4 Analysis And Acceptance` `Rendered Image Evidence Rule` `Completion-spine fields driven by Rendered Image Evidence Rule` block.
 
 Report decisive user-surface work with the concrete proof method and execution evidence actually used.
 Completion-grade transport states whether requested content, functions, format, user-facing path, reader/operator burden, applicable `CORE-WORKFLOW-CLOSURE` rows, and acceptance surface are matched, verified, `not-applicable:<basis>`, explicitly user-accepted as out-of-scope, lawfully owner-deferred through upstream record, or open/blocked in `OPEN-SURFACES` or `HOLD`.

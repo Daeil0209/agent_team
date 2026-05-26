@@ -111,11 +111,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/01-plan/features/{feature}.plan.md` unless project config names another canonical path
 **Entry law**: Phase 0 output, if activated, must already be synthesized enough for CP1. Otherwise the request-fit basis must be stable
-**Execution law**: team-lead Phase 1 execution:
-- handles planning design, CP1/CP2, frozen `SCOPE-BASELINE`, open-question policy, YAGNI status, material specialist skill basis, canonical plan artifact direction, and canonical plan document authoring
-- authors the canonical plan document directly from the frozen Phase 1 design basis
-- receives accepted Codex or team-lead review findings through artifact-convergence and applies valid `REDESIGN-PLAN` edits directly to the canonical plan document
-- treats the canonical plan artifact as the plan surface
+**Execution law**: detail per `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 1 Canonical Plan Surface`.
 **Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
 **Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning`, and Phase 2 expands the Phase 1 artifact into scope, risk, architecture, proof, acceptance, and downstream work decisions.
 **Exit law**: unresolved open questions are recorded explicitly.
@@ -129,36 +125,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: team-lead
 **Canonical output**: `docs/02-design/features/{feature}.design.md` unless project config names another canonical path
 **Entry law**: converged Phase 1 canonical plan artifact, CP1/CP2 outputs, and the Phase 1 closure record with completed artifact-level convergence for the canonical plan artifact must already exist
-**Execution law**: team-lead handles:
-- the decision-level Phase 2 design basis and records it
-- canonical design document authoring
-**Execution law**: the design basis covers:
-- Phase 1 artifact-controlled scope, risk, architecture, proof, acceptance, and downstream work implications expanded by Phase 2
-- selected direction, ER/data, interface/API/format, and UI/user-flow
-- benchmark-required external-reference capture for detailed design when information representation, visual structure, workflow pattern, methodology choice, or domain pattern materially shapes the design
-- proof, acceptance, correction-readiness, launch/operator, implementation-binding internal detail bundle, and material specialist skill basis
-**Execution law**: team-lead Phase 2 authorship:
-- records the decision-level Phase 2 design basis as team-lead internal decision evidence, not as a separate completion artifact
-- keeps that internal decision evidence decision-complete across the listed surfaces
-- surfaces every decision needed by implementation, proof, acceptance, artifact-convergence, or CP4 in the canonical design artifact or required implementation-binding internal detail bundle
-- expands those decisions into the required canonical design artifact and required implementation-binding internal detail bundle structure
-- makes the canonical design artifact directly usable for downstream design, proof, acceptance, and artifact-convergence from its recorded decisions and linked implementation-binding detail
-- makes the implementation-binding internal detail bundle the CP4 translation input when implementation dispatch depends on it
-**Execution law**: accepted Codex or team-lead review findings return to team-lead redesign through artifact-convergence; team-lead applies valid `REDESIGN-PLAN` edits directly to the canonical design document.
-**Execution law**: option count, design-surface requirements, and CP3 detail live in `references/phase-surfaces.md` and `references/checkpoints.md`.
-**Execution law**: implementation planning starts after CP3 is resolved; production implementation starts only after Phase 2 exits and CP4 resolves.
-**Execution law**: the internal detail bundle stays inside Phase 2 as implementation-binding detail and becomes CP4 translation input.
-**Execution law**: internal detail bundle freeze:
-- prepares Phase 3/CP4 production-lane decomposition; implementation dispatch waits for Phase 2 exit plus CP4 resolution
-- covers real-use contracts, lane/surface responsibility, and shared source-of-truth
-- covers interface or format contracts, dependency boundaries, and integration points
-- covers error contracts, proof hooks, and return-evidence expectations
-**Execution law**: internal detail bundle regions driving Phase 3 active parallel dispatch are fully frozen before that dispatch.
-**Execution law**: vague regions:
-- outside Phase 3 active parallel dispatch are sequenced before later dependent dispatch
-- inside Phase 3 active parallel dispatch are design-time blockers, not downstream reviewer/validator burden
-**Execution law**: cross-surface drift after PASS-attempt returns to Phase 2 correction.
-**Execution law**: missed-catch classification selects workflow repair, owner correction, or `Skill(governance-modification)`.
+**Execution law**: detail per `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 2 Design Surface` and `.claude/skills/dev-workflow/references/checkpoints.md` for CP3 detail.
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
@@ -179,9 +146,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lane**: developer
 **Canonical output**: changed production surfaces plus an explicit developer handoff
 **Entry law**: Phase 2 closure record exists, CP3 is resolved, and team-lead CP4 translates the Phase 2 implementation-binding internal detail bundle into implementation scope and lane decomposition.
-**Execution law**: team-lead CP4 fixes parallel-default production responsibility with bounded specialist-fit work surfaces, explicit dependency boundaries, surface-to-agent map, and explicit merge responsibility.
-**Execution law**: every independent, nonblocked CP4 surface whose needed input is already present in the Phase 2 implementation-binding internal detail bundle enters the first parallel dispatch segment.
-**Execution law**: later dispatch segments are valid only for surfaces classified sequential or interdependent by the frozen parallel-fit basis, with exact dependency or interdependence recorded.
+**Execution law**: detail per `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 3 Implementation Surface`.
 **Exit law**: developer handoff names:
 - `OUTPUT-SURFACE`, changed surfaces, executed checks, `ACTIVE-SLICE`, and `SCOPE-BASELINE` coverage or stale rows
 - `FROZEN-CONTRACT-STATUS`, unresolved assumptions, and the next owner/action
@@ -193,16 +158,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Owner lanes**: reviewer + tester. Validator joins for verdict arbitration when required
 **Canonical output**: reviewer and tester completion-grade evidence blocks, then validator verdict when the acceptance path requires it
 **Entry law**: implementation handoff and the current plan/design surfaces carry explicit acceptance basis for reviewer and tester.
-**Execution law**: reviewer and tester remain separate; planned proof comes first, exploratory expansion second.
-**Execution law**: proof tooling follows the decisive user surface per `references/phase-surfaces.md` Phase 4.
-**Execution law**: tester applies smallest truthful proof default per `agents/tester.md`.
-**Execution law**: validator applies highest-fidelity proof default per `agents/validator.md`.
-**Execution law**: missing decisive user-surface tooling freezes bounded setup or routes to `hold|blocker`.
-**Execution law**: parallel production requires explicit cross-surface contextual coherence review.
-**Execution law**: cross-surface contextual coherence review covers API fit, runtime data shape, shared source-of-truth, integration points, error handling, computed-surface semantics, and `CORE-WORKFLOW-CLOSURE` end-to-end coverage.
-**Execution law**: validator cross-surface integration verification is required before PASS.
-**Execution law**: per-surface quality without cross-surface coherence is incomplete review.
-**Execution law**: cross-surface drift after PASS opens CP5 correction and missed-catch classification; confirmed Phase 4 missed-catch process failure opens `Skill(governance-modification)` on the narrowest owner surface.
+**Execution law**: detail per `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 4 Analysis And Acceptance` (tester smallest-truthful-proof default per `.claude/agents/tester.md`; validator highest-fidelity-proof default per `.claude/agents/validator.md`).
 **Exit law**: CP5 routing — design-level/implementation/operator-delivery/route/scope/HOLD priorities — lives in `references/checkpoints.md` `## CP5 -- Gap Resolution Decision` Auto-resolve priority. Apply that priority list before dispatch.
 **Exit law**: correction paths derive the acceptance-grade correction contract from the frozen Phase 2 design basis, Phase 4 evidence, or `FINAL-REJECT` packet before dispatch.
 **Exit law**: once CP5 selects a non-`HOLD` path, team-lead executes the selected next owner/action in the same execution segment; Phase 5 consumes the CP5 correction contract, not raw finding lists.

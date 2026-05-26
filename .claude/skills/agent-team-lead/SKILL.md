@@ -69,7 +69,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Same-lane follow-on work, wave transition, replacement, or redispatch consumes runtime-dispatch reuse before shutdown or new member creation.
 - Planning consumption consumes the mapped reference key for frozen planning fields, FAR correction routing, configured-review result lead own-review, and lead-local or blocker-clear local work; that frozen local action uses `lead-local-guarded-law` before execution.
 - Accepting, relaying, freezing from, claiming convergence from, completing from, or redispatching from configured independent-review result consumes `codex-output-lead-own-review`.
-- Message-class truth consumes `.claude/skills/task-execution/references/message-classes.md` and `.claude/skills/task-execution/references/truth-rules.md`.
+- Message-class truth consumes `.claude/skills/task-execution/references/message-classes.md`.
 - Synthesis and redispatch from synthesized results consume `synthesis-consume`.
 - Evidence quality, owner separation, acceptance risk, final-arbitration readiness, defect classification, or patch-worthiness opens `Skill(review-verification)`.
 - Final acceptance, final arbitration, or `PASS/HOLD/FAIL` verdict execution opens `validator` and `Skill(agent-validator)`.
