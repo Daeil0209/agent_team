@@ -9,7 +9,12 @@ DELETE-PENDING-COMPLIANCE-HOOK-REVIEW: true
 
 # task-execution: Truth Rules
 
-> DELETE-PENDING-COMPLIANCE-HOOK-REVIEW: this file is a thin pointer reference scheduled for deletion per `claude_doc/governance-audit-2026-05-27/promotion/promotion-catalog.md` P4.4 (B-19 finding). Content is canonically owned by the surfaces cited in the body below. 2 of the 3 prior live citations were cleared in Wave 3 Batch F (`agent-team-lead/SKILL.md:72` rewritten to drop the truth-rules.md half; `task-execution/SKILL.md:174` removed because SKILL.md:40 Reference Map already covers the canonical lookup chain). The remaining citation lives at:
+> DELETE-PENDING-COMPLIANCE-HOOK-REVIEW: this file is a thin pointer reference scheduled for deletion per `claude_doc/governance-audit-2026-05-27/promotion/promotion-catalog.md` P4.4 (B-19 finding). Content is canonically owned by the surfaces cited in the body below. 3 of the 4 prior live citations were cleared:
+> - `.claude/skills/agent-team-lead/SKILL.md:72` (Wave 3 Batch F-1) — rewritten to drop the truth-rules.md half (message-classes.md retained as canonical message-class truth owner).
+> - `.claude/skills/task-execution/SKILL.md:174` (Wave 3 Batch F-2) — redundant bullet removed because SKILL.md:40 Reference Map already covers the full canonical lookup chain via message-classes.md + runtime-state-detail.md + runtime-dispatch-law.md + reporting-prohibition-law.md.
+> - `.claude/skills/task-execution/references/runtime-dispatch-law.md:115` (Wave 2+3 Correction F-1) — `per truth-rules.md` clause dropped; the rule "assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task" is self-contained, and the immediately following bullet (line 116) already cites `message-classes.md` `### Assignment Delivery Contract` as the canonical owner.
+>
+> The remaining (and explicitly deferred) citation lives at:
 > - `.claude/reference/reporting-prohibition-law.md:65` (Detail Owners pointer — file is PROTECTED-CURTAIN-SURFACE; citation update requires validator pre-approval + user notification per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`; explicitly deferred per Wave 3 packet `### Batch F` `DEFER reporting-prohibition-law.md:65` clause).
 >
 > Pre-deletion requirements: update the remaining PROTECTED-CURTAIN-SURFACE citer under the constitutional gates above, then delete this file. The single citation update is an OPEN-SURFACE handed off to team-lead for separate dispatch under the protection gates.

@@ -112,7 +112,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Recoverable packet or target gaps stay outside hook-controlled blocking.
 
 ## SendMessage And Skill Law
-- Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task per `truth-rules.md`.
+- Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task.
 - Assignment worker targeting follows `message-classes.md` `### Assignment Delivery Contract`; task-row mutation is not worker targeting.
 - Completed-task correction first needs an open executable task whose `TaskCreate` result has returned before dependent dispatch or task mutation.
 - Workflow-control `SendMessage` is for canonical `phase-transition-control` only.
