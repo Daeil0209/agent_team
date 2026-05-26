@@ -90,7 +90,32 @@ if ! printf '%s' "$INPUT_JSON" | grep -qE '"tool_name"[[:space:]]*:[[:space:]]*"
   exit 0
 fi
 
-# Look for upward state-class MESSAGE-CLASS header at the start of the
+# Secondary check FIRST: bulk meeting/critique inventory markers in any
+# SendMessage body, regardless of MESSAGE-CLASS. These markers MUST live in
+# retained carriers per
+# .claude/skills/task-execution/references/message-classes.md
+# ### Transport Payload non-state-class rule and
+# .claude/skills/team-meeting/SKILL.md ### 3-4a. Meeting Transport
+# Envelope Discipline. They are curtain-violating regardless of whether
+# the message is upward state class, custom meeting class (critique-request,
+# critique-response, discussion-entry, verdict), peer evidence, or any
+# other non-assignment-delivery class.
+MEETING_LEAK_RE='(FINDING-STATE-LADDER-SUMMARY|PATCH-WORTHINESS:|META-CONCERN:|OPINION-ROUND PROMPT|DRAFTER MEETING-AUDIT-CRITERIA|FINDING-STATE-INVENTORY|CITATION-EVIDENCE-INVENTORY)'
+
+if printf '%s' "$INPUT_JSON" | grep -qE "$MEETING_LEAK_RE"; then
+  cat <<'EOF'
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage body carries bulk meeting/critique inventory markers (FINDING-STATE-LADDER-SUMMARY, PATCH-WORTHINESS, META-CONCERN, OPINION-ROUND PROMPT, DRAFTER MEETING-AUDIT-CRITERIA, FINDING-STATE-INVENTORY, or CITATION-EVIDENCE-INVENTORY) that MUST live in the retained carrier per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule and .claude/skills/team-meeting/SKILL.md '### 3-4a. Meeting Transport Envelope Discipline'. Recover by moving the inventory content to a retained carrier file and resending with canonical envelope: summary = brief class label + round/task pointer (e.g., 'critique-response r5 carrier-only'); message body = 1-3 lines naming the carrier path + brief intent label (e.g., 'CARRIER: claude_doc/.../critique-r5.md', 'STATE: candidate-classified-with-revision'); no inline opinion body, no inventory blocks, no inline rationale."
+  }
+}
+EOF
+  exit 0
+fi
+
+# Primary check: upward state-class MESSAGE-CLASS header at the start of the
 # message body. In JSON-encoded form this looks like:
 #   "message":"MESSAGE-CLASS: dispatch-ack\n..."
 # The classes are: dispatch-ack, status, scope-pressure, completion,

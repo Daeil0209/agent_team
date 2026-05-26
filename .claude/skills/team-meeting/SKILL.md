@@ -71,40 +71,41 @@ NEXT ACTION:
 The draft is concrete enough that the next owner can act.
 Drafter maintains a cumulative enumeration of every operator directive issued during the meeting (initial agenda + every operator pre-critic intervention + every operator post-critic-response intervention) and every accepted critic opinion; this enumeration appears in each revised draft as an `OPERATOR-DIRECTIVE COMPLIANCE CHECK` (or equivalent name) section that traces each prior input to its reflection in the current draft.
 
-### 3-4. Opinion Round
-Participants deliver opinions to the drafter.
-An opinion targets the whole draft or a specific solution item.
-Critic opinion is sufficient when the drafter can identify the objection, suggested improvement, and controlling reason or evidence.
-Critics evaluate the draft and each proposed revision against Section 3-5 `MEETING-AUDIT-CRITERIA`.
-Critics name the failed audit criterion when that criterion controls the objection.
-Drafter accepts a useful opinion regardless of its shape.
-Drafter accepts opinions in free-form delivery.
+### 3-4. Discussion Round
+The meeting is a discussion among participants, not a drafter-issued assignment with aggregated reports. Drafter and critics are co-discussants: drafter proposes drafts and responds to challenges; critics challenge drafts and respond to drafter and to each other. Treating critics as work-assignees who produce isolated critique reports for drafter consumption is a meeting-form defect that routes the round to redo.
 
-Critics work in parallel when team-agent runtime is active with `ACTIVE-CONCURRENT-AGENT-CAP` at or above critic count and the live process-backed roster includes all critic lanes.
-Each critic delivers opinions independently.
-Apply serial waiting when a critic's opinion depends on another critic's evidence.
-Forced single-lane execution despite available parallel runtime fit — "serial convenience" — is a bottleneck defect.
+Each discussion round runs against the current draft. Within a round:
+- Drafter surfaces the current draft for discussion via carrier reference; the draft itself is the discussion target, not an assignment specification for shaped critic reports.
+- Every critic consumes the current draft AND every prior in-round discussion entry (prior critic opinions, drafter responses, evidence pointers) BEFORE adding its own opinion. A critic opinion submitted without consuming prior in-round entries is an isolated-report defect and routes to redo within the same round.
+- A critic opinion targets the whole draft, a specific solution item, OR a prior critic opinion or drafter response. Cross-critic dialogue is first-class meeting content, not noise.
+- Critic opinion is sufficient when the drafter can identify the objection, suggested improvement, and controlling reason or evidence. Critics name the failed `MEETING-AUDIT-CRITERIA` criterion when that criterion controls the objection.
+- Drafter responds inline within the round to each unresolved opinion (acceptance, revision proposal, evidence-backed rejection, or tradeoff narrowing). Drafter response is itself a discussion entry that subsequent critics consume before adding their own.
+- Within-round contradictions between critics, or between a critic and drafter, trigger IMMEDIATE pairwise discussion within the same round when the contradiction blocks solution correctness; deferring contradictions to the next round is a meeting-form defect.
 
-Drafter reads all opinions together.
-Drafter revises the draft once per round when possible.
-Each revision MUST verify cumulative input integration: every prior operator directive and every accepted critic opinion remains reflected in the revised draft. Silently dropping prior input across revisions is a procedure-adherence violation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` and disqualifies the revision from advancing to `### 3-5 MEETING-AUDIT-CRITERIA` convergence-readiness.
-Drafter keeps a brief basis when rejecting a material objection or improvement.
-Drafter triggers pairwise debate when a direct contradiction blocks solution correctness.
-Drafter answers each unresolved objection by proposing the best-current persuasive solution.
-Drafter uses discussion requests to obtain evidence.
-Drafter uses discussion requests to resolve a direct contradiction.
-Drafter converts every remaining material objection into a persuasion target before the next round.
+Critic discussion entries may run in parallel when team-agent runtime is active with `ACTIVE-CONCURRENT-AGENT-CAP` at or above critic count and the live process-backed roster includes all critic lanes; parallel critic entry remains discussion form when each critic consumes the prior in-round thread before contributing. Apply serial waiting when a critic's contribution depends on another critic's evidence. Forced single-lane execution despite available parallel runtime fit — "serial convenience" — is a bottleneck defect.
+
+Drafter revises the draft once per round when possible. Each revision MUST verify cumulative input integration: every prior operator directive and every accepted critic opinion remains reflected in the revised draft. Silently dropping prior input across revisions is a procedure-adherence violation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` and disqualifies the revision from advancing to `### 3-5 MEETING-AUDIT-CRITERIA` convergence-readiness.
+
+Drafter keeps a brief basis when rejecting a material objection or improvement. Drafter answers each unresolved objection by proposing the best-current persuasive solution. Drafter uses discussion requests to obtain evidence or resolve direct contradictions. Drafter converts every remaining material objection into a persuasion target before the next round.
+
 Persuasion target options:
 - revise the item so the objection is satisfied.
 - add evidence-backed rationale showing why the current item already satisfies the objection.
 - narrow the conflict into operator-choice tradeoff options when valid goals conflict.
-The next round tests the converted solution or rationale.
-Repeated objection advances through changed solution content, changed evidence, or clearer tradeoff framing.
 
-Operator may set an opinion-round limit at meeting opening.
-The marathon default continues until full consent on every item or until a default cap is reached.
-Default round cap is five rounds; drafter declares `HOLD` with documented objection-persistence basis when full consent is not reached within the cap, and operator may extend the cap explicitly.
-Per-item iteration closes after every critic clears material objections on that item.
+The next round tests the converted solution or rationale. Repeated objection advances through changed solution content, changed evidence, or clearer tradeoff framing.
+
+Operator may set a round limit at meeting opening. The marathon default continues until full consent on every item or until a default cap is reached. Default round cap is five rounds; drafter declares `HOLD` with documented objection-persistence basis when full consent is not reached within the cap, and operator may extend the cap explicitly. Per-item iteration closes after every critic clears material objections on that item.
+
+### 3-4a. Meeting Transport Envelope Discipline
+Every meeting-internal `SendMessage` (drafter discussion prompts, critic discussion contributions, peer critic dialogue, `critique-request` / `critique-response` / `discussion-entry` / `verdict` / any other meeting class) MUST use the canonical envelope-plus-retained-carrier-pointer shape per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` non-state-class rule:
+- `summary` parameter carries a canonical no-detail signal: brief class label plus round/task pointer only (e.g., `discussion-entry r3 reviewer-shard-a`, `critique-response r5 carrier-only`, `redirect for active draft-r6`).
+- `message` body carries minimum carrier pointer only — 1-3 lines naming the retained carrier path plus a brief intent label or single-class status word (e.g., `CARRIER: claude_doc/.../critique-r5-reviewer-shard-a.md`, `STATE: candidate-classified-with-revision`); no inline opinion body, no `FINDING-STATE-LADDER-SUMMARY`, no `PATCH-WORTHINESS`, no `DRAFTER MEETING-AUDIT-CRITERIA REASSESSMENT`, no `META-CONCERN`, no `NEXT-OWNER-ACTION` block, no `SELF-VERIFICATION` inventory, no `OPEN-SURFACES` inventory, no `OPINION-ROUND PROMPT RESPONSES`, no operational rationale, no excerpts.
+- Full discussion-entry content (opinions, finding inventories, rationale, evidence citations, audit-criteria reassessment, META observations, next-owner-action, self-verification record, open surfaces) lives in the retained carrier referenced via the envelope pointer; the receiving participant consumes that carrier for all decision-affecting body.
+
+Inline full-content body in any meeting `SendMessage` is a Constitutional Reporting Curtain violation per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` and `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; the rendered body becomes user-visible host UI content carrying meeting work-product into the user surface, violating the curtain. Senders MUST author meeting messages with carrier-based delivery from the outset; receivers MUST treat inline-body delivery as carrier-citation defect and route correction.
+
+Runtime enforcement: `.claude/hooks/reporting-curtain-envelope-gate.sh` extends beyond upward state classes to reject any `SendMessage` body carrying bulk meeting/critique inventory markers (`FINDING-STATE-LADDER-SUMMARY`, `PATCH-WORTHINESS`, `META-CONCERN`, `OPINION-ROUND PROMPT`, `DRAFTER MEETING-AUDIT-CRITERIA`, `FINDING-STATE-INVENTORY`, `CITATION-EVIDENCE-INVENTORY` with body). This is a runtime safety net; the primary control is identity-layer Curtained Communication and this section's discipline.
 
 ### 3-5. MEETING-AUDIT-CRITERIA
 This section is the meeting's audit regulation.
@@ -178,10 +179,12 @@ Each transition below opens the next owner/action in the same turn per `.claude/
 
 - Agenda clear → Section 3-3 Solution Draft.
 - Agenda ambiguous → clarification or `HOLD`.
-- Draft ready → Section 3-4 Opinion Round.
-- Opinions received → drafter revision.
-- Material objection remains → dissent-to-solution conversion in Section 3-4.
+- Draft ready → Section 3-4 Discussion Round.
+- Discussion contributions received → drafter inline response within round; round-end → drafter revision.
+- Within-round contradiction blocking correctness → immediate pairwise discussion within the same round per Section 3-4.
+- Material objection remains after round-close revision → dissent-to-solution conversion in Section 3-4.
 - Material objections cleared → Section 3-5 MEETING-AUDIT-CRITERIA.
+- Meeting `SendMessage` envelope shape violation → reject and resend with canonical envelope-plus-carrier-pointer per Section 3-4a.
 - MEETING-AUDIT-CRITERIA passed → Section 3-7 Operator Gate.
 - Operator accept → named downstream owner per Section 4-1.
 - Operator reject or modify → smallest affected step.
