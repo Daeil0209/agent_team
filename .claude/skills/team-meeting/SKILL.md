@@ -43,7 +43,8 @@ All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluati
 ### 3-1. Activation
 Activate when the operator explicitly asks for a meeting.
 Activate when the operator's agenda needs critical improvement from more than one perspective.
-Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate triggers mandatory consumption (hard design decisions — operator-policy-choice surfaces, constitutional-protected surface mutation, or trade-off-bearing patch design — when convergence-tractable form applies per that rule); skipping team-meeting to escalate trade-off choice directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
+Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate triggers mandatory consumption (hard design decisions — operator-policy-choice surfaces, constitutional-protected surface mutation, or trade-off-bearing patch design — when convergence-tractable form applies per that rule).
+Skipping team-meeting to escalate trade-off choice directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
 Use the clear single-owner action when it already solves the request.
 Activate when an active owner detects a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (multiple defensible options with material variance in upper-philosophy compliance / user-stated-goal coverage / user burden / trade-off shape / built-in safety, after proven-user-owned-blocker pre-test fails); choice-situation activation is unconditionally mandatory per that rule.
 

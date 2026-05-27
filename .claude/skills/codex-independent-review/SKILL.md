@@ -42,7 +42,9 @@ Load when the active path opens configured independent review or must record con
 - parallel fit affects correctness or bottleneck risk
 - team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or evidence route
 
-**Skip semantics**: "Skip when no risk-triggered axis applies" applies to the Risk-triggered evaluation only; it does not skip codex-review when any Required trigger fires. Record `skipped:no-material-independent-review-trigger:<basis>` in `CODEX-INDEPENDENT-REVIEW-BASIS` only when no Required trigger AND no Risk-triggered trigger applies.
+**Skip semantics** rule 1: "Skip when no risk-triggered axis applies" applies to the Risk-triggered evaluation only.
+**Skip semantics** rule 2: this does not skip codex-review when any Required trigger fires.
+**Skip semantics** rule 3: record `skipped:no-material-independent-review-trigger:<basis>` in `CODEX-INDEPENDENT-REVIEW-BASIS` only when no Required trigger AND no Risk-triggered trigger applies.
 For `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is further valid only when no planning, design, material review, risk, route, artifact-convergence, final-acceptance, or workflow boundary is being frozen, revised, or used for advancement.
 Pre-`work-planning` external review output is not planning evidence.
 

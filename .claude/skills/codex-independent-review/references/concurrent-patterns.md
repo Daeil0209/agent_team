@@ -47,7 +47,10 @@ The team-lead's invocation of Pattern A (per the Definition section above) carri
 
 ### Pattern C Team-Lead Parallel-Execution Choice
 
-Team-lead's path to Pattern C output (transportable official independent review) is `mcp__codex__codex` direct invocation per Pattern C section below; this is foreground-blocking (synchronous, blocks team-lead orchestration during invocation). Team-lead's path to PARALLEL-EXECUTION codex aid (preserving orchestration + user-conversation-continuity) is team-lead Pattern A (this Team-Lead Variant), NOT Pattern C. The two paths therefore present an explicit either-or choice: foreground-blocking + transportable (Pattern C via `mcp__codex__codex`) vs parallel + non-transportable (Pattern A team-lead variant). There is NO "team-lead Pattern C with parallel-execution" path — Pattern C is foreground-only per common-contract.md `## Tool Discipline`.
+Team-lead's path to Pattern C output (transportable official independent review) is `mcp__codex__codex` direct invocation per Pattern C section below; this is foreground-blocking (synchronous, blocks team-lead orchestration during invocation).
+Team-lead's path to PARALLEL-EXECUTION codex aid (preserving orchestration + user-conversation-continuity) is team-lead Pattern A (this Team-Lead Variant), NOT Pattern C.
+The two paths therefore present an explicit either-or choice: foreground-blocking + transportable (Pattern C via `mcp__codex__codex`) vs parallel + non-transportable (Pattern A team-lead variant).
+There is NO "team-lead Pattern C with parallel-execution" path — Pattern C is foreground-only per common-contract.md `## Tool Discipline`.
 
 ### Sub-command Enumeration
 - Pattern A admissible sub-commands: `codex exec` (non-interactive run) + `codex review` (code review). These are one-shot non-interactive analysis modes suitable for lane evidence-gathering aid.
@@ -103,7 +106,9 @@ Codex CLI and `mcp__codex__codex` MCP tool are NOT Claude Code agent processes. 
 The closest achievable approximations to "codex as parallel teammate":
 - `mcp__codex__codex` direct invocation (Pattern C) = synchronous foreground-blocking MCP tool call. Output transportable per common-contract.md governance; but parallel execution blocked during invocation and user-conversation-continuity blocked.
 - `Bash(codex exec, run_in_background=true)` (Pattern A, lane or team-lead variant) = background process invocation. Parallel execution available; user-conversation-continuity preserved; codex output polled via BashOutput; codex is NOT a teammate, just a background process owned by the invoking owner. Output is non-transportable per Pattern A Authority + Transport Boundary.
-- Team-lead dispatches a Claude Code lane as the teammate; the lane uses codex CLI via Pattern A (lane variant) as its own internal aid. The lane's WORK PRODUCT (lane's own framing/evidence/decision; NOT codex output) is transported normally per lane completion contract. This is NOT "team-lead Pattern C with parallel execution" — codex output stays lane-internal; only the lane's normal work product (which may be informed by codex aid) is transported.
+- Team-lead dispatches a Claude Code lane as the teammate; the lane uses codex CLI via Pattern A (lane variant) as its own internal aid.
+- The lane's WORK PRODUCT (lane's own framing/evidence/decision; NOT codex output) is transported normally per lane completion contract.
+- This is NOT "team-lead Pattern C with parallel execution" — codex output stays lane-internal; only the lane's normal work product (which may be informed by codex aid) is transported.
 
 This infrastructure limit is named here as a recurrence barrier against re-asking the same question. Treating codex as a SendMessage-addressable teammate is an infrastructure mismatch, not a governance gap. The dispatched-lane-with-Pattern-A approximation specifically does NOT produce transportable codex evidence; it produces transportable lane work product that codex informally aided.
 
