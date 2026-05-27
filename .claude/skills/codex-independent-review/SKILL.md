@@ -1,6 +1,6 @@
 ---
 name: codex-independent-review
-description: Run configured Codex MCP independent review as evidence for planning, artifact convergence, review convergence, final acceptance reconciliation, or bounded checks without replacing frozen scope.
+description: Run codex CLI background consultation as evidence for planning, artifact convergence, review convergence, final acceptance reconciliation, or bounded checks without replacing frozen scope.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -12,8 +12,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Identity
 You are the configured independent-review capability.
-Codex MCP is the current tool adapter, not doctrine basis.
-The active tool is `mcp__codex__codex` when configured independent review is required and available.
+Codex CLI is the current tool adapter, not doctrine basis.
+The active tool is codex CLI via Bash background invocation when codex consultation is required and available.
 Use this skill only through an active path.
 
 ## Coverage
@@ -51,7 +51,7 @@ Pre-`work-planning` external review output is not planning evidence.
 ## Reference Map
 Load only the references whose trigger is active:
 - `references/common-contract.md` before every configured Codex MCP review call.
-- `references/concurrent-patterns.md` when dual-pattern parallel codex usage is active (Pattern A lane-internal aid + Pattern C team-lead-orchestrated official independent review).
+- `references/concurrent-patterns.md` for codex CLI background usage rules (lane-internal aid + team-lead-internal aid).
 - `references/wp-consult.md` for `WP-CONSULT` route-freeze review.
 - `.claude/skills/dev-workflow/references/artifact-convergence-review.md` for artifact convergence review.
 - `.claude/skills/dev-workflow/references/review-convergence-review.md` for reviewer-grade convergence review.
@@ -76,7 +76,7 @@ Load only the references whose trigger is active:
 2. Load `references/common-contract.md`.
 3. Load the target-specific reference.
 4. Build a derived configured-review packet from canonical fields and evidence surfaces.
-5. Call `mcp__codex__codex` under the common tool discipline.
+5. Call codex CLI via Bash background invocation under the common tool discipline.
 6. Parse the returned JSON.
 7. Retry once for first-use connection miss or parse failure when the common contract permits.
 8. Record `fail-open:<reason>` after exhausted tool, auth, quota, timeout, config, or parse failure.
@@ -85,10 +85,10 @@ Load only the references whose trigger is active:
 
 ## Resolve Next Owner And Action
 - Planning configured review opens `references/wp-consult.md`.
-- Every Codex MCP call opens `references/common-contract.md`.
+- Every codex CLI call opens `references/common-contract.md`.
 - Accepted `WP-CONSULT` points update planning fields or blocker basis.
 - Accepted non-planning points update the active artifact, correction basis, convergence record, or acceptance record.
 - Rejected points record cited doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
-- Codex MCP access failure records `fail-open:<reason>` on the active configured-review record.
+- Codex CLI access failure records `fail-open:<reason>` on the active configured-review record.
 - Unadjudicated valid points keep the active path open.
 - Unsupported post-route-freeze expansion opens the active `Skill(governance-modification)` path.

@@ -1,7 +1,7 @@
 ---
 name: "team-lead"
 description: "Use as the lead session for intake, work-plan drafting, route planning, agent-team orchestration, synthesis, closeout, and user-facing reporting."
-tools: Agent(researcher, developer, reviewer, tester, validator), Read, Grep, Glob, Bash, WebSearch, WebFetch, Edit, MultiEdit, Write, Skill, ToolSearch, mcp__codex__codex, TeamCreate, TeamDelete, SendMessage, TaskCreate, TaskUpdate, TaskGet, TaskList, TaskOutput, TaskStop, CronCreate, CronDelete
+tools: Agent(researcher, developer, reviewer, tester, validator), Read, Grep, Glob, Bash, WebSearch, WebFetch, Edit, MultiEdit, Write, Skill, ToolSearch, TeamCreate, TeamDelete, SendMessage, TaskCreate, TaskUpdate, TaskGet, TaskList, TaskOutput, TaskStop, CronCreate, CronDelete
 disallowedTools: AskUserQuestion
 permissionMode: bypassPermissions
 maxTurns: 50
