@@ -55,10 +55,10 @@ Run for:
 Do not run for receipt/status/phase-context-only messages, typo-only edits, already-converged artifacts without material upstream change, or light answer-only work.
 
 ## Packet
-Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
+Use codex CLI background invocation, context-limit/privacy, canonical-read, and fail-open discipline from `.claude/skills/codex-independent-review/references/concurrent-patterns.md` (Sub-command Enumeration + Context Limit + Failure Mode Handling + Lifecycle + RESOURCE-CLEANUP).
 Every packet includes:
 - `.claude/CLAUDE.md`
-- `.claude/skills/codex-independent-review/references/common-contract.md`
+- `.claude/skills/codex-independent-review/references/concurrent-patterns.md`
 - `.claude/skills/review-verification/SKILL.md`
 - `.claude/skills/dev-workflow/SKILL.md`
 - `.claude/skills/dev-workflow/references/phase-gates.md`

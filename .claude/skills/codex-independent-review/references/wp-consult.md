@@ -8,7 +8,7 @@ auto-inject: false
 
 Use this reference for route-freeze configured independent review inside `work-planning`.
 Load after `Skill(work-planning)` is active, draft planning fields exist, and route freeze needs planning, design, material review, or risk-triggered independent critique.
-Also consume `.claude/skills/codex-independent-review/references/common-contract.md` before the Codex MCP call.
+Also consume `.claude/skills/codex-independent-review/references/concurrent-patterns.md` before the codex CLI background invocation.
 
 ## WP-CONSULT Packet
 `WP-CONSULT` adds these fields to the common packet:
@@ -36,7 +36,7 @@ Codex checks the draft freeze for:
 - acceptance, proof, skill-map, or carry-forward gaps that would make dispatch unsafe
 
 ## WP-CONSULT Handling
-Adjudicate every valid `WP-CONSULT` point per `.claude/skills/codex-independent-review/references/common-contract.md` Handling rules before the planning basis is complete.
+Adjudicate every valid `WP-CONSULT` point per team-lead Accept/Reject/Defer adjudication before the planning basis is complete; codex output transport rules per `.claude/skills/codex-independent-review/references/concurrent-patterns.md` Authority + Transport Boundary.
 
 Freeze one:
 - `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`

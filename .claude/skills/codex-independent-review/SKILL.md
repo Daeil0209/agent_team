@@ -17,7 +17,7 @@ The active tool is codex CLI via Bash background invocation when codex consultat
 Use this skill only through an active path.
 
 ## Coverage
-Coverage, adjacent boundaries, evidence-only output rule, and non-substitution rule (no block, dispatch, validate, accept, login, file mutation, credential repair, or settings/hook edit) live canonically at `references/common-contract.md` `## Common Contract` and `## Tool Discipline`.
+Coverage, adjacent boundaries, evidence-only output rule, and non-substitution rule (no block, dispatch, validate, accept, login, file mutation, credential repair, or settings/hook edit) live canonically at `references/concurrent-patterns.md` `## Codex CLI Background Usage (Lane + Team-Lead Variants)` (Authority + Transport Boundary + Authority Non-Substitution).
 
 
 ## Purpose
@@ -50,8 +50,7 @@ Pre-`work-planning` external review output is not planning evidence.
 
 ## Reference Map
 Load only the references whose trigger is active:
-- `references/common-contract.md` before every configured Codex MCP review call.
-- `references/concurrent-patterns.md` for codex CLI background usage rules (lane-internal aid + team-lead-internal aid).
+- `references/concurrent-patterns.md` before every codex CLI background invocation (lane-internal aid + team-lead-internal aid) — sole canonical codex usage governance owner.
 - `references/wp-consult.md` for `WP-CONSULT` route-freeze review.
 - `.claude/skills/dev-workflow/references/artifact-convergence-review.md` for artifact convergence review.
 - `.claude/skills/dev-workflow/references/review-convergence-review.md` for reviewer-grade convergence review.
@@ -73,7 +72,7 @@ Load only the references whose trigger is active:
 
 ## Review Workflow
 1. Confirm the active path opened configured independent review.
-2. Load `references/common-contract.md`.
+2. Load `references/concurrent-patterns.md` for codex CLI background usage governance.
 3. Load the target-specific reference.
 4. Build a derived configured-review packet from canonical fields and evidence surfaces.
 5. Call codex CLI via Bash background invocation under the common tool discipline.
@@ -85,7 +84,7 @@ Load only the references whose trigger is active:
 
 ## Resolve Next Owner And Action
 - Planning configured review opens `references/wp-consult.md`.
-- Every codex CLI call opens `references/common-contract.md`.
+- Every codex CLI call opens `references/concurrent-patterns.md`.
 - Accepted `WP-CONSULT` points update planning fields or blocker basis.
 - Accepted non-planning points update the active artifact, correction basis, convergence record, or acceptance record.
 - Rejected points record cited doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.

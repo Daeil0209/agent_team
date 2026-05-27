@@ -50,10 +50,10 @@ Do not run for receipt/status/phase-context-only messages, typo-only/cosmetic-on
 If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
 
 ## Packet
-Use Codex tool, privacy, canonical-read, stabilization, and fail-open discipline from `.claude/skills/codex-independent-review/references/common-contract.md`.
+Use codex CLI background invocation, context-limit/privacy, canonical-read, and fail-open discipline from `.claude/skills/codex-independent-review/references/concurrent-patterns.md` (Sub-command Enumeration + Context Limit + Failure Mode Handling + Lifecycle + RESOURCE-CLEANUP).
 Every packet includes:
 - `.claude/CLAUDE.md`
-- `.claude/skills/codex-independent-review/references/common-contract.md`
+- `.claude/skills/codex-independent-review/references/concurrent-patterns.md`
 - `.claude/skills/review-verification/SKILL.md`
 - `.claude/agents/reviewer.md`
 - `.claude/skills/agent-reviewer/SKILL.md`
@@ -90,7 +90,7 @@ Codex reviews missed negative space, evidence overreach, owner-action gaps, stal
 Codex must not generate user questions for owner-decidable defaults.
 
 ## Reconciliation
-Classify each material point (`material point` = configured reviewer lane finding or Codex valid point per `.claude/skills/codex-independent-review/references/common-contract.md` `## Point Schema`):
+Classify each material point (`material point` = configured reviewer lane finding or codex valid output point per `.claude/skills/codex-independent-review/references/concurrent-patterns.md` Authority + Transport Boundary):
 - `COMMON`
 - `CLAUDE-ONLY`
 - `CODEX-ONLY`

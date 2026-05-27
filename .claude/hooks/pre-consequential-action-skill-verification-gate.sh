@@ -158,7 +158,7 @@ fi
 # ============================================================================
 # Branch 3: Bash test/proof/validation pattern detection
 # STATUS: ADVISORY-ONLY pending actor-discrimination integration.
-# Rationale (per codex Pattern C independent review Point 2): PreToolUse
+# Rationale (per codex independent review Point 2): PreToolUse
 # hook input does NOT include agent-identity / session-discriminator, so
 # this hook fires identically for team-lead Bash invocations AND for
 # tester/validator lane Bash invocations. Active-deny on tester running
