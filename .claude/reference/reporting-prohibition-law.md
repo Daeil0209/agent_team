@@ -62,7 +62,7 @@ PROTECTED-CURTAIN-SURFACE: entire file. Enumerated in `.claude/reference/modific
 ## Detail Owners
 - Completion carrier and lane-output synthesis detail: `.claude/skills/task-execution/references/completion-handoff.md`.
 - Communication Plane envelope and message-class detail: `.claude/skills/task-execution/references/message-classes.md`.
-- Dispatch/status truth labels: `.claude/skills/task-execution/references/truth-rules.md`.
+- Dispatch/status truth labels: `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `### Transport Payload` (state-token canonical envelope) + `.claude/skills/session-boot/references/runtime-state-detail.md` `## Canonical Runtime-State Model` and `## Agent Work States` (runtime-state vocabulary).
 - Team-lead admitted-report evidence-basis control: `.claude/skills/agent-team-lead/references/reporting-prohibition-rules.md`.
 - Routine continuation and residual queue: `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
 - Synthesis resolution and claim basis: `.claude/skills/agent-team-lead/references/synthesis-consume.md`.
