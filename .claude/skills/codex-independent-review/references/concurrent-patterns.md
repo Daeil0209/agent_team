@@ -45,6 +45,27 @@ The team-lead's invocation of Pattern A (per the Definition section above) carri
 - Lead-internal aid (positive scope: decision-support / doctrine-consultation / draft-checking) operates only on work surfaces without a frozen independent owner and never produces outputs substituting for a frozen owner's work product; team-lead self-executing frozen-owner work under "lead-internal aid" classification is a boundary defect regardless of the specific lane.
 - This negative-scope rule is additive to the three boundary clauses below (Authority Non-Substitution + Context Limit security + RESOURCE-CLEANUP); each applies independently.
 
+### Team-Lead Variant — Pattern-A-Mediated CODEX-INDEPENDENT-REVIEW-BASIS (parallel-execution path for high-risk verdict class)
+
+When validator SKILL Step 8 high-risk verdict class requires `CODEX-INDEPENDENT-REVIEW-BASIS` citation, team-lead's path choice is governed by parallel-execution need:
+
+- **Pattern C direct path** (default): `mcp__codex__codex` synchronous foreground call; codex output is transportable per Pattern C governance. Trade-off: blocks team-lead orchestration + user-conversation-continuity during the call.
+- **Pattern-A-mediated path** (parallel-execution alternative): team-lead invokes Pattern A team-lead variant via Bash background (`codex exec --run-in-background` or equivalent) in parallel with own orchestration, then transports **team-lead's own adjudication** (informed by Pattern A codex output but authored by team-lead with own evidence basis) as `CODEX-INDEPENDENT-REVIEW-BASIS`.
+
+Pattern-A-mediated path safety conditions (ALL required for validator-acceptable basis):
+- (i) Team-lead adjudication is owner-authored work product per existing Pattern A rule (own analysis, own evidence basis, own decision authority); codex Pattern A output informs but does NOT appear verbatim.
+- (ii) Team-lead adjudication carrier explicitly records: Pattern A invocation identifier (codex CLI invocation tag, background process ID, or scratch-path reference for forensic trace); codex output summary in team-lead's own framing per-point; team-lead's per-point disposition with own evidence; record of which codex point informed which team-lead analysis line.
+- (iii) Team-lead adjudication carrier marks `CODEX-BASIS-CLASS: Pattern-A-mediated` (distinct from `CODEX-BASIS-CLASS: Pattern-C-direct`) so validator and downstream owners see the basis class explicitly.
+- (iv) Validator re-verification right: validator MAY independently re-invoke codex Pattern C (`mcp__codex__codex` direct) when material defeater suspected in team-lead's Pattern-A-mediated adjudication; validator escalation is non-blocking on team-lead (validator runs its own Pattern C check in parallel with team-lead's continued orchestration).
+- (v) Pattern A negative-scope boundary preserved: Pattern A invocation MUST NOT target frozen-independent-owner work (review production / proof execution / final acceptance arbitration) per Negative-Scope Boundary above; codex consultation in Pattern-A-mediated path is for decision-support / doctrine-consultation / adjudication-aid on the team-lead's own adjudication work product, not for executing the owning lane's work.
+
+Pattern-A-mediated path defects:
+- Pattern A codex output verbatim in team-lead adjudication carrier → carrier-as-evidence fabrication per Authority + Transport Boundary above; the adjudication must be team-lead's own writing informed by codex, not codex verbatim transported under team-lead's name.
+- Missing `CODEX-BASIS-CLASS: Pattern-A-mediated` marker → basis class invisibility defect; validator cannot apply Pattern-C-direct re-verification choice without the marker.
+- Missing per-point invocation/output/disposition trace → forensic-trace defect; downstream owners cannot audit which codex point informed which team-lead analysis.
+
+When path choice is open (no operator preference recorded), default is Pattern-A-mediated (preserves parallel orchestration capacity); Pattern C direct is selected only when codex verbatim transport is operator-directed or validator-specifically-required.
+
 ### Pattern C Team-Lead Parallel-Execution Choice
 
 Team-lead's path to Pattern C output (transportable official independent review) is `mcp__codex__codex` direct invocation per Pattern C section below; this is foreground-blocking (synchronous, blocks team-lead orchestration during invocation).
