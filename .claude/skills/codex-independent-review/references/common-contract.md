@@ -5,6 +5,9 @@ SOURCE-RULES: "Configured independent-review common contract; Work Execution Phi
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
+DELETE-PENDING-COMPLIANCE-HOOK-REVIEW: true
+
+> DELETE-PENDING-COMPLIANCE-HOOK-REVIEW: this file is the Pattern C canonical contract body. Per operator directive "패턴 C 관련 내용은 완전히 제거해~!!" (Pattern C complete removal — task 36), this file is scheduled for deletion. Pattern A (codex CLI background usage) governance moved to canonical owner `concurrent-patterns.md` (single "codex usage" pattern per Wave 4 task 39 K1 restructure). The mcp__codex__codex tool path (Pattern C) is removed from team-lead.md frontmatter (task 37 K5) and from work-execution-core-law BACKGROUND-DECISION-SUPPORT clause (task 37 K6); the codex-independent-review SKILL.md Reference Map cross-reference cleanup is scheduled for sub-dispatch 36b (K3 + K4). Direct Bash rm blocked by compliance-supervisor.sh policy (governance file deletion requires user-approved-delete-roots authorization). Future cleanup: remove this file once SKILL.md Reference Map references are cleaned in 36b, then user-approval-listed authorization for the rm, then deletion.
 
 Use this reference before every configured Codex MCP review call.
 
