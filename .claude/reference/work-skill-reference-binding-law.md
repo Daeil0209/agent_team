@@ -166,6 +166,9 @@ Completion requires every trigger-required reference consumed and every material
 - Missing material applied-rule mapping opens applied-rule correction before action.
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
+- **Full-content absorption requirement**: any `Read` invocation on a governance document, skill body, reference file, or other consumed-surface artifact must absorb the FULL content of the read range required for the active owner decision; partial or excerpt-only consumption is shallow-reading (얼렁뚱땅) defect when the unread portion materially affects the active owner action, stop, evidence, claim, or routing.
+- **Full-body Skill load requirement**: any `Skill(<skill>)` tool invocation binds the loader to absorb the FULL skill body content from frontmatter through Output Format / Resolve Next Owner And Action sections; the skill body's Structural Contract, Reference Map, every Step / Workflow / Section, and trigger-bound rules become active immediately; cursory awareness of skill name / purpose / one rule is not Skill load.
+- **Shallow-load / shallow-read defect classification**: claiming `applied` or treating a skill/reference as consumed without the corresponding full-body absorption is a procedure-adherence + anti-fabrication defect (carrier-prose-as-evidence per `Skill(self-verification)` Step 3); the active owner must reload `Skill(<skill>)` or re-Read the reference range with full-content absorption before proceeding.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
 - Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
