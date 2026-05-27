@@ -25,10 +25,11 @@ Pattern A has two variants:
 In both variants, the codex output exists only in the invoking owner's scratch directory or working memory.
 
 ### Authority + Transport Boundary
-- Codex output produced via Pattern A is **lane-internal aid (lane variant)** or **lead-internal aid (team-lead variant)** only.
-- Codex output **MAY NOT** appear in any transported surface — not in any completion carrier, not in `SendMessage` envelope or body, not in retained-output files cited by completion handoff, not in task state, not in any retained carrier consumed by downstream owners, not in any user-facing reporting surface, not in any synthesis carrier consumed by downstream owners.
-- Codex output **verbatim text** MAY NOT appear in any transported surface. The invoking owner's work product may be conceptually informed by codex output; the owner's own framing, writing, and decision authority remain owner-owned. The owner's transported work product carries the owner's own evidence basis — not codex's.
-- If the invoking owner needs to surface codex output verbatim or as direct evidence basis, that escalation routes to Pattern C (team-lead-orchestrated official independent review via `mcp__codex__codex`); the invoking owner cannot self-promote Pattern A codex output to transported evidence.
+- Codex output produced via Pattern A is **lane-internal aid (lane variant)** or **lead-internal aid (team-lead variant)**.
+- Pattern A output is usable as evidence basis by the invoking owner per operator standing directive (background codex utilization).
+- The invoking owner's transported work product MAY cite Pattern A codex output as evidence basis, summarize codex points in transport-acceptable form, OR carry codex output verbatim with explicit `CODEX-PATTERN-A-SOURCE: <invocation-identifier>` marker so receivers see the codex provenance.
+- The invoking owner remains the decision authority; codex output informs but does not substitute for the invoking owner's own judgment + framing where decisive owner authority applies.
+- Pattern C (`mcp__codex__codex` synchronous) remains available for cases where synchronous foreground blocking is operator-required (e.g., explicit synchronous-confirmation operator directive).
 
 ### Authority Non-Substitution (CRITICAL safeguard)
 - Pattern A codex result **NEVER substitutes** for `Skill(review-verification)` packet at `Skill(self-verification)` Step 3 `PASS-2`. Pattern A is information-gathering supplement only; PASS-2 still requires actual `Skill(review-verification)` load + Step 14 packet citation per existing rule.
@@ -38,33 +39,26 @@ In both variants, the codex output exists only in the invoking owner's scratch d
 
 The team-lead's invocation of Pattern A (per the Definition section above) carries the same Authority + Transport Boundary, Authority Non-Substitution, Sub-command Enumeration, Context Limit, Resource Accounting, Failure Mode Handling, and Lifecycle + RESOURCE-CLEANUP rules as the lane variant. The following additional safeguards reflect the team-lead's proximity to user-facing surface + synthesis ownership:
 
-- Pattern A output (team-lead variant) MAY NOT appear in any user-facing reporting surface, any retained synthesis carrier consumed by downstream owners (lane assignments, validator verdict carriers, final reports), any completion-grade transport, any reportable prose admitted by `.claude/reference/reporting-prohibition-law.md`, or any retained carrier or task-state field.
-- Team-lead Pattern A is strictly self-orchestration aid (decision-support, doctrine-consultation, draft-checking). Pattern C remains the only path for "official independent review" producing transported evidence consumed by validator final arbitration or governance-modification basis.
-- Team-lead synthesis carriers MUST cite their own evidence basis (Read/Grep/Bash tool-call evidence, lane completion carriers, validator verdicts, review-verification packets) — NOT Pattern A codex output. Citing Pattern A codex output as synthesis evidence is carrier-as-evidence fabrication per `Skill(self-verification)` Step 3 anti-fabrication rule + Receiver applicability rule + carrier-citation rule per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
+- Team-lead Pattern A output is usable as evidence basis in team-lead-authored carriers (synthesis, adjudication, validator routing) per operator standing directive (background codex utilization).
+- Team-lead synthesis / adjudication carriers carrying Pattern A codex output cite the codex invocation explicitly via `CODEX-PATTERN-A-SOURCE: <invocation-identifier>` (codex CLI tag, background process PID, or output-file path) so receivers see the codex provenance + can re-verify by reading the same source.
+- Team-lead Pattern A output retains its lead-internal-aid character; team-lead remains the decision authority + framing owner. Codex output is decision-support evidence the team-lead consumes; the team-lead's final decision + framing are team-lead's own work product.
+- Team-lead carriers MAY also cite team-lead's own Read/Grep/Bash tool-call evidence + lane completion carriers + validator verdicts + review-verification packets alongside Pattern A codex evidence; multiple evidence sources strengthen the basis.
 - **Negative-Scope Boundary (Lead-Internal-Aid vs Frozen-Independent-Owner-Work)**: Pattern A team-lead variant scope is bounded by §6 Judgment Philosophy independent-specialist-lane separation; any work surface that has a frozen independent owner per §6 (including, open-set: review production, proof execution, final acceptance arbitration, or any lane whose ownership is established by §6 plus the team's frozen route) is OUTSIDE lead-internal aid scope and MUST route to that owner via `Skill(task-execution)` dispatch.
 - Lead-internal aid (positive scope: decision-support / doctrine-consultation / draft-checking) operates only on work surfaces without a frozen independent owner and never produces outputs substituting for a frozen owner's work product; team-lead self-executing frozen-owner work under "lead-internal aid" classification is a boundary defect regardless of the specific lane.
 - This negative-scope rule is additive to the three boundary clauses below (Authority Non-Substitution + Context Limit security + RESOURCE-CLEANUP); each applies independently.
 
-### Team-Lead Variant — Pattern-A-Mediated CODEX-INDEPENDENT-REVIEW-BASIS (parallel-execution path for high-risk verdict class)
+### Team-Lead Variant — Pattern A Background as CODEX-INDEPENDENT-REVIEW-BASIS (default path)
 
-When validator SKILL Step 8 high-risk verdict class requires `CODEX-INDEPENDENT-REVIEW-BASIS` citation, team-lead's path choice is governed by parallel-execution need:
+Per operator standing directive (codex utilized via background execution), Pattern A team-lead variant Bash background invocation is the default path for `CODEX-INDEPENDENT-REVIEW-BASIS` citation when validator SKILL Step 8 high-risk verdict class requires codex basis.
 
-- **Pattern C direct path** (default): `mcp__codex__codex` synchronous foreground call; codex output is transportable per Pattern C governance. Trade-off: blocks team-lead orchestration + user-conversation-continuity during the call.
-- **Pattern-A-mediated path** (parallel-execution alternative): team-lead invokes Pattern A team-lead variant via Bash background (`codex exec --run-in-background` or equivalent) in parallel with own orchestration, then transports **team-lead's own adjudication** (informed by Pattern A codex output but authored by team-lead with own evidence basis) as `CODEX-INDEPENDENT-REVIEW-BASIS`.
+Required for validator-acceptable Pattern A CODEX-INDEPENDENT-REVIEW-BASIS:
+- Pattern A invocation identifier (codex CLI invocation tag, background process PID, or scratch-path reference) recorded in the basis-citing carrier.
+- Carrier marks `CODEX-BASIS-CLASS: Pattern-A-background` so validator and downstream owners see the basis class.
+- Pattern A negative-scope boundary preserved (Pattern A invocation MUST NOT target frozen-independent-owner work per Negative-Scope Boundary above).
 
-Pattern-A-mediated path safety conditions (ALL required for validator-acceptable basis):
-- (i) Team-lead adjudication is owner-authored work product per existing Pattern A rule (own analysis, own evidence basis, own decision authority); codex Pattern A output informs but does NOT appear verbatim.
-- (ii) Team-lead adjudication carrier explicitly records: Pattern A invocation identifier (codex CLI invocation tag, background process ID, or scratch-path reference for forensic trace); codex output summary in team-lead's own framing per-point; team-lead's per-point disposition with own evidence; record of which codex point informed which team-lead analysis line.
-- (iii) Team-lead adjudication carrier marks `CODEX-BASIS-CLASS: Pattern-A-mediated` (distinct from `CODEX-BASIS-CLASS: Pattern-C-direct`) so validator and downstream owners see the basis class explicitly.
-- (iv) Validator re-verification right: validator MAY independently re-invoke codex Pattern C (`mcp__codex__codex` direct) when material defeater suspected in team-lead's Pattern-A-mediated adjudication; validator escalation is non-blocking on team-lead (validator runs its own Pattern C check in parallel with team-lead's continued orchestration).
-- (v) Pattern A negative-scope boundary preserved: Pattern A invocation MUST NOT target frozen-independent-owner work (review production / proof execution / final acceptance arbitration) per Negative-Scope Boundary above; codex consultation in Pattern-A-mediated path is for decision-support / doctrine-consultation / adjudication-aid on the team-lead's own adjudication work product, not for executing the owning lane's work.
+Validator re-verification right: validator MAY independently re-invoke codex Pattern C (`mcp__codex__codex` direct) when material defeater suspected; validator escalation is non-blocking on team-lead.
 
-Pattern-A-mediated path defects:
-- Pattern A codex output verbatim in team-lead adjudication carrier → carrier-as-evidence fabrication per Authority + Transport Boundary above; the adjudication must be team-lead's own writing informed by codex, not codex verbatim transported under team-lead's name.
-- Missing `CODEX-BASIS-CLASS: Pattern-A-mediated` marker → basis class invisibility defect; validator cannot apply Pattern-C-direct re-verification choice without the marker.
-- Missing per-point invocation/output/disposition trace → forensic-trace defect; downstream owners cannot audit which codex point informed which team-lead analysis.
-
-When path choice is open (no operator preference recorded), default is Pattern-A-mediated (preserves parallel orchestration capacity); Pattern C direct is selected only when codex verbatim transport is operator-directed or validator-specifically-required.
+Pattern C direct (`mcp__codex__codex` synchronous foreground) remains available for cases where operator explicitly requires synchronous-blocking codex consultation; mark such carriers `CODEX-BASIS-CLASS: Pattern-C-direct`.
 
 ### Pattern C Team-Lead Parallel-Execution Choice
 
