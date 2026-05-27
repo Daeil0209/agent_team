@@ -75,6 +75,9 @@ Target-resolution preflight is mandatory before the tool call:
 - A batch that would exceed frozen `ACTIVE-CONCURRENT-AGENT-CAP` reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for an explicit status answer.
+
+### PARALLEL-DISPATCH-LOCK
+
 - When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
 - Parallel `Agent` batch dispatch is not a trial step; every `Agent` call in the batch must pass target-resolution, team-scope, and canonical spawn-prompt screen-safety preflight before the batch is sent.
 - Ordinary team-scoped member creation uses the canonical prompt template from `message-classes.md`; alternate prompt text is a preflight exception, not the default.
