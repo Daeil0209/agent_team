@@ -7,13 +7,10 @@ source "$(dirname "$0")/lib/hook-tool-response.sh"
 INPUT="$(cat)"
 
 # Detect event type. This hook is wired for TeammateIdle only.
-EVENT_TYPE="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  process.stdout.write(Object.prototype.hasOwnProperty.call(input, "tool_name") ? "unsupported" : "teammate-idle");
-} catch {
-  process.stdout.write("unknown");
-}
+EVENT_TYPE="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+process.stdout.write(Object.prototype.hasOwnProperty.call(input, "tool_name") ? "unsupported" : "teammate-idle");
 NODE
 )"
 
@@ -230,17 +227,14 @@ case "$EVENT_TYPE" in
 
   teammate-idle)
     # Quality gate mirror.
-    PARSED_IDLE="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const teammate = input.teammate_name || input.teammateName || "unknown";
-  const idleReason = input.idle_reason || input.idleReason || "unknown";
-  const completedTask = input.completed_task_id || input.completedTaskId || "none";
-  const completedStatus = input.completed_status || input.completedStatus || "none";
-  process.stdout.write(`${teammate}\n${idleReason}\n${completedTask}\n${completedStatus}\n`);
-} catch {
-  process.stdout.write("unknown\nunknown\nnone\nnone\n");
-}
+    PARSED_IDLE="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+const teammate = input.teammate_name || input.teammateName || "unknown";
+const idleReason = input.idle_reason || input.idleReason || "unknown";
+const completedTask = input.completed_task_id || input.completedTaskId || "none";
+const completedStatus = input.completed_status || input.completedStatus || "none";
+process.stdout.write(`${teammate}\n${idleReason}\n${completedTask}\n${completedStatus}\n`);
 NODE
     )"
     mapfile -t IDLE_FIELDS <<<"$PARSED_IDLE"

@@ -5,15 +5,12 @@ source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
 # ─── SHARED PARSE: prompt + session_id ──────────────────────────────────────
-PARSED_SHARED="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const prompt = String(input.prompt || "").replace(/\s+/g, " ").trim();
-  const sessionId = String(input.session_id || "");
-  process.stdout.write(prompt + "\n" + sessionId + "\n");
-} catch {
-  process.stdout.write("\n\n");
-}
+PARSED_SHARED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+const prompt = String(input.prompt || "").replace(/\s+/g, " ").trim();
+const sessionId = String(input.session_id || "");
+process.stdout.write(prompt + "\n" + sessionId + "\n");
 NODE
 )"
 mapfile -t SHARED_FIELDS <<<"$PARSED_SHARED"

@@ -56,7 +56,7 @@ case "$TOOL_NAME" in
   # ── Agent: dispatch tracking ──────────────────────────────────────────────
   Agent)
     PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { encode, flattenText, joinUniqueText, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const { encode, flattenText, joinUniqueText, firstNonEmptyString, parseInput } = require(process.env.HOOK_JSON_HELPERS);
 const AGENT_DISPATCH_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
 const collectAgentDispatchText = (toolInput) => joinUniqueText([
   ...flattenText(toolInput.description, AGENT_DISPATCH_TEXT_KEYS),
@@ -75,7 +75,7 @@ const collectAgentDispatchText = (toolInput) => joinUniqueText([
   ...flattenText(toolInput.notes, AGENT_DISPATCH_TEXT_KEYS),
 ]);
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const input = parseInput();
   const toolInput = input.tool_input || {};
   const toolResponse = input.tool_response || {};
 	  const fields = [
@@ -176,9 +176,10 @@ NODE
 
   # ── TeamCreate|TeamDelete|CronCreate|CronDelete: runtime state tracking ───
   TeamCreate|TeamDelete|CronCreate|CronDelete)
-    PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
+    PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const input = parseInput();
   const toolInput = input.tool_input || {};
   const toolResponse = input.tool_response || {};
   const lookup = (obj, keys) => {

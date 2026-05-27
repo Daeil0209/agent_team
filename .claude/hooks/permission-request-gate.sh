@@ -8,7 +8,7 @@ INPUT="$(cat)"
 # protected self-edit approval. Keep this hook smaller than the governance
 # doctrine: it only removes repeat prompts for structured Edit/MultiEdit changes to document
 # surfaces that the normal PreToolUse gates have already allowed.
-RESULT="$(INPUT_JSON="$INPUT" WORKSPACE_ROOT="$(resolve_project_root)" node <<'NODE'
+RESULT="$(INPUT_JSON="$INPUT" WORKSPACE_ROOT="$(resolve_project_root)" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
 
@@ -90,7 +90,8 @@ const safeRelativeOperationalSurface = (relativePath, toolName) => {
 };
 
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+  const input = parseInput();
   const toolName = String(input.tool_name || input.toolName || "");
   const toolInput = input.tool_input || input.toolInput || input.input || {};
 

@@ -4,13 +4,9 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  process.stdout.write(`${String(input.session_id || "")}\n`);
-} catch {
-  process.stdout.write("\n");
-}
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+process.stdout.write(`${String(parseInput().session_id || "")}\n`);
 NODE
 )"
 

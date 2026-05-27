@@ -3,11 +3,9 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 
 INPUT="$(cat)"
-SESSION_ID_RAW="$(INPUT_JSON="$INPUT" node -e "
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || '{}');
-  process.stdout.write(String(input.session_id || ''));
-} catch { process.stdout.write(''); }
+SESSION_ID_RAW="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node -e "
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+process.stdout.write(String(parseInput().session_id || ''));
 " 2>/dev/null || printf '')"
 SESSION_ID="$(recover_session_id "$SESSION_ID_RAW" 2>/dev/null || printf '')"
 
@@ -1114,10 +1112,11 @@ allowed_lead_context_subcmd() {
   return 1
 }
 
-PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
 const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const input = parseInput();
   const toolName = String(input.tool_name || "");
   const toolInput = input.tool_input || {};
   const filePath = String(toolInput.file_path || toolInput.path || "");

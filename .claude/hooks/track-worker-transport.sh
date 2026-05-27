@@ -27,11 +27,11 @@ clear_worker_idle_notice() {
 }
 
 PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { encode, flattenText, joinUniqueText } = require(process.env.HOOK_JSON_HELPERS);
+const { encode, flattenText, joinUniqueText, parseInput } = require(process.env.HOOK_JSON_HELPERS);
 const TRANSPORT_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
 
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const input = parseInput();
   const toolName = String(input.tool_name || "");
   const toolInput = input.tool_input || {};
   const toolResponse = input.tool_response || {};
@@ -88,9 +88,9 @@ ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
 tool_response_succeeded || exit 0
 
 CONTROL_PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { encode, firstNonEmptyString } = require(process.env.HOOK_JSON_HELPERS);
+const { encode, firstNonEmptyString, parseInput } = require(process.env.HOOK_JSON_HELPERS);
 try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  const input = parseInput();
   const toolInput = input.tool_input || {};
   const nested = toolInput.message && typeof toolInput.message === "object" ? toolInput.message : {};
   const targetName = firstNonEmptyString(

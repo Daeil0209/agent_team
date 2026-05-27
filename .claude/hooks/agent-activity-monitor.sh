@@ -4,19 +4,16 @@ set -euo pipefail
 source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  const sessionId = input.session_id || "unknown";
-  const toolName = input.tool_name || "unknown";
-  const cwd = input.cwd || "unknown";
-  const agentId = input.agent_id || "";
-  const agentType = input.agent_type || "";
-  const command = (input.tool_input && input.tool_input.command) || "";
-  process.stdout.write(`${sessionId}\n${toolName}\n${cwd}\n${agentId}\n${agentType}\n${command}\n`);
-} catch {
-  process.stdout.write("unknown\nunknown\nunknown\n\n\n\n");
-}
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+const sessionId = input.session_id || "unknown";
+const toolName = input.tool_name || "unknown";
+const cwd = input.cwd || "unknown";
+const agentId = input.agent_id || "";
+const agentType = input.agent_type || "";
+const command = (input.tool_input && input.tool_input.command) || "";
+process.stdout.write(`${sessionId}\n${toolName}\n${cwd}\n${agentId}\n${agentType}\n${command}\n`);
 NODE
 )"
 mapfile -t FIELDS <<<"$PARSED"

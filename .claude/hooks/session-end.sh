@@ -7,13 +7,9 @@ source "$(dirname "$0")/hook-config.sh"
 INPUT="$(cat)"
 SESSION_END_INPUT="$INPUT"
 SESSION_END_TIMESTAMP_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-SESSION_ID="$(INPUT_JSON="$INPUT" node <<'NODE'
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || "{}");
-  process.stdout.write(String(input.session_id || ""));
-} catch {
-  process.stdout.write("");
-}
+SESSION_ID="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+process.stdout.write(String(parseInput().session_id || ""));
 NODE
 )"
 if [[ -z "$SESSION_ID" || "$SESSION_ID" == "unknown" ]]; then

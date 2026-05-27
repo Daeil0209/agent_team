@@ -18,13 +18,12 @@ source "$(dirname "$0")/hook-config.sh"
 
 INPUT="$(cat)"
 
-PARSED="$(INPUT_JSON="$INPUT" node -e "
-try {
-  const input = JSON.parse(process.env.INPUT_JSON || '{}');
-  const skill = String((input.tool_input || {}).skill || '');
-  const sid = String(input.session_id || 'unknown');
-  process.stdout.write(skill + '\n' + sid);
-} catch { process.stdout.write('\nunknown'); }
+PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node -e "
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
+const input = parseInput();
+const skill = String((input.tool_input || {}).skill || '');
+const sid = String(input.session_id || 'unknown');
+process.stdout.write(skill + '\n' + sid);
 " 2>/dev/null || printf '\nunknown')"
 mapfile -t FIELDS <<<"$PARSED"
 SKILL_NAME="${FIELDS[0]:-}"
