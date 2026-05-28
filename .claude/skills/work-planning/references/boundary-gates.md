@@ -12,10 +12,11 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
 - Exhaustive, full-corpus, whole-folder, unknown-corpus, governance-audit, and governance-review work freezes bounded corpus measurement first.
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
-- Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
-- Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
-- Run lawful measurement commands when they supply required work evidence, even when host-native tool output is visible.
-- Reporting discipline controls assistant-authored prose; it does not reduce or suppress measurement evidence required for the work.
+- For explicitly named small-surface review, bounded measurement can be the target-file inventory plus a quiet line/byte aggregate when scale affects route; whole-folder remeasurement is not required unless scope or route depends on it.
+- Preserve required measurement evidence in retained/internal records.
+- Compose measurement as the smallest bounded data-collection action that supplies the required basis; repeat measurement only for a newly material fact not reasonably captured by the prior record.
+- Measurement composition follows `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`: reader-oriented progress prose and assistant-authored labels stay empty; required evidence is captured in retained/internal records or machine-minimal command output and execution continues.
+- Corpus sizing uses a quiet aggregate or retained/internal record rather than multiple labeled `Bash` displays for reader orientation. If multiple counts or inventories are needed, write the evidence to a retained/internal record or run a quiet aggregate command and consume the result internally.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
 - Unmeasured material burden blocks dispatch-ready planning.
@@ -148,12 +149,13 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
-16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
-17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
-18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
-19. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
-20. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
-21. Trace the termination row to the frozen `COMPLETION-STOP-CONDITION` and every `SCOPE-BASELINE` row; failed trace reopens `work-planning`.
+16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
+17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
+18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
+19. When the named owner/action has not yet been opened, open or load that owner and consume it before replanning.
+20. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
+21. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
+22. Trace the termination row to the frozen `COMPLETION-STOP-CONDITION` and every `SCOPE-BASELINE` row; failed trace reopens `work-planning`.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

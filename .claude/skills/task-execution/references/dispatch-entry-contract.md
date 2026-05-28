@@ -20,7 +20,7 @@ Carrier-by-memory or filename-by-inference dispatch-readiness consumption withou
 
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
-- actual `Skill(task-execution)` load-and-learn or `same-session-loaded:task-execution` for the current Claude session
+- actual `Skill(task-execution)` load-and-learn or `same-session-loaded-and-learned:task-execution` for the current Claude session
 - current boundary `work-planning`
 - the current frozen workflow or sequence owner already opened when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is present
 - a frozen additional-agent route or ambiguous dispatch route
@@ -57,7 +57,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Otherwise return to `work-planning`.
 - A frozen route lacking measured burden basis reopens `work-planning`.
 - A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `.claude/skills/work-planning/references/parallel-fit.md`. PROTECTED-LOCAL-RESTATEMENT-BASIS: runtime-side enforcement of the planning-side verification rule; runtime preflight requires planning-side verification before dispatch.
-- Missing on-disk verification reopens `work-planning` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
+- Missing on-disk verification for an existing frozen carrier path with unchanged route axes opens `task-execution` read-class verification, bounded propagation retry, regeneration from the frozen basis, and re-read per `parallel-fit.md`; unresolved verification after that ladder opens `hold|blocker`, while absent, stale, contradictory, or route-changing carrier basis reopens `work-planning`.
 - `PARALLEL-GROUPS: none` on multi-surface work requires a measured dependency or serial-burden basis; missing basis reopens `work-planning`.
 - Route, staffing, parallelism, or dispatch options that doctrine and evidence can settle reopen `work-planning` or continue with the evidence-backed route.
 - A field required by the frozen route that is missing, contradictory, or marked `not-applicable` without an allowed basis reopens `work-planning`.

@@ -190,12 +190,17 @@ for curtain_hook in reporting-curtain-envelope-gate.sh sv-tracker.sh; do
   fi
 done
 
-# (7) Verify identity-layer atomic-check clause present in all 6 role files
+# (7) Verify protected identity-layer curtain restatement present in all 6 role files
 for role_file in developer.md researcher.md reviewer.md team-lead.md tester.md validator.md; do
   role_path="$CLAUDE_ROOT/agents/$role_file"
   if [[ -f "$role_path" ]]; then
-    if ! grep -q 'Atomic-check procedure (executable at every emission moment)' "$role_path"; then
-      curtain_issues+=("$role_file missing identity-layer atomic-check clause (constitutional invariant (c) priority identity-spawn priming compromised)")
+    role_missing=()
+    grep -q 'PROTECTED-CURTAIN-SURFACE' "$role_path" || role_missing+=("PROTECTED-CURTAIN-SURFACE")
+    grep -q 'Constitutional Reporting Curtain' "$role_path" || role_missing+=("Constitutional Reporting Curtain")
+    grep -q 'reporting-prohibition-law.md' "$role_path" || role_missing+=("reporting-prohibition-law.md")
+    grep -q 'Atomic-check:' "$role_path" || role_missing+=("Atomic-check")
+    if [[ ${#role_missing[@]} -gt 0 ]]; then
+      curtain_issues+=("$role_file missing protected identity-layer curtain restatement component(s): ${role_missing[*]} (constitutional invariant (c) priority identity-spawn priming compromised)")
     fi
   fi
 done
@@ -233,12 +238,12 @@ if [[ ${#curtain_issues[@]} -gt 0 ]]; then
   {
     printf '[%s] CURTAIN-CONSTITUTIONAL VIOLATION:\n' "$(date '+%Y-%m-%d %H:%M:%S')"
     printf -- '- %s\n' "${curtain_issues[@]}"
-    printf 'Restore curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work. Forensic: claude_doc/curtain-constitutional-fix-2026-05-26/forensic-report.md.\n'
+    printf 'Repair or realign curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work; do not assume HEAD-text restoration unless semantic loss is proven. Forensic: claude_doc/curtain-constitutional-fix-2026-05-26/forensic-report.md.\n'
   } >> "$VIOLATION_LOG"
   # Emit additionalContext to surface violation at session-start
   printf '\nCURTAIN-CONSTITUTIONAL-FIX VIOLATION DETECTED at session-start:\n'
   printf -- '- %s\n' "${curtain_issues[@]}"
-  printf 'Required action: restore curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work. Bypass prohibition: constitutional-curtain enforcement is not skippable.\n'
+  printf 'Required action: repair or realign curtain protection per .claude/reference/modification-core-law.md ## Constitutional Curtain Protection before continuing work; do not assume HEAD-text restoration unless semantic loss is proven. Bypass prohibition: constitutional-curtain enforcement is not skippable.\n'
 fi
 
 exit 0

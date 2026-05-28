@@ -211,17 +211,21 @@ Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
 Follow `.claude/reference/reporting-prohibition-law.md`.
-Planning progress is silent while the next owner/action can run in the same segment.
-Planning measurement, setup, dispatch preparation, corpus/reference/taxonomy measurement, burden balancing, runtime-readiness preparation, route-freeze rationale, source-exclusion rationale, fresh work-name selection, binding-surface materialization, artifact-write verification, shard/wave/cap summary, and dispatch-opening narration are internal planning records; execute the owner action without tool-adjacent prose.
-After a planning artifact is written or verified, do not emit assistant-authored prose announcing line counts, completeness, plan-frozen state, lane/shard/wave counts, or next dispatch opening; open the next owner/tool call silently when reporting law admits no report.
-Internal planning and dispatch-preparation detail stay internal while the next owner can run.
-Blocked execution emits only a report granted a narrow exception by `.claude/reference/reporting-prohibition-law.md`.
+Planning progress is silent while the next owner/action can run.
+Planning records and planning tool output are internal material under `.claude/reference/reporting-prohibition-law.md`.
+Planning measurement command composition follows `references/boundary-gates.md` `## Corpus Measurement Gate`.
+When planning prose is suppressed, continue the next owner/tool call or record a lawful `HOLD`; suppression never stops execution.
 Keep the planning record internal.
 
 ## Post-Planning Gate
 After planning, apply `references/boundary-gates.md` Post-Planning Gate.
 Open the first next owner/action from `TEAM-LEAD-WORK-PLAN`.
-Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed.
+Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
+When the named owner/action has not yet been opened, open or load that owner and consume it before replanning.
+When the opened next action is team-routed dispatch, `work-planning` freezes the route and packet-field basis only.
+It does not materialize dispatch-bound binding surfaces, shard packets, retained assignment carriers, task rows, or assignment-carrier templates.
+Those artifacts are created or finalized only after `Skill(task-execution)` is active and its packet preflight has consumed the frozen basis.
+Any pre-`task-execution` draft of those artifacts is context only; it cannot be sent, reused as dispatch-ready, or treated as preflight-passed until `task-execution` regenerates or verifies it as dispatch-bound.
 
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.

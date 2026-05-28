@@ -31,12 +31,12 @@ Before treating any cited carrier as `VERIFIED-DATA-FEEDBACK`, `ADMITTED-CASE-IN
 - (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
 - (ii) verify the carrier's `PACKET-ID` (or equivalent identifier) matches the expected ID referenced in the dispatch / completion context;
 - (iii) verify the carrier's verdict label, completion class, or cited content matches the synthesis-consumed claim.
-Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness. Carrier-presence, carrier-reading, completion-acceptance, and ingest narration are synthesis input state, not user-facing report content; replace them with the actual read, verification, correction, monitoring, or synthesis action.
+Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness. Carrier-presence, carrier-reading, completion-acceptance, and ingest visibility is owned by `.claude/reference/reporting-prohibition-law.md`; the synthesis owner continues through the actual read, verification, correction, monitoring, or synthesis action.
 
 ## Synthesis Procedure
 1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.
-3. Keep missing, late, or insufficient inputs as unresolved input items outside the admitted-case inventory; partial-acceptance, accepted/missing-lane, and wait-for-remaining-input narration stays internal and opens monitoring, correction, or `HOLD` instead of visible prose.
+3. Keep missing, late, or insufficient inputs as unresolved input items outside the admitted-case inventory; partial-acceptance, accepted/missing-lane, and wait-for-remaining-input visibility is owned by `.claude/reference/reporting-prohibition-law.md`, while monitoring, correction, or `HOLD` remains the procedure path.
 4. Map every admitted case to exactly one `category` by same evidence-backed material feature; single-member categories are valid and `CATEGORY-MEMBER-TOTAL` must equal `ADMITTED-CASE-TOTAL`.
 5. Keep cases in separate categories when owner/action, causal mechanism, evidence need, acceptance truth, or correction path differs materially.
 6. For each category member, record every material resolved `work-coordinate` target; record `no-follow-on:<basis>` only when the category member has no material coordinate target.

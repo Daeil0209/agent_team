@@ -6,7 +6,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## Structural Contract
-- Produce two-pass convergence (`PASS-1` coverage + `PASS-2` review-verification) on a produced work-product surface; do not mutate, dispatch, validate, report, or substitute the calling owner's work.
+- Produce two-pass convergence (`PASS-1` coverage + `PASS-2` review-verification) on a produced work-product surface only; mutation, dispatch, validation, reporting, and calling-owner work remain outside this skill.
 - Keep this fixed order after Structural Contract: Flow Overview, Step 1, Step 2, Step 3, Step 4, Step 5, Step 6, Output Format.
 - Keep `## Step 1` through `## Step 6` as the canonical step anchors; do not rename or renumber.
 - Always run Step 2 (Coverage), Step 3 (review-verification), and Step 4 (Branch) before Step 6 (Handoff).

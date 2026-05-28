@@ -19,7 +19,7 @@ Host-native display includes tool rows, tool result expanders, automatic backgro
 This curtain does not claim to block host-native display.
 
 Agent-authored discretionary prose is inside the curtain target when the operator chooses supervised rendering.
-Discretionary prose includes voluntary progress narration, review narration, analysis summaries, dispatch narration, shard status summaries, retained-output summaries, and non-final report prose.
+Discretionary-prose classification is owned by `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content`; supervised rendering observes that classification without redefining it.
 
 ## Curtain Invariant
 When supervised rendering is used, the user-facing report surface renders only explicit report proposals that pass the structural release gate.

@@ -18,6 +18,8 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: routine-continuation atomic-check — Procedu
 
 ## Resolve Next Owner And Action
 - Status or why answers consume `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` and `## Report Shape`, then return to the active owner action unless the user redirects or a user-action blocker is proven.
+- Status or why answers state only the direct user-relevant condition in the user's language. Unless the user explicitly requests detail, omit shard/lane inventories, per-agent narratives, ack/completion counts, carrier paths, file sizes, packet-correction history, retry rationale, hook errors, and recovery-action detail.
+- After an admitted status or why answer, resume from the last proven owner/action through the next lawful tool, Communication Plane, recovery, synthesis, or mutation move with no visible recovery narration.
 - Routine milestones and partial arrivals stay Procedure Plane unless the user explicitly asks for status; admitted status stays compact and omits internal inventories unless requested.
 - Any open frozen next owner/action executes through its active owner path.
 - Any same-request residual work opens the smallest owner that can close that residual item.

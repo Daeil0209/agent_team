@@ -86,15 +86,15 @@ Rendered `SendMessage` class policy:
 - `assignment-carrier-pointer`: `assignment`, `reuse`, `reroute`, and `phase-transition-control` render with empty/whitespace summary or exactly one matching class token plus at most one carrier/task-state pointer line. Full packet floor fields live in the governed carrier or task state.
 - `structured-shutdown-payload`: runtime cleanup sends only the exact structured object payload `{"type":"shutdown_request"}` or `{"type":"shutdown_response"}` with empty/whitespace summary; no reason, comment, status, findings, evidence, or progress field is added to the rendered transport.
 - `carrier-pointer-only`: team-meeting discussion, `critique-request`, `critique-response`, `verdict`, `redirect`, draft publication/update, peer-challenge notes, corrective instruction notices, and other non-assignment/non-state messages render only no-detail summary tokens plus at most one carrier/index KEY line.
-- `render-prohibited-detail`: findings, evidence inventories, rationale, critique body, opinion body, result inventory, counts, excerpts, file/line lists, bulk context, and progress prose never render through `summary` or `message`; they live in retained carriers, task state, assignment packet carriers, or evidence artifacts.
-The user-visible `message` body exposure ceiling is one non-empty line for every rendered `SendMessage` class.
+- `render-prohibited-detail`: content categories excluded from visible `summary` or `message` are owned by `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content`; receiver-required detail lives in retained carriers, task state, assignment packet carriers, or evidence artifacts.
+The user-visible `message` body admits no detail; a non-empty line is allowed only when the active class below explicitly requires a no-detail carrier/index pointer line.
 
 For upward state classes, the `summary` parameter contains only the canonical no-detail state token required by the class, or stays empty when the runtime permits; it carries no fields, paths, counts, coverage labels, `OPEN-SURFACES`, excerpts, summaries, rationale, or prose.
 Canonical no-detail summary tokens are closed routing tokens: a class token, a hook-safe task/round/turn id such as `task-1`, a runtime handle such as `@reviewer-A`, a configured lane/role token, or a short combination of those tokens when the active class requires routing identity.
 Raw host task ids such as `#1`, ranges such as `#1-#4`, task counts, worker lists, delivery wording, envelope-shape explanations, and natural-language clauses are not canonical summary tokens.
 The `message` parameter is empty or a single ASCII space and carries no other content.
 `SendMessage` render means the combined `summary` plus `message` display; both halves obey this canonical state-signal envelope rule.
-For `MESSAGE-CLASS: hold|blocker`, `BLOCKER-TYPE`, `BLOCKER-BASIS`, `SAFE-NEXT-STEP`, and any receiver-required detail live in the governed payload carrier, task state, or retained-output path referenced by the envelope; they never live in rendered `summary` or `message` body text.
+For `MESSAGE-CLASS: hold|blocker`, `BLOCKER-TYPE`, `BLOCKER-BASIS`, `SAFE-NEXT-STEP`, and any receiver-required detail live in the governed payload carrier, task state, or retained-output path referenced by the envelope; visible admission follows `.claude/reference/reporting-prohibition-law.md`.
 This is the single canonical envelope rule for upward state-class signals; other owner surfaces cite this rule and keep local restatement out.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
 For downward assignment delivery `SendMessage`:
@@ -107,7 +107,7 @@ For downward assignment delivery `SendMessage`:
 - Assignment-packet required-floor fields live in the governed carrier or task state referenced by the visible pointer line.
 - Rendered assignment delivery does not carry multi-line continuations, findings, evidence inventories, rationale, critique text, file/line lists, or bulk context.
 - Bulk shared context, full taxonomy text, parenthetical explanation, restated upstream basis, duplicated retained-carrier content, and report-shaped prose move to the retained carrier referenced via `RETAINED-OUTPUT-PATH` or `UPSTREAM-DECISION-BASIS` and stay out of the assignment body.
-- This downward body is receiver-facing governed packet transport; it does not satisfy a user report and must not carry user-facing narrative.
+- This downward body is receiver-facing governed packet transport; user-facing report admission is owned by `.claude/reference/reporting-prohibition-law.md`.
 For all other `SendMessage` classes — peer challenger evidence notes, team-meeting opinion exchange (`critique-request` / `critique-response`), corrective instruction messages, phase-context relay outside the canonical `phase-transition-control` class, and any class not explicitly governed by the upward state class rules or downward assignment delivery rules above — the same canonical-envelope-plus-retained-carrier-pointer shape applies:
 - `summary` parameter carries a canonical no-detail signal: brief class label, task pointer, round/turn pointer, recipient lane/agent handle, or their no-detail combination only (e.g., "critique-request task-N", "verdict round-N carrier-only", "redirect active task-N", "redirect @worker-id").
 - `message` body carries exactly one non-empty carrier/index KEY line when a body is required (e.g., `CARRIER: claude_doc/.../review.md#turn-7`, `VERDICT: PASS`, `CRITIQUE: carrier-only`, or `REDIRECT: carrier-only`); no inline critique body, no inline opinion content, no inline corrective instruction body.
@@ -117,11 +117,12 @@ Before every `SendMessage` call, the sender verifies the rendered `summary` plus
 - Upward state classes use the canonical no-detail state-signal envelope above.
 - Downward assignment delivery uses a no-detail assignment signal plus at most one carrier/task-state pointer line per the rules above.
 - Bulk content exceeding the envelope is rejected at write-time and rewritten to canonical envelope plus retained-carrier pointer before send.
-- Hook denial for non-canonical `summary` or `message` is same-owner envelope-correction evidence. Correct from this section and retry the actual `SendMessage`; do not open hook-source inspection, progress narration, carrier rewrite unrelated to the rejected envelope, or placeholder tool calls unless this section is unavailable or contradicted.
+- Tool rejection for a non-canonical rendered envelope is same-owner envelope-correction evidence. Correct from this section and retry the actual `SendMessage`.
+- Envelope correction is part of the same dispatch/recovery execution block. If retry is impossible, route the blocker through the canonical no-detail blocker envelope and retained carrier.
 Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
-Screen-rendered transport never satisfies a user report and never carries raw internal inventories.
-The visible body excludes `MESSAGE-CLASS`, receiver-required detail, and report prose.
+Screen-rendered transport remains Communication Plane evidence.
+The visible body uses only the canonical envelope shape from this file.
 Canonical pointer labels such as `CARRIER`, `VERDICT`, `CRITIQUE`, or `REDIRECT` are allowed only as no-detail index labels; they do not carry receiver-required detail.
 
 ### Payload Fidelity
@@ -140,8 +141,17 @@ Task tracking is active when team-lead uses the shared task list as the planned 
 When task tracking is active, team-lead creates or verifies the task row after current-session team runtime registration and before assignment-grade `SendMessage`.
 Pre-team, lead-local, or previous-namespace task rows are never assignment identity for team-runtime work.
 If `TeamCreate` or runtime recovery changes the active task namespace, discard pre-team task ids for assignment identity and create or verify new rows in the active team task namespace before carrier finalization or assignment send.
-Before active-team task identity is verified, packet drafts omit `TASK-ID`; after verification, the dispatchable assignment carrier receives exactly one `TASK-ID` from returned or verified active-team `TaskCreate`/`TaskGet`/`TaskList` evidence.
-Placeholder, duplicate, or alias-valued `TASK-ID` fields are carrier-integrity defects.
+Before active-team task identity is verified, packet drafts stay non-dispatchable and are not written to per-lane assignment carrier paths.
+When task tracking is active, create or verify the active-team task row first, then materialize each dispatchable assignment carrier once with exactly one `TASK-ID` from returned or verified active-team `TaskCreate`/`TaskGet`/`TaskList` evidence.
+The preflight target is assignment identity coherence, not manual numeric repair: a same-batch task result may be mapped to planned targets by the frozen target order only when the returned/verified rows are distinct, complete, and order-preserving for that batch.
+Sequence-order mapping is pre-write evidence only; it is never a license to send a placeholder, guessed id, malformed field, or post-write `TASK-ID` patch.
+Task row creation, dispatchable per-lane carrier materialization, and assignment-grade `SendMessage` are one assignment-send segment for that target.
+Do not materialize future-wave per-lane assignment carriers with `TASK-ID` while the target is not yet addressable for assignment or reuse and assignment-grade `SendMessage` is not the next executable action for that target.
+Future-wave preparation uses the shared binding surface, shard map, or a non-dispatchable planning record without assignment `TASK-ID`; it does not use per-lane assignment carrier paths.
+Do not write a retained assignment carrier without `TASK-ID` and then edit it solely to add task identity; that is carrier-finalization-order defect.
+Placeholder, duplicate, alias-valued, concatenated, or suffix-contaminated `TASK-ID` fields are carrier-integrity defects.
+The `TASK-ID` field value must identify the verified active-team task row without ambiguity; when the task row identity is used by task-state tools, preserve the returned raw identity exactly. When the identity is an integer, the field value is decimal digits only after trimming whitespace.
+`MESSAGE-CLASS` and `TASK-ID` must be separate line-atomic fields inside the governed carrier or task state; a carrier line such as `TASK-ID: 1ASS: assignment` is not a valid task identity or message class.
 `TaskCreate` uses top-level non-empty `subject` and `description`.
 The task row supplies `TASK-ID` identity only.
 `SendMessage.to` carries the live worker target and assignment delivery.
@@ -192,7 +202,7 @@ Use `Read` on the background task output path when the runtime provides that pat
 ### Team Member Startup Recognition
 In team-agent runtime, the team-scoped `Agent` prompt creates or reattaches a live member address; it is not the assignment-grade work packet.
 The member startup prompt carries role and screen-safety only.
-Default team-scoped member creation uses this exact prompt template: `Member: <name>. Role: <lane>. Screen-safety: no visible prose from this member-creation prompt.`
+Default team-scoped member creation uses this exact prompt template: `Member: <name>. Role: <lane>. Screen-safety: visible emission requires reporting-prohibition-law admission.`
 Only `<name>` and `<lane>` vary in the default template.
 The startup prompt carries role and screen-safety only; `ready`, `context loaded`, `awaiting assignment`, `readiness ack`, `dispatch-ack`, `status`, `completion`, and every other upward message stay absent.
 The spawn prompt restriction applies to upward Communication Plane transport and visible prose only.
@@ -253,7 +263,7 @@ Every class below is Communication Plane transport. The descriptions name when t
   - requires converged lane-owned work
   - screen-rendered `SendMessage` header/preview is one state signal only: `completion task <TASK-ID>` when task tracking is active, otherwise `completion`
   - envelope shape governed by Transport Payload above
-  - no files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, completion narrative, path-substitution rationale, next-step prose, or retained-output contents in the `SendMessage` render
+  - completion-render content exclusion is governed by `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content`
   - synthesis-ready only when the retained carrier satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
 - `hold|blocker`
   - required when ambiguity, missing authority, blocked environment, or missing decisive basis prevents truthful execution
@@ -283,8 +293,10 @@ Before any re-dispatch, synthesis, or user-facing positive report, team-lead mus
 
 Tool/evidence-gap consumption:
 - If the agent names a missing evidence surface, required tool, setup owner, or current-toolchain gap, team-lead resolves it through `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, packet correction, or route replan.
-- A usable tool/evidence-gap request names the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program candidate, fit rationale, why weaker evidence is invalid, smallest truthful boundary, and setup owner candidate or packet correction.
-- If those details are missing, team-lead must request corrected blocker/pressure transport, route `Skill(tool-acquisition)` under the active owner path, or reopen `work-planning`.
+- A usable lane-origin tool/evidence-gap blocker names the missing evidence surface, required capability, current toolset or toolchain limit, why weaker evidence is invalid, and smallest truthful boundary.
+- Candidate tools considered, selected tool or program candidate, fit rationale, setup owner, and setup path are supplied by `Skill(tool-acquisition)` or `Skill(external-tool-bridge)` unless already known by the lane.
+- If minimum lane blocker facts are missing, team-lead must request corrected blocker/pressure transport, route `Skill(tool-acquisition)` under the active owner path, or reopen `work-planning`.
+- If only acquisition facts are missing, team-lead routes `Skill(tool-acquisition)` or `Skill(external-tool-bridge)` before requiring a corrected lane blocker.
 - Missing basis becomes explicit packet correction, route replan, or blocker truth.
 - A corrected packet is valid only when the same frozen route remains truthful and the missing setup/tool basis is explicit.
 - Otherwise reopen `work-planning` to freeze `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, the exact setup owner, or a proven user-owned blocker.
@@ -301,7 +313,7 @@ Then return the corrected executable path to the blocked owner or lane.
 Treat the constraint transport as a resume-route trigger until a genuine impossible or unsafe condition is proven.
 
 ## Resolve Next Owner And Action
-- `dispatch-ack` opens the same assignment execution block; waiting, status narration, and user reporting stay closed.
+- `dispatch-ack` opens the same assignment execution block.
 - Executable same-boundary packet correction opens corrected assignment messaging.
 - `scope-pressure` opens team-lead classification as `packet-correction`, `route-replan`, `parallel-continue`, or proven user-owned blocker.
 - `hold|blocker` opens team-lead blocker resolution through corrected packet, reopened planning, owner routing, setup/research routing, default, parameter, or marked inference path.

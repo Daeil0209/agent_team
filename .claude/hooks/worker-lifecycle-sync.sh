@@ -270,7 +270,7 @@ const classification = process.env.TURN_END_CLASSIFICATION_VAR || "working-trans
 let ctx;
 switch (classification) {
   case "standby":
-    ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as STANDBY now; next valid lead actions are retained-carrier synthesis, distinct bounded reuse, structured cleanup, or route-owned validation/correction.`;
+    ctx = `Agent completed: ${teammate} sent completion transport (${reason}, ${status}). Treat the agent as STANDBY for lifecycle availability only; retained-carrier synthesis or verification is required before relying on quality claims.`;
     break;
   case "working-permission-pending":
     ctx = `Agent still working: ${teammate} has a host-presented tool permission request. Next: resolve the existing host request if already displayed; do not ask the user otherwise, status-probe, or reclassify the agent as not working.`;
@@ -285,7 +285,7 @@ switch (classification) {
     ctx = `Agent needs scope resolution: ${teammate} raised scope-pressure. Evidence surface: structured objection. Next: classify packet-correction, route-replan, or parallel-continue and resolve through the smallest lawful owner.`;
     break;
   default:
-    ctx = `Agent still working: ${teammate}'s turn ended without completion-grade output. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
+    ctx = `Agent still working: ${teammate}'s turn ended without completion transport. Next: do not treat this as non-working; request partial results only if it blocks current lead work.`;
 }
 // Intentional silent stdout: the Claude Code TeammateIdle hookSpecificOutput schema
 // is not documented in .claude/reference/environment-official-claude-code-source-cache.md, and the

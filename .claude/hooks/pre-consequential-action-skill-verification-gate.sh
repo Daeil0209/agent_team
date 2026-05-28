@@ -60,11 +60,13 @@
 #
 # Check (deterministic, no heuristics)
 #   For governance mutation (Edit/MultiEdit/Write on .claude/*):
-#     - Active Skill(governance-modification) load evidence in same-session
-#       transcript (deterministic transcript regex check for the literal Skill
-#       tool invocation).
-#     - Block-on-missing per anti-fabrication rule (carrier-prose claim of
-#       "Skill loaded" without same-session tool-call invocation fails).
+#     - Branch 1 is advisory-only because PreToolUse input does not provide
+#       reliable same-session Skill evidence.
+#     - Branch 1 cannot be cited as runtime proof of Skill(governance-modification)
+#       compliance; governance-mutation compliance remains owned by doctrine,
+#       Skill(governance-modification), review-verification, self-verification,
+#       and existing mutation guards.
+#     - Active deny requires a separate state-backed evidence design.
 #
 #   For assignment-grade SendMessage:
 #     - Rendered envelope transport carries only a no-detail summary token plus
@@ -120,7 +122,7 @@ fi
 
 # ============================================================================
 # Branch 1: Governance mutation — Edit / MultiEdit / Write on .claude/*
-# Check: same-session Skill(governance-modification) tool-call evidence
+# Advisory target: same-session Skill(governance-modification) tool-call evidence
 # STATUS: ADVISORY-ONLY pending Skill-evidence tracking integration.
 # Rationale: PreToolUse hook input does NOT include conversation transcript;
 # direct transcript scan is infeasible from PreToolUse. Proper enforcement

@@ -21,7 +21,9 @@ At planning-time, check whether prior same-session decisions or doctrine patches
 - governance rules that would alter the route or stop condition
 - confirmed corrections or recurrence barriers that would alter the next owner/action
 
-A prior invariant affecting the current route gets incorporated into the frozen route or recorded as a blocker.
+A prior invariant affecting the current route is recorded as `live`, `incorporated`, `superseded`, `not-material:<basis>`, or `blocked:<basis>`.
+`live` or `incorporated` invariants enter the frozen route; `blocked` opens blocker truth.
+After the current-route state is recorded, do not rescan prior or sibling materials unless a new route-affecting fact appears.
 A current route contradicting a prior invariant reopens `work-planning`.
 Resolve contradictions through invariant incorporation, reopened `work-planning`, or blocker classification before integration.
 Prior-output exclusion and non-shape-defining consultation rules are owned by `.claude/skills/work-planning/references/boundary-gates.md` `## Hard Routing Gates`.

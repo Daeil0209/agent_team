@@ -153,7 +153,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Primary skill links load-and-learn through their active owner-path triggers.
 - Loaded-and-learned skill owner resolution uses this order: explicit owner, phase owner, or sequence owner declared by a loaded-and-learned procedure skill; then the agent that loaded and learned the skill when the loaded-and-learned skill does not declare a procedure owner for the current action.
 - Non-agent specialist skills state coverage, method, packet, and handoff boundaries only; they do not declare independent ownership, authority, or mutation permission.
-- The top-level agent-team `team-lead` session loads and learns `Skill(agent-team-lead)` before lead-owned procedure movement.
+- The top-level agent-team `team-lead` session establishes a loaded-and-learned `Skill(agent-team-lead)` basis before lead-owned procedure movement through the valid activation forms defined in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 - `agent-team-lead` procedure consumption requires actual `Skill(agent-team-lead)` activation plus full-body learning or current same-session loaded-and-learned skill basis.
 - Always-loaded role surfaces and trigger-bound references follow `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` for content composition and consumption discipline; that section is the canonical executable detail owner.
 - Skill load-and-learn eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.
@@ -171,7 +171,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Communication Plane Law
 - Communication, Procedure, and Reporting are separate planes.
 - Communication Plane transport classes, Receipt Event Contract, `scope-pressure`/`hold|blocker` objection routing, channel registry, transport boundary, and team-runtime channel rules live in `.claude/skills/task-execution/references/message-classes.md`.
-- Communication Plane labels do not exempt renderable assistant-authored text from `.claude/reference/reporting-prohibition-law.md`; receiver-required detail travels in governed carriers, not visible envelopes.
+- Renderable assistant-authored Communication Plane text is governed by `.claude/reference/reporting-prohibition-law.md`; receiver-required detail travels in governed carriers.
 - Assignment-grade lane receipt requires a first upward outcome after packet review.
 - First upward outcome validity and `dispatch-ack` work-start semantics are consumed from `.claude/skills/task-execution/references/message-classes.md`.
 - Converged lane work requires both a retained completion carrier and completion-class transport to `team-lead`; the rendered envelope stays no-detail and completion fields live in the governed carrier.
@@ -181,6 +181,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Execution Progress Law
 - Process state report opens the next truthful action in the same turn.
 - The next truthful action executes in the same turn or records lawful deferral with cited authority surface, truthful blocker `HOLD`, or explicit user cancellation/redirect. Missing basis opens correction under `## Resolve Next Owner And Action`; it is not a closure basis.
+- Empty-body, whitespace-only, blank-placeholder main-turn responses, intent-promise prose, setup recaps, progress recaps, procedure announcements, and continuation cues are invalid substitutes for the next owner/action execution.
+- Canonical empty or single-space bodies are Communication Plane envelope mechanics only when the owning message class requires that shape; they are not main-turn or tool-adjacent execution progress.
 - Same-turn next-action drive applies to every direct-execution step (`Edit`, `MultiEdit`, `Write`, `Bash`, `SendMessage`, `TaskCreate`, `TeamCreate`, `Agent`, every mutation, every dispatch, every tool call).
 - The drive remains active at the execution boundary.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
@@ -190,11 +192,17 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Direct Tool-Call Composition Law
 - Direct tool-call composition preserves execution progress; a tool call expected to produce a tolerated non-zero result must contain explicit failure containment before it is issued.
-- Direct tool calls used for internal measurement, setup, planning, dispatch preparation, dispatch monitoring, task/task-namespace reconciliation, artifact verification, or evidence routing keep user-visible stdout quiet when the user did not request exact raw tool output.
-- Route line-count tables, file inventories, created-path confirmations, verification summaries, monitoring summaries, task-id reconciliation notes, and other internal detail to governed carriers, artifacts, or quiet command results instead of visible stdout.
-- A command whose only rendered output is assistant-authored status, progress, monitoring, reconciliation, retry, readiness, or created-path text is not quiet; remove that stdout or place the required detail in a governed carrier/artifact.
+- Direct tool calls that serve internal procedure, communication, evidence, verification, setup, or recovery use quiet success by default. Rendered stdout/stderr is admissible only when the user explicitly requested exact raw output or when the command's own machine-minimal output is the required evidence for the next owner action and contains no assistant-authored internal narration.
+- Assistant-authored command output and tool-adjacent prose that describe internal process, status, retry, readiness, verification, monitoring, or dispatch state are internal material governed by `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content`.
+- Route internal detail to governed carriers, artifacts, task state, retained outputs, or quiet command results according to `.claude/reference/reporting-prohibition-law.md`.
+- Internal commands route required evidence to retained/internal records unless machine-minimal stdout/stderr is the required evidence for the next owner action. Assistant-authored shell text such as banners, labels, progress strings, status strings, `echo`, or `printf` output is report content when rendered.
+- Internal measurement, inspection, verification, and dispatch-check commands use stdout/stderr only for machine-minimal evidence required by the next owner action; human-readable banners, section labels, created-path confirmations, waiting notes, and progress markers move to governed records when needed.
+- Artifact verification, retained-output inspection, and multi-file carrier checks use absolute paths or reset to the active workspace/frozen output root inside the command before relative paths are resolved.
+- Verification, mutation, dispatch, retained-output, and completion checks resolve paths from absolute paths or an explicit active workspace/frozen output-root reset instead of persisted shell `cwd`, prior `cd`, or incidental directory state.
+- Command stdout carrying only report-law non-reportable narration is handled by `.claude/reference/reporting-prohibition-law.md`; this section owns failure containment, workspace anchoring, and tool-call sequencing.
+- `Bash` remains valid for real measurement, search, verification, artifact inspection, contained failure handling, and governed runtime checks. No-op or placeholder tool calls, including `Bash(true)`, `Bash(:)`, empty-output shell placeholders, or sleep-only boundary creation, are invalid substitutes for waiting, dispatch monitoring, or execution progress; issue the real next owner/action tool call, use the governed runtime monitoring/recovery surface, or close by a valid closure basis when no executable same-turn action remains.
 - For `Bash`, explicit failure containment means wrapping the tolerated command with `|| true`, using `&&` only when downstream commands depend on prior success, using a guarded shell conditional, or using `set +e` with explicit handling for tolerated failures.
-- Do not batch a `Bash` command that may exit non-zero with critical sibling tool calls whose cancellation would interrupt mutation, dispatch, task update, or communication (`Edit`, `MultiEdit`, `Write`, `TaskCreate`, `TaskUpdate`, `SendMessage`, or equivalent).
+- A `Bash` command that may exit non-zero runs outside the same batch as critical sibling tool calls whose cancellation would interrupt mutation, dispatch, task update, or communication (`Edit`, `MultiEdit`, `Write`, `TaskCreate`, `TaskUpdate`, `SendMessage`, or equivalent).
 - If non-zero behavior is not contained, issue the `Bash` call alone, observe the result, and then issue critical sibling tool calls after the execution boundary is safe.
 - Treat wrapper-specific or non-standard exit codes as non-portable evidence; rely on explicit containment and observed result, not remembered exit-code interpretation.
 

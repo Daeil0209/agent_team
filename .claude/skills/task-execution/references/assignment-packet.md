@@ -33,12 +33,14 @@ Every assignment-grade work packet carries:
 - `WORK-SURFACE`
 - `CURRENT-PHASE`
 - `REQUIRED-SKILLS`
-- open executable `TASK-ID` from the active task namespace when task tracking is active
+- open executable `TASK-ID` from the active task namespace when task tracking is active; same-batch returned task rows may be mapped by the frozen target order before carrier write when the batch result is distinct, complete, and order-preserving
 - `SEMANTIC-INTENT-BASIS` from the frozen planning/request-bound basis.
 - `COMPLETION-STOP-CONDITION` from the frozen planning basis.
 - `RECEIPT-COMPLETION-CONTRACT`
 - `TARGET-INTENT-BASIS` per `.claude/reference/detailed-design-core-law.md` `[DESIGN-INTENT]`.
 - `CLAIM-CEILING` for analysis, critique, governance judgment, review, validation, or patch-worthiness packets. Allowed values are `evidence-only candidates`, `review findings`, `validation verdict input`, `validator-final-verdict`, and `patch-worthiness classification`.
+- The field name must be exact: `CLAIM-CEILING`. Aliases such as `FINDING-STATE CEILING`, `FINDING-STATE-CEILING`, `STATE-CEILING`, or prose-only ceiling wording do not satisfy the field.
+- When the frozen basis makes the ceiling unambiguous, the packet-producing owner corrects an alias to exact `CLAIM-CEILING` inside the same preflight path without route replan, user escalation, or sibling dispatch delay.
 - `validator-final-verdict` is valid only for assignment-grade validator final-arbitration packets.
 - `validator-final-verdict` permits validator-owned `VERDICT: PASS|HOLD|FAIL` on the assigned validation surface.
 - No claim ceiling grants promotion, final rejection, patch/no-patch, patch-worthiness, or patch-readiness authority outside its named owner.
@@ -46,8 +48,15 @@ Every assignment-grade work packet carries:
 - `UPSTREAM-DECISION-BASIS` for every follow-on, correction, reuse, reroute, validation, patch, continuation, or completion-affecting packet whose work depends on prior reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready output.
 - `DISPATCH-AUTHORIZATION-BASIS` names the active owner's decision authority for THIS dispatch with a basis token (e.g., `frozen-independent-lane:<lane>`, `proven-user-owned-blocker:<named-constraint>`, `team-meeting-outcome:<meeting-id>`, or other recorded owner-authorized basis traceable to the active execution boundary). Recognized bases are open-set including (not exhaustive): frozen independent specialist lane per `.claude/CLAUDE.md` `## 6. Judgment Philosophy`, proven user-owned blocker per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law`, team-meeting convergence outcome per `Skill(team-meeting)` `### 3-6. Convergence`.
 - Missing, unverifiable, or non-traceable `DISPATCH-AUTHORIZATION-BASIS` routes to packet-correction before dispatch send.
+- If the active frozen route already contains the dispatch authority, packet-correction fills the field and continues; use `route-replan` or `HOLD` only when the authority basis itself is absent, contradicted, or route-changing.
+- Independent review, promotion-review, validation, or final-arbitration dispatch proves in `DISPATCH-AUTHORIZATION-BASIS` or row-granular scope fields that the receiver did not produce the active slice under review.
+- A packet that mixes independent items with self-authored or prior-produced items splits or reassigns the non-independent rows before send.
+- Splitting or reassignment is a smooth packet-correction, not a full-route blocker, when the remaining active slice still satisfies the frozen proof/acceptance chain.
 - Row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, and `DEFERRED-SURFACES` when the output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
 - Governance audit or defect-sweep packets may ask a lane for high-recall discovery plus lane-local first-pass `candidate-classified` or `rejected:<basis>` states inside the assigned surface. Packets that ask for binding cross-surface filtering, final rejection, promotion, ranking, prioritization, correction priority, removal, patch-worthiness, patch-readiness, or patch/no-patch direction route full workflow activation to `team-lead` or `validator`; assigned `REVIEW-VERIFICATION-LENSES` may supply bounded review packet evidence for that route but do not grant lane binding authority.
+- Non-lead review lanes that supply promotion-review evidence use bounded recommendation wording such as `RECOMMENDED-STATE`.
+- Instructions that make a non-lead lane own or emit `FINAL-STATE`, `promotion owner`, binding promotion, binding `CONFIRM`/`OVERTURN`, corpus-level `confirmed-defect`, or final rejection are owner-boundary defects unless the packet assigns the authorized full-workflow owner.
+- Corrected-packet blocker history may name those labels only to identify the original blocker or to state that binding disposition remains team-lead/validator owned.
 - When a packet asserts or relies on PASS-2, review-verification, or lens application, packet preflight carries the actual `Skill(review-verification)` packet/lens basis; equivalent checks, proxy lens mappings, inline PASS wording, and checklist prose open `packet-correction` before assignment send.
 - `WRITE-SCOPE` carries bounded write authority as one or more allowed write-path prefixes for the receiving lane.
 - Receiving lanes include reviewer, validator, tester, researcher, and any non-developer lane that produces a retained-output artifact.
@@ -90,9 +99,16 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - missing assignment-delivery tool-envelope fields send zero dependent calls and open tool-envelope correction
 - tool-envelope field placement rule is owned by `message-classes.md` `## Canonical Channel Registry`; preflight verifies that planned `TaskCreate` and `SendMessage` envelope shapes satisfy the canonical placement rule before send
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
-- for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
-- assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; planned `summary` and `message` must pass the canonical assignment-carrier-pointer envelope in `message-classes.md`; the packet's required floor stays in task state or retained carriers
+- for parallel `Agent` batches, every planned spawn prompt first passes the shared screen-safety clause; a shared screen-safety/template defect blocks every inheriting sibling, while a row-local or call-local prompt defect quarantines only the affected planned call after shared checks pass and lets unaffected valid calls proceed through `parallel-continue`
+- assignment transport screen-safety clause: planned `summary` and `message` must pass the canonical assignment-carrier-pointer envelope in `message-classes.md`; the packet's required floor stays in task state or retained carriers
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `RECEIPT-COMPLETION-CONTRACT`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- exact-field schema: fields required by `## Downward Assignment Base Packet` and the active trigger-specific packet sections must appear with their exact canonical names; semantically similar prose, aliases, parenthetical labels, or noncanonical field names open same-owner packet-correction when the same frozen route remains unchanged
+- required packet fields are line-atomic: each required field key appears as its own first-line field segment, and no required field key or class suffix may be concatenated into another field's value
+- concatenated required-field text such as `TASK-ID: 1ASS: assignment`, `MESSAGE-CLASS: assignmentTASK-ID: 1`, or any `FIELD: valueFIELD: value` splice is a malformed carrier, counts the affected required fields as incoherent, sends zero assignment-grade `SendMessage` calls, and opens same-owner packet reconstruction before dispatch
+- Packet field preflight reads the actual governed carrier or task-state content. Host-rendered `Write` previews, truncated panes, line-wrapped snippets, and visible tool result summaries are UI evidence only; packet PASS or packet failure is proven by inspected carrier/task-state content.
+- If actual carrier/task-state content passes the line-atomic schema, continue dispatch. If actual content is malformed, reconstruct the carrier before send instead of applying a post-write identity patch.
+- `DISPATCH-AUTHORIZATION-BASIS`, row-granular `SCOPE-BASELINE`, `ACTIVE-SLICE`, `DEFERRED-SURFACES`, and exact `CLAIM-CEILING` are verified before send whenever their schema triggers are active; missing values are not inferred from work-surface prose, shard maps, route summaries, or retained context
+- independent-lane preflight rejects mixed independent/self-authored active slices before send; split or reassign those rows while preserving the frozen proof/acceptance chain
 - `REQUIRED-SKILLS` skill-field validity: reject role names, receiving agent-specific skill names, lane-mismatched entries, contradictory entries, non-fitting entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send
 - `SKILL-RECOMMENDATIONS` skill-field validity: reject role names, receiving agent-specific skill names, contradictory entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send; ordinary non-fitting recommendations remain receiver-classified as `not-material:<basis>`
 - Lane-dispatched `review-verification` uses `REVIEW-VERIFICATION-LENSES` for bounded named lane lenses, or routes full workflow activation to `team-lead` or `validator`.
@@ -103,11 +119,15 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `completion` without retained carrier, permits `completion` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
 - packet field vs loaded-and-learned skill law conflict: any packet field value that contradicts a binding rule from loaded-and-learned skill / role-body / trigger-bound reference per `.claude/reference/work-skill-reference-binding-law.md` precedence stack is a packet defect; send zero assignment-grade `SendMessage` calls and open `packet-correction`
 - when task tracking is active, consume `message-classes.md` `### Assignment Delivery Contract` for `TASK-ID`, task-row non-owner, and completion-closure rules
+- when task tracking is active, create or verify the active-team task row before writing the per-lane assignment carrier; the initial retained assignment carrier write already contains the mapped or verified `TASK-ID`
+- before the initial retained assignment carrier write, verify the composed carrier text has newline-separated required field segments and the `TASK-ID` line value unambiguously identifies the returned or verified active-team task row with no adjacent class text, suffix, prefix, or embedded field token
 - planned `TaskUpdate` for assignment owner, assignee, claimed, or in-progress marking before completion transport sends zero dependent calls and opens dispatch-move correction
 - assignment carriers that carry `TASK-ID` before active-team task identity verification or violate that contract's task-tracking carrier-integrity rule send zero assignment-grade `SendMessage` calls and open same-owner carrier finalization correction
+- planned `Write` followed by `Edit`/`Update` solely to insert missing `TASK-ID` into a newly written assignment carrier is a carrier-finalization-order defect; reorder to task-row verification before carrier write
 - task ids from a pre-team, lead-local, previous-namespace, guessed, or not-returned task list send zero assignment-grade `SendMessage` calls and open same-owner carrier finalization correction when active-team task creation is still available, otherwise `route-replan`
+- sequence-order alone is not an executable task identity; sequence-order becomes sufficient only as pre-write mapping evidence from distinct, complete, order-preserving active-team task rows returned or verified for the current assignment batch
 - invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
-- analysis, validation, or defect-audit `CLAIM-CEILING`: the packet states one wording ceiling from the allowed-values enumeration above in this reference's schema list; otherwise preflight keeps the packet evidence-only
+- analysis, critique, governance judgment, review, validation, defect-audit, or patch-worthiness `CLAIM-CEILING`: the packet states one exact wording ceiling from the allowed-values enumeration above in this reference's schema list; missing, alias, or noncanonical ceiling wording opens same-owner packet-correction when the same frozen route remains unchanged, and the corrected packet sends without replan once the ceiling is exact
 - completed-task correction/follow-up uses an open executable task whose `TaskCreate` result has returned before dependent dispatch or task mutation
 - Already-completed lane confirmation uses retained carrier consumption or distinct new bounded work, not assignment, reuse, reroute, or expanded packet text for the same `TASK-ID`, `WORK-SURFACE`, or `RETAINED-OUTPUT-PATH`.
 - This is a lead-side no-send rule; the closed lane remains closed without duplicate proof packets.
@@ -139,11 +159,14 @@ Multi-wave wave packets consume `SCOPE-BASELINE` union rules in `.claude/skills/
 
 Preflight outcome names:
 - `packet-correction`: the missing or malformed packet value already exists in the frozen basis and the same owner, phase, deliverable, proof/acceptance chain, staffing shape, and agent boundary remain unchanged. Correct the packet and rerun preflight before sending.
-- Post-convergence transport-display defects in delivered completions are not `packet-correction`; consume retained truth and route recurrence cleanup to `Skill(governance-modification)`.
+- Post-convergence transport-display defects in delivered completions split by effect. If retained carrier truth and canonical completion state are sufficient and the defect is non-authoritative display residue, consume retained truth and route recurrence cleanup to `Skill(governance-modification)`. If assistant-authored rendered content meets `.claude/reference/review-and-verification-core-law.md` `curtain-breach` criteria, pause completion acceptance for the required review/validation correction path before synthesis or final acceptance.
 - `route-replan`: the missing, contradictory, or stale basis is absent from the frozen basis or would move a `work-planning` boundary-change axis. Reopen `work-planning`.
 - `parallel-continue`: the affected surface is blocked or being corrected while unrelated independent surfaces remain inside the same frozen parallel route. Continue unaffected surfaces while resolving the blocked surface through `packet-correction`, `route-replan`, or proven user-owned blocker.
 
 Packet preflight never invents route facts, tool facts, acceptance facts, or skill openings. It corrects a bounded packet translation defect, reopens the route owner, or keeps independent unblocked work moving.
+Shared-template defects in schema, owner authority, claim ceiling, skill-field, or completion-contract grounds block only siblings that inherit the defective shared template until the template correction reruns.
+Row-local independence defects split or reassign only the affected rows; unaffected siblings and unaffected rows continue through `parallel-continue` when their packet preflight passes.
+Already-sent siblings with the same shared defect open same-boundary packet correction before further work is accepted from that defective basis; unaffected siblings stay live.
 Target resolution preflight per `runtime-dispatch-law.md` Target-resolution preflight.
 If member creation would move a `work-planning` boundary-change axis, reopen `work-planning`.
 When the receiving path is team-agent runtime, preflight must also reject packets that rely on lead-only conversation context, unlinked prior reasoning, or implicit upstream decisions. Those facts must be carried as packet fields, task/workflow state, or preserved artifacts before dispatch.
@@ -162,6 +185,7 @@ Required shape for every dispatch field (assignment, validator, reviewer, tester
 - `:` MUST come directly after the field name (only whitespace allowed between)
 - NO parenthetical descriptor, type annotation, or natural-language qualifier between key and colon
 - value follows the colon on the same line
+- value for a required identity/class field MUST end before the next field begins; another canonical field token embedded on the same line is malformed, not continuation content
 - multi-line continuation is allowed on subsequent lines
 - numbered lists, bullets, and nested detail are continuation content only
 - continuation content is NOT what the parser keys against
@@ -185,11 +209,11 @@ Treat same-shape retry as a recurrence-barrier defect, not a parser bug.
 
 Packet skill fields separate required skills from methodology recommendations.
 - Use `REQUIRED-SKILLS` for methodology or capability skills frozen as necessary for the receiving lane's bounded work.
-- Receiving lanes must load every valid `REQUIRED-SKILLS` entry before execution, apply it at the first material work surface where it can shape the assigned result, or return `scope-pressure` / `hold|blocker`.
+- Receiving lanes must load and learn every valid `REQUIRED-SKILLS` entry before execution, apply it at the first material work surface where it can shape the assigned result, or return `scope-pressure` / `hold|blocker`.
 - Use `REQUIRED-SKILLS: []` to record absence of upstream required skills.
 - Carry `SKILL-RECOMMENDATIONS` when planning or the active workflow owner froze methodology instructions for the receiving lane.
 - The receiver classifies each carried recommendation as applied, not-material, or blocked.
-- The receiver loads material recommendations before the work surface they shape and applies them at the first material work surface where they can shape the assigned result.
+- The receiver loads and learns material recommendations before the work surface they shape and applies them at the first material work surface where they can shape the assigned result.
 - The receiver records recommendation classification basis in the completion carrier.
 - The receiver validates every skill-field entry before loading; invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed entries are blocked packet facts, not optional instructions.
 - A lane that receives a blocked required-skill entry returns `scope-pressure` or `hold|blocker` before lane work and reports the invalid entry as blocked packet truth.

@@ -19,17 +19,20 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 
 ## Target Selection Rules
 - Choose one primary target before Q1-Q5. Add each mandatory secondary target only when it belongs to the same owner, surface, deliverable, proof/acceptance chain, and next action.
-- On consequential top-level plans, `route-plan` is the default primary target.
-- The matching alternative target replaces primary only when the route is delegated, lane-local, or blocker-clear.
-- In those cases, `lead-local-plan`, `delegated-lane-plan`, `blocker-clear-plan`, or `workflow-sequence-plan` becomes primary.
+- On consequential top-level plans, `route-plan` is the default primary target, and target resolution order is route selection, workflow/sequence owner selection, then dispatch readiness.
+- `workflow-sequence-plan` joins the same planning pass when it selects the first workflow or sequence owner inside the same frozen route.
+- `workflow-sequence-plan` replaces primary only when it changes the first executable owner before route freeze; otherwise it returns owner-selection fields to the route plan.
+- The matching alternative target replaces primary only when the route is lane-local, delegated, or blocker-clear.
+- In those cases, `lead-local-plan`, `delegated-lane-plan`, or `blocker-clear-plan` becomes primary.
 - Lower-level lane plans use the matching target as primary.
 - `request-fit-plan` is mandatory (as primary or secondary) when the interpreted request is thin, corrected, reference-based, burden-sensitive, or dependent on user-surface proof or original wording.
 - `lead-local-plan` is valid only for one named item with no final-arbitration trigger, no configured lane substitution, no lost independent parallel surface, no independent review/proof/validation separation, and no stronger-than-local evidence claim.
-- `team-dispatch-readiness-plan` is mandatory (as primary or secondary) when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`; it carries the dispatch phase inside the team-lead work plan and termination plan.
+- `team-dispatch-readiness-plan` is mandatory as a secondary target when routing is team-routed, ambiguous, parallel-fit, host-authorized additional-agent capable, or eligible to enter `task-execution`; it joins after route/workflow readiness as a dispatch row inside the team-lead work plan and termination plan.
 - If dispatch readiness needs unavailable corpus, line/byte, or reference-density facts, freeze route-local measurement first; final `AGENT-MAP`/`PARALLEL-GROUPS` waits for measured basis.
 - `workflow-sequence-plan` is mandatory when a workflow or primary sequence owns the next path.
 - `blocker-clear-plan` is valid only when the clearing move preserves every `work-planning` boundary-change axis and next action.
 - `delegated-lane-plan` freezes lane-local assignment boundary only; planning ownership stays with `team-lead` through `work-planning`.
+- Mandatory target conflict resolves by explicit primary promotion before freeze or by a planned later row in `TEAM-LEAD-WORK-PLAN`; implicit target switching after freeze is invalid.
 
 ## Target-Specific Required Basis
 - `request-fit-plan`: `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and material request wording or cited artifact anchors.

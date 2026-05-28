@@ -22,6 +22,7 @@ Partial draft, implemented subset, placeholder surface, or developer-only run pa
 
 ## User-Ready Delivery Chain
 Every consequential deliverable or active slice follows a named user-ready delivery chain.
+Active-slice proof closes only assigned `ACTIVE-SLICE` rows; final deliverable completion, workflow completion, or validator `PASS` requires reconciliation against the `SCOPE-BASELINE` union and all `DEFERRED-SURFACES` or open rows.
 The chain starts from the user's instruction.
 The chain expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence.
 The chain converges into the final user-consumed surface or an explicit deferred receiver surface backed by user-stated boundary, user-accepted boundary, or cited `[USER-DELIVERY-FIT]` deferral authority.

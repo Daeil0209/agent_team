@@ -7,7 +7,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
 `EXECUTION-READINESS-BASIS` is the planning-level readiness contract.
-It does not assemble packets or prove results.
+`ready:<basis>` means route-ready facts for the frozen next owner/action are available.
+It does not mean proof execution, setup completion, packet materialization, runtime send, result validation, or final acceptance.
 It records whether the frozen next owner can execute the next action without re-deriving omitted route, packet, proof, setup, cleanup, parallel, or acceptance facts.
 
 For team-routed or dispatch-capable paths, readiness must cover:
@@ -36,7 +37,7 @@ For lead-local consequential paths, readiness covers the first local item, stop 
 A readiness gap that changes owner, phase, deliverable, surface decomposition, staffing shape, proof surface, or acceptance chain is a route problem and reopens `work-planning`.
 A gap that stays inside the same frozen owner, phase, surface, deliverable, proof/acceptance chain, and staffing shape is carried as bounded packet-correction or blocker-clear basis for the next owner/action.
 
-An agent tool/evidence-gap request lacking adequate candidate-tool research freezes a bounded `researcher` tool-selection research step before setup.
+An agent tool/evidence-gap request that carries the minimum blocker facts but lacks candidate-tool research opens `Skill(tool-acquisition)`, `Skill(external-tool-bridge)`, or bounded researcher tool-selection under the active owner path before setup.
 The exception is when the correct tool is already proven or the route is a proven user-owned blocker.
 
 Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path.

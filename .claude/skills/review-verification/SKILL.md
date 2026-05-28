@@ -6,7 +6,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## Structural Contract
-- Produce internal `review_verification_packet` only; do not mutate, test, validate, report, or satisfy self-verification convergence.
+- Produce internal `review_verification_packet` only; mutation, testing, validation, reporting, and self-verification convergence remain outside this skill.
 - Keep this fixed order after Structural Contract: Activation, Reference Map, Named Lane Lens Index, Packet, Review Workflow, Handoff Or Next Work.
 - Keep `### 1` through `### 14` as `Steps 1-14`; do not rename these anchors.
 - Always run `### 5. Critical Review Gate` and `### 14. Next-Owner Routing`.
@@ -62,7 +62,7 @@ Return internal `review_verification_packet` with:
 
 ## Review Workflow
 Run steps in numeric order against the current cumulative live state.
-Keep evidence local to each step; put only result fields in the packet. Step-start, step-completion, defect-promotion, candidate-count, citation-substantiation, and remaining-citation progress narration stay internal; execute the required inspection tool call or packet-population action instead of visible prose.
+Keep evidence local to each step; put only result fields in the packet. Step-start, step-completion, defect-promotion, candidate-count, citation-substantiation, and remaining-citation visibility is owned by `.claude/reference/reporting-prohibition-law.md`; execute the required inspection tool call or packet-population action.
 If target, corpus, findings, patch design, diff, or claim strength changes, reopen the earliest invalidated step.
 Run Steps 6-9 only for patch design, removal, or mutation readiness; otherwise record `not-applicable:<basis>`.
 
@@ -70,12 +70,14 @@ Run Steps 6-9 only for patch design, removal, or mutation readiness; otherwise r
 Read the governing review/verification philosophy and the requested target surfaces.
 For governance hierarchy questions, inspect only the top doctrine, mapped core law, trigger-bound owner reference, and lower surface needed by the requested judgment.
 Consume the basis that controls the requested review claim.
+When a selected Skill, reference, or governance surface controls the review claim, consumed-surface learning follows `.claude/reference/work-skill-reference-binding-law.md` full-body/full-document absorption; excerpts, line citations, and citation-substantiation records do not satisfy consumption.
 Name only material design intent, protected meaning, owner boundary, valid procedure path, stop condition, and acceptance surface.
 If requested-claim basis is missing, stale, contradicted, or unconsumed, open the smallest correction owner or `HOLD`.
 
 ### 2. Freeze Requested Review Basis
 Name the caller's review request, target, requested corpus, evidence burden, claim ceiling, output form, and any requested shard basis.
 Inspect only surfaces needed to answer that bounded review question.
+Bounded surface selection controls which surfaces are opened; it does not lower the learning depth required for any opened governing surface that is consumed.
 Open adjacent owner, producer/consumer, mapped core-law, or trigger-bound owner-reference surfaces only if the requested judgment cannot be made without them.
 If requested corpus is unknown, open bounded discovery before judgment.
 
@@ -160,11 +162,12 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: citation-substantiation atomic-check — dist
 For every outgoing external citation/anchor claim in the produced packet, populate `CITATION-EVIDENCE-INVENTORY` with one 3-tuple entry per citation. "Outgoing external citation/anchor" = cited surface is a different file or different carrier than the produced packet itself (cited file path, section name, line:column, PACKET-ID, retained carrier path, or content claim referencing another file). "Internal/structural" citation (exempt) = produced packet's own section header / self-PACKET-ID / produced file's own line:column self-reference.
 Apply the 2-class deterministic test:
 - **Class A (admissible)**: current turn carries a Read/Grep/Bash tool-call against the cited surface AND the cited line/section/PACKET-ID is contained in that tool-call output. Citation immediately admissible.
-- Class-A `Bash` citation checks follow `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`: do not add assistant-authored stdout headers, progress labels, zero-match commentary, substantiation summaries, or remaining-item narration; use quiet `Grep`/`Read`, a quiet contained command, or a governed evidence carrier when raw rendered stdout was not explicitly requested.
+- Class-A `Bash` citation checks follow `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`; command stdout admission for citation-check narration is owned by `.claude/reference/reporting-prohibition-law.md`.
 - **Class B (deferred Class A, admissible only with explicit citation)**: cited surface was loaded earlier in the same session via a Class-A-qualifying tool-call at turn-N AND (i) staleness check passed per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, (ii) the entry explicitly cites the originating turn-N tool-call evidence (Read/Grep/Bash invocation identifier or retained carrier PACKET-ID + retained path). Class B claims without explicit originating-turn citation are inadmissible.
 - **Not-A-not-B**: citation is inadmissible; the writer MUST execute a fresh Class-A tool-call in the current turn before the citation enters the packet. Carrier prose marking "Class A required" without executing the tool-call is fabrication, not admissibility.
 Each `CITATION-EVIDENCE-INVENTORY` entry records: (a) cited target identifier (file path + section/line/PACKET-ID); (b) freshness class (A or B) + verifying tool-call type and parameters + (Class B only) originating turn-N tool-call evidence citation; (c) observed verbatim content snippet from the tool-call output (Class A) or originating-turn output reference (Class B). Entries missing any of (a)(b)(c) are inadmissible; treat as citation fabrication and fail Step 12b.
 This Gate is distinct from Step 5 (failure-mode disproof) and Step 12 (defect inventory) in purpose — Step 12b probes citation-correctness substantiation, not defeater disproof.
+Citation substantiation proves citation freshness only; it does not prove full-body or full-document consumed-surface learning for the cited governance, Skill, or reference file.
 Bootstrap exemption: this Gate enforces from the patch installing it forward; review-verification packets produced prior to installation are not retroactively reclassified. Bootstrap pattern parallels `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection` bootstrap exemption clauses.
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where outgoing-external-citation entries are missing from `CITATION-EVIDENCE-INVENTORY` or lack any required 3-tuple component.
 

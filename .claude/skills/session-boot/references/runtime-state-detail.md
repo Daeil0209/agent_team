@@ -98,7 +98,7 @@ Canonical rule:
 - when a workflow is active, runtime signals classify agent/runtime truth only; phase advancement and checkpoint clearance stay with the active workflow owner.
 
 ## Supervisor Decisions On Turn-Ended Signals
-After completion-grade output, governing control records `STANDBY`.
+After valid completion transport, governing control records `STANDBY`.
 If immediate work exists, send `assignment`, `reuse`, or `reroute` as new bounded work; choose `reuse` only when `## Reuse Rule` owner/context fit remains truthful.
 If no immediate work exists, send nothing.
 Shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence.
@@ -108,7 +108,7 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 - Runtime cleanup is message-first when the cleanup decision requires agent-side behavior.
 - Completion creates `STANDBY` and a synthesis obligation; removal requires a cleanup, reuse-failure, release-gate, or closeout basis.
 - Completion-grade agent transports carry the one-line pointer envelope and retained carrier required by `completion-handoff.md`.
-- During active runtime, `session-boot` owns cleanup interpretation after completion-grade output when no new assignment-grade packet is being sent.
+- During active runtime, `session-boot` owns cleanup interpretation after completion transport when no new assignment-grade packet is being sent.
 - `assignment` and `reuse` return an agent to `ACTIVE`.
 - Teammate population changes only on creation and confirmed shutdown/removal.
 - Closeout exception: session teardown uses the narrow closeout shutdown path from `session-closeout`.
@@ -205,7 +205,7 @@ Canonical evidence mapping:
 - agent `status`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
 - current-session agent tool activity or assigned-surface mtime/diff in the dispatch window -> corroborating activity/side-effect evidence
 - `permission_request` -> active-but-permission-blocked evidence
-- `completion` -> `STANDBY` tracking signal plus completion-grade carrier for synthesis
+- `completion` -> `STANDBY` tracking signal plus completion carrier for synthesis; quality claims still require completion-handoff verification.
 - structured `shutdown_request` -> shutdown intent evidence; shutdown becomes authoritative only through live-roster absence, termination evidence, or hook/runtime shutdown evidence
 
 ## Hook-Maintained Ledger Surfaces
@@ -213,7 +213,7 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
-| `WORKER_TRANSPORT_LEDGER` | agent-originated progress, completion-grade message receipt | absence is not completion absence; consult message body and lane evidence |
+| `WORKER_TRANSPORT_LEDGER` | agent-originated progress, completion transport message receipt | absence is not completion absence; consult message body and lane evidence |
 | `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification |
 | `IDLE_DECISION_PENDING_FILE` | legacy or exceptional turn-ended state not yet synchronized to canonical transport | activity requires completion transport, standby ledger, and live runtime evidence |
 | `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | activity requires positive evidence beyond missing idle marker |
@@ -251,7 +251,8 @@ Rules:
 - Waiting for the user to identify monitoring-detectable defects (parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, agent-charter mismatch, or agent stall) is itself a defect; non-destructive runtime recovery is team-lead owned.
 
 ## Stall-Without-Progress Rule
-`dispatch-pending-no-ack` is missing assignment acceptance: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
+`dispatch-pending-no-ack` requires assignment-send evidence. If the target only has `member-created` / live roster evidence, return to `task-execution` with dispatch-recovery interrupt point `team-created-no-assignment`; assignment delivery remains the next action and visible emission admission is owned by `.claude/reference/reporting-prohibition-law.md`.
+`dispatch-pending-no-ack` is missing assignment acceptance after assignment-send evidence: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
 `dispatch-ack` with no same-segment agent-start evidence is `dispatch-ack-no-start`: trigger same-assignment execution follow-up immediately in the same monitoring turn.
 Parallel dispatch is active monitoring, not passive waiting.
 Running-group reporting requires every intended target to be past `dispatch-pending-no-ack` and `dispatch-ack-no-start`.
@@ -263,11 +264,12 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
-2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
-3. Keep additional assignment/correction packets out of a silent inbox.
-4. At the re-check window, inspect current response and activity/side-effect evidence. Preserve active agents in lane execution. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
-5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows that law's `## Report Shape`.
+1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, first prove the required assignment-send or ack evidence for that state. If the proof is absent, return to the preceding dispatch interrupt point (`team-created-no-assignment` for no assignment-send evidence, or `dispatch-pending-no-ack` for no ack evidence) and execute that state instead of follow-up.
+2. When the state proof exists, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+3. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
+4. Keep additional assignment/correction packets out of a silent inbox.
+5. At the re-check window, inspect current response and activity/side-effect evidence. Preserve active agents in lane execution. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+6. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows that law's `## Report Shape`.
 
 Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among routine nudge, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
 
@@ -328,6 +330,8 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class C `tmux kill-*` pane termination surfaces as prohibited command selection and routes back to cooperative cleanup or non-tmux owner recovery.
 - Domain 2 reconciliation result surfaces as a status answer when the user explicitly references a UI display ≠ governance roster mismatch per `.claude/reference/reporting-prohibition-law.md`.
 - Completed automatic non-destructive reconciliation stays internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for a status answer.
+- When the user asks about a specific missing ack, idle teammate, stale task row, or runtime display mismatch, answer only the direct current condition by default. Per-agent timelines, shard inventories, file sizes, carrier paths, internal recovery steps, and hook/tool correction history remain internal unless explicitly requested.
+- After the direct status answer, resume the required monitoring, assignment delivery, recovery, replacement, shutdown, or synthesis move without visible recovery narration.
 
 ## Runtime Cleanup Rules
 - Choose shutdown when closeout is active, hard memory pressure exists, context exhaustion risk is real, or recurrence is clearly absent.

@@ -54,13 +54,13 @@ Every agent-specific skill inherits these common preconditions:
 - Lane continues to the next executable lane action in the same turn until completion, blocker, or scope-pressure.
 - Governance asset change quality requires lane-local `Skill(self-verification)` plus `Skill(review-verification)` named-lens consumption; bare lane-local `Skill(self-verification)` routes lane completion to quality-contract correction and lane lens supplementation.
 - Every upward lane `SendMessage` (`dispatch-ack`, `status`, `scope-pressure`, `completion`, `hold|blocker`) uses the canonical no-detail state-signal envelope per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; receiver-required detail moves to the retained carrier referenced via `RETAINED-OUTPUT-PATH`.
-- When the assignment packet's completion contract or upward-message instructions direct the lane to place retained-output paths, retained-output contents, INSPECTION-COVERAGE, OPEN-SURFACES, file or findings counts, excerpts, summaries, operational notes, or any field other than the canonical state signal in the upward `SendMessage` render, the lane sends `scope-pressure` with `PRESSURE-TYPE: malformed-completion-contract` and `CORRECTION-OUTCOME: packet-correction` while still emitting the canonical envelope.
+- When the assignment packet's completion contract or upward-message instructions direct the lane to place receiver-required detail in the upward `SendMessage` render, the lane sends `scope-pressure` with `PRESSURE-TYPE: malformed-completion-contract` and `CORRECTION-OUTCOME: packet-correction` while still emitting the canonical envelope.
 - Receipt requires the receipt event contract; agent spawn success, visible `working`, visible pane/final text, tool output, skill loading, status, and later completion remain supporting signals.
 - Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.
 - Execution-block internals (skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, progress notes) stay inside the block.
 - Every upward message follows `.claude/skills/task-execution/references/message-classes.md` Communication Plane Law.
 - Carry receiver-required detail through governed Communication Plane payload; use retained-output or task carriers only for size, evidence retention, or reuse.
-- Report suppression and visible-row hygiene preserve complete, undistorted assignment facts.
+- Visible-row admission is owned by `.claude/reference/reporting-prohibition-law.md`; Communication Plane payload rules preserve complete, undistorted assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
 - Before a lane uses actual skill load-and-learn, officially preloaded-and-learned skill basis, same-session loaded-and-learned skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload-and-relearn, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
@@ -83,8 +83,8 @@ Every agent-specific skill inherits these common preconditions:
 - `scope-pressure` routes mixed-phase, wrong-owner, shardable overload, hidden-prerequisite, or packet-field-vs-skill-law-conflict packets per `.claude/reference/work-skill-reference-binding-law.md` precedence stack.
 - `hold|blocker` routes materially ambiguous decisive basis or non-derivable missing fields.
 - Skill-field intake precedes first lane work.
-- Classify every `REQUIRED-SKILLS` entry as `valid-loaded`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every valid material entry to `applied` or `blocked:<basis>`.
-- Classify every `SKILL-RECOMMENDATIONS` entry as `material-loaded`, `not-material:<basis>`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every material entry to `applied` or `blocked:<basis>`.
+- Classify every `REQUIRED-SKILLS` entry as `valid-loaded-and-learned`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every valid material entry to `applied` or `blocked:<basis>`.
+- Classify every `SKILL-RECOMMENDATIONS` entry as `material-loaded-and-learned`, `not-material:<basis>`, `blocked:<basis>`, or `not-yet-applied:<basis>` before first lane execution; completion must resolve every material entry to `applied` or `blocked:<basis>`.
 - Lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, malformed, or full-workflow-only required-skill entries are blocked packet facts; return `scope-pressure` or `hold|blocker` instead of treating them as optional local omissions.
 - When packet or retained-context wording offers equivalent checks, proxy lens mappings, inline PASS wording, or checklist prose in place of actual `Skill(review-verification)` packet/lens basis, send `scope-pressure` before lane work or completion.
 - Silence when assigned specialist-surface structure is weak is a lane failure.
@@ -123,7 +123,7 @@ Every agent-specific skill inherits these common preconditions:
   - skill basis
   - material tool or rendered/runtime needs
 - If meaning-dependent work lacks a usable `SEMANTIC-INTENT-BASIS`, treat literal-text execution as unsafe and return `scope-pressure` or `hold|blocker` instead of narrowing the task by local interpretation.
-- Every valid `REQUIRED-SKILLS` entry must be loaded before first lane execution and applied at the first material work surface where it can shape the assigned result; completion must preserve its applied or blocked truth.
+- Every valid `REQUIRED-SKILLS` entry must be loaded and learned before first lane execution and applied at the first material work surface where it can shape the assigned result; completion must preserve its applied or blocked truth.
 - `REQUIRED-SKILLS` entries use skill identifiers; agent-specific skills come from the assigned lane.
 - A blocked required entry sends `scope-pressure` when packet correction or replanning can restore execution.
 - A blocked required entry sends `hold|blocker` when truthful execution remains blocked.
@@ -136,12 +136,12 @@ Every agent-specific skill inherits these common preconditions:
 - A bare full-workflow skill entry is a packet defect when the skill reserves full activation to another owner.
 - If the lane already accepted or completed after receiving bare `REQUIRED-SKILLS: [review-verification]`, the lane defect is failure to surface the packet defect before work, not failure to run a full workflow it did not own.
 - `SKILL-RECOMMENDATIONS` are use-if-fit execution prompts, not optional decoration.
-- If a recommended, packet-implied, or newly discovered skill fits the assigned lane surface, the lane loads it immediately and applies it at the first material work surface inside the lane boundary.
+- If a recommended, packet-implied, or newly discovered skill fits the assigned lane surface, the lane loads and learns it immediately and applies it at the first material work surface inside the lane boundary.
 - If a recommended skill mismatches the lane need but another available skill fits, the lane uses the fitting skill and records the replacement basis.
 - If the skill mismatches the lane need or is unusable, mark it `not-material:<basis>` or `blocked:<basis>` before completion.
 - Owner wording limits claim authority, not fitting skill use.
 - Capability fit requires applying the fitting skill to the work surface.
-- Lane claims require loaded-and-applied skill evidence on the assigned work surface or `not-material:<basis>` / `blocked:<basis>`; packet wording, skill names, labels, tool-call presence, style language, and procedure-shaped text remain background signals.
+- Lane claims require loaded-learned-and-applied skill evidence on the assigned work surface or `not-material:<basis>` / `blocked:<basis>`; packet wording, skill names, labels, tool-call presence, style language, and procedure-shaped text remain background signals.
 - When a selected capability skill's `SKILL.md` names a direct reference that owns material method detail for the assigned surface, capability fit includes loading and applying that reference, or marking it `not-material` / blocked with basis.
 - During lane work, a newly discovered skill need is lane-local refinement only when it stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.
 - During lane work, a newly discovered tool need opens `Skill(tool-acquisition)` when the current toolset cannot satisfy the assigned surface and the need stays inside the same owner, phase, work surface, deliverable shape, proof/acceptance chain, and staffing route.

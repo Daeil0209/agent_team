@@ -22,12 +22,14 @@ PROTECTED-CURTAIN-SURFACE: entire file. Enumerated in `.claude/reference/modific
 
 ## Pre-Report Gate
 - User-facing prose is prohibited unless every applicable row below passes.
+- Report suppression is a continuation rule, not a stop rule: when prose fails this gate, the owner continues the next lawful Procedure Plane or Communication Plane action silently, or records a truthful `HOLD` only when no internal continuation exists.
 
 1. `REPORT-REASON` is exactly one of:
    - `final verified result`
    - `user-action blocker`
    - `explicit status answer`
    - `closeout residual`
+   Autonomous assistant-authored emission uses only `final verified result`; the other reasons require explicit user interruption, true user-action dependency, or closeout residual with no internal continuation.
 2. Same-segment internal continuation is unavailable or inappropriate because the deliverable is finally verified, a real user-action blocker exists, the user explicitly requested status, or closeout residual truth must be surfaced.
 3. Report content contains only the user-relevant final outcome, required user action, requested status, or residual truth.
 4. `final verified result` requires all same-request executable owner/actions closed, explicitly cancelled/redirected, or lawfully owner-deferred/out-of-scope.
@@ -38,10 +40,12 @@ PROTECTED-CURTAIN-SURFACE: entire file. Enumerated in `.claude/reference/modific
 9. If any required row is missing, stale, contradicted, or uncertain, keep prose suppressed and continue through the owning Procedure Plane or Communication Plane path.
 
 ## Non-Reportable Content
-- These are never user reports unless the user explicitly requests the exact internal material or `## Report Shape` admits a canonical artifact/carrier citation: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, ack/status/completion transport, task rows, packets, retained-carrier contents, retained-carrier paths not admitted as canonical citations, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, monitoring state, and prose whose only purpose is "starting", "continuing", "checking", "dispatching", "monitoring", "verifying", or "waiting".
-- A rendered internal transport envelope is non-reportable only when this law and the Communication Plane owner limit it to a canonical no-detail state token plus empty/space body or one canonical carrier-pointer/index body line; downward assignment packet fields and all receiver-required detail stay in governed packets, task state, retained carriers, shutdown requests, or evidence artifacts referenced by that visible pointer. Any progress wording, count, evidence summary, rationale, completion narrative, or path not used solely as a canonical carrier pointer in a renderable field is a report attempt.
+- System/host-generated UI rows, tool chrome, sandbox/approval UI, hook/tool result frames, and harness-emitted status are outside assistant-authored report control unless assistant-authored content is placed into a renderable field or intentionally written to rendered stdout/stderr.
+- Except for system/host-generated surfaces, every controllable assistant-authored renderable surface, including visible prose around tool calls and assistant-authored command stdout/stderr, defaults to empty body or single ASCII space until `## Pre-Report Gate` admits a report.
+- Internal material is any assistant-authored content whose purpose is to advance, explain, monitor, verify, recover, route, or evidence work before an admitted report; channel, tool, plane, message-class, or receiver label does not make it user-reportable.
+- Do not place internal material in renderable fields. Receiver-required detail lives in governed carriers, artifacts, task state, retained outputs, shutdown requests, or quiet command results unless the user explicitly requested the exact raw material.
+- A rendered internal transport envelope is non-reportable only when this law and the Communication Plane owner limit it to empty/space or a canonical no-detail token plus at most one canonical carrier-pointer/index body line. Downward assignment packet fields and all receiver-required detail stay in governed packets, task state, retained carriers, shutdown requests, or evidence artifacts referenced by that visible pointer. Any progress wording, count, evidence summary, rationale, completion narrative, or path not used solely as a canonical carrier pointer in a renderable field is a report attempt.
 - Communication Plane screen-rendered envelopes remain transport signals; receiver-required detail stays in governed packets, task state, retained carriers, shutdown requests, or evidence artifacts.
-- Host/system-generated Claude Code UI rows are not assistant-authored reports; classify them only when they affect report truth, runtime evidence, or user-visible rendering proof.
 - Optional supervised curtain behavior stays in `.claude/reference/environment-output-curtain-runtime.md`.
 
 ## Report Shape
@@ -71,7 +75,7 @@ PROTECTED-CURTAIN-SURFACE: entire file. Enumerated in `.claude/reference/modific
 
 ## Resolve Next Owner And Action
 - Passing `## Pre-Report Gate` returns to `team-lead` for concise user-facing prose.
-- Non-excepted prose returns to the owning Procedure Plane or Communication Plane continuation.
+- Non-excepted prose returns to the owning Procedure Plane or Communication Plane continuation; it never authorizes waiting, idling, deferral, completion, retry-loop abandonment, or backlog conversion while an internal next action remains available.
 - Missing verification, unintegrated result, pending required result, open same-request owner/action, or uncertain report reason opens the required internal continuation or truthful `HOLD`.
 - A required user action opens `user-action blocker`.
 - A non-user-action `HOLD` remains Procedure Plane state and does not admit `final verified result` or blocker prose.

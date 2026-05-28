@@ -44,7 +44,7 @@ Rules:
 | **Review scope** | Code quality | + architecture consistency | + security (`security-review`) + infrastructure |
 | **Testing requirements** | Basic verification | Structured testing | E2E + security + performance |
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
-| **Default team size** | 1-2 agents | 2-4 agents | Precision 5-lane deployment |
+| **Default team size** | 1-2 agents | 2-4 agents | Cap-aware precision deployment: use up to `ACTIVE-CONCURRENT-AGENT-CAP`; default to 4-lane/sub-batch under the host-safe cap, and use 5-lane only when the active cap explicitly permits it |
 | **Design options** | Conditional | Default | Required (3 architecture options) |
 | **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
 | **Gap analysis** | Conditional | Default | Required before acceptance |

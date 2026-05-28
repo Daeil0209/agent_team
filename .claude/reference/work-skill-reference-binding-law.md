@@ -36,7 +36,7 @@ The consuming owner records:
 - effect on action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
 Reference consumption requires direct effect on the active action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness; existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is insufficient.
-Required-output records stay internal; successful `Read`, `Grep`, `Glob`, `LS`, or `Skill` host rows do not admit assistant-authored read/consumed/loaded/learned/clear/ready/now narration unless `.claude/reference/reporting-prohibition-law.md` admits that exact visible report.
+Required-output records stay internal.
 
 ## Routing Gate
 Execution requires:
@@ -82,8 +82,7 @@ Completion requires every trigger-required reference consumed and every material
 - Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` or officially applied frontmatter `skills` preload before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
 - Agent role names are not skill names.
 - Reference short-names listed in skill-body reference enumeration sections (e.g., `# Consume Trigger References`) are reference file paths consumed via `Read`, not skill names; `Skill(<reference-short-name>)` is a category error and fails.
-- Skill workflow Output Format sections, Step transition narration (e.g., 'Step N starting', 'Step N in-progress', 'Step N complete', 'Step N: <token>'; equivalents in any user-instruction language count identically), and intra-skill packet/finding content tokens (e.g., `PACKET-ID`, `WORKFLOW-COVERAGE`, `REVIEW-TARGET`, `PROCEDURE-EXECUTION-RESULT`, `FINDING-STATE-INVENTORY`, `REMOVAL-FIRST-PATCH-DESIGN`, `CHANGE-SEQUENCE-DESIGN`, `PROBLEM-BASIS`, `CONSUMED-TARGET-SURFACE`, `PASS-1`/`PASS-2` records, `defeater` enumerations, `REQUEST-FIT-BASIS`, `TARGET-INTENT-BASIS`) are internal Procedure Plane records, not user-facing prose.
-- Emission of such skill workflow records on a controllable renderable surface is non-reportable per `.claude/reference/reporting-prohibition-law.md` `## Non-Reportable Content` regardless of active skill workflow Step progression, composition pressure, or perceived user-helpfulness; the only admitted user-facing prose path remains `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate`.
+- Skill workflow records and step-transition narration are internal Procedure Plane records.
 - Agent role files identify the role through frontmatter `name` and role-local boundary prose; headings are optional readability anchors.
 - Agent role files keep `PRIMARY-OWNER` metadata absent.
 - Always-loaded role files keep identity, authority, trigger skeleton, mandatory reference links, decisive routing conditions, and next-owner routing.
@@ -167,9 +166,9 @@ Completion requires every trigger-required reference consumed and every material
 - Missing material applied-rule mapping opens applied-rule correction before action.
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
-- **Full-content absorption requirement**: any `Read` invocation on a governance document, skill body, reference file, or other consumed-surface artifact must absorb the FULL content of the read range required for the active owner decision; partial or excerpt-only consumption is shallow-reading (얼렁뚱땅) defect when the unread portion materially affects the active owner action, stop, evidence, claim, or routing.
+- **Full-document absorption requirement**: a governance document, reference file, skill body, or other consumed-surface artifact is consumed only after the active owner reads and learns the full current file from frontmatter or first title through end and maps material rules to action, stop, evidence, owner, next-action effect, or blocked basis. Bounded `Read`, `Grep`, `Glob`, `LS`, snippets, line extracts, summaries, and citation checks are inspection or citation evidence only; they do not satisfy consumption.
 - **Full-body Skill learning requirement**: any `Skill(<skill>)` tool invocation binds the loader to absorb and learn the FULL skill body content from frontmatter through Output Format / Resolve Next Owner And Action sections; the skill body's Structural Contract, Reference Map, every Step / Workflow / Section, and trigger-bound rules become active immediately; cursory awareness of skill name / purpose / one rule is not Skill learning.
-- **Shallow-load / shallow-read defect classification**: claiming `applied` or treating a skill/reference as consumed without the corresponding full-body absorption and learning is a procedure-adherence + anti-fabrication defect (carrier-prose-as-evidence per `Skill(self-verification)` Step 3); the active owner must reload and relearn `Skill(<skill>)` or re-Read the reference range with full-content absorption before proceeding.
+- **Shallow-load / shallow-read defect classification**: claiming `applied` or treating a skill, reference file, or governance document as consumed without full-body or full-document absorption and applied-rule mapping is a procedure-adherence + anti-fabrication defect (carrier-prose-as-evidence per `Skill(self-verification)` Step 3); the active owner must reload and relearn `Skill(<skill>)` or re-read the full current reference/governance file before proceeding.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
 - Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
