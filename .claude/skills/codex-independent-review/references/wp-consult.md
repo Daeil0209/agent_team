@@ -11,7 +11,7 @@ Load after `Skill(work-planning)` is active, draft planning fields exist, and ro
 Also consume `.claude/skills/codex-independent-review/references/concurrent-patterns.md` before the codex CLI background invocation.
 
 ## WP-CONSULT Packet
-`WP-CONSULT` adds these fields to the common packet:
+`WP-CONSULT` adds these fields to the codex invocation prompt (Sub-command Enumeration + Context Limit scope rules per `concurrent-patterns.md`):
 - `request_summary`
 - `draft_freeze`: every `Always freeze` field plus every material `Freeze when material` field per the canonical work-planning record schema at `.claude/skills/work-planning/references/planning-record-fields.md` (consume that canonical schema rather than this list; field list evolves there and this packet stays in sync automatically).
 - `context_notes`
@@ -36,7 +36,7 @@ Codex checks the draft freeze for:
 - acceptance, proof, skill-map, or carry-forward gaps that would make dispatch unsafe
 
 ## WP-CONSULT Handling
-Adjudicate every valid `WP-CONSULT` point per team-lead Accept/Reject/Defer adjudication before the planning basis is complete; codex output transport rules per `.claude/skills/codex-independent-review/references/concurrent-patterns.md` Authority + Transport Boundary.
+Adjudicate every valid `WP-CONSULT` point per team-lead Accept/Reject/Lawfully-Defer adjudication before the planning basis is complete; `Lawfully-Defer` requires cited owner-deferral authority plus next owner/action, otherwise keep the point open and continue planning. Codex output transport rules per `.claude/skills/codex-independent-review/references/concurrent-patterns.md` Authority + Transport Boundary.
 
 Freeze one:
 - `CODEX-INDEPENDENT-REVIEW-BASIS: skipped:<basis>`

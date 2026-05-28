@@ -8,7 +8,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 # Code Quality — Reference Material
 Reference checklists, tables, and catalogs for `code-quality-review`.
-Read this file explicitly when needed; it is not auto-injected on Skill load.
+Read this file explicitly when needed; it is not auto-injected on Skill load-and-learn.
 
 ## Code Quality Deep Review
 ### 1. SOLID Principles Checklist

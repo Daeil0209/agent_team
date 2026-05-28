@@ -46,7 +46,7 @@ Trivial surfaces skip benchmark only when the active workflow or planning path r
   - evidence is too weak for a routing, promotion, or capability-advance claim
 
 ### Reference Map
-After `Skill(benchmark-simulation)` is loaded, load trigger-specific references directly.
+After `Skill(benchmark-simulation)` is loaded and learned, load trigger-specific references directly.
 - `references/capability-benchmark.md`: governance modification/capability benchmark standard, runnable benchmark path, team selection, workflow/product structure, and coupled-core extensions.
 - It also covers external-reference, visual/UX, and workflow-product benchmark extensions.
 - `references/observation-protocol.md`: multi-modal reference observation, image-aware evidence handling, quantitative observation, and subjective-observation discipline.

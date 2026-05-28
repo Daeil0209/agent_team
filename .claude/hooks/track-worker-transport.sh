@@ -320,7 +320,7 @@ if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
     mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-transport:${MESSAGE_CLASS}"
   fi
 
-  if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]] || { [[ "$ACK_WAS_REQUIRED" == "true" ]] && { [[ "$MESSAGE_CLASS" == "scope-pressure" ]] || [[ "$MESSAGE_CLASS" == "hold|blocker" ]]; }; }; then
+  if [[ "$MESSAGE_CLASS" == "dispatch-ack" ]] || { [[ "$ACK_WAS_REQUIRED" == "true" ]] && { [[ "$MESSAGE_CLASS" == "completion" ]] || [[ "$MESSAGE_CLASS" == "scope-pressure" ]] || [[ "$MESSAGE_CLASS" == "hold|blocker" ]]; }; }; then
     clear_worker_dispatch_ack_required "$SENDER_NAME"
     clear_worker_standby "$SENDER_NAME"
     clear_worker_idle_pending "$SENDER_NAME"

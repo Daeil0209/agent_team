@@ -73,7 +73,7 @@ Minimum measurement record:
 
 Line counts and file sizes support diagnosis only as non-proof evidence.
 
-Enabled MCP server processes, including `codex mcp-server` and Playwright MCP, are runtime footprint surfaces when they affect a route. Treat their latency, process lifetime, and child-process cleanup claims as `UNVERIFIED` until measured on the active route.
+Enabled MCP server processes, including Playwright MCP, are runtime footprint surfaces when they affect a route. Treat their latency, process lifetime, and child-process cleanup claims as `UNVERIFIED` until measured on the active route.
 
 ## Continuity Truth Law
 Runtime continuity truth uses current-session authorities: `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs.

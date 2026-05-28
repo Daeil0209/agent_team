@@ -20,7 +20,7 @@ Carrier-by-memory or filename-by-inference dispatch-readiness consumption withou
 
 ## Prior Owner Requirements
 Before this skill acts, the lead must already have:
-- actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session
+- actual `Skill(task-execution)` load-and-learn or `same-session-loaded:task-execution` for the current Claude session
 - current boundary `work-planning`
 - the current frozen workflow or sequence owner already opened when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is present
 - a frozen additional-agent route or ambiguous dispatch route

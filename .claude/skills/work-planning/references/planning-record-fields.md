@@ -34,7 +34,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `TARGET-INTENT-BASIS` records cited design intent, applicable core-law axes, target purpose, material solution-structure or scope-boundary basis, affected owner surfaces, drift stop, or `not-applicable:<basis>` allowed by `.claude/reference/detailed-design-core-law.md`.
 - `COMPLETION-STOP-CONDITION` is mandatory for consequential plans and must derive from the user instruction, deliverable type, proof/acceptance defaults, and active workflow or sequence exit law.
 - It names the smallest practical closure condition a reasonable owner can verify, the evidence that proves closure, and the condition that keeps the owner open or routes `HOLD`.
-- Valid terminal states are deliverable closure, explicit user-accepted deferral, lawful owner deferral under `[USER-DELIVERY-FIT]`, or `HOLD` with truthful blocker.
+- Valid terminal states are deliverable closure, explicit user-accepted deferral, lawful owner deferral under `[USER-DELIVERY-FIT]` with cited authority surface, or `HOLD` with truthful blocker.
 - Lead-authored wave, batch, sample, priority tier, context limit, runtime limit, turn limit, response-length limit, or tool-call pressure is not a terminal state.
 - `TEAM-LEAD-WORK-PLAN` is mandatory for consequential plans and must name the material phases, owner for each phase, action, stop/evidence, verification or review need, iteration or re-entry condition, and termination plan.
 - `TEAM-LEAD-WORK-PLAN` is authored by `team-lead` and carries the procedure that `team-lead` will execute, route, monitor, synthesize, verify, and close.
@@ -46,9 +46,9 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Place `Skill(review-verification)` inside `Skill(self-verification)` Step 3 when the produced work-product surface set needs PASS-2 critical review.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 - A complete `TEAM-LEAD-WORK-PLAN` carries only trigger-backed owner rows and makes the termination row executable.
-- A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly user-accepted as deferred/out-of-scope, lawfully owner-deferred, or blocked by a truthful `HOLD`.
+- A complete `TEAM-LEAD-WORK-PLAN` keeps every `SCOPE-BASELINE` row open until covered, explicitly user-accepted as deferred/out-of-scope, deferred by cited lawful owner-deferral authority, or blocked by a truthful `HOLD`.
 - Governance defect or removal audit plans keep review-promotion rows distinct from lead synthesis rows.
-- Governance patch plans keep the governance-modification change loop open until every same-request `patch-ready` row is applied, lawfully deferred, rejected by current review basis, or blocked by truthful `HOLD`.
+- Governance patch plans keep the governance-modification change loop open until every same-request `patch-ready` row is applied, deferred by cited lawful owner-deferral authority, rejected by current review basis, or blocked by truthful `HOLD`.
 - `DERIVED-DEFAULTS` is mandatory for consequential plans and must name deliverable type, receiver job, consumption path, decisive proof surface, and triggered type-specific owner surfaces or `not-applicable:<basis>`.
 - `CLAIM-CEILING` is mandatory when the route includes analysis, critique, governance judgment, review, validation, defect audit, or patch-worthiness judgment; use one allowed value from `.claude/skills/task-execution/references/assignment-packet.md` `CLAIM-CEILING` allowed-values enumeration.
 - Governance defect or removal audits assigned to reviewer lanes default to `evidence-only candidates`; `patch-worthiness classification` requires team-lead `Skill(review-verification)` promotion basis.
@@ -58,7 +58,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Implemented artifacts cannot be used later to invent the completion scope.
 - Multi-wave routes record per-wave `SCOPE-BASELINE` against the frozen deliverable scope.
 - Multi-wave routes record the `SCOPE-BASELINE` union state as `full-coverage`, `partial-with-deferral`, or `partial-with-HOLD`.
-- Deliverable-scope delta from a wave's `SCOPE-BASELINE` records under `DEFERRED-SURFACES` with named owner-deferral upstream record path or `HOLD` with cited blocker.
+- Deliverable-scope delta from a wave's `SCOPE-BASELINE` records under `DEFERRED-SURFACES` only with explicit user acceptance, user-stated boundary, cited `[USER-DELIVERY-FIT]` lawful owner-deferral upstream record path, or `HOLD` with cited blocker.
 - `partial-with-deferral` is valid only when every deferred surface has explicit user acceptance, user-stated boundary, or `[USER-DELIVERY-FIT]` lawful owner-deferral basis.
 - Lead-authored wave, batch, sample, priority tier, resource pressure, or planning convenience cannot create `partial-with-deferral`.
 - `partial-with-deferral` does not satisfy deliverable completion for the originally requested scope unless the user explicitly accepts the narrowed scope.
@@ -67,8 +67,8 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Wave PASS cannot redefine deliverable scope as that wave's `SCOPE-BASELINE`.
 - Multi-wave routes classify each wave's system-damage potential as `safe`, `cautionary`, or `risky`.
 - Wave ordering places `safe` first, `cautionary` next, `risky` last.
-- For `risky` waves, team-lead prepares positive-effect and negative-effect analysis before user-selection.
-- User-selection on `risky` waves is operator-policy-choice per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
+- For `risky` waves, team-lead prepares positive-effect and negative-effect analysis, chooses the §1-§8-compliant reversible order when one is derivable, and opens user-decision-risk decision support only before asking the user to choose.
+- User-selection on `risky` waves opens only after decision support cannot derive an executable order, destructive/security approval is required, or a proven user-owned blocker remains.
 - When `DERIVED-DEFAULTS` names a receiver job, consumption path, or decisive proof surface for downstream review, proof, validation, or acceptance, `REQUEST-BOUND-PACKET-FIELDS` must include `TARGET-INTENT-BASIS`, `USER-SURFACE`, and `USER-SURFACE-PROOF-PATH`.
 - When plan, design, or workflow state freezes Receiver-Surface Contract, Consumption Chain, Boundary Register, or Evidence-Quality Matrix, `REQUEST-BOUND-PACKET-FIELDS` must preserve their cited identities for `task-execution` packet basis.
 - When reference-use triggers and downstream lanes depend on it, `REQUEST-BOUND-PACKET-FIELDS` must preserve cited reference identities or `DEVIATION-FROM-REFERENCE` basis. Downstream reference-use identity belongs inside `REQUEST-BOUND-PACKET-FIELDS`.
@@ -91,7 +91,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `LANE-REQUIRED-SKILLS-MAP` is mandatory when routing is team-routed or ambiguous-route.
 - Every lane entry records methodology or capability skills frozen as required for credible execution.
 - Use `[]` to record absence of required methodology or capability skills.
-- Lane ownership triggers agent-specific skill loading outside `LANE-REQUIRED-SKILLS-MAP`.
+- Lane ownership triggers agent-specific skill load-and-learn outside `LANE-REQUIRED-SKILLS-MAP`.
 - Methodology-only entries go to `SKILL-RECOMMENDATIONS`.
 - `SKILL-RECOMMENDATIONS` is mandatory as `[]` or a lane-scoped methodology instruction map when any configured lane is a candidate receiver for assignment-grade work.
 - `SKILL-RECOMMENDATIONS` carries methodology instructions only.
@@ -138,8 +138,8 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - Use `fail-open:*` when a required or triggered attempt did not complete.
 - Use `skipped:*` only when no trigger applies.
 - If `ACTIVE-WORKFLOW: dev-workflow`, `skipped:*` is valid only as `skipped:no-material-independent-review-trigger:<basis>`.
-- Codex MCP access failure is `fail-open:*`.
-- Codex MCP access failure is not a blocker by itself.
+- Codex CLI access failure is `fail-open:*`.
+- Codex CLI access failure is not a blocker by itself.
 - For any route eligible to enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
 - For assignment-grade dispatch, `EXECUTION-READINESS-BASIS` cannot be `ready:<basis>` unless the standard `RECEIPT-COMPLETION-CONTRACT` can be carried by `task-execution` packet assembly.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.

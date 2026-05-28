@@ -13,7 +13,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `[USER-DELIVERY-FIT]` Completion requires the frozen requested deliverable.
 - A question-shaped request freezes the deliverable as an answer or audit result unless the same instruction requests execution, correction, mutation, dispatch, validation, or cleanup.
 - Completion requires the frozen user burden contract to be satisfied.
-- Owner deferral lawful basis is user-stated boundary, `[NO-NEEDLESS-ASK]` destructive/security/operator-policy-choice gate, or proven user-owned blocker.
+- Owner deferral lawful basis is user-stated boundary, explicit user-accepted deferred or out-of-scope surface, cited upstream lawful owner-deferral record under `[USER-DELIVERY-FIT]`, or proven user-owned blocker with owner, blocker, and next safe evidence step.
+- Destructive, security-sensitive, or operator-policy-choice gates open the required approval or blocker path; they do not by themselves close in-scope work as deferred.
 - Lead-drafted batching, wave structure, scope decomposition, context-burden, planning convenience, self-authored `TEAM-LEAD-WORK-PLAN` rows, turn capacity, response length, tool-call count, host-imposed message-size factor, or any turn-boundary-deferral wording are invalid deferral basis.
 - The user-frozen deliverable scope stays binding across lead-drafted work-plan, wave, or batch structure.
 - Detailed Design consumes the frozen request, deliverable, scope, user burden, and completion shape as upstream basis.

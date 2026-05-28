@@ -35,7 +35,7 @@ Load when sheets, manual operations, decision gates, or workflow-heavy tools hid
 - define the operator meaning of major tabs, windows, buttons, and save paths
 - preserve undefined but observed labels, policy meanings, and allocation choices as configurable categories, rule tables, or user-editable parameters
 - Record original value, source, meaning, scope, and unresolved state for each preserved ambiguity.
-- Ambiguity that cannot preserve those facts becomes an open question or `hold|blocker` with next owner/action.
+- Ambiguity that cannot preserve those facts becomes an open question carried to the next owner/action or a `hold|blocker` with blocker and next safe evidence step.
 - Report `hold|blocker` when any of these remain too weak for credible delivery (operational test: the listed item cannot be enumerated as a discrete named state, named transition, named actor boundary, or named audit-sensitive event):
   - workflow start states
   - workflow end states
@@ -68,8 +68,8 @@ Capture only the decisive business packet:
 ## Handoff Boundary
 - Hand off after downstream execution can use explicit purpose, actor/mutation rules, and reconciliation behavior.
 - Keep unresolved role or decision conflicts explicit.
-- Expose role, decision, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions, or `hold|blocker` with next owner/action.
-- Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question.
+- Expose role, decision, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, user-decision-risk decision-support input, open questions carried to the next owner/action, or `hold|blocker` with blocker and next safe evidence step.
+- Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question carried to the next owner/action.
 - Record the chosen representation and evidence basis before handoff.
 - User-escalation triggers follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 - Carry CRUD completeness, destructive action, rollover, import-conflict, and stale-warning expectations through the active domain reference selected from the Reference Map above when material.

@@ -21,5 +21,5 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: routine-continuation atomic-check — Procedu
 - Routine milestones and partial arrivals stay Procedure Plane unless the user explicitly asks for status; admitted status stays compact and omits internal inventories unless requested.
 - Any open frozen next owner/action executes through its active owner path.
 - Any same-request residual work opens the smallest owner that can close that residual item.
-- A residual item closes only through patch, required integration, proof, validation, acceptance, cited out-of-scope basis, lawful owner deferral, explicit user cancellation/redirect, or truthful `HOLD`.
-- Procedure Plane `FINAL` closure opens only when every same-request residual item is closed, lawfully deferred, explicitly cancelled/redirected, or blocked by truthful `HOLD`; visible final prose still requires `.claude/reference/reporting-prohibition-law.md` admission, and non-user-action `HOLD` does not admit final prose.
+- A residual item closes only through patch, required integration, proof, validation, acceptance, cited out-of-scope basis, lawful owner deferral with cited authority surface, explicit user cancellation/redirect, or truthful `HOLD`.
+- Procedure Plane `FINAL` closure opens only when every same-request residual item is closed, deferred by cited lawful owner-deferral authority, explicitly cancelled/redirected, or blocked by truthful `HOLD`; visible final prose still requires `.claude/reference/reporting-prohibition-law.md` admission, and non-user-action `HOLD` does not admit final prose.

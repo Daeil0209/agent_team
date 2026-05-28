@@ -43,8 +43,8 @@ When a validator role or skill says "validator additions" or "validator detail",
 
 If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
-If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
-If only part of the basis is derivable, issue `VERDICT: HOLD` and carry covered scope plus unverified scope in `SCOPE-COVERAGE` and `OPEN-SURFACES`, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
+If the decisive basis remains non-derivable and truthful validation would require inventing it, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier or task state, not the rendered body.
+If only part of the basis is derivable, issue `VERDICT: HOLD` and carry covered scope plus unverified scope in `SCOPE-COVERAGE` and `OPEN-SURFACES`, unless the narrowed subset was frozen or lawfully upstream-deferred by the owning upstream record.
 
 If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 Do not replace decisive runtime, rendered, interaction, environment, or operator-burden evidence with source-only evidence.
@@ -121,8 +121,8 @@ If that broader surface is unavailable, report it in `OPEN-SURFACES` or return `
 For executable user-facing programs, every operator-reachable page, route, and screen state inside the frozen acceptance surface must be inspected through an explicit Evidence-Quality Matrix.
 The matrix enumerates every applicable `CORE-WORKFLOW-CLOSURE` row.
 The matrix traces each row to retained tester evidence.
-Partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows `PASS` only when the subset was frozen or upstream-deferred; otherwise it forces `HOLD`, not PASS.
-The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
+Partial route, viewport, state, or `CORE-WORKFLOW-CLOSURE` coverage narrows `PASS` only when the subset was frozen or lawfully upstream-deferred; otherwise it forces `HOLD`, not PASS.
+The matrix must cover the frozen `SCOPE-BASELINE` or explicitly mark rows as lawfully upstream-deferred; placeholder-only or unimplemented baseline rows block workflow-completion PASS.
 Static screenshot or initial-render evidence cannot satisfy dynamic rows.
 For edit-save-reload, create/import/upsert-disposition, mutation-dependent recompute, displayed-surface inspection/action/navigation, entity or aggregate authority trace, import/export, or workflow-state rows, validator checks the executed user action, retained postcondition evidence, and row-matched closure-defect probe status.
 Workflow-completion, reliability, or user-ready claims also require material hard-test probe status against decisive workflow and data-state families.

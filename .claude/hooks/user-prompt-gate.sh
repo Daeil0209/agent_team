@@ -273,6 +273,17 @@ if [[ -n "$USER_DELETE_APPROVAL_ROOTS" ]]; then
   printf '%s\n' "$USER_DELETE_APPROVAL_ROOTS" > "$USER_APPROVED_DELETE_ROOTS_FILE"
 fi
 
+# Record whether the current real user turn explicitly requested expanded
+# report detail. Pre-emission reporting discipline uses this to preserve the
+# reporting-law exception for exact internal material requested by the user.
+REPORT_DETAIL_REQUEST="$(USER_PROMPT="$USER_PROMPT" node <<'NODE'
+const prompt = String(process.env.USER_PROMPT || "");
+const explicitDetail = /(\bdetails?\b|\bevidence\b|\bfile\s*:\s*line\b|\bfull\s+list\b|\bcomplete\s+list\b|\braw\b|\benumerat(e|ed)\b|\bcit(e|es|ation|ations)\b|\bverbose\b|\beverything\b|\bentire\b|상세|자세히|근거|증거|파일\s*:\s*라인|전체\s*목록|전체|전부|모두|원문|나열|열거|인용)/iu.test(prompt);
+process.stdout.write(explicitDetail ? "explicit-detail-request" : "default-concise");
+NODE
+)"
+update_procedure_state_fields "$PROMPT_SESSION_ID" reportDetailRequest "$REPORT_DETAIL_REQUEST"
+
 # ─── SECTION 1: BOOT MARKER SYNC ────────────────────────────────────────────
 if [[ -s "$SESSION_BOOT_MARKER_FILE" && ! -s "$BOOT_SEQUENCE_COMPLETE_FILE" ]]; then
   BOOT_STARTUP_STATE="$(get_procedure_state_field "startupState" "")"

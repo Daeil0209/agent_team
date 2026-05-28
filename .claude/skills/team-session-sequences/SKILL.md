@@ -44,7 +44,7 @@ Canonical Sequence Activation Discipline lives in `Skill(session-boot)`.
 
 ### Reference Map
 
-After `Skill(team-session-sequences)` is loaded, load trigger-specific references directly.
+After `Skill(team-session-sequences)` is loaded and learned, load trigger-specific references directly.
 - `references/pre-dispatch-verification.md`: consequential dispatch readiness index and risk-tier record map.
 - `references/task-decomposition.md`: split basis, child packet boundary, done condition, and return-form discipline.
 - `references/dispatch-packet-compliance.md`: session-side controlled-value fields and lane-specific presence hints.

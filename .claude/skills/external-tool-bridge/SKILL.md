@@ -29,8 +29,9 @@ Capability recovery investigation produces setup or diagnostic input only.
 ## Purpose
 Load when truthful delivery depends on a bounded external API, connector, client, or external bridge path.
 Use it when no credible ordinary local workflow can replace that path.
+`credible local workflow` means a local-first path can produce the required artifact, evidence, client action, or service result at the frozen claim strength with lower or equal risk than the external bridge.
 Use `Skill(tool-acquisition)` for ordinary local tool discovery, allowed setup, and tool-path verification before external bridge risk exists.
-Canonical examples include routed Codex MCP review recovery after `mcp_unavailable`, `auth_error`, or `quota` fail-open.
+Canonical examples include routed codex CLI background-invocation review recovery after `codex_cli_unavailable`, `auth_error`, or `quota` fail-open.
 Other bounded MCP/API/browser bridge setup also belongs here.
 ## Scope Guardrail
 - Keep only the bounded bridge for the active run.
@@ -50,11 +51,11 @@ Other bounded MCP/API/browser bridge setup also belongs here.
 ## Activation
 Activate when the requested outcome genuinely needs external bridging.
 `genuinely needs external bridging` means no local-first path can produce the required artifact, evidence, client action, or service result at the frozen claim strength.
-Examples: API-backed generation, external-service verification, or non-local client automation with no credible quieter substitute.
+Examples: API-backed generation, external-service verification, or non-local client automation with no quieter local-first substitute that satisfies the `credible local workflow` test above.
 Also activate when `team-lead` routes a bounded agent `hold|blocker` or `scope-pressure`.
 That routed signal must identify a missing evidence surface, required tool/capability, or current-toolchain gap that blocks truthful work.
 Also activate when an external review/tool path records one of these conditions:
-- `mcp_unavailable`
+- `codex_cli_unavailable`
 - `auth_error`
 - `quota`
 - `tool_unavailable`
@@ -94,7 +95,7 @@ Required rules:
 - leave a usable blocked-state record instead of a vague tool complaint
 - Decision-required actions, allowed-setup boundary, and the proceed split live in `references/integration-bridge-detail.md`.
 - Use the smallest path and record fallback/cleanup truth.
-- prefer a quieter or safer local-first path when it becomes credible
+- prefer a quieter or safer local-first path when it satisfies the `credible local workflow` test above
 - if the bridge opens a console, helper process, client session, or proxy, define and verify cleanup after the decisive check
 - Simulation-only evidence leaves executable bridge acceptance claims `UNVERIFIED` (a bridge-local claim status distinct from the validator verdict tokens governed by `.claude/CLAUDE.md` `## 6. Judgment Philosophy`) or blocked.
 ## Role-Scoped Structural Feedback

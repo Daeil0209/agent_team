@@ -102,9 +102,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its governing phase.
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
-**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, and team-lead-verified evidence of the smallest true user-action blocker.
+**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, user-decision-risk decision-support when it can still confirm continuation or prove the user-owned decision basis, and team-lead-verified evidence of the smallest true user-action blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
-**Exit law**: user questions become CP1 open questions or a proven user-action blocker with next owner/action.
+**Exit law**: user questions become CP1 open questions, user-decision-risk decision-support input, or a proven user-action blocker with next owner/action.
 
 ## Phase 1: Plan
 **Purpose**: Produce the canonical feature plan surface.
@@ -113,12 +113,11 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Entry law**: Phase 0 output, if activated, must already be synthesized enough for CP1. Otherwise the request-fit basis must be stable
 **Execution law**: detail per `.claude/skills/dev-workflow/references/phase-surfaces.md` `## Phase 1 Canonical Plan Surface`.
 **Exit law**: CP1 is resolved; CP2 either auto-resolves from the converged plan basis or surfaces only after artifact-level convergence when it consumes the canonical plan artifact.
-**Exit law**: converged canonical plan artifact exists with frozen `SCOPE-BASELINE`; team-lead immediately opens the Phase 2 boundary through `work-planning`, and Phase 2 expands the Phase 1 artifact into scope, risk, architecture, proof, acceptance, and downstream work decisions.
 **Exit law**: unresolved open questions are recorded explicitly.
 **Exit law**: open questions that still change scope, risk posture, or delivery expectations cannot exit Phase 1; they reopen or `HOLD` through CP2.
-**Exit law**: Phase 1 closure records YAGNI scope-review status as `complete` or `not-applicable:<basis>` with no unreviewed scope inflation.
-**Exit law**: Before CP2 is surfaced to the user from the canonical plan artifact, or before Phase 1 exits after CP2 auto-resolution, load and complete `references/artifact-convergence-review.md` only when the canonical plan artifact materially controls next-phase scope, risk, architecture, proof, acceptance, or downstream work; otherwise record `artifact-convergence: not-applicable:<low-risk/no-material-dependency basis>`.
-**Exit law**: The Phase 1 artifact-convergence record is design-coherence level, not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`; field schema lives in `references/artifact-convergence-review.md` Output Record.
+**Exit law**: Phase 1 closes only when the canonical plan artifact, frozen `SCOPE-BASELINE`, YAGNI status, artifact-convergence status, and next owner/action satisfy `references/phase-gates.md` Phase 1 -> Phase 2.
+**Exit law**: Artifact-convergence detail and field schema live in `references/artifact-convergence-review.md`; route-level `CODEX-INDEPENDENT-REVIEW-BASIS` is not a substitute.
+**Exit law**: Once the Phase 1 gate is satisfied, team-lead immediately opens the Phase 2 boundary through `work-planning`.
 
 ## Phase 2: Design
 **Purpose**: Produce bounded architecture options and freeze one selected design direction.
@@ -129,17 +128,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: design artifact is decision-bearing for frozen `SCOPE-BASELINE`.
 **Exit law**: selected architecture is explicit.
 **Exit law**: verification and correction-readiness basis is recorded.
-**Exit law**: Phase 2 closure:
-- closes only when the artifact-convergence-review record for the Phase 2 design artifact or implementation-binding internal detail bundle is complete
-- once satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning`
-**Exit law**: Phase 2 outputs:
-- the internal detail bundle is the CP4 basis
-- the artifact-convergence record:
-  - is design-coherence level
-  - is not wording-review level or route-level `CODEX-INDEPENDENT-REVIEW-BASIS`
-**Exit law**: field schema:
-- lives in `references/artifact-convergence-review.md` Output Record
-- includes internal detail bundle status and material specialist contract status when specialist output shapes implementation, proof, or acceptance
+**Exit law**: Phase 2 closes only when the design artifact or implementation-binding internal detail bundle satisfies `references/phase-gates.md` Phase 2 -> Phase 3 and `references/artifact-convergence-review.md` Output Record.
+**Exit law**: The implementation-binding internal detail bundle is the CP4 basis; internal detail bundle status and material specialist contract status stay in the artifact-convergence record when they shape implementation, proof, or acceptance.
+**Exit law**: Once the Phase 2 gate is satisfied, team-lead immediately opens the Phase 3 boundary through `work-planning`.
 
 ## Phase 3: Implementation
 **Purpose**: Implement the feature inside the resolved design boundary.
@@ -171,7 +162,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Entry law**: CP5 or validator-authored `FINAL-REJECT` correction packet has classified the remaining gap as implementation or operator-delivery.
 **Entry law**: that classification must stay inside the unchanged Phase 1/2 delivery contract.
 **Entry law**: design-level, scope, owner-map, route, proof-chain, or acceptance-chain changes route to Phase 2 or `work-planning` before Phase 5.
-**Execution law**: Phase 5 iteration protocol per `references/gap-iteration.md` `Iteration Protocol Detail`; positive completion waits for re-verification against the CP5 correction contract and frozen acceptance basis.
+**Execution law**: Phase 5 iteration protocol per `references/gap-iteration.md` `Iteration Protocol Detail`; positive completion requires the active owner to run re-verification against the CP5 correction contract and frozen acceptance basis before closure.
 **Exit law**: CP5 gap state routes as follows:
 - cleared CP5-contracted blocking gaps against frozen `SCOPE-BASELINE` with required user-surface evidence open affected review, proof, and validator ingress by the frozen acceptance path
 - in validator-required chains, only a fresh or still-current validator `PASS` after affected review, proof, and validation rerun opens Final Acceptance Review
@@ -182,7 +173,7 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: launch, termination, clean re-launch, access, cleanup, artifact hygiene, or user-environment failure returns to Phase 5, Phase 2, or `work-planning` by root cause.
 
 ## Reference-Owned Workflow Sections
-After `Skill(dev-workflow)` is loaded, load triggered references directly.
+After `Skill(dev-workflow)` is loaded and learned, load triggered references directly.
 - `references/checkpoints.md`: CP1-CP5 trigger, auto-resolve, reopen/HOLD, and iteration reuse rules.
 - `references/phase-surfaces.md`: phase artifact minimums, option counts, implementation-surface, and Phase 4 user-surface proof defaults.
 - `references/phase-gates.md`: phase transition hard gates and cursor consumption law.
@@ -197,7 +188,7 @@ Reference trigger rule:
 - Each reference under `references/` declares its mandatory-load trigger at its top block.
 - Phase advancement requires every reference whose trigger fires.
 - If a mandatory reference cannot load, `HOLD` or reopen the governing path.
-- Advancement requires loaded owner basis.
+- Advancement requires loaded-and-learned owner basis.
 - A missing mandatory convergence record opens the named convergence reference; it does not advance through CP, phase dispatch, reporting-law-admitted user-facing prose, or user review.
 
 ## Resolve Next Owner And Action

@@ -29,6 +29,7 @@ Load when derivation quality, notation clarity, or quantitative correctness mate
   - step-by-step derivation defense is absent
   - notation is ambiguous
   - a critical assumption chain is unverified
+- Operational test for `ambiguous` or `unverified`: the notation, derivation step, or assumption chain cannot be traced to a named definition, transformation rule, stated assumption, or independent check that supports the frozen mathematical claim.
 ## Boundary
 - general pedagogy and visual design stay with the active path
 - correctness stays intact across presentation flow

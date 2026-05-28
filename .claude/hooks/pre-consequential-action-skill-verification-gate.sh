@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 # pre-consequential-action-skill-verification-gate.sh
 #
-# PROTECTED-LOCAL-RESTATEMENT-BASIS: see .claude/reference/modification-core-law.md ## Constitutional Curtain Protection for canonical owner and constitutional-curtain-visibility basis; this hook is the runtime enforcement layer for the essence-discipline patch wave per team-meeting `team-lead-essence-discipline` r2 4/4 critic consent (carrier: claude_doc/governance-audit-2026-05-27/meetings/team-lead-essence-discipline/draft-r2.md).
-# PROTECTED-CURTAIN-SURFACE / DO NOT DISABLE
+# GOVERNANCE-RUNTIME-GUARD-SURFACE / DO NOT DISABLE WITHOUT REVIEW
+# This hook is not an enumerated constitutional curtain protected surface.
 # Disabling, removing, or weakening this hook (script body, hook wiring in
-# settings.json, or registration in MANIFEST.md) requires:
-#   1. Skill(governance-modification) Step 3 review-verification packet
-#   2. Validator pre-approval (CLAIM-CEILING: validator-final-verdict, PASS verdict)
-#   3. User notification with constitutional invariant + forensic erosion cycle disclosure
-#   4. User acknowledgment or absence of objection in the same turn segment
+# settings.json, or registration in MANIFEST.md) requires Skill(governance-modification)
+# mutation readiness, current review-verification basis, and self-verification
+# convergence. Constitutional curtain gates apply only if the change also mutates
+# an enumerated protected curtain surface in .claude/reference/modification-core-law.md.
 # Approval basis for installation: team-meeting team-lead-essence-discipline r2 4/4 critic CONSENT
 # (developer T14+T18 / researcher T15+T19 / reviewer-shard-a T16 / reviewer-shard-b T17) +
 # operator directive "ANTI-PASSIVE-WAIT 즉시 실행" + "patches must be generalized"
@@ -36,23 +35,23 @@
 #     proposal without independent essence-evidence (covered by Essence-
 #     Evidence Law in work-execution-core-law; hook enforces presence at
 #     emission moment).
-#   - RC-D Role-separation gap (partial): team-lead self-executes work that
+#   - RC-D Role-separation gap (advisory): team-lead self-executes work that
 #     belongs to a frozen independent owner (F-S2 premature-dispatch +
-#     F-S3 self-test patterns); hook enforces DISPATCH-AUTHORIZATION-BASIS
-#     presence on assignment-grade SendMessage.
+#     F-S3 self-test patterns); assignment packet-quality evidence now lives in
+#     governed carriers/task state under one-line rendered-envelope transport,
+#     so this hook keeps no active assignment-body detector.
 #
 # Scope (narrow, deterministic)
 #   - Only fires on PreToolUse with tool_name in the consequential-action set.
 #   - Consequential-action set: Edit / MultiEdit / Write on .claude/* (governance
-#     mutation); SendMessage with MESSAGE-CLASS: assignment / reuse / reroute
-#     (assignment-grade lane dispatch); Bash invocation matching test/proof/
+#     mutation); Bash invocation matching test/proof/
 #     validation execution pattern when not in carve-out (architectural enablement
-#     detection per Pattern A negative-scope boundary).
+#     detection per concurrent-patterns.md Team-Lead Variant negative-scope boundary).
 #   - Empty / single-space message body passes through unaffected.
 #   - Non-consequential tools (Read / Grep / Glob / WebSearch / WebFetch / TaskList
 #     / TaskGet / TaskOutput / etc.) pass through.
-#   - Pattern A codex CLI carve-out: Bash containing `codex` subcommand passes
-#     through (lead-internal aid per concurrent-patterns.md Pattern A).
+#   - Codex CLI carve-out: Bash containing `codex` subcommand passes
+#     through (lead-internal aid per concurrent-patterns.md Codex CLI Background Usage).
 #   - Read-equivalent Bash carve-out: Bash containing only ls / grep / cat / find
 #     / stat / wc / head / tail / sed -n (read-only) without execution-side-effect
 #     passes through.
@@ -67,19 +66,26 @@
 #     - Block-on-missing per anti-fabrication rule (carrier-prose claim of
 #       "Skill loaded" without same-session tool-call invocation fails).
 #
-#   For assignment-grade SendMessage (MESSAGE-CLASS: assignment / reuse / reroute):
-#     - DISPATCH-AUTHORIZATION-BASIS field present in message body.
-#     - Block-on-missing per assignment-packet.md DISPATCH-AUTHORIZATION-BASIS
-#       rule (missing/unverifiable/non-traceable routes to packet-correction).
+#   For assignment-grade SendMessage:
+#     - Rendered envelope transport carries only a no-detail summary token plus
+#       one carrier/task-state pointer line.
+#     - DISPATCH-AUTHORIZATION-BASIS and packet-quality fields live in the
+#       governed assignment packet, task state, or retained carrier.
+#     - Missing/unverifiable/non-traceable basis routes through task-execution
+#       packet preflight, receiving-owner packet correction, and
+#       review/self-verification path, not this rendered-envelope hook.
 #
 #   For Bash test/proof/validation pattern (architectural enablement detection):
 #     - Detect command-name match: pytest / jest / playwright / vitest /
 #       cypress / mocha / curl-non-readonly / wget / nodemon / npm-test /
 #       pnpm-test / yarn-test / go-test / cargo-test / rspec / phpunit.
 #     - Apply carve-out (codex / read-equivalent / --version / --help).
-#     - On match without carve-out: block with routing recommendation
-#       (route to tester / validator lane per §6 Judgment Philosophy +
-#       Pattern A negative-scope boundary).
+#     - On match without carve-out: ADVISORY-ONLY (no deny emit; routing
+#       recommendation surfaced via comment block) pending actor-discrimination
+#       integration per Branch 3 documentation at lines 158-180; structural-
+#       detection scaffold preserved (route to tester / validator lane per
+#       §6 Judgment Philosophy + concurrent-patterns.md Team-Lead Variant
+#       negative-scope boundary when integration completes).
 #
 # Failure mode
 #   Fail-open on any hook-internal error (malformed JSON, bash exception).
@@ -126,33 +132,23 @@ fi
 # - Skill(governance-modification) discipline + carrier-citation rule per
 #   .claude/reference/work-skill-reference-binding-law.md ## Skill Rules
 # - identity-layer team-lead Operating Philosophy commitment
-# This branch will activate as blocking once skill-evidence state file
-# integration is added (separate follow-on patch).
+# This branch remains advisory-only. Blocking activation requires a separate
+# approved governance patch that adds skill-evidence state-file integration and
+# proves it cannot false-positive self-block legitimate governance mutation.
 # ============================================================================
 # (intentionally advisory-only; no deny emit)
 
 # ============================================================================
-# Branch 2: Assignment-grade SendMessage — MESSAGE-CLASS: assignment/reuse/reroute
-# Check: DISPATCH-AUTHORIZATION-BASIS field present
+# Branch 2: Assignment-grade SendMessage packet-quality
+# Check: intentionally no runtime body inspection under one-line rendered-envelope transport.
+# STATUS: ADVISORY-ONLY. Hook-Last reserves active deny for destructive,
+# security-critical, or session-stability-breaking dangers. Packet-field
+# absence is recoverable procedure quality, so this hook must not deny it.
 # ============================================================================
 if [ "$TOOL_NAME" = "SendMessage" ]; then
-  # Detect assignment-grade MESSAGE-CLASS
-  ASSIGNMENT_HEADER_RE='"message"[[:space:]]*:[[:space:]]*"MESSAGE-CLASS:[[:space:]]*(assignment|reuse|reroute)'
-  if printf '%s' "$INPUT_JSON" | grep -qE "$ASSIGNMENT_HEADER_RE"; then
-    # Check for DISPATCH-AUTHORIZATION-BASIS presence
-    if ! printf '%s' "$INPUT_JSON" | grep -qE 'DISPATCH-AUTHORIZATION-BASIS:'; then
-      cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Essence-discipline violation: assignment-grade SendMessage (MESSAGE-CLASS: assignment/reuse/reroute) without DISPATCH-AUTHORIZATION-BASIS field in packet body. Per .claude/skills/task-execution/references/assignment-packet.md '## Downward Assignment Base Packet' DISPATCH-AUTHORIZATION-BASIS rule, every assignment-grade packet MUST name the active owner's decision authority (recognized open-set bases: frozen-independent-lane:<lane>, proven-user-owned-blocker:<named-constraint>, team-meeting-outcome:<meeting-id>, or other recorded owner-authorized basis). Recover by adding DISPATCH-AUTHORIZATION-BASIS line to message body before send. This gate enforces F-S2 premature-dispatch pattern closure per team-meeting team-lead-essence-discipline r2."
-  }
-}
-EOF
-      exit 0
-    fi
-  fi
+  # No stdout: task-execution preflight and the receiving owner inspect the
+  # governed packet carrier/task state for DISPATCH-AUTHORIZATION-BASIS.
+  :
 fi
 
 # ============================================================================
@@ -169,9 +165,9 @@ fi
 # identity or session role), this branch is advisory-only to preserve
 # positive function while keeping the structural-detection scaffold.
 # Active essence-discipline enforcement on RC-D/RC-I role-separation
-# remains via Branch 2 (DISPATCH-AUTHORIZATION-BASIS gate on assignment-
-# grade SendMessage) + concurrent-patterns.md Pattern A Team-Lead Variant
-# negative-scope boundary discipline.
+# remains via task-execution packet preflight, receiving-owner packet
+# correction, and concurrent-patterns.md Team-Lead Variant negative-scope
+# boundary discipline.
 # Coverage gap (per codex Point 3): `npm run test` and similar wrapper
 # invocations not in original pattern set; if branch is later promoted
 # from advisory to active, expand patterns to include `(npm|pnpm|yarn)

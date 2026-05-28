@@ -38,6 +38,7 @@ It keeps governance burden proportional to product-pattern proof.
 - define the pattern-level proof oracle so review, test, and validation do not infer completion from the implemented subset
 - reject patterns that fit the source example but not the destination user, scale, constraints, or domain
 - Report `hold|blocker` when credible tool family, operator surface, or pattern-level proof oracle is unavailable from evidence.
+- Operational test for `not credible`: the tool family, operator surface, or proof oracle cannot be named from request evidence, benchmark basis, or workflow contract in a way that downstream review/test can verify against the frozen scope.
 ## Activation
 Activate when the frozen scope materially includes any of:
 - practical personal or team internal software tool

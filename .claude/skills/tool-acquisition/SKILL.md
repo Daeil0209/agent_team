@@ -45,7 +45,7 @@ Before discovery or setup, carry the minimum packet:
 - `TOOL-DISCOVERY-BOUNDARY`
 - `TOOL-VERIFICATION-STANDARD`
 - `TOOL-CLEANUP-EXPECTATION`
-- setup safety classification: `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`
+- setup safety classification: `allowed-setup`, `approval-required`, or `blocked`
 - expected return owner/action
 
 ## Procedure
@@ -61,9 +61,9 @@ Before discovery or setup, carry the minimum packet:
    - non-paid
    - no persistent service
    - no security-setting change
-   - project-local or user-local when no manual filesystem-restoration step is needed for cleanup and no persistent state lives outside the bounded work surface
-   - reversible when removal preserves no manual filesystem-restoration debt and no persistent state outside the bounded work surface
-6. Route `approval-required` setup to explicit approval or `HOLD`; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
+   - project-local or user-local; persistent state outside the bounded work surface is allowed only for standard local prerequisites named by `.claude/skills/work-planning/references/execution-readiness.md`, with cleanup expectation or residual-cache disclosure recorded
+   - reversible where practical; when standard local prerequisite caches remain after lawful setup, record the residual/cache expectation instead of treating the cache itself as setup damage
+6. Route `approval-required` setup to the named owner; open user-decision-risk decision support before explicit approval or `HOLD` only when no §1-§8-compliant reversible setup path is derivable; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
 7. Verify the selected tool with the smallest decisive real-tool proof that satisfies `TOOL-VERIFICATION-STANDARD`.
 8. Use the verified tool path for the blocked work when the same owner path remains valid; otherwise return a corrected executable path to the blocked owner or lane.
 9. If verification fails, try only a credible fallback inside the same boundary; otherwise return `hold|blocker` with evidence and the smallest unblock path.
@@ -71,7 +71,7 @@ Before discovery or setup, carry the minimum packet:
 
 ## Outputs
 Return only the decisive acquisition packet:
-- tool status: `verified`, `fallback-used`, `blocked`, or `not-needed`
+- tool status: `verified`, `fallback-used`, `approval-required`, `blocked`, or `not-needed`
 - selected tool or program path
 - setup action and safety classification
 - verification evidence
@@ -84,6 +84,6 @@ Tool acquisition status is not proof, validation, final acceptance, or completio
 - `verified` opens the blocked owner or lane's next executable action.
 - `fallback-used` opens the blocked owner or lane's next executable action with fallback basis.
 - `not-needed` returns to the active owner path with the existing truthful tool basis.
-- `approval-required` opens explicit approval or `HOLD`.
+- `approval-required` opens the named owner; user-decision-risk setup choices open decision support before explicit approval only when no §1-§8-compliant reversible setup path is derivable; damage-capable, security, credential, paid, or persistent-service setup opens explicit approval; proven blocked setup opens `HOLD`.
 - External bridge risk opens `Skill(external-tool-bridge)`.
 - `blocked` opens `hold|blocker` with owner, blocker, evidence, and next safe unblock action.

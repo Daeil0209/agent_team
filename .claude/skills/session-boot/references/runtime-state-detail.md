@@ -99,7 +99,7 @@ Canonical rule:
 
 ## Supervisor Decisions On Turn-Ended Signals
 After completion-grade output, governing control records `STANDBY`.
-If immediate work exists, send `assignment`, `reuse`, or `reroute` as new bounded work.
+If immediate work exists, send `assignment`, `reuse`, or `reroute` as new bounded work; choose `reuse` only when `## Reuse Rule` owner/context fit remains truthful.
 If no immediate work exists, send nothing.
 Shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence.
 Validation waiting keeps the teammate in `STANDBY` while the validation route resolves.
@@ -244,7 +244,7 @@ Downstream-phase prep examples include tester scenario design plus test-infrastr
 
 Rules:
 - Phase boundaries gate execution, not prep.
-- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the release gate from `.claude/skills/task-execution/references/completion-handoff.md` (validation chain ACCEPT, proven out-of-plan, or closeout).
+- Agents without a defined upcoming role MUST be released through structured `shutdown_request` when their state is reconstructable from preserved artifacts AND the surface they produced has reached the release gate from `.claude/skills/task-execution/references/completion-handoff.md` (validator `PASS`, workflow `FINAL-ACCEPT`, user-accepted or originally frozen out-of-scope exclusion, or closeout-owned path).
 - Producer-lane agents on a surface still inside the active validation chain (review -> test -> validate) remain `STANDBY` while validation routing resolves.
 - Preserving an agent just in case without explicit reuse basis is a `team-runtime hygiene defect`.
 - Failing to dispatch independent downstream prep that can run in parallel now is a `bottleneck defect`.

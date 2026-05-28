@@ -37,7 +37,7 @@ Cached facts:
 - Teammates are full independent Claude Code sessions and can be messaged or redirected.
 - Teammates load project context and assignment prompt, but not the lead's conversation history.
 - Agent teams support shared task lists; tasks can be assigned by lead or claimed by teammates, and task dependencies can block claiming until prerequisites complete.
-- Complex or risky teammate work can require plan approval before implementation; the lead approves or rejects the plan.
+- Complex or risky teammate work can require internal plan approval before implementation; the lead approves or rejects the plan, and this is not operator approval unless a separate protected, destructive, security-sensitive, or operator-policy-choice gate independently applies.
 - Strong team-use cases are parallel research/review, new independent modules or features, competing-hypothesis debugging, and cross-layer coordination.
 - Poor team-use cases include sequential work, same-file edits, and dependency-heavy tasks where coordination overhead exceeds parallel value.
 - Agent teams add coordination overhead and context use; each teammate has its own context window, and token use scales with teammate count.

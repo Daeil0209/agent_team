@@ -65,7 +65,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - Configured-lane ownership opens the configured lane owner.
 - Lead-only packet basis opens packet correction.
 - The consuming owner must leave one next executable owner/action.
-- If no next owner/action is lawful, report `HOLD`.
+- If no next owner/action is lawful, record `HOLD`; render it to the user only when reporting law admits a user-action blocker or requested status surface.
 - The `HOLD` names:
   - owner
   - blocker

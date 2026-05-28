@@ -23,7 +23,7 @@ Dispatch readiness coverage that must be preserved by those owners:
 3. **Agent-Charter Fit** - the selected lane or agent is the best charter match for the work surface.
 4. **Scope Appropriateness** - scope is neither unfocused nor missing needed context, and the boundary is explicit.
 5. **Prior-Analysis Transfer** - settled upstream facts, findings, and reasoning needed by the receiver travel in packet fields, task/workflow state, or cited artifacts.
-6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, deferred with owner, or blocked.
+6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, lawfully owner-deferred with cited basis, or blocked with owner and next safe evidence step.
 7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless `HOLD`.
 
 Risk-tier record rule (risk-tier maps 1-to-1 to governance-depth tier per `.claude/skills/work-planning/references/governance-depth.md`: low-risk = Lightweight, medium-risk = Standard, high-risk = Precision):

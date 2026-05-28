@@ -50,11 +50,15 @@ That task-state mutation is internal runtime closure; it is not user reporting a
 
 Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, and `LANE-LOCAL-RESULT-VERIFICATION`.
 Carrier assertions of verification or PASS-grade evidence in completion handoffs follow the anti-fabrication tool-call-evidence rule at `.claude/skills/self-verification/SKILL.md` `## Step 1` + `## Step 3` and the packet-citation rule at `.claude/skills/review-verification/SKILL.md` `### 14. Next-Owner Routing`.
+Team-lead classifies carrier-asserted `PASS-1`, `PASS-2`, `CONVERGENCE-PASS`, `Skill(...) loaded`, `REVIEW-PACKET-CITATION`, or packet-consumption claims without the required actual evidence as `carrier-as-evidence-fabrication`.
+Team-lead rejects completion-grade transport when `carrier-as-evidence-fabrication` is present.
+Team-lead marks the assigned task non-converged when `carrier-as-evidence-fabrication` is present.
+Team-lead routes distinct bounded correction to the producing lane with `INPUT-FINDINGS` naming the carrier defect.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
 Team-lead `Skill(self-verification)` convergence remains separate from lane completion.
-Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for convergence on the synthesized work-product surface set and outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
+Team-lead synthesizes only completion-grade lane outputs, then loads and learns `Skill(self-verification)` for convergence on the synthesized work-product surface set and outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
 For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
 Plain-text agent output is production evidence only until carried through that channel.
@@ -141,7 +145,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 
 ## Common Lane Completion Law
 - Every agent completion is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
-- Every agent completion goes to `team-lead` through `SendMessage` with `MESSAGE-CLASS: completion`.
+- Every agent completion goes to `team-lead` through completion-class `SendMessage` transport; rendered envelope stays no-detail and completion fields live in the retained carrier.
 - Every agent completion also provides the retained carrier containing the common completion spine.
 - Completion is not valid when either the retained carrier or the `SendMessage` completion state signal is missing.
 - The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
@@ -155,7 +159,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - `LANE-NEXT-CANDIDATE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or `HOLD` without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.
 - Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain routes to `scope-pressure` or `hold|blocker`.
-- Pending required procedure state routes to `MESSAGE-CLASS: hold|blocker`.
+- Pending required procedure state routes to hold|blocker-class transport with blocker fields in the governed carrier or task state.
 
 ## Resolve Next Owner And Action
 - Converged completion-grade output opens team-lead synthesis.

@@ -21,7 +21,7 @@ Shutdown requests, phase-transition packets, and status probes are not assignmen
 Runtime shape terms:
 - standalone `Agent` semantics owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` and `## Team-Agent-Only Lane Dispatch`.
 - `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
-- Assignment-grade work begins only after `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` reaches that exact live member address.
+- Assignment-grade work begins only after assignment-class `SendMessage` (`assignment`, `reuse`, or `reroute`) reaches that exact live member address with a governed carrier/task-state pointer to the complete assignment packet.
 - Task-row identity and assignment delivery follow `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
 - `team member address` is the exact live process-backed roster name. A configured role label is not an assignment-delivery address unless the roster contains that exact member with live pane proof.
 - `teammate context` is independent. A teammate loads project context such as `CLAUDE.md`, configured MCP servers, and available skills, and receives the lead's spawn/assignment prompt; assignment packets must therefore be self-contained enough for the receiving lane to act without reconstructing prior chat.
@@ -66,8 +66,8 @@ It must require `dispatch-ack`, `scope-pressure`, or `hold|blocker` as the first
 It must define `dispatch-ack` as no-objection assignment acceptance and work-start trigger.
 It must require `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when truthful start is blocked.
 It must require converged lane work to write the retained completion carrier required by `.claude/skills/task-execution/references/completion-handoff.md`.
-It must require converged lane work to send `MESSAGE-CLASS: completion` to `team-lead` through `SendMessage`.
-It must require retained carrier plus `MESSAGE-CLASS: completion` handoff instead of disk output, pane/final prose, `status`, or `TaskUpdate` substitutes.
+It must require converged lane work to send completion-class transport to `team-lead` through `SendMessage` while completion fields live in the governed retained carrier.
+It must require retained carrier plus completion-class transport handoff instead of disk output, pane/final prose, `status`, or `TaskUpdate` substitutes.
 When the assignment requests returned facts, counts, findings, state labels, recommendations, or verdict inputs, the contract must require `VERIFIED-DATA-FEEDBACK` in the retained carrier; unverified returned data is not completion-grade feedback.
 
 ### Tester Executable-Proof Schema Floor
@@ -91,7 +91,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - tool-envelope field placement rule is owned by `message-classes.md` `## Canonical Channel Registry`; preflight verifies that planned `TaskCreate` and `SendMessage` envelope shapes satisfy the canonical placement rule before send
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
 - for parallel `Agent` batches, every planned spawn prompt passes the screen-safety clause before any `Agent` call is sent; one failing prompt blocks the whole batch until corrected
-- assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, move detail to task state or retained carriers and keep the packet's required floor plus carrier pointer
+- assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; planned `summary` and `message` must pass the canonical assignment-carrier-pointer envelope in `message-classes.md`; the packet's required floor stays in task state or retained carriers
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `RECEIPT-COMPLETION-CONTRACT`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
 - `REQUIRED-SKILLS` skill-field validity: reject role names, receiving agent-specific skill names, lane-mismatched entries, contradictory entries, non-fitting entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send
 - `SKILL-RECOMMENDATIONS` skill-field validity: reject role names, receiving agent-specific skill names, contradictory entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send; ordinary non-fitting recommendations remain receiver-classified as `not-material:<basis>`
@@ -101,8 +101,11 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - missing `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
 - contradictory `RECEIPT-COMPLETION-CONTRACT` sends zero assignment-grade `SendMessage` calls and opens `packet-correction`
 - a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `completion` without retained carrier, permits `completion` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
-- packet field vs loaded skill law conflict: any packet field value that contradicts a binding rule from loaded skill / role-body / trigger-bound reference per `.claude/reference/work-skill-reference-binding-law.md` precedence stack is a packet defect; send zero assignment-grade `SendMessage` calls and open `packet-correction`
+- packet field vs loaded-and-learned skill law conflict: any packet field value that contradicts a binding rule from loaded-and-learned skill / role-body / trigger-bound reference per `.claude/reference/work-skill-reference-binding-law.md` precedence stack is a packet defect; send zero assignment-grade `SendMessage` calls and open `packet-correction`
 - when task tracking is active, consume `message-classes.md` `### Assignment Delivery Contract` for `TASK-ID`, task-row non-owner, and completion-closure rules
+- planned `TaskUpdate` for assignment owner, assignee, claimed, or in-progress marking before completion transport sends zero dependent calls and opens dispatch-move correction
+- assignment carriers that carry `TASK-ID` before active-team task identity verification or violate that contract's task-tracking carrier-integrity rule send zero assignment-grade `SendMessage` calls and open same-owner carrier finalization correction
+- task ids from a pre-team, lead-local, previous-namespace, guessed, or not-returned task list send zero assignment-grade `SendMessage` calls and open same-owner carrier finalization correction when active-team task creation is still available, otherwise `route-replan`
 - invalid or unverified `TASK-ID` sends zero assignment-grade `SendMessage` calls and opens `packet-correction` when the active task exists, otherwise `route-replan`
 - analysis, validation, or defect-audit `CLAIM-CEILING`: the packet states one wording ceiling from the allowed-values enumeration above in this reference's schema list; otherwise preflight keeps the packet evidence-only
 - completed-task correction/follow-up uses an open executable task whose `TaskCreate` result has returned before dependent dispatch or task mutation
@@ -163,6 +166,8 @@ Required shape for every dispatch field (assignment, validator, reviewer, tester
 - numbered lists, bullets, and nested detail are continuation content only
 - continuation content is NOT what the parser keys against
 
+Rendered assignment delivery envelope shape is owned by `message-classes.md` `### Transport Payload`; this section only defines the packet fields that live inside the governed carrier or task state.
+
 | Wrong | Right |
 |---|---|
 | `EXPECTATION-SOURCES (consolidated frozen criteria - read in this order):` | `EXPECTATION-SOURCES: Consolidated frozen criteria, read in order. (1) ...` |
@@ -189,6 +194,7 @@ Packet skill fields separate required skills from methodology recommendations.
 - The receiver validates every skill-field entry before loading; invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed entries are blocked packet facts, not optional instructions.
 - A lane that receives a blocked required-skill entry returns `scope-pressure` or `hold|blocker` before lane work and reports the invalid entry as blocked packet truth.
 - For lane dispatch, `review-verification` is carried by `REVIEW-VERIFICATION-LENSES` when bounded named lenses are authorized; binding promotion or patch-selection authority routes to the full-workflow owner. Bare `REQUIRED-SKILLS: [review-verification]` is a packet defect.
+- Taxonomy, finding-state ladder, or expectation-source use of review-verification material is carried as `EXPECTATION-SOURCES`, `GOVERNING-BASIS`, or an equivalent reference field, not as bare `REQUIRED-SKILLS`.
 ## Session Cross-Continuity Packet Check
 Before assignment-grade dispatch for independent or parallel work, packet construction must apply prior same-session patches, confirmed corrections, recurrence barriers, decisions, contract freezes, lane-charter changes, sibling outputs, and acceptance-contract changes that affect packet fields, owner boundaries, proof burden, or acceptance truth.
 

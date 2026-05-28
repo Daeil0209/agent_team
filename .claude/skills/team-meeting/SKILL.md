@@ -1,6 +1,6 @@
 ---
 name: team-meeting
-description: Run a critical marathon meeting for an operator-provided agenda. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and operator acceptance.
+description: Run a critical marathon meeting for an operator-provided agenda or user-decision-risk decision-support need. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and either internal execution direction or proven operator decision need.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -9,8 +9,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 Run a critical marathon meeting for the operator's agenda.
 Turn the agenda into a fully consensus-converged solution through drafter writing and critic opinion.
 Keep procedures on `task-execution`, `Skill(governance-modification)`, or other named procedure paths throughout the meeting.
-Require unanimous participant consent for every solution item before the operator gate.
-End the meeting after full consent and operator acceptance.
+Require unanimous participant consent for every solution item before the direction gate or operator path.
+End the meeting after full consent and either internal execution direction or required operator acceptance.
 Drafter treats dissent as solution material.
 Drafter converts every material objection before `HOLD`.
 Drafter converts objections through a revised solution item, evidence-backed persuasive rationale, or bounded operator-choice tradeoff.
@@ -24,34 +24,37 @@ Drafter integrates useful opinions.
 Drafter states the final recommendation.
 Critics read the draft from a critical stance.
 Critics provide improvement opinions.
-The meeting keeps the fixed drafter and at least one critic.
-Total agent participants (drafter + critics) is capped at MAX 5 agents per meeting. The fixed drafter (`team-lead`) plus at most 4 critic agents. The cap preserves real-time discussion latency (each turn round-trip parallelizes across critics; >4 critics degrades convergence quality per cross-critic awareness cost) and respects `ACTIVE-CONCURRENT-AGENT-CAP` runtime burden. Operator may name fewer critics; operator may not exceed 4 critics for a single meeting.
-Operator specifies which agents fill the critic roles at meeting opening.
+The meeting keeps the fixed drafter and at least two critics for decision-support use.
+Total agent participants (drafter + critics) is capped at MAX 5 agents per meeting. The fixed drafter (`team-lead`) plus at most 4 critic agents. The cap preserves real-time discussion latency (each turn round-trip parallelizes across critics; >4 critics degrades convergence quality per cross-critic awareness cost) and respects `ACTIVE-CONCURRENT-AGENT-CAP` runtime burden. Operator may name fewer than 4 critics; operator may not exceed 4 critics for a single meeting.
+When requested or useful critic coverage exceeds `ACTIVE-CONCURRENT-AGENT-CAP`, drafter keeps the highest-material lens coverage in the active critic set and routes remaining critique through sub-batching, serial phasing, or `HOLD` only when no truthful internal continuation remains.
+When the operator does not name critics, drafter selects critics by material lens coverage and current runtime fit without asking the operator to staff the meeting.
+When the operator names fewer than two critics for a user-decision-risk decision-support meeting, drafter fills the remaining critic slot by material lens coverage unless runtime fit is unavailable.
 
-All participants use `Skill(review-verification)` as a bounded critical lens.
-Participants use the lens to find defects, risks, missing evidence, boundary problems, and better alternatives.
-Treat lens coverage as bounded critique coverage.
+Participants use named `review-verification` lens labels as bounded critique criteria during meeting discussion.
+Participants use those lens labels to find defects, risks, missing evidence, boundary problems, and better alternatives.
+Treat lens coverage as bounded critique coverage, not standalone `Skill(review-verification)` activation or packet output.
 Keep final acceptance, mutation rules, and full-workflow checks on their named procedure paths.
 The lens operates as free-form critical thinking during the meeting.
 Use the standalone `Skill(review-verification)` workflow for formal `review_verification_packet`, verdict table, and review record outputs.
 Default lenses: `design-intent-lens`, `coherence-integrity-lens`, `owner-boundary-lens`.
 Use `patch-worthiness-lens` when the agenda is a governance-patch solution.
-All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluation standard for drafts, opinions, revisions, consent, and operator-gate readiness.
+All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluation standard for drafts, opinions, revisions, consent, and direction-gate or operator-path readiness.
 
 ## 3. Meeting Procedure
 
 ### 3-1. Activation
 Activate when the operator explicitly asks for a meeting.
 Activate when the operator's agenda needs critical improvement from more than one perspective.
-Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate triggers mandatory consumption (hard design decisions — operator-policy-choice surfaces, constitutional-protected surface mutation, or trade-off-bearing patch design — when convergence-tractable form applies per that rule).
-Skipping team-meeting to escalate trade-off choice directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
+Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` user-decision-risk decision-support trigger fires: the active owner would otherwise ask the user for decision, direction, approval, or instruction and convergence-tractable internal critique can still confirm a §1-§8-compliant continuation or prove the user-owned decision basis.
+Skipping team-meeting to escalate a user-decision-risk trade-off directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
 Use the clear single-owner action when it already solves the request.
-Activate when an active owner detects a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (multiple defensible options with material variance in upper-philosophy compliance / user-stated-goal coverage / user burden / trade-off shape / built-in safety, after proven-user-owned-blocker pre-test fails); choice-situation activation is unconditionally mandatory per that rule.
+Do not activate merely because multiple implementation options exist; when doctrine and evidence identify one §1-§8-compliant reversible path, the active owner chooses it and proceeds.
 
 ### 3-2. Agenda
 Drafter freezes the operator's agenda as `MEETING-AGENDA`.
 Drafter records the desired result as `TARGET-OUTCOME`.
-Drafter asks for clarification when the agenda or desired result is materially ambiguous.
+Drafter resolves agenda ambiguity through operator standing directives, cited procedure, maximal-coverage reading, and evidence-backed reversible defaults before clarification or `HOLD`.
+Clarification or `HOLD` opens only when no internally executable meeting draft can truthfully preserve `MEETING-AGENDA` and `TARGET-OUTCOME` and a proven user-owned blocker remains.
 Operator agenda change re-freezes `MEETING-AGENDA`.
 A re-frozen agenda restarts the procedure from Section 3-3.
 
@@ -68,7 +71,7 @@ NEXT ACTION:
 ```
 The draft is concrete enough that the next owner can act.
 
-After publication, drafter broadcasts a SINGLE-PUBLICATION-NOTIFICATION `SendMessage` to every critic in parallel using the canonical Draft-Publication envelope shape per Section 3-4a (a): `summary` = brief class label (e.g., `draft-publication r0`), `message` body = CARRIER pointer + STATE label (≤3 lines, no inline substantive content). This single broadcast establishes the shared discussion baseline. ALL subsequent meeting communication uses Section 3-4 Synchronized Discussion turn-form, NOT additional carrier files per turn.
+After publication, drafter broadcasts a SINGLE-PUBLICATION-NOTIFICATION `SendMessage` to every critic in parallel using the canonical Draft-Publication envelope shape per Section 3-4a (a): `summary` = brief class label (e.g., `draft-publication r0`), `message` body = exactly one CARRIER pointer line and no inline substantive content. This single broadcast establishes the shared discussion baseline. ALL subsequent meeting communication uses Section 3-4 Synchronized Discussion turn-form, NOT additional carrier files per turn.
 
 Drafter maintains a cumulative enumeration of every operator directive issued during the meeting (initial agenda + every operator pre-critic intervention + every operator post-critic-response intervention) and every accepted discussion outcome; this enumeration appears in each revised draft carrier as an `OPERATOR-DIRECTIVE COMPLIANCE CHECK` (or equivalent name) section that traces each prior input to its reflection in the current draft.
 
@@ -79,7 +82,7 @@ After Draft Publication, participants engage in real-time turn-by-turn discussio
 
 Substance transport architecture:
 - All discussion substance (questions, answers, claims, counter-claims, evidence pointers, agreement signals, tradeoff options) lives in a SHARED retained carrier file — typically a running discussion log (`discussion-log.md`) co-located with the draft carrier — appended in short turn-by-turn entries.
-- Every meeting `SendMessage` (drafter or critic) uses canonical carrier-pointer envelope per Section 3-4a: `summary` = brief turn label; `message` body = `CARRIER: <log-path>` + `TURN: <turn-id>` + brief `STATE` label, ≤3 lines, NO substantive content inline. The SendMessage IS a notification that a new turn was appended to the log, NOT the turn content itself.
+- Every meeting `SendMessage` (drafter or critic) uses canonical carrier-pointer envelope per Section 3-4a: `summary` = brief turn label; `message` body = exactly one `CARRIER: <log-path>#<turn-id>` pointer line, NO substantive content inline. Round, turn, and state indexing lives in the summary token, pointer fragment, or retained carrier. The SendMessage IS a notification that a new turn was appended to the log, NOT the turn content itself.
 - Receiving participant reads the LOG (not the envelope body) for substance; the envelope is a wake/index signal only.
 
 Turn append pattern (real-time short turns via carrier append, NOT body content):
@@ -109,18 +112,18 @@ Persuasion target options for unresolved objections:
 
 When consent converges on an item, drafter updates the SHARED draft carrier (Section 3-3 update-notification path) and the meeting proceeds to the next unresolved item OR Section 3-5 audit.
 
-Carrier-file batch correspondence (writing long carrier file per turn, sending carrier pointer per discussion turn, producing 100+ line critique carriers per round) is the PROHIBITED anti-form: it converts real discussion into assignment-aggregation, the same defect that drove this Skill's redesign. Detected carrier-file batch turn (multi-line substantive carrier per turn, or any turn body exceeding ≤3 lines with substantive content) routes the turn to redo in short-message form.
+Carrier-file batch correspondence (writing long carrier file per turn, sending carrier pointer per discussion turn, producing 100+ line critique carriers per round) is the PROHIBITED anti-form: it converts real discussion into assignment-aggregation, the same defect that drove this Skill's redesign. Detected carrier-file batch turn (bulk substantive carrier per turn, or any rendered `SendMessage` body exceeding one non-empty line or carrying substantive content) routes the turn to redo in short-message form.
 
 Critic discussion turns may run in parallel when team-agent runtime is active with `ACTIVE-CONCURRENT-AGENT-CAP` at or above critic count and the live process-backed roster includes all critic lanes. Apply serial waiting when a critic's turn depends on another critic's evidence. Forced single-lane execution despite available parallel runtime fit — "serial convenience" — is a bottleneck defect.
 
 Drafter revises the SHARED draft carrier when consent converges on an item, not on every turn. Each revision MUST verify cumulative input integration: every prior operator directive and every accepted discussion outcome remains reflected in the revised carrier per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` cumulative-input mandate.
 
-Operator may set a round limit at meeting opening. Marathon default continues until full consent on every item or until default cap is reached. Default round cap is five rounds; drafter declares `HOLD` with documented objection-persistence basis when full consent is not reached within the cap, and operator may extend the cap explicitly. Per-item iteration closes after every critic clears material objections on that item.
+Operator may set a round limit at meeting opening. Marathon default continues until full consent on every item or until default cap is reached. Default round cap is five rounds; when full consent is not reached within the cap, drafter first applies the fallback chain in Section 3-6 before any operator path. Per-item iteration closes after every critic clears material objections on that item.
 
 ### 3-4a. Discussion Envelope Form (CARRIER-POINTER ONLY for all meeting SendMessage)
 Every meeting-internal `SendMessage` (drafter draft publication, drafter discussion-turn wake notification, critic discussion-turn wake notification, peer critic dialogue wake notification, `critique-request` / `critique-response` / `discussion-entry` / `verdict` / any other meeting class) MUST use the SAME canonical carrier-pointer envelope shape per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` non-state-class rule:
 - `summary` parameter carries a canonical no-detail signal: brief class label plus round/turn pointer (e.g., `draft-publication r0`, `draft-update r3`, `discussion-turn r1 wake-to-developer`, `r1-turn-append critic-A`).
-- `message` body carries CARRIER pointer + minimum index label only — 1-3 lines naming the retained carrier path plus a brief TURN-ID / STATE / ROUND label (e.g., `CARRIER: claude_doc/.../draft-r0.md` + `STATE: published` + `ROUND: r0`; or `CARRIER: claude_doc/.../discussion-log.md` + `TURN: r1-T07` + `STATE: appended`). NO inline substantive content of any kind: no questions, no answers, no claims, no counter-claims, no inline opinion body, no FINDING-STATE-LADDER-SUMMARY, no PATCH-WORTHINESS, no DRAFTER MEETING-AUDIT-CRITERIA REASSESSMENT, no META-CONCERN, no NEXT-OWNER-ACTION block, no SELF-VERIFICATION inventory, no OPEN-SURFACES inventory, no operational rationale, no excerpts, no convergence summary, no cross-critic synthesis.
+- `message` body carries exactly one non-empty carrier/index KEY line, normally `CARRIER: <retained-carrier-path>#<round-or-turn-id>` (e.g., `CARRIER: claude_doc/.../draft-r0.md#published` or `CARRIER: claude_doc/.../discussion-log.md#r1-T07`). NO inline substantive content of any kind: no questions, no answers, no claims, no counter-claims, no inline opinion body, no FINDING-STATE-LADDER-SUMMARY, no PATCH-WORTHINESS, no DRAFTER MEETING-AUDIT-CRITERIA REASSESSMENT, no META-CONCERN, no NEXT-OWNER-ACTION block, no SELF-VERIFICATION inventory, no OPEN-SURFACES inventory, no operational rationale, no excerpts, no convergence summary, no cross-critic synthesis.
 - All discussion substance (questions, answers, claims, counter-claims, evidence pointers, agreement signals, tradeoff options, finding inventories, audit-criteria reassessment, META observations, next-owner-action, self-verification record, open surfaces, convergence sketches) lives in the retained carrier (draft carrier OR running discussion-log carrier) referenced via the envelope pointer; the receiving participant consumes that carrier for all decision-affecting body.
 
 Why carrier-only universally (not just for batch reports):
@@ -130,7 +133,7 @@ Why carrier-only universally (not just for batch reports):
 
 Inline substantive content in any meeting `SendMessage` body is a Constitutional Reporting Curtain violation per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` AND a meeting-form defect per Section 3-4; the rendered body becomes user-visible host UI content carrying meeting deliberation into the user surface, violating the curtain. Senders MUST author meeting messages with carrier-only delivery from the outset; receivers MUST treat inline-body delivery as carrier-citation defect and route correction.
 
-Runtime enforcement: `.claude/hooks/reporting-curtain-envelope-gate.sh` PART A rejects bodies carrying inventory markers regardless of MESSAGE-CLASS; PART B rejects non-downward-delivery bodies with >3 newlines. Both apply to meeting `SendMessage`. The hook is the runtime safety net; the primary control is identity-layer Curtained Communication + this Section's discipline + the drafter-and-critics shared commitment to carrier-only-envelope form so meeting substance stays out of the host-rendered user surface.
+Runtime enforcement: `.claude/hooks/reporting-curtain-envelope-gate.sh` rejects rendered `SendMessage` bodies that exceed the one-line visible exposure ceiling or contain non-key free-form lines. The hook is the runtime safety net; the primary control is identity-layer Curtained Communication + this Section's discipline + the drafter-and-critics shared commitment to carrier-only-envelope form so meeting substance stays out of the host-rendered user surface.
 
 ### 3-5. MEETING-AUDIT-CRITERIA
 This section is the meeting's audit regulation.
@@ -140,13 +143,14 @@ Drafter checks every criterion below before accepting a revised item as consent-
 Drafter checks every criterion below before presenting the solution.
 Critics use the same criteria when challenging, accepting, or proposing improvements.
 
-Operator-emphasized meeting compliance criteria — solution passes every operator-emphasized keyword per the canonical 8-keyword list at `.claude/CLAUDE.md` `## 5. Modification Philosophy`. Drafter and critics consume that canonical list directly at audit time.
+Operator-emphasized meeting compliance criteria — when the agenda or downstream action is governance modification, recurrence-barrier hardening, or governance patch design, the solution passes every operator-emphasized keyword per the canonical 8-keyword list at `.claude/CLAUDE.md` `## 5. Modification Philosophy`. For non-governance meetings, record this criterion as `not-material:<agenda-basis>` and keep evaluation on the live agenda's owner criteria.
 
 No-compression source:
 - Apply `CLAUDE.md` `no-compression` definition when deciding whether a sentence is an allowed same-subject repeated-pattern line or a prohibited bundled clause.
 
 Solution essentials:
 - agenda fit: solution answers `MEETING-AGENDA` and `TARGET-OUTCOME`.
+- upper-philosophy invariant: solution direction satisfies every applicable `.claude/CLAUDE.md` `## 1` through `## 8` philosophy condition and the mapped core-law executable detail controlling the downstream action.
 - simplicity: solution keeps necessary procedure, packet, role, and gate elements.
 - correctness: material risks, assumptions, and evidence gaps are named.
 - feasibility: the `NEXT ACTION` names an executable owner/action.
@@ -159,24 +163,24 @@ Any failed criterion returns the solution to revision before Section 3-6 converg
 Marathon convergence requires unanimous participant consent for every solution item.
 A remaining material objection on any item triggers dissent-to-solution conversion before further opinion rounds on that item.
 Record each remaining non-blocking tradeoff briefly per item.
-Operator-set round limit reached before full consent records `HOLD`.
-HOLD owner is drafter.
-HOLD blocker is items lacking consent.
-HOLD next-safe-evidence-step is operator adjudication.
-Treat `HOLD` as escalation.
-Reopen the meeting when the operator directs continuation.
+Round cap reached before full consent opens this fallback chain:
+- If the discussion produced one evidence-backed reversible direction that satisfies Section 3-5, drafter records that direction and opens Section 3-7 without operator adjudication.
+- If every remaining option fails the upper-philosophy invariant, drafter performs one redesign round focused on the failing invariant before escalation.
+- If no evidence-backed reversible direction emerges and the remaining selection is a proven user-owned decision, drafter records `HOLD` with owner, blocker, failed upper-philosophy condition or user-owned decision basis, and smallest safe operator adjudication step.
+Reopen the meeting when the operator directs continuation after a lawful `HOLD`.
 
-### 3-7. Operator Gate
-Drafter presents the final solution to the operator in the compact draft format.
-Operator accept closes the meeting.
-Operator accept opens the named downstream owner/action per Section 4-1.
+### 3-7. Direction Gate
+Internally executable convergence closes the meeting and opens the named downstream owner/action per Section 4-1 without operator acceptance.
+Operator gate opens only when convergence leaves a proven user-owned decision/action or an operator-set acceptance requirement.
+When operator gate opens, drafter presents the final solution to the operator in the compact draft format.
+Operator accept closes the operator gate and opens the named downstream owner/action per Section 4-1.
 Operator reject with reason reopens the smallest affected step.
 Operator modification request updates the agenda or draft.
-Operator-unclear response triggers one clarification request from drafter.
-Required operator response that remains absent routes to `HOLD`.
+Operator-unclear response after a lawful operator gate triggers one clarification request from drafter.
+Required operator response that remains absent after a lawful operator gate routes to `HOLD`.
 HOLD owner is drafter.
 HOLD blocker is operator no-response.
-HOLD next-safe-evidence-step is operator direction.
+HOLD next-safe-evidence-step is response to the already-open lawful operator gate.
 
 ## 4. Downstream Owner & Recovery
 
@@ -196,14 +200,14 @@ Idle participant receives one prompt containing the current draft and requested 
 Sustained idle routes to `HOLD`.
 HOLD owner is drafter.
 HOLD blocker is named idle participant.
-HOLD next-safe-evidence-step is operator direction.
+HOLD next-safe-evidence-step is runtime recovery, participant reuse, or replacement through the active session runtime path; user-facing escalation opens only after those paths prove a user-owned decision blocker.
 Out-of-turn content is treated as an opinion for the next revision.
 
 ## 5. Resolve Next Owner And Action
 Each transition below opens the next owner/action in the same turn per `.claude/CLAUDE.md` `## 5. Modification Philosophy` `upper-lower execution-drive`.
 
-- Agenda clear → Section 3-3 Solution Draft.
-- Agenda ambiguous → clarification or `HOLD`.
+- Agenda clear → Section 3-3 Draft Publication.
+- Agenda ambiguous after standing-directive, cited-procedure, maximal-coverage, and reversible-default tests are exhausted → clarification or `HOLD` with owner, blocker, and next safe evidence step.
 - Draft published (Section 3-3) → Section 3-4 Synchronized Discussion (running discussion-log carrier opened/appended).
 - New discussion-log turn entry appended → author sends carrier-pointer wake envelope to recipient(s) per Section 3-4a.
 - Wake envelope received → recipient reads discussion-log carrier (every prior in-round turn entry) before appending new turn; consent-converged item → drafter updates SHARED draft carrier (Section 3-3 update-notification path).
@@ -211,11 +215,12 @@ Each transition below opens the next owner/action in the same turn per `.claude/
 - Material objection remains after round-close revision → dissent-to-solution conversion (next-round turn appended) per Section 3-4.
 - Material objections cleared → Section 3-5 MEETING-AUDIT-CRITERIA.
 - Meeting `SendMessage` envelope shape violation (any inline substantive body content) → reject and resend per Section 3-4a (carrier-pointer-only envelope; substance must live in carrier, never in body).
-- MEETING-AUDIT-CRITERIA passed → Section 3-7 Operator Gate.
-- Operator accept → named downstream owner per Section 4-1.
+- MEETING-AUDIT-CRITERIA passed with internally executable direction → named downstream owner per Section 4-1.
+- MEETING-AUDIT-CRITERIA passed with proven user-owned decision/action or operator-set acceptance requirement → Section 3-7 Direction Gate operator path.
+- Operator accept on operator path → named downstream owner per Section 4-1.
 - Operator reject or modify → smallest affected step.
 - Correctness blocker unresolved → next opinion round or `HOLD`.
-- Operator-set round limit reached before full consent → `HOLD` per Section 3-6.
+- Operator-set round limit reached before full consent → Section 3-6 fallback chain.
 - `HOLD` escalation with operator continuation → reopen meeting.
 - Accepted governance mutation need → `Skill(governance-modification)`.
 - Accepted separate-agent dispatch need → `Skill(task-execution)`.

@@ -29,7 +29,7 @@ Required recovery record:
 | `dispatch-ack-no-start` | assignment accepted, no later activity | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify the target as stalled or dead-or-unavailable after that follow-up returns no agent-start / blocker / scope-pressure / `HOLD` and no assigned-surface activity/side-effect evidence within the `session-boot` re-check window. |
 | `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Return to `task-execution` only when replanning freezes a new assignment. |
 | `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Configured lane work stays on the configured lane route, and completion claims require completion-grade evidence. |
-| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
+| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load and learn `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
 
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
@@ -52,13 +52,14 @@ Recovery rules:
 ## Agent Compaction Recovery
 A compacted agent has lost the assignment-grade packet context but retains its agent-specific skill. To resume truthfully:
 
-- Agent emits the exact literal `MESSAGE-CLASS: hold|blocker`.
-- It includes `BLOCKER-TYPE: context-loss-after-compaction`.
-- It includes `BLOCKER-BASIS: prior packet context not in working memory`.
-- It includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
+- Agent emits hold|blocker-class transport; the exact `MESSAGE-CLASS: hold|blocker` field lives in the governed blocker carrier or task state.
+- The rendered `SendMessage` envelope stays no-detail per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
+- The governed blocker carrier or task state includes `BLOCKER-TYPE: context-loss-after-compaction`.
+- The governed blocker carrier or task state includes `BLOCKER-BASIS: prior packet context not in working memory`.
+- The governed blocker carrier or task state includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
 - Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet or a same-boundary packet correction so the agent can resume.
 - Packet correction during compaction recovery preserves the previously frozen scope, route, proof/acceptance chain, parallel grouping, and required-skill basis.
-- Agent reports the context-loss blocker; assignment context returns through packet redelivery rather than gist or partial-memory reconstruction.
+- Agent reports the context-loss blocker through the canonical carrier-based blocker path; assignment context returns through packet redelivery rather than gist or partial-memory reconstruction.
 - Recovery is packet redelivery, not a fresh planning event. The frozen `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof chain remain unchanged.
 - If the prior frozen scope is no longer truthful, team-lead reopens `work-planning` instead of redelivering. That is a fresh planning event, not compaction recovery.
 

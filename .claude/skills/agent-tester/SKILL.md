@@ -34,7 +34,7 @@ Apply this gate whenever the task claims a user workflow, operator workflow, or 
 4. Are results based on executed workflow evidence rather than smoke checks, extracted text, or render-only impressions?
 5. Does blocked or partial proof status replace pass-like language when full workflow proof is unavailable?
 6. For executable user-facing software, does proof cover every frozen `SCOPE-BASELINE` feature/surface/control in the assigned `ACTIVE-SLICE`?
-7. Are uncovered baseline items classified as blocked or upstream-deferred?
+7. Are uncovered baseline items classified as blocked or lawfully upstream-deferred?
 8. Does reporting classify each untested implemented subset as a proof slice and withhold full deliverable completion?
 9. Has each assigned `CORE-WORKFLOW-CLOSURE` row received a targeted closure-defect probe for its material failure mode: disposition path, access/inspection/navigation, dependent recompute, source-authority trace, reload/stale state, or runtime/console/network error?
 10. Has the claimed user-ready surface received hard-test probes beyond normal success paths, or has the report truthfully narrowed the claim to smoke or happy-path proof?
@@ -79,8 +79,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Map retained postcondition evidence after the action.
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
-- Missing packet-backed or safe-inference-backed map opens `MESSAGE-CLASS: hold|blocker` before proof work.
-- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `MESSAGE-CLASS: hold|blocker`.
+- Missing packet-backed or safe-inference-backed map opens hold|blocker-class transport before proof work.
+- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through hold|blocker-class transport; rendered envelope stays no-detail with one pointer line and request detail lives in the governed carrier or task state.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
 - If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
 ### 2. Choose The Smallest Credible Test Set
@@ -158,7 +158,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 
 ## Active Communication Protocol
 - Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
-- Use exact `MESSAGE-CLASS: hold|blocker` for `blocked` proof classification.
+- Use hold|blocker-class transport for `blocked` proof classification; keep exact blocker fields in the governed payload.
 - Completion uses `completion` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action

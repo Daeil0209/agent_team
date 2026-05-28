@@ -26,6 +26,7 @@ Load when the output must teach, train, or onboard effectively rather than merel
 - require readable equations, diagrams, legends, annotations, and stepwise worked examples when material
 - identify likely confusion points where the learner needs visible geometry, state, workflow, or causal relations beyond text alone
 - Report `hold|blocker` when credible learner comprehension is absent because sequencing, diagrams, equations, or step logic remains unreadable.
+- Operational test for `not credible`: the learner-facing sequence, visual, equation, or step cannot be followed from stated prerequisite to intended takeaway without inventing a missing transition, label, or explanation object.
 ## Boundary
 - Run learning structure.
 - learner profile and prerequisite floor require basis when material

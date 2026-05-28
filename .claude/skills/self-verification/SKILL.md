@@ -1,6 +1,6 @@
 ---
 name: self-verification
-description: Producer outbound gate for analysis or modification work products: two-pass check (coverage; defect-free via Skill(review-verification)), correction delegation on fail, loop until convergence, silent handoff.
+description: "Producer outbound gate for analysis or modification work products: two-pass check (coverage; defect-free via Skill(review-verification)), correction delegation on fail, loop until convergence, silent handoff."
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -15,17 +15,19 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Flow Overview
 ```mermaid
 flowchart TD
-    Step1[Load Skill] --> Step2[Coverage] -->|record PASS-1| Step3[review-verification] -->|record PASS-2| Step4{Branch} -->|PASS-1 AND PASS-2| Step6[Handoff or Next Work] --> END([AUTO-PROC])
+    Step1[Load And Learn Skill] --> Step2[Coverage] -->|record PASS-1| Step3[review-verification] -->|record PASS-2| Step4{Branch} -->|PASS-1 AND PASS-2| Step6[Handoff or Next Work] --> END([AUTO-PROC])
     Step4 -->|else| Step5[Recorrection] --> Step2
 ```
 
-## Step 1: Load Skill
+## Step 1
+Load and learn Skill.
 PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — anti-fabrication tool-invocation rule colocated at every Step 1 invocation moment to defeat carrier-prose substitution at the load decision point. `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` defines the general rule; this surface applies it as the Step 1 atomic check at first execution of self-verification.
-Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
-Record the load as the same-turn `Skill(self-verification)` tool-call evidence; this evidence is the basis for downstream `PASS-1`/`PASS-2` truth and is required for any later citation that names this load.
+Load and learn the full `Skill(self-verification)` body via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, shallow read, or carrier prose asserting "loaded" without same-turn tool invocation and full-body learning does not satisfy this step.
+Record the load-and-learn as the same-turn `Skill(self-verification)` tool-call evidence; this evidence is the basis for downstream `PASS-1`/`PASS-2` truth and is required for any later citation that names this load.
 Proceed to Step 2.
 
-## Step 2: Coverage
+## Step 2
+Coverage.
 Select frozen-scope basis (first match wins):
 1. `SCOPE-BASELINE` from the active planning record.
 2. `COMPLETION-STOP-CONDITION` + `CONCRETE-DELIVERABLE` + frozen request wording.
@@ -61,15 +63,17 @@ Substantive correctness on silently-narrowed coverage does not cure the procedur
 
 Proceed to Step 3.
 
-## Step 3: review-verification
-Load `Skill(review-verification)` and call with bounded review question:
+## Step 3
+review-verification.
+Load and learn `Skill(review-verification)` and call with bounded review question:
 - target: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
 - question: PASS-2 produced-result verification for the exact target, outgoing claim, corpus, scope, and claim ceiling.
 - scope: critical exhaustive inspection of produced-result truth and soundness, evidence fit, defect, coherence, integrity, negative-risk, claim strength, and regression under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture.
 - claim ceiling: frozen `CLAIM-CEILING`; review-verification may classify findings, patch-worthiness, handoff disposition, or correction need only within that ceiling.
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
-PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load-and-learn and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+The PASS-2 record cites the packet `WORKFLOW-COVERAGE` value. Treating `lens-bounded` or `gate-only` coverage as `full-steps-1-14` is fabrication.
 When the only basis is carrier form, completion fields, PASS wording, checklist text, inline critical-review prose, equivalent checks, or proxy lens mapping, record `PASS-2: fail` and open Step 5 correction.
 
 Target identity for prior-packet reuse: a prior `review_verification_packet` covers the current Step 3 PASS-2 target only when its `REVIEW-TARGET` surface-set fully contains the current Step 3 target's surface-set (produced work-product surface + outgoing claim + every material returned item awaiting handoff).
@@ -96,11 +100,13 @@ Reject bare `CONFIRMED`; require exact ladder state.
 
 Proceed to Step 4.
 
-## Step 4: Branch
+## Step 4
+Branch.
 - `PASS-1: pass` AND `PASS-2: pass` → Step 6.
 - Else → Step 5.
 
-## Step 5: Recorrection
+## Step 5
+Recorrection.
 Build correction packet:
 - `CORRECTION-TARGETS`: exact surface set to correct
 - `INPUT-COVERAGE-GAPS`: Step 2 missing-surface inventory (when present)
@@ -109,7 +115,7 @@ Build correction packet:
 
 Route by producing owner:
 - team-lead lead-local → return correction inventory to team-lead.
-- lane → dispatch via `Skill(task-execution)` with `MESSAGE-CLASS: assignment` and `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
+- lane → dispatch via `Skill(task-execution)` assignment-class transport; the visible `SendMessage` body carries one carrier/task-state pointer line, and the governed assignment packet carries `MESSAGE-CLASS: assignment` plus `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
 - `Skill(governance-modification)` Change Sequence → return correction inventory to that Change Sequence.
 
 Wait for correction completion.
@@ -118,8 +124,9 @@ Reject partial re-check; require corrected surface + coherence radius.
 
 Proceed to Step 2.
 
-## Step 6: Handoff or Next Work
-Return converged work product silently to calling owner.
+## Step 6
+Handoff or Next Work.
+Return converged work product silently to calling owner. `PASS-1`, `PASS-2`, recorrection, convergence, report-shape consultation, and handoff-ready status are verification evidence, not visible progress prose.
 
 ## Output Format
 ```

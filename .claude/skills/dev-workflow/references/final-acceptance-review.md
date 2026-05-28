@@ -42,7 +42,7 @@ team-lead freezes one `FINAL-EVIDENCE-PACKET`.
 - `OPEN-SURFACES`: remaining surfaces with frozen upstream deferral or frozen out-of-scope basis
 
 ## Parallel Evaluation
-team-lead starts own-review and Codex MCP independent review in parallel from the same frozen packet when `CODEX-INDEPENDENT-REVIEW-BASIS` is frozen as `triggered:*` for this closure surface, or when FAR closure surface validator-required acceptance materially depends on it.
+team-lead starts own-review and codex CLI background-invocation independent review in parallel from the same frozen packet when `CODEX-INDEPENDENT-REVIEW-BASIS` is frozen as `triggered:*` for this closure surface, or when FAR closure surface validator-required acceptance materially depends on it.
 Use codex CLI background invocation, context-limit/privacy, canonical-read, and fail-open discipline from `.claude/skills/codex-independent-review/references/concurrent-patterns.md` (Sub-command Enumeration + Context Limit + Failure Mode Handling + Lifecycle + RESOURCE-CLEANUP).
 team-lead records own-review basis before reading Codex findings.
 Codex evaluates independently from the same frozen packet.
@@ -66,7 +66,7 @@ Codex ties each material point to:
 
 Codex packet carries:
 - this reference
-- active configured independent-review common contract
+- active `.claude/skills/codex-independent-review/references/concurrent-patterns.md` Authority + Transport Boundary + Authority Non-Substitution rules
 - active top-level doctrine
 - active dev-workflow skill
 - active phase-gates reference
@@ -190,7 +190,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback closure-insp
 - Evidence-Quality Matrix supported scope
 - Feynman plain-explanation basis
 - team-lead own-review basis
-- Codex MCP independent-review status
+- codex CLI background-invocation independent-review status
 - reconciliation result
 - 100% instruction-closure basis
 - user-ready completion basis, including operator-delivery closure when executable user-facing
@@ -205,7 +205,7 @@ Codex unavailable status records `fail-open:<reason>` with fallback closure-insp
 - evidence gap or contradiction
 - user-ready gap
 - team-lead own-review basis
-- Codex MCP independent-review status
+- codex CLI background-invocation independent-review status
 - reconciliation result
 - validator return instruction
 - `IMAGE-EVIDENCE` for every visual / rendered defect follows `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`; each entry names the capture path, design-stated expectation, concrete observed deviation, and multimodal `Read` direct-open confirmation. Visual defects without an attached image entry are procedurally invalid; FAR producers capture the image at FAR time when the prior tester/validator capture is missing or stale.

@@ -6,13 +6,16 @@ INPUT="$(cat)"
 
 # PermissionRequest is the narrow place where Claude Code asks the operator for
 # protected self-edit approval. Keep this hook smaller than the governance
-# doctrine: it only removes repeat prompts for structured Edit/MultiEdit changes to document
-# surfaces that the normal PreToolUse gates have already allowed.
+# doctrine: it only removes repeat prompts for structured Edit/MultiEdit changes to non-protected
+# document surfaces that the normal PreToolUse gates have already allowed.
 RESULT="$(INPUT_JSON="$INPUT" WORKSPACE_ROOT="$(resolve_project_root)" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
 
 const emit = (behavior) => {
+  if (behavior !== "allow" && behavior !== "deny") {
+    return;
+  }
   const output = {
     hookSpecificOutput: {
       hookEventName: "PermissionRequest",
@@ -71,6 +74,39 @@ const hasAllowedEditShape = (toolName, toolInput) => {
   return false;
 };
 
+const collectEditTextFragments = (toolName, toolInput) => {
+  const fragments = [];
+  const add = (value) => {
+    if (typeof value === "string" && value) fragments.push(value);
+  };
+
+  add(toolInput.old_string);
+  add(toolInput.new_string);
+  add(toolInput.oldString);
+  add(toolInput.newString);
+
+  if (toolName === "MultiEdit" && Array.isArray(toolInput.edits)) {
+    for (const edit of toolInput.edits) {
+      if (edit && typeof edit === "object") {
+        add(edit.old_string);
+        add(edit.new_string);
+        add(edit.oldString);
+        add(edit.newString);
+      }
+    }
+  }
+
+  return fragments;
+};
+
+const touchesProtectedRoleCurtainContent = (toolName, toolInput) => {
+  const protectedRolePattern =
+    /PROTECTED-CURTAIN-SURFACE|Curtained Communication|IR-3|Constitutional Reporting Curtain|reporting curtain|reporting-prohibition/i;
+  return collectEditTextFragments(toolName, toolInput).some((fragment) =>
+    protectedRolePattern.test(fragment)
+  );
+};
+
 const safeRelativeDocSurface = (relativePath) => {
   const rel = relativePath.replace(/\\/g, "/");
   if (rel === ".claude/CLAUDE.md") return true;
@@ -78,6 +114,23 @@ const safeRelativeDocSurface = (relativePath) => {
   if (/^\.claude\/reference\/[^/]+\.md$/.test(rel)) return true;
   if (/^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(rel)) return true;
   if (/^\.claude\/skills\/[^/]+\/references\/[^/]+\.md$/.test(rel)) return true;
+  return false;
+};
+
+// PermissionRequest auto-allow stays conservative for protected surfaces. This
+// helper returns to host/manual handling only for enumerated protected files or
+// role-file edits whose actual Edit/MultiEdit text touches protected curtain
+// role content. It is not an instruction for the assistant to ask the user;
+// the assistant continues any non-conflicting internal work while the host owns
+// the protected permission surface.
+const manualPermissionFallbackGovernanceSurface = (relativePath, protectedRoleContentTouched) => {
+  const rel = relativePath.replace(/\\/g, "/");
+  if (rel === ".claude/CLAUDE.md") return true;
+  if (rel === ".claude/reference/reporting-core-law.md") return true;
+  if (rel === ".claude/reference/reporting-prohibition-law.md") return true;
+  if (rel === ".claude/reference/modification-core-law.md") return true;
+  if (rel === ".claude/reference/review-and-verification-core-law.md") return true;
+  if (/^\.claude\/agents\/[^/]+\.md$/.test(rel)) return protectedRoleContentTouched;
   return false;
 };
 
@@ -139,7 +192,12 @@ try {
     process.exit(0);
   }
 
+  const protectedRoleContentTouched = touchesProtectedRoleCurtainContent(toolName, toolInput);
   for (const relative of resolvedRelatives) {
+    if (manualPermissionFallbackGovernanceSurface(relative, protectedRoleContentTouched)) {
+      emit(null);
+      process.exit(0);
+    }
     if (!safeRelativeDocSurface(relative) && !safeRelativeOperationalSurface(relative, toolName)) {
       emit(null);
       process.exit(0);

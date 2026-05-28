@@ -31,8 +31,8 @@ Every agent-specific skill inherits these common preconditions:
 - Truthful-start failure sends `scope-pressure` or `hold|blocker` instead of `dispatch-ack`.
 - A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence outside destructive, security-critical, or session-stability-breaking runtime protection per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules` is an over-broad-blocking defect per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message while preserving compliance truth.
 - Converged lane work must hand off to `team-lead` through `.claude/skills/task-execution/references/completion-handoff.md`.
-- The handoff requires both the retained carrier containing the common completion spine and `MESSAGE-CLASS: completion` sent to `team-lead` through `SendMessage`.
-- Required completion handoff uses both retained carrier and `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain supporting signals.
+- The handoff requires both the retained carrier containing the common completion spine and completion-class transport sent to `team-lead` through `SendMessage`.
+- Required completion handoff uses both retained carrier and completion-class transport; disk output, pane/final prose, `status`, and `TaskUpdate` remain supporting signals.
 - Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Immediately apply the same assigned-task `TaskUpdate` closure required by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` when task tracking is active after `completion`.
 - After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
@@ -63,7 +63,7 @@ Every agent-specific skill inherits these common preconditions:
 - Report suppression and visible-row hygiene preserve complete, undistorted assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
-- Before a lane uses actual skill load, officially preloaded skill basis, same-session loaded-skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
+- Before a lane uses actual skill load-and-learn, officially preloaded-and-learned skill basis, same-session loaded-and-learned skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload-and-relearn, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
 - For each trigger-active pointer governing the assigned lane action or completion claim, record `applied`, `not-material:<basis>`, or `blocked:<basis>` per `.claude/reference/work-skill-reference-binding-law.md`.
 - Consume `UPSTREAM-DECISION-BASIS` before first lane work when the packet carries or should carry prior reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready output.
 - If material `UPSTREAM-DECISION-BASIS` is missing, stale, contradictory, or not consumable, send `scope-pressure` or `hold|blocker` and request a consumable upstream basis.
@@ -163,6 +163,10 @@ They carry direct pointers to common transport and completion law instead of res
 Lane role documents own always-loaded lane identity, boundary, and routing conditions; they are not packet catalogs.
 
 For session-side controlled packet value tables and lane-specific presence hints, see `.claude/skills/team-session-sequences/references/dispatch-packet-compliance.md` for assignment-side values such as `RESEARCH-MODE`, `BENCHMARK-MODE`, `PLAN-STATE`, `ACCEPTANCE-RISK`, `PROOF-OWNER`, `PREREQ-STATE`, `REVIEW-STATE`, and `TEST-STATE`; see `.claude/skills/team-session-sequences/references/upward-handoff.md` for upward lane-owned state such as `VERDICT`. Those reference sections are lookup indexes. `team-session-sequences` owns session-sequence indexes and dispatch-detail lookups, not packet schema or agent-specific additions. Runtime spine stays with `session-boot`, closeout with `session-closeout`, and packet schema with `task-execution`. Hooks guard runtime integrity as last-resort checks; normal agent behavior stays with the owning procedure.
+
+Do not re-home `team-session-sequences` references as a group.
+Move only a reference section whose direct decision moment is `task-execution` packet assembly, packet preflight, or completion handoff.
+Keep lookup-only pointers when direct-consumption relevance is not proven.
 
 ## Resolve Next Owner And Action
 - Satisfied common preconditions open lane-owned work.

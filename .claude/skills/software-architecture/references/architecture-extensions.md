@@ -114,7 +114,7 @@ Numbered project lessons captured from past incident hardening. Each lesson is a
 - **L-02 Launcher Robustness Preservation**: Launcher reliability features are PRESERVED ASSETs. Required contract: (1) readiness check method, (2) port availability verification, (3) browser-open trigger conditions, (4) shutdown/cleanup sequence, (5) error recovery path. Opening browser before server readiness = `launcher_race_condition`.
 - **L-04 Resource Acquisition as Architecture Contract**: Pre-allocation vs. dynamic acquisition is an architecture contract on paths with timing/ordering/consistency invariants. Unresolved allocation strategy on hard-invariant paths = architecture gap.
 - **L-05 Latency Budget Decomposition**: Explicit latency budget decomposition across module boundaries required when timing is an acceptance criterion. No decomposed budget on timing-critical paths = architecture gap.
-- **L-06 Multi-Dimension Trade-Off Documentation**: Competing metrics must be identified and chosen balance documented. Single-metric optimization with unmeasured acceptance dimensions = defect; deferred measurement requires explicit risk statement.
+- **L-06 Multi-Dimension Trade-Off Documentation**: Competing metrics must be identified and chosen balance documented. Single-metric optimization with unmeasured acceptance dimensions = defect; unperformed material measurement remains an `OPEN-SURFACE` with owner, acceptance impact, and explicit risk statement unless lawfully owner-deferred.
 
 Note: L-03 (Entity ID Stability Contract) lives in the Coupled-Core Architecture Extension above because it is intrinsic to that extension's many-to-many modeling.
 

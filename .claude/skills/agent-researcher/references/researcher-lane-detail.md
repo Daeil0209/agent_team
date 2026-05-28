@@ -55,7 +55,7 @@ When a researcher role or skill says "researcher additions" or "researcher detai
 ## Evidence Tier Discipline
 - Evidence-tier selection in descending order: external authoritative reference > prior session evidence > model prior knowledge > intuition.
 - A feasible, materially-relevant higher-tier source is the required default.
-- Lower-tier use requires named deferral basis.
+- Lower-tier use requires a named evidence-tier downgrade basis; it is not owner deferral and does not close a material higher-tier evidence need.
 - Settling for a lower tier while a material higher tier is available is an evidence defect.
 - For design, visual, UX, methodology, and governance-hardening surfaces, external authoritative evidence or benchmark synthesis is the default quality ceiling raiser when the decision depends on current best practice.
 
@@ -78,7 +78,7 @@ Evidence work is forbidden until the packet is classified as `execute` or `recon
 | `execute` | Decisive evidence basis is explicit, bounded, and owner-consistent | Proceed through workflow |
 | `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, or evidence boundary | Mark inference, proceed through workflow |
 | `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles drafting/proof/validation into evidence work | Stop evidence work; send pressure to `team-lead` via `SendMessage` with smallest truthful evidence boundary |
-| `hold|blocker` | Decision target, evidence boundary, downstream consumer, question surface, decisive evidence basis, or smallest truthful evidence boundary is materially ambiguous | Stop evidence work; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis |
+| `hold|blocker` | Decision target, evidence boundary, downstream consumer, question surface, decisive evidence basis, or smallest truthful evidence boundary is materially ambiguous | Stop evidence work; send hold|blocker-class transport to `team-lead`; rendered envelope stays no-detail with one pointer line and the governed blocker carrier names the exact invalid or missing basis |
 
 Upward assertion must name:
 - invalid or missing decisive basis
@@ -91,7 +91,7 @@ Upward assertion must name:
 - Multi-modal evidence includes image or screenshot capture, layout extraction, quantitative measurement of font, image, whitespace, table form, color, spacing, or typography signals, and rendered page or artifact observation when material.
 - If researcher cannot obtain the required rendered or multi-modal evidence with its toolset, it consumes `Skill(tool-acquisition)` for bounded tool-path discovery, verification, fallback, or blocked-state capture when current tools can lawfully inspect or search candidate options.
 - The upward request must name: missing evidence surface; required capability; current toolset limit; candidate tools considered; selected tool or program candidate; fit rationale; why text-only evidence is invalid; smallest truthful evidence boundary; setup owner candidate or packet correction.
-- Methodology, governance-hardening, and evolving best-practice decision targets require external authoritative evidence or benchmark synthesis unless infeasible. If infeasible, name the deferral basis and mark the claim as lower confidence.
+- Methodology, governance-hardening, and evolving best-practice decision targets require external authoritative evidence or benchmark synthesis unless infeasible after bounded tool/evidence path attempts. If infeasible, name the evidence-gap basis, keep the claim lower confidence, and route unresolved material evidence as `OPEN-SURFACES` or `HOLD`; do not treat infeasibility as owner deferral.
 - Use `.claude/skills/benchmark-simulation/references/observation-protocol.md` when per-modality discipline is needed.
 
 ## Benchmark-Enhanced Search Fields

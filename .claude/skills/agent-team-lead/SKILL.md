@@ -20,9 +20,9 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 - Activate before lead-owned procedure movement.
 - Reuse same-session `agent-team-lead` basis only while the invoked skill body still supplies the rule needed for the active lead-owned procedure path.
 - Treat `agent-team-lead` basis as stale when the session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active lead-owned path needs an unconsumed trigger-specific reference.
-- Stale or uncertain `agent-team-lead` basis must not drive action; reload `Skill(agent-team-lead)` when this skill body is needed, or consume the exact triggered reference when reference detail is sufficient.
+- Stale or uncertain `agent-team-lead` basis must not drive action; reload and relearn `Skill(agent-team-lead)` when this skill body is needed, or consume the exact triggered reference when reference detail is sufficient.
 - Consume fresh same-session `agent-team-lead` basis before any `.claude/skills/agent-team-lead/references/` reference.
-- Activation gate: load only when team-lead is the active owner. Lane agents (developer / researcher / reviewer / tester / validator) do NOT load this skill; their own agent-* skill governs lane work.
+- Activation gate: load and learn only when team-lead is the active owner. Lane agents (developer / researcher / reviewer / tester / validator) do NOT load-and-learn this skill; their own agent-* skill governs lane work.
 
 
 # Operating Philosophy Procedure
@@ -74,8 +74,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Evidence quality, owner separation, acceptance risk, final-arbitration readiness, defect classification, or patch-worthiness opens `Skill(review-verification)`.
 - Final acceptance, final arbitration, or `PASS/HOLD/FAIL` verdict execution opens `validator` and `Skill(agent-validator)`.
 - Validator-issued `FINAL-REJECT` opens team-lead FAR correction routing via `far-reject-routing` for routing-class classification and corrective dispatch.
-- Governance change entry loads `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load the skill.
-- Operator-initiated meeting request, operator-stated multi-perspective convergence agenda, or operator-stated multi-participant discussion-to-consensus need opens `Skill(team-meeting)`.
+- Governance change entry loads and learns `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load-and-learn the skill.
 - Interrupt/autonomy trigger consumes `interrupt-autonomy`.
 
 ## User-Facing Reports
@@ -88,6 +87,6 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 
 # Resolve Next Owner And Action
 - Satisfied reference consumption returns to the active team-lead procedure action.
-- Missing `agent-team-lead` skill load opens `Skill(agent-team-lead)`.
+- Missing `agent-team-lead` load-and-learn basis opens `Skill(agent-team-lead)`.
 - Missing reference consumption opens the exact required reference.
 - Boundary changes route to the owning skill, sequence, reference, or lane named by the role spine, this skill, or the active owner path.

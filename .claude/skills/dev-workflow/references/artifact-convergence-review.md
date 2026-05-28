@@ -76,7 +76,7 @@ Missing required path records `fail-open:blocked_by_config`.
 1. The artifact authoring owner writes or revises the canonical artifact from the frozen owner basis.
 2. team-lead authors Phase 1/2 canonical plan and design artifacts.
 3. The assigned producer authors Phase 3+ separate-producer artifacts.
-4. team-lead defect-seeking own-review and Codex MCP independent review run in parallel when independence holds.
+4. team-lead defect-seeking own-review and codex CLI background-invocation independent review run in parallel when independence holds.
 5. team-lead records own-review basis before reading or using Codex output.
 6. team-lead own-review basis carries:
    - inspected surfaces
@@ -150,14 +150,14 @@ Phase advancement requires:
 - completed Codex review or lawful fail-open
 - point-by-point reconciliation
 - no accepted high/medium issue affecting the next phase
-- every point accepted, rejected, or deferred with reason
-- deferred low issues have later phase and owner
+- every point accepted, rejected with evidence, lawfully owner-deferred with cited authority, or kept open with reason
+- remaining low issues have later phase, owner, and lawful deferral/open-surface basis
 - downstream artifact status is current, intentionally held, or explicitly stale
 - owner-decidable defaults and routine phase advancement route to the next owner/action
 - `Skill(self-verification)` runs convergence on the reconciled claim
 
 After `converged` or `resolved-divergence` phase-gate artifact resolution satisfies Phase advancement requirements, execute `next owner/action` as phase advancement, next phase boundary `work-planning`, or the named downstream owner.
-User-facing review/proceed prompts are valid only when the user already requested review, explicit approval is required, or a verified user-owned blocker exists; otherwise keep review offers internal and execute the next owner/action.
+User-facing review/proceed prompts are valid only when the user already requested review, explicit approval is required after cited owner procedures and applicable user-decision-risk decision support are exhausted, or a verified user-owned blocker exists; otherwise keep review offers internal and execute the next owner/action.
 
 Route-level `CODEX-INDEPENDENT-REVIEW-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and reporting-law-admitted user-facing prose.
@@ -207,7 +207,7 @@ Do not print own-review findings, Codex findings, reconciliation tables, point l
 Record:
 - artifact path and phase
 - team-lead own-review basis status and verdict
-- Codex MCP independent-review status: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
+- codex CLI background-invocation independent-review status: `converged`, `resolved-divergence`, `non-converged`, or `fail-open:<reason>`
 - accepted/rejected/deferred point counts
 - redesign plan validity for accepted findings: `not-needed`, `valid`, `invalid`, or `missing`
 - fallback inspection basis when fail-open is used

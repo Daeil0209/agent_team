@@ -29,6 +29,7 @@ Load when a UI mockup exists and implementation needs frozen layout intent.
   - component boundaries remain ambiguous
   - token bridges remain ambiguous
   - prop contracts remain ambiguous
+- Operational test for `ambiguous`: the item cannot be mapped to a concrete component boundary, token source/consumer bridge, or prop/interface contract that implementation can consume without choosing among multiple plausible structures.
 ## Activation
 Activate when mockup-based UI work depends on converting visual surfaces into bounded component structure.
 ## Inputs

@@ -21,6 +21,35 @@ Two variants:
 
 In both variants, the codex output exists in the invoking owner's scratch directory or working memory.
 
+### Codex Governance Loading (MANDATORY, no carve-out)
+
+PROTECTED-LOCAL-RESTATEMENT-BASIS: codex governance-loading is the precondition for codex's "independent review" character; without loaded Codex Subagent Doctrine, codex output is ad-hoc OpenAI model output (not governance-aware independent review). Canonical owner: this section. Operator-explicit directive: rule elevated to consumed-surface + team-lead + lanes forcibly comply unconditionally.
+
+- Every codex CLI invocation (lane variant AND team-lead variant AND CODEX-INDEPENDENT-REVIEW-BASIS path) MUST execute with `cwd=/mnt/d/Agent_team/Codex/` so codex loads `AGENTS.md` (Codex Subagent Doctrine) + `.agents/` tree (mapped core-laws + skills) from invocation cwd per codex CLI standard discovery.
+- Canonical invocation pattern: `cd /mnt/d/Agent_team/Codex && codex exec [admissible flags] "<prompt>"` OR Bash invocation with explicit `cwd` parameter set to `/mnt/d/Agent_team/Codex/`.
+- Files outside the `Codex/` subtree (e.g., `.claude/*` governance text targeted for codex review) MUST be passed to codex via absolute paths in the prompt; before relying on those files, the invoking owner verifies the current invocation/session can read the target path. A local Codex config such as `sandbox_mode = "workspace-write"` plus `writable_roots = ["/mnt/d/Agent_team"]` is setup evidence, not a substitute for current read-capability proof.
+- Governance-loading verification: every codex invocation's first response MUST be evaluated by the invoking owner for Codex Subagent Doctrine awareness signals (Constitutional Reporting Curtain awareness OR §1-§8 philosophy chain awareness OR consumed-surface keyword awareness per Codex `AGENTS.md`).
+- Governance-loading failure = absence of doctrine-awareness signals in codex first response → invocation INVALID; any codex output from a governance-loading-failed invocation is INADMISSIBLE as lane-internal aid, lead-internal aid, OR CODEX-INDEPENDENT-REVIEW-BASIS citation.
+- Governance-loading failure recovery: invoking owner MUST re-invoke codex with verified `cwd=/mnt/d/Agent_team/Codex/`; if `Codex/AGENTS.md` is missing or moved, invoking owner routes to `Skill(governance-modification)` for canonical-path recovery, NOT operator-policy-choice substitution.
+- This rule applies UNCONDITIONALLY: lane variant, team-lead variant, CODEX-INDEPENDENT-REVIEW-BASIS path, validator high-risk verdict path, decision-support invocation, doctrine-consultation invocation, draft-checking invocation — all subject to this requirement; no carve-out.
+- Pre-existing codex output from any governance-loading-failed invocation is INADMISSIBLE per this rule; invoking owner re-invokes with proper governance loading before using output as basis.
+- **REVIEW-CRITERIA-SOURCE (separate from operating governance)**: every codex invocation prompt MUST include an explicit `REVIEW-CRITERIA-SOURCE: <exact-path>` field naming the doctrine surface codex SHALL apply as PRIMARY REVIEW CRITERIA when evaluating the work under review. This is distinct from codex's OPERATING GOVERNANCE (`Codex/AGENTS.md`, loaded automatically per the rules above which govern HOW codex behaves while reviewing).
+- REVIEW-CRITERIA-SOURCE default mapping:
+  - Reviewing `.claude/*` work (Claude Code agent team artifacts): `REVIEW-CRITERIA-SOURCE: .claude/CLAUDE.md` + relevant `.claude/reference/*.md` (named explicitly per review scope)
+  - Reviewing `Codex/*` work (Codex Subagent artifacts): `REVIEW-CRITERIA-SOURCE: Codex/AGENTS.md` + relevant `Codex/.agents/reference/*.md` (named explicitly per review scope)
+  - Reviewing cross-cutting work: invoking owner names operator-specified canonical criteria source explicitly; absence opens user-decision-risk decision support only when no §1-§8-compliant reversible criteria-source path is derivable, and routes to operator escalation only when no standing directive, no cited procedure, and genuine novel policy remain.
+- REVIEW-CRITERIA-SOURCE absence = governance-loading failure (analog to AGENTS.md absence per the rules above); invocation INVALID; output INADMISSIBLE.
+- REVIEW-CRITERIA-SOURCE field MUST be cited by codex in its first response paragraph alongside operating-governance awareness signals (extending the governance-loading verification requirement above); absence of REVIEW-CRITERIA-SOURCE acknowledgment in codex output = governance-loading-failure.
+- Operating-governance / Review-criteria distinction enforcement: codex's `Codex/AGENTS.md` defines HOW codex operates; the named REVIEW-CRITERIA-SOURCE defines WHAT codex evaluates against. Codex MUST NOT substitute its own operating governance for the named review-criteria-source when evaluating work that originates from a different doctrine surface; conflating the two is review-criteria-substitution defect (per §4 Review And Verification Philosophy evidence-outranks-substitution rule).
+- Pre-existing codex output from any REVIEW-CRITERIA-SOURCE-absent invocation is INADMISSIBLE per this rule; invoking owner re-invokes with explicit REVIEW-CRITERIA-SOURCE before using output as basis.
+- **REVIEW-CRITERIA-SOURCE consumption-proof (MANDATORY)**: every codex invocation MUST cause codex to ACTUALLY READ (via codex's file-read tool: Read / Bash cat / equivalent) each named REVIEW-CRITERIA-SOURCE file during the invocation; path acknowledgment without file-read is consumption failure per §4 Review And Verification Philosophy `evidence outranks ... verification-shaped prose` rule.
+- Codex consumption-proof verification mechanism: codex first response MUST include AT LEAST ONE verbatim content extract (1-3 lines minimum, copied exactly from the file with line numbers if present) from EACH named REVIEW-CRITERIA-SOURCE file; extract MUST be cite-quotable + matching current file state on disk (not paraphrase, not summary, not memory recall).
+- Verbatim extract format: codex first response includes for each REVIEW-CRITERIA-SOURCE file `<path>` a quote block like: `[REVIEW-CRITERIA-SOURCE: <path>] [lines <N-M>]: "<exact content extracted>"`. Multiple extracts per file are admissible.
+- Consumption-proof absence (no verbatim extract from a named REVIEW-CRITERIA-SOURCE file) = governance-loading failure; invocation INVALID; output INADMISSIBLE.
+- Mutability preservation: REVIEW-CRITERIA-SOURCE files are governance documents at canonical paths (`.claude/CLAUDE.md`, `.claude/reference/*.md`, `Codex/AGENTS.md`, `Codex/.agents/reference/*.md`, etc.) — operator-editable at any time without prompt change; codex reads CURRENT file state at each invocation per Read tool semantics (no caching, no embedded copy).
+- Criteria-embedding prohibition: invocation prompts MUST NOT embed the full criteria text inline (e.g., copying CLAUDE.md content into the prompt); inline embedding violates the mutability requirement (operator edits to file would not propagate; codex consumes stale embedded copy). Prompts cite paths + extract requirements; codex reads from disk.
+- Invoking-owner verification duty: after receiving codex response, invoking owner MUST verify each REVIEW-CRITERIA-SOURCE extract matches actual current file content (via own Read or Bash grep); mismatch = governance-loading failure → re-invoke or `Skill(governance-modification)` for canonical-path recovery.
+
 ### Authority + Transport Boundary
 - Codex output is **lane-internal aid (lane variant)** or **lead-internal aid (team-lead variant)**.
 - Codex output is usable as evidence basis by the invoking owner per operator standing directive (background codex utilization).
@@ -28,7 +57,7 @@ In both variants, the codex output exists in the invoking owner's scratch direct
 - The invoking owner remains the decision authority; codex output informs but does not substitute for the invoking owner's own judgment + framing where decisive owner authority applies.
 
 ### Authority Non-Substitution (CRITICAL safeguard)
-- Codex result **NEVER substitutes** for `Skill(review-verification)` packet at `Skill(self-verification)` Step 3 `PASS-2`. Codex usage is information-gathering supplement only; PASS-2 still requires actual `Skill(review-verification)` load + Step 14 packet citation per existing rule.
+- Codex result **NEVER substitutes** for `Skill(review-verification)` packet at `Skill(self-verification)` Step 3 `PASS-2`. Codex usage is information-gathering supplement only; PASS-2 still requires actual `Skill(review-verification)` load-and-learn plus Step 14 packet citation per existing rule.
 - Substituting codex result for `review_verification_packet` is fabrication per `Skill(self-verification)` Step 3 anti-fabrication rule + Carrier-citation rule per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 
 ### Team-Lead Variant — Additional Safeguards (Lead-Internal Codex Aid)
@@ -60,6 +89,7 @@ Validator re-verification right: validator MAY independently re-invoke codex via
 
 ### Context Limit (Security Boundary)
 - Codex invocation: lane MUST limit codex context to the frozen `WORK-SURFACE` files named in the assignment packet (or files explicitly within `WRITE-SCOPE` for lane self-correction loops).
+- Named `REVIEW-CRITERIA-SOURCE` files and `doctrine_read_paths` required by this reference are authorized criteria surfaces for the invocation, not out-of-scope work files, when the prompt names them explicitly and the invoking owner verifies current read capability before relying on them.
 - Files containing secrets, credentials, auth tokens, private keys, or other security-sensitive material **MAY NOT** be passed as codex context.
 - Out-of-scope files (files outside the frozen `WORK-SURFACE` and not explicitly authorized by assignment packet) **MAY NOT** be passed as codex context.
 - Context limit violation invalidates the codex invocation; any codex output from a violating invocation is inadmissible as lane-internal aid.
@@ -70,15 +100,16 @@ Validator re-verification right: validator MAY independently re-invoke codex via
 - Unlimited invocation may exhaust quota → subsequent lane codex invocations may fail → each lane bears the failure consequence.
 
 ### Failure Mode Handling
-- codex CLI invocation may fail (network, quota, timeout, auth, parse, process error, etc.).
+- codex CLI invocation may fail (network, quota, timeout, auth, parse, process error, governance-loading-failure per "### Codex Governance Loading" above, etc.).
 - On failure, the lane proceeds with own discipline without codex output — codex usage is supplementary aid, not blocking.
 - Codex invocation failure does NOT block lane completion. Lane completion proceeds per the lane's own evidence basis.
 
 ### Lifecycle + RESOURCE-CLEANUP
 - Codex `codex exec` with `run_in_background: true` creates a long-running background process and may produce output files (logs, JSON results, scratch files).
 - The lane MUST terminate the codex background process before lane completion per `.claude/skills/task-execution/references/completion-handoff.md` `## Common Completion Result Spine` RESOURCE-CLEANUP enumeration.
-- The lane MUST clean up codex output files (logs, JSON, scratch artifacts) before lane completion as part of the same RESOURCE-CLEANUP discipline.
-- Process termination + output file cleanup are both completion preconditions; missing either is a RESOURCE-CLEANUP defect blocking completion-grade transport.
+- The lane MUST clean up uncited codex output files (logs, JSON, scratch artifacts) before lane completion as part of the same RESOURCE-CLEANUP discipline.
+- Codex output files cited as `CODEX-SOURCE`, upstream evidence, or retained decision basis MUST be preserved in place or moved into a governed retained carrier before scratch cleanup.
+- Process termination plus cleanup of uncited scratch artifacts, with preservation of cited carriers, are completion preconditions; missing any required cleanup or cited-carrier preservation is a RESOURCE-CLEANUP defect blocking completion-grade transport.
 
 ## External CLI Tools — Slippery-Slope Guard
 

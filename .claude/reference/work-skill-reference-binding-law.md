@@ -5,14 +5,14 @@ SOURCE-RULES: "Work Execution Philosophy"
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
-# Common Doctrine Reference: Skill Loading And Reference Binding
+# Common Doctrine Reference: Skill Learning And Reference Binding
 
 ## Purpose
-This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loading and reference consumption.
-Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
+This reference gives the detailed execution rules behind `CLAUDE.md` Skill load-and-learn and reference consumption.
+Use it to make loaded-and-learned skills, loaded documents, and references mandatory execution surfaces instead of passive reading.
 
 ## Reporting Curtain Inheritance
-This reference governs skill loading and reference binding, not report exceptions.
+This reference governs skill load-and-learn and reference binding, not report exceptions.
 User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Consume When
@@ -28,14 +28,15 @@ User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 
 ## Required Output
 The consuming owner records:
-- loaded skill or reference path
-- loaded-skill basis as `Skill(<skill>)`, officially applied frontmatter `skills` preload, or the named skill's same-session loaded-skill token
+- loaded-and-learned skill or reference path
+- full-body skill-learning basis as actual `Skill(<skill>)` invocation plus full-body learning, officially applied frontmatter `skills` preload plus full-body learning, or the named skill's same-session loaded-and-learned skill token
 - trigger that required it
 - applied rules
 - blocked or unavailable rules
 - effect on action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness
 - applied-rule mapping to action, stop, evidence, owner, or next-action effect
 Reference consumption requires direct effect on the active action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness; existence, discoverability, citation convenience, broad traceability, reverse-linking, or possible future use is insufficient.
+Required-output records stay internal; successful `Read`, `Grep`, `Glob`, `LS`, or `Skill` host rows do not admit assistant-authored read/consumed/loaded/learned/clear/ready/now narration unless `.claude/reference/reporting-prohibition-law.md` admits that exact visible report.
 
 ## Routing Gate
 Execution requires:
@@ -59,14 +60,14 @@ Completion requires every trigger-required reference consumed and every material
 - A lookup-only reference returns consumed facts to the active consuming owner.
 
 ## Skill Rules
-- Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, procedure words in the user message, or anticipation of future skill need.
+- Skill load-and-learn eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, procedure words in the user message, or anticipation of future skill need.
 - Primary skill links become required skills only when their trigger creates the active owner path.
-- Required skill activation and loaded-skill basis are satisfied only by actual `Skill(<skill>)` load, officially applied frontmatter `skills` preload, or a current same-session loaded-skill basis under the named skill's freshness rule.
-- Same-session loaded-skill basis is executable only while the invoked skill body still supplies the rule needed for the current owner path.
-- Treat loaded-skill basis as stale when the session changed, the skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active owner path needs unconsumed trigger-specific detail.
-- Stale or uncertain loaded-skill basis must not execute the action; open the smallest refresh action: reload `Skill(<skill>)` when skill-body rules are needed, or consume the exact trigger-specific reference when reference detail is sufficient.
-- Same-session loaded-skill basis reuse scope: covers the Skill tool load only (skipping a fresh `Skill(<skill>)` tool invocation when staleness conditions do not fire).
-- Same-session loaded-skill basis non-carry: does NOT carry per-target outputs across targets — `review_verification_packet`, `Skill(self-verification)` PASS-1/PASS-2 records, validator verdict PASS-2 basis, or any per-target packet output produced by a skill's workflow steps require fresh per-target workflow execution producing a fresh per-target output bound to that target's identity.
+- Required skill activation and loaded-and-learned skill basis are satisfied only by actual `Skill(<skill>)` load-and-learn, officially applied frontmatter `skills` preload plus full-body learning, or a current same-session loaded-and-learned skill basis under the named skill's freshness rule.
+- Same-session loaded-and-learned skill basis is executable only while the invoked-and-learned full skill body still supplies the rule needed for the current owner path.
+- Treat loaded-and-learned skill basis as stale when the session changed, the skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active owner path needs unconsumed trigger-specific detail.
+- Stale or uncertain loaded-and-learned skill basis must not execute the action; open the smallest refresh action: reload and relearn `Skill(<skill>)` when skill-body rules are needed, or consume the exact trigger-specific reference when reference detail is sufficient.
+- Same-session loaded-and-learned skill basis reuse scope: covers the Skill tool load-and-learn only (skipping a fresh `Skill(<skill>)` tool invocation when staleness conditions do not fire).
+- Same-session loaded-and-learned skill basis non-carry: does NOT carry per-target outputs across targets — `review_verification_packet`, `Skill(self-verification)` PASS-1/PASS-2 records, validator verdict PASS-2 basis, or any per-target packet output produced by a skill's workflow steps require fresh per-target workflow execution producing a fresh per-target output bound to that target's identity.
 - Cross-target citation as fabrication: citing a prior per-target output as upstream basis for a downstream record against a different target is carrier-prose-as-evidence fabrication and fails `Skill(self-verification)` Step 3 anti-fabrication rule.
 - **Carrier-citation rule**: any cited carrier path, PACKET-ID, content claim, or file:line/section citation consumed as upstream-decision-basis requires fresh tool-call verification per (i)/(ii)/(iii) below.
 - Carrier-citation requirement (i) — freshness: Read the cited carrier path in current turn OR cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Citation Substantiation Gate (Read/Grep/Bash invocation identifier or retained carrier PACKET-ID + retained path; staleness check passed per the staleness rule above).
@@ -74,9 +75,9 @@ Completion requires every trigger-required reference consumed and every material
 - Carrier-citation requirement (iii) — content match: verify cited content (line/section text, ladder state, verdict label) matches the consumed claim.
 - Carrier-citation fabrication: carrier-by-memory consumption of unverified path/PACKET-ID/content is carrier-citation fabrication and fails the same anti-fabrication rule.
 - When a primary skill trigger fires, skipping activation is classified as a Work Execution Philosophy violation.
-- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only.
+- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only and never satisfies skill activation, full-body skill learning, or applied skill consumption.
 - Before non-preloaded `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection supports eligibility only.
-- Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents by `Read` or `Grep` unless the requested outcome also requires that skill's execution artifact.
+- Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection by `Read` or `Grep` supports eligibility and evidence discovery only; it does not satisfy skill activation or applied skill consumption unless the requested outcome also opens the skill's execution path and the full skill body is learned through that path.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
 - Skill-owned surfaces under `.claude/skills/<skill>/` are entered through `Skill(<skill>)` or officially applied frontmatter `skills` preload before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
 - Agent role names are not skill names.
@@ -90,27 +91,27 @@ Completion requires every trigger-required reference consumed and every material
 - Lane agent-specific skills use `agent-<lane>` names.
 - Team-lead procedure skill uses `agent-team-lead`.
 - Team-lead procedure references live under `.claude/skills/agent-team-lead/references/` and are skill-owned surfaces.
-- The top-level agent-team `team-lead` session loads `Skill(agent-team-lead)` before lead-owned procedure movement.
-- `agent-team-lead` also loads before lead-owned procedure triggers when no current same-session `agent-team-lead` load basis exists.
+- The top-level agent-team `team-lead` session loads and learns `Skill(agent-team-lead)` before lead-owned procedure movement.
+- `agent-team-lead` also loads and learns before lead-owned procedure triggers when no current same-session `agent-team-lead` load-and-learn basis exists.
 - Same-session `agent-team-lead` reuse follows `.claude/skills/agent-team-lead/SKILL.md` `# Activation`.
-- Loaded skills inherit:
+- Loaded-and-learned skills inherit:
   - `CLAUDE.md`
   - active owner role
   - Common Lane-Core Preconditions when the loaded owner is a lane
 - Procedure skills control their declared owner, phase owner, or sequence owner before loader ownership.
 - Skills without a procedure-owner declaration execute under the agent that loaded the skill.
-- Loaded skills sharpen the loading agent or active procedure owner behavior only within the active routing boundary.
-- A named skill's freshness rule governs same-session loaded-skill reuse.
-- Lane agent-specific skills load on assignment-grade lane work.
-- These messages load agent-specific skills only when they assign or reopen work:
+- Loaded-and-learned skills sharpen the loading agent or active procedure owner behavior only within the active routing boundary.
+- A named skill's freshness rule governs same-session loaded-and-learned skill reuse.
+- Lane agent-specific skills load-and-learn on assignment-grade lane work.
+- These messages load-and-learn agent-specific skills only when they assign or reopen work:
   - receipt messages
   - control messages
   - status messages
   - lifecycle messages
   - phase messages
   - clarification messages
-- Loaded skill rules, role-body rules, and trigger-bound reference rules outrank packet field values; a packet field that contradicts a binding rule from those surfaces is a packet defect, and the receiving owner sends `scope-pressure` with `CORRECTION-OUTCOME: packet-correction` before `dispatch-ack`, work, or completion.
-- These outrank loaded agent-specific skills:
+- Loaded-and-learned skill rules, role-body rules, and trigger-bound reference rules outrank packet field values; a packet field that contradicts a binding rule from those surfaces is a packet defect, and the receiving owner sends `scope-pressure` with `CORRECTION-OUTCOME: packet-correction` before `dispatch-ack`, work, or completion.
+- These outrank loaded-and-learned agent-specific skills:
   - doctrine
   - roles
   - owner gates
@@ -123,12 +124,12 @@ Completion requires every trigger-required reference consumed and every material
   - phase basis
 - Packetize required methodology or capability skills as `REQUIRED-SKILLS`.
 - Agent-facing `REQUIRED-SKILLS` entries are mandatory consumption duties.
-- Required-skill intake order is validate, then load/apply or block.
-- Validate each `REQUIRED-SKILLS` entry for availability, lane fit, owner authority, boundary fit, and required lens or field shape before loading.
+- Required-skill intake order is validate, then load-and-learn/apply or block.
+- Validate each `REQUIRED-SKILLS` entry for availability, lane fit, owner authority, boundary fit, and required lens or field shape before load-and-learn.
 - Invalid, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, or malformed required-skill entries record `blocked:<basis>` and route through the owning packet-correction, `scope-pressure`, or `hold|blocker` path.
 - A blocked required-skill entry routes through packet-correction, `scope-pressure`, or `hold|blocker` with its `blocked:<basis>` record.
 - For each valid, material, lane-executable `REQUIRED-SKILLS` entry, the receiving lane must:
-  - load each `REQUIRED-SKILLS` entry before execution
+  - load and learn each `REQUIRED-SKILLS` entry's full skill body before execution
   - apply each `REQUIRED-SKILLS` entry at the first material work surface where the skill can shape the assigned result
   - record applied basis before completion
 - The receiving lane records blocked basis for each invalid, unavailable, lane-mismatched, contradictory, non-fitting, outside-boundary, owner-reserved, malformed, or unavailable required-skill entry before surfacing the correction path.
@@ -144,8 +145,8 @@ Completion requires every trigger-required reference consumed and every material
   - classify every carried recommendation as applied, not-material, or blocked before completion
   - record the basis for each recommendation classification
   - select material recommendations
-  - load material recommendations before the work surface they shape
-- Recommendation intake order is classify, then load material recommendations or record `not-material:<basis>` / `blocked:<basis>`.
+  - load and learn material recommendations before the work surface they shape
+- Recommendation intake order is classify, then load-and-learn material recommendations or record `not-material:<basis>` / `blocked:<basis>`.
 - Invalid, lane-mismatched, contradictory, outside-boundary, owner-reserved, malformed, or full-workflow-only recommendations record `blocked:<basis>` and route through the owning correction path when they affect truthful execution.
 - Non-fitting recommendations with no truthful-execution effect record `not-material:<basis>` before completion.
 - Silent recommendation skipping is a completion blocker.
@@ -160,15 +161,15 @@ Completion requires every trigger-required reference consumed and every material
 - Valid consumption uses live loaded surface evidence and applied-rule mapping; summary, memory, local confidence, and broad familiarity remain background context only.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
 - Direct-consumption relevance means the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness.
-- Loading, naming, quoting, or summarizing a governance document is not consumption.
+- Loading without full-content learning, naming, quoting, or summarizing a governance document is not consumption.
 - Before action, report, completion, or verdict, classify current-surface active rules as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
 - `applied` means the rule changed, confirmed, or routed concrete behavior.
 - Missing material applied-rule mapping opens applied-rule correction before action.
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - **Full-content absorption requirement**: any `Read` invocation on a governance document, skill body, reference file, or other consumed-surface artifact must absorb the FULL content of the read range required for the active owner decision; partial or excerpt-only consumption is shallow-reading (얼렁뚱땅) defect when the unread portion materially affects the active owner action, stop, evidence, claim, or routing.
-- **Full-body Skill load requirement**: any `Skill(<skill>)` tool invocation binds the loader to absorb the FULL skill body content from frontmatter through Output Format / Resolve Next Owner And Action sections; the skill body's Structural Contract, Reference Map, every Step / Workflow / Section, and trigger-bound rules become active immediately; cursory awareness of skill name / purpose / one rule is not Skill load.
-- **Shallow-load / shallow-read defect classification**: claiming `applied` or treating a skill/reference as consumed without the corresponding full-body absorption is a procedure-adherence + anti-fabrication defect (carrier-prose-as-evidence per `Skill(self-verification)` Step 3); the active owner must reload `Skill(<skill>)` or re-Read the reference range with full-content absorption before proceeding.
+- **Full-body Skill learning requirement**: any `Skill(<skill>)` tool invocation binds the loader to absorb and learn the FULL skill body content from frontmatter through Output Format / Resolve Next Owner And Action sections; the skill body's Structural Contract, Reference Map, every Step / Workflow / Section, and trigger-bound rules become active immediately; cursory awareness of skill name / purpose / one rule is not Skill learning.
+- **Shallow-load / shallow-read defect classification**: claiming `applied` or treating a skill/reference as consumed without the corresponding full-body absorption and learning is a procedure-adherence + anti-fabrication defect (carrier-prose-as-evidence per `Skill(self-verification)` Step 3); the active owner must reload and relearn `Skill(<skill>)` or re-Read the reference range with full-content absorption before proceeding.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
 - Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.

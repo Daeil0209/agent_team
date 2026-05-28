@@ -100,7 +100,7 @@ Reviewer classifies each gap:
 |-------|------------|-------------------|
 | Blocking | Missing component, broken contract, missing user-surface proof, or failure to implement primary use case | Reopen the correction loop until governing evidence reclassifies the gap |
 | Non-blocking | Minor behavioral gap, cosmetic mismatch, or deviation without user-surface, acceptance, data, security, or workflow impact | Record in report |
-| Deferred | Design decision intentionally outside this iteration | Record under follow-up |
+| Deferred | Design decision outside this iteration under explicit iteration boundary or cited lawful deferral authority | Record follow-up owner/action and authority |
 
 When a gap is Blocking at P0 or P1 severity, escalate through `.claude/skills/dev-workflow/references/incident-response.md`.
 Classify P0/P1 gaps as incident-response candidates.

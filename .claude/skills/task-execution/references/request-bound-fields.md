@@ -79,7 +79,7 @@ When a frozen plan, MVP, release, or phase scope contains one or more promised f
 Each baseline row names a feature, workflow, surface, control, data, artifact, or reader/operator expectation that can be mapped to evidence.
 Module, epic, or screen labels are parent headings only.
 `ACTIVE-SLICE` is the subset assigned in the current packet.
-`DEFERRED-SURFACES` is valid only when original frozen request/plan/design explicitly deferred or excluded those row-granular items.
+`DEFERRED-SURFACES` is valid only when the original frozen request explicitly user-deferred/excluded those row-granular items or a frozen plan/design records cited `[USER-DELIVERY-FIT]` lawful owner-deferral basis.
 `CORE-WORKFLOW-CLOSURE` rows name applicable user-visible executable software actions and their paired completion surfaces.
 An unimplemented baseline item remains open, not out-of-scope by dispatch.
 
@@ -127,7 +127,7 @@ If the exact tool is not yet frozen, the packet can instead freeze a bounded dis
 - `TOOL-CLEANUP-EXPECTATION`
 
 Keep assignment autonomy without vague or unbounded tool hunting.
-When that boundary includes environment/tool setup, carry the setup safety classification from `work-planning`: `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`. `allowed-setup` is not a user confirmation gate; `approval-required` must name the damage-capable/destructive/security/credential/paid/persistent-service/policy reason.
+When that boundary includes environment/tool setup, carry the setup safety classification from `work-planning`: `allowed-setup`, `approval-required`, or `blocked`. `allowed-setup` is not a user confirmation gate; `approval-required` must name the damage-capable/destructive/security/credential/paid/persistent-service/policy reason.
 When a new tool path must be found, acquired, installed, configured, or verified, the active owner or lane consumes `Skill(tool-acquisition)` with this bounded field set. External API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work routes from there to `Skill(external-tool-bridge)`.
 For browser-ui proof or acceptance, an exact `TOOL-REQUIREMENT` and the full bounded discovery/setup bundle are alternatives at dispatch time. Carry both only when the workflow truly needs both.
 

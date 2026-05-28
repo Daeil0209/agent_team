@@ -40,6 +40,7 @@ Load when a request depends on preserving structure, format intent, section fide
   - answer surface remains unresolved
   - evidence-safe generation boundary remains unresolved
   - format-preservation requirements remain unresolved
+- Operational test for `unresolved`: the item cannot be named as a concrete document type, answer surface, allowed evidence class, or format/fidelity requirement that the next owner can execute without inventing document intent.
 ## Boundary
 - domain validation stays with the active path
 - fidelity claims stay within the format path's capability
@@ -65,7 +66,7 @@ Hand off after the next path can tell:
 - what evidence class is allowed
 - what structure is frozen
 - whether the artifact is section-ready, integrated, review-ready, or still blocked
-- whether format/openability fidelity is proven, deferred by the upstream record, or blocked
+- whether format/openability fidelity is proven, covered by a lawful upstream owner-deferral record, or blocked
 
 Before dense generation, keep concept hierarchy explicit.
 Keep section order explicit.

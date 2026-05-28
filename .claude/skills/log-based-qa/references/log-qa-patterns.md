@@ -108,17 +108,18 @@ If logs are the frozen decisive proof surface, missing required log fields or re
 - [ ] Docker Compose environment starts cleanly and log stream confirms JSON output
 - [ ] Manual test flow documented (core paths, edge cases, error paths)
 - [ ] Issue documentation template ready
-- [ ] Convergence cycle tracker initialized with target pass rate defined
+- [ ] Convergence cycle tracker initialized with target evidence coverage and outcome criteria defined
 ## Cycle Documentation Template
 ```markdown
 ## QA Cycle N — {feature name} — {YYYY-MM-DD}
 
-- **Pass Rate**: N% (X passed / Y total scenarios)
+- **Coverage Summary**: X observed / Y total scenarios; Z blocked with blocker basis
 
 | Scenario | Status | Log Evidence |
 |----------|--------|--------------|
-| Scenario 1 | ✅ PASS | |
-| Scenario 2 | ❌ FAIL | {request_id + error summary} |
+| Scenario 1 | Observed | |
+| Scenario 2 | Not observed | {request_id + error summary} |
+| Scenario 3 | Blocked | {blocker basis + next safe evidence step} |
 
 ### Bugs Found This Cycle
 - **BUG-N01**: {title} — Root cause: {desc} — Fix: {what changed} — Files: `path/file:line`

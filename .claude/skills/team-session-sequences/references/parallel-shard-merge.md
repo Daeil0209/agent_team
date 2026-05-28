@@ -21,6 +21,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A shard's retained carrier becomes merge-eligible input only after that shard's Communication Plane `completion` clears its per-target receipt barrier per `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Parallel And Reuse Law`.
 - File presence on disk, mtime, size, or partial content is supporting evidence only; pre-completion carrier reads do not become merge-eligible input even if their content later proves correct.
 - Once the frozen parent packet and the set of completion-cleared shards support useful progress, that owner opens bounded drafting or integration on that cleared set.
+- `useful progress` / `useful shard set` means the completed shard set can advance at least one frozen parent-packet row without inventing missing shard intent, hiding unresolved shard gaps, or claiming authoritative final synthesis.
 - Later shard arrivals fold into explicit follow-up merge work.
 - Missing inputs remain visible.
 - Each shard dispatch stays bounded and explicitly states what part of the parent work it owns, what it must not absorb, and the required completion form.
@@ -50,7 +51,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Merge does not owe every shard full local preservation in the final reader-facing body.
 - After merge, route one authoritative integrated output forward.
 - Do not send multiple shard bodies downstream as if acceptance lanes own implicit merge work.
-- Authoritative integrated output requires every required shard result to be integrated, explicitly deferred by owner, or marked out-of-scope with cited basis.
+- Authoritative integrated output requires every required shard result to be integrated, lawfully owner-deferred with cited authority/upstream record, or marked out-of-scope with cited basis.
 
 ## Resolve Next Owner And Action
 - Valid shard decomposition opens parallel shard dispatch.

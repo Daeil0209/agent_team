@@ -27,16 +27,16 @@ Completion transport, report admission, finding promotion, verification, runtime
 
 ## Carrier-Citation Atomic-Check
 PROTECTED-LOCAL-RESTATEMENT-BASIS: synthesis-input-reading atomic-check — carrier-citation rule colocated at the synthesis input consumption decision moment because synthesis decisions consume completion carriers as upstream-decision-basis at this exact step. Canonical carrier-citation rule lives at `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; this surface applies it at synthesis read time.
-Before treating any cited carrier as `VERIFIED-DATA-FEEDBACK`, `ADMITTED-CASE-INVENTORY`, or upstream-decision-basis for synthesis, run carrier-identification fresh verification:
+Before treating any cited carrier as `VERIFIED-DATA-FEEDBACK`, `ADMITTED-CASE-INVENTORY`, or upstream-decision-basis for synthesis, run carrier-identification fresh verification as quiet synthesis-input work:
 - (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
 - (ii) verify the carrier's `PACKET-ID` (or equivalent identifier) matches the expected ID referenced in the dispatch / completion context;
 - (iii) verify the carrier's verdict label, completion class, or cited content matches the synthesis-consumed claim.
-Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness.
+Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness. Carrier-presence, carrier-reading, completion-acceptance, and ingest narration are synthesis input state, not user-facing report content; replace them with the actual read, verification, correction, monitoring, or synthesis action.
 
 ## Synthesis Procedure
 1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.
-3. Keep missing, late, or insufficient inputs as unresolved input items outside the admitted-case inventory.
+3. Keep missing, late, or insufficient inputs as unresolved input items outside the admitted-case inventory; partial-acceptance, accepted/missing-lane, and wait-for-remaining-input narration stays internal and opens monitoring, correction, or `HOLD` instead of visible prose.
 4. Map every admitted case to exactly one `category` by same evidence-backed material feature; single-member categories are valid and `CATEGORY-MEMBER-TOTAL` must equal `ADMITTED-CASE-TOTAL`.
 5. Keep cases in separate categories when owner/action, causal mechanism, evidence need, acceptance truth, or correction path differs materially.
 6. For each category member, record every material resolved `work-coordinate` target; record `no-follow-on:<basis>` only when the category member has no material coordinate target.

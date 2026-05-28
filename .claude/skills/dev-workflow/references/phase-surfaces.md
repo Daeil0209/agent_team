@@ -58,7 +58,7 @@ auto-inject: false
   - interface, format, source-of-truth, and dependency surface
   - Boundary Register for cross-artifact, cross-surface, generated-output, template/render, and downstream handoff edges
   - Verification and correction-readiness plan derived from the plan's proof basis, including `SCOPE-BASELINE` coverage, exact-launch-artifact proof when executable, review/test proof surfaces, validator acceptance surface, and Phase 5 return-evidence pattern
-  - Internal Detail Bundle index: lane/surface contract paths, owner, implementation-ready status, and deferred or blocked status
+  - Internal Detail Bundle index: lane/surface contract paths, owner, implementation-ready status, and authorized deferred or blocked status
 - Internal Detail Bundle is the Phase 2-owned implementation-binding design detail; it must be present as bounded sub-artifacts, linked as explicit sub-artifacts, or explicitly excluded from the active implementation scope before Phase 3:
   - real-use contract for every material user-facing surface:
     - `ENTRY-OPEN-PATH`: exact user action, artifact, prerequisite, environment, and first open/start path
@@ -72,7 +72,7 @@ auto-inject: false
     - `EXIT-CLEANUP-REENTRY`: stop/close action, process/lock/port/temp cleanup, and clean relaunch result
     - `VISUAL-RENDERED-QUALITY`: required route/page/document/viewport states, readability, no clipping, no overlap, and visible hierarchy
     - `EVIDENCE-RETURN-CONTRACT`: tester/validator actions, retained proof artifacts, PASS blockers, and Phase 5 return evidence
-  - material specialist packets, oracles, and contract deltas selected by Phase 1, `LANE-REQUIRED-SKILLS-MAP`, `LEAD-LOCAL-REQUIRED-SKILLS`, or lawful phase-local refinement; each must be folded into implementation-binding detail, cited as a linked contract, or marked `deferred`/`blocked` with owner before Phase 3
+  - material specialist packets, oracles, and contract deltas selected by Phase 1, `LANE-REQUIRED-SKILLS-MAP`, `LEAD-LOCAL-REQUIRED-SKILLS`, or lawful phase-local refinement; each must be folded into implementation-binding detail, cited as a linked contract, marked `deferred` with cited lawful authority and follow-up owner/action, or marked `blocked` with owner, blocker, and next safe evidence step before Phase 3
   - business workflow packet: source-of-truth meaning, operator workflow meaning, mutation authority, period basis, allocation or participation semantics, reconciliation behavior, and proof oracle when spreadsheet or operations workflow meaning determines acceptance
   - ERD/data invariants/lifecycle when persistence or imported data matters
   - work-tool pattern packet: tool family, operator job, product-surface topology, persistence/import/export expectations, rejected pattern basis, and pattern proof oracle when practical work-tool structure determines acceptance

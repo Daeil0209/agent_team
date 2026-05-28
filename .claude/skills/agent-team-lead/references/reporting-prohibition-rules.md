@@ -14,21 +14,21 @@ Record team-lead's compact evidence-basis decision for the admitted report.
 ## Consume When
 - A reporting-law-admitted team-lead report needs compact evidence-basis control.
 - The admitted report uses visual, rendered, runtime, or user-surface proof to support final verified result wording.
-- The admitted report might include a lawfully deferred/out-of-scope surface, user-action blocker truth, closeout residual truth, or artifact links.
+- The admitted report might include a surface deferred by cited lawful authority, an out-of-scope surface, user-action blocker truth, closeout residual truth, or artifact links.
 
 ## Required Output
 Record:
 - reporting-law exception reason
 - current `Skill(self-verification)` convergence when required
 - concise evidence basis
-- included or omitted lawfully deferred/out-of-scope basis
+- included or omitted cited lawful deferral or out-of-scope basis
 - link placement basis when material
 
 ## Routing Gate
 - Missing reporting-law exception returns to `.claude/reference/reporting-prohibition-law.md`.
 - Missing required `Skill(self-verification)` convergence opens `Skill(self-verification)`.
 - Claim strength beyond evidence narrows to verified scope or routes `INFERENCE/UNVERIFIED` through `.claude/reference/reporting-prohibition-law.md`.
-- Missing lawfully deferred/out-of-scope, user-action blocker, residual, or artifact-link basis opens the owning synthesis, proof, acceptance, closeout, or filesystem-result path.
+- Missing cited lawful deferral, out-of-scope, user-action blocker, residual, or artifact-link basis opens the owning synthesis, proof, acceptance, closeout, or filesystem-result path.
 
 ## Resolve Next Owner And Action
 - Satisfied evidence-basis control returns to `.claude/reference/reporting-prohibition-law.md` for admitted prose.
@@ -38,17 +38,32 @@ Record:
 
 ## Evidence Basis
 - Include only the basis admitted by `.claude/reference/reporting-prohibition-law.md`.
-- Final-result proof basis names retained evidence anchor, decisive surface, inspected scope/action, and material lawfully deferred/out-of-scope or defect state only when material to the admitted report.
+- Final-result proof basis names retained evidence anchor, decisive surface, inspected scope/action, and material cited lawful deferral, out-of-scope, or defect state only when material to the admitted report.
 - Raw artifacts are shown only when explicitly requested or when the artifact is the deliverable.
 
 ## Composition Atomic-Check
 
-PROTECTED-LOCAL-RESTATEMENT-BASIS: composition-atomic-check colocated at team-lead reporting-discipline owner because cure activates at every team-lead admitted-prose composition moment. Canonical rules at `.claude/reference/reporting-prohibition-law.md` `## Report Shape` Multi-Element Inline-Render Constraint + `## Pre-Report Gate` row 52; this surface applies them at team-lead-specific composition moments with atomic-check framing.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: composition-atomic-check colocated at team-lead reporting-discipline owner because cure activates at every team-lead admitted-prose composition moment. Canonical rules at `.claude/reference/reporting-prohibition-law.md` `## Report Shape` Multi-Element Inline-Render Constraint + `## Pre-Report Gate`; this surface applies them at team-lead-specific composition moments with atomic-check framing.
 
 NAMING DISAMBIGUATION: this file `.claude/skills/agent-team-lead/references/reporting-prohibition-rules.md` is the OPERATIONAL team-lead reference for reporting discipline; it is DISTINCT from the PROTECTED `.claude/reference/reporting-prohibition-law.md` which carries the canonical rules. Modifications here go through normal Skill(governance-modification) cycle; modifications to the PROTECTED file require operator-policy-choice gate per `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`.
 
 ### Multi-Element Inline-Render Atomic-Check
-Before composing any admitted-class report containing multi-element required content (≥2 patches/items each requiring multi-element detail, or single patch whose elements alone exceed concise default capacity), atomically test total inline bullet/cell count against the concise default (lead-with-result sentence + ≤5 supporting bullets total). If total exceeds, suspend inline composition; route required detail to a retained carrier; emit only (1) lead-with-result statement, (2) item count + concise cross-row summary ≤5 bullets, (3) carrier path citation, (4) operator decision options when applicable. Inline-dump of all required elements × N patches is anti-pattern per canonical `## Report Shape` Multi-Element Inline-Render Constraint.
+- Before composing any admitted-class report containing multi-element required content, atomically test the candidate inline shape against the applicable canonical cap in `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
+- For `final verified result`, count every non-empty visible line including the `REPORT-REASON` marker and the final file-location line; maximum is 8 lines.
+- For `final verified result`, keep the last non-empty visible line shaped as `파일: <retained-carrier-or-artifact-path>`.
+- If the candidate report exceeds its applicable cap or would expose evidence/detail lists already retained in a carrier, suspend inline composition and route required detail to a retained carrier.
+- Emit only the result/decision statement, material unresolved result or needed next action, operator decision options only when a proven user-owned decision remains, and the final file/carrier path when required by the canonical shape.
+- Inline-dump of all required elements × N patches/items or all available retained evidence is anti-pattern per canonical `## Report Shape` Multi-Element Inline-Render Constraint.
+
+### Final-Result Pre-Emission Builder
+- Before emitting `REPORT-REASON: final verified result`, build the visible report from fixed slots only: report-reason marker, one result sentence, one optional material-unresolved-or-next-action sentence, and final `파일: <retained-carrier-or-artifact-path>` line.
+- Keep all candidate inventories, finding inventories, defect counts, lane/shard/member counts, evidence counts, file:line lists, patch enumerations, verification packet summaries, carrier body summaries, runtime state, and standby-agent state in the retained carrier.
+- Reject any visible draft that repeats a prior blocked report, appends a correction report to old prose, duplicates a result unit, includes a middle `Carrier:` citation, or exceeds the canonical 8-line maximum.
+- Repair a rejected visible draft internally before emission; do not rely on post-emission controls, hook errors, or corrective re-emission to achieve report-shape compliance.
+- When the user did not explicitly request detailed material in the current turn, default-concise remains active and the builder emits only the user-relevant result plus the final file location.
 
 ### Direct-Question Answer-Required Atomic-Check
-When the active user turn contains a direct question (yes/no, what/why/which, status-asking, or equivalent in any language), the same-turn response MUST emit an answer prose with REPORT-REASON: `explicit status answer` per canonical `## Pre-Report Gate` row 52 before any non-trivial tool batch. Tool-batch-only response without answer prose to a direct user question is `explicit status answer` evasion. Force-continuation reflex (immediate jump to grep/Bash/Read without emitting answer) is the named anti-pattern; the cure is: answer first, then tool batch. Post-answer next-tool-call duty is owned by `.claude/skills/agent-team-lead/references/pre-action-gate.md` `## Action Invariants` Report separation invariant (covers post-answer prose surface composition moment).
+When the active user turn is answer-only or status-only and the answer is already truthfully known from current evidence, emit the narrow answer with `REPORT-REASON: explicit status answer` before any non-trivial tool batch.
+When a direct question also assigns audit, mutation, verification, dispatch, cleanup, or evidence-dependent judgment, do not classify it as `explicit status answer` by question shape alone; freeze and execute the required owner path first, then report only if `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` admits the result or a true status answer.
+Tool-batch-only response to an answer-only/status-only direct question whose answer is already known is `explicit status answer` evasion.
+Post-answer next-tool-call duty is owned by `.claude/skills/agent-team-lead/references/pre-action-gate.md` `## Action Invariants` Report separation invariant.

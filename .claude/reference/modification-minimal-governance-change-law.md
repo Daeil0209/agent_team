@@ -182,9 +182,9 @@ Adjacent-surface patch-selection duplication is replaced by citation to this gat
 ## Hardening Rules
 PROTECTED-LOCAL-RESTATEMENT-BASIS: hardening-atomic-check — `[HARDEN]` discipline rule colocated at the hardening-operations consumption surface for atomic application at every hardening-mode patch design moment; canonical owner is `.claude/reference/modification-core-law.md` `[HARDEN]` rule.
 - Correct confirmed defects at the narrowest owner.
-- Use `Skill(governance-modification)` `recurrence-hardening` mode only for recurrence-barrier hardening.
+- Use `Skill(governance-modification)` `CHANGE-MODE: recurrence-hardening` only for recurrence-barrier hardening.
 - Treat non-compliance as an adherence defect.
 - Harden adherence instead of adding duplicate doctrine for non-compliance.
-- Structural or cross-surface governance patches consume `Skill(governance-modification)` `REVIEW-VERIFICATION-NEED`.
-- Material `REVIEW-VERIFICATION-NEED` entries load `Skill(review-verification):<bounded-question>` before mutation.
+- Structural or cross-surface governance patches consume `Skill(governance-modification)` Step 2 `REVIEW-VERIFICATION-NEED`.
+- Material `REVIEW-VERIFICATION-NEED` entries load and learn `Skill(review-verification):<bounded-question>` before mutation.
 - Recurrence-barrier and asset-change patch execution follow `.claude/skills/governance-modification/SKILL.md` Steps 4-6 and `# Patch Execution Method`.

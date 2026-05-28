@@ -54,7 +54,7 @@ Capture only the decisive enterprise-architecture packet:
 - active anti-pattern risks
 - open surfaces and next owner/action
 ## Handoff Boundary
-Route implementation divergence, missing design-doc traceability, security deferral, and production-readiness gaps explicitly upward.
+Route implementation divergence, missing design-doc traceability, security gaps, and production-readiness gaps explicitly upward with owner, evidence gap, and next action; do not label security gaps as deferrable unless a lawful owner-deferral basis exists.
 Keep checklist tables and anti-pattern catalogs in `references/architecture-review-detail.md`.
 ## Operating Core
 - design documents must precede implementation on enterprise-scale work

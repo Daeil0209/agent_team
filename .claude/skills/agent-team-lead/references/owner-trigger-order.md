@@ -45,7 +45,7 @@ Governance-modification activation requires a current owner/action basis; inspec
 - A lower-trigger gap opens the higher trigger owner.
 - An owner-execution-credit gap opens loaded-document consumption.
 - A reporting gap opens artifact refresh.
-- A dispatch gap loads `Skill(work-planning)` or the primary sequence skill owner.
+- A dispatch gap loads and learns `Skill(work-planning)` or the primary sequence skill owner.
 
 ## Trigger Order
 Consume the highest active trigger first:
@@ -70,8 +70,8 @@ After the current session-start artifact is current, trigger 3 reopens trigger 2
 - `Skill(session-closeout)` emits closeout residual truth or teardown completion.
 
 ## Artifact Discipline
-Skill load is availability only.
-Loaded owner text becomes execution evidence only through applied-rule mapping.
+Skill load-and-learn creates availability only.
+Loaded-and-learned owner text becomes execution evidence only through applied-rule mapping.
 Applied-rule mapping names action, stop, evidence, owner, or next-action effect.
 Tool result is artifact only when the owner defines it as artifact.
 Narrative claims of completed owner work are procedural failure.

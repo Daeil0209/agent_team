@@ -23,5 +23,5 @@ Missing that path when materially relevant is a planning-evidence defect.
 
 ## Resolve Next Owner And Action
 - Higher-tier evidence need opens the canonical escalation path.
-- Feasible lower-tier-only planning records the deferral basis.
+- Feasible lower-tier-only planning records the evidence-tier downgrade basis and open higher-tier evidence impact; it does not close a material higher-tier evidence need as owner deferral.
 - Missing material escalation reopens `work-planning`.

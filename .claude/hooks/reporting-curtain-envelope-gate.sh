@@ -10,7 +10,7 @@
 #   1. Skill(governance-modification) Step 3 review-verification packet
 #   2. Validator pre-approval (CLAIM-CEILING: validator-final-verdict, PASS verdict)
 #   3. User notification with constitutional invariant + forensic erosion cycle disclosure
-#   4. User acknowledgment or absence of objection in the same turn segment
+#   4. Explicit user acknowledgment or explicit user instruction authorizing the named protected-surface mutation
 # Approval basis for the in-place script: 2026-05-21 prior reporting-prohibition
 # patch wave (commit c361c8a) + 2026-05-26 constitutional re-confirmation
 # (curtain-constitutional-fix-2026-05-26, user-authorized via "독립적이면서 안전한
@@ -38,28 +38,30 @@
 #
 # Scope (narrow)
 #   - Only fires on tool_name == "SendMessage".
-#   - Only fires when the message body starts with
-#     "MESSAGE-CLASS: <upward state class>" where the upward state classes
-#     are exactly: dispatch-ack, status, scope-pressure, completion,
-#     hold|blocker (per
-#     .claude/skills/task-execution/references/message-classes.md
-#     `## Upward Message Classes`).
-#   - Downward message classes (assignment, reuse, reroute,
-#     phase-transition-control) and structured payloads (shutdown_request
-#     etc.) are not in scope and pass through unaffected.
-#   - Empty or single-ASCII-space message body passes through unaffected
-#     (canonical envelope).
+#   - Inspects decoded tool_input.summary and tool_input.message together.
+#   - Summary carries only empty/whitespace or canonical no-detail routing
+#     tokens; runtime agent handles such as @R1-reviewer and parenthesized
+#     role labels such as (reviewer) are routing tokens, not receiver-required
+#     content.
+#   - Message carries only empty/whitespace, one carrier-pointer/index KEY
+#     line, or the exact structured shutdown object
+#     {"type":"shutdown_request"} / {"type":"shutdown_response"}.
+#     String-rendered user-visible body exposure ceiling is one non-empty line.
+#   - Downward assignment/reuse/reroute/phase-transition-control details stay
+#     in a governed carrier or task state referenced by that one visible line.
 #
 # Recovery
 #   Resend with the canonical envelope per
 #   .claude/skills/task-execution/references/message-classes.md
 #   `### Transport Payload`:
-#     - summary parameter = canonical state token only
-#       (e.g., "ack task N", "completion task N", "scope-pressure",
-#       "hold|blocker", "status").
-#     - message body = empty string or single ASCII space.
-#     - Receiver-required detail moves to the retained carrier referenced
-#       via RETAINED-OUTPUT-PATH on the assignment packet.
+#     - summary parameter = canonical no-detail routing token only.
+#     - message body = empty string, single ASCII space, one
+#       carrier-pointer/index KEY line, or exact structured shutdown object.
+#     - Downward assignment/reuse/reroute/phase-transition-control packet
+#       detail lives in the governed carrier or task state referenced by the
+#       one-line visible body.
+#     - Receiver-required detail moves to a governed carrier, task state,
+#       packet, or evidence artifact referenced by the visible envelope.
 #
 # Failure mode
 #   Fail-open on any hook-internal error (malformed JSON, bash exception).
@@ -68,15 +70,13 @@
 #   safety net.
 #
 # Implementation
-#   Pure bash + grep, no jq dependency. Loose substring match on the
-#   JSON-encoded message body looking for upward state class MESSAGE-CLASS
-#   header at the start of the message value. This is narrow enough to
-#   avoid false positives on assignment/downward packets while binary
-#   enough to enforce envelope discipline at transport moment.
+#   Bash wrapper + existing Node helper
+#   .claude/hooks/lib/hook-json-helpers.js parseInput(). JSON parsing is used
+#   so escaped quotes and encoded newlines are inspected as actual strings.
 #
 # Footprint
 #   Single PreToolUse matcher on "SendMessage" tool. No filesystem writes.
-#   No long-running operations. Single grep pass on stdin input.
+#   No long-running operations. Single JSON parse and string validation.
 
 set +e  # fail-open posture
 
@@ -85,126 +85,220 @@ if [ -z "$INPUT_JSON" ]; then
   exit 0
 fi
 
-# Confirm tool_name == SendMessage; otherwise allow.
-if ! printf '%s' "$INPUT_JSON" | grep -qE '"tool_name"[[:space:]]*:[[:space:]]*"SendMessage"'; then
+HOOK_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)"
+HOOK_JSON_HELPERS="$HOOK_DIR/lib/hook-json-helpers.js"
+
+if [ ! -f "$HOOK_JSON_HELPERS" ]; then
   exit 0
 fi
 
-# Generalized non-downward body discipline: prior over-specific marker
-# allow-list (PART A) removed per operator directive "패치는 일반화 되어야"
-# (patches must be generalized). The over-specific marker enumeration
-# (FINDING-STATE-LADDER-SUMMARY / PATCH-WORTHINESS / META-CONCERN / etc.)
-# was a brittle whack-a-mole pattern that ALSO false-positive-blocked
-# legitimate canonical short tokens like `VERDICT: PASS` that
-# .claude/skills/task-execution/references/message-classes.md
-# `### Transport Payload` explicitly cites as canonical envelope examples.
-# Generalized enforcement now lives in PART C (non-downward body allow-list)
-# below: any non-canonical body line in non-downward delivery is rejected
-# by structural rule, not by specific marker name. Downward delivery is
-# producer-authored by team-lead under identity-layer Curtained Communication
-# discipline and the downward packet schema governs body shape semantically.
+INPUT_JSON="$INPUT_JSON" HOOK_JSON_HELPERS="$HOOK_JSON_HELPERS" node <<'NODE' 2>/dev/null || true
+const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
 
-# Bulk-body heuristic for non-downward-delivery messages (PART B): any
-# SendMessage whose body has more than CURTAIN_BODY_MAX_NL newlines
-# AND does NOT start with a downward delivery MESSAGE-CLASS (assignment,
-# reuse, reroute, phase-transition-control) is presumed curtain-violating.
-# Downward delivery legitimately carries packet floor fields; non-downward
-# bodies must be canonical envelope (empty / single space / short carrier
-# pointer ≤ 3 lines) per the non-state-class rule.
-CURTAIN_BODY_MAX_NL=3
-DOWNWARD_HEADER_RE='"message"[[:space:]]*:[[:space:]]*"MESSAGE-CLASS:[[:space:]]*(assignment|reuse|reroute|phase-transition-control)'
-# Count escaped newlines (\n) inside the JSON-encoded "message" body.
-BODY_NL_COUNT=$(printf '%s' "$INPUT_JSON" | grep -oE '"message"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -oE '\\n' | wc -l)
-if [ "$BODY_NL_COUNT" -gt "$CURTAIN_BODY_MAX_NL" ]; then
-  if ! printf '%s' "$INPUT_JSON" | grep -qE "$DOWNWARD_HEADER_RE"; then
-    cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage body exceeds canonical envelope shape (>3 newlines) and is NOT a downward delivery class (assignment/reuse/reroute/phase-transition-control). Non-downward SendMessage must be canonical envelope per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule: summary = brief class label + task pointer; message body = empty, single ASCII space, OR ≤3 lines naming a CARRIER path plus brief intent label. Bulk body content (opinion, inventory, rationale, narrative) belongs in the retained carrier referenced by the envelope pointer, not in the SendMessage body. Recover by moving body content to a retained carrier file and resending with the canonical envelope shape."
+const input = parseInput();
+if (String(input.tool_name || "") !== "SendMessage") process.exit(0);
+
+const toolInput = input.tool_input || {};
+const summary = String(toolInput.summary ?? input.summary ?? "");
+const rawMessage = toolInput.message ?? input.message ?? "";
+const message = typeof rawMessage === "string" ? rawMessage : String(rawMessage ?? "");
+
+function deny(reason) {
+  process.stdout.write(JSON.stringify({
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      permissionDecisionReason: reason,
+    },
+  }, null, 2));
+  process.exit(0);
+}
+
+function hasFreeformSummary(text) {
+  const trimmed = text.trim();
+  if (!trimmed) return false;
+  if (text.includes("\n") || text.includes("\r")) return true;
+  if (trimmed.length > 80) return true;
+  if (/[\\/?!,;"'`{}[\]]/.test(trimmed)) return true;
+  if (/\b(findings?|defects?|evidence|rationale|summary|details?|counts?|paths?|files?|lines?|open-surfaces|basis|because|leaks?|leaked|results?)\b/i.test(trimmed)) return true;
+
+  const noDetailClassTokens = new Set([
+    "ack",
+    "active",
+    "assignment",
+    "carrier-only",
+    "completion",
+    "consent",
+    "critique-request",
+    "critique-response",
+    "draft-publication",
+    "draft-update",
+    "for",
+    "hold",
+    "hold|blocker",
+    "hold-blocker",
+    "no-objection",
+    "pass",
+    "phase-transition-control",
+    "redirect",
+    "reroute",
+    "reuse",
+    "scope-pressure",
+    "shutdown-request",
+    "shutdown-response",
+    "shutdown_request",
+    "shutdown_response",
+    "status",
+    "task",
+    "turn",
+    "verdict",
+    "wake",
+  ]);
+  const roleTokens = new Set([
+    "critic",
+    "developer",
+    "drafter",
+    "researcher",
+    "reviewer",
+    "team-lead",
+    "tester",
+    "validator",
+    "worker",
+  ]);
+
+  function tokenize(segment) {
+    return segment.trim().match(/\([^()\s]+\)|[^\s]+/g) || [];
+  }
+
+  function normalized(token) {
+    return token.trim().toLowerCase();
+  }
+
+  function isNoDetailClassToken(token) {
+    const lower = normalized(token);
+    if (noDetailClassTokens.has(lower)) return true;
+    return /^(r|t)[0-9]+$/i.test(token)
+      || /^(round|turn|task|batch|wave)-[A-Za-z0-9_.|-]+$/i.test(token);
+  }
+
+  function isRoleToken(token) {
+    const lower = normalized(token);
+    if (roleTokens.has(lower)) return true;
+    const match = token.match(/^\(([A-Za-z][A-Za-z0-9_.|-]*)\)$/);
+    return Boolean(match && roleTokens.has(match[1].toLowerCase()));
+  }
+
+  function isRoutingIdentifierToken(token) {
+    if (!/^[A-Za-z0-9@][A-Za-z0-9_.|@-]*$/.test(token)) return false;
+    if (/^@[A-Za-z0-9][A-Za-z0-9_.|-]*$/.test(token)) return true;
+    if (/^[0-9]+$/.test(token)) return true;
+    if (/^(agent|worker|lane|shard|batch|wave|task|round|turn)[-_]?[A-Za-z0-9_.|-]+$/i.test(token)) return true;
+    return /[0-9]/.test(token) && /[-_.|]/.test(token);
+  }
+
+  const colonCount = (trimmed.match(/:/g) || []).length;
+  if (colonCount > 1) return true;
+  const segments = trimmed.split(":").map((segment) => segment.trim());
+  if (segments.some((segment) => !segment)) return true;
+  if (colonCount === 1 && !isNoDetailClassToken(segments[0])) return true;
+
+  const tokens = segments.flatMap(tokenize);
+  if (tokens.length > 8) return true;
+  return !tokens.every((token) => (
+    isNoDetailClassToken(token)
+    || isRoleToken(token)
+    || isRoutingIdentifierToken(token)
+  ));
+}
+
+if (hasFreeformSummary(summary)) {
+  deny("Reporting-curtain envelope violation: SendMessage summary contains free-form detail or non-canonical token shape. Summary is user-visible and may carry only empty/whitespace or a short no-detail routing token. Receiver-required detail belongs in the governed carrier, task state, packet, or evidence artifact referenced by the message body pointer.");
+}
+
+function isStructuredShutdownPayload(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const keys = Object.keys(value);
+  return keys.length === 1
+    && keys[0] === "type"
+    && (value.type === "shutdown_request" || value.type === "shutdown_response");
+}
+
+if (isStructuredShutdownPayload(rawMessage)) {
+  process.exit(0);
+}
+
+const body = message.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+if (!body.trim()) process.exit(0);
+
+const lines = body.split("\n").filter((line) => line.trim() !== "");
+if (lines.length > 1) {
+  deny("Reporting-curtain envelope violation: SendMessage body exceeds the one-line visible exposure ceiling. Assignment packets, team-meeting turns, critique, findings, rationale, evidence, and status detail belong in a governed carrier, task state, packet carrier, or evidence artifact referenced by one visible pointer line.");
+}
+
+const allowedKey = /^(CARRIER|STATE|ROUND|TURN|WAKE|NEXT|FROM|TO|VERDICT|CRITIQUE|REDIRECT|REPORT-REASON|TASK-ID|RETAINED-OUTPUT-PATH|UPSTREAM-DECISION-BASIS):[ \t]\S/;
+const pathKeys = new Set(["CARRIER", "RETAINED-OUTPUT-PATH"]);
+const reportReasons = new Set([
+  "final verified result",
+  "user-action blocker",
+  "explicit status answer",
+  "closeout residual",
+]);
+const closedValues = {
+  VERDICT: new Set(["PASS", "HOLD", "FAIL", "carrier-only"]),
+  CRITIQUE: new Set([
+    "critique-request",
+    "critique-response",
+    "carrier-only",
+    "candidate-classified",
+    "candidate-classified-with-revision",
+    "revision-required",
+    "no-objection",
+    "CONSENT",
+    "HOLD",
+  ]),
+  REDIRECT: new Set([
+    "carrier-only",
+    "packet-correction",
+    "scope-pressure",
+    "hold-blocker",
+    "owner-correction",
+  ]),
+};
+const substantiveToken = /(found|finding|findings|defect|defects|critical|major|minor|because|leak|leaks|leaked|evidence|count|counts|rationale|reasoning|summary|detail|details|files|lines|open[-_]?surfaces|open|surface|surfaces|result|results)/i;
+
+for (const rawLine of lines) {
+  const line = rawLine.trim();
+  if (!allowedKey.test(line)) {
+    deny("Reporting-curtain envelope violation: SendMessage body contains a free-form or disallowed rendered line. The visible body may contain only canonical carrier-pointer/index KEY lines and must not contain MESSAGE-CLASS, assignment packet fields, critique body, rationale, findings, evidence, or progress prose.");
+  }
+  const key = line.slice(0, line.indexOf(":"));
+  const value = line.slice(line.indexOf(":") + 1).trim();
+  if (!pathKeys.has(key)) {
+    if (key === "REPORT-REASON") {
+      if (!reportReasons.has(value)) {
+        deny("Reporting-curtain envelope violation: REPORT-REASON body value is not a canonical report reason. Non-canonical report wording belongs in the governed carrier.");
+      }
+      continue;
+    }
+    if (substantiveToken.test(value)) {
+      deny("Reporting-curtain envelope violation: SendMessage body KEY value contains substantive finding, evidence, count, rationale, result, or leakage wording. Non-path KEY values must stay closed-vocabulary no-detail index labels.");
+    }
+    if (closedValues[key] && !closedValues[key].has(value)) {
+      deny("Reporting-curtain envelope violation: SendMessage body KEY value is outside the closed no-detail vocabulary for that KEY. Receiver-required detail belongs in the governed carrier.");
+    }
+    if (key === "ROUND" && !/^(r[0-9]+|round-[0-9]+)$/i.test(value)) {
+      deny("Reporting-curtain envelope violation: ROUND value must be a no-detail round identifier.");
+    }
+    if (key === "TURN" && !/^([Tt][0-9]+|turn-[0-9]+)$/.test(value)) {
+      deny("Reporting-curtain envelope violation: TURN value must be a no-detail turn identifier.");
+    }
+    if (value.length > 80 || !/^[A-Za-z0-9_.|@-]+$/.test(value)) {
+      deny("Reporting-curtain envelope violation: SendMessage body KEY value contains substantive prose. Non-path KEY values must stay no-detail index labels; receiver-required detail belongs in the governed carrier.");
+    }
+  } else if (value.length > 240) {
+    deny("Reporting-curtain envelope violation: SendMessage carrier pointer is too large for the visible envelope. Use the smallest governed carrier path or task-state pointer.");
   }
 }
-EOF
-    exit 0
-  fi
-fi
-
-# Secondary check (PART C — non-downward-delivery body strict allow-list):
-# For non-downward delivery SendMessage, EVERY non-empty body line MUST start
-# with a canonical curtain-allowed KEY (CARRIER, STATE, ROUND, TURN, WAKE,
-# NEXT, FROM, TO, VERDICT, CRITIQUE, REDIRECT, REPORT-REASON, MESSAGE-CLASS,
-# TASK-ID, RETAINED-OUTPUT-PATH, UPSTREAM-DECISION-BASIS). Lines that contain
-# free-form substantive content (questions, answers, claims, opinions,
-# summaries, narratives) — any line not starting with an allowed KEY — fail
-# the curtain because the host runtime auto-renders teammate-message envelope
-# body into user-visible UI, exposing controllable substance to the user
-# surface. Substantive content MUST live in the retained carrier referenced
-# via CARRIER pointer; the SendMessage body is index-only.
-#
-# Downward delivery (assignment/reuse/reroute/phase-transition-control) is
-# exempt because the body legitimately carries packet floor fields that
-# follow the broader assignment-packet schema; team-lead authors those
-# downward packets and is the producer, not the user-surface consumer.
-NONDOWNWARD_BODY_ALLOWED_RE='^(CARRIER|STATE|ROUND|TURN|WAKE|NEXT|FROM|TO|VERDICT|CRITIQUE|REDIRECT|REPORT-REASON|MESSAGE-CLASS|TASK-ID|RETAINED-OUTPUT-PATH|UPSTREAM-DECISION-BASIS):[[:space:]]'
-
-if ! printf '%s' "$INPUT_JSON" | grep -qE "$DOWNWARD_HEADER_RE"; then
-  # Extract body content from JSON-encoded "message" field
-  BODY_RAW=$(printf '%s' "$INPUT_JSON" | grep -oE '"message"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed -E 's/^"message"[[:space:]]*:[[:space:]]*"//' | sed -E 's/"$//')
-  # Skip allow-list check for empty / single-space body (canonical empty envelope)
-  TRIMMED_BODY=$(printf '%s' "$BODY_RAW" | tr -d '[:space:]')
-  if [ -n "$TRIMMED_BODY" ]; then
-    # Convert escaped \n (JSON-encoded newlines) to actual newlines for line-by-line check
-    BODY_TEXT=$(printf '%s' "$BODY_RAW" | sed 's/\\n/\n/g')
-    # Find any non-empty line that does NOT start with allowed canonical KEY
-    NONCONFORMING_COUNT=$(printf '%s\n' "$BODY_TEXT" | grep -vE "$NONDOWNWARD_BODY_ALLOWED_RE" | grep -vcE '^[[:space:]]*$')
-    if [ "$NONCONFORMING_COUNT" -gt "0" ]; then
-      cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Reporting-curtain envelope violation: non-downward-delivery SendMessage body contains free-form substantive line(s) — line(s) not starting with a canonical curtain-allowed KEY. Per .claude/CLAUDE.md '## Constitutional Reporting Curtain' + .claude/skills/task-execution/references/message-classes.md '### Transport Payload' non-state-class rule + .claude/skills/team-meeting/SKILL.md '### 3-4a. Discussion Envelope Form', non-downward SendMessage body MUST be empty, single ASCII space, OR consist ONLY of canonical KEY: value lines where KEY is in {CARRIER, STATE, ROUND, TURN, WAKE, NEXT, FROM, TO, VERDICT, CRITIQUE, REDIRECT, REPORT-REASON, MESSAGE-CLASS, TASK-ID, RETAINED-OUTPUT-PATH, UPSTREAM-DECISION-BASIS}. Free-form substantive content (questions, answers, claims, opinions, summaries, narratives, rationale, status-prose) lives in the retained carrier referenced via CARRIER pointer; the SendMessage body is index-only. Host runtime auto-renders teammate-message envelope body into user-visible UI; free-form body content therefore leaks meeting/work substance to the user surface, breaking the curtain. Recover by moving body content to a retained carrier file and resending with KEY-only envelope shape (e.g., 'CARRIER: claude_doc/.../log.md' + 'STATE: r1-T07-appended' + 'WAKE: drafter')."
-  }
-}
-EOF
-      exit 0
-    fi
-  fi
-fi
-
-# Primary check: upward state-class MESSAGE-CLASS header at the start of the
-# message body. In JSON-encoded form this looks like:
-#   "message":"MESSAGE-CLASS: dispatch-ack\n..."
-# The classes are: dispatch-ack, status, scope-pressure, completion,
-# hold|blocker. (The pipe in hold|blocker is escaped in the regex with
-# a backslash.)
-UPWARD_HEADER_RE='"message"[[:space:]]*:[[:space:]]*"MESSAGE-CLASS:[[:space:]]*(dispatch-ack|status|scope-pressure|completion|hold\|blocker)'
-
-if ! printf '%s' "$INPUT_JSON" | grep -qE "$UPWARD_HEADER_RE"; then
-  # Canonical envelope or downward / structured payload — allow.
-  exit 0
-fi
-
-# Extract detected class for the recovery message.
-DETECTED_CLASS=$(printf '%s' "$INPUT_JSON" \
-  | grep -oE 'MESSAGE-CLASS:[[:space:]]*(dispatch-ack|status|scope-pressure|completion|hold\|blocker)' \
-  | head -1 \
-  | sed -E 's/MESSAGE-CLASS:[[:space:]]*//')
-
-if [ -z "$DETECTED_CLASS" ]; then
-  DETECTED_CLASS="upward-state-class"
-fi
-
-# Emit deny decision via PreToolUse hookSpecificOutput JSON.
-cat <<EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Reporting-curtain envelope violation: SendMessage upward state class '${DETECTED_CLASS}' carries MESSAGE-CLASS header plus content in the message body. Per .claude/skills/task-execution/references/message-classes.md '### Transport Payload' and .claude/reference/reporting-prohibition-law.md, upward state-class transport MUST use the canonical no-detail envelope: summary parameter carries the canonical state token only (e.g., 'ack task N' / 'completion task N' / 'scope-pressure' / 'hold|blocker' / 'status'); message body is the empty string or a single ASCII space; receiver-required detail moves to the retained carrier cited by RETAINED-OUTPUT-PATH. The agent role file IR-3 Curtained Communication (or attribute (i) for team-lead) is the identity-level commitment to this discipline. Recover by resending with canonical envelope shape; do not retry with the current malformed body."
-  }
-}
-EOF
+NODE
 
 exit 0

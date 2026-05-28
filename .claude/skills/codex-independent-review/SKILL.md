@@ -21,9 +21,9 @@ Coverage, adjacent boundaries, evidence-only output rule, and non-substitution r
 
 
 ## Purpose
-Provide one reusable Codex MCP independent-review surface for all configured-review consumers.
+Provide one reusable codex CLI background-invocation independent-review surface for all configured-review consumers.
 Keep trigger handling, packet shape, tool discipline, and adjudication consistent across planning, artifact convergence, review convergence, final acceptance, and bounded review targets.
-Avoid embedding Codex MCP procedure detail inside `work-planning` or `dev-workflow` consumer documents.
+Avoid embedding codex CLI background-invocation procedure detail inside `work-planning` or `dev-workflow` consumer documents.
 
 ## Activation
 Load when the active path opens configured independent review or must record configured-review trigger handling.
@@ -40,7 +40,7 @@ Load when the active path opens configured independent review or must record con
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
 - lead-local would substitute for a configured lane
 - parallel fit affects correctness or bottleneck risk
-- team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or evidence route
+- team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, evidence route, or user-decision-risk decision-support route
 
 **Skip semantics** rule 1: "Skip when no risk-triggered axis applies" applies to the Risk-triggered evaluation only.
 **Skip semantics** rule 2: this does not skip codex-review when any Required trigger fires.
@@ -66,7 +66,7 @@ Load only the references whose trigger is active:
 
 ## Outputs
 - `CODEX-INDEPENDENT-REVIEW-BASIS`
-- accepted/rejected/deferred/fail-open points
+- accepted/rejected/lawfully-deferred-with-authority/fail-open points
 - adjudication basis
 - open surfaces and next owner/action
 
@@ -77,7 +77,7 @@ Load only the references whose trigger is active:
 4. Build a derived configured-review packet from canonical fields and evidence surfaces.
 5. Call codex CLI via Bash background invocation under the common tool discipline.
 6. Parse the returned JSON.
-7. Retry once for first-use connection miss or parse failure when the common contract permits.
+7. Retry once for first-use connection miss or parse failure when `references/concurrent-patterns.md` Failure Mode Handling permits.
 8. Record `fail-open:<reason>` after exhausted tool, auth, quota, timeout, config, or parse failure.
 9. Adjudicate every valid point against doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
 10. Update only the active planning field, artifact, correction basis, convergence record, acceptance record, blocker basis, or fail-open record.

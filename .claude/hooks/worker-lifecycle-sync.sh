@@ -273,7 +273,7 @@ switch (classification) {
     ctx = `Agent completed: ${teammate} has completion-grade output (${reason}, ${status}). Treat the agent as STANDBY now; next valid lead actions are retained-carrier synthesis, distinct bounded reuse, structured cleanup, or route-owned validation/correction.`;
     break;
   case "working-permission-pending":
-    ctx = `Agent still working: ${teammate} is awaiting user permission for a tool request. Next: resolve the permission prompt; do not status-probe or reclassify the agent as not working.`;
+    ctx = `Agent still working: ${teammate} has a host-presented tool permission request. Next: resolve the existing host request if already displayed; do not ask the user otherwise, status-probe, or reclassify the agent as not working.`;
     break;
   case "dispatch-pending-no-ack":
     ctx = `Dispatch still pending: ${teammate} has no dispatch-ack yet after current dispatch check. Next: send one same-assignment receipt follow-up; do not wait silently or status-probe the unstarted target as the primary action.`;
@@ -294,7 +294,9 @@ switch (classification) {
 // failed — (root): Invalid input" on every idle event. Context-injection via stdout is
 // abandoned until a verified schema lands; file/state side effects above remain the
 // hook's effective output. The `ctx` variable is still constructed so future schema
-// verification can re-enable the write with a minimal change here.
+// verification can re-enable the write only if the verified schema preserves
+// silent-by-default reporting and does not ask the user unless a host request
+// already exists.
 void ctx;
 NODE
 

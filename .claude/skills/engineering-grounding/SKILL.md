@@ -31,6 +31,7 @@ Load when applied engineering realism, units, or operating constraints materiall
 - keep timing budgets explicit when timing matters
 - keep trade-off documentation explicit when competing metrics are in play
 - Report `hold|blocker` when credible assumptions, operating conditions, constraints, or evidence are absent.
+- Operational test for `not credible`: the needed item cannot be named with a cited assumption, operating condition, constraint source, or evidence source that supports the frozen claim strength.
 ## Boundary
 - mathematical correctness checking stays with the active path
 - engineering requirements require evidence

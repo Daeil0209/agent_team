@@ -89,6 +89,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ### 7. Classify Findings
 - Every finding states severity, evidence anchor, impact, owner, and fix direction.
 - Governance defect, removal, patch-worthiness, or correction-priority labels remain candidate evidence under the frozen claim ceiling until the team-lead `Skill(review-verification)` defect-promotion path promotes them.
+- Before raising governance-related `candidate-classified`, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` recorded candidate-classification basis gate; otherwise keep the item as `candidate-evidence` or `OPEN-SURFACES`.
 - That candidate ceiling does not weaken ordinary acceptance review; blocking acceptance findings remain blocking under severity mapping.
 - Repeated wording stays candidate evidence until local consuming-surface need is disproven on each affected surface.
 - Distinguish blocking from non-blocking findings explicitly.
@@ -114,5 +115,5 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Completion uses `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
-- Downstream of reviewer `MESSAGE-CLASS: completion` with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).
+- Downstream of reviewer completion-class governed payload with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).
 - `REVIEW-STATE: hold|blocked` opens the named blocker owner/action before acceptance continues.

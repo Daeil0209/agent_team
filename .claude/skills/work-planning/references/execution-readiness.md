@@ -20,7 +20,7 @@ For team-routed or dispatch-capable paths, readiness must cover:
 - parallel grouping with burden-balance basis, or serial reason
 - proof owner
 - acceptance owner
-- setup safety when environment/tool setup is needed: classify the setup as `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`, and do not convert `allowed-setup` into a user choice.
+- setup safety when environment/tool setup is needed: classify the setup as `allowed-setup`, `approval-required`, or `blocked`, and do not convert `allowed-setup` into a user choice.
 
 An unknown but material readiness category records the blocker and freezes the smallest blocker-clear owner.
 Passing such a gap downstream is forbidden.
@@ -41,7 +41,7 @@ The exception is when the correct tool is already proven or the route is a prove
 
 Allowed setup is bounded, reversible where practical, non-damaging, credential-free, non-paid, and directly needed for the frozen user-surface proof or delivery path.
 Standard font packages, browser runtime/cache, and equivalent local tool prerequisites proceed inside that boundary when needed.
-Heavyweight installers, persistent services/daemons, credential repair, paid/licensed tools, destructive package actions, or security-setting changes require explicit approval or deferral.
+Heavyweight installers, persistent services/daemons, credential repair, paid/licensed tools, destructive package actions, or security-setting changes route as `approval-required` or `blocked` to the named setup owner.
 
 A later local parallel launch mechanism failure allows serial carry-forward only when the failure happens before agent-boundary commitment.
 Serial carry-forward also requires the fallback to stay inside the same frozen owner, surface set, deliverable, acceptance chain, and material burden/timing meaning.
@@ -54,5 +54,5 @@ Losing the planned parallel path while it changes staffing truth, independent-su
 - Unknown material readiness category opens blocker-clear or route correction before dispatch.
 - Route-changing readiness gap reopens `work-planning`.
 - Same-boundary readiness gap opens bounded packet correction or blocker-clear.
-- Setup approval need opens explicit approval or deferral path.
+- Setup approval need opens the named setup owner; user-decision-risk setup choices open decision support before explicit approval or `HOLD` only when no §1-§8-compliant reversible setup path is derivable; damage-capable, security, credential, paid, or persistent-service approval opens explicit approval.
 - Proven allowed setup opens the setup owner inside the frozen boundary.

@@ -21,7 +21,8 @@ INPUT="$(cat)"
 PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node -e "
 const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
 const input = parseInput();
-const skill = String((input.tool_input || {}).skill || '');
+const toolInput = input.tool_input || {};
+const skill = String(toolInput.skill || toolInput.name || input.skill || input.name || '');
 const sid = String(input.session_id || 'unknown');
 process.stdout.write(skill + '\n' + sid);
 " 2>/dev/null || printf '\nunknown')"
@@ -64,12 +65,13 @@ SKILL_MARKER_NAME="$(skill_marker_name "$SKILL_NAME" 2>/dev/null || true)"
 
 if [[ -n "$SKILL_MARKER_NAME" ]]; then
   date -u '+%Y-%m-%dT%H:%M:%SZ' > "$LOG_DIR/.skill-loaded-${SESSION_ID}-${SKILL_MARKER_NAME}"
+  SUPPRESS_DISPLAY=1
 fi
 
 case "$SKILL_NAME" in
-  *session-boot*)
-    if ! runtime_sender_session_is_worker "$SESSION_ID"; then
-      mark_procedure_startup_ready "$SESSION_ID"
+	  *session-boot*)
+	    if ! runtime_sender_session_is_worker "$SESSION_ID"; then
+	      mark_procedure_startup_ready "$SESSION_ID"
       # Idempotent active-runtime monitoring marker.
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$SB_LOADED_MARKER"
       # Re-anchor the boot session marker to the confirmed lead session.
@@ -78,11 +80,12 @@ case "$SKILL_NAME" in
       # causing recover_session_id to resolve the wrong identity in subsequent
       # hook invocations. Writing the raw event session here restores the
       # correct lead session identity in the marker file.
-      if [[ -n "$RAW_SESSION_ID" && "$RAW_SESSION_ID" != "unknown" ]]; then
-        printf '%s' "$RAW_SESSION_ID" > "$SESSION_BOOT_MARKER_FILE"
-      fi
-    fi
-    ;;
+	      if [[ -n "$RAW_SESSION_ID" && "$RAW_SESSION_ID" != "unknown" ]]; then
+	        printf '%s' "$RAW_SESSION_ID" > "$SESSION_BOOT_MARKER_FILE"
+	      fi
+	    fi
+	    SUPPRESS_DISPLAY=1
+	    ;;
   *self-growth-sequence*)
     # Entry was observed. Do not treat this as proof that hardening is complete.
     self_growth_clear_state "$SESSION_ID"

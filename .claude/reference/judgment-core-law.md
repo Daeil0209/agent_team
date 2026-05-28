@@ -24,9 +24,9 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Only `validator` issues final `PASS/HOLD/FAIL` and owns final acceptance.
 - Final `PASS` stays within the frozen accepted surface.
 - Sample, tier, wave, or priority evidence cannot create a fourth verdict label.
-- Sample, tier, wave, or priority evidence narrows `PASS` only when the subset was frozen or upstream-deferred; otherwise route `HOLD` with covered scope and open surfaces.
-- Full-surface `PASS` requires every frozen scope, proof, and validation row to be covered, explicitly user-accepted as out-of-scope or deferred, or lawfully deferred; any unresolved or blocked row routes `HOLD`.
-- Candidate, promotion, and patch-loop rows close only when covered, applied and verified, lawfully deferred, or rejected by current review basis; any unresolved or blocked row routes `HOLD` for claims depending on that row.
+- Sample, tier, wave, or priority evidence narrows `PASS` only when the subset was frozen or deferred by cited upstream lawful owner-deferral basis; otherwise route `HOLD` with covered scope and open surfaces.
+- Full-surface `PASS` requires every frozen scope, proof, and validation row to be covered, explicitly user-accepted as out-of-scope or deferred, or deferred by cited lawful owner-deferral authority; any unresolved or blocked row routes `HOLD`.
+- Candidate, promotion, and patch-loop rows close only when covered, applied and verified, deferred by cited lawful owner-deferral authority, or rejected by current review basis; any unresolved or blocked row routes `HOLD` for claims depending on that row.
 - Local closure report exception is owned by `.claude/reference/reporting-prohibition-law.md`.
 - Final-arbitration triggers route to validator or `HOLD`.
 - Test and validation packets freeze surface, expected outcome, and acceptance basis.

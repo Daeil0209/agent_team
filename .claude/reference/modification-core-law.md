@@ -26,7 +26,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
   - Axis 3 — no new defect: no negative behavior introduced on the patched surface.
   - Axis 4 — cross-reference integrity: no broken anchor citations, no stale pointers, no orphaned references.
   - Axis 5 — dimensional independence: no text or behavioral change outside the declared patch dimension per `dimensional-independence`.
-- Operational test for criterion (c) is `Skill(review-verification)` `## Upstream Basis Review Law` consumption of the controlling philosophy section and mapped core-law executable detail at both design phase (governance-modification Step 3) and post-patch review phase, with explicit `philosophy-conformance: pass | hold:<basis> | fail:<basis>` verdict alongside the 5-axis matrix.
+- Operational test for criterion (c) is `.claude/reference/review-and-verification-core-law.md` `## Upstream Basis Review Law` consumption through `Skill(review-verification)` at both design phase (governance-modification Step 3) and post-patch review phase, with explicit `philosophy-conformance: pass | hold:<basis> | fail:<basis>` verdict alongside the 5-axis matrix.
 - Combined PASS on (a) + (b) + (c) is the acceptance contract; any single axis fail or philosophy-conformance fail = patch is not independent and not acceptance-ready until corrected.
 - This contract is enforced at `Skill(governance-modification)` Post-Verify, `Skill(review-verification)` post-patch review, `Skill(self-verification)` convergence, and validator final acceptance.
 - Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
@@ -39,6 +39,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `dimensional-independence` requires every governance patch to declare a target dimension from: top doctrine, mapped core law, identity, operational, runtime.
 - A `dimensional-independence`-compliant patch restricts text changes and behavioral changes to the declared dimension; downstream dimensions automatically adapt through existing reference/trigger paths.
 - Identity-layer text under `dimensional-independence` does not name specific functional elements by exact identifier (specific skill names, specific field names, specific operational governance term tokens); generic dimensional terms only.
+- `specific functional element` means an exact identifier that can be individually matched: skill name, reference path, section anchor, field name, message class, hook name, settings key, tool name, literal token, or filesystem path.
+- `generic dimensional term` means a category-level dimension or owner class such as top doctrine, mapped core law, identity, operational procedure, runtime, hook/settings surface, role surface, skill surface, reference surface, or communication plane.
+- The exact-identifier restriction applies to identity-layer text because identity text defines stance before procedure execution.
+- Top-doctrine, mapped-core-law, operational, and runtime dimension patches may name exact identifiers only when the identifier is the consumed owner, action target, evidence target, routing target, or protected source being changed or preserved.
+- For agent role files, identity-layer text means role-identity and stance text whose primary job is to define who the agent is before procedure execution; assignment, receipt, communication, tool-boundary, and completion-contract text is operational-layer text.
+- Operational-layer role text may cite exact functional owners only when the citation is directly consumed to decide action, stop, evidence, packet, proof, completion, verdict, routing, or patch-readiness at role receipt or lane execution time.
+- Functional-owner citation in role text stays the shortest owner pointer that preserves the action, stop, evidence, and routing duty without restating the functional owner's detailed rule.
 - `Skill(review-verification)` Critical Review Gate defeater enumeration tests dimensional-independence violation for every governance patch design alongside under-specification, over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking.
 - Governance-asset patch-design decisions test and cite every operator-emphasized keyword from that owner.
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
@@ -61,6 +68,9 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A governance patch that adds or changes core-law executable detail updates trigger-bound owner references only when the active owner path needs situation-specific guidance.
 - A governance patch repairs weak top or mapped core-law rules at that upper layer before adding lower-surface situation-specific detail.
 - Consolidate distributed common execution meaning to its single owner surface before adding, keeping, or expanding lower situation-specific detail.
+- Do not classify role-file boundary wording as a duplicate defect solely because peer role files carry the same boundary pattern when the wording carries direct-consumption relevance at spawn, assignment receipt, or lane execution and cites the canonical owner instead of redefining that owner's detailed rule.
+- Still classify or trim role-file boundary wording when it restates detailed owner rules beyond receipt-time action, stop, evidence, and routing force; diverges from the canonical owner; lacks a canonical pointer; or creates stale-information risk.
+- Re-home or trim role-file boundary wording only when the shorter role surface preserves the same receipt-time action, stop, evidence, and routing force.
 - Governance duplicate, reduction, re-home, or optimization work applies `.claude/reference/work-execution-core-law.md` governance hierarchy order before lower-surface edit selection.
 - Lower-surface edit selection records the upper-layer basis as preserved, corrected, or `not-material:<basis>` before mutation.
 - Keep lower duplicate wording only when it has protected local-restatement basis, direct-consumption relevance, or isolation-safety need.
@@ -109,7 +119,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ### Retroactive Application Rules
 - Land new doctrine after affected current-session surfaces are handled.
 - Land sharpened doctrine after affected current-session surfaces are handled.
-- Record affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred per lawful owner-deferral basis`.
+- Record affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred only by cited upstream lawful owner-deferral basis or explicit user-accepted `[USER-DELIVERY-FIT]` boundary`.
 - Fix affected artifacts through the owning upstream record.
 - Invalidate affected artifacts through the owning upstream record.
 - Defer affected artifacts through the owning upstream record.
@@ -123,7 +133,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Constitutional Curtain Protection
 PROTECTED-CURTAIN-SURFACE: This section is enumerated in this section's own protected list and may not be modified except per its own gates. Removal-first / consolidate / tighten / reduce / sweep operations on this section require validator pre-approval + user notification.
 
-Per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` invariant (d) always-maintained, the following surfaces are constitutionally-protected. Each carries a `PROTECTED-CURTAIN-SURFACE` marker (file-level frontmatter or section-level). Any mutation on a protected surface requires the standard `Skill(governance-modification)` Step 3 review-verification packet + Step 5 self-verification convergence PLUS the additional gates below:
+Per `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` invariant (d) always-maintained, the following surfaces are constitutionally-protected. Text and script protected surfaces carry a `PROTECTED-CURTAIN-SURFACE` marker (file-level frontmatter or section-level); JSON hook wiring entries are protected by this enumerated list and session-start self-validation because JSON cannot carry comments. Any mutation on a protected surface requires the standard `Skill(governance-modification)` Step 3 review-verification packet + Step 5 self-verification convergence PLUS the additional gates below:
 
 Enumerated protected surfaces:
 - `.claude/CLAUDE.md` `## Constitutional Reporting Curtain` section
@@ -133,17 +143,17 @@ Enumerated protected surfaces:
 - `.claude/reference/review-and-verification-core-law.md` `curtain-breach` defect class sub-rule
 - `.claude/agents/*.md` identity-layer Curtained Communication attribute (team-lead attribute (i); lane role IR-3)
 - `.claude/hooks/reporting-curtain-envelope-gate.sh`
-- `.claude/hooks/assistant-response-curtain-gate.sh`
+- `.claude/hooks/sv-tracker.sh`
 - `.claude/hooks/session-start.sh` curtain-validation block
-- `.claude/settings.json` curtain hook wiring entries (PreToolUse SendMessage curtain-envelope, Stop curtain-response)
+- `.claude/settings.json` curtain hook wiring entries (PreToolUse SendMessage curtain-envelope; PostToolUse Skill-result suppression)
 
 Curtain-restatement isolation-safety basis (for the 6 enumerated curtain-restatement surfaces: `.claude/agents/team-lead.md` attribute (i) Curtained Communication + 5 lane role-file IR-3 sections at `.claude/agents/{developer,researcher,reviewer,tester,validator}.md`): PROTECTED-LOCAL-RESTATEMENT-BASIS = lane-stance work-time carry-forward — Curtained Communication content colocated at each role-file because identity-priming activates at every spawn moment and assignment-receipt moment, while canonical owner (`.claude/CLAUDE.md` `## Constitutional Reporting Curtain` + `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate`) is consumed only after skill load; the local restatement enforces curtain discipline at pre-skill-load activation. Canonical owner remains source-of-truth for any rule body change; local restatements are synchronized to canonical owner content. Per-surface PROTECTED-CURTAIN-SURFACE marker points to this central basis.
 
 Additional gates for any mutation on a protected surface:
 - Operation-type guard: removal-first / consolidate / tighten / reduce / sweep / dedup / cross-block-duplication-reduce operations on a protected surface are PROHIBITED unless the patch design explicitly justifies that the removed text is duplicated meaning preserved on a stronger consumed-surface owner. Mere "shorter is better" justification is rejected.
 - Validator pre-approval gate: before mutation, dispatch validator with packet carrying `CLAIM-CEILING: validator-final-verdict` on the proposed protected-surface patch design; validator must issue `PASS` on the design before Patch Execution Method is reached. `HOLD` or `FAIL` blocks mutation.
-- User notification gate: before mutation, surface to user via `user-action blocker` or `explicit status answer` (per reporting-prohibition narrow exception) the proposed protected-surface patch with: (a) which constitutional invariant is affected, (b) what the patch preserves vs changes, (c) the validator PASS basis, (d) the expected post-patch behavior on every controllable emission surface, (e) the forensic erosion cycle this patch is designed to avoid. Apply `.claude/reference/reporting-prohibition-law.md` `## Report Shape` Multi-Element Inline-Render Constraint to the rendering. User notification gate content additionally follows `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` convergence-tractable mandate when applicable; operator-policy-choice nature of the gate is preserved. Proceed only after user acknowledgment or absence of objection within the same turn segment.
-- Bypass prohibition: these gates are not bypassable by `[NO-NEEDLESS-ASK]` evidence-backed-default reasoning. Constitutional-protected surface mutation is operator-policy-choice by definition.
+- User notification gate: before mutation, surface to user via `user-action blocker` or `explicit status answer` (per reporting-prohibition narrow exception) the proposed protected-surface patch with: (a) which constitutional invariant is affected, (b) what the patch preserves vs changes, (c) the validator PASS basis, (d) the expected post-patch behavior on every controllable emission surface, (e) the forensic erosion cycle this patch is designed to avoid. Apply `.claude/reference/reporting-prohibition-law.md` `## Report Shape` Multi-Element Inline-Render Constraint to the rendering. This is a mandatory operator-acknowledgment gate separate from the standard `operator-policy-choice` escalation class. Proceed only after explicit user acknowledgment or explicit user instruction that authorizes the named protected-surface mutation; silence or absence of objection is not a consent signal.
+- Bypass prohibition: these gates are not bypassable by `[NO-NEEDLESS-ASK]` evidence-backed-default reasoning. Constitutional-protected surface mutation requires the mandatory operator-acknowledgment gate above.
 - Closeout residual emission: patches that pass these gates and apply MUST emit `closeout residual` (per reporting-prohibition narrow exception) naming the protected-surface change + the constitutional invariants affected.
 
 Bootstrap exemption: the initial installation of this `## Constitutional Curtain Protection` section + the constitutional surfaces it enumerates is exempt from the additional gates above; user authorization for the bootstrap install (the `curtain-constitutional-fix-2026-05-26` work, user-authorized via "독립적이면서 안전한 보완 패치를 신중하게 진행해") is the operator-policy-choice basis. After bootstrap, all subsequent mutations are subject to the additional gates.

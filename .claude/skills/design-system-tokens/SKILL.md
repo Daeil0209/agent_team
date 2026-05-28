@@ -36,6 +36,7 @@ Load when a design system needs a stable token architecture.
 - Report `hold|blocker` when:
   - credible token boundaries are absent
   - credible layer-consumption rules are absent
+- Operational test for `not credible`: the boundary or consumption rule cannot be named as a concrete token layer, component layer, inheritance path, or consumer rule that downstream implementation can apply without inventing structure.
 ## Activation
 Activate when setting up a new design system, standardizing inconsistent tokens, or needing cross-platform token consistency.
 ## Inputs

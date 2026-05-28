@@ -47,7 +47,7 @@ Default surfaces:
 - governance, proof, report, or design-implementation review that determines acceptance or redispatch
 
 Do not run for receipt/status/phase-context-only messages, typo-only/cosmetic-only review, already-adjudicated findings without material artifact change, or light answer-only work.
-If the trigger applies, MCP unavailability or unreadable paths are fail-open, not non-trigger.
+If the trigger applies, codex CLI unavailability or unreadable paths are fail-open, not non-trigger.
 
 ## Packet
 Use codex CLI background invocation, context-limit/privacy, canonical-read, and fail-open discipline from `.claude/skills/codex-independent-review/references/concurrent-patterns.md` (Sub-command Enumeration + Context Limit + Failure Mode Handling + Lifecycle + RESOURCE-CLEANUP).
@@ -71,7 +71,7 @@ Missing decisive reviewer-facing fields are not guessed.
 
 ## Blind Dual Review
 1. Start the configured reviewer lane through `task-execution`.
-2. Start Codex MCP independent review from the same frozen reviewer packet fields without waiting for reviewer handoff.
+2. Start codex CLI background-invocation independent review from the same frozen reviewer packet fields without waiting for reviewer handoff.
 3. Reviewer and Codex packets name the applicable `Skill(review-verification)` lenses.
 4. First Codex packet excludes configured reviewer lane findings, reviewer verdict, team-lead verdict, and suggested fixes.
 5. team-lead must not use Codex findings to rewrite the configured reviewer lane packet for the same pass.
@@ -97,12 +97,12 @@ Classify each material point (`material point` = configured reviewer lane findin
 - `CONFLICT`
 - `NO-ACTION`
 
-Each material point must be accepted, rejected with evidence, or deferred with owner and phase.
+Each material point must be accepted, rejected with evidence, lawfully owner-deferred with cited authority, or kept open as `HOLD` / `OPEN-SURFACES` with owner and phase.
 Accepted material findings become correction requirements.
 Rejected Codex and configured reviewer lane points require governing doctrine, artifact evidence, or frozen request basis.
 Rubber-stamp acceptance or unexplained rejection is a convergence defect.
 
-After each correction, rerun configured reviewer lane and Codex MCP independent review as a new blind dual-review pass.
+After each correction, rerun configured reviewer lane and codex CLI background-invocation independent review as a new blind dual-review pass.
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
 Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
@@ -112,7 +112,7 @@ Fail-open cannot claim Codex concurrence or bypass reviewer, tester, validator, 
 ## Convergence
 Review convergence requires:
 - no accepted high/major/blocking review issue remains on the active surface
-- every configured reviewer lane and Codex point is accepted, rejected, or deferred with reason
+- every configured reviewer lane and Codex point is accepted, rejected with evidence, lawfully owner-deferred with cited authority, or kept open with owner, phase, and reason
 - Codex-only and reviewer-lane-only material points are adjudicated
 - any remaining low/minor issue has owner, phase, and acceptance impact
 - tester and validator ingress surfaces remain truthful
@@ -125,7 +125,7 @@ Codex disagreement is evidence, not veto.
 `Skill(self-verification)` runs convergence on phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop.
 team-lead executes the output-record next owner/action without user-facing review/proceed prompts.
-The exception is explicit approval or a verified user-owned blocker.
+The exception is explicit approval after cited owner procedures and applicable user-decision-risk decision support are exhausted, or a verified user-owned blocker.
 
 ## Same-Boundary Loop
 Use the same-boundary common fields in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` `## Same-Boundary Loop`.

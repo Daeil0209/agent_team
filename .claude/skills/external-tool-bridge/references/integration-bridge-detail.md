@@ -15,7 +15,7 @@ Before initiating any external bridge, verify all of the following:
 - **Endpoint reachability**: target host/port/path accessible from execution environment
 - **Quota/rate-limit**: current usage headroom confirmed before bulk operations
 - **Permission scope**: token or credential scope covers required operations at minimum scope
-- **Setup safety**: classify required setup as `allowed-setup`, `approval-required`, `defer-capable`, or `blocked`; `allowed-setup` proceeds inside the frozen boundary
+- **Setup safety**: classify required setup as `allowed-setup`, `approval-required`, or `blocked`; `allowed-setup` proceeds inside the frozen boundary
 - **Cleanup path**: explicit procedure exists to close sessions, revoke tokens, and remove residual state on success and on failure
 ### Integration Failure Patterns
 Standard response patterns for external service failures:
@@ -57,7 +57,9 @@ When the external bridge involves batch data transfer, streaming ingest, or pipe
 - Passing pre-verification opens bounded external bridge execution.
 - Failed credential, endpoint, quota, permission, setup, or cleanup check opens blocked-condition report.
 - Allowed setup opens bounded setup execution.
-- Approval-required setup opens explicit approval or deferral path.
+- Approval-required setup opens the named owner; user-decision-risk setup choices open decision support before explicit approval only when no §1-§8-compliant reversible setup path is derivable; damage-capable, security, credential, paid, or persistent-service setup opens explicit approval.
+- Blocked setup opens a blocked-condition report or truthful `HOLD` with named setup owner, blocker, and next safe evidence step.
+- Owner deferral for setup is valid only with explicit user-accepted boundary or cited upstream lawful owner-deferral basis under `[USER-DELIVERY-FIT]`.
 - Retryable failure opens one retry path with changed timing, endpoint health, fallback route, or setup state.
 - Repeated unchanged failure opens blocked-condition report.
 - Successful bridge execution returns evidence to the consuming owner.

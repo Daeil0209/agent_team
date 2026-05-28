@@ -18,7 +18,7 @@ Hard gates verified by team-lead before phase advancement or dispatch.
 | Phase 4/FAR reject -> Phase 2 | CP5 or validator-authored correction packet classifies at least one blocking gap as design-level under unchanged scope |
 | Phase 4/FAR reject -> Phase 4 re-evidence | CP5 or validator-authored correction packet classifies proof/acceptance-chain evidence gap inside unchanged scope, owner map, route, proof chain, and acceptance chain |
 | Phase 4/FAR reject -> Phase 5 | CP5 or validator-authored correction packet classifies a blocking or significant gap as implementation or operator-delivery inside the unchanged Phase 1/2 delivery contract |
-| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control and every applicable `CORE-WORKFLOW-CLOSURE` row, including executable operator-delivery axes when applicable, is implemented, proven, or explicitly deferred by original frozen request/plan/design. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
+| Phase 4/5 -> Complete | Blocking gap state is clear. Every frozen `SCOPE-BASELINE` feature/surface/control and every applicable `CORE-WORKFLOW-CLOSURE` row, including executable operator-delivery axes when applicable, is implemented, proven, explicitly user-deferred by the original frozen request, or lawfully owner-deferred with cited `[USER-DELIVERY-FIT]` basis recorded in the frozen plan/design. Triggered review convergence is resolved or lawfully failed open with fallback review. Validator-required acceptance chains carry `FINAL-ACCEPT`. |
 
 Additional gate law:
 - Phase advancement requires completion-grade evidence, not artifact existence alone

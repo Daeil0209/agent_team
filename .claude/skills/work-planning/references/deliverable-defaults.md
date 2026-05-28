@@ -24,7 +24,7 @@ Partial draft, implemented subset, placeholder surface, or developer-only run pa
 Every consequential deliverable or active slice follows a named user-ready delivery chain.
 The chain starts from the user's instruction.
 The chain expands through concept fit, detailed structure, implementation or production surfaces, and verification evidence.
-The chain converges into the final user-consumed surface or an explicit deferred receiver surface.
+The chain converges into the final user-consumed surface or an explicit deferred receiver surface backed by user-stated boundary, user-accepted boundary, or cited `[USER-DELIVERY-FIT]` deferral authority.
 Each stage carries forward the information needed by the next stage.
 The carried information covers why the deliverable exists, what is in scope, which internal parts connect, what data/example/method makes it usable, what proves it, and what remains open.
 Implementation adds necessary internal detail or parallel branches only when each branch traces back to request intent and forward to proof or user use.

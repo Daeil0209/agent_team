@@ -127,7 +127,7 @@ When reviewing software plans, designs, or implementation-facing specs, verify t
 - what data is created, changed, saved, and shown
 - which screens, commands, APIs, or files carry the workflow
 - what evidence proves the promised workflow exists
-- what is intentionally deferred
+- what is deferred by cited lawful authority or still open
 
 If the program can be explained only by naming implemented fragments, but not by explaining the user's complete task, flag a scope or delivery gap.
 

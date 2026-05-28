@@ -51,7 +51,7 @@ When a reviewer role or skill says "reviewer additions" or "reviewer detail", co
   - `FAILURE-MODES`
   - `REGRESSION-RADIUS`
 
-If these fields are missing and truthful review would require inventing them, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
+If these fields are missing and truthful review would require inventing them, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier or task state, not the rendered body.
 
 If truthful review needs a tool, rendered surface, or setup path unavailable to reviewer, the upward request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`. Do not replace a required rendered or executable review surface with source-only evidence.
 If rendered evidence is available for review, inspect it for visible defects; do not treat capture existence as rendered fitness.
@@ -105,7 +105,7 @@ Cross-vocabulary translation (this is the canonical severity owner; other surfac
 | Minor | T2 (single) / T1-equivalent (cumulative 3+ T2 with exploitability basis) | minor | medium / low | RFP-1 / RFP-2 / RFP-3 per file-size thresholds |
 | Advisory | T3 | n/a (audit lane ceiling = candidate-classified, not advisory) | low | n/a |
 
-Translation rules: (a) Security severity uses T0-T3 per `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; T2 cumulative thresholding aggregates 3+ unresolved T2 findings to T1-equivalent only when cumulative-exploitability basis is documented. (b) Codex output severity (`high|medium|low` per codex CLI conventional severity terminology) translates to reviewer canonical at team-lead synthesis ingress. (c) Audit-schema severity (`blocking|material|minor` per `claude_doc/governance-defect-audit/shared-context.md` schema) translates at synthesis time. (d) Code-quality RFP-1/RFP-2/RFP-3 thresholds are file-size signals, not severity tiers; they coexist with Minor severity rather than mapping.
+Translation rules: (a) Security severity uses T0-T3 per `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`; T2 cumulative thresholding aggregates 3+ unresolved T2 findings to T1-equivalent only when cumulative-exploitability basis is documented. (b) Codex output severity (`high|medium|low` per codex CLI conventional severity terminology) translates to reviewer canonical at team-lead synthesis ingress. (c) Audit-schema severity (`blocking|material|minor`) translates only from the current live assignment packet, current review-verification finding-state basis, or team-lead synthesis basis; non-live `claude_doc` schemas are historical evidence only. (d) Code-quality RFP-1/RFP-2/RFP-3 thresholds are file-size signals, not severity tiers; they coexist with Minor severity rather than mapping.
 
 ## Specialist Skill Loading
 Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
@@ -123,7 +123,7 @@ These are review lenses; findings use normal severity and are blocking when seve
 Remediation stays with the producing owner.
 
 ## Reviewer Completion Detail
-- Reviewer `MESSAGE-CLASS: completion` blocks must include `REVIEW-STATE: ready|hold|blocked`; exact `MESSAGE-CLASS: hold|blocker` uses blocker-native fields and adds `REVIEW-STATE` only as context.
+- Reviewer completion-class governed payload blocks must include `REVIEW-STATE: ready|hold|blocked`; hold|blocker-class governed payload uses blocker-native fields and adds `REVIEW-STATE` only as context.
 - Reviewer completion must include `TARGET-INTENT-BASIS` through the common completion spine.
 - Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Without that basis, classify the item as preliminary evidence, not a completed review finding.
@@ -153,7 +153,7 @@ Remediation stays with the producing owner.
 - `execute` opens reviewer-owned review work.
 - `reconstruct-with-inference` opens reviewer-owned review work with marked inference.
 - Blocking review finding opens producer correction through team-lead.
-- Reviewer-local `REVIEW-STATE: ready` opens reviewer `MESSAGE-CLASS: completion` emission (post-completion downstream routing per SKILL.md `## Resolve Next Owner And Action`).
+- Reviewer-local `REVIEW-STATE: ready` opens reviewer completion-class transport emission (post-completion downstream routing per SKILL.md `## Resolve Next Owner And Action`).
 - `REVIEW-STATE: hold` opens team-lead basis, evidence, tool, or upstream-state correction.
 - `REVIEW-STATE: blocked` opens team-lead replanning, rerouting, or upstream correction.
 - Runnable proof need opens tester routing.

@@ -12,7 +12,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `request-fit-plan`: freezes intent, deliverable, user, reference use, burden cues, material blockers, and packet-carry fields.
 - `route-plan`: freezes owner path, workflow/sequence, channel, lead-local vs team-routed shape, and first next owner/action.
 - `lead-local-plan`: freezes one local item with no final-arbitration trigger (validator `PASS/HOLD/FAIL` need or independent review/proof/validation separation per `.claude/reference/judgment-core-law.md`), required local skills, stop point, and evidence limit.
-- `team-dispatch-readiness-plan`: freezes agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, cleanup/proof/acceptance readiness, and dispatch blockers for the dispatch phase of the team-lead work plan.
+- `team-dispatch-readiness-plan`: freezes active concurrent-agent cap, agent map, parallel groups, lane skill map, skill recommendations, packet readiness, teammate context isolation, cleanup/proof/acceptance readiness, and dispatch blockers for the dispatch phase of the team-lead work plan.
 - `workflow-sequence-plan`: freezes the active workflow or primary sequence owner before dispatch or execution.
 - `blocker-clear-plan`: freezes one same-route blocker-clear move that preserves every `work-planning` boundary-change axis and next action.
 - `delegated-lane-plan`: verifies a receiving lane's assignment packet, owned work surface, current phase, required skills, first lane action, and stop condition without transferring planning ownership.
@@ -35,7 +35,7 @@ Use this file when the plan is large, mixed, ambiguous, or at risk of becoming o
 - `request-fit-plan`: `REQUEST-FIT-BASIS`, `REQUEST-BOUND-PACKET-FIELDS`, and material request wording or cited artifact anchors.
 - `route-plan`: `ACTIVE-WORKFLOW`, `ACTIVE-SEQUENCE`, `ACTION-CLASS`, `ROUTING-SIGNAL`, and `NEXT-CONSEQUENTIAL-ACTION`.
 - `lead-local-plan`: `LEAD-LOCAL-WORK-ITEMS`, `LEAD-LOCAL-REQUIRED-SKILLS`, evidence limit, stop condition, and proof/acceptance non-substitution basis.
-- `team-dispatch-readiness-plan`: `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`, and `DISPATCH-BLOCKERS`.
+- `team-dispatch-readiness-plan`: `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, `PARALLEL-GROUPS`, `LANE-REQUIRED-SKILLS-MAP`, `SKILL-RECOMMENDATIONS`, `EXECUTION-READINESS-BASIS`, and `DISPATCH-BLOCKERS`.
 - `workflow-sequence-plan`: selected owner, reason it opens before deeper execution, and what it must hand to the next owner/action.
 - `blocker-clear-plan`: exact blocker, exact clearing move, same-route proof, and boundary that triggers replanning.
 - `delegated-lane-plan`: assignment packet, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, first lane action, stop condition, and `scope-pressure`/`hold|blocker` threshold.

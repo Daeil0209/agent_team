@@ -132,7 +132,7 @@ Invariant reference points keep axis domains, thresholds, scale anchors, and ref
 Edge cases include empty state, single-element state, overflow handling, and operator-visible "more" affordance when content is truncated.
 Typography stability fixes label margin or width so text-length variance does not shift chart geometry.
 Accessibility basics include role, aria-label, and keyboard path when applicable.
-Omitted material spec items stay `OPEN-SURFACES` until corrected or deferred by the upstream record.
+Omitted material spec items stay `OPEN-SURFACES` until corrected or covered by a lawful upstream owner-deferral record.
 ## Role-Scoped Structural Feedback
 - Challenge manager instructions, peer handoffs, or surface plans when layout intent, information hierarchy, control purpose, or readability budgets are structurally weak.
 - State the issue in UI/composition language.

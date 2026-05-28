@@ -10,7 +10,7 @@
 #   runtime_integrity_reconcile_nondestructive <team_name>
 #       Apply Class B/D/F automatic cleanup. Class C tmux-pane termination stays unavailable.
 #   runtime_integrity_destructive_report <team_name>
-#       Print HOLD-formatted lines for hook-detectable Class A/E requiring operator approval.
+#       Print HOLD-formatted lines for hook-detectable Class A/E requiring owner routing and force-kill approval when applicable.
 #
 # All emissions are stderr-safe for hook composition; stdout reserved for structured output.
 
@@ -235,7 +235,7 @@ runtime_integrity_destructive_report() {
   while IFS=$'\t' read -r class detail; do
     case "$class" in
       CLASS=A|CLASS=E)
-        printf 'HOLD-REQUIRED: %s %s action=kill-or-reattach operator-approval-required\n' "$class" "$detail"
+        printf 'HOLD-REQUIRED: %s %s action=reattach-or-session-closeout cited-procedure-required=session-closeout-or-runtime-boundary-law operator-approval-required-for-forceful-kill decision-support-only-if-proven-user-owned-choice-remains\n' "$class" "$detail"
         has_destructive=1
         ;;
     esac

@@ -47,7 +47,7 @@ The consuming owner records:
 - decisive user surface
 - evidence surface used
 - requested delivery contract
-- covered row-granular baseline or explicitly deferred baseline row
+- covered row-granular baseline or explicitly user-deferred / lawfully owner-deferred baseline row
 - open surfaces
 - claim strength
 
@@ -89,7 +89,8 @@ Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
 - Owner deferral names:
   - deferred item
   - owner
-  - reason
+  - lawful deferral basis
+  - next owner/action or acceptance impact
   - next action
 - Downstream missing implementation, proof, or acceptance evidence leaves the row open or blocked.
 - Record implemented subset coverage against the requested deliverable.

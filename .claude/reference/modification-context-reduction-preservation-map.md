@@ -6,7 +6,7 @@ SOURCE-RULES: "Modification Philosophy; information preservation; source-to-dest
 captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
-topology-updated: 2026-05-20
+topology-updated: 2026-05-27
 ---
 # Context Reduction Preservation Map
 
@@ -20,6 +20,8 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Stale destination opens live owner-surface inspection.
 - Broken reference binding opens owning-reference correction.
 - Unreconstructable moved meaning opens `HOLD` with source, destination, blocker, and next evidence step.
+- Missing `claude_doc/<work-name>/` work-artifact carrier opens deletion-safety classification before any ledger citation is used as current proof.
+- Task/session lookup ambiguity opens ref-by-ref owner routing before re-home; wholesale movement is invalid without direct-consumption relevance for every moved reference.
 
 ## Consumer And Ownership
 - `team-lead` consumes this reference only for preservation audits, compression-safety challenges, duplicate-overlap checks, live-surface-porting checks, or source-to-destination traceability reviews.
@@ -41,7 +43,7 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Governance asset mutation, recurrence hardening, asset-change mode, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references named by that skill's Step 2.
 - Review-verification workflow and governance review gates live in `.claude/skills/review-verification/SKILL.md` and `.claude/skills/review-verification/references/governance-review-gates.md`.
 - Self-verification two-pass outbound gate procedure lives in `.claude/skills/self-verification/SKILL.md`.
-- Team-lead role spine stays in `.claude/agents/team-lead.md`; detailed lead procedure lives in `.claude/skills/agent-team-lead/SKILL.md` and references reached through that skill's `# Consume Trigger References`.
+- Team-lead role spine stays in `.claude/agents/team-lead.md`; detailed lead procedure lives in `.claude/skills/agent-team-lead/SKILL.md` and references reached through that skill's `# Trigger Skeleton Procedure`.
 - Lane role spines stay in `.claude/agents/<lane>.md`; lane packet fields, specialist matrices, proof/review/verdict details, and completion detail live in `.claude/skills/agent-<lane>/SKILL.md` and matching lane-detail references.
 - Assignment packet, dispatch truth, runtime dispatch, message classes, scope-pressure, truth ladder, phase-transition, and completion-handoff detail lives in `.claude/skills/task-execution/SKILL.md` and references reached through that skill's `## Reference Map`.
 - Work-planning fields, planning targets, boundary gates, evidence tiers, deliverable defaults, parallel fit, team-runtime fit, execution readiness, governance depth, and cross-continuity detail lives in `.claude/skills/work-planning/SKILL.md` and references reached through that skill's `## Reference Map`.
@@ -51,6 +53,29 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Team-session sequence lookup detail lives in `.claude/skills/team-session-sequences/SKILL.md` and references reached through that skill's `## Reference Map`; runtime spine stays with `session-boot`, and dispatch packet truth stays with `task-execution`.
 - Configured independent-review trigger, packet, adjudication, fail-open, and authority limits live in `.claude/skills/codex-independent-review/SKILL.md` and references reached through that skill's `## Reference Map`.
 - Hook posture and hard-deny categories live in `.claude/hooks/MANIFEST.md`; literal hook behavior lives in the matched hook script.
+
+## Carrier Evidence Claim Ceiling
+`claude_doc/<work-name>/` files are protected work-artifact carriers, not governance text. Their absence does not authorize fabricated replacement carriers or silent proof claims.
+
+When a governance or hook surface cites a `claude_doc/...` carrier, classify the citation before using it:
+- `restored`: the carrier exists in the working tree and supports the cited claim.
+- `reconstructed-from-git`: the carrier is absent from the working tree but recoverable from Git for the current review.
+- `ledger-only-surviving-evidence`: the carrier is absent or unreconstructed; the citation preserves only a historical approval or forensic label.
+- `remove-stale-citation`: the cited carrier cannot support even a historical label on the consuming surface.
+
+`ledger-only-surviving-evidence` cannot prove current runtime behavior, forensic fact, validator approval, or hook narrowness. Current proof must come from live owner surfaces such as hook body, `settings.json` wiring, protected-surface list, or reconstructed Git evidence.
+If the stale carrier label appears inside a constitutionally protected hook or reporting surface, classify the claim here but do not mutate that protected surface until its protected-surface gate is satisfied.
+
+## Restatement And Lookup Reduction Gate
+Before reducing duplicate-looking governance text, classify each candidate as `protected-restatement`, `design-tradeoff`, `duplicate`, or `obsolete`.
+`protected-restatement` and local safety restatements stay unless the protected-surface or owner-local gate authorizes mutation.
+Only `duplicate` or `obsolete` text may be tightened, re-homed, or removed after source-to-destination traceability is reconstructable.
+
+Before moving `team-session-sequences` references, build a ref-by-ref decision matrix:
+- packet preflight or completion-handoff values directly consumed by `task-execution` may move to `task-execution/references/`;
+- monitoring, lifecycle, load guard, parallel merge, decomposition, and sequence-control meaning stays with `team-session-sequences`;
+- runtime readiness stays with `session-boot`;
+- direct-consumption relevance failure keeps the current lookup-only pointer.
 
 ## Preservation Audit Rule
 Before or after any high-traffic context reduction, verify:
@@ -78,7 +103,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |
 | Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, or user-facing blocker; never smooth into progress, completion, or agent reluctance. |
 | Packet correction | Lawful only inside the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |
-| Completion synthesis | Only completion-grade `MESSAGE-CLASS: completion` plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
+| Completion synthesis | Only completion-class transport plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
 | Final arbitration | Formal `PASS/HOLD/FAIL` belongs to `validator`; local `final verified result` closure is valid only when no final-arbitration trigger applies. |
 | Runtime/cleanup truth | Dispatch, receipt, agent-start, progress, completion, standby, cleanup, and acceptance remain distinct. |
 | Hook/runtime footprint claim | Separate official legality from local `[HOOK-LAST]` philosophy; measured claims need runtime evidence, otherwise report `design-level` or `UNVERIFIED`. |

@@ -40,10 +40,11 @@ Load at the main session's fresh start, resume, pause-return, or active-runtime 
 Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/reporting-core-law.md` and its triggered `.claude/reference/reporting-prohibition-law.md`.
 Before any boot, resume, or monitoring prose, preserve and apply those already-consumed reporting references.
 Clean startup preserves those reporting references without re-consuming them.
-If the Startup Contract lacks consumed reporting core law and triggered reporting-prohibition law before this skill loaded, route visible prose through the active team-lead startup owner before boot narration.
+If the Startup Contract lacks consumed reporting core law and triggered reporting-prohibition law before this skill is loaded and learned, route visible prose through the active team-lead startup owner before boot narration.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
-When none is material, record `runtime-ready: clean` internally.
-Then proceed without runtime-detail reference load, runtime-ledger inspection, or boot prose.
+When none is material, record `runtime-ready: clean` internally and return to the prior owner/action.
+Visible surfaces after boot or runtime checks route through `.claude/skills/agent-team-lead/references/pre-action-gate.md` `## Action Invariants` Report separation invariant and reporting law.
+On a runtime-detail non-trigger, do not emit boot prose or readiness prose; any read-only runtime observation that occurred remains internal and returns to the prior owner/action.
 Run `Session-Start Sequence` as the baseline.
 Run `Boot Sequence` when boot is incomplete.
 Run it when explicit runtime-readiness classification, monitoring, dispatch-state observation, cleanup interpretation, or runtime recovery is required.
@@ -52,10 +53,10 @@ Boot checks can change runtime owner/action; visible boot, status, progress, or 
 If boot evidence and visible-prose pressure conflict, keep boot evidence internal and continue the Procedure Plane path.
 
 Answer-only text that needs no tool can remain light.
-While session-boot is active, runtime-readiness, recovery, monitoring, cleanup, or dispatch-state tool work waits for the matching session-boot classification.
+While session-boot is active, runtime-readiness, recovery, monitoring, cleanup, or dispatch-state tool work routes through the matching session-boot classification before tool work; classification opens the next owner/action in the same segment or records truthful `HOLD`.
 
 Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
-Runtime-ready and clean boot outcomes are internal move-out facts unless `.claude/reference/reporting-prohibition-law.md` admits blocker or status prose.
+Runtime-ready and clean boot outcomes are internal move-out facts; clean-session, boot-complete, ready-for-task, and startup-applied prose stays suppressed unless `.claude/reference/reporting-prohibition-law.md` admits blocker or status prose.
 Open the next owner/action that can run in the same segment before any reporting-law-excepted boot prose.
 
 ## Boot Sequence

@@ -36,10 +36,13 @@ Record only the active row for the current trigger.
 ## Autonomy Procedure
 PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy Procedure colocated for atomic team-lead consultation at every autonomy/escalation decision moment. `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (`[NO-NEEDLESS-ASK]`) defines the general rule; this surface applies it as procedural steps for team-lead at the decision moment without per-decision cross-reference traversal.
 1. Inside the active boundary, choose the evidence-backed reversible default when doctrine and evidence identify one.
-2. Ask the user or `HOLD` only for irreversible, destructive, security-sensitive, operator-policy-choice, explicit cancellation, explicit redirect, proven user-owned blocker, or in-plan blocker basis.
+2. Ask the user or `HOLD` only for irreversible, destructive, security-sensitive, explicit cancellation, explicit redirect, proven user-owned blocker, in-plan blocker, or proven user-decision-risk/operator-policy-choice basis after cited owner procedures and applicable decision support are exhausted.
 3. Do not create waiting, deferral, or follow-up-choice prompts from preference, convenience, or uncertainty that evidence can resolve.
 4. Continue the frozen multi-step plan to the next executable owner/action after the current step satisfies its owning path.
 5. Route non-autonomy effects through their owning path; this reference does not replace `work-planning`, `task-execution`, `Skill(governance-modification)`, `Skill(self-verification)`, `Skill(review-verification)`, or validator authority.
+6. Before asking the user for decision, direction, approval, or instruction, run the user-decision-risk test: no evidence-backed reversible default, no standing directive, no cited owner procedure, and a remaining user-owned preference, value judgment, approval posture, or risk-tolerance decision.
+7. When the user-decision-risk test is not proven, choose the §1-§8-compliant reversible path and execute it.
+8. When the user-decision-risk test is proven and internal critique can still confirm a continuation or prove the user-owned decision basis, open `Skill(team-meeting)` as decision support before user escalation.
 
 ## User Challenge Procedure
 1. Treat the challenged conclusion as unverified until rechecked.
@@ -60,5 +63,5 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy P
 - A status challenge opens admitted status exposure and same-turn continuation through the selected next executable owner/action.
 - A user challenge opens `User Challenge Procedure`.
 - Valid autonomous-decision basis opens evidence-backed default execution.
-- Exception-class basis opens user escalation or `HOLD` with owner, blocker, and next safe action.
+- Exception-class basis opens the cited owner procedure first; user-decision-risk/operator-policy-choice basis opens `Skill(team-meeting)` only when decision support can still confirm continuation or prove the user-owned decision basis, while direct user escalation or `HOLD` stays limited to the lawful bases above after cited owner procedures and applicable decision support are exhausted.
 - Non-autonomy side effects open the owning skill, reference, lane, or `work-planning`.

@@ -12,14 +12,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Always run `### 5. Critical Review Gate` and `### 14. Next-Owner Routing`.
 
 ## Activation
-Load when a caller supplies a bounded review question whose requested scope requires inspection of design intent, owner boundary, procedure adherence, skill consumption, coherence, integrity, negative risk, defect promotion, removal, patch-worthiness, patch-readiness, or final-arbitration readiness.
+Load and learn the full skill body when a caller supplies a bounded review question whose requested scope requires inspection of design intent, owner boundary, procedure adherence, skill consumption, coherence, integrity, negative risk, defect promotion, removal, patch-worthiness, patch-readiness, or final-arbitration readiness.
 Run all applicable steps for binding promotion, final rejection, patch/no-patch, patch-worthiness synthesis, patch-readiness, verdict support, or mutation-readiness review.
 Use named lenses only as bounded packet evidence; they do not expand beyond the assigned review question.
 Reset for a new target, corpus, findings set, patch design, diff, bounded question, or scope.
 Stale packets, summaries, memory, and pre-patch snapshots do not carry forward across resets.
 A `review_verification_packet` exists only after current `Skill(review-verification)` activation reaches Step 14 for the exact target, corpus, bounded question, and scope.
 Named-lens claims exist only for exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
-Same-session loaded skill basis (per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`) reuse covers the Skill tool load only — it permits skipping a fresh `Skill(review-verification)` tool invocation when staleness conditions in that reference do not fire, but it does NOT carry packet output across targets.
+Same-session loaded-and-learned skill basis (per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`) reuse covers the Skill tool load-and-learn only — it permits skipping a fresh `Skill(review-verification)` tool invocation when staleness conditions in that reference do not fire, but it does NOT carry packet output across targets.
 Each new target, corpus, findings set, patch design, diff, bounded question, or scope requires fresh Steps 1-14 execution producing a fresh per-target `review_verification_packet`.
 Citing a prior packet as PASS-2 basis for a different target — in a `Skill(self-verification)` record, validator verdict PASS-2 basis, or any downstream consumption — is carrier-prose-as-evidence fabrication per `Skill(self-verification)` Step 3 anti-fabrication rule.
 
@@ -35,9 +35,10 @@ Substantive correctness on a silently-narrowed scope does not cure the procedura
 - Load `references/governance-review-gates.md` for detailed claim, artifact-change, synthesis, finding-promotion, or patch-worthiness review.
 
 ## Named Lane Lens Index
-Accept only these `REVIEW-VERIFICATION-LENSES`: `design-intent-lens`, `owner-boundary-lens`, `procedure-adherence-lens`, `skill-consumption-lens`, `coherence-integrity-lens`, `governance-continuity-lens`, `minimum-executable-information-lens`, `negative-risk-lens`, `removal-first-lens`, `patch-worthiness-lens`.
+Accept only these `REVIEW-VERIFICATION-LENSES`: `design-intent-lens`, `owner-boundary-lens`, `procedure-adherence-lens`, `skill-consumption-lens`, `coherence-integrity-lens`, `governance-continuity-lens`, `minimum-executable-information-lens`, `negative-risk-lens`, `removal-first-lens`, `dimensional-independence-lens`, `patch-worthiness-lens`.
 For aliases, proxy mappings, inferred equivalence, shortened names, or omitted `-lens` suffixes, return `PROCEDURE-EXECUTION-RESULT: blocked:invalid-review-verification-lens` and `NEXT-OWNER-ACTION: packet-correction`.
-Use named lenses to narrow target, corpus, required fields, and claim ceiling.
+Use named lenses to select lens-relevant required fields within the caller-supplied or frozen target, corpus, and claim ceiling.
+Do not narrow target, corpus, or claim ceiling below the caller-supplied or frozen scope unless the bounded review question explicitly supplies that narrowing or the anti-narrowing caller-confirm path completes first.
 Mark out-of-lens fields `not-applicable:<claim-scope-basis>`.
 Run all applicable steps for three or more lenses.
 Reject bare `REQUIRED-SKILLS: [review-verification]` for a non-lead participant without named `REVIEW-VERIFICATION-LENSES`.
@@ -61,7 +62,7 @@ Return internal `review_verification_packet` with:
 
 ## Review Workflow
 Run steps in numeric order against the current cumulative live state.
-Keep evidence local to each step; put only result fields in the packet.
+Keep evidence local to each step; put only result fields in the packet. Step-start, step-completion, defect-promotion, candidate-count, citation-substantiation, and remaining-citation progress narration stay internal; execute the required inspection tool call or packet-population action instead of visible prose.
 If target, corpus, findings, patch design, diff, or claim strength changes, reopen the earliest invalidated step.
 Run Steps 6-9 only for patch design, removal, or mutation readiness; otherwise record `not-applicable:<basis>`.
 
@@ -93,7 +94,7 @@ Reject bare `CONFIRMED`; use exact ladder state.
 ### 5. Critical Review Gate
 PROTECTED-LOCAL-RESTATEMENT-BASIS: critical-review-gate atomic-defeater-test — defeater enumeration colocated here for atomic test at every Critical Review Gate execution. `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law` defines under/over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking as execution-force defects; this surface enumerates them together with additional review-verification-specific defeaters (protected-function loss, source-to-destination gap, runtime/tool/user-surface failure, stronger narrower alternative, etc.) for one-shot defeater-first sweep at Step 5 execution.
 Try to disprove the preferred conclusion before any packet, synthesis, bestness, no-defect, no-regression, patch-worthiness, route, completion, or closure claim leaves review-verification.
-Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
+Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, dimensional-independence violation, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
 For source-to-destination gap review, trace every material hop in the claim chain, including source surface, producer output, synthesis, and outgoing claim when those surfaces are present.
 Keep any untraced material hop as an open defeater.
 Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule:
@@ -104,9 +105,10 @@ This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the pe
 The 3-component record is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per the receiver-applicability rule at `.claude/skills/self-verification/SKILL.md` `## Step 3` Receiver applicability paragraph.
 Shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
 Test these additional generalized defeaters when applicable:
-- **Same-category coverage defeater**: when the review target patches a surface belonging to a category with same-category siblings (open-set examples: completion-spine field set, marker pattern set, consumer skill set, lane agent set, hook surface set), enumerate every sibling and verdict its applicability against the patch principle; patching one surface while ignoring siblings is a coverage-survey defect recorded as `confirmed-defect` with the uncovered-sibling inventory.
-- **Cumulative-input integrity defeater**: when the review target is a produced work-product spanning multiple input cycles (operator directives + critic opinions + prior verification cycles), trace every prior material input and verify it is reflected in the current produced work-product; silently dropped prior input is a `confirmed-defect` with the dropped-input citation.
-Block the requested positive review result while any material defeater is open or confirmed without lawful owner deferral.
+- **Same-category coverage defeater**: when the review target patches a surface belonging to a category with same-category siblings (open-set examples: completion-spine field set, marker pattern set, consumer skill set, lane agent set, hook surface set), enumerate every sibling and verdict its applicability against the patch principle; untreated siblings stay open defeaters or `candidate-classified` until `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` proves the exact stronger state.
+- **Cumulative-input integrity defeater**: when the review target is a produced work-product spanning multiple input cycles (operator directives + critic opinions + prior verification cycles), trace every prior material input and verify it is reflected in the current produced work-product; unreflected material input stays an open defeater or `candidate-classified` until `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` proves the exact stronger state.
+- For both generalized defeaters, record `rejected:<basis>` instead of promotion when the surface is `not-material:<basis>`, lawfully scoped out, explicitly superseded, preserved elsewhere, a `protected-restatement`, a `design-tradeoff`, or a `non-issue`.
+Block the requested positive review result while any material defeater is open or confirmed without lawful owner deferral with cited authority surface.
 Return confirmed defeaters to Step 2 or Step 6.
 
 ### 6. Design Removal-First Patch
@@ -120,6 +122,7 @@ If multiple defensible removal-first patch operations (tighten / replace / trim 
 ### 7. Pre-Patch Negative-Risk Gate
 Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate.
 Test meaning loss, owner conflict, weaker procedure, weaker clarity, weaker execution force, weaker next action, broken reference, added burden, runtime side effect, user-surface regression, reuse failure, and acceptance regression.
+For governance patch design, record patch independence: functional restoration, no negative impact, and `philosophy-conformance: pass | hold:<basis> | fail:<basis>` per `.claude/reference/modification-core-law.md` `## Modification Law`.
 Revise, re-home, narrow, or `HOLD` until every material risk is removed, disproven, or assigned.
 
 ### 8. Widen Coherence Radius
@@ -128,6 +131,7 @@ Update the design when wider review finds drift, overlap, missing owner handoff,
 
 ### 9. Integrity Gate Before Live Patch
 Verify structural contract, fixed order, source-to-destination meaning, protected local restatement, minimum executable information, direct simplification, positive execution path, direct-consumption relevance, reference integrity, and no behavior-weakening wording.
+For governance patches, verify the 5-axis patch independence matrix: defect closure, intent preservation, no new defect, cross-reference integrity, and dimensional independence.
 When execution meaning changed, verify top-to-core coverage and core-to-trigger-bound guidance or valid `not-material:<basis>`.
 After trim, re-home, merge, or pointer replacement, verify adjacent surfaces are removed, citation-only, or protected local restatements.
 Enumerate positively-working functions in the coherence radius and verify no regression.
@@ -156,6 +160,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: citation-substantiation atomic-check — dist
 For every outgoing external citation/anchor claim in the produced packet, populate `CITATION-EVIDENCE-INVENTORY` with one 3-tuple entry per citation. "Outgoing external citation/anchor" = cited surface is a different file or different carrier than the produced packet itself (cited file path, section name, line:column, PACKET-ID, retained carrier path, or content claim referencing another file). "Internal/structural" citation (exempt) = produced packet's own section header / self-PACKET-ID / produced file's own line:column self-reference.
 Apply the 2-class deterministic test:
 - **Class A (admissible)**: current turn carries a Read/Grep/Bash tool-call against the cited surface AND the cited line/section/PACKET-ID is contained in that tool-call output. Citation immediately admissible.
+- Class-A `Bash` citation checks follow `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`: do not add assistant-authored stdout headers, progress labels, zero-match commentary, substantiation summaries, or remaining-item narration; use quiet `Grep`/`Read`, a quiet contained command, or a governed evidence carrier when raw rendered stdout was not explicitly requested.
 - **Class B (deferred Class A, admissible only with explicit citation)**: cited surface was loaded earlier in the same session via a Class-A-qualifying tool-call at turn-N AND (i) staleness check passed per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, (ii) the entry explicitly cites the originating turn-N tool-call evidence (Read/Grep/Bash invocation identifier or retained carrier PACKET-ID + retained path). Class B claims without explicit originating-turn citation are inadmissible.
 - **Not-A-not-B**: citation is inadmissible; the writer MUST execute a fresh Class-A tool-call in the current turn before the citation enters the packet. Carrier prose marking "Class A required" without executing the tool-call is fabrication, not admissibility.
 Each `CITATION-EVIDENCE-INVENTORY` entry records: (a) cited target identifier (file path + section/line/PACKET-ID); (b) freshness class (A or B) + verifying tool-call type and parameters + (Class B only) originating turn-N tool-call evidence citation; (c) observed verbatim content snippet from the tool-call output (Class A) or originating-turn output reference (Class B). Entries missing any of (a)(b)(c) are inadmissible; treat as citation fabrication and fail Step 12b.

@@ -9,7 +9,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # benchmark-simulation: Owner-Initiated Benchmark Cues
 These cues are mandatory selection checks for `SKILL-RECOMMENDATIONS` or lane-selected skill basis. Loading still follows `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 The responsible owner evaluates them without waiting for explicit user direction.
-When a material cue applies, select `benchmark-simulation` or record a valid deferral basis.
+When a material cue applies, select `benchmark-simulation` unless a valid non-selection basis below proves the benchmark path is not needed for the active decision; non-selection is not owner deferral.
 
 ## Cues
 - **T1. Visual / structural / information-representation deliverable**: dashboard, monitoring UI, report-with-figures, document layout, slide composition, form-flow design, diagram, dense table, chart, card set, governance/procedure representation, or any surface where external examples can reveal useful information elements or presentation patterns.
@@ -25,14 +25,14 @@ When a material cue applies, select `benchmark-simulation` or record a valid def
 - **C3. Cross-cultural / cross-locale concern** requires domain-specific benchmark.
 - **C4. Accessibility / regulatory constraint** is in scope; authoritative standards must ground the design.
 
-## Deferral Discipline
-When a material cue is not selected, record the deferral basis:
-- `BENCHMARK-DEFERRED: user-supplied-reference-already-fits` with citation
-- `BENCHMARK-DEFERRED: prior-session-already-grounded` with citation
-- `BENCHMARK-DEFERRED: burden-exceeds-value` with burden basis
+## Non-Selection Discipline
+When a material cue is not selected, record the non-selection basis:
+- `BENCHMARK-NOT-SELECTED: user-supplied-reference-already-fits` with citation
+- `BENCHMARK-NOT-SELECTED: prior-session-already-grounded` with citation
+- `BENCHMARK-NOT-SELECTED: burden-exceeds-value` with burden basis, lower-confidence impact, and open evidence risk
 Silent skip when a material cue applies is a planning-evidence defect, not legitimate scope reduction.
 
 ## Resolve Next Owner And Action
 - Applied material cue opens `benchmark-simulation`.
-- Valid deferral returns cited deferral basis to the consuming owner.
+- Valid non-selection returns cited non-selection basis to the consuming owner and keeps any material evidence risk open.
 - Silent skip opens planning-evidence correction.

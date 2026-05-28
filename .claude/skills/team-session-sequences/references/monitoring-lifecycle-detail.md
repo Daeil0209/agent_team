@@ -35,11 +35,8 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 - Standby, shutdown, stale tracking, and reuse decisions must refer to those concrete agent names rather than to the generic capability label alone.
 
 ## Supervisor Decisions On idle_notification
-When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
-If immediate work is available and preserved context is valuable, send `assignment`, `reuse`, or `reroute` as new bounded work.
-If no immediate work is available, send nothing.
-If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for termination evidence.
-If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
+Consume `.claude/skills/session-boot/references/runtime-state-detail.md` `## Supervisor Decisions On Turn-Ended Signals` for canonical `STANDBY`, new-work, no-message, shutdown, and validation-wait decisions.
+Monitoring extension: when immediate work is available and preserved context is valuable, prefer `reuse` only after the canonical `## Reuse Rule` owner/context fit stays truthful; otherwise route fresh bounded work through `assignment` or `reroute`.
 
 ## Message-First Runtime Cleanup Rule
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
@@ -82,7 +79,7 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - Treat direct user-to-teammate messages as user instructions to the receiving teammate inside that teammate's current authority and active surface.
 - Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
 - Route ownership, acceptance, routing, cleanup, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
-- Use free-form `SendMessage` for peer status, clarification, or partial-result notes only inside unchanged ownership, cleanup, routing, and active surface.
+- Use carrier-pointer `SendMessage` for peer status, clarification, or partial-result notes only inside unchanged ownership, cleanup, routing, and active surface; inline peer-note detail stays in the retained carrier and the rendered body carries only the canonical envelope plus pointer.
 - Free-form teammate interaction does not create agent-to-lead `MESSAGE-CLASS` authority and does not reopen a closed assignment execution block.
 - After a lane sends `completion`, duplicate packet replay and already-completed confirmation are handled by `.claude/skills/task-execution/references/message-classes.md` `Receipt Event Contract`, not by free-form status or clarification.
 - Authoritative downward phase packets, upward transport `MESSAGE-CLASS` vocabulary, and structured shutdown requests are owned by `.claude/skills/task-execution/references/phase-transition-control.md` and `.claude/skills/task-execution/references/message-classes.md`.

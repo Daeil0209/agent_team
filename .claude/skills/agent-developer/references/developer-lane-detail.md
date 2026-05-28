@@ -51,7 +51,7 @@ Owner fields use `not-applicable:<basis>` only when the frozen surface has no ma
 ## Completion Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
-PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment phrase below restates `.claude/agents/developer.md` `### IR-2. Non-Negotiable Boundary` constraint-resolution-trigger rule and `.claude/skills/agent-developer/SKILL.md` `## Completion Completeness Challenge` for developer-lane defense-in-depth consumption.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment phrase below restates `.claude/agents/developer.md` `### IR-2. Non-Negotiable Boundary` constraint-resolution-trigger rule and this file's `## Completion Completeness Challenge` for developer-lane defense-in-depth consumption.
 Production discovery and edits are forbidden until the packet is classified as `execute` or `reconstruct-with-inference`.
 Developer must use the first lawful executable path that can satisfy the user instruction.
 `scope-pressure` and `hold|blocker` stop only the unsafe current path; they open the team-lead resolution loop, not task abandonment.
@@ -82,7 +82,7 @@ Decision table:
 | `execute` | Decisive basis is explicit, bounded, and owner-consistent | Proceed through workflow |
 | `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle | Reconstruct explicitly, mark inference, then proceed |
 | `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles review/proof/validation into production | Stop the unsafe path; send pressure to `team-lead` via `SendMessage` with smallest truthful production boundary and next executable step |
-| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis and what is needed to resume |
+| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send hold|blocker-class transport to `team-lead`; rendered envelope stays no-detail with one pointer line and the governed blocker carrier names the exact invalid or missing basis plus what is needed to resume |
 
 Upward assertion must name:
 - exact constraint or missing decisive basis
@@ -149,7 +149,7 @@ Support overlays defer to earlier controlling contracts.
 | root-cause | Addresses a verified origin | Proceed |
 | symptom-relief | Reduces impact without proving origin | Proceed and disclose |
 | hypothesis-based | Plausible but unconfirmed cause | Proceed and keep verification basis explicit |
-| open | Cause unknown | internal `HOLD`; if reporting upward, emit `MESSAGE-CLASS: hold|blocker` with the missing root-cause basis and safe next step |
+| open | Cause unknown | internal `HOLD`; if reporting upward, emit hold|blocker-class transport with the missing root-cause basis and safe next step in the governed blocker carrier |
 
 ## Regression Guard
 - Trigger when `TASK-CLASS: defect-fix` or the assignment is clearly an observed defect correction.
