@@ -24,7 +24,7 @@ Every agent-specific skill inherits these common preconditions:
 - Full-scope completion, validation, promotion, rejection, and patch-selection claims require explicit full-scope basis; wave, sample, priority-tier, or representative-slice wording records `ACTIVE-SLICE` only.
 - Upward outcome envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Lane upward `SendMessage` sets top-level `to: team-lead`.
-- Tool envelope satisfaction requires top-level `SendMessage.to`; recipient wording in visible text, `summary`, `message`, or packet fields remains payload text.
+- Tool envelope satisfaction requires top-level `SendMessage.to`; recipient wording in visible text, `message`, or packet fields remains payload text. `summary` stays absent.
 - Missing `SendMessage.to` opens envelope-defect packet correction.
 - Receipt/start gates verify `dispatch-ack` envelope and packet truth per `.claude/skills/task-execution/references/message-classes.md`.
 - `Skill(self-verification)` applies to produced-result and completion surfaces, not receipt/start gates.
@@ -32,10 +32,9 @@ Every agent-specific skill inherits these common preconditions:
 - A hook block that enforces positive-pattern, doctrine-shape, or compliance-field presence outside destructive, security-critical, or session-stability-breaking runtime protection per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules` is an over-broad-blocking defect per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; the lane sends `scope-pressure` to team-lead naming the hook surface and the exact block message while preserving compliance truth.
 - Converged lane work must hand off to `team-lead` through `.claude/skills/task-execution/references/completion-handoff.md`.
 - The handoff requires both the retained carrier containing the common completion spine and completion-class transport sent to `team-lead` through `SendMessage`.
-- Required completion handoff uses both retained carrier and completion-class transport; disk output, pane/final prose, `status`, and `TaskUpdate` remain supporting signals.
+- Required completion handoff uses both retained carrier and completion-class transport; disk output, pane/final prose, and `status` remain supporting signals.
 - Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
-- Immediately apply the same assigned-task `TaskUpdate` closure required by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` when task tracking is active after `completion`.
-- After `completion`, same `TASK-ID` replay is closed-work replay and the lane sends no further message for that work.
+- After `completion`, same-work replay is closed-work replay and the lane sends no further message for that work.
 - This lane-baseline duty executes without packet wording.
 - For lane work that touches governance assets (`.claude/` doctrine, agents, skills, settings, hooks, or live-surface mirrors), the lane-side quality contract is the trio plus the operator-emphasized keyword gate.
 - Lane governance mutation consumes an active parent `Skill(governance-modification)` boundary, packet-carried `PRE-MUTATION-BASIS`, and completed Patch-Ready Gate basis before `Edit`/`MultiEdit`/`Write`/`Bash` mutation.
@@ -59,7 +58,7 @@ Every agent-specific skill inherits these common preconditions:
 - Receipt event content, post-ACK continuation, one-execution-block discipline, and pane-prose suppression follow `message-classes.md` Receipt Event Contract and Communication Integrity.
 - Execution-block internals (skill-loading, corpus enumeration, file-read plan, retained-output path planning, evidence strategy, next action, progress notes) stay inside the block.
 - Every upward message follows `.claude/skills/task-execution/references/message-classes.md` Communication Plane Law.
-- Carry receiver-required detail through governed Communication Plane payload; use retained-output or task carriers only for size, evidence retention, or reuse.
+- Carry receiver-required detail through governed Communication Plane payload; use retained-output or retained carriers only for size, evidence retention, or reuse.
 - Visible-row admission is owned by `.claude/reference/reporting-prohibition-law.md`; Communication Plane payload rules preserve complete, undistorted assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.

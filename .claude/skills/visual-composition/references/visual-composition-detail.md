@@ -43,7 +43,7 @@ Role-appropriate visual types for operational planning documents; each must pass
 ### R&D Proposal Document Visual Types
 Visual type by R&D proposal section:
 - **development overview**: structural diagram (component relationships or work breakdown)
-- **implementation system**: table/matrix (resource allocation, task assignment, method comparison)
+- **implementation system**: table/matrix (resource allocation, work assignment, method comparison)
 - **market/expected effects**: comparative diagram (before-after, baseline-target, multi-scenario)
 - **timeline**: Gantt/milestone chart with dependency/phase sequencing
 
@@ -127,7 +127,7 @@ Expert tool UI:
 ## Workflow Tool Design Patterns
 Canonical patterns for desktop apps, workflow tools, and operator-facing programs.
 ### Core Design Principles
-- Model tasks as **task-state machine**: start, resume, pause, save, import, export, finish
+- Model workflow items as **state machines**: start, resume, pause, save, import, export, finish
 - Treat persistence as **part of the product**; context loss on exit = incomplete workflow
 - Support bulk import as **first-class path** (spreadsheet/list source format)
 - Reject if tabs/menus/pages don't describe next steps, prerequisite states, or completion states

@@ -40,7 +40,7 @@ Load when the active path opens configured independent review or must record con
 - `ROUTING-SIGNAL` is `team-routing candidate` or `ambiguous-route`
 - lead-local would substitute for a configured lane
 - parallel fit affects correctness or bottleneck risk
-- team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, evidence route, or user-decision-risk decision-support route
+- team-lead is considering a non-destructive, non-security, non-operator-policy-choice user question instead of a default, parameter, assumption, or evidence route
 
 **Skip semantics** rule 1: "Skip when no risk-triggered axis applies" applies to the Risk-triggered evaluation only.
 **Skip semantics** rule 2: this does not skip codex-review when any Required trigger fires.

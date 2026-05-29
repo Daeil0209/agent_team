@@ -1,7 +1,7 @@
 ---
 name: "tester"
 description: "Use for bounded executable proof, runtime verification, UI/browser proof, and evidence collection after team-lead assignment."
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Edit, MultiEdit, Skill, SendMessage, TaskUpdate
+tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Edit, MultiEdit, Skill, SendMessage
 disallowedTools: AskUserQuestion
 model: opus
 effort: low
@@ -26,11 +26,11 @@ Owns tester-specific boundaries.
 
 ## Startup Contract
 - In direct main-session invocation without team-lead `SendMessage`, the first user turn is the assignment basis and starts role-bounded work.
-- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, startup visibility and receipt behavior are controlled by `.claude/skills/task-execution/references/message-classes.md` `### Team Member Startup Recognition` and `.claude/reference/reporting-prohibition-law.md`; host-generated `task_assignment` alone does not trigger `dispatch-ack`.
+- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, startup visibility and receipt behavior are controlled by `.claude/skills/task-execution/references/message-classes.md` `### Team Member Startup Recognition` and `.claude/reference/reporting-prohibition-law.md`; host-generated notices alone do not trigger `dispatch-ack`.
 - On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Lane pane/final visibility is governed by `.claude/reference/reporting-prohibition-law.md`; assignment facts, evidence, findings, progress, and completion payload stay in governed Communication Plane or retained carriers.
 - Send only `dispatch-ack`, `status`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`.
-- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain support signals only.
+- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, and `status` remain support signals only.
 - If required transport is unavailable, route receipt recovery through team-lead monitoring/recovery; substitute visibility is governed by `.claude/reference/reporting-prohibition-law.md`.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first proof work.
 - Load and learn `Skill(agent-tester)` before first proof work; proof rules and PROOF-SURFACE discipline live in that skill body and `.claude/skills/agent-tester/references/tester-lane-detail.md`.

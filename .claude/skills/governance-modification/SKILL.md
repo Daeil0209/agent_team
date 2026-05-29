@@ -66,8 +66,8 @@ Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `
 Design items lacking `REVIEW-PACKET-CITATION` are carrier prose, not review-verified design; reject and reopen Step 3.
 Keep Step 4 design-only; route file mutation through Step 6.
 
-Choice-situation law:
-- If multiple defensible CHANGE-SEQUENCE-DESIGN row-ordering / row-atomicity / serial-vs-parallel application options exist for the same patch-set per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before design-row selection. Per-row EDIT-OPERATION selection (re-home / delete / split / merge) is owned upstream at `Skill(review-verification)` Step 6 Design Removal-First Patch; that step also consumes the canonical rule when multiple defensible operations exist.
+Row selection law:
+- When multiple CHANGE-SEQUENCE-DESIGN row-ordering, row-atomicity, or serial-vs-parallel options preserve the same protected function, choose the option that removes the failing path with the fewest changed surfaces and preserves independent rows as independently verifiable. Per-row EDIT-OPERATION selection remains upstream at `Skill(review-verification)` Step 6 Design Removal-First Patch.
 
 # Step 5: self-verification
 Load and learn `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation on the produced `CHANGE-SEQUENCE-DESIGN`.
@@ -104,7 +104,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: patch-execution atomic-check — execution ru
 - For deletion, verify the deleted meaning is duplicate, obsolete, harmful, or preserved on the destination owner surface.
 - For recurrence or capability-gap repair, patch the existing consumed surface when it can carry the barrier.
 - Create or expand a governance surface only when the review-verified path proves no existing consumed surface can carry the required barrier or reusable capability.
-- For blocking hook/settings runtime-enforcement expansion, use Hook-Last review, `.claude/hooks/MANIFEST.md` ledger entry, and explicit operator approval before activation.
+- For blocking hook/settings runtime-enforcement expansion, use Hook-Last review and explicit operator approval before activation.
 - For MCP or external-tool capability changes, preserve official-behavior alignment, capability boundary, fallback, and cleanup truth on the owning environment/runtime surface.
 
 ## Post-Verify

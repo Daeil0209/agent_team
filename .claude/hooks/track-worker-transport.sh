@@ -35,10 +35,29 @@ try {
   const toolName = String(input.tool_name || "");
   const toolInput = input.tool_input || {};
   const toolResponse = input.tool_response || {};
-  const taskId = String(input.task_id || input.taskId || toolInput.task_id || toolInput.taskId || "").trim();
-  const taskSubject = String(input.task_subject || input.taskSubject || toolInput.task_subject || toolInput.taskSubject || "").trim();
+  function structuredMessageLines(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+    if (value.type === "state_signal" && value.class) {
+      return [`MESSAGE-CLASS: ${String(value.class).trim()}`];
+    }
+    if (value.type === "carrier_pointer") {
+      const lines = [];
+      if (value.class) lines.push(`MESSAGE-CLASS: ${String(value.class).trim()}`);
+      if (value.key && value.value) lines.push(`${String(value.key).trim()}: ${String(value.value).trim()}`);
+      return lines;
+    }
+    if (value.type === "index_pointer" && value.key && value.value) {
+      return [`${String(value.key).trim()}: ${String(value.value).trim()}`];
+    }
+    if ((value.type === "shutdown_request" || value.type === "shutdown_response")) {
+      return [`MESSAGE-CLASS: ${String(value.type).trim()}`];
+    }
+    return [];
+  }
+
   const messageText = joinUniqueText(
     flattenText(toolInput.summary, TRANSPORT_TEXT_KEYS)
+      .concat(structuredMessageLines(toolInput.message))
       .concat(flattenText(toolInput.message, TRANSPORT_TEXT_KEYS))
       .concat(flattenText(toolInput.content, TRANSPORT_TEXT_KEYS))
       .concat(flattenText(toolInput.body, TRANSPORT_TEXT_KEYS))
@@ -54,8 +73,6 @@ try {
     String(input.agent_type || ""),
     String(input.teammate_name || input.teammateName || toolInput.teammate_name || toolInput.teammateName || ""),
     String(input.team_name || input.teamName || toolInput.team_name || toolInput.teamName || ""),
-    taskId,
-    taskSubject,
     messageText,
     Object.prototype.hasOwnProperty.call(toolResponse, "success") ? String(toolResponse.success) : "",
     Object.prototype.hasOwnProperty.call(toolResponse, "is_error") ? String(toolResponse.is_error) : "",
@@ -63,7 +80,7 @@ try {
   ];
   process.stdout.write(fields.map(encode).join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n\n\n\n\n\n\n");
+  process.stdout.write("\n\n\n\n\n\n\n\n\n\n\n");
 }
 NODE
 )"
@@ -77,12 +94,10 @@ AGENT_NAME="$(hook_decode_base64_field "${FIELDS[3]:-}")"
 AGENT_TYPE="$(hook_decode_base64_field "${FIELDS[4]:-}")"
 TEAMMATE_NAME="$(hook_decode_base64_field "${FIELDS[5]:-}")"
 TEAM_NAME="$(hook_decode_base64_field "${FIELDS[6]:-}")"
-TASK_ID="$(hook_decode_base64_field "${FIELDS[7]:-}")"
-TASK_SUBJECT="$(hook_decode_base64_field "${FIELDS[8]:-}")"
-DESCRIPTION="$(hook_decode_base64_field "${FIELDS[9]:-}")"
-SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
-IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
-ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
+DESCRIPTION="$(hook_decode_base64_field "${FIELDS[7]:-}")"
+SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[8]:-}")" | tr '[:upper:]' '[:lower:]')"
+IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[9]:-}")" | tr '[:upper:]' '[:lower:]')"
+ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[10]:-}")"
 
 [[ "$TOOL_NAME" == "SendMessage" ]] || exit 0
 tool_response_succeeded || exit 0
@@ -128,32 +143,26 @@ const lines = rawText
   .filter(Boolean);
 const text = rawText.trim().replace(/\s+/g, " ");
 let klass = "";
-let taskId = "";
 let signals = [];
 for (const line of lines.length ? lines : [text]) {
-  let match = line.match(/^ack(?: task ([A-Za-z0-9._:-]+))?$/i);
+  let match = line.match(/^ack$/i);
   if (match) {
-    signals.push(["dispatch-ack", match[1] || ""]);
+    signals.push("dispatch-ack");
     continue;
   }
-  match = line.match(/^completion(?: task ([A-Za-z0-9._:-]+))?$/i);
-  if (match) signals.push(["completion", match[1] || ""]);
+  match = line.match(/^completion$/i);
+  if (match) signals.push("completion");
 }
 if (signals.length === 1) {
-  klass = signals[0][0];
-  taskId = signals[0][1];
+  klass = signals[0];
 }
-process.stdout.write(`${klass}\n${taskId}`);
+process.stdout.write(`${klass}\n`);
 NODE
 )"
 mapfile -t STATE_SIGNAL_FIELDS <<<"$STATE_SIGNAL_PARSED"
 STATE_SIGNAL_CLASS="${STATE_SIGNAL_FIELDS[0]:-}"
-STATE_SIGNAL_TASK_ID="${STATE_SIGNAL_FIELDS[1]:-}"
 if [[ -z "$MESSAGE_CLASS" && -n "$STATE_SIGNAL_CLASS" ]]; then
   MESSAGE_CLASS="$STATE_SIGNAL_CLASS"
-fi
-if [[ -n "$STATE_SIGNAL_TASK_ID" && -z "$(printf '%s' "$TASK_ID" | tr -d '[:space:]')" ]]; then
-  TASK_ID="$STATE_SIGNAL_TASK_ID"
 fi
 
 SENDER_NAME="$(resolve_runtime_sender_name "$SESSION_ID" "$AGENT_ID" "$AGENT_NAME" "$AGENT_TYPE" "$TEAMMATE_NAME" 2>/dev/null || true)"
@@ -192,44 +201,39 @@ NODE
 
 _update_worker_retained_carrier_locked() {
   local worker_name="${1:?worker name required}"
-  local task_id="${2-}"
-  local retained_path="${3:?retained path required}"
+  local retained_path="${2:?retained path required}"
   local target_file="$WORKER_RETAINED_CARRIER_MAP"
   local temp_file=""
 
   mkdir -p "$(dirname "$target_file")"
   touch "$target_file"
   temp_file="$(make_atomic_temp_file "$target_file")"
-  awk -F'|' -v worker="$worker_name" -v task="$task_id" '
-    !($1 == worker && $2 == task) { print $0 }
+  awk -F'|' -v worker="$worker_name" '
+    !($1 == worker) { print $0 }
   ' "$target_file" > "$temp_file"
-  printf '%s|%s|%s\n' "$worker_name" "$task_id" "$retained_path" >> "$temp_file"
+  printf '%s|%s\n' "$worker_name" "$retained_path" >> "$temp_file"
   atomic_replace_file "$temp_file" "$target_file"
 }
 
 remember_worker_retained_carrier() {
   local worker_name="${1-}"
-  local task_id="${2-}"
-  local retained_path="${3-}"
+  local retained_path="${2-}"
 
   worker_name="$(normalize_lane_id "$worker_name")"
-  task_id="$(printf '%s' "$task_id" | tr -d '[:space:]')"
   retained_path="$(printf '%s' "$retained_path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
   [[ -n "$worker_name" && -n "$retained_path" ]] || return 0
 
-  with_lock_file "$WORKER_RETAINED_CARRIER_MAP_LOCK" _update_worker_retained_carrier_locked "$worker_name" "$task_id" "$retained_path"
+  with_lock_file "$WORKER_RETAINED_CARRIER_MAP_LOCK" _update_worker_retained_carrier_locked "$worker_name" "$retained_path"
 }
 
 lookup_worker_retained_carrier() {
   local worker_name="${1-}"
-  local task_id="${2-}"
 
   worker_name="$(normalize_lane_id "$worker_name")"
-  task_id="$(printf '%s' "$task_id" | tr -d '[:space:]')"
   [[ -n "$worker_name" && -f "$WORKER_RETAINED_CARRIER_MAP" ]] || return 0
 
-  awk -F'|' -v worker="$worker_name" -v task="$task_id" '
-    $1 == worker && $2 == task { value = $3 }
+  awk -F'|' -v worker="$worker_name" '
+    $1 == worker { value = $2 }
     END { if (value != "") print value }
   ' "$WORKER_RETAINED_CARRIER_MAP"
 }
@@ -256,9 +260,11 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
   case "$MESSAGE_CLASS" in
     assignment|reuse|reroute)
       if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
-        ASSIGNMENT_TASK_ID="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
         ASSIGNMENT_RETAINED_OUTPUT_PATH="$(dispatch_field_raw_value "$DESCRIPTION" "RETAINED-OUTPUT-PATH" 2>/dev/null || true)"
-        remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_TASK_ID" "$ASSIGNMENT_RETAINED_OUTPUT_PATH"
+        if [[ -z "$(printf '%s' "$ASSIGNMENT_RETAINED_OUTPUT_PATH" | tr -d '[:space:]')" ]]; then
+          ASSIGNMENT_RETAINED_OUTPUT_PATH="$(dispatch_field_raw_value "$DESCRIPTION" "CARRIER" 2>/dev/null || true)"
+        fi
+        remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_RETAINED_OUTPUT_PATH"
         clear_worker_idle_pending "$TARGET_NAME"
         clear_worker_idle_notice "$TARGET_NAME"
         clear_worker_standby "$TARGET_NAME"
@@ -366,7 +372,7 @@ NODE
 
 RETAINED_OUTPUT_PATH_VALUE="$(description_field_value "RETAINED-OUTPUT-PATH")"
 if [[ -z "$(printf '%s' "$RETAINED_OUTPUT_PATH_VALUE" | tr -d '[:space:]')" ]]; then
-  RETAINED_OUTPUT_PATH_VALUE="$(lookup_worker_retained_carrier "$SENDER_NAME" "$TASK_ID")"
+  RETAINED_OUTPUT_PATH_VALUE="$(lookup_worker_retained_carrier "$SENDER_NAME")"
 fi
 RETAINED_CARRIER_TEXT=""
 case "$MESSAGE_CLASS" in
@@ -390,18 +396,6 @@ field_value() {
   description_field_value "$field_name"
 }
 
-TASK_ID_FIELD_PRESENT="false"
-TASK_ID_FROM_MESSAGE="$(field_value "TASK-ID")"
-if [[ -n "$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')" ]]; then
-  TASK_ID_FIELD_PRESENT="true"
-  TASK_ID="$(printf '%s' "$TASK_ID_FROM_MESSAGE" | tr -d '[:space:]')"
-elif [[ -n "$STATE_SIGNAL_TASK_ID" ]]; then
-  TASK_ID_FIELD_PRESENT="true"
-  TASK_ID="$(printf '%s' "$STATE_SIGNAL_TASK_ID" | tr -d '[:space:]')"
-else
-  TASK_ID="$(printf '%s' "$TASK_ID" | tr -d '[:space:]')"
-fi
-
 case "$MESSAGE_CLASS" in
   completion)
     clear_worker_idle_pending "$SENDER_NAME"
@@ -412,10 +406,6 @@ case "$MESSAGE_CLASS" in
     clear_worker_idle_pending "$SENDER_NAME"
     ;;
 esac
-
-if [[ -z "$TASK_SUBJECT" ]]; then
-  TASK_SUBJECT="$(field_value "TASK-SUBJECT")"
-fi
 
 OUTPUT_SURFACE_VALUE="$(field_value "OUTPUT-SURFACE")"
 TARGET_INTENT_BASIS_VALUE="$(field_value "TARGET-INTENT-BASIS")"
@@ -493,16 +483,13 @@ fi
 
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-LEDGER_LINE="$(TRANSPORT_TIMESTAMP="$TIMESTAMP" TRANSPORT_SESSION_ID="$SESSION_ID" TRANSPORT_SENDER_NAME="$SENDER_NAME" TRANSPORT_TEAM_NAME="$TEAM_NAME" TRANSPORT_AGENT_TYPE="$AGENT_TYPE" TRANSPORT_TASK_ID="$TASK_ID" TRANSPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" TRANSPORT_TASK_SUBJECT="$TASK_SUBJECT" TRANSPORT_MESSAGE_CLASS="$MESSAGE_CLASS" TRANSPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" TRANSPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" TRANSPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" TRANSPORT_OPEN_SURFACES="$OPEN_SURFACES" TRANSPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" TRANSPORT_NEXT_LANE="$NEXT_LANE" TRANSPORT_USER_RUN_PATH="$USER_RUN_PATH" TRANSPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" TRANSPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" TRANSPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" TRANSPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" TRANSPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" TRANSPORT_BURDEN_STATUS="$BURDEN_STATUS" TRANSPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" TRANSPORT_PLANNING_BASIS="$PLANNING_BASIS" TRANSPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" TRANSPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" TRANSPORT_TOOL_PATH_USED="$TOOL_PATH_USED" TRANSPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" TRANSPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION="$LANE_LOCAL_RESULT_VERIFICATION" TRANSPORT_CONVERGENCE_PASS_STATE="$CONVERGENCE_PASS_STATE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_STATE="$LANE_LOCAL_RESULT_VERIFICATION_STATE" TRANSPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" TRANSPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" TRANSPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" TRANSPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" TRANSPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" TRANSPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" TRANSPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" TRANSPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" TRANSPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" TRANSPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" TRANSPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_VALUE="$LANE_LOCAL_RESULT_VERIFICATION_VALUE" node <<'NODE'
+LEDGER_LINE="$(TRANSPORT_TIMESTAMP="$TIMESTAMP" TRANSPORT_SESSION_ID="$SESSION_ID" TRANSPORT_SENDER_NAME="$SENDER_NAME" TRANSPORT_TEAM_NAME="$TEAM_NAME" TRANSPORT_AGENT_TYPE="$AGENT_TYPE" TRANSPORT_MESSAGE_CLASS="$MESSAGE_CLASS" TRANSPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" TRANSPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" TRANSPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" TRANSPORT_OPEN_SURFACES="$OPEN_SURFACES" TRANSPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" TRANSPORT_NEXT_LANE="$NEXT_LANE" TRANSPORT_USER_RUN_PATH="$USER_RUN_PATH" TRANSPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" TRANSPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" TRANSPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" TRANSPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" TRANSPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" TRANSPORT_BURDEN_STATUS="$BURDEN_STATUS" TRANSPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" TRANSPORT_PLANNING_BASIS="$PLANNING_BASIS" TRANSPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" TRANSPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" TRANSPORT_TOOL_PATH_USED="$TOOL_PATH_USED" TRANSPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" TRANSPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION="$LANE_LOCAL_RESULT_VERIFICATION" TRANSPORT_CONVERGENCE_PASS_STATE="$CONVERGENCE_PASS_STATE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_STATE="$LANE_LOCAL_RESULT_VERIFICATION_STATE" TRANSPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" TRANSPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" TRANSPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" TRANSPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" TRANSPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" TRANSPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" TRANSPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" TRANSPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" TRANSPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" TRANSPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" TRANSPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_VALUE="$LANE_LOCAL_RESULT_VERIFICATION_VALUE" node <<'NODE'
 const line = {
   timestamp: process.env.TRANSPORT_TIMESTAMP || "",
   sessionId: process.env.TRANSPORT_SESSION_ID || "",
   senderName: process.env.TRANSPORT_SENDER_NAME || "",
   teamName: process.env.TRANSPORT_TEAM_NAME || "",
   agentType: process.env.TRANSPORT_AGENT_TYPE || "",
-  taskId: process.env.TRANSPORT_TASK_ID || "",
-  taskIdFieldPresent: process.env.TRANSPORT_TASK_ID_FIELD_PRESENT === "true",
-  taskSubject: process.env.TRANSPORT_TASK_SUBJECT || "",
   messageClass: process.env.TRANSPORT_MESSAGE_CLASS || "",
   fields: {
     outputSurface: process.env.TRANSPORT_OUTPUT_SURFACE === "true",
@@ -606,8 +593,8 @@ if [[ "$AGENT_TYPE" == "validator" && "$MESSAGE_CLASS" == "completion" ]]; then
 
     if (( ${#SILENT_PASS_MISMATCHES[@]} > 0 )); then
       WARN_MISMATCH_LIST="$(printf '%s; ' "${SILENT_PASS_MISMATCHES[@]}")"
-      printf '[%s] TRACK-WORKER-TRANSPORT WARN: validator PASS transport field mismatch from %s task=%s mismatches=%s\n' \
-        "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" "${TASK_ID:-unknown}" "$WARN_MISMATCH_LIST" >> "$VIOLATION_LOG"
+      printf '[%s] TRACK-WORKER-TRANSPORT WARN: validator PASS transport field mismatch from %s mismatches=%s\n' \
+        "$(date '+%Y-%m-%d %H:%M:%S')" "$SENDER_NAME" "$WARN_MISMATCH_LIST" >> "$VIOLATION_LOG"
     fi
   fi
 fi

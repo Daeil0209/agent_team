@@ -55,7 +55,7 @@ PROTECTED-CURTAIN-SURFACE: removal-first / consolidate / tighten / reduce / swee
 - Governance hierarchy work proceeds top-down through mapped execution layers, and `.claude` governance mutation starts only inside active `Skill(governance-modification)`.
 - Skill activation is situation-scoped: each skill loads and learns its full body when the interpreted requested outcome creates that skill's active execution owner path per its own activation rule, not by skill name lookup or anticipation.
 - Skill load-and-learn (actual `Skill(<skill>)` invocation plus full-body learning, or current same-session loaded-and-learned skill basis) binds the loader to consume the full skill body and adhere to its rules before any subsequent owner decision the loaded skill governs; trigger-active pointers are recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` on the governed path.
-- Communication Plane, task output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
+- Communication Plane, work output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
 - Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
 - Executable detail lives in `.claude/reference/work-execution-core-law.md`.
 

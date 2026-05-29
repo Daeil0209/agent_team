@@ -30,7 +30,7 @@ Unknown material burden means `blocked:<measurement-owner-and-basis>`, not `read
 
 For team-agent runtime paths, readiness also accounts for teammate context isolation.
 Teammates receive project context plus the assignment packet, not the lead's conversation history.
-Material upstream facts must travel through the packet or an explicit task/workflow state surface.
+Material upstream facts must travel through the packet or an explicit workflow state surface.
 
 For lead-local consequential paths, readiness covers the first local item, stop point, required local skills, evidence/proof limit, and whether any independent lane or acceptance owner would be substituted.
 
@@ -55,5 +55,5 @@ Losing the planned parallel path while it changes staffing truth, independent-su
 - Unknown material readiness category opens blocker-clear or route correction before dispatch.
 - Route-changing readiness gap reopens `work-planning`.
 - Same-boundary readiness gap opens bounded packet correction or blocker-clear.
-- Setup approval need opens the named setup owner; user-decision-risk setup choices open decision support before explicit approval or `HOLD` only when no §1-§8-compliant reversible setup path is derivable; damage-capable, security, credential, paid, or persistent-service approval opens explicit approval.
+- Setup approval need opens the named setup owner; setup choices that would otherwise ask the user open `Skill(team-meeting)` before explicit approval or `HOLD` when it can derive a §1-§8-compliant reversible setup path; damage-capable, security, credential, paid, or persistent-service approval opens explicit approval.
 - Proven allowed setup opens the setup owner inside the frozen boundary.

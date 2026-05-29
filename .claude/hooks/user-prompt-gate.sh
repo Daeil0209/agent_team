@@ -27,7 +27,7 @@ is_system_generated_followup_prompt() {
     return 0
   fi
 
-  # Pure task notifications carry state; mixed user text re-arms planning.
+  # Pure host notifications carry state; mixed user text re-arms planning.
   if task_notification_only_prompt "$prompt"; then
     return 0
   fi

@@ -80,7 +80,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
 - Missing packet-backed or safe-inference-backed map opens hold|blocker-class transport before proof work.
-- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through hold|blocker-class transport; rendered envelope stays no-detail with one pointer line and request detail lives in the governed carrier or task state.
+- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through hold|blocker-class transport; rendered envelope stays no-detail with one pointer line and request detail lives in the governed carrier.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
 - If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
 ### 2. Choose The Smallest Credible Test Set

@@ -41,9 +41,9 @@ When a validator role or skill says "validator additions" or "validator detail",
   - `BURDEN-CONTRACT`
   - `FIRST-USE-STATE` and sufficient `DATA-CONTENT-STATE` when visible behavior depends on operator data
 
-If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
+If these fields are missing, first derive safely from frozen packet, workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
-If the decisive basis remains non-derivable and truthful validation would require inventing it, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier or task state, not the rendered body.
+If the decisive basis remains non-derivable and truthful validation would require inventing it, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier, not the rendered body.
 If only part of the basis is derivable, issue `VERDICT: HOLD` and carry covered scope plus unverified scope in `SCOPE-COVERAGE` and `OPEN-SURFACES`, unless the narrowed subset was frozen or lawfully upstream-deferred by the owning upstream record.
 
 If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.

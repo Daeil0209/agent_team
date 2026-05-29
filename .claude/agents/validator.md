@@ -1,7 +1,7 @@
 ---
 name: "validator"
 description: "Use for bounded final validation, decisive acceptance review, PASS/HOLD/FAIL verdicts, and validator correction packets after team-lead assignment."
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Edit, MultiEdit, Skill, SendMessage, TaskUpdate, mcp__playwright__browser_navigate, mcp__playwright__browser_navigate_back, mcp__playwright__browser_click, mcp__playwright__browser_type, mcp__playwright__browser_fill_form, mcp__playwright__browser_press_key, mcp__playwright__browser_hover, mcp__playwright__browser_select_option, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_evaluate, mcp__playwright__browser_console_messages, mcp__playwright__browser_network_requests, mcp__playwright__browser_wait_for, mcp__playwright__browser_resize, mcp__playwright__browser_close, mcp__playwright__browser_tabs, mcp__playwright__browser_handle_dialog, mcp__playwright__browser_file_upload, mcp__playwright__browser_drag
+tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Edit, MultiEdit, Skill, SendMessage, mcp__playwright__browser_navigate, mcp__playwright__browser_navigate_back, mcp__playwright__browser_click, mcp__playwright__browser_type, mcp__playwright__browser_fill_form, mcp__playwright__browser_press_key, mcp__playwright__browser_hover, mcp__playwright__browser_select_option, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_evaluate, mcp__playwright__browser_console_messages, mcp__playwright__browser_network_requests, mcp__playwright__browser_wait_for, mcp__playwright__browser_resize, mcp__playwright__browser_close, mcp__playwright__browser_tabs, mcp__playwright__browser_handle_dialog, mcp__playwright__browser_file_upload, mcp__playwright__browser_drag
 disallowedTools: AskUserQuestion
 model: opus
 effort: xhigh
@@ -26,11 +26,11 @@ Owns validator-specific boundaries.
 
 ## Startup Contract
 - In direct main-session invocation without team-lead `SendMessage`, the first user turn is the assignment basis and starts role-bounded work.
-- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, startup visibility and receipt behavior are controlled by `.claude/skills/task-execution/references/message-classes.md` `### Team Member Startup Recognition` and `.claude/reference/reporting-prohibition-law.md`; host-generated `task_assignment` alone does not trigger `dispatch-ack`.
+- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, startup visibility and receipt behavior are controlled by `.claude/skills/task-execution/references/message-classes.md` `### Team Member Startup Recognition` and `.claude/reference/reporting-prohibition-law.md`; host-generated notices alone do not trigger `dispatch-ack`.
 - On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Lane pane/final visibility is governed by `.claude/reference/reporting-prohibition-law.md`; assignment facts, evidence, findings, progress, and completion payload stay in governed Communication Plane or retained carriers.
 - Send only `dispatch-ack`, `status`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`.
-- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain support signals only.
+- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, and `status` remain support signals only.
 - If required transport is unavailable, route receipt recovery through team-lead monitoring/recovery; substitute visibility is governed by `.claude/reference/reporting-prohibition-law.md`.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first validation work.
 - Load and learn `Skill(agent-validator)` before first validation work.
@@ -83,7 +83,7 @@ The validator walkthrough remains required after lane-local reviewer + tester PA
 AC-verdict and FAR-claim screenshot inspection follows the multimodal-Read rule in `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 Runtime, rendering, interaction, environment, or operator-burden validation surfaces require matching proof rather than source-only downgrade.
 Missing decisive validation basis is not local improvisation.
-First derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
+First derive safely from frozen packet, workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
 Use an information blocker only when decisive basis remains non-derivable and validation would require invention.
 Otherwise issue `HOLD` on the assigned verdict surface, carry the verified surface and unverified scope in verdict transport, and use `PASS` only when the narrowed subset was frozen or lawfully upstream-deferred.

@@ -20,7 +20,6 @@ State signal text and envelope shape are owned by `.claude/skills/task-execution
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
 Required completion payload fields for every completion-grade `MESSAGE-CLASS: completion`:
-- `TASK-ID` when task tracking is active
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
 - `UPSTREAM-DECISION-BASIS-CONSUMPTION`
@@ -44,19 +43,16 @@ Unsupported, inferred, stale, memory-only, or uninspected data is not verified f
 Completion without `UPSTREAM-DECISION-BASIS-CONSUMPTION` is not completion-grade when upstream decision basis affected the assignment.
 
 Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
-Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
-After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Assignment Delivery Contract` when task tracking is active.
-That task-state mutation is runtime closure.
+Any content added to the rendered `SendMessage` body beyond the canonical state signal is malformed screen-rendered transport.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, and `LANE-LOCAL-RESULT-VERIFICATION`.
+Team-lead accepts completion-grade transport only when the assignment carrier or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, and `LANE-LOCAL-RESULT-VERIFICATION`.
 Completion-side details stay in retained synthesis state or the next assignment/correction carrier unless reporting law admits exact visible material.
 Carrier assertions of verification or PASS-grade evidence in completion handoffs follow the anti-fabrication tool-call-evidence rule at `.claude/skills/self-verification/SKILL.md` `## Step 1` + `## Step 3` and the packet-citation rule at `.claude/skills/review-verification/SKILL.md` `### 14. Next-Owner Routing`.
 Team-lead classifies carrier-asserted `PASS-1`, `PASS-2`, `CONVERGENCE-PASS`, `Skill(...) loaded`, `REVIEW-PACKET-CITATION`, or packet-consumption claims without the required actual evidence as `carrier-as-evidence-fabrication`.
 Team-lead rejects completion-grade transport when `carrier-as-evidence-fabrication` is present.
-Team-lead marks the assigned task non-converged when `carrier-as-evidence-fabrication` is present.
+Team-lead marks the assigned work non-converged when `carrier-as-evidence-fabrication` is present.
 Team-lead routes distinct bounded correction to the producing lane with `INPUT-FINDINGS` naming the carrier defect.
-If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
-If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
+If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
 
 Team-lead `Skill(self-verification)` convergence remains separate from lane completion.
 Team-lead synthesizes only completion-grade lane outputs, then loads and learns `Skill(self-verification)` for convergence on the synthesized work-product surface set and outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
@@ -149,9 +145,9 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Every agent completion goes to `team-lead` through completion-class `SendMessage` transport; rendered envelope stays no-detail and completion fields live in the retained carrier.
 - Every agent completion also provides the retained carrier containing the common completion spine.
 - Completion is not valid when either the retained carrier or the `SendMessage` completion state signal is missing.
-- The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
-- When the runtime displays a completion state signal, keep it in the canonical summary/header/preview slot only; the message body is empty or one ASCII space.
-- Include only the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
+- The `SendMessage` structured payload transports only one state signal; lane-local execution truth travels in the retained carrier.
+- When the runtime displays a completion state signal, keep it in the canonical structured `state_signal` payload; do not add `summary`, string body text, or prose.
+- Include only the canonical structured state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
 - Transport only lane-local result truth in the retained carrier: the surface actually examined or changed, `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `SCOPE-COVERAGE`, `VERIFIED-DATA-FEEDBACK`, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Missing `SCOPE-COVERAGE` makes the completion spine incomplete when the lane output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
 - Wave, sample, priority-tier, or representative-slice completion stays scoped to `ACTIVE-SLICE`; full-scope completion, validation, promotion, rejection, or patch selection requires `SCOPE-COVERAGE` over the frozen `SCOPE-BASELINE`.
@@ -161,7 +157,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.
 - Team-lead's completion-side visible emission after receiving this transport is admitted only through `.claude/reference/reporting-prohibition-law.md`.
 - Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain routes to `scope-pressure` or `hold|blocker`.
-- Pending required procedure state routes to hold|blocker-class transport with blocker fields in the governed carrier or task state.
+- Pending required procedure state routes to hold|blocker-class transport with blocker fields in the governed carrier.
 
 ## Resolve Next Owner And Action
 - Converged completion-grade output opens team-lead synthesis.

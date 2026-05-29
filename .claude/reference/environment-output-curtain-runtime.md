@@ -11,7 +11,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 Output Curtain Runtime owns the optional display curtain for user-facing reports.
 
 The curtain does not own, rewrite, summarize, redact, archive, classify, or separately manage team-lead to agent Communication Plane payloads.
-Internal communication remains governed by the existing team runtime, `SendMessage`, task state, retained-output carriers, and lifecycle contracts.
+Internal communication remains governed by the existing team runtime, `SendMessage`, retained-output carriers, and lifecycle contracts.
 
 ## Display Classes
 Claude Code host-native display is outside this curtain.
@@ -37,6 +37,7 @@ If the curtain runtime fails, the supervised report surface fails closed and emi
 Direct `claude` native startup does not activate the curtain.
 If the operator uses normal Claude Code native UI, host-native display remains governed by Claude Code behavior and the model-side reporting law; it is not proof of curtain failure.
 In native UI, agent-authored prose leakage violates `.claude/reference/reporting-prohibition-law.md` report-prohibition criteria; it is not supervised curtain proof.
+Current native `.claude/settings.json` hook wiring proves only the wired hook surfaces; it does not prove hard blocking of normal assistant prose, final prose, or visible task-plan/checklist text.
 Use a configured supervised-renderer executable only after verifying that the path exists and is executable.
 If no supervised-renderer executable is installed, supervised curtain operation is unavailable; record `HOLD` or `UNVERIFIED` instead of claiming curtain proof, and render only through reporting-law admission.
 

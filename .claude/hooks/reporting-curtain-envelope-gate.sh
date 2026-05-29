@@ -6,7 +6,7 @@
 # This hook is enumerated as constitutionally-protected per
 # .claude/reference/modification-core-law.md ## Constitutional Curtain Protection.
 # Disabling, removing, or weakening this hook (script body, hook wiring in
-# settings.json, or registration in MANIFEST.md) requires:
+# settings.json) requires:
 #   1. Skill(governance-modification) Step 3 review-verification packet
 #   2. Validator pre-approval (CLAIM-CEILING: validator-final-verdict, PASS verdict)
 #   3. User notification with constitutional invariant + forensic erosion cycle disclosure
@@ -30,7 +30,7 @@
 # Protected failure
 #   Upward state-class SendMessage envelope discipline violations — lane
 #   putting MESSAGE-CLASS header plus receiver-required detail in the
-#   message body instead of the canonical no-detail envelope. This was
+#   message payload instead of the canonical no-detail envelope. This was
 #   observed repeatedly across reporting-prohibition patch waves: governance
 #   text patches alone did not prevent the violation because lane
 #   composition habit (showing thoroughness inline, explaining context
@@ -38,30 +38,30 @@
 #
 # Scope (narrow)
 #   - Only fires on tool_name == "SendMessage".
-#   - Inspects decoded tool_input.summary and tool_input.message together.
-#   - Summary carries only empty/whitespace or canonical no-detail routing
-#     tokens; runtime agent handles such as @R1-reviewer and parenthesized
-#     role labels such as (reviewer) are routing tokens, not receiver-required
-#     content.
-#   - Message carries only empty/whitespace, one carrier-pointer/index KEY
-#     line, or the exact structured shutdown object
+#   - Inspects decoded non-body rendered field and message payload together.
+#   - The non-body rendered field carries only empty/whitespace. Any non-empty
+#     value is a rendered report attempt and is denied.
+#   - Message must be a structured no-detail object. String messages are denied
+#     because Claude Code requires summary for string message payloads, and
+#     summary is prohibited by the reporting curtain.
+#   - Message carries only a structured carrier pointer, structured state signal,
+#     structured no-detail index pointer, or the exact structured shutdown object
 #     {"type":"shutdown_request"} / {"type":"shutdown_response"}.
-#     String-rendered user-visible body exposure ceiling is one non-empty line.
 #   - Downward assignment/reuse/reroute/phase-transition-control details stay
-#     in a governed carrier or task state referenced by that one visible line.
+#     in a governed carrier referenced by that one visible line.
 #
 # Recovery
 #   Resend with the canonical envelope per
 #   .claude/skills/task-execution/references/message-classes.md
 #   `### Transport Payload`:
-#     - summary parameter = canonical no-detail routing token only.
-#     - message body = empty string, single ASCII space, one
-#       carrier-pointer/index KEY line, or exact structured shutdown object.
+#     - non-body rendered field = empty/whitespace only.
+#     - message payload = structured carrier pointer, structured state signal,
+#       structured no-detail index pointer, or exact structured shutdown object.
 #     - Downward assignment/reuse/reroute/phase-transition-control packet
-#       detail lives in the governed carrier or task state referenced by the
-#       one-line visible body.
-#     - Receiver-required detail moves to a governed carrier, task state,
-#       packet, or evidence artifact referenced by the visible envelope.
+#       detail lives in the governed carrier referenced by the one-line
+#       visible body.
+#     - Receiver-required detail moves to a governed carrier, packet, or
+#       evidence artifact referenced by the visible envelope.
 #
 # Failure mode
 #   Fail-open on any hook-internal error (malformed JSON, bash exception).
@@ -76,7 +76,7 @@
 #
 # Footprint
 #   Single PreToolUse matcher on "SendMessage" tool. No filesystem writes.
-#   No long-running operations. Single JSON parse and string validation.
+#   No long-running operations. Single JSON parse and structured-payload validation.
 
 set +e  # fail-open posture
 
@@ -99,9 +99,8 @@ const input = parseInput();
 if (String(input.tool_name || "") !== "SendMessage") process.exit(0);
 
 const toolInput = input.tool_input || {};
-const summary = String(toolInput.summary ?? input.summary ?? "");
+const nonBodyRenderedField = String(toolInput.summary ?? input.summary ?? "");
 const rawMessage = toolInput.message ?? input.message ?? "";
-const message = typeof rawMessage === "string" ? rawMessage : String(rawMessage ?? "");
 
 function deny(reason) {
   process.stdout.write(JSON.stringify({
@@ -114,106 +113,21 @@ function deny(reason) {
   process.exit(0);
 }
 
-function hasFreeformSummary(text) {
-  const trimmed = text.trim();
-  if (!trimmed) return false;
-  if (text.includes("\n") || text.includes("\r")) return true;
-  if (trimmed.length > 80) return true;
-  if (/[\\/?!,;"'`{}[\]]/.test(trimmed)) return true;
-  if (/\b(findings?|defects?|evidence|rationale|summary|details?|counts?|paths?|files?|lines?|open-surfaces|basis|because|leaks?|leaked|results?)\b/i.test(trimmed)) return true;
-
-  const noDetailClassTokens = new Set([
-    "ack",
-    "active",
-    "assignment",
-    "carrier-only",
-    "completion",
-    "consent",
-    "critique-request",
-    "critique-response",
-    "draft-publication",
-    "draft-update",
-    "for",
-    "hold",
-    "hold|blocker",
-    "hold-blocker",
-    "no-objection",
-    "pass",
-    "phase-transition-control",
-    "redirect",
-    "reroute",
-    "reuse",
-    "scope-pressure",
-    "shutdown-request",
-    "shutdown-response",
-    "shutdown_request",
-    "shutdown_response",
-    "status",
-    "task",
-    "turn",
-    "verdict",
-    "wake",
-  ]);
-  const roleTokens = new Set([
-    "critic",
-    "developer",
-    "drafter",
-    "researcher",
-    "reviewer",
-    "team-lead",
-    "tester",
-    "validator",
-    "worker",
-  ]);
-
-  function tokenize(segment) {
-    return segment.trim().match(/\([^()\s]+\)|[^\s]+/g) || [];
-  }
-
-  function normalized(token) {
-    return token.trim().toLowerCase();
-  }
-
-  function isNoDetailClassToken(token) {
-    const lower = normalized(token);
-    if (noDetailClassTokens.has(lower)) return true;
-    return /^(r|t)[0-9]+$/i.test(token)
-      || /^(round|turn|task|batch|wave)-[A-Za-z0-9_.|-]+$/i.test(token);
-  }
-
-  function isRoleToken(token) {
-    const lower = normalized(token);
-    if (roleTokens.has(lower)) return true;
-    const match = token.match(/^\(([A-Za-z][A-Za-z0-9_.|-]*)\)$/);
-    return Boolean(match && roleTokens.has(match[1].toLowerCase()));
-  }
-
-  function isRoutingIdentifierToken(token) {
-    if (!/^[A-Za-z0-9@][A-Za-z0-9_.|@-]*$/.test(token)) return false;
-    if (/^@[A-Za-z0-9][A-Za-z0-9_.|-]*$/.test(token)) return true;
-    if (/^[0-9]+$/.test(token)) return true;
-    if (/^(agent|worker|lane|shard|batch|wave|task|round|turn)[-_]?[A-Za-z0-9_.|-]+$/i.test(token)) return true;
-    return /[0-9]/.test(token) && /[-_.|]/.test(token);
-  }
-
-  const colonCount = (trimmed.match(/:/g) || []).length;
-  if (colonCount > 1) return true;
-  const segments = trimmed.split(":").map((segment) => segment.trim());
-  if (segments.some((segment) => !segment)) return true;
-  if (colonCount === 1 && !isNoDetailClassToken(segments[0])) return true;
-
-  const tokens = segments.flatMap(tokenize);
-  if (tokens.length > 8) return true;
-  return !tokens.every((token) => (
-    isNoDetailClassToken(token)
-    || isRoleToken(token)
-    || isRoutingIdentifierToken(token)
-  ));
+if (nonBodyRenderedField.trim()) {
+  deny("Reporting-curtain envelope violation: SendMessage non-body rendered field must be empty/whitespace. Receiver-required detail belongs in the governed carrier, packet, or evidence artifact referenced by the structured message pointer.");
 }
 
-if (hasFreeformSummary(summary)) {
-  deny("Reporting-curtain envelope violation: SendMessage summary contains free-form detail or non-canonical token shape. Summary is user-visible and may carry only empty/whitespace or a short no-detail routing token. Receiver-required detail belongs in the governed carrier, task state, packet, or evidence artifact referenced by the message body pointer.");
-}
+const pathKeys = new Set(["CARRIER", "RETAINED-OUTPUT-PATH"]);
+const allowedKeys = new Set(["CARRIER", "STATE", "ROUND", "TURN", "WAKE", "NEXT", "FROM", "TO", "VERDICT", "CRITIQUE", "REDIRECT", "REPORT-REASON", "RETAINED-OUTPUT-PATH", "UPSTREAM-DECISION-BASIS"]);
+const stateClasses = new Set(["ack", "dispatch-ack", "status", "completion", "scope-pressure", "hold|blocker"]);
+const carrierClasses = new Set(["assignment", "reuse", "reroute", "phase-transition-control", "critique-request", "critique-response", "verdict", "redirect", "peer-note", "correction"]);
+const reportReasons = new Set(["final verified result", "user-action blocker", "explicit status answer", "closeout residual"]);
+const closedValues = {
+  VERDICT: new Set(["PASS", "HOLD", "FAIL", "carrier-only"]),
+  CRITIQUE: new Set(["critique-request", "critique-response", "carrier-only", "candidate-classified", "candidate-classified-with-revision", "revision-required", "no-objection", "CONSENT", "HOLD"]),
+  REDIRECT: new Set(["carrier-only", "packet-correction", "scope-pressure", "hold-blocker", "owner-correction"]),
+};
+const substantiveToken = /(found|finding|findings|defect|defects|critical|major|minor|because|leak|leaks|leaked|evidence|count|counts|rationale|reasoning|summary|detail|details|files|lines|open[-_]?surfaces|open|surface|surfaces|result|results)/i;
 
 function isStructuredShutdownPayload(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
@@ -223,82 +137,85 @@ function isStructuredShutdownPayload(value) {
     && (value.type === "shutdown_request" || value.type === "shutdown_response");
 }
 
+function requireNoExtraKeys(value, allowed) {
+  for (const key of Object.keys(value)) {
+    if (!allowed.has(key)) {
+      deny("Reporting-curtain envelope violation: SendMessage structured payload contains an unsupported field. Receiver-required detail belongs in the governed carrier.");
+    }
+  }
+}
+
+function checkKeyValue(key, value) {
+  if (!allowedKeys.has(key)) {
+    deny("Reporting-curtain envelope violation: SendMessage structured payload contains a free-form or disallowed key. Use only canonical carrier-pointer/index keys and keep receiver-required detail in the governed carrier.");
+  }
+  if (pathKeys.has(key)) {
+    if (!value || value.length > 240) {
+      deny("Reporting-curtain envelope violation: SendMessage carrier pointer is missing or too large for the visible envelope. Use the smallest governed carrier path.");
+    }
+    return;
+  }
+  if (key === "REPORT-REASON") {
+    if (!reportReasons.has(value)) {
+      deny("Reporting-curtain envelope violation: REPORT-REASON value is not a canonical report reason. Non-canonical report wording belongs in the governed carrier.");
+    }
+    return;
+  }
+  if (substantiveToken.test(value)) {
+    deny("Reporting-curtain envelope violation: SendMessage structured KEY value contains substantive finding, evidence, count, rationale, result, or leakage wording. Non-path KEY values must stay closed-vocabulary no-detail index labels.");
+  }
+  if (closedValues[key] && !closedValues[key].has(value)) {
+    deny("Reporting-curtain envelope violation: SendMessage structured KEY value is outside the closed no-detail vocabulary for that KEY. Receiver-required detail belongs in the governed carrier.");
+  }
+  if (key === "ROUND" && !/^(r[0-9]+|round-[0-9]+)$/i.test(value)) {
+    deny("Reporting-curtain envelope violation: ROUND value must be a no-detail round identifier.");
+  }
+  if (key === "TURN" && !/^([Tt][0-9]+|turn-[0-9]+)$/.test(value)) {
+    deny("Reporting-curtain envelope violation: TURN value must be a no-detail turn identifier.");
+  }
+  if (value.length > 80 || !/^[A-Za-z0-9_.|@-]+$/.test(value)) {
+    deny("Reporting-curtain envelope violation: SendMessage structured KEY value contains substantive prose. Non-path KEY values must stay no-detail index labels; receiver-required detail belongs in the governed carrier.");
+  }
+}
+
 if (isStructuredShutdownPayload(rawMessage)) {
   process.exit(0);
 }
 
-const body = message.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-if (!body.trim()) process.exit(0);
-
-const lines = body.split("\n").filter((line) => line.trim() !== "");
-if (lines.length > 1) {
-  deny("Reporting-curtain envelope violation: SendMessage body exceeds the one-line visible exposure ceiling. Assignment packets, team-meeting turns, critique, findings, rationale, evidence, and status detail belong in a governed carrier, task state, packet carrier, or evidence artifact referenced by one visible pointer line.");
+if (typeof rawMessage === "string") {
+  deny("Reporting-curtain envelope violation: SendMessage message must be a structured no-detail object. String message payloads trigger Claude Code's required summary field, and summary is prohibited by the reporting curtain.");
 }
 
-const allowedKey = /^(CARRIER|STATE|ROUND|TURN|WAKE|NEXT|FROM|TO|VERDICT|CRITIQUE|REDIRECT|REPORT-REASON|TASK-ID|RETAINED-OUTPUT-PATH|UPSTREAM-DECISION-BASIS):[ \t]\S/;
-const pathKeys = new Set(["CARRIER", "RETAINED-OUTPUT-PATH"]);
-const reportReasons = new Set([
-  "final verified result",
-  "user-action blocker",
-  "explicit status answer",
-  "closeout residual",
-]);
-const closedValues = {
-  VERDICT: new Set(["PASS", "HOLD", "FAIL", "carrier-only"]),
-  CRITIQUE: new Set([
-    "critique-request",
-    "critique-response",
-    "carrier-only",
-    "candidate-classified",
-    "candidate-classified-with-revision",
-    "revision-required",
-    "no-objection",
-    "CONSENT",
-    "HOLD",
-  ]),
-  REDIRECT: new Set([
-    "carrier-only",
-    "packet-correction",
-    "scope-pressure",
-    "hold-blocker",
-    "owner-correction",
-  ]),
-};
-const substantiveToken = /(found|finding|findings|defect|defects|critical|major|minor|because|leak|leaks|leaked|evidence|count|counts|rationale|reasoning|summary|detail|details|files|lines|open[-_]?surfaces|open|surface|surfaces|result|results)/i;
-
-for (const rawLine of lines) {
-  const line = rawLine.trim();
-  if (!allowedKey.test(line)) {
-    deny("Reporting-curtain envelope violation: SendMessage body contains a free-form or disallowed rendered line. The visible body may contain only canonical carrier-pointer/index KEY lines and must not contain MESSAGE-CLASS, assignment packet fields, critique body, rationale, findings, evidence, or progress prose.");
-  }
-  const key = line.slice(0, line.indexOf(":"));
-  const value = line.slice(line.indexOf(":") + 1).trim();
-  if (!pathKeys.has(key)) {
-    if (key === "REPORT-REASON") {
-      if (!reportReasons.has(value)) {
-        deny("Reporting-curtain envelope violation: REPORT-REASON body value is not a canonical report reason. Non-canonical report wording belongs in the governed carrier.");
-      }
-      continue;
-    }
-    if (substantiveToken.test(value)) {
-      deny("Reporting-curtain envelope violation: SendMessage body KEY value contains substantive finding, evidence, count, rationale, result, or leakage wording. Non-path KEY values must stay closed-vocabulary no-detail index labels.");
-    }
-    if (closedValues[key] && !closedValues[key].has(value)) {
-      deny("Reporting-curtain envelope violation: SendMessage body KEY value is outside the closed no-detail vocabulary for that KEY. Receiver-required detail belongs in the governed carrier.");
-    }
-    if (key === "ROUND" && !/^(r[0-9]+|round-[0-9]+)$/i.test(value)) {
-      deny("Reporting-curtain envelope violation: ROUND value must be a no-detail round identifier.");
-    }
-    if (key === "TURN" && !/^([Tt][0-9]+|turn-[0-9]+)$/.test(value)) {
-      deny("Reporting-curtain envelope violation: TURN value must be a no-detail turn identifier.");
-    }
-    if (value.length > 80 || !/^[A-Za-z0-9_.|@-]+$/.test(value)) {
-      deny("Reporting-curtain envelope violation: SendMessage body KEY value contains substantive prose. Non-path KEY values must stay no-detail index labels; receiver-required detail belongs in the governed carrier.");
-    }
-  } else if (value.length > 240) {
-    deny("Reporting-curtain envelope violation: SendMessage carrier pointer is too large for the visible envelope. Use the smallest governed carrier path or task-state pointer.");
-  }
+if (!rawMessage || typeof rawMessage !== "object" || Array.isArray(rawMessage)) {
+  deny("Reporting-curtain envelope violation: SendMessage message payload is missing or not a structured no-detail object.");
 }
+
+if (rawMessage.type === "state_signal") {
+  requireNoExtraKeys(rawMessage, new Set(["type", "class"]));
+  const klass = String(rawMessage.class || "").trim();
+  if (!stateClasses.has(klass)) {
+    deny("Reporting-curtain envelope violation: SendMessage state_signal class is not a canonical no-detail state signal.");
+  }
+  process.exit(0);
+}
+
+if (rawMessage.type === "carrier_pointer") {
+  requireNoExtraKeys(rawMessage, new Set(["type", "class", "key", "value"]));
+  const klass = String(rawMessage.class || "").trim();
+  if (klass && !carrierClasses.has(klass)) {
+    deny("Reporting-curtain envelope violation: SendMessage carrier_pointer class is outside the closed no-detail transport class set.");
+  }
+  checkKeyValue(String(rawMessage.key || "").trim(), String(rawMessage.value || "").trim());
+  process.exit(0);
+}
+
+if (rawMessage.type === "index_pointer") {
+  requireNoExtraKeys(rawMessage, new Set(["type", "key", "value"]));
+  checkKeyValue(String(rawMessage.key || "").trim(), String(rawMessage.value || "").trim());
+  process.exit(0);
+}
+
+deny("Reporting-curtain envelope violation: SendMessage structured payload type is not allowed. Use state_signal, carrier_pointer, index_pointer, shutdown_request, or shutdown_response.");
 NODE
 
 exit 0

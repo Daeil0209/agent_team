@@ -15,8 +15,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - For explicitly named small-surface review, bounded measurement can be the target-file inventory plus a quiet line/byte aggregate when scale affects route; whole-folder remeasurement is not required unless scope or route depends on it.
 - Preserve required measurement evidence in retained/internal records.
 - Compose measurement as the smallest bounded data-collection action that supplies the required basis; repeat measurement only for a newly material fact not reasonably captured by the prior record.
-- Measurement composition follows `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`: reader-oriented progress prose and assistant-authored labels stay empty; required evidence is captured in retained/internal records or machine-minimal command output and execution continues.
-- Corpus sizing uses a quiet aggregate or retained/internal record rather than multiple labeled `Bash` displays for reader orientation. If multiple counts or inventories are needed, write the evidence to a retained/internal record or run a quiet aggregate command and consume the result internally.
+- Measurement composition follows `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`: reader-oriented progress prose and assistant-authored labels stay empty; required evidence is captured in retained/internal records by default and execution continues.
+- Rendered machine-minimal measurement output is valid only when the exact count or inventory is required evidence for the next owner action and no retained/internal record can carry that basis without losing execution truth.
+- Corpus sizing uses retained/internal records rather than labeled `Bash` displays for reader orientation. If multiple counts or inventories are needed, write the evidence to a retained/internal record or run a quiet aggregate command and consume the result internally.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
 - Unmeasured material burden blocks dispatch-ready planning.
@@ -135,6 +136,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 
 ## Post-Planning Gate
 1. Open exactly one next owner/action from the frozen team-lead work plan.
+   - Opening the next owner/action is a Procedure Plane transition; it is not report admission, bridge-prose permission, milestone narration, route-summary permission, or handoff narration.
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent or insufficient under that owner's freshness rule.
@@ -148,6 +150,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
+    - Open or consume `task-execution` immediately; do not render plan-freeze, route, cap, work-plan, phase-split, team-routed, or dispatch-owner-opening prose first.
 15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
 16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
 17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.

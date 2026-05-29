@@ -1,13 +1,13 @@
 ---
 name: team-meeting
-description: Run a critical marathon meeting for an operator-provided agenda or user-decision-risk decision-support need. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and either internal execution direction or proven operator decision need.
+description: Run a critical marathon meeting for an operator-provided agenda or user-decision moment where internal critique can avoid asking the user. Team-lead drafts an audit-applied solution. Participants deliver critical improvement opinions. Drafter iterates persuasive best-current solutions until every item reaches unanimous participant consent and either internal execution direction or proven operator decision need.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 
 ## 1. Purpose
-Run a critical marathon meeting for the operator's agenda.
-Turn the agenda into a fully consensus-converged solution through drafter writing and critic opinion.
+Run a critical marathon meeting for the operator's agenda or a user-decision moment where internal critique can keep work moving.
+Turn the agenda or decision moment into a fully consensus-converged solution through drafter writing and critic opinion.
 Keep procedures on `task-execution`, `Skill(governance-modification)`, or other named procedure paths throughout the meeting.
 Require unanimous participant consent for every solution item before the direction gate or operator path.
 End the meeting after full consent and either internal execution direction or required operator acceptance.
@@ -24,11 +24,11 @@ Drafter integrates useful opinions.
 Drafter states the final recommendation.
 Critics read the draft from a critical stance.
 Critics provide improvement opinions.
-The meeting keeps the fixed drafter and at least two critics for decision-support use.
+The meeting keeps the fixed drafter and at least two critics when the agenda or decision moment needs multi-perspective critique.
 Total agent participants (drafter + critics) is capped at MAX 5 agents per meeting. The fixed drafter (`team-lead`) plus at most 4 critic agents. The cap preserves real-time discussion latency (each turn round-trip parallelizes across critics; >4 critics degrades convergence quality per cross-critic awareness cost) and respects `ACTIVE-CONCURRENT-AGENT-CAP` runtime burden. Operator may name fewer than 4 critics; operator may not exceed 4 critics for a single meeting.
 When requested or useful critic coverage exceeds `ACTIVE-CONCURRENT-AGENT-CAP`, drafter keeps the highest-material lens coverage in the active critic set and routes remaining critique through sub-batching, serial phasing, or `HOLD` only when no truthful internal continuation remains.
 When the operator does not name critics, drafter selects critics by material lens coverage and current runtime fit without asking the operator to staff the meeting.
-When the operator names fewer than two critics for a user-decision-risk decision-support meeting, drafter fills the remaining critic slot by material lens coverage unless runtime fit is unavailable.
+When the meeting needs multi-perspective critique and names fewer than two critics, drafter fills the remaining critic slot by material lens coverage unless runtime fit is unavailable.
 
 Participants use named `review-verification` lens labels as bounded critique criteria during meeting discussion.
 Participants use those lens labels to find defects, risks, missing evidence, boundary problems, and better alternatives.
@@ -43,10 +43,8 @@ All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluati
 ## 3. Meeting Procedure
 
 ### 3-1. Activation
-Activate when the operator explicitly asks for a meeting.
-Activate when the operator's agenda needs critical improvement from more than one perspective.
-Activate when `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]` user-decision-risk decision-support trigger fires: the active owner would otherwise ask the user for decision, direction, approval, or instruction and convergence-tractable internal critique can still confirm a §1-§8-compliant continuation or prove the user-owned decision basis.
-Skipping team-meeting to escalate a user-decision-risk trade-off directly in those cases is a `[NO-NEEDLESS-ASK]` violation per that rule.
+Activate when the operator explicitly asks for a meeting or multi-perspective critique on an agenda.
+Activate when the active owner would otherwise ask the user for decision, direction, approval, or instruction and internal critique can still derive a §1-§8-compliant reversible continuation or prove the user-owned blocker.
 Use the clear single-owner action when it already solves the request.
 Do not activate merely because multiple implementation options exist; when doctrine and evidence identify one §1-§8-compliant reversible path, the active owner chooses it and proceeds.
 

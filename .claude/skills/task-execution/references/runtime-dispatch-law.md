@@ -12,7 +12,7 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 
 ## Team Runtime Shape
 - `TeamCreate` establishes team-agent runtime only when no current-session team registration exists.
-- Team-agent runtime is required when the frozen route is parallel-fit for independent specialist work or names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared task/mailbox state, runtime monitoring, or continuity beyond lead-local work.
+- Team-agent runtime is required when the frozen route is parallel-fit for independent specialist work or names any of: additional lanes, `PARALLEL-GROUPS`, multiple concurrent agents, shared mailbox/runtime state, runtime monitoring, or continuity beyond lead-local work.
 - Repeated `TeamCreate` is not the path to satisfy these requirements; one runtime serves all of them.
 - If the frozen path is team-agent operation and canonical current-session team-runtime evidence is absent while no current-session team registration exists, `TeamCreate` is the next execution move.
 - If current-session team registration exists without live panes, recover through `session-boot` and reattach needed lanes with team-scoped `Agent` on the existing team.
@@ -58,19 +58,23 @@ Target-resolution preflight is mandatory before the tool call:
 3. map the frozen target role to an exact live process-backed member name
 4. choose assignment-grade `SendMessage` only on exact live-process roster match through `message-classes.md` `### Assignment Delivery Contract`
 5. choose team-scoped `Agent` with top-level `team_name` and `name` when the lane is absent but team-runtime delegation remains the route
-6. create or verify the task row through `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage` when task tracking is active
-7. treat standalone host evidence only as legacy/fallback evidence, not dispatch
-8. label the resulting truth before any user-facing claim: `member-created`, task-row-created, `dispatch pending`, fallback evidence, or `HOLD`
-9. after `member-created`, create or verify the task row when task tracking is active, then send assignment-grade `SendMessage` before monitoring, fallback dispatch, replacement, or any admitted user-facing status answer
+6. treat standalone host evidence only as legacy/fallback evidence, not dispatch
+7. label the resulting truth before any user-facing claim: `member-created`, `dispatch pending`, fallback evidence, or `HOLD`
+8. after `member-created`, send assignment-grade `SendMessage` before monitoring, fallback dispatch, replacement, or any direct status answer admitted by reporting law
+
+Target-resolution and runtime-state results are dispatch evidence only.
+When runtime evidence proves `teamRuntimeState: active`, the next assistant action is the next required carrier write/check, member creation/reuse, assignment-grade `SendMessage`, recovery move, or `HOLD`.
+Do not render active-runtime confirmation or materialization intent such as "Team runtime is active", "now I will materialize", "now I will write", shared binding-surface staging, shard-carrier staging, canonical-folder rationale, or carrier-writing status.
 
 ## Parallel And Reuse Law
 - Configured project lanes come first.
 - Additional-agent dispatch uses team-agent runtime.
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
-- When task tracking is active for team-agent dispatch, consume `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage` and before task-scoped mutation.
-- Runtime dispatch keeps `TaskCreate`, `TaskUpdate`, task identity, and worker targeting inside that contract.
+- Runtime dispatch consumes `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage`.
+- Runtime dispatch uses retained carrier identity and `SendMessage.to`; list-style assignment tracking is removed from worker targeting and completion closure.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - Runtime dispatch follows frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
+- Runtime dispatch must never exceed 2 concurrent team-scoped lane agents unless a later governance change explicitly replaces the standing operator maximum in `work-planning/references/parallel-fit.md`.
 - Before any same-segment parallel dispatch, reuse batch, or new `Agent`, count current live or standby dispatched-lane members plus planned nonblocked assignment targets.
 - A live or standby dispatched-lane member stays in the count until shutdown or termination evidence removes it from the active roster.
 - If the count is at cap and a no-longer-needed live or standby member blocks required new member creation, complete `shutdown_request` before any new `Agent`.
@@ -89,18 +93,16 @@ Target-resolution preflight is mandatory before the tool call:
 - Tool-call envelope shape (parameter tag form, namespace prefix, required-parameter presence, attribute names) must be verified call-by-call against the first validated call's exact envelope before send; same-class copy-paste without per-call shape verification is the named batch-preflight failure mode.
 - A hook `BLOCKED` result, host `InputValidationError`, or `Invalid tool parameters` rejection on any call of a batch is batch-preflight-failure evidence; correct the failed preflight cause before retrying that dispatch shape.
 - While `PARALLEL-DISPATCH-LOCK` is open, every move must directly create, verify, send, or repair the next dispatch state for a frozen nonblocked group.
-- Allowed lock moves are only: required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; or silent retained-output directory or shared-carrier creation when the frozen packet requires it.
-- When no current-session team runtime is registered, `TeamCreate` is the first lock move and no assignment `TaskCreate`, assignment-carrier `TASK-ID` finalization, `TaskUpdate`, or assignment-grade `SendMessage` may run before that `TeamCreate` succeeds.
-- Assignment `TaskCreate` runs only inside the active team task namespace, and per-lane assignment carriers are written/finalized only after the returned team task identity is verified or same-batch returned rows are coherently mapped by frozen target order.
-- Do not create a per-lane retained assignment carrier first and patch in `TASK-ID` later; create task identity first, then write the dispatchable carrier once.
-- Frozen target-order mapping is valid only before carrier write, only for distinct/complete/order-preserving active-team task rows, and only when it preserves the same target, work-surface, retained-output path, and receiver address.
-- Per-lane assignment-carrier writing is a dispatch/reuse move only for targets in the current assignment-send segment. Later-wave preparation while current-wave targets are still in flight is not a reason to write dispatchable per-lane carriers with `TASK-ID`; keep later-wave context in the shared retained carrier or non-dispatchable planning record until a live or standby target is ready for assignment/reuse.
-- `TaskUpdate` for assignment owner, claimed, or in-progress marking is not a dispatch-lock move; before completion transport, dispatch truth moves through assignment `SendMessage`, first upward outcome, and runtime evidence.
-- A pre-team or previous-namespace task id in an assignment carrier is a preflight defect; correct the carrier before any assignment-grade `SendMessage`, and treat any already-rendered stale carrier as unresolved packet delivery rather than asking the receiver to self-remap.
+- While `PARALLEL-DISPATCH-LOCK` is open and a lawful lock move remains, the next assistant action is that tool/file move or a governed blocker; assistant-authored visible progress narration is suppressed.
+- A host-rendered `Read` result inside the lock does not open a narration slot. After required reads prove active runtime, target addressability, or carrier location, continue directly to the next lock move without assistant-authored prose.
+- Allowed lock moves are only: required reference-consumption reads for the selected lock move; required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; current-runtime or team-registration evidence reads; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; team-scoped `Agent`; assignment-grade `SendMessage`; or silent retained-output directory or shared-carrier creation when the frozen packet requires it.
+- Runtime counts, shard counts, measured corpus counts, plan-frozen state, reference-consumption prerequisites, deferred schema discovery, current-runtime or team-registration checks, binding-carrier verification, `TeamCreate` status, member-created counts, and carrier-writing status stay in retained carriers or internal evidence while the lock can continue.
+- When no current-session team runtime is registered, `TeamCreate` is the first lock move and no assignment-grade `SendMessage` may run before that `TeamCreate` succeeds.
+- Per-lane assignment-carrier writing is a dispatch/reuse move only for targets in the current assignment-send segment. Later-wave preparation while current-wave targets are still in flight stays in the shared retained carrier or non-dispatchable planning record until a live or standby target is ready for assignment/reuse.
 - Narrow blocker exception: `hold|blocker` or `scope-pressure` for a proven dispatch blocker is the only lawful exit from lock-move execution; it is not one of the lock moves listed above but the lawful abandonment of the lock when execution cannot proceed.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open follows `.claude/reference/work-execution-core-law.md` `## Direct Tool-Call Composition Law`.
 - `PARALLEL-DISPATCH-LOCK` contains only lawful lock moves until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
-- Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
+- Codex/review tools, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
 - Packet size or self-contained packet burden is not a reason to delay dispatch or omit receiver-required basis; put complete shared context in a retained carrier and send required-floor shard packets that point to it.
 - A user challenge about missing parallel dispatch answers only the user-relevant outcome admitted by `.claude/reference/reporting-prohibition-law.md`; internal dispatch/recovery detail stays internal and the locked dispatch action resumes unless the user redirects.
 - A parallel execution segment then reconciles every intended target before it moves out.
@@ -125,9 +127,8 @@ Target-resolution preflight is mandatory before the tool call:
 - Recoverable packet or target gaps stay outside hook-controlled blocking.
 
 ## SendMessage And Skill Law
-- Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against an open executable task.
-- Assignment worker targeting follows `message-classes.md` `### Assignment Delivery Contract`; task-row mutation is not worker targeting.
-- Completed-task correction first needs an open executable task whose `TaskCreate` result has returned before dependent dispatch or task mutation.
+- Assignment-grade `SendMessage` is for bounded assignment, reroute, or reuse against a retained carrier assignment.
+- Assignment worker targeting follows `message-classes.md` `### Assignment Delivery Contract`.
 - Workflow-control `SendMessage` is for canonical `phase-transition-control` only.
 - Runtime-cleanup `SendMessage` carries cleanup only; assignment dispatch uses assignment-grade `SendMessage`.
 - Agent-facing `REQUIRED-SKILLS` is mandatory on every assignment-grade packet as required methodology or capability skills frozen by planning or the active workflow owner.

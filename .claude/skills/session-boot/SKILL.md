@@ -28,7 +28,7 @@ Runtime-detail non-triggers:
 
 Runtime-detail load decision:
 1. If current request or frozen route requires delegated runtime, classify runtime readiness; load `references/runtime-state-detail.md` only when existing runtime state, recovery state, monitoring state, cleanup state, or dispatch state can change the next owner/action.
-2. If current-session runtime evidence exists (`.runtime/procedure-state.json`, `SessionStart`, hook signal, task state, runtime ledger, inbox/completion, or live roster evidence), decide whether that evidence is clean, active, stale, blocked, cleanup-pending, or recovery-relevant.
+2. If current-session runtime evidence exists (`.runtime/procedure-state.json`, `SessionStart`, hook signal, runtime ledger, inbox/completion, or live roster evidence), decide whether that evidence is clean, active, stale, blocked, cleanup-pending, or recovery-relevant.
 3. If the evidence is clean and has no next owner/action effect, keep the reference unloaded.
 4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 
@@ -108,7 +108,7 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 ## Sequence Activation Discipline
 - A sequence is `materially active` when its state can change the next owner, next action, blocker, recovery, monitoring, cleanup, or dispatch truth.
 - Record the active session sequence in the internal continuity carrier when it is materially active.
-- Record the current phase, checkpoint, or blocking step in the matching internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
+- Record the current phase, checkpoint, or blocking step in the matching internal carrier: continuity record, runtime ledger, retained note, or recovery record.
 - Keep boot, phase, checkpoint, continuity, and sequence names internal as procedure state; visible output follows `.claude/reference/reporting-prohibition-law.md` only.
 - Sequence switches require an explicit active-sequence transition in the internal carrier.
 - Defined session procedures follow the governing basis or stay on `HOLD`.
@@ -116,17 +116,17 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 ## Mode Split
 Two agent-execution modes must stay separate:
 - `standalone Agent`: legacy or fallback host evidence only; not configured lane dispatch or lane work.
-- `team-agent runtime`: coordinated teammate execution with shared task/mailbox coordination and monitoring.
+- `team-agent runtime`: coordinated teammate execution with shared mailbox/runtime coordination and monitoring.
 
 Require the explicit team-agent runtime path when the frozen route is parallel-fit, names `PARALLEL-GROUPS`, or needs shared team runtime.
 Each runtime-specific condition below independently requires team-agent runtime when true.
 Each true runtime-specific condition independently preserves the team-agent runtime requirement.
 At least one runtime-specific condition must be true:
 - the frozen route is parallel-fit or names `PARALLEL-GROUPS`
-- the frozen route names team-agent runtime, shared mailbox/task state, or monitoring continuity
+- the frozen route names team-agent runtime, shared mailbox/runtime state, or monitoring continuity
 - role separation across multiple coordinated turns needs shared runtime coordination
 - preserved agent context across multiple tasks materially reduces redispatch burden (this condition justifies team-agent runtime only when reuse is the intended path; per the "Preserved agent context is a reuse signal only" rule below, this condition does NOT override frozen independent work surfaces, `PARALLEL-GROUPS`, or required role separation)
-- teammates need direct inter-agent communication, shared task claiming, competing-hypothesis challenge, or independent cross-layer coordination
+- teammates need direct inter-agent communication, competing-hypothesis challenge, or independent cross-layer coordination
 - a single returned subagent result is insufficient to preserve the needed coordination
 
 This requirement records runtime need only; session-boot emits runtime evidence for the already frozen route.

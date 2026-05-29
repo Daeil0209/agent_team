@@ -160,8 +160,7 @@ _update_worker_idle_notice_locked() {
   local action="${1:?action required}"
   local worker_name="${2:?agent name required}"
   local idle_reason="${3-}"
-  local completed_task="${4-}"
-  local completed_status="${5-}"
+  local completed_status="${4-}"
   local target_file="$WORKER_IDLE_NOTICE_FILE"
   local temp_file=""
   local new_state=""
@@ -178,10 +177,10 @@ _update_worker_idle_notice_locked() {
       atomic_replace_file "$temp_file" "$target_file"
       ;;
     mark)
-      new_state="${idle_reason}|${completed_status}|${completed_task}"
+      new_state="${idle_reason}|${completed_status}"
       if awk -F'|' -v worker="$worker_name" -v state="$new_state" '
         $1 == worker {
-          current = $2 "|" $3 "|" $4
+          current = $2 "|" $3
           if (current == state) found = 1
         }
         END { exit(found ? 0 : 1) }
@@ -192,7 +191,7 @@ _update_worker_idle_notice_locked() {
       awk -F'|' -v worker="$worker_name" '
         $1 != worker { print $0 }
       ' "$target_file" > "$temp_file"
-      printf '%s|%s|%s|%s\n' "$worker_name" "$idle_reason" "$completed_status" "$completed_task" >> "$temp_file"
+      printf '%s|%s|%s\n' "$worker_name" "$idle_reason" "$completed_status" >> "$temp_file"
       atomic_replace_file "$temp_file" "$target_file"
       ;;
     *)
@@ -205,12 +204,11 @@ _update_worker_idle_notice_locked() {
 mark_worker_idle_notice_if_changed() {
   local worker_name="${1-}"
   local idle_reason="${2-}"
-  local completed_task="${3-}"
-  local completed_status="${4-}"
+  local completed_status="${3-}"
   local rc=0
 
   [[ -n "$worker_name" ]] || return 1
-  if with_lock_file "$WORKER_IDLE_NOTICE_LOCK" _update_worker_idle_notice_locked "mark" "$worker_name" "$idle_reason" "$completed_task" "$completed_status"; then
+  if with_lock_file "$WORKER_IDLE_NOTICE_LOCK" _update_worker_idle_notice_locked "mark" "$worker_name" "$idle_reason" "$completed_status"; then
     return 0
   else
     rc=$?
@@ -232,22 +230,20 @@ const { parseInput } = require(process.env.HOOK_JSON_HELPERS);
 const input = parseInput();
 const teammate = input.teammate_name || input.teammateName || "unknown";
 const idleReason = input.idle_reason || input.idleReason || "unknown";
-const completedTask = input.completed_task_id || input.completedTaskId || "none";
 const completedStatus = input.completed_status || input.completedStatus || "none";
-process.stdout.write(`${teammate}\n${idleReason}\n${completedTask}\n${completedStatus}\n`);
+process.stdout.write(`${teammate}\n${idleReason}\n${completedStatus}\n`);
 NODE
     )"
     mapfile -t IDLE_FIELDS <<<"$PARSED_IDLE"
     TEAMMATE="${IDLE_FIELDS[0]:-unknown}"
     IDLE_REASON="${IDLE_FIELDS[1]:-unknown}"
-    COMPLETED_TASK="${IDLE_FIELDS[2]:-none}"
-    COMPLETED_STATUS="${IDLE_FIELDS[3]:-none}"
+    COMPLETED_STATUS="${IDLE_FIELDS[2]:-none}"
     TURN_END_CLASSIFICATION="$(worker_turn_end_classification "$TEAMMATE")"
     IDLE_NOTICE_REASON="$TURN_END_CLASSIFICATION"
 
     TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-    printf '%s | TEAMMATE_IDLE | %s | reason:%s | status:%s | task:%s | mode:mirror\n' \
-      "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
+    printf '%s | TEAMMATE_IDLE | %s | reason:%s | status:%s | mode:mirror\n' \
+      "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
       if [[ "$TURN_END_CLASSIFICATION" == "standby" ]]; then
@@ -258,7 +254,7 @@ NODE
       fi
     fi
 
-    if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"; then
+    if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS"; then
       exit 0
     fi
 

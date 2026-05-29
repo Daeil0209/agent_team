@@ -39,7 +39,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Classify the received packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before research discovery.
 - `scope-pressure` and `hold|blocker` stop evidence work. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis and the smallest truthful evidence boundary.
 - Required decisive basis: `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`, `REQUIRED-SKILLS`, and the smallest truthful evidence boundary.
-- For write-producing research, missing, contradictory, stale, unrelated, or out-of-scope `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is `hold|blocker` or `scope-pressure`, not `reconstruct-with-inference`.
+- For write-producing research, missing, contradictory, stale, unrelated, or out-of-scope `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is `hold|blocker` or `scope-pressure`, not `reconstruct-with-inference`.
 - If the safe question boundary, source family, decision target, downstream consumer, and evidence-authority threshold are inferable without changing the assignment boundary, reconstruct the working packet explicitly.
 - Mark inferred pieces as inference.
 - Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, and evidence-authority threshold.

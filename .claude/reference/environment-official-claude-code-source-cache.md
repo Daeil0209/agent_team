@@ -31,19 +31,19 @@ Source: https://code.claude.com/docs/en/agent-teams
 
 Cached facts:
 - Agent teams are enabled through `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
-- Agent teams are experimental and have known limitations around session resumption, task coordination, and shutdown behavior.
+- Agent teams are experimental and have known limitations around session resumption, coordination, and shutdown behavior.
 - The lead creates the team, spawns teammates, coordinates work, synthesizes findings, and attempts cleanup.
-- The lead handles team coordination, task assignment, and delegation from natural-language user instructions.
+- The lead handles team coordination, assignment, and delegation from natural-language user instructions.
 - Teammates are full independent Claude Code sessions and can be messaged or redirected.
 - Teammates load project context and assignment prompt, but not the lead's conversation history.
-- Agent teams support shared task lists; tasks can be assigned by lead or claimed by teammates, and task dependencies can block claiming until prerequisites complete.
+- Agent teams support host coordination lists, assignment claiming, and dependency blocking in official behavior; current governance assignment delivery consumes retained carriers and `SendMessage` instead of those list surfaces.
 - Complex or risky teammate work can require internal plan approval before implementation; the lead approves or rejects the plan, and this is not operator approval unless a separate protected, destructive, security-sensitive, or operator-policy-choice gate independently applies.
 - Strong team-use cases are parallel research/review, new independent modules or features, competing-hypothesis debugging, and cross-layer coordination.
 - Poor team-use cases include sequential work, same-file edits, and dependency-heavy tasks where coordination overhead exceeds parallel value.
 - Agent teams add coordination overhead and context use; each teammate has its own context window, and token use scales with teammate count.
-- Official team runtime resources are stored outside the project governance docs, including team config under `~/.claude/teams/{team-name}/config.json` and task lists under `~/.claude/tasks/{team-name}/`.
+- Official team runtime resources are stored outside the project governance docs, including team config under `~/.claude/teams/{team-name}/config.json` and host coordination stores under `~/.claude/`.
 - Team cleanup is lead-owned; active teammates must be drained or shut down first.
-- Current limitations include no nested teams, fixed lead, one team per session, task-status lag, slow shutdown, and in-process teammate resume/rewind gaps.
+- Current limitations include no nested teams, fixed lead, one team per session, status lag, slow shutdown, and in-process teammate resume/rewind gaps.
 
 Governance implications:
 - Constraint reports from a teammate are lead coordination input, not final completion; `.claude/skills/task-execution/references/message-classes.md` `## Upward Message Classes` owns the operative rule when this implication affects routing.

@@ -59,13 +59,13 @@ Hook changes route to the smallest non-runtime correction owner when risk belong
 - skill
 - packet
 - owner report
-- task state
+- runtime state
 Settings changes route to the owning update path when risk belongs to:
 - doctrine
 - skill
 - packet
 - owner report
-- task state
+- runtime state
 Protected settings edits require the owning update path.
 Runtime-footprint claims require measured evidence.
 Tool availability routes to the owner procedure for:
@@ -93,6 +93,8 @@ Non-owner tool output routes these claims to the owning procedure:
 
 ## Runtime Boundary Rules
 - Hook-last rules from `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy` govern this section.
+- Normal assistant-authored prose, visible task-plan/checklist text, and native Claude Code UI prose are model-governed in native Claude Code unless current settings prove a verified assistant-output hook or supervised renderer. `SendMessage`, `Skill`, lifecycle, or tool-event hooks prove only their matched hook surfaces; they do not prove hard blocking of normal assistant prose.
+- A claim that runtime enforcement blocks planning, startup, dispatch, progress, or final prose must cite the exact wired surface that can observe that renderable field. When no such surface exists, report-prohibition compliance remains an owner-procedure duty under `.claude/reference/reporting-prohibition-law.md`.
 - Hook stdout JSON must validate against the Claude Code hook output schema for the matched event; emit empty stdout when the event's accepted `hookSpecificOutput` shape is not verified against `.claude/reference/environment-official-claude-code-source-cache.md` or live harness behavior, and rely on file/state side effects only.
 - Adding an unverified JSON shape to hook stdout is a recurrence-class defect that returns to this rule for narrowing or silent fallback.
 - Hooks block only actions that must never happen: destructive (data loss, irreversible state mutation, runtime corruption), security-critical (secret exposure, sandbox escape), session-stability-breaking (e.g., `tmux kill-*` against an active session), or constitutionally-protected reporting-curtain renderable-surface violations enumerated by `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection`.
@@ -101,9 +103,9 @@ Non-owner tool output routes these claims to the owning procedure:
 - Cooperative `shutdown_request` stays in routine runtime cleanup when a runtime cleanup owner selects a live process-backed teammate for cleanup.
 - A settings-wired hook records cooperative cleanup evidence and runtime roster state after a worker sends `shutdown_response`.
 - General cleanup uses cooperative `shutdown_request`, explicit operator-approved non-tmux force cleanup, or `session-closeout`.
-- Positive-pattern or doctrine-shape enforcement (e.g., forcing a specific `TaskUpdate` field set, requiring a specific packet field) is owned by lane self-quality contracts via the trio (`Skill(governance-modification)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses), not by hooks. Constitutionally-protected reporting-curtain `SendMessage` envelope blocking remains the explicit exception above.
+- Positive-pattern or doctrine-shape enforcement (e.g., requiring a specific packet field) is owned by lane self-quality contracts via the trio (`Skill(governance-modification)` + `Skill(self-verification)` + `Skill(review-verification)` named lenses), not by hooks. Constitutionally-protected reporting-curtain `SendMessage` envelope blocking remains the explicit exception above.
 - A hook that blocks legitimate doctrine-compliant variations (generic Claude Code tool patterns, valid worker-to-lead transport, allowed packet shapes, normal in-progress task signals) is over-broad blocking per `.claude/CLAUDE.md` `## 3. Work Execution Philosophy` and returns to narrowing or removal at the narrowest hook surface.
-- Blocking hook/settings runtime-enforcement expansion requires `Skill(governance-modification)`, Hook-Last Footprint Review, `.claude/hooks/MANIFEST.md` Hook-Last Review Ledger entry, and explicit operator approval before activation.
+- Blocking hook/settings runtime-enforcement expansion requires `Skill(governance-modification)`, Hook-Last Footprint Review, and explicit operator approval before activation.
 - `[HOOK-LAYER-CACHE]` Mid-session removal of a positive-pattern hook applies both the `.claude/settings.json` matcher deletion and a file-level `exit 0` trim at the top of the hook script body by the same governance patch.
 - Wiring removal alone may leave already-started teammates or local hook harness state firing the hook when live observation proves cache retention; pair matcher deletion with file-level `exit 0` only for that observed recurrence path.
 - `[HOOK-AUTHOR-DUTY]` A new or modified hook script body consumes the negative-only-filter test (does the body block only destructive, security-critical, or session-stability-breaking actions?) before commit and records the test result in the governance modification record.
@@ -136,7 +138,7 @@ Non-owner tool output routes these claims to the owning procedure:
 - Route mutation to the owning production or patch owner.
 - Route credential repair to the security or setup owner.
 - Route owner-gate changes to the owning governance sequence.
-- Agent-team runtime state stays on the runtime-owned filesystem surfaces: team config, task state, mailbox state, cleanup state, and generated runtime state.
+- Agent-team runtime state stays on the runtime-owned filesystem surfaces: team config, mailbox state, cleanup state, and generated runtime state.
 - Protected settings changes route to the owning update path.
 
 ## Footprint Claims

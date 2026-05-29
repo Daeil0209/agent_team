@@ -101,7 +101,7 @@ nondeveloper_worker_write_matches_retained_scope() {
   [[ -f "${WORKER_RETAINED_CARRIER_MAP:-}" ]] || return 1
 
   local retained_path canonical_retained
-  while IFS='|' read -r mapped_worker _task_id retained_path; do
+  while IFS='|' read -r mapped_worker retained_path; do
     [[ "$mapped_worker" == "$worker_name" ]] || continue
     [[ -n "$retained_path" ]] || continue
     case "$retained_path" in
@@ -308,11 +308,22 @@ subcommand_targets_governance_surface() {
   local workspace_root
   workspace_root="$(resolve_project_root 2>/dev/null)"
   [[ -n "$workspace_root" ]] || return 1
+  # Over-broad-blocking fix (operator-directed 2026-05-29): a .claude path that is
+  # ONLY a variable-assignment value (`VAR=.claude/...`) or an interpreter/exec
+  # argument (`bash|sh|source|.|node|python <.claude/...>`) is NOT a governance
+  # MUTATION target. Strip such non-target references before classification so a
+  # command that merely runs or references a .claude script while mutating a
+  # NON-.claude path (e.g. /tmp) is not falsely blocked. Mutations whose TARGET is
+  # .claude (rm/mv/cp/touch/> /sed -i .claude/...) keep their token in target
+  # position and remain governed. Quoted-string .claude tokens are already removed
+  # upstream by strip_quoted_regions.
+  local scan="$subcmd"
+  scan="$(printf '%s' "$scan" | sed -E "s#(^|[[:space:]])[A-Za-z_][A-Za-z0-9_]*=(\"|')?(\./)?(${workspace_root}/)?\.claude/[^[:space:]\"']*##g; s#(^|[[:space:]])(bash|sh|source|\.|node|python3?)[[:space:]]+(-[A-Za-z0-9]+[[:space:]]+)*(\"|')?(\./)?(${workspace_root}/)?\.claude/[^[:space:]\"']*##g")"
   # Match workspace .claude/ only: absolute workspace paths or cwd-relative paths.
-  if printf '%s' "$subcmd" | grep -qF "$workspace_root/.claude/"; then
+  if printf '%s' "$scan" | grep -qF "$workspace_root/.claude/"; then
     return 0
   fi
-  printf '%s' "$subcmd" | grep -qE '(^|[[:space:]])(\./)?\.claude/[^[:space:]]'
+  printf '%s' "$scan" | grep -qE '(^|[[:space:]])(\./)?\.claude/[^[:space:]]'
 }
 
 # Narrow rm/rmdir carve-out for non-restricted .claude residue only: one path,
@@ -1347,7 +1358,7 @@ fi
     # per CLAUDE.md over-broad-blocking and escalation rules.
     # Catastrophic system targets (rm -rf /) are caught above. Governance
     # shell mutation of .claude/ is caught by command_mutates_governance_surface
-    # above. Reserved hard-deny categories (MANIFEST: secrets, .claude shell
+    # above. Reserved hard-deny categories (list: secrets, .claude shell
     # mutation, runtime/team-state corruption, read-only reference mutation)
     # are guarded by their own narrow checks; this block only adds the
     # outside-workspace and protected-relative pinpoints for shell rm/rmdir.
@@ -1414,7 +1425,13 @@ for (const sub of parts) {
       process.stdout.write("protected-references:" + w); process.exit(0);
     }
     if (rel === ".runtime" || rel.startsWith(".runtime/")) {
-      process.stdout.write("protected-runtime:" + w); process.exit(0);
+      // Operator-authorized 2026-05-29 narrowing: .runtime LOG files (*.log) are
+      // transient diagnostic output, not critical runtime state — agent deletion
+      // is permitted. Runtime STATE (procedure-state.json, team/mailbox
+      // state, any non-.log runtime file) stays protected.
+      if (!/\.log$/.test(rel)) {
+        process.stdout.write("protected-runtime:" + w); process.exit(0);
+      }
     }
     if (rel === "secrets" || rel.startsWith("secrets/")) {
       process.stdout.write("protected-secrets-dir:" + w); process.exit(0);

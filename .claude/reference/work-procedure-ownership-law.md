@@ -129,7 +129,6 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: detail-reference parallel owner-listing — p
 ## Reference Continuity
 - Send lead conversation facts through these surfaces when teammates need them:
   - packets
-  - task state
   - workflow state
   - cited artifacts
 - Handoffs carry:

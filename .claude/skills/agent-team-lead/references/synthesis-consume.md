@@ -31,7 +31,11 @@ Before treating any cited carrier as `VERIFIED-DATA-FEEDBACK`, `ADMITTED-CASE-IN
 - (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
 - (ii) verify the carrier's `PACKET-ID` (or equivalent identifier) matches the expected ID referenced in the dispatch / completion context;
 - (iii) verify the carrier's verdict label, completion class, or cited content matches the synthesis-consumed claim.
-Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness. Carrier-presence, carrier-reading, completion-acceptance, and ingest visibility is owned by `.claude/reference/reporting-prohibition-law.md`; the synthesis owner continues through the actual read, verification, correction, monitoring, or synthesis action.
+Carrier-by-memory or filename-by-inference consumption without (i)+(ii)+(iii) is carrier-citation fabrication and fails the canonical rule. Synthesis based on unverified carrier identity is procedural failure regardless of downstream synthesis correctness.
+Carrier-presence, carrier-reading, completion-acceptance, and ingest visibility is owned by `.claude/reference/reporting-prohibition-law.md`; the synthesis owner continues through the actual read, verification, correction, monitoring, or synthesis action.
+Successful synthesis-input admission is an internal nonterminal event.
+Successful synthesis-input admission does not create report admission.
+Do not render source-lane counts, per-agent completion narratives, carrier-grade claims, live-evidence claims, phase-promotion requirements, or next internal procedure while synthesis, verification, correction, redispatch, validation, or `HOLD` routing can continue.
 
 ## Synthesis Procedure
 1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.

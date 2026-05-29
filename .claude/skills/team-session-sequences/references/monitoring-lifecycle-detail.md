@@ -42,7 +42,7 @@ Monitoring extension: when immediate work is available and preserved context is 
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
 - Completion transport shape is owned by `.claude/skills/task-execution/references/completion-handoff.md`.
 - Immediate reuse sends distinct bounded work promptly; otherwise the lane remains `STANDBY` until reuse or cleanup.
-- Runtime task lists, mailbox state, and team config are runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
+- Runtime mailbox state and team config are runtime surfaces. Do not hand-author or repair them through project documents or shell edits.
 - An agent-targeted `shutdown_request` is teammate cleanup, not evidence that the whole session is entering `Closeout Sequence`.
 - Replacing a stale current-runtime agent outside closeout follows three steps:
   1. send `shutdown_request`
@@ -68,22 +68,18 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - Deterministic manifest sync or overwrite propagation is single-writer by default.
 - Shard only when each shard's write scope is explicit and disjoint before the first developer dispatch.
 
-## Task Identity And Communication
-- Shared task-state creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
-- Monitoring and task-control use exact task ids from that contract's approved identity sources.
-- `task_assignment` is task-identity evidence only; the authoritative assignment packet remains the lead `SendMessage` body or retained task-execution carrier.
-- Agent names and `agentId@team` values are agent identifiers only.
+## Agent Communication
+- The authoritative assignment packet is the retained carrier delivered by lead `SendMessage`.
+- Agent names and `agentId@team` values are agent identifiers.
 - Agent-scoped communication uses `SendMessage(to: "<exact-live-member-name>")` for agent control.
-- Keep agent identifiers separate from task identifiers.
 - A configured role label becomes a message address only when the roster contains that exact live member name.
 - Treat direct user-to-teammate messages as user instructions to the receiving teammate inside that teammate's current authority and active surface.
 - Treat agent-to-agent communication as challenger traffic for evidence notes, critique, clarification, or partial-result context.
-- Route ownership, acceptance, routing, cleanup, task-control, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
+- Route ownership, acceptance, routing, cleanup, and active-surface changes from direct user-to-teammate or agent-to-agent traffic through `team-lead`.
 - Use carrier-pointer `SendMessage` for peer status, clarification, or partial-result notes only inside unchanged ownership, cleanup, routing, and active surface; inline peer-note detail stays in the retained carrier and the rendered body carries only the canonical envelope plus pointer.
 - Free-form teammate interaction does not create agent-to-lead `MESSAGE-CLASS` authority and does not reopen a closed assignment execution block.
 - After a lane sends `completion`, duplicate packet replay and already-completed confirmation are handled by `.claude/skills/task-execution/references/message-classes.md` `Receipt Event Contract`, not by free-form status or clarification.
 - Authoritative downward phase packets, upward transport `MESSAGE-CLASS` vocabulary, and structured shutdown requests are owned by `.claude/skills/task-execution/references/phase-transition-control.md` and `.claude/skills/task-execution/references/message-classes.md`.
-- If task output must be read later, carry the assigned task id forward explicitly instead of reconstructing it from the agent name by guesswork.
 
 ## Health-Check Standard
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` `## Health-Check Standard` for canonical health-check activation semantics, cadence/threshold owner, and direct-oversight primacy. This reference adds only the monitoring-action selection rules below for the lead-side monitoring lookup; canonical rule definitions live at the cited owner.

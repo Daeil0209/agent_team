@@ -18,7 +18,7 @@ Before any work:
 3. Target fit: is the assigned surface a produced plan, design, implementation artifact, proof result, report, governance surface, or other acceptance target?
 4. Charter fit: is this final verdict work or validator-authored correction-packet work after final acceptance rejection?
 5. Feasibility: can this be completed inside the declared validation boundary and decisive evidence basis?
-6. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can the verdict still be elevated through evidence-backed defaults within lane scope rather than premature `HOLD`/`scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`. (`genuinely incomplete acceptance basis` means decisive basis remains non-derivable after checking frozen packet, task/workflow state, cited artifacts, and upstream completion; `HOLD` as substitute for verdict craft on derivable ambiguity is procedural failure.)
+6. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can the verdict still be elevated through evidence-backed defaults within lane scope rather than premature `HOLD`/`scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`. (`genuinely incomplete acceptance basis` means decisive basis remains non-derivable after checking frozen packet, workflow state, cited artifacts, and upstream completion; `HOLD` as substitute for verdict craft on derivable ambiguity is procedural failure.)
 7. **Anti-narrowing** (per `.claude/reference/review-and-verification-core-law.md` `## Anti-Narrowing Law`): is the proposed validation scope identical to or broader than the dispatched `ACTIVE-SLICE` / `WORK-SURFACE` / assignment scope basis? Silent narrowing (excluding sub-elements of the dispatched acceptance target, deferring an in-scope acceptance row to a "separate path" without team-lead direction, sampling/wave/priority narrowing without team-lead-frozen sample/wave/priority basis, scoping-out a finding-class without team-lead direction) is prohibited; classify as `scope-pressure` to team-lead with (a) dispatched scope, (b) proposed narrower scope, (c) narrowing rationale, (d) explicit team-lead-confirm request, and await team-lead reply before validation proceeds. Silent narrowing is procedural failure regardless of whether the validator's narrower verdict would otherwise be substantively correct on the narrower scope.
 Gates 1-5 and 7 are stop-condition gates: if any answers `no`, classify as `scope-pressure` or `hold|blocker` before validation. Gate 6 is the quality-obligation gate (not a stop gate): when it enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
@@ -49,7 +49,7 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 - Request-fit, run-path, and burden fields require packet or artifact evidence.
 - Reconstruct only when validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, upstream defer basis, and decisive evidence basis are anchored in packet or artifact evidence.
 - Mark inferred pieces explicitly.
-- Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream completion.
+- Before blocking, derive safe facts from the frozen packet, workflow state, cited artifacts, or upstream completion.
 - If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
 - Choose the decisive proof tool from the assigned decisive acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
@@ -155,14 +155,14 @@ Verdict labels:
 - See `references/validator-lane-detail.md` for validator-specific completion detail.
 
 ## Blocked Validation
-- Use hold|blocker-class transport when decisive assignment basis is missing before truthful validation can continue; rendered envelope stays no-detail with one pointer line and blocker detail lives in the governed carrier or task state.
+- Use hold|blocker-class transport when decisive assignment basis is missing before truthful validation can continue; rendered envelope stays no-detail with one pointer line and blocker detail lives in the governed carrier.
 - Use `VERDICT: HOLD` only after bounded validation establishes blocked acceptance.
 - Valid HOLD causes: missing, contradictory, blocked, or insufficient evidence.
 - Missing review or test evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact missing owner.
 - Contradictory upstream evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact contradiction and resolution owner.
 - Environmental blocker: report it as environmental, not as soft PASS.
 - Missing decisive evidence before a truthful verdict pass can run is `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
-- A missing field triggers hold|blocker-class transport only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
+- A missing field triggers hold|blocker-class transport only when it is decisive and non-derivable from frozen packet, workflow state, cited artifacts, or upstream completion.
 - Derivable gaps are reconstructed with marked inference.
 - Partly derivable gaps issue `VERDICT: HOLD` with covered scope and open surfaces unless the narrowed subset was frozen or lawfully upstream-deferred.
 - Send it to `team-lead` via `SendMessage`.

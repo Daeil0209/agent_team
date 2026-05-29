@@ -61,13 +61,13 @@ Consume the highest active trigger first:
 After the current session-start artifact is current, trigger 3 reopens trigger 2 only when trigger 2 is independently active.
 
 ## Named Artifacts
-- `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
-- `Skill(work-planning)` emits frozen-fields record.
+- `Skill(session-boot)` records internal `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
+- `Skill(work-planning)` records internal frozen-fields record.
 - `Skill(review-verification)` returns internal `review_verification_packet`.
-- `Skill(self-verification)` emits an internal convergence-state record.
-- `Skill(task-execution)` emits dispatch-ready packet, dispatch-pending truth, or correction route.
-- `Skill(governance-modification)` emits asset-change or recurrence-hardening patch basis and post-verify result.
-- `Skill(session-closeout)` emits closeout residual truth or teardown completion.
+- `Skill(self-verification)` records internal convergence-state record.
+- `Skill(task-execution)` records internal dispatch-ready packet, dispatch-pending truth, or correction route.
+- `Skill(governance-modification)` records internal asset-change or recurrence-hardening patch basis and post-verify result.
+- `Skill(session-closeout)` records internal closeout residual truth or teardown completion.
 
 ## Artifact Discipline
 Skill load-and-learn creates availability only.
@@ -86,7 +86,7 @@ Keep ordinary same-boundary correction inside the frozen boundary.
 Reopen planning when owner, phase, deliverable shape, proof chain, acceptance chain, staffing shape, or user requirement changes.
 
 ## Status And Interruption
-Routine in-flight status uses `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
-Interrupted or interrupt-blocked path status/challenge uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
+Direct user-requested/reporting-law-admitted routine in-flight status-answer attempts use `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
+Direct user-requested/reporting-law-admitted interrupted or interrupt-blocked path status-answer attempts and challenges use `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
 If the boundary is already complete, route any answer through `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first; use `## Report Shape` only after admission, otherwise suppress prose and continue the owning path or truthful `HOLD`.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.

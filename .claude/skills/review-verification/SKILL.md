@@ -70,7 +70,7 @@ Run Steps 6-9 only for patch design, removal, or mutation readiness; otherwise r
 Read the governing review/verification philosophy and the requested target surfaces.
 For governance hierarchy questions, inspect only the top doctrine, mapped core law, trigger-bound owner reference, and lower surface needed by the requested judgment.
 Consume the basis that controls the requested review claim.
-When a selected Skill, reference, or governance surface controls the review claim, consumed-surface learning follows `.claude/reference/work-skill-reference-binding-law.md` full-body/full-document absorption; excerpts, line citations, and citation-substantiation records do not satisfy consumption.
+When a selected Skill, reference, or governance surface controls the review claim, consumed-surface learning follows `.claude/reference/work-skill-reference-binding-law.md` trigger-bound consumption rules; excerpts, line citations, and citation-substantiation records do not by themselves satisfy applied-rule mapping.
 Name only material design intent, protected meaning, owner boundary, valid procedure path, stop condition, and acceptance surface.
 If requested-claim basis is missing, stale, contradicted, or unconsumed, open the smallest correction owner or `HOLD`.
 
@@ -119,7 +119,7 @@ Classify challenged text, section, or document as removal-default before mutatio
 Retain only if removal would lose protected function, owner boundary, recovery path, or execution force.
 Select tighten, replace, trim, merge, re-home, or delete before append if that preserves protected meaning.
 Record `REMOVAL-FIRST-PATCH-DESIGN` with failing path, consumed surface, source meaning, destination owner when moved, minimum-executable-information result, behavior-weakening result, continuity result, adjacent-surface status, selected operation, rejected removals, and retention basis.
-If multiple defensible removal-first patch operations (tighten / replace / trim / merge / re-home / delete) exist for the same failing path per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before `REMOVAL-FIRST-PATCH-DESIGN` row authoring.
+If multiple removal-first operations preserve the same protected function, select the operation with the fewest changed surfaces and lowest new wording burden before `REMOVAL-FIRST-PATCH-DESIGN` row authoring; use `HOLD` only when no operation preserves owner boundary, recovery path, or execution force.
 
 ### 7. Pre-Patch Negative-Risk Gate
 Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate.
@@ -167,7 +167,7 @@ Apply the 2-class deterministic test:
 - **Not-A-not-B**: citation is inadmissible; the writer MUST execute a fresh Class-A tool-call in the current turn before the citation enters the packet. Carrier prose marking "Class A required" without executing the tool-call is fabrication, not admissibility.
 Each `CITATION-EVIDENCE-INVENTORY` entry records: (a) cited target identifier (file path + section/line/PACKET-ID); (b) freshness class (A or B) + verifying tool-call type and parameters + (Class B only) originating turn-N tool-call evidence citation; (c) observed verbatim content snippet from the tool-call output (Class A) or originating-turn output reference (Class B). Entries missing any of (a)(b)(c) are inadmissible; treat as citation fabrication and fail Step 12b.
 This Gate is distinct from Step 5 (failure-mode disproof) and Step 12 (defect inventory) in purpose — Step 12b probes citation-correctness substantiation, not defeater disproof.
-Citation substantiation proves citation freshness only; it does not prove full-body or full-document consumed-surface learning for the cited governance, Skill, or reference file.
+Citation substantiation proves citation freshness only; it does not prove applied-rule mapping for the cited governance, Skill, or reference surface.
 Bootstrap exemption: this Gate enforces from the patch installing it forward; review-verification packets produced prior to installation are not retroactively reclassified. Bootstrap pattern parallels `.claude/reference/modification-core-law.md` `## Constitutional Curtain Protection` bootstrap exemption clauses.
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where outgoing-external-citation entries are missing from `CITATION-EVIDENCE-INVENTORY` or lack any required 3-tuple component.
 

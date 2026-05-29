@@ -146,7 +146,7 @@ Phase 2 owns delivery-contract or design weakness.
 `work-planning` owns changed deliverable shape, operator OS, proof/acceptance chain, or user requirement.
 Do not close it as instruction residue.
 When the frozen operator surface is still satisfiable, team-lead routes directly to Phase 5 operator-proof or repair and attempts non-destructive team-side proof before user escalation.
-Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required after cited owner procedures and applicable user-decision-risk decision support are exhausted, or the user explicitly redirects scope.
+Scope narrowing becomes user-owned only after team-side proof paths are proven infeasible, destructive/security/policy approval is required after cited owner procedures and applicable `Skill(team-meeting)` continuation are exhausted, or the user explicitly redirects scope.
 
 ## Resolve Next Owner And Action
 - Complete operator-delivery closure returns to Phase 4/5 acceptance or Final Acceptance Review.

@@ -52,7 +52,7 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 - Dispatch-runtime creation, member creation, assignment send, and reuse consume this reference only as runtime-readiness or recovery evidence after the dispatch route is frozen by its owning trigger. Standalone `Agent` is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to classify runtime readiness.
 - Active `Boot Sequence` closes before delegated fan-out.
-- Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs.
+- Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, retained carriers, and agent handoffs.
 - Fresh-task isolation stays active during startup. Inherited continuity can reveal blockers or residue; prior goals reopen only through current-session authority.
 - If runtime is only partially booted and session end becomes explicit, hand directly to `session-closeout`.
 
@@ -192,7 +192,7 @@ Runtime recovery classification meanings:
 - `working-blocked`: target reported `hold|blocker` or equivalent active blocker.
 - `not-working-awaiting-cleanup`: target is not active and cleanup or replacement truth remains unresolved.
 - `active-stall`: target is `ACTIVE` but lacks expected progress or side-effect evidence after the governed follow-up window.
-- `unclaimed-dispatch-failure`: dispatch or task evidence exists but no live target lawfully claimed the assignment.
+- `unclaimed-dispatch-failure`: dispatch evidence exists but no live target lawfully claimed the assignment.
 - `pipeline-ready-idle`: target is available for new bounded work after prior truth is reconciled.
 
 Canonical evidence mapping:
@@ -221,7 +221,6 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 | `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence is not team-existence proof; dispatch-runtime creation is decided by `.claude/skills/task-execution/references/runtime-dispatch-law.md` |
 | `KILL_LIST` | observed teardown intent on listed agents | absence is not agent-still-live evidence; consult live process-backed roster |
 
-The canonical hook-policy ownership for these ledger surfaces lives in `.claude/hooks/MANIFEST.md`.
 
 ## Workflow Continuity Bridge
 - `session-boot` observes runtime for active workflows; workflow progression stays with the workflow owner.
@@ -276,7 +275,7 @@ Re-check windows are owner-selected monitoring bounds; the mandate is proactive 
 ## Runtime Integrity Defect Classification
 Runtime-integrity defect domains are classified separately and reconciled to one consistent live state.
 The hook helper `runtime_integrity_classify` covers Domain 1 and Domain 2 Classes A-F from process, config, pane, socket, UI, and task-store evidence.
-Domain 3 Classes G-I are team-lead or session-boot monitoring classifications from `SendMessage`, retained-output, mailbox, and idle evidence.
+Domain 3 Classes F-H are team-lead or session-boot monitoring classifications from `SendMessage`, retained-output, mailbox, and idle evidence.
 Domain 3 is not hook auto-cleanup evidence.
 
 ### Domain 1: Agent Operation (process/config/pane parity)
@@ -285,15 +284,14 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class C: a live tmux pane that has no descendant claude process under its `pane_pid`.
 - Class D: an orphan `/tmp/tmux-$(id -u)/claude-swarm-*` socket file whose `tmux -L <name> list-sessions` returns no live server.
 
-### Domain 2: UI Synchronization (display ↔ governance parity)
+### Domain 2: UI Synchronization (display -> governance parity)
 - Class E: Claude Code teammate UI displays a member that is absent from `config.json` because UI reads live process inventory and `config.json` records the governance-tracked roster only; UI ≠ governance roster is the surfaced defect.
-- Class F: `TaskList` host response returns a task id that is absent from `~/.claude/tasks/<team>/<id>.json` on-disk store; highwatermark-only id without persisted record is the surfaced defect.
-- UI/host display state is read-only evidence; governance reconciliation flows from disk truth (`config.json`, `~/.claude/tasks/<team>/`, live process inventory) to a single resolved state.
+- UI/host display state is read-only evidence; governance reconciliation flows from disk truth (`config.json`, live process inventory) to a single resolved state.
 
 ### Domain 3: Messaging And Communication (channel completeness)
-- Class G: a teammate produced work-product evidence on disk (verdict, completion artifact, retained-output) without sending the canonical completion-class `SendMessage` back to `team-lead`; disk-only completion is incomplete completion handoff per `.claude/skills/task-execution/references/completion-handoff.md`.
-- Class H: a teammate received an assignment-grade `SendMessage`, marked it `read: true`, then idled without sending `dispatch-ack`, `scope-pressure`, `hold|blocker`, or any progress class; mailbox-consumed-without-channel-response is missing receipt.
-- Class I: a `SendMessage` succeeds at the inbox-write surface but the receiver process is non-responsive (idle without further turn execution) for the bounded receipt window; inbox-arrival ≠ teammate work-trigger is the surfaced defect.
+- Class F: a teammate produced work-product evidence on disk (verdict, completion artifact, retained-output) without sending the canonical completion-class `SendMessage` back to `team-lead`; disk-only completion is incomplete completion handoff per `.claude/skills/task-execution/references/completion-handoff.md`.
+- Class G: a teammate received an assignment-grade `SendMessage`, marked it `read: true`, then idled without sending `dispatch-ack`, `scope-pressure`, `hold|blocker`, or any progress class; mailbox-consumed-without-channel-response is missing receipt.
+- Class H: a `SendMessage` succeeds at the inbox-write surface but the receiver process is non-responsive (idle without further turn execution) for the bounded receipt window; inbox-arrival ≠ teammate work-trigger is the surfaced defect.
 
 ## Runtime Integrity Detection Triggers
 - Compaction resume opens runtime-integrity classification before consequential dispatch, reuse, assignment-grade `SendMessage`, or `TeamCreate`.
@@ -312,10 +310,9 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class C cleanup still uses config-entry removal, lane re-spawn, cooperative `shutdown_request`, or non-tmux owner recovery.
 - Class D: unlink the orphan socket file only after confirming `tmux -L <name> list-sessions` fails; never unlink a socket whose server responds.
 - Class E: bring UI and governance roster into parity by either re-attaching the live process via Class A action or removing the surplus live process via approved `kill <pid>`; UI count must equal `config.json` member count post-reconciliation.
-- Class F: discard the phantom task id; treat retained-output disk evidence as evidence for the affected work surface only; route away from `TaskUpdate` on the phantom id.
-- Class G: team-lead consumes the on-disk retained-output as production evidence only, opens missing completion-transport recovery or keeps the surface open, and records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration.
-- Class H: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class I.
-- Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or `HOLD` per `.claude/skills/task-execution/references/dispatch-recovery.md`.
+- Class F: team-lead consumes the on-disk retained-output as production evidence only, opens missing completion-transport recovery or keeps the surface open, and records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration.
+- Class G: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class H.
+- Class H: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or `HOLD` per `.claude/skills/task-execution/references/dispatch-recovery.md`.
 
 ## Operator-Approval Gate
 - Class A `kill <pid>` and Class E `kill <pid>` are non-tmux force cleanup and require explicit operator approval before execution.
@@ -330,7 +327,7 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class C `tmux kill-*` pane termination surfaces as prohibited command selection and routes back to cooperative cleanup or non-tmux owner recovery.
 - Domain 2 reconciliation result surfaces as a status answer when the user explicitly references a UI display ≠ governance roster mismatch per `.claude/reference/reporting-prohibition-law.md`.
 - Completed automatic non-destructive reconciliation stays internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for a status answer.
-- When the user asks about a specific missing ack, idle teammate, stale task row, or runtime display mismatch, answer only the direct current condition by default. Per-agent timelines, shard inventories, file sizes, carrier paths, internal recovery steps, and hook/tool correction history remain internal unless explicitly requested.
+- When the user asks about a specific missing ack, idle teammate, or runtime display mismatch, answer only the direct current condition by default. Per-agent timelines, shard inventories, file sizes, carrier paths, internal recovery steps, and hook/tool correction history remain internal unless explicitly requested.
 - After the direct status answer, resume the required monitoring, assignment delivery, recovery, replacement, shutdown, or synthesis move without visible recovery narration.
 
 ## Runtime Cleanup Rules

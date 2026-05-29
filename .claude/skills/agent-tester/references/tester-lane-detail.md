@@ -63,7 +63,7 @@ Required matrix columns:
 - `RESULT`: directly proven, disproven, blocked, or out-of-scope by dispatch
 
 Missing-information rule:
-- If `DESIGN-INTENT`, `ENTRY-PATH`, `USER-ACTION`, `EXPECTED-VISIBLE-RESULT`, `STATE-CHECK`, material `HARD-TEST-PROBE`, `CLOSURE-DEFECT-PROBE`, `POSTCONDITION-EVIDENCE`, `PLAYWRIGHT-PROOF`, or closure/oracle basis cannot be named from the packet, frozen design, upstream oracle, or safe inference that does not invent scope or closure, stop and send hold|blocker-class transport to `team-lead`; rendered envelope stays no-detail with one pointer line and blocker detail lives in the governed carrier or task state.
+- If `DESIGN-INTENT`, `ENTRY-PATH`, `USER-ACTION`, `EXPECTED-VISIBLE-RESULT`, `STATE-CHECK`, material `HARD-TEST-PROBE`, `CLOSURE-DEFECT-PROBE`, `POSTCONDITION-EVIDENCE`, `PLAYWRIGHT-PROOF`, or closure/oracle basis cannot be named from the packet, frozen design, upstream oracle, or safe inference that does not invent scope or closure, stop and send hold|blocker-class transport to `team-lead`; rendered envelope stays no-detail with one pointer line and blocker detail lives in the governed carrier.
 - The blocker must name the exact missing field, why proof would become guesswork without it, and the smallest corrected packet that would unblock testing.
 - If the blocker concerns missing tool or execution capability, also include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 

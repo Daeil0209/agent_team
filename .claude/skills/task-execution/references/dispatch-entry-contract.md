@@ -14,7 +14,7 @@ Load after `Skill(task-execution)` is active per the activation rule at `.claude
 PROTECTED-LOCAL-RESTATEMENT-BASIS: dispatch-entry carrier-identification atomic-check — carrier-citation rule colocated at the dispatch-entry decision moment because dispatch readiness routinely depends on prior carrier identification (validator verdicts, lane completion carriers, review-verification packets) consumed as upstream-decision-basis. Canonical carrier-citation rule lives at `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; this surface applies it at dispatch-entry preflight time.
 When dispatch readiness depends on prior carrier identification (e.g., prior validator verdict requiring re-dispatch, prior review-verification packet supplying patch-readiness basis, prior lane completion supplying upstream-decision-basis), run carrier-identification fresh verification before recording `EXECUTION-READINESS-BASIS: ready`:
 - (i) Read the cited carrier path in the current turn (or cite originating same-session Class-A turn-N tool-call evidence per `Skill(review-verification)` Step 12b Citation Substantiation Gate);
-- (ii) verify the carrier's `PACKET-ID` (or `TASK-ID`, `RETAINED-OUTPUT-PATH`, or equivalent identifier) matches the expected ID;
+- (ii) verify the carrier's `PACKET-ID` (or `RETAINED-OUTPUT-PATH`, or equivalent carrier identifier) matches the expected ID;
 - (iii) verify the carrier's verdict label, completion class, or cited content matches the dispatch-readiness claim.
 Carrier-by-memory or filename-by-inference dispatch-readiness consumption without (i)+(ii)+(iii) is carrier-citation fabrication; `EXECUTION-READINESS-BASIS: ready` based on such consumption is invalid. Reopen `work-planning` or correct the citation before dispatch proceeds.
 
@@ -26,6 +26,10 @@ Before this skill acts, the lead must already have:
 - a frozen additional-agent route or ambiguous dispatch route
 - frozen team-runtime route basis from `work-planning` readiness for any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, reuse, blocker-clear, or packet assembly move on a team-agent route
 - `session-boot` supplies current-runtime readiness or recovery classification only when live runtime truth can change the next owner/action
+
+Entry-contract consumption, carrier-citation verification, current-runtime readiness classification, and team-registration evidence checks are dispatch-entry evidence, not report reasons.
+When a required entry-contract read or check can run, execute it silently and continue to `runtime-dispatch-law`, `session-boot`, `TeamCreate`, or `HOLD`; do not render reference-consumption, readiness, runtime-state-check prose, active-runtime confirmation, materialization intent, canonical-folder rationale, or carrier-staging narration.
+Host-rendered `Skill(...)` and `Read N files` rows do not create a visible assistant prose slot; after those rows, dispatch-entry continues through the next owner/tool move without bridge narration.
 
 ## Consumed Frozen Fields
 Consume only dispatch-relevant frozen fields in the order and conditionals owned by `.claude/skills/work-planning/references/planning-record-fields.md` `## Allowed Values`. A consumed field must carry either a concrete frozen value or an explicit `not-applicable` basis allowed by `work-planning` for the current route.
@@ -62,7 +66,6 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Route, staffing, parallelism, or dispatch options that doctrine and evidence can settle reopen `work-planning` or continue with the evidence-backed route.
 - A field required by the frozen route that is missing, contradictory, or marked `not-applicable` without an allowed basis reopens `work-planning`.
 - Assigned output requiring detailed internal material requires a retained-output path or non-visible carrier before dispatch.
-- Task-state mutation assignment requires the receiver to have the required task-state tool before dispatch.
 
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
@@ -70,16 +73,12 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - agent -> `team-lead` uses message-class transports (`dispatch-ack`, `status`, `scope-pressure`, `completion`, exact `hold|blocker`).
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
-- Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, and `TaskList`; `TaskOutput` and `TaskStop` are background-task inspection/control, not task-list identity.
-- Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
-- Task identity requires the contract-owned task basis rather than agent name alone.
-- Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
 - Official message-channel payload keeps ACK, completion, status, blocker, findings, counts, paths, and `MESSAGE-CLASS` blocks out of visible teammate pane/final text.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.
-- Assignment packets carry the governed Communication Plane payload through `SendMessage`, task state, or retained carriers.
+- Assignment packets carry the governed Communication Plane payload through `SendMessage` or retained carriers.
 
 ## Resolve Next Owner And Action
 - Passing entry contract opens `task-execution` Step 1 Activate Frozen Route.
@@ -91,5 +90,4 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Missing, contradictory, stale, or invalid route fields reopen `work-planning`.
 - Dispatch-owned blocker-clear readiness returns to `task-execution`.
 - Plain-text delivery attempts open official message-channel correction before dispatch truth.
-- Missing task-state identity opens `TaskList`, `TaskGet`, `task_assignment`, or returned-mutation evidence recovery before task mutation.
-- Available background task output path opens `Read` instead of `TaskOutput`.
+- Available background output path opens `Read`.

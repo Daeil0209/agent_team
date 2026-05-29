@@ -2,13 +2,13 @@
 # Runtime Integrity Recovery
 # Sourceable bash helpers for auto-compaction recovery + ghost-state cleanup.
 # Governance ownership: .claude/skills/session-boot/references/runtime-state-detail.md
-# `## Runtime Integrity Defect Classification` (Domains 1-3, Classes A-I).
+# `## Runtime Integrity Defect Classification`.
 #
 # Public functions:
 #   runtime_integrity_classify <team_name>
-#       Print one hook-detectable defect per line: `CLASS=<A|B|C|D|E|F>\tDETAIL=<text>`
+#       Print one hook-detectable defect per line: `CLASS=<A|B|C|D|E>\tDETAIL=<text>`
 #   runtime_integrity_reconcile_nondestructive <team_name>
-#       Apply Class B/D/F automatic cleanup. Class C tmux-pane termination stays unavailable.
+#       Apply Class B/D automatic cleanup. Class C tmux-pane termination stays unavailable.
 #   runtime_integrity_destructive_report <team_name>
 #       Print HOLD-formatted lines for hook-detectable Class A/E requiring owner routing and force-kill approval when applicable.
 #
@@ -18,7 +18,6 @@ set -o pipefail
 
 _rir_uid="$(id -u 2>/dev/null || echo "")"
 _rir_teams_root="${HOME:-/}/.claude/teams"
-_rir_tasks_root="${HOME:-/}/.claude/tasks"
 _rir_tmux_sock_root="/tmp/tmux-${_rir_uid}"
 
 _rir_resolve_socket() {
@@ -152,17 +151,6 @@ runtime_integrity_classify() {
     fi
   fi
 
-  # Domain 2: F (phantom task — highwatermark id with no on-disk record)
-  local tasks_dir="$_rir_tasks_root/$team"
-  if [[ -f "$tasks_dir/.highwatermark" ]]; then
-    local hwm
-    hwm="$(cat "$tasks_dir/.highwatermark" 2>/dev/null | tr -d ' ')"
-    if [[ "$hwm" =~ ^[0-9]+$ && "$hwm" -gt 0 ]]; then
-      if [[ ! -f "$tasks_dir/$hwm.json" ]]; then
-        printf 'CLASS=F\tDETAIL=phantom-task highwatermark=%s team=%s no-disk-record\n' "$hwm" "$team"
-      fi
-    fi
-  fi
 }
 
 runtime_integrity_reconcile_nondestructive() {
@@ -217,13 +205,6 @@ with open('$cfg','w') as f: json.dump(c,f,indent=2)
       fi
     fi
   done
-
-  # Class F: phantom task — log only, do not mutate task store (host owns highwatermark)
-  while IFS=$'\t' read -r class detail; do
-    if [[ "$class" == "CLASS=F" ]]; then
-      printf 'NOTED: class=F %s consume-retained-output-as-completion\n' "$detail"
-    fi
-  done < <(runtime_integrity_classify "$team" 2>/dev/null)
 
   printf 'TOTAL-APPLIED: %s\n' "$applied_count"
 }

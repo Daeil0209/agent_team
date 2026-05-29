@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-# PROTECTED-LOCAL-RESTATEMENT-BASIS: disabled-stub-preservation — per-stub file retained individually (not consolidated to a single shared shim) for per-file Git history traceability and independent future-narrowing path per stub; the disable-basis comment block below is structurally parallel across all 8 legacy stubs enumerated in `.claude/hooks/MANIFEST.md` `## Legacy Hooks` but each stub carries its own evolutionary record.
+# PROTECTED-LOCAL-RESTATEMENT-BASIS: disabled-stub-preservation — per-stub file retained individually (not consolidated to a single shared shim) for per-file Git history traceability and independent future-narrowing path per stub; the disable-basis comment block below is structurally parallel across all 8 legacy stubs but each stub carries its own evolutionary record.
 # Hook body disabled per .claude/reference/work-runtime-boundary-law.md ## Runtime Boundary Rules
 # (negative-only-filter doctrine: hooks block only destructive, security-critical, or
 # session-stability-breaking actions; positive-pattern doctrine-shape enforcement is

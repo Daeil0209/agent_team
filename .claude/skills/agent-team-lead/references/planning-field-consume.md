@@ -70,7 +70,6 @@ Contradictory cross-continuity basis reopens `work-planning`.
 Before team-agent runtime dispatch, confirm receiving lanes have or will receive every material lead-context fact through a governed transfer path.
 Material facts travel as:
 - packet fields
-- task state
 - workflow state
 - cited artifacts
 Missing material fact transfer blocks dispatch and opens packet-field correction inside `task-execution` when `task-execution` is active or is the frozen `NEXT-CONSEQUENTIAL-ACTION`.

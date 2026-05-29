@@ -57,7 +57,7 @@ When the external bridge involves batch data transfer, streaming ingest, or pipe
 - Passing pre-verification opens bounded external bridge execution.
 - Failed credential, endpoint, quota, permission, setup, or cleanup check opens blocked-condition report.
 - Allowed setup opens bounded setup execution.
-- Approval-required setup opens the named owner; user-decision-risk setup choices open decision support before explicit approval only when no §1-§8-compliant reversible setup path is derivable; damage-capable, security, credential, paid, or persistent-service setup opens explicit approval.
+- Approval-required setup opens the named owner; setup choices that would otherwise ask the user open `Skill(team-meeting)` when it can derive a compliant reversible setup path; damage-capable, security, credential, paid, or persistent-service setup opens explicit approval.
 - Blocked setup opens a blocked-condition report or truthful `HOLD` with named setup owner, blocker, and next safe evidence step.
 - Owner deferral for setup is valid only with explicit user-accepted boundary or cited upstream lawful owner-deferral basis under `[USER-DELIVERY-FIT]`.
 - Retryable failure opens one retry path with changed timing, endpoint health, fallback route, or setup state.

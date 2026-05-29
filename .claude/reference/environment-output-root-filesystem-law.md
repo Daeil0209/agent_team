@@ -26,11 +26,11 @@ Use this reference when work:
 - edits governance files
 - names an output root
 - targets a path outside the frozen output root
-It keeps user deliverables in the task project folder.
+It keeps user deliverables in the active project folder.
 It keeps governance edits on owner files.
 
 ## Consume When
-- A task will create:
+- Work will create:
   - deliverables
   - logs
   - evidence
@@ -39,7 +39,7 @@ It keeps governance edits on owner files.
 - A source file will be edited.
 - A governance file will be edited.
 - The project output folder is unknown.
-- A command targets a path outside the task project folder.
+- A command targets a path outside the active project folder.
 - Work targets:
   - runtime state
   - protected settings
@@ -74,12 +74,12 @@ Protected filesystem mutation uses direct owner-file mutation through the struct
 - Interpreter-mutation risk opens direct owner-file mutation through the structured edit path.
 
 ## Output-Root Rules
-- Admitted task-created outputs stay under the task project folder:
+- Admitted work outputs stay under the active project folder:
   - deliverables
   - evidence
   - logs
   - exports
-- Tool output stays under the task project folder unless another canonical root is frozen.
+- Tool output stays under the active project folder unless another canonical root is frozen.
 - Place generated products outside:
   - repo root unless repo root is the frozen output root
   - `.claude/*`
@@ -89,7 +89,7 @@ Protected filesystem mutation uses direct owner-file mutation through the struct
   - incidental cwd
 - If the project output folder is unknown, derive and freeze the safest canonical root.
 - User escalation is invalid when a safe canonical root exists.
-- Team-lead work-distribution planning documents live under `<project-root>/claude_doc/<work-name>/` inside the task project folder.
+- Team-lead work-distribution planning documents live under `<project-root>/claude_doc/<work-name>/` inside the active project folder.
 - Shared binding surfaces used by parallel dispatch live in the same `claude_doc/<work-name>/` folder as the planning document.
 - Per-work-item retained outputs and intra-work synthesis co-locate in `claude_doc/<work-name>/` or its declared sub-batch directory.
 - `parallel-fit` on-disk verification resolves materialized binding surfaces against this canonical location.
@@ -105,7 +105,7 @@ Protected filesystem mutation uses direct owner-file mutation through the struct
 - Send protected settings changes to the owning update path.
 - Source edits stay on source owner files.
 - Governance edits stay on governance owner files.
-- Runtime-owned filesystem surfaces (team config, task state, mailbox state, cleanup state, generated runtime state) are enumerated canonically at `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`; keep generated runtime content on those surfaces.
+- Runtime-owned filesystem surfaces (team config, mailbox state, cleanup state, generated runtime state) are enumerated canonically at `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`; keep generated runtime content on those surfaces.
 - `claude_doc/<work-name>/` contents are protected work-artifact carriers, distinct from runtime-owned surfaces and from `.claude/` governance text.
 - Hooks, settings rules, and runtime cleanup must not delete, move, or block `claude_doc/<work-name>/` lifecycle without explicit user-approved teardown.
-- Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review via `.claude/reference/environment-runtime-footprint-continuity.md` `## Hook-Last Footprint Review` (canonical review-process owner); `.claude/hooks/MANIFEST.md` and `.claude/reference/environment-configuration-core-law.md` `[HOOK-LAST]` ledger the resulting hook posture.
+- Any hook that adds `claude_doc/` deletion, write-rejection, or move logic enters the over-broad-blocking review via `.claude/reference/environment-runtime-footprint-continuity.md` `## Hook-Last Footprint Review` (canonical review-process owner).

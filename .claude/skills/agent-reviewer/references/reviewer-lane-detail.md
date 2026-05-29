@@ -51,7 +51,7 @@ When a reviewer role or skill says "reviewer additions" or "reviewer detail", co
   - `FAILURE-MODES`
   - `REGRESSION-RADIUS`
 
-If these fields are missing and truthful review would require inventing them, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier or task state, not the rendered body.
+If these fields are missing and truthful review would require inventing them, use hold|blocker-class transport instead of guessing; blocker detail lives in the governed carrier, not the rendered body.
 
 If truthful review needs a tool, rendered surface, or setup path unavailable to reviewer, the upward request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`. Do not replace a required rendered or executable review surface with source-only evidence.
 If rendered evidence is available for review, inspect it for visible defects; do not treat capture existence as rendered fitness.

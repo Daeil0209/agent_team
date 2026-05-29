@@ -125,7 +125,7 @@ Codex disagreement is evidence, not veto.
 `Skill(self-verification)` runs convergence on phase/stage-end synthesis before user-facing reporting, completion claim, phase advancement, or out-of-loop synthesis-triggered redispatch.
 In-phase correction dispatch, tester continuation, or validator ingress stays inside the active Phase 4/5 loop.
 team-lead executes the output-record next owner/action without user-facing review/proceed prompts.
-The exception is explicit approval after cited owner procedures and applicable user-decision-risk decision support are exhausted, or a verified user-owned blocker.
+The exception is explicit approval after cited owner procedures and applicable `Skill(team-meeting)` continuation are exhausted, or a verified user-owned blocker.
 
 ## Same-Boundary Loop
 Use the same-boundary common fields in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` `## Same-Boundary Loop`.

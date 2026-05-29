@@ -4,7 +4,7 @@
 # GOVERNANCE-RUNTIME-GUARD-SURFACE / DO NOT DISABLE WITHOUT REVIEW
 # This hook is not an enumerated constitutional curtain protected surface.
 # Disabling, removing, or weakening this hook (script body, hook wiring in
-# settings.json, or registration in MANIFEST.md) requires Skill(governance-modification)
+# settings.json) requires Skill(governance-modification)
 # mutation readiness, current review-verification basis, and self-verification
 # convergence. Constitutional curtain gates apply only if the change also mutates
 # an enumerated protected curtain surface in .claude/reference/modification-core-law.md.
@@ -38,7 +38,7 @@
 #   - RC-D Role-separation gap (advisory): team-lead self-executes work that
 #     belongs to a frozen independent owner (F-S2 premature-dispatch +
 #     F-S3 self-test patterns); assignment packet-quality evidence now lives in
-#     governed carriers/task state under one-line rendered-envelope transport,
+#     governed carriers under one-line rendered-envelope transport,
 #     so this hook keeps no active assignment-body detector.
 #
 # Scope (narrow, deterministic)
@@ -48,8 +48,7 @@
 #     validation execution pattern when not in carve-out (architectural enablement
 #     detection per concurrent-patterns.md Team-Lead Variant negative-scope boundary).
 #   - Empty / single-space message body passes through unaffected.
-#   - Non-consequential tools (Read / Grep / Glob / WebSearch / WebFetch / TaskList
-#     / TaskGet / TaskOutput / etc.) pass through.
+#   - Non-consequential read/search tools pass through.
 #   - Codex CLI carve-out: Bash containing `codex` subcommand passes
 #     through (lead-internal aid per concurrent-patterns.md Codex CLI Background Usage).
 #   - Read-equivalent Bash carve-out: Bash containing only ls / grep / cat / find
@@ -70,9 +69,9 @@
 #
 #   For assignment-grade SendMessage:
 #     - Rendered envelope transport carries only a no-detail summary token plus
-#       one carrier/task-state pointer line.
+#       one carrier pointer line.
 #     - DISPATCH-AUTHORIZATION-BASIS and packet-quality fields live in the
-#       governed assignment packet, task state, or retained carrier.
+#       governed assignment packet or retained carrier.
 #     - Missing/unverifiable/non-traceable basis routes through task-execution
 #       packet preflight, receiving-owner packet correction, and
 #       review/self-verification path, not this rendered-envelope hook.
@@ -149,7 +148,7 @@ fi
 # ============================================================================
 if [ "$TOOL_NAME" = "SendMessage" ]; then
   # No stdout: task-execution preflight and the receiving owner inspect the
-  # governed packet carrier/task state for DISPATCH-AUTHORIZATION-BASIS.
+  # governed packet carrier for DISPATCH-AUTHORIZATION-BASIS.
   :
 fi
 

@@ -36,7 +36,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 
 ## Continuity And Completion
 - Multi-lane or multi-shard synthesis uses `synthesis-consume` after completion-grade synthesis input admission; closure conditions (admitted-case count parity, duplicate collapse, correlation-analysis work-item mapping) are owned by `synthesis-consume`.
-- Routine gates, phase transitions, partial arrivals, and residual queues consume `routine-gate-continuation` before final or status prose.
+- Routine gates, phase transitions, partial arrivals, and residual queues consume `routine-gate-continuation` before reporting-law-admitted final prose or a direct status-answer attempt.
 
 ## Synthesis And Reporting
 - Synthesis consumes `synthesis-consume`; completion-grade lane input follows active `Skill(task-execution)` and `.claude/skills/task-execution/references/completion-handoff.md` when completion spine, delivery contract, or whole-work completion truth is material.
@@ -82,7 +82,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - After admitted report prose or a rejected report attempt, execute the next owner/action named by the reporting law.
 - When the reporting law names no new owner/action, resume the prior live owner/action.
 - Override: user instruction that redirected the work, OR a truthful `HOLD`, takes precedence over the resume-prior-owner rule above.
-- Report evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists; routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
+- Report evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists; direct user-requested status-answer attempt or continuation consumes `routine-gate-continuation` when its trigger fires.
 
 
 # Resolve Next Owner And Action

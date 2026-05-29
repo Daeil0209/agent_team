@@ -273,7 +273,7 @@ function hasSingleAckStateSignal(text) {
   const signals = String(text || "")
     .split(/\r?\n/)
     .map((line) => line.trim().replace(/\s+/g, " "))
-    .filter((line) => /^ack(?: task [A-Za-z0-9._:-]+)?$/i.test(line));
+    .filter((line) => /^ack$/i.test(line));
   return signals.length === 1;
 }
 

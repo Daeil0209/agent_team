@@ -102,9 +102,9 @@ Governance, config, or hook edits are not excluded when the accepted deliverable
 **Exit law**: once verified discovery output exists, team-lead immediately opens the Phase 1 boundary through `work-planning` and uses the discovery output as the CP1 basis; a proven Phase 0 blocker records `HOLD` or next owner/action instead.
 **Exit law**: implementation or design freeze requires its governing phase.
 **Exit law**: discovery open questions default into Phase 1 configurable-parameter/assumption/open-question table.
-**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, user-decision-risk decision-support when it can still confirm continuation or prove the user-owned decision basis, and team-lead-verified evidence of the smallest true user-action blocker.
+**Exit law**: user escalation requires `work-planning`, configured independent-review handling when its trigger is material, applicable `Skill(team-meeting)` continuation when it can avoid asking the user, and team-lead-verified evidence of the smallest true user-action blocker.
 **Exit law**: missing labels or policies represented as settings, rule tables, or user-editable categories are modeled, not asked.
-**Exit law**: user questions become CP1 open questions, user-decision-risk decision-support input, or a proven user-action blocker with next owner/action.
+**Exit law**: user questions become CP1 open questions, `Skill(team-meeting)` continuation input, or a proven user-action blocker with next owner/action.
 
 ## Phase 1: Plan
 **Purpose**: Produce the canonical feature plan surface.

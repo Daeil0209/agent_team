@@ -39,7 +39,12 @@ Recovery rules:
 - Repeated assignment or correction messages stay out of a target with no agent-originated receipt, start, blocker, or progress.
 - The one bounded follow-up asks for the missing receipt, start evidence, `scope-pressure`, or `hold|blocker`; resend assignment content only when prior send evidence is absent or duplicate side-effect risk is ruled out. If prior send evidence is absent, the action is assignment delivery from `team-created-no-assignment`, not receipt follow-up.
 - The bounded follow-up uses the canonical no-detail `SendMessage` envelope from `message-classes.md`. A hook or envelope rejection is same-owner envelope-correction evidence: correct and retry silently inside the same recovery block, or route a canonical no-detail blocker if retry is impossible.
+- For `dispatch-pending-no-ack` follow-up, use assignment-class reuse to the exact live member with `message: {"type":"carrier_pointer","class":"reuse","key":"CARRIER","value":"<existing assignment carrier path>"}` and no `summary`.
+- For `dispatch-ack-no-start` follow-up, use the same structured reuse envelope against the existing assignment carrier; if recovery detail is newly required, write it to a retained recovery carrier first and send only that carrier pointer.
+- Follow-up structured payloads never carry wake wording, receipt counts, idle/runtime truth, hook-block explanation, required-action prose, rationale, or progress detail.
+- A hook rejection for a free-form follow-up envelope proves an envelope defect only. Correct the envelope and retry silently; do not render the hook result, correction rationale, or retry plan to the user while recovery can continue.
 - After one bounded follow-up, wait for response, agent-start, blocker, or assigned-surface activity until the `session-boot` re-check window.
+- A follow-up send is not recovery closure; recovery closes only through Communication Plane evidence, assigned-surface activity within the re-check window, dead-or-unavailable classification, or `HOLD`.
 - Missing response and missing activity after that window is dead-or-unavailable recovery for the affected target, not another packet retry.
 - A same-target packet correction to a responsive live target opens a correction-response window. Shutdown or replacement waits until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - Parallel group "running" status requires every target to be past `dispatch-pending-no-ack` and `dispatch-ack-no-start`.
@@ -53,11 +58,11 @@ Recovery rules:
 ## Agent Compaction Recovery
 A compacted agent has lost the assignment-grade packet context but retains its agent-specific skill. To resume truthfully:
 
-- Agent emits hold|blocker-class transport; the exact `MESSAGE-CLASS: hold|blocker` field lives in the governed blocker carrier or task state.
+- Agent sends hold|blocker-class transport; the exact `MESSAGE-CLASS: hold|blocker` field lives in the governed blocker carrier.
 - The rendered `SendMessage` envelope stays no-detail per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
-- The governed blocker carrier or task state includes `BLOCKER-TYPE: context-loss-after-compaction`.
-- The governed blocker carrier or task state includes `BLOCKER-BASIS: prior packet context not in working memory`.
-- The governed blocker carrier or task state includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
+- The governed blocker carrier includes `BLOCKER-TYPE: context-loss-after-compaction`.
+- The governed blocker carrier includes `BLOCKER-BASIS: prior packet context not in working memory`.
+- The governed blocker carrier includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
 - Team-lead consumes the blocker, locates the original assignment-grade packet from internal carry-forward, and reissues the same packet or a same-boundary packet correction so the agent can resume.
 - Packet correction during compaction recovery preserves the previously frozen scope, route, proof/acceptance chain, parallel grouping, and required-skill basis.
 - Agent reports the context-loss blocker through the canonical carrier-based blocker path; assignment context returns through packet redelivery rather than gist or partial-memory reconstruction.

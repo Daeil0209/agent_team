@@ -52,7 +52,6 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Session closeout and teardown truth lives in `.claude/skills/session-closeout/SKILL.md` and `.claude/skills/session-closeout/references/closeout-state-detail.md`.
 - Team-session sequence lookup detail lives in `.claude/skills/team-session-sequences/SKILL.md` and references reached through that skill's `## Reference Map`; runtime spine stays with `session-boot`, and dispatch packet truth stays with `task-execution`.
 - Configured independent-review trigger, packet, adjudication, fail-open, and authority limits live in `.claude/skills/codex-independent-review/SKILL.md` and references reached through that skill's `## Reference Map`.
-- Hook posture and hard-deny categories live in `.claude/hooks/MANIFEST.md`; literal hook behavior lives in the matched hook script.
 
 ## Carrier Evidence Claim Ceiling
 `claude_doc/<work-name>/` files are protected work-artifact carriers, not governance text. Their absence does not authorize fabricated replacement carriers or silent proof claims.

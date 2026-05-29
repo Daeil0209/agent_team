@@ -68,7 +68,7 @@ Capture only the decisive business packet:
 ## Handoff Boundary
 - Hand off after downstream execution can use explicit purpose, actor/mutation rules, and reconciliation behavior.
 - Keep unresolved role or decision conflicts explicit.
-- Expose role, decision, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, user-decision-risk decision-support input, open questions carried to the next owner/action, or `hold|blocker` with blocker and next safe evidence step.
+- Expose role, decision, audit-sensitive, destructive, or policy-choice conflicts as named states, rules, parameters, open questions carried to the next owner/action, or `hold|blocker` with blocker and next safe evidence step.
 - Preserve every observed case's original value, source, meaning, scope, unresolved state, and downstream effect in a configurable category, rule table, user-editable parameter, default, or open question carried to the next owner/action.
 - Record the chosen representation and evidence basis before handoff.
 - User-escalation triggers follow `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.

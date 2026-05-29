@@ -756,8 +756,7 @@ _update_idle_pending_locked() {
   local action="${1:?action required}"
   local worker_name="${2-}"
   local idle_reason="${3-}"
-  local completed_task="${4-}"
-  local completed_status="${5-}"
+  local completed_status="${4-}"
   local normalized_worker=""
   local temp_file=""
   local timestamp=""
@@ -776,7 +775,6 @@ _update_idle_pending_locked() {
     -v raw_worker="$worker_name" \
     -v ts="$timestamp" \
     -v idle_reason="$idle_reason" \
-    -v completed_task="$completed_task" \
     -v completed_status="$completed_status" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
@@ -791,7 +789,7 @@ _update_idle_pending_locked() {
     }
     END {
       if (action == "mark") {
-        printf "%s | %s | %s | %s | %s\n", ts, raw_worker, idle_reason, completed_task, completed_status
+        printf "%s | %s | %s | %s\n", ts, raw_worker, idle_reason, completed_status
       }
     }
   ' "$IDLE_DECISION_PENDING_FILE" > "$temp_file"
@@ -802,8 +800,7 @@ _update_idle_pending_locked() {
 mark_worker_idle_pending() {
   local worker_name="${1-}"
   local idle_reason="${2-unknown}"
-  local completed_task="${3-none}"
-  local completed_status="${4-none}"
+  local completed_status="${3-none}"
 
   [[ -n "$worker_name" ]] || return 0
   with_lock_file \
@@ -812,7 +809,6 @@ mark_worker_idle_pending() {
     "mark" \
     "$worker_name" \
     "$idle_reason" \
-    "$completed_task" \
     "$completed_status"
 }
 

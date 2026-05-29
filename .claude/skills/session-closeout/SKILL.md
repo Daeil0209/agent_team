@@ -77,7 +77,7 @@ Keep closeout narrow:
 - During active closeout, `TeamDelete` opens only after each live process-backed teammate has termination proof or non-live residue classification and unresolved live-agent truth is preserved or carried forward.
 - Runtime cleanup is handled by lead.
 - Teammate cleanup truth stays with lead.
-- Team config, task list, mailbox, and cleanup state stay runtime-bound.
+- Team config, mailbox, and cleanup state stay runtime-bound.
 - Governed runtime cleanup uses governed runtime surfaces.
 - Blocked, clean, or warning-bearing closeout visibility routes through `.claude/reference/reporting-prohibition-law.md`.
 

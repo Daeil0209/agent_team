@@ -50,10 +50,12 @@ Unknown material burden facts make measurement the next planned action, not a pr
 
 `ACTIVE-CONCURRENT-AGENT-CAP` is the maximum concurrent team-scoped lane-agent count allowed for the active plan, excluding the team-lead host.
 `work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
-The cap basis records every applicable ceiling: explicit user maximum, current runtime/session configuration, host capability limit, and default basis.
+Standing operator maximum is 2 concurrent team-scoped lane agents.
+The cap basis records every applicable ceiling: standing operator maximum 2, explicit lower user maximum when present, current runtime/session configuration, host capability limit, and default basis.
 The active value is the lowest applicable ceiling.
-A user-stated maximum is a binding ceiling and must stay recorded even when a lower runtime or host ceiling controls the active value.
-When no lower explicit user or runtime ceiling is available, the default host-safe ceiling is 4.
+A user-stated maximum below 2 is a binding lower ceiling and must stay recorded even when a lower runtime or host ceiling controls the active value.
+A user-stated maximum above 2 does not raise the standing operator maximum unless a later governance change explicitly replaces this line.
+When no lower explicit user or runtime ceiling is available, the default host-safe ceiling is 2.
 `work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below `ACTIVE-CONCURRENT-AGENT-CAP`.
 A plan that names more concurrent dispatched lane members than `ACTIVE-CONCURRENT-AGENT-CAP` is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.

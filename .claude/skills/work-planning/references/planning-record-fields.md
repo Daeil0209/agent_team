@@ -68,8 +68,8 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Wave PASS cannot redefine deliverable scope as that wave's `SCOPE-BASELINE`.
 - Multi-wave routes classify each wave's system-damage potential as `safe`, `cautionary`, or `risky`.
 - Wave ordering places `safe` first, `cautionary` next, `risky` last.
-- For `risky` waves, team-lead prepares positive-effect and negative-effect analysis, chooses the §1-§8-compliant reversible order when one is derivable, and opens user-decision-risk decision support only before asking the user to choose.
-- User-selection on `risky` waves opens only after decision support cannot derive an executable order, destructive/security approval is required, or a proven user-owned blocker remains.
+- For `risky` waves, team-lead prepares positive-effect and negative-effect analysis, chooses the §1-§8-compliant reversible order when one is derivable, and opens `Skill(team-meeting)` only before asking the user to choose.
+- User-selection on `risky` waves opens only after `Skill(team-meeting)` cannot derive an executable order, destructive/security approval is required, or a proven user-owned blocker remains.
 - When `DERIVED-DEFAULTS` names a receiver job, consumption path, or decisive proof surface for downstream review, proof, validation, or acceptance, `REQUEST-BOUND-PACKET-FIELDS` must include `TARGET-INTENT-BASIS`, `USER-SURFACE`, and `USER-SURFACE-PROOF-PATH`.
 - When plan, design, or workflow state freezes Receiver-Surface Contract, Consumption Chain, Boundary Register, or Evidence-Quality Matrix, `REQUEST-BOUND-PACKET-FIELDS` must preserve their cited identities for `task-execution` packet basis.
 - When reference-use triggers and downstream lanes depend on it, `REQUEST-BOUND-PACKET-FIELDS` must preserve cited reference identities or `DEVIATION-FROM-REFERENCE` basis. Downstream reference-use identity belongs inside `REQUEST-BOUND-PACKET-FIELDS`.
@@ -83,7 +83,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - `ROUTING-SIGNAL`, `NEXT-CONSEQUENTIAL-ACTION`, and `DISPATCH-BLOCKERS` are mandatory for consequential `team-lead` plans.
 - `LEAD-LOCAL-WORK-ITEMS` is mandatory when `ROUTING-SIGNAL` is `lead-local candidate`.
 - `LEAD-LOCAL-REQUIRED-SKILLS` is mandatory when `ROUTING-SIGNAL` is `lead-local candidate` and the acting subject needs any non-owner skill to complete the frozen local path truthfully.
-- `ACTIVE-CONCURRENT-AGENT-CAP` is mandatory when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable; cap rules (active value, cap basis enumeration, user-maximum preservation, default host-safe ceiling) live canonically at `.claude/skills/work-planning/references/parallel-fit.md`.
+- `ACTIVE-CONCURRENT-AGENT-CAP` is mandatory when additional-agent routing is possible, host-authorized, team-routed, ambiguous-route, or dispatch-capable; cap rules (active value, standing operator maximum 2, cap basis enumeration, user-maximum preservation, default host-safe ceiling) live canonically at `.claude/skills/work-planning/references/parallel-fit.md`.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when routing is team-routed or becomes team-routed after one named blocker-clear move.
 - `AGENT-MAP` and `PARALLEL-GROUPS` are mandatory when additional-agent routing is host-authorized.
 - When `AGENT-MAP` or `PARALLEL-GROUPS` is not mandatory but `task-execution` consumes the route, record `not-applicable:<basis>` instead of leaving the field blank.

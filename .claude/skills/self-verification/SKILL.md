@@ -115,7 +115,7 @@ Build correction packet:
 
 Route by producing owner:
 - team-lead lead-local → return correction inventory to team-lead.
-- lane → dispatch via `Skill(task-execution)` assignment-class transport; the visible `SendMessage` body carries one carrier/task-state pointer line, and the governed assignment packet carries `MESSAGE-CLASS: assignment` plus `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
+- lane -> dispatch via `Skill(task-execution)` assignment-class transport; the visible `SendMessage` body carries one carrier pointer line, and the governed assignment packet carries `MESSAGE-CLASS: assignment` plus `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
 - `Skill(governance-modification)` Change Sequence → return correction inventory to that Change Sequence.
 
 Wait for correction completion.

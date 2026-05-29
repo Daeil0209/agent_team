@@ -15,7 +15,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Section 6 is Step 3.
 - Section 7 is Step 4.
 - Section 8 is Internal Planning Record.
-- Section 9 is Progress Update Surface.
+- Section 9 is Planning Progress Suppression Surface.
 - Section 10 is Post-Planning Gate.
 - Section 11 is Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
@@ -77,7 +77,7 @@ Active runtime, recovery, monitoring, cleanup, or unresolved session-start readi
 Also load and learn for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
 `work-planning` activation and freeze are proven by actual `Skill(work-planning)` load-and-learn plus the required freeze, or by current same-session loaded-and-learned `work-planning` basis when every boundary-change axis per `references/boundary-gates.md` remains unchanged.
-Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, and outside draft fields are context only; actual `Skill(work-planning)` load-and-learn plus required freeze proves activation or freeze.
+Pre-action gate fields, internal plan-state notes, task-plan UI state, route notes, Codex calls, and outside draft fields are context only; actual `Skill(work-planning)` load-and-learn plus required freeze proves activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard routing gates, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
@@ -152,10 +152,9 @@ User-surface law:
 - If truthful proof or acceptance is blocked by a missing user-facing surface or tool path, freeze one bounded next step: `Skill(tool-acquisition)` for local discovery/setup, `Skill(external-tool-bridge)` for external bridge risk, the named setup owner, or blocker with bounded discovery/setup fields.
 - Use source-only evidence only when it truthfully matches the user-facing proof surface.
 
-Choice-situation law:
-- If Q1-Q5 or any later planning step reveals a choice situation per `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (choice-situation + INVARIANT + ANTI-PASSIVE-WAIT + BACKGROUND-DECISION-SUPPORT clauses), apply that canonical rule before Step 3 work-plan build or Step 4 freeze.
-
-Essence-evidence law trigger: when Step 3 work-plan build includes consequential governance-design / patch-design / critical work-product emission, consume the canonical Essence-Evidence Law at `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` before plan-build proceeds.
+Autonomy law:
+- Resolve planning uncertainty through the evidence-backed default, standing directive, or cited owner procedure in `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` before Step 3 work-plan build or Step 4 freeze.
+- Governance-design, patch-design, and critical work-product rows use their named owner gates (`Skill(review-verification)`, `Skill(self-verification)`, `Skill(governance-modification)`, validator) without adding a separate decision-support layer.
 
 ## Step 3: Build Team-Lead Work Plan
 Before freeze, `team-lead` builds the work plan it will execute or route.
@@ -205,14 +204,22 @@ Use `references/execution-readiness.md` when packet, proof, setup, cleanup, para
 ## Internal Planning Record
 Populate the internal record from `references/planning-record-fields.md`.
 Hold it in current-turn context only.
-Expose only plain next action, blocker, or owner/action truth.
+Keep the record internal.
+If `.claude/reference/reporting-prohibition-law.md` admits a direct next-action, blocker, or owner/action answer, state only that admitted truth.
 Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
-## Progress Update Surface
-Follow `.claude/reference/reporting-prohibition-law.md`.
+## Planning Progress Suppression Surface
+This section is the work-planning local reporting-curtain execution surface for planning-specific suppression and replacement actions only.
+It does not create progress-update permission, report exceptions, or final-report shape.
+Report admission stays exclusively with `.claude/reference/reporting-prohibition-law.md`.
 Planning progress is silent while the next owner/action can run.
-Planning records and planning tool output are internal material under `.claude/reference/reporting-prohibition-law.md`.
+Planning records, task-plan UI state, and planning tool output are internal material.
+Planning progress-tracking setup, todo/checklist changes, corpus-size statements, "I'll" or "Let me" preambles, grounding announcements, and procedure-readiness narration are non-reportable planning material.
+Completed planning freeze, corpus measurement, selected route, `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, `PARALLEL-GROUPS`, phase split, and next-owner handoff are planning/Procedure Plane evidence.
+Those states do not create report admission, bridge-prose permission, milestone narration, route-summary permission, or handoff narration.
+When `Post-Planning Gate` names `Skill(task-execution)` activation or loaded `task-execution` consumption, the next action is that owner activation or consumption, not visible plan-freeze, route, cap, phase, or dispatch-owner-opening prose.
+Do not render plan-frozen, route-selected, cap-selected, work-plan, promotion-phase, team-routed, or dispatch-owner-opening summaries unless `.claude/reference/reporting-prohibition-law.md` admits that exact user-requested material.
 Planning measurement command composition follows `references/boundary-gates.md` `## Corpus Measurement Gate`.
 When planning prose is suppressed, continue the next owner/tool call or record a lawful `HOLD`; suppression never stops execution.
 Keep the planning record internal.
@@ -220,10 +227,12 @@ Keep the planning record internal.
 ## Post-Planning Gate
 After planning, apply `references/boundary-gates.md` Post-Planning Gate.
 Open the first next owner/action from `TEAM-LEAD-WORK-PLAN`.
+Post-planning owner opening is an internal Procedure Plane transition.
+If the first next owner is `Skill(task-execution)` activation or loaded `task-execution` consumption, open or consume that owner immediately without rendering plan-freeze, route, cap, phase, or handoff prose.
 Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed after the named owner/action has been opened and required consumption failed or became impossible under that owner's freshness rule.
 When the named owner/action has not yet been opened, open or load that owner and consume it before replanning.
 When the opened next action is team-routed dispatch, `work-planning` freezes the route and packet-field basis only.
-It does not materialize dispatch-bound binding surfaces, shard packets, retained assignment carriers, task rows, or assignment-carrier templates.
+It does not materialize dispatch-bound binding surfaces, shard packets, retained assignment carriers, or assignment-carrier templates.
 Those artifacts are created or finalized only after `Skill(task-execution)` is active and its packet preflight has consumed the frozen basis.
 Any pre-`task-execution` draft of those artifacts is context only; it cannot be sent, reused as dispatch-ready, or treated as preflight-passed until `task-execution` regenerates or verifies it as dispatch-bound.
 

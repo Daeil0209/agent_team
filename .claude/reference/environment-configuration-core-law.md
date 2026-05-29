@@ -15,13 +15,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `.claude/reference/environment-output-root-filesystem-law.md`: load when project output-root placement, generated files, source edits, governance edits, or filesystem boundaries are material.
 - `Skill(tool-acquisition)`: load when current toolset limits, missing tool path, or bounded setup materially blocks the active owner path.
 - `Skill(external-tool-bridge)`: load when tool recovery requires external API, MCP, auth, quota, credential, paid, persistent-service, or external bridge work.
-- `Skill(task-execution)` -> `references/message-classes.md`: consume through active `Skill(task-execution)` when shared task-list identity, structured `shutdown_request`, Communication Plane runtime-cleanup transport, or termination proof affects runtime cleanup truth.
+- `Skill(task-execution)` -> `references/message-classes.md`: consume through active `Skill(task-execution)` when structured `shutdown_request`, Communication Plane runtime-cleanup transport, or termination proof affects runtime cleanup truth.
 - `Skill(task-execution)` -> `references/runtime-dispatch-law.md`: consume through active `Skill(task-execution)` when lane-member cleanup, reuse-before-cleanup, structured shutdown routing, or active-team runtime cleanup affects the next owner/action.
 
 ## Runtime Boundary Law
 - Runtime state, including team runtime state, is runtime-owned and stays out of project governance documents.
 - `[HOOK-LAST]` hooks are last-resort runtime guards.
-- Shared task-list creation, identity, mutation, and closure rules are owned by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
 - Cooperative `shutdown_request`, `tmux kill-*` hard-deny, blocked-cleanup routing, and `kill <pid>` operator-approval detail are owned by `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`.
 - Agent-authored shell teardown routes to forceful runtime termination law, and closeout truth stays with `session-closeout`.
 

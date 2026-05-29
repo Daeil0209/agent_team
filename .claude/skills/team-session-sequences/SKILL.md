@@ -52,7 +52,7 @@ After `Skill(team-session-sequences)` is loaded and learned, load trigger-specif
 - `references/dispatch-execution-contract.md`: background/foreground runtime execution, request-fit ordering, phase intent, and mixed-purpose prompt boundaries.
 - `references/parallel-shard-merge.md`: parent packet freeze, shard fan-out, merge owner, and integrated output routing.
 - `references/upward-handoff.md`: consequential upward completion block fields and monotonic lane-state rules.
-- `references/monitoring-lifecycle-detail.md`: runtime signals, cleanup decisions, manifest gate, health-check, stale response, runtime pressure, and task identity detail.
+- `references/monitoring-lifecycle-detail.md`: runtime signals, cleanup decisions, manifest gate, health-check, stale response, runtime pressure, and agent communication detail.
 
 ## Mode Split
 
@@ -69,7 +69,7 @@ Triggers for `Boot Sequence` and `Session-Start Sequence` open `Skill(session-bo
 
 The `Monitoring Sequence` general procedure lives in `Skill(session-boot)`.
 Canonical runtime-state vocabulary lives in `.claude/skills/session-boot/references/runtime-state-detail.md`.
-Lead-side runtime-signal, cleanup, manifest, health-check, stale-response, runtime-pressure, and task-identity detail lives in `references/monitoring-lifecycle-detail.md`.
+Lead-side runtime-signal, cleanup, manifest, health-check, stale-response, runtime-pressure, and agent-communication detail lives in `references/monitoring-lifecycle-detail.md`.
 
 ### Lead-Side Dispatch Index
 
@@ -81,7 +81,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 - Agent load guard — `references/agent-load-guard.md` for sizing bounds and serial-basis requirement.
 - Dispatch execution contract — `references/dispatch-execution-contract.md` for request-fit-packet → deliverable-shape → phase-intent → staffing-choice ordering and mixed-purpose split discipline.
 - Parallel shard and merge — `references/parallel-shard-merge.md` for parent-packet freeze, MERGE-OWNER, shard non-overlap, and integrated-output routing.
-- Task identity — `references/monitoring-lifecycle-detail.md`; task ids, agent names, and agent-scoped communication are distinct, and task identity comes from task evidence, not guessed agent identity.
+- Agent communication — `references/monitoring-lifecycle-detail.md`; agent names and agent-scoped communication are distinct runtime address surfaces.
 - Consequential upward completion — `.claude/skills/task-execution/references/completion-handoff.md` (completion contract) and `.claude/skills/task-execution/references/message-classes.md` (blocker-native fields); `references/upward-handoff.md` adds session-readable lane block and monotonic-state rules.
 - Health-check, stale-response, and runtime-pressure — `references/monitoring-lifecycle-detail.md`; `hook-policy.sh` handles literal cadence/threshold values.
 
