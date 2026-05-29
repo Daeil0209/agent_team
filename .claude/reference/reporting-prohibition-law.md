@@ -14,6 +14,21 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Any assistant-authored field, state signal, transport envelope, status, or prose that can render to the user is governed by this law before visible rendering; Communication Plane, Procedure Plane, tool, channel, or message-class labels do not bypass this law.
 - `team-lead` owns Reporting Plane emission.
 
+## Curtain Supremacy
+- This law controls assistant-authored visible prose before any lower owner surface can authorize wording.
+- Planning state, lane state, verification state, runtime state, active skill state, hook state, transport state, and checked information do not create report permission.
+- More checked information produces internal evidence to classify, not more user-facing content.
+- When any owner surface says `visible`, `report`, `status`, `progress`, `summary`, `next action`, `result`, `dispatch-ack`, `subjob-done`, `completion`, or similar wording, resolve it through this law before prose reaches the user.
+
+## Default Screen Curtain
+- Assistant-authored visible prose defaults to silence while Procedure Plane or Communication Plane action can continue.
+- Suppressed controllable renderable fields stay empty, omitted, or a single ASCII space.
+- Punctuation-only placeholders, including `.`, `-`, `...`, and similar filler, are report attempts when this law has not admitted prose.
+- Host-rendered tool rows, lane transport rows, and task rows are execution or transport evidence only; they do not create an adjacent assistant-authored prose slot.
+- Automatic no-detail screen state signals are limited to exactly two standalone tokens: `dispatch-ack` when an agent accepts the assigned work and starts, and `subjob-done` when an agent hands completed subjob output to `team-lead`.
+- In `SendMessage`, the schema-required `summary` field is the canonical visible state-signal slot for those two tokens; the body remains empty, omitted, or single ASCII space.
+- Those two tokens are allowed transport signals, not user reports; any added word, punctuation, task id, carrier path, summary, count, result preview, or completion narrative turns the rendered content into a report attempt or malformed transport display.
+
 ## Consume When
 - Consume before any assistant-authored visible prose, terminal-visible report text, pane-visible report text, visible task-plan/todo/checklist text, completion claim, phase/stage-end result, user-action blocker report, explicit status answer, or closeout residual.
 - Consume before startup, boot, planning, skill-load, reference-load, dispatch, monitoring, verification, or cleanup prose.
@@ -39,14 +54,16 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 9. If any required row is missing, stale, contradicted, or uncertain, keep prose suppressed and continue through the owning Procedure Plane or Communication Plane path.
 
 ## Non-Reportable Content
-- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, ack/status/completion transport, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, and monitoring state.
-- Tool-adjacent assistant-authored progress prose whose only purpose is "starting", "continuing", "checking", "dispatching", "monitoring", "verifying", or "waiting" is not admitted report content and remains suppressed while the owner action can continue.
+- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, dispatch-ack/status/subjob-done transport, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, and monitoring state.
+- Work-start, dispatch-start, lane-start, task-start, work-completion, lane-completion, and task-completion content is non-reportable stage content; stage identity admits only the standalone `dispatch-ack` or `subjob-done` screen signal when the matching transport event occurs, never assistant-authored visible prose, summaries, counts, paths, result previews, completion narratives, or filler.
+- Tool-adjacent assistant-authored prose that starts, continues, checks, dispatches, monitors, verifies, waits, explains interim findings, connects evidence to a next step, marks stage completion, or otherwise narrates Procedure Plane or Communication Plane movement is not admitted report content and remains suppressed while the owner action can continue.
+- Single-character, punctuation-only, whitespace-plus-punctuation, or decorative filler content is not an admitted report; use empty, omitted, or single ASCII space when a tool field cannot be omitted.
 - Assistant-authored command stdout/stderr labels, success echoes, progress banners, and section separators are not admitted report content unless the user explicitly requested that exact material; when routing needs command evidence, prefer exit status or the smallest machine-readable pass/fail or missing-path/missing-field fact.
 - Assistant-authored command output for internal artifact or carrier verification emits no terminal-visible success output; when routing depends on the command result, emit only machine-readable pass/fail or missing-path/missing-field facts, while carrier headers, excerpts, line counts, candidate counts, completion-grade summaries, and reuse decisions stay out of terminal-visible output.
 - Assistant-authored file-write preview content for internal carriers or produced user-facing report drafts is a report attempt when it carries route, dispatch, packet, verification, candidate, retained-carrier, final-result, synthesis, defect/finding, count, recommendation, or post-final-tail detail before this law admits that exact content or the user explicitly requests that exact preview content.
-- A rendered internal transport envelope avoids report-attempt classification only when this law and the Communication Plane owner limit it to a canonical no-detail state token and an empty/space body; any receiver-required detail, progress wording, count, path, evidence summary, rationale, completion narrative, or task-row subject/description detail in a renderable field is a report attempt.
+- A rendered internal transport envelope avoids report-attempt classification only when this law and the Communication Plane owner limit it to the no-detail shape owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; any receiver-required detail, progress wording, count, path, evidence summary, rationale, completion narrative, or task-row subject/description detail in a renderable field is a report attempt.
 - Duplicate assistant-authored rendering of the same internal state token across visible envelope slots is a report attempt; the Communication Plane owner must render at most one no-detail token and keep receiver-required detail in governed non-rendered carriers.
-- Communication Plane screen-rendered envelopes and task rows remain transport signals; receiver-required detail stays in governed packets, non-rendered task state, retained carriers, shutdown requests, shutdown responses, or evidence artifacts.
+- Communication Plane screen-rendered envelopes and task rows remain transport signals; task rows are identity-only/no-detail surfaces, and receiver-required detail stays in governed packets, non-rendered task state, retained carriers, shutdown requests, shutdown responses, or evidence artifacts.
 - Host/system-generated Claude Code UI rows are not assistant-authored reports; classify them only when they affect report truth, runtime evidence, or user-visible rendering proof.
 
 ## Admitted Report Handoff

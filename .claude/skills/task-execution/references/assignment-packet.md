@@ -60,12 +60,12 @@ Every assignment-grade work packet carries:
 ### Receipt And Completion Contract
 `RECEIPT-COMPLETION-CONTRACT` is mandatory for assignment-grade work packets.
 It binds the receiver's upward outcome and final handoff.
-It must require `completion` when packet review plus bounded lane work completes in the same execution block, or `dispatch-ack`, `scope-pressure`, or `hold|blocker` when work cannot truthfully complete before first upward transport.
+It must require `subjob-done` when packet review plus bounded lane work completes in the same execution block, or `dispatch-ack`, `scope-pressure`, or `hold|blocker` when work cannot truthfully complete before first upward transport.
 It must define `dispatch-ack` as no-objection assignment acceptance and immediate work-start trigger, not a waiting gate.
 It must require `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when truthful start is blocked.
 It must require converged lane work to write the retained completion carrier required by `.claude/skills/task-execution/references/completion-handoff.md`.
-It must require converged lane work to send `MESSAGE-CLASS: completion` to `team-lead` through `SendMessage`.
-It must require retained carrier plus `MESSAGE-CLASS: completion` handoff instead of disk output, pane/final prose, `status`, or `TaskUpdate` substitutes.
+It must require converged lane work to send governed `subjob-done` transport to `team-lead` through `SendMessage`.
+It must require retained carrier plus governed `subjob-done` handoff instead of disk output, pane/final prose, `status`, or `TaskUpdate` substitutes.
 When the assignment requests returned facts, counts, findings, state labels, recommendations, or verdict inputs, the contract must require `VERIFIED-DATA-FEEDBACK` in the retained carrier; unverified returned data is not completion-grade feedback.
 
 ### Tester Executable-Proof Schema Floor
@@ -101,7 +101,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - Non-derivable, contradictory, lane-mismatched, outside-boundary, owner-reserved, or ownership-changing skill-field entries open `packet-send stop: packet-correction` when the same boundary remains unchanged; otherwise open `route-replan`.
 - missing `RECEIPT-COMPLETION-CONTRACT` opens `packet-send stop: packet-correction`
 - contradictory `RECEIPT-COMPLETION-CONTRACT` opens `packet-send stop: packet-correction`
-- a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `completion` without retained carrier, permits `completion` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
+- a contradictory `RECEIPT-COMPLETION-CONTRACT` permits work without first upward outcome, permits `dispatch-ack` without no-objection acceptance, permits `subjob-done` without retained carrier, permits `subjob-done` without `SendMessage` to `team-lead`, or treats disk output, pane/final prose, `status`, or `TaskUpdate` as a completion substitute
 - packet field vs loaded skill law conflict: any packet field value that contradicts a binding rule from loaded skill / role-body / trigger-bound reference per `.claude/reference/work-skill-reference-binding-law.md` precedence stack is a packet defect; open `packet-send stop: packet-correction`
 - when task tracking is active, consume `message-classes.md` `### Assignment Delivery Contract` for `TASK-ID`, task-row non-owner, and completion-closure rules
 - invalid or unverified `TASK-ID` opens `packet-send stop: packet-correction` when the active task exists, otherwise `route-replan`
@@ -124,7 +124,7 @@ Before assignment-grade dispatch, `task-execution` must run packet preflight aga
 - missing row-granular scope rows open `packet-send stop: packet-correction` when the frozen basis contains them but they are not uniquely derivable, otherwise `route-replan`
 - wave, sample, priority-tier, or representative-slice packets label that slice as `ACTIVE-SLICE`; `SCOPE-BASELINE`, `COMPLETION-STOP-CONDITION`, `CLAIM-CEILING`, and downstream completion truth remain frozen
 - finding counts are retained evidence, not dispatch scope
-- Completion contracts request only the canonical state signal in upward `SendMessage` per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; other content travels in the retained carrier.
+- Completion contracts request governed upward `subjob-done` `SendMessage` per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; receiver-required detail travels in the retained carrier.
 - Receiver-required completion payload travels in the retained carrier per `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine.
 - Assignment packets request data feedback through the retained carrier; team-lead consumes returned data only from the completion spine's `VERIFIED-DATA-FEEDBACK`, `EVIDENCE-BASIS`, and `OPEN-SURFACES`.
 - These packet types must carry `RETAINED-OUTPUT-PATH` when expected output includes Communication Plane detail that would pollute transport display:

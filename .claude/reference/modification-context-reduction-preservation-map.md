@@ -77,7 +77,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |
 | Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, proven user-action blocker candidate for reporting-prohibition, or internal blocker-routing; never smooth into progress, completion, or agent reluctance. |
 | Packet correction | Lawful only inside the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |
-| Completion synthesis | Only completion-grade `MESSAGE-CLASS: completion` plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
+| Completion synthesis | Only completion-grade `MESSAGE-CLASS: subjob-done` plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
 | Final arbitration | Formal `PASS/HOLD/FAIL` belongs to `validator`; local `final verified result` closure is valid only when no final-arbitration trigger applies. |
 | Runtime/cleanup truth | Dispatch, receipt, agent-start, progress, completion, standby, cleanup, and acceptance remain distinct. |
 | Hook/runtime footprint claim | Separate official legality from local `[HOOK-LAST]` philosophy; measured claims need runtime evidence, otherwise report `design-level` or `UNVERIFIED`. |

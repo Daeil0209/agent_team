@@ -107,7 +107,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - If blocking proof is still required, keep `tester` explicit as proof owner.
 ### 9. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before reviewer-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
@@ -125,5 +125,5 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Completion uses `completion` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
-- Downstream of reviewer `MESSAGE-CLASS: completion` with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).
+- Downstream of reviewer `completion` transport with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).
 - `REVIEW-STATE: hold|blocked` opens the named blocker owner/action before acceptance continues.

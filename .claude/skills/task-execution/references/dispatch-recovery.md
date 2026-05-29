@@ -29,7 +29,7 @@ Required recovery record:
 | `dispatch-ack-no-start` | assignment accepted, no later activity | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or blocker-routing. Keep unaffected parallel targets moving. Classify the target as stalled or dead-or-unavailable after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
 | `agent-started-after-receipt` | valid first upward outcome plus agent-side activity exists | lane execution plus `session-boot` monitoring. Return to `task-execution` only when replanning freezes a new assignment. |
 | `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | Inspect current host/runtime state, preserve the standalone call only as bounded evidence, and reopen `work-planning`, `session-boot`, or `task-execution` redispatch for the configured lane route. Use blocker-routing only after duplicate-send risk and every executable recovery route are exhausted. Completion claims require completion-grade evidence. |
-| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load and learn `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
+| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load and learn `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime `subjob-done` transport. |
 
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
@@ -56,7 +56,7 @@ Recovery rules:
 ## Agent Compaction Recovery
 A compacted agent has lost the assignment-grade packet context but retains its agent-specific skill. To resume truthfully:
 
-- Agent sends governed `MESSAGE-CLASS: hold|blocker` through the Communication Plane; the render uses the canonical state signal only.
+- Agent sends governed `hold|blocker` transport through the Communication Plane; the render uses the canonical state signal only.
 - It includes `BLOCKER-TYPE: context-loss-after-compaction`.
 - It includes `BLOCKER-BASIS: prior packet context not in working memory`.
 - It includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.

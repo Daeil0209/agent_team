@@ -141,7 +141,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before developer-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **PASS records require evidence citations** per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3; assertion-only completion carrier is fabrication and disqualifies handoff.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.

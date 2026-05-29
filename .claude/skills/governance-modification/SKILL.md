@@ -40,7 +40,7 @@ Load and learn the full `Skill(review-verification)` body and call with bounded 
 - scope: tier, problem basis, correction direction, consumed target surface, recurrence-barrier basis when material, removal-first design, direct-consumption relevance, functional independence, positive-function inventory, no-negative-impact result, report-prohibition no-negative-impact when renderable or reporting behavior can change, negative risk, patch-worthiness, patch-readiness, mutation readiness
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
-Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-INDEPENDENCE`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, and `NEXT-OWNER-ACTION`.
+Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-INDEPENDENCE`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, `JUDGMENT-RELIABILITY` when the change depends on a high-risk judgment, and `NEXT-OWNER-ACTION`.
 Reject post-hoc review when it is offered as the missing pre-mutation basis for already-applied governance patches; route that order failure to recurrence-barrier hardening at the narrowest failed pre-mutation path.
 
 # Step 4: Change Sequence Design
@@ -83,6 +83,7 @@ Execute patches through this section only after Step 4 design and Step 5 self-ve
 - Current owner/action boundary, `REQUEST-FIT-BASIS`, `TARGET-INTENT-BASIS`, and target `.claude` asset set are recorded.
 - `PRE-MUTATION-BASIS` is recorded before mutation and may be prepared from this section during Step 4.
 - `Skill(review-verification)` supplied the current mutation-readiness, patch-worthiness, and patch-independence basis required by the change tier; `PRE-MUTATION-BASIS` must cite the actual `review_verification_packet` `PACKET-ID` (or content reference) from Step 3. Carrier prose asserting "review-verification supplied basis" without packet citation is fabrication and blocks mutation.
+- `PASS-1`, `PASS-2`, validator `PASS`, accepted report text, or upstream carrier labels do not create mutation authority; mutation opens only from current `PRE-MUTATION-BASIS` plus current Step 3 mutation-readiness and required `JUDGMENT-RELIABILITY` basis.
 - `Skill(self-verification)` Step 5 convergence is recorded with its `Skill(self-verification)` tool-call evidence; carrier-asserted convergence without tool-call evidence is fabrication and blocks mutation.
 - The patch target is the consumed owner surface that can execute the changed meaning.
 

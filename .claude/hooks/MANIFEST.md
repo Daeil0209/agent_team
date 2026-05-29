@@ -17,17 +17,19 @@ truthful procedure execution remain the primary control surfaces.
 - Keep active hooks narrow, observable, and surface-specific.
 - Use silent tracking or owner-surface repair when the procedure has a recoverable path.
 - User-facing hook warnings are exceptional and must not become progress gates.
-- Use `permissionDecision: "deny"` only for reserved hard-deny dangers or exact runtime actor/tool impossibilities that would corrupt delivery or runtime truth.
+- Use `permissionDecision: "deny"` only for reserved hard-deny dangers, exact runtime actor/tool impossibilities that would corrupt delivery or runtime truth, or operator-approved screen-curtain violations with a narrow command-shape detector.
 - Hard deny is reserved for secrets/credentials exposure, destructive recursive
 deletion, `.claude` governance shell mutation or wholesale overwrite,
 runtime/team-state corruption, exact task-state corruption, read-only reference
-mutation, and interpreter-based mutation of protected filesystem surfaces that bypasses
-structured edit surfaces.
+mutation, non-owner lane protected-filesystem bypass, and interpreter-based mutation
+of protected filesystem surfaces that bypasses structured edit surfaces.
 - Procedure gaps, planning/self-verification order gaps, packet-quality gaps, review-tool absence, output-root instructions, and recoverable completion defects are not hard-deny causes unless they directly create one of those reserved dangers.
 - Hooks specify prohibitions, not allow-lists. Default for any unspecified shell or tool action is allow; deny only specific reserved dangers using narrow, target-scoped checks (outside-workspace targets, protected relative paths, catastrophic system targets, governance shell mutation, secrets/credentials surfaces). A broad "deny unless approved" pattern is an over-broad-blocking defect candidate.
 - Over-broad hook blocking is repaired at the hook surface by narrowing the prohibition. Never substitute agent-side adherence rules, user re-confirmation flows, allow-list arming, or descriptive-pattern arming for prohibition narrowing — those move friction onto the user without removing the over-broad block and recreate the same bottleneck.
+- Operator-approved terminal-pollution hardening may deny exact assistant-authored Bash `echo`/`printf` progress, start, completion, or banner text that would render internal Procedure Plane or Communication Plane state; recovery is command rewrite to user-requested output, minimal machine-readable facts, quiet checks, exit status, or retained artifacts.
 - Do not add a new hook when adherence to an existing doctrine, skill, or role
 surface is the real fix.
+- The `SendMessage` summary-envelope guard is a backstop for the already-defined Communication Plane contract; when agent behavior and hook behavior diverge, repair the loaded doctrine, role, skill, or reference rule first, then keep the hook only as last-resort recurrence prevention.
 - Treat `claude_doc/<work-name>/` as a protected work-artifact carrier per `.claude/reference/environment-output-root-filesystem-law.md`; hook-side deletion, write-rejection, move, or other interference against `claude_doc/` is an over-broad-blocking defect candidate unless the action is explicit user-approved teardown.
 - Every hook script must be classified as active, support, absorbed, or
 runtime artifact.
@@ -77,13 +79,14 @@ operator approval before activation; the ledger record names the approval basis.
 | `permission-request-gate.sh` | repeat prompts for bounded structured edits that normal PreToolUse gates already allowed | PermissionRequest-only auto-allow surface; non-matching requests fall back to Claude Code permission handling. |
 | `sv-gate.sh` | browser proof without current planning basis | Narrow Playwright proof edge only; use silent tracking when denial would prevent ledger repair; recover through work-planning or claim narrowing. |
 | `tmux-kill-block.sh` | active-session instability from tool-issued `tmux kill-*` commands | Bash-only hard-deny for exact tool-issued `tmux kill-*` command forms. Recover through per-member `SendMessage` `shutdown_request` selected by the runtime cleanup owner or `Skill(session-closeout)` Runtime Teardown Preflight followed by `TeamDelete`. |
-| `worker-lifecycle-sync.sh` | teammate idle, completion, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; writes hook-maintained runtime state files when runtime state has a new lead-relevant idle or cleanup fact. It does not inject stdout context and does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
-| `track-worker-transport.sh` | worker-originated transport, completion, blocker, retained-output scope, and cooperative shutdown evidence becoming invisible or stale | PostToolUse SendMessage only; records transport state and retained-output scope from governed assignment/reuse/reroute messages, and after a worker-originated `shutdown_response`, removes runtime roster state without `tmux kill-*`. Tool-issued `tmux kill-*` routes to hard-deny runtime-boundary law. |
-| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer own-output scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
+| `worker-lifecycle-sync.sh` | teammate idle, subjob-done, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; writes hook-maintained runtime state files when runtime state has a new lead-relevant idle or cleanup fact. It does not inject stdout context and does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
+| `track-worker-transport.sh` | worker-originated transport, subjob-done, blocker, retained-output scope, cooperative shutdown evidence, and malformed or legacy state-signal display becoming invisible or stale | PostToolUse SendMessage only; records transport state and retained-output scope from governed assignment/reuse/reroute messages, refuses receipt classification when an upward state token is legacy `ack`, legacy `completion`, has a task suffix, or carries extra visible glyph content, and after a worker-originated `shutdown_response`, removes runtime roster state without `tmux kill-*`. Tool-issued `tmux kill-*` routes to hard-deny runtime-boundary law. |
+| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer own-output scope violation, protected-filesystem bypass, invalid `SendMessage` state-signal envelope, or assistant-authored Bash progress/start/completion/banner stdout that pollutes the terminal screen | Mutation-capable tools plus explicit Bash secret-read commands, exact no-redirect `echo`/`printf` internal-progress/start/completion/banner detection, and PreToolUse `SendMessage` prevention for string `message` without `summary` or state tokens in the body. Terminal-pollution hardening is operator-approved by the 2026-05-30 request to block unnecessary intermediate reports; recover by removing labels and using user-requested output, minimal machine-readable facts, quiet checks, exit status, retained artifacts, or `summary: dispatch-ack/subjob-done` with `message: " "`. |
 | `sv-tracker.sh` | selected skill body rendering becoming startup/procedure noise | PostToolUse Skill only; records skill markers and suppresses display for `agent-team-lead`, `session-boot`, `work-planning`, `task-execution`, `self-verification`, and `session-closeout`. This does not claim to police later assistant-authored prose. |
 
 ## Compliance Supervisor Boundaries
-- Hard-deny existing governance-file wholesale overwrite, secret/credential mutation or explicit Bash read, runtime/team-state overwrite, team runtime directory removal, shell mutation against `.claude`, non-developer worker `Write`/`Edit`/`MultiEdit` outside its frozen `RETAINED-OUTPUT-PATH` or declared `WRITE-SCOPE`, interpreter-based protected-path bypass, protected/outside-workspace `rm` or `find`, and catastrophic primitives.
+- Hard-deny existing governance-file wholesale overwrite, secret/credential mutation or explicit Bash read, runtime/team-state overwrite, team runtime directory removal, shell mutation against `.claude`, protected-filesystem bypass by non-developer worker `Write`/`Edit`/`MultiEdit` outside its frozen `RETAINED-OUTPUT-PATH` or declared `WRITE-SCOPE`, interpreter-based protected-path bypass, protected/outside-workspace `rm` or `find`, catastrophic primitives, invalid `SendMessage` state-signal envelopes, and exact assistant-authored Bash progress/start/completion/banner stdout covered by the operator-approved terminal-pollution hardening rule.
+- The terminal-pollution detector applies only to unredirected command parts that start with optional `command` plus `echo` or `printf` and contain internal progress/start/completion/banner keywords; redirected writes, user-requested command output, and minimal machine-readable facts are outside that denial shape.
 - Allow structured governance edits, new reference-file creation, and owner-procedure output-root instructions unless the narrow non-developer worker own-output scope guard applies.
 - Recover by narrowing the command target, using structured edit for governance content, or using non-secret/redacted evidence.
 
@@ -109,9 +112,8 @@ current behavior belongs to the active owner named here.
 
 ## Runtime Artifacts
 Runtime output must not become repository policy or appear under `hooks/`.
-Route tool-produced files to repository-root
-`projects/<project-folder>/.runtime/<tool>/...`
-unless the user or active project config names a stricter output folder.
+Route task-created tool output to the frozen task project output root from `.claude/reference/environment-output-root-filesystem-law.md`.
+Route runtime-owned state only to the runtime-owned filesystem surfaces named by `.claude/reference/work-runtime-boundary-law.md`.
 
 - `.playwright-mcp/`
 - `*.png`

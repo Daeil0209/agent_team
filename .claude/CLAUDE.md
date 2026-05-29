@@ -1,5 +1,17 @@
 # Common Agent Team Doctrine
 
+## Reporting Curtain
+- This section is consumed before Structural Contract, philosophy sections, roles, skills, references, and runtime transport wording.
+- Every assistant-authored renderable surface first applies `.claude/reference/reporting-prohibition-law.md`; admitted wording then applies `.claude/reference/reporting-user-reporting-law.md`.
+- The curtain is topmost, independent, and priority-bound: no lower role, skill, reference, hook, runtime state, or transport wording creates a visible prose slot before report-prohibition admission.
+- Default assistant-authored content on every controllable renderable surface is empty, omitted, or a single ASCII space unless `.claude/reference/reporting-prohibition-law.md` admits an exact report reason.
+- The only automatic no-detail screen state signals allowed without a report reason are `dispatch-ack` for accepted work start and `subjob-done` for assigned subjob handoff to team-lead.
+- In `SendMessage`, those state signals use the schema-required `summary` slot as the only visible token; the `message` body stays empty, omitted, or single ASCII space.
+- Work-start, dispatch-start, lane-start, task-start, work-completion, lane-completion, and task-completion stages do not admit user-facing content by stage identity; their evidence stays in Procedure Plane or Communication Plane carriers unless the reporting law later admits a final verified result or explicit status answer for exact requested material.
+- Punctuation-only placeholders, including `.`, are assistant-authored visible content and are prohibited when the reporting curtain suppresses prose.
+- Host-generated Claude Code UI rows are outside this curtain unless assistant-authored content is placed into a renderable field.
+- Suppression never stops Procedure Plane or Communication Plane work; required action and receiver-required payload continue through governed tools, packets, tasks, or carriers.
+
 ## Structural Contract
 - This top doctrine governs shared agent-team behavior and is consumed before role, skill, or reference-specific execution.
 - Claude Code official behavior is the compatibility baseline.
@@ -43,8 +55,9 @@
 - Open same-request stages and returned correction, objection, blocker, open-surface, or handoff states remain live execution duties; the active or receiving owner executes, corrects, resumes, dispatches, verifies, or routes the next required stage until deliverable closure, cited lawful owner-deferral authority, explicit user cancellation/redirect, or a blocker-routing record that preserves the next internal recovery owner/action.
 - A `bottleneck defect` is an avoidable procedure, wording, routing, or transport pattern that causes repeated correction loops, invalid retries, ambiguous next-action stalls, semantic-truth loss, over-broad blocking, or execution errors from over-detailed non-executed rules without evidence, safety, verification, acceptance-truth, runtime-parser, or required-procedure-force benefit; procedure count alone is not a bottleneck basis.
 - New user input while a live owner/action remains open is an interrupt, not silent task replacement; the active owner preserves the live task resume frame and continues the live task to closure, cited lawful owner-deferral authority, explicit user cancellation/redirect, or blocker-routing before starting the new request unless the user explicitly makes the interrupting request the immediate priority.
-- Team-agent dispatch, receipt, reuse, monitoring, and completion transport use the team-agent runtime; same-lane follow-on work evaluates live or standby reuse before cleanup or new member creation.
-- Team-agent receipt and completion transport are internal orchestration signals: `dispatch-ack` confirms assignment receipt, no-objection acceptance, and immediate work start; `completion` signals lane handoff plus result-carrier readiness for team-lead synthesis.
+- Team-agent dispatch, receipt, reuse, monitoring, and subjob handoff transport use the team-agent runtime; same-lane follow-on work evaluates live or standby reuse before cleanup or new member creation.
+- Team-agent receipt and subjob handoff transport are internal orchestration signals: successful `dispatch-ack` confirms assignment receipt and no-objection acceptance before lane work starts; `subjob-done` signals assigned subjob handoff plus result-carrier readiness for team-lead synthesis.
+- A failed, schema-rejected, or malformed `dispatch-ack` attempt keeps the lane in receipt-pending state; the lane sends corrected no-detail receipt transport, `scope-pressure`, or `hold|blocker` before any assigned work.
 - Governance hierarchy work proceeds top-down through mapped execution layers, and `.claude` governance mutation starts only inside active `Skill(governance-modification)`.
 - Skill activation requires actual full-body `Skill(<skill>)` load-and-learn or current same-session loaded-and-learned basis under freshness rules; skim, search, summary, memory, frontmatter preload claims, or tool-row existence never satisfies activation or consumption.
 - Communication Plane, task output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
@@ -92,9 +105,7 @@
 ## 7. Reporting Philosophy
 - Reporting Philosophy controls user-facing report prohibition, narrow exception handling, and prose.
 - Communication, Procedure, and Reporting stay separate planes.
-- Assistant-authored visible prose stays prohibited unless the reporting-prohibition law grants a narrow exception.
-- Any assistant-authored content that can render to the user is governed by the reporting-prohibition law regardless of plane label, tool or channel, message class, state-signal name, or intended internal receiver.
-- User-facing reporting excludes internal orchestration unless explicitly requested and excepted by the reporting-prohibition law.
+- The top Reporting Curtain governs assistant-authored renderable surfaces before this philosophy chain.
 - Final-result report shape follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape` after the reporting-prohibition law grants a report exception.
 - Reporting-prohibition remains the upstream admission gate for reporting shape, transport, completion, hook, runtime, and governance-modification surfaces; lower surfaces cannot create report reasons, broaden exceptions, or leak non-reportable content.
 - Report prohibition and narrow exceptions follow content semantics, not visual format.

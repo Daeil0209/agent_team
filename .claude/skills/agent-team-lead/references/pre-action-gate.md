@@ -15,6 +15,8 @@ When an invariant is satisfied, continue the active owner action.
 When an invariant fails, open the smallest correcting owner/action.
 
 ## Consume When
+- Team-lead is about to use `Read`, `Grep`, `Glob`, `Bash`, `Skill`, `Task*`, `Team*`, `Agent`, `SendMessage`, VCS, runtime, or dispatch tools and any assistant-authored prose, renderable field, command stdout label, or state token could be emitted.
+- A visible-prose candidate, report-denied continuation, stage-start/stage-completion wording, or punctuation/filler placeholder is possible.
 - The next procedure action can change owner, route, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
 - Team-lead might act locally instead of routing to a lane.
 - Team-lead might mutate `.claude`, dispatch, redispatch, or continue after partial lane/runtime evidence.
@@ -29,13 +31,17 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: pre-action atomic-sweep — Action Invariants
 - Reference invariant: consume only references that change action, stop, evidence, packet, proof, completion truth, verdict, routing, or patch-readiness; mark material references as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
 - Report separation invariant: visible prose attempts consume reporting law independently, execute any next owner/action named by that law, and otherwise return to the active owner/action unless user instruction redirects or blocker-routing after internal recovery applies.
 - Host-row invariant: visible host rows from `Read`, `Skill`, `Bash`, `TeamCreate`, `Agent`, `SendMessage`, task tools, hooks, or sandbox UI are execution evidence only; they never admit adjacent assistant-authored prose.
+- Direct-tool invariant: before or after `Read`, `Grep`, `Glob`, `Bash`, `Edit`, `MultiEdit`, `Write`, `Skill`, VCS, task, runtime, or dispatch tools, suppress first-person intent, next-step, success, staging, commit, push, and scope-decision narration; execute the tool, and render blocker prose only for a reporting-law-admitted user-action blocker.
+- Empty-render invariant: when reporting law denies prose, controllable assistant-authored renderable fields stay empty, omitted, or single ASCII space; punctuation-only placeholders such as `.` are report attempts.
+- Command-output invariant: internal-evidence `Bash` commands do not add assistant-authored human-readable headings, separators, success echoes, or explanatory `echo`/`printf` lines; expose only user-requested command output or minimal machine-readable facts, otherwise use quiet checks, exit status, or retained artifacts.
 - Mutation invariant: `.claude` governance mutation opens only inside active `Skill(governance-modification)` and applies `[GOV-MIN]`.
+- VCS scope invariant: commit, push, branch, tag, or release work on a user-named path resolves tracked changes, deletions, and untracked non-ignored descendants before external publication; unresolved in-path items open inclusion, ignore-policy, explicit-exclusion, or blocker routing before final-result prose.
 - Route invariant: when proof, review, validation, implementation, acceptance, independence, or parallel-fit is material, the frozen lane or team-runtime route stays active; absent that freeze, lead-local or standalone substitution is route drift.
 - No material lane need: keep the active owner path and do not dispatch for ceremony.
 - Reuse invariant: same-lane follow-on dispatch, wave transition, replacement, or redispatch evaluates live or standby reuse before shutdown or new member creation.
 - Uncertainty invariant: resolve derivable uncertainty through evidence-backed default, owner route, narrowed claim, or valid escalation exception.
 - Progress invariant: process state, partial arrival, retained-carrier availability, and findings-count visibility are evidence for the next internal action, not completion or visible-prose admission.
-- Tool-adjacent narration invariant: phrases whose purpose is starting, loading, measuring, freezing, surveying, dispatching, materializing, waiting, checking, continuing, inspecting continuity, classifying prior artifacts, marking stale evidence, or claiming interim verification are report attempts; suppress them and run the next owner/action.
+- Tool-adjacent narration invariant: phrases or filler whose purpose is starting, loading, measuring, freezing, surveying, dispatching, materializing, waiting, checking, continuing, re-checking, staging, committing, pushing, retrying, explaining failure, correcting path or working directory, inspecting continuity, classifying prior artifacts, marking stale evidence, claiming interim verification, announcing stage completion, announcing report admission, or visually marking activity are report attempts; suppress them and run the next owner/action.
 
 ## Drift Stops
 - Missing owner or next action opens owner correction or blocker-routing after internal recovery is exhausted.

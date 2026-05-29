@@ -106,7 +106,7 @@
         ]
       },
       {
-        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit",
+        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit|SendMessage",
         "hooks": [
           {
             "type": "command",

@@ -27,6 +27,16 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Review-verification gates consequential governance judgment before mutation.
 - File mutation, final validation, and acceptance remain with their owning adjacent owners.
 
+## Judgment Reliability Law
+- `JUDGMENT-RELIABILITY` applies before a high-risk judgment is used as a decisive basis for downstream action, claim-strength upgrade, route selection, correction, mutation, verification, PASS-2, validation, acceptance, reporting, or closure.
+- A high-risk judgment is not defined by task type, defect label, domain name, or listed example.
+- A high-risk judgment is any non-observational or inference-dependent claim whose wrong acceptance can materially change owner action, scope, artifact state, proof burden, validation truth, acceptance truth, user burden, or deliverable closure.
+- Direct observations, raw test results, inventory rows, and non-decisive evidence records are not high-risk judgments until an owner uses them as a decisive basis.
+- The review owner records `JUDGMENT-RELIABILITY` for each material high-risk judgment: exact claim, current evidence surface, governing expectation basis, causal or fit path, strongest contrary hypothesis or classification tested, observable defeat condition, direct inspection result, downstream owner/action, and protected outcome/function or regression risk when correction or closure is proposed.
+- Self-ratification risk exists when the same producer, same carrier chain, prior PASS label, prior verdict, or preferred conclusion raises claim strength without fresh `JUDGMENT-RELIABILITY` on the current decisive basis.
+- Missing, stale, contradicted, or open `JUDGMENT-RELIABILITY` keeps the judgment at candidate, open, partial, or `HOLD` strength; it does not support promotion, closure, PASS-2, mutation-readiness, validation support, or verified-result reporting.
+- Existing `PASS-1`, `PASS-2`, validator `PASS`, checklist, carrier, upstream acceptance label, or prior packet is evidence only inside its cited covered surface; it does not widen `JUDGMENT-RELIABILITY`, replace current live evidence, or create mutation, verification, or acceptance authority beyond that cited surface.
+
 ## Candidate Filtering And Promotion Law
 - Candidate discovery maximizes recall for evidence collection.
 - Candidate discovery records recall-only evidence; defect truth, severity truth, priority truth, patch-worthiness, and patch readiness require promotion filtering.
@@ -50,6 +60,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `patch-worthy` requires a `confirmed-defect` plus protected-function preservation, user-outcome impact, regression-risk basis, smallest owner, selected operation type, and rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.
 - `patch-ready` requires `patch-worthy` plus current patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
 - `rejected:<basis>` covers `protected-restatement`, `design-tradeoff`, `non-issue`, `risk-hypothesis`, `unverified`, and `not-material:<basis>`.
+- Finding-state promotion, final rejection, patch/no-patch selection, patch-worthiness, and patch-readiness are high-risk judgments when they affect downstream correction, mutation, validation, reporting, or closure; those judgments require current `JUDGMENT-RELIABILITY`.
 - A reportable governance issue is a filtered result whose state is `confirmed-defect`, `patch-worthy`, or `patch-ready`, or an open candidate explicitly labelled with its unclosed state and next owner.
 - Raw candidate counts, repeated labels, similar wording, multi-lane convergence, and researcher outputs remain inventory evidence unless this ladder promotes them.
 - Bare `CONFIRMED` is not a finding state; records use the exact ladder state that matches the evidence.
@@ -88,7 +99,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Review-verification tests proposed or existing governance for evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking wording when the wording controls owner action or procedure execution.
 - Evasion-enabling governance lets an owner avoid a required action, evidence step, verification step, route, blocker, or completion truth.
 - Ambiguous or conflicting governance leaves multiple plausible next actions or incompatible owner duties on the same active path.
-- Bottleneck-forming governance applies the top-doctrine `bottleneck defect` definition to governance wording that controls owner action or procedure execution and lacks evidence, safety, verification, acceptance-truth, or required-procedure-force benefit.
+- Bottleneck-forming governance applies the top-doctrine `bottleneck defect` definition to governance wording that controls owner action or procedure execution when that definition's delay pattern appears without one of that definition's named benefits.
 - Over-broad-blocking governance blocks, stalls, or downgrades a valid owner action, continuation, dispatch, verification, mutation, report exception, or completion path beyond the evidence, safety, verification, acceptance-truth, or required-procedure-force need.
 - Confirmed evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance is an execution-force defect.
 - Positive governance integrity, patch-worthiness, no-defect, and completion claims require behavior-weakening governance to be corrected or assigned to the precise owner.

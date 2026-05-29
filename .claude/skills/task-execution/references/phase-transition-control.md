@@ -34,7 +34,7 @@ Affected agents consume phase context without user-facing report; new bounded wo
 Team-lead or the active workflow owner sends this packet only after the workflow phase cursor is truthfully advanced.
 
 ## Resolve Next Owner And Action
-- Valid phase movement sends `MESSAGE-CLASS: phase-transition-control` to each affected agent.
+- Valid phase movement sends governed `phase-transition-control` transport to each affected agent.
 - New bounded work opens assignment-grade dispatch.
 - Missing truthful phase cursor reopens the workflow owner.
 - Differing agent impact opens per-agent control routing.

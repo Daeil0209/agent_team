@@ -1045,7 +1045,7 @@ for (let i = 0; i < command.length; i += 1) {
 parts.push(cur.trim());
 
 const echoLiteral = /^(?:command\s+)?(?:printf|echo)\b/i;
-const bannerOrProgress = /(={3,}|-{3,}|file counts?|tasks?|phase|wave|progress|corpus|survey|measur|planning|dispatch|runtime|ready|boot|startup|loaded|checking|now\b|next\b|inventory|written|captured|prior|stale|verify|verified|current corpus|git history|작업|진행|측정|조사|계획|디스패치|런타임|준비|로드|시작|완료|인벤토리|작성|캡처|이전|스테일|검증)/i;
+const bannerOrProgress = /(={3,}|-{3,}|\b(file counts?|tasks?|phase|wave|progress|corpus|survey|measur(?:e|ed|ing|ement)?|planning|dispatch|runtime|ready|boot|startup|started|start|loaded|checking|now|next|inventory|written|wrote|saved|captured|prior|stale|verify|verified|complete|completed|completion|finished|done|success|passed|current corpus|git history)\b|작업|진행|측정|조사|계획|디스패치|런타임|준비|로드|시작|착수|완료|성공|통과|끝|인벤토리|작성|캡처|이전|스테일|검증)/i;
 function hasUnquotedRedirect(part) {
   let s = false, d = false, b = false, p = 0;
   for (let i = 0; i < part.length; i += 1) {
@@ -1210,6 +1210,46 @@ allowed_lead_context_subcmd() {
   return 1
 }
 
+sendmessage_schema_deny_reason() {
+  INPUT_JSON="$INPUT" node <<'NODE'
+try {
+  const input = JSON.parse(process.env.INPUT_JSON || "{}");
+  if (String(input.tool_name || "") !== "SendMessage") process.exit(1);
+
+  const toolInput = input.tool_input || {};
+  const hasSummary = typeof toolInput.summary === "string" && toolInput.summary.trim() !== "";
+  const summary = hasSummary ? toolInput.summary.trim() : "";
+  const message = toolInput.message;
+  const messageIsString = typeof message === "string";
+  const messageText = messageIsString ? message.trim() : "";
+  const isState = (value) => /^(dispatch-ack|subjob-done)$/i.test(String(value || "").trim());
+
+  if (messageIsString && !hasSummary) {
+    if (isState(messageText)) {
+      process.stdout.write(`state-token-string-without-summary:${messageText.toLowerCase()}`);
+    } else {
+      process.stdout.write("string-message-without-summary");
+    }
+    process.exit(0);
+  }
+
+  if (isState(summary) && messageIsString && messageText !== "") {
+    process.stdout.write(`state-token-body-not-empty:${summary.toLowerCase()}`);
+    process.exit(0);
+  }
+
+  if (isState(messageText)) {
+    process.stdout.write(`state-token-in-message-body:${messageText.toLowerCase()}`);
+    process.exit(0);
+  }
+
+  process.exit(1);
+} catch {
+  process.exit(1);
+}
+NODE
+}
+
 PARSED="$(INPUT_JSON="$INPUT" node <<'NODE'
 const encode = (value) => Buffer.from(String(value ?? ""), "utf8").toString("base64");
 try {
@@ -1282,6 +1322,15 @@ if [[ -n "$FILE_PATH" ]]; then
   CANONICAL_PATH="$(realpath -m "$FILE_PATH" 2>/dev/null || printf '%s' "$FILE_PATH")"
 fi
 
+if [[ "$TOOL_NAME" == "SendMessage" ]]; then
+  SENDMESSAGE_DENY_REASON="$(sendmessage_schema_deny_reason 2>/dev/null || true)"
+  if [[ -n "$SENDMESSAGE_DENY_REASON" ]]; then
+    emit_deny "SendMessage state signals require summary-only transport. Use summary: dispatch-ack/subjob-done and message: single ASCII space; do not put the state token in message."
+    log_violation "$TOOL_NAME" "$SENDMESSAGE_DENY_REASON" "sendmessage-summary-schema" || true
+    exit 0
+  fi
+fi
+
 	case "$TOOL_NAME" in
 	  Edit|MultiEdit|Write|NotebookEdit)
 	    if [[ -n "$CANONICAL_PATH" ]]; then
@@ -1293,7 +1342,7 @@ fi
 		      fi
 
 		      if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
-	        emit_deny "Runtime artifacts must not be created under .claude/hooks. Route tool output to projects/<project-folder>/.runtime/<tool>/ or the active project output surface."
+		        emit_deny "Runtime artifacts must not be created under .claude/hooks. Route task-created tool output to the frozen project output root, or route runtime-owned state to a runtime-owned filesystem surface named by work-runtime-boundary-law."
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0
 	      fi
@@ -1360,7 +1409,9 @@ fi
     # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
     if command_has_internal_progress_banner "$CLEAN_COMMAND"; then
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "bash-internal-progress-banner-audit" || true
+      emit_deny "Assistant-authored Bash progress/banner output is blocked. Remove echo/printf headings and use user-requested output, minimal machine-readable facts, quiet checks, exit status, or retained artifacts."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "bash-internal-progress-banner-deny" || true
+      exit 0
     fi
     if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
       emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-agent state first; if only stale residue remains, use TeamDelete or report the exact residual state."

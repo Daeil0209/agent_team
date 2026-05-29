@@ -84,8 +84,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Map retained postcondition evidence after the action.
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
-- Missing packet-backed or safe-inference-backed map opens `MESSAGE-CLASS: hold|blocker` before proof work.
-- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `MESSAGE-CLASS: hold|blocker`.
+- Missing packet-backed or safe-inference-backed map opens `hold|blocker` transport before proof work.
+- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `hold|blocker` transport.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
 - If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
 ### 2. Choose The Smallest Credible Test Set
@@ -148,7 +148,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before tester-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Proof PASS in completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) corrupts validator and team-lead synthesis.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
@@ -167,7 +167,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 
 ## Active Communication Protocol
 - Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
-- Use exact `MESSAGE-CLASS: hold|blocker` only when blocked execution prevents a truthful tester-owned proof report; otherwise send `completion` with row-level `blocked` classifications and `OPEN-SURFACES`.
+- Use `hold|blocker` transport only when blocked execution prevents a truthful tester-owned proof report; otherwise send `completion` with row-level `blocked` classifications and `OPEN-SURFACES`.
 - Completion uses `completion` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action

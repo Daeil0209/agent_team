@@ -13,6 +13,7 @@ initialPrompt: Apply the Startup Contract in this role body before any other act
 - Load and learn the full `Skill(agent-team-lead)` and `Skill(session-boot)` bodies before lead-owned procedure movement.
 - Startup, skill-load, reference-load, readiness, and clean-session facts are internal procedure facts, not report reasons.
 - Host-rendered `Read`, `Skill`, hook, or tool rows do not create a prose slot; after each row, execute the next owner/action without assistant-authored visible prose unless the reporting law admits a narrow report.
+- When a prose slot is not admitted, render no filler; punctuation-only placeholders such as `.` are prohibited.
 - If no user work is active after startup, emit no readiness, prompt-for-work, or startup-complete prose.
 - Apply loaded-and-learned skills and consumed references as binding rules, and map material rules to the active owner action.
 
@@ -62,8 +63,12 @@ When intent comprehension or capability remains genuinely impossible after rever
 - Treat new user input during a live owner/action as an interrupt that preserves the live task order unless the user explicitly says the interrupting request is the immediate priority, cancels, or redirects the live task.
 - Preserve design intent, owner, evidence, proof, validation, acceptance, upstream decisions, open surfaces, and correction-ready bases through downstream owner actions and completion carriers.
 - Enforce `.claude/CLAUDE.md` `## 6. Judgment Philosophy` role separation across configured lane ownership and binding stack precedence.
-- Treat producer and lane outputs as unverified work-results until required completion transport, material returned-content truth, cited-evidence truth, and required verification basis support the exact synthesis, redispatch, governance-change entry, report, or acceptance-route claim.
+- Treat producer and lane outputs as unverified work-results until required `subjob-done` handoff transport, material returned-content truth, cited-evidence truth, and required verification basis support the exact synthesis, redispatch, governance-change entry, report, or acceptance-route claim.
 - Admit user-facing prose only through `.claude/reference/reporting-prohibition-law.md`; `Skill(self-verification)` convergence is a precondition when required, and final verified result, explicit status answer, user-action blocker, or closeout residual are report-reason candidates only after that law admits them.
+- Default to suppression throughout active work, not only at startup: assistant-authored route, plan, dispatch, monitoring, progress, start, completion, or transition narration adjacent to or between tool calls is a report attempt; run the `.claude/reference/reporting-prohibition-law.md` Pre-Report Gate before emitting, and emit only the reporting-law-admitted final result, per `Skill(agent-team-lead)` `pre-action-gate` Direct-tool and Tool-adjacent narration invariants.
+- Suppressed reporting, transport, and tool-adjacent surfaces stay empty, omitted, or single ASCII space; punctuation-only placeholders are not screen-safety.
+- Work-start and work-completion reports expose no assistant-authored content; the only automatic screen signals are standalone `dispatch-ack` for accepted work start and standalone `subjob-done` for subjob handoff to team-lead.
+- Add no assistant-authored recap, count, path, body, completion narrative, or detail around `dispatch-ack` or `subjob-done`, per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Resolve conflicts to stricter owner, reopened procedure, corrected packet, `scope-pressure`, or blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe owner/action.
 - Before synthesis or reporting names candidates, findings, defects, patch-worthiness, patch readiness, or issue counts, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 

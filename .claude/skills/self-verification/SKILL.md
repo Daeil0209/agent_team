@@ -38,6 +38,7 @@ Inventory against frozen scope:
 - every named completion-stop row
 - every actually-produced result surface awaiting handoff
 - every material returned case, item, finding, fact, count, state label, recommendation, or verdict input awaiting handoff
+- every material high-risk judgment claim awaiting handoff per `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law`
 
 Map produced surfaces against requested surfaces.
 Map produced surfaces against material `TARGET-INTENT-BASIS` coverage units.
@@ -57,13 +58,14 @@ Proceed to Step 3.
 ## Step 3: review-verification
 Load and learn the full `Skill(review-verification)` body and call with bounded review question:
 - target: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
+- target includes every material high-risk judgment claim awaiting handoff.
 - question: PASS-2 produced-result verification for the exact target, outgoing claim, corpus, scope, and claim ceiling.
 - scope: critical exhaustive inspection of produced-result truth and soundness, evidence fit, defect, coherence, integrity, negative-risk, claim strength, and regression under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture.
 - claim ceiling: frozen `CLAIM-CEILING`; review-verification may classify findings, patch-worthiness, handoff disposition, or correction need only within that ceiling.
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
 PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling, or on valid prior-packet reuse that satisfies the rules below; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
-Prior `review_verification_packet` reuse is valid only when its `REVIEW-TARGET`, outgoing claim, corpus, scope, claim ceiling, activation freshness, and `WORKFLOW-COVERAGE` fully cover the current PASS-2 target surface set: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
+Prior `review_verification_packet` reuse is valid only when its `REVIEW-TARGET`, outgoing claim, corpus, scope, claim ceiling, activation freshness, and `WORKFLOW-COVERAGE` fully cover the current PASS-2 target surface set: produced work-product surface, outgoing claim, every material returned item awaiting handoff, and every material high-risk judgment claim awaiting handoff.
 Any change to target, outgoing claim, corpus, scope, claim ceiling, bounded question, finding set, patch design, diff, or freshness invalidates reuse and requires a fresh Step 14 packet or a supplementary packet that explicitly covers the changed surface.
 Partial target overlap is insufficient.
 When a prior packet covers only substantive claims and not carrier structure, outgoing claim, or returned-item coverage, PASS-2 requires a supplementary lens-bounded `Skill(review-verification)` packet using `coherence-integrity-lens` plus `procedure-adherence-lens` at minimum, or a fresh full Steps 1-14 packet on the current target.
@@ -71,6 +73,8 @@ The current PASS-2 record cites packet `WORKFLOW-COVERAGE`; treating `lens-bound
 When the outgoing work product carries external citation or anchor claims, PASS-2 requires the current `review_verification_packet` to contain `CITATION-EVIDENCE-INVENTORY` entries for those claims per `Skill(review-verification)` `### 12b. Citation Substantiation Gate`.
 Missing inventory entries, stale entries, incomplete entries, entries lacking target/freshness evidence/observed content, or carrier prose marking a citation as Class-A-required without executing the tool call fail PASS-2 as citation-evidence fabrication.
 Route citation-evidence fabrication to Step 5 with `INPUT-FINDINGS: citation-evidence-fabrication`.
+When the outgoing work product carries a high-risk judgment, PASS-2 requires the current `review_verification_packet` to contain `JUDGMENT-RELIABILITY` entries for each material high-risk judgment per `Skill(review-verification)` `## Packet` and `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law`.
+Missing, stale, contradicted, or open `JUDGMENT-RELIABILITY` entries fail PASS-2 as judgment-reliability gap and route to Step 5.
 When the only basis is carrier form, completion fields, PASS wording, checklist text, inline critical-review prose, equivalent checks, or proxy lens mapping, record `PASS-2: fail` and open Step 5 correction.
 
 Carrier-as-evidence fabrication is the named failure mode: writing `Skill(self-verification) loaded`, `Skill(review-verification) consumed`, `PASS-1 verified`, `PASS-2 cleared`, or equivalent prose into a carrier without actual same-turn tool invocation evidence is fabrication, not verification. Producer self-check and receiver evaluation both reject such carriers and route to Step 5.

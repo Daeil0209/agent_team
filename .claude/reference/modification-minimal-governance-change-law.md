@@ -50,6 +50,7 @@ A governance patch satisfies the Patch-Ready Gate after the consuming owner reco
 - `TARGET-INTENT-BASIS`
 - review-verification basis
 - finding-state basis for defect, removal, patch-worthiness, patch-readiness, or no-patch judgment
+- `JUDGMENT-RELIABILITY` basis for each high-risk judgment that drives defect, removal, patch-worthiness, patch-readiness, no-patch, or mutation-readiness
 - source rule or source meaning
 - failing execution path
 - current `PRE-MUTATION-BASIS` satisfying `## PRE-MUTATION-BASIS`

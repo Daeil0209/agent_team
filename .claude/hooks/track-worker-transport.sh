@@ -129,25 +129,62 @@ const text = rawText.trim().replace(/\s+/g, " ");
 let klass = "";
 let taskId = "";
 let signals = [];
+let displayDefect = "";
+let legacyAck = false;
+let legacyCompletion = false;
 for (const line of lines.length ? lines : [text]) {
-  let match = line.match(/^ack(?: task ([A-Za-z0-9._:-]+))?$/i);
-  if (match) {
-    signals.push(["dispatch-ack", match[1] || ""]);
+  if (/^dispatch-ack$/i.test(line)) {
+    signals.push(["dispatch-ack", ""]);
     continue;
   }
-  match = line.match(/^completion(?: task ([A-Za-z0-9._:-]+))?$/i);
-  if (match) signals.push(["completion", match[1] || ""]);
+  if (/^dispatch-ack\b/i.test(line)) {
+    displayDefect = displayDefect || "state-signal-visible-detail";
+    continue;
+  }
+  if (/^ack(?: task ([A-Za-z0-9._:-]+))?$/i.test(line)) {
+    legacyAck = true;
+    continue;
+  }
+  if (/^completion$/i.test(line)) {
+    legacyCompletion = true;
+    continue;
+  }
+  if (/^completion\b/i.test(line)) {
+    displayDefect = displayDefect || "legacy-completion-visible-token";
+    continue;
+  }
+  if (/^subjob-done$/i.test(line)) {
+    signals.push(["subjob-done", ""]);
+    continue;
+  }
+  if (/^subjob-done\b/i.test(line)) {
+    displayDefect = displayDefect || "state-signal-visible-detail";
+  }
 }
-if (signals.length === 1) {
+if (signals.length === 1 && lines.length === 1) {
   klass = signals[0][0];
   taskId = signals[0][1];
+} else if (signals.length > 0) {
+  displayDefect = "state-signal-extra-visible-content";
+} else if (legacyAck) {
+  displayDefect = "legacy-ack-visible-token";
+} else if (legacyCompletion) {
+  displayDefect = "legacy-completion-visible-token";
 }
-process.stdout.write(`${klass}\n${taskId}`);
+process.stdout.write(`${klass}\n${taskId}\n${displayDefect}`);
 NODE
 )"
 mapfile -t STATE_SIGNAL_FIELDS <<<"$STATE_SIGNAL_PARSED"
 STATE_SIGNAL_CLASS="${STATE_SIGNAL_FIELDS[0]:-}"
 STATE_SIGNAL_TASK_ID="${STATE_SIGNAL_FIELDS[1]:-}"
+TRANSPORT_DISPLAY_DEFECT="${STATE_SIGNAL_FIELDS[2]:-}"
+if [[ -n "$(printf '%s' "$TRANSPORT_DISPLAY_DEFECT" | tr -d '[:space:]')" ]]; then
+  printf '[%s] TRACK-WORKER-TRANSPORT WARN: malformed state-signal envelope (%s); refusing receipt classification (session: %s)\n' \
+    "$(date '+%Y-%m-%d %H:%M:%S')" "$TRANSPORT_DISPLAY_DEFECT" "${SESSION_ID:0:20}" >> "$VIOLATION_LOG"
+  MESSAGE_CLASS=""
+  STATE_SIGNAL_CLASS=""
+  STATE_SIGNAL_TASK_ID=""
+fi
 if [[ -z "$MESSAGE_CLASS" && -n "$STATE_SIGNAL_CLASS" ]]; then
   MESSAGE_CLASS="$STATE_SIGNAL_CLASS"
 fi
@@ -295,7 +332,7 @@ if [[ -z "$SENDER_NAME" || "$SENDER_NAME" == "team-lead" ]]; then
 fi
 
 case "$MESSAGE_CLASS" in
-  completion) ;;
+  subjob-done) ;;
   hold\|blocker|status|scope-pressure|dispatch-ack) ;;
   *) exit 0 ;;
 esac
@@ -376,7 +413,7 @@ if [[ -z "$(printf '%s' "$RETAINED_OUTPUT_PATH_VALUE" | tr -d '[:space:]')" ]]; 
 fi
 RETAINED_CARRIER_TEXT=""
 case "$MESSAGE_CLASS" in
-  completion)
+  subjob-done)
     RETAINED_CARRIER_TEXT="$(read_retained_carrier "$RETAINED_OUTPUT_PATH_VALUE" || true)"
     ;;
 esac
@@ -409,7 +446,7 @@ else
 fi
 
 case "$MESSAGE_CLASS" in
-  completion)
+  subjob-done)
     clear_worker_idle_pending "$SENDER_NAME"
     clear_worker_idle_notice "$SENDER_NAME"
     mark_worker_standby "$SENDER_NAME"
@@ -558,7 +595,7 @@ append_line_locked "$WORKER_TRANSPORT_LEDGER_LOCK" "$WORKER_TRANSPORT_LEDGER" "$
 #
 # Trigger conditions (ALL must hold to fire):
 #   (a) AGENT_TYPE = validator
-#   (b) MESSAGE_CLASS = completion
+#   (b) MESSAGE_CLASS = subjob-done
 #   (c) DESCRIPTION contains explicit PASS verdict marker (`VERDICT: PASS`)
 #   (d) Any evidence-vs-claim mismatch present:
 #       - EVIDENCE-BASIS empty/missing
@@ -570,7 +607,7 @@ append_line_locked "$WORKER_TRANSPORT_LEDGER_LOCK" "$WORKER_TRANSPORT_LEDGER" "$
 #
 # Narrow recurrence signal only: downstream owners decide whether the transport
 # is acceptable, blocked, or needs correction.
-if [[ "$AGENT_TYPE" == "validator" && "$MESSAGE_CLASS" == "completion" ]]; then
+if [[ "$AGENT_TYPE" == "validator" && "$MESSAGE_CLASS" == "subjob-done" ]]; then
   PASS_VERDICT="false"
   if printf '%s' "$DESCRIPTION" | grep -Eiq '(^|[[:space:]])VERDICT[[:space:]]*:[[:space:]]*PASS([[:space:]]|$)'; then
     PASS_VERDICT="true"

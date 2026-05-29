@@ -22,8 +22,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `final verified result` uses at most eight rendered lines.
 - `final verified result` reports only the user-instructed work result and user-decisive exceptions required by the admitted report reason.
 - `final verified result` states the result first in concise Korean.
+- The first rendered line of a `final verified result` is the user-result line; no report-admission preface, verification preface, delivery announcement, or procedure-complete announcement appears before it.
 - `final verified result` includes verification basis, cited lawful owner-deferral authority, explicit out-of-scope surface, or material defect state only when it affects the instructed work result or was explicitly requested.
-- `final verified result` excludes unrequested internal procedure, skill/reference loads, route or dispatch topology, diff inventories, raw candidate counts, broad evidence detail, self-accusation, excuses, intent promises, and proceed prompts.
+- `final verified result` excludes unrequested internal procedure, skill/reference loads, route or dispatch topology, diff inventories, raw candidate counts, broad evidence detail, self-accusation, excuses, intent promises, proceed prompts, and follow-up offers.
+- `final verified result` must not append confirmation-needed or scope-decision notes for unresolved in-scope work; unresolved scope is handled before report admission as internal continuation or `user-action blocker`.
 - `final verified result` places `REPORT-LOCATION-LINE` as the last rendered line: `<localized-report-label>: <canonical artifact path>` when a report artifact exists or the user requested a report location, otherwise `<localized-report-label>: <localized-none-value>`.
 - `final verified result` ends the final-result report block at `REPORT-LOCATION-LINE`; no assistant-authored rendered content follows that line in the same final-result block.
 - Post-final runtime, standby, idle, cleanup, no-further-work, or follow-up suggestion content stays out of final-result prose.
@@ -32,7 +34,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `user-action blocker` states the blocked user decision/action and the smallest safe next step.
 - `explicit status answer` uses the narrowest truthful answer, including exact internal material only when that exact material was explicitly requested, and then returns to the active owner action unless the user redirected or a user-action blocker exists.
 - Binary status questions get one yes/no sentence plus a user-action blocker only when present.
-- Status answers omit internal topology, packet, shard, ack/completion, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field was requested.
+- Status answers omit internal topology, packet, shard, dispatch-ack/subjob-done, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field was requested.
 - `closeout residual` reports only residual state that affects the user.
 
 ## Resolve Next Owner And Action

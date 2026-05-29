@@ -137,6 +137,7 @@ Dispatch law:
 - Match each `SendMessage` to the exact class or structured payload defined by its reference.
 - `SendMessage`, non-rendered task state, and retained carrier delivery carry assignment-grade teammate output.
 - Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block; `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
+- Work-start and work-completion transition facts stay inside the assignment execution block, retained carrier, task state, or governed state token; they do not create assistant-authored visible start or completion reports.
 - Details required only by that block stay in its packet, non-rendered task state, retained carrier, or lane-local context.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.
@@ -156,24 +157,21 @@ Branch rule:
 ## Step 3: Dispatch Truth
 Dispatch truth is Procedure Plane and Communication Plane state.
 User-facing report admission is governed by `.claude/reference/reporting-prohibition-law.md`; admitted report shape is governed by `.claude/reference/reporting-user-reporting-law.md`.
-Dispatch execution emits no assistant-authored visible prose while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
-Tool-adjacent progress prose stays suppressed while dispatch, monitoring, recovery, merge, synthesis, or locked parallel dispatch can continue.
-Skill-load success, reference reads, contract-consumed facts, plan-frozen facts, runtime-active facts, runtime API errors, hook denials, member creation rows, assignment-send rows, ack rows, completion rows, packet materialization, shared binding-surface creation, carrier staging, inventory staging, and retained-output availability do not create a prose slot.
-Transport dispatch state through `message-classes.md`; dispatch state remains internal unless reporting law grants a narrow user-report exception.
-User-facing dispatch prose opens only when `.claude/reference/reporting-prohibition-law.md` grants a narrow user-facing report exception and `.claude/reference/reporting-user-reporting-law.md` shapes the admitted prose.
-Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
+Dispatch execution follows the top Reporting Curtain: host/tool/runtime rows do not admit assistant-authored progress prose while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
+Progress narration, status labels, receipt barriers, and dispatch-pending truth never substitute for the next executable tool, dispatch, recovery, carrier-consumption, synthesis, or blocker-routing action.
+Transport display is owned by `references/message-classes.md`; receiver-required detail stays in packets, non-rendered task state, retained carriers, or lane-local context.
 When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, the next actions stay inside the allowed dispatch/reuse moves for every frozen nonblocked group.
 Execute the lawful `PARALLEL-DISPATCH-LOCK` move; user-visible prose appears only after `.claude/reference/reporting-prohibition-law.md` admission and `.claude/reference/reporting-user-reporting-law.md` shape control.
 
-The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
+The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every assignment-success, dispatch-ack, progress, or recovery decision.
 
 Reporting consequences:
-- Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
+- Assignment success, no-change dispatch, dispatch-ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
 - User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
 
 Completion acceptance:
-- `MESSAGE-CLASS: completion` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
+- `MESSAGE-CLASS: subjob-done` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
 - Verify the retained carrier exists and contains every required completion payload field; field-presence check is necessary but not sufficient, field-value truth (actual evidence citation) is the acceptance gate.
 - For carrier-asserted `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`/`Skill(...) loaded` claims, verify each cites actual tool-call evidence per `Skill(self-verification)` Step 1 and Step 3 citation requirements.
 - For carrier-asserted review-verification basis (`REVIEW-PACKET-CITATION`, packet consumption claims), verify each cites the `review_verification_packet` `PACKET-ID` or content reference per `Skill(review-verification)` Step 14 citation form.
@@ -181,7 +179,7 @@ Completion acceptance:
 - Carrier-truth fabrication is not a packet defect; reopen `work-planning` only when the fabrication exposes a moved boundary axis.
 
 Recovery reconciliation:
-- A dispatch segment becomes complete only after every target has a valid first upward outcome (`dispatch-ack`, completion-grade `completion`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action.
+- A dispatch segment becomes complete only after every target has a valid first upward outcome (`dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action.
 - Agent-start evidence after valid receipt supports monitoring and no-start recovery; agent-start evidence without valid receipt does not clear missing-receipt debt.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.

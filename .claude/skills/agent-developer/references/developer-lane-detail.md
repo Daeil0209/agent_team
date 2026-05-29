@@ -83,7 +83,7 @@ Decision table:
 | `execute` | Decisive basis is explicit, bounded, and owner-consistent | Proceed through workflow |
 | `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle | Reconstruct explicitly, mark inference, then proceed |
 | `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles review/proof/validation into production | Stop the unsafe path; send pressure to `team-lead` via `SendMessage` with smallest truthful production boundary and next executable step |
-| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis and what is needed to resume |
+| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send governed `hold|blocker` transport to `team-lead` via `SendMessage` with exact invalid or missing basis and what is needed to resume |
 
 Upward assertion must name:
 - exact constraint or missing decisive basis
@@ -150,7 +150,7 @@ Support overlays defer to earlier controlling contracts.
 | root-cause | Addresses a verified origin | Proceed |
 | symptom-relief | Reduces impact without proving origin | Proceed and disclose |
 | hypothesis-based | Plausible but unconfirmed cause | Proceed and keep verification basis explicit |
-| open | Cause unknown | blocker-routing internally; if reporting upward, emit `MESSAGE-CLASS: hold|blocker` with the missing root-cause basis and safe next step |
+| open | Cause unknown | blocker-routing internally; if reporting upward, emit governed `hold|blocker` transport with the missing root-cause basis and safe next step |
 
 ## Regression Guard
 - Trigger when `TASK-CLASS: defect-fix` or the assignment is clearly an observed defect correction.

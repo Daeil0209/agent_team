@@ -13,6 +13,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Activation
 Load and learn the full skill body when a caller supplies a bounded review question whose requested scope requires inspection of design intent, owner boundary, procedure adherence, skill consumption, coherence, integrity, negative risk, defect promotion, removal, patch-worthiness, patch-readiness, or final-arbitration readiness.
+Load and learn the full skill body when an outgoing or upstream claim is intended to be used as a high-risk judgment under `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law`.
 Run all applicable steps for binding promotion, final rejection, patch/no-patch, patch-worthiness synthesis, patch-readiness, verdict support, or mutation-readiness review.
 Use named lenses only as bounded packet evidence; they do not expand beyond the assigned review question.
 Reset for a new target, corpus, findings set, patch design, diff, bounded question, or scope; stale packets, summaries, memory, and pre-patch snapshots do not carry forward.
@@ -46,6 +47,7 @@ Return internal `review_verification_packet` with:
 - `NEGATIVE-RISK-RESULT`
 - `WORKFLOW-COVERAGE`
 - `FINDING-STATE-INVENTORY`
+- `JUDGMENT-RELIABILITY` — per high-risk judgment basis required by `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law`; otherwise `not-applicable:no-high-risk-judgment`
 - `CITATION-EVIDENCE-INVENTORY` — per `### 12b. Citation Substantiation Gate`; populated when the produced packet carries an outgoing external citation or anchor claim, otherwise `not-applicable:no-outgoing-external-citation`
 - `REMOVAL-FIRST-PATCH-DESIGN`
 - `PATCH-INDEPENDENCE`
@@ -81,13 +83,14 @@ Separate owner surfaces from references, generated outputs, runtime state, non-a
 Combine local or requested-shard findings into one evidence map.
 Classify by owner semantics and operating effect.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
+Apply `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law` before using any high-risk judgment as a decisive basis.
 Keep raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-ready, rejected, no-patch, and open-candidate states separate.
 Reject bare `CONFIRMED`; use exact ladder state.
 
 ### 5. Critical Review Gate
 PROTECTED-LOCAL-RESTATEMENT-BASIS: critical-review-gate atomic-defeater-test — defeater enumeration colocated here for atomic test at every Critical Review Gate execution. `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law` defines under/over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking as execution-force defects; this surface enumerates them together with additional review-verification-specific defeaters (protected-function loss, source-to-destination gap, runtime/tool/user-surface failure, stronger narrower alternative, etc.) for one-shot defeater-first sweep at Step 5 execution.
 Try to disprove the preferred conclusion before any packet, synthesis, bestness, no-defect, no-regression, patch-worthiness, route, completion, or closure claim leaves review-verification.
-Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, functional-independence violation, positive-function regression, hidden cross-function coupling, incidental behavior change, report-prohibition regression, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
+Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, judgment-reliability gap, self-ratification risk, untested strongest contrary hypothesis or classification, functional-independence violation, positive-function regression, hidden cross-function coupling, incidental behavior change, report-prohibition regression, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
 For source-to-destination gap review, trace every material hop in the claim chain, including source surface, producer output, synthesis, and outgoing claim when those surfaces are present.
 Keep any untraced material hop as an open defeater.
 Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule: (a) the named failure mode being probed, (b) the observable evidence that would defeat the preferred positive claim if found, and (c) direct inspection evidence naming the inspected surface plus observed line, section, content, tool result, or retained artifact finding. This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the per-defeater evidence surface and is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per receiver applicability; shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
@@ -134,6 +137,7 @@ Return post-patch changed-result convergence to the executing patch sequence's P
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
 Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, evidence surface, owner, and open next owner when applicable.
 For material defeaters that produced or supported a positive verification claim, the `FINDING-STATE-INVENTORY` entry must carry the 3-component disproof-attempt evidence per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`: (a) named failure mode probed, (b) observable evidence that would defeat the preferred positive claim if found, and (c) direct inspection evidence naming the inspected surface plus observed line, section, content, tool result, or retained artifact finding.
+Each high-risk judgment used as a decisive basis must cite its `JUDGMENT-RELIABILITY` entry; a missing, stale, contradicted, or open entry fails classification and returns to Step 4 or Step 5.
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where material-defeater entries lack these three components or carry shorthand-only evidence surface.
 
 ### 12b. Citation Substantiation Gate

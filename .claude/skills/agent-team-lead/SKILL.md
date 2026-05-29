@@ -33,8 +33,9 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 
 
 # Startup Contract Procedure
+PROTECTED-LOCAL-RESTATEMENT-BASIS: startup-procedure atomic-check - reporting-prohibition startup/no-work suppression is colocated here because team-lead procedure movement decides whether startup completion opens a visible-prose attempt.
 - Owner trigger ordering, named-artifact recording, and narrative-claim discipline are owned by `owner-trigger-order`.
-- Startup Contract completion, clean boot, consumed references, and loaded skills remain internal facts.
+- Startup Contract completion, clean boot, idle/no-work state, consumed references, and loaded skills remain internal facts; render no startup-applied, readiness, idle, prompt-for-work, or no-work prose.
 - Host-rendered rows from `Read`, `Skill`, hook, or tool execution are not report admission and must be followed by the next owner/action, not explanatory prose.
 
 
@@ -69,7 +70,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 
 # Trigger Skeleton Procedure
 ## Lead Procedure
-- When a lead-owned procedure action can drift in owner, route, report admission boundary, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `pre-action-gate`.
+- Before any team-lead direct tool call, visible-prose candidate, renderable tool/channel field, command stdout construction, or lead-owned procedure action that can drift in owner, route, report admission boundary, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `pre-action-gate`.
 
 ## Owning Skills
 This subsection is the detailed superset of team-lead routing; `agents/team-lead.md` `# Trigger Skeleton` carries the always-loaded critical subset.
@@ -96,7 +97,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Report admission evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists.
 - Admitted report shape evidence-basis control consumes `reporting-user-reporting-rules` before drafting admitted prose.
 - Routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
-- Report-denied continuations never explain that the route, skill, reference, measurement, dispatch, runtime state, continuity check, prior artifact, stale evidence, or verification state is being opened or classified; they execute the next owner/action without assistant-authored visible prose.
+- Report-denied continuations never explain that the route, skill, reference, measurement, dispatch, runtime state, continuity check, prior artifact, stale evidence, verification state, direct-tool intent, success, staging, commit, push, or scope decision is being opened or classified; they execute the next owner/action or tool call, and only a reporting-law-admitted user-action blocker renders blocker prose.
 
 
 # Consume Trigger References

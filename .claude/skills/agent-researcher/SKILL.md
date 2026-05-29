@@ -111,7 +111,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before researcher-specific completion additions below.
-- Direct-consumption local restatement: before `MESSAGE-CLASS: completion`, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Evidence claims without source citation are fabrication that corrupts every downstream lane consuming this evidence as upstream basis.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.

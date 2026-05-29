@@ -118,7 +118,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Parallelism And Bottleneck Law
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
 - Additional-agent lane work uses the current Claude Code agent-team runtime.
-- Lane dispatch, receipt, reuse, monitoring, and completion transport require current Claude Code agent-team runtime evidence; standalone `Agent` output remains fallback evidence.
+- Lane dispatch, receipt, reuse, monitoring, and subjob handoff transport require current Claude Code agent-team runtime evidence; standalone `Agent` output remains fallback evidence.
 - `work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - The cap basis records explicit user maximum when present, current runtime/session ceiling when present, host capability limit, and default basis.
 - Additional-agent plans keep planned active members at or below the frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
@@ -162,12 +162,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Communication, Procedure, and Reporting are separate planes.
 - Communication Plane transport classes, Receipt Event Contract, `scope-pressure`/`hold|blocker` objection routing, channel registry, transport boundary, and team-runtime channel rules live in `.claude/skills/task-execution/references/message-classes.md`.
 - Communication Plane labels do not exempt renderable assistant-authored text from `.claude/reference/reporting-prohibition-law.md`; receiver-required detail travels in governed carriers, not visible envelopes.
-- Assignment-grade lane receipt requires a first upward outcome after packet review; `dispatch-ack` is the team-lead orchestration signal that the lane received the assignment, accepts it without objection, and starts work immediately.
+- Assignment-grade lane receipt requires a first upward outcome after packet review; successful `dispatch-ack` transport is the team-lead orchestration signal that the lane received the assignment and accepts it without objection before work starts.
 - First upward outcome validity and `dispatch-ack` work-start semantics are consumed from `.claude/skills/task-execution/references/message-classes.md`.
 - Agent-start evidence, pane activity, file mutation, or runtime liveness is monitoring evidence only and never substitutes for missing receipt transport.
-- Converged lane work requires both a retained completion carrier and `MESSAGE-CLASS: completion` to `team-lead`.
-- `MESSAGE-CLASS: completion` is an internal lane handoff signal plus result-carrier readiness signal for team-lead synthesis; it is not final acceptance or user-facing report admission.
-- Required completion transport uses the retained completion carrier and `MESSAGE-CLASS: completion`; runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals.
+- A failed, schema-rejected, or malformed `dispatch-ack` attempt keeps receipt unresolved; corrected receipt transport, `scope-pressure`, or `hold|blocker` is the next Communication Plane action before assigned work.
+- Converged lane work requires both a retained completion carrier and governed `subjob-done` transport to `team-lead`.
+- `subjob-done` transport is an internal lane handoff signal plus result-carrier readiness signal for team-lead synthesis; it is not final acceptance or user-facing report admission.
+- Required subjob handoff uses the retained completion carrier and governed `subjob-done` transport; runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, visible-prose admission, and claim strength.
 
 ## Execution Progress Law
@@ -177,11 +178,19 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Same-turn next-action drive applies to every direct-execution step (`Edit`, `MultiEdit`, `Write`, `Bash`, `SendMessage`, `TaskCreate`, `TeamCreate`, `Agent`, every mutation, every dispatch, every tool call).
 - The drive remains active at the execution boundary.
 - Host-rendered tool rows are execution evidence only and never create a user-facing prose slot.
-- Assistant-authored shell stdout labels, banners, progress summaries, and explanatory `echo` lines are renderable report content; internal evidence commands use bare evidence output or retained artifacts.
+- Assistant-authored shell stdout labels, banners, progress summaries, and explanatory `echo`/`printf` lines are renderable report content; internal-evidence `Bash` command construction uses direct command output, quiet checks, exit status, or retained artifacts instead.
+- Assistant-authored direct-tool preambles, next-step narration, success narration, staging summaries, and scope-decision narration are renderable report content; execute the tool call or route through `.claude/reference/reporting-prohibition-law.md` instead.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
 - The agent keeps emitting required tool calls while live same-request executable owner/actions remain.
 - Final/turn closure requires one closure basis from `## Procedure And Ownership Law`.
 - Auto-compact, response boundary, or next user input preserves the same live owner/action from the recorded basis and keeps backlog conversion or completion outside the closure path.
+
+## Version-Control Execution Law
+- User-requested commit, push, branch, tag, or release work freezes the named path, repository boundary, staging scope, external publication target, and completion shape, then resolves staging scope before mutation.
+- A user-named folder path includes tracked changes, deletions, and untracked non-ignored children under that path unless the user explicitly excludes them or a current repository ignore/policy basis excludes them before staging.
+- Self-excluding an untracked child of the requested path because it is large, generated, dependency, tooling, or inconvenient is scope narrowing unless a current ignore/policy basis or explicit user exclusion exists.
+- Before external publication such as `git push`, any untracked or unstaged item under the frozen requested path must be included, ignored by current policy, explicitly excluded by the user, or routed as a user-action blocker; do not push a subset and ask for confirmation afterward.
+- Final verified result for version-control work cannot claim the named path is committed or pushed while an in-scope untracked, unstaged, uncommitted, or unpushed item remains without explicit exclusion or cited lawful deferral.
 
 ## Output Root And Filesystem Law
 - `[PROJECT-OUTPUT-ROOT]` Task-created outputs stay under the task project folder.

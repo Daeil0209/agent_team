@@ -43,7 +43,7 @@ When a validator role or skill says "validator additions" or "validator detail",
 
 If these fields are missing, first derive safely from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 Mark every inferred piece.
-If the decisive basis remains non-derivable and truthful validation would require inventing it, use `MESSAGE-CLASS: hold|blocker` instead of guessing.
+If the decisive basis remains non-derivable and truthful validation would require inventing it, use `hold|blocker` transport instead of guessing.
 If only part of the basis is derivable, issue `VERDICT: HOLD` and carry covered scope plus unverified scope in `SCOPE-COVERAGE` and `OPEN-SURFACES`, unless the narrowed subset was frozen or upstream-deferred by the owning upstream record.
 
 If truthful validation needs a missing or uncertain user-surface tool path, the request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
@@ -274,6 +274,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
 
 ## Resolve Next Owner And Action
 - `PASS` opens team-lead acceptance synthesis or Final Acceptance Review by frozen route.
+- `PASS` is acceptance evidence for its frozen surface; it does not replace the owning execution, modification, review-verification, `JUDGMENT-RELIABILITY`, proof, or mutation-readiness path for downstream action.
 - `HOLD` opens team-lead blocker or evidence-basis correction.
 - `FAIL` opens team-lead correction routing.
 - `FINAL-REJECT` packet opens team-lead `far-reject-routing`/CP5 route classification; correction or re-evidence dispatch enters `task-execution` only after team-lead classification.

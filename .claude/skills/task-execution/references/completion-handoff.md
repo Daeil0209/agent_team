@@ -14,13 +14,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Common Completion Result Spine
 This spine names content that the producing lane must provide to team-lead through a retained carrier.
-`completion` is the internal lane-to-team-lead signal that assigned lane work ended and the result carrier is ready for team-lead consumption.
-`completion` is Communication Plane transport, not a user report, final acceptance, or final user-facing result.
+`subjob-done` is the internal lane-to-team-lead signal that assigned lane work ended and the result carrier is ready for team-lead consumption.
+`subjob-done` is Communication Plane transport, not a user report, work-completion report, final acceptance, or final user-facing result.
 For team-agent runtime, rendered envelope shape follows `.claude/skills/task-execution/references/message-classes.md`; the rendered state signal is not the completion spine.
 State signal text and envelope shape are owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
-Required completion payload fields for every completion-grade `MESSAGE-CLASS: completion`:
+Required completion payload fields for every completion-grade `MESSAGE-CLASS: subjob-done`:
 - `TASK-ID` when task tracking is active
 - `OUTPUT-SURFACE`
 - `TARGET-INTENT-BASIS`
@@ -45,14 +45,16 @@ Unsupported, inferred, stale, memory-only, or uninspected data is not verified f
 `UPSTREAM-DECISION-BASIS-CONSUMPTION` records each material upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis consumed, superseded by current basis, blocked, or marked `not-applicable:<basis>`.
 Completion without `UPSTREAM-DECISION-BASIS-CONSUMPTION` is not completion-grade when upstream decision basis affected the assignment.
 
-Producers sending `completion` write the receiver-required completion payload to the retained carrier and send only the canonical state signal through `SendMessage` per `message-classes.md` `### Transport Payload`.
-Any content added to the `SendMessage` `summary` or `message` parameters beyond the canonical state signal is malformed screen-rendered transport.
+Producers sending `subjob-done` write the receiver-required completion payload to the retained carrier and send governed `subjob-done` transport per `message-classes.md` `### Transport Payload`.
+This file adds no separate visible token or body rule.
+Work-completion content, result previews, summaries, counts, paths, acceptance statements, and completion narratives stay out of renderable fields and remain in the retained carrier.
 After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Assignment Delivery Contract` when task tracking is active.
 That task-state mutation records lane handoff closure only; it is not team-lead acceptance, final verification, user reporting, or completion narrative.
 
 Team-lead accepts completion-grade transport only when the assignment, non-rendered task state, or retained-carrier registry internally verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `PLANNING-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, conditional `CORE-WORKFLOW-CLOSURE-COVERAGE`, and `LANE-LOCAL-RESULT-VERIFICATION`.
 Carrier existence and required-field checks use quiet commands or reads: success produces no assistant-authored terminal-visible stdout, and failure emits only the smallest missing-path or missing-field signal needed for correction routing.
-Team-lead does not print retained-carrier headers, excerpts, line counts, candidate counts, completion-grade summaries, acceptance narration, reuse decisions, round state, lane activity, or waiting status while accepting completion or preparing reuse.
+Carrier verification commands must not print `wc`, `grep`, header, count, class-total, file-list, pass/fail-summary, or extracted-field output for successful checks; retain those facts internally or in verification records.
+Team-lead does not print retained-carrier headers, excerpts, line counts, candidate counts, class totals, files-read totals, completion-grade summaries, acceptance narration, reuse decisions, round state, lane activity, or waiting status while accepting completion or preparing reuse.
 Carrier assertions of `PASS-1`, `PASS-2`, `CONVERGENCE-PASS`, planning-basis consumption, lens application, or verification completion are completion-grade only when they cite actual loaded-basis evidence, applied-rule mapping, decision impact, actual `Skill(self-verification)` loaded-skill basis, and the required or claimed `Skill(review-verification)` packet or lens basis.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.
@@ -61,7 +63,7 @@ A completed task row never proves retained-carrier acceptance and never prevents
 Team-lead `Skill(self-verification)` convergence remains separate from lane completion.
 Team-lead synthesizes only completion-grade lane outputs, then loads `Skill(self-verification)` for convergence on the synthesized work-product surface set and outgoing claim before user-facing consequential reporting, completion claim, or redispatch.
 
-For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` with the required `MESSAGE-CLASS`.
+For team-agent runtime, the transport is completion-grade only when delivered to `team-lead` by `SendMessage` as governed `subjob-done` transport.
 Plain-text agent output is production evidence only until carried through that channel.
 When the assigned output is a synthesis, audit, evidence pack, generated artifact, or project-output surface, the completion cites the frozen `RETAINED-OUTPUT-PATH` under the canonical output root from `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
 When artifacts, logs, screenshots, traces, reports, or datasets support `EVIDENCE-BASIS`, the completion must cite a retained path inside the frozen output root. When the cited evidence includes screenshot or full-page image files for user-facing rendered surfaces, the producing lane opens each image directly via the multimodal `Read` tool and confirms the rendered surface matches the claimed verdict; the receiving lane (reviewer/validator/team-lead synthesis) opens the same image files independently before accepting the claim.
@@ -121,7 +123,7 @@ Each material start-contract axis closes through matched evidence, upstream defe
 Use `matched` only when the supporting spine fields or lane-specific status fields show the axis outcome.
 When the user-ready delivery chain is material, `matched` requires traceable continuity from instruction through concept/detail, implementation or production surface, verification evidence, and final receiver path.
 Working features with disconnected information, hidden assumptions, orphaned components, or implausible receiver flow are not closed-result evidence.
-The completion transport closes the assignment execution block and records `STANDBY`.
+The `subjob-done` transport closes the assignment execution block and records `STANDBY`.
 Team-lead consumes the retained carrier for synthesis, routing, validation, correction, reuse, shutdown, or closeout.
 Correction dispatch follows `OPEN-SURFACES`, `LANE-NEXT-CANDIDATE`, or the validator correction packet.
 Re-dispatch the producer for producer-owned correction.
@@ -160,14 +162,12 @@ Executable completion-grade transport requires the exact operator launch artifac
 Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPEN-SURFACES`.
 
 ## Common Lane Completion Law
-- Every agent completion is upward Communication Plane transport, not a user report and not a replacement for the frozen global plan.
+- Every agent completion is upward Communication Plane transport, not a user report, not a work-completion report, and not a replacement for the frozen global plan.
 - User-visible final results are drafted only by team-lead after completion carriers are consumed, synthesized, verified, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
-- Every agent completion goes to `team-lead` through `SendMessage` with `MESSAGE-CLASS: completion`.
+- Every agent completion goes to `team-lead` through governed `subjob-done` transport with `SendMessage`.
 - Every agent completion also provides the retained carrier containing the common completion spine.
-- Completion is not valid when either the retained carrier or the `SendMessage` completion state signal is missing.
-- The `SendMessage` render transports only one state signal; lane-local execution truth travels in the retained carrier.
-- When the runtime displays a completion state signal, keep it in the canonical summary/header/preview slot only; the message body is empty or one ASCII space.
-- Include only the canonical state signal in the `SendMessage` render per `message-classes.md` `### Transport Payload`.
+- Completion-grade subjob handoff is not valid when either the retained carrier or the `SendMessage` `subjob-done` state signal is missing.
+- The `SendMessage` render follows `message-classes.md` `### Transport Payload`; lane-local execution truth travels in the retained carrier.
 - Transport only lane-local result truth in the retained carrier: the surface actually examined or changed, `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `SCOPE-COVERAGE`, `VERIFIED-DATA-FEEDBACK`, the decisive evidence basis, open surfaces, and the narrowest truthful next-lane/action recommendation.
 - Missing `SCOPE-COVERAGE` or material `CORE-WORKFLOW-CLOSURE-COVERAGE` makes the completion spine incomplete when the lane output can affect completion, review, proof, validation, governance judgment, defect audit, or patch selection.
 - Wave, sample, priority-tier, or representative-slice completion stays scoped to `ACTIVE-SLICE`; full-scope completion, validation, promotion, rejection, or patch selection requires `SCOPE-COVERAGE` over the frozen `SCOPE-BASELINE`.
@@ -176,7 +176,7 @@ Missing, placeholder-only, unimplemented, or unproven baseline items remain `OPE
 - `LANE-NEXT-CANDIDATE` narrows the plausible next owner/action enough for team-lead to choose redispatch, verification, acceptance, correction, blocker-clear, or blocker-routing without lane-local rediscovery; routing freeze and independent-owner preservation remain team-lead-owned.
 - Team-lead still owns synthesis, redispatch, closeout, and acceptance routing.
 - Changed owner, phase, deliverable shape, staffing shape, proof surface, or acceptance chain routes to `scope-pressure` or `hold|blocker`.
-- Pending required procedure state routes to `MESSAGE-CLASS: hold|blocker`.
+- Pending required procedure state routes to governed `hold|blocker` transport.
 
 ## Resolve Next Owner And Action
 - Converged completion-grade output opens team-lead synthesis.
