@@ -1,0 +1,12 @@
+{
+  "name": "claude-playwright-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Playwright CLI entrypoint for Claude agent proof work.",
+  "scripts": {
+    "version": "playwright --version"
+  },
+  "dependencies": {
+    "@playwright/test": "latest"
+  }
+}

@@ -22,3 +22,6 @@ session-env
 session-state.md
 .boot-sequence-complete
 .team-runtime-active
+
+# Installed tool dependencies (reproducible via committed package-lock.json)
+.claude/tools/**/node_modules/

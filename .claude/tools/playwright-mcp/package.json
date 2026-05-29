@@ -1,0 +1,12 @@
+{
+  "name": "claude-playwright-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Playwright MCP entrypoint for Claude validator/browser proof work.",
+  "scripts": {
+    "start": "npx --no-install @playwright/mcp"
+  },
+  "dependencies": {
+    "@playwright/mcp": "latest"
+  }
+}
