@@ -109,10 +109,7 @@ Drift reopens `work-planning`.
 - Scope-continuity consumers use `.claude/reference/modification-core-law.md` `### Preservation Rules` as the canonical common baseline.
 - Local scope/change edits preserve or sharpen that baseline across meaning, clarity, execution force, owner boundary, required gates, and existing valid procedure paths.
 - Operation-specific emphasis keeps the common baseline active.
-- Migration explicitly verifies clarity preservation.
-- Refactoring explicitly verifies action and execution-force preservation.
-- Reduction explicitly verifies stop-condition preservation.
-- Re-home explicitly verifies handoff, evidence, gate, owner-boundary, and reporting-truth continuity.
+- Migration, refactoring, reduction, and re-home operation checks cite the matching canonical preservation row instead of restating it here.
 - Scope/change review tightens, re-homes, or removes weaker duplicate doctrine per `.claude/reference/modification-minimal-governance-change-law.md` `## Change Rules`.
 - Role-specific content stays out of shared doctrine when a more precise owner exists.
 

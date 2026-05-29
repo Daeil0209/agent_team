@@ -52,7 +52,7 @@ A governance patch satisfies the Patch-Ready Gate after the consuming owner reco
 - finding-state basis for defect, removal, patch-worthiness, patch-readiness, or no-patch judgment
 - source rule or source meaning
 - failing execution path
-- `PRE-MUTATION-BASIS` with request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, active sequence, triggered skills/references, current cumulative live state, review-verification basis, material finding-state basis, modification-keyword status, consumed-surface access proof, Patch-Ready Gate status, and next legal step
+- current `PRE-MUTATION-BASIS` satisfying `## PRE-MUTATION-BASIS`
 - edit operation
 - preserved meaning
 - protected procedure preservation result
@@ -81,8 +81,11 @@ Completed post-change verification is a post-mutation closure duty, not a pre-mu
 Other owner surfaces cite this gate for patch selection.
 Other owner surfaces may add owner-local route, review, execution, proof, or handoff duties.
 Local duties preserve or strengthen this gate.
-`PRE-MUTATION-BASIS` records the lawful governance-modification path before patch design: request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, active sequence, required skills, triggered references, current cumulative live state including session-applied patches, consumed surface access, consumed or blocked status, review-verification basis, material finding-state basis, and next legal step.
-`PRE-MUTATION-BASIS` is invalid when it is post-hoc, missing request-fit basis, missing `TARGET-INTENT-BASIS`, missing active owner/action boundary, missing required review-verification basis, missing material finding-state basis, missing modification-philosophy keyword status, missing consumed-surface access proof, missing Patch-Ready Gate status, or recorded only as intention without consumed/blocked evidence.
+
+## PRE-MUTATION-BASIS
+`PRE-MUTATION-BASIS` records the lawful governance-modification path before mutation readiness, patch design, or draft.
+Required fields are request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, active sequence, required skills, triggered references, current cumulative live state including session-applied patches, consumed-surface access proof, consumed or blocked status, review-verification basis, material finding-state basis, modification-philosophy keyword status, Patch-Ready Gate status, and next legal step.
+`PRE-MUTATION-BASIS` is invalid when it is post-hoc, missing any required field, or recorded only as intention without consumed/blocked evidence.
 Review-verification, modification-philosophy keyword checks, consumed-surface proof, and source-to-destination preservation are cumulative patch-readiness duties.
 For `quick update` or `quick hardening`, the Patch-Ready record may be compact only when owner surface, write scope, and meaning preservation are unambiguous.
 Direct-consumption relevance records the consuming owner, target reference, active decision axis, and concrete behavior changed by the target.
@@ -110,7 +113,7 @@ Mutation requires proposed governance wording to exclude non-executed procedure,
 Mutation requires proposed governance wording to remove evasion, ambiguous next action, semantic conflict, repeated-error bottleneck, over-detail bottleneck, and over-broad-blocking without required risk basis.
 Mutation requires the intended changed function set, positive-function inventory, and no-negative-impact result for every positive function in the coherence radius.
 Mutation blocks when the patch changes a correlated function without a recorded consumed contract, owner route, evidence basis, and verification basis.
-Draft requires current `PRE-MUTATION-BASIS` with request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, cumulative live-state basis, required skill/reference status, required review-verification basis, material finding-state basis, modification-philosophy keyword status, consumed-surface access proof, and next legal step.
+Draft requires current `PRE-MUTATION-BASIS` satisfying `## PRE-MUTATION-BASIS`.
 Mutation requires reconstructed source-to-destination meaning.
 Mutation requires existing valid procedure, gate, owner path, and state transition to stay preserved or strengthened.
 Mutation requires every positive function outside the intended changed function set to stay behaviorally unchanged or strengthened.
@@ -177,7 +180,7 @@ Adjacent-surface patch-selection duplication is replaced by citation to this gat
 - Role identity and role stop rules stay in the matching `agents/*.md`.
 - Repeatable workflow and checklist detail stays in the matching skill or reference.
 - Runtime enforcement stays in hook, settings, or runtime owner files.
-- Creating a new `.claude/rules/*.md` owner surface requires approved structural asset introduction, path-scoped consumption basis, and live directory ownership before routing meaning there.
+- Creating a new rule-overlay owner surface requires approved structural asset introduction, path-scoped consumption basis, and live directory ownership before routing meaning there.
 - Always-loaded doctrine routes into `CLAUDE.md` or the correct owner-local surface instead of non-existing rule-overlay files.
 - Runtime settings or thresholds keep one literal owner, and other documents reference that owner instead of copying the literal value.
 - Always-loaded `CLAUDE.md` follows official Claude Code memory documentation.

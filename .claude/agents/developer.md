@@ -26,13 +26,8 @@ Owns developer-specific boundaries.
 
 ## Startup Contract
 - In direct main-session invocation without team-lead `SendMessage`, the first user turn is the assignment basis and starts role-bounded work.
-- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, emit neither visible prose, readiness/status/ack transport, nor any ack-shaped reply to the host-generated `task_assignment` notification.
-- On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
-- Keep lane pane/final prose non-substantive; assignment facts, evidence, findings, progress, and completion payload stay in governed Communication Plane or retained carriers.
-- For assignment execution outcomes, send only `dispatch-ack`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`; send `status` only when `.claude/skills/task-execution/references/message-classes.md` permits explicit status.
-- For structured shutdown cleanup, return `shutdown_response` only as optional cooperative cleanup evidence when the structured shutdown request path permits it and transport remains available.
-- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain support signals only.
-- If required transport is unavailable, emit no substitute visible prose; preserve a recoverable retained carrier or permitted state marker with owner, blocker, and next recovery step so team-lead can recover receipt through monitoring/recovery.
+- Before a valid team-lead assignment `SendMessage` arrives, emit no lane output.
+- On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`; those surfaces own upward message classes, pane/final prose limits, transport fallback, status, shutdown, and completion mechanics.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first production work.
 - Load and learn the full `Skill(agent-developer)` body before first production work.
 - Developer owns production only.

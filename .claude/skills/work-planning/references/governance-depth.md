@@ -48,7 +48,7 @@ Rules:
 | **Design options** | Conditional | Default | Required (3 architecture options) |
 | **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
 | **Gap analysis** | Conditional | Default | Required before acceptance |
-| **Specialist skills** | None by default | `dev-workflow`; add `external-tool-bridge` when external capability is active | `dev-workflow`; add `security-review`, `enterprise-architecture`, or `external-tool-bridge` only when each skill's activation criteria is true |
+| **Specialist skills** | None by tier alone | `dev-workflow` only when its activation criteria are true; add `external-tool-bridge` when external capability is active | `dev-workflow`, `security-review`, `enterprise-architecture`, or `external-tool-bridge` only when each skill's activation criteria is true |
 ### Checkpoint Semantics
 Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input becomes relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
 Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.

@@ -42,9 +42,9 @@ Unresolved conflicts block final schedule output.
 
 ## Fatigue And Rhythm
 Early-morning peak favors high-concentration tasks.
-Post-lunch dip keeps demanding cognitive work outside 13:00 to 14:30 unless a hard schedule constraint blocks it.
+Post-lunch dip uses 13:00 to 14:30 as a default fatigue-risk window; user constraints, local schedule evidence, or task-specific evidence can override it.
 Post-transit recovery uses light activity after significant movement.
-Long sessions require a break or format change after 90 continuous minutes when material.
+Long sessions use 90 continuous minutes as a default review trigger for break or format change when material; explicit event constraints or participant evidence can override it.
 
 ## Schedule Quality Gate
 Executable schedules give every block sufficient time, resources, and prerequisites.

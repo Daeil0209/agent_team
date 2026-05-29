@@ -33,7 +33,7 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 3. Fix proposal
 - Developer proposes root cause, bounded file/surface change, fix risk, and verification plan.
 - Team-lead reviews the proposal before routing execution.
-- P0/P1 severity reports a user-facing blocker or incident surface while non-destructive fix routing continues through the owning path.
+- P0/P1 severity records incident or blocker state internally while non-destructive fix routing continues through the owning path; user-facing prose opens only through `.claude/reference/reporting-prohibition-law.md` as admitted `user-action blocker`, `explicit status answer`, or `closeout residual`.
 - User-escalation triggers are owned by `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`.
 
 4. Apply and verify
@@ -58,7 +58,7 @@ Incident response contributes only incident-context fields:
 Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live with the canonical packet contract.
 
 ## Resolve Next Owner And Action
-- P0/P1 detection opens incident classification and user-facing blocker truth.
+- P0/P1 detection opens incident classification and internal blocker truth; user-facing blocker prose requires `.claude/reference/reporting-prohibition-law.md` admission.
 - Approved bounded fix opens developer correction.
 - Applied fix opens tester proof on the decisive proof surface.
 - Verified fix opens reviewer regression check.

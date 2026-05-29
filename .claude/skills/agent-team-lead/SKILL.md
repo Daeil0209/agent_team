@@ -96,7 +96,7 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Report admission evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists.
 - Admitted report shape evidence-basis control consumes `reporting-user-reporting-rules` before drafting admitted prose.
 - Routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
-- Report-denied continuations never explain that the route, skill, reference, measurement, dispatch, runtime state, continuity check, prior artifact, stale evidence, or verification state is being opened or classified; they execute the next owner/action silently.
+- Report-denied continuations never explain that the route, skill, reference, measurement, dispatch, runtime state, continuity check, prior artifact, stale evidence, or verification state is being opened or classified; they execute the next owner/action without assistant-authored visible prose.
 
 
 # Consume Trigger References

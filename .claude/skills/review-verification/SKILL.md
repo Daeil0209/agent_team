@@ -16,6 +16,7 @@ Load and learn the full skill body when a caller supplies a bounded review quest
 Run all applicable steps for binding promotion, final rejection, patch/no-patch, patch-worthiness synthesis, patch-readiness, verdict support, or mutation-readiness review.
 Use named lenses only as bounded packet evidence; they do not expand beyond the assigned review question.
 Reset for a new target, corpus, findings set, patch design, diff, bounded question, or scope; stale packets, summaries, memory, and pre-patch snapshots do not carry forward.
+Downstream citation of an unchanged packet is valid only when the downstream owner proves the prior packet covers the same or stricter target, corpus, bounded question, scope, claim ceiling, freshness, and workflow coverage required by that owner.
 A `review_verification_packet` exists only after current `Skill(review-verification)` activation reaches Step 14 for the exact target, corpus, bounded question, and scope; named-lens claims exist only for exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
 
 ## Reference Map
@@ -155,6 +156,7 @@ Do not authorize mutation from incomplete patch-ready proof; keep the current la
 ### 14. Next-Owner Routing
 Return `review_verification_packet` only after all required steps are current for the requested target, corpus, patch design, and diff.
 Record `WORKFLOW-COVERAGE` as `full-steps-1-14`, `lens-bounded:<exact lenses and covered steps>`, or `gate-only:<exact gate and basis>`; omit none.
+`full-steps-1-14` is valid when every step is either executed or explicitly recorded `not-applicable:<basis>` under this workflow, including non-patch reviews where Steps 6-9 are out of scope.
 Record `CLAIM-CEILING` exactly from Step 2; missing or stale `CLAIM-CEILING` blocks Step 14 currentness.
 The returned packet is the canonical citable artifact for the requested review question; downstream verification gates (e.g., `Skill(self-verification)` Step 3 `PASS-2`) cite this packet by `PACKET-ID`, by `REVIEW-TARGET` + verdict summary (`PROCEDURE-EXECUTION-RESULT` / `PATCH-WORTHINESS`), or by full-content reference.
 Return the smallest truthful next owner/action: triggering owner, `researcher`, `reviewer`, `developer`, `tester`, `validator`, `Skill(governance-modification)`, `Skill(self-verification)`, or blocker-routing with exhausted internal correction basis.

@@ -18,6 +18,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Consume before any assistant-authored visible prose, terminal-visible report text, pane-visible report text, visible task-plan/todo/checklist text, completion claim, phase/stage-end result, user-action blocker report, explicit status answer, or closeout residual.
 - Consume before startup, boot, planning, skill-load, reference-load, dispatch, monitoring, verification, or cleanup prose.
 - Consuming this reference stays internal and never replaces required Procedure Plane or Communication Plane action.
+- When this law suppresses, silences, empties, or limits visible content, the active owner continues the required Procedure Plane or Communication Plane action with complete governed evidence.
+- Suppression does not change blocker, deferral, user-escalation, verification, correction, routing, or closure thresholds.
 
 ## Pre-Report Gate
 - User-facing prose is prohibited unless every applicable row below passes.
@@ -37,11 +39,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 9. If any required row is missing, stale, contradicted, or uncertain, keep prose suppressed and continue through the owning Procedure Plane or Communication Plane path.
 
 ## Non-Reportable Content
-- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, ack/status/completion transport, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, monitoring state, and prose whose only purpose is "starting", "continuing", "checking", "dispatching", "monitoring", "verifying", or "waiting".
-- A rendered internal transport envelope is non-reportable only when this law and the Communication Plane owner limit it to a canonical no-detail state token and an empty/space body; any receiver-required detail, progress wording, count, path, evidence summary, rationale, or completion narrative in a renderable field is a report attempt.
-- Communication Plane screen-rendered envelopes remain transport signals; receiver-required detail stays in governed packets, task state, retained carriers, shutdown requests, shutdown responses, or evidence artifacts.
+- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, ack/status/completion transport, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, and monitoring state.
+- Tool-adjacent assistant-authored progress prose whose only purpose is "starting", "continuing", "checking", "dispatching", "monitoring", "verifying", or "waiting" is not admitted report content and remains suppressed while the owner action can continue.
+- Assistant-authored command stdout/stderr labels, success echoes, progress banners, and section separators are not admitted report content unless the user explicitly requested that exact material; when routing needs command evidence, prefer exit status or the smallest machine-readable pass/fail or missing-path/missing-field fact.
+- Assistant-authored command output for internal artifact or carrier verification emits no terminal-visible success output; when routing depends on the command result, emit only machine-readable pass/fail or missing-path/missing-field facts, while carrier headers, excerpts, line counts, candidate counts, completion-grade summaries, and reuse decisions stay out of terminal-visible output.
+- Assistant-authored file-write preview content for internal carriers or produced user-facing report drafts is a report attempt when it carries route, dispatch, packet, verification, candidate, retained-carrier, final-result, synthesis, defect/finding, count, recommendation, or post-final-tail detail before this law admits that exact content or the user explicitly requests that exact preview content.
+- A rendered internal transport envelope avoids report-attempt classification only when this law and the Communication Plane owner limit it to a canonical no-detail state token and an empty/space body; any receiver-required detail, progress wording, count, path, evidence summary, rationale, completion narrative, or task-row subject/description detail in a renderable field is a report attempt.
+- Duplicate assistant-authored rendering of the same internal state token across visible envelope slots is a report attempt; the Communication Plane owner must render at most one no-detail token and keep receiver-required detail in governed non-rendered carriers.
+- Communication Plane screen-rendered envelopes and task rows remain transport signals; receiver-required detail stays in governed packets, non-rendered task state, retained carriers, shutdown requests, shutdown responses, or evidence artifacts.
 - Host/system-generated Claude Code UI rows are not assistant-authored reports; classify them only when they affect report truth, runtime evidence, or user-visible rendering proof.
-- Optional supervised curtain behavior stays in `.claude/reference/environment-output-curtain-runtime.md`.
 
 ## Admitted Report Handoff
 - This law admits or rejects user-facing prose; `.claude/reference/reporting-user-reporting-law.md` owns admitted report wording, report shape, final-result line budget, and report-location line.

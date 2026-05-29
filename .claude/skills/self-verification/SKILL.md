@@ -1,6 +1,6 @@
 ---
 name: self-verification
-description: Producer outbound gate for analysis or modification work products: two-pass check (coverage; defect-free via Skill(review-verification)), correction delegation on fail, loop until convergence, silent handoff.
+description: Producer outbound gate for analysis or modification work products: two-pass check (coverage; defect-free via Skill(review-verification)), correction delegation on fail, loop until convergence, internal handoff without user-facing report.
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -101,7 +101,7 @@ Build correction packet:
 
 Route by producing owner:
 - team-lead lead-local → return correction inventory to team-lead.
-- lane → dispatch via `Skill(task-execution)` with `MESSAGE-CLASS: assignment` and `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
+- lane-produced surface → return correction inventory to `team-lead`; assignment-grade correction, reuse, or reroute is `team-lead`-owned through `Skill(task-execution)` with `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
 - `Skill(governance-modification)` Change Sequence → return correction inventory to that Change Sequence.
 
 Continue through the correction owner/action until correction completion or blocker-routing with exhausted correction basis.
@@ -111,7 +111,7 @@ Reject partial re-check; require corrected surface + coherence radius.
 Proceed to Step 2.
 
 ## Step 6: Handoff or Next Work
-Return converged work product silently to calling owner.
+Return converged work product to the calling owner through internal handoff without user-facing report.
 
 ## Output Format
 ```

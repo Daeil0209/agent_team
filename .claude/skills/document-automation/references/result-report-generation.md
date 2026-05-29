@@ -29,10 +29,10 @@ Use when generating a result report from a plan, proposal, or project reference.
 - PPT places text with supporting visual per slide.
 - PPT uses balanced text-to-visual ratio.
 - PPT font sizes remain legible inside all visuals.
-- Word/HWP images occupy at most about one-third of page area.
+- Word/HWP images occupy at most about one-third of page area by default unless template, submission, or benchmark evidence justifies another ratio.
 - Every Word/HWP image requires a descriptive caption.
 - Short documents of 2-3 pages use heavier visual ratio only when visuals compress decision-relevant information better than text.
-- Long documents of 10+ pages use about 5:5 to 6:4 text-to-visual ratio.
+- Long documents of 10+ pages use about 5:5 to 6:4 text-to-visual ratio as default calibration unless template, submission, or benchmark evidence justifies another ratio.
 
 ## Completion Conditions
 - Target submission-ready quality where the human role is reviewer or approver.

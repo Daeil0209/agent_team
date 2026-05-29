@@ -29,7 +29,7 @@ Report admission is owned by `.claude/reference/reporting-prohibition-law.md`; a
 ## Required Output
 The consuming owner records:
 - loaded skill or reference path
-- loaded-skill basis as full-body `Skill(<skill>)` load-and-learn, officially applied full-skill frontmatter `skills` preload, or the named skill's same-session loaded-and-learned token
+- loaded-skill basis as full-body `Skill(<skill>)` load-and-learn or the named skill's current same-session loaded-and-learned token
 - trigger that required it
 - applied rules
 - blocked or unavailable rules
@@ -61,17 +61,17 @@ Completion requires every trigger-required reference consumed and every material
 ## Skill Rules
 - Skill-load eligibility is decided from the interpreted requested outcome or runtime-owned trigger, not from skill names, document names, doctrine names, or procedure words in the user message.
 - Primary skill links become required skills only when their trigger creates the active owner path.
-- Required skill activation and loaded-skill basis are satisfied only by actual full-body `Skill(<skill>)` load-and-learn, officially applied full-skill frontmatter `skills` preload, or a current same-session loaded-and-learned basis under the named skill's freshness rule.
+- Required skill activation and loaded-skill basis are satisfied only by actual full-body `Skill(<skill>)` load-and-learn or a current same-session loaded-and-learned basis under the named skill's freshness rule.
 - Same-session loaded-and-learned basis is executable only while the invoked full skill body still supplies the rule needed for the current owner path.
 - Treat loaded-skill basis as stale when the session changed, the skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active owner path needs unconsumed trigger-specific detail.
 - Stale or uncertain loaded-skill basis must not execute the action; open the smallest refresh action: reload and learn `Skill(<skill>)` when skill-body rules are needed, or consume the exact trigger-specific reference when reference detail is sufficient.
 - When a primary skill trigger fires, skipping activation is classified as a Work Execution Philosophy violation.
-- `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only and never proves full-body skill learning or applied consumption.
+- `Read`, `Grep`, `Glob`, `LS`, summary, memory, frontmatter preload claims, or reference-map traversal of `.claude/skills/<skill>/**` remains inspection only and never proves full-body skill learning or applied consumption.
 - Host-rendered tool rows, tool status, and visible `Skill(...) loaded` text are invocation/status evidence only; they never replace full-body load-and-learn or applied-rule mapping.
-- Before non-preloaded `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-load inspection supports eligibility only.
+- Before `Skill(<skill>)`, the consuming owner proves the requested outcome creates that skill's active execution owner path; pre-invocation inspection supports eligibility only.
 - Learning, relearning, familiarization, doctrine refresh, audit, and patch-design inspection consume live documents only by reading and learning the complete active document or complete triggered section; `Grep` is discovery and anchor evidence only, not document consumption.
 - Skill consumption is situation-scoped by current work surface, trigger flag, workflow phase, proof burden, acceptance burden, and same-boundary lane-local discovery.
-- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through full-body `Skill(<skill>)` load-and-learn or officially applied full-skill frontmatter `skills` preload before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
+- Skill-owned surfaces under `.claude/skills/<skill>/` are entered through full-body `Skill(<skill>)` load-and-learn before direct `Read`, `Grep`, `Glob`, or `LS` when the active owner path needs that skill's execution method or named artifact.
 - Agent role names are not skill names.
 - Agent role files identify the role through frontmatter `name` and role-local boundary prose; headings are optional readability anchors.
 - Agent role files keep `PRIMARY-OWNER` metadata absent.
@@ -158,6 +158,8 @@ Completion requires every trigger-required reference consumed and every material
 - Governance compliance claims require recorded applied-rule mapping.
 - Skim, partial search, title lookup, summary awareness, and memory-based use leave the document unconsumed.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
+- Reference frontmatter `PRIMARY-OWNER` names the executable owner authority (`team-lead` or lane agent), not the skill or reference file itself.
+- Skill or reference file ownership is expressed through `SOURCE-ANCHOR`, `REFERENCE-OWNER`, or an explicit local consumption note.
 - Bare governance paths such as `agents/...`, `skills/...`, `reference/...`, and `hooks/...` resolve from `.claude/` unless the current line names another root.
 - A procedure-bearing reference carries a local `Resolve Next Owner And Action` section.
 - Missing this section blocks completion and opens reference correction.

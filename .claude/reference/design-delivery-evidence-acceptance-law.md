@@ -55,7 +55,7 @@ The consuming owner records:
 Positive completion requires:
 - requested content, function, format, data/example/use instructions, run/read path, and user burden satisfied
 - decisive user surface proven
-Final acceptance verdict always routes to `validator`.
+Final acceptance verdict routing follows `.claude/reference/judgment-core-law.md`.
 Local `final verified result` closure is a reporting exception only when no final-arbitration trigger applies.
 Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
 

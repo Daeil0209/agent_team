@@ -100,7 +100,7 @@ Canonical rule:
 ## Supervisor Decisions On Turn-Ended Signals
 After completion-grade output, governing control records `STANDBY`.
 If immediate work exists, send `assignment`, `reuse`, or `reroute` as new bounded work.
-If no immediate work exists, send nothing.
+If no immediate work exists for that teammate, send no teammate-directed message for that turn-ended signal; continue any other live same-request owner/action through its active owner path.
 Shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence.
 Validation waiting keeps the teammate in `STANDBY` while the validation route resolves.
 
@@ -221,7 +221,8 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 | `TEAM_RUNTIME_ACTIVE_FILE` | `team exists` (current-session team-runtime registration) | absence is not team-existence proof; dispatch-runtime creation is decided by `.claude/skills/task-execution/references/runtime-dispatch-law.md` |
 | `KILL_LIST` | observed teardown intent on listed agents | absence is not agent-still-live evidence; consult live process-backed roster |
 
-The canonical hook-policy ownership for these ledger surfaces lives in `.claude/hooks/MANIFEST.md`.
+Literal path defaults for these ledger surfaces live in `.claude/hooks/lib/hook-policy.sh`; the hook scripts that read or write each surface are the active runtime maintainers.
+`.claude/hooks/MANIFEST.md` records hook dependency inventory only, not per-ledger semantic ownership.
 
 ## Workflow Continuity Bridge
 - `session-boot` observes runtime for active workflows; workflow progression stays with the workflow owner.
@@ -265,7 +266,7 @@ Longer waits require an explicit planning basis.
 Corrective protocol:
 1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
 2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
-3. Keep additional assignment/correction packets out of a silent inbox.
+3. Keep additional assignment/correction packets out of an inbox with no current response.
 4. At the re-check window, inspect current response and activity/side-effect evidence. Assigned-surface activity without valid first upward outcome prevents dead-or-unavailable classification but does not clear receipt debt; preserve the active agent in lane execution while team-lead continues missing-receipt or closing-transport recovery. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
 5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 
@@ -273,7 +274,8 @@ Re-check windows are owner-selected monitoring bounds; the mandate is proactive 
 
 ## Runtime Integrity Defect Classification
 Runtime-integrity defect domains are classified separately and reconciled to one consistent live state.
-The hook helper `runtime_integrity_classify` covers Domain 1 and Domain 2 Classes A-F from process, config, pane, socket, UI, and task-store evidence.
+`runtime_integrity_classify` is active evidence only when a current hook or manual recovery command actually invokes `.claude/hooks/lib/runtime-integrity-recovery.sh`.
+Without that caller evidence, Domain 1 and Domain 2 classification uses direct process, config, pane, socket, UI, and task-store inspection.
 Domain 3 Classes G-I are team-lead or session-boot monitoring classifications from `SendMessage`, retained-output, mailbox, and idle evidence.
 Domain 3 is not hook auto-cleanup evidence.
 
@@ -340,7 +342,7 @@ Domain 3 is not hook auto-cleanup evidence.
 - Runtime-required classification returns to the frozen next owner/action as runtime evidence.
 - Runtime recovery need opens `session-boot` recovery.
 - Missing receipt or start evidence opens one bounded follow-up and re-check.
-- Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or blocker-routing after runtime recovery is exhausted.
+- Stale or non-responsive target after re-check opens replacement, redistribution, structured shutdown, or blocker-routing after runtime recovery is exhausted.
 - Bottleneck or missed downstream-prep parallel-fit opens boundary-change correction through `team-lead`.
 - Cleanup need opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Hard runtime pressure opens explicit recovery before new fan-out.

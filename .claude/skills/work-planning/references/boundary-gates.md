@@ -139,7 +139,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent or insufficient under that owner's freshness rule.
-5. Load a named skill owner only through `Skill(<skill>)`; `Read`, `Grep`, `Glob`, `LS`, summary, memory, or reference-map traversal does not satisfy the load.
+5. Satisfy named skill or reference loading through `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` and `## Reference Binding`.
 6. Run the named owner to its named outcome when required by that owner's freshness rule.
 7. Consume the named owner before lead-local action.
 8. Consume the named owner before `task-execution`.
@@ -147,7 +147,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 10. Consume the named owner before phase movement.
 11. Consume the named owner before mutation.
 12. Rerun stale owner consumption to outcome before downstream movement.
-13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
+13. Reject named-owner consumption that lacks applied-rule mapping under `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
 15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load and learn `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
 16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.

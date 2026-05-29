@@ -98,7 +98,7 @@ Run the actual execution move:
 - assemble the real outgoing packet from the frozen plan basis
 - run `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` and packet final check before sending
 - reject any planned task-state tool call that violates that contract before the tool call
-- confirm retained-output carriers with silent success commands; failed checks surface only through the governing blocker or correction path
+- confirm retained-output carriers with commands that emit no assistant-authored visible success output; failed checks surface only through the governing blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - Carry `DERIVED-DEFAULTS`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, and request-bound packet fields only from the frozen planning basis or active workflow owner's phase-local refinement.
 - Packet skill and request-bound field duties route through `references/assignment-packet.md` and `references/request-bound-fields.md`; dispatch preserves their frozen names and values.
@@ -135,9 +135,9 @@ Dispatch law:
 - Phase-transition control `SendMessage` uses `MESSAGE-CLASS: phase-transition-control`.
 - Runtime cleanup uses structured `shutdown_request`.
 - Match each `SendMessage` to the exact class or structured payload defined by its reference.
-- `SendMessage`, task state, and retained carrier delivery carry assignment-grade teammate output.
+- `SendMessage`, non-rendered task state, and retained carrier delivery carry assignment-grade teammate output.
 - Treat member creation plus assignment send plus lane receipt plus subsequent lane work as one assignment execution block; `dispatch-ack` may create an internal tool-turn boundary, but that boundary is not a wait, status, blocker, or user-report reason.
-- Details required only by that block stay in its packet, task state, retained carrier, or lane-local context.
+- Details required only by that block stay in its packet, non-rendered task state, retained carrier, or lane-local context.
 - Bounded partial-parallel-failure recovery is valid only under the exact recovery rule in `references/runtime-dispatch-law.md`.
 - Otherwise reopen `work-planning`.
 
@@ -156,7 +156,7 @@ Branch rule:
 ## Step 3: Dispatch Truth
 Dispatch truth is Procedure Plane and Communication Plane state.
 User-facing report admission is governed by `.claude/reference/reporting-prohibition-law.md`; admitted report shape is governed by `.claude/reference/reporting-user-reporting-law.md`.
-Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
+Dispatch execution emits no assistant-authored visible prose while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
 Tool-adjacent progress prose stays suppressed while dispatch, monitoring, recovery, merge, synthesis, or locked parallel dispatch can continue.
 Skill-load success, reference reads, contract-consumed facts, plan-frozen facts, runtime-active facts, runtime API errors, hook denials, member creation rows, assignment-send rows, ack rows, completion rows, packet materialization, shared binding-surface creation, carrier staging, inventory staging, and retained-output availability do not create a prose slot.
 Transport dispatch state through `message-classes.md`; dispatch state remains internal unless reporting law grants a narrow user-report exception.

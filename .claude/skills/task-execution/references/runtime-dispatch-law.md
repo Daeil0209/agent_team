@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -73,6 +73,7 @@ Target-resolution preflight is mandatory before the tool call:
 - A batch that would exceed frozen `ACTIVE-CONCURRENT-AGENT-CAP` reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for an explicit status answer.
+- Dispatch, reuse, cap, runtime-readiness, shard, wave, round, target-state, and receipt-barrier facts stay internal Procedure Plane or Communication Plane truth; `task-execution` keeps required evidence in tool results, retained carriers, or runtime state and does not emit assistant-authored visible progress prose, success stdout, listings, counts, or summaries for those facts unless `.claude/reference/reporting-prohibition-law.md` admits an explicit status answer for the exact material.
 - When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
 - Parallel `Agent` batch dispatch is not a trial step; every `Agent` call in each atomic same-envelope subgroup must pass target-resolution, team-scope, and canonical spawn-prompt screen-safety preflight before that subgroup is sent.
 - Ordinary team-scoped member creation uses the canonical prompt template from `message-classes.md`; alternate prompt text is a preflight exception, not the default.
@@ -81,9 +82,9 @@ Target-resolution preflight is mandatory before the tool call:
 - Tool-call envelope shape (parameter tag form, namespace prefix, required-parameter presence, attribute names) must be verified call-by-call against the first validated call's exact envelope before send; same-class copy-paste without per-call shape verification is the named batch-preflight failure mode.
 - A hook `BLOCKED` result, host `InputValidationError`, or `Invalid tool parameters` rejection on any call of a batch is batch-preflight-failure evidence only when the rejection matches a protected runtime rule or tool-envelope requirement; over-broad positive-pattern or doctrine-shape hook blocks route to hook narrowing/removal while preserving the valid dispatch path.
 - While `PARALLEL-DISPATCH-LOCK` is open, every move must directly create, verify, send, or repair the next dispatch state for a frozen nonblocked group.
-- Allowed lock moves are only: required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; or silent retained-output directory or shared-carrier creation when the frozen packet requires it.
+- Allowed lock moves are only: required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; or retained-output directory or shared-carrier creation without assistant-authored visible output when the frozen packet requires it.
 - Narrow blocker exception: `hold|blocker` or `scope-pressure` for a proven dispatch blocker is the only lawful exit from lock-move execution; it is not one of the lock moves listed above but the lawful abandonment of the lock when execution cannot proceed.
-- Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open stays silent and emits no listing, count, probe, diagnostic output, or user-facing prose.
+- Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open uses no assistant-authored visible output: no listing, count, probe, diagnostic output, or user-facing prose.
 - `PARALLEL-DISPATCH-LOCK` contains only lawful lock moves until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
 - Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
 - Lock state, lawful move list, retained-output setup, and dispatch preparation stay internal; visible non-tool prose appears only as a report admitted by `.claude/reference/reporting-prohibition-law.md` and shaped by `.claude/reference/reporting-user-reporting-law.md`.
@@ -101,6 +102,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Before new `Agent` member creation, `task-execution` evaluates live or standby same-lane reuse when such a member exists.
 - Reuse-fit holds when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, and active cap.
 - When reuse-fit holds, `task-execution` sends assignment-grade reuse-via-`SendMessage` before cleanup.
+- Successful same-segment dispatch or reuse proceeds to receipt monitoring, completion handling, or the next executable owner action without assistant-authored visible narration; preserve required evidence, but do not narrate readiness, cap, active-lane, wave, round, waiting, or holding state.
 - New `Agent` member creation opens only when no live or standby fit exists, the target is dead-or-unavailable for the assignment, the lane is absent, or reuse-fit fails by named basis.
 - `shutdown_request` before same-lane new member creation is valid only after reuse-fit fails, the target is dead-or-unavailable, the lane is no longer needed, or active `session-closeout` owns teardown.
 - User-directed cleanup of named lane members without explicit session-end intent is a lane-member no-longer-needed basis for those members and uses runtime-cleanup `SendMessage`; session-closeout opens only from explicit session-end intent.

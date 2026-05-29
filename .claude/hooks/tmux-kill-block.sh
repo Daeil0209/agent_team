@@ -23,7 +23,7 @@
 set -euo pipefail
 INPUT="$(cat)"
 
-REASON='tmux kill-* commands are blocked by explicit operator policy (session-stability protection). Use SendMessage shutdown_request to the exact live member per .claude/skills/task-execution/references/message-classes.md, or Skill(session-closeout) Runtime Teardown Preflight followed by TeamDelete, for safe teardown.'
+REASON='tmux kill-* commands are blocked by session-stability policy. Use structured shutdown_request for selected live members or TeamDelete after termination proof.'
 
 emit_deny() {
   # Emit the canonical PreToolUse deny JSON; reason is embedded as a JSON string.

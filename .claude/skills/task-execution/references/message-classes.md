@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -29,11 +29,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Every fresh assignment-grade `SendMessage` in team-agent runtime requires a first upward outcome unless upward transport was classified unsupported before dispatch.
 - A first upward `dispatch-ack` is the team-lead orchestration feedback signal: the lane reviewed the assignment packet, accepts it without objection, tells `team-lead` that receipt is confirmed, and starts the assigned work immediately.
 - A first upward `scope-pressure` or `hold|blocker` means the assigned work as written is not truthfully startable.
-- Unsupported upward transport is a dispatch-shape blocker before assignment send, not an after-the-fact excuse for silent idle.
+- Unsupported upward transport is a dispatch-shape blocker before assignment send, not an after-the-fact excuse for idle without recovery.
 - Treat plain-text output, pane output, and agent final prose as observation evidence only.
 - Delivery proof, ledger evidence, and synthesis-ready completion require resend through `SendMessage`; cleanup evidence follows `## Structured Shutdown Request` and termination proof.
 - Methodology skills identify blocker conditions.
 - Message-class authority remains with this Communication Plane law.
+- `completion` without qualifier means `MESSAGE-CLASS: completion` transport.
+- `completion-grade` means retained-carrier sufficiency for downstream synthesis or closure.
+- `status: completed` is task-row handoff state only.
+- `reuse` as a `MESSAGE-CLASS` is assignment delivery; runtime reuse-fit is the monitoring decision that selects a live or standby teammate for that delivery.
 - The active owner sends `hold|blocker` through its governed Communication Plane channel.
 - `status` is progress only.
 - `MESSAGE-CLASS: completion` is positive-state transport only.
@@ -52,7 +56,7 @@ No governed payload field can replace `SendMessage.to`.
 | Family | Tool surface | Payload shape | Owner reference | Next-action rule |
 |---|---|---|---|---|
 | Runtime topology | `TeamCreate`, team-scoped `Agent`, `TeamDelete` | runtime creation, member creation/reattach with top-level `description`, `prompt`, `team_name`, and `name`; runtime deletion | `runtime-dispatch-law.md`; `session-closeout` closeout state | member-created truth, assignment-send next action, or closeout residual truth |
-| Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, silent phase-context consumption, or cleanup-control evidence |
+| Lead-directed work/control | `SendMessage` from `team-lead`, workflow owner, or `session-closeout` to exact live member | assignment, reuse, reroute, phase-transition-control, or `{"type":"shutdown_request"}` | `assignment-packet.md`; `phase-transition-control.md`; this file | first upward outcome, internal phase-context consumption without user-facing report, or cleanup-control evidence |
 | Agent-to-lead transport | `SendMessage` from lane agent to `team-lead` | dispatch-ack, status, scope-pressure, hold\|blocker, completion, or blocked transport | this file; `scope-pressure.md`; `completion-handoff.md` | lane work, monitoring, pressure/blocker resolution, or synthesis |
 | Direct teammate interaction | teammate UI or peer `SendMessage` | user instruction inside current authority or challenger evidence note for active surface | `.claude/skills/team-session-sequences/references/monitoring-lifecycle-detail.md` | receiver uses evidence; ownership, routing, cleanup, task-control, acceptance, or active-surface changes route to `team-lead` |
 | Shared task state | `TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList` | task row creation, status update, read, or list; never assignment delivery | this file `### Assignment Delivery Contract` | task correction, task identity recovery, retained-output `Read`, or completion status closure |
@@ -78,18 +82,24 @@ Reporting Plane may cite only the user-relevant outcome granted a narrow excepti
 
 ### Transport Payload
 Communication payload carries the detail required by the receiving owner through the active envelope plus governed carriers.
-Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, task state, or retained-output contract.
+Payload shape is governed by the active message class, assignment packet, completion contract, phase-transition packet, shutdown request, non-rendered task state, or retained-output contract.
 Receiver-required detail stays complete regardless of user-display suppression.
 When `SendMessage` can render on a user-visible screen, visible fields obey `.claude/reference/reporting-prohibition-law.md` before rendering; admitted report prose shape follows `.claude/reference/reporting-user-reporting-law.md`.
-For upward state classes, the `summary` parameter contains only the canonical no-detail state token required by the class, or stays empty when the runtime permits; it carries no fields, paths, counts, coverage labels, `OPEN-SURFACES`, excerpts, summaries, rationale, or prose.
+For upward state classes, the `summary` parameter is the preferred visible token slot and contains only the canonical no-detail state token required by the class, or stays empty when the runtime permits; it carries no fields, paths, counts, coverage labels, `OPEN-SURFACES`, excerpts, summaries, rationale, or prose.
 The `message` parameter is empty or a single ASCII space and carries no other content.
 `SendMessage` render means the combined `summary` plus `message` display; both halves obey this canonical state-signal envelope rule.
-For `dispatch-ack`, canonical render is exactly `ack`, `dispatch-ack`, or `ack task <TASK-ID>` when task tracking is active; shard names, intake confirmations, git/head facts, file counts, charter-read claims, prior-work judgments, planned writes, or work-start narrative make the envelope malformed.
-For `completion`, canonical render is exactly `completion` or `completion task <TASK-ID>` when task tracking is active; findings counts, file paths, evidence summaries, and completion narrative stay in the retained carrier.
+A rendered upward state signal appears at most once across every assistant-authored visible slot for the same transport event, including prompt line, pane prefix, header, summary, message, and body.
+If one visible slot already renders the state token, every other assistant-authored visible slot stays empty or exactly one ASCII space; echoing the same token into the body makes the envelope malformed.
+For `dispatch-ack`, canonical render is exactly `ack`; append `task <TASK-ID>` only when the runtime cannot correlate the transport event through non-rendered task identity, and never render `dispatch-ack task <TASK-ID>`.
+For `completion`, canonical render is exactly `completion`; append `task <TASK-ID>` only when the runtime cannot correlate the transport event through non-rendered task identity. Findings counts, file paths, evidence summaries, and completion narrative stay in the retained carrier.
 For `status`, canonical render is exactly `status` or empty; details stay in the retained carrier or team-lead-requested status artifact.
-This is the single canonical envelope rule for `ack` and `completion` state signals; other owner surfaces cite this rule and keep local restatement out.
+For `scope-pressure`, canonical render is exactly `scope-pressure`; append `task <TASK-ID>` only when the runtime cannot correlate the transport event through non-rendered task identity. Pressure fields and correction basis stay in governed non-rendered carrier fields.
+For `hold|blocker`, canonical render is exactly `hold|blocker`; append `task <TASK-ID>` only when the runtime cannot correlate the transport event through non-rendered task identity. Blocker fields and safe-next-step basis stay in governed non-rendered carrier fields.
+This is the single canonical envelope rule for upward state signals; other owner surfaces cite this rule and keep local restatement out.
+Lane, role, and agent-specific skill surfaces that say send, emit, route, raise, or report `scope-pressure`, `hold|blocker`, `dispatch-ack`, `status`, or `completion` are interpreted through this Transport Payload rule.
+Those local surfaces may name class-specific carrier facts, but they must not restate or override visible envelope shape.
 If the `SendMessage` schema rejects an empty body for a governed state signal, use exactly one ASCII space in the body slot and no other body content.
-Receiver-required detail moves to the assignment packet, task state, retained-output file, shutdown request, shutdown response, or evidence artifact referenced by that envelope.
+Receiver-required detail moves to the assignment packet, non-rendered task state, retained-output file, shutdown request, shutdown response, or evidence artifact referenced by that envelope.
 Use retained-output files or task output when detail is evidence, result inventory, counts, excerpts, operational notes, long-lived state, or material reused by later owners.
 Screen-rendered transport never satisfies a user report and never carries raw internal inventories.
 The visible body excludes state tokens, `MESSAGE-CLASS`, field labels, receiver-required detail, and report prose.
@@ -99,7 +109,7 @@ Communication payload is mission-critical internal evidence.
 User non-display never permits loss, omission, distortion, or vague substitution of receiver-required information.
 Transport carriers preserve exact user intent, `TARGET-INTENT-BASIS`, request-fit facts, acceptance basis, scope boundaries, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action when those facts are material to the receiving owner.
 Summaries are routing aids only; they do not replace exact packet, task, or retained-output basis when downstream execution, synthesis, proof, or validation depends on the exact basis.
-When exact wording, full evidence, result inventory, counts, excerpts, or operational notes are needed, carry them in task state or retained-output and send the pointer through the owning message class.
+When exact wording, full evidence, result inventory, counts, excerpts, or operational notes are needed, carry them in non-rendered task state or retained-output and send the pointer through the owning message class.
 A receiving owner consumes the governed carrier before acting; a screen-visible envelope or excerpt is not sufficient basis when the governed carrier is required.
 
 ### Assignment Delivery Contract
@@ -110,6 +120,8 @@ Task tracking is active when team-lead uses the shared task list as the planned 
 When task tracking is active, team-lead creates or verifies the task row after current-session team runtime registration and before assignment-grade `SendMessage`.
 `TaskCreate` uses top-level non-empty `subject` and `description`.
 The task row supplies `TASK-ID` identity only.
+Renderable `TaskCreate.subject` and `TaskCreate.description` must not carry `MESSAGE-CLASS`, `RETAINED-OUTPUT-PATH`, `WRITE-SCOPE`, packet fields, evidence summaries, counts, route topology, target/member assignment detail, retained-carrier pointers, or completion detail.
+When task-state files are used as governed carriers, their renderable task-row projection remains identity-only.
 `SendMessage.to` carries the live worker target and assignment delivery.
 Task rows are not assignment-owner, assignee, or in-progress tracking surfaces.
 Immediately after `completion` transport, the normal team-runtime `TaskUpdate` mutation sets `status: completed` on the same assigned task.
@@ -121,8 +133,8 @@ Unknown, guessed, pre-team, lead-local, next-numeric, same-batch planned-but-not
 ### Receipt Event Contract
 `dispatch-ack` is the assignment acceptance and immediate work-start state token inside the Communication Plane when bounded same-block completion is not the first upward outcome.
 This contract preserves Communication Plane payload capacity.
-Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
-A receipt event uses the canonical no-detail summary/header token `ack task <TASK-ID>` when task tracking is active, otherwise `ack`, only when the runtime requires a visible transport token.
+Receiver-required execution detail travels through the assignment packet, phase-transition packet, shutdown request, non-rendered task state, retained-output carrier, `status` when lead-requested, `scope-pressure`, `completion`, or `hold|blocker`, according to the owning message class.
+A receipt event uses the canonical no-detail summary/header token `ack`; append `task <TASK-ID>` only when the runtime cannot correlate the receipt through non-rendered task identity and requires a visible transport token.
 The receiving owner interprets that token as `MESSAGE-CLASS: dispatch-ack`; envelope shape is governed by Transport Payload above.
 Before `dispatch-ack`, the lane inspects the assignment packet for `WORK-SURFACE`, required task state, lane authority, full-body load-and-learned required skills, decisive basis, and blocker truth.
 `dispatch-ack` means the lane accepts the packet without team-lead correction, replan, authority change, or blocker clearance.
@@ -140,9 +152,9 @@ The current-packet closing transport classes are `completion`, `scope-pressure`,
 For `scope-pressure` and `hold|blocker`, closure applies only to the unsafe packet execution attempt; same-request duty remains live with the receiving owner until corrected packet, reopened planning, owner route, setup/research/tool path, marked inference/default, parallel continuation, proven user-owned blocker, or blocker-routing with exhausted internal recovery basis and next safe owner/action.
 Closed packet work reopens only through distinct bounded `assignment`, `reuse`, `reroute`, or completion-transport correction carrying new defect evidence.
 Same `TASK-ID` / `WORK-SURFACE` / `RETAINED-OUTPUT-PATH` replay is duplicate packet noise only when it carries no new carrier defect, malformed-completion evidence, bounded correction basis, or blocker basis; team-lead otherwise consumes the retained carrier or sends distinct bounded work.
-After a current-packet closing class, the lane stays silent only for duplicate closed packet work.
-Closed-packet replay stays silent for `status`, `clarification`, duplicate `completion`, and duplicate `dispatch-ack` when no new correction or blocker basis is present.
-A closed lane that discovers genuine post-completion defect evidence or completion-transport defect evidence emits a distinct bounded `MESSAGE-CLASS: hold|blocker` naming the new evidence.
+After a current-packet closing class, the lane sends no additional transport only for duplicate closed packet work.
+Closed-packet replay sends no additional transport for `status`, `clarification`, duplicate `completion`, and duplicate `dispatch-ack` when no new correction or blocker basis is present.
+A closed lane that discovers genuine post-completion defect evidence or completion-transport defect evidence emits a distinct bounded `MESSAGE-CLASS: hold|blocker`; the governed non-rendered carrier names the new evidence.
 Team-lead routes the new evidence through corrected packet, reopened planning, or owner correction.
 The lane drives its own continuation between intra-block turn boundaries without waiting for another team-lead prompt.
 A valid `dispatch-ack` clears receipt and establishes no-objection assignment acceptance; later progress, work quality, completion, and acceptance require their own governed evidence.
@@ -194,7 +206,7 @@ Termination proof is live-roster absence, `teammate_terminated`, or hook/runtime
 `TeamDelete` opens only after termination proof for every live process-backed teammate; absent proof routes to `session-closeout` warning, runtime recovery, or blocker-routing with cleanup owner/action instead of passive waiting.
 
 ## Upward Message Classes
-Every class below is Communication Plane transport. The descriptions name when to use the class; receiver-required execution truth travels through non-rendered packets, task state, retained-output, or retained carriers when size, evidence retention, reuse, or visible-render suppression requires it.
+Every class below is Communication Plane transport. The descriptions name when to use the class; receiver-required execution truth travels through non-rendered packets, non-rendered task state, retained-output, or retained carriers when size, evidence retention, reuse, or visible-render suppression requires it.
 Structured shutdown response is cleanup/control evidence under `## Structured Shutdown Request`, not an upward assignment-work message class.
 
 - `dispatch-ack`
@@ -218,13 +230,14 @@ Structured shutdown response is cleanup/control evidence under `## Structured Sh
 - `scope-pressure`
   - structured objection to workload, ownership split, hidden prerequisite, missing critical field, or burden contract
   - use when the agent rejects the packet as written while packet correction or replanning remains viable
-  - receiver-required detail travels through the governed carrier fields in `scope-pressure.md`: `PRESSURE-TYPE`, `PRESSURE-BASIS`, `CORRECTION-OUTCOME`, `ATTEMPTED-DEFAULTS`, `SMALLEST-SAFE-CORRECTION`, and `RESUME-ROUTE`
+  - receiver-required detail travels through governed non-rendered carrier fields in `scope-pressure.md`: `PRESSURE-TYPE`, `PRESSURE-BASIS`, `CORRECTION-OUTCOME`, `ATTEMPTED-DEFAULTS`, `SMALLEST-SAFE-CORRECTION`, and `RESUME-ROUTE`
+  - rendered `SendMessage` summary/body stays canonical no-detail per Transport Payload
 - `completion`
   - completion-grade candidate only
   - use only after converged lane work has written the retained carrier required by `completion-handoff.md`
   - send to `team-lead` through `SendMessage`
   - requires converged lane-owned work
-  - screen-rendered `SendMessage` header/preview is one state signal only: `completion task <TASK-ID>` when task tracking is active, otherwise `completion`
+  - screen-rendered `SendMessage` header/preview is one state signal only: `completion`, with `task <TASK-ID>` appended only when Transport Payload allows visible task identity
   - envelope shape governed by Transport Payload above
   - no files-read counts, findings counts, per-class totals, excerpts, evidence summaries, operational notes, completion narrative, path-substitution rationale, next-step prose, or retained-output contents in the `SendMessage` render
   - synthesis-ready only when the retained carrier satisfies `.claude/skills/task-execution/references/completion-handoff.md` Common Completion Result Spine
@@ -233,7 +246,8 @@ Structured shutdown response is cleanup/control evidence under `## Structured Sh
   - use as a separate blocked message class after receipt or intake when truthful lane execution is blocked
   - route unavailable decisive user-surface exercise through `hold|blocker`
   - if the blocker is an information request, team-lead must answer it through a corrected packet, reopened planning, or proven user-owned blocker
-  - receiver-required detail travels through the governed carrier fields: `BLOCKER-TYPE`, `BLOCKER-BASIS`, `ATTEMPTED-RESOLUTION`, `OWNER-NEEDED`, `SAFE-NEXT-STEP`, and `RESUME-ROUTE`
+  - receiver-required detail travels through governed non-rendered carrier fields: `BLOCKER-TYPE`, `BLOCKER-BASIS`, `ATTEMPTED-RESOLUTION`, `OWNER-NEEDED`, `SAFE-NEXT-STEP`, and `RESUME-ROUTE`
+  - rendered `SendMessage` summary/body stays canonical no-detail per Transport Payload
   - resolution requires blocker handling through a truthful next owner/action
 
 ### Agent Information Request Consumption

@@ -9,7 +9,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Reference Map
 - `.claude/reference/reporting-prohibition-law.md`: load before any user-facing prose, visible report text, completion claim, phase/stage-end result, user-action blocker report, explicit status answer, final verified result, or closeout residual.
 - `.claude/reference/reporting-user-reporting-law.md`: load after `.claude/reference/reporting-prohibition-law.md` grants a report exception and before admitted user-facing prose is drafted.
-- `.claude/reference/environment-output-curtain-runtime.md`: load when supervised user-report rendering, output-curtain operation, or curtain proof is material.
 - `Skill(task-execution)` -> `references/completion-handoff.md`: consume through active `Skill(task-execution)` when completion claim, completion-grade convergence, retained completion carrier, or lane-output synthesis affects a user-facing report.
 
 ## Reporting Plane Law
@@ -31,6 +30,5 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Any user-facing prose attempt opens `.claude/reference/reporting-prohibition-law.md` before drafting.
 - Admitted report drafting opens `.claude/reference/reporting-user-reporting-law.md` after report-prohibition admission.
 - Completion-grade lane-output synthesis that affects a user-facing report opens active `Skill(task-execution)` consumption of `references/completion-handoff.md`.
-- Supervised report rendering, output-curtain operation, or curtain proof opens `.claude/reference/environment-output-curtain-runtime.md`.
 - Non-reportable content returns to the owning Procedure Plane or Communication Plane action.
 - Conflicting reporting wording opens `Skill(governance-modification)` owner-local cleanup.

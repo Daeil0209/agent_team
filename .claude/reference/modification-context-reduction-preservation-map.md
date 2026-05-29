@@ -3,10 +3,8 @@ doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Modification Philosophy; information preservation; source-to-destination traceability"
-captured: 2026-04-29
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
-topology-updated: 2026-05-20
 ---
 # Context Reduction Preservation Map
 
@@ -37,7 +35,6 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Output-root, source-edit, governance-edit, protected settings, `claude_doc/<work-name>/`, and filesystem boundary detail lives in `.claude/reference/environment-output-root-filesystem-law.md`.
 - User-facing report prohibition and narrow exception lives in `.claude/reference/reporting-prohibition-law.md`.
 - Admitted user-facing report shape, final-result line budget, and report-location line lives in `.claude/reference/reporting-user-reporting-law.md`.
-- Optional supervised report rendering and curtain proof lives in `.claude/reference/environment-output-curtain-runtime.md`.
 - Official Claude Code source facts live in `.claude/reference/environment-official-claude-code-source-cache.md`.
 - Minimal governance patch selection, Patch-Ready Gate, source-to-destination trace, and hardening rules live in `.claude/reference/modification-minimal-governance-change-law.md`.
 - Governance asset mutation, recurrence-barrier hardening path, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references named by that skill's Step 2.
@@ -78,7 +75,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |
 | Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; standalone `Agent` is fallback evidence only, not team-runtime dispatch. |
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |
-| Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, or user-facing blocker; never smooth into progress, completion, or agent reluctance. |
+| Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, proven user-action blocker candidate for reporting-prohibition, or internal blocker-routing; never smooth into progress, completion, or agent reluctance. |
 | Packet correction | Lawful only inside the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |
 | Completion synthesis | Only completion-grade `MESSAGE-CLASS: completion` plus Common Completion Result Spine can synthesize; receipt/status/blocker/pressure cannot close work. |
 | Final arbitration | Formal `PASS/HOLD/FAIL` belongs to `validator`; local `final verified result` closure is valid only when no final-arbitration trigger applies. |

@@ -32,7 +32,7 @@ Disconnected information, hidden assumptions, orphaned components, implausible u
 Such items can also reopen the owning design, implementation, proof, or acceptance path.
 
 Use these defaults when the deliverable class is in scope:
-- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, every applicable `CORE-WORKFLOW-CLOSURE` row closed end-to-end on the user surface (create/import/upsert→disposition, edit→save+reload+consumer-persist, input/mutation→dependent-recompute/reactivity, displayed-surface→inspection/action/navigation, entity/aggregate→authority trace), UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment
+- usable program -> operator-exhaustive proof of every frozen `SCOPE-BASELINE` feature/surface/control and workflow path, every applicable `CORE-WORKFLOW-CLOSURE` row from `.claude/reference/design-delivery-evidence-acceptance-law.md` closed end-to-end on the user surface, UI/browser tool plan when applicable, plus launch and termination burden in the primary operator environment
 - research or analysis report -> all requested questions/sections answered, reader-comprehension structure, decision-surface placement, source-data/example/application method when material, tables/figures when material, and uncertainty visibility
 - reference or source/read document -> direct readability of the changed source/read surface, cross-reference integrity, navigability, and update-safe structure
 - API or library -> contract completeness and integration proof against a real or representative consumer

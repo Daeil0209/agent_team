@@ -8,13 +8,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 # benchmark-simulation: Cited External Reference Evidence
 The following reference families were captured via external benchmark and ground the `SKILL.md` doctrine assertions. Per `Reference-Class Discrimination`, each is classified principle-class or standard-class. Where direct fetch was blocked, downgrade flag is recorded. This file is a preserved evidence cache, not an always-loaded procedure spine.
+Do not use this cache as current external-source proof; when source currentness affects a claim, refresh the source through the active research or benchmark evidence path before promotion.
 
 ## NN/g UX Research Methodology
 - Class: principle-class, high confidence
 - Sources: nngroup.com - "When to Use Which UX Research Methods" (Rohrer), "Contextual Inquiry", "10 Usability Heuristics", "UX Research Cheat Sheet", "The Trustworthiness of UX Evidence"
 - Abstracted principle: research methodology is structured along three axes: attitudinal vs behavioral (what people say vs do), qualitative vs quantitative (why/how vs how-many), and context (natural / scripted / limited / no-product). Methods sit at axis intersections, and the same method shifts purpose by Discover/Explore/Test/Listen phase. NN/g's heuristics framework was empirically derived from factor analysis of 249 observed usability problems; frameworks themselves can be evidence-derived rather than merely asserted.
 - Anti-pattern: sample size alone is a poor indicator of validity. Research diversity across user types, geographies, methodologies, and longitudinal span is the credibility multiplier. Apply to this doctrine: five sources from the same source family do not count as five independent corroborations; cross-family diversity is the actual multiplier.
-- Reject log: NN/g's "Listen phase" (continuous post-launch monitoring via analytics and search logs) does not fit benchmark-simulation's design-time / verification-design-time invocation surface. Keep it as a future cross-reference for `dev-workflow` gap-iteration (`.claude/skills/dev-workflow/references/gap-iteration.md`) only.
+- Reject log: NN/g's "Listen phase" (continuous post-launch monitoring via analytics and search logs) does not fit benchmark-simulation's design-time / verification-design-time invocation surface. Use it only when active `dev-workflow` gap-iteration (`.claude/skills/dev-workflow/references/gap-iteration.md`) needs post-launch monitoring, analytics, or search-log evidence.
 
 ## Major Design Systems Comparison
 - Class: mixed-class, mixed confidence

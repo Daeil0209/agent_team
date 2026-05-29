@@ -84,7 +84,6 @@ SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | t
 IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
 ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
 
-[[ "$TOOL_NAME" == "SendMessage" ]] || exit 0
 tool_response_succeeded || exit 0
 
 CONTROL_PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
@@ -193,7 +192,8 @@ NODE
 _update_worker_retained_carrier_locked() {
   local worker_name="${1:?worker name required}"
   local task_id="${2-}"
-  local retained_path="${3:?retained path required}"
+  local retained_path="${3-}"
+  local write_scope="${4-}"
   local target_file="$WORKER_RETAINED_CARRIER_MAP"
   local temp_file=""
 
@@ -203,7 +203,7 @@ _update_worker_retained_carrier_locked() {
   awk -F'|' -v worker="$worker_name" -v task="$task_id" '
     !($1 == worker && $2 == task) { print $0 }
   ' "$target_file" > "$temp_file"
-  printf '%s|%s|%s\n' "$worker_name" "$task_id" "$retained_path" >> "$temp_file"
+  printf '%s|%s|%s|%s\n' "$worker_name" "$task_id" "$retained_path" "$write_scope" >> "$temp_file"
   atomic_replace_file "$temp_file" "$target_file"
 }
 
@@ -211,14 +211,19 @@ remember_worker_retained_carrier() {
   local worker_name="${1-}"
   local task_id="${2-}"
   local retained_path="${3-}"
+  local write_scope="${4-}"
 
   worker_name="$(normalize_lane_id "$worker_name")"
   task_id="$(printf '%s' "$task_id" | tr -d '[:space:]')"
   retained_path="$(printf '%s' "$retained_path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-  [[ -n "$worker_name" && -n "$retained_path" ]] || return 0
+  write_scope="$(printf '%s' "$write_scope" | tr '\n|' ', ' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  [[ -n "$worker_name" ]] || return 0
+  [[ -n "$retained_path" || -n "$write_scope" ]] || return 0
 
-  with_lock_file "$WORKER_RETAINED_CARRIER_MAP_LOCK" _update_worker_retained_carrier_locked "$worker_name" "$task_id" "$retained_path"
+  with_lock_file "$WORKER_RETAINED_CARRIER_MAP_LOCK" _update_worker_retained_carrier_locked "$worker_name" "$task_id" "$retained_path" "$write_scope"
 }
+
+[[ "$TOOL_NAME" == "SendMessage" ]] || exit 0
 
 lookup_worker_retained_carrier() {
   local worker_name="${1-}"
@@ -258,7 +263,8 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
       if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
         ASSIGNMENT_TASK_ID="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
         ASSIGNMENT_RETAINED_OUTPUT_PATH="$(dispatch_field_raw_value "$DESCRIPTION" "RETAINED-OUTPUT-PATH" 2>/dev/null || true)"
-        remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_TASK_ID" "$ASSIGNMENT_RETAINED_OUTPUT_PATH"
+        ASSIGNMENT_WRITE_SCOPE="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
+        remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_TASK_ID" "$ASSIGNMENT_RETAINED_OUTPUT_PATH" "$ASSIGNMENT_WRITE_SCOPE"
         clear_worker_idle_pending "$TARGET_NAME"
         clear_worker_idle_notice "$TARGET_NAME"
         clear_worker_standby "$TARGET_NAME"

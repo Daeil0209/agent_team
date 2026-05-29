@@ -29,6 +29,7 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 - `ACTIVE`/`STANDBY` tracking-signal semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
 - Receiving `idle_notification` without a preceding completion transport from the agent is a completion failure (T2).
 - Receiving completion transport marks `STANDBY` directly.
+- Monitoring, idle, active, standby, stale, reuse, shutdown, lane-activity, wave, round, waiting, and holding facts stay internal runtime or Procedure Plane state unless `.claude/reference/reporting-prohibition-law.md` admits an explicit status answer for the exact material.
 
 ## Agent Identity Rule
 - If multiple agents of the same capability can exist concurrently, assign unique agent names at dispatch time.
@@ -37,9 +38,10 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 ## Supervisor Decisions On idle_notification
 When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
 If immediate work is available and reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, active cap, and the live agent remains the correct context owner, send `assignment`, `reuse`, or `reroute` as new bounded work.
-If no immediate work is available, send nothing.
+If no immediate work is available for that teammate, send no teammate-directed message for that idle event; continue any other live same-request owner/action through its active owner path.
 If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})`, check termination evidence, then classify cleanup recovery, residue, standby, or blocker-routing explicitly when evidence remains absent.
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
+Supervisor decisions on idle or monitoring signals execute the selected action with required evidence preserved in runtime state, retained carriers, or tool results, and without assistant-authored visible progress prose, status narration, success stdout, listings, counts, or summaries.
 
 ## Message-First Runtime Cleanup Rule
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.
@@ -57,7 +59,8 @@ If validation or correction routing is pending, keep the teammate in `STANDBY`; 
 ## Reuse Rule
 Reuse / standby semantics canonical owner: `.claude/skills/session-boot/references/runtime-state-detail.md` `## Reuse Rule`. Lead-side monitoring-action extensions below.
 - Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
-- Treat `standby` as already set by valid `completion`; choose no message when no immediate reuse, correction, or shutdown is needed.
+- Treat `standby` as already set by valid `completion`; choose no teammate-directed message when no immediate reuse, correction, or shutdown is needed for that teammate, while other live owner/actions continue through their active paths.
+- Reuse and standby decisions update runtime state or send the next bounded work while preserving required evidence and without assistant-authored visible narration; do not narrate lane cycling, active-lane count, round progress, waiting state, or no-op standby.
 
 ## Manifest Review Gate
 - When execution depends on a user-provided file list, copy set, or overwrite manifest, complete review before fan-out: collapse duplicates, verify final unique write set, and make pre-execution review explicit.
@@ -92,8 +95,9 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical health-check activation semantics.
 - The configured cron cadence and stale thresholds are defined in `hook-policy.sh`; treat that file as the single literal owner.
 - Direct oversight, event-triggered agent monitoring, and memory-pressure checks remain the primary lead-owned monitoring path even when no tracked health-check cron is active.
+- Use `CronList` to inspect scheduled-task state only when tracked health-check cron existence, ID, or rotation state is material to the next monitoring action.
 - In single-primary automation mode, keep the watchdog armed during standby periods. Do not pause the health-check cron merely because all agents are standby.
-- Replacing the tracked health-check cron is not session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, then perform `CronDelete` and replacement `CronCreate`.
+- Replacing the tracked health-check cron is not session closeout. For monitor rotation, record explicit rotation intent in structured runtime state first, inspect scheduled-task state when needed with `CronList`, then perform `CronDelete` and replacement `CronCreate`.
 - If no tracked health-check cron is active, do not create, rotate, or narrate one by ceremony.
 
 ## Stale Response
@@ -114,7 +118,7 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 - Healthy active lane returns to monitoring.
 - Reuse-fit live lane opens bounded reuse.
 - Idle notification without preceding completion transport opens completion-transport correction, recovery/reissue, or blocker-routing after internal recovery is exhausted; it never marks `STANDBY`.
-- Standby decision sends no message unless bounded reuse or cleanup is selected.
+- Standby decision sends no teammate-directed message unless bounded reuse or cleanup is selected for that teammate; unrelated live owner/actions continue through their active paths.
 - Shutdown decision opens structured `shutdown_request`.
 - Stale response opens investigate, bounded wait-extension, reroute, resize, replacement, or replan.
 - Manifest overlap opens pre-execution manifest correction.

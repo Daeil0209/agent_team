@@ -14,7 +14,7 @@ Return admitted report wording and shape to `.claude/reference/reporting-user-re
 Record the compact report-shape basis for admitted team-lead prose.
 
 ## Consume When
-- A reporting-law-admitted team-lead report needs final-result line-budget, requested-work-only, report-location, or link-placement basis.
+- A reporting-law-admitted team-lead report needs final-result line-budget, requested-work-only, report-location, post-final-tail absence for final-result reports, or link-placement basis.
 - A draft admitted report may exceed the shape allowed by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Required Output
@@ -23,11 +23,12 @@ Record:
 - final-result `<=8` rendered-line basis when material
 - requested-work-only basis when material
 - report-location line basis when material
+- post-final-tail absence basis for final-result reports
 - link-placement basis when material
 
 ## Routing Gate
 - Missing reporting-law exception returns to `.claude/reference/reporting-prohibition-law.md`.
-- Missing final-result line-budget, requested-work-only, report-location, or link-placement basis keeps this reference active until the basis is recorded or opens the smallest evidence owner that can supply it.
+- Missing final-result line-budget, requested-work-only, report-location, post-final-tail absence for a final-result report, or link-placement basis keeps this reference active until the basis is recorded or opens the smallest evidence owner that can supply it.
 - A recorded basis with draft wording that violates report shape returns to `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Resolve Next Owner And Action
@@ -36,5 +37,5 @@ Record:
 - Basis gaps open the smallest owner that can supply the missing evidence.
 
 ## Evidence Basis
-- Final-result shape basis records `REPORT-LINE-BUDGET: <=8`, `REQUESTED-WORK-ONLY: pass`, and `REPORT-LOCATION-LINE: 보고서: <canonical artifact path> | 보고서: 해당 없음`.
+- Final-result shape basis records `REPORT-LINE-BUDGET: <=8`, `REQUESTED-WORK-ONLY: pass`, `REPORT-LOCATION-LINE: <localized-report-label>: <canonical artifact path> | <localized-report-label>: <localized-none-value>`, and `POST-FINAL-TAIL: absent`.
 - Raw artifacts are shown only when explicitly requested or when the artifact is the deliverable.

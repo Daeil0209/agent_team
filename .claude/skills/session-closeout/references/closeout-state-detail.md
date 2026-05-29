@@ -40,8 +40,8 @@ Structured shutdown request shape is owned by `.claude/skills/task-execution/ref
 
 ## Resolve Next Owner And Action
 - `cleanupEligibility: ready` returns to session-closeout completion.
-- `closeoutDisposition: hold` routes blocker-routing with residual owner, blocker, exhausted cleanup basis, and next safe owner/action through `.claude/reference/reporting-prohibition-law.md`.
-- `cleanupEligibility: blocked` with preserved residual truth routes warning-bearing closeout through `.claude/reference/reporting-prohibition-law.md`.
-- Live teammate residue opens shutdown resolution or reporting-law-routed warning-bearing closeout.
+- `closeoutDisposition: hold` records blocker-routing with residual owner, blocker, exhausted cleanup basis, and next safe owner/action; any user-facing residual prose requires `.claude/reference/reporting-prohibition-law.md` admission.
+- `cleanupEligibility: blocked` with preserved residual truth routes cleanup recovery first; warning-bearing closeout opens only when no executable cleanup route remains and `.claude/reference/reporting-prohibition-law.md` admits it.
+- Live teammate residue opens shutdown resolution first; warning-bearing closeout opens only when no executable cleanup route remains and `.claude/reference/reporting-prohibition-law.md` admits it.
 - Validation debt returns to the owning validation or acceptance path.
 - Runtime cleanup debt returns to session-closeout teardown.

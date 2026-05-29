@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -30,7 +30,7 @@ Carry:
 - `BLOCKING-ISSUES`
 - `RETAINED-CARRIER-PATH` when phase evidence or receiver-required context is too large for the packet
 
-Affected agents consume phase context silently; new bounded work uses an assignment-grade packet and normal `dispatch-ack`.
+Affected agents consume phase context without user-facing report; new bounded work uses an assignment-grade packet and normal `dispatch-ack`.
 Team-lead or the active workflow owner sends this packet only after the workflow phase cursor is truthfully advanced.
 
 ## Resolve Next Owner And Action

@@ -49,6 +49,25 @@ Governance implications:
 - Constraint reports from a teammate are lead coordination input, not final completion; `.claude/skills/task-execution/references/message-classes.md` `## Upward Message Classes` owns the operative rule when this implication affects routing.
 - Team runtime routing must preserve official limitations instead of hiding them behind local procedure labels; `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` owns the operative rule when this implication affects dispatch.
 
+## Built-In Tools
+Source: https://code.claude.com/docs/en/tools-reference
+Source: https://code.claude.com/docs/en/scheduled-tasks
+
+Cached facts:
+- Tool names are the exact strings used in permission rules, subagent tool lists, and hook matchers.
+- `CronCreate` schedules a recurring or one-shot prompt within the current session.
+- `CronList` lists scheduled tasks in the session.
+- `CronDelete` cancels a scheduled task by ID.
+- Scheduled tasks require Claude Code support for cron tools and are unavailable when `CLAUDE_CODE_DISABLE_CRON=1` is set.
+- `EnterWorktree` creates or enters an isolated git worktree for the current repository.
+- `ExitWorktree` exits a worktree session and returns to the original directory.
+- `EnterWorktree` and `ExitWorktree` are not available to subagents that already run in their own working directory.
+
+Governance implications:
+- `CronList` is a scheduled-task inspection tool; monitoring procedure owns its use when scheduled-task state affects health-check cron decisions.
+- `EnterWorktree` and `ExitWorktree` are lead-session worktree isolation tools; runtime/filesystem boundary procedure owns their use conditions.
+- Permission allow-list presence proves tool exposure only; the consuming owner still applies the owning procedure before tool use.
+
 ## Agent Definition Files
 Source: https://code.claude.com/docs/en/sub-agents
 
@@ -84,12 +103,9 @@ Cached facts:
 - `user-invocable: false` hides a skill from direct slash-command use while keeping it available as background knowledge when relevant.
 - Invoked skill content stays in conversation context and can be carried through compaction within token budgets.
 - Claude Code custom skills are filesystem-based and separate from Claude.ai/API skill uploads.
-- Custom commands have been merged into skills. Existing `.claude/commands/` files still work, but official docs prefer skills because they support additional features such as supporting files.
-- If a skill and command share a name, the skill takes precedence.
 
 Governance implications:
 - Use `user-invocable: false` for governance skills that are model-invoked rather than user-facing commands.
-- Do not treat absence of `.claude/commands/` as a defect when the project uses equivalent skills.
 
 ## Hooks
 Source: https://code.claude.com/docs/en/hooks
@@ -108,7 +124,7 @@ Cached facts:
 Governance implications:
 - Hooks are valid for deterministic guardrails and runtime feedback, but they carry security and operational risk; `.claude/CLAUDE.md` `## 8. Environment Configuration Philosophy` and `.claude/reference/work-runtime-boundary-law.md` own operative hook-last rules when this implication affects hook governance.
 
-## Memory, Rules, And Settings
+## Memory And Settings
 Source: https://code.claude.com/docs/en/memory
 Source: https://code.claude.com/docs/en/settings
 
@@ -117,7 +133,6 @@ Cached facts:
 - Project instructions live at `./CLAUDE.md` or `./.claude/CLAUDE.md`.
 - Long `CLAUDE.md` files consume context and reduce adherence; official documentation favors concise, specific, structured instructions.
 - Official troubleshooting says `CLAUDE.md` files over 200 lines can reduce adherence.
-- `.claude/rules/` can split instructions and scope them to paths.
 - `@path` imports are an organization mechanism; imported files load into context at launch with the importing `CLAUDE.md`.
 - `settings.json` is the official mechanism for technical configuration such as permissions, environment, hooks, and sandbox behavior.
 - Settings priority is managed, command-line, local, project, then user.
@@ -127,7 +142,6 @@ Governance implications:
 - Do not claim `@imports` reduce launch context footprint; use them for organization, not lazy loading.
 - Do not claim `CLAUDE.md` prose alone hard-enforces a behavior; use settings, permissions, sandbox, or hooks for technical enforcement.
 - Keep project-shared team standards in `.claude/` project scope and machine-specific experimentation in local scope.
-- Treat `.claude/rules/` as an official capability fact only; this repository has no live `.claude/rules/` owner surface unless a structural governance change introduces that directory and its consumption path.
 
 ## Use Rule
 When a governance patch claims official-document alignment, cite the relevant source section from this cache in the internal basis.

@@ -50,7 +50,6 @@ ORPHAN_PID_LIST=""
 STALE_SOCKET_COUNT=0
 STALE_SOCKET_LIST=""
 STATUS="ok"
-AUTO_REAP_ELIGIBLE="false"
 
 if runtime_automation_single_primary && [[ -n "$CURRENT_SESSION_ID" ]]; then
   ORPHAN_SCAN="$(
@@ -148,12 +147,6 @@ if (( STALE_SOCKET_COUNT > 0 )) && [[ "$STATUS" == "ok" ]]; then
   STATUS="soft"
 fi
 
-if runtime_automation_single_primary && runtime_autoreap_enabled && [[ -n "$CURRENT_SESSION_ID" ]]; then
-  if (( ORPHAN_PROCESS_COUNT > 0 || STALE_SOCKET_COUNT > 0 )); then
-    AUTO_REAP_ELIGIBLE="true"
-  fi
-fi
-
 SUMMARY="status=${STATUS};mem_kb=${MEM_AVAILABLE_KB};swap_kb=${SWAP_FREE_KB};orphan_sessions=${ORPHAN_SESSION_COUNT};orphan_processes=${ORPHAN_PROCESS_COUNT};orphan_rss_kb=${ORPHAN_RSS_KB};stale_sockets=${STALE_SOCKET_COUNT}"
 
 STATE_FILE="$RUNTIME_PRESSURE_STATE_FILE" \
@@ -169,7 +162,6 @@ ORPHAN_SESSION_IDS="$ORPHAN_SESSION_IDS" \
 ORPHAN_PID_LIST="$ORPHAN_PID_LIST" \
 STALE_SOCKET_COUNT="$STALE_SOCKET_COUNT" \
 STALE_SOCKET_LIST="$STALE_SOCKET_LIST" \
-AUTO_REAP_ELIGIBLE="$AUTO_REAP_ELIGIBLE" \
 SUMMARY="$SUMMARY" \
 node <<'NODE'
 const fs = require("fs");
@@ -201,7 +193,6 @@ const state = {
   orphanPids: splitList(process.env.ORPHAN_PID_LIST).map((value) => Number(value)),
   staleSocketCount: Number(process.env.STALE_SOCKET_COUNT || 0),
   staleSockets: splitList(process.env.STALE_SOCKET_LIST),
-  autoReapEligible: String(process.env.AUTO_REAP_ELIGIBLE || "") === "true",
   summary: process.env.SUMMARY || ""
 };
 
@@ -221,5 +212,4 @@ printf '%s\n' \
   "$STALE_SOCKET_COUNT" \
   "$ORPHAN_PID_LIST" \
   "$STALE_SOCKET_LIST" \
-  "$AUTO_REAP_ELIGIBLE" \
   "$SUMMARY"

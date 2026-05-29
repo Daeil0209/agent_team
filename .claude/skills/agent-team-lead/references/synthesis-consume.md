@@ -18,6 +18,7 @@ Completion transport, report admission, finding promotion, verification, runtime
 - `retained material content` — the normalized downstream-relevant meaning of a category member after preserving its source case identifier and evidence anchor.
 - `work-item` — one de-duplicated downstream execution unit by resolved coordinate target.
 - `correlation-analysis` work-item — covers one resolved coordinate target with multiple categories or retained material contents that must be handled together without merging their categories.
+- `unresolved input item` — missing, late, insufficient, `OPEN-SURFACES`, `scope-pressure`, `hold|blocker`, or otherwise non-completion-grade input held outside the admitted-case inventory until corrected, excluded, deferred, or blocker-routed.
 
 ## Consume When
 - Completion-grade lane results must be merged.
@@ -32,16 +33,16 @@ Completion transport, report admission, finding promotion, verification, runtime
 - Fallback evidence that cannot populate the needed completion spine fields remains an unresolved input item, opens corrected transport, redispatches bounded evidence work, or opens blocker-routing after internal recovery is exhausted.
 
 ## Synthesis Procedure
-1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.
+1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input; unresolved input items are not admitted cases.
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.
-3. Keep missing, late, or insufficient inputs as unresolved input items outside the admitted-case inventory.
+3. Keep missing, late, insufficient, or otherwise unresolved inputs as unresolved input items outside the admitted-case inventory.
 4. Map every admitted case to exactly one `category` by same evidence-backed material feature; single-member categories are valid and `CATEGORY-MEMBER-TOTAL` must equal `ADMITTED-CASE-TOTAL`.
 5. Keep cases in separate categories when owner/action, causal mechanism, evidence need, acceptance truth, or correction path differs materially.
 6. For each category member, record every material resolved `work-coordinate` target; record `no-follow-on:<basis>` only when the category member has no material coordinate target.
 7. Collapse duplicate follow-on work only when category, retained material content, and resolved coordinate target are all the same; preserve collapsed case identifiers as `covered-cases`.
 8. When one resolved coordinate target carries multiple categories or retained material contents, emit one `correlation-analysis` work-item for that target and preserve all covered cases.
 9. Treat unresolved category mapping, malformed/non-resolving coordinate, uncollapsed duplicate, or missing correlation item as mapping correction, not synthesis closure.
-10. Close synthesis only after both completion gates pass.
+10. Close synthesis only after all completion gates pass.
    - Gate 1: `ADMITTED-CASE-TOTAL` equals `CATEGORY-MEMBER-TOTAL`.
    - Gate 2: every category member either records `no-follow-on:<basis>` or has every material resolved coordinate target mapped exactly once to one de-duplicated `work-item` or one `correlation-analysis` work-item.
    - Gate 3: every missing, late, insufficient, or otherwise unresolved required input is corrected, redispatched, excluded by explicit out-of-scope basis, deferred by cited lawful owner-deferral authority, or blocker-routed after internal recovery before final/completion coverage closure.
@@ -49,6 +50,7 @@ Completion transport, report admission, finding promotion, verification, runtime
 ## Synthesis Result
 - Return category inventory as the case-classification surface; include work-item mapping when follow-on work is material.
 - Keep unresolved input items separate from the admitted-case inventory.
+- Carry completion-carrier `OPEN-SURFACES` as unresolved input or routing items. A separate current completion-grade `VERIFIED-DATA-FEEDBACK` row may admit its verified material content as a case, but it does not close the `OPEN-SURFACES` item unless the carrier basis proves closure.
 - Carry source surfaces, case identifiers or labels, evidence anchors for category members, `ADMITTED-CASE-TOTAL`, `CATEGORY-MEMBER-TOTAL`, category mapping bases, coordinate resolution bases, work-item mapping, unresolved inputs, result coverage, and material `UPSTREAM-DECISION-BASIS`.
 - When follow-on work is material, return `ADMITTED-CASE-INVENTORY`, `CATEGORY-MEMBER-MAP`, `WORK-ITEMS`, each `work-item`'s type, resolved coordinate target, coordinate expression aliases, covered categories, retained material contents, and covered case identifiers or labels.
 - Do not emit two ordinary `WORK-ITEMS` for the same category, retained material content, and resolved coordinate target; preserve duplicated source cases only as covered cases.

@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -71,7 +71,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.
-- Assignment packets carry the governed Communication Plane payload through `SendMessage`, task state, or retained carriers.
+- Assignment packets carry the governed Communication Plane payload through `SendMessage`, non-rendered task state, or retained carriers.
 
 ## Resolve Next Owner And Action
 - Passing entry contract opens `task-execution` Step 1 Activate Frozen Route.

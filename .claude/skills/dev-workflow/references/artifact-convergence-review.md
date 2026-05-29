@@ -157,7 +157,7 @@ Phase advancement requires:
 - `Skill(self-verification)` runs convergence on the reconciled claim
 
 After `converged` or `resolved-divergence` phase-gate artifact resolution satisfies Phase advancement requirements, execute `next owner/action` as phase advancement, next phase boundary `work-planning`, or the named downstream owner.
-User-facing review/proceed prompts are valid only when the user already requested review, explicit approval is required, or a verified user-owned blocker exists; otherwise keep review offers internal and execute the next owner/action.
+Review/proceed prompts stay internal unless `.claude/reference/reporting-prohibition-law.md` admits the exact user-facing prose for a user-requested review/status answer, explicit approval requirement, or verified user-owned blocker; otherwise execute the next owner/action.
 
 Route-level `CODEX-INDEPENDENT-REVIEW-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and reporting-law-admitted user-facing prose.

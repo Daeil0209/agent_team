@@ -119,35 +119,6 @@ sanitize_ledger_field() {
   printf '%s' "$raw" | tr '\n' ' ' | sed -E 's/\|/%7C/g; s/[[:space:]]+/ /g; s/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
-specialist_skill_requires_explicit_approval() {
-  local skill_id=""
-  skill_id="$(normalize_skill_id "${1-}")"
-  pipe_list_has_token "$SPECIALIST_SKILLS_REQUIRING_APPROVAL" "$skill_id" && active_skill_exists "$skill_id"
-}
-
-role_local_skill_owner_role() {
-  local skill_id=""
-  local canonical_role=""
-  skill_id="$(normalize_skill_id "${1-}")"
-  [[ -n "$skill_id" ]] || return 1
-  active_skill_exists "$skill_id" || return 1
-
-  if canonical_role="$(canonical_registered_agent_name "$skill_id" 2>/dev/null)"; then
-    printf '%s' "$canonical_role"
-    return 0
-  fi
-
-  return 1
-}
-
-role_local_skill_requires_matching_role() {
-  role_local_skill_owner_role "${1-}" >/dev/null
-}
-
-skill_requires_explicit_approval() {
-  specialist_skill_requires_explicit_approval "${1-}"
-}
-
 canonical_dispatch_agent_name() {
   local raw="${1-}"
   local canonical_name=""

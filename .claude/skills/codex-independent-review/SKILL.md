@@ -89,4 +89,5 @@ Load only the references whose trigger is active:
 - Rejected points record cited doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
 - Codex MCP access failure records `fail-open:<reason>` on the active configured-review record.
 - Unadjudicated valid points keep the active path open.
-- Unsupported post-route-freeze expansion opens the active `Skill(governance-modification)` path.
+- Unsupported post-route-freeze expansion opens `work-planning` when it changes target, scope, route, staffing, proof, or acceptance boundary.
+- Open `Skill(governance-modification)` only when the accepted point requires governance asset change or recurrence-barrier hardening.

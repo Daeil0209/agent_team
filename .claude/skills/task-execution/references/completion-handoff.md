@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -16,7 +16,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 This spine names content that the producing lane must provide to team-lead through a retained carrier.
 `completion` is the internal lane-to-team-lead signal that assigned lane work ended and the result carrier is ready for team-lead consumption.
 `completion` is Communication Plane transport, not a user report, final acceptance, or final user-facing result.
-For team-agent runtime, the screen-rendered `SendMessage` header/preview is one state signal, not the completion spine.
+For team-agent runtime, rendered envelope shape follows `.claude/skills/task-execution/references/message-classes.md`; the rendered state signal is not the completion spine.
 State signal text and envelope shape are owned by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 The retained carrier is part of Communication Plane payload and carries the completion spine for team-lead synthesis.
 
@@ -50,7 +50,9 @@ Any content added to the `SendMessage` `summary` or `message` parameters beyond 
 After the state signal is sent, the producing lane immediately applies the same assigned-task `TaskUpdate` closure required by `message-classes.md` `### Assignment Delivery Contract` when task tracking is active.
 That task-state mutation records lane handoff closure only; it is not team-lead acceptance, final verification, user reporting, or completion narrative.
 
-Team-lead accepts completion-grade transport only when the assignment, task state, or retained-carrier registry silently verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `PLANNING-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, conditional `CORE-WORKFLOW-CLOSURE-COVERAGE`, and `LANE-LOCAL-RESULT-VERIFICATION`.
+Team-lead accepts completion-grade transport only when the assignment, non-rendered task state, or retained-carrier registry internally verifies a retained carrier that contains every required completion payload field, including `UPSTREAM-DECISION-BASIS-CONSUMPTION`, `PLANNING-BASIS-CONSUMPTION`, `VERIFIED-DATA-FEEDBACK`, conditional `CORE-WORKFLOW-CLOSURE-COVERAGE`, and `LANE-LOCAL-RESULT-VERIFICATION`.
+Carrier existence and required-field checks use quiet commands or reads: success produces no assistant-authored terminal-visible stdout, and failure emits only the smallest missing-path or missing-field signal needed for correction routing.
+Team-lead does not print retained-carrier headers, excerpts, line counts, candidate counts, completion-grade summaries, acceptance narration, reuse decisions, round state, lane activity, or waiting status while accepting completion or preparing reuse.
 Carrier assertions of `PASS-1`, `PASS-2`, `CONVERGENCE-PASS`, planning-basis consumption, lens application, or verification completion are completion-grade only when they cite actual loaded-basis evidence, applied-rule mapping, decision impact, actual `Skill(self-verification)` loaded-skill basis, and the required or claimed `Skill(review-verification)` packet or lens basis.
 If the retained carrier or any required completion payload field is missing, team-lead routes correction to the producer when the producer still has an open executable task.
 If the task is closed, correction uses a distinct bounded `assignment`, `reuse`, or `reroute` with an open executable task only when the producer lane remains the truthful correction owner; otherwise team-lead routes `Skill(governance-modification)` cleanup.

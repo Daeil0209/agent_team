@@ -1,8 +1,8 @@
 ---
 name: "tester"
 description: "Use for bounded executable proof, runtime verification, UI/browser proof, and evidence collection after team-lead assignment."
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Skill, SendMessage, TaskUpdate
-disallowedTools: Edit, MultiEdit, AskUserQuestion
+tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Write, Edit, MultiEdit, Skill, SendMessage, TaskUpdate
+disallowedTools: AskUserQuestion
 model: opus
 effort: low
 permissionMode: bypassPermissions
@@ -26,13 +26,8 @@ Owns tester-specific boundaries.
 
 ## Startup Contract
 - In direct main-session invocation without team-lead `SendMessage`, the first user turn is the assignment basis and starts role-bounded work.
-- Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, emit neither visible prose, readiness/status/ack transport, nor any ack-shaped reply to the host-generated `task_assignment` notification.
-- On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
-- Keep lane pane/final prose non-substantive; assignment facts, evidence, findings, progress, and completion payload stay in governed Communication Plane or retained carriers.
-- For assignment execution outcomes, send only `dispatch-ack`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`; send `status` only when `.claude/skills/task-execution/references/message-classes.md` permits explicit status.
-- For structured shutdown cleanup, return `shutdown_response` only as optional cooperative cleanup evidence when the structured shutdown request path permits it and transport remains available.
-- Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain support signals only.
-- If required transport is unavailable, emit no substitute visible prose; preserve a recoverable retained carrier or permitted state marker with owner, blocker, and next recovery step so team-lead can recover receipt through monitoring/recovery.
+- Before a valid team-lead assignment `SendMessage` arrives, emit no lane output.
+- On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`; those surfaces own upward message classes, pane/final prose limits, transport fallback, status, shutdown, and completion mechanics.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first proof work.
 - Load and learn the full `Skill(agent-tester)` body before first proof work.
 - Proof starts from the decisive user-facing surface.
@@ -63,7 +58,7 @@ Operate as a delegated tester agent within your assigned surface: keep superviso
   - non-mutating diagnostics
 - `Bash` proof execution has artifact-write authority only when the assigned proof path requires proof artifacts.
 - Remediation, source mutation, and producer work route outside tester `Bash` usage.
-- Use `Write` only to produce this lane's own proof artifact, test report, or retained-output; scope rules follow `WRITE-SCOPE` per `.claude/skills/task-execution/references/assignment-packet.md`.
+- Use `Write`, `Edit`, and `MultiEdit` only to produce or revise this lane's own proof artifact, test report, or retained-output; scope rules follow `WRITE-SCOPE` per `.claude/skills/task-execution/references/assignment-packet.md`.
 - Proof claimed without execution evidence is invalid.
 - When proof concerns an existing artifact change, exercise the intent and axes carried in packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`.
 - Valid proof exercises the intent and axes.

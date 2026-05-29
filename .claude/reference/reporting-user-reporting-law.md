@@ -24,7 +24,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `final verified result` states the result first in concise Korean.
 - `final verified result` includes verification basis, cited lawful owner-deferral authority, explicit out-of-scope surface, or material defect state only when it affects the instructed work result or was explicitly requested.
 - `final verified result` excludes unrequested internal procedure, skill/reference loads, route or dispatch topology, diff inventories, raw candidate counts, broad evidence detail, self-accusation, excuses, intent promises, and proceed prompts.
-- `final verified result` places the last rendered line as `보고서: <canonical artifact path>` when a report artifact exists or the user requested a report location; otherwise the last rendered line is `보고서: 해당 없음`.
+- `final verified result` places `REPORT-LOCATION-LINE` as the last rendered line: `<localized-report-label>: <canonical artifact path>` when a report artifact exists or the user requested a report location, otherwise `<localized-report-label>: <localized-none-value>`.
+- `final verified result` ends the final-result report block at `REPORT-LOCATION-LINE`; no assistant-authored rendered content follows that line in the same final-result block.
+- Post-final runtime, standby, idle, cleanup, no-further-work, or follow-up suggestion content stays out of final-result prose.
+- A separately admitted explicit status answer or closeout residual uses its own report event and is not appended after the final-result `REPORT-LOCATION-LINE`.
 - `final verified result` avoids final acceptance or `PASS/HOLD/FAIL` wording unless the `validator` issued that verdict.
 - `user-action blocker` states the blocked user decision/action and the smallest safe next step.
 - `explicit status answer` uses the narrowest truthful answer, including exact internal material only when that exact material was explicitly requested, and then returns to the active owner action unless the user redirected or a user-action blocker exists.
@@ -34,6 +37,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Resolve Next Owner And Action
 - Passing `## Report Shape` returns to `team-lead` for the admitted prose, then follows the continuation named by `.claude/reference/reporting-prohibition-law.md` or resumes the prior live owner/action unless redirected, blocked by a proven user-owned action, or final closure applies.
-- Missing line-budget, requested-work-only, report-location, or link-placement basis opens `.claude/skills/agent-team-lead/references/reporting-user-reporting-rules.md` evidence-basis correction.
+- Missing line-budget, requested-work-only, report-location, post-final-tail absence for a final-result report, or link-placement basis opens `.claude/skills/agent-team-lead/references/reporting-user-reporting-rules.md` evidence-basis correction.
 - Report-admission gaps return to `.claude/reference/reporting-prohibition-law.md`.
 - Non-excepted prose returns to the owning Procedure Plane or Communication Plane path without visible drafting.

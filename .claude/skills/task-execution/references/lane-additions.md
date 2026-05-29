@@ -1,5 +1,5 @@
 ---
-PRIMARY-OWNER: task-execution
+PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/skills/task-execution/SKILL.md
 SOURCE-RULES: "Parent skill Reference Map; Work Execution Philosophy reference binding; active owner path"
 LOAD-POLICY: on-demand reference only
@@ -32,7 +32,6 @@ Every agent-specific skill inherits these common preconditions:
 - Converged lane work must hand off to `team-lead` through `.claude/skills/task-execution/references/completion-handoff.md`.
 - The handoff requires both the retained carrier containing the common completion spine and `MESSAGE-CLASS: completion` sent to `team-lead` through `SendMessage`.
 - Required completion handoff uses both retained carrier and `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain supporting signals.
-- Completion-grade `completion` envelope shape governed by `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Immediately apply the same assigned-task `TaskUpdate` closure required by `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` when task tracking is active after `completion`.
 - That `TaskUpdate` marks lane handoff closure only; retained-carrier acceptance, synthesis, final verification, and user-facing report admission stay with team-lead and reporting law.
 - After `completion`, exact same `TASK-ID` replay with no new defect, carrier, correction, or blocker basis is closed-work replay and the lane sends no further message for that duplicate work.
@@ -64,7 +63,7 @@ Every agent-specific skill inherits these common preconditions:
 - Report suppression and visible-row hygiene preserve complete, undistorted assignment facts.
 - Preserve the following in governed carriers when material: exact request intent, target intent, acceptance basis, constraints, assumptions, inferences, blocker truth, evidence pointers, and next owner/action.
 - Load and apply duties remain internal unless a receiver-owned packet, blocker, or completion field requires them.
-- Before a lane uses actual full-body skill load-and-learn, officially preloaded full-skill basis, same-session loaded-and-learned skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
+- Before a lane uses actual full-body skill load-and-learn, same-session loaded-and-learned skill basis, `REQUIRED-SKILLS`, or `SKILL-RECOMMENDATIONS` to authorize assigned work or completion, consume `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`; stale or uncertain basis opens required skill reload, exact trigger-reference consumption, `scope-pressure`, or `hold|blocker`.
 - For each trigger-active pointer governing the assigned lane action or completion claim, record `applied`, `not-material:<basis>`, or `blocked:<basis>` per `.claude/reference/work-skill-reference-binding-law.md`.
 - Consume `UPSTREAM-DECISION-BASIS` before first lane work when the packet carries or should carry prior reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready output.
 - If material `UPSTREAM-DECISION-BASIS` is missing, stale, contradictory, or not consumable, send `scope-pressure` or `hold|blocker` and request a consumable upstream basis.
@@ -100,7 +99,11 @@ Every agent-specific skill inherits these common preconditions:
 - Completion records `UPSTREAM-DECISION-BASIS-CONSUMPTION`; missing consumption blocks completion-grade handoff when upstream decision basis was material.
 - Lane-local `Skill(self-verification)` convergence verifies producer-owned result truth at the applicable frozen claim strength, including `CLAIM-CEILING` when the packet carries one.
 - PASS-2 remains blocked until the lane has a current `review_verification_packet` from actual `Skill(review-verification)` Step 14 for the exact produced result and outgoing claim; evidence-only claim ceilings narrow authority only and never replace PASS-2.
-- Packet quantitative scope specs (`PASS-2-MANDATE` lens count, `REVIEW-VERIFICATION-LENSES` enumeration, `COMPLETION-STOP-CONDITION` axis count, similar) are MINIMUM lane coverage within the same assigned review question, target, corpus, scope, claim ceiling, and lane authority, not maximum; lane extends without new packet authorization when produced-surface risk profile, domain breadth, or upstream evidence indicates deeper application of assigned named lenses, additional defeater enumeration, or coverage axis extension within that same bounded scope is material per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` substantive failure-mode probing rule, records the extension basis and exact applied lenses in the retained carrier, and treats packet-as-ceiling interpretation as the failure mode that `Skill(self-verification)` Step 3 PASS-2 fails on shallow verification; extension that would change target, corpus, bounded question, scope, claim ceiling, owner authority, or binding promotion/patch-selection authority requires `scope-pressure`, route-replan, or full-workflow activation per `.claude/skills/review-verification/SKILL.md` `## Activation` bounded-packet-evidence rule, not self-authorization.
+- Packet quantitative scope specs (`PASS-2-MANDATE` lens count, `REVIEW-VERIFICATION-LENSES` enumeration, `COMPLETION-STOP-CONDITION` axis count, similar) are minimum lane coverage, not maximum, within the same assigned review question, target, corpus, scope, claim ceiling, and lane authority.
+- The lane extends inside that same bounded scope when produced-surface risk profile, domain breadth, or upstream evidence makes deeper assigned-lens application, additional defeater enumeration, or coverage-axis extension material per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`.
+- The lane records the extension basis and exact applied lenses in the retained carrier.
+- Packet-as-ceiling interpretation is shallow-verification failure for `Skill(self-verification)` Step 3 PASS-2.
+- Extension that would change target, corpus, bounded question, scope, claim ceiling, owner authority, or binding promotion/patch-selection authority requires `scope-pressure`, route-replan, or full-workflow activation per `.claude/skills/review-verification/SKILL.md` `## Activation`, not lane self-authorization.
 - For AC-supporting rendered evidence, open every cited screenshot or full-page capture directly via the multimodal `Read` tool before claiming the rendered surface; AC-supporting proof requires the opened rendered surface. Routine non-AC baseline captures stay cite-only when they are unrelated to verdict support and defect evidence.
 - Team-lead owns synthesis `Skill(self-verification)` convergence.
 - Consume the agent-specific skill only for consequential lane-owned work.

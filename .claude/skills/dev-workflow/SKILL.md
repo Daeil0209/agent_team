@@ -10,7 +10,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
   1. `Activation Criteria`
   2. `Workflow Core Law`
   3. Phase sections (Phase 0-5) in order
-  4. Reference detail workflow sections (active references in `references/`):
+  4. Reference-Owned Workflow Sections (active references in `references/`):
      - `Checkpoints`, `Phase Transition Gates`, `Phase Surfaces`, `Artifact Convergence Review`, `Review Convergence Review`, `Final Acceptance Review`, `Incident Response`, `Gap Iteration`, `Operator Delivery`
   5. Local orchestration sections:
      - `Resolve Next Owner And Action`, `Related Skills`, `Delivery Spine`, `Governance Change And Structural Feedback`
@@ -250,7 +250,7 @@ Resolve the phase cursor in the same turn by tool-call execution: dispatch or ex
 A satisfied non-destructive/non-security/non-operator-policy-choice phase gate is consumed by team-lead, not user confirmation.
 
 When team-lead advances to a new phase, send the canonical `phase-transition-control` packet from `.claude/skills/task-execution/references/phase-transition-control.md` to each affected agent.
-Affected agents consume phase context silently.
+Affected agents consume phase context without user-facing report.
 Use assignment-grade packets for new bounded work and structured `shutdown_request` for runtime cleanup.
 If the same agent also receives new bounded work in that segment, carry the needed phase context inside the assignment-grade packet.
 

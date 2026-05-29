@@ -29,7 +29,7 @@ structured edit surfaces.
 - Do not add a new hook when adherence to an existing doctrine, skill, or role
 surface is the real fix.
 - Treat `claude_doc/<work-name>/` as a protected work-artifact carrier per `.claude/reference/environment-output-root-filesystem-law.md`; hook-side deletion, write-rejection, move, or other interference against `claude_doc/` is an over-broad-blocking defect candidate unless the action is explicit user-approved teardown.
-- Every hook script must be classified as active, support, absorbed, legacy, or
+- Every hook script must be classified as active, support, absorbed, or
 runtime artifact.
 - Every active `settings.json` hook command must carry an explicit `timeout`.
   Timeout is a bottleneck guard, not a substitute for making hook logic small.
@@ -49,25 +49,6 @@ These files are wired directly from `../settings.json`.
 - `track-worker-transport.sh`
 - `user-prompt-gate.sh`
 - `worker-lifecycle-sync.sh`
-
-## Legacy Hooks
-These hook scripts remain in `./` for traceability.
-- Their bodies are file-level no-op with `exit 0` at top.
-- Their comment blocks point to the disable basis per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`.
-- Positive-pattern doctrine-shape enforcement is owned by the exact failing owner path named in `.claude/reference/work-runtime-boundary-law.md`, not by legacy hooks.
-- Downstream reviewer and validator independent gates remain intact.
-- Their `settings.json` matchers were removed in the same governance patch.
-- The Hook-Last Review Ledger does not list legacy hooks because a disabled body cannot fulfill a "Protected failure" claim.
-- Each file is preserved for traceability and potential future narrowing to a negative-only filter.
-
-- `dispatch-proof-gate.sh`
-- `dispatch-sizing-gate.sh`
-- `runtime-entry-gate.sh`
-- `spawn-prompt-screen-safety.sh`
-- `task-completed-gate.sh`
-- `task-created-gate.sh`
-- `task-start-gate.sh`
-- `validate-task-target.sh`
 
 ## Hook-Last Review Ledger
 This ledger is the current manifest review record for active blocking guardrails.
@@ -97,13 +78,13 @@ operator approval before activation; the ledger record names the approval basis.
 | `sv-gate.sh` | browser proof without current planning basis | Narrow Playwright proof edge only; use silent tracking when denial would prevent ledger repair; recover through work-planning or claim narrowing. |
 | `tmux-kill-block.sh` | active-session instability from tool-issued `tmux kill-*` commands | Bash-only hard-deny for exact tool-issued `tmux kill-*` command forms. Recover through per-member `SendMessage` `shutdown_request` selected by the runtime cleanup owner or `Skill(session-closeout)` Runtime Teardown Preflight followed by `TeamDelete`. |
 | `worker-lifecycle-sync.sh` | teammate idle, completion, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; writes hook-maintained runtime state files when runtime state has a new lead-relevant idle or cleanup fact. It does not inject stdout context and does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
-| `track-worker-transport.sh` | worker-originated transport, completion, blocker, and cooperative shutdown evidence becoming invisible or stale | PostToolUse SendMessage only; records transport state and, after a worker-originated `shutdown_response`, removes runtime roster state without `tmux kill-*`. Tool-issued `tmux kill-*` routes to hard-deny runtime-boundary law. |
-| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer retained-scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
+| `track-worker-transport.sh` | worker-originated transport, completion, blocker, retained-output scope, and cooperative shutdown evidence becoming invisible or stale | PostToolUse SendMessage only; records transport state and retained-output scope from governed assignment/reuse/reroute messages, and after a worker-originated `shutdown_response`, removes runtime roster state without `tmux kill-*`. Tool-issued `tmux kill-*` routes to hard-deny runtime-boundary law. |
+| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer own-output scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
 | `sv-tracker.sh` | selected skill body rendering becoming startup/procedure noise | PostToolUse Skill only; records skill markers and suppresses display for `agent-team-lead`, `session-boot`, `work-planning`, `task-execution`, `self-verification`, and `session-closeout`. This does not claim to police later assistant-authored prose. |
 
 ## Compliance Supervisor Boundaries
-- Hard-deny existing governance-file wholesale overwrite, secret/credential mutation or explicit Bash read, runtime/team-state overwrite, team runtime directory removal, shell mutation against `.claude`, non-developer worker `Write` outside its frozen `RETAINED-OUTPUT-PATH` or `claude_doc/<work-name>/` WRITE-SCOPE, interpreter-based protected-path bypass, protected/outside-workspace `rm` or `find`, and catastrophic primitives.
-- Allow structured governance edits, new reference-file creation, and owner-procedure output-root instructions unless the narrow non-developer worker retained-root guard applies.
+- Hard-deny existing governance-file wholesale overwrite, secret/credential mutation or explicit Bash read, runtime/team-state overwrite, team runtime directory removal, shell mutation against `.claude`, non-developer worker `Write`/`Edit`/`MultiEdit` outside its frozen `RETAINED-OUTPUT-PATH` or declared `WRITE-SCOPE`, interpreter-based protected-path bypass, protected/outside-workspace `rm` or `find`, and catastrophic primitives.
+- Allow structured governance edits, new reference-file creation, and owner-procedure output-root instructions unless the narrow non-developer worker own-output scope guard applies.
 - Recover by narrowing the command target, using structured edit for governance content, or using non-secret/redacted evidence.
 
 ## Hook Dependencies
@@ -112,11 +93,11 @@ Update callers in the same patch before removing any listed file.
 
 - `hook-config.sh`: sourced by settings-wired active hooks except `permission-request-gate.sh`.
 - `hook-config-core.sh`: sourced by `permission-request-gate.sh`.
-- `lib/*.sh`: sourced through `hook-config.sh`, `hook-config-core.sh`, `track-runtime-lifecycle.sh`, `track-worker-transport.sh`, or `worker-lifecycle-sync.sh` when the active hook needs that library.
+- Shared `lib/*.sh` files are active only when sourced by `hook-config.sh`, `hook-config-core.sh`, or an explicitly wired hook script.
+- Unsourced `lib/*.sh` files are dormant helpers, not active hook dependencies; governance docs cite them as active only with caller evidence.
 - `lib/*.js`: executed by active hook scripts or sourced hook libraries for JSON parsing, command parsing, or generated-command policy checks.
 - `health-check.sh`: runtime helper invoked by a tracked health-check cron when active; `track-runtime-lifecycle.sh` recognizes health-check cron commands.
-- `runtime-pressure-scan.sh`: runtime helper called by `health-check.sh` and legacy-disabled `runtime-entry-gate.sh`.
-- `cleanup-orphan-runtime.sh`: runtime helper called by `health-check.sh` and legacy-disabled `runtime-entry-gate.sh`; it calls `runtime-pressure-scan.sh`.
+- `runtime-pressure-scan.sh`: runtime helper called by `health-check.sh`.
 
 ## Absorbed Scripts
 Absorbed scripts must not remain as runnable top-level hook surfaces. Their

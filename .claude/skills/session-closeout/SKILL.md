@@ -64,8 +64,8 @@ Keep closeout narrow:
 7. No repeated teardown on the same evidence and no ad hoc runtime surgery.
 8. Let `SessionEnd` finish continuity capture and clear runtime-bound transient residue.
 9. Set `supervisorReviewState: required` only when the user asked for closeout-management review, a real teardown/management defect occurred, or `Skill(governance-modification)` work is active; set it `completed` after team-lead records the review result.
-10. End with user-facing closeout prose only after `.claude/reference/reporting-prohibition-law.md` admission and `.claude/reference/reporting-user-reporting-law.md` shape control, using residual truth when blocked, warning-bearing, explicitly requested, or review-triggered.
-11. Otherwise clean closeout stays silent unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
+10. End with user-facing closeout prose only after `.claude/reference/reporting-prohibition-law.md` admits `closeout residual`, or admits `explicit status answer` for exact requested closeout status; `.claude/reference/reporting-user-reporting-law.md` controls the admitted shape.
+11. Otherwise clean closeout emits no user-facing closeout prose unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
 
 ### Fast paths
 - No-runtime fast path: when no explicit team runtime or recurring monitor was created in the current session, closeout reduces to intent mark, exact residual disclosure if needed, and `SessionEnd` capture.
@@ -82,7 +82,7 @@ Keep closeout narrow:
 - Team config, task list, mailbox, and cleanup state stay runtime-bound.
 - Governed runtime cleanup uses governed runtime surfaces.
 - Blocked or partially cleaned closeout routes residual truth through `.claude/reference/reporting-prohibition-law.md`.
-- Clean closeout stays silent unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
+- Clean closeout emits no user-facing closeout prose unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
 - Warning-bearing closeout stays short under `.claude/reference/reporting-user-reporting-law.md`: exact residual state, exact hold reason, and next recovery surface only after report admission.
 
 See `references/closeout-state-detail.md` for:
@@ -92,7 +92,7 @@ See `references/closeout-state-detail.md` for:
 - `Agent Lifecycle Resolution`
 
 ## Resolve Next Owner And Action
-- Clean closeout exits silently unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
+- Clean closeout exits without user-facing closeout prose unless `.claude/reference/reporting-prohibition-law.md` admits one-line closeout-residual prose.
 - Warning-bearing closeout routes exact residual state, hold reason, and next recovery surface through `.claude/reference/reporting-prohibition-law.md`.
 - Unresolved live-agent truth routes warning-bearing closeout or blocker-routing through `.claude/reference/reporting-prohibition-law.md`.
 - Product-delivery residuals return to the governing delivery or acceptance path before teardown completion.

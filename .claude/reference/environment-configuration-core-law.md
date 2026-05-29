@@ -8,7 +8,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # 8. Environment Configuration Core Law
 ## Reference Map
 - `.claude/reference/environment-official-claude-code-source-cache.md`: load when official Claude Code behavior, documented team-runtime behavior, or source freshness is decision-relevant.
-- `.claude/reference/environment-output-curtain-runtime.md`: load when supervised user-report rendering, output-curtain operation, or curtain proof is material.
 - `.claude/reference/environment-runtime-footprint-continuity.md`: load when hook footprint, generated continuity files, agent-team runtime overhead, or runtime-footprint claims are material.
 - `.claude/reference/work-runtime-boundary-law.md`: load when hook/settings enforcement, runtime signal, tool signal, external capability, or runtime-owned surface boundaries affect the execution path.
 - `.claude/reference/modification-minimal-governance-change-law.md`: load when governance-text patch selection is material to hook, settings, runtime, or tool-capability changes.

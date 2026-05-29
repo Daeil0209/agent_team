@@ -67,10 +67,13 @@ is_governance_restricted_write_path() {
   esac
 }
 
-nondeveloper_worker_write_outside_retained_root() {
+nondeveloper_worker_mutation_outside_own_output_scope() {
   local candidate_path="${1-}"
   [[ -n "$candidate_path" ]] || return 1
-  [[ "${TOOL_NAME:-}" == "Write" ]] || return 1
+  case "${TOOL_NAME:-}" in
+    Write|Edit|MultiEdit) ;;
+    *) return 1 ;;
+  esac
   [[ -n "${SESSION_ID:-}" ]] || return 1
   runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null || return 1
 
@@ -85,36 +88,79 @@ nondeveloper_worker_write_outside_retained_root() {
   workspace_root="$(resolve_project_root 2>/dev/null || true)"
   [[ -n "$workspace_root" ]] || return 1
 
-  if nondeveloper_worker_write_matches_retained_scope "$worker_name" "$candidate_path" "$workspace_root"; then
+  if nondeveloper_worker_mutation_matches_own_output_scope "$worker_name" "$candidate_path" "$workspace_root"; then
     return 1
   fi
 
-  case "$candidate_path" in
-    "$workspace_root"/claude_doc/*) return 1 ;;
-    *) return 0 ;;
+  return 0
+}
+
+nondeveloper_scope_token_is_empty() {
+  local scope_path="${1-}"
+  scope_path="$(printf '%s' "$scope_path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  case "$(printf '%s' "$scope_path" | tr '[:upper:]' '[:lower:]')" in
+    ""|"-"|"none"|"n/a"|not-applicable*) return 0 ;;
+    *) return 1 ;;
   esac
 }
 
-nondeveloper_worker_write_matches_retained_scope() {
+nondeveloper_candidate_matches_scope_path() {
+  local candidate_path="${1-}"
+  local workspace_root="${2-}"
+  local scope_path="${3-}"
+  local prefix_mode="${4:-exact}"
+  local canonical_scope=""
+
+  [[ -n "$candidate_path" && -n "$workspace_root" ]] || return 1
+  scope_path="$(printf '%s' "$scope_path" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+  nondeveloper_scope_token_is_empty "$scope_path" && return 1
+
+  case "$scope_path" in
+    /*) canonical_scope="$(realpath -m "$scope_path" 2>/dev/null || printf '%s' "$scope_path")" ;;
+    *) canonical_scope="$(realpath -m "$workspace_root/$scope_path" 2>/dev/null || printf '%s/%s' "$workspace_root" "$scope_path")" ;;
+  esac
+
+  [[ "$candidate_path" == "$canonical_scope" ]] && return 0
+  if [[ "$prefix_mode" == "prefix" || "$scope_path" == */ || -d "$canonical_scope" ]]; then
+    case "$candidate_path" in
+      "$canonical_scope"/*) return 0 ;;
+    esac
+  fi
+
+  return 1
+}
+
+nondeveloper_candidate_matches_write_scope_list() {
+  local candidate_path="${1-}"
+  local workspace_root="${2-}"
+  local scope_list="${3-}"
+  local scope_path=""
+
+  [[ -n "$scope_list" ]] || return 1
+  while IFS= read -r scope_path; do
+    if nondeveloper_candidate_matches_scope_path "$candidate_path" "$workspace_root" "$scope_path" "prefix"; then
+      return 0
+    fi
+  done < <(printf '%s\n' "$scope_list" | tr ',;' '\n\n')
+
+  return 1
+}
+
+nondeveloper_worker_mutation_matches_own_output_scope() {
   local worker_name="${1-}"
   local candidate_path="${2-}"
   local workspace_root="${3-}"
   [[ -n "$worker_name" && -n "$candidate_path" && -n "$workspace_root" ]] || return 1
   [[ -f "${WORKER_RETAINED_CARRIER_MAP:-}" ]] || return 1
 
-  local retained_path canonical_retained
-  while IFS='|' read -r mapped_worker _task_id retained_path; do
+  local retained_path write_scope
+  while IFS='|' read -r mapped_worker _task_id retained_path write_scope _rest; do
     [[ "$mapped_worker" == "$worker_name" ]] || continue
-    [[ -n "$retained_path" ]] || continue
-    case "$retained_path" in
-      /*) canonical_retained="$(realpath -m "$retained_path" 2>/dev/null || printf '%s' "$retained_path")" ;;
-      *) canonical_retained="$(realpath -m "$workspace_root/$retained_path" 2>/dev/null || printf '%s/%s' "$workspace_root" "$retained_path")" ;;
-    esac
-    [[ "$candidate_path" == "$canonical_retained" ]] && return 0
-    if [[ "$retained_path" == */ || -d "$canonical_retained" ]]; then
-      case "$candidate_path" in
-        "$canonical_retained"/*) return 0 ;;
-      esac
+    if nondeveloper_candidate_matches_scope_path "$candidate_path" "$workspace_root" "$retained_path" "exact"; then
+      return 0
+    fi
+    if nondeveloper_candidate_matches_write_scope_list "$candidate_path" "$workspace_root" "$write_scope"; then
+      return 0
     fi
   done < "$WORKER_RETAINED_CARRIER_MAP"
 
@@ -347,8 +393,8 @@ command_is_narrow_nonrestricted_claude_file_rm() {
     # restricted-rm is over-broad-blocking per
     # `.claude/reference/work-execution-core-law.md` `## Parallelism And
     # Bottleneck Law`. Top doctrine (CLAUDE.md), settings, agent role spines,
-    # rules, and reference core laws remain restricted.
-    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|rules/|reference/)' && return 1
+    # and reference core laws remain restricted.
+    printf '%s' "$target" | grep -qE '\.claude/(CLAUDE\.md|settings\.(json|[^/]*\.json)|agents/|reference/)' && return 1
   done < <(printf '%s\n' "$cmd" | sed -E 's/&&/\n/g; s/;/\n/g; s/&/\n/g')
   return 0
 }
@@ -432,14 +478,14 @@ command_is_narrow_governance_relocation() {
       # Reject traversal that could fake an archival segment.
       printf '%s' "$src" | grep -qE '(^|/)\.\.(/|$)' && return 1
       printf '%s' "$dest" | grep -qE '(^|/)\.\.(/|$)' && return 1
-      # Destination must stay under trusted hooks/skills/rules archive roots.
-      printf '%s' "$dest" | grep -qE '\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)/' || return 1
+      # Destination must stay under trusted hooks/skills archive roots.
+      printf '%s' "$dest" | grep -qE '\.claude/(hooks|skills)/(legacy|archive|deprecated)/' || return 1
       # Resolve parent to block archive-root symlink escapes.
       local dest_parent="${dest%/*}"
       if [[ -e "$dest_parent" ]]; then
         local canonical
         canonical="$(realpath -- "$dest_parent" 2>/dev/null)" || return 1
-        printf '%s' "$canonical" | grep -qE '\.claude/(hooks|skills|rules)/(legacy|archive|deprecated)(/|$)' || return 1
+        printf '%s' "$canonical" | grep -qE '\.claude/(hooks|skills)/(legacy|archive|deprecated)(/|$)' || return 1
       fi
       continue
     fi
@@ -1240,13 +1286,13 @@ fi
 	  Edit|MultiEdit|Write|NotebookEdit)
 	    if [[ -n "$CANONICAL_PATH" ]]; then
 	      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
-	      if nondeveloper_worker_write_outside_retained_root "$CANONICAL_PATH"; then
-                emit_deny "Non-developer lane Write is restricted to its frozen RETAINED-OUTPUT-PATH or claude_doc/<work-name>/ WRITE-SCOPE. Use developer-owned edit/write authority for source, governance, or producer artifact mutation."
-                log_violation "$TOOL_NAME" "$CANONICAL_PATH" "nondeveloper-write-outside-retained-root" || true
-                exit 0
-              fi
+		      if nondeveloper_worker_mutation_outside_own_output_scope "$CANONICAL_PATH"; then
+		        emit_deny "Non-developer lane Write/Edit/MultiEdit is restricted to its frozen RETAINED-OUTPUT-PATH or declared WRITE-SCOPE. Use developer-owned edit/write authority for source, governance, producer artifact, or another lane's output mutation."
+		        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "nondeveloper-mutation-outside-own-output-scope" || true
+		        exit 0
+		      fi
 
-              if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
+		      if is_hook_runtime_artifact_path "$CANONICAL_PATH"; then
 	        emit_deny "Runtime artifacts must not be created under .claude/hooks. Route tool output to projects/<project-folder>/.runtime/<tool>/ or the active project output surface."
 	        log_violation "$TOOL_NAME" "$CANONICAL_PATH" "hook-runtime-artifact-path" || true
 	        exit 0

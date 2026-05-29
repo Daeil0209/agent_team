@@ -76,7 +76,7 @@ The business workflow packet records:
 - Populated-state proof uses representative data for every material workflow path.
 
 ## Proof Oracle
-- Proof oracle for this domain extends `CORE-WORKFLOW-CLOSURE` row types in `.claude/skills/dev-workflow/references/phase-surfaces.md` Phase 2 Design Surface with allocation-specific instances (participation, labor cost, period selection, reconciliation totals, import/export reconciliation).
+- Proof oracle for this domain applies `.claude/reference/design-delivery-evidence-acceptance-law.md` `## CORE-WORKFLOW-CLOSURE` canonical row families to allocation-specific instances (participation, labor cost, period selection, reconciliation totals, import/export reconciliation).
 - Proof uses representative workbook or seeded data when spreadsheet meaning determines acceptance.
 - Proof records each uncovered oracle row as blocked, deferred by upstream record, or out-of-scope by frozen basis.
 
@@ -85,4 +85,4 @@ The business workflow packet records:
 - Missing source-of-truth mapping opens design correction.
 - Missing linked workflow surface opens design correction.
 - Missing proof oracle row opens tester packet correction.
-- Missing reconciliation evidence opens validator verdict `HOLD` carrying correction routing or direct correction routing.
+- Missing reconciliation evidence opens validator ingress or correction routing; only the validator owner issues a `PASS/HOLD/FAIL` verdict.

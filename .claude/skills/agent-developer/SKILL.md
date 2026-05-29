@@ -40,8 +40,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Use only after team-lead assigns bounded developer-owned production scope.
 - Apply common agent-specific skill preconditions from `.claude/skills/task-execution/references/lane-additions.md`.
 - Also consume the developer detail contract in `references/developer-lane-detail.md`.
-- In active `dev-workflow`, team-lead owns Phase 1 planning design and canonical plan document authoring; Phase 2 design direction/contract and canonical design document authoring.
-- Developer's dev-workflow lane begins at Phase 3 implementation production from the frozen Phase 2 design basis.
+- In active `dev-workflow`, consume the frozen Phase 2 design basis from the workflow owner.
+- Developer's dev-workflow lane begins at Phase 3 implementation production from that frozen basis.
 - Review, proof, validation, and route ownership stay with their owning lanes.
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, bounded development production surface, source-of-truth, material closure row, disposition path, consumer/recompute path, and acceptance oracle are inferable without changing the assignment boundary, reconstruct the working packet explicitly and mark inferred pieces as inference.

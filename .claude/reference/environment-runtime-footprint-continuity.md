@@ -3,7 +3,7 @@ doc-type: reference-cache
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Environment Configuration Philosophy; runtime footprint; hook-last continuity"
-captured: 2026-04-29
+snapshot-status: historical-not-current-runtime-evidence
 LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -43,7 +43,11 @@ If any item is missing, do not add, broaden, or defend blocking enforcement as v
 ## Captured Local Hook Posture
 Before classifying current hook posture, density, or improvement, read live `.claude/settings.json` and apply measured latency, context, or runtime evidence. Classify the live posture as `high-footprint guardrail debt` until measured evidence proves runtime-footprint improvement; after improvement evidence, record `runtime-footprint posture: improved-with-residual-review` or route remaining hook burden to runtime-governance correction.
 
-## Baseline Capture (2026-04-29)
+## Historical Hook Footprint Snapshot
+This snapshot is historical comparison evidence only.
+Do not use it as current settings state, current hook inventory, current runtime-footprint proof, or current improvement proof.
+Current runtime-footprint claims require live `.claude/settings.json`, live hook state, and measurement evidence under `## Runtime Footprint Claims`.
+
 `.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, self-verification, runtime-entry, dispatch sizing/proof, and compliance supervision.
 
 Rules:

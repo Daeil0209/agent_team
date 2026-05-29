@@ -160,20 +160,9 @@ User-surface law:
 - Use source-only evidence only when it truthfully matches the user-facing proof surface.
 
 ## Step 3: Build Team-Lead Work Plan
-Before freeze, `team-lead` builds the work plan it will execute or route.
-The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
-Each material phase names the opened closure unit it closes; category, pattern, theme, summary, wave, batch, priority, or work-item rows are valid as organization or follow-on mapping unless the frozen phase opened that row as its own closure unit.
-The work plan names the upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis each material phase consumes or passes forward.
-For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or blocker-routing with exhausted internal recovery basis.
-Place each conditional owner at its material trigger point; place `Skill(governance-modification)` only when the plan's current next owner/action is governance asset change or confirmed recurrence-barrier hardening.
-Keep governance audit, candidate discovery, defect promotion, and proposal-only rows with planning, review, verification, or the active procedure owner.
-`Skill(self-verification)` verifies the produced work-product surface set from `team-lead` or a lane through PASS-1 coverage and PASS-2 review-verification before reporting, governance-asset `Skill(governance-modification)`, or redispatch.
-`Skill(review-verification)` runs inside `Skill(self-verification)` Step 3 for the produced work-product surface set and returned PASS-2 packet.
-`Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
-The plan names a practical termination path derived from the user's instruction.
-The termination path names only deliverable closure, cited lawful owner-deferral authority, or blocker-routing with truthful blocker, exhausted internal recovery basis, and next safe owner/action as terminal states.
-Lead-authored waves, batches, samples, priority tiers, category rows, pattern rows, theme rows, summaries, or work-item rows satisfy organization, ordering, or follow-on execution only; they do not replace a finer opened closure unit or permit phase closure without preserving source-unit coverage.
-Governance defect or removal audits keep corpus inspection, review-promotion, and lead synthesis as separate rows; patch scope adds a separate governance-modification patch-loop row.
+Before freeze, `team-lead` builds `TEAM-LEAD-WORK-PLAN` as the executable plan it will execute, route, monitor, synthesize, verify, and close.
+Plan field semantics, required rows, owner placement, verification placement, governance-modification placement, termination states, and coverage rules are owned by `references/planning-record-fields.md`.
+Step 3 produces the plan body; Step 4 freezes it with the current planning record.
 
 ## Step 4: Freeze Scope And Route
 Freeze only what the selected planning target requires.
@@ -208,7 +197,7 @@ Hard routing gate detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail stays in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record `ACTIVE-CONCURRENT-AGENT-CAP` on this surface before dispatch can open.
 Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
 Team-routed or ambiguous dispatch opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
-Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine and evidence can choose the best route.
+Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine, current request, and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
 
@@ -221,7 +210,7 @@ Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
 Follow `.claude/reference/reporting-prohibition-law.md`.
-Planning progress is silent while the next owner/action can run in the same segment.
+Planning progress emits no assistant-authored visible prose while the next owner/action can run in the same segment.
 Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
 Request classification, consequentiality judgment, route freeze, corpus sizing, reference loading, skill loading, and dispatch-readiness are internal planning facts, not status reports.
 Continuity discovery, prior-work reuse or supersession, stale-evidence checks, git-history checks, artifact inventory, live-corpus mismatch classification, and interim verification outcomes are internal planning facts, not status reports.

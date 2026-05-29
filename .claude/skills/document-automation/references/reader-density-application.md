@@ -10,11 +10,11 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 Use when the document must support fast executive reading, practical field reuse, or decision-support comprehension.
 
 ## Information Density Design
-- Core conclusion is accessible within 30 seconds.
+- Core conclusion is accessible in the default 30-second scan layer unless the user supplies another reader model.
 - Place summary conclusion table or executive summary at the document top.
-- Three-layer reading design contains 30-second layer, 3-minute layer, and full-read layer.
-- The 30-second layer gives the conclusion.
-- The 3-minute layer uses section headings and key tables.
+- Three-layer reading design uses default 30-second scan, 3-minute skim, and full-read layers.
+- The default 30-second scan layer gives the conclusion.
+- The default 3-minute skim layer uses section headings and key tables.
 - The full-read layer carries the body.
 - Each reading layer is independently coherent.
 - Prefer tables over prose when the same information fits either form.

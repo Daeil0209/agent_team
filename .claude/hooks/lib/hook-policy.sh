@@ -44,42 +44,6 @@ process.stdout.write(JSON.stringify({
 NODE
 }
 
-hook_emit_event_context() {
-  local event_name="${1:?event name required}"
-  local context="${2:?context required}"
-  local default_context="${3:-Project hook context.}"
-  local suppress_output="${4:-false}"
-  HOOK_EVENT_NAME="$event_name" \
-  HOOK_CONTEXT="$context" \
-  HOOK_DEFAULT_CONTEXT="$default_context" \
-  HOOK_SUPPRESS_OUTPUT="$suppress_output" node <<'NODE'
-const eventName = process.env.HOOK_EVENT_NAME || "PreToolUse";
-const ctx = process.env.HOOK_CONTEXT || process.env.HOOK_DEFAULT_CONTEXT || "Project hook context.";
-const out = { hookSpecificOutput: { hookEventName: eventName, additionalContext: ctx } };
-if (process.env.HOOK_SUPPRESS_OUTPUT === "true") out.suppressOutput = true;
-process.stdout.write(JSON.stringify(out));
-NODE
-}
-
-hook_emit_pretool_context() {
-  local context="${1:?context required}"
-  local default_context="${2:-Project hook context.}"
-  hook_emit_event_context "PreToolUse" "$context" "$default_context"
-}
-
-hook_emit_posttool_context() {
-  local context="${1:?context required}"
-  local default_context="${2:-Project hook context.}"
-  hook_emit_event_context "PostToolUse" "$context" "$default_context"
-}
-
-hook_emit_user_prompt_context() {
-  local context="${1:?context required}"
-  local default_context="${2:-Project hook context.}"
-  local suppress_output="${3:-false}"
-  hook_emit_event_context "UserPromptSubmit" "$context" "$default_context" "$suppress_output"
-}
-
 hook_decode_base64_field() {
   local encoded="${1-}"
   [[ -z "$encoded" ]] && { printf ''; return 0; }
@@ -145,11 +109,9 @@ set_default_export IDLE_DECISION_PENDING_LOCK "$LOG_DIR/.idle-decision-pending.l
 set_default_export WORKER_IDLE_NOTICE_LOCK "$LOG_DIR/.worker-idle-notice.lock"
 set_default_export WORKER_TRANSPORT_LEDGER_LOCK "$LOG_DIR/.worker-transport-ledger.lock"
 set_default_export WORKER_RETAINED_CARRIER_MAP_LOCK "$LOG_DIR/.worker-retained-carrier-map.lock"
-set_default_export SKILL_AUTH_LOCK "$LOG_DIR/.skill-auth.lock"
 set_default_export CLOSEOUT_STATE_LOCK "$LOG_DIR/.closeout-state.lock"
 set_default_export HEALTH_CRON_ROTATION_STATE_LOCK "$LOG_DIR/.health-cron-rotation-state.lock"
 set_default_export PERMISSION_REQUEST_LOG "$LOG_DIR/permission-request.log"
-set_default_export SPECIALIST_SKILL_AUTH_LEDGER "$LOG_DIR/.specialist-skill-auth"
 set_default_export LEAD_PLANNING_PENDING_FILE "$LOG_DIR/.lead-planning-pending"
 set_default_export WORKER_DISPATCH_ACK_PENDING_FILE "$LOG_DIR/.worker-dispatch-ack-pending"
 set_default_export USER_APPROVED_DELETE_ROOTS_FILE "$LOG_DIR/.user-approved-delete-roots"
@@ -179,7 +141,6 @@ set_default_export HOOK_HEALTH_LOG "$LOG_DIR/hook-health.log"
 # HOOK_HEALTH_REQUIRED_HOOKS deprecated per F-G-10: settings.json hooks block is the single
 # source of truth; session-start.sh derives the wired-hook list from parsed settings.json.
 set_default_export RUNTIME_AUTOMATION_MODE "single-primary"
-set_default_export RUNTIME_AUTOREAP_ENABLED "0"
 set_default_export RUNTIME_KEEP_WATCHDOG_WHEN_IDLE ""
 # Available-memory thresholds: lower MemAvailable is worse, so SOFT > HARD.
 set_default_export RUNTIME_MEM_SOFT_KB "1572864"
@@ -187,9 +148,6 @@ set_default_export RUNTIME_MEM_HARD_KB "786432"
 set_default_export RUNTIME_MEM_EMERGENCY_KB "393216"
 set_default_export RUNTIME_SWAP_HARD_KB "524288"
 set_default_export RUNTIME_SWAP_EMERGENCY_KB "131072"
-set_default_export RUNTIME_REAP_TERM_GRACE_SECONDS "2"
-set_default_export RUNTIME_REAP_MAX_PROCESSES "24"
-set_default_export RUNTIME_REAP_COOLDOWN_SECONDS "120"
 set_default_export RUNTIME_TMUX_SOCKET_DIR "/tmp/tmux-$(id -u)"
 
 # Resolve active claude-swarm tmux socket name.
@@ -231,15 +189,8 @@ tmux_cmd() { tmux ${RUNTIME_TMUX_SOCKET_NAME:+-L "$RUNTIME_TMUX_SOCKET_NAME"} "$
 
 set_default_export RUNTIME_PRESSURE_STATE_FILE "$LOG_DIR/.runtime-pressure-state.json"
 set_default_export RUNTIME_ORPHAN_AUDIT_LOG "$LOG_DIR/runtime-orphan-audit.log"
-set_default_export RUNTIME_REAP_LOG "$LOG_DIR/runtime-reap.log"
-set_default_export RUNTIME_REAP_LOCK "$LOG_DIR/.runtime-reap.lock"
-set_default_export RUNTIME_REAP_COOLDOWN_FILE "$LOG_DIR/.runtime-reap-cooldown"
 set_default_export SESSION_STATE_STALE_THRESHOLD "1800"
 set_default_export SESSION_STATE_FRESH_THRESHOLD "900"
-# Specialist skill runtime enforcement is opt-in; empty approval list allows all.
-set_default_export SPECIALIST_SKILL_ENFORCEMENT_MODE "autonomous"
-set_default_export SPECIALIST_SKILLS_REQUIRING_APPROVAL ""
-set_default_export SPECIALIST_SKILL_OWNER_ROLE "developer"
 set_default_export USER_PROMPT_CLOSEOUT_INTENT_REASON "user-prompt-explicit-closeout"
 set_default_export EXPLICIT_CLOSEOUT_PROMPT_JS_PATTERN "(?:\\bclose\\s*out\\b|\\bcloseout\\b|\\bend\\s+(?:the\\s+)?session\\b|\\bexit\\s+(?:the\\s+)?session\\b|\\bterminate\\s+(?:the\\s+)?session\\b|\\bshut\\s+down\\s+(?:the\\s+)?(?:session|team|runtime)\\b|\\bwrap\\s+up\\s+(?:the\\s+)?(?:session|team|runtime)\\b|\\uC138\\uC158\\s*\\uC885\\uB8CC|\\uC791\\uC5C5\\s*\\uC885\\uB8CC|\\uD300\\s*\\uC885\\uB8CC|\\uB7F0\\uD0C0\\uC784\\s*\\uC885\\uB8CC)"
 set_default_export CLOSEOUT_CANCEL_PROMPT_JS_PATTERN "(?:\\bcancel\\s+closeout\\b|\\bdefer\\s+closeout\\b|\\bdo\\s+not\\s+(?:end|exit|close)\\b|\\bkeep\\s+(?:the\\s+)?session\\s+open\\b|\\bcontinue\\s+working\\b|\\bresume\\s+work\\b|\\uC885\\uB8CC\\s*(?:\\uCDE8\\uC18C|\\uBCF4\\uB958)|\\uC138\\uC158\\s*\\uACC4\\uC18D|\\uACC4\\uC18D\\s*\\uC791\\uC5C5|\\uC885\\uB8CC\\s*\\uD558\\uC9C0\\s*\\uB9C8)"
@@ -273,7 +224,6 @@ RUNTIME_TRANSIENT_FILES=(
   "$SESSION_AGENT_MAP"
   "$PENDING_AGENT_MODES_FILE"
   "$SESSION_AGENT_MODE_MAP"
-  "$SPECIALIST_SKILL_AUTH_LEDGER"
   "$LEAD_PLANNING_PENDING_FILE"
   "$WORKER_DISPATCH_ACK_PENDING_FILE"
   "$USER_APPROVED_DELETE_ROOTS_FILE"
@@ -348,10 +298,6 @@ runtime_truthy() {
 
 runtime_automation_single_primary() {
   [[ "${RUNTIME_AUTOMATION_MODE:-}" == "single-primary" ]]
-}
-
-runtime_autoreap_enabled() {
-  runtime_truthy "${RUNTIME_AUTOREAP_ENABLED:-0}"
 }
 
 runtime_keep_watchdog_when_idle() {

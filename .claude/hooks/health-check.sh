@@ -22,20 +22,13 @@ run_scan() {
   SCAN_ORPHAN_PROC_COUNT="${SCAN_FIELDS[4]:-0}"
   SCAN_ORPHAN_SESSION_COUNT="${SCAN_FIELDS[5]:-0}"
   SCAN_STALE_SOCKET_COUNT="${SCAN_FIELDS[8]:-0}"
-  SCAN_AUTO_REAP_ELIGIBLE="${SCAN_FIELDS[11]:-false}"
-  SCAN_SUMMARY="${SCAN_FIELDS[12]:-}"
+  SCAN_SUMMARY="${SCAN_FIELDS[11]:-}"
 }
 
 run_scan
 
-REAP_OUTPUT=""
-if runtime_automation_single_primary && runtime_autoreap_enabled && [[ "$SCAN_AUTO_REAP_ELIGIBLE" == "true" ]]; then
-  REAP_OUTPUT="$("$HOOK_DIR/cleanup-orphan-runtime.sh" --auto --reason "health-check" 2>/dev/null || true)"
-  run_scan
-fi
-
-if [[ -n "$REAP_OUTPUT" ]] || [[ "$SCAN_STATUS" != "ok" ]] || (( SCAN_ORPHAN_PROC_COUNT > 0 )) || (( SCAN_STALE_SOCKET_COUNT > 0 )); then
-  printf '%s | session=%s | stage=health-check | status=%s | mem_kb=%s | swap_kb=%s | orphan_sessions=%s | orphan_processes=%s | stale_sockets=%s | reap=%s\n' \
+if [[ "$SCAN_STATUS" != "ok" ]] || (( SCAN_ORPHAN_PROC_COUNT > 0 )) || (( SCAN_STALE_SOCKET_COUNT > 0 )); then
+  printf '%s | session=%s | stage=health-check | status=%s | mem_kb=%s | swap_kb=%s | orphan_sessions=%s | orphan_processes=%s | stale_sockets=%s\n' \
     "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
     "$(current_runtime_session_id)" \
     "$SCAN_STATUS" \
@@ -43,14 +36,10 @@ if [[ -n "$REAP_OUTPUT" ]] || [[ "$SCAN_STATUS" != "ok" ]] || (( SCAN_ORPHAN_PRO
     "$SCAN_SWAP_KB" \
     "$SCAN_ORPHAN_SESSION_COUNT" \
     "$SCAN_ORPHAN_PROC_COUNT" \
-    "$SCAN_STALE_SOCKET_COUNT" \
-    "${REAP_OUTPUT:-none}" >> "$RUNTIME_ORPHAN_AUDIT_LOG"
+    "$SCAN_STALE_SOCKET_COUNT" >> "$RUNTIME_ORPHAN_AUDIT_LOG"
 fi
 
 CAPACITY_LINES=()
-if [[ "$REAP_OUTPUT" == REAPED:* ]]; then
-  CAPACITY_LINES+=("AUTOREAP:${REAP_OUTPUT#REAPED: }")
-fi
 if [[ "$SCAN_STATUS" != "ok" ]] || (( SCAN_ORPHAN_PROC_COUNT > 0 )) || (( SCAN_STALE_SOCKET_COUNT > 0 )); then
   CAPACITY_LINES+=("RUNTIME [${SCAN_STATUS^^}]: mem_kb=${SCAN_MEM_KB} | swap_kb=${SCAN_SWAP_KB} | orphan_sessions=${SCAN_ORPHAN_SESSION_COUNT} | orphan_processes=${SCAN_ORPHAN_PROC_COUNT} | stale_sockets=${SCAN_STALE_SOCKET_COUNT}")
 fi

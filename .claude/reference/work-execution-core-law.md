@@ -51,7 +51,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - The active owner continues, dispatches, verifies, or routes that next stage until closure, cited lawful owner-deferral authority, explicit user cancellation/redirect, or blocker-routing with recovery owner/action.
 - Communication Plane `scope-pressure` and `hold|blocker` are resolution triggers; the receiving owner classifies and executes packet correction, replanning, owner routing, setup/research/tool acquisition, marked inference/default, parallel continuation, or blocker-routing after every executable internal resolution route is exhausted.
 - Final/turn closure requires one closure basis: zero live same-request executable owner/action, explicit user cancellation/redirect, or cited lawful owner-deferral authority. Blocker-routing without lawful deferral is not closure.
-- A live same-request executable owner/action drives the next tool call, dispatch, verification, mutation, routing action, or blocker-routing carrier before final prose.
+- A live same-request executable owner/action drives the next tool call, dispatch, verification, mutation, routing action, or blocker-routing carrier before any reporting-law gate; final prose still requires `.claude/reference/reporting-prohibition-law.md` admission.
 - Planned continuation path requires an executable next owner/action; status reporting, proceed prompts, wave boundaries, future replanning, context pressure, and response boundaries remain process evidence only.
 - Downstream plans, assignment packets, correction packets, reuse packets, reroute packets, phase-transition packets, validation packets, and completion carriers must carry each material upstream review, verification, synthesis, validation, rejection, open-surface, blocker, or correction-ready basis that changes the next owner action, stop, evidence, claim ceiling, or acceptance truth.
 - Execution, phase movement, completion, validation, and positive synthesis require the material upstream decision basis or a current superseding basis; dropping, summarizing away, reinterpreting, or replacing that basis opens packet correction, owner correction, basis refresh, or blocker-routing with recovery owner/action.
@@ -59,7 +59,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `Skill(self-verification)` is the producer-owned outbound gate for produced work-product surfaces; plan readiness disputes reopen `work-planning` or the owning review path.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
-- `team-lead` owns intake, route, orchestration, synthesis, closeout, and user communication.
+- `team-lead` owner-duty detail is owned by `.claude/reference/work-procedure-ownership-law.md` `## Owner Separation`.
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
 - Lead-local consequential work requires `work-planning` freeze.
@@ -89,6 +89,17 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Missing, stale, uninspected, contradicted, or absent materiality basis opens the smallest basis-refresh, consumption-correction, owner-correction, or blocker route before the qualifier-gated action is skipped.
 - `material` and `materially` are never operator-judgment-only qualifiers; application requires evidence-backed anchor from the material applicability test.
 
+## Qualifier Selection Law
+- `smallest` and `narrowest` mean the least authority, scope, owner movement, user burden, runtime footprint, file mutation, or report detail that still satisfies the governing action, evidence, verification, acceptance, safety, and recovery requirements.
+- When two options satisfy the same requirement, choose the option with fewer changed owner surfaces, fewer irreversible effects, less user burden, and no weaker evidence path.
+- If no option can be proven smallest or narrowest from current evidence, open basis-refresh, owner-correction, or blocker-routing instead of using the qualifier as a preference label.
+- `credible` means cited evidence supports the active claim ceiling and no material defeater remains open on the governing surface.
+- Missing credibility evidence opens the named proof, review, validation, or blocker route instead of allowing a weaker claim.
+- Evidence-strength qualifiers such as `too weak`, `weak`, `strong enough`, and `strongly enough` compare the current evidence against the governing claim ceiling, proof burden, acceptance burden, or delivery burden named by the active surface.
+- Scope, size, and pressure qualifiers such as `trivial`, `non-trivial`, `thin`, `major`, `high-traffic`, and `hard pressure` require a named observable basis: affected owner count, affected surface count, user-outcome risk, runtime footprint, context/load pressure, or execution-frequency impact.
+- Quality-readiness qualifiers such as `over-dense`, `self-explanatory`, `genuine`, and `submission-ready` require the active surface's acceptance, reader, proof, or receiver-job criteria; absent criteria opens basis-refresh or review rather than pass/fail by label.
+- A qualifier not covered by this law requires a local operational anchor before it can block, pass, route, or close an owner action.
+
 ## Autonomy And Escalation Law
 - `[NO-NEEDLESS-ASK]` Choose the evidence-backed best solution.
 - Derivable ambiguity uses reversible defaults.
@@ -102,7 +113,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `[NO-NEEDLESS-ASK]` resolves choices only inside the active execution boundary; mutation uses the matching execution path.
 - Scope reduction, sample-only completion, tier-only completion, wave-only completion, or partial-with-deferral requires explicit user instruction or recorded `[USER-DELIVERY-FIT]` cited lawful owner-deferral authority.
 - Resource, context, runtime, turn, response-length, or tool-call pressure routes to the next safe action, owner recovery, parallel continuation, or blocker-routing with recovery owner/action; deferral, completion, dispatch, and validation require their own lawful basis.
-- The agent routes to the user only after internal evidence-backed defaults, correction, routing, setup, recovery, and named owner paths are exhausted and a proven user-owned action remains; the request to the user names the exact action needed and preserved resume owner/action.
+- The agent routes to the user only after internal evidence-backed defaults, correction, routing, setup, recovery, and named owner paths are exhausted and a proven user-owned action remains; admitted user prose names only the exact user action needed and smallest safe next step, while preserved resume owner/action stays internal.
 
 ## Parallelism And Bottleneck Law
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
@@ -123,8 +134,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Skill And Reference Consumption Law
 - Skills load only when required by the active owner path.
 - Primary skill links load through their active owner-path triggers.
-- Required skill activation and loaded-skill basis require actual full-body `Skill(<skill>)` load-and-learn, officially applied full-skill frontmatter `skills` preload, or current same-session loaded-and-learned basis under the named skill's freshness rule.
-- Skill load means the full active skill body is loaded and learned through `Skill(<skill>)` or officially applied full-skill frontmatter `skills` preload; direct reading, searching, listing, summarizing, reference-map traversal of `.claude/skills/<skill>/**`, host-rendered tool rows, tool status, or visible `Skill(...) loaded` text remains inspection/status evidence only.
+- Required skill activation and loaded-skill basis require actual full-body `Skill(<skill>)` load-and-learn or current same-session loaded-and-learned basis under the named skill's freshness rule.
+- Skill load means the full active skill body is loaded and learned through `Skill(<skill>)`; frontmatter preload claims, direct reading, searching, listing, summarizing, reference-map traversal of `.claude/skills/<skill>/**`, host-rendered tool rows, tool status, or visible `Skill(...) loaded` text remains inspection/status evidence only.
 - Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Agent role names remain role identifiers.
 - Loaded skill owner resolution uses this order: explicit owner, phase owner, or sequence owner declared by a loaded procedure skill; then the agent that loaded the skill when the loaded skill does not declare a procedure owner for the current action.
@@ -137,7 +148,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Trigger-bound references carry situation-specific procedure detail only when their active owner path consumes them.
 - Skill-load eligibility, situation-scoped consumption, `agent-<lane>` and `agent-team-lead` naming, `REQUIRED-SKILLS`/`SKILL-RECOMMENDATIONS` packet semantics, missing-consumption defect classification, and teammate-isolation/packet-carried-fact rules live in `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`, `## Required Skills`, `## Methodology Guidance`, and `.claude/skills/task-execution/references/assignment-packet.md`.
 - Non-core trigger-bound `.claude/reference/*-law.md` detail references are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
-- `.claude/reference/*-map.md`, `environment-official-claude-code-source-cache.md`, `environment-runtime-footprint-continuity.md`, and `environment-output-curtain-runtime.md` load through their trigger rules as reference surfaces.
+- `.claude/reference/*-map.md`, `environment-official-claude-code-source-cache.md`, and `environment-runtime-footprint-continuity.md` load through their trigger rules as reference surfaces.
 - For the map/runtime references named above, `LOAD-POLICY`, `Purpose`, `Consumer And Ownership`, or an equivalent trigger section supplies the trigger gate when `Consume When` is absent; `SOURCE-ANCHOR` and `SOURCE-RULES` still bind the reference to the active top-doctrine law.
 - Reference consumption requires the active owner to read-and-learn the complete active reference or complete triggered section and is valid only when the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness decision.
 - Reference path existence, search convenience, broad traceability, reverse-linking, or non-triggered background relevance leaves the target unconsumed.

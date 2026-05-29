@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Modification Law
 - Operator-emphasized keyword names and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 - This core law owns executable keyword definitions, patch-design tests, preservation rules, duplicate handling, and source-to-destination continuity.
-- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`; `functional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
+- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` and `comprehension-as-execution-force` carry `[GOV-MIN]` and `[RULE-FORCE]`; `functional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
 - Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
 - `removal-first` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete while preserving required information.
 - `consumed-surface` lands patches on the document the affected owner actually consumes at the failing decision moment.
@@ -22,6 +22,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `upper-lower execution-drive` preserves direct-execution continuity from top intent through mapped core law, trigger-bound guidance, and tool action.
 - `executable-imperative` writes positive owner-action directives; hazardous-action prohibitions include the valid replacement action or next owner.
 - `minimum-executable-information` keeps the smallest complete rule content needed for owner, trigger, action, stop, evidence, verification, acceptance truth, routing, patch-readiness, and executable duty.
+- `comprehension-as-execution-force` treats misunderstanding-inducing governance wording as a defect only when current evidence traces it to executable-action impedance: wrong owner selection, wrong next action, stale information consumption, or failed boundary verification.
+- `comprehension-as-execution-force` repairs through removal-first edit selection and minimum-executable-information; adding documentation, restating rules, or adding structure without changing executable owner action is not a valid repair.
 - `functional-independence` requires every governance patch to name the intended changed function set: the executable function, owner path, workflow, user-facing capability, procedure gate, evidence path, verification path, acceptance path, runtime/tool contract, or reporting-truth path whose behavior is meant to change.
 - A positive function is an existing valid function, owner path, workflow, user-facing capability, procedure gate, evidence path, verification path, acceptance path, runtime/tool contract, or reporting-truth path that currently works or protects correctness, safety, continuity, or user outcome.
 - A `functional-independence`-compliant patch closes the named defect inside the intended changed function set while preserving every positive function outside that set.

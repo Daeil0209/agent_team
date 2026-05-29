@@ -127,7 +127,7 @@ Use this verification-methodology lens when the active path selects `benchmark-s
 Skip when prior session already froze the verification basis from external evidence or when tester/validator uses an already-frozen proven local default cited in the packet, lane rule, or acceptance surface.
 See `references/verification-methodology.md` for protocol.
 
-Acceptance fidelity follows `.claude/reference/review-and-verification-core-law.md` `[USER-SURFACE]` and `dev-workflow` `Rendered Image Evidence Rule`.
+Acceptance fidelity follows `.claude/reference/review-and-verification-core-law.md` `[USER-SURFACE]` and `.claude/skills/dev-workflow/references/phase-surfaces.md` `Rendered Image Evidence Rule`.
 
 When dispatching this skill, lead pre-names sibling skills the receiving lane must compose with.
 Base that composition on the selected recipe in `references/design-stack-composition.md`.

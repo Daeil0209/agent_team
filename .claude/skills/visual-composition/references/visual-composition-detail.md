@@ -21,7 +21,7 @@ Rules:
 - Audience-variant rule: when a schedule serves multiple audiences, visual format type differs per audience when reader job differs.
 - Unchanged operator-density schedule to participants = candidate `format_class_mismatch`.
 **Word/HWP Image Constraints**:
-- Single image must not exceed ~one-third of page area (violation: `poor_proportion`).
+- Single image must not exceed ~one-third of page area by default unless template, submission, or benchmark evidence justifies another ratio (violation without basis: `poor_proportion`).
 - Every figure requires descriptive caption (violation: `weak_hierarchy`).
 - Placement must not break surrounding text flow (violation: `weak_hierarchy`).
 **Visual Role Separation**: each visual element must serve exactly one purpose. A table simultaneously acting as schedule, role matrix, and status tracker = role separation violation; split or redesign to single reading task.
@@ -30,8 +30,8 @@ Rules:
 **Page Gaze-Path Rule**: no page contains competing visual elements of equal weight fighting for primary attention. When two or more equal-weight elements appear on the same page, one must be promoted or the other demoted = `weak_hierarchy` defect at page level.
 **Semantic Deduplication Gate**: before finalizing any visual, verify it does not restate information already conveyed by adjacent text or another visual on the same surface. A restatement visual = `decorative_noise` or `narrative_redundancy`.
 **Density Standards**:
-- Short documents (2-3 pages) lean heavier on visuals.
-- Medium documents (~10 pages) target ~5:5 or 6:4 text-to-visual ratio.
+- Short documents (2-3 pages) lean heavier on visuals when visuals compress decision-relevant information better than text.
+- Medium documents (~10 pages) target ~5:5 or 6:4 text-to-visual ratio as default calibration.
 - Available benchmark/reference proposals supply concrete density targets (visuals per page, text-to-visual ratio per section type, whitespace budget) as calibration inputs that override defaults.
 - A visual included only to hit density still fails the justification gate.
 ### Event Planning Document Visual Types

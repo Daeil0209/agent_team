@@ -51,7 +51,7 @@ The consuming owner records one of these outcomes:
 - next executable owner/action
 
 ## Routing Gate
-Completion reporting requires one truthful outcome from `## Required Output`.
+Completion reporting first requires truthful Required Output classification, then `.claude/reference/reporting-prohibition-law.md` admission; blocker-routing remains nonterminal and never satisfies `final verified result`.
 Configured lane ownership routes local substitution to that lane for the next:
 - proof function
 - review function

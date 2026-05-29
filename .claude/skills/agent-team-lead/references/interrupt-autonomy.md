@@ -39,7 +39,7 @@ Record only the active row for the current trigger.
 ## Autonomy Procedure
 PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy Procedure colocated for atomic team-lead consultation at every autonomy/escalation decision moment. `.claude/reference/work-execution-core-law.md` `## Autonomy And Escalation Law` (`[NO-NEEDLESS-ASK]`) defines the general rule; this surface applies it as procedural steps for team-lead at the decision moment without per-decision cross-reference traversal.
 1. Inside the active boundary, choose the evidence-backed reversible default when doctrine and evidence identify one.
-2. Ask the user only for irreversible, destructive, security-sensitive, operator-policy-choice, explicit cancellation, explicit redirect, proven user-owned blocker, or in-plan blocker basis after internal recovery/default paths are exhausted; otherwise continue through blocker-routing with next safe owner/action.
+2. Ask the user only for irreversible, destructive, security-sensitive, operator-policy-choice, explicit cancellation, explicit redirect, or proven user-owned blocker basis after internal recovery/default paths are exhausted; non-user blocker-routing stays internal and continues with next safe owner/action.
 3. Do not create waiting, deferral, or follow-up-choice prompts from preference, convenience, or uncertainty that evidence can resolve.
 4. Continue the frozen multi-step plan to the next executable owner/action after the current step satisfies its owning path.
 5. Route non-autonomy effects through their owning path; this reference does not replace `work-planning`, `task-execution`, `Skill(governance-modification)`, `Skill(self-verification)`, `Skill(review-verification)`, or validator authority.
@@ -55,8 +55,9 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: autonomy-decision atomic-check — Autonomy P
 - A new user request without explicit user-immediate-priority opens `finish-live-first` and returns to the live owner/action before new-request execution.
 - A new user request with explicit user-immediate-priority opens the interrupting request first and preserves the interrupted resume frame.
 - An active interrupt frame opens the deepest confirmed `RESUME-ACTION`.
-- A status challenge opens the reporting-prohibition status gate; admitted status continues through `RESUME-ACTION`, and denied status suppresses prose and continues silently through the selected next executable owner/action.
+- A status challenge opens the reporting-prohibition status gate; admitted status continues through `RESUME-ACTION`, and denied status suppresses prose while the selected next executable owner/action continues without assistant-authored visible prose.
 - A user challenge opens `User Challenge Procedure`.
 - Valid autonomous-decision basis opens evidence-backed default execution.
-- Exception-class basis opens user escalation only for proven user-owned action, or blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe action.
+- Exception-class basis opens user escalation only for proven user-owned action admitted by `.claude/reference/reporting-prohibition-law.md`.
+- Non-user exception-class blocker-routing records owner, blocker, exhausted internal recovery basis, and next safe action internally.
 - Non-autonomy side effects open the owning skill, reference, lane, or `work-planning`.

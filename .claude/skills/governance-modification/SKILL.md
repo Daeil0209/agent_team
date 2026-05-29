@@ -41,7 +41,7 @@ Load and learn the full `Skill(review-verification)` body and call with bounded 
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
 Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-INDEPENDENCE`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, and `NEXT-OWNER-ACTION`.
-Reject post-hoc review on already-applied governance patches; route the order failure to recurrence-barrier hardening at the narrowest failed pre-mutation path.
+Reject post-hoc review when it is offered as the missing pre-mutation basis for already-applied governance patches; route that order failure to recurrence-barrier hardening at the narrowest failed pre-mutation path.
 
 # Step 4: Change Sequence Design
 Write `CHANGE-SEQUENCE-DESIGN` only from `review_verification_packet.REMOVAL-FIRST-PATCH-DESIGN`.
@@ -73,7 +73,7 @@ If patch execution is next, execute or hand off through `# Patch Execution Metho
 If same-request design rows remain, continue the next row through Step 2.
 If a recurrence-barrier hardening path converged, carry verified `RESUME-ACTION`.
 If the governance design interrupted another procedure path, reopen that path with the verified design basis.
-Return converged governance-modification state silently to the calling owner when no same-request executable owner/action remains.
+Return converged governance-modification state to the calling owner through internal handoff without user-facing report when no same-request executable owner/action remains.
 
 # Patch Execution Method
 Use this section to prepare `PRE-MUTATION-BASIS` during Step 4.

@@ -86,7 +86,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|MultiEdit|Write|NotebookEdit|Skill|mcp__playwright__browser_.*|Agent|TeamCreate|TeamDelete|CronCreate|CronDelete|TaskCreate|TaskUpdate|TaskStop",
+        "matcher": "Read|Grep|Glob|LS|ToolSearch|TaskGet|TaskList|TaskOutput|Bash|Edit|MultiEdit|Write|NotebookEdit|Skill|mcp__codex__codex|mcp__playwright__browser_.*|Agent|TeamCreate|TeamDelete|EnterWorktree|ExitWorktree|CronCreate|CronDelete|CronList|TaskCreate|TaskUpdate|TaskStop",
         "hooks": [
           {
             "type": "command",
