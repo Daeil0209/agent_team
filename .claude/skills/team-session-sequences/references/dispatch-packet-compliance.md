@@ -15,7 +15,7 @@ Cross-lane packet schema, common message classes, field format, and packet prefl
 ## Controlled-Value Fields
 | Lane | Field | Rule |
 |------|-------|------|
-| researcher | RESEARCH-MODE | `bounded` \| `deep` \| `sharded` as dispatch-shape context only; never a reasoning or coverage limit |
+| researcher | RESEARCH-MODE | `bounded` \| `deep-evidence` \| `sharded` as dispatch-shape context only; never a reasoning or coverage limit |
 | researcher | SOURCE-FAMILY | `repo` \| `runtime` \| `web` \| `mixed` |
 | researcher (benchmark) | BENCHMARK-MODE | `light` \| `full` |
 | researcher (benchmark) | BENCHMARK-PROVENANCE | `repo-observed` \| `authoritative-external` \| `mixed` \| `simulator-only` |

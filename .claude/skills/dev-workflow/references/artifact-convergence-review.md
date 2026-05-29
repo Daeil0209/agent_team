@@ -140,18 +140,18 @@ CANONICAL-ARTIFACT: <path>
 BOUNDARY-UNCHANGED: yes
 ```
 
-Missing or false continuation values reopen `work-planning` or stop on `HOLD`.
+Missing or false continuation values reopen `work-planning` or blocker-route after internal recovery.
 Valid continuation preserves boundary only.
 It does not preserve prior own-review, Codex review, or reconciliation as current-pass result.
 
 ## Resolution
 Phase advancement requires:
 - recorded team-lead own-review basis
-- completed Codex review or lawful fail-open
+- completed Codex review or fail-open with cited basis
 - point-by-point reconciliation
 - no accepted high/medium issue affecting the next phase
-- every point accepted, rejected, or deferred with reason
-- deferred low issues have later phase and owner
+- every point accepted, rejected, or deferred with cited reason
+- deferred low issues have cited later phase and owner
 - downstream artifact status is current, intentionally held, or explicitly stale
 - owner-decidable defaults and routine phase advancement route to the next owner/action
 - `Skill(self-verification)` runs convergence on the reconciled claim
@@ -161,11 +161,11 @@ User-facing review/proceed prompts are valid only when the user already requeste
 
 Route-level `CODEX-INDEPENDENT-REVIEW-BASIS` does not satisfy this artifact-level convergence record.
 Missing output record blocks CP user escalation that consumes the artifact, phase advancement, next-phase dispatch, and reporting-law-admitted user-facing prose.
-For phase-gate material artifacts, lawful fail-open requires fallback reviewer-style artifact inspection plus conservative `Skill(self-verification)` convergence.
+For phase-gate material artifacts, fail-open requires cited fail-open basis, fallback reviewer-style artifact inspection, and conservative `Skill(self-verification)` convergence.
 If Codex reports non-ready, close only by `resolved-divergence` grounded in doctrine, artifact evidence, or frozen request basis.
 Codex non-ready state is evidence, not veto.
 
-Stop on `HOLD` when:
+Blocker-route after internal recovery when:
 - two consecutive passes add no material finding
 - the same unresolved point repeats without new evidence
 - the artifact owner cannot revise the blocker
@@ -198,7 +198,7 @@ They must not control implementation, review, testing, validation, or acceptance
 After upstream convergence, choose exactly one:
 - revise downstream artifacts
 - regenerate downstream artifacts
-- `HOLD` with exact reason
+- blocker-routing with exact reason, exhausted internal recovery basis, and next safe owner/action
 
 ## Output Record
 `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` is internal phase evidence.
@@ -214,15 +214,15 @@ Record:
 - downstream artifact status: `current`, `stale`, or `hold`
 - implementation-binding internal detail bundle status when Phase 2 closure uses that bundle: `not-applicable`, `complete`, `missing`, `stale`, or `hold`
 - material specialist contract status when specialist output shapes implementation, proof, or acceptance: `not-applicable`, `current`, `missing`, `stale`, or `hold`
-- next owner/action: correction dispatch, phase advancement, fallback review, or `HOLD`
+- next owner/action: correction dispatch, phase advancement, fallback review, or blocker-routing
 For `converged` or `resolved-divergence` phase-gate artifacts that satisfy Phase advancement requirements, the output record carries an executable next owner/action; it does not end at user direction.
-A conditional status of `missing`, `stale`, or `hold` blocks phase advancement and records correction, stale-surface repair, or `HOLD` as next owner/action.
+A conditional status of `missing`, `stale`, or `hold` blocks phase advancement and records correction, stale-surface repair, or blocker-routing as next owner/action.
 
 ## Resolve Next Owner And Action
 - Accepted findings open artifact owner redesign or correction.
 - Valid `REDESIGN-PLAN` opens artifact mutation by the owning producer.
 - Missing output record blocks phase advancement and next-phase dispatch.
 - `converged` or `resolved-divergence` output opens the recorded next owner/action.
-- `non-converged` output opens correction, fallback review, or `HOLD`.
-- Lawful `fail-open` opens fallback artifact inspection plus conservative `Skill(self-verification)` convergence.
-- Stale downstream artifact opens revise, regenerate, or `HOLD`.
+- `non-converged` output opens correction, fallback review, or blocker-routing after internal recovery.
+- `fail-open` opens cited fail-open basis, fallback artifact inspection, and conservative `Skill(self-verification)` convergence.
+- Stale downstream artifact opens revise, regenerate, or blocker-routing after internal recovery.

@@ -9,7 +9,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 # team-session-sequences: Consequential Upward Completion Block
 - For consequential upward `SendMessage` transport from runtime lanes with `MESSAGE-CLASS: completion`, keep one authoritative completion block in the retained-output carrier instead of scattering acceptance-critical state across prose. This reference does not replace `.claude/skills/task-execution/references/completion-handoff.md`; completion-grade transports must satisfy that common spine first, then add the lane-owned fields below.
-- Exact `MESSAGE-CLASS: hold|blocker` uses the blocker-native fields in `.claude/skills/task-execution/references/message-classes.md`: `BLOCKER-TYPE`, `BLOCKER-BASIS`, and `SAFE-NEXT-STEP`. Add completion context fields in the payload carrier only when they are known and help team-lead correct, replan, continue independent lanes, or classify a true blocker.
+- Exact `MESSAGE-CLASS: hold|blocker` uses the blocker-native carrier fields in `.claude/skills/task-execution/references/message-classes.md`: `BLOCKER-TYPE`, `BLOCKER-BASIS`, `ATTEMPTED-RESOLUTION`, `OWNER-NEEDED`, `SAFE-NEXT-STEP`, and `RESUME-ROUTE`. Add completion context fields in the payload carrier only when they are known and help team-lead correct, replan, continue independent lanes, or classify a true blocker.
 - `status` and `scope-pressure` are Communication Plane transport and carry receiver-required detail through governed payload fields. Blocked transports use exact `MESSAGE-CLASS: hold|blocker`; do not emit bare `hold` or bare `blocker`.
 - Once a lane declares `MESSAGE-CLASS: completion`, a missing authoritative completion block makes the transport synthesis-invalid: team-lead must consume it as blocker/open-surface evidence or request corrected transport, not treat it as completion.
 - Session-readable completion blocks use the common completion spine as the required field floor.
@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
   - `reviewer` -> `REVIEW-STATE: ready|hold|blocked`
   - `tester` -> `TEST-STATE: ready|hold|blocked`
   - `validator` -> `VERDICT: PASS|HOLD|FAIL`
-- Preserve lane-owned state monotonically across reroute and re-dispatch. `team-lead` summarizes or routes from these fields, but must not silently strengthen an agent-owned state without a fresh explicit transport from the owning lane or stronger evidence on that same lane surface.
+- Preserve lane-owned state monotonically across reroute and re-dispatch. `team-lead` summarizes or routes from these fields, but must not strengthen an agent-owned state without fresh explicit transport from the owning lane; stronger evidence routes back to the owning lane, while team-lead may preserve, weaken, or mark the state open.
 - `tester` does not emit `TEST-STATE: not-needed`; that remains a lead-side validation-ingress decision when the acceptance design truthfully does not require tester proof.
 - `TEST-STATE: ready` means the tester completion is row-classified and decision-ready, not that the tested artifact passed.
 

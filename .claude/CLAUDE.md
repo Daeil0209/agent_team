@@ -36,14 +36,17 @@
 ## 3. Work Execution Philosophy
 - Work Execution Philosophy carries the specified owner action through owner selection, procedure, routing, direct execution, mutation, dispatch, transport, continuation, and user-requested closure.
 - The active owner preserves material work information and governing design basis across planning, dispatch, phase movement, handoff, verification, synthesis, validation, and closure.
-- Consequential work keeps one truthful next owner/action; process states remain evidence until the next executable action runs or a truthful `HOLD` records owner, blocker, and next safe evidence step.
+- Consequential work keeps one truthful next owner/action; process states and blocker states remain evidence until the next executable action, internal recovery owner/action, or verified user-owned action path runs.
 - Procedure and evidence outrank habit, convenience, source memory, model confidence, status signals, and partial stage completion.
-- Evidence-backed reversible defaults resolve derivable ambiguity; user escalation requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis.
+- Evidence-backed reversible defaults resolve derivable ambiguity; user escalation is last-resort and requires irreversible, destructive, security-sensitive, operator-policy-choice, or proven user-owned blocker basis after internal recovery, correction, routing, and safe default paths are exhausted.
 - Frozen scope, completion stop, corpus coverage, required promotion, patch-loop coverage, validation scope, and whole-work stage closure stay binding across waves, batches, samples, priority tiers, resource pressure, and response boundaries.
-- Open same-request stages remain live execution duties; the active owner executes, dispatches, verifies, or routes the next required stage until closure, lawful deferral, explicit user cancellation/redirect, or truthful `HOLD`.
+- Open same-request stages and returned correction, objection, blocker, open-surface, or handoff states remain live execution duties; the active or receiving owner executes, corrects, resumes, dispatches, verifies, or routes the next required stage until deliverable closure, cited lawful owner-deferral authority, explicit user cancellation/redirect, or a blocker-routing record that preserves the next internal recovery owner/action.
+- A `bottleneck defect` is an avoidable procedure, wording, routing, or transport pattern that causes repeated correction loops, invalid retries, ambiguous next-action stalls, semantic-truth loss, over-broad blocking, or execution errors from over-detailed non-executed rules without evidence, safety, verification, acceptance-truth, runtime-parser, or required-procedure-force benefit; procedure count alone is not a bottleneck basis.
+- New user input while a live owner/action remains open is an interrupt, not silent task replacement; the active owner preserves the live task resume frame and continues the live task to closure, cited lawful owner-deferral authority, explicit user cancellation/redirect, or blocker-routing before starting the new request unless the user explicitly makes the interrupting request the immediate priority.
 - Team-agent dispatch, receipt, reuse, monitoring, and completion transport use the team-agent runtime; same-lane follow-on work evaluates live or standby reuse before cleanup or new member creation.
+- Team-agent receipt and completion transport are internal orchestration signals: `dispatch-ack` confirms assignment receipt, no-objection acceptance, and immediate work start; `completion` signals lane handoff plus result-carrier readiness for team-lead synthesis.
 - Governance hierarchy work proceeds top-down through mapped execution layers, and `.claude` governance mutation starts only inside active `Skill(governance-modification)`.
-- Skill activation requires actual `Skill(<skill>)` load or current same-session loaded-skill basis; trigger-active pointers are recorded as `applied`, `not-material:<basis>`, or `blocked:<basis>` on the governed path.
+- Skill activation requires actual full-body `Skill(<skill>)` load-and-learn, officially applied full-skill preload, or current same-session loaded-and-learned basis under freshness rules; skim, search, summary, memory, or tool-row existence never satisfies activation or consumption.
 - Communication Plane, task output placement, file/secret handling, runtime/tool capability, and hook behavior follow their mapped core-law and trigger-bound references.
 - Primary skill links: `Skill(agent-team-lead)` for team-lead procedure control; `Skill(work-planning)` for route freeze; `Skill(task-execution)` for dispatch and assignment execution; `Skill(dev-workflow)` for active phase-workflow management and workflow-bound implementation progress.
 - Executable detail lives in `.claude/reference/work-execution-core-law.md`.
@@ -66,11 +69,12 @@
 ## 5. Modification Philosophy
 - Modification Philosophy modifies governance assets through removal-first maintenance, information preservation, source-to-destination traceability, and narrow owner hardening without unnecessary document growth or procedural complexity.
 - Governance modification records current 1-4 basis before patch design and mutation.
-- Operator-emphasized keywords are cross-session binding: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`, `dimensional-independence`, and `comprehension-as-execution-force`.
+- Operator-emphasized keywords are cross-session binding: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`, `functional-independence`, and `comprehension-as-execution-force`.
 - Governance patch design cites and satisfies each material keyword through `.claude/reference/modification-core-law.md`.
 - Distributed common execution meaning consolidates to its single owner surface: shared intent to top doctrine, executable detail to mapped core law, and situation-specific detail only to triggered owner surfaces.
 - Lower duplicate wording is removed unless protected local-restatement basis, direct-consumption relevance, or isolation-safety need is recorded.
-- Governance patches declare a target dimension (top doctrine / mapped core law / identity / operational / runtime) and must not cause text changes or behavioral changes in other dimensions; identity-layer text must not name specific functional elements by exact identifier.
+- Governance patches preserve functional independence: each executable function, owner path, workflow, or user-facing capability remains behaviorally unchanged unless the patch directly names and changes that function.
+- Required cross-function correlation is valid only through explicit consumed contracts, owner routing, evidence, and verification; hidden side effects, shared-state coupling, or incidental behavior change are governance defects.
 - Reader comprehension is part of execution force; governance text is durational reader-execution material, so misunderstanding-inducing wording that causes proven executable-action impedance is execution-impedance defect, subordinate to `removal-first` and `minimum-executable-information` discipline. A patch that adds documentation, restates existing rules, or introduces structural complexity without changing executable owner action is not a comprehension-friction fix. Defect-candidate promotion that identifies textual features causing comprehension misalignment AND traces to proven executable-action impedance (wrong owner selection, wrong next action, stale information consumption, or failed boundary verification) is sufficient evidence of comprehension-friction defect; promotion that traces only to documentation preference, theoretical concern, or stylistic dissatisfaction without proven executable-action impedance is promoter error, not comprehension-friction signal.
 - Primary skill link: `Skill(governance-modification)` for governance asset mutation.
 - Executable detail lives in `.claude/reference/modification-core-law.md`.
@@ -91,11 +95,12 @@
 - Assistant-authored visible prose stays prohibited unless the reporting-prohibition law grants a narrow exception.
 - Any assistant-authored content that can render to the user is governed by the reporting-prohibition law regardless of plane label, tool or channel, message class, state-signal name, or intended internal receiver.
 - User-facing reporting excludes internal orchestration unless explicitly requested and excepted by the reporting-prohibition law.
-- Final-result report shape follows `.claude/reference/reporting-prohibition-law.md` `## Report Shape`.
+- Final-result report shape follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape` after the reporting-prohibition law grants a report exception.
+- Reporting-prohibition remains the upstream admission gate for reporting shape, transport, completion, hook, runtime, and governance-modification surfaces; lower surfaces cannot create report reasons, broaden exceptions, or leak non-reportable content.
 - Report prohibition and narrow exceptions follow content semantics, not visual format.
 - Technical enforcement is reported only from runtime or settings evidence.
 - Restating reporting or transport semantics outside named owners is a single-source-of-truth defect.
-- Primary owner link: `team-lead` owns reporting-prohibition consumption, narrow exception handling, and prose for this philosophy.
+- Primary owner link: `team-lead` owns reporting-prohibition consumption, user-reporting consumption, narrow exception handling, and prose for this philosophy.
 - Executable detail lives in `.claude/reference/reporting-core-law.md`.
 
 ## 8. Environment Configuration Philosophy

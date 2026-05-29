@@ -33,7 +33,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 Anti-pattern search is as valuable as positive-pattern search. A benchmark cycle that found five positive patterns but zero anti-patterns is incomplete. Required: at least one anti-pattern search per benchmark cycle on visual / structural decisions.
 
 ## Search Depth Bound
-Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Stop search when added burden exceeds added decision value.
+Continue searching until: (a) pattern set saturates, (b) destination-fit decision is grounded enough to defend, (c) anti-pattern catalog has at least one entry. Stop only the search branch when added burden exceeds added decision value with downgraded evidence state plus residual miss-risk; route blocker-routing after internal recovery only when residual miss-risk blocks the decision.
 
 ## Resolve Next Owner And Action
 - Grounded benchmark evidence returns to the consuming owner.

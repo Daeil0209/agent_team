@@ -55,7 +55,7 @@ Before endorsing any engineering claim:
 - Constraint source cited (datasheet, standard, or specification)
 - Physical plausibility confirmed (order-of-magnitude sanity check)
 - Operating conditions stated (temperature, pressure, frequency, load)
-Claims failing any of the above are `HOLD` until corrected.
+Claims failing any of the above remain blocked and open correction until corrected.
 
 ## Resolve Next Owner And Action
 - Return verified units, constraints, plausibility checks, and operating conditions to the active engineering-grounding workflow.

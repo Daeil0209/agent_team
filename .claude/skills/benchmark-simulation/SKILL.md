@@ -134,7 +134,9 @@ Base that composition on the selected recipe in `references/design-stack-composi
 
 Use `BENCHMARK-MODE: light|full` exactly as frozen in the packet.
 Benchmark-light is the default comparative discipline.
+`benchmark-light` requires at least one inspected comparison basis, the decision axis it informs, and a bounded applicability note.
 Benchmark-full is required when routing, promotion, or sustainable team shape materially depends on the result.
+`benchmark-full` requires multiple independent comparison bases when available, explicit positive and negative pattern checks, fit/adapt reasoning, residual uncertainty, and an output basis strong enough for the named routing, promotion, durable pattern, blocking, or acceptance-strength use.
 `promotion` means upgrading benchmark-supported evidence into routing force, durable pattern or capability adoption, blocking force, or acceptance-strength influence.
 
 ## Capability-Evolution Loop

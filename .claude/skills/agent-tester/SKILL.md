@@ -162,12 +162,12 @@ Assigned user-facing interaction requires executed interaction proof and observe
 ## Proof Classification
 - `Directly proven`: executed check on the assigned decisive surface, expected behavior observed, required material closure-defect probe executed, and required postcondition evidence retained. Directly proven covers only the executed scenario; user-ready or reliability claims also require material hard-test probe evidence.
 - `Indirect evidence`: inferred from related executed evidence; it is support evidence only and cannot close direct-required user-facing `SCOPE-BASELINE`, `CORE-WORKFLOW-CLOSURE`, proof surface, or interaction-coverage rows.
-- `Blocked`: required execution did not complete.
+- `Blocked`: required execution did not complete; it can travel as row-level proof evidence when the proof report can truthfully complete with open surfaces.
 - `Disproven`: executed check, failing behavior observed.
 
 ## Active Communication Protocol
 - Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
-- Use exact `MESSAGE-CLASS: hold|blocker` for `blocked` proof classification.
+- Use exact `MESSAGE-CLASS: hold|blocker` only when blocked execution prevents a truthful tester-owned proof report; otherwise send `completion` with row-level `blocked` classifications and `OPEN-SURFACES`.
 - Completion uses `completion` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action

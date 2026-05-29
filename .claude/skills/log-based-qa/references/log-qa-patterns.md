@@ -102,7 +102,7 @@ If logs are the frozen decisive proof surface, missing required log fields or re
 - [ ] JSON log format applied to all services
 - [ ] Request ID generation at entry point
 - [ ] `X-Request-ID` header propagated across all service layers
-- [ ] Log level per environment (`DEBUG` for dev/staging, `WARN` for prod)
+- [ ] Log level per environment (`DEBUG` for dev/local, `INFO` for staging, `WARN` for prod)
 - [ ] Docker `json-file` logging driver with rotation configured
 ### QA Workflow Readiness
 - [ ] Docker Compose environment starts cleanly and log stream confirms JSON output

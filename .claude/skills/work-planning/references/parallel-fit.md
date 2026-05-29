@@ -20,7 +20,7 @@ The Step 2 Q4 discrimination test is `distinct acceptance contracts AND output->
 
 Independent specialist-fit work surfaces separate by one of these axes: evidence family, decision target, document section, production surface, source-of-truth, interface/format boundary, proof burden, or correction owner.
 Prior-context reuse, agent setup burden, or coordination convenience alone is not a sufficient serial reason.
-Operational burden is a team-runtime planning input, not a standalone-route basis; handle it by cap, shard merge, sub-batching, serial phasing, reuse, or `HOLD` without losing configured lane ownership or independent specialist separation.
+Operational burden is a team-runtime planning input, not a standalone-route basis; handle it by cap, shard merge, sub-batching, serial phasing, reuse, or blocker-routing after internal recovery is exhausted without losing configured lane ownership or independent specialist separation.
 Collapsing genuinely independent surfaces onto one agent is a bottleneck defect.
 
 PROTECTED-LOCAL-RESTATEMENT-BASIS: planning-vs-runtime split — the binding-surface verification rule below is also enforced runtime-side at `.claude/skills/task-execution/references/dispatch-entry-contract.md` `## Field Rules` and `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Parallel And Reuse Law`. Planning-side declares the verification rule (freeze-time); runtime-side enforces it pre-`TeamCreate`/`Agent`/`SendMessage`. Both surfaces are required because verification happens at two distinct operational moments.
@@ -72,4 +72,4 @@ If cap blocks new member creation and reuse-fit holds, the next move is reuse-vi
 - Material burden imbalance opens split refinement.
 - Frozen parallel groups return to `AGENT-MAP` and `PARALLEL-GROUPS`.
 - Missing parallel binding surface blocks dispatch readiness.
-- Ready host-authorized additional-agent route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists; runtime creation, reuse, and member execution are consumed through loaded `task-execution` from `.claude/skills/task-execution/references/runtime-dispatch-law.md`.
+- Ready host-authorized additional-agent route opens `Skill(task-execution)` when no fresh current same-session loaded-and-learned `task-execution` basis exists; runtime creation, reuse, and member execution consume fresh loaded-and-learned `task-execution` plus `.claude/skills/task-execution/references/runtime-dispatch-law.md`.

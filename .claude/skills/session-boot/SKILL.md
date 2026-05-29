@@ -54,15 +54,15 @@ If boot evidence and visible-prose pressure conflict, keep boot evidence interna
 Answer-only text that needs no tool can remain light.
 While session-boot is active, runtime-readiness, recovery, monitoring, cleanup, or dispatch-state tool work waits for the matching session-boot classification.
 
-Return only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
-Runtime-ready and clean boot outcomes are internal move-out facts unless `.claude/reference/reporting-prohibition-law.md` admits blocker or status prose.
+Record only runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
+Runtime-ready and clean boot outcomes are internal move-out facts; do not render startup-applied, ready, clean-session, or request-prompt prose unless `.claude/reference/reporting-prohibition-law.md` admits blocker or explicit-status prose.
 Open the next owner/action that can run in the same segment before any reporting-law-excepted boot prose.
 
 ## Boot Sequence
 `Boot Sequence` is the bounded entry path for lead-session boot and explicit team-agent runtime readiness.
 Run the team-agent runtime branch only for runtime readiness, recovery, or entry gating required by the current request or frozen route.
 Classify runtime-ready, runtime-required, runtime-blocked, monitoring-required, or recovery-required here.
-Active `Boot Sequence` emits runtime-readiness classification before runtime-dependent action.
+Active `Boot Sequence` records runtime-readiness classification internally before runtime-dependent action.
 
 `startup-volatile control residue` means startup-era runtime, hook, task, or continuity observations that are not live continuity basis unless rechecked for the current session.
 
@@ -110,7 +110,7 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 - Record the current phase, checkpoint, or blocking step in the matching internal carrier: continuity record, task state, runtime ledger, retained note, or recovery record.
 - Keep boot, phase, checkpoint, continuity, and sequence names internal as procedure state; visible output follows `.claude/reference/reporting-prohibition-law.md` only.
 - Sequence switches require an explicit active-sequence transition in the internal carrier.
-- Defined session procedures follow the governing basis or stay on `HOLD`.
+- Defined session procedures follow the governing basis or blocker-routing after internal recovery is exhausted.
 
 ## Mode Split
 Two agent-execution modes must stay separate:
@@ -147,6 +147,7 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 - Track lane health, no-progress risk, route drift, stalled agents, merge collisions, and runtime pressure.
 - Monitor canonical team/runtime truth classes without collapsing receipt-level dispatch into agent-start evidence.
 - Runtime signals classify agent/runtime truth only.
+- Runtime health checks, socket-drop checks, carrier-presence checks, roster reads, and missing-file checks stay as internal recovery evidence; use retained artifacts or bare evidence commands and do not narrate the check, hook denial, retry, or interim classification.
 - Workflow progression, checkpoint resolution, and completion claims stay with their governing procedure.
 - When a governing workflow such as `dev-workflow` is active, monitor runtime in service of the active phase cursor only.
 - Phase advancement, redistribution, synthesis, and completion claims stay with `team-lead` plus the active workflow owner.
@@ -181,4 +182,4 @@ See `references/runtime-state-detail.md` for:
 - Bottleneck collapse opens boundary-change correction through `team-lead`.
 - Cleanup obligation opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Closeout intent opens `session-closeout`.
-- Runtime-blocked reports `HOLD` with owner, blocker, and next safe evidence step.
+- Runtime-blocked records blocker-routing with owner, blocker, exhausted runtime recovery basis, and next safe owner/action.

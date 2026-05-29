@@ -70,6 +70,10 @@ Patch-worthiness requires current proof of:
 - smallest owner surface
 - selected operation type
 - regression risk
+- intended changed function set
+- positive-function inventory in the coherence radius
+- correlated functions changed by governed interface
+- per-function no-negative-impact result
 - minimum-executable-information result
 - behavior-weakening wording result
 - upper-to-core executable-detail result when top doctrine changes execution
@@ -78,7 +82,7 @@ Patch-worthiness requires current proof of:
 - tested rejection of `design-tradeoff`
 - tested rejection of `non-issue`
 
-Patch readiness additionally requires current proof of patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
+Patch readiness additionally requires current proof of patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, intended changed function set, positive-function inventory, per-function no-negative-impact result, and verification basis.
 Patch-worthiness without those fields remains `patch-worthy`, not `patch-ready`.
 The selected patch direction is patch-ready only when:
 - every stronger narrower alternative is tested or rejected by current evidence
@@ -92,7 +96,7 @@ The selected patch direction is patch-ready only when:
 
 ## Resolve Next Owner And Action
 - Confirmed review packet returns to the triggering owner with the next owner/action named by `Skill(review-verification)` Step 14; standalone full workflow opens that owner/action.
-- Missing evidence opens researcher, reviewer, local inspection, or `HOLD`.
+- Missing evidence opens researcher, reviewer, local inspection, or blocker-routing after internal recovery.
 - Patch-ready governance asset change opens the named patch sequence or production owner for mutation.
 - Patch-worthy governance asset change without patch-ready basis opens patch-readiness completion on the current review or governance-modification path, not mutation.
 - Confirmed recurrence-barrier need opens `Skill(governance-modification)`.

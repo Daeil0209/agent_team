@@ -140,7 +140,7 @@ auto-inject: false
 - No self-certification inside iteration
 - Convergence is the goal.
 - Continue while each pass reduces real acceptance risk and has a changed artifact, changed evidence basis, or changed correction path.
-- Repeating the same gap class without new artifact evidence, new proof evidence, or a new correction path forces explicit `HOLD`/replan or Incident Response.
+- Repeating the same gap class without new artifact evidence, new proof evidence, or a new correction path forces explicit blocker-routing/replan or Incident Response.
 - Iteration resets only after genuine re-analysis, not by habit.
 - Cross-environment gaps stay in the same acceptance stream.
 - Env-coverage substitution closes visual, launch, or interaction deltas only inside the frozen Phase 4 surface or explicit replan.
@@ -153,4 +153,4 @@ auto-inject: false
 - Missing `DESIGN-ROW-IMPL-MATRIX` blocks Phase 3 -> 4 transition and opens developer or design correction.
 - Complete Phase 4 acceptance evidence opens CP5 or Final Acceptance Review by acceptance path.
 - Phase 5 cleared correction opens affected review, proof, validation, and operator-delivery rerun.
-- Repeated same-class gap opens `HOLD`, `work-planning`, or incident response by root cause.
+- Repeated same-class gap opens `work-planning`, incident response, or blocker-routing after internal recovery by root cause.

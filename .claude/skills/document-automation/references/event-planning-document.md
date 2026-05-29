@@ -46,7 +46,7 @@ Use when document mode is institutional event planning, including retreats, work
 - Treat fatigue, concentration rhythm, logistics complexity, transition overhead, and post-meal energy as hard realism constraints.
 - Use conservative defaults when thresholds are missing.
 - Conservative defaults include short focused sessions with breaks, protected transitions, lighter content after meals, and progressive intensity reduction across multi-day events.
-- Schedules violating these constraints mark `HOLD`.
+- Schedules violating these constraints mark a blocked feasibility state with correction owner/action.
 
 ## Visual Inclusion For Event Documents
 - Candidate types include schedule/timetable tables, process flow diagrams, venue layout maps, role/responsibility matrices, budget allocation charts, and participant journey maps.

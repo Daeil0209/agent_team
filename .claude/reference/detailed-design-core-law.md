@@ -16,9 +16,9 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `TARGET-INTENT-BASIS` does not replace `REQUEST-FIT-BASIS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, or row-granular `SCOPE-BASELINE` when those bases are material.
 - A detailed-design move that changes frozen request, deliverable, scope, user burden, or completion shape is design drift and reopens `work-planning` before downstream execution.
 - The active downstream owner consumes current design intent, `TARGET-INTENT-BASIS`, solution-structure basis, scope boundary, proof path, acceptance path, and drift stop as Work Execution input.
-- `[DESIGN-SPECIFICATION]` The active design owner specifies design intent, `TARGET-INTENT-BASIS`, solution structure, and scope boundary before design-dependent execution, dispatch, review, proof, validation, or mutation.
+- `[DESIGN-SPECIFICATION]` The active design owner specifies design intent, `TARGET-INTENT-BASIS`, solution structure, scope boundary, proof path, and acceptance path before design-dependent execution, dispatch, review, proof, validation, or mutation.
 - `[DESIGN-INTENT]` Existing-artifact work and existing-governance judgment start from cited design intent and cited applicable core-law axes.
-- `TARGET-INTENT-BASIS` records cited design intent, applicable core-law axes, target purpose, affected owner surfaces, scope boundary, and drift stop.
+- `TARGET-INTENT-BASIS` records cited design intent, applicable core-law axes, target purpose, affected owner surfaces, scope boundary, proof path, acceptance path, and drift stop.
 - When solution structure is material, `TARGET-INTENT-BASIS` also records the solution-structure basis and boundary fit.
 - Existing-artifact packets carry `TARGET-INTENT-BASIS`.
 - Original creation records `TARGET-INTENT-BASIS` when downstream work needs target artifact, program, report, document, governance, proof, or acceptance purpose.

@@ -85,4 +85,4 @@ The business workflow packet records:
 - Missing source-of-truth mapping opens design correction.
 - Missing linked workflow surface opens design correction.
 - Missing proof oracle row opens tester packet correction.
-- Missing reconciliation evidence opens validator `HOLD` or correction routing.
+- Missing reconciliation evidence opens validator verdict `HOLD` carrying correction routing or direct correction routing.

@@ -10,7 +10,7 @@ Checkpoint policy.
 CP1-CP5 are checkpoint surfaces, not default stop points or user-confirmation labels.
 team-lead resolves checkpoints autonomously when the frozen request-fit basis and available evidence are sufficient.
 Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here.
-Those classes force `HOLD` and re-entry through the owning path.
+Those classes open blocker-routing and re-entry through the owning path after internal recovery.
 CP5 is auto-resolved in normal gap flow.
 T0/T1 gaps follow Incident Response.
 
@@ -19,21 +19,21 @@ T0/T1 gaps follow Incident Response.
 - **Trigger**: problem understanding and request-fit basis are synthesized
 - **Present**: problem, scope boundaries, frozen `SCOPE-BASELINE` for in-scope features/surfaces/controls, constraints, delivery experience, acceptance evidence basis, and lightweight verification strategy basis; if a reference exists, also present adopted/adapted/rejected reference fit
 - **Auto-resolve**: when the request-fit basis and available evidence make the plan basis clear
-- **Reopen/HOLD**: when reference interpretation or core plan basis remains materially ambiguous
+- **Reopen/blocker-routing**: when reference interpretation or core plan basis remains materially ambiguous after internal recovery
 
 ## CP2 -- Ambiguity Resolution
 - **Phase**: Plan, after the plan draft exists
 - **Trigger**: open design or integration questions remain
 - **Present**: only the unresolved questions that still change scope, risk posture, or delivery expectations
 - **Auto-resolve**: when the answer is still bounded by the request-fit basis and existing evidence
-- **Reopen/HOLD**: when bounded inference no longer preserves scope, risk posture, or delivery expectations
+- **Reopen/blocker-routing**: when bounded inference no longer preserves scope, risk posture, or delivery expectations after internal recovery
 
 ## CP3 -- Architecture Selection
 - **Phase**: Design
 - **Trigger**: architecture options are produced
 - **Present**: explicit options plus their `SCOPE-BASELINE` closure, verification, delivery, and implementation implications
 - **Default path**: team-lead auto-resolution from the pragmatic option with bounded supplementation
-- **Reopen/HOLD**: when supplementation would materially change architecture family, risk posture, or implementation scope
+- **Reopen/blocker-routing**: when supplementation would materially change architecture family, risk posture, or implementation scope after internal recovery
 
 ## CP4 -- Implementation Scope Resolution
 - **Phase**: Implementation, before any implementation begins
@@ -41,7 +41,7 @@ T0/T1 gaps follow Incident Response.
 - **Owner action**: team-lead freezes CP4 by translating the Phase 2 implementation-binding internal detail bundle into production assignments; developer receives CP4 as implementation basis only
 - **Present**: work surfaces to create/modify, out-of-scope items, risk points, `SCOPE-BASELINE` coverage, delivery experience check, specialist-fit lane decomposition, dependency boundaries, surface-to-agent map, first parallel dispatch segment, later-segment parallel-fit basis, and merge ownership
 - **Auto-resolve**: when the scope matches the design contract and frozen request-fit basis with no unresolved design-level gap
-- **Reopen/HOLD**: for destructive/security-sensitive actions or material scope expansion beyond the resolved design
+- **Reopen/blocker-routing**: for destructive/security-sensitive actions or material scope expansion beyond the resolved design after internal recovery
 
 ## CP5 -- Gap Resolution Decision
 - **Phase**: Analysis

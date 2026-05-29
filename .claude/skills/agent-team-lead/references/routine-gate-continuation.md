@@ -17,9 +17,10 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: routine-continuation atomic-check — Procedu
 - A final, closeout, or status path finds any frozen next owner/action or same-request residual work.
 
 ## Resolve Next Owner And Action
-- Status or why answers consume `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` and `## Report Shape`, then return to the active owner action unless the user redirects or a user-action blocker is proven.
+- Status or why answers consume `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate`; admitted answers consume `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`, while denied answers suppress prose and return to the active owner action unless the user explicitly cancels, redirects, immediately prioritizes an interrupting request, or a user-action blocker is proven.
 - Routine milestones and partial arrivals stay Procedure Plane unless the user explicitly asks for status; admitted status stays compact and omits internal inventories unless requested.
 - Any open frozen next owner/action executes through its active owner path.
 - Any same-request residual work opens the smallest owner that can close that residual item.
-- A residual item closes only through patch, required integration, proof, validation, acceptance, cited out-of-scope basis, lawful owner deferral, explicit user cancellation/redirect, or truthful `HOLD`.
-- Procedure Plane `FINAL` closure opens only when every same-request residual item is closed, lawfully deferred, explicitly cancelled/redirected, or blocked by truthful `HOLD`; visible final prose still requires `.claude/reference/reporting-prohibition-law.md` admission, and non-user-action `HOLD` does not admit final prose.
+- A residual item closes only through patch, required integration, proof, validation, acceptance, cited out-of-scope basis, cited lawful owner-deferral authority, explicit user cancellation/redirect, or blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe owner/action.
+- Procedure Plane `FINAL` closure opens only when every same-request residual item is closed, deferred by cited lawful owner-deferral authority, explicitly cancelled/redirected, or blocker-routed after internal recovery is exhausted; visible final prose still requires `.claude/reference/reporting-prohibition-law.md` admission.
+- A non-user-action blocker-routing record is not `final verified result`; when it blocks the user-requested deliverable and no internal executable route remains, open `closeout residual` reporting with only user-relevant residual truth, otherwise open the remaining internal route.

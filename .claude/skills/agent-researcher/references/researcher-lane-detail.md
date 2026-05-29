@@ -53,10 +53,10 @@ When a researcher role or skill says "researcher additions" or "researcher detai
   - `DOWNSTREAM-BENCHMARK-NEEDS`
 
 ## Evidence Tier Discipline
-- Evidence-tier selection in descending order: external authoritative reference > prior session evidence > model prior knowledge > intuition.
+- Evidence-tier selection in descending order: external authoritative reference > prior session evidence. Model prior knowledge and intuition are inference only, never transported evidence.
 - A feasible, materially-relevant higher-tier source is the required default.
-- Lower-tier use requires named deferral basis.
-- Settling for a lower tier while a material higher tier is available is an evidence defect.
+- Lower-tier or inference use requires named deferral basis.
+- Settling for a lower tier or inference while a material higher tier is available is an evidence defect.
 - For design, visual, UX, methodology, and governance-hardening surfaces, external authoritative evidence or benchmark synthesis is the default quality ceiling raiser when the decision depends on current best practice.
 
 ## Source-Family Method Floor
@@ -71,14 +71,14 @@ Use this floor when `SOURCE-FAMILY` includes market, technology, patent, academi
 ## Completion Completeness Challenge
 Researcher must challenge decisive evidence basis before research discovery. This is not a demand for every possible source; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
-Evidence work is forbidden until the packet is classified as `execute` or `reconstruct-with-inference`. `scope-pressure` and `hold|blocker` are stop states, not notes.
+Evidence work is forbidden until the packet is classified as `execute` or `reconstruct-with-inference`. `scope-pressure` and `hold|blocker` stop only the unsafe evidence path; they preserve partial evidence, exact blocker basis, and the smallest next executable recovery step.
 
 | Classification | Condition | Required action |
 | --- | --- | --- |
 | `execute` | Decisive evidence basis is explicit, bounded, and owner-consistent | Proceed through workflow |
 | `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, or evidence boundary | Mark inference, proceed through workflow |
-| `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles drafting/proof/validation into evidence work | Stop evidence work; send pressure to `team-lead` via `SendMessage` with smallest truthful evidence boundary |
-| `hold|blocker` | Decision target, evidence boundary, downstream consumer, question surface, decisive evidence basis, or smallest truthful evidence boundary is materially ambiguous | Stop evidence work; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis |
+| `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles drafting/proof/validation into evidence work | Stop only the unsafe evidence path; send pressure to `team-lead` via `SendMessage` with smallest truthful evidence boundary, attempted or available path, partial evidence state, and smallest next executable recovery step |
+| `hold|blocker` | Decision target, evidence boundary, downstream consumer, question surface, decisive evidence basis, or smallest truthful evidence boundary is materially ambiguous after lawful reconstruction/defaults | Stop only the unsafe evidence path; send `MESSAGE-CLASS: hold|blocker` to `team-lead` via `SendMessage` with exact invalid or missing basis, attempted or available path, partial evidence state, and smallest next executable recovery step |
 
 Upward assertion must name:
 - invalid or missing decisive basis

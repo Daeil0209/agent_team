@@ -20,7 +20,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Naming `MERGE-OWNER` does not force a global wait for shard completeness.
 - A shard's retained carrier becomes merge-eligible input only after that shard's Communication Plane `completion` clears its per-target receipt barrier per `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Parallel And Reuse Law`.
 - File presence on disk, mtime, size, or partial content is supporting evidence only; pre-completion carrier reads do not become merge-eligible input even if their content later proves correct.
-- Once the frozen parent packet and the set of completion-cleared shards support useful progress, that owner opens bounded drafting or integration on that cleared set.
+- Once the frozen parent packet and the completion-cleared shard set has no unresolved contradiction inside that set and can produce an interim-only subset output, that owner opens bounded drafting or integration on that cleared set.
 - Later shard arrivals fold into explicit follow-up merge work.
 - Missing inputs remain visible.
 - Each shard dispatch stays bounded and explicitly states what part of the parent work it owns, what it must not absorb, and the required completion form.
@@ -35,7 +35,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Merge work is its own phase-intent.
 - Do not hide merge responsibility inside one shard writer's ordinary draft step after parallel fan-out has already happened.
 - Phase separation does not require passive waiting.
-- Starting draft from an incomplete but already useful shard set is valid only for interim work.
+- Starting draft from an incomplete shard set is valid only for interim work over the completion-cleared subset; it cannot claim final, full-corpus, authoritative, or completion-grade synthesis.
 - Bounded integration follow-up remains with the designated owner as later shard results arrive.
 - The parent packet, merge ownership, and unresolved gaps stay explicit.
 - Partial shard merge output is not authoritative `FINAL`, full-corpus judgment, or completion-grade synthesis.
@@ -50,13 +50,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Merge does not owe every shard full local preservation in the final reader-facing body.
 - After merge, route one authoritative integrated output forward.
 - Do not send multiple shard bodies downstream as if acceptance lanes own implicit merge work.
-- Authoritative integrated output requires every required shard result to be integrated, explicitly deferred by owner, or marked out-of-scope with cited basis.
+- Authoritative integrated output requires every required shard result to be integrated, deferred by cited lawful owner-deferral authority, or marked out-of-scope with cited basis.
 
 ## Resolve Next Owner And Action
 - Valid shard decomposition opens parallel shard dispatch.
 - Overlapping shard boundary opens resize, resequence, or single-owner routing.
 - Missing `MERGE-OWNER` blocks full fan-out until named.
-- Useful partial shard set opens bounded merge work.
+- Completion-cleared, non-contradictory partial shard set opens interim bounded merge work.
 - Late shard arrival opens follow-up merge work.
-- Unresolved shard contradiction opens merge-owner clarification, correction, or `HOLD`.
+- Unresolved shard contradiction opens merge-owner clarification, correction, or blocker-routing after internal recovery is exhausted.
 - Authoritative integrated output opens downstream review, proof, validation, or synthesis routing.

@@ -15,7 +15,7 @@ Use it to:
 
 ## Reporting Curtain Inheritance
 This reference governs procedure movement, not report exceptions.
-User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
+Report admission is owned by `.claude/reference/reporting-prohibition-law.md`; admitted report shape is owned by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Consume When
 - A task moves beyond `answer-only`.
@@ -45,7 +45,7 @@ User-facing prose is owned by `.claude/reference/reporting-prohibition-law.md`.
 ## Required Output
 The consuming owner records one of these outcomes:
 - `verified work-result basis`
-- `HOLD`
+- blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe owner/action
 - explicit cancel
 - explicit redirect
 - next executable owner/action
@@ -65,11 +65,12 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - Configured-lane ownership opens the configured lane owner.
 - Lead-only packet basis opens packet correction.
 - The consuming owner must leave one next executable owner/action.
-- If no next owner/action is lawful, report `HOLD`.
-- The `HOLD` names:
+- If no next owner/action is lawful after every internal recovery, correction, routing, setup, and safe default route is exhausted, record blocker-routing.
+- Blocker-routing names:
   - owner
   - blocker
-  - next safe evidence step
+  - exhausted internal recovery basis
+  - next safe owner/action
 
 ## Rules
 - Governance documents are operating-rule surfaces, not passive surfaces.
@@ -124,7 +125,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: detail-reference parallel owner-listing — p
 - Frontmatter is task context.
 - Loaded skills are task context.
 - Runtime convenience is task context.
-- Conflict selects the stricter correct owner.
+- Conflict selects the owner whose declared authority directly controls the active action, stop, evidence, proof, validation, mutation, reporting, or runtime boundary.
 - Conflict selects `scope-pressure` when planning quality is unsafe.
 - Conflict selects `hold|blocker` when safe continuation is blocked.
 

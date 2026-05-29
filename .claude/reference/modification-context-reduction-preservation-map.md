@@ -19,11 +19,12 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Missing current destination opens preservation-map correction.
 - Stale destination opens live owner-surface inspection.
 - Broken reference binding opens owning-reference correction.
-- Unreconstructable moved meaning opens `HOLD` with source, destination, blocker, and next evidence step.
+- Unreconstructable moved meaning opens blocker-routing with source, destination, blocker, exhausted reconstruction basis, and next safe owner/action.
 
 ## Consumer And Ownership
 - `team-lead` consumes this reference only for preservation audits, compression-safety challenges, duplicate-overlap checks, live-surface-porting checks, or source-to-destination traceability reviews.
-- Lane agents receive only the traceability facts packetized by `team-lead` when needed.
+- Lane agents receive packetized traceability facts from `team-lead` only for lookup-only transfer.
+- When lane work judges context reduction, compression, preservation, migration, or source-to-destination traceability, the lane consumes the complete triggered section and records applied-rule mapping; packetized facts alone are insufficient.
 - Compression is lawful only when the shorter surface remains equal or stronger on action, owner, trigger, stop, evidence, verification, acceptance truth, and live cross-reference integrity.
 
 ## Current Source-To-Destination Index
@@ -34,11 +35,12 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - Skill loading, required-skill handling, methodology guidance, and reference binding detail lives in `.claude/reference/work-skill-reference-binding-law.md`.
 - Runtime boundary, hook-last, settings/tool capability, external capability, runtime-owned surface, and footprint-claim boundary detail lives in `.claude/reference/work-runtime-boundary-law.md` and `.claude/reference/environment-runtime-footprint-continuity.md`.
 - Output-root, source-edit, governance-edit, protected settings, `claude_doc/<work-name>/`, and filesystem boundary detail lives in `.claude/reference/environment-output-root-filesystem-law.md`.
-- User-facing report prohibition, narrow exception, and report shape lives in `.claude/reference/reporting-prohibition-law.md`.
+- User-facing report prohibition and narrow exception lives in `.claude/reference/reporting-prohibition-law.md`.
+- Admitted user-facing report shape, final-result line budget, and report-location line lives in `.claude/reference/reporting-user-reporting-law.md`.
 - Optional supervised report rendering and curtain proof lives in `.claude/reference/environment-output-curtain-runtime.md`.
 - Official Claude Code source facts live in `.claude/reference/environment-official-claude-code-source-cache.md`.
 - Minimal governance patch selection, Patch-Ready Gate, source-to-destination trace, and hardening rules live in `.claude/reference/modification-minimal-governance-change-law.md`.
-- Governance asset mutation, recurrence hardening, asset-change mode, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references named by that skill's Step 2.
+- Governance asset mutation, recurrence-barrier hardening path, and patch mechanics live in `.claude/skills/governance-modification/SKILL.md` and references named by that skill's Step 2.
 - Review-verification workflow and governance review gates live in `.claude/skills/review-verification/SKILL.md` and `.claude/skills/review-verification/references/governance-review-gates.md`.
 - Self-verification two-pass outbound gate procedure lives in `.claude/skills/self-verification/SKILL.md`.
 - Team-lead role spine stays in `.claude/agents/team-lead.md`; detailed lead procedure lives in `.claude/skills/agent-team-lead/SKILL.md` and references reached through that skill's `# Consume Trigger References`.
@@ -72,7 +74,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | --- | --- |
 | Fresh consequential request | `session-boot` opens first when runtime readiness triggers; otherwise `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` convergence runs before analyzed-result reporting or completion. |
 | Light answer-only request | No agent-specific skill, workflow, dispatch, or governance detail loads by habit. |
-| Read-only diagnostic, audit, or analytical work | Lead-local is valid only under direct-work limits; team fan-out requires frozen context-footprint or independent-evidence basis. |
+| Read-only diagnostic, audit, or analytical work | Lead-local is valid only under `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md` lead-local conditions; team fan-out requires frozen context-footprint or independent-evidence basis. |
 | Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |
 | Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; standalone `Agent` is fallback evidence only, not team-runtime dispatch. |
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |

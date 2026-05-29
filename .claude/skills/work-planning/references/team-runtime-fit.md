@@ -12,7 +12,7 @@ Team operating rule: additional-agent lane work uses the team-agent runtime rout
 Standalone `Agent` supplies fallback or non-authoritative evidence only.
 Standalone `Agent` is not a third work route.
 Standalone `Agent` is not configured lane work, assignment-grade work, multi-surface audit work, review/proof/validation separation, receipt transport, reuse, monitoring, or completion handoff.
-Operational burden, context size, setup friction, and coordination overhead are handled inside team-agent runtime planning through `ACTIVE-CONCURRENT-AGENT-CAP`, shard merge, sub-batching, serial phasing, reuse, or truthful `HOLD`; they do not convert required lane-owned work or independent specialist surfaces into standalone evidence-only work.
+Operational burden, context size, setup friction, and coordination overhead are handled inside team-agent runtime planning through `ACTIVE-CONCURRENT-AGENT-CAP`, shard merge, sub-batching, serial phasing, reuse, or blocker-routing after internal recovery is exhausted; they do not convert required lane-owned work or independent specialist surfaces into standalone evidence-only work.
 If standalone `Agent` is considered for evidence-only use, freeze it as lead-local evidence gathering with a concrete evidence purpose and no lane-state promise.
 If the requested deliverable needs a configured lane owner, independent specialist surface, multi-surface audit, receipt, reuse, monitoring, or completion handoff, freeze team-agent runtime route or reopen route planning.
 If configured independent-review handling is material, freeze `CODEX-INDEPENDENT-REVIEW-BASIS` through `Skill(codex-independent-review)`; standalone `Agent` is not configured independent review.

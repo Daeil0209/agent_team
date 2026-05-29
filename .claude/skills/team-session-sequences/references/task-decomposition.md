@@ -33,4 +33,4 @@ These make the decomposition itself legible.
 - Sequential child tasks open ordered dispatch.
 - Mixed or oversized child boundary opens further decomposition.
 - Missing chain-forward context opens packet correction.
-- Completed child results open merge, continuation, reroute, or `HOLD` by parent objective.
+- Completed child results open merge, continuation, reroute, or blocker-routing after internal recovery is exhausted by parent objective.

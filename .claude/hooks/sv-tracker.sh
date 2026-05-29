@@ -68,6 +68,9 @@ if [[ -n "$SKILL_MARKER_NAME" ]]; then
 fi
 
 case "$SKILL_NAME" in
+  *agent-team-lead*)
+    SUPPRESS_DISPLAY=1
+    ;;
   *session-boot*)
     if ! runtime_sender_session_is_worker "$SESSION_ID"; then
       mark_procedure_startup_ready "$SESSION_ID"
@@ -83,6 +86,7 @@ case "$SKILL_NAME" in
         printf '%s' "$RAW_SESSION_ID" > "$SESSION_BOOT_MARKER_FILE"
       fi
     fi
+    SUPPRESS_DISPLAY=1
     ;;
   *self-growth-sequence*)
     # Entry was observed. Do not treat this as proof that hardening is complete.

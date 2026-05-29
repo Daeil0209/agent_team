@@ -76,7 +76,7 @@ Use only the lenses that materially affect the assigned validation surface.
 - Complete-process check: for multi-step user workflows, validate the whole process path, not only isolated pages or states.
 - Contradiction reconciliation: keep review truth, test truth, produced output, and user-surface proof separate until they reconcile on the same decisive surface.
 - Negative-space validation: look for required but absent expectations, users, environments, data states, edge cases, cleanup paths, rollback paths, and burden assumptions.
-- Confidence calibration: downgrade to `HOLD`, `partial`, `mismatched`, `blocked`, `not assessable`, `INFERENCE`, or `UNVERIFIED` before using pass-like language that outruns evidence.
+- Confidence calibration: downgrade to verdict `HOLD` carrying correction owner/action, `partial`, `mismatched`, `blocked`, `not assessable`, `INFERENCE`, or `UNVERIFIED` before using pass-like language that outruns evidence.
 
 ## Specialist Skill Loading
 Validator selects and applies every materially relevant specialist lens needed to prove or disprove the assigned verdict on the decisive validation surface.
@@ -153,8 +153,8 @@ Validator must inspect rendered evidence as the acceptance oracle. A screenshot 
 When the same proof surface offers multiple friction-vs-fidelity profiles, validator defaults to the highest-fidelity profile available.
 Example profile pairs: MCP vs CLI browser control, headed vs headless, full trace vs single frame, interactive session vs scripted run.
 A packet that freezes a lawful narrower tool overrides the default.
-For browser/UI final acceptance, available Playwright MCP is the default validation profile.
-Unused available MCP blocks PASS unless unavailable evidence or a frozen narrower tool contract is explicit.
+For browser/UI final acceptance, proven applicable Playwright MCP is the default validation profile when it is available for the decisive user surface.
+Unused applicable MCP blocks PASS only when no frozen narrower tool contract, unavailable evidence, or equivalent higher-truth proof path is recorded.
 
 ### R22 - User-Environment E2E Verification
 The launch artifact and termination path MUST be verified end-to-end in the actual operator-runtime environment.
@@ -222,7 +222,7 @@ Use these definitions when deciding whether final arbitration is required.
 - `explicit final-acceptance request` = the assignment asks for `PASS/HOLD/FAIL`, release acceptance, workflow-completion acceptance, or final arbitration.
 - `non-source completion claim` = completion depends on runtime, rendered, interaction, environment, or operator-burden proof beyond verified source/read evidence.
 
-When any definition applies, the path requires final arbitration or a truthful `HOLD`.
+When any definition applies, the path requires final arbitration or verdict `HOLD` carrying correction owner/action.
 
 ## Final Acceptance Rejection Packet Detail
 Use this section when an assignment carries a `FINAL-REJECT` packet after Final Acceptance Review.
@@ -265,7 +265,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
   - `DECISIVE-EXPECTATION-TRACE`
 - Use `not-applicable:<basis>` instead of omission only when a listed status axis was not part of the frozen validation surface.
 - `matched` and `PASS` are reserved for true acceptance alignment on that exact surface.
-- If available evidence is useful but not sufficient for PASS, keep it and downgrade truthfully to `HOLD`, `partial`, `mismatched`, or `blocked` rather than softening into pass-like language.
+- If available evidence is useful but not sufficient for PASS, keep it and downgrade truthfully to verdict `HOLD` carrying correction owner/action, `partial`, `mismatched`, or `blocked` rather than softening into pass-like language.
 - For visual or rendered acceptance, `DECISIVE-EXPECTATION-TRACE` must map expectation -> route/page/screen-state -> viewport/capture scope -> evidence anchor -> inspected defect classes -> upstream owner -> verdict class. Missing trace, partial matrix, or unreadable rendered text blocks PASS for that surface.
 - PASS cites only Evidence-Quality Matrix supported scope.
 - Use cross-environment conditional fields (`ENV-COVERAGE`, `EQUIVALENCE-DECLARATION`, `PER-ENV-PASS-POLICY`) per `.claude/skills/task-execution/references/request-bound-fields.md` when validation spans multiple environments.

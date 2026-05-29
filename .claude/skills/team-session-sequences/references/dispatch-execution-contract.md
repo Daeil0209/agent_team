@@ -29,8 +29,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
   - `audit/evidence/review + governance patch execution`
   - `draft + final acceptance review`
   - `review + validation verdict`
-- Do not require a new agent only because the phase changed. When scope remains single-purpose and context reuse is beneficial, continue with the current agent through a bounded follow-up dispatch instead of manufacturing completion overhead.
-- Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when the frozen packet and current evidence already support useful progress.
+- Do not require a new agent only because the phase changed. When reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, active cap, and the live agent remains the correct context owner, continue with the current agent through a bounded follow-up dispatch instead of manufacturing completion overhead.
+- Late-arriving shard updates are absorbed narrowly without reopening the whole staffing plan when the frozen packet and current evidence support interim bounded integration over completion-cleared, non-contradictory shard results.
 - The designated draft or merge owner continues and then takes a bounded follow-up update for the late shard.
 - The active phase intent stays explicit.
 - Use one foreground scout first only when independence, staffing shape, or boundary quality is still uncertain after the `intent -> deliverable shape -> phase` freeze.

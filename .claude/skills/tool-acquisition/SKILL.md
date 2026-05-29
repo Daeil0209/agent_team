@@ -54,7 +54,7 @@ Before discovery or setup, carry the minimum packet:
 3. Search only inside the bounded discovery goal; select candidates only from an existing local path, project-declared dependency manager, official/vendor source, or verified package source.
 4. Classify setup safety before installation or configuration.
 5. Execute setup only when classification is `allowed-setup`: bounded, directly needed, non-damaging, credential-free, non-paid, no persistent service, no security-setting change, project-local or user-local where practical, and reversible where practical.
-6. Route `approval-required` setup to explicit approval or `HOLD`; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
+6. Route `approval-required` setup to explicit approval only when approval is the remaining user-owned action after internal alternatives are exhausted; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
 7. Verify the selected tool with the smallest decisive real-tool proof that satisfies `TOOL-VERIFICATION-STANDARD`.
 8. Use the verified tool path for the blocked work when the same owner path remains valid; otherwise return a corrected executable path to the blocked owner or lane.
 9. If verification fails, try only a credible fallback inside the same boundary; otherwise return `hold|blocker` with evidence and the smallest unblock path.
@@ -75,6 +75,6 @@ Tool acquisition status is not proof, validation, final acceptance, or completio
 - `verified` opens the blocked owner or lane's next executable action.
 - `fallback-used` opens the blocked owner or lane's next executable action with fallback basis.
 - `not-needed` returns to the active owner path with the existing truthful tool basis.
-- `approval-required` opens explicit approval or `HOLD`.
+- `approval-required` opens explicit approval only when approval is the remaining user-owned action after internal alternatives are exhausted; otherwise keep tool acquisition on fallback discovery or blocker-routing with next safe owner/action.
 - External bridge risk opens `Skill(external-tool-bridge)`.
 - `blocked` opens `hold|blocker` with owner, blocker, evidence, and next safe unblock action.

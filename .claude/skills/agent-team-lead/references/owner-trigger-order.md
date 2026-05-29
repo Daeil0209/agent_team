@@ -20,8 +20,8 @@ When no narrow report exception exists, continue through the selected next owner
 - A previous owner outcome is stale, missing, or only narrated.
 - The user challenges whether work is actually progressing.
 
-## Required Output
-Record the highest active trigger and its named artifact:
+## Required Internal Output
+Record the highest active trigger and its named artifact internally:
 - `TRIGGER`
 - `OWNER`
 - `REQUIRED-REFERENCE`
@@ -55,19 +55,19 @@ Consume the highest active trigger first:
 4. confirmed primary sequence skill owner
 5. frozen workflow or sequence skill owner
 6. `Skill(task-execution)` for assignment-grade dispatch
-7. `Skill(self-verification)` for required report or redispatch gate
-8. `Skill(governance-modification)` when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action after required `Skill(self-verification)` convergence
+7. `Skill(review-verification)` when evidence quality, owner separation, defect classification, patch-worthiness, patch-readiness, negative-risk, or final-arbitration readiness controls the next action
+8. `Skill(self-verification)` for required report or redispatch gate
+9. `Skill(governance-modification)` when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action after required `Skill(self-verification)` convergence
 
 After the current session-start artifact is current, trigger 3 reopens trigger 2 only when trigger 2 is independently active.
 
-## Named Artifacts
-- `Skill(session-boot)` emits `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration.
-- `Skill(work-planning)` emits frozen-fields record.
+- `Skill(session-boot)` records `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration internally.
+- `Skill(work-planning)` records frozen-fields internally.
 - `Skill(review-verification)` returns internal `review_verification_packet`.
-- `Skill(self-verification)` emits an internal convergence-state record.
-- `Skill(task-execution)` emits dispatch-ready packet, dispatch-pending truth, or correction route.
-- `Skill(governance-modification)` emits asset-change or recurrence-hardening patch basis and post-verify result.
-- `Skill(session-closeout)` emits closeout residual truth or teardown completion.
+- `Skill(self-verification)` records an internal convergence-state record.
+- `Skill(task-execution)` records dispatch-ready packet, dispatch-pending truth, or correction route internally.
+- `Skill(governance-modification)` records asset-change or recurrence-barrier hardening patch basis and post-verify result internally.
+- `Skill(session-closeout)` records closeout residual truth or teardown completion internally.
 
 ## Artifact Discipline
 Skill load is availability only.
@@ -75,6 +75,7 @@ Loaded owner text becomes execution evidence only through applied-rule mapping.
 Applied-rule mapping names action, stop, evidence, owner, or next-action effect.
 Tool result is artifact only when the owner defines it as artifact.
 Narrative claims of completed owner work are procedural failure.
+Host-rendered skill/tool success rows are not narrative slots; after the row, continue the next owner/action without prose.
 Owner rerun triggers:
 - only narrative claim exists
 - target, corpus, route, patch design, or diff changed
@@ -88,5 +89,5 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 ## Status And Interruption
 Routine in-flight status uses `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
 Interrupted or interrupt-blocked path status/challenge uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
-If the boundary is already complete, route any answer through `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first; use `## Report Shape` only after admission, otherwise suppress prose and continue the owning path or truthful `HOLD`.
+If the boundary is already complete, route any answer through `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first; use `.claude/reference/reporting-user-reporting-law.md` `## Report Shape` only after admission, otherwise suppress prose and continue the owning path or blocker-routing after internal recovery.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.

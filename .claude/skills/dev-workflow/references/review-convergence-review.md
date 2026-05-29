@@ -97,7 +97,7 @@ Classify each material point (`material point` = configured reviewer lane findin
 - `CONFLICT`
 - `NO-ACTION`
 
-Each material point must be accepted, rejected with evidence, or deferred with owner and phase.
+Each material point must be accepted, rejected with evidence, or deferred with cited owner and phase.
 Accepted material findings become correction requirements.
 Rejected Codex and configured reviewer lane points require governing doctrine, artifact evidence, or frozen request basis.
 Rubber-stamp acceptance or unexplained rejection is a convergence defect.
@@ -105,14 +105,14 @@ Rubber-stamp acceptance or unexplained rejection is a convergence defect.
 After each correction, rerun configured reviewer lane and Codex MCP independent review as a new blind dual-review pass.
 Prior reviewer output, Codex output, reconciliation, landing confirmation, spot-check, or relay cannot carry forward.
 Continue only while convergence value remains material.
-Stop or `HOLD` when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute.
-For material review surfaces, lawful fail-open requires configured reviewer lane synthesis, fallback review basis, and conservative `Skill(self-verification)` convergence.
+Stop only the repeated review pass when the same disagreement repeats without new evidence, required access is unavailable outside fail-open, or another pass would repeat an adjudicated dispute; route to fail-open basis, correction owner, or blocker-routing after internal resolution is exhausted.
+For material review surfaces, fail-open requires cited fail-open basis, configured reviewer lane synthesis, fallback review basis, and conservative `Skill(self-verification)` convergence.
 Fail-open cannot claim Codex concurrence or bypass reviewer, tester, validator, stale-artifact classification, or claim narrowing.
 
 ## Convergence
 Review convergence requires:
 - no accepted high/major/blocking review issue remains on the active surface
-- every configured reviewer lane and Codex point is accepted, rejected, or deferred with reason
+- every configured reviewer lane and Codex point is accepted, rejected, or deferred with cited reason
 - Codex-only and reviewer-lane-only material points are adjudicated
 - any remaining low/minor issue has owner, phase, and acceptance impact
 - tester and validator ingress surfaces remain truthful
@@ -146,7 +146,7 @@ BOUNDARY-UNCHANGED: yes
 Missing or false continuation values make the result discussion-only.
 Valid continuation preserves boundary only.
 It does not preserve prior reviewer, Codex, or reconciliation output as current-pass convergence.
-Rerun with owner contract, record lawful fail-open, or stop on `HOLD`.
+Rerun with owner contract, record cited fail-open basis, or blocker-route after internal recovery.
 
 ## Output Record
 Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills/dev-workflow/references/artifact-convergence-review.md` Output Record. Review-convergence additions:
@@ -157,7 +157,7 @@ Use the shared `INDEPENDENT-REVIEW-CONVERGENCE-RECORD` schema in `.claude/skills
 - Accepted material findings open correction requirements.
 - Resolved review convergence opens the output-record next owner/action.
 - Missing or false continuation values make the result discussion-only and reopen the review convergence route.
-- Lawful `fail-open` opens configured reviewer lane synthesis plus conservative `Skill(self-verification)` convergence.
+- `fail-open` opens cited fail-open basis, configured reviewer lane synthesis, and conservative `Skill(self-verification)` convergence.
 - Stale artifact or proof result opens stale-surface correction before advancement.
 - Boundary-changing review result reopens `work-planning`.
-- Repeated unresolved disagreement opens `HOLD`.
+- Repeated unresolved disagreement opens fail-open basis, correction owner, or blocker-routing after internal resolution is exhausted.

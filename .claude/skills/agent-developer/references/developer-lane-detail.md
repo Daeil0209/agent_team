@@ -44,7 +44,7 @@ Governance-patch additions:
 - `BASELINE-CLASS` values: `preserved-asset`, `improvement-target`, or `stability-anchor`.
 - `EDIT-OPERATION` values: `tighten`, `replace`, `trim`, `merge`, `re-home`, `delete`, or `append-with-EXISTING-OWNER-ENUMERATION`.
 - Meaning migration requires `CHANGE-BOUNDARY` to include source-meaning inventory, destination rationale, and cross-reference update list.
-- High-traffic governance surfaces add `SESSION-REVALIDATION: current-session-repo` and `BASELINE-ANCHOR: captured`.
+- Governance patch packets touching `CLAUDE.md`, mapped core laws under `.claude/reference/`, agent role spines, governance-modification, review-verification, self-verification, task-execution transport, team-lead procedure, reporting law, or hook/runtime boundary surfaces add `SESSION-REVALIDATION: current-session-repo` and `BASELINE-ANCHOR: captured`.
 - `PRIOR-ANALYSIS` cites upstream researcher/reviewer evidence when governance audit, review, or defect classification is material; otherwise use `PRIOR-ANALYSIS: not-applicable:<basis>`.
 
 Owner fields use `not-applicable:<basis>` only when the frozen surface has no material proof or final-acceptance owner; reviewer remains required for developer-owned production unless the upstream acceptance basis makes review not applicable.
@@ -150,12 +150,12 @@ Support overlays defer to earlier controlling contracts.
 | root-cause | Addresses a verified origin | Proceed |
 | symptom-relief | Reduces impact without proving origin | Proceed and disclose |
 | hypothesis-based | Plausible but unconfirmed cause | Proceed and keep verification basis explicit |
-| open | Cause unknown | internal `HOLD`; if reporting upward, emit `MESSAGE-CLASS: hold|blocker` with the missing root-cause basis and safe next step |
+| open | Cause unknown | blocker-routing internally; if reporting upward, emit `MESSAGE-CLASS: hold|blocker` with the missing root-cause basis and safe next step |
 
 ## Regression Guard
 - Trigger when `TASK-CLASS: defect-fix` or the assignment is clearly an observed defect correction.
 - Default: build a failing guard before the target correction, confirm fail, correct, confirm pass, keep the guard.
-- Fallback: if guard creation is impossible or disproportionate, record `FALLBACK-BASIS` and keep the retest surface explicit.
+- Fallback: if guard creation is impossible because no executable oracle, safe setup, stable reproduction path, or bounded guard surface exists, record `FALLBACK-BASIS` with attempted or unavailable guard path and keep the retest surface explicit.
 - Non-skip: no silent correction-only path.
 
 ## Developer Completion Detail

@@ -972,6 +972,56 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
   [[ "$saw_delete" == "true" ]]
 }
 
+command_has_internal_progress_banner() {
+  local cmd="${1-}"
+  [[ -n "$cmd" ]] || return 1
+
+  COMMAND_TEXT="$cmd" node <<'NODE'
+const command = String(process.env.COMMAND_TEXT || "");
+const parts = [];
+let cur = "", inS = false, inD = false, bt = false, pd = 0;
+for (let i = 0; i < command.length; i += 1) {
+  const c = command[i], n = command[i + 1];
+  const quoted = inS || inD || bt || pd > 0;
+  if (!quoted && (c === ";" || c === "\n" || (c === "&" && n === "&") || (c === "|" && n === "|"))) {
+    parts.push(cur.trim());
+    cur = "";
+    if ((c === "&" && n === "&") || (c === "|" && n === "|")) i += 1;
+    continue;
+  }
+  if (!inD && !bt && pd === 0 && c === "'") inS = !inS;
+  else if (!inS && !bt && pd === 0 && c === '"') inD = !inD;
+  else if (!inS && !inD && pd === 0 && c === "`") bt = !bt;
+  else if (!inS && !inD && !bt && c === "$" && n === "(") { pd += 1; cur += c + n; i += 1; continue; }
+  else if (!inS && !inD && !bt && pd > 0 && c === ")") pd -= 1;
+  cur += c;
+}
+parts.push(cur.trim());
+
+const echoLiteral = /^(?:command\s+)?(?:printf|echo)\b/i;
+const bannerOrProgress = /(={3,}|-{3,}|file counts?|tasks?|phase|wave|progress|corpus|survey|measur|planning|dispatch|runtime|ready|boot|startup|loaded|checking|now\b|next\b|inventory|written|captured|prior|stale|verify|verified|current corpus|git history|작업|진행|측정|조사|계획|디스패치|런타임|준비|로드|시작|완료|인벤토리|작성|캡처|이전|스테일|검증)/i;
+function hasUnquotedRedirect(part) {
+  let s = false, d = false, b = false, p = 0;
+  for (let i = 0; i < part.length; i += 1) {
+    const c = part[i], n = part[i + 1];
+    if (!d && !b && p === 0 && c === "'") s = !s;
+    else if (!s && !b && p === 0 && c === '"') d = !d;
+    else if (!s && !d && p === 0 && c === "`") b = !b;
+    else if (!s && !d && !b && c === "$" && n === "(") { p += 1; i += 1; }
+    else if (!s && !d && !b && p > 0 && c === ")") p -= 1;
+    else if (!s && !d && !b && p === 0 && c === ">") return true;
+  }
+  return false;
+}
+for (const part of parts) {
+  if (!echoLiteral.test(part)) continue;
+  if (hasUnquotedRedirect(part)) continue;
+  if (bannerOrProgress.test(part)) process.exit(0);
+}
+process.exit(1);
+NODE
+}
+
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # Shared patterns are defined once before these wrappers.
 # S02_IMPLEMENTATION_PATTERN stays case-local; sender context is required.
@@ -1239,7 +1289,7 @@ fi
           case "$TOOL_NAME" in
             Write|NotebookEdit)
               if [[ -e "$CANONICAL_PATH" ]]; then
-                emit_deny "High-traffic governance surfaces under .claude must not be overwritten wholesale. Use structured Edit/MultiEdit changes so governance intent remains reviewable."
+                emit_deny "Protected governance surfaces under .claude (CLAUDE.md, reference laws, agent spines, governance/review/self-verification/task-execution/team-lead/reporting/runtime-boundary surfaces) must not be overwritten wholesale. Use structured Edit/MultiEdit changes so governance intent remains reviewable."
                 log_violation "$TOOL_NAME" "$CANONICAL_PATH" "governance-wholesale-write" || true
                 exit 0
               fi
@@ -1263,6 +1313,9 @@ fi
     # Ignore quoted separators for compound-command checks; real unquoted
     # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
+    if command_has_internal_progress_banner "$CLEAN_COMMAND"; then
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "bash-internal-progress-banner-audit" || true
+    fi
     if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
       emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-agent state first; if only stale residue remains, use TeamDelete or report the exact residual state."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "team-runtime-shell-delete" || true

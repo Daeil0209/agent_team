@@ -23,8 +23,8 @@ Dispatch readiness coverage that must be preserved by those owners:
 3. **Agent-Charter Fit** - the selected lane or agent is the best charter match for the work surface.
 4. **Scope Appropriateness** - scope is neither unfocused nor missing needed context, and the boundary is explicit.
 5. **Prior-Analysis Transfer** - settled upstream facts, findings, and reasoning needed by the receiver travel in packet fields, task/workflow state, or cited artifacts.
-6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, deferred with owner, or blocked.
-7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless `HOLD`.
+6. **Prerequisite Completeness** - material dependencies, setup, proof tool, run path, and acceptance prerequisites are resolved, deferred with cited owner authority, or blocked.
+7. **Failure Path** - recovery path is known enough to avoid duplicate dispatch, silent serial collapse, or ownerless blocker-routing.
 
 Risk-tier record rule (risk-tier maps to governance-depth tier per `.claude/skills/work-planning/references/governance-depth.md`: low-risk ≈ Lightweight, medium-risk ≈ Standard, high-risk ≈ Precision):
 - Low-risk bounded inspection satisfies the index through goal alignment plus prior-analysis transfer when no other item is material.
@@ -33,7 +33,7 @@ Risk-tier record rule (risk-tier maps to governance-depth tier per `.claude/skil
 - Runtime-protection emergencies abbreviate only under the owning runtime policy, and the abbreviated basis must still be recorded.
 
 Do not require a separate seven-question pre-dispatch checklist from `team-session-sequences`.
-If readiness or packet basis is missing, use the canonical owner result: `packet-correction`, `route-replan`, `parallel-continue`, blocker-clear, or `HOLD`.
+If readiness or packet basis is missing, use the canonical owner result: `packet-correction`, `route-replan`, `parallel-continue`, blocker-clear, or blocker-routing after internal recovery is exhausted.
 
 ## Resolve Next Owner And Action
 - Complete readiness index returns to `task-execution` packet preflight or dispatch.
@@ -42,4 +42,4 @@ If readiness or packet basis is missing, use the canonical owner result: `packet
 - Missing runtime target truth opens runtime target resolution.
 - Missing recovery path opens dispatch recovery basis.
 - Independent unaffected lanes continue through `parallel-continue`.
-- Unclear blocker opens blocker-clear or `HOLD`.
+- Unclear blocker opens blocker-clear or blocker-routing after internal recovery is exhausted.

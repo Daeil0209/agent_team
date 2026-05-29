@@ -36,7 +36,7 @@ Required rules:
 - treat unauthorized capture of another role's charter-core assets as an overlap regression, not as evidence of healthy improvement
 - when a fix-ownership contest is benchmarked, compare candidate roles on durable ownership fit, overlap burden, throughput effect, and evidence-backed success probability rather than on ambition alone
 - use `benchmark-light` by default for governance modification comparison claims, and escalate to `benchmark-full` when routing, promotion, or durable ownership is materially at stake
-- if a benchmark depends on uncited external comparisons, vague recollection, or non-inspectable examples, return `HOLD` or mark the result simulator-only instead of issuing a clean comparative verdict
+- if a benchmark depends on uncited external comparisons, vague recollection, or non-inspectable examples, mark the result simulator-only or blocker-route after internal evidence recovery instead of issuing a clean comparative verdict
 - if the result remains simulator-only or simulator-unconfirmed after comparison, do not let it masquerade as capability-growth execution readiness
 
 ## Runnable Benchmark Asset
@@ -86,7 +86,7 @@ Treat flattened cardinality, collapsed project-type behavior, or happy-path-only
 External-reference benchmarking applies the evidence hierarchy in `.claude/CLAUDE.md` `## 4. Review And Verification Philosophy` to design and methodology decisions.
 
 Required protocol per external reference consulted:
-- **Source provenance**: cite URL or canonical reference; uncited memory is `HOLD` not `evidence`
+- **Source provenance**: cite URL or canonical reference; uncited memory is blocked inference, not evidence
 - **Abstract**: extract design problem solved + underlying principle + user need served, not surface details
 - **Fit-judge**: rate destination user / scale / constraint / domain / regulatory / business model fit per axis (high / medium / low / fail); reject `fail` patterns with reason
 - **Adapt-synthesize**: combine fitting abstracts from multiple references into one proposal tailored to destination

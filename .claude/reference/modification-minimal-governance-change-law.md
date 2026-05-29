@@ -63,6 +63,12 @@ A governance patch satisfies the Patch-Ready Gate after the consuming owner reco
 - generalization basis
 - minimum-executable-information result
 - behavior-weakening wording result for evasion, ambiguity, conflict, bottleneck, and over-broad-blocking
+- functional-independence result
+- intended changed function set
+- positive-function inventory for the coherence radius
+- no-negative-impact result for each positive function
+- report-prohibition no-negative-impact result when the patch can affect user-facing prose, renderable transport, completion, hook, runtime, or reporting-governance behavior
+- cross-function correlation basis when a correlated function must change
 - upper-to-core executable-detail result
 - core-to-trigger-bound guidance result when situation-specific guidance is material
 - reference integrity result
@@ -102,9 +108,13 @@ Append review requires each proposed governance sentence to carry one rule or ac
 Mutation requires proposed governance wording to carry each material owner action, trigger, stop, evidence, verification, acceptance truth, routing, or patch-readiness field required by the changed execution meaning.
 Mutation requires proposed governance wording to exclude non-executed procedure, example, condition, explanation, and context burden.
 Mutation requires proposed governance wording to remove evasion, ambiguous next action, semantic conflict, repeated-error bottleneck, over-detail bottleneck, and over-broad-blocking without required risk basis.
+Mutation requires the intended changed function set, positive-function inventory, and no-negative-impact result for every positive function in the coherence radius.
+Mutation blocks when the patch changes a correlated function without a recorded consumed contract, owner route, evidence basis, and verification basis.
 Draft requires current `PRE-MUTATION-BASIS` with request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, cumulative live-state basis, required skill/reference status, required review-verification basis, material finding-state basis, modification-philosophy keyword status, consumed-surface access proof, and next legal step.
 Mutation requires reconstructed source-to-destination meaning.
 Mutation requires existing valid procedure, gate, owner path, and state transition to stay preserved or strengthened.
+Mutation requires every positive function outside the intended changed function set to stay behaviorally unchanged or strengthened.
+Mutation that can affect user-facing prose, renderable transport, completion, hook, runtime, or reporting-governance behavior requires report-prohibition no-negative-impact: no new report reason, no broader exception, no weaker non-reportable-content suppression, no internal-detail leakage, and no lower-surface bypass.
 Governance-defect claims require `[GOV-MIN]` application.
 Closure requires moved rules to name an explicit destination owner.
 Route, assignment, mutation, and closure require completed Patch-Ready Gate.
@@ -138,6 +148,8 @@ Adjacent-surface patch-selection duplication is replaced by citation to this gat
 - Compliance strengthens through the fewest sentences that preserve executable force.
 - Minimum executable information is complete enough to execute and small enough to avoid non-executed burden.
 - Behavior-weakening wording is corrected by making the valid action explicit or removing the non-executed burden.
+- Functional independence is proven by naming the intended changed function set, enumerating positive functions in the coherence radius, and recording no-negative-impact evidence for each one.
+- A patch that improves one function while weakening another positive function is not patch-ready unless the second function is explicitly inside the intended changed function set with consumed-contract basis and independent verification.
 - Obsolete concepts leave active consumed surfaces through delete, replace, trim, merge, or re-home.
 - A live runtime artifact that can still emit an obsolete token is mapped to the valid replacement action without keeping that token in the normal schema.
 - Prohibition-only wording closes a governance defect only when a current hazardous action remains live and the rule also names the valid replacement action or next owner.
@@ -181,9 +193,9 @@ Adjacent-surface patch-selection duplication is replaced by citation to this gat
 
 ## Hardening Rules
 - Correct confirmed defects at the narrowest owner.
-- Use `Skill(governance-modification)` `recurrence-hardening` mode only for recurrence-barrier hardening.
+- Use `Skill(governance-modification)` recurrence-barrier hardening path only when the active owner/action records a confirmed recurrence-barrier basis.
 - Treat non-compliance as an adherence defect.
 - Harden adherence instead of adding duplicate doctrine for non-compliance.
-- Structural or cross-surface governance patches consume `Skill(governance-modification)` `REVIEW-VERIFICATION-NEED`.
-- Material `REVIEW-VERIFICATION-NEED` entries load `Skill(review-verification):<bounded-question>` before mutation.
+- Structural or cross-surface governance patches consume the current `Skill(governance-modification)` Step 3 `review_verification_packet`.
+- Material governance patch questions load and learn `Skill(review-verification):<bounded-question>` and carry the returned Step 14 packet before mutation.
 - Recurrence-barrier and asset-change patch execution follow `.claude/skills/governance-modification/SKILL.md` Steps 4-6 and `# Patch Execution Method`.

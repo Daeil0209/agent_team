@@ -6,15 +6,14 @@ LOAD-POLICY: on-demand reference only
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 auto-inject: false
 
-Evidence quality has four tiers in descending order:
+Evidence quality has two evidence tiers plus inference in descending order:
 1. external authoritative reference: standards, official docs, best-practice patterns, reference implementations, current web-searched state of practice
 2. prior session evidence
-3. model prior knowledge
-4. intuition
+3. model prior knowledge or intuition as labelled inference only, not transported evidence
 
 A feasible, materially-relevant higher-tier source is mandatory.
 Deferring a higher-tier source requires an explicit frozen reason.
-Settling for a lower tier while a higher tier is feasible-and-relevant is a planning-evidence defect.
+Settling for a lower tier or inference while a higher tier is feasible-and-relevant is a planning-evidence defect.
 
 Strict tier discipline applies to design, visual, UX, interaction, structural, methodology, and governance-hardening decisions where external practice can move faster than model prior knowledge.
 
@@ -23,5 +22,5 @@ Missing that path when materially relevant is a planning-evidence defect.
 
 ## Resolve Next Owner And Action
 - Higher-tier evidence need opens the canonical escalation path.
-- Feasible lower-tier-only planning records the deferral basis.
+- Feasible lower-tier-only planning records the explicit frozen deferral basis.
 - Missing material escalation reopens `work-planning`.

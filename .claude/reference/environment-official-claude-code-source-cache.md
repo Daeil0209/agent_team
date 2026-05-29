@@ -16,7 +16,7 @@ Not always-loaded context. Refresh from official docs when current product behav
 ## Resolve Next Owner And Action
 - A current-product-behavior dependency opens official-document refresh.
 - A contradicted cached fact opens official-document refresh.
-- An unavailable current source downgrades the claim to `UNVERIFIED` or opens `HOLD`.
+- An unavailable current source downgrades the dependent claim to `UNVERIFIED` and continues non-dependent work; blocker-routing is valid only when exact current official behavior is required for the active deliverable and refresh cannot recover it.
 - A lane needing official-source facts receives packetized relevant facts from `team-lead`.
 
 ## Consumer And Ownership

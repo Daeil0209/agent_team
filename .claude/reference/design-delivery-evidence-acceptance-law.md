@@ -76,16 +76,8 @@ Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
 - Source-read evidence is decisive only for source-read deliverables.
 - Rendered claims require rendered proof.
 - Runtime claims require runtime proof.
-- Visual claims need proper:
-  - lane evidence
-  - skill evidence
-  - tool evidence
-  - live-document evidence when live-document evidence is the fitting surface
-- UX claims need proper:
-  - lane evidence
-  - skill evidence
-  - tool evidence
-  - live-document evidence when live-document evidence is the fitting surface
+- Visual claims require a concrete evidence record naming the visual claim, lane output or owner-local basis, material skill basis, tool execution evidence, rendered or live-document evidence path, and exception basis when any field is not applicable.
+- UX claims require a concrete evidence record naming the UX claim, lane output or owner-local basis, material skill basis, tool execution evidence, rendered or live-document evidence path, and exception basis when any field is not applicable.
 - A screenshot proves only the captured visual state.
 - Dynamic behavior requires executed user action and retained postcondition evidence.
 

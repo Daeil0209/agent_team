@@ -27,5 +27,6 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Resolve Next Owner And Action
 - Frozen answer or audit deliverables return to the answering or audit owner.
 - Execution, correction, mutation, dispatch, validation, cleanup, or multi-owner deliverables open `Skill(work-planning)` for route and boundary freeze.
-- Missing request fit, deliverable, scope, user-burden, completion-shape, or closure basis opens `Skill(work-planning)` correction or `HOLD`.
+- Missing request fit, deliverable, scope, user-burden, completion-shape, or closure basis opens `Skill(work-planning)` correction.
+- Blocker-routing opens only after reversible defaults, available frozen evidence, and planning correction cannot restore the missing basis and a named blocker remains.
 - User-surface evidence, acceptance, validation, or `CORE-WORKFLOW-CLOSURE` gaps open `.claude/reference/design-delivery-evidence-acceptance-law.md`.

@@ -36,7 +36,7 @@ Use these procedures when the corresponding sequence is `materially active` per 
 
 ### Reporting Curtain Inheritance
 This sequence index governs sequence lookup, not report exceptions.
-User-facing prose is governed by `.claude/reference/reporting-prohibition-law.md`.
+Report admission is governed by `.claude/reference/reporting-prohibition-law.md`; admitted report shape is governed by `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Sequence Activation Discipline
 
@@ -96,4 +96,4 @@ Closeout triggers open `Skill(session-closeout)`. This index names that owner on
 - A dispatch concern opens the canonical dispatch owner named in Lead-Side Dispatch Index.
 - Ambiguous runtime mode opens `session-boot` Mode Split.
 - A closeout trigger opens `session-closeout`.
-- Missing canonical owner mapping opens `work-planning` or `HOLD`.
+- Missing canonical owner mapping opens `work-planning` or blocker-routing after internal recovery is exhausted.

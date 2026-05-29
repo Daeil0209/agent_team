@@ -34,8 +34,8 @@ Procedure:
    - DEFER: nice-to-have
    - OUT: out of current scope
 4. Classify DEFER and OUT rows as scope-removal candidates.
-5. Move a DEFER or OUT row out of current plan scope only when the frozen request, plan, design, explicit user instruction, or `[USER-DELIVERY-FIT]` lawful owner-deferral basis permits narrowed current scope.
-6. Keep unsupported DEFER or OUT rows in current scope, route scope correction through `work-planning`, or record truthful `HOLD` when the basis is missing.
+5. Move a DEFER or OUT row out of current plan scope only when the frozen request, plan, design, explicit user instruction, or `[USER-DELIVERY-FIT]` cited lawful owner-deferral authority permits narrowed current scope.
+6. Keep unsupported DEFER or OUT rows in current scope, route scope correction through `work-planning`, or record blocker-routing when the basis is missing after internal recovery.
 7. Record only lawfully removed rows as future backlog; the backlog record is evidence, not completion or deferral authority.
 
 Advance to CP2 only after scope inflation review is complete.
@@ -54,7 +54,7 @@ Missing proof on the required user surface is independently blocking.
 Compare against the frozen `SCOPE-BASELINE`.
 Treat implemented `ACTIVE-SLICE` as insufficient baseline evidence.
 Treat missing, stubbed, placeholder-only, or unproven baseline items as blocking.
-Honor explicit deferrals from the original frozen request, plan, or design.
+Honor only explicit deferrals from the original frozen request, plan, or design when the frozen record cites the deferral basis.
 
 ## Structural Check
 For each component in the design, verify:
@@ -112,7 +112,7 @@ Gap detection contributes Phase-2-derived acceptance-grade correction contract f
 Per-cycle gap detection contribution after authoritative corrected output and before tester re-verify:
 1. Reviewer reruns structural, functional, contract, delivery-experience, and user-readiness checks scoped to affected components.
 2. Reviewer reapplies the gap classification table to remaining or newly introduced gaps.
-3. Coverage score, blocking-gap count, required return evidence, and acceptance-entry condition feed Phase 5 continue, root-cause escalation, or `HOLD` decision.
+3. Coverage score, blocking-gap count, required return evidence, and acceptance-entry condition feed Phase 5 continue, root-cause correction, or blocker-routing after internal recovery.
 
 Reviewer quick-check stays blocking-only and delta-scoped.
 Unclear delta raises `scope-pressure` and preserves delta scope.

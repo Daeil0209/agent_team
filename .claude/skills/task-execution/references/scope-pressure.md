@@ -21,9 +21,19 @@ Canonical `PRESSURE-TYPE` values:
 - `decision-surface-mismatch`
 - `deliverable-shape-mismatch`
 - `malformed-completion-contract`
+- `upstream-carrier-fabrication`
 
 Use `parallel-split-needed` when nominally parallel or independently staffable work lets two or more independent tasks or surfaces collapse onto one agent strongly enough that the agent becomes the schedule bottleneck.
 Use `boundary-too-wide` when the packet already exceeds the smallest truthful lane-owned boundary even before throughput evidence accumulates.
+Use `upstream-carrier-fabrication` only when upstream `PASS`, verification, or `Skill(...) loaded` claims are the only or decisive basis and no direct artifact or evidence surface is inspectable inside lane scope. When direct artifact or evidence inspection is available, inspect that surface and carry the fabrication as a blocking finding or open surface instead of blocking intake.
+
+Carrier fields for actual `scope-pressure` transport:
+- `PRESSURE-TYPE`
+- `PRESSURE-BASIS`
+- `CORRECTION-OUTCOME`
+- `ATTEMPTED-DEFAULTS`
+- `SMALLEST-SAFE-CORRECTION`
+- `RESUME-ROUTE`
 
 Correction outcome law:
 - `CORRECTION-OUTCOME: route-replan` when the objection moves any `work-planning` boundary-change axis.

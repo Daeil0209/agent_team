@@ -36,7 +36,7 @@ Procedure spine (Steps 0-4):
 Post-planning handoff: open the first next owner/action from that work plan per `## Post-Planning Gate`.
 
 Missing, vague, contradicted, or overclaimed basis blocks execution.
-Output `HOLD`, blocker-clear, or reopened owner.
+Output blocker-routing, blocker-clear, or reopened owner.
 
 Boundary:
 - `team-lead` handles thin instruction reading and channel opening.
@@ -66,24 +66,25 @@ Triggered references are mandatory before positive route freeze.
 - `references/cross-continuity.md`: same-session patches, confirmed corrections, recurrence barriers, decisions, contracts, lane changes, sibling outputs, and acceptance changes.
 - `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`: configured independent-review skill, common contract lookup, `WP-CONSULT` route-freeze handling, team-lead adjudication, fail-open, and coverage/footprint limits.
 
-Unavailable needed references route to `HOLD`, blocker-clear, or reopened owner.
+Unavailable needed references route to owner recovery, blocker-clear, reopened owner, or blocker-routing only after internal recovery is exhausted.
 
 ## Activation Trigger
-`team-lead` loads `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
+`team-lead` loads and learns `Skill(work-planning)` when the current instruction creates, reopens, or changes a consequential work boundary.
 `material` follows `.claude/CLAUDE.md` `## 3. Work Execution Philosophy`; consequential boundary changes are tested through `references/boundary-gates.md` Boundary-Change Axes.
 Session start routes to `Skill(session-boot)`.
 Answer-only, known-owner status, notification-only, receipt-only, cleanup-only, phase-transition-only, and clarification-only messages stay outside `work-planning` unless they assign, reopen, or change consequential work.
 Active runtime, recovery, monitoring, cleanup, or unresolved session-start readiness routes to `Skill(session-boot)`.
 Also load for reopened delegated lane boundary freeze.
 Run before the first consequential tool call, artifact read, workspace discovery, external lookup, mutation, dispatch, reuse, or consequential report on a new or reopened boundary.
-`work-planning` activation and freeze are proven by actual `Skill(work-planning)` load plus the required freeze, or by current same-session loaded `work-planning` basis when every boundary-change axis per `references/boundary-gates.md` remains unchanged.
+`work-planning` activation and freeze are proven by actual `Skill(work-planning)` load-and-learn plus the required freeze, or by fresh current same-session loaded-and-learned `work-planning` basis when every boundary-change axis per `references/boundary-gates.md` remains unchanged.
+Stale or uncertain `work-planning` basis reloads and learns `Skill(work-planning)` before the freeze drives execution.
 Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, and outside draft fields are context only; actual `Skill(work-planning)` load plus required freeze proves activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard routing gates, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Governance audit/review uses the bounded corpus measurement rule.
 Governance defect, removal, and preservation judgment is planned as bounded review/verification rows.
 Synthesized-result judgment goes through `Skill(self-verification)` first.
-Governance patch design and mutation go through `Skill(governance-modification)` and its `REVIEW-VERIFICATION-NEED` only after a current review basis verifies governance asset-change or recurrence-barrier need.
+Governance patch design and mutation go through `Skill(governance-modification)` and its Step 3 `review_verification_packet` only after a current review basis verifies governance asset-change or recurrence-barrier need.
 Unmeasured material burden blocks dispatch-ready planning.
 Same-boundary correction stays with the active owner.
 A moved boundary-change axis reopens `work-planning`.
@@ -163,14 +164,14 @@ Before freeze, `team-lead` builds the work plan it will execute or route.
 The work plan names each material phase, owner, action, stop/evidence, verification/review need, iteration or re-entry condition, and termination plan.
 Each material phase names the opened closure unit it closes; category, pattern, theme, summary, wave, batch, priority, or work-item rows are valid as organization or follow-on mapping unless the frozen phase opened that row as its own closure unit.
 The work plan names the upstream reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis each material phase consumes or passes forward.
-For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or `HOLD:<basis>`.
+For each material phase, `team-lead` records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane review/proof/validation, or blocker-routing with exhausted internal recovery basis.
 Place each conditional owner at its material trigger point; place `Skill(governance-modification)` only when the plan's current next owner/action is governance asset change or confirmed recurrence-barrier hardening.
 Keep governance audit, candidate discovery, defect promotion, and proposal-only rows with planning, review, verification, or the active procedure owner.
 `Skill(self-verification)` verifies the produced work-product surface set from `team-lead` or a lane through PASS-1 coverage and PASS-2 review-verification before reporting, governance-asset `Skill(governance-modification)`, or redispatch.
 `Skill(review-verification)` runs inside `Skill(self-verification)` Step 3 for the produced work-product surface set and returned PASS-2 packet.
 `Skill(review-verification)` runs under `Skill(governance-modification)` for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
 The plan names a practical termination path derived from the user's instruction.
-The termination path names only deliverable closure, lawful owner deferral, or `HOLD` with truthful blocker as terminal states.
+The termination path names only deliverable closure, cited lawful owner-deferral authority, or blocker-routing with truthful blocker, exhausted internal recovery basis, and next safe owner/action as terminal states.
 Lead-authored waves, batches, samples, priority tiers, category rows, pattern rows, theme rows, summaries, or work-item rows satisfy organization, ordering, or follow-on execution only; they do not replace a finer opened closure unit or permit phase closure without preserving source-unit coverage.
 Governance defect or removal audits keep corpus inspection, review-promotion, and lead synthesis as separate rows; patch scope adds a separate governance-modification patch-loop row.
 
@@ -222,6 +223,9 @@ Agent packets use `task-execution` translation.
 Follow `.claude/reference/reporting-prohibition-law.md`.
 Planning progress is silent while the next owner/action can run in the same segment.
 Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
+Request classification, consequentiality judgment, route freeze, corpus sizing, reference loading, skill loading, and dispatch-readiness are internal planning facts, not status reports.
+Continuity discovery, prior-work reuse or supersession, stale-evidence checks, git-history checks, artifact inventory, live-corpus mismatch classification, and interim verification outcomes are internal planning facts, not status reports.
+Do not narrate first-person progress openers, corpus-count summaries, measured line/file counts, loaded-reference lists, frozen-plan summaries, prior-artifact summaries, stale-state summaries, or interim verification conclusions around planning tools.
 Internal planning and dispatch-preparation detail stay internal while the next owner can run.
 Blocked execution emits only a report granted a narrow exception by `.claude/reference/reporting-prohibition-law.md`.
 Keep the planning record internal.
@@ -234,8 +238,8 @@ Reopen `work-planning` when the frozen target, route, readiness basis, or next a
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
-- A team-routed or ambiguous route opens `Skill(task-execution)` only when no current same-session loaded `task-execution` basis exists.
-- A team-routed or ambiguous route opens loaded `task-execution` consumption when the same-session `task-execution` basis exists.
+- A team-routed or ambiguous route opens `Skill(task-execution)` when no fresh current same-session loaded-and-learned `task-execution` basis exists.
+- A team-routed or ambiguous route opens loaded `task-execution` consumption only when the fresh same-session `task-execution` basis exists; stale or uncertain basis reloads and learns `Skill(task-execution)`.
 - A missing freeze field reopens `work-planning`.
 - A blocker-clear plan opens the named blocker-clear move.
-- `HOLD` records planning owner, blocker, and next safe evidence step.
+- Blocker-routing records planning owner, blocker, exhausted internal recovery basis, and next safe owner/action.

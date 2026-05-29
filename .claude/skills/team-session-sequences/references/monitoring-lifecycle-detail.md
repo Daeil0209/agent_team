@@ -36,9 +36,9 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 
 ## Supervisor Decisions On idle_notification
 When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
-If immediate work is available and preserved context is valuable, send `assignment`, `reuse`, or `reroute` as new bounded work.
+If immediate work is available and reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, active cap, and the live agent remains the correct context owner, send `assignment`, `reuse`, or `reroute` as new bounded work.
 If no immediate work is available, send nothing.
-If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})` and wait for termination evidence.
+If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})`, check termination evidence, then classify cleanup recovery, residue, standby, or blocker-routing explicitly when evidence remains absent.
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
 
 ## Message-First Runtime Cleanup Rule
@@ -98,7 +98,7 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 
 ## Stale Response
 - High-confidence stale: investigate quickly. Replacement requires shutdown evidence or an explicit recovery freeze.
-- Low-confidence stale during long-running bash: observe, extend if justified, then escalate if the lane remains unproductive.
+- Low-confidence stale during long-running bash: run bounded re-checks, then continue observation, reroute, resize, replace with shutdown evidence, replan, or record a proven user-owned blocker only when internal recovery cannot advance the lane.
 - Repeated stale or error-loop behavior requires reroute, resize, replacement, or re-plan.
 - Treat stale signals and idle_notification as observational only. Do not assert a specific tool-phase hang or team-infrastructure defect unless ledger evidence, dispatch behavior, runtime-pressure evidence, or explicit tool errors support it.
 - Repo-local generated-output cleanup uses bounded destructive commands only inside the active repo's frozen output root per `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
@@ -113,9 +113,10 @@ Reuse / standby semantics canonical owner: `.claude/skills/session-boot/referenc
 ## Resolve Next Owner And Action
 - Healthy active lane returns to monitoring.
 - Reuse-fit live lane opens bounded reuse.
+- Idle notification without preceding completion transport opens completion-transport correction, recovery/reissue, or blocker-routing after internal recovery is exhausted; it never marks `STANDBY`.
 - Standby decision sends no message unless bounded reuse or cleanup is selected.
 - Shutdown decision opens structured `shutdown_request`.
-- Stale response opens investigate, wait-extension, reroute, resize, replacement, or replan.
+- Stale response opens investigate, bounded wait-extension, reroute, resize, replacement, or replan.
 - Manifest overlap opens pre-execution manifest correction.
 - Runtime pressure opens explicit recovery before new fan-out.
 - Orphan historical residue opens orphan-runtime recovery.

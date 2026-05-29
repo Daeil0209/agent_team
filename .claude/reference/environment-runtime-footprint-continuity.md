@@ -22,7 +22,8 @@ Not always-loaded doctrine; does not authorize bypassing `CLAUDE.md`, owner skil
 ## Consumer And Ownership
 - Primary consumer: `team-lead`.
 - Use during governance design review, hook-density review, runtime-footprint claims, continuity-file disputes, and context-footprint audits.
-- Lane agents receive only packetized facts from this section when the assigned lane needs them.
+- Lane agents receive packetized lookup facts from this section only for non-judgment fact transfer.
+- When lane work judges runtime footprint, Hook-Last review, continuity truth, measurement proof, or patch readiness governed by this reference, the lane consumes the complete triggered section and records applied-rule mapping; packetized facts alone are insufficient.
 
 ## Hook-Last Footprint Review
 Hooks are valid runtime guardrails, but they are the last resort.
@@ -40,7 +41,7 @@ Before adding, broadening, or defending a blocking hook, verify all items:
 If any item is missing, do not add, broaden, or defend blocking enforcement as verified. Preserve hard security or reserved danger blockers only when their protected danger is explicit; otherwise remove, narrow, downgrade to silent tracking, or repair the owner procedure.
 
 ## Captured Local Hook Posture
-Before classifying current hook posture, density, or improvement, read live `.claude/settings.json` and apply measured latency, context, or runtime evidence. Classify the live posture as `high-footprint guardrail debt` until measured evidence proves runtime-footprint improvement, then narrowed.
+Before classifying current hook posture, density, or improvement, read live `.claude/settings.json` and apply measured latency, context, or runtime evidence. Classify the live posture as `high-footprint guardrail debt` until measured evidence proves runtime-footprint improvement; after improvement evidence, record `runtime-footprint posture: improved-with-residual-review` or route remaining hook burden to runtime-governance correction.
 
 ## Baseline Capture (2026-04-29)
 `.claude/settings.json` used multiple high-frequency `PreToolUse` hooks, including activity monitoring, task-start, self-verification, runtime-entry, dispatch sizing/proof, and compliance supervision.

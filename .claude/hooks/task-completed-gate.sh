@@ -4,8 +4,8 @@ set -euo pipefail
 # Hook body disabled per .claude/reference/work-runtime-boundary-law.md ## Runtime Boundary Rules
 # (negative-only-filter doctrine: hooks block only destructive, security-critical, or
 # session-stability-breaking actions; positive-pattern doctrine-shape enforcement is
-# owned by the lane trio — Skill(governance-modification) + Skill(self-verification) + Skill(review-verification)
-# named lenses — and downstream reviewer/validator independent gates).
+# owned by the exact failing owner path named in work-runtime-boundary-law, and
+# downstream reviewer/validator independent gates remain intact).
 # settings.json TaskCompleted matcher was removed; this file-level no-op handles
 # already-started agents or local hook harness state that still attempts to fire the hook. File preserved for
 # traceability and potential future narrowing to a negative-only filter.
@@ -235,7 +235,7 @@ try {
     ["openSurfaces", "OPEN-SURFACES"],
     ["frozenContractStatus", "FROZEN-CONTRACT-STATUS"],
     ["laneNextCandidate", "LANE-NEXT-CANDIDATE"],
-    ["planningBasis", "PLANNING-BASIS"],
+    ["planningBasis", "PLANNING-BASIS-CONSUMPTION"],
     ["resourceCleanup", "RESOURCE-CLEANUP"],
     ["convergencePass", "CONVERGENCE-PASS"],
     ["laneLocalResultVerification", "LANE-LOCAL-RESULT-VERIFICATION"]
@@ -486,15 +486,15 @@ if [[ -n "$TASK_ID" && "$EXACT_TASK_TRANSPORT_PRESENT" != "true" ]]; then
 fi
 
 if [[ -n "$MISSING_FIELDS" ]]; then
-  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS RESOURCE-CLEANUP CONVERGENCE-PASS LANE-LOCAL-RESULT-VERIFICATION USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
+  for field_name in OUTPUT-SURFACE TARGET-INTENT-BASIS EVIDENCE-BASIS OPEN-SURFACES FROZEN-CONTRACT-STATUS LANE-NEXT-CANDIDATE PLANNING-BASIS-CONSUMPTION RESOURCE-CLEANUP CONVERGENCE-PASS LANE-LOCAL-RESULT-VERIFICATION USER-SURFACE-PROOF-METHOD TOOL-PATH-USED TOOL-EXECUTION-EVIDENCE; do
     if missing_field_present "$field_name"; then
       FAILURES+=("Missing completion-carrier safety field: ${field_name}.")
     fi
   done
 fi
 
-if [[ "$PLANNING_BASIS_VALUE" != "loaded" ]]; then
-  FAILURES+=("Completion carrier must provide PLANNING-BASIS: loaded.")
+if [[ -z "$(printf '%s' "$PLANNING_BASIS_VALUE" | tr -d '[:space:]')" || "$(printf '%s' "$PLANNING_BASIS_VALUE" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')" == "loaded" ]]; then
+  FAILURES+=("Completion carrier must provide PLANNING-BASIS-CONSUMPTION with loaded basis, applied planning rule, and decision impact, or blocked/not-applicable basis.")
 fi
 
 case "$FROZEN_CONTRACT_STATUS_VALUE" in

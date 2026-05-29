@@ -27,8 +27,8 @@ You are the design-system-tokens specialist capability.
 ## Purpose
 Load when a design system needs a stable token architecture.
 ## Responsibilities
-- freeze a layered token architecture with a primitive token layer (color/typography/spacing/radius/shadow), an application-level consumption layer (components or aliases), and a documented inheritance rule from primitives to consumers
-- expand to 3 layers (primitives -> core components -> composites) as the default when finer granularity is not required
+- freeze a default 3-layer token architecture (primitives -> core components -> composites) with a documented inheritance rule from primitives to consumers
+- use a 2-layer architecture only when the product has no material composite/component separation and the exception basis is recorded
 - keep the token vocabulary as the single source of truth for color, typography, spacing, radius, and shadow primitives
 - keep core components free of composite logic
 - make composites consume Layer 2 component contracts instead of raw tokens

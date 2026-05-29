@@ -21,8 +21,8 @@ truthful procedure execution remain the primary control surfaces.
 - Hard deny is reserved for secrets/credentials exposure, destructive recursive
 deletion, `.claude` governance shell mutation or wholesale overwrite,
 runtime/team-state corruption, exact task-state corruption, read-only reference
-mutation, and interpreter-based mutation of protected filesystem surfaces that
-bypasses structured edit surfaces.
+mutation, and interpreter-based mutation of protected filesystem surfaces that bypasses
+structured edit surfaces.
 - Procedure gaps, planning/self-verification order gaps, packet-quality gaps, review-tool absence, output-root instructions, and recoverable completion defects are not hard-deny causes unless they directly create one of those reserved dangers.
 - Hooks specify prohibitions, not allow-lists. Default for any unspecified shell or tool action is allow; deny only specific reserved dangers using narrow, target-scoped checks (outside-workspace targets, protected relative paths, catastrophic system targets, governance shell mutation, secrets/credentials surfaces). A broad "deny unless approved" pattern is an over-broad-blocking defect candidate.
 - Over-broad hook blocking is repaired at the hook surface by narrowing the prohibition. Never substitute agent-side adherence rules, user re-confirmation flows, allow-list arming, or descriptive-pattern arming for prohibition narrowing — those move friction onto the user without removing the over-broad block and recreate the same bottleneck.
@@ -54,7 +54,7 @@ These files are wired directly from `../settings.json`.
 These hook scripts remain in `./` for traceability.
 - Their bodies are file-level no-op with `exit 0` at top.
 - Their comment blocks point to the disable basis per `.claude/reference/work-runtime-boundary-law.md` `## Runtime Boundary Rules`.
-- Positive-pattern doctrine-shape enforcement is owned by the lane trio: `Skill(governance-modification)`, `Skill(self-verification)`, and `Skill(review-verification)` named lenses.
+- Positive-pattern doctrine-shape enforcement is owned by the exact failing owner path named in `.claude/reference/work-runtime-boundary-law.md`, not by legacy hooks.
 - Downstream reviewer and validator independent gates remain intact.
 - Their `settings.json` matchers were removed in the same governance patch.
 - The Hook-Last Review Ledger does not list legacy hooks because a disabled body cannot fulfill a "Protected failure" claim.
@@ -98,7 +98,8 @@ operator approval before activation; the ledger record names the approval basis.
 | `tmux-kill-block.sh` | active-session instability from tool-issued `tmux kill-*` commands | Bash-only hard-deny for exact tool-issued `tmux kill-*` command forms. Recover through per-member `SendMessage` `shutdown_request` selected by the runtime cleanup owner or `Skill(session-closeout)` Runtime Teardown Preflight followed by `TeamDelete`. |
 | `worker-lifecycle-sync.sh` | teammate idle, completion, pending permission, pending dispatch, scope-pressure, or blocker signals becoming invisible or over-authoritative | TeammateIdle only; writes hook-maintained runtime state files when runtime state has a new lead-relevant idle or cleanup fact. It does not inject stdout context and does not hard-deny. Recover through reuse, structured shutdown, blocker resolution, packet correction, or claim narrowing. |
 | `track-worker-transport.sh` | worker-originated transport, completion, blocker, and cooperative shutdown evidence becoming invisible or stale | PostToolUse SendMessage only; records transport state and, after a worker-originated `shutdown_response`, removes runtime roster state without `tmux kill-*`. Tool-issued `tmux kill-*` routes to hard-deny runtime-boundary law. |
-| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer retained-scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands only; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
+| `compliance-supervisor.sh` | `.claude` governance mutation, wholesale overwrite, catastrophic primitives, runtime/team-state corruption, secrets exposure, hook-runtime artifact misplacement, non-developer retained-scope violation, or protected-filesystem bypass | Mutation-capable tools plus explicit Bash secret-read commands; hard-deny categories and recovery live in `Compliance Supervisor Boundaries` below. |
+| `sv-tracker.sh` | selected skill body rendering becoming startup/procedure noise | PostToolUse Skill only; records skill markers and suppresses display for `agent-team-lead`, `session-boot`, `work-planning`, `task-execution`, `self-verification`, and `session-closeout`. This does not claim to police later assistant-authored prose. |
 
 ## Compliance Supervisor Boundaries
 - Hard-deny existing governance-file wholesale overwrite, secret/credential mutation or explicit Bash read, runtime/team-state overwrite, team runtime directory removal, shell mutation against `.claude`, non-developer worker `Write` outside its frozen `RETAINED-OUTPUT-PATH` or `claude_doc/<work-name>/` WRITE-SCOPE, interpreter-based protected-path bypass, protected/outside-workspace `rm` or `find`, and catastrophic primitives.

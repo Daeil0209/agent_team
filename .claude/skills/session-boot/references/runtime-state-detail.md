@@ -134,7 +134,7 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 - Replacement, shutdown, and stale-classification reporting all require this inspection.
 - Idle notifications, dispatch-ack presence, and inbox `read:true` alone are not stale evidence.
 - Replacement additionally requires shutdown evidence or an explicit recovery freeze.
-- Low-confidence stale during long-running work -> observe, extend if justified, then escalate.
+- Low-confidence stale during long-running work opens bounded re-checks, then continue observation, reroute, resize, replace with shutdown evidence, replan, or record a proven user-owned blocker only when internal recovery cannot advance the lane.
 - Repeated stale/error loops require reroute, resize, replacement, or re-plan.
 - Observational stale signals require runtime-truth and side-effect-evidence inspection before tool-phase hang, non-working state, or team-infrastructure defect classification.
 
@@ -227,7 +227,7 @@ The canonical hook-policy ownership for these ledger surfaces lives in `.claude/
 - `session-boot` observes runtime for active workflows; workflow progression stays with the workflow owner.
 - `team-lead` plus the active workflow owner still own phase advancement, checkpoint resolution, redistribution, synthesis, and completion claims.
 - Runtime observation sharpens agent-start evidence, cleanup evidence, stale/ghost classification, and bottleneck observation when material.
-- If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or `HOLD`.
+- If runtime blocks lawful workflow continuation, corrective ownership returns to `team-lead` plus the active workflow owner with exact next owner/action or blocker-routing after runtime recovery is exhausted.
 
 ## Proactive Team-Composition Reassessment
 At phase transition, agent completion convergence, major checkpoint, or completion synthesis, `team-lead` applies `Monitoring Sequence` reassessment only when current-runtime monitoring or recovery is materially active, or when remaining frozen work can reuse, release, redistribute, or reassign active or standby agents.
@@ -263,11 +263,11 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, then wait for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
 2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
 3. Keep additional assignment/correction packets out of a silent inbox.
-4. At the re-check window, inspect current response and activity/side-effect evidence. Preserve active agents in lane execution. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
-5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows that law's `## Report Shape`.
+4. At the re-check window, inspect current response and activity/side-effect evidence. Assigned-surface activity without valid first upward outcome prevents dead-or-unavailable classification but does not clear receipt debt; preserve the active agent in lane execution while team-lead continues missing-receipt or closing-transport recovery. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 
 Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among routine nudge, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
 
@@ -313,7 +313,7 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class F: discard the phantom task id; treat retained-output disk evidence as evidence for the affected work surface only; route away from `TaskUpdate` on the phantom id.
 - Class G: team-lead consumes the on-disk retained-output as production evidence only, opens missing completion-transport recovery or keeps the surface open, and records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration.
 - Class H: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class I.
-- Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or `HOLD` per `.claude/skills/task-execution/references/dispatch-recovery.md`.
+- Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or blocker-routing per `.claude/skills/task-execution/references/dispatch-recovery.md`.
 
 ## Operator-Approval Gate
 - Class A `kill <pid>` and Class E `kill <pid>` are non-tmux force cleanup and require explicit operator approval before execution.
@@ -324,7 +324,7 @@ Domain 3 is not hook auto-cleanup evidence.
 
 ## Runtime Integrity Reporting
 - Classification, per-class action plan, and applied-reconciliation record are internal Procedure Plane evidence.
-- Class A and Class E force cleanup surface as a `HOLD` with exact `kill <pid>` action plus approval request per `.claude/reference/reporting-prohibition-law.md`.
+- Class A and Class E force cleanup surface as a proven user-owned approval action with exact `kill <pid>` basis per `.claude/reference/reporting-prohibition-law.md` after cooperative cleanup and non-tmux owner recovery are exhausted.
 - Class C `tmux kill-*` pane termination surfaces as prohibited command selection and routes back to cooperative cleanup or non-tmux owner recovery.
 - Domain 2 reconciliation result surfaces as a status answer when the user explicitly references a UI display ≠ governance roster mismatch per `.claude/reference/reporting-prohibition-law.md`.
 - Completed automatic non-destructive reconciliation stays internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for a status answer.
@@ -340,7 +340,7 @@ Domain 3 is not hook auto-cleanup evidence.
 - Runtime-required classification returns to the frozen next owner/action as runtime evidence.
 - Runtime recovery need opens `session-boot` recovery.
 - Missing receipt or start evidence opens one bounded follow-up and re-check.
-- Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or `HOLD`.
+- Stale or silent target after re-check opens replacement, redistribution, structured shutdown, or blocker-routing after runtime recovery is exhausted.
 - Bottleneck or missed downstream-prep parallel-fit opens boundary-change correction through `team-lead`.
 - Cleanup need opens structured shutdown, reuse, recovery, or `session-closeout`.
 - Hard runtime pressure opens explicit recovery before new fan-out.

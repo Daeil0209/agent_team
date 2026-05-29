@@ -126,9 +126,9 @@ Target-specific references may narrow valid point effects through their converge
 ## Handling
 1. Parse JSON.
 2. Retry once on parse failure with a JSON-only reminder.
-3. Drop malformed points.
+3. Record malformed point count and reason, preserve readable partial observations when possible, and drop only unreadable malformed points.
 4. Retry one first-use connection miss before final fail-open.
-5. Record `fail-open:<reason>` after exhausted MCP/tool/auth/quota/timeout/parse failure.
+5. Record `fail-open:<reason>` after exhausted MCP/tool/auth/quota/timeout/parse failure or when all returned points are malformed.
 
 Every valid point returned by a successful configured independent review requires team-lead adjudication before the owning basis is complete.
 - Accept only by changing the affected planning field, artifact, correction basis, blocker basis, convergence record, or acceptance record.

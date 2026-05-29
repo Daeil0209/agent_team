@@ -27,16 +27,18 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: pre-action atomic-sweep — Action Invariants
 - Procedure invariant: open the triggered owner skill, sequence, reference, or lane before acting on that owner path.
 - Freshness invariant: before owner, route, report, mutation, dispatch, proof/review/validation, or claim-strength movement, use only loaded skill/reference basis that still supplies the rule needed for that movement; stale or uncertain basis cannot authorize movement.
 - Reference invariant: consume only references that change action, stop, evidence, packet, proof, completion truth, verdict, routing, or patch-readiness; mark material references as `applied`, `not-material:<basis>`, or `blocked:<basis>`.
-- Report separation invariant: visible prose attempts consume reporting law independently, execute any next owner/action named by that law, and otherwise return to the active owner/action unless user instruction redirects or truthful `HOLD` applies.
+- Report separation invariant: visible prose attempts consume reporting law independently, execute any next owner/action named by that law, and otherwise return to the active owner/action unless user instruction redirects or blocker-routing after internal recovery applies.
+- Host-row invariant: visible host rows from `Read`, `Skill`, `Bash`, `TeamCreate`, `Agent`, `SendMessage`, task tools, hooks, or sandbox UI are execution evidence only; they never admit adjacent assistant-authored prose.
 - Mutation invariant: `.claude` governance mutation opens only inside active `Skill(governance-modification)` and applies `[GOV-MIN]`.
 - Route invariant: when proof, review, validation, implementation, acceptance, independence, or parallel-fit is material, the frozen lane or team-runtime route stays active; absent that freeze, lead-local or standalone substitution is route drift.
 - No material lane need: keep the active owner path and do not dispatch for ceremony.
 - Reuse invariant: same-lane follow-on dispatch, wave transition, replacement, or redispatch evaluates live or standby reuse before shutdown or new member creation.
 - Uncertainty invariant: resolve derivable uncertainty through evidence-backed default, owner route, narrowed claim, or valid escalation exception.
 - Progress invariant: process state, partial arrival, retained-carrier availability, and findings-count visibility are evidence for the next internal action, not completion or visible-prose admission.
+- Tool-adjacent narration invariant: phrases whose purpose is starting, loading, measuring, freezing, surveying, dispatching, materializing, waiting, checking, continuing, inspecting continuity, classifying prior artifacts, marking stale evidence, or claiming interim verification are report attempts; suppress them and run the next owner/action.
 
 ## Drift Stops
-- Missing owner or next action opens owner correction or `HOLD`.
+- Missing owner or next action opens owner correction or blocker-routing after internal recovery is exhausted.
 - Missing material reference consumption opens the exact required reference.
 - Stale or uncertain loaded skill/reference basis opens the smallest refresh action before movement: reload the required skill or consume the exact triggered reference.
 - Visible-prose denial executes the reporting-law named continuation or otherwise continues the current owner action without user-facing prose.
@@ -50,4 +52,4 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: pre-action atomic-sweep — Action Invariants
 - Invariant failure: open the smallest correcting owner/action named above.
 - Boundary change: open `Skill(work-planning)`.
 - Runtime readiness, monitoring, recovery, or cleanup evidence: open `Skill(session-boot)`, `Skill(task-execution)`, or `Skill(session-closeout)` according to the active runtime path.
-- Report attempt: open `.claude/reference/reporting-prohibition-law.md`, execute the next owner/action named by that law, and otherwise return to the active owner/action unless user instruction redirects or truthful `HOLD` applies.
+- Report attempt: open `.claude/reference/reporting-prohibition-law.md`, execute the next owner/action named by that law, and otherwise return to the active owner/action unless user instruction redirects or blocker-routing after internal recovery applies.

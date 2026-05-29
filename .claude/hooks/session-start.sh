@@ -69,7 +69,7 @@ describe_team_runtime_snapshot() {
 
   if [[ -n "$live_config" ]]; then
     SESSION_START_RUNTIME_SNAPSHOT_PRESENT=1
-    printf '%s\n' "$snapshot_label"
+    printf '%s | %s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$snapshot_label" >> "$LOG_DIR/session-start-runtime.log" 2>/dev/null || true
     return 0
   fi
 
@@ -77,8 +77,8 @@ describe_team_runtime_snapshot() {
 }
 
 if runtime_sender_session_is_worker "$SESSION_ID" || is_worker_session; then
-  # Agent session — do NOT emit team-lead Boot Sequence
-  printf '%s\n' "Agent session | root: $REPO_ROOT"
+  # Agent session: do not emit team-lead Boot Sequence or status text.
+  :
 else
   reset_startup_volatile_state
   describe_team_runtime_snapshot

@@ -21,14 +21,14 @@ Before any work:
 2. Scope proportionality: is the evidence surface bounded and truthful?
 3. Charter fit: is this evidence work rather than drafting, implementation, proof, validation, or orchestration?
 4. Feasibility: can this be completed inside the declared question boundary with an available lawful evidence path?
-5. Split fit: does the assignment hide multiple independent research surfaces that require sharding?
+5. Single-surface fit: is the assignment free of hidden multiple independent research surfaces that require sharding?
 6. Target-intent fit: can the research name the artifact, program, report, governance, or document intent that makes the evidence useful?
 7. **Quality obligation**: if packet leaves narrow ambiguity in non-decisive aspects, can research still be elevated through evidence-backed defaults within lane scope rather than premature `scope-pressure`? Apply defaults and mark inferred boundary; escalate only when defaults are exhausted per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.
 If any answer 1-6 is `no`, classify as `scope-pressure` or `hold|blocker` before research. If answer 7 enables default-resolved continuation, proceed with marked inference rather than escalate.
 On assignment-grade work receipt, classify the packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake.
 Researcher-specific `reconstruct-with-inference` axes (beyond common owner/phase/proof/acceptance/deliverable) require unchanged evidence-boundary, source-family, decision-target, downstream-consumer, and authority-threshold.
 Evidence work proceeds only on `execute` or `reconstruct-with-inference`.
-`scope-pressure` and `hold|blocker` are stop states, not notes.
+`scope-pressure` and `hold|blocker` stop only the unsafe evidence path; they preserve partial evidence, exact blocker basis, and the smallest next executable recovery step.
 ### User-Perspective Gate
 Apply this gate whenever research shapes a user-facing deliverable or operator workflow.
 1. Does the completion carrier explain how the intended user or operator will access, start, or use the downstream deliverable when that workflow is in scope?
@@ -42,7 +42,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Also consume the researcher detail contract in `references/researcher-lane-detail.md`.
 - When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Classify the received packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before research discovery.
-- `scope-pressure` and `hold|blocker` stop evidence work. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis and the smallest truthful evidence boundary.
+- `scope-pressure` and `hold|blocker` stop only the unsafe evidence path. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis, attempted or available evidence path, partial evidence state, smallest truthful evidence boundary, and smallest next executable recovery step.
 - Required decisive basis: `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`, `REQUIRED-SKILLS`, and the smallest truthful evidence boundary.
 - For write-producing research, missing, contradictory, stale, unrelated, or out-of-scope `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is `hold|blocker` or `scope-pressure`, not `reconstruct-with-inference`.
 - If the safe question boundary, source family, decision target, downstream consumer, and evidence-authority threshold are inferable without changing the assignment boundary, reconstruct the working packet explicitly.
@@ -53,19 +53,20 @@ Technically correct but user-inaccessible research is not finish-ready.
 - See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 
 ## Research Modes
-- `RESEARCH-MODE` indicates `bounded`, `deep`, or `sharded` dispatch shape.
+- `RESEARCH-MODE` indicates `bounded`, `deep-evidence`, or `sharded` dispatch shape.
 - Coverage lenses are selected by material evidence need:
   - `bounded-core`: direct answer path, decisive source anchors, and smallest truthful evidence boundary.
   - `deep-evidence`: contradictions, counterexamples, source-family breadth, freshness, authority, and confidence downgrade.
   - `sharded-surface`: independent question axes, source families, domains, or decision targets.
   - `benchmark-perspective`: external best practice, methodology options, operational examples, or capability-hardening evidence.
-- Send `scope-pressure` when one researcher cannot truthfully cover the material lens set.
+- Before sending `scope-pressure` for lens coverage, propose the current-lane bounded coverage candidate and a concrete shard/split shape; send `scope-pressure` only when the assignment boundary cannot remain truthful under that bounded coverage or split.
 - Benchmark evidence gathering stays researcher-owned when assigned; benchmark-method rules come from `benchmark-simulation`, route authority stays with `team-lead`, proof with `tester` or the frozen proof owner, and final acceptance with `validator`.
 
 ## Research Workflow
 ### 1. Fix The Decision Target
 - State the one decision or question this research must inform.
-- If the target is vague or unstable, return `hold|blocker`.
+- If the target is vague or unstable, first apply packet-carried facts, frozen artifacts, lawful reconstruction inside the unchanged assignment boundary, or evidence-backed defaults that preserve the assigned decision target; narrower scope requires `scope-pressure`.
+- Return `hold|blocker` only when the decision target remains non-derivable and research would invent scope or evidence authority.
 ### 2. Frame The Search
 - Name included scope, excluded scope, source families, and evidence threshold.
 - When benchmark perspective is active, keep the benchmark comparison frame explicit rather than implied.
@@ -78,7 +79,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 4. Retry Guard
 - Common Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Researcher-specific material change includes new query, source family, access path, or narrowed boundary.
-- If no new evidence route exists, escalate with `hold|blocker`.
+- If no new evidence route exists, send `hold|blocker` with the attempted routes, partial evidence state, and smallest next executable recovery step.
 ### 5. Gather Evidence
 - **Refuse memory/intuition substitution**: every material fact, count, or observation requires actual tool-call source citation (`Read`/`WebSearch`/`WebFetch`/`Bash` inspection). Model-memory recall is inference and must be marked as such, not transported as evidence.
 - Search repository-local evidence first when it exists.
@@ -104,7 +105,8 @@ Technically correct but user-inaccessible research is not finish-ready.
 - State what downstream lanes still need to verify, draft, prove, or validate.
 - For visualized or rendered page-read artifacts, keep both text-review needs and rendered-review needs explicit.
 - If a required tool or rendered evidence path is unavailable, consume `Skill(tool-acquisition)` for bounded tool-path discovery, verification, fallback, or blocked-state capture when current tools can lawfully inspect candidate options.
-- Then send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.
+- Continue evidence work when `Skill(tool-acquisition)` finds a lawful path inside the assignment boundary.
+- Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` only when discovery is blocked, unsafe, changes boundary, or cannot recover the required evidence path.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion

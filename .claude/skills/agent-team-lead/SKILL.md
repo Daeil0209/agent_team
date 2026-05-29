@@ -19,7 +19,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 - Activate before lead-owned procedure movement.
 - Reuse same-session `agent-team-lead` basis only while the invoked skill body still supplies the rule needed for the active lead-owned procedure path.
 - Treat `agent-team-lead` basis as stale when the session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or the active lead-owned path needs an unconsumed trigger-specific reference.
-- Stale or uncertain `agent-team-lead` basis must not drive action; reload `Skill(agent-team-lead)` when this skill body is needed, or consume the exact triggered reference when reference detail is sufficient.
+- Stale or uncertain `agent-team-lead` basis must not drive action; reload and learn `Skill(agent-team-lead)` when this skill body is needed, or consume the exact triggered reference when reference detail is sufficient.
 - Consume fresh same-session `agent-team-lead` basis before any `.claude/skills/agent-team-lead/references/` reference.
 - Load for lane-owned assignment work only when team-lead procedure control is the active owner path.
 
@@ -33,13 +33,15 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 
 
 # Startup Contract Procedure
-- Owner trigger ordering, named-artifact emission, and narrative-claim discipline are owned by `owner-trigger-order`.
+- Owner trigger ordering, named-artifact recording, and narrative-claim discipline are owned by `owner-trigger-order`.
+- Startup Contract completion, clean boot, consumed references, and loaded skills remain internal facts.
+- Host-rendered rows from `Read`, `Skill`, hook, or tool execution are not report admission and must be followed by the next owner/action, not explanatory prose.
 
 
 # Operating Philosophy Procedure
 ## Request And Work Plan
 - Fresh instruction interpretation chooses light answer or consequential boundary.
-- Execution, correction, mutation, dispatch, validation, cleanup, or changed work boundary opens `Skill(work-planning)`.
+- A current instruction that creates, reopens, or changes a consequential work boundary opens `Skill(work-planning)`; same-boundary execution, correction, mutation, dispatch, validation, or cleanup stays with the active owner path.
 - Planning consumption uses `planning-field-consume` before local execution, dispatch, phase movement, or reporting-law-admitted user-facing prose.
 - Local execution requires `lead-local-guarded-law` consumption when consumed planning fields identify `ROUTING-SIGNAL: lead-local candidate` or `ROUTING-SIGNAL: blocker-clear` and `NEXT-CONSEQUENTIAL-ACTION` names the first local item or exact blocker-clear move.
 - Unconsumed `lead-local-guarded-law` gate blocks only that frozen local action.
@@ -56,7 +58,8 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 ## Governance And Conflict
 - Open `Skill(governance-modification)` only when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action.
 - Keep inspection, audit, proposal, candidate discovery, review, reporting, and expected later patch need with the current planning, review, verification, or active procedure owner.
-- Interrupt/resume preserves the original task as resume target until lawful termination or verified resume.
+- Interrupt/resume preserves the original task as resume target until lawful termination or verified resume; explicit immediate-priority user instruction for the interrupting request changes execution order only while preserving that resume target.
+- A new user request during a live owner/action enters interrupt/resume; it does not replace the live task unless the user explicitly cancels, redirects, or immediately prioritizes the new request.
 - Interrupt/resume, user challenge, autonomous delegation, stabilization, or no-needless-ask risk consumes `interrupt-autonomy`.
 
 ## Operational Control
@@ -71,7 +74,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: skill-activation atomic-check — staleness/r
 ## Owning Skills
 This subsection is the detailed superset of team-lead routing; `agents/team-lead.md` `# Trigger Skeleton` carries the always-loaded critical subset.
 - Consequential boundary opens `Skill(work-planning)`.
-- Runtime readiness blocker opens `Skill(session-boot)` or `HOLD`.
+- Runtime readiness blocker opens `Skill(session-boot)` or blocker-routing after runtime recovery is exhausted.
 - Missing truthful tool path, current-toolchain gap, or bounded local tool discovery/setup that materially blocks the active owner path opens `Skill(tool-acquisition)`; external bridge risk opens `Skill(external-tool-bridge)`.
 - Workflow-bound implementation progress opens `Skill(dev-workflow)`.
 - Owner trigger ordering consumes `owner-trigger-order` for highest active trigger and named artifact before local execution, dispatch, phase movement, mutation, or consequential reporting.
@@ -84,13 +87,16 @@ This subsection is the detailed superset of team-lead routing; `agents/team-lead
 - Synthesis and redispatch from synthesized results consume `synthesis-consume`.
 - Evidence quality, owner separation, acceptance risk, final-arbitration readiness, defect classification, or patch-worthiness opens `Skill(review-verification)`.
 - Final acceptance, final arbitration, or `PASS/HOLD/FAIL` verdict execution opens `validator` and `Skill(agent-validator)`.
-- Governance change entry loads `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load the skill.
+- Governance change entry loads and learns `Skill(governance-modification)` only for a current next owner/action that changes a `.claude` governance asset or installs confirmed recurrence-barrier hardening; expected later patch need does not load the skill.
 - Interrupt/autonomy trigger consumes `interrupt-autonomy`.
 
 ## User-Facing Reports
 - Reporting consumption controls visible-prose admission and the reporting law's named next owner/action only; it does not replace route, dispatch, recovery, mutation, verification, synthesis, or completion owner duties.
-- After admitted report prose or a rejected report attempt, execute the next owner/action named by the reporting law; when the reporting law names no new owner/action, resume the prior live owner/action unless the user instruction redirected the work or a truthful `HOLD` is recorded.
-- Report evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists; routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
+- After admitted report prose or a rejected report attempt, execute the next owner/action named by the reporting law; when the reporting law names no new owner/action, resume the prior live owner/action unless the user instruction redirected the work or blocker-routing after internal recovery is recorded.
+- Report admission evidence-basis control consumes `reporting-prohibition-rules` only after a narrow report exception exists.
+- Admitted report shape evidence-basis control consumes `reporting-user-reporting-rules` before drafting admitted prose.
+- Routine status or continuation consumes `routine-gate-continuation` when its trigger fires.
+- Report-denied continuations never explain that the route, skill, reference, measurement, dispatch, runtime state, continuity check, prior artifact, stale evidence, or verification state is being opened or classified; they execute the next owner/action silently.
 
 
 # Consume Trigger References
@@ -103,6 +109,7 @@ Short names below resolve to `.claude/skills/agent-team-lead/references/<name>.m
 - `lead-local-guarded-law`
 - `synthesis-consume`
 - `reporting-prohibition-rules`
+- `reporting-user-reporting-rules`
 - `routine-gate-continuation`
 - `interrupt-autonomy`
 

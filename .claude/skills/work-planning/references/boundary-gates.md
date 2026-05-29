@@ -12,10 +12,10 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
 - Exhaustive, full-corpus, whole-folder, unknown-corpus, governance-audit, and governance-review work freezes bounded corpus measurement first.
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
-- Prefer scalar or small grouped measurement stdout when that satisfies the planning burden.
-- Use retained carriers for raw path manifests, per-file inventories, and high-volume line-count tables when a retained carrier preserves evidence better.
-- Run lawful measurement commands when they supply required work evidence, even when host-native tool output is visible.
-- Reporting discipline controls assistant-authored prose; it does not reduce or suppress measurement evidence required for the work.
+- Prefer retained carriers for raw path manifests, per-file inventories, high-volume line-count tables, and grouped measurement evidence.
+- Bare scalar stdout is allowed only when it is the measurement evidence itself and carries no assistant-authored progress label, banner, or explanatory wrapper.
+- Do not add shell `echo` banners, section headers, prose labels, or count summaries for internal planning measurement.
+- Run lawful measurement commands when they supply required work evidence, while keeping assistant-authored progress prose and labels suppressed.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
 - Unmeasured material burden blocks dispatch-ready planning.
@@ -88,7 +88,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - A moved axis reopens `work-planning`.
 
 ## Hard Routing Gates
-- `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, blocker-clear move, authorization request, or `HOLD`.
+- `NEXT-CONSEQUENTIAL-ACTION` names the first local item, workflow owner, sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, blocker-clear move, authorization request, or blocker-routing after internal recovery.
 - Consequential planning names the team-lead work plan before `NEXT-CONSEQUENTIAL-ACTION`; the next action executes the first row and carries the remaining rows as internal continuation.
 - Planning opens one next owner/action before:
   - execution
@@ -149,7 +149,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Source lookup, remembered procedure text, non-owner review input, and unchecked owner summary do not satisfy named-owner consumption per `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
 14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
-15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
+15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load and learn `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
 16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
 17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.
 18. Reopen `work-planning` when the readiness basis is missing, vague, contradicted, or unconsumed.
@@ -161,5 +161,5 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Measurement gaps open bounded corpus measurement.
 - Boundary-change findings reopen `work-planning`.
 - Same-boundary findings return to the active workflow owner.
-- Hard routing-gate failure opens `HOLD`, blocker-clear, or reopened owner.
+- Hard routing-gate failure opens blocker-clear, reopened owner, or blocker-routing after internal recovery is exhausted.
 - Completed post-planning gate opens the named next owner/action.

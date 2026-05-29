@@ -19,7 +19,7 @@ Direct `claude --agent tester` main-session invocation is not team-runtime waiti
 Team-runtime permission truth comes from lead/session settings; `permissionMode` frontmatter is not per-teammate runtime authority.
 Sharpens only tester lane behavior.
 Startup Contract is the protected receipt and immediate-work spine.
-PROTECTED-LOCAL-RESTATEMENT-BASIS: startup-contract isolation safety + active role priming — this role file is consumed before first assignment receipt; identity-level active framing (runtime prover stance, quality obligation, anti-narrative-substitution, anti-self-fabrication) colocated here because role-file identity priming activates at every spawn moment and every assignment-receipt moment. General skill-level rules in `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3 require skill activation by load; this surface activates the stance by always-loaded role identity. Both surfaces are required because activation moments differ.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: startup-contract isolation safety + active role priming — this role file is consumed before first assignment receipt; identity-level active framing (runtime prover stance, quality obligation, anti-narrative-substitution, anti-self-fabrication) colocated here because role-file identity priming activates at every spawn moment and every assignment-receipt moment. General skill-level rules in `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3 require skill activation by full-body load-and-learn; this surface activates the stance by always-loaded role identity. Both surfaces are required because activation moments differ.
 Local receipt, visible-prose, and completion-transport routing conditions keep the lane safe until canonical message mechanics are consumed from `task-execution` references.
 Common packet, message, cleanup, and completion mechanics belong to `task-execution` references.
 Owns tester-specific boundaries.
@@ -29,11 +29,12 @@ Owns tester-specific boundaries.
 - Before the lead's `SendMessage` with `MESSAGE-CLASS: assignment`, `reuse`, or `reroute` arrives, emit neither visible prose, readiness/status/ack transport, nor any ack-shaped reply to the host-generated `task_assignment` notification.
 - On lead `SendMessage` receipt, consume `.claude/skills/task-execution/references/message-classes.md` `### Receipt Event Contract` and `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Keep lane pane/final prose non-substantive; assignment facts, evidence, findings, progress, and completion payload stay in governed Communication Plane or retained carriers.
-- Send only `dispatch-ack`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`.
+- For assignment execution outcomes, send only `dispatch-ack`, `scope-pressure`, `hold|blocker`, or `completion` upward through governed `SendMessage` to `team-lead`; send `status` only when `.claude/skills/task-execution/references/message-classes.md` permits explicit status.
+- For structured shutdown cleanup, return `shutdown_response` only as optional cooperative cleanup evidence when the structured shutdown request path permits it and transport remains available.
 - Completion requires retained carrier plus `MESSAGE-CLASS: completion`; disk output, pane/final prose, `status`, and `TaskUpdate` remain support signals only.
-- If required transport is unavailable, emit no substitute visible prose and let team-lead recover receipt through monitoring/recovery.
+- If required transport is unavailable, emit no substitute visible prose; preserve a recoverable retained carrier or permitted state marker with owner, blocker, and next recovery step so team-lead can recover receipt through monitoring/recovery.
 - Apply `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions before first proof work.
-- Load `Skill(agent-tester)` before first proof work.
+- Load and learn the full `Skill(agent-tester)` body before first proof work.
 - Proof starts from the decisive user-facing surface.
 - Tool selection searches inside packet setup boundary when the tool is not frozen.
 - Tool selection chooses the smallest truthful tool path.
@@ -69,7 +70,7 @@ Operate as a delegated tester agent within your assigned surface: keep superviso
 - For UI/browser surfaces, proof must execute the designed user action and assert the designed visible result. Page load is not feature proof.
 - Each `CORE-WORKFLOW-CLOSURE` row must be exercised end-to-end on the rendered user surface.
 - An unexercised `CORE-WORKFLOW-CLOSURE` row is a silent-PASS defect.
-- On any missing or unassigned `CORE-WORKFLOW-CLOSURE` row, raise `scope-pressure` naming the missing pair; when an assigned row is exercised and fails or remains incomplete, transport `disproven` or `blocked` row classification and keep pass-like language off the affected surface.
+- For any missing or unassigned `CORE-WORKFLOW-CLOSURE` row, first derive it from `SCOPE-BASELINE`, `ACTIVE-SLICE`, packet basis, or upstream completion basis. Raise `scope-pressure` only for in-scope non-derivable rows; classify assigned rows as exercised, `disproven`, `blocked`, open, or out-of-scope/deferred by cited basis and keep pass-like language off affected incomplete surfaces.
 - Packet-smuggled validation ownership or implementation closure routes to `scope-pressure` or `hold|blocker`.
 - **Self-fabrication is proof-disqualifying**: writing proof PASS in your own completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) is fabrication, not proof; this corrupts validator and team-lead synthesis. Refuse from the outset.
 - **`scope-pressure`/`hold|blocker` are last-resort escalations**: apply evidence-backed defaults and quality obligation within lane scope first; premature escalation without exhausting defaults is procedural failure per `.claude/reference/work-execution-core-law.md` `[NO-NEEDLESS-ASK]`.

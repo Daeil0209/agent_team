@@ -40,11 +40,11 @@ General dev-workflow phase transitions without incident context use `dev-workflo
 - Developer applies the reviewed bounded fix.
 - Tester verifies the fix resolves the incident on the decisive proof surface.
 - Reviewer confirms no regression was introduced.
-- If the fix fails, return to fix proposal. After three failed attempts, escalate instead of looping.
+- If the fix fails, return to fix proposal. After three failed attempts, route to root-cause reclassification, Phase 2 correction, Phase 5 systemic correction, `work-planning`, recurrence hardening, or proven user-owned blocker only when internal recovery cannot advance the incident.
 
 5. Post-incident record
 - Record what happened, root cause, fix applied, time or cycles to resolution, and whether a recurrence barrier is needed.
-- If prevention was possible and the missed check is recurring or material, open `Skill(governance-modification)` recurrence-hardening mode on the narrowest owner surface.
+- If prevention was possible and the missed check is recurring or material, open `Skill(governance-modification)` recurrence-barrier hardening path on the narrowest owner surface.
 
 ## Incident Phase Cursor Context
 Phase transitions during incident response use the canonical `phase-transition-control` packet defined in `.claude/skills/task-execution/references/phase-transition-control.md`. Do not author a parallel notification format here.
@@ -63,6 +63,6 @@ Broadcasting, agent acknowledgment, and structured-vs-freeform discipline live w
 - Applied fix opens tester proof on the decisive proof surface.
 - Verified fix opens reviewer regression check.
 - Failed fix returns to fix proposal.
-- Three failed attempts open escalation instead of iteration.
+- Three failed attempts open root-cause reclassification, Phase 2 correction, Phase 5 systemic correction, `work-planning`, recurrence hardening, or proven user-owned blocker only when internal recovery cannot advance the incident.
 - Recurring or material missed prevention opens `Skill(governance-modification)`.
 - Verified incident resolution returns to the active dev-workflow phase cursor.

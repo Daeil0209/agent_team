@@ -20,7 +20,7 @@ flowchart TD
 ```
 
 ## Step 1: Load Skill
-Load `Skill(self-verification)` via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
+Load and learn the full `Skill(self-verification)` body via actual `Skill(self-verification)` tool invocation; in-context awareness, prior-session memory, or carrier prose asserting "loaded" without same-turn tool invocation does not satisfy this step.
 Record the load as the same-turn `Skill(self-verification)` tool-call evidence; this evidence is the basis for downstream `PASS-1`/`PASS-2` truth and is required for any later citation that names this load.
 Proceed to Step 2.
 
@@ -50,26 +50,34 @@ Record `PASS-1`:
 
 Defer produced-result truth, defect, owner boundary, coherence, integrity, and patch-worthiness judgment to Step 3.
 
-Reject sample-only / tier-only / wave-only / representative-slice coverage when frozen scope demands exhaustive; record `fail` with open-surface inventory unless explicit user-narrowed scope or `[USER-DELIVERY-FIT]` lawful deferral.
+Reject sample-only / tier-only / wave-only / representative-slice coverage when frozen scope demands exhaustive; record `fail` with open-surface inventory unless explicit user-narrowed scope or `[USER-DELIVERY-FIT]` cited lawful owner-deferral authority applies.
 
 Proceed to Step 3.
 
 ## Step 3: review-verification
-Load `Skill(review-verification)` and call with bounded review question:
+Load and learn the full `Skill(review-verification)` body and call with bounded review question:
 - target: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
 - question: PASS-2 produced-result verification for the exact target, outgoing claim, corpus, scope, and claim ceiling.
 - scope: critical exhaustive inspection of produced-result truth and soundness, evidence fit, defect, coherence, integrity, negative-risk, claim strength, and regression under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture.
 - claim ceiling: frozen `CLAIM-CEILING`; review-verification may classify findings, patch-worthiness, handoff disposition, or correction need only within that ceiling.
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
-PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling, or on valid prior-packet reuse that satisfies the rules below; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
+Prior `review_verification_packet` reuse is valid only when its `REVIEW-TARGET`, outgoing claim, corpus, scope, claim ceiling, activation freshness, and `WORKFLOW-COVERAGE` fully cover the current PASS-2 target surface set: produced work-product surface, outgoing claim, and every material returned item awaiting handoff.
+Any change to target, outgoing claim, corpus, scope, claim ceiling, bounded question, finding set, patch design, diff, or freshness invalidates reuse and requires a fresh Step 14 packet or a supplementary packet that explicitly covers the changed surface.
+Partial target overlap is insufficient.
+When a prior packet covers only substantive claims and not carrier structure, outgoing claim, or returned-item coverage, PASS-2 requires a supplementary lens-bounded `Skill(review-verification)` packet using `coherence-integrity-lens` plus `procedure-adherence-lens` at minimum, or a fresh full Steps 1-14 packet on the current target.
+The current PASS-2 record cites packet `WORKFLOW-COVERAGE`; treating `lens-bounded` or `gate-only` coverage as `full-steps-1-14` is fabrication.
+When the outgoing work product carries external citation or anchor claims, PASS-2 requires the current `review_verification_packet` to contain `CITATION-EVIDENCE-INVENTORY` entries for those claims per `Skill(review-verification)` `### 12b. Citation Substantiation Gate`.
+Missing inventory entries, stale entries, incomplete entries, entries lacking target/freshness evidence/observed content, or carrier prose marking a citation as Class-A-required without executing the tool call fail PASS-2 as citation-evidence fabrication.
+Route citation-evidence fabrication to Step 5 with `INPUT-FINDINGS: citation-evidence-fabrication`.
 When the only basis is carrier form, completion fields, PASS wording, checklist text, inline critical-review prose, equivalent checks, or proxy lens mapping, record `PASS-2: fail` and open Step 5 correction.
 
 Carrier-as-evidence fabrication is the named failure mode: writing `Skill(self-verification) loaded`, `Skill(review-verification) consumed`, `PASS-1 verified`, `PASS-2 cleared`, or equivalent prose into a carrier without actual same-turn tool invocation evidence is fabrication, not verification. Producer self-check and receiver evaluation both reject such carriers and route to Step 5.
 
 Record `PASS-2`:
-- `pass` — Critical Review Gate cleared for produced-result truth and soundness plus outgoing claim under the frozen `CLAIM-CEILING` (material defeaters tested and disproven or owner-deferred) AND `FINDING-STATE-INVENTORY` contains no produced-work-product defect or verification-claim defect that remains `confirmed-defect`, `patch-worthy`, `patch-ready`, or open-candidate blocking the next action.
-- `pass` also requires every material returned fact, count, state label, recommendation, verdict input, or other handoff item to be covered by the current `review_verification_packet`, verified retained-carrier feedback, `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker`.
+- `pass` — Critical Review Gate cleared for produced-result truth and soundness plus outgoing claim under the frozen `CLAIM-CEILING` (material defeaters tested and disproven or deferred by cited lawful owner-deferral authority) AND `FINDING-STATE-INVENTORY` contains no produced-work-product defect or verification-claim defect that remains `confirmed-defect`, `patch-worthy`, `patch-ready`, or open-candidate blocking the next action.
+- `pass` also requires every material returned fact, count, state label, recommendation, verdict input, or other handoff item to be covered by the current `review_verification_packet` or verified retained-carrier feedback. `OPEN-SURFACES`, `scope-pressure`, or `hold|blocker` coverage can pass only for an outgoing open-surface, scope-pressure, or blocked handoff claim; final, completion, or verified-result claims fail while material returned items remain open or blocked.
 - `fail` — preserve review packet defects and every returned content item or claim lacking exact state, evidence, or coverage. Reject carrier-only, confirmation-only, or convenience-aligned execution; re-call with explicit critical posture against produced content itself.
 
 `PASS-2` is a verifiable evidence record citing the actual `Skill(review-verification)` Step 14 packet identifier or content reference, the consumed `REVIEW-VERIFICATION-LENSES` when named-lens scope, and the explicit pass/fail verdict. A `PASS-2` claim without packet citation is carrier prose, not verified evidence.
@@ -96,7 +104,7 @@ Route by producing owner:
 - lane → dispatch via `Skill(task-execution)` with `MESSAGE-CLASS: assignment` and `UPSTREAM-DECISION-BASIS: self-verification-correction-cycle`.
 - `Skill(governance-modification)` Change Sequence → return correction inventory to that Change Sequence.
 
-Wait for correction completion.
+Continue through the correction owner/action until correction completion or blocker-routing with exhausted correction basis.
 Rerun Step 2 and every downstream step on the corrected surface; prior `PASS-1` and `PASS-2` do not carry over after correction.
 Reject partial re-check; require corrected surface + coherence radius.
 

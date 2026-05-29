@@ -19,7 +19,7 @@ Use when the document is an operational plan, schedule, timetable, resource plan
 - Risk segments include post-travel, pre-transition, post-meal, multi-person movement, and external-variable periods.
 - Execution-control minimum field set: activity, time, responsible person, location, preparation items, prerequisites, status, and approval state.
 - Mandatory feasibility review checks hidden-time completeness, responsible-person duplication, equipment/resource conflict, buffer sufficiency, overcrowded slots, approval-timing gaps, and parallel-task interference.
-- Any mandatory feasibility failure marks `HOLD`.
+- Any mandatory feasibility failure marks a blocked feasibility state with correction owner/action.
 - Acceptance priority order is executability, zero-ambiguity comprehension, change resilience, then hidden-time completeness.
 - Visual tidiness is outside acceptance when it conflicts with the four acceptance priorities.
 - Cascade structure from purpose type.
@@ -31,4 +31,4 @@ Use when the document is an operational plan, schedule, timetable, resource plan
 
 ## Resolve Next Owner And Action
 - Return schedule mode, representation choice, feasibility findings, buffer logic, acceptance priority, and purpose-priority ranking to the active document-automation workflow.
-- If feasibility fails, route the exact `HOLD` basis and smallest correcting owner before schedule generation continues.
+- If feasibility fails, route the exact blocked-feasibility basis and smallest correcting owner before schedule generation continues.

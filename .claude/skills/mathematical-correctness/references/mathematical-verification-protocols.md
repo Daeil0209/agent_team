@@ -9,7 +9,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # Reference Material
 ## Responsibilities: Reference Protocols
 ### Analytical Solution Verification Protocol
-Non-ODE analytical families (Laplace transforms, Fourier series, PDE separation of variables, eigenvalue problems) verify with the same-rigor checklist: step justification per `## Derivation Rigor Standards`; HOLD on unverified existence/uniqueness; back-substitution validation per family.
+Non-ODE analytical families (Laplace transforms, Fourier series, PDE separation of variables, eigenvalue problems) verify with the same-rigor checklist: step justification per `## Derivation Rigor Standards`; block claims on unverified existence/uniqueness and open correction; back-substitution validation per family.
 #### ODE Exactness Verification
 **Exactness test checklist:**
 1. Identify M(x,y) and N(x,y) from the form M dx + N dy = 0

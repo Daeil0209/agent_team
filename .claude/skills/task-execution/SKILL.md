@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Reference Map stays inside Purpose.
 ## Purpose
 Run frozen additional-agent execution after planning is complete.
-Load at most once per Claude session, and only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route.
+Activate only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route; reuse only a fresh same-session loaded-and-learned basis.
 When active, it handles dispatch packet assembly, dispatch-bound binding-surface materialization, send truth, runtime creation/launch, and dispatch interruption state.
 Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
@@ -44,12 +44,12 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Load `Skill(task-execution)` at most once per Claude session when the first frozen dispatch, reuse, blocker-clear, or standalone-result classification path requires it and no current same-session `task-execution` load exists.
-After current same-session `task-execution` load exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded skill instead of another `Skill(task-execution)` call.
-Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; current same-session `task-execution` load basis remains reusable under the activation rule.
-`task-execution` activation basis is actual `Skill(task-execution)` load or `same-session-loaded:task-execution` for the current Claude session.
-Same-session-loaded `task-execution` basis becomes stale per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` staleness rule (session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or active path needs unconsumed trigger-specific detail); stale basis reloads `Skill(task-execution)` or consumes the exact trigger-specific reference before action.
-Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only; activation basis requires actual skill load or current same-session loaded-skill basis.
+Load and learn `Skill(task-execution)` when a frozen dispatch, reuse, blocker-clear, or standalone-result classification path requires it and no fresh current same-session `task-execution` load-and-learn basis exists.
+After a fresh current same-session `task-execution` load-and-learn basis exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded-and-learned skill instead of another `Skill(task-execution)` call.
+Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; current same-session `task-execution` load basis is reusable only while fresh under the activation rule.
+`task-execution` activation basis is actual full-body `Skill(task-execution)` load-and-learn or `same-session-loaded-and-learned:task-execution` for the current Claude session.
+Same-session-loaded-and-learned `task-execution` basis becomes stale per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` staleness rule (session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or active path needs unconsumed trigger-specific detail); stale basis reloads and learns `Skill(task-execution)` or consumes the exact trigger-specific reference before action.
+Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only; activation basis requires actual full-body skill load-and-learn or current same-session loaded-and-learned basis.
 Current boundary `work-planning` must be complete.
 Any frozen named workflow or sequence owner must be complete.
 Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, runtime-cleanup state, and phase-transition-only state stay with their current owner.
@@ -118,7 +118,7 @@ Packet final check:
 - `Agent` spawn prompts contain only member identity, role identity, and screen-safety.
 - Before any parallel `Agent` batch, preflight every planned spawn prompt in the batch against this screen-safety floor.
 - Failed spawn-prompt preflight opens prompt-set correction before any `Agent` call from that batch.
-- Hook denial is enforcement evidence. A hook `BLOCKED` result proves the preflight was missed.
+- Hook denial is enforcement evidence. A hook `BLOCKED` result proves missed preflight only when the hook enforces a protected destructive, security-critical, or session-stability runtime rule; over-broad positive-pattern or doctrine-shape blocks route as hook defects.
 - Assignment-grade work begins only through `SendMessage` after the live member address exists.
 - The detailed Team Member Startup Recognition rule stays in `references/message-classes.md`; this `SKILL.md` surface carries the executable preflight floor.
 - Dispatches that will receive completion-grade carriers invoke Step 3 `Completion acceptance` upon receipt; the assigned lane's verification work must satisfy the citation requirements named there (`Skill(review-verification)` `PACKET-ID`, `Skill(self-verification)` tool-call evidence) for the completion to pass.
@@ -155,21 +155,22 @@ Branch rule:
 - if a branch requires new route judgment, new work surface decomposition, or changed route, reopen `work-planning` first
 ## Step 3: Dispatch Truth
 Dispatch truth is Procedure Plane and Communication Plane state.
-User-facing reporting is governed only by `.claude/reference/reporting-prohibition-law.md`.
+User-facing report admission is governed by `.claude/reference/reporting-prohibition-law.md`; admitted report shape is governed by `.claude/reference/reporting-user-reporting-law.md`.
 Dispatch execution is silent while the next dispatch, monitoring, recovery, merge, or synthesis action can run.
 Tool-adjacent progress prose stays suppressed while dispatch, monitoring, recovery, merge, synthesis, or locked parallel dispatch can continue.
+Skill-load success, reference reads, contract-consumed facts, plan-frozen facts, runtime-active facts, runtime API errors, hook denials, member creation rows, assignment-send rows, ack rows, completion rows, packet materialization, shared binding-surface creation, carrier staging, inventory staging, and retained-output availability do not create a prose slot.
 Transport dispatch state through `message-classes.md`; dispatch state remains internal unless reporting law grants a narrow user-report exception.
-User-facing dispatch prose opens only when `.claude/reference/reporting-prohibition-law.md` grants a narrow user-facing report exception.
+User-facing dispatch prose opens only when `.claude/reference/reporting-prohibition-law.md` grants a narrow user-facing report exception and `.claude/reference/reporting-user-reporting-law.md` shapes the admitted prose.
 Keep runtime setup, packet work, lane choice, receipt handling, and team-state changes internal.
 When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, the next actions stay inside the allowed dispatch/reuse moves for every frozen nonblocked group.
-Execute the lawful `PARALLEL-DISPATCH-LOCK` move; user-visible prose appears only through `.claude/reference/reporting-prohibition-law.md`.
+Execute the lawful `PARALLEL-DISPATCH-LOCK` move; user-visible prose appears only after `.claude/reference/reporting-prohibition-law.md` admission and `.claude/reference/reporting-user-reporting-law.md` shape control.
 
 The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every assignment-success, ack, progress, or recovery decision.
 
 Reporting consequences:
 - Assignment success, no-change dispatch, ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
-- User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and may cite only the user-relevant waiting condition it admits.
-- Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, and admitted by `.claude/reference/reporting-prohibition-law.md`.
+- User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition.
+- Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
 
 Completion acceptance:
 - `MESSAGE-CLASS: completion` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
@@ -180,7 +181,8 @@ Completion acceptance:
 - Carrier-truth fabrication is not a packet defect; reopen `work-planning` only when the fabrication exposes a moved boundary axis.
 
 Recovery reconciliation:
-- A dispatch segment becomes complete only after every target has `dispatch-ack`, agent-start evidence, blocker, scope-pressure, failed-send truth, replacement truth, or team-lead-recorded Procedure Plane `HOLD`.
+- A dispatch segment becomes complete only after every target has a valid first upward outcome (`dispatch-ack`, completion-grade `completion`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action.
+- Agent-start evidence after valid receipt supports monitoring and no-start recovery; agent-start evidence without valid receipt does not clear missing-receipt debt.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Per-interruption-point recovery procedures (missing-`dispatch-ack` follow-up, `dispatch-ack`-without-agent-start follow-up, dead-or-unavailable classification, unaffected-target movement) live in `references/dispatch-recovery.md` `## Dispatch Interruption Recovery`; SKILL.md consumes that reference for the executable detail at every recovery decision.
@@ -233,6 +235,6 @@ Compaction is valid only while the operator can still answer, immediately and wi
 - why `task-execution` opened
 - which frozen fields it consumed
 - what exact dispatch move it handles now
-- what user-facing truth limit applies before agent-start evidence exists
+- what user-facing truth limit applies before valid receipt, agent-start, or completion evidence exists
 - if interrupted, what last proven dispatch truth and resume owner/action apply
 - which owner takes over next

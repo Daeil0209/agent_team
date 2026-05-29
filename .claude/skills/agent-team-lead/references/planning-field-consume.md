@@ -45,7 +45,7 @@ Consumer surfaces use the canonical field owner, then act on the consumed result
 - Fields outside every current local execution, workflow, sequence, dispatch, or reporting-law-admitted user-facing prose owner stay outside `work-planning` reopening.
 - Team-lead decision basis is the consumed frozen scope, route, owner map, proof chain, acceptance chain, parallel-fit basis, and active-route mandatory fields.
 - Downstream expansion stays inside the consumed basis; moved scope, owner, proof, acceptance, route, or claim boundary reopens `work-planning`.
-- A consumed field whose canonical floor does not support the selected route class, owner choice, next action, reporting-law gate, `HOLD` route, or claim strength reopens `work-planning`.
+- A consumed field whose canonical floor does not support the selected route class, owner choice, next action, reporting-law gate, blocker-routing, or claim strength reopens `work-planning`.
 - Consume `TEAM-LEAD-WORK-PLAN` only when local execution, dispatch, synthesis, reporting-law-admitted user-facing prose, or termination depends on it.
 - `NEXT-CONSEQUENTIAL-ACTION` must trace to the first executable row of `TEAM-LEAD-WORK-PLAN`; failed trace reopens `work-planning`.
 - Claims stay at or below the consumed `CLAIM-CEILING`; a required stronger claim reopens `work-planning`.

@@ -101,7 +101,7 @@ Termination-path E2E verification is required closure evidence.
 When verifier cannot directly exercise the operator's window-close action, document the termination test as operator reference only.
 Acceptance closes from team-side auto-test proof or proven-equivalent interop proof.
 The proof target is: close button -> verify all ports release -> verify clean re-launch succeeds.
-If neither proof path is available, report `HOLD` or `UNVERIFIED-IN-OPERATOR-ENV`.
+If neither proof path is available, return proof status `UNVERIFIED-IN-OPERATOR-ENV` and open bounded setup/tool proof, equivalence proof, or blocker-routing after internal recovery.
 
 ## R31 -- Mental-Model Alignment Mandate
 "Minimum-effort termination path" is NOT satisfied by merely providing a working close mechanism.
@@ -127,7 +127,7 @@ Failing this mental-model alignment check is a delivery-fit defect even when the
 ## Closure Re-entry Law
 Any missing, broken, unverified, or mismatched closure item blocks executable user-facing `FINAL-ACCEPT` and completion.
 During Final Acceptance Review, the blocking item records `FINAL-REJECT`.
-Before Final Acceptance Review entry, the blocking item opens the narrowest repair, proof, correction, or `HOLD` route below.
+Before Final Acceptance Review entry, the blocking item opens the narrowest repair, proof, correction, or blocker-routing route below after internal recovery.
 Closure items:
 - exact launch artifact
 - native setup/build/run chain when material
@@ -153,6 +153,6 @@ Scope narrowing becomes user-owned only after team-side proof paths are proven i
 - Missing implementation or cleanup closure opens Phase 5 repair.
 - Missing delivery-contract or design closure opens Phase 2 correction.
 - Changed deliverable shape, operator OS, proof chain, acceptance chain, or user requirement opens `work-planning`.
-- Unavailable team-side proof path opens bounded setup/tool proof path or `HOLD`.
+- Unavailable team-side proof path opens bounded setup/tool proof path or blocker-routing after internal recovery.
 - Proven infeasible team-side proof with user-owned condition opens user-owned blocker.
 - Operator-delivery `FINAL-REJECT` recorded during Final Acceptance Review returns to CP5 route classification.

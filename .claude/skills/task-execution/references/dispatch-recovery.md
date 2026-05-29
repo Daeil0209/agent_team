@@ -26,19 +26,23 @@ Required recovery record:
 | `packet-ready-not-sent` | packet is assembled only | `task-execution`: verify no send evidence, then send once or return to the same frozen owner if packet basis drifted without changing route |
 | `team-created-no-assignment` | `member-created` only | `session-boot` if runtime readiness is uncertain; otherwise `task-execution` sends the next assignment-grade `SendMessage` |
 | `dispatch-pending-no-ack` | assignment sent, no acceptance | `session-boot`: send one same-assignment receipt follow-up after current dispatch check. Keep unaffected parallel targets moving. Classify the target as dead-or-unavailable for the current assignment after that follow-up fails and assigned-surface activity/side-effect evidence is absent. |
-| `dispatch-ack-no-start` | assignment accepted, no later activity | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or `HOLD`. Keep unaffected parallel targets moving. Classify the target as stalled or dead-or-unavailable after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
-| `agent-started` | agent-side activity exists | lane execution plus `session-boot` monitoring. Return to `task-execution` only when replanning freezes a new assignment. |
-| `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | default to `HOLD`. Reopen `work-planning` when route validity is stale or contradicted. Configured lane work stays on the configured lane route, and completion claims require completion-grade evidence. |
-| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
+| `dispatch-ack-no-start` | assignment accepted, no later activity | `session-boot`: send one same-assignment execution follow-up after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or blocker-routing. Keep unaffected parallel targets moving. Classify the target as stalled or dead-or-unavailable after that follow-up fails and agent-start or assigned-surface activity/side-effect evidence is absent. |
+| `agent-started-after-receipt` | valid first upward outcome plus agent-side activity exists | lane execution plus `session-boot` monitoring. Return to `task-execution` only when replanning freezes a new assignment. |
+| `standalone-agent-call-incomplete` | legacy or accidental synchronous standalone `Agent` call has no returned result | Inspect current host/runtime state, preserve the standalone call only as bounded evidence, and reopen `work-planning`, `session-boot`, or `task-execution` redispatch for the configured lane route. Use blocker-routing only after duplicate-send risk and every executable recovery route are exhausted. Completion claims require completion-grade evidence. |
+| `standalone-agent-result-returned` | legacy or accidental synchronous standalone `Agent` result returned | `team-lead` can consume it only as bounded evidence. Load and learn `Skill(self-verification)` for convergence before reporting or redispatch. Team-runtime completion requires team-runtime completion transport. |
 
 Recovery rules:
 - `RECOVERY-EVIDENCE` must cite the concrete basis: host return, send result, runtime state, agent message, assigned-surface mtime/diff, ledger, or explicit absence checked at the current authority.
-- Unknown send state is not safe to resend. First check the current dispatch authority; if still unknown, use `HOLD` or `session-boot` recovery rather than duplicate assignment.
+- Host API/socket errors, hook denials, malformed-envelope denials, command exit codes, missing-file checks, and absent-carrier checks are recovery evidence only; they do not admit explanatory prose while a recovery action, retry with corrected tool shape, retained evidence check, or blocker-routing can run.
+- After a hook blocks progress/banner stdout, rerun only the corrected evidence command or retained-artifact check; do not narrate the hook block or the retry.
+- Unknown send state is not safe to resend. First check the current dispatch authority; if still unknown, use `session-boot` recovery or blocker-routing with duplicate-send risk, exhausted recovery basis, and next safe owner/action rather than duplicate assignment.
 - Missing receipt and no-start recovery are exact-target liveness drives; probe the unresolved target only.
+- Agent-side activity without valid first upward outcome remains `dispatch-pending-no-ack`; it does not satisfy receipt, but it is evidence for the bounded follow-up and dead-or-unavailable decision.
 - Ack counts, missing target names, inbox read state, nudges, replacement consideration, and no-start classification stay internal while Procedure Plane or Communication Plane recovery can continue.
+- Idle after `dispatch-ack` is not by itself a reason for a proceed prompt; use the no-start recovery row only after the receipt segment ends without agent-start, blocker, scope-pressure, failure, or blocker-routing.
 - Repeated assignment or correction messages stay out of a target with no agent-originated receipt, start, blocker, or progress.
 - The one bounded follow-up asks for the missing receipt, start evidence, `scope-pressure`, or `hold|blocker`; resend assignment content only when prior send evidence is absent or duplicate side-effect risk is ruled out.
-- After one bounded follow-up, wait for response, agent-start, blocker, or assigned-surface activity until the `session-boot` re-check window.
+- After one bounded follow-up, continue unaffected work and let `session-boot` monitor for response, agent-start, blocker, or assigned-surface activity until the re-check window.
 - Missing response and missing activity after that window is dead-or-unavailable recovery for the affected target, not another packet retry.
 - A same-target packet correction to a responsive live target opens a correction-response window. Shutdown or replacement waits until the window closes without corrected receipt, blocker, scope-pressure, start evidence, or assigned-surface activity, unless the target is actively mutating outside authority or corrupting protected state.
 - Parallel group "running" status requires every target to be past `dispatch-pending-no-ack` and `dispatch-ack-no-start`.
@@ -52,7 +56,7 @@ Recovery rules:
 ## Agent Compaction Recovery
 A compacted agent has lost the assignment-grade packet context but retains its agent-specific skill. To resume truthfully:
 
-- Agent emits the exact literal `MESSAGE-CLASS: hold|blocker`.
+- Agent sends governed `MESSAGE-CLASS: hold|blocker` through the Communication Plane; the render uses the canonical state signal only.
 - It includes `BLOCKER-TYPE: context-loss-after-compaction`.
 - It includes `BLOCKER-BASIS: prior packet context not in working memory`.
 - It includes `SAFE-NEXT-STEP: team-lead reissues the assignment-grade packet for the previously-frozen surface`.
@@ -67,7 +71,7 @@ A compacted agent has lost the assignment-grade packet context but retains its a
 - `CORRECTION-OUTCOME: route-replan` opens `work-planning`.
 - Uncertain runtime readiness opens `session-boot`.
 - Missing send-state evidence opens current dispatch-authority inspection.
-- Duplicate-send risk opens `HOLD` or `session-boot` recovery.
+- Duplicate-send risk opens `session-boot` recovery, or blocker-routing only after recovery cannot remove the duplicate-send risk.
 - Agent compaction opens assignment-packet reissue from the frozen route.
 - Route-changing recovery opens `work-planning`.
 - Recurrence-hardening recovery defect opens `Skill(governance-modification)` before suspended dispatch closure.

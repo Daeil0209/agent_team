@@ -14,7 +14,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Modification Law
 - Operator-emphasized keyword names and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 - This core law owns executable keyword definitions, patch-design tests, preservation rules, duplicate handling, and source-to-destination continuity.
-- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`; `dimensional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
+- Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` carries both `[GOV-MIN]` and `[RULE-FORCE]`; `functional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
 - Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
 - `removal-first` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete while preserving required information.
 - `consumed-surface` lands patches on the document the affected owner actually consumes at the failing decision moment.
@@ -22,10 +22,16 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `upper-lower execution-drive` preserves direct-execution continuity from top intent through mapped core law, trigger-bound guidance, and tool action.
 - `executable-imperative` writes positive owner-action directives; hazardous-action prohibitions include the valid replacement action or next owner.
 - `minimum-executable-information` keeps the smallest complete rule content needed for owner, trigger, action, stop, evidence, verification, acceptance truth, routing, patch-readiness, and executable duty.
-- `dimensional-independence` requires every governance patch to declare a target dimension from: top doctrine, mapped core law, identity, operational, runtime.
-- A `dimensional-independence`-compliant patch restricts text changes and behavioral changes to the declared dimension; downstream dimensions automatically adapt through existing reference/trigger paths.
-- Identity-layer text under `dimensional-independence` does not name specific functional elements by exact identifier (specific skill names, specific field names, specific operational governance term tokens); generic dimensional terms only.
-- `Skill(review-verification)` Critical Review Gate defeater enumeration tests dimensional-independence violation for every governance patch design alongside under-specification, over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking.
+- `functional-independence` requires every governance patch to name the intended changed function set: the executable function, owner path, workflow, user-facing capability, procedure gate, evidence path, verification path, acceptance path, runtime/tool contract, or reporting-truth path whose behavior is meant to change.
+- A positive function is an existing valid function, owner path, workflow, user-facing capability, procedure gate, evidence path, verification path, acceptance path, runtime/tool contract, or reporting-truth path that currently works or protects correctness, safety, continuity, or user outcome.
+- A `functional-independence`-compliant patch closes the named defect inside the intended changed function set while preserving every positive function outside that set.
+- Negative impact means weaker owner boundary, trigger, action, stop, evidence burden, verification depth, acceptance truth, routing, completion/blocker semantics, user-facing capability, runtime/tool contract, or reporting truth.
+- Required cross-function correlation is a governed interface, not a side effect; when a correlated function must change, the patch records that function inside the intended changed function set before mutation.
+- Patch records name the intended changed function set, positive-function inventory in the coherence radius, correlated functions, consumed contract, owner route, evidence, and per-function no-negative-impact verification basis.
+- A patch affecting reporting shape, renderable transport, completion, hook, runtime, or governance-modification surfaces treats `.claude/reference/reporting-prohibition-law.md` admission and non-reportable-content suppression as protected positive functions unless the intended changed function set explicitly strengthens that law.
+- Report-prohibition no-negative-impact verifies no new report reason, no broader exception, no weaker `## Non-Reportable Content`, no internal Procedure Plane or Communication Plane detail leakage, and no bypass from lower report-shape or transport surfaces.
+- Hidden shared-state coupling, incidental behavior change, verification/status/routing coupling, completion/blocker coupling, acceptance coupling, or unrecorded positive-function regression across functions is a `functional-independence` violation.
+- `Skill(review-verification)` Critical Review Gate defeater enumeration tests functional-independence violation, positive-function regression, hidden cross-function coupling, and incidental behavior change for every governance patch design alongside under-specification, over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking.
 - Governance-asset patch-design decisions test and cite every operator-emphasized keyword from that owner.
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
 - Removal-first edit selection tries tighten, replace, trim, merge, re-home, or delete before append.
@@ -67,7 +73,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Patch-ready review records direct-consumption relevance through `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 - When governance-modification routing overlaps another sequence, `.claude/reference/work-execution-core-law.md` `## Procedure And Ownership Law` primary-sequence rule governs routing.
 - `[HARDEN]` governs recurrence-barrier correction scope.
-- Open `Skill(governance-modification)` after quality, evidence, ownership, and acceptance integrity are secure.
+- Open `Skill(governance-modification)` when the active owner/action names governance asset change or recurrence-barrier hardening and carries current owner/action basis, current review-verification packet, material finding-state basis, and unresolved proof or acceptance handling as applied, deferred by cited lawful authority, or blocked.
 
 ### Preservation Rules
 - `[PRES-FIRST]` Migration, refactoring, reduction, and re-home edits preserve protected procedure force.
@@ -95,7 +101,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ### Retroactive Application Rules
 - Land new doctrine after affected current-session surfaces are handled.
 - Land sharpened doctrine after affected current-session surfaces are handled.
-- Record affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred per lawful owner-deferral basis`.
+- Record affected current-session surfaces as `unaffected`, `fixed`, `invalidated`, or `deferred by cited lawful owner-deferral authority`.
 - Fix affected artifacts through the owning upstream record.
 - Invalidate affected artifacts through the owning upstream record.
 - Defer affected artifacts through the owning upstream record.

@@ -28,7 +28,7 @@ Hidden child screen text is not a replacement carrier, not a redacted artifact, 
 
 ## Release Gate
 `.claude/reference/reporting-prohibition-law.md` owns whether a report may be proposed.
-The curtain release gate only verifies structural release conditions: schema, active `run_id`, valid narrow exception reason, valid report id, non-empty visible text, size limit, and terminal-control safety.
+The curtain release gate only verifies structural release conditions: valid JSON-like report envelope schema, active `run_id`, `REPORT-REASON` admitted by `.claude/reference/reporting-prohibition-law.md`, unique non-empty `report_id` within the active `run_id`, non-empty visible text, byte length not exceeding the supervised renderer's `CURTAIN_MAX_BYTES` value, and absence of terminal-control characters outside newline and horizontal tab. Missing `CURTAIN_MAX_BYTES` fails closed as curtain proof `UNVERIFIED`.
 The gate is not a content classifier for internal Communication Plane messages.
 The gate must not mutate internal payloads into user reports.
 
@@ -38,7 +38,7 @@ Direct `claude` native startup does not activate the curtain.
 If the operator uses normal Claude Code native UI, host-native display remains governed by Claude Code behavior and the model-side reporting law; it is not proof of curtain failure.
 In native UI, agent-authored prose leakage violates `.claude/reference/reporting-prohibition-law.md` report-prohibition criteria; it is not supervised curtain proof.
 Use a configured supervised-renderer executable only after verifying that the path exists and is executable.
-If no supervised-renderer executable is installed, supervised curtain operation is unavailable; report `HOLD` or `UNVERIFIED` instead of claiming curtain proof.
+If no supervised-renderer executable is installed, supervised curtain operation is unavailable; return curtain proof status `UNVERIFIED`, open renderer setup or governance routing when curtain proof is required, and use blocker-routing only when the active deliverable depends on curtain proof and no fallback remains.
 
 ## Proof Standard
 The decisive proof for the curtain is user-visible stdout/stderr from the supervised renderer.
@@ -47,6 +47,6 @@ Proof capture of child output is verification-only and must be requested explici
 
 ## Resolve Next Owner And Action
 - Passing curtain proof returns to the reporting owner with the proven supervised-renderer basis.
-- Curtain unavailability or failed proof returns `HOLD` or `UNVERIFIED` to the reporting or environment owner.
+- Curtain unavailability or failed proof returns `UNVERIFIED` to the reporting or environment owner, opens renderer setup/governance routing when proof is required, or records blocker-routing only when the active deliverable depends on curtain proof and no fallback remains.
 - Content-admission questions return to `.claude/reference/reporting-prohibition-law.md`.
 - Renderer path, executable, hook, settings, or runtime-enforcement changes open `Skill(governance-modification)` after environment configuration review.

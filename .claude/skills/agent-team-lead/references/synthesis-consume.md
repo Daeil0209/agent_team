@@ -25,6 +25,12 @@ Completion transport, report admission, finding promotion, verification, runtime
 - Multiple cases/results overlap, diverge, contradict, correlate, or feed one downstream decision.
 - Final Acceptance Review (FAR) `FINAL-REJECT` correction evidence enters the next synthesis.
 
+## Fallback Evidence Conversion
+- Team-lead converts previously bounded fallback evidence before admitted-case inventory only when it can populate the completion spine fields needed for synthesis.
+- Converted fallback evidence enters the existing `VERIFIED-DATA-FEEDBACK` spine with `SOURCE-CLASS: fallback-converted`, source surface, evidence anchor, claim ceiling, coverage limits, and verification basis.
+- Conversion does not strengthen claim ceiling, lane ownership, acceptance truth, or validation state beyond what the evidence actually supports.
+- Fallback evidence that cannot populate the needed completion spine fields remains an unresolved input item, opens corrected transport, redispatches bounded evidence work, or opens blocker-routing after internal recovery is exhausted.
+
 ## Synthesis Procedure
 1. Admit only completion-grade `VERIFIED-DATA-FEEDBACK` rows as synthesis input.
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.
@@ -38,6 +44,7 @@ Completion transport, report admission, finding promotion, verification, runtime
 10. Close synthesis only after both completion gates pass.
    - Gate 1: `ADMITTED-CASE-TOTAL` equals `CATEGORY-MEMBER-TOTAL`.
    - Gate 2: every category member either records `no-follow-on:<basis>` or has every material resolved coordinate target mapped exactly once to one de-duplicated `work-item` or one `correlation-analysis` work-item.
+   - Gate 3: every missing, late, insufficient, or otherwise unresolved required input is corrected, redispatched, excluded by explicit out-of-scope basis, deferred by cited lawful owner-deferral authority, or blocker-routed after internal recovery before final/completion coverage closure.
 
 ## Synthesis Result
 - Return category inventory as the case-classification surface; include work-item mapping when follow-on work is material.
@@ -58,10 +65,10 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: synthesis-time validator-PASS atomic-check â€
 
 ## Resolve Next Owner And Action
 - Uninventoried case opens inventory correction.
-- Non-completion-grade input, including completion carriers that assert PASS-2 without the required packet/lens basis, opens completion correction before synthesis.
+- Non-completion-grade input, including completion carriers that assert PASS-2 without the required packet/lens basis, opens fallback conversion when it is previously bounded fallback evidence that can satisfy the completion spine; otherwise it opens completion correction before synthesis.
 - Category count mismatch, uncategorized admitted case, or admitted case mapped to multiple categories opens category mapping correction before synthesis closure.
 - Missing `work-coordinate`, incomplete/malformed/stale/non-resolving coordinate expression, uncollapsed duplicate `work-item`, missing `correlation-analysis` item for one coordinate target with multiple categories or retained material contents, same case mapped to multiple `work-item`s without distinct resolved coordinate targets, or uncovered material follow-on case opens work-item mapping correction before redispatch or mutation.
 - Remaining unmapped synthesis case opens category mapping correction or work-item mapping correction.
-- Missing or late input stays an unresolved input item unless final/completion coverage is required by the active route.
-- Synthesis strength beyond evidence opens narrowing, category mapping correction, work-item mapping correction, redispatch, exclusion, or `HOLD`.
+- Missing or late input stays an unresolved input item; when final/completion coverage is required by the active route, it opens correction, redispatch, explicit exclusion, cited lawful deferral, or blocker-routing after internal recovery before closure.
+- Synthesis strength beyond evidence opens narrowing, category mapping correction, work-item mapping correction, redispatch, exclusion, or blocker-routing after internal recovery.
 - Non-synthesis effects route to the owning skill, reference, lane, or `Skill(work-planning)`.

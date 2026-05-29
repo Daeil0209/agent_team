@@ -27,14 +27,14 @@ Record only the active row:
 2. Confirm the frozen local action names the exact item or blocker-clear move, one surface, evidence limit, claim ceiling, required-skill status, and stop point.
 3. Execute only that frozen action until its stop point.
 4. Keep evidence and claims inside the frozen limit.
-5. Load only the required skills named for the first material surface; missing or stale required-skill basis exits lead-local.
+5. Load and learn only the required skills named for the first material surface; missing or stale required-skill basis exits lead-local.
 6. Use non-owner specialist skills only when the frozen support basis permits team-lead consumption.
 7. Treat read-only diagnostic, audit, analysis, or explicitly frozen evidence-only standalone `Agent` use as lead-local only while it creates no independent evidence family, decision target, production/source-of-truth/interface boundary, proof burden, or correction owner.
 8. At the stop point, return to the active team-lead plan or named replanning boundary before any next local action.
 
 ## Drift Exit
 Exit lead-local when any `.claude/skills/work-planning/references/boundary-gates.md` `## Boundary-Change Axes` axis moves for the frozen local action, or when the action would create a destructive, security-sensitive, external-bridge, or final-acceptance burden (lead-local-specific additions beyond the boundary-change axes).
-Context-size, latency, or runtime-burden benefit that changes owner route counts as material parallel-fit.
+Context-size, latency, or runtime-burden benefit that changes owner route counts as material parallel-fit only when evidence shows it affects coverage, proof, risk, owner separation, or executable continuity; convenience alone does not reopen route or force parallelization.
 After drift, take no further local tool call, report, claim, or continuation until `Resolve Next Owner And Action` selects the next owner/action.
 
 ## Resolve Next Owner And Action
@@ -43,5 +43,5 @@ After drift, take no further local tool call, report, claim, or continuation unt
 - Missing, stale, contradictory, or weaker planning fields reopen `work-planning`.
 - A frozen new owner routes to that owner; an unfrozen owner, item, surface, route ambiguity, hidden consequential step, or material parallel-fit reopens `work-planning`.
 - Lane-owned proof, review, validation, implementation, or acceptance routes through `Skill(task-execution)` when frozen, or `work-planning` when not frozen.
-- Required-skill gap opens the named skill when the boundary permits it; otherwise reopen `work-planning` or `HOLD`.
+- Required-skill gap opens the named skill when the boundary permits it; otherwise reopen `work-planning` or blocker-routing after internal recovery is exhausted.
 - Claim beyond the frozen evidence limit opens claim narrowing, `Skill(self-verification)`, or `Skill(review-verification)` according to claim type.

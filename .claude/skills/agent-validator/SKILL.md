@@ -59,7 +59,7 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
 - For those deliverables, tester evidence must come from a browser-proof path.
-- For browser/UI final acceptance, available Playwright MCP is the default validation profile; absence of MCP use blocks PASS unless the packet freezes a narrower lawful tool or proves MCP unavailable.
+- For browser/UI final acceptance, proven applicable Playwright MCP is the default validation profile when it is available for the decisive user surface; absence of MCP use blocks PASS only when no frozen narrower tool contract, unavailable evidence, or equivalent higher-truth proof path is recorded.
 - For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, PASS depends on native-capable or format-faithful rendered/runtime evidence.
 - This applies when layout, formulas, pagination, interaction, or visible burden are part of acceptance.
 - Missing decisive-surface tooling routes to `hold|blocker` or `scope-pressure`.
@@ -99,7 +99,8 @@ Keep authoritative versus supplemental sources explicit.
 - Proof/review outputs: validate method, surface match, claim strength, unresolved contradictions, and whether evidence supports the requested verdict.
 - Governance/report outputs: validate preservation, rule force, owner boundaries, cross-reference integrity, claim truth, `SEMANTIC-INTENT-BASIS` alignment, and user-facing clarity.
 - Apply only lenses material to the assigned validation surface.
-- Unassigned ownership returns to `team-lead`.
+- Unassigned ownership returns to `team-lead` only when the next required action is outside validator authority.
+- When the ownership gap is verdict-relevant evidence, carry it into the verdict basis as blocked, not assessable, or open surface instead of abandoning validator-owned inspection.
 ### 3. Inspect Intent And Governing Expectations
 - Check whether the output answers what was asked and whether scope or deliverable shape drifted.
 - Check compliance with `CLAUDE.md`, project rules, and active workflow requirements.
@@ -136,7 +137,7 @@ Verdict labels:
 - `HOLD`: ambiguity, missing prerequisite, unresolved contradiction, blocked decisive evidence, missing required workflow basis, or triggered `review_verification_packet` material defeater confirmed or open.
 - `FAIL`: fundamental mismatch on the decisive acceptance surface, or triggered `review_verification_packet` confirms unresolved cross-surface conflict, owner-boundary breach, protected-function loss, or patch-unworthiness on the validated target.
 - Subset-anchor PASS is procedurally invalid; PASS only on frozen scope or upstream-deferred basis per the reference.
-- **Upstream carrier-as-evidence is verdict-disqualifying**: if the acceptance basis relies on upstream carrier prose asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation, the verdict routes to `HOLD` (incomplete acceptance basis) or `FAIL` (when fabrication itself constitutes acceptance mismatch); do not issue `PASS` on such basis. Demand actual tool-call evidence trails for every claimed upstream verification.
+- **Upstream carrier-as-evidence is verdict-disqualifying**: if the acceptance basis relies on upstream carrier prose asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation, the verdict becomes `HOLD` carrying correction owner/action for incomplete acceptance basis or `FAIL` when fabrication itself constitutes acceptance mismatch; do not issue `PASS` on such basis. Demand actual tool-call evidence trails for every claimed upstream verification.
 ### 7. Retest And Result Verification
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
@@ -164,7 +165,7 @@ Verdict labels:
 - Missing decisive evidence before a truthful verdict pass can run is `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
 - A missing field triggers `MESSAGE-CLASS: hold|blocker` only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - Derivable gaps are reconstructed with marked inference.
-- Partly derivable gaps issue `VERDICT: HOLD` with covered scope and open surfaces unless the narrowed subset was frozen or upstream-deferred.
+- Partly derivable gaps issue `VERDICT: HOLD` carrying covered scope, open surfaces, and correction owner/action unless the narrowed subset was frozen or upstream-deferred.
 - Send it to `team-lead` via `SendMessage`.
 - Include exact missing fields, blocker basis, and safe next step.
 

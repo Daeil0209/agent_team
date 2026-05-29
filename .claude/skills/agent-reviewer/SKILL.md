@@ -43,7 +43,8 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Produced plans and designs are valid review targets.
 - Review them as artifacts.
 - Planning, route freeze, staffing, implementation, proof execution, and final acceptance stay with their owning lanes.
-- If review prerequisites or producer completion are missing, return `hold|blocker`.
+- If review prerequisites or producer completion are missing, inspect any direct artifact or evidence surface that can still answer the assigned review without inventing scope.
+- Return `hold|blocker` only when the missing prerequisite is decisive and direct artifact or evidence inspection cannot make the review truthful.
 - When request-fit materially shapes review or acceptance judgment, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Reconstruct only when the review target, evidence basis, expectation sources, scope baseline, closure/oracle row, and evidence authority are anchored in packet or frozen artifact evidence without changing the review boundary.
 - Mark inferred pieces explicitly.
@@ -68,7 +69,8 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Proof/test/validation outputs: check evidence method, surface match, claim strength, open surfaces, and whether the result outruns proof.
 - Reports/governance: check claim truth, rule force, owner boundaries, preservation, consistency, and user-surface clarity.
 - Apply only lenses material to the assigned surface.
-- Unassigned ownership returns to `team-lead`.
+- Unassigned ownership returns to `team-lead` only when the next required action is outside reviewer authority.
+- When the ownership gap is itself reviewable evidence, carry it as a finding or open surface and continue the reviewer-owned review.
 ### 4. Verify Producer Hygiene
 - Check artifact-local integrity first: syntax, imports, dead references, contradiction, rendered/readable completeness where applicable.
 - Missing upstream hygiene is a blocking finding on the producer.
@@ -82,7 +84,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Required rendered surfaces need rendered review evidence.
 ### 6. Run Evidence Challenge
 - **Apply defeater-first posture per `.claude/skills/review-verification/SKILL.md` `### 5. Critical Review Gate`**: try to disprove the preferred conclusion BEFORE accepting any positive review result. A finding-free review on a change that violates intent is procedural failure, not neutral pass.
-- **Reject carrier-as-evidence**: upstream carriers asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation are intake-stage defects (`scope-pressure` with `PRESSURE-TYPE: upstream-carrier-fabrication`), not finding inputs.
+- **Reject carrier-as-evidence**: upstream carriers asserting verification, `PASS-1`/`PASS-2`/`Skill(...) loaded`/`CONVERGENCE-PASS` without actual tool-call citation are intake-stage defects. Use `scope-pressure` with `PRESSURE-TYPE: upstream-carrier-fabrication` before review work only when the fabricated carrier is the only or decisive review basis and no direct artifact or evidence surface is inspectable inside lane scope; otherwise inspect the direct artifact or evidence and carry the fabrication as a blocking finding or open surface.
 - Verify claims against inspectable evidence.
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.

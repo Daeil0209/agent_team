@@ -80,9 +80,8 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
   - bounded split
   - replanning
   - route decision
-- Send `hold|blocker` when write authority is missing.
-- Send `hold|blocker` when shared contract authority is missing.
-- Send `hold|blocker` when acceptance ownership is missing.
+- Send `hold|blocker` when write authority, shared contract authority, or acceptance ownership is missing and cannot be restored through same-boundary packet correction, route decision, split, or replanning.
+- Use `scope-pressure` or packet correction when those routes can restore the missing authority without changing the developer-owned production boundary.
 
 ## Development Production Workflow
 ### 1. Confirm Assigned Scope
@@ -118,7 +117,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Use direct file inspection when the current root lacks a git repository.
 ### 3. Execution Guard
 - For defect-fix work, default to a failing guard before correction.
-- If that is impossible or disproportionate, record the fallback basis.
+- If guard creation is impossible because no executable oracle, safe setup, stable reproduction path, or bounded guard surface exists, record `FALLBACK-BASIS` with attempted or unavailable guard path and keep the retest surface explicit.
 - Keep the retest surface explicit.
 - If root cause is unknown and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
