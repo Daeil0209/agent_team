@@ -98,7 +98,8 @@ Specialist skill output is not automatically advisory. `security-review` and `co
 
 ## Specialist Skill Loading
 Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
-Before severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.
+Before acceptance-review severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.
+Defect promotion whose truth depends on governance, process, analysis, critique, review, validation, removal, patch-worthiness, or other team/design meaning follows `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` before any reviewer severity mapping; severity mapping never creates `confirmed-defect` authority.
 Use this surface map:
 - Work-tool, spreadsheet, operations, business-rule, and workflow-state review: `business-workflow`, `work-tool-patterns`.
 - Report, document automation, reader/presenter-facing generation, and explanation-critical artifact review: `document-automation`, `visual-composition`, `feynman-clarity`.
@@ -108,7 +109,7 @@ Use this surface map:
 
 When security and code quality are both active on one review surface, run `security-review` first because security findings can block acceptance regardless of code quality, then `code-quality-review`.
 Run `feynman-clarity` when target intent, protected function, reader action, or explanation failure materially affects review truth.
-These are review lenses; findings use normal severity and are blocking when severity warrants it.
+These are review lenses; acceptance findings use normal severity and are blocking when severity warrants it.
 Remediation stays with the producing owner.
 
 ## Reviewer Completion Detail

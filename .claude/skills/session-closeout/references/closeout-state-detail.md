@@ -33,7 +33,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Closeout governance remains unresolved and `holdReason` names the residual blocker.
 ## Agent Cleanup Resolution
 Before closeout completion, each teammate must be resolved as structured shutdown path, terminated, `STANDBY` with an owning validation or correction route, or non-live residue.
-During session teardown, a canonical `STANDBY` teammate with no remaining validation, correction, or reuse route becomes eligible for automatic structured `shutdown_request`. Canonical `STANDBY` semantics (reuse-eligible when ownership fit and context fit remain truthful) are owned by `.claude/skills/session-boot/references/runtime-state-detail.md`; closeout does not redefine `STANDBY`.
+During session teardown, a canonical `STANDBY` teammate with no remaining validation, correction, or reuse route becomes eligible for automatic structured `shutdown_request`. Canonical `STANDBY` semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md`; reuse-fit predicate is owned by `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law`; closeout does not redefine either.
 During active closeout, `TeamDelete` opens only after each live process-backed teammate has termination proof or non-live residue classification; unresolved live-agent truth remains warning, hold, or residue truth before teardown.
 A roster entry with no live agent-process proof is residue, not a live teammate. `TeamDelete` uses live-process proof only.
 Structured shutdown request shape is owned by `.claude/skills/task-execution/references/message-classes.md`.

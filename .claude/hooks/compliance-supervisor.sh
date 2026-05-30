@@ -353,14 +353,15 @@ validate_compound_command() {
 subcommand_targets_governance_surface() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
-  local workspace_root
+  local workspace_root workspace_root_ere
   workspace_root="$(resolve_project_root 2>/dev/null)"
   [[ -n "$workspace_root" ]] || return 1
-  # Match workspace .claude/ only: absolute workspace paths or cwd-relative paths.
-  if printf '%s' "$subcmd" | grep -qF "$workspace_root/.claude/"; then
+  workspace_root_ere="$(printf '%s' "$workspace_root" | sed -E 's/[][(){}.^$*+?|\\/]/\\&/g')"
+  # Match workspace .claude only: absolute workspace paths or cwd-relative paths.
+  if printf '%s' "$subcmd" | grep -qE "(^|[[:space:]])['\"]?${workspace_root_ere}/[.]claude($|/|['\"]|[[:space:]])"; then
     return 0
   fi
-  printf '%s' "$subcmd" | grep -qE '(^|[[:space:]])(\./)?\.claude/[^[:space:]]'
+  printf '%s' "$subcmd" | grep -qE "(^|[[:space:]])['\"]?(\\./)?[.]claude($|/|['\"]|[[:space:]])"
 }
 
 # Narrow rm/rmdir carve-out for non-restricted .claude residue only: one path,
@@ -411,36 +412,230 @@ command_is_narrow_nonrestricted_claude_file_rm() {
 subcommand_redirect_targets_governance() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
-  local workspace_root target
-  workspace_root="$(resolve_project_root 2>/dev/null)"
-  # Dynamic-expansion redirect targets (`$VAR`, `$(...)`, backticks) defeat
-  # static analysis; conservatively treat such cases as governance-targeting.
-  if printf '%s' "$subcmd" | grep -oE '[>][>]?[[:space:]]*[^[:space:]|;&]+' \
-      | grep -qE '(\$|`)'; then
-    return 0
-  fi
-  for target in $(printf '%s' "$subcmd" \
-      | grep -oE '[>][>]?[[:space:]]*[^[:space:]|;&]+' \
-      | sed -E 's/^[>]+[[:space:]]*//'); do
-    [[ -n "$target" ]] || continue
-    if [[ -n "$workspace_root" && "$target" == "$workspace_root/.claude/"* ]]; then
-      return 0
-    fi
-    case "$target" in
-      .claude/*|./.claude/*) return 0 ;;
-    esac
-  done
-  return 1
+
+  COMMAND_TEXT="$subcmd" \
+  WORKSPACE_ROOT="$(resolve_project_root)" \
+  node <<'NODE'
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+
+const targets = [];
+let current = "";
+let quote = "";
+for (let index = 0; index < command.length; index += 1) {
+  const ch = command[index];
+  const next = command[index + 1] || "";
+  if (quote) {
+    if (ch === quote) {
+      quote = "";
+    } else if (ch === "\\" && quote === "\"" && index + 1 < command.length) {
+      current += command[++index];
+    } else {
+      current += ch;
+    }
+    continue;
+  }
+  if (ch === "\"" || ch === "'") {
+    quote = ch;
+    continue;
+  }
+  if (ch !== ">") continue;
+  if (next === "&") {
+    index += 1;
+    continue;
+  }
+  if (next === ">") index += 1;
+  index += 1;
+  while (index < command.length && /\s/.test(command[index])) index += 1;
+  current = "";
+  quote = "";
+  for (; index < command.length; index += 1) {
+    const targetChar = command[index];
+    if (quote) {
+      if (targetChar === quote) {
+        quote = "";
+      } else if (targetChar === "\\" && quote === "\"" && index + 1 < command.length) {
+        current += command[++index];
+      } else {
+        current += targetChar;
+      }
+      continue;
+    }
+    if (targetChar === "\"" || targetChar === "'") {
+      quote = targetChar;
+      continue;
+    }
+    if (/\s/.test(targetChar) || targetChar === ";" || targetChar === "|" || targetChar === "&") break;
+    current += targetChar;
+  }
+  if (current) targets.push(current);
+}
+
+const underWorkspaceClaude = (target) => {
+  if (!target) return false;
+  if (/[$`]/.test(target)) return true;
+  const normalized = target.replace(/\\/g, "/");
+  if (normalized === ".claude" || normalized.startsWith(".claude/") || normalized.startsWith("./.claude/")) return true;
+  const resolved = path.resolve(workspaceRoot, normalized);
+  const rel = path.relative(path.join(workspaceRoot, ".claude"), resolved).replace(/\\/g, "/");
+  return rel === "" || (!rel.startsWith("..") && !path.isAbsolute(rel));
+};
+
+process.exit(targets.some(underWorkspaceClaude) ? 0 : 1);
+NODE
+}
+
+subcommand_copy_install_targets_governance() {
+  local subcmd="${1-}"
+  [[ -n "$subcmd" ]] || return 1
+
+  COMMAND_TEXT="$subcmd" \
+  WORKSPACE_ROOT="$(resolve_project_root)" \
+  HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+  node <<'NODE'
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+
+const clean = (word) => String(word || "").replace(/^['"]|['"]$/g, "");
+const commandName = (word) => path.basename(clean(word)).toLowerCase();
+const underWorkspaceClaude = (word) => {
+  const target = clean(word);
+  if (!target || target === "--") return false;
+  if (/[$`]/.test(target)) return true;
+  const normalized = target.replace(/\\/g, "/");
+  if (normalized === ".claude" || normalized.startsWith(".claude/") || normalized.startsWith("./.claude/")) return true;
+  const resolved = path.resolve(workspaceRoot, normalized);
+  const rel = path.relative(path.join(workspaceRoot, ".claude"), resolved).replace(/\\/g, "/");
+  return rel === "" || (!rel.startsWith("..") && !path.isAbsolute(rel));
+};
+
+const words = tokenize(command);
+if (!words || words.length < 2) process.exit(1);
+let commandIndex = 0;
+while (commandIndex < words.length) {
+  const name = commandName(words[commandIndex]);
+  if (name === "env") {
+    commandIndex += 1;
+    while (commandIndex < words.length && /^[A-Za-z_][A-Za-z0-9_]*=/.test(words[commandIndex])) commandIndex += 1;
+    continue;
+  }
+  if (name === "sudo" || name === "command") {
+    commandIndex += 1;
+    while (commandIndex < words.length && words[commandIndex].startsWith("-")) commandIndex += 1;
+    continue;
+  }
+  break;
+}
+if (commandIndex >= words.length) process.exit(1);
+const verb = commandName(words[commandIndex]);
+if (verb !== "cp" && verb !== "install") process.exit(1);
+
+let targetDirectory = "";
+let installDirectoryMode = false;
+const positional = [];
+const installValueOptions = new Set(["-m", "-o", "-g", "-S", "--mode", "--owner", "--group", "--suffix"]);
+
+for (let index = commandIndex + 1; index < words.length; index += 1) {
+  const word = words[index];
+  if (word === "--") continue;
+  if (word === "-t" || word === "--target-directory") {
+    if (index + 1 >= words.length) process.exit(0);
+    targetDirectory = words[++index];
+    continue;
+  }
+  if (word.startsWith("--target-directory=")) {
+    targetDirectory = word.slice("--target-directory=".length);
+    continue;
+  }
+  if (verb === "install" && (word === "-d" || word === "--directory")) {
+    installDirectoryMode = true;
+    continue;
+  }
+  if (verb === "install" && installValueOptions.has(word)) {
+    if (index + 1 >= words.length) process.exit(0);
+    index += 1;
+    continue;
+  }
+  if (word.startsWith("-")) continue;
+  positional.push(word);
+}
+
+let targets = [];
+if (targetDirectory) {
+  targets = [targetDirectory];
+} else if (installDirectoryMode) {
+  targets = positional;
+} else if (positional.length >= 2) {
+  targets = [positional[positional.length - 1]];
+} else {
+  process.exit(0);
+}
+
+process.exit(targets.some(underWorkspaceClaude) ? 0 : 1);
+NODE
 }
 
 subcommand_is_mutating_shell() {
   local subcmd="${1-}"
   [[ -n "$subcmd" ]] || return 1
-  # Mutating exec keywords classify as mutation regardless of textual target;
-  # their bounded carve-outs and target-deny gates apply downstream.
-  if printf '%s' "$subcmd" | grep -Eiq "${HOOK_MUTATING_SHELL_COMMAND_PATTERN}"; then
-    return 0
-  fi
+  local primary_command
+  primary_command="$(
+    COMMAND_TEXT="$subcmd" \
+    HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+    node <<'NODE'
+const path = require("path");
+const command = String(process.env.COMMAND_TEXT || "");
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+const words = tokenize(command);
+if (!words || words.length === 0) process.exit(1);
+const commandName = (word) => path.basename(String(word || "")).toLowerCase();
+let index = 0;
+while (index < words.length) {
+  const word = words[index];
+  const name = commandName(word);
+  if (name === "env") {
+    index += 1;
+    while (index < words.length && /^[A-Za-z_][A-Za-z0-9_]*=/.test(words[index])) index += 1;
+    continue;
+  }
+  if (name === "sudo" || name === "command") {
+    index += 1;
+    while (index < words.length && words[index].startsWith("-")) index += 1;
+    continue;
+  }
+  process.stdout.write(name);
+  process.exit(0);
+}
+process.exit(1);
+NODE
+  )" || primary_command=""
+
+  case "$primary_command" in
+    cp|install)
+      subcommand_copy_install_targets_governance "$subcmd"
+      return $?
+      ;;
+    rm|mv|touch|mkdir|rmdir|chmod|chown|tee)
+      return 0
+      ;;
+    sed|perl)
+      if COMMAND_TEXT="$subcmd" \
+        HOOK_COMMAND_TOKENIZER="$HOOK_LIB_DIR/hook-command-tokenizer.js" \
+        node <<'NODE'
+const command = String(process.env.COMMAND_TEXT || "");
+const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
+const words = tokenize(command);
+if (!words) process.exit(1);
+process.exit(words.some((word) => word === "-i" || /^-i/.test(word)) ? 0 : 1);
+NODE
+      then
+        return 0
+      fi
+      ;;
+  esac
   # Redirect operators (`: >`, ` > `, ` >> `) classify as mutation only when
   # the redirect target resolves under .claude/. Read-only enumeration of
   # .claude/ whose output is redirected outside .claude/ (canonical work
@@ -1018,56 +1213,6 @@ command_is_governance_file_rm_compound_with_readonly_followup() {
   [[ "$saw_delete" == "true" ]]
 }
 
-command_has_internal_progress_banner() {
-  local cmd="${1-}"
-  [[ -n "$cmd" ]] || return 1
-
-  COMMAND_TEXT="$cmd" node <<'NODE'
-const command = String(process.env.COMMAND_TEXT || "");
-const parts = [];
-let cur = "", inS = false, inD = false, bt = false, pd = 0;
-for (let i = 0; i < command.length; i += 1) {
-  const c = command[i], n = command[i + 1];
-  const quoted = inS || inD || bt || pd > 0;
-  if (!quoted && (c === ";" || c === "\n" || (c === "&" && n === "&") || (c === "|" && n === "|"))) {
-    parts.push(cur.trim());
-    cur = "";
-    if ((c === "&" && n === "&") || (c === "|" && n === "|")) i += 1;
-    continue;
-  }
-  if (!inD && !bt && pd === 0 && c === "'") inS = !inS;
-  else if (!inS && !bt && pd === 0 && c === '"') inD = !inD;
-  else if (!inS && !inD && pd === 0 && c === "`") bt = !bt;
-  else if (!inS && !inD && !bt && c === "$" && n === "(") { pd += 1; cur += c + n; i += 1; continue; }
-  else if (!inS && !inD && !bt && pd > 0 && c === ")") pd -= 1;
-  cur += c;
-}
-parts.push(cur.trim());
-
-const echoLiteral = /^(?:command\s+)?(?:printf|echo)\b/i;
-const bannerOrProgress = /(={3,}|-{3,}|\b(file counts?|tasks?|phase|wave|progress|corpus|survey|measur(?:e|ed|ing|ement)?|planning|dispatch|runtime|ready|boot|startup|started|start|loaded|checking|now|next|inventory|written|wrote|saved|captured|prior|stale|verify|verified|complete|completed|completion|finished|done|success|passed|current corpus|git history)\b|작업|진행|측정|조사|계획|디스패치|런타임|준비|로드|시작|착수|완료|성공|통과|끝|인벤토리|작성|캡처|이전|스테일|검증)/i;
-function hasUnquotedRedirect(part) {
-  let s = false, d = false, b = false, p = 0;
-  for (let i = 0; i < part.length; i += 1) {
-    const c = part[i], n = part[i + 1];
-    if (!d && !b && p === 0 && c === "'") s = !s;
-    else if (!s && !b && p === 0 && c === '"') d = !d;
-    else if (!s && !d && p === 0 && c === "`") b = !b;
-    else if (!s && !d && !b && c === "$" && n === "(") { p += 1; i += 1; }
-    else if (!s && !d && !b && p > 0 && c === ")") p -= 1;
-    else if (!s && !d && !b && p === 0 && c === ">") return true;
-  }
-  return false;
-}
-for (const part of parts) {
-  if (!echoLiteral.test(part)) continue;
-  if (hasUnquotedRedirect(part)) continue;
-  if (bannerOrProgress.test(part)) process.exit(0);
-}
-process.exit(1);
-NODE
-}
-
 # Allowlist wrappers used as check_fn arguments to validate_compound_command.
 # Shared patterns are defined once before these wrappers.
 # S02_IMPLEMENTATION_PATTERN stays case-local; sender context is required.
@@ -1218,28 +1363,11 @@ try {
 
   const toolInput = input.tool_input || {};
   const hasSummary = typeof toolInput.summary === "string" && toolInput.summary.trim() !== "";
-  const summary = hasSummary ? toolInput.summary.trim() : "";
   const message = toolInput.message;
   const messageIsString = typeof message === "string";
-  const messageText = messageIsString ? message.trim() : "";
-  const isState = (value) => /^(dispatch-ack|subjob-done)$/i.test(String(value || "").trim());
 
   if (messageIsString && !hasSummary) {
-    if (isState(messageText)) {
-      process.stdout.write(`state-token-string-without-summary:${messageText.toLowerCase()}`);
-    } else {
-      process.stdout.write("string-message-without-summary");
-    }
-    process.exit(0);
-  }
-
-  if (isState(summary) && messageIsString && messageText !== "") {
-    process.stdout.write(`state-token-body-not-empty:${summary.toLowerCase()}`);
-    process.exit(0);
-  }
-
-  if (isState(messageText)) {
-    process.stdout.write(`state-token-in-message-body:${messageText.toLowerCase()}`);
+    process.stdout.write("string-message-without-summary");
     process.exit(0);
   }
 
@@ -1325,8 +1453,8 @@ fi
 if [[ "$TOOL_NAME" == "SendMessage" ]]; then
   SENDMESSAGE_DENY_REASON="$(sendmessage_schema_deny_reason 2>/dev/null || true)"
   if [[ -n "$SENDMESSAGE_DENY_REASON" ]]; then
-    emit_deny "SendMessage state signals require summary-only transport. Use summary: dispatch-ack/subjob-done and message: single ASCII space; do not put the state token in message."
-    log_violation "$TOOL_NAME" "$SENDMESSAGE_DENY_REASON" "sendmessage-summary-schema" || true
+    emit_deny "Claude Code SendMessage rejects string message without summary. Add a summary field, or use a structured message object; state signals use summary: dispatch-ack/subjob-done with message: single ASCII space."
+    log_violation "$TOOL_NAME" "$SENDMESSAGE_DENY_REASON" "sendmessage-string-message-without-summary" || true
     exit 0
   fi
 fi
@@ -1408,11 +1536,6 @@ fi
     # Ignore quoted separators for compound-command checks; real unquoted
     # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"
-    if command_has_internal_progress_banner "$CLEAN_COMMAND"; then
-      emit_deny "Assistant-authored Bash progress/banner output is blocked. Remove echo/printf headings and use user-requested output, minimal machine-readable facts, quiet checks, exit status, or retained artifacts."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "bash-internal-progress-banner-deny" || true
-      exit 0
-    fi
     if command_removes_team_runtime_dir "$CLEAN_COMMAND"; then
       emit_deny "Team runtime directory cleanup must use TeamDelete, not shell rm. Verify live-agent state first; if only stale residue remains, use TeamDelete or report the exact residual state."
       log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "team-runtime-shell-delete" || true
@@ -1614,6 +1737,16 @@ NODE
     fi
 
     UNQUOTED_SANITIZED="$(strip_quoted_regions "$SANITIZED_COMMAND")"
+    GOVERNANCE_MUTATION_COMMAND="$(strip_heredoc_regions "$SANITIZED_COMMAND")"
+    if command_mutates_governance_surface "$GOVERNANCE_MUTATION_COMMAND"; then
+      # Content-preserving relocation/structure carve-out: see definition near subcommand_is_mutating_shell.
+      if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
+        exit 0
+      fi
+      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
+      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
+      exit 0
+    fi
     if printf '%s' "$UNQUOTED_SANITIZED" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
       # Lead-only approved system dependency install; agents must hold for setup.
       if [[ -n "$SESSION_ID" ]] && ! runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
@@ -1625,7 +1758,7 @@ NODE
       if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
         exit 0
       fi
-      if command_mutates_governance_surface "$(strip_heredoc_regions "$SANITIZED_COMMAND")"; then
+      if command_mutates_governance_surface "$GOVERNANCE_MUTATION_COMMAND"; then
         emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
         log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
         exit 0
@@ -1645,13 +1778,6 @@ NODE
       exit 0
     fi
 
-	    if printf '%s' "$SANITIZED_COMMAND" | grep -Eq '[.]claude/(reference/|skills/[^[:space:];|&]+/references/)'; then
-      if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])(cp|mv|rm|install|tee)([[:space:]]|$)|sed[[:space:]]+-i|perl[[:space:]]+-i'; then
-	        emit_deny "Governance reference materials must not be modified in place."
-        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "references-shell-mutation" || true
-        exit 0
-      fi
-    fi
     ;;
 esac
 

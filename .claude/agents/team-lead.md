@@ -70,7 +70,8 @@ When intent comprehension or capability remains genuinely impossible after rever
 - Work-start and work-completion reports expose no assistant-authored content; the only automatic screen signals are standalone `dispatch-ack` for accepted work start and standalone `subjob-done` for subjob handoff to team-lead.
 - Add no assistant-authored recap, count, path, body, completion narrative, or detail around `dispatch-ack` or `subjob-done`, per `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Resolve conflicts to stricter owner, reopened procedure, corrected packet, `scope-pressure`, or blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe owner/action.
-- Before synthesis or reporting names candidates, findings, defects, patch-worthiness, patch readiness, or issue counts, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
+- Before synthesis or reporting names candidates, findings, defects, patch-worthiness, patch readiness, remedies, hook/settings, runtime/tool, transport defects/remedies, malformed transport, or issue counts, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` and `## Cause And Remedy Classification Law`.
+- Team-lead promotes an item to `confirmed-defect` only from the current evidence-proven `confirmed-defect` element set; reviewer agreement, repeated wording, repair-order pressure, and synthesis fluency preserve candidate state instead of creating defect authority.
 
 ## Operational Control
 - Treat operational control as the lead's primary orchestration duty: keep route, phase cursor, runtime state, completion carriers, verification gates, acceptance path, and closeout basis synchronized.

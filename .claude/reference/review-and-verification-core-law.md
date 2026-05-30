@@ -39,13 +39,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Candidate Filtering And Promotion Law
 - Candidate discovery maximizes recall for evidence collection.
-- Candidate discovery records recall-only evidence; defect truth, severity truth, priority truth, patch-worthiness, and patch readiness require promotion filtering.
-- Governance audit binding filtering, final rejection, cross-surface rejection, ranking, prioritization, removal judgment, correction-priority judgment, patch-readiness judgment, and patch/no-patch selection are promotion-filtering work, not candidate discovery.
+- Candidate discovery records recall-only evidence; defect truth, patch-worthiness, and patch readiness require promotion filtering.
+- Repair order and execution order are downstream scheduling metadata only; they are not defect-truth inputs and cannot promote a candidate.
+- Governance audit binding filtering, final rejection, cross-surface rejection, removal judgment, patch-readiness judgment, and patch/no-patch selection are promotion-filtering work, not candidate discovery.
 - Lane-local first-pass classification or `rejected:<basis>` inside the assigned surface remains candidate evidence until current `Skill(review-verification)` defect-promotion basis consumes it or team-lead synthesis consumes that current basis.
 - Team-lead synthesis lawfully promotes only from current `Skill(review-verification)` defect-promotion basis for the same corpus; otherwise it preserves candidate state.
-- Lawful team-lead synthesis for final rejection, cross-surface rejection, promotion, ranking, prioritization, patch-readiness, or patch/no-patch selection means team-lead consumes a current `Skill(review-verification)` defect-promotion basis; team-lead synthesis does not create an independent promotion path.
+- Lawful team-lead synthesis for final rejection, cross-surface rejection, promotion, patch-readiness, or patch/no-patch selection means team-lead consumes a current `Skill(review-verification)` defect-promotion basis; team-lead synthesis does not create an independent promotion path.
 - Promoted, rejected, open-candidate, patch-worthy, patch-ready, and no-patch bases remain upstream decision bases for downstream correction, mutation, validation, and reporting until a current `Skill(review-verification)` basis or lawful team-lead synthesis of that basis supersedes them.
-- For exhaustive, full-corpus, whole-folder, or governance-audit scope, promotion, rejection, ranking, prioritization, patch/no-patch, and count claims use the opened closure unit from the frozen basis.
+- For exhaustive, full-corpus, whole-folder, or governance-audit scope, promotion, rejection, patch/no-patch, and count claims use the opened closure unit from the frozen basis.
 - When the frozen claim or deliverable opens promotion filtering, each opened candidate remains open until it is promoted, rejected by current `Skill(review-verification)` basis, covered by cited lawful owner-deferral authority, excluded by explicit user-narrowed out-of-scope basis, or blocker-routed after internal correction routes are exhausted.
 - Open-candidate reporting remains valid only as open-surface reporting with state, evidence basis, and next owner/action; category/theme convergence or an open-unpromoted label is not closure.
 - Corpus inspection coverage records inspection-stage evidence only; defect-identification, defect-promotion, patch-worthiness, patch-readiness, mutation, and post-verify each require their own current closure basis when the frozen request includes them.
@@ -53,13 +54,15 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A governance audit-plus-patch deliverable also stays open while any confirmed defect lacks patch-worthiness judgment, any patch-worthy defect lacks patch-ready basis, or any patch-ready row remains unapplied, unverified, deferred by cited lawful owner-deferral authority, rejected by current review basis, or blocker-routing after internal correction routes are exhausted.
 - Each open governance-audit or audit-plus-patch stage opens the next filtering, judgment, mutation, verification, or correction owner in the same request chain.
 - Sample-only, tier-only, or wave-only filtering supports the inspected narrowed claim only; full-corpus completion, no-open-surface, final patch inventory, and validator-ready claims require frozen-corpus coverage.
-- Review-verification uses the finding-state ladder: `candidate-evidence`, `candidate-classified`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
+- Review-verification uses the finding-state ladder: `candidate-evidence`, `candidate-classified`, `open-candidate`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
 - `candidate-evidence` records an observed rule, wording, behavior, output, or runtime signal without defect authority.
-- `candidate-classified` maps candidate evidence to a proposed defect class, severity, owner, and inspected source surface without defect authority.
-- `confirmed-defect` requires live evidence of design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction.
+- `candidate-classified` maps candidate evidence to a proposed defect class, owner, and inspected source surface without defect authority.
+- `open-candidate` records an inspected candidate whose defect judgment still lacks one or more required `confirmed-defect` elements or whose rejection basis is not yet proven.
+- `confirmed-defect` requires all item-level elements: expected behavior from the governing design or owner basis, observed deviation from that expectation, causal link from the candidate source to the deviation, correction-restores-behavior basis, correction owner, and no stronger protected-function loss from correction.
+- Missing any `confirmed-defect` element keeps the item at `candidate-evidence`, `candidate-classified`, `open-candidate`, or `rejected:<basis>`; reviewer agreement, repeated wording, label similarity, plausible future risk, explanation fluency, ordering pressure, or repair-order need cannot substitute for any element.
 - `patch-worthy` requires a `confirmed-defect` plus protected-function preservation, user-outcome impact, regression-risk basis, smallest owner, selected operation type, and rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.
 - `patch-ready` requires `patch-worthy` plus current patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
-- `rejected:<basis>` covers `protected-restatement`, `design-tradeoff`, `non-issue`, `risk-hypothesis`, `unverified`, and `not-material:<basis>`.
+- `rejected:<basis>` covers `protected-restatement`, `design-tradeoff`, `non-issue`, `non-executable-difference`, `wrong-cause`, `promoter-error`, `risk-hypothesis`, `unverified`, and `not-material:<basis>`.
 - Finding-state promotion, final rejection, patch/no-patch selection, patch-worthiness, and patch-readiness are high-risk judgments when they affect downstream correction, mutation, validation, reporting, or closure; those judgments require current `JUDGMENT-RELIABILITY`.
 - A reportable governance issue is a filtered result whose state is `confirmed-defect`, `patch-worthy`, or `patch-ready`, or an open candidate explicitly labelled with its unclosed state and next owner.
 - Raw candidate counts, repeated labels, similar wording, multi-lane convergence, and researcher outputs remain inventory evidence unless this ladder promotes them.
@@ -67,6 +70,23 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Any review packet, lane carrier, synthesis, or user-facing defect report that carries candidates, findings, defects, removal, patch-worthiness, patch-readiness, rejection, no-patch, or finding counts records the exact per-item ladder state and keeps raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-ready, rejected, no-patch, and open-candidate counts separate when counts are material.
 - `CLAIM-CEILING` limits finding-state, verdict, or claim-strength authority.
 - `CLAIM-CEILING` does not reduce evidence inspection, source-truth verification, basis-fit verification, or material-defeater testing required for the outgoing claim.
+
+## Cause And Remedy Classification Law
+- Review-verification records `CAUSE-REMEDY-CLASSIFICATION` before defect promotion, final rejection, patch-worthiness, patch-readiness, patch/no-patch selection, or no-defect judgment when the claim can affect owner action, procedure, reporting, transport defect/remedy, runtime/tool behavior, hook/settings behavior, or governance mutation.
+- Ordinary governed `dispatch-ack` and `subjob-done` emission, receipt, state transition, and retained-carrier handoff are protocol promises, not cause/remedy cases; classify only a defect, malformed transport, no-patch, hook/runtime/schema, or reporting-remedy judgment about those signals.
+- `CAUSE-REMEDY-CLASSIFICATION` contains these exact fields: `observed-symptom`, `failure-source`, `negative-effect`, `remedy-owner`, `remedy-class`, `hook-eligibility`, `stronger-narrower-alternative`, and `counterexample-oracle`.
+- Each entry is scoped to one candidate, finding, rejection, no-patch basis, patch-worthiness basis, patch-ready basis, remedy-owner route, or behavior-affecting claim; category-level or theme-level classification does not satisfy item-level classification.
+- `failure-source` is exactly one of: `governance-rule-defect`, `tool-schema-failure`, `reserved-runtime-danger`, `screen-pollution`, `procedure-bottleneck`, `evidence-gap`, `non-issue`, or `mixed:<split-required>`.
+- `remedy-class` is exactly one of: `governance-rule-correction`, `owner-procedure-correction`, `reporting-transport-correction`, `tool-schema-correction`, `hook-settings-guard`, `evidence-proof-correction`, `no-patch`, or `blocker-routing`.
+- `hook-eligibility` is exactly `eligible:<tool-schema-failure|reserved-runtime-danger>:<evidence>` or `not-eligible:<basis>`.
+- A mixed failure source must split into independently judged entries before promotion, rejection, patch-worthiness, patch-readiness, or no-patch selection.
+- `tool-schema-failure` requires live tool behavior or official schema evidence showing the tool rejects the exact invocation shape.
+- `reserved-runtime-danger` requires destructive, security-critical, session-stability-breaking, protected-filesystem-bypass, or other runtime-boundary law named hard-deny basis.
+- `screen-pollution`, reporting-law violation, communication-plane malformed display, procedure bottleneck, governance wording defect, or evidence gap is not hook-eligible on that basis alone.
+- Hook eligibility is valid only when the failure source is `reserved-runtime-danger` or proven `tool-schema-failure`, the proposed guard blocks only the rejected or reserved-danger shape, and the stronger narrower alternative test fails.
+- The stronger narrower alternative field names the tested narrower remedy, the evidence that would make it sufficient, and the observed result; `untested`, broad preference, or convenience-only rejection is invalid.
+- Counterexample oracle records `allowed-behavior`, `disallowed-behavior`, and `expected-remedy-result`; for `no-patch`, it records the protected baseline behavior and the rejected intervention.
+- Missing, stale, unsplit, invalid-enum, theme-level-only, contradicted, or open `CAUSE-REMEDY-CLASSIFICATION` blocks positive no-defect, confirmed-defect, patch-worthiness, patch-readiness, final rejection, no-patch, and mutation-readiness claims.
 
 ## Owner Boundary And Skill Consumption Law
 - Review-verification tests owner-boundary and skill-consumption fit when a claim, packet, patch, route, verdict input, or completion depends on who owns the action or which skill/reference must shape the result.
@@ -125,7 +145,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Resolve Next Owner And Action
 - Missing or stale 1-3 basis opens the smallest correction owner named in `## Upstream Basis Review Law`.
-- Candidate, defect, patch-worthiness, patch-readiness, removal, rejection, ranking, or count claims open current `Skill(review-verification)` promotion filtering before mutation, validation, or report.
+- Candidate, defect, patch-worthiness, patch-readiness, removal, rejection, repair-order, or count claims open current `Skill(review-verification)` promotion filtering before mutation, validation, or report.
 - Governance coherence, owner-boundary, skill-consumption, minimum-information, negative-risk, or patch-fit gaps open the bounded `Skill(review-verification)` lens or full workflow required by the active owner path.
 - Verified governance change need opens `Skill(governance-modification)` after review-verification basis is current.
 - Verification truth gaps open `Skill(self-verification)`, the proof owner, the validation owner, setup/tool recovery, owner recovery, or blocker-routing only after every executable evidence-recovery route for the missing surface is exhausted.

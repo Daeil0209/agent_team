@@ -71,6 +71,8 @@
 - Verification depth is substantive failure-mode probing of produced-result truth, not procedural completion of verification steps; disprove the preferred conclusion before positive verification claim, and treat procedural completion without explicit disproof-attempt evidence as verification-shaped prose.
 - Verification stays on the user's decisive surface and requires the named verification owner before completion claims.
 - Review And Verification separates candidate discovery, promotion filtering, confirmed-defect judgment, patch-worthiness, patch-readiness, final rejection, patch/no-patch selection, and reportable issue selection.
+- Review And Verification separates observed symptom, failure source, negative effect, remedy owner, remedy class, hook eligibility, stronger narrower alternative, and counterexample oracle before defect promotion, final rejection, patch-worthiness, patch-readiness, or no-patch selection.
+- Normal `dispatch-ack` and `subjob-done` protocol execution stays under Work Execution and Communication Plane semantics; Review And Verification cause/remedy classification applies only when judging a defect, malformed transport, remedy, no-patch, hook/runtime/schema, or reporting claim about those signals.
 - Governance defect reports and review packets preserve raw candidates, candidate-classified items, confirmed defects, patch-worthy defects, patch-ready defects, rejected findings, no-patch bases, and open candidates as distinct states.
 - Governance execution-meaning changes test top doctrine, mapped core law, and trigger-bound owner-reference continuity.
 - Under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking governance is an execution-force defect when it weakens truthful next-action selection or required procedure execution.
@@ -82,6 +84,7 @@
 ## 5. Modification Philosophy
 - Modification Philosophy modifies governance assets through removal-first maintenance, information preservation, source-to-destination traceability, and narrow owner hardening without unnecessary document growth or procedural complexity.
 - Governance modification records current 1-4 basis before patch design and mutation.
+- Governance modification consumes current Review And Verification cause/remedy classification before selecting patch owner, changed function set, hook/runtime enforcement, or no-patch disposition for a behavior-affecting defect/remedy path.
 - Operator-emphasized keywords are cross-session binding: `removal-first`, `consumed-surface`, `no-compression`, `upper-lower execution-drive`, `executable-imperative`, `minimum-executable-information`, `functional-independence`, and `comprehension-as-execution-force`.
 - Governance patch design cites and satisfies each material keyword through `.claude/reference/modification-core-law.md`.
 - Distributed common execution meaning consolidates to its single owner surface: shared intent to top doctrine, executable detail to mapped core law, and situation-specific detail only to triggered owner surfaces.

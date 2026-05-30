@@ -39,4 +39,4 @@ Record:
 ## Evidence Basis
 - Include only the basis admitted by `.claude/reference/reporting-prohibition-law.md`.
 - Final-result proof basis names retained evidence anchor, decisive surface, inspected scope/action, and material cited lawful owner-deferral authority, explicit out-of-scope, or defect state only when material to the admitted report.
-- Raw artifacts are shown only when explicitly requested or when the artifact is the deliverable.
+- Raw-artifact display shape is owned by `.claude/skills/agent-team-lead/references/reporting-user-reporting-rules.md` `## Evidence Basis`.

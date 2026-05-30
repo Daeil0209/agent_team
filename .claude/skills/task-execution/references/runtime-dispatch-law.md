@@ -100,7 +100,7 @@ Target-resolution preflight is mandatory before the tool call:
 - Replacement, redistribution, or shutdown follows after the required follow-up, frozen re-check wait, and absent response/activity evidence classify that target as dead-or-unavailable for the current assignment.
 - A target with `dispatch-ack` but no later activity evidence enters `dispatch-recovery` as no-start after acceptance.
 - Before new `Agent` member creation, `task-execution` evaluates live or standby same-lane reuse when such a member exists.
-- Reuse-fit holds when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, and active cap.
+- Reuse-fit holds only under `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law`.
 - When reuse-fit holds, `task-execution` sends assignment-grade reuse-via-`SendMessage` before cleanup.
 - Successful same-segment dispatch or reuse proceeds to receipt monitoring, completion handling, or the next executable owner action without assistant-authored visible narration; preserve required evidence, but do not narrate readiness, cap, active-lane, wave, round, waiting, or holding state.
 - New `Agent` member creation opens only when no live or standby fit exists, the target is dead-or-unavailable for the assignment, the lane is absent, or reuse-fit fails by named basis.

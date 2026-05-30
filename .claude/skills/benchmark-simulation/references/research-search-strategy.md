@@ -13,7 +13,7 @@ Use this section when `benchmark-simulation` is consumed by researcher for exter
 - `lookup`: direct fact or source retrieval; stop when an authoritative source answers the question and contradiction risk is low.
 - `learn`: concept, method, or domain mapping; use exploratory search, term harvesting, and triangulation.
 - `investigate`: contradiction, unclear decision target, or multi-source evidence path; use a query ledger, source-family targets, and explicit stopping rule.
-- `benchmark-shaped`: comparative or capability-hardening research; combine search strategy with benchmark fields, fair baseline awareness, and evidence coverage checks.
+- `benchmark-perspective`: comparative or capability-hardening research; combine search strategy with benchmark fields, fair baseline awareness, and evidence coverage checks.
 
 ## Search Loop
 1. Frame concept blocks, source families, and first queries from the decision target.

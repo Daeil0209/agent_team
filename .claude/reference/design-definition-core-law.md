@@ -20,7 +20,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Detailed Design consumes the frozen request, deliverable, scope, user burden, and completion shape as upstream basis.
 - Implemented subsets stay compared against the requested deliverable.
 - Half-delivered artifacts are defects.
-- `[FUNCTIONAL-CLOSURE]` Executable user-facing software actions close through applicable `CORE-WORKFLOW-CLOSURE` rows.
+- `[FUNCTIONAL-CLOSURE]` Executable user-facing software actions close only through applicable `CORE-WORKFLOW-CLOSURE` rows.
 - Uncovered applicable `CORE-WORKFLOW-CLOSURE` rows are defects.
 - Uncovered applicable `CORE-WORKFLOW-CLOSURE` rows block validator `PASS` and local `final verified result` closure.
 - `[USER-CONVENIENCE]` Use the evidence-backed path that reduces user burden.

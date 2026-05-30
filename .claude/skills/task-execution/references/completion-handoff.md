@@ -75,11 +75,13 @@ Use `INFERENCE` only when reconstructed safely from request, plan, design, Struc
 Use concrete task, artifact, expectation, evidence, and next-owner wording.
 Common finding basis:
 - Evidence-only observations stay as anchors or `OPEN-SURFACES`.
-- Finding outputs use the state ladder from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`: `candidate-evidence`, `candidate-classified`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
-- Raw finding counts, repeated or similar labels, same words on different classification axes, multi-lane convergence, and candidate lists are evidence only; they are not conflict, severity, priority, patch-worthiness, or confirmed-defect proof.
+- Finding outputs use the state ladder from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`: `candidate-evidence`, `candidate-classified`, `open-candidate`, `confirmed-defect`, `patch-worthy`, `patch-ready`, or `rejected:<basis>`.
+- Raw finding counts, repeated or similar labels, same words on different classification axes, multi-lane convergence, and candidate lists are evidence only; they are not conflict, patch-worthiness, patch-readiness, repair-order, or confirmed-defect proof.
 - Raw candidate counts stay separate from confirmed-defect counts, patch-worthy counts, patch-ready counts, rejected counts, and open-candidate counts.
 - Researcher outputs supply evidence and candidate classifications only unless a downstream review owner reclassifies them through this basis.
 - Bare `CONFIRMED` is not a valid finding state; use the exact ladder state supported by evidence.
+- `confirmed-defect` requires expected behavior from the governing design or owner basis, observed deviation from that expectation, causal link from the candidate source to the deviation, correction-restores-behavior basis, correction owner, and no stronger protected-function loss from correction.
+- Missing any `confirmed-defect` element keeps the finding at `candidate-evidence`, `candidate-classified`, `open-candidate`, or `rejected:<basis>`.
 - A patchable finding states `TARGET-INTENT-BASIS`, evidence class when material, protected function, user-outcome impact, `patch-worthiness`, regression risk, and the tested basis for rejecting `protected-restatement`, `design-tradeoff`, and `non-issue` classifications.
 - A governance, process, analysis, critique, review, or validation finding whose truth depends on user/team/design meaning also states `SEMANTIC-INTENT-BASIS`; without it the finding stays evidence-only or `OPEN-SURFACES`.
 - Quality, evidence, independent review, proof, validation, Codex independent review, and Final Acceptance Review (FAR) gates are protected functions; deletion, non-enforcement, hook silence, runtime omission, cost, latency, repetition, or ceremony is evidence only until the common finding basis proves `confirmed-defect`.
@@ -89,8 +91,9 @@ Common finding basis:
 - `PATCH-DISPOSITION: observe|no-patch` stays retained context and does not dispatch mutation.
 - Common finding-class taxonomy is shared by reviewer, review-verification, and validator-input findings:
   - `candidate-evidence`: observed evidence without defect authority.
-  - `candidate-classified`: candidate evidence mapped to proposed class, severity, owner, and inspected source surface without defect authority.
-  - `confirmed-defect`: live evidence proves design-intent conflict, negative operating effect, causal path, correction owner, and no stronger protected-function loss from correction.
+  - `candidate-classified`: candidate evidence mapped to proposed class, owner, and inspected source surface without defect authority.
+  - `open-candidate`: inspected candidate still missing a required `confirmed-defect` element or current rejection basis.
+  - `confirmed-defect`: all required defect elements are proven by current evidence.
   - `patch-worthy`: `confirmed-defect` plus protected-function preservation, user-outcome impact, regression-risk basis, smallest owner, selected operation type, and rejected non-defect alternatives.
   - `patch-ready`: `patch-worthy` plus patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, and verification basis.
   - `risk-hypothesis`: plausible risk lacks enough proof for patch dispatch.
@@ -99,7 +102,7 @@ Common finding basis:
   - `protected-restatement`: repeated meaning with a named owner and direct-consumption or isolation-safety basis.
   - `non-issue`: evidence disproves the concern.
   - `unverified`: evidence basis incomplete.
-  - `rejected:<basis>`: umbrella state for `protected-restatement`, `design-tradeoff`, `non-issue`, `risk-hypothesis`, `unverified`, or `not-material:<basis>` when filtering rejects promotion.
+  - `rejected:<basis>`: umbrella state for `protected-restatement`, `design-tradeoff`, `non-issue`, `non-executable-difference`, `wrong-cause`, `promoter-error`, `risk-hypothesis`, `unverified`, or `not-material:<basis>` when filtering rejects promotion.
 
 `RESOURCE-CLEANUP` records whether long-running spawned resources opened during lane work were closed at completion.
 Long-running resources include Playwright MCP browser sessions, dev servers, daemons, dev-runners, and other port-bound or session-bound processes.

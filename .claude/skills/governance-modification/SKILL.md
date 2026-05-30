@@ -37,10 +37,10 @@ Freeze change boundary:
 # Step 3: review-verification
 Load and learn the full `Skill(review-verification)` body and call with bounded design question:
 - target: Step 2 target asset or asset set
-- scope: tier, problem basis, correction direction, consumed target surface, recurrence-barrier basis when material, removal-first design, direct-consumption relevance, functional independence, positive-function inventory, no-negative-impact result, report-prohibition no-negative-impact when renderable or reporting behavior can change, negative risk, patch-worthiness, patch-readiness, mutation readiness
+- scope: tier, problem basis, correction direction, consumed target surface, recurrence-barrier basis when material, cause/remedy classification, removal-first design, direct-consumption relevance, functional independence, positive-function inventory, no-negative-impact result, report-prohibition no-negative-impact when renderable or reporting behavior can change, negative risk, patch-worthiness, patch-readiness, mutation readiness
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
-Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-INDEPENDENCE`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, `JUDGMENT-RELIABILITY` when the change depends on a high-risk judgment, and `NEXT-OWNER-ACTION`.
+Require `REMOVAL-FIRST-PATCH-DESIGN`, `PATCH-INDEPENDENCE`, `PATCH-WORTHINESS`, `FINDING-STATE-INVENTORY`, `CAUSE-REMEDY-CLASSIFICATION` when the change judges or changes owner action, procedure, reporting, transport-defect/remedy handling, runtime/tool behavior, hook/settings behavior, or governance mutation, `JUDGMENT-RELIABILITY` when the change depends on a high-risk judgment, and `NEXT-OWNER-ACTION`.
 Reject post-hoc review when it is offered as the missing pre-mutation basis for already-applied governance patches; route that order failure to recurrence-barrier hardening at the narrowest failed pre-mutation path.
 
 # Step 4: Change Sequence Design
@@ -52,13 +52,14 @@ Each design item records:
 - `EDIT-OPERATION`
 - `PRESERVED-MEANING`
 - `PRE-MUTATION-BASIS`
+- `CAUSE-REMEDY-CLASSIFICATION`
 - `REVIEW-PACKET-CITATION` — `review_verification_packet` `PACKET-ID` (or `REVIEW-TARGET` + verdict summary, or full-content reference) that supplied this design item
 - `PATCH-INDEPENDENCE` — intended changed function set, positive-function inventory, no-negative-impact result, report-prohibition no-negative-impact when material, cross-function correlation basis, and philosophy-conformance basis from `.claude/reference/modification-core-law.md` `## Modification Law`
 - `NEXT-OWNER-ACTION`
 
 Derive `PRE-MUTATION-BASIS` from `.claude/reference/modification-minimal-governance-change-law.md` and `# Patch Execution Method`.
 Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate through `.claude/reference/modification-core-law.md`; the canonical operator-emphasized keyword set lives at `.claude/CLAUDE.md` `## 5. Modification Philosophy` (consume the canonical list at design-time rather than an inline restatement that drifts stale).
-Design items lacking `REVIEW-PACKET-CITATION` or `PATCH-INDEPENDENCE` are carrier prose, not review-verified design; reject and reopen Step 3.
+Design items lacking `REVIEW-PACKET-CITATION`, required `CAUSE-REMEDY-CLASSIFICATION`, or `PATCH-INDEPENDENCE` are carrier prose, not review-verified design; reject and reopen Step 3.
 Keep Step 4 design-only; route file mutation through Step 6.
 
 # Step 5: self-verification

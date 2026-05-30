@@ -77,7 +77,7 @@ Load only the references whose trigger is active:
 5. Call `mcp__codex__codex` under the common tool discipline.
 6. Parse the returned JSON.
 7. Retry once for first-use connection miss or parse failure when the common contract permits.
-8. Record `fail-open:<reason>` after exhausted tool, auth, quota, timeout, config, or parse failure.
+8. Record `fail-open:<reason>` using the reason-code set owned by `references/common-contract.md` `## Tool Discipline`.
 9. Adjudicate every valid point against doctrine, user instruction, artifact evidence, proof evidence, acceptance evidence, or frozen request basis.
 10. Update only the active planning field, artifact, correction basis, convergence record, acceptance record, blocker basis, or fail-open record.
 

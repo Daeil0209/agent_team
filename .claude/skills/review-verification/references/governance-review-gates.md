@@ -47,7 +47,9 @@ Before positive synthesis:
 - Consume completion-grade or otherwise evidence-bearing surfaces, not receipt, status, progress, file presence, or partial runtime signals.
 - Reconcile conflicts between agent outputs, evidence families, prior decisions, and sibling artifacts.
 - Separate candidate recall from defect-promotion filtering.
-- Classify each item through `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` before using defect, patch-worthiness, patch-readiness, severity, or count language.
+- Classify each item through `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` and `## Cause And Remedy Classification Law` before using defect, patch-worthiness, patch-readiness, remedy, hook/settings, runtime/tool, reporting, transport-defect, malformed-transport, transport-remedy, or count language.
+- Promote a synthesized item to `confirmed-defect` only when the current evidence proves every required `confirmed-defect` element from `.claude/reference/review-and-verification-core-law.md`; otherwise preserve `candidate-evidence`, `candidate-classified`, `open-candidate`, or `rejected:<basis>`.
+- Treat reviewer agreement, repeated labels, similar wording, repair-order pressure, and fluent synthesis as non-promoting metadata.
 - Keep occurrence counts separate from root-cause counts.
 - Keep raw candidate counts separate from confirmed-defect, patch-worthy, patch-ready, rejected, and open-candidate counts.
 - Record per-item finding-state inventory before any downstream correction, routing, mutation, validation, reporting, or closure uses the synthesis.
@@ -64,6 +66,7 @@ If outputs conflict, coverage is partial, or the synthesized conclusion outruns 
 ## Patch-Worthiness Review
 Patch-worthiness requires current proof of:
 - protected function
+- item-level cause/remedy classification
 - negative operating effect
 - correction owner
 - preserved or improved user outcome
@@ -85,6 +88,7 @@ Patch-worthiness requires current proof of:
 Patch readiness additionally requires current proof of patch-owner surface, edit operation, source meaning, destination owner when moved, direct-consumption relevance, intended changed function set, positive-function inventory, per-function no-negative-impact result, and verification basis.
 Patch-worthiness without those fields remains `patch-worthy`, not `patch-ready`.
 The selected patch direction is patch-ready only when:
+- item-level cause/remedy classification is current and matches remedy owner, remedy class, hook eligibility, and counterexample oracle
 - every stronger narrower alternative is tested or rejected by current evidence
 - removal, trim, merge, re-home, replace, or tighten is selected whenever it preserves the rule with less burden than append
 - the consumed execution surface can carry the corrected rule

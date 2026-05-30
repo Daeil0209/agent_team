@@ -15,7 +15,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Operator-emphasized keyword names and cross-session binding are owned by `.claude/CLAUDE.md` `## 5. Modification Philosophy`.
 - This core law owns executable keyword definitions, patch-design tests, preservation rules, duplicate handling, and source-to-destination continuity.
 - Core-law tag bindings: `removal-first` and `no-compression` carry `[GOV-MIN]`; `consumed-surface` carries `[HARDEN]`; `upper-lower execution-drive` carries `[AUTO-PROC]`; `executable-imperative` carries `[RULE-FORCE]`; `minimum-executable-information` and `comprehension-as-execution-force` carry `[GOV-MIN]` and `[RULE-FORCE]`; `functional-independence` carries `[HARDEN]` and `[RULE-FORCE]`.
-- Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state when material.
+- Governance modification records the current 1-4 basis before patch design: request fit, `TARGET-INTENT-BASIS`, active owner/action execution boundary, and review-verification basis with finding-state and cause/remedy classification when material.
 - `removal-first` repairs weak execution-force through tighten, replace, trim, merge, re-home, or delete while preserving required information.
 - `consumed-surface` lands patches on the document the affected owner actually consumes at the failing decision moment.
 - `no-compression` separates independently testable meanings and keeps same-owner repeated peer terms together when they share one governing role.
@@ -29,12 +29,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A `functional-independence`-compliant patch closes the named defect inside the intended changed function set while preserving every positive function outside that set.
 - Negative impact means weaker owner boundary, trigger, action, stop, evidence burden, verification depth, acceptance truth, routing, completion/blocker semantics, user-facing capability, runtime/tool contract, or reporting truth.
 - Required cross-function correlation is a governed interface, not a side effect; when a correlated function must change, the patch records that function inside the intended changed function set before mutation.
-- Patch records name the intended changed function set, positive-function inventory in the coherence radius, correlated functions, consumed contract, owner route, evidence, and per-function no-negative-impact verification basis.
+- Patch records name the intended changed function set, positive-function inventory in the coherence radius, correlated functions, cause/remedy classification basis, consumed contract, owner route, evidence, and per-function no-negative-impact verification basis.
 - A patch affecting reporting shape, renderable transport, completion, hook, runtime, or governance-modification surfaces treats `.claude/reference/reporting-prohibition-law.md` admission and non-reportable-content suppression as protected positive functions unless the intended changed function set explicitly strengthens that law.
 - Report-prohibition no-negative-impact verifies no new report reason, no broader exception, no weaker `## Non-Reportable Content`, no internal Procedure Plane or Communication Plane detail leakage, and no bypass from lower report-shape or transport surfaces.
 - Hidden shared-state coupling, incidental behavior change, verification/status/routing coupling, completion/blocker coupling, acceptance coupling, or unrecorded positive-function regression across functions is a `functional-independence` violation.
 - `Skill(review-verification)` Critical Review Gate defeater enumeration tests functional-independence violation, positive-function regression, hidden cross-function coupling, and incidental behavior change for every governance patch design alongside under-specification, over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking.
 - Governance-asset patch-design decisions test and cite every operator-emphasized keyword from that owner.
+- Governance patch design consumes `Skill(review-verification)` `CAUSE-REMEDY-CLASSIFICATION` when the patch judges or changes a behavior-affecting defect/remedy path; changing failure source, remedy owner, remedy class, hook eligibility, or stronger narrower alternative reopens `Skill(review-verification)` before mutation.
 - `[GOV-MIN]` Apply removal-first edit selection before appending doctrine.
 - Removal-first edit selection tries tighten, replace, trim, merge, re-home, or delete before append.
 - Removal-first edit selection keeps governance documents at the smallest complete size that preserves protected procedure force.
@@ -42,15 +43,10 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `minimum-executable-information` simplification uses direct executable wording and strengthens execution force by directly reducing procedure steps, branch paths, consumed documents, or repeated consumption points when protected procedure force and execution-critical fields remain preserved.
 - Removal-first edit selection preserves core information required to identify material owner, trigger, action, stop, evidence, verification, acceptance truth, and protected procedure force.
 - Governance proposal, planning, and implementation content includes owner, trigger, action, stop, evidence, verification, acceptance truth, routing, or patch-readiness only when the item changes execution.
-- Under-specified governance omits material information required for the active owner to act, stop, verify, route, or claim completion truthfully.
-- Over-specified governance adds non-executed procedure, examples, cases, explanation, or context that increases consumption burden without changing execution.
-- Correct under-specified and over-specified governance at the narrowest owner surface.
-- Governance patch design rejects evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking wording before Draft.
-- Evasion-enabling wording lets the owner avoid a required action, evidence step, verification step, route, blocker, or completion truth.
-- Ambiguous or conflicting wording leaves multiple plausible next actions or incompatible duties on the same active path.
-- Bottleneck-forming wording follows the top-doctrine `bottleneck defect` definition and is rejected before Draft when it lacks evidence, safety, verification, acceptance-truth, or required-procedure-force benefit.
-- Over-broad-blocking wording blocks or stalls a valid next action beyond required evidence, safety, verification, acceptance-truth, or procedure-force need.
+- Behavior-weakening defect definitions are owned by `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law`.
+- Governance patch design consumes those definitions and rejects under-specified, over-specified, evasion-enabling, ambiguous, conflicting, bottleneck-forming, or over-broad-blocking wording before Draft.
 - Correct behavior-weakening governance at the narrowest consumed owner surface.
+- Remedy-owner and remedy-class selection follows current cause/remedy classification; a patch that selects hook/settings enforcement for a non-hook-eligible failure source is a patch-design defect.
 - A governance patch that adds or changes top-doctrine execution intent updates the mapped core law with matching executable detail or records why existing core-law detail already covers it.
 - A governance patch that adds or changes core-law executable detail updates trigger-bound owner references only when the active owner path needs situation-specific guidance.
 - A governance patch repairs weak top or mapped core-law rules at that upper layer before adding lower-surface situation-specific detail.

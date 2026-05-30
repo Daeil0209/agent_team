@@ -50,6 +50,7 @@ A governance patch satisfies the Patch-Ready Gate after the consuming owner reco
 - `TARGET-INTENT-BASIS`
 - review-verification basis
 - finding-state basis for defect, removal, patch-worthiness, patch-readiness, or no-patch judgment
+- item-level `CAUSE-REMEDY-CLASSIFICATION` basis for behavior-affecting defect, removal, patch-worthiness, patch-readiness, no-patch, hook/settings, runtime/tool, reporting, transport-defect, malformed-transport, transport-remedy, or governance-mutation judgment
 - `JUDGMENT-RELIABILITY` basis for each high-risk judgment that drives defect, removal, patch-worthiness, patch-readiness, no-patch, or mutation-readiness
 - source rule or source meaning
 - failing execution path
@@ -85,7 +86,7 @@ Local duties preserve or strengthen this gate.
 
 ## PRE-MUTATION-BASIS
 `PRE-MUTATION-BASIS` records the lawful governance-modification path before mutation readiness, patch design, or draft.
-Required fields are request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, active sequence, required skills, triggered references, current cumulative live state including session-applied patches, consumed-surface access proof, consumed or blocked status, review-verification basis, material finding-state basis, modification-philosophy keyword status, Patch-Ready Gate status, and next legal step.
+Required fields are request-fit basis, `TARGET-INTENT-BASIS`, active owner/action boundary, active sequence, required skills, triggered references, current cumulative live state including session-applied patches, consumed-surface access proof, consumed or blocked status, review-verification basis, material finding-state basis, material cause/remedy classification basis, modification-philosophy keyword status, Patch-Ready Gate status, and next legal step.
 `PRE-MUTATION-BASIS` is invalid when it is post-hoc, missing any required field, or recorded only as intention without consumed/blocked evidence.
 Review-verification, modification-philosophy keyword checks, consumed-surface proof, and source-to-destination preservation are cumulative patch-readiness duties.
 For `quick update` or `quick hardening`, the Patch-Ready record may be compact only when owner surface, write scope, and meaning preservation are unambiguous.

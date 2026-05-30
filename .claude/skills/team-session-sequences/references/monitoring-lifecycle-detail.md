@@ -37,7 +37,7 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 
 ## Supervisor Decisions On idle_notification
 When an idle_notification is received with valid completion transport, team-lead records the lane as `STANDBY`.
-If immediate work is available and reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, active cap, and the live agent remains the correct context owner, send `assignment`, `reuse`, or `reroute` as new bounded work.
+If immediate work is available and `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law` reuse-fit holds, send `assignment`, `reuse`, or `reroute` as new bounded work.
 If no immediate work is available for that teammate, send no teammate-directed message for that idle event; continue any other live same-request owner/action through its active owner path.
 If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})`, check termination evidence, then classify cleanup recovery, residue, standby, or blocker-routing explicitly when evidence remains absent.
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
@@ -57,9 +57,9 @@ Supervisor decisions on idle or monitoring signals execute the selected action w
 - Previous-session remembered agents are continuity artifacts, not runtime shutdown targets in a later session.
 
 ## Reuse Rule
-Reuse / standby semantics canonical owner: `.claude/skills/session-boot/references/runtime-state-detail.md` `## Reuse Rule`. Lead-side monitoring-action extensions below.
-- Choose `reuse` when immediate work exists and the valid live agent remains the correct owner/context.
-- Treat `standby` as already set by valid `completion`; choose no teammate-directed message when no immediate reuse, correction, or shutdown is needed for that teammate, while other live owner/actions continue through their active paths.
+Reuse / standby state semantics canonical owner: `.claude/skills/session-boot/references/runtime-state-detail.md` `## Reuse Rule`; reuse-fit predicate owner: `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law`. Lead-side monitoring-action extensions below.
+- Choose `reuse` when immediate work exists and the core-law reuse-fit predicate holds.
+- Treat `standby` as already set by valid completion-grade `subjob-done`; choose no teammate-directed message when no immediate reuse, correction, or shutdown is needed for that teammate, while other live owner/actions continue through their active paths.
 - Reuse and standby decisions update runtime state or send the next bounded work while preserving required evidence and without assistant-authored visible narration; do not narrate lane cycling, active-lane count, round progress, waiting state, or no-op standby.
 
 ## Manifest Review Gate

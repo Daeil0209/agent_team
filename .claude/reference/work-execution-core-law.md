@@ -124,7 +124,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Additional-agent plans keep planned active members at or below the frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
 - Active cap count includes live or standby lane members until shutdown or termination evidence removes them from the active roster.
 - Same-lane follow-on work evaluates live or standby member reuse before shutdown or new member creation.
-- Reuse-fit holds only when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, and active cap.
+- Reuse-fit holds only when reuse preserves frozen parallel shape, lane separation, acceptance/proof separation, lane ownership, active cap, and the live or standby member remains the correct context owner for the bounded follow-on work.
 - Shutdown before same-lane new member creation requires reuse-fit failure, dead-or-unavailable target, lane absence, lane no-longer-needed basis, or active `session-closeout` teardown.
 - User-directed lane-member cleanup without explicit session-end intent is a lane-member no-longer-needed cleanup basis for the named member or lane and routes through `task-execution`; `session-closeout` remains for explicit session-end intent.
 - Serial convenience over independent surfaces is a `bottleneck defect` only when it satisfies the top-doctrine `bottleneck defect` test without dependency, evidence, safety, verification, acceptance-truth, runtime-parser, or required-procedure-force basis.

@@ -81,7 +81,7 @@ Failure to enter `session-boot` when the condition holds is a procedure violatio
 
 ## Agent Work States
 - `ACTIVE`: valid `dispatch-ack` accepted and started the current assignment execution block and no closing transport has followed.
-- `STANDBY`: valid `completion` was received for that assignment execution block; the exact teammate is eligible for reuse when ownership fit and context fit remain truthful.
+- `STANDBY`: valid completion-grade `subjob-done` was received for that assignment execution block; the exact teammate is eligible for reuse only when `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law` reuse-fit holds.
 - Shutdown-pending, removed, blocked, stale, validation-waiting, and residue are runtime or routing classifications, not additional team-lead managed lane work states.
 
 Canonical rule:
@@ -93,7 +93,7 @@ Canonical rule:
 ## Runtime Signals (Not Governance States)
 - `idle_notification` is an observation signal, not a lifecycle transition.
 - `permission_request` proves the agent is still active but blocked on permission.
-- completion records `STANDBY` through valid `completion`.
+- completion records `STANDBY` through valid completion-grade `subjob-done`.
 - observed single-agent collapse in nominal parallel work is a distribution-planning defect, not local runtime authority to rebalance staffing.
 - when a workflow is active, runtime signals classify agent/runtime truth only; phase advancement and checkpoint clearance stay with the active workflow owner.
 
@@ -115,7 +115,9 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 
 ## Reuse Rule
 - New dispatch rebuilds context.
-- Reuse or standby is valid only when ownership fit and context fit remain truthful.
+- Reuse-fit predicate is owned by `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law`.
+- Reuse is valid only when the core-law reuse-fit predicate holds for the bounded follow-on work.
+- Standby is valid after completion until reuse, cleanup, release, or closeout changes teammate population truth.
 
 ## Health-Check Standard
 - Cron-backed health monitoring runs only when a tracked health-check cron is actually active.

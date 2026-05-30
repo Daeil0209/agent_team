@@ -94,8 +94,9 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
 - Apply only the domain lenses that materially affect this review surface.
 ### 7. Classify Findings
-- Every finding states severity, evidence anchor, impact, owner, and fix direction.
-- Governance defect, removal, patch-worthiness, or correction-priority labels remain candidate evidence under the frozen claim ceiling until the team-lead `Skill(review-verification)` defect-promotion path promotes them.
+- Acceptance-review findings state severity, evidence anchor, impact, owner, and fix direction.
+- Findings whose truth depends on governance, process, analysis, critique, review, validation, removal, patch-worthiness, or other team/design meaning use the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`; `confirmed-defect` language requires the common element test and is not created by severity mapping.
+- Governance defect, removal, patch-worthiness, or repair-order labels remain candidate evidence under the frozen claim ceiling until the team-lead `Skill(review-verification)` defect-promotion path promotes them.
 - That candidate ceiling does not weaken ordinary acceptance review; blocking acceptance findings remain blocking under severity mapping.
 - Repeated wording stays candidate evidence until local consuming-surface need is disproven on each affected surface.
 - Distinguish blocking from non-blocking findings explicitly.

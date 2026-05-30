@@ -78,7 +78,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - A loaded owner document rule is mandatory while that owner context is active.
 - A trigger-bound reference rule is mandatory while its trigger is active.
 - Active governance rules keep their executable force.
-- If an active governance rule is unclear, over-specified, evasion-enabling, semantically conflicting, scope-abuse-prone, or bottleneck-forming, route to the owning correction path instead of ignoring or applying the weak form.
+- If an active governance rule matches a behavior-weakening defect class owned by `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law`, route to the owning correction path instead of ignoring or applying the weak form.
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
 - Executable rules name owner, trigger, stop, evidence, verification, and acceptance truth when material.

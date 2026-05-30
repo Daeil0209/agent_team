@@ -48,6 +48,7 @@ Return internal `review_verification_packet` with:
 - `WORKFLOW-COVERAGE`
 - `FINDING-STATE-INVENTORY`
 - `JUDGMENT-RELIABILITY` — per high-risk judgment basis required by `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law`; otherwise `not-applicable:no-high-risk-judgment`
+- `CAUSE-REMEDY-CLASSIFICATION` — exact item-level entries per `.claude/reference/review-and-verification-core-law.md` `## Cause And Remedy Classification Law`; otherwise `not-applicable:no-defect-remedy-or-behavior-affecting-claim`
 - `CITATION-EVIDENCE-INVENTORY` — per `### 12b. Citation Substantiation Gate`; populated when the produced packet carries an outgoing external citation or anchor claim, otherwise `not-applicable:no-outgoing-external-citation`
 - `REMOVAL-FIRST-PATCH-DESIGN`
 - `PATCH-INDEPENDENCE`
@@ -84,13 +85,16 @@ Combine local or requested-shard findings into one evidence map.
 Classify by owner semantics and operating effect.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law` before using any high-risk judgment as a decisive basis.
+Apply `.claude/reference/review-and-verification-core-law.md` `## Cause And Remedy Classification Law` before promotion, rejection, patch-worthiness, patch-readiness, patch/no-patch selection, no-defect judgment, or remedy-owner routing.
+For any item proposed as `confirmed-defect`, record every required `confirmed-defect` element from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`; missing elements keep the item `open-candidate` or `rejected:<basis>`.
+Do not use ordering pressure, repair-order need, reviewer agreement, repeated wording, label similarity, plausible future risk, or explanation fluency as promotion evidence.
 Keep raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-ready, rejected, no-patch, and open-candidate states separate.
 Reject bare `CONFIRMED`; use exact ladder state.
 
 ### 5. Critical Review Gate
 PROTECTED-LOCAL-RESTATEMENT-BASIS: critical-review-gate atomic-defeater-test — defeater enumeration colocated here for atomic test at every Critical Review Gate execution. `.claude/reference/review-and-verification-core-law.md` `## Minimum Executable Information Law` defines under/over-specification, evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking as execution-force defects; this surface enumerates them together with additional review-verification-specific defeaters (protected-function loss, source-to-destination gap, runtime/tool/user-surface failure, stronger narrower alternative, etc.) for one-shot defeater-first sweep at Step 5 execution.
 Try to disprove the preferred conclusion before any packet, synthesis, bestness, no-defect, no-regression, patch-worthiness, route, completion, or closure claim leaves review-verification.
-Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, judgment-reliability gap, self-ratification risk, untested strongest contrary hypothesis or classification, functional-independence violation, positive-function regression, hidden cross-function coupling, incidental behavior change, report-prohibition regression, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
+Test material defeaters: owner-boundary conflict, protected-function loss, weaker procedure, weaker clarity, weaker execution force, missing confirmed-defect element, repair-order-as-defect-proof, reviewer-convergence-as-defect-proof, text-feature-only promotion, missing or burden-only skill consumption, upper-to-core gap, core-to-trigger-bound gap, under-specification, over-specification, evasion, ambiguity, conflict, bottleneck, over-broad blocking, judgment-reliability gap, cause/remedy classification gap, invalid cause/remedy enum, theme-level-only cause/remedy classification, unsplit mixed failure source, remedy-owner mismatch, hook-eligibility overclaim, missing counterexample oracle, untested stronger narrower alternative, self-ratification risk, untested strongest contrary hypothesis or classification, functional-independence violation, positive-function regression, hidden cross-function coupling, incidental behavior change, report-prohibition regression, source-to-destination gap, missing direct-consumption relevance, runtime/tool/user-surface failure, and stronger narrower alternative.
 For source-to-destination gap review, trace every material hop in the claim chain, including source surface, producer output, synthesis, and outgoing claim when those surfaces are present.
 Keep any untraced material hop as an open defeater.
 Record evidence surface, confirmed/disproven/open result, correction owner, and next action for each material defeater per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` 3-component disproof-attempt evidence rule: (a) the named failure mode being probed, (b) the observable evidence that would defeat the preferred positive claim if found, and (c) direct inspection evidence naming the inspected surface plus observed line, section, content, tool result, or retained artifact finding. This 3-component record carries into Step 12 `FINDING-STATE-INVENTORY` as the per-defeater evidence surface and is consumed by downstream `Skill(self-verification)` Step 3 PASS-2 gates per receiver applicability; shorthand record (`tested`, `disproven`, `defeater enumerated`, `not material`) without these three components is verification-shaped prose and fails the Gate.
@@ -102,7 +106,7 @@ Consume `.claude/reference/modification-minimal-governance-change-law.md` `## Pa
 Classify challenged text, section, or document as removal-default before mutation.
 Retain only if removal would lose protected function, owner boundary, recovery path, or execution force.
 Select tighten, replace, trim, merge, re-home, or delete before append if that preserves protected meaning.
-Record `REMOVAL-FIRST-PATCH-DESIGN` with failing path, consumed surface, source meaning, destination owner when moved, minimum-executable-information result, behavior-weakening result, functional-independence result, intended changed function set, positive-function inventory, no-negative-impact result, cross-function correlation basis, continuity result, adjacent-surface status, selected operation, rejected removals, and retention basis.
+Record `REMOVAL-FIRST-PATCH-DESIGN` with failing path, cause/remedy classification basis, consumed surface, source meaning, destination owner when moved, minimum-executable-information result, behavior-weakening result, functional-independence result, intended changed function set, positive-function inventory, no-negative-impact result, cross-function correlation basis, continuity result, adjacent-surface status, selected operation, rejected removals, and retention basis.
 
 ### 7. Pre-Patch Negative-Risk Gate
 Apply `.claude/CLAUDE.md` `## 5. Modification Philosophy` keyword gate.
@@ -135,7 +139,9 @@ Return post-patch changed-result convergence to the executing patch sequence's P
 
 ### 12. Classify Findings
 Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
-Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, evidence surface, owner, and open next owner when applicable.
+Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, cause/remedy classification reference, evidence surface, owner, and open next owner when applicable.
+A `confirmed-defect` entry must cite expected behavior, observed deviation, causal link from candidate source, correction-restores-behavior basis, correction owner, and protected-function no-loss basis; otherwise classify as `open-candidate` or `rejected:<basis>`.
+Each material finding or disposition whose state is `confirmed-defect`, `patch-worthy`, `patch-ready`, `rejected:<basis>`, `no-patch`, or `open-candidate` must cite a current item-level `CAUSE-REMEDY-CLASSIFICATION` entry when the claim can affect owner action, procedure, reporting, transport defect/remedy, malformed transport, runtime/tool behavior, hook/settings behavior, or governance mutation; missing, invalid-enum, theme-level-only, contradicted, or open classification returns to Step 4 or Step 5.
 For material defeaters that produced or supported a positive verification claim, the `FINDING-STATE-INVENTORY` entry must carry the 3-component disproof-attempt evidence per `.claude/reference/review-and-verification-core-law.md` `## Evidence Law`: (a) named failure mode probed, (b) observable evidence that would defeat the preferred positive claim if found, and (c) direct inspection evidence naming the inspected surface plus observed line, section, content, tool result, or retained artifact finding.
 Each high-risk judgment used as a decisive basis must cite its `JUDGMENT-RELIABILITY` entry; a missing, stale, contradicted, or open entry fails classification and returns to Step 4 or Step 5.
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where material-defeater entries lack these three components or carry shorthand-only evidence surface.
@@ -153,7 +159,8 @@ This gate checks citation substantiation only; Step 5 still owns failure-mode di
 Downstream `Skill(self-verification)` Step 3 PASS-2 rejects packets where outgoing external citations are absent from `CITATION-EVIDENCE-INVENTORY` or lack required entry components.
 
 ### 13. Decide Patch Worthiness
-Record protected function, positive-function inventory, no-negative-impact result, negative operating effect, user-outcome impact, regression risk, smallest owner, operation type, and tested rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.
+Record cause/remedy classification, protected function, positive-function inventory, no-negative-impact result, negative operating effect, user-outcome impact, regression risk, smallest owner, operation type, and tested rejection of `protected-restatement`, `design-tradeoff`, and `non-issue`.
+Reject patch-worthiness when remedy owner, remedy class, hook eligibility, or stronger narrower alternative is missing, stale, contradicted, or mismatched to the cause/remedy classification.
 Use the Step 6 operation or return to Step 6 when the operation changes.
 Do not authorize mutation from incomplete patch-ready proof; keep the current ladder state.
 
