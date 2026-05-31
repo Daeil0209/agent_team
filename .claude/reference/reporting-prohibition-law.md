@@ -2,37 +2,36 @@
 PRIMARY-OWNER: team-lead
 SOURCE-ANCHOR: .claude/CLAUDE.md
 SOURCE-RULES: "Reporting Philosophy; Work Execution Philosophy communication-plane boundary"
-LOAD-POLICY: mandatory before any user-facing report
+LOAD-POLICY: mandatory before any assistant-authored renderable surface
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # Reporting Prohibition Law
 
 ## Purpose
-- This reference is the single source of truth for assistant-authored user-facing prose admission.
+- This reference is the single source of truth for assistant-authored renderable-surface admission and user-facing prose prohibition.
 - Default rule: do not show intermediate progress, internal reasoning, route, dispatch, monitoring, verification, candidate, packet, carrier, log, or cleanup content to the user.
 - Communication Plane moves internal transport; Procedure Plane executes work; Reporting Plane emits user-facing prose only after this law grants a narrow exception and `.claude/reference/reporting-user-reporting-law.md` shapes the admitted prose.
 - Any assistant-authored field, state signal, transport envelope, status, or ordinary message/pane prose that can render to the user is governed by this law before visible rendering; Communication Plane, Procedure Plane, tool, channel, or message-class labels do not bypass this law.
 - `team-lead` owns Reporting Plane emission.
 
 ## Curtain Supremacy
-- This law controls assistant-authored visible prose before any lower owner surface can authorize wording.
+- This law controls assistant-authored renderable content before any lower owner surface can authorize wording.
 - Planning state, lane state, verification state, runtime state, active skill state, hook state, transport state, and checked information do not create report permission.
 - More checked information produces internal evidence to classify, not more user-facing content.
 - When any owner surface says `visible`, `report`, `status`, `progress`, `summary`, `next action`, `result`, `problem-report`, `dispatch-ack`, `scope-pressure`, `hold|blocker`, `subjob-done`, `completion`, or similar wording, resolve it through this law before prose reaches the user.
 
 ## Default Screen Curtain
 - Assistant-authored visible prose defaults to silence while Procedure Plane or Communication Plane action can continue; the replacement action is the next governed tool, carrier, packet, task-state, dispatch, verification, synthesis, correction, or blocker-routing move, not a status sentence.
-- Suppressed controllable renderable fields stay empty, omitted, or a single ASCII space.
+- Suppressed controllable renderable fields are omitted when omission is available; empty or single-space content is valid only inside a non-omittable schema-required field and must not create a blank assistant message, pane row, or bullet marker.
 - Punctuation-only placeholders, including `.`, `-`, `...`, and similar filler, are report attempts when this law has not admitted prose.
 - Host/system-rendered tool rows, lane transport rows, task rows, sandbox or approval UI, tool errors, runtime state, internal state transitions, and recovery decisions are execution or transport evidence only; they do not create an adjacent assistant-authored prose slot or report reason.
-- Automatic no-detail Communication Plane state signals are limited to exactly four standalone tokens: `dispatch-ack`, `scope-pressure`, `hold|blocker`, and `subjob-done`.
-- In `SendMessage`, the schema-required `summary` field is the canonical visible state-signal slot for those four tokens; the body remains empty, omitted, or single ASCII space.
-- Those four tokens are allowed transport signals, not user reports; any added word, punctuation, task id, carrier path, problem detail, count, result preview, or completion narrative turns the rendered content into a report attempt or malformed transport display.
-- `problem-report` is receiver-required Communication Plane evidence only when recorded in non-rendered carrier, task state, runtime ledger, or evidence artifact; it is not admitted in visible `SendMessage` summary/body, pane text, or final prose.
+- Automatic Communication Plane state signals avoid report classification only when rendered through the canonical no-detail envelope owned by `.claude/skills/task-execution/references/message-classes.md`.
+- Any assistant-authored state-signal detail outside that canonical envelope is a report attempt or malformed transport display.
+- `problem-report` detail is receiver-required Communication Plane evidence only through the non-rendered carrier paths owned by `.claude/skills/task-execution/references/message-classes.md`; it is not admitted in visible pane text or final prose.
 
 ## Consume When
-- Consume before any assistant-authored visible prose, terminal-visible report text, pane-visible report text, visible task-plan/todo/checklist text, completion claim, phase/stage-end result, user-action blocker report, explicit status answer, or closeout residual.
-- Consume before startup, boot, planning, skill-load, reference-load, dispatch, monitoring, verification, or cleanup prose.
+- Consume before constructing any assistant-authored renderable surface: ordinary prose, pane/final text, renderable tool or channel field, visible task-plan/todo/checklist text, `SendMessage` visible field, `Bash` command text, `Bash` tool parameters, stdout, stderr, completion claim, phase/stage-end result, user-action blocker report, explicit status answer, final verified result, or closeout residual.
+- Consume before startup, boot, planning, skill-load, reference-load, owner/action transition, dispatch, monitoring, verification, cleanup, or tool-adjacent narration can render.
 - Consuming this reference stays internal and never replaces required Procedure Plane or Communication Plane action.
 - When this law suppresses, silences, empties, or limits visible content, it changes only the user-rendered projection. The active owner continues the required Procedure Plane or Communication Plane action with complete receiver-required payload and complete governed evidence.
 - Suppression does not change blocker, deferral, user-escalation, verification, correction, routing, or closure thresholds.
@@ -55,14 +54,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 9. If any required row is missing, stale, contradicted, or uncertain, keep prose suppressed and continue through the owning Procedure Plane or Communication Plane path.
 
 ## Non-Reportable Content
-- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, skill/reference loads, route choices, dispatch topology, lane/member counts, dispatch-ack/status/subjob-done transport, `problem-report`, `scope-pressure`, `hold|blocker`, blocker-clear, blocker retraction, blocker-resolution state, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, and monitoring state.
+- These are never user reports unless `REPORT-REASON: explicit status answer` applies to an explicit user request for that exact internal material: owner triggers, startup contract execution, boot completion, no-active-user-work facts, skill/reference load intent, skill/reference loads, route choices, dispatch topology, lane/member counts, dispatch-ack/status/subjob-done transport, `problem-report`, `scope-pressure`, `hold|blocker`, blocker-clear, blocker retraction, blocker-resolution state, task rows, packets, retained-carrier paths or contents, raw candidate/finding inventories, verification packets, patch logs, runtime ledgers, cleanup state, and monitoring state.
 - Completion-acceptance, retained-carrier verification, completion-grade classification, self-verification or review-verification convergence facts, synthesis-readiness, `STANDBY`, reuse-fit, next-batch or next-shard selection, correction-readiness, and accepted/rejected lane-result facts are non-reportable internal state unless `REPORT-REASON: explicit status answer` requests that exact material.
-- Work-start, dispatch-start, lane-start, task-start, work-completion, lane-completion, and task-completion content is non-reportable stage content; stage identity admits only standalone Communication Plane state tokens when the matching transport event occurs, never assistant-authored visible prose, summaries, counts, paths, result previews, completion narratives, or filler.
-- Tool-adjacent assistant-authored prose that starts, continues, checks, dispatches, monitors, verifies, accepts, reuses, waits, explains interim findings, connects evidence to a next step, marks stage completion, or otherwise narrates Procedure Plane or Communication Plane movement is not admitted report content and remains suppressed while the owner action can continue.
+- Work-start, dispatch-start, lane-start, task-start, work-completion, lane-completion, and task-completion content is non-reportable stage content; stage identity admits only token-only Communication Plane state signals when the matching transport event occurs, never assistant-authored visible prose, summaries, counts, paths, result previews, completion narratives, or filler.
+- Tool-adjacent assistant-authored prose that starts, continues, checks, dispatches, monitors, verifies, accepts, reuses, waits, explains interim findings, connects evidence to a next step, announces measurement completion, announces skill/reference loading, marks stage completion, or otherwise narrates Procedure Plane or Communication Plane movement is not admitted report content and remains suppressed while the owner action can continue.
 - Assistant-authored status sentences that summarize current internal state, queue state, lane activity, carrier acceptance, shard progress, verification progress, standby/reuse, or waiting state are progress narration; keep them internal unless `REPORT-REASON: explicit status answer` requests that exact material or `final verified result` is fully admitted.
-- Standalone phase/action labels, carrier-authoring labels, carrier-verified labels, acceptance/reuse labels, path-selection rationale, prior-artifact classification, stale-artifact classification, retry rationale, reroute rationale, and tool-error recovery explanation are tool-adjacent report attempts when an internal next owner/action can run.
-- Single-character, punctuation-only, whitespace-plus-punctuation, or decorative filler content is not an admitted report; use empty, omitted, or single ASCII space when a tool field cannot be omitted.
-- Assistant-authored command stdout/stderr for internal planning, measurement, sharding, dispatch preparation, carrier creation, carrier verification, monitoring, or synthesis stays empty unless the user explicitly requested that exact command output or this law admits that exact material; valid internal evidence capture and expected-false-state handling follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
+- Isolated phase/action labels, carrier-authoring labels, carrier-verified labels, acceptance/reuse labels, path-selection rationale, prior-artifact classification, stale-artifact classification, retry rationale, reroute rationale, and tool-error recovery explanation are tool-adjacent report attempts when an internal next owner/action can run.
+- Single-character, punctuation-only, whitespace-plus-punctuation, decorative filler content, or a blank assistant turn is not an admitted report; omit the surface when omission is available, and use empty or single ASCII space only inside a non-omittable schema-required field.
+- Assistant-authored command text, tool parameters, stdout, or stderr for internal planning, measurement, sharding, dispatch preparation, carrier creation, carrier verification, monitoring, or synthesis stays empty, screen-safe, or omitted unless the user explicitly requested that exact command material or this law admits that exact material; valid internal evidence capture and expected-false-state handling follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - Assistant-authored file-write preview content for internal carriers or produced user-facing report drafts is a report attempt when it carries route, dispatch, packet, verification, candidate, retained-carrier, final-result, synthesis, defect/finding, count, recommendation, or post-final-tail detail before this law admits that exact content or the user explicitly requests that exact preview content. Internal carriers that would preview through `Write` use a non-rendered carrier path instead.
 - A rendered internal transport envelope avoids report-attempt classification only when this law and the Communication Plane owner limit it to the no-detail state-signal shape; `problem-report` detail stays in non-rendered carrier, task state, runtime ledger, or evidence artifact. Progress wording, counts, paths, evidence summaries, rationales, completion narratives, and task-row assignment details remain report attempts.
 - A hook or pre-action guard may suppress only a renderable projection when the acting agent still receives the completed tool result and receiver-required information remains available; projection suppression and `Bash` output mechanics follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.

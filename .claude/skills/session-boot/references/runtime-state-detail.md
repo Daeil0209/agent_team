@@ -49,7 +49,7 @@ Runtime detail can change runtime classification, cleanup decision, recovery own
 
 ## Boot Window And Startup Rules
 - `Boot Sequence` is first for lead-session boot; its team-agent runtime branch is only for explicit runtime readiness, recovery, or entry gating.
-- Dispatch-runtime creation, member creation, assignment send, and reuse consume this reference only as runtime-readiness or recovery evidence after the dispatch route is frozen by its owning trigger. Standalone `Agent` is not team-runtime dispatch.
+- Dispatch-runtime creation, member creation, assignment send, and reuse consume this reference only as runtime-readiness or recovery evidence after the dispatch route is frozen by its owning trigger. Direct `Agent` outside team runtime is not team-runtime dispatch.
 - During boot, allow only continuity reads, runtime-shape discovery, and read-only path probes needed to classify runtime readiness.
 - Active `Boot Sequence` closes before delegated fan-out.
 - Use current-session authorities first: workspace-root `.runtime/procedure-state.json`, `SessionStart` snapshot lines, hook logs, task records, and agent handoffs.
@@ -86,9 +86,11 @@ Failure to enter `session-boot` when the condition holds is a procedure violatio
 
 Canonical rule:
 - `dispatch-ack` is the `ACTIVE` no-objection acceptance and work-start signal, not progress, quality, completion, or acceptance evidence.
+- An `ACTIVE` teammate remains owner-bound to the current assignment until `subjob-done`, `scope-pressure`, `hold|blocker`, failed-send truth, replacement truth, or blocker-routing closes or supersedes that assignment; team-lead monitors the current assignment and does not send fresh work, same-assignment work instructions, proceed prompts, or completion prompts to that teammate while the assignment remains active.
 - `dispatch pending` is not `agent started`.
 - `agent started` needs agent-side activity, progress, or other started-work evidence.
 - Raw `subjob-done` is the completion-candidate tracking signal, not acceptance evidence; `STANDBY` records only after retained-carrier acceptance passes.
+- Accepted completion-grade `subjob-done` transitions the teammate from `ACTIVE` to `STANDBY` in the same control step, then team-lead evaluates reuse, next assignment, cleanup, synthesis, or validation routing from that updated state.
 
 ## Runtime Signals (Not Governance States)
 - `idle_notification` is an observation signal, not a lifecycle transition.
@@ -123,7 +125,7 @@ Validation waiting keeps the teammate in `STANDBY` while the validation route re
 - Cron-backed health monitoring runs only when a tracked health-check cron is actually active.
 - When hook policy enforces tracked health monitoring, missing monitoring is runtime-blocked evidence here.
 - Team existence alone is not runtime-ready evidence when health monitoring is required by hook policy.
-- Standalone `Agent` calls are synchronous host calls outside team-agent runtime; live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, and health-cron duty require team-agent runtime evidence. They support fallback evidence only when the route truth allows non-runtime evidence.
+- Direct `Agent` calls outside team runtime are synchronous host calls outside team-agent runtime; live roster membership, team mailbox state, `dispatch-ack` debt, later `SendMessage` addressability, and health-cron duty require team-agent runtime evidence. They support fallback evidence only when the route truth allows non-runtime evidence.
 - Literal cadence and stale thresholds belong to `.claude/hooks/lib/hook-policy.sh`; this reference cites that owner instead of restating numeric values.
 - Direct oversight remains primary even without cron-backed monitoring.
 - Team existence and team activity are separate questions.
@@ -187,7 +189,7 @@ Canonical classes:
 
 Runtime recovery classification meanings:
 - `dispatch-pending-no-ack`: assignment send evidence exists and the target lacks valid `dispatch-ack`.
-- `dispatch-ack-no-start`: `dispatch-ack` accepted the assignment, the target stayed inside the frozen quiet activity window, and that window closed with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence; one same-assignment execution follow-up is then required.
+- `dispatch-ack-no-start`: `dispatch-ack` accepted the assignment, the target stayed inside the frozen quiet activity window, and that window closed with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence; one same-assignment state-reconciliation follow-up is then required.
 - `ack-late`: `dispatch-ack` arrived after follow-up or stale suspicion and must be reconciled with current assignment truth.
 - `working-permission-pending`: target is active and blocked on permission.
 - `working-transport-missing`: side-effect or activity evidence exists but required Communication Plane transport is missing.
@@ -216,7 +218,7 @@ These are hook-maintained mirrors, not alternate semantic owners. They can corro
 | Ledger surface | Corroborates which truth-ladder row | Absence behavior |
 |---|---|---|
 | `WORKER_TRANSPORT_LEDGER` | agent-originated progress, completion-grade message receipt | absence is not completion absence; consult message body and lane evidence |
-| `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt follow-up via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification |
+| `WORKER_DISPATCH_ACK_PENDING_FILE` | `dispatch pending` awaiting `dispatch-ack` | absence after `dispatch pending` triggers receipt-window monitoring and the bounded state-reconciliation path via `.claude/skills/task-execution/references/dispatch-recovery.md`, not silent stale classification or an immediate prompt |
 | `IDLE_DECISION_PENDING_FILE` | legacy or exceptional turn-ended state not yet synchronized to canonical transport | activity requires completion transport, standby ledger, and live runtime evidence |
 | `WORKER_IDLE_NOTICE_FILE` | most recent `TeammateIdle` evidence | activity requires positive evidence beyond missing idle marker |
 | `STANDBY_FILE` | completion-derived `STANDBY` tracking signal | absence is not authority to require cleanup; consult completion transport |
@@ -254,9 +256,9 @@ Rules:
 - Waiting for the user to identify monitoring-detectable defects (parallel collapse, idle agent preservation, missed parallel-fit, missed downstream-prep parallel-fit, agent-charter mismatch, or agent stall) is itself a defect; non-destructive runtime recovery is team-lead owned.
 
 ## Stall-Without-Progress Rule
-`dispatch-pending-no-ack` is missing assignment acceptance: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
+`dispatch-pending-no-ack` is missing assignment acceptance: open receipt-window monitoring; do not trigger a same-assignment follow-up from immediate post-send idle, inbox state, missing output, or absent retained-output mtime alone.
 Valid `dispatch-ack` clears the receipt barrier and opens quiet `ACTIVE` monitoring for that target.
-Immediate absence of agent-start evidence after valid `dispatch-ack` is not `dispatch-ack-no-start`, not a proceed prompt basis, and not an execution follow-up basis.
+Immediate absence of agent-start evidence after valid `dispatch-ack` is not `dispatch-ack-no-start`, not a proceed prompt basis, and not a state-reconciliation follow-up basis.
 Classify `dispatch-ack-no-start` only after the frozen quiet activity window closes with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence.
 Parallel dispatch is active non-rendered monitoring, not user-visible waiting narration.
 Running-group internal state treats valid `dispatch-ack` targets as active while they remain inside the quiet activity window.
@@ -270,15 +272,15 @@ The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `dispatch-pending-no-ack`, send exactly one same-assignment receipt follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
-2. For valid `dispatch-ack`, do not send a same-assignment execution follow-up during the quiet activity window.
-3. When `dispatch-ack-no-start` is classified after the quiet activity window, send exactly one same-assignment execution follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+1. For `dispatch-pending-no-ack`, send exactly one same-assignment state-reconciliation follow-up through `SendMessage` only after the bounded receipt window or mailbox-consumed-without-channel-response evidence proves missing receipt; continue unaffected work and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+2. For valid `dispatch-ack`, do not send a same-assignment state-reconciliation follow-up during the quiet activity window.
+3. When `dispatch-ack-no-start` is classified after the quiet activity window, send exactly one same-assignment state-reconciliation follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
 4. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
-5. Keep additional assignment/correction packets out of an inbox with no current response.
+5. Keep additional assignment/correction packets, proceed prompts, continue prompts, and `subjob-done` instructions out of an inbox with no current response.
 6. At the re-check window, inspect current response and activity/side-effect evidence. Assigned-surface activity without valid first upward outcome prevents dead-or-unavailable classification but does not clear receipt debt; preserve the active agent in lane execution while team-lead continues missing-receipt or closing-transport recovery. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
 7. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 
-Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among routine nudge, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
+Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among bounded state-reconciliation follow-up, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
 
 ## Runtime Integrity Defect Classification
 Runtime-integrity defect domains are classified separately and reconciled to one consistent live state.
@@ -322,8 +324,8 @@ Domain 3 is not hook auto-cleanup evidence.
 - Class E: bring UI and governance roster into parity by either re-attaching the live process via Class A action or removing the surplus live process via approved `kill <pid>`; UI count must equal `config.json` member count post-reconciliation.
 - Class F: discard the phantom task id; treat retained-output disk evidence as evidence for the affected work surface only; route away from `TaskUpdate` on the phantom id.
 - Class G: team-lead consumes the on-disk retained-output as production evidence only, opens missing completion-transport recovery or keeps the surface open, and records `completion-via-disk-only` as Domain 3 defect evidence for downstream `Skill(governance-modification)` patch consideration.
-- Class H: team-lead sends one bounded receipt-follow-up `SendMessage`; persistent missing receipt after follow-up routes to Class I.
-- Class I: team-lead sends one bounded execution-follow-up `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or blocker-routing per `.claude/skills/task-execution/references/dispatch-recovery.md`.
+- Class H: team-lead sends one bounded receipt state-reconciliation `SendMessage`; persistent missing receipt after follow-up routes to Class I.
+- Class I: team-lead sends one bounded execution state-reconciliation `SendMessage`; persistent unresponsive teammate after follow-up routes to replacement spawn, structured shutdown, or blocker-routing per `.claude/skills/task-execution/references/dispatch-recovery.md`.
 
 ## Operator-Approval Gate
 - Class A `kill <pid>` and Class E `kill <pid>` are non-tmux force cleanup and require explicit operator approval before execution.
@@ -349,7 +351,7 @@ Domain 3 is not hook auto-cleanup evidence.
 - Runtime-ready state returns to the frozen next owner/action.
 - Runtime-required classification returns to the frozen next owner/action as runtime evidence.
 - Runtime recovery need opens `session-boot` recovery.
-- Missing receipt or start evidence opens one bounded follow-up and re-check.
+- Missing receipt or start evidence opens one bounded state-reconciliation follow-up and re-check under `dispatch-recovery.md`.
 - Stale or non-responsive target after re-check opens replacement, redistribution, structured shutdown, or blocker-routing after runtime recovery is exhausted.
 - Bottleneck or missed downstream-prep parallel-fit opens boundary-change correction through `team-lead`.
 - Cleanup need opens structured shutdown, reuse, recovery, or `session-closeout`.

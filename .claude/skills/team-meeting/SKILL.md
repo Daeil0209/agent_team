@@ -33,7 +33,7 @@ Participants use those criteria to find defects, risks, missing evidence, bounda
 Treat critique coverage as meeting critique coverage, not formal `Skill(review-verification)` consumption.
 Keep final acceptance, mutation rules, and full-workflow checks on their named procedure paths.
 The criteria operate as free-form critical thinking during the meeting.
-Use the standalone `Skill(review-verification)` workflow and current Step 14 packet for formal skill-consumption claims, `review_verification_packet`, verdict table, and review record outputs.
+Use the direct `Skill(review-verification)` workflow and current Step 14 packet for formal skill-consumption claims, `review_verification_packet`, verdict table, and review record outputs.
 Default lenses: `design-intent-lens`, `coherence-integrity-lens`, `owner-boundary-lens`.
 Use `patch-worthiness-lens` when the agenda is a governance-patch solution.
 All participants use Section 3-5 `MEETING-AUDIT-CRITERIA` as the shared evaluation standard for drafts, opinions, revisions, consent, and operator-gate readiness.

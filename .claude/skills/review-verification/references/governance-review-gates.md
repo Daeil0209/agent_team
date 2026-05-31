@@ -99,7 +99,7 @@ The selected patch direction is patch-ready only when:
 - core-to-trigger-bound execution changes have required triggered owner guidance or valid `not-material:<basis>`
 
 ## Resolve Next Owner And Action
-- Confirmed review packet returns to the triggering owner with the next owner/action named by `Skill(review-verification)` Step 14; standalone full workflow opens that owner/action.
+- Confirmed review packet returns to the triggering owner with the next owner/action named by `Skill(review-verification)` Step 14; full workflow execution opens that owner/action.
 - Missing evidence opens researcher, reviewer, local inspection, or blocker-routing after internal recovery.
 - Patch-ready governance asset change opens the named patch sequence or production owner for mutation.
 - Patch-worthy governance asset change without patch-ready basis opens patch-readiness completion on the current review or governance-modification path, not mutation.

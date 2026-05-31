@@ -304,6 +304,36 @@ strip_full_line_shell_comments() {
   printf '%s' "$command_text" | sed '/^[[:space:]]*#/d'
 }
 
+normalize_shell_command_for_static_scan() {
+  local command_text="${1-}"
+  COMMAND_TEXT="$command_text" node <<'NODE'
+const cmd = String(process.env.COMMAND_TEXT || "");
+let out = "";
+let inS = false, inD = false, bt = false, pd = 0;
+const pushBoundary = () => {
+  out = out.replace(/[ \t]+$/g, "");
+  if (out && !out.endsWith(";")) out += ";";
+  out += " ";
+};
+for (let i = 0; i < cmd.length; i += 1) {
+  const c = cmd[i], n = cmd[i + 1] || "";
+  const q = inS || inD || bt || pd > 0;
+  if (!q && (c === "\r" || c === "\n")) {
+    if (c === "\r" && n === "\n") i += 1;
+    pushBoundary();
+    continue;
+  }
+  if (!q && c === "$" && n === "(") { pd += 1; out += c + n; i += 1; continue; }
+  if (!inS && !inD && !bt && pd > 0 && c === ")") { pd -= 1; out += c; continue; }
+  if (!inD && !bt && pd === 0 && c === "'") inS = !inS;
+  else if (!inS && !bt && pd === 0 && c === '"') inD = !inD;
+  else if (!inS && !inD && pd === 0 && c === "`") bt = !bt;
+  out += c;
+}
+process.stdout.write(out.trim());
+NODE
+}
+
 allowed_package_or_build_command() {
   local command_text="${1-}"
   [[ -n "$command_text" ]] || return 1
@@ -1585,7 +1615,8 @@ fi
     ;;
 
   Bash)
-    CLEAN_COMMAND="$(strip_full_line_shell_comments "$COMMAND" | tr '\n' ' ')"
+    RAW_COMMAND_NO_COMMENTS="$(strip_full_line_shell_comments "$COMMAND")"
+    CLEAN_COMMAND="$(normalize_shell_command_for_static_scan "$RAW_COMMAND_NO_COMMENTS")"
     # Ignore quoted separators for compound-command checks; real unquoted
     # separators still route through validate_compound_command.
     UNQUOTED_CLEAN="$(strip_quoted_regions "$CLEAN_COMMAND")"

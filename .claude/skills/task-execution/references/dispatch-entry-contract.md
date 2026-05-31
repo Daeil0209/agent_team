@@ -33,7 +33,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, cap-exceed routing, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
-- `task-execution` consumes the frozen team-runtime route basis together with `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP`; it must not infer team-runtime eligibility from tool visibility, convenience, or standalone `Agent` output.
+- `task-execution` consumes the frozen team-runtime route basis together with `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP`; it must not infer team-runtime eligibility from tool visibility, convenience, or direct-Agent output outside team runtime.
 - Concrete `PARALLEL-GROUPS` must include boundary, non-overlap, and measured/cited burden basis from the frozen planning path.
 - Dispatch readiness requires measurement from the frozen planning path rather than file-only, guessed, or pre-`work-planning` measurement.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is dispatch context only for configured independent-review handling.
@@ -50,6 +50,8 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - A frozen route lacking measured burden basis reopens `work-planning`.
 - A frozen route whose binding surface materialized as an external carrier requires on-disk verification of that carrier per `.claude/skills/work-planning/references/parallel-fit.md`. PROTECTED-LOCAL-RESTATEMENT-BASIS: runtime-side enforcement of the planning-side verification rule; runtime preflight requires planning-side verification before dispatch.
 - Missing on-disk verification reopens `work-planning` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
+- A frozen route that will create retained outputs or write-producing lane carriers requires quiet artifact-footprint and retained-path collision preflight from `.claude/reference/environment-output-root-filesystem-law.md` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
+- Missing, stale, or contradicted collision preflight reopens `work-planning` or packet correction before send; an existing retained-output path with mismatched current-run identity blocks assignment delivery instead of pushing collision discovery to the lane.
 - `PARALLEL-GROUPS: none` on multi-surface work requires a measured dependency or serial-burden basis; missing basis reopens `work-planning`.
 - Route, staffing, parallelism, or dispatch options that doctrine and evidence can settle reopen `work-planning` or continue with the evidence-backed route.
 - A field required by the frozen route that is missing, contradictory, or marked `not-applicable` without an allowed basis reopens `work-planning`.
@@ -68,7 +70,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Task identity requires the contract-owned task basis rather than agent name alone.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
-- Official message-channel payload keeps state detail, status, blocker, findings, counts, paths, `MESSAGE-CLASS` blocks, and `problem-report` fields out of visible teammate pane/final text; visible worker-originated transport is limited to the exact standalone state token allowed by Transport Payload.
+- Official message-channel payload keeps state detail, status, blocker, findings, counts, paths, `MESSAGE-CLASS` blocks, and `problem-report` fields out of visible teammate pane/final text; visible worker-originated transport is limited to the exact token-only state signal allowed by Transport Payload.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.

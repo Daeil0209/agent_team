@@ -32,7 +32,7 @@ When a developer role or skill says "developer additions" or "developer detail",
 | Meaningful/high/critical risk | surface-driven acceptance chain (split rules below) |
 | Request-bound documents | `CHANGE-BOUNDARY` must declare first-draft, merge-integration, or bounded correction surface |
 | Manifest-sync | `TASK-CLASS`, `MANIFEST-UNIQUE`, `OVERLAP-REVIEW`, `PRE-EXEC-REVIEW`, `WRITE-SCOPE` |
-| Governance-patch | All `All developer-owned production` fields plus the governance-patch additions below; not a standalone packet |
+| Governance-patch | All `All developer-owned production` fields plus the governance-patch additions below; not a separate packet |
 
 Acceptance-chain rules for the Meaningful/high/critical risk row:
 - `REVIEW-OWNER: reviewer` is required.

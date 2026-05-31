@@ -427,9 +427,8 @@ fi
 case "$MESSAGE_CLASS" in
   subjob-done) ;;
   problem-report)
-    printf '[%s] TRACK-WORKER-TRANSPORT WARN: visible problem-report from %s is malformed transport display; problem detail must use non-rendered carrier/task/runtime evidence and the visible envelope must use only the no-detail state token.\n' \
+    printf '[%s] TRACK-WORKER-TRANSPORT WARN: visible problem-report from %s is malformed transport display; recording class for recovery only. Problem detail must use non-rendered carrier/task/runtime evidence and the visible envelope must use only the no-detail state token.\n' \
       "$(date '+%Y-%m-%d %H:%M:%S')" "${SENDER_NAME:-unknown}" >> "$VIOLATION_LOG"
-    exit 0
     ;;
   hold\|blocker|status|scope-pressure|dispatch-ack) ;;
   *) exit 0 ;;

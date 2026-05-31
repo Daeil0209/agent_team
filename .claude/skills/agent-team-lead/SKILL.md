@@ -64,13 +64,15 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: startup-procedure atomic-check - reporting-pr
 - Interrupt/resume, user challenge, autonomous delegation, stabilization, or no-needless-ask risk consumes `interrupt-autonomy`.
 
 ## Operational Control
-- Team-agent dispatch and runtime path use `Skill(task-execution)`; standalone `Agent` is fallback evidence only.
+- Team-agent dispatch and runtime path use `Skill(task-execution)`; direct `Agent` outside team runtime is fallback evidence only.
 - Deliverable closeout and session teardown stay separate per `Skill(session-closeout)`.
 
 
 # Trigger Skeleton Procedure
 ## Lead Procedure
-- Before any team-lead direct tool call, visible-prose candidate, renderable tool/channel field, command stdout construction, or lead-owned procedure action that can drift in owner, route, report admission boundary, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `pre-action-gate`.
+- Before any team-lead direct tool call, visible-prose candidate, renderable tool/channel field, or command stdout construction, consume `pre-action-gate`.
+- Before any lead-owned procedure action that can drift in owner, route, report admission boundary, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength, consume `pre-action-gate`.
+- After a resolved owner skill or owner reference loads, load success, planning-freeze truth, route readiness, and setup need remain internal; execute that owner's first governed action without assistant-authored transition prose.
 
 ## Owning Skills
 This subsection is the detailed superset of team-lead routing; `agents/team-lead.md` `# Trigger Skeleton` carries the always-loaded critical subset.

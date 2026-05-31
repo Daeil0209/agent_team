@@ -94,6 +94,9 @@ Protected filesystem mutation uses direct owner-file mutation through the struct
 - Per-work-item retained outputs and intra-work synthesis co-locate in `claude_doc/<work-name>/` or its declared sub-batch directory.
 - `parallel-fit` on-disk verification resolves materialized binding surfaces against this canonical location.
 - `<work-name>` is named by the owning `work-planning` freeze; sub-batch directories such as `claude_doc/<work-name>/<date-or-batch>/` are allowed when multiple runs of the same work shape are needed.
+- Before freezing or reusing `claude_doc/<work-name>/` for multi-lane, parallel, retained-carrier, or audit work, run quiet artifact-footprint preflight on the intended output root and planned retained-output paths.
+- If that root contains prior task-created outputs and current `work-planning` did not freeze explicit prior-output reuse, freeze a collision-free sub-batch root before carrier materialization or assignment dispatch; prior outputs remain excluded sources under `work-planning` boundary gates.
+- Existing retained-output paths are reusable only when the current frozen basis explicitly reuses that artifact and the artifact identity matches the current `TASK-ID`, `WORK-SURFACE`, binding surface, and completion spine; otherwise choose a collision-free path/root or reopen packet correction before dispatch.
 
 ## Filesystem Boundary Rules
 - Record these before file work:

@@ -62,6 +62,9 @@ Load and learn the full `Skill(review-verification)` body and call with bounded 
 - question: PASS-2 produced-result verification for the exact target, outgoing claim, corpus, scope, and claim ceiling.
 - scope: critical exhaustive inspection of produced-result truth and soundness, evidence fit, defect, coherence, integrity, negative-risk, claim strength, and regression under `Skill(review-verification)` `### 5. Critical Review Gate` defeater-first posture.
 - claim ceiling: frozen `CLAIM-CEILING`; review-verification may classify findings, patch-worthiness, handoff disposition, or correction need only within that ceiling.
+PASS-2 review-verification is satisfied only by `Skill(review-verification)` or a current citable `review_verification_packet` meeting this step's reuse rules.
+This step does not create a direct `Agent(reviewer)` execution path outside team runtime. When the frozen route or acceptance basis requires an independent reviewer lane, that need is configured-lane work and follows the Work Execution default through `team-lead`, `Skill(task-execution)`, and the team-agent runtime before any `Agent` call.
+Only a completion-grade team-runtime carrier can satisfy that lane-owned review; already-returned direct-Agent output from outside team runtime remains fallback evidence only and cannot create PASS-2, independent-lane satisfaction, receipt, reuse, monitoring, or completion handoff.
 
 Consume `review_verification_packet` returned by `Skill(review-verification)` Step 14.
 PASS-2 can pass only on a current `review_verification_packet` returned by actual `Skill(review-verification)` load and Step 14 execution for the same target, outgoing claim, corpus, scope, and claim ceiling, or on valid prior-packet reuse that satisfies the rules below; named-lens scope also requires exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
@@ -88,7 +91,7 @@ Record `PASS-2`:
 
 `PASS-2` is a verifiable evidence record citing the actual `Skill(review-verification)` Step 14 packet identifier or content reference, the consumed `REVIEW-VERIFICATION-LENSES` when named-lens scope, and the explicit pass/fail verdict. A `PASS-2` claim without packet citation is carrier prose, not verified evidence.
 
-Receiver applicability — when self-verification runs on a synthesis or report that incorporates upstream carrier evidence (lane completion, sub-agent output, prior verified result), the carrier evidence quality is part of `PASS-2` truth. Upstream carrier asserting `Skill(...) loaded` or `PASS-N verified` without actual tool invocation evidence fails `PASS-2` for the downstream synthesis even when downstream internal consistency holds. Receiver routes the failure to Step 5 with `INPUT-FINDINGS` naming the upstream carrier defect.
+Receiver applicability — when self-verification runs on a synthesis or report that incorporates upstream carrier evidence (team-runtime lane completion, fallback direct-Agent evidence from outside team runtime, or prior verified result), the carrier evidence quality is part of `PASS-2` truth. Fallback direct-Agent evidence from outside team runtime stays bounded evidence only and cannot satisfy team-runtime lane work or independent reviewer/proof/validation routes. Upstream carrier asserting `Skill(...) loaded` or `PASS-N verified` without actual tool invocation evidence fails `PASS-2` for the downstream synthesis even when downstream internal consistency holds. Receiver routes the failure to Step 5 with `INPUT-FINDINGS` naming the upstream carrier defect.
 
 Reject bare `CONFIRMED`; require exact ladder state.
 

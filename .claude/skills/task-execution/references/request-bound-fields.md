@@ -95,7 +95,7 @@ It never creates lane ownership, authorizes agent-specific skill listing, or cha
 If missing from the frozen planning/workflow basis, keep it absent and route through the owning correction path.
 
 Carry these request-fit or methodology fields in the packet when the receiving lane must use them to plan, verify, or judge the assigned surface truthfully.
-When upstream planning froze reference-based citation or deviation basis, carry it as cited request-bound or artifact basis, not as a standalone `REFERENCE-USE` packet field.
+When upstream planning froze reference-based citation or deviation basis, carry it as cited request-bound or artifact basis, not as a separate `REFERENCE-USE` packet field.
 
 When frozen governance depth materially changes staffing, checkpoint, review, proof, or acceptance burden for the receiving lane, the assignment packet must also carry:
 - `PROJECT-TIER`

@@ -33,14 +33,14 @@ Runtime-detail load decision:
 4. If the evidence can change owner/action, load the reference and classify exactly one of runtime-ready, runtime-required, runtime-blocked, monitoring-required, recovery-required, or runtime-cleanup-needed.
 
 Runtime-detail consumption stays inside the Procedure Plane.
-It preserves `.claude/reference/reporting-prohibition-law.md` report-prohibition criteria and surfaces visible boot, monitoring, route, or runtime prose only through a reporting-law narrow exception.
+It preserves the current same-session `REPORTING-BASIS` and surfaces visible boot, monitoring, route, or runtime prose only through a reporting-law narrow exception.
 
 ## Activation
 Load at the main session's fresh start, resume, pause-return, or active-runtime recovery/monitoring re-entry.
-Session boot is loaded after the team-lead Startup Contract consumes `.claude/reference/reporting-core-law.md` and its triggered `.claude/reference/reporting-prohibition-law.md`.
-Before any boot, resume, or monitoring prose, preserve and apply those already-consumed reporting references.
-Clean startup preserves those reporting references without re-consuming them.
-If the Startup Contract lacks consumed reporting core law and triggered reporting-prohibition law before this skill loaded, route visible prose through the active team-lead startup owner before boot narration.
+Session boot is loaded after the team-lead Startup Contract records the current same-session `REPORTING-BASIS`.
+Before any boot, resume, or monitoring prose, apply the current `REPORTING-BASIS` to the exact candidate surface.
+Clean startup preserves the current `REPORTING-BASIS` only when session, file, compaction/drop/truncation, and applied-rule freshness checks pass; otherwise reopen the team-lead startup refresh before any boot, resume, monitoring, or progress prose.
+If the Startup Contract lacks current `REPORTING-BASIS` before this skill loaded, route visible prose through the active team-lead startup owner before boot narration.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Then proceed without runtime-detail reference load, runtime-ledger inspection, or boot prose.
@@ -114,7 +114,7 @@ See `references/runtime-state-detail.md` `Session-Start Recovery` for compaction
 
 ## Mode Split
 Two agent-execution modes must stay separate:
-- `standalone Agent`: legacy or fallback host evidence only; not configured lane dispatch or lane work.
+- `direct Agent outside team runtime`: legacy or fallback host evidence only; not configured lane dispatch or lane work.
 - `team-agent runtime`: coordinated teammate execution with shared task/mailbox coordination and monitoring.
 
 Require the explicit team-agent runtime path when the frozen route is parallel-fit, names `PARALLEL-GROUPS`, or needs shared team runtime.
@@ -137,7 +137,7 @@ Otherwise stay lead-local only when frozen route, route boundaries, and proof/ac
 Required team runtime stands despite runtime friction.
 
 The first dispatch-runtime execution move is the runtime escalation boundary; assignment starts only through assignment-grade `SendMessage`.
-Satisfy the runtime-readiness gate before that boundary if the work no longer remains lead-local or evidence-only standalone.
+Satisfy the runtime-readiness gate before that boundary if the work no longer remains lead-local or evidence-only direct-Agent work outside team runtime.
 If runtime is needed and current-session runtime is absent or not ready, return that classification as runtime evidence.
 
 ## Monitoring Sequence

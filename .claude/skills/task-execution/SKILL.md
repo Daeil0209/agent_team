@@ -19,7 +19,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Reference Map stays inside Purpose.
 ## Purpose
 Run frozen additional-agent execution after planning is complete.
-Activate only for assignment-grade dispatch, standalone `Agent` result classification, or dispatch recovery from a frozen route; reuse only a fresh same-session loaded-and-learned basis.
+Activate only for assignment-grade dispatch, any planned configured-lane `Agent` tool use for work production/review/proof/validation/shard execution, direct-Agent result classification from outside team runtime, or dispatch recovery from a frozen route; reuse only a fresh same-session loaded-and-learned basis.
 When active, it handles dispatch packet assembly, dispatch-bound binding-surface materialization, send truth, runtime creation/launch, and dispatch interruption state.
 Use `references/phase-transition-control.md` without loading this skill when the active workflow owner sends phase context without new bounded work.
 
@@ -44,7 +44,7 @@ After `Skill(task-execution)` is loaded, load trigger-specific references named 
 - `references/phase-transition-control.md`: phase-transition packet schema.
 - `references/lane-additions.md`: lane-specific packet-addition owner map and team-session controlled-value pointer.
 ## Activation
-Load and learn `Skill(task-execution)` when a frozen dispatch, reuse, blocker-clear, or standalone-result classification path requires it and no fresh current same-session `task-execution` load-and-learn basis exists.
+Load and learn `Skill(task-execution)` when a frozen dispatch, reuse, blocker-clear, planned configured-lane `Agent` tool use, or direct-Agent-result classification path requires it and no fresh current same-session `task-execution` load-and-learn basis exists.
 After a fresh current same-session `task-execution` load-and-learn basis exists, later dispatch, reuse, blocker-clear, and route-iteration paths consume the loaded-and-learned skill instead of another `Skill(task-execution)` call.
 Boundary changes refresh `work-planning` fields, route basis, dispatch-entry checks, and trigger-specific reference consumption; current same-session `task-execution` load basis is reusable only while fresh under the activation rule.
 `task-execution` activation basis is actual full-body `Skill(task-execution)` load-and-learn or `same-session-loaded-and-learned:task-execution` for the current Claude session.
@@ -58,6 +58,7 @@ Missing actual `work-planning` freeze discards the attempted dispatch path and r
 Use `references/dispatch-entry-contract.md` before this skill acts.
 Hard surface:
 - This skill must be active by actual `Skill(task-execution)` load or current same-session activation basis before dispatch-bound binding-surface materialization, packet assembly, `TeamCreate`, `Agent`, assignment-grade `SendMessage`, reuse, or blocker-clear movement.
+- After this skill or any trigger-specific reference loads from a frozen route, emit no assistant-authored prose; execute the next governed `TeamCreate`, `TaskCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, retained-carrier/file tool call, verification tool call, correction move, or blocker-routing path. `setup`, binding-surface authoring, runtime creation, carrier materialization, and collision recovery mean executable actions, not narration labels.
 - Required prior owners: current boundary `work-planning`, any frozen workflow/sequence owner, and a frozen additional-agent or ambiguous dispatch route.
 - New agent dispatch also requires dispatch-runtime execution proof consumed from `references/runtime-dispatch-law.md`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
@@ -71,7 +72,7 @@ Hard surface:
 - Route, staffing, parallelism, or dispatch option prompts to the user are not dispatch actions unless a proven user-action blocker is frozen.
 - Packet repair inside `task-execution` is limited to values already frozen by the governing path.
 - Agents receive bounded assignment packets derived from the freeze; the full internal planning block stays internal.
-- Same-boundary packet correction, receipt follow-up, execution follow-up, and bounded reuse consume the frozen boundary.
+- Same-boundary packet correction, receipt state-reconciliation follow-up, execution state-reconciliation follow-up, and bounded reuse consume the frozen boundary.
 - Reopen `work-planning` when a `work-planning` boundary-change axis moves.
 ## Step 1: Activate Frozen Route
 Select only the next concrete execution move that preserves the frozen routed state:
@@ -85,6 +86,7 @@ Core rule:
 - `ambiguous-route` means the frozen route opens dispatch handling but the exact dispatch move is not safely reducible to lead-local execution without moving owner, phase, staffing, proof, acceptance, or work-surface boundaries
 - an additional-agent route enters here as a frozen routed state
 - `ambiguous-route` defaults to team-routed handling, not lead-local compression
+- a planned configured-lane `Agent` tool call for work production, review, proof, validation, or shard execution enters team-routed handling before the host `Agent` call, not direct execution outside team runtime
 
 Keep explicit:
 - whether the next move is team-agent runtime creation, reuse by assignment message, team-scoped member creation, assignment-grade SendMessage, parallel assignment send, or blocker clearance
@@ -96,6 +98,8 @@ Run the actual execution move:
 - reuse a suitable live or standby agent when that is the frozen path
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
+- run the output-root and retained-path collision preflight required by `dispatch-entry-contract.md` and `assignment-packet.md` before packet materialization or assignment/reuse send
+- materialize required retained-output directories, shared carriers, binding surfaces, or shard manifests through quiet tool/file paths without assistant-authored visible preface, progress, labels, listings, or rationale; do not emit labels such as binding-surface authoring, runtime creation, carrier setup, or fresh-path selection
 - run `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` and packet final check before sending
 - reject any planned task-state tool call that violates that contract before the tool call
 - synchronize task-state lifecycle changes immediately on the same `TASK-ID` per `message-classes.md` `### Assignment Delivery Contract`; do not use task-row owner, assignee, subject, or description changes as state repair
@@ -112,9 +116,12 @@ Packet final check:
 - Reject assignment-grade `SendMessage` when the packet lacks `RECEIPT-COMPLETION-CONTRACT`.
 - Reject assignment-grade `SendMessage` when `RECEIPT-COMPLETION-CONTRACT` contradicts first-outcome or completion-handoff law.
 - Send only after every frozen route axis is current, present, and coherent; same-owner packet defects return to the same frozen owner, and any moved `work-planning` boundary-change axis reopens `work-planning`.
+- Reject any planned `TeamCreate` or team-scoped `Agent` plan that fails `references/runtime-dispatch-law.md` tool-envelope preflight.
+- For team-scoped `Agent`, treat the canonical spawn prompt as the `prompt` value only; `references/runtime-dispatch-law.md` owns the current required top-level envelope fields and correction path.
+- In an atomic parallel `Agent` batch, a missing required envelope field blocks the affected target or same-envelope subgroup before any dependent peer call is sent.
 - For `Agent` member creation, the spawn prompt is member creation only: role/member identity plus screen-safety.
 - Use the canonical team-member spawn prompt template: `Member: <name>. Role: <lane>. Screen-safety: no visible prose from this member-creation prompt.`
-- In the canonical template, only `<name>` and `<lane>` vary.
+- Inside the canonical `prompt` template, only `<name>` and `<lane>` vary.
 - Ordinary team-scoped member creation uses the canonical spawn prompt.
 - `Agent` spawn prompts contain only member identity, role identity, and screen-safety.
 - Before any parallel `Agent` batch, preflight every planned spawn prompt in the batch against this screen-safety floor.
@@ -130,10 +137,10 @@ Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight required before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - Planned `Agent` inside a team-routed path is team-scoped member creation only.
-- Host/background `Agent` execution without team-scope parameters is standalone route drift for team-routed work; stop before synthesis or reuse claims and recover through `references/runtime-dispatch-law.md`.
+- Host/background `Agent` execution without team-scope parameters is route drift for team-routed work; stop before synthesis or reuse claims and recover through `references/runtime-dispatch-law.md`.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
 - Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-modification)`.
-- `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, standalone-fallback classification, blocker-shape stop rule) live in `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.
+- `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, direct-Agent fallback classification, blocker-shape stop rule) live in `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.
 - Configured lanes, frozen `PARALLEL-GROUPS`, lane separation, proof/acceptance separation, and packet skill-field law outrank reuse or dispatch convenience.
 - Assignment-grade `SendMessage` uses `MESSAGE-CLASS: assignment`.
 - Phase-transition control `SendMessage` uses `MESSAGE-CLASS: phase-transition-control`.
@@ -148,7 +155,7 @@ Dispatch law:
 
 Inside the frozen routed state, treat these as the only valid next actions:
 - `TeamCreate`
-- `TaskCreate` under `references/message-classes.md` `### Assignment Delivery Contract` when task tracking is active
+- `TaskCreate` under `references/message-classes.md` `### Assignment Delivery Contract` only when task tracking is active and screen-safe under that contract
 - `reuse-via-SendMessage`
 - `Agent` member creation
 - assignment-grade `SendMessage`
@@ -171,8 +178,8 @@ The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every
 Before assignment-send evidence exists, missing retained-output files are expected non-evidence; do not classify `dispatch-pending-no-ack`, dispatch-recovery, packet rejection, or no-start from absent output carriers before a valid assignment-grade `SendMessage` has been sent.
 
 Reporting consequences:
-- Assignment success, no-change dispatch, dispatch-ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
-- Ack, returned, verified, accepted, standby, reuse, next-shard, next-batch, waiting, and idle facts stay internal while monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or closeout can continue.
+- Assignment, dispatch, receipt, lane-count, waiting/idle, completion, retained-output, completion-acceptance, reuse/standby, and next-work facts stay internal while monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or closeout can continue.
+- Wave/task-row staging, assignment-dispatch staging, await-receipt text, receipt-cleared text, teammate-running text, and idle/wait text are dispatch progress narration; execute the next dispatch, monitoring, recovery, carrier-consumption, synthesis, correction, or blocker-routing action instead.
 - User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition; after the admitted answer, resume the active owner action without assistant-authored resume, waiting, or monitoring narration.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
 
@@ -192,7 +199,7 @@ Recovery reconciliation:
 - Agent-start evidence after valid receipt supports monitoring and no-start recovery; agent-start evidence without valid receipt does not clear missing-receipt debt.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
-- Per-interruption-point recovery procedures (missing-`dispatch-ack` follow-up, `dispatch-ack`-without-agent-start follow-up, dead-or-unavailable classification, unaffected-target movement) live in `references/dispatch-recovery.md` `## Dispatch Interruption Recovery`; SKILL.md consumes that reference for the executable detail at every recovery decision.
+- Per-interruption-point recovery procedures (missing-`dispatch-ack` state-reconciliation follow-up, `dispatch-ack`-without-agent-start state-reconciliation follow-up, dead-or-unavailable classification, unaffected-target movement) live in `references/dispatch-recovery.md` `## Dispatch Interruption Recovery`; SKILL.md consumes that reference for the executable detail at every recovery decision.
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
 If interruption occurs while this skill is active or before clean move-out, preserve the dispatch side-effect boundary before continuing.
@@ -211,9 +218,9 @@ Rules:
 - partial dispatch maps to recovery or resume truth only
 ## Resolve Next Owner And Action
 After the execution move:
-- fallback standalone returned results, if already present, go to `team-lead` synthesis as bounded evidence only
+- fallback direct-Agent returned results from outside team runtime, if already present, go to `team-lead` synthesis as bounded evidence only
 - then `Skill(self-verification)` runs convergence before phase/stage-end reporting or synthesis-triggered redispatch
-- fallback standalone results stay outside team-runtime monitoring
+- fallback direct-Agent results from outside team runtime stay outside team-runtime monitoring
 - `session-boot` handles monitoring and agent-state interpretation
 - agent lanes handle execution and completion packets
 - `team-lead` handles synthesis after agent outputs arrive

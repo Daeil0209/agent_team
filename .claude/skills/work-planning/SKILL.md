@@ -59,7 +59,7 @@ Triggered references are mandatory before positive route freeze.
 - `references/evidence-tier.md`: coverage, benchmarks, and model-prior downgrade risk.
 - `references/deliverable-defaults.md`: proof, review, validation, user burden, and acceptance defaults by deliverable type.
 - `references/parallel-fit.md`: independent/sequential/interdependent discrimination, bottleneck defects, serial basis, and the active concurrent-agent cap.
-- `references/team-runtime-fit.md`: team-agent runtime fit and standalone fallback-evidence boundary.
+- `references/team-runtime-fit.md`: team-agent runtime fit and direct-Agent fallback-evidence boundary.
 - `references/execution-readiness.md`: packet, proof, setup, cleanup, parallel, and acceptance readiness.
 - `references/planning-record-fields.md`: field values, conditional fields, record template, `not-applicable` bases, serial reasons, and bounded corrections.
 - `references/governance-depth.md`: project/request tier classification, governance-depth fields, and scaling guardrails.
@@ -149,12 +149,12 @@ Parallel law:
 - See `references/parallel-fit.md` for independent/sequential/interdependent discrimination, burden basis, bottleneck-defect rule, and serial-basis evidence.
 - Load `references/parallel-fit.md` before freezing `ACTIVE-CONCURRENT-AGENT-CAP`, `AGENT-MAP`, or `PARALLEL-GROUPS`.
 - Load `references/team-runtime-fit.md` before freezing any route that considers `Agent` tool use, configured lane work, assignment-grade work, reuse, teammate coordination, independent specialist-fit surfaces, or additional-agent routing.
-- Classify considered `Agent` tool use, independent specialist-fit surfaces, or additional-agent routing through `references/team-runtime-fit.md` before route freeze: assignment-grade or lane work freezes team-agent runtime route; lawful evidence-only standalone use freezes a lead-local evidence purpose with no lane-state promise.
+- Classify considered `Agent` tool use, independent specialist-fit surfaces, or additional-agent routing through `references/team-runtime-fit.md` before route freeze: assignment-grade or lane work freezes team-agent runtime route; lawful evidence-only direct-Agent use outside team runtime freezes a lead-local evidence purpose with no lane-state promise.
 - Freeze `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - Apply the active concurrent-agent cap from `references/parallel-fit.md` before dispatch-ready freeze.
 - A freeze that exceeds that cap is invalid before dispatch and reopens this step for shard merging, sub-batching, or sequential phasing.
 - Additional-agent dispatch freezes the team-agent runtime route basis; runtime creation or reuse execution is decided later by `task-execution` from `runtime-dispatch-law.md`.
-- Dispatch-ready planning is invalid when independent specialist-fit, parallel-fit, configured lane work, or additional-agent routing is present without a frozen team-runtime route basis; lawful lead-local evidence-only standalone use is valid only when none of those team-runtime disqualifiers is active.
+- Dispatch-ready planning is invalid when independent specialist-fit, parallel-fit, configured lane work, or additional-agent routing is present without a frozen team-runtime route basis; lawful lead-local evidence-only direct-Agent use outside team runtime is valid only when none of those team-runtime disqualifiers is active.
 
 User-surface law:
 - If truthful proof or acceptance is blocked by a missing user-facing surface or tool path, freeze one bounded next step: `Skill(tool-acquisition)` for local discovery/setup, `Skill(external-tool-bridge)` for external bridge risk, the named setup owner, or blocker with bounded discovery/setup fields.
@@ -211,14 +211,10 @@ Agent packets use `task-execution` translation.
 
 ## Progress Update Surface
 Follow `.claude/reference/reporting-prohibition-law.md`.
-Planning progress emits no assistant-authored visible prose while the next owner/action can run in the same segment.
-Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
-Planning phase labels, phase-row titles, carrier-authoring announcements, binding-surface authoring announcements, prior-artifact reuse/exclusion rationale, and path-switch rationale are progress; keep them inside the planning record or retained carrier and execute the next owner action without visible prose.
-Planning measurement command shape is governed by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
-Request classification, consequentiality judgment, route freeze, corpus sizing, reference loading, skill loading, and dispatch-readiness are internal planning facts, not status reports.
-Continuity discovery, prior-work reuse or supersession, stale-evidence checks, git-history checks, artifact inventory, live-corpus mismatch classification, and interim verification outcomes are internal planning facts, not status reports.
-Do not narrate first-person progress openers, corpus-count summaries, measured line/file counts, loaded-reference lists, frozen-plan summaries, prior-artifact summaries, stale-state summaries, or interim verification conclusions around planning tools.
-Internal planning and dispatch-preparation detail stay internal while the next owner can run.
+The Progress Update Surface is a render boundary, not an output channel.
+Planning measurement, inventory, reference/skill load need, freeze truth, route/readiness truth, setup, dispatch setup, materialization, output-root choice, prior-artifact classification, and interim verification are internal planning facts.
+After a planning measurement or inventory tool returns, execute the next required `Read`, `Skill`, reference-consumption, carrier, dispatch, verification, correction, or blocker-routing move without measurement-complete, reference-loading, skill-loading, or next-step bridge prose.
+Planning measurement and carrier-materialization command shape is governed by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 Blocked execution emits only a report granted a narrow exception by `.claude/reference/reporting-prohibition-law.md`.
 Keep the planning record internal.
 

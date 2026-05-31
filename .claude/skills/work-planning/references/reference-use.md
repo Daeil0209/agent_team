@@ -50,7 +50,7 @@ Silent deviation is a spec that contradicts reference without explicit acknowled
 Silent deviation is a silent-PASS class defect.
 
 ## Packet And Verification Gate
-- `task-execution` does not require a standalone `REFERENCE-USE` packet field.
+- `task-execution` does not require a separate `REFERENCE-USE` packet field.
 - `task-execution` rejects assignment-grade dispatch when the packet needs a reference-based basis and the material citation or deviation identity is absent from request-bound packet fields or cited artifact basis.
 - Citation specificity must match trigger scope before dispatch that consumes the reference-based plan.
 - A disputed plan citation basis reopens `work-planning` reference-use correction or the owning review path; `Skill(self-verification)` remains a produced work-product outbound gate.

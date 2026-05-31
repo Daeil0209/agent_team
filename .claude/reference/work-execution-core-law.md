@@ -59,6 +59,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `Skill(self-verification)` is the producer-owned outbound gate for produced work-product surfaces; plan readiness disputes reopen `work-planning` or the owning review path.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
+- Configured-lane work defaults to current team-agent runtime at owner selection time. A planned `Agent(<lane>)` call that would produce researcher, developer, reviewer, tester, validator, independent review, proof, validation, or parallel shard work opens `Skill(task-execution)` before any `Agent` call.
+- Outside active `Skill(task-execution)`, direct `Agent(<lane>)` use outside team runtime is not lead-local execution, not self-verification execution, and not a configured-lane route; already-returned direct-Agent output from outside team runtime is fallback evidence only.
 - `team-lead` owner-duty detail is owned by `.claude/reference/work-procedure-ownership-law.md` `## Owner Separation`.
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
 - Project lanes outrank lead-local substitution.
@@ -120,7 +122,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Parallelism And Bottleneck Law
 - `[PARALLEL]` Independent bounded work becomes parallel-fit when parallel work reduces risk, latency, or context pressure.
 - Additional-agent lane work uses the current Claude Code agent-team runtime.
-- Lane dispatch, receipt, reuse, monitoring, and subjob handoff transport require current Claude Code agent-team runtime evidence; standalone `Agent` output remains fallback evidence.
+- Lane dispatch, receipt, reuse, monitoring, and subjob handoff transport require current Claude Code agent-team runtime evidence; direct-Agent output from outside team runtime remains fallback evidence.
+- Direct `Agent` outside team runtime is never the default dispatch path for configured-lane or independent specialist work; it can only be classified after the fact as bounded fallback evidence.
 - `work-planning` freezes `ACTIVE-CONCURRENT-AGENT-CAP` before `AGENT-MAP` or `PARALLEL-GROUPS` when additional-agent routing is possible.
 - The cap basis records explicit user maximum when present, current runtime/session ceiling when present, host capability limit, and default basis.
 - Additional-agent plans keep planned active members at or below the frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
@@ -179,6 +182,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - The next truthful action executes in the same turn or records cited lawful owner-deferral authority, blocker-routing with recovery owner/action, or explicit user cancellation/redirect.
 - Missing, stale, or absent basis is not closure; it opens the smallest basis-refresh, packet-correction, owner-correction, or blocker-routing only after executable correction routes are exhausted.
 - Same-turn next-action drive applies to every direct-execution step (`Edit`, `MultiEdit`, `Write`, `Bash`, `SendMessage`, `TaskCreate`, `TeamCreate`, `Agent`, every mutation, every dispatch, every tool call).
+- Parallel tool-call batches contain only independent calls; a tool call that reads, checks, validates, or depends on a file, runtime state, schema, task state, carrier, or other result produced by another tool call runs after the producer succeeds, not in the same batch.
 - The drive remains active at the execution boundary.
 - Host-rendered tool rows are execution evidence only and never create a user-facing prose slot.
 - Assistant-authored shell stdout/stderr is renderable report content; internal-evidence `Bash` command construction follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.

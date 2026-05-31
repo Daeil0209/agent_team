@@ -124,7 +124,7 @@ function isGeneratedMkdir(subcommand) {
   return sawPath;
 }
 
-function standaloneCleanupAllowed() {
+function boundedCleanupAllowed() {
   if (!command.trim() || /[|;&<>`$]/.test(command)) return false;
   return isBoundedCleanup(command) || isBoundedNonRecursiveCleanup(command);
 }
@@ -143,7 +143,7 @@ function resetScaffoldAllowed() {
   return index === parts.length;
 }
 
-if (mode === "cleanup" && standaloneCleanupAllowed()) {
+if (mode === "cleanup" && boundedCleanupAllowed()) {
   process.exit(0);
 }
 

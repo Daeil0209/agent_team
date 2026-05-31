@@ -19,8 +19,8 @@ Team-scoped `Agent` creates or reattaches the member address; it is not assignme
 Shutdown requests, phase-transition packets, and status probes are not assignment-grade.
 
 Runtime shape terms:
-- standalone `Agent` semantics owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` and `## Team-Agent-Only Lane Dispatch`.
-- `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use `team_name` and `name` to create or reattach a live member address.
+- direct `Agent` semantics outside team runtime are owned by `.claude/skills/task-execution/references/runtime-dispatch-law.md` `## Team Runtime Shape` and `## Team-Agent-Only Lane Dispatch`.
+- `team-agent runtime` is opened by `TeamCreate` for coordinated teammates with shared task/mailbox state. Team-scoped `Agent` calls use a member-creation envelope to create or reattach a live member address keyed by `team_name` and `name`.
 - Assignment-grade work begins only after governed assignment delivery per `.claude/skills/task-execution/references/message-classes.md` reaches that exact live member address.
 - Task-row identity and assignment delivery follow `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.
 - `team member address` is the exact live process-backed roster name. A configured role label is not an assignment-delivery address unless the roster contains that exact member with live pane proof.
@@ -49,7 +49,7 @@ Every assignment-grade work packet carries:
 - When a packet asserts or relies on PASS-2, review-verification, or lens application, packet preflight carries the actual `Skill(review-verification)` packet/lens basis; equivalent checks, proxy lens mappings, inline PASS wording, and checklist prose open `packet-correction` before assignment send.
 - `WRITE-SCOPE` carries bounded write and self-revision authority as one or more allowed write-path prefixes for the receiving lane.
 - Receiving lanes include reviewer, validator, tester, researcher, and any non-developer lane that produces a retained-output artifact.
-- Allowed prefixes are the frozen `RETAINED-OUTPUT-PATH` and declared `claude_doc/<work-name>/` sub-paths.
+- Allowed prefixes are the frozen `RETAINED-OUTPUT-PATH` and declared, collision-preflighted `claude_doc/<work-name>/` sub-paths.
 - Runtime write guards may consume the frozen retained carrier registry as corroborating scope evidence.
 - Registry absence does not remove a non-developer lane's authority to create or revise its assigned project output under `claude_doc/<work-name>/`.
 - A registry row proving that the target is another lane's retained carrier remains protected-filesystem bypass evidence.
@@ -61,11 +61,13 @@ Every assignment-grade work packet carries:
 - After assignment-grade `SendMessage` succeeds, any same-`TASK-ID` or same-`WORK-SURFACE` correction/reuse/reroute packet preserves the frozen `RETAINED-OUTPUT-PATH` and `WRITE-SCOPE` from the active assignment.
 - Changing `RETAINED-OUTPUT-PATH` for already-dispatched lane work is not packet correction; it requires prior-assignment side-effect reconciliation and a distinct bounded assignment/reuse/reroute with a new open `TASK-ID`.
 - A packet that changes `RETAINED-OUTPUT-PATH` while the prior same-`WORK-SURFACE` assignment can still write is duplicate side-effect risk and stops before send.
+- A write-producing packet whose `RETAINED-OUTPUT-PATH` already exists must carry a current-run reuse basis that matches `TASK-ID`, `WORK-SURFACE`, binding surface, and completion spine. A mismatch opens `packet-send stop` before assignment delivery.
+- Packet assertions that prior artifacts are excluded or absent require quiet artifact-footprint evidence from the frozen output root. A false excluded-source premise opens `packet-send stop` before assignment delivery.
 
 ### Receipt And Completion Contract
 `RECEIPT-COMPLETION-CONTRACT` is mandatory for assignment-grade work packets.
 It binds the receiver's upward outcome and final handoff.
-It must require `subjob-done` when packet review plus bounded lane work completes in the same execution block, or no-detail `dispatch-ack` / `scope-pressure` / `hold|blocker` when work cannot truthfully complete before first upward transport.
+It must require no-detail `dispatch-ack` before long-running lane work, completion-grade `subjob-done` when packet review plus bounded lane work completes in the same execution block, and no-detail `scope-pressure` or `hold|blocker` when truthful start is blocked.
 It must define `problem-report` as the mandatory nonclosing non-rendered problem-detail record before `dispatch-ack`, `scope-pressure`, or `hold|blocker` whenever intake finds a concrete problem and a receiver-consumable non-rendered channel is available.
 It must define `dispatch-ack` as no-unresolved-objection assignment acceptance and immediate work-start trigger, not a waiting gate.
 It must require `scope-pressure` or `hold|blocker` instead of `dispatch-ack` when truthful start remains blocked after `problem-report`.
@@ -91,13 +93,15 @@ See `agents/tester.md` RPA-1 for the lane-side restatement.
 ### Packet Preflight And Correction Routing
 Before assignment-grade dispatch, `task-execution` must run packet preflight against the frozen planning/workflow basis, not against gist. Preflight checks:
 - consume `message-classes.md` `### Assignment Delivery Contract` before packet-body checks, `TaskCreate`, or assignment-grade `SendMessage`
-- missing assignment-delivery tool-envelope fields send zero dependent calls and open tool-envelope correction
-- tool-envelope field placement rule is owned by `message-classes.md` `## Canonical Channel Registry`; preflight verifies that planned `TaskCreate` and `SendMessage` envelope shapes satisfy the canonical placement rule before send
+- missing assignment-delivery or team-scoped member-creation tool-envelope fields send zero dependent calls and open tool-envelope correction
+- tool-envelope field placement rule is owned by `message-classes.md` `## Canonical Channel Registry`; preflight verifies that planned team-scoped `Agent`, `TaskCreate`, and `SendMessage` envelope shapes satisfy the canonical placement rule before send
+- team-scoped `Agent` envelope preflight consumes `runtime-dispatch-law.md` before the host `Agent` call; the spawn prompt template supplies only the `prompt` field and never satisfies top-level envelope fields
 - `Agent` member-creation prompt screen-safety clause per `message-classes.md` Team Member Startup Recognition
 - for parallel `Agent` batches, every planned spawn prompt in an atomic same-envelope subgroup passes the screen-safety clause before that subgroup is sent; a failing independent target blocks only that target or subgroup when the remaining subgroup preserves frozen route, cap, lane separation, and proof/acceptance separation
 - assignment transport screen-safety clause: no extra visible prose around the governed assignment packet; when display-safe envelope shape is required, render follows `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` and the packet's required floor plus carrier pointer move to non-rendered task state or retained carriers
 - screen suppression never authorizes blank assignment delivery; a short shard packet is valid only when it carries the required packet floor and points to a complete receiver-consumable retained carrier or non-rendered task state
 - common base packet floor: `MESSAGE-CLASS`, `WORK-SURFACE`, `CURRENT-PHASE`, `REQUIRED-SKILLS`, `SEMANTIC-INTENT-BASIS`, `COMPLETION-STOP-CONDITION`, `RECEIPT-COMPLETION-CONTRACT`, `TARGET-INTENT-BASIS`, and an open executable `TASK-ID` from the active task namespace when task tracking is active
+- write-producing packet preflight verifies the frozen output root and every planned `RETAINED-OUTPUT-PATH` passed quiet artifact-footprint and retained-path collision preflight; existing mismatched artifacts open `packet-send stop: packet-correction` or `route-replan` before send
 - `packet-send stop` means team-lead sends no assignment-grade work delivery and opens `packet-correction` when the same frozen boundary remains valid; otherwise it opens `route-replan` or blocker-routing as named by the failed row.
 - `REQUIRED-SKILLS` skill-field validity: reject role names, receiving agent-specific skill names, lane-mismatched entries, contradictory entries, non-fitting entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send
 - `SKILL-RECOMMENDATIONS` skill-field validity: reject role names, receiving agent-specific skill names, contradictory entries, outside-boundary entries, owner-reserved entries, malformed entries, and full-workflow-only entries before assignment send; ordinary non-fitting recommendations remain receiver-classified as `not-material:<basis>`
@@ -209,7 +213,7 @@ Use assignment-grade packets for:
 - reroute
 - bounded reuse
 
-If an agent is receiving new bounded work in the same execution segment, carry any needed workflow phase context inside the assignment packet instead of sending a separate standalone phase-transition packet.
+If an agent is receiving new bounded work in the same execution segment, carry any needed workflow phase context inside the assignment packet instead of sending a separate phase-transition packet.
 
 ## Resolve Next Owner And Action
 - Passing packet preflight opens `task-execution` dispatch or reuse.

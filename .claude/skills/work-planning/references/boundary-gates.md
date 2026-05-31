@@ -134,7 +134,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - Multi-wave patch routes consume `SCOPE-BASELINE` union rules in `.claude/skills/work-planning/references/planning-record-fields.md`.
 
 ## Post-Planning Gate
-1. Open exactly one next owner/action from the frozen team-lead work plan.
+1. Open exactly one next owner/action from the frozen team-lead work plan by executing it directly.
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent or insufficient under that owner's freshness rule.
@@ -155,6 +155,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 19. Consume the team-lead work plan as phase, owner, action, stop/evidence, review/verification, iteration, and termination rows.
 20. Trace the next action to the first executable row of the team-lead work plan; failed trace reopens `work-planning`.
 21. Trace the termination row to the frozen `COMPLETION-STOP-CONDITION` and every `SCOPE-BASELINE` row; failed trace reopens `work-planning`.
+22. Completed post-planning truth is internal; continue by executing the named next owner/action without post-planning, reference-loading, skill-loading, measurement-complete, materialization, or next-step prose.
 
 ## Resolve Next Owner And Action
 - Measurement gaps open bounded corpus measurement.

@@ -73,7 +73,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Light answer-only request | No agent-specific skill, workflow, dispatch, or governance detail loads by habit. |
 | Read-only diagnostic, audit, or analytical work | Lead-local is valid only under `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md` lead-local conditions; team fan-out requires frozen context-footprint or independent-evidence basis. |
 | Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |
-| Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; standalone `Agent` is fallback evidence only, not team-runtime dispatch. |
+| Team-routed lane work | `task-execution` resolves active team name, live roster, and exact target before assignment-grade dispatch; direct `Agent` outside team runtime is fallback evidence only, not team-runtime dispatch. |
 | Parallel-fit work | Independent bounded surfaces are marked parallel-fit; serial collapse needs a named dependency or runtime-burden basis. |
 | Agent `hold|blocker` or `scope-pressure` | Consume explicit fields; classify as packet correction, route replan, parallel continue, proven user-action blocker candidate for reporting-prohibition, or internal blocker-routing; never smooth into progress, completion, or agent reluctance. |
 | Packet correction | Lawful only inside the same frozen owner, phase, deliverable, proof/acceptance chain, staffing shape, agent boundary, parallel grouping, and required verification gate. |

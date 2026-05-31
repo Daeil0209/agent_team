@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "owner-trigger-priority; skill-activation; artifact-discipline; reporting-prohibition; environment-readiness"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Owner Trigger Order
 
@@ -10,7 +11,8 @@ SOURCE-RULES: "owner-trigger-priority; skill-activation; artifact-discipline; re
 Consume this reference when several owner triggers are active.
 Select one executable next owner/action.
 Treat procedural narration as nonterminal evidence.
-Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` only when the selected next procedure action can drift in owner, route, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
+Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` before direct tool, renderable-field, visible-prose, or `Bash` stdout/stderr construction boundaries.
+For ordinary procedure routing with none of those boundaries, use `pre-action-gate` when the selected next procedure action can drift in owner, route, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
 Keep trigger order, named artifacts, consumption status, and next-owner/action internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception.
 When no narrow report exception exists, continue through the selected next owner/action internally.
 
@@ -89,5 +91,7 @@ Reopen planning when owner, phase, deliverable shape, proof chain, acceptance ch
 ## Status And Interruption
 Routine in-flight status uses `.claude/skills/agent-team-lead/references/routine-gate-continuation.md`.
 Interrupted or interrupt-blocked path status/challenge uses `.claude/skills/agent-team-lead/references/interrupt-autonomy.md`.
-If the boundary is already complete, route any answer through `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first; use `.claude/reference/reporting-user-reporting-law.md` `## Report Shape` only after admission, otherwise suppress prose and continue the owning path or blocker-routing after internal recovery.
+If the boundary is already complete, route any answer through the current `REPORTING-BASIS` and `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate` first.
+Refresh stale reporting basis before judgment.
+Use `.claude/reference/reporting-user-reporting-law.md` `## Report Shape` only after admission; otherwise suppress prose and continue the owning path or blocker-routing after internal recovery.
 If an open lead-owned path exists, continue through the next owner/action in the same turn.

@@ -20,8 +20,8 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 ## Allowed Values
 - `ACTION-CLASS` must be one of `lead-local`, `team-routed`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
 - `ROUTING-SIGNAL` must be one of `lead-local candidate`, `team-routing candidate`, `ambiguous-route`, `workflow-owner`, `sequence-owner`, `authorization-request`, `blocker-clear`, or `hold`.
-- No `ACTION-CLASS` or `ROUTING-SIGNAL` value represents standalone `Agent` as a work route.
-- Lawful standalone `Agent` evidence use records as `lead-local candidate` with an evidence-only `LEAD-LOCAL-WORK-ITEMS` basis.
+- No `ACTION-CLASS` or `ROUTING-SIGNAL` value represents direct `Agent` outside team runtime as a work route.
+- Lawful direct-Agent evidence use outside team runtime records as `lead-local candidate` with an evidence-only `LEAD-LOCAL-WORK-ITEMS` basis.
 - Any route needing configured lane work, assignment-grade work, receipt, reuse, monitoring, or completion handoff records `team-routing candidate` or `ambiguous-route`.
 - `DISPATCH-BLOCKERS` must be `[]`, `blocked:<owner-and-basis>`, or `authorization-required:<basis>`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
@@ -130,7 +130,7 @@ Other lanes receive the trigger flag as request-bound basis.
 Reference activations are loaded by the named owning skill at the listed phases.
 - `EXECUTION-READINESS-BASIS` is mandatory for consequential `team-lead` plans. Use `ready:<basis>` only when the next owner can execute the next action from the frozen basis without rediscovering material packet, skill, proof, tool/setup, cleanup, parallel, or acceptance facts. Use `blocked:<owner-and-basis>` when the next lawful action is blocker-clear, authorization request, or hold. Use `not-applicable:<basis>` only for delegated lane-local plans that are not producing a top-level route.
 - `EXECUTION-READINESS-BASIS: ready:<basis>` requires the next owner/action to match the first executable row of `TEAM-LEAD-WORK-PLAN`.
-- For team-routed, ambiguous-route, independent specialist-fit, additional-agent, or dispatch-capable routes, `EXECUTION-READINESS-BASIS: ready:<basis>` must include the frozen team-runtime route basis from `team-runtime-fit.md`; missing, standalone-only, or lead-local evidence-only basis is not `ready` when assignment-grade lane work, receipt, reuse, monitoring, completion handoff, or independent specialist separation is required.
+- For team-routed, ambiguous-route, independent specialist-fit, additional-agent, or dispatch-capable routes, `EXECUTION-READINESS-BASIS: ready:<basis>` must include the frozen team-runtime route basis from `team-runtime-fit.md`; missing, direct-Agent-only, or lead-local evidence-only basis is not `ready` when assignment-grade lane work, receipt, reuse, monitoring, completion handoff, or independent specialist separation is required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is mandatory only after configured independent-review trigger evaluation is material or required by the active workflow.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` records team-lead trigger handling, adjudication, or fail-open truth.
 - Configured-review output is not authority.
