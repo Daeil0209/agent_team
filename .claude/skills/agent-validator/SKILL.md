@@ -54,7 +54,7 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 - Reconstruct only when validation target, validation surface, expectation sources, scope baseline, closure/oracle row, evidence authority, upstream defer basis, and decisive evidence basis are anchored in packet or artifact evidence.
 - Mark inferred pieces explicitly.
 - Before blocking, derive safe facts from the frozen packet, task/workflow state, cited artifacts, or upstream completion.
-- If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, send `hold|blocker` to `team-lead` via `SendMessage`.
+- If expectation sources, review/test state, validation surface, decisive acceptance surface, decision surface, or user-facing acceptance basis remains materially ambiguous and non-derivable, route `hold|blocker` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Choose the decisive proof tool from the assigned decisive acceptance surface.
 - Source-state alone is decisive only when the frozen acceptance surface is the source/read document itself.
 - For executable interactive web/UI deliverables, browser-surface proof is decisive by default.
@@ -63,7 +63,7 @@ Per-target conditional PASS requirements live in `references/validator-lane-deta
 - For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, PASS depends on native-capable or format-faithful rendered/runtime evidence.
 - This applies when layout, formulas, pagination, interaction, or visible burden are part of acceptance.
 - Missing decisive-surface tooling routes to `hold|blocker` or `scope-pressure`.
-- Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
+- Route `hold|blocker` or `scope-pressure` to `team-lead` through the canonical Transport Payload path in `.claude/skills/task-execution/references/message-classes.md`, using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Do this unless a frozen discovery/setup path already authorizes the exact next step.
 - For executable user-facing programs, operator-exhaustive integrity is verdict-critical.
 - Rendered visual quality is verdict-critical.
@@ -90,7 +90,7 @@ Keep authoritative versus supplemental sources explicit.
 - Route freeze stays upstream-owned.
 - State the validation target type, validation target, expectation sources, validation surface, decisive user surface, upstream review/test states, and decision surface when materially required.
 - If the packet is over-scoped but splitable, return one concrete split shape before validation begins.
-- If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the acceptance basis.
+- If the packet is boundary-ambiguous or internally contradictory, route `hold|blocker` rather than guessing the acceptance basis.
 ### 2. Select Verdict Lens
 - Plan/design deliverables: validate request fit, design intent, owner boundaries, proof/acceptance chain, rule compliance, risk handling, and evidence sufficiency.
 - Implementations and executable artifacts: validate user-surface behavior, exact launch artifact, invocation evidence, and termination path.
@@ -145,7 +145,7 @@ Verdict labels:
 - Validator-specific material change includes changed validation surface, changed acceptance condition, or changed upstream state.
 ### 8. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before validator-specific completion additions below.
-- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3, and verdict citations against the consumed `review_verification_packet` `PACKET-ID` per `.claude/skills/review-verification/SKILL.md` Step 14.
 - Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
@@ -158,24 +158,24 @@ Verdict labels:
 - See `references/validator-lane-detail.md` for validator-specific completion detail.
 
 ## Blocked Validation
-- Use `hold|blocker` transport when decisive assignment basis is missing before truthful validation can continue.
+- Route `hold|blocker` state when decisive assignment basis is missing before truthful validation can continue.
 - Use `VERDICT: HOLD` only after bounded validation establishes blocked acceptance.
 - Valid HOLD causes: missing, contradictory, blocked, or insufficient evidence.
 - Missing review or test evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact missing owner.
 - Contradictory upstream evidence discovered during verdict arbitration: `VERDICT: HOLD` plus exact contradiction and resolution owner.
 - Environmental blocker: report it as environmental, not as soft PASS.
 - Missing decisive evidence before a truthful verdict pass can run is `hold|blocker`, not `scope-pressure`, unless the planning shape itself is defective.
-- A missing field triggers `hold|blocker` transport only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
+- A missing field triggers `hold|blocker` state only when it is decisive and non-derivable from frozen packet, task/workflow state, cited artifacts, or upstream completion.
 - Derivable gaps are reconstructed with marked inference.
 - Partly derivable gaps issue `VERDICT: HOLD` carrying covered scope, open surfaces, and correction owner/action unless the narrowed subset was frozen or upstream-deferred.
-- Send it to `team-lead` via `SendMessage`.
+- Route it to `team-lead` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Include exact missing fields, blocker basis, and safe next step.
 
 ## Active Communication Protocol
 - Validator-specific blocker: missing validation basis, blocked verdict basis, or missing decisive evidence.
 - Inference requires explicit marking and safe decisive basis.
-- Use `hold|blocker` transport for blocked verdict.
-- Completion uses `completion` only for converged validator-owned verdict work.
+- Route `hold|blocker` state for blocked verdict.
+- Completion uses `subjob-done` only for converged validator-owned verdict work.
 - Final acceptance rejection analysis uses `completion` with `OUTPUT-SURFACE: validator correction packet`.
 
 ## Resolve Next Owner And Action

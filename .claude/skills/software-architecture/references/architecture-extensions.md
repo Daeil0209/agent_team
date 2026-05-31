@@ -23,7 +23,7 @@ For operator-facing workflow tools and document-backed systems:
 - Explicit separation: manual inputs, imported seeds, editable overrides, derived calculations, locked summaries, exported outputs
 - Lifecycle-safe architecture: delete, archive, restore, period rollover, history access
 - Automation-ingestion pipelines as first-class contracts for repeated source files
-Send `hold|blocker` with architecture basis when artifact treats derived state as free-form editable or leaves lifecycle/ingestion architecture implicit.
+Record non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis when artifact treats derived state as free-form editable or leaves lifecycle/ingestion architecture implicit.
 ## Coupled-Core Architecture Extension
 For tightly coupled workflow cores:
 - Model many-to-many relationships explicitly; separate source facts, derived values, posted/closed results, reconciliation evidence into distinct write paths
@@ -34,15 +34,15 @@ For tightly coupled workflow cores:
   - Array-position-based addressing = defect.
   - ID recycling = defect.
   - Required: UUID or monotonically increasing ID, FK using stable IDs, referential integrity rules (cascade delete/nullify/restrict).
-Send `hold|blocker` with architecture basis when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
+Record non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis when architecture duplicates acceptance-critical facts across sibling stores or relies on hidden project-type assumptions.
 ## Operational Management Entity Architecture Extension
 For operational management systems (project management, resource allocation, personnel tracking, budget control):
 - **Core Entity Set Contract**: Define core entities (managed item/project, resource/person, assignment/allocation, budget/capacity, derived cost/summary) before module boundaries.
 - **Junction-Entity Separation**: Resource-to-managed-item relationships require a first-class junction entity with role, rate or unit, period, status, source, and override basis when material. Direct FK without junction = defect.
 - **Period And Rate Invariant Contract**: Period-based allocation, participation, capacity, utilization, or budget-rate calculations require explicit period granularity and unit semantics.
 - **Period And Rate Detail**: Name cap or threshold rules, overlap handling, over-allocation classification, recalculation trigger, lock or post rule, and historical display basis.
-- **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling sends `hold|blocker` with architecture basis.
-Send `hold|blocker` with architecture basis when either condition holds:
+- **Mandatory Design Order**: scope definition → entity identification → relationship definition → user work sequence → UI/module boundaries. Screen-first skipping entity modeling records non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis.
+Record non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis when either condition holds:
 - module/UI boundaries freeze before core entity set and relationship graph are explicit
 - material allocation/rate/capacity metrics lack period, unit, cap, overlap, recalculation, and lock/post contracts
 ## Workflow-Product Architecture Extension
@@ -66,7 +66,7 @@ Sequential phases; each phase requires predecessor gate to pass. No element sele
 9. **Output validation** — semantic dedup, repeatability scoring, constraint-satisfaction, volume compliance (non-compliance loops to compression only)
 10. **Final output** — after all validation gates pass
 ### Input Contract
-Three tiers with override resolution (org defaults < event-type defaults < event-specific overrides):
+Three tiers with override resolution (`org-culture defaults -> event-type defaults -> event-specific overrides`):
 - **Hard constraints**: venue type, budget ceiling, time window, headcount, logistics. Non-negotiable; gate feasibility.
 - **Soft preferences**: culture, decision-maker disposition, formality, interaction style. Shape selection but tradeable.
 - **Derived constraints**: participant burden, control feasibility, element appropriateness. Calculated, not directly input.
@@ -85,7 +85,7 @@ First-class gates before final delivery:
 - **Burden audit**: computed participant burden within tolerance; flag exceedances
 - **Autonomous sub-plan detection**: autonomous modules (own data model, constraint set, rendering) must not be flattened into parent structure
 - **Volume-target compliance**: non-compliance loops to compression, never to earlier phases
-Send `hold|blocker` with architecture basis when phase preconditions are missing, derived constraints are treated as inputs, pre-generation loop is absent, or output validation lacks semantic dedup/repeatability gates.
+Record non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis when phase preconditions are missing, derived constraints are treated as inputs, pre-generation loop is absent, or output validation lacks semantic dedup/repeatability gates.
 ### Research Report Architecture Extensions
 - **Search Strategy Engine**: phase between input collection and purpose resolution; decomposes question into concept axes with synonyms; produces per-source-type query plans (academic DB, patent DB, market, standards); outputs structured search spec with inclusion/exclusion filter gate and logged decisions.
 - **Multi-Source Pipeline**: each source family (academic paper, patent, market report, technical standard) uses own ingestion schema (metadata, epistemic-role tags, quality-tier); shared normalization → unified claim-evidence records; source-type distinctions preserved through cross-analysis phase.
@@ -105,7 +105,7 @@ Send `hold|blocker` with architecture basis when phase preconditions are missing
 ## Specialist Skill Maintainability Extension
 - Generate only semantically identical shared blocks from one owner fragment source; commit `SKILL.md` as static directly readable artifact; runtime assembly prohibited
 - Keep authority boundaries, domain defect taxonomies, and role-owned judgment rules owner-local; review generated diff as real contract surface before promotion
-Send `hold|blocker` with architecture basis when a maintainability refactor hides the reader-facing skill, removes owner-local safety text, or templates away domain-specific judgment.
+Record non-rendered `problem-report` before no-detail `hold|blocker` with architecture basis when a maintainability refactor hides the reader-facing skill, removes owner-local safety text, or templates away domain-specific judgment.
 
 ## Project Lessons (Recurrence-Barrier Catalog)
 Numbered project lessons captured from past incident hardening. Each lesson is a recurrence-barrier installed on the architecture surface; SKILL.md references this catalog by `L-NN` ID.

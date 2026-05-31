@@ -82,7 +82,7 @@ This file is an index, not a second enforcement gate. Each entry below names a d
 - Dispatch execution contract — `references/dispatch-execution-contract.md` for request-fit-packet → deliverable-shape → phase-intent → staffing-choice ordering and mixed-purpose split discipline.
 - Parallel shard and merge — `references/parallel-shard-merge.md` for parent-packet freeze, MERGE-OWNER, shard non-overlap, and integrated-output routing.
 - Task identity — `references/monitoring-lifecycle-detail.md`; task ids, agent names, and agent-scoped communication are distinct, and task identity comes from task evidence, not guessed agent identity.
-- Consequential upward completion — `.claude/skills/task-execution/references/completion-handoff.md` (completion contract) and `.claude/skills/task-execution/references/message-classes.md` (blocker-native fields); `references/upward-handoff.md` adds session-readable lane block and monotonic-state rules.
+- Consequential upward completion — `.claude/skills/task-execution/references/completion-handoff.md` (completion contract) and `.claude/skills/task-execution/references/message-classes.md` (non-rendered `problem-report` fields plus no-detail state tokens); `references/upward-handoff.md` adds session-readable lane block and monotonic-state rules.
 - Health-check, stale-response, and runtime-pressure — `references/monitoring-lifecycle-detail.md`; `hook-policy.sh` handles literal cadence/threshold values.
 
 ## Closeout Sequence

@@ -63,9 +63,9 @@ Required matrix columns:
 - `RESULT`: directly proven, disproven, blocked, or out-of-scope by dispatch
 
 Missing-information rule:
-- If `DESIGN-INTENT`, `ENTRY-PATH`, `USER-ACTION`, `EXPECTED-VISIBLE-RESULT`, `STATE-CHECK`, material `HARD-TEST-PROBE`, `CLOSURE-DEFECT-PROBE`, or closure/oracle basis cannot be named from the packet, frozen design, upstream oracle, or safe inference that does not invent scope or closure, stop and send governed `hold|blocker` transport to `team-lead` via `SendMessage`.
+- If `DESIGN-INTENT`, `ENTRY-PATH`, `USER-ACTION`, `EXPECTED-VISIBLE-RESULT`, `STATE-CHECK`, material `HARD-TEST-PROBE`, `CLOSURE-DEFECT-PROBE`, or closure/oracle basis cannot be named from the packet, frozen design, upstream oracle, or safe inference that does not invent scope or closure, stop and route `hold|blocker` through Transport Payload.
 - `POSTCONDITION-EVIDENCE` and `PLAYWRIGHT-PROOF` are lane-produced proof outputs; missing them before proof work does not block start when the proof target, oracle, environment, and tool path can be selected truthfully inside the tester lane.
-- If required postcondition or Playwright-equivalent evidence cannot be produced because the tool, runtime, or execution capability is unavailable after safe inference and authorized setup/tool routes, send governed `hold|blocker` transport with the common tool/evidence-gap fields.
+- If required postcondition or Playwright-equivalent evidence cannot be produced because the tool, runtime, or execution capability is unavailable after safe inference and authorized setup/tool routes, route `hold|blocker` state with the common tool/evidence-gap fields.
 - The blocker must name the exact missing field, why proof would become guesswork without it, and the smallest corrected packet that would unblock testing.
 - If the blocker concerns missing tool or execution capability, also include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 

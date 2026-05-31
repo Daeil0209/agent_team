@@ -16,7 +16,7 @@ Use when the document is an operational plan, schedule, timetable, resource plan
 - Representation options include table, timeline, gantt, checklist, and split-version.
 - Generation order canonical owner: `.claude/skills/business-workflow/references/schedule-planning-workflow.md` `## Generation State Machine` (8-step superset including representation/tooling step 4 + version separation + compression). Document-automation consumes that canonical sequence; any document-drafting-specific addendum (e.g., visual layout polish at compression stage) carries `PROTECTED-LOCAL-RESTATEMENT-BASIS: document-drafting variant` and lives below this line.
 - Place buffers by risk segment.
-- Risk segments include post-travel, pre-transition, post-meal, multi-person movement, and external-variable periods.
+- Risk segments consume the canonical risk-zone set from `.claude/skills/business-workflow/references/schedule-planning-workflow.md` `## Buffers`; document drafting may group weather, vendor delay, and equipment failure as external-variable periods only when source risk remains traceable.
 - Execution-control minimum field set: activity, time, responsible person, location, preparation items, prerequisites, status, and approval state.
 - Mandatory feasibility review checks hidden-time completeness, responsible-person duplication, equipment/resource conflict, buffer sufficiency, overcrowded slots, approval-timing gaps, and parallel-task interference.
 - Any mandatory feasibility failure marks a blocked feasibility state with correction owner/action.

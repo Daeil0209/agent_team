@@ -10,7 +10,7 @@ SOURCE-RULES: "request-fit; design-intent; frozen-planning-fields; route-continu
 Consume only the frozen planning fields needed for the current next owner/action before local execution, dispatch, phase movement, or reporting-law-admitted user-facing prose.
 Stop the current action when the consumed plan no longer supports it.
 
-PROTECTED-LOCAL-RESTATEMENT-BASIS: planning-consumption atomic-check — Reaction Rules, Cross-Continuity, and Lead-Only Context Guard colocated for atomic team-lead consultation at pre-dispatch and per planning-field consumption. Destinations (`.claude/skills/work-planning/references/cross-continuity.md`, `.claude/skills/task-execution/references/assignment-packet.md` Cross-Continuity Packet Check, `.claude/skills/work-planning/references/planning-record-fields.md`) are trigger-loaded; in-line application here preserves dispatch-readiness check atomicity.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: planning-consumption atomic-check — Reaction Rules, Cross-Continuity, and Lead-Only Context Guard colocated for atomic team-lead consultation at pre-dispatch and per planning-field consumption. Destinations (`.claude/skills/work-planning/references/cross-continuity.md`, `.claude/skills/task-execution/references/assignment-packet.md` Cross-Continuity Packet Check, `.claude/skills/work-planning/references/planning-record-fields.md`) are trigger-loaded; this surface preserves dispatch-readiness check atomicity by naming the consumed owners instead of restating their item sets.
 
 ## Consume When
 - A local execution path, workflow, sequence, dispatch, or reporting-law-admitted user-facing prose depends on frozen `work-planning` fields.
@@ -56,12 +56,8 @@ Consumer surfaces use the canonical field owner, then act on the consumed result
 - `EXECUTION-READINESS-BASIS` that is missing or blocked reopens `work-planning` unless `NEXT-CONSEQUENTIAL-ACTION` names a verified same-route blocker-clear move.
 
 ## Cross-Continuity
-Before `task-execution`, confirm the frozen route applied:
-- same-session prior patches
-- confirmed decisions
-- contract freezes
-- lane-charter changes
-- acceptance-contract changes
+Before `task-execution`, apply `.claude/skills/work-planning/references/cross-continuity.md` for the full active cross-continuity item set.
+For assignment-grade dispatch, also apply `.claude/skills/task-execution/references/assignment-packet.md` `## Session Cross-Continuity Packet Check`.
 
 Missing cross-continuity basis reopens `work-planning`.
 Contradictory cross-continuity basis reopens `work-planning`.

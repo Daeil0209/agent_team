@@ -59,7 +59,8 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 ## Information Movement Rule
 - `work-planning` -> `team-lead/task-execution` uses internal carry-forward of the frozen planning basis.
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
-- agent -> `team-lead` uses message-class transports (`dispatch-ack`, `status`, `scope-pressure`, `subjob-done`, exact `hold|blocker`).
+- agent -> `team-lead` state transport uses only the no-detail `dispatch-ack`, `scope-pressure`, `hold|blocker`, and `subjob-done` tokens.
+- agent -> `team-lead` problem/detail transport carries `problem-report`, lead-requested `status`, blocker-clear facts, blocker corrections, findings, counts, paths, and `MESSAGE-CLASS` blocks through non-rendered task state, retained carriers, runtime ledgers, or governed evidence artifacts as owned by `message-classes.md`; visible `SendMessage` fields carry only the allowed no-detail state token.
 - agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, and `TaskList`; `TaskOutput` and `TaskStop` are background-task inspection/control, not task-list identity.
@@ -67,7 +68,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Task identity requires the contract-owned task basis rather than agent name alone.
 - Task-state mutation is assigned only to an owner whose tool surface includes the required task-state tool.
 - Agent-originated team-runtime message traffic is official only through `SendMessage`.
-- Official message-channel payload keeps `dispatch-ack`, `subjob-done`, status, blocker, findings, counts, paths, and `MESSAGE-CLASS` blocks out of visible teammate pane/final text except for the exact standalone state token allowed by Transport Payload.
+- Official message-channel payload keeps state detail, status, blocker, findings, counts, paths, `MESSAGE-CLASS` blocks, and `problem-report` fields out of visible teammate pane/final text; visible worker-originated transport is limited to the exact standalone state token allowed by Transport Payload.
 - Official delivery uses the required message channel.
 - Keep the full internal planning block in `team-lead/task-execution` carry-forward.
 - Send only the bounded fields needed for the agent's owned surface.

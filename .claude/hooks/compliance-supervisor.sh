@@ -92,6 +92,16 @@ nondeveloper_worker_mutation_outside_own_output_scope() {
     return 1
   fi
 
+  if nondeveloper_worker_mutation_matches_other_retained_output "$worker_name" "$candidate_path" "$workspace_root"; then
+    return 0
+  fi
+
+  case "$candidate_path" in
+    "$workspace_root"/claude_doc/*)
+      return 1
+      ;;
+  esac
+
   return 0
 }
 
@@ -153,13 +163,31 @@ nondeveloper_worker_mutation_matches_own_output_scope() {
   [[ -n "$worker_name" && -n "$candidate_path" && -n "$workspace_root" ]] || return 1
   [[ -f "${WORKER_RETAINED_CARRIER_MAP:-}" ]] || return 1
 
-  local retained_path write_scope
+  local mapped_worker retained_path write_scope
   while IFS='|' read -r mapped_worker _task_id retained_path write_scope _rest; do
     [[ "$mapped_worker" == "$worker_name" ]] || continue
     if nondeveloper_candidate_matches_scope_path "$candidate_path" "$workspace_root" "$retained_path" "exact"; then
       return 0
     fi
     if nondeveloper_candidate_matches_write_scope_list "$candidate_path" "$workspace_root" "$write_scope"; then
+      return 0
+    fi
+  done < "$WORKER_RETAINED_CARRIER_MAP"
+
+  return 1
+}
+
+nondeveloper_worker_mutation_matches_other_retained_output() {
+  local worker_name="${1-}"
+  local candidate_path="${2-}"
+  local workspace_root="${3-}"
+  [[ -n "$worker_name" && -n "$candidate_path" && -n "$workspace_root" ]] || return 1
+  [[ -f "${WORKER_RETAINED_CARRIER_MAP:-}" ]] || return 1
+
+  local mapped_worker retained_path _write_scope
+  while IFS='|' read -r mapped_worker _task_id retained_path _write_scope _rest; do
+    [[ -n "$mapped_worker" && "$mapped_worker" != "$worker_name" ]] || continue
+    if nondeveloper_candidate_matches_scope_path "$candidate_path" "$workspace_root" "$retained_path" "exact"; then
       return 0
     fi
   done < "$WORKER_RETAINED_CARRIER_MAP"
@@ -807,10 +835,10 @@ const command = String(process.env.COMMAND_TEXT || "");
 const workspaceRoot = path.resolve(String(process.env.WORKSPACE_ROOT || process.cwd()));
 const { tokenize } = require(process.env.HOOK_COMMAND_TOKENIZER);
 
-const mutatingExec = new Set([
-  "rm", "rmdir", "mv", "cp", "touch", "mkdir", "chmod", "chown", "tee",
-  "bash", "sh", "python", "python3", "node", "nodejs",
-]);
+const mutatingExec = new Set(["rm", "rmdir", "mv", "cp", "touch", "mkdir", "chmod", "chown", "tee"]);
+const interpreterExec = new Set(["bash", "sh", "python", "python3", "node", "nodejs"]);
+const mutationBodyPattern =
+  /(^|[;&|()\s])(rm|rmdir|mv|cp|touch|mkdir|chmod|chown|tee)(\s|$)|(^|[^A-Za-z0-9_])(fs\.)?(rmSync|rm|rmdirSync|rmdir|unlinkSync|unlink|writeFileSync|writeFile|appendFileSync|appendFile|renameSync|rename|cpSync|cp|copyFileSync|copyFile|mkdirSync|mkdir|chmodSync|chmod|chownSync|chown|truncateSync|truncate|createWriteStream|openSync|write_text|write_bytes|touch|replace)\s*\(|(^|[ \t]):?[ \t]*>{1,2}[ \t]*[^ \t]/i;
 
 function clean(word) {
   return String(word || "").replace(/^['"]|['"]$/g, "");
@@ -820,13 +848,39 @@ function base(word) {
   return path.basename(clean(word)).replace(/[;{}]+$/g, "");
 }
 
+function inlineInterpreterMutates(words, execIndex, execWord) {
+  const isShell = execWord === "sh" || execWord === "bash";
+  const isNode = execWord === "node" || execWord === "nodejs";
+  const isPython = execWord === "python" || execWord === "python3" || /^python[0-9.]*$/.test(execWord);
+
+  for (let j = execIndex + 1; j < words.length; j++) {
+    const word = clean(words[j]);
+    if (word === "{}" || word === ";" || word === "\\;" || word === "+") break;
+    if ((isShell && word === "-c") || (isNode && (word === "-e" || word === "--eval")) || (isPython && word === "-c")) {
+      const body = clean(words[j + 1] || "");
+      return mutationBodyPattern.test(body);
+    }
+  }
+  return false;
+}
+
 function hasMutableFindAction(words, findIndex) {
   for (let i = findIndex + 1; i < words.length; i++) {
     const word = clean(words[i]);
     if (word === "-delete") return true;
     if (word === "-exec" || word === "-execdir") {
       const execWord = base(words[i + 1] || "");
-      if (mutatingExec.has(execWord) || /^python[0-9.]*$/.test(execWord)) return true;
+      if (mutatingExec.has(execWord)) return true;
+      if (interpreterExec.has(execWord) || /^python[0-9.]*$/.test(execWord)) {
+        if (inlineInterpreterMutates(words, i + 1, execWord)) return true;
+        const execArgs = [];
+        for (let j = i + 2; j < words.length; j++) {
+          const arg = clean(words[j]);
+          if (arg === "{}" || arg === ";" || arg === "\\;" || arg === "+" || arg === "\\") break;
+          execArgs.push(arg);
+        }
+        if (mutationBodyPattern.test(execArgs.join(" "))) return true;
+      }
     }
   }
   return false;
@@ -1444,7 +1498,6 @@ FILE_PATH="$(hook_decode_base64_field "${FIELDS[1]:-}")"
 COMMAND="$(hook_decode_base64_field "${FIELDS[2]:-}")"
 MUTATION_CONTENT_CHARS="$(hook_decode_base64_field "${FIELDS[3]:-}")"
 MUTATION_CONTENT_LINES="$(hook_decode_base64_field "${FIELDS[4]:-}")"
-
 CANONICAL_PATH=""
 if [[ -n "$FILE_PATH" ]]; then
   CANONICAL_PATH="$(realpath -m "$FILE_PATH" 2>/dev/null || printf '%s' "$FILE_PATH")"
@@ -1453,13 +1506,13 @@ fi
 if [[ "$TOOL_NAME" == "SendMessage" ]]; then
   SENDMESSAGE_DENY_REASON="$(sendmessage_schema_deny_reason 2>/dev/null || true)"
   if [[ -n "$SENDMESSAGE_DENY_REASON" ]]; then
-    emit_deny "Claude Code SendMessage rejects string message without summary. Add a summary field, or use a structured message object; state signals use summary: dispatch-ack/subjob-done with message: single ASCII space."
+    emit_deny "Claude Code SendMessage rejects string message without summary. Add a summary field, or use a structured message object; no-detail state signals use summary with message: single ASCII space."
     log_violation "$TOOL_NAME" "$SENDMESSAGE_DENY_REASON" "sendmessage-string-message-without-summary" || true
     exit 0
   fi
 fi
 
-	case "$TOOL_NAME" in
+		case "$TOOL_NAME" in
 	  Edit|MultiEdit|Write|NotebookEdit)
 	    if [[ -n "$CANONICAL_PATH" ]]; then
 	      BASENAME="$(basename "$CANONICAL_PATH" 2>/dev/null || printf '%s' "$CANONICAL_PATH")"
@@ -1738,18 +1791,26 @@ NODE
 
     UNQUOTED_SANITIZED="$(strip_quoted_regions "$SANITIZED_COMMAND")"
     GOVERNANCE_MUTATION_COMMAND="$(strip_heredoc_regions "$SANITIZED_COMMAND")"
-    if command_mutates_governance_surface "$GOVERNANCE_MUTATION_COMMAND"; then
-      # Content-preserving relocation/structure carve-out: see definition near subcommand_is_mutating_shell.
-      if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
-        exit 0
-      fi
-      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
-      exit 0
-    fi
-    if printf '%s' "$UNQUOTED_SANITIZED" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
-      # Lead-only approved system dependency install; agents must hold for setup.
-      if [[ -n "$SESSION_ID" ]] && ! runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
+	    if command_mutates_governance_surface "$GOVERNANCE_MUTATION_COMMAND"; then
+	      # Content-preserving relocation/structure carve-out: see definition near subcommand_is_mutating_shell.
+	      if command_is_narrow_governance_relocation "$SANITIZED_COMMAND"; then
+	        exit 0
+	      fi
+	      emit_deny "Mutable shell commands touching .claude governance surfaces are blocked. Use structured Edit/MultiEdit changes so policy and hook edits remain reviewable."
+	      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "governance-shell-mutation" || true
+	      exit 0
+	    fi
+	    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-delete([[:space:]]|$)|[[:space:]]-exec(dir)?([[:space:]]|$))'; then
+	      FIND_TARGET_DENY_REASON="$(mutable_find_target_deny_reason "$CLEAN_COMMAND" 2>/dev/null)"
+	      if [[ -n "$FIND_TARGET_DENY_REASON" ]]; then
+	        emit_deny "Mutable find target restricted (${FIND_TARGET_DENY_REASON}). Narrow the find target to a workspace-internal non-protected path."
+	        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-target-restricted" || true
+	        exit 0
+	      fi
+	    fi
+	    if printf '%s' "$UNQUOTED_SANITIZED" | grep -Eiq '(^|[[:space:]])(rm|mv|cp|install|touch|mkdir|rmdir|chmod|chown|tee)([[:space:]]|$)|(^|[[:space:]])git[[:space:]]+(checkout|switch|restore|reset|clean|commit|merge|rebase|push)([[:space:]]|$)|(^|[[:space:]])sed[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]])perl[[:space:]]+-i([[:space:]]|$)|(^|[[:space:]]):[[:space:]]*>|[[:space:]]>[[:space:]]*[^[:space:]]'; then
+	      # Lead-only approved system dependency install; agents must hold for setup.
+	      if [[ -n "$SESSION_ID" ]] && ! runtime_sender_session_is_worker "$SESSION_ID" 2>/dev/null; then
         if command_is_lead_authorized_apt_install "$CLEAN_COMMAND"; then
           exit 0
         fi
@@ -1767,18 +1828,7 @@ NODE
       exit 0
     fi
 
-    if printf '%s' "$SANITIZED_COMMAND" | grep -Eiq '(^|[[:space:]])find([[:space:]]|$).*([[:space:]]-delete([[:space:]]|$)|[[:space:]]-exec(dir)?([[:space:]]|$))'; then
-      FIND_TARGET_DENY_REASON="$(mutable_find_target_deny_reason "$CLEAN_COMMAND" 2>/dev/null)"
-      if [[ -n "$FIND_TARGET_DENY_REASON" ]]; then
-        emit_deny "Mutable find target restricted (${FIND_TARGET_DENY_REASON}). Narrow the find target to a workspace-internal non-protected path."
-        log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-target-restricted" || true
-        exit 0
-      fi
-      log_violation "$TOOL_NAME" "${CLEAN_COMMAND:0:80}" "mutable-find-warning" || true
-      exit 0
-    fi
-
-    ;;
+	    ;;
 esac
 
 exit 0

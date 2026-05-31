@@ -81,24 +81,24 @@ Failure to enter `session-boot` when the condition holds is a procedure violatio
 
 ## Agent Work States
 - `ACTIVE`: valid `dispatch-ack` accepted and started the current assignment execution block and no closing transport has followed.
-- `STANDBY`: valid completion-grade `subjob-done` was received for that assignment execution block; the exact teammate is eligible for reuse only when `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law` reuse-fit holds.
+- `STANDBY`: valid completion-grade `subjob-done` was received and the retained carrier passed acceptance for that assignment execution block; the exact teammate is eligible for reuse only when `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law` reuse-fit holds.
 - Shutdown-pending, removed, blocked, stale, validation-waiting, and residue are runtime or routing classifications, not additional team-lead managed lane work states.
 
 Canonical rule:
 - `dispatch-ack` is the `ACTIVE` no-objection acceptance and work-start signal, not progress, quality, completion, or acceptance evidence.
 - `dispatch pending` is not `agent started`.
 - `agent started` needs agent-side activity, progress, or other started-work evidence.
-- `completion` is the `STANDBY` tracking signal, not acceptance evidence.
+- Raw `subjob-done` is the completion-candidate tracking signal, not acceptance evidence; `STANDBY` records only after retained-carrier acceptance passes.
 
 ## Runtime Signals (Not Governance States)
 - `idle_notification` is an observation signal, not a lifecycle transition.
 - `permission_request` proves the agent is still active but blocked on permission.
-- completion records `STANDBY` through valid completion-grade `subjob-done`.
+- Completion-grade handoff records `STANDBY` only after valid `subjob-done` plus retained-carrier acceptance.
 - observed single-agent collapse in nominal parallel work is a distribution-planning defect, not local runtime authority to rebalance staffing.
 - when a workflow is active, runtime signals classify agent/runtime truth only; phase advancement and checkpoint clearance stay with the active workflow owner.
 
 ## Supervisor Decisions On Turn-Ended Signals
-After completion-grade output, governing control records `STANDBY`.
+After accepted completion-grade output, governing control records `STANDBY`.
 If immediate work exists, send `assignment`, `reuse`, or `reroute` as new bounded work.
 If no immediate work exists for that teammate, send no teammate-directed message for that turn-ended signal; continue any other live same-request owner/action through its active owner path.
 Shutdown uses structured `shutdown_request` and confirmed shutdown or termination evidence.
@@ -187,7 +187,7 @@ Canonical classes:
 
 Runtime recovery classification meanings:
 - `dispatch-pending-no-ack`: assignment send evidence exists and the target lacks valid `dispatch-ack`.
-- `dispatch-ack-no-start`: `dispatch-ack` accepted the assignment but no same-segment activity evidence exists; same-assignment execution follow-up required.
+- `dispatch-ack-no-start`: `dispatch-ack` accepted the assignment, the target stayed inside the frozen quiet activity window, and that window closed with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence; one same-assignment execution follow-up is then required.
 - `ack-late`: `dispatch-ack` arrived after follow-up or stale suspicion and must be reconciled with current assignment truth.
 - `working-permission-pending`: target is active and blocked on permission.
 - `working-transport-missing`: side-effect or activity evidence exists but required Communication Plane transport is missing.
@@ -204,10 +204,10 @@ Canonical evidence mapping:
 - named team runtime death requires evidence beyond default tmux-server absence
 - inbox growth, read/unread state, send success, config residue, and hook-emitted idle notices are not agent-originated progress
 - `dispatch-ack` -> `ACTIVE` no-objection assignment acceptance and work-start tracking signal only
-- agent `status`, `completion`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
+- agent `status`, completion-grade `subjob-done`, exact `hold|blocker`, or `scope-pressure` after receipt -> agent activity/start evidence
 - current-session agent tool activity or assigned-surface mtime/diff in the dispatch window -> corroborating activity/side-effect evidence
 - `permission_request` -> active-but-permission-blocked evidence
-- `completion` -> `STANDBY` tracking signal plus completion-grade carrier for synthesis
+- accepted completion-grade `subjob-done` plus retained-carrier acceptance -> `STANDBY` tracking signal and synthesis-ready carrier
 - structured `shutdown_request` -> shutdown intent evidence; shutdown becomes authoritative only through live-roster absence, termination evidence, or hook/runtime shutdown evidence
 
 ## Hook-Maintained Ledger Surfaces
@@ -255,22 +255,28 @@ Rules:
 
 ## Stall-Without-Progress Rule
 `dispatch-pending-no-ack` is missing assignment acceptance: trigger same-assignment receipt follow-up immediately in the same monitoring turn.
-`dispatch-ack` with no same-segment agent-start evidence is `dispatch-ack-no-start`: trigger same-assignment execution follow-up immediately in the same monitoring turn.
-Parallel dispatch is active monitoring, not passive waiting.
-Running-group reporting requires every intended target to be past `dispatch-pending-no-ack` and `dispatch-ack-no-start`.
-Recover the affected target and keep unaffected independent targets moving.
+Valid `dispatch-ack` clears the receipt barrier and opens quiet `ACTIVE` monitoring for that target.
+Immediate absence of agent-start evidence after valid `dispatch-ack` is not `dispatch-ack-no-start`, not a proceed prompt basis, and not an execution follow-up basis.
+Classify `dispatch-ack-no-start` only after the frozen quiet activity window closes with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence.
+Parallel dispatch is active non-rendered monitoring, not user-visible waiting narration.
+Running-group internal state treats valid `dispatch-ack` targets as active while they remain inside the quiet activity window.
+Recover only the affected target and keep unaffected independent targets moving.
 
+After valid `dispatch-ack`, choose the shortest task-specific quiet activity window before no-start recovery.
+For analysis, audit, review, validation, or proof shards, missing retained-output mtime during the expected read/work window is not no-start evidence; wait for a closing signal, blocker signal, permission/failure signal, or the frozen quiet activity window to expire.
 After agent-start evidence exists, choose the shortest task-specific re-check interval.
 For quick checks, use same-turn or minute-scale follow-up.
 The 30-minute bounded-task and 60-minute multi-track windows are upper caps, not default waits.
 Longer waits require an explicit planning basis.
 
 Corrective protocol:
-1. For `dispatch-pending-no-ack` or `dispatch-ack-no-start`, send exactly one same-assignment receipt or execution follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
-2. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
-3. Keep additional assignment/correction packets out of an inbox with no current response.
-4. At the re-check window, inspect current response and activity/side-effect evidence. Assigned-surface activity without valid first upward outcome prevents dead-or-unavailable classification but does not clear receipt debt; preserve the active agent in lane execution while team-lead continues missing-receipt or closing-transport recovery. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
-5. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
+1. For `dispatch-pending-no-ack`, send exactly one same-assignment receipt follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+2. For valid `dispatch-ack`, do not send a same-assignment execution follow-up during the quiet activity window.
+3. When `dispatch-ack-no-start` is classified after the quiet activity window, send exactly one same-assignment execution follow-up through `SendMessage`, continue unaffected work, and let monitoring check for response, permission, blocker, completion, or assigned-surface activity until the frozen re-check window.
+4. Reuse proceeds through assignment-grade work; shutdown proceeds through structured `shutdown_request`.
+5. Keep additional assignment/correction packets out of an inbox with no current response.
+6. At the re-check window, inspect current response and activity/side-effect evidence. Assigned-surface activity without valid first upward outcome prevents dead-or-unavailable classification but does not clear receipt debt; preserve the active agent in lane execution while team-lead continues missing-receipt or closing-transport recovery. When both response and activity evidence are absent after missing ACK or no-start follow-up, classify the target as dead-or-unavailable for the current assignment, then dispatch a replacement with the original assignment plus stall context, redistribute queued work, or send structured `shutdown_request` to release runtime.
+7. Keep stall, follow-up, replacement, redistribution, and shutdown decision internal while recovery can continue. Report only when `.claude/reference/reporting-prohibition-law.md` grants a narrow report exception; status-answer content follows `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`.
 
 Re-check windows are owner-selected monitoring bounds; the mandate is proactive detect-and-route-around. Team-lead chooses among routine nudge, replacement, redistribution, or shutdown of stalled teammates when doctrine and evidence determine the route.
 
@@ -294,7 +300,7 @@ Domain 3 is not hook auto-cleanup evidence.
 
 ### Domain 3: Messaging And Communication (channel completeness)
 - Class G: a teammate produced work-product evidence on disk (verdict, completion artifact, retained-output) without sending the canonical completion-class `SendMessage` back to `team-lead`; disk-only completion is incomplete completion handoff per `.claude/skills/task-execution/references/completion-handoff.md`.
-- Class H: a teammate received an assignment-grade `SendMessage`, marked it `read: true`, then idled without sending `dispatch-ack`, `scope-pressure`, `hold|blocker`, or any progress class; mailbox-consumed-without-channel-response is missing receipt.
+- Class H: a teammate received an assignment-grade `SendMessage`, marked it `read: true`, then idled without `problem-report`, visible `dispatch-ack`, `scope-pressure`/`hold|blocker` state, or any progress class; mailbox-consumed-without-channel-response is missing receipt.
 - Class I: a `SendMessage` succeeds at the inbox-write surface but the receiver process is non-responsive (idle without further turn execution) for the bounded receipt window; inbox-arrival ≠ teammate work-trigger is the surfaced defect.
 
 ## Runtime Integrity Detection Triggers

@@ -81,6 +81,7 @@ Stale or uncertain `work-planning` basis reloads and learns `Skill(work-planning
 Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, and outside draft fields are context only; actual `Skill(work-planning)` load plus required freeze proves activation or freeze.
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard routing gates, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
+Before the first corpus measurement or planning-inspection command, apply `references/boundary-gates.md` and `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 Governance audit/review uses the bounded corpus measurement rule.
 Governance defect, removal, and preservation judgment is planned as bounded review/verification rows.
 Synthesized-result judgment goes through `Skill(self-verification)` first.
@@ -204,7 +205,7 @@ Use `references/execution-readiness.md` when packet, proof, setup, cleanup, para
 ## Internal Planning Record
 Populate the internal record from `references/planning-record-fields.md`.
 Hold it in current-turn context only.
-Expose only plain next action, blocker, or owner/action truth.
+Keep it internal; user-visible next-action, blocker, or owner/action truth renders only after `.claude/reference/reporting-prohibition-law.md` admits the exact report reason and exact material.
 Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
@@ -212,6 +213,8 @@ Agent packets use `task-execution` translation.
 Follow `.claude/reference/reporting-prohibition-law.md`.
 Planning progress emits no assistant-authored visible prose while the next owner/action can run in the same segment.
 Planning measurement, setup, and dispatch preparation are progress; execute the owner action without tool-adjacent prose.
+Planning phase labels, phase-row titles, carrier-authoring announcements, binding-surface authoring announcements, prior-artifact reuse/exclusion rationale, and path-switch rationale are progress; keep them inside the planning record or retained carrier and execute the next owner action without visible prose.
+Planning measurement command shape is governed by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 Request classification, consequentiality judgment, route freeze, corpus sizing, reference loading, skill loading, and dispatch-readiness are internal planning facts, not status reports.
 Continuity discovery, prior-work reuse or supersession, stale-evidence checks, git-history checks, artifact inventory, live-corpus mismatch classification, and interim verification outcomes are internal planning facts, not status reports.
 Do not narrate first-person progress openers, corpus-count summaries, measured line/file counts, loaded-reference lists, frozen-plan summaries, prior-artifact summaries, stale-state summaries, or interim verification conclusions around planning tools.
@@ -221,7 +224,7 @@ Keep the planning record internal.
 
 ## Post-Planning Gate
 After planning, apply `references/boundary-gates.md` Post-Planning Gate.
-Open the first next owner/action from `TEAM-LEAD-WORK-PLAN`.
+Open the first next owner/action from `TEAM-LEAD-WORK-PLAN` by executing the next tool, dispatch, carrier, verification, or blocker-routing move without rendering the phase row, action label, route rationale, or progress narration.
 Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed.
 
 ## Resolve Next Owner And Action

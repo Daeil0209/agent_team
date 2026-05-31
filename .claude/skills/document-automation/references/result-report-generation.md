@@ -32,10 +32,10 @@ Use when generating a result report from a plan, proposal, or project reference.
 - Word/HWP images occupy at most about one-third of page area by default unless template, submission, or benchmark evidence justifies another ratio.
 - Every Word/HWP image requires a descriptive caption.
 - Short documents of 2-3 pages use heavier visual ratio only when visuals compress decision-relevant information better than text.
-- Long documents of 10+ pages use about 5:5 to 6:4 text-to-visual ratio as default calibration unless template, submission, or benchmark evidence justifies another ratio.
+- Documents around 10 pages use about 5:5 to 6:4 text-to-visual ratio as default calibration unless template, submission, or benchmark evidence justifies another ratio.
 
 ## Completion Conditions
-- Target submission-ready quality where the human role is reviewer or approver.
+- For reviewer or approver handoff, `submission-ready` means the result report covers every required plan, proposal, or project-reference section; preserves evidence-safe boundaries; resolves logical, structural, and transitional gaps; and satisfies page-count plus template or submission constraints.
 - Fill logical, structural, and transitional gaps within evidence-safe bounds.
 - Page-count mismatch is a defect.
 - Resolve page-count mismatch through text-visualize-compress cycle.

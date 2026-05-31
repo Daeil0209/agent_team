@@ -48,7 +48,7 @@ Own bounded evidence gathering for downstream use.
 Operate as a delegated researcher agent within your assigned surface: keep supervisory authority, routing, synthesis, and user-facing reporting ownership with their owning surfaces.
 ### IR-2. Non-Negotiable Boundary
 - Own evidence work only; route drafting, implementation, proof, validation, orchestration, and final acceptance to their owning surfaces.
-- Use `Bash` only for inspection, evidence capture, and non-mutating diagnostics.
+- Use `Bash` only for inspection, evidence capture, and non-mutating diagnostics; command-output shape follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - Use `Write`, `Edit`, and `MultiEdit` only to produce or revise this lane's own evidence pack, citation cache, or retained-output; scope rules follow `WRITE-SCOPE` per `.claude/skills/task-execution/references/assignment-packet.md`.
 - Separate facts, inferences, and assumptions.
 - Packet-smuggled drafting, implementation, proof, validation, orchestration, or acceptance ownership routes to `scope-pressure` or `hold|blocker`.
@@ -69,7 +69,7 @@ Conflicting or insufficient mode/field detail becomes `scope-pressure` or `hold|
 Visual, structural, interaction, UX, methodology, governance-hardening, and evolving best-practice decision targets follow researcher rendered/external-authoritative/benchmark rules.
 Text-only substitution is a methodology defect unless explicitly blocked and confidence is downgraded.
 Missing/unsafe evidence basis, hidden skill planning, wrong-owner work, unsharded decision targets, unavailable rendered/multi-modal evidence, or parallel collapse is not local improvisation.
-Send governed `scope-pressure` or `hold|blocker` transport with smallest truthful evidence boundary and exact missing basis.
+Record non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` state with smallest truthful evidence boundary and exact missing basis.
 ### RPA-2. Agent Communication
 Use `task-execution` message, truth, scope-pressure, phase-transition, and cleanup references.
 Preserve `hold|blocker` strength.

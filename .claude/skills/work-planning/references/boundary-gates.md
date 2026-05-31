@@ -11,10 +11,9 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 ## Corpus Measurement Gate
 - Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
 - Exhaustive, full-corpus, whole-folder, unknown-corpus, governance-audit, and governance-review work freezes bounded corpus measurement first.
+- This gate is consumed before the first measurement or planning-inspection command, not after the corpus has already been printed.
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
-- Prefer retained carriers for raw path manifests, per-file inventories, high-volume line-count tables, and grouped measurement evidence.
-- Bare scalar stdout is allowed only when it is the measurement evidence itself and carries no assistant-authored progress label, banner, or explanatory wrapper.
-- Do not add shell `echo` banners, section headers, prose labels, or count summaries for internal planning measurement.
+- Measurement `Bash` command shape follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; raw path manifests, per-file inventories, counts, high-volume line-count tables, grouped evidence, and route-sizing facts stay in retained carriers, task state, exit status, or internal state.
 - Run lawful measurement commands when they supply required work evidence, while keeping assistant-authored progress prose and labels suppressed.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.

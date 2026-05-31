@@ -27,9 +27,10 @@ This reference is a lead-side monitoring lookup; it consumes `.claude/skills/ses
 ## Runtime Signals
 - `idle_notification`: automatic runtime message indicating an agent's turn has ended. This is a technical signal, not a state transition.
 - `ACTIVE`/`STANDBY` tracking-signal semantics are owned by `.claude/skills/session-boot/references/runtime-state-detail.md` `## Agent Work States`.
-- Receiving `idle_notification` without a preceding completion transport from the agent is a completion failure (T2).
+- Receiving `idle_notification` without a preceding completion transport from the agent is a `completion-transport-missing` failure.
 - Receiving completion transport marks `STANDBY` directly.
 - Monitoring, idle, active, standby, stale, reuse, shutdown, lane-activity, wave, round, waiting, and holding facts stay internal runtime or Procedure Plane state unless `.claude/reference/reporting-prohibition-law.md` admits an explicit status answer for the exact material.
+- Team-lead may use shared task rows as orchestration visibility for assignment-block lifecycle, but monitoring truth reconciles task state with governed transport, retained-carrier acceptance, runtime state, and side-effect evidence. A task-row mismatch opens task-state synchronization or recovery, not result rework by itself.
 
 ## Agent Identity Rule
 - If multiple agents of the same capability can exist concurrently, assign unique agent names at dispatch time.
@@ -42,6 +43,7 @@ If no immediate work is available for that teammate, send no teammate-directed m
 If the teammate must be terminated, send `SendMessage(to: "<agent-name>", message: {type: "shutdown_request"})`, check termination evidence, then classify cleanup recovery, residue, standby, or blocker-routing explicitly when evidence remains absent.
 If validation or correction routing is pending, keep the teammate in `STANDBY`; validation wait is a route condition, not a separate lane work state.
 Supervisor decisions on idle or monitoring signals execute the selected action with required evidence preserved in runtime state, retained carriers, or tool results, and without assistant-authored visible progress prose, status narration, success stdout, listings, counts, or summaries.
+When a supervisor decision changes an assignment-block lifecycle state and task tracking is active, apply the `message-classes.md` `### Assignment Delivery Contract` same-`TASK-ID` update rule immediately when the host supports that visible status; otherwise record the transition in non-rendered runtime or task state.
 
 ## Message-First Runtime Cleanup Rule
 - Consume `.claude/skills/session-boot/references/runtime-state-detail.md` for canonical `ACTIVE` / `STANDBY`, completion, reuse, shutdown, and teammate-population semantics.

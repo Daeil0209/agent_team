@@ -53,7 +53,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Consolidate distributed common execution meaning to its single owner surface before adding, keeping, or expanding lower situation-specific detail.
 - Governance duplicate, reduction, re-home, or optimization work applies `.claude/reference/work-execution-core-law.md` governance hierarchy order before lower-surface edit selection.
 - Lower-surface edit selection records the upper-layer basis as preserved, corrected, or `not-material:<basis>` before mutation.
-- Keep lower duplicate wording only when it has protected local-restatement basis, direct-consumption relevance, or isolation-safety need.
+- Keep lower duplicate wording only when it has a named owner and direct-consumption or isolation-safety basis.
 - Each governance sentence carries one independent rule or action.
 - Different peer terms alone are not split basis.
 - Keep same-subject repeated-pattern wording in one sentence when only peer object terms differ under the same owner, action pattern, and governing role.

@@ -82,7 +82,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - Violating an active governance rule is a procedural defect unless the owning rule names a lawful exception.
 - Governance rules must be executable.
 - Executable rules name owner, trigger, stop, evidence, verification, and acceptance truth when material.
-- Procedure outranks habit, convenience, source memory, and model confidence.
+- Procedure and evidence outrank habit, convenience, source memory, model confidence, status signals, and partial stage completion.
 - Consequential work stays inside the named procedure currently open.
 - The active path keeps one truthful next owner and one truthful next action.
 

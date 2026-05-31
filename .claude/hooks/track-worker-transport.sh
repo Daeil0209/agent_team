@@ -27,8 +27,47 @@ clear_worker_idle_notice() {
 }
 
 PARSED="$(INPUT_JSON="$INPUT" HOOK_JSON_HELPERS="$HOOK_LIB_DIR/hook-json-helpers.js" node <<'NODE'
-const { encode, flattenText, joinUniqueText } = require(process.env.HOOK_JSON_HELPERS);
+const { encode, flattenText, flattenValueText, joinUniqueText } = require(process.env.HOOK_JSON_HELPERS);
 const TRANSPORT_TEXT_KEYS = ["text", "message", "content", "summary", "body", "value", "description", "title", "note", "notes"];
+
+function normalizeFieldName(key) {
+  return String(key || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function fieldValueToText(value) {
+  return joinUniqueText(flattenValueText(value));
+}
+
+function firstStructuredField(root, aliases) {
+  const targets = new Set(aliases.map(normalizeFieldName));
+  const queue = [root];
+  const seen = new Set();
+
+  while (queue.length) {
+    const current = queue.shift();
+    if (!current || typeof current !== "object") continue;
+    if (seen.has(current)) continue;
+    seen.add(current);
+
+    if (Array.isArray(current)) {
+      for (const entry of current) queue.push(entry);
+      continue;
+    }
+
+    for (const [key, value] of Object.entries(current)) {
+      if (targets.has(normalizeFieldName(key))) {
+        const text = fieldValueToText(value);
+        if (text) return text;
+      }
+    }
+
+    for (const value of Object.values(current)) {
+      if (value && typeof value === "object") queue.push(value);
+    }
+  }
+
+  return "";
+}
 
 try {
   const input = JSON.parse(process.env.INPUT_JSON || "{}");
@@ -46,6 +85,19 @@ try {
       .concat(flattenText(toolInput.notes, TRANSPORT_TEXT_KEYS))
       .concat(flattenText(toolInput.description, TRANSPORT_TEXT_KEYS))
   );
+  const structuredMessageClass = firstStructuredField(toolInput, [
+    "MESSAGE-CLASS", "MESSAGE_CLASS", "message-class", "message_class", "messageClass"
+  ]);
+  const structuredTaskId = firstStructuredField(toolInput, [
+    "TASK-ID", "TASK_ID", "task-id", "task_id", "taskId"
+  ]);
+  const structuredRetainedOutputPath = firstStructuredField(toolInput, [
+    "RETAINED-OUTPUT-PATH", "RETAINED_OUTPUT_PATH", "retained-output-path",
+    "retained_output_path", "retainedOutputPath"
+  ]);
+  const structuredWriteScope = firstStructuredField(toolInput, [
+    "WRITE-SCOPE", "WRITE_SCOPE", "write-scope", "write_scope", "writeScope"
+  ]);
   const fields = [
     toolName,
     String(input.session_id || ""),
@@ -59,11 +111,15 @@ try {
     messageText,
     Object.prototype.hasOwnProperty.call(toolResponse, "success") ? String(toolResponse.success) : "",
     Object.prototype.hasOwnProperty.call(toolResponse, "is_error") ? String(toolResponse.is_error) : "",
-    Object.prototype.hasOwnProperty.call(toolResponse, "error") ? String(toolResponse.error || "") : ""
+    Object.prototype.hasOwnProperty.call(toolResponse, "error") ? String(toolResponse.error || "") : "",
+    structuredMessageClass,
+    structuredTaskId,
+    structuredRetainedOutputPath,
+    structuredWriteScope
   ];
   process.stdout.write(fields.map(encode).join("\n"));
 } catch {
-  process.stdout.write("\n\n\n\n\n\n\n\n\n\n");
+  process.stdout.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 }
 NODE
 )"
@@ -83,6 +139,10 @@ DESCRIPTION="$(hook_decode_base64_field "${FIELDS[9]:-}")"
 SUCCESS_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[10]:-}")" | tr '[:upper:]' '[:lower:]')"
 IS_ERROR_VALUE="$(printf '%s' "$(hook_decode_base64_field "${FIELDS[11]:-}")" | tr '[:upper:]' '[:lower:]')"
 ERROR_VALUE="$(hook_decode_base64_field "${FIELDS[12]:-}")"
+STRUCTURED_MESSAGE_CLASS="$(hook_decode_base64_field "${FIELDS[13]:-}")"
+STRUCTURED_TASK_ID="$(hook_decode_base64_field "${FIELDS[14]:-}")"
+STRUCTURED_RETAINED_OUTPUT_PATH="$(hook_decode_base64_field "${FIELDS[15]:-}")"
+STRUCTURED_WRITE_SCOPE="$(hook_decode_base64_field "${FIELDS[16]:-}")"
 
 tool_response_succeeded || exit 0
 
@@ -118,6 +178,19 @@ NESTED_TYPE="$(hook_decode_base64_field "${CONTROL_FIELDS[2]:-}")"
 
 MESSAGE_CLASS="$(dispatch_field_raw_value "$DESCRIPTION" "message-class" 2>/dev/null || true)"
 MESSAGE_CLASS="$(printf '%s' "$MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
+if [[ -z "$MESSAGE_CLASS" && -n "$STRUCTURED_MESSAGE_CLASS" ]]; then
+  MESSAGE_CLASS="$(printf '%s' "$STRUCTURED_MESSAGE_CLASS" | tr '[:upper:]' '[:lower:]')"
+fi
+if [[ -z "$MESSAGE_CLASS" ]]; then
+  case "$TOP_TYPE" in
+    assignment|reuse|reroute) MESSAGE_CLASS="$TOP_TYPE" ;;
+  esac
+fi
+if [[ -z "$MESSAGE_CLASS" ]]; then
+  case "$NESTED_TYPE" in
+    assignment|reuse|reroute) MESSAGE_CLASS="$NESTED_TYPE" ;;
+  esac
+fi
 
 STATE_SIGNAL_PARSED="$(DESCRIPTION_TEXT="$DESCRIPTION" node <<'NODE'
 const rawText = String(process.env.DESCRIPTION_TEXT || "");
@@ -137,14 +210,30 @@ for (const line of lines.length ? lines : [text]) {
     signals.push(["dispatch-ack", ""]);
     continue;
   }
-  if (/^dispatch-ack\b/i.test(line)) {
-    displayDefect = displayDefect || "state-signal-visible-detail";
-    continue;
-  }
-  if (/^ack(?: task ([A-Za-z0-9._:-]+))?$/i.test(line)) {
-    legacyAck = true;
-    continue;
-  }
+	  if (/^dispatch-ack\b/i.test(line)) {
+	    displayDefect = displayDefect || "state-signal-visible-detail";
+	    continue;
+	  }
+	  if (/^scope-pressure$/i.test(line)) {
+	    signals.push(["scope-pressure", ""]);
+	    continue;
+	  }
+	  if (/^scope-pressure\b/i.test(line)) {
+	    displayDefect = displayDefect || "state-signal-visible-detail";
+	    continue;
+	  }
+	  if (/^hold\|blocker$/i.test(line)) {
+	    signals.push(["hold|blocker", ""]);
+	    continue;
+	  }
+	  if (/^hold\|blocker\b/i.test(line)) {
+	    displayDefect = displayDefect || "state-signal-visible-detail";
+	    continue;
+	  }
+	  if (/^ack(?: task ([A-Za-z0-9._:-]+))?$/i.test(line)) {
+	    legacyAck = true;
+	    continue;
+	  }
   if (/^completion$/i.test(line)) {
     legacyCompletion = true;
     continue;
@@ -299,8 +388,12 @@ if [[ "$SENDER_IS_WORKER" != "true" ]]; then
     assignment|reuse|reroute)
       if [[ -n "$TARGET_NAME" && "$TARGET_NAME" != "team-lead" ]]; then
         ASSIGNMENT_TASK_ID="$(dispatch_field_raw_value "$DESCRIPTION" "TASK-ID" 2>/dev/null || true)"
+        [[ -n "$ASSIGNMENT_TASK_ID" ]] || ASSIGNMENT_TASK_ID="$STRUCTURED_TASK_ID"
+        [[ -n "$ASSIGNMENT_TASK_ID" ]] || ASSIGNMENT_TASK_ID="$TASK_ID"
         ASSIGNMENT_RETAINED_OUTPUT_PATH="$(dispatch_field_raw_value "$DESCRIPTION" "RETAINED-OUTPUT-PATH" 2>/dev/null || true)"
+        [[ -n "$ASSIGNMENT_RETAINED_OUTPUT_PATH" ]] || ASSIGNMENT_RETAINED_OUTPUT_PATH="$STRUCTURED_RETAINED_OUTPUT_PATH"
         ASSIGNMENT_WRITE_SCOPE="$(dispatch_field_raw_value "$DESCRIPTION" "WRITE-SCOPE" 2>/dev/null || true)"
+        [[ -n "$ASSIGNMENT_WRITE_SCOPE" ]] || ASSIGNMENT_WRITE_SCOPE="$STRUCTURED_WRITE_SCOPE"
         remember_worker_retained_carrier "$TARGET_NAME" "$ASSIGNMENT_TASK_ID" "$ASSIGNMENT_RETAINED_OUTPUT_PATH" "$ASSIGNMENT_WRITE_SCOPE"
         clear_worker_idle_pending "$TARGET_NAME"
         clear_worker_idle_notice "$TARGET_NAME"
@@ -333,6 +426,11 @@ fi
 
 case "$MESSAGE_CLASS" in
   subjob-done) ;;
+  problem-report)
+    printf '[%s] TRACK-WORKER-TRANSPORT WARN: visible problem-report from %s is malformed transport display; problem detail must use non-rendered carrier/task/runtime evidence and the visible envelope must use only the no-detail state token.\n' \
+      "$(date '+%Y-%m-%d %H:%M:%S')" "${SENDER_NAME:-unknown}" >> "$VIOLATION_LOG"
+    exit 0
+    ;;
   hold\|blocker|status|scope-pressure|dispatch-ack) ;;
   *) exit 0 ;;
 esac
@@ -356,7 +454,8 @@ fi
 if [[ "$DUPLICATE_DISPATCH_ACK" != "true" ]]; then
   record_team_runtime_state "$SESSION_ID" "active" "worker-transport:${MESSAGE_CLASS}"
 
-  if [[ "$CURRENT_DISPATCH_STATE" == "pending" ]] \
+  if [[ "$MESSAGE_CLASS" != "problem-report" ]] \
+    && [[ "$CURRENT_DISPATCH_STATE" == "pending" ]] \
     && { [[ "$CURRENT_PENDING_WORKER" == "$SENDER_NAME" ]] || [[ "$CURRENT_DISPATCH_WORKER" == "$SENDER_NAME" ]]; }; then
     mark_team_dispatch_claimed "$SESSION_ID" "$SENDER_NAME" "worker-transport:${MESSAGE_CLASS}"
   elif [[ "$MESSAGE_CLASS" == "dispatch-ack" && "$ACK_WAS_REQUIRED" == "true" ]]; then
@@ -446,11 +545,6 @@ else
 fi
 
 case "$MESSAGE_CLASS" in
-  subjob-done)
-    clear_worker_idle_pending "$SENDER_NAME"
-    clear_worker_idle_notice "$SENDER_NAME"
-    mark_worker_standby "$SENDER_NAME"
-    ;;
   hold\|blocker)
     clear_worker_idle_pending "$SENDER_NAME"
     ;;
@@ -462,9 +556,12 @@ fi
 
 OUTPUT_SURFACE_VALUE="$(field_value "OUTPUT-SURFACE")"
 TARGET_INTENT_BASIS_VALUE="$(field_value "TARGET-INTENT-BASIS")"
+UPSTREAM_DECISION_BASIS_VALUE="$(field_value "UPSTREAM-DECISION-BASIS-CONSUMPTION")"
 EVIDENCE_BASIS_VALUE="$(field_value "EVIDENCE-BASIS")"
+VERIFIED_DATA_FEEDBACK_VALUE="$(field_value "VERIFIED-DATA-FEEDBACK")"
 OPEN_SURFACES_VALUE="$(field_value "OPEN-SURFACES")"
 FROZEN_CONTRACT_STATUS_VALUE="$(printf '%s' "$(field_value "FROZEN-CONTRACT-STATUS")" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+SCOPE_COVERAGE_VALUE="$(field_value "SCOPE-COVERAGE")"
 NEXT_LANE_VALUE="$(field_value "LANE-NEXT-CANDIDATE")"
 USER_RUN_PATH_VALUE="$(field_value "USER-RUN-PATH")"
 BURDEN_CONTRACT_VALUE="$(printf '%s' "$(field_value "BURDEN-CONTRACT")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
@@ -475,6 +572,7 @@ INTERACTION_COVERAGE_STATUS_VALUE="$(printf '%s' "$(field_value "INTERACTION-COV
 BURDEN_STATUS_VALUE="$(printf '%s' "$(field_value "BURDEN-STATUS")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 ACCEPTANCE_RECONCILIATION_VALUE="$(printf '%s' "$(field_value "ACCEPTANCE-RECONCILIATION")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 PLANNING_BASIS_VALUE="$(printf '%s' "$(field_value "PLANNING-BASIS-CONSUMPTION")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+SKILL_FIELD_CONSUMPTION_VALUE="$(field_value "SKILL-FIELD-CONSUMPTION")"
 RESOURCE_CLEANUP_VALUE="$(printf '%s' "$(field_value "RESOURCE-CLEANUP")" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 USER_SURFACE_PROOF_METHOD_VALUE="$(field_value "USER-SURFACE-PROOF-METHOD")"
 TOOL_PATH_USED_VALUE="$(field_value "TOOL-PATH-USED")"
@@ -484,9 +582,12 @@ LANE_LOCAL_RESULT_VERIFICATION_VALUE="$(field_value "LANE-LOCAL-RESULT-VERIFICAT
 
 OUTPUT_SURFACE="false"
 TARGET_INTENT_BASIS="false"
+UPSTREAM_DECISION_BASIS="false"
 EVIDENCE_BASIS="false"
+VERIFIED_DATA_FEEDBACK="false"
 OPEN_SURFACES="false"
 FROZEN_CONTRACT_STATUS="false"
+SCOPE_COVERAGE="false"
 NEXT_LANE="false"
 USER_RUN_PATH="false"
 BURDEN_CONTRACT="false"
@@ -497,6 +598,7 @@ INTERACTION_COVERAGE_STATUS="false"
 BURDEN_STATUS="false"
 ACCEPTANCE_RECONCILIATION="false"
 PLANNING_BASIS="false"
+SKILL_FIELD_CONSUMPTION="false"
 RESOURCE_CLEANUP="false"
 USER_SURFACE_PROOF_METHOD="false"
 TOOL_PATH_USED="false"
@@ -506,9 +608,12 @@ LANE_LOCAL_RESULT_VERIFICATION="false"
 
 [[ -n "$(printf '%s' "$OUTPUT_SURFACE_VALUE" | tr -d '[:space:]')" ]] && OUTPUT_SURFACE="true"
 [[ -n "$(printf '%s' "$TARGET_INTENT_BASIS_VALUE" | tr -d '[:space:]')" ]] && TARGET_INTENT_BASIS="true"
+[[ -n "$(printf '%s' "$UPSTREAM_DECISION_BASIS_VALUE" | tr -d '[:space:]')" ]] && UPSTREAM_DECISION_BASIS="true"
 [[ -n "$(printf '%s' "$EVIDENCE_BASIS_VALUE" | tr -d '[:space:]')" ]] && EVIDENCE_BASIS="true"
+[[ -n "$(printf '%s' "$VERIFIED_DATA_FEEDBACK_VALUE" | tr -d '[:space:]')" ]] && VERIFIED_DATA_FEEDBACK="true"
 [[ -n "$(printf '%s' "$OPEN_SURFACES_VALUE" | tr -d '[:space:]')" ]] && OPEN_SURFACES="true"
 [[ -n "$FROZEN_CONTRACT_STATUS_VALUE" ]] && FROZEN_CONTRACT_STATUS="true"
+[[ -n "$(printf '%s' "$SCOPE_COVERAGE_VALUE" | tr -d '[:space:]')" ]] && SCOPE_COVERAGE="true"
 [[ -n "$(printf '%s' "$NEXT_LANE_VALUE" | tr -d '[:space:]')" ]] && NEXT_LANE="true"
 [[ -n "$(printf '%s' "$USER_RUN_PATH_VALUE" | tr -d '[:space:]')" ]] && USER_RUN_PATH="true"
 [[ -n "$BURDEN_CONTRACT_VALUE" ]] && BURDEN_CONTRACT="true"
@@ -519,6 +624,7 @@ LANE_LOCAL_RESULT_VERIFICATION="false"
 [[ -n "$BURDEN_STATUS_VALUE" ]] && BURDEN_STATUS="true"
 [[ -n "$ACCEPTANCE_RECONCILIATION_VALUE" ]] && ACCEPTANCE_RECONCILIATION="true"
 [[ -n "$PLANNING_BASIS_VALUE" ]] && PLANNING_BASIS="true"
+[[ -n "$(printf '%s' "$SKILL_FIELD_CONSUMPTION_VALUE" | tr -d '[:space:]')" ]] && SKILL_FIELD_CONSUMPTION="true"
 [[ -n "$RESOURCE_CLEANUP_VALUE" ]] && RESOURCE_CLEANUP="true"
 [[ -n "$(printf '%s' "$USER_SURFACE_PROOF_METHOD_VALUE" | tr -d '[:space:]')" ]] && USER_SURFACE_PROOF_METHOD="true"
 [[ -n "$(printf '%s' "$TOOL_PATH_USED_VALUE" | tr -d '[:space:]')" ]] && TOOL_PATH_USED="true"
@@ -526,9 +632,16 @@ LANE_LOCAL_RESULT_VERIFICATION="false"
 [[ -n "$CONVERGENCE_PASS_VALUE" ]] && CONVERGENCE_PASS="true"
 [[ -n "$(printf '%s' "$LANE_LOCAL_RESULT_VERIFICATION_VALUE" | tr -d '[:space:]')" ]] && LANE_LOCAL_RESULT_VERIFICATION="true"
 
+case "$MESSAGE_CLASS" in
+  subjob-done)
+    clear_worker_idle_pending "$SENDER_NAME"
+    clear_worker_idle_notice "$SENDER_NAME"
+    ;;
+esac
+
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-LEDGER_LINE="$(TRANSPORT_TIMESTAMP="$TIMESTAMP" TRANSPORT_SESSION_ID="$SESSION_ID" TRANSPORT_SENDER_NAME="$SENDER_NAME" TRANSPORT_TEAM_NAME="$TEAM_NAME" TRANSPORT_AGENT_TYPE="$AGENT_TYPE" TRANSPORT_TASK_ID="$TASK_ID" TRANSPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" TRANSPORT_TASK_SUBJECT="$TASK_SUBJECT" TRANSPORT_MESSAGE_CLASS="$MESSAGE_CLASS" TRANSPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" TRANSPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" TRANSPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" TRANSPORT_OPEN_SURFACES="$OPEN_SURFACES" TRANSPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" TRANSPORT_NEXT_LANE="$NEXT_LANE" TRANSPORT_USER_RUN_PATH="$USER_RUN_PATH" TRANSPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" TRANSPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" TRANSPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" TRANSPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" TRANSPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" TRANSPORT_BURDEN_STATUS="$BURDEN_STATUS" TRANSPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" TRANSPORT_PLANNING_BASIS="$PLANNING_BASIS" TRANSPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" TRANSPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" TRANSPORT_TOOL_PATH_USED="$TOOL_PATH_USED" TRANSPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" TRANSPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION="$LANE_LOCAL_RESULT_VERIFICATION" TRANSPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" TRANSPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" TRANSPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" TRANSPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" TRANSPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" TRANSPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" TRANSPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" TRANSPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" TRANSPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" TRANSPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" TRANSPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_VALUE="$LANE_LOCAL_RESULT_VERIFICATION_VALUE" node <<'NODE'
+LEDGER_LINE="$(TRANSPORT_TIMESTAMP="$TIMESTAMP" TRANSPORT_SESSION_ID="$SESSION_ID" TRANSPORT_SENDER_NAME="$SENDER_NAME" TRANSPORT_TEAM_NAME="$TEAM_NAME" TRANSPORT_AGENT_TYPE="$AGENT_TYPE" TRANSPORT_TASK_ID="$TASK_ID" TRANSPORT_TASK_ID_FIELD_PRESENT="$TASK_ID_FIELD_PRESENT" TRANSPORT_TASK_SUBJECT="$TASK_SUBJECT" TRANSPORT_MESSAGE_CLASS="$MESSAGE_CLASS" TRANSPORT_OUTPUT_SURFACE="$OUTPUT_SURFACE" TRANSPORT_TARGET_INTENT_BASIS="$TARGET_INTENT_BASIS" TRANSPORT_UPSTREAM_DECISION_BASIS="$UPSTREAM_DECISION_BASIS" TRANSPORT_EVIDENCE_BASIS="$EVIDENCE_BASIS" TRANSPORT_VERIFIED_DATA_FEEDBACK="$VERIFIED_DATA_FEEDBACK" TRANSPORT_OPEN_SURFACES="$OPEN_SURFACES" TRANSPORT_FROZEN_CONTRACT_STATUS="$FROZEN_CONTRACT_STATUS" TRANSPORT_SCOPE_COVERAGE="$SCOPE_COVERAGE" TRANSPORT_NEXT_LANE="$NEXT_LANE" TRANSPORT_USER_RUN_PATH="$USER_RUN_PATH" TRANSPORT_BURDEN_CONTRACT="$BURDEN_CONTRACT" TRANSPORT_PROOF_SURFACE_MATCH="$PROOF_SURFACE_MATCH" TRANSPORT_RUN_PATH_STATUS="$RUN_PATH_STATUS" TRANSPORT_CORE_WORKFLOW_STATUS="$CORE_WORKFLOW_STATUS" TRANSPORT_INTERACTION_COVERAGE_STATUS="$INTERACTION_COVERAGE_STATUS" TRANSPORT_BURDEN_STATUS="$BURDEN_STATUS" TRANSPORT_ACCEPTANCE_RECONCILIATION="$ACCEPTANCE_RECONCILIATION" TRANSPORT_PLANNING_BASIS="$PLANNING_BASIS" TRANSPORT_SKILL_FIELD_CONSUMPTION="$SKILL_FIELD_CONSUMPTION" TRANSPORT_RESOURCE_CLEANUP="$RESOURCE_CLEANUP" TRANSPORT_USER_SURFACE_PROOF_METHOD="$USER_SURFACE_PROOF_METHOD" TRANSPORT_TOOL_PATH_USED="$TOOL_PATH_USED" TRANSPORT_TOOL_EXECUTION_EVIDENCE="$TOOL_EXECUTION_EVIDENCE" TRANSPORT_CONVERGENCE_PASS="$CONVERGENCE_PASS" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION="$LANE_LOCAL_RESULT_VERIFICATION" TRANSPORT_OPEN_SURFACES_VALUE="$OPEN_SURFACES_VALUE" TRANSPORT_FROZEN_CONTRACT_STATUS_VALUE="$FROZEN_CONTRACT_STATUS_VALUE" TRANSPORT_USER_RUN_PATH_VALUE="$USER_RUN_PATH_VALUE" TRANSPORT_BURDEN_CONTRACT_VALUE="$BURDEN_CONTRACT_VALUE" TRANSPORT_PROOF_SURFACE_MATCH_VALUE="$PROOF_SURFACE_MATCH_VALUE" TRANSPORT_RUN_PATH_STATUS_VALUE="$RUN_PATH_STATUS_VALUE" TRANSPORT_CORE_WORKFLOW_STATUS_VALUE="$CORE_WORKFLOW_STATUS_VALUE" TRANSPORT_INTERACTION_COVERAGE_STATUS_VALUE="$INTERACTION_COVERAGE_STATUS_VALUE" TRANSPORT_BURDEN_STATUS_VALUE="$BURDEN_STATUS_VALUE" TRANSPORT_ACCEPTANCE_RECONCILIATION_VALUE="$ACCEPTANCE_RECONCILIATION_VALUE" TRANSPORT_PLANNING_BASIS_VALUE="$PLANNING_BASIS_VALUE" TRANSPORT_RESOURCE_CLEANUP_VALUE="$RESOURCE_CLEANUP_VALUE" TRANSPORT_USER_SURFACE_PROOF_METHOD_VALUE="$USER_SURFACE_PROOF_METHOD_VALUE" TRANSPORT_TOOL_PATH_USED_VALUE="$TOOL_PATH_USED_VALUE" TRANSPORT_TOOL_EXECUTION_EVIDENCE_VALUE="$TOOL_EXECUTION_EVIDENCE_VALUE" TRANSPORT_CONVERGENCE_PASS_VALUE="$CONVERGENCE_PASS_VALUE" TRANSPORT_LANE_LOCAL_RESULT_VERIFICATION_VALUE="$LANE_LOCAL_RESULT_VERIFICATION_VALUE" node <<'NODE'
 const line = {
   timestamp: process.env.TRANSPORT_TIMESTAMP || "",
   sessionId: process.env.TRANSPORT_SESSION_ID || "",
@@ -542,9 +655,12 @@ const line = {
   fields: {
     outputSurface: process.env.TRANSPORT_OUTPUT_SURFACE === "true",
     targetIntentBasis: process.env.TRANSPORT_TARGET_INTENT_BASIS === "true",
+    upstreamDecisionBasis: process.env.TRANSPORT_UPSTREAM_DECISION_BASIS === "true",
     evidenceBasis: process.env.TRANSPORT_EVIDENCE_BASIS === "true",
+    verifiedDataFeedback: process.env.TRANSPORT_VERIFIED_DATA_FEEDBACK === "true",
     openSurfaces: process.env.TRANSPORT_OPEN_SURFACES === "true",
     frozenContractStatus: process.env.TRANSPORT_FROZEN_CONTRACT_STATUS === "true",
+    scopeCoverage: process.env.TRANSPORT_SCOPE_COVERAGE === "true",
     laneNextCandidate: process.env.TRANSPORT_NEXT_LANE === "true",
     userRunPath: process.env.TRANSPORT_USER_RUN_PATH === "true",
     burdenContract: process.env.TRANSPORT_BURDEN_CONTRACT === "true",
@@ -555,6 +671,7 @@ const line = {
     burdenStatus: process.env.TRANSPORT_BURDEN_STATUS === "true",
     acceptanceReconciliation: process.env.TRANSPORT_ACCEPTANCE_RECONCILIATION === "true",
     planningBasis: process.env.TRANSPORT_PLANNING_BASIS === "true",
+    skillFieldConsumption: process.env.TRANSPORT_SKILL_FIELD_CONSUMPTION === "true",
     resourceCleanup: process.env.TRANSPORT_RESOURCE_CLEANUP === "true",
     userSurfaceProofMethod: process.env.TRANSPORT_USER_SURFACE_PROOF_METHOD === "true",
     toolPathUsed: process.env.TRANSPORT_TOOL_PATH_USED === "true",

@@ -98,7 +98,8 @@ Run the actual execution move:
 - assemble the real outgoing packet from the frozen plan basis
 - run `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` and packet final check before sending
 - reject any planned task-state tool call that violates that contract before the tool call
-- confirm retained-output carriers with commands that emit no assistant-authored visible success output; failed checks surface only through the governing blocker or correction path
+- synchronize task-state lifecycle changes immediately on the same `TASK-ID` per `message-classes.md` `### Assignment Delivery Contract`; do not use task-row owner, assignee, subject, or description changes as state repair
+- confirm retained-output carriers with commands shaped by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; failed checks surface only through the governing blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - Carry `DERIVED-DEFAULTS`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, and request-bound packet fields only from the frozen planning basis or active workflow owner's phase-local refinement.
 - Packet skill and request-bound field duties route through `references/assignment-packet.md` and `references/request-bound-fields.md`; dispatch preserves their frozen names and values.
@@ -120,6 +121,8 @@ Packet final check:
 - Failed spawn-prompt preflight opens prompt-set correction before any `Agent` call from that batch.
 - Hook denial is enforcement evidence. A hook `BLOCKED` result proves missed preflight only when the hook enforces a protected destructive, security-critical, or session-stability runtime rule; over-broad positive-pattern or doctrine-shape blocks route as hook defects.
 - Assignment-grade work begins only through `SendMessage` after the live member address exists.
+- After member creation or neutral task-row creation, the next executable dispatch move is assignment-grade `SendMessage` carrying or pointing to a complete receiver-consumable packet; do not substitute no-op commands, retained-output probes, output-carrier checks, or visible progress prose.
+- Screen-safe dispatch still requires a real receiver-consumable packet before the send. If the planned visible envelope is empty or whitespace-only and no non-rendered packet body, retained assignment carrier, or runtime-owned assignment evidence exists for the receiver, correct that delivery path locally before `SendMessage`; do not create a task row plus blank message and then classify missing retained output as dispatch progress.
 - The detailed Team Member Startup Recognition rule stays in `references/message-classes.md`; this `SKILL.md` surface carries the executable preflight floor.
 - Dispatches that will receive completion-grade carriers invoke Step 3 `Completion acceptance` upon receipt; the assigned lane's verification work must satisfy the citation requirements named there (`Skill(review-verification)` `PACKET-ID`, `Skill(self-verification)` tool-call evidence) for the completion to pass.
 
@@ -127,6 +130,7 @@ Dispatch law:
 - Apply `references/runtime-dispatch-law.md` before any `TeamCreate`, `Agent`, parallel assignment-send segment, reuse-via-`SendMessage`, or packet-correction-via-`SendMessage` move.
 - Runtime readiness classification may come from `session-boot`, but the preflight required before `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, or assignment-grade reuse is consumed here.
 - Planned `Agent` inside a team-routed path is team-scoped member creation only.
+- Host/background `Agent` execution without team-scope parameters is standalone route drift for team-routed work; stop before synthesis or reuse claims and recover through `references/runtime-dispatch-law.md`.
 - A same-task packet-correction-via-`SendMessage` whose receiver has no open executable task (post-completion, idle, converged) fails the `SendMessage And Skill Law` necessity check; suppress the same-task send.
 - Malformed or missing retained-carrier completion payload after task closure opens distinct bounded `assignment`, `reuse`, or `reroute` only when the producer lane remains the truthful correction owner; otherwise route cleanup to `Skill(governance-modification)`.
 - `TeamCreate` / team-scoped `Agent` / `SendMessage` runtime-shape rules (runtime-creation-order, team-scope-identity, BLOCKED-result handling, blocked-pre-agent-start treatment, address-vs-role, standalone-fallback classification, blocker-shape stop rule) live in `references/runtime-dispatch-law.md` `## Team Runtime Shape` + `## Team-Agent-Only Lane Dispatch` + `## Parallel And Reuse Law`; consume there for the rule body.
@@ -164,22 +168,27 @@ When `runtime-dispatch-law.md` opens `PARALLEL-DISPATCH-LOCK`, the next actions 
 Execute the lawful `PARALLEL-DISPATCH-LOCK` move; user-visible prose appears only after `.claude/reference/reporting-prohibition-law.md` admission and `.claude/reference/reporting-user-reporting-law.md` shape control.
 
 The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every assignment-success, dispatch-ack, progress, or recovery decision.
+Before assignment-send evidence exists, missing retained-output files are expected non-evidence; do not classify `dispatch-pending-no-ack`, dispatch-recovery, packet rejection, or no-start from absent output carriers before a valid assignment-grade `SendMessage` has been sent.
 
 Reporting consequences:
 - Assignment success, no-change dispatch, dispatch-ack, lane-count, waiting, idle, individual completion, partial fan-out completion, and retained-output availability stay internal while monitoring, recovery, retained-carrier consumption, merge, or synthesis can continue.
-- User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition.
+- Ack, returned, verified, accepted, standby, reuse, next-shard, next-batch, waiting, and idle facts stay internal while monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or closeout can continue.
+- User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition; after the admitted answer, resume the active owner action without assistant-authored resume, waiting, or monitoring narration.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
 
 Completion acceptance:
 - `MESSAGE-CLASS: subjob-done` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
 - Verify the retained carrier exists and contains every required completion payload field; field-presence check is necessary but not sufficient, field-value truth (actual evidence citation) is the acceptance gate.
+- Treat raw `subjob-done` as a completion-candidate signal only until retained-carrier acceptance passes; it does not create `STANDBY`, reuse eligibility, synthesis input, or task-result acceptance by itself.
+- Run acceptance probes and post-acceptance routing under `references/completion-handoff.md`; expected false branches stay internal, and acceptance/reuse narration remains suppressed by `.claude/reference/reporting-prohibition-law.md`.
+- If the carrier is absent or incomplete, keep the producer on the same correction path and route only a bounded carrier-correction assignment to that same producer when an executable task is needed; do not assign fresh shard/work to that lane from the failed signal.
 - For carrier-asserted `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`/`Skill(...) loaded` claims, verify each cites actual tool-call evidence per `Skill(self-verification)` Step 1 and Step 3 citation requirements.
 - For carrier-asserted review-verification basis (`REVIEW-PACKET-CITATION`, packet consumption claims), verify each cites the `review_verification_packet` `PACKET-ID` or content reference per `Skill(review-verification)` Step 14 citation form.
 - Carrier-as-evidence fabrication (PASS, skill-load, or packet-citation assertion without actual evidence) is a procedural defect; reject the completion-grade transport, mark the assigned task non-converged, and route correction via distinct bounded `assignment`, `reuse`, or `reroute` to the producing lane with `INPUT-FINDINGS` naming the carrier defect.
 - Carrier-truth fabrication is not a packet defect; reopen `work-planning` only when the fabrication exposes a moved boundary axis.
 
 Recovery reconciliation:
-- A dispatch segment becomes complete only after every target has a valid first upward outcome (`dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action.
+- A dispatch segment becomes complete only after every target has a valid first upward resolution outcome (`dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action; `problem-report` is a pending-problem event, not segment completion.
 - Agent-start evidence after valid receipt supports monitoring and no-start recovery; agent-start evidence without valid receipt does not clear missing-receipt debt.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
 - Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.

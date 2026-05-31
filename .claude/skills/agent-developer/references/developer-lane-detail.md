@@ -52,7 +52,7 @@ Owner fields use `not-applicable:<basis>` only when the frozen surface has no ma
 ## Completion Completeness Challenge
 Developer must challenge decisive production basis before production. This is not a demand for all possible information; it is a hard gate against starting from an implied, incomplete, contradictory, wrong-owner, or overbroad packet.
 
-PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment phrase below restates `.claude/agents/developer.md` lines 49-58 and `.claude/skills/agent-developer/SKILL.md` for developer-lane defense-in-depth consumption.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety — the `scope-pressure / hold|blocker` stop-not-abandonment phrase below restates `.claude/agents/developer.md` developer constraint-resolution duties and `.claude/skills/agent-developer/SKILL.md` for developer-lane defense-in-depth consumption.
 Production discovery and edits are forbidden until the packet is classified as `execute` or `reconstruct-with-inference`.
 Developer must use the first lawful executable path that can satisfy the user instruction.
 `scope-pressure` and `hold|blocker` stop only the unsafe current path; they open the team-lead resolution loop, not task abandonment.
@@ -82,8 +82,8 @@ Decision table:
 |---|---|---|
 | `execute` | Decisive basis is explicit, bounded, and owner-consistent | Proceed through workflow |
 | `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle | Reconstruct explicitly, mark inference, then proceed |
-| `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles review/proof/validation into production | Stop the unsafe path; send pressure to `team-lead` via `SendMessage` with smallest truthful production boundary and next executable step |
-| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; send governed `hold|blocker` transport to `team-lead` via `SendMessage` with exact invalid or missing basis and what is needed to resume |
+| `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles review/proof/validation into production | Stop the unsafe path; route pressure through Transport Payload with smallest truthful production boundary and next executable step in carrier state |
+| `hold|blocker` | Write scope, authority, acceptance contract, production-phase basis, decisive production basis, or smallest truthful implementation boundary is materially ambiguous | Stop the unsafe path; route `hold|blocker` through Transport Payload with exact invalid or missing basis and what is needed to resume in carrier state |
 
 Upward assertion must name:
 - exact constraint or missing decisive basis
@@ -150,7 +150,7 @@ Support overlays defer to earlier controlling contracts.
 | root-cause | Addresses a verified origin | Proceed |
 | symptom-relief | Reduces impact without proving origin | Proceed and disclose |
 | hypothesis-based | Plausible but unconfirmed cause | Proceed and keep verification basis explicit |
-| open | Cause unknown | blocker-routing internally; if reporting upward, emit governed `hold|blocker` transport with the missing root-cause basis and safe next step |
+| open | Cause unknown | blocker-routing internally; if reporting upward, route `hold|blocker` state with the missing root-cause basis and safe next step |
 
 ## Regression Guard
 - Trigger when `TASK-CLASS: defect-fix` or the assignment is clearly an observed defect correction.

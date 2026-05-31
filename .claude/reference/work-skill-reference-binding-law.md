@@ -8,8 +8,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 # Common Doctrine Reference: Skill Loading And Reference Binding
 
 ## Purpose
-This reference gives the detailed execution rules behind `CLAUDE.md` Skill Loading and reference consumption.
-Use it to make loaded documents and references mandatory execution surfaces instead of passive reading.
+This reference gives the detailed execution rules behind `CLAUDE.md` skill loading, document consumption, and reference consumption.
+Use it to make loaded documents, loaded skills, and references mandatory execution surfaces instead of passive reading or invocation-status evidence.
 
 ## Reporting Curtain Inheritance
 This reference governs skill loading and reference binding, not report exceptions.
@@ -99,7 +99,7 @@ Completion requires every trigger-required reference consumed and every material
   - lifecycle messages
   - phase messages
   - clarification messages
-- Loaded skill rules, role-body rules, and trigger-bound reference rules outrank packet field values; a packet field that contradicts a binding rule from those surfaces is a packet defect, and the receiving owner sends `scope-pressure` with `CORRECTION-OUTCOME: packet-correction` before `dispatch-ack`, work, or completion.
+- Loaded skill rules, role-body rules, and trigger-bound reference rules outrank packet field values; a packet field that contradicts a binding rule from those surfaces is a packet defect, and the receiving owner records non-rendered `problem-report`, then sends no-detail `scope-pressure` with scope-pressure carrier `CORRECTION-OUTCOME: packet-correction` before `dispatch-ack`, work, or completion.
 - These outrank loaded agent-specific skills:
   - doctrine
   - roles
@@ -148,7 +148,7 @@ Completion requires every trigger-required reference consumed and every material
 - Trigger-bound reference and loaded-owner-document mandatoriness is owned by `.claude/reference/work-procedure-ownership-law.md` `## Rules`.
 - A trigger-active pointer from a Reference Map, rule text, packet field, or loaded owner document opens a bounded consumption handoff for the governed action or claim.
 - The active owner resolves that handoff by recording `applied`, `not-material:<basis>`, or `blocked:<basis>` and mapping each material active rule to the concrete action, stop, evidence, owner, or route.
-- Valid consumption uses live loaded surface evidence from the complete active document or complete triggered section plus applied-rule mapping; `Grep` hits, tool rows, tool status, summary, memory, local confidence, and broad familiarity remain background context only.
+- Valid consumption uses live loaded surface evidence from the complete active document or complete triggered section plus applied-rule mapping; the `## Skill Rules` inspection-only/status evidence set remains background context only.
 - Consumption means mapping active rules to concrete action, stop, evidence, owner, next-action effect, or blocked basis.
 - Direct-consumption relevance means the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness.
 - Loading, naming, quoting, or summarizing a governance document is not consumption.
@@ -156,7 +156,7 @@ Completion requires every trigger-required reference consumed and every material
 - `applied` means the rule changed, confirmed, or routed concrete behavior.
 - Missing material applied-rule mapping opens applied-rule correction before action.
 - Governance compliance claims require recorded applied-rule mapping.
-- Skim, partial search, title lookup, summary awareness, and memory-based use leave the document unconsumed.
+- Skim, partial search, title lookup, and every inspection-only/status evidence form named in `## Skill Rules` leave the document unconsumed unless complete active document or triggered-section learning plus applied-rule mapping is recorded.
 - A trigger-bound reference carries `SOURCE-ANCHOR` and `SOURCE-RULES`.
 - Reference frontmatter `PRIMARY-OWNER` names the executable owner authority (`team-lead` or lane agent), not the skill or reference file itself.
 - Skill or reference file ownership is expressed through `SOURCE-ANCHOR`, `REFERENCE-OWNER`, or an explicit local consumption note.

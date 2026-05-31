@@ -45,15 +45,15 @@ When truthful lane execution depends on the original request shape, the assignme
 
 `EXCLUDED-SOURCES` names source classes or paths excluded from receiver use.
 When the user rejects prior history, prior audit artifacts, prior findings, prior shard reports, or prior inventory, `EXCLUDED-SOURCES` must carry that no-history constraint.
-Receivers return `scope-pressure` when a packet omits material `EXCLUDED-SOURCES` or when the assigned carrier appears derived from an excluded source.
+Receivers record non-rendered `problem-report` before no-detail `scope-pressure` when a packet omits material `EXCLUDED-SOURCES` or when the assigned carrier appears derived from an excluded source.
 
 `SEMANTIC-INTENT-BASIS` bridges `REQUEST-INTENT` and `TARGET-INTENT-BASIS`.
 Its bridge axes are owned by `planning-record-fields.md` `SEMANTIC-INTENT-BASIS`.
 Semantic basis remains distinct from literal task wording or target purpose alone.
-If the carried semantic basis is stale, missing, contradicted by cited artifact intent, mismatched with `TARGET-INTENT-BASIS`, or fails upper-philosophy-governed application of the user instruction per `[DESIGN-INTENT]`, the receiving lane returns `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
+If the carried semantic basis is stale, missing, contradicted by cited artifact intent, mismatched with `TARGET-INTENT-BASIS`, or fails upper-philosophy-governed application of the user instruction per `[DESIGN-INTENT]`, the receiving lane records non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
 
 `COMPLETION-STOP-CONDITION` names the practical closure condition and evidence burden for the assigned surface.
-If it is missing, weaker than the requested deliverable, or not evidence-verifiable for the receiving lane, the lane returns `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
+If it is missing, weaker than the requested deliverable, or not evidence-verifiable for the receiving lane, the lane records non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
 
 When truthful lane execution depends on why the target artifact exists or what it must preserve, the assignment packet must also carry:
 - `TARGET-INTENT-BASIS`
@@ -65,7 +65,7 @@ Report and document work use reader, question, conclusion, evidence, and action 
 Review, proof, validation, and completion work use the target intent that defines fit and closure.
 Safe inference from a named source (request, plan, design, Structural Contract, cited artifact, or frozen scope) marks the basis as `INFERENCE` and proceeds.
 Safe inference stays within scope, closure rows, disposition paths, consumer or recompute paths, source authority, display-only basis, and acceptance oracle specified by the named source.
-Non-inferable basis uses `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
+Non-inferable basis uses non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` as packet-correction or blocker-routing input, not as abandonment, waiting permission, or user-handoff.
 `TARGET-INTENT-BASIS` states protected purpose and user outcome.
 Per-finding protected function, user-outcome impact, `patch-worthiness`, and regression risk belong to `.claude/skills/task-execution/references/completion-handoff.md`.
 

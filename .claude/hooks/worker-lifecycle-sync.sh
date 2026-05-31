@@ -118,11 +118,6 @@ worker_turn_end_classification() {
     return 0
   }
 
-  if worker_dispatch_ack_required "$worker_name"; then
-    printf 'dispatch-pending-no-ack'
-    return 0
-  fi
-
   parsed="$(latest_worker_transport_class "$worker_name")"
   mapfile -t _turn_end_transport_fields <<<"$parsed"
   last_message_class="${_turn_end_transport_fields[0]:-}"
@@ -130,6 +125,15 @@ worker_turn_end_classification() {
   dispatch_worker="$(get_procedure_state_field "lastDispatchWorker" "")"
   dispatch_at="$(get_procedure_state_field "lastDispatchAt" "")"
   permission_request_timestamp="$(latest_worker_permission_request_timestamp "$worker_name")"
+
+  if worker_dispatch_ack_required "$worker_name"; then
+    if [[ "$last_message_class" == "problem-report" ]]; then
+      printf 'problem-reported-pending-outcome'
+    else
+      printf 'dispatch-pending-no-ack'
+    fi
+    return 0
+  fi
 
   if [[ -n "$permission_request_timestamp" ]] \
     && { [[ -z "$dispatch_worker" || "$dispatch_worker" == "$worker_name" ]]; } \
@@ -139,13 +143,16 @@ worker_turn_end_classification() {
     return 0
   fi
 
-  case "$last_message_class" in
+	case "$last_message_class" in
+    problem-report)
+      printf 'problem-reported-pending-outcome'
+      ;;
     subjob-done)
       if [[ -n "$dispatch_at" && "$dispatch_worker" == "$worker_name" && ( -z "$last_message_timestamp" || "$last_message_timestamp" < "$dispatch_at" ) ]]; then
         printf 'working-transport-missing'
         return 0
       fi
-      printf 'standby'
+      printf 'subjob-done-candidate'
       ;;
     hold\|blocker|hold|blocker)
       printf 'working-blocked'
@@ -256,12 +263,7 @@ NODE
       "$TIMESTAMP" "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_STATUS" "$COMPLETED_TASK" >> "$ACTIVITY_LEDGER"
 
     if [[ -n "$TEAMMATE" && "$TEAMMATE" != "unknown" ]]; then
-      if [[ "$TURN_END_CLASSIFICATION" == "standby" ]]; then
-        mark_worker_standby "$TEAMMATE"
-        clear_worker_idle_pending "$TEAMMATE"
-      else
-        clear_worker_idle_pending "$TEAMMATE"
-      fi
+      clear_worker_idle_pending "$TEAMMATE"
     fi
 
     if ! mark_worker_idle_notice_if_changed "$TEAMMATE" "$IDLE_NOTICE_REASON" "$COMPLETED_TASK" "$COMPLETED_STATUS"; then

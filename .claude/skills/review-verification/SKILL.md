@@ -31,7 +31,7 @@ Accept only these canonical `REVIEW-VERIFICATION-LENSES`: `design-intent-lens`, 
 Normalize each uniquely recoverable shorthand or omitted `-lens` suffix to the canonical value and record the normalization basis before review proceeds.
 For ambiguous aliases, proxy mappings, inferred equivalence, conflicting values, or ownership-changing lens entries, return `PROCEDURE-EXECUTION-RESULT: blocked:invalid-review-verification-lens` and `NEXT-OWNER-ACTION: packet-correction`.
 Use named lenses to select lens-relevant required fields inside the caller-supplied or frozen target, corpus, and claim ceiling.
-Named lenses do not narrow the target, corpus, claim ceiling, or required document-consumption scope; a requested narrowing below that scope returns `scope-pressure` before review proceeds.
+Named lenses do not narrow the target, corpus, claim ceiling, or required document-consumption scope; a requested narrowing below that scope records non-rendered `problem-report` before no-detail `scope-pressure` before review proceeds.
 Mark out-of-lens fields `not-applicable:<claim-scope-basis>` only after recording that the caller-supplied or frozen scope remains intact.
 Run all applicable steps for three or more lenses.
 Reject bare `REQUIRED-SKILLS: [review-verification]` for a non-lead participant without named `REVIEW-VERIFICATION-LENSES`.
@@ -138,7 +138,7 @@ Route newly found requested-scope defects to the smallest correction owner/path.
 Return post-patch changed-result convergence to the executing patch sequence's Post-Verify `Skill(self-verification)` gate.
 
 ### 12. Classify Findings
-Use the common finding-class taxonomy from `.claude/skills/task-execution/references/completion-handoff.md`.
+Use the canonical finding-state ladder and rejection-basis labels from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 Record each material finding in `FINDING-STATE-INVENTORY` with exact ladder state, cause/remedy classification reference, evidence surface, owner, and open next owner when applicable.
 A `confirmed-defect` entry must cite expected behavior, observed deviation, causal link from candidate source, correction-restores-behavior basis, correction owner, and protected-function no-loss basis; otherwise classify as `open-candidate` or `rejected:<basis>`.
 Each material finding or disposition whose state is `confirmed-defect`, `patch-worthy`, `patch-ready`, `rejected:<basis>`, `no-patch`, or `open-candidate` must cite a current item-level `CAUSE-REMEDY-CLASSIFICATION` entry when the claim can affect owner action, procedure, reporting, transport defect/remedy, malformed transport, runtime/tool behavior, hook/settings behavior, or governance mutation; missing, invalid-enum, theme-level-only, contradicted, or open classification returns to Step 4 or Step 5.

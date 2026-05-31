@@ -17,7 +17,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Procedure And Ownership Law
 - `[RULE-FORCE]` Rules must be executable.
-- `material` means an axis, fact, or trigger that changes what the active owner must do next.
+- `material` and `materially` are defined by `## Material And Materiality Law`.
 - `consequential` means an action, decision, tool use, artifact read, discovery, mutation, dispatch, synthesis, handoff, or report that creates, reopens, changes, or closes a work boundary, owner, route, scope, evidence basis, artifact state, runtime state, acceptance state, or user-facing claim.
 - Executable rules name every material owner, trigger, stop, evidence, verification, and acceptance-truth requirement.
 - Executable governance wording names a material owner, trigger, action, stop, or evidence; descriptive, explanatory, additivity-narrating, alongside/non-substitution-framing, or philosophical wording without those fields is a `[RULE-FORCE]` defect.
@@ -35,7 +35,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Completion-grade `LANE-LOCAL-RESULT-VERIFICATION` requires actual `Skill(self-verification)` loaded-and-learned basis; narrative checks, carrier-field text, and checklist-shaped prose route to completion correction.
 - Procedure Plane blocker-routing and Communication Plane `hold|blocker` are blocker-routing records, not closure, waiting permission, or user-handoff states; they require owner, blocker, exhausted internal recovery basis, and next safe owner/action.
 - Missing next owner or next action reopens the last valid owner.
-- `[PROC-HABIT]` Procedure outranks habit, convenience, source memory, and model confidence.
+- `[PROC-HABIT]` Procedure and evidence outrank habit, convenience, source memory, model confidence, status signals, and partial stage completion.
 - Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
 - Frozen `COMPLETION-STOP-CONDITION`, `SCOPE-BASELINE`, and opened closure units remain binding until deliverable closure, cited lawful owner-deferral authority, explicit user-narrowed out-of-scope basis, or blocker-routing that preserves the next recovery owner/action.
 - An opened closure unit is the finest row, item, case, candidate, finding, proof row, validation row, patch row, or completion-stop row opened by the frozen request, plan, packet, lane carrier, synthesis inventory, or review basis.
@@ -93,6 +93,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `smallest` and `narrowest` mean the least authority, scope, owner movement, user burden, runtime footprint, file mutation, or report detail that still satisfies the governing action, evidence, verification, acceptance, safety, and recovery requirements.
 - When two options satisfy the same requirement, choose the option with fewer changed owner surfaces, fewer irreversible effects, less user burden, and no weaker evidence path.
 - If no option can be proven smallest or narrowest from current evidence, open basis-refresh, owner-correction, or blocker-routing instead of using the qualifier as a preference label.
+- `proven` means every required element named by the active surface is supported by current direct or retained evidence and no material defeater remains open at the active claim ceiling.
+- When the active surface does not name required elements for `proven`, use the governing claim ceiling, evidence burden, verification owner, and acceptance burden before treating the qualifier as satisfied.
 - `credible` means cited evidence supports the active claim ceiling and no material defeater remains open on the governing surface.
 - Missing credibility evidence opens the named proof, review, validation, or blocker route instead of allowing a weaker claim.
 - Evidence-strength qualifiers such as `too weak`, `weak`, `strong enough`, and `strongly enough` compare the current evidence against the governing claim ceiling, proof burden, acceptance burden, or delivery burden named by the active surface.
@@ -132,6 +134,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Over-broad blocking is a defect.
 
 ## Skill And Reference Consumption Law
+- This section is the mapped executable detail for `.claude/CLAUDE.md` Work Execution Philosophy skill, document, and reference consumption.
 - Skills load only when required by the active owner path.
 - Primary skill links load through their active owner-path triggers.
 - Required skill activation and loaded-skill basis require actual full-body `Skill(<skill>)` load-and-learn or current same-session loaded-and-learned basis under the named skill's freshness rule.
@@ -150,7 +153,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Non-core trigger-bound `.claude/reference/*-law.md` detail references are `CLAUDE.md` detail references only when their `SOURCE-ANCHOR` names `.claude/CLAUDE.md`, their `SOURCE-RULES` names the active top-doctrine law, and their `Consume When` trigger matches the active owner path.
 - `.claude/reference/*-map.md`, `environment-official-claude-code-source-cache.md`, and `environment-runtime-footprint-continuity.md` load through their trigger rules as reference surfaces.
 - For the map/runtime references named above, `LOAD-POLICY`, `Purpose`, `Consumer And Ownership`, or an equivalent trigger section supplies the trigger gate when `Consume When` is absent; `SOURCE-ANCHOR` and `SOURCE-RULES` still bind the reference to the active top-doctrine law.
-- Reference consumption requires the active owner to read-and-learn the complete active reference or complete triggered section and is valid only when the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness decision.
+- Document and reference consumption requires the active owner to read-and-learn the complete active document, complete active reference, or complete triggered section and is valid only when the target changes active owner action, stop, evidence requirement, packet content, proof basis, completion truth, verdict, routing, or patch-readiness decision.
 - Reference path existence, search convenience, broad traceability, reverse-linking, or non-triggered background relevance leaves the target unconsumed.
 - A claimed reference with a direct-consumption relevance gap opens applied-rule mapping correction or target removal before execution, completion, or positive synthesis.
 - Trigger-bound references are mandatory execution surfaces once their trigger fires.
@@ -167,7 +170,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Agent-start evidence, pane activity, file mutation, or runtime liveness is monitoring evidence only and never substitutes for missing receipt transport.
 - A failed, schema-rejected, or malformed `dispatch-ack` attempt keeps receipt unresolved; corrected receipt transport, `scope-pressure`, or `hold|blocker` is the next Communication Plane action before assigned work.
 - Converged lane work requires both a retained completion carrier and governed `subjob-done` transport to `team-lead`.
-- `subjob-done` transport is an internal lane handoff signal plus result-carrier readiness signal for team-lead synthesis; it is not final acceptance or user-facing report admission.
+- Valid completion-grade `subjob-done` plus retained-carrier acceptance is the internal lane handoff and result-carrier readiness signal for team-lead synthesis; raw `subjob-done` alone is not final acceptance, user-facing report admission, `STANDBY`, reuse eligibility, or synthesis input.
 - Required subjob handoff uses the retained completion carrier and governed `subjob-done` transport; runtime status, task state, disk output, pane text, final prose, and visible teammate output remain supporting signals.
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, visible-prose admission, and claim strength.
 
@@ -178,7 +181,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Same-turn next-action drive applies to every direct-execution step (`Edit`, `MultiEdit`, `Write`, `Bash`, `SendMessage`, `TaskCreate`, `TeamCreate`, `Agent`, every mutation, every dispatch, every tool call).
 - The drive remains active at the execution boundary.
 - Host-rendered tool rows are execution evidence only and never create a user-facing prose slot.
-- Assistant-authored shell stdout labels, banners, progress summaries, and explanatory `echo`/`printf` lines are renderable report content; internal-evidence `Bash` command construction uses direct command output, quiet checks, exit status, or retained artifacts instead.
+- Assistant-authored shell stdout/stderr is renderable report content; internal-evidence `Bash` command construction follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - Assistant-authored direct-tool preambles, next-step narration, success narration, staging summaries, and scope-decision narration are renderable report content; execute the tool call or route through `.claude/reference/reporting-prohibition-law.md` instead.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
 - The agent keeps emitting required tool calls while live same-request executable owner/actions remain.

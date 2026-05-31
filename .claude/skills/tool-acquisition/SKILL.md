@@ -31,7 +31,7 @@ Activate when any work-authorized owner or lane has one of these bases:
 - packet fields name `TOOL-DISCOVERY-GOAL`, `TOOL-DISCOVERY-BOUNDARY`, `TOOL-VERIFICATION-STANDARD`, or `TOOL-CLEANUP-EXPECTATION`
 - exact `TOOL-REQUIREMENT` is unavailable or unverified
 - current toolset cannot produce the frozen deliverable, evidence, proof, validation, or user-surface result
-- a lane sends `scope-pressure` or `hold|blocker` naming a required tool, setup owner, missing evidence surface, or current-toolchain gap
+- a lane records non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` naming a required tool, setup owner, missing evidence surface, or current-toolchain gap
 - team-lead routes a bounded tool/setup recovery task
 
 Do not use this skill for convenience preferences when an existing credible tool path can truthfully satisfy the frozen claim.
@@ -49,7 +49,7 @@ Before discovery or setup, carry the minimum packet:
 - expected return owner/action
 
 ## Procedure
-1. Confirm the tool need is inside the active owner path; boundary-changing tool needs reopen `work-planning` or return `scope-pressure` / `hold|blocker`.
+1. Confirm the tool need is inside the active owner path; boundary-changing tool needs reopen `work-planning` or record non-rendered `problem-report` before no-detail `scope-pressure` / `hold|blocker`.
 2. Prefer an already available local or project tool when it satisfies the frozen claim strength.
 3. Search only inside the bounded discovery goal; select candidates only from an existing local path, project-declared dependency manager, official/vendor source, or verified package source.
 4. Classify setup safety before installation or configuration.
@@ -57,7 +57,7 @@ Before discovery or setup, carry the minimum packet:
 6. Route `approval-required` setup to explicit approval only when approval is the remaining user-owned action after internal alternatives are exhausted; route credential repair, paid/licensed tools, persistent daemons, security-setting changes, external API/MCP/auth/quota work, or bridge-produced artifacts to `Skill(external-tool-bridge)` or the named owner.
 7. Verify the selected tool with the smallest decisive real-tool proof that satisfies `TOOL-VERIFICATION-STANDARD`.
 8. Use the verified tool path for the blocked work when the same owner path remains valid; otherwise return a corrected executable path to the blocked owner or lane.
-9. If verification fails, try only a credible fallback inside the same boundary; otherwise return `hold|blocker` with evidence and the smallest unblock path.
+9. If verification fails, try only a credible fallback inside the same boundary; otherwise record non-rendered `problem-report` before no-detail `hold|blocker` with evidence and the smallest unblock path.
 10. Perform or record cleanup according to `TOOL-CLEANUP-EXPECTATION`.
 
 ## Outputs

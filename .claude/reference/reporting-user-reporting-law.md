@@ -32,9 +32,12 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - A separately admitted explicit status answer or closeout residual uses its own report event and is not appended after the final-result `REPORT-LOCATION-LINE`.
 - `final verified result` avoids final acceptance or `PASS/HOLD/FAIL` wording unless the `validator` issued that verdict.
 - `user-action blocker` states the blocked user decision/action and the smallest safe next step.
+- Internal lane `scope-pressure`, `hold|blocker`, blocker-clear, blocker retraction, packet correction, runtime recovery, or carrier correction is not a `user-action blocker` unless `team-lead` proves the remaining blocker is user-owned after internal recovery paths are exhausted.
 - `explicit status answer` uses the narrowest truthful answer, including exact internal material only when that exact material was explicitly requested, and then returns to the active owner action unless the user redirected or a user-action blocker exists.
 - Binary status questions get one yes/no sentence plus a user-action blocker only when present.
-- Status answers omit internal topology, packet, shard, dispatch-ack/subjob-done, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field was requested.
+- Delay, cause, or "why did this not happen" status questions get the cause class and current next action only; do not provide a timeline, numbered incident report, per-agent narrative, log excerpts, paths, counts, packet fields, or evidence inventory unless that exact field was requested.
+- Status answers omit internal topology, packet, shard, `problem-report`/state-signal transport, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field was requested.
+- After an admitted status answer, do not render a resume, waiting, monitoring, or "continuing work" sentence; resume the active owner action silently.
 - `closeout residual` reports only residual state that affects the user.
 
 ## Resolve Next Owner And Action

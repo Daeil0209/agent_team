@@ -35,12 +35,14 @@ Load only after `Skill(task-execution)` Step 2 reaches dispatch-law detail.
 ## Team-Agent-Only Lane Dispatch
 - When team runtime is active (`procedure-state.json` `teamRuntimeState: active`), team-scoped `Agent` uses `team_name` and `name` to create or reattach a live member addressable by `SendMessage`.
 - Planned team-routed `Agent` dispatch is never standalone; missing top-level `team_name` or `name` is a preflight blocker before the host `Agent` call.
+- A host/background `Agent` batch that runs reviewer/tester/validator/researcher/developer work without `team_name`, `name`, and assignment-grade `SendMessage` is standalone route drift, even when the visible role label names a configured lane.
 - Assignment-grade work delivery uses `SendMessage` after team-scoped `Agent` creates or reattaches the live member address.
 - Standalone `Agent` shape (`Agent` without `team_name`) is fallback evidence only for already-produced or lead-local evidence-only output.
 - Standalone `Agent` bypasses team continuity, cleanup visibility, reuse, inter-agent coordination, receipt, and completion transport.
 - Operational burden, context size, setup friction, or coordination overhead is not a standalone fallback basis for configured lane work, frozen `PARALLEL-GROUPS`, multi-surface audit work, or required review/proof/validation separation.
 - When those surfaces remain required, choose team-scoped `Agent` plus assignment-grade `SendMessage`, reopen `work-planning` for cap, shard, or serial-route change, or record blocker-routing for a proven runtime blocker after internal recovery is exhausted.
 - An already-happened standalone `Agent` result is treated only as bounded fallback evidence.
+- A rendered host row that shows background agents running is host-runtime observation only; it is not team-runtime dispatch, receipt, active-lane state, reuse state, or completion transport.
 - Role is responsibility; live process-backed member name is address.
 - The assignment-delivery address must match the current live process-backed roster exactly per `message-classes.md` `### Assignment Delivery Contract`.
 - Configured role labels (`validator`, `reviewer`, `tester`, `developer`, `researcher`) are addresses only when the roster contains that exact member with live pane proof.
@@ -54,10 +56,10 @@ Target-resolution preflight is mandatory before the tool call:
 3. map the frozen target role to an exact live process-backed member name
 4. choose assignment-grade `SendMessage` only on exact live-process roster match through `message-classes.md` `### Assignment Delivery Contract`
 5. choose team-scoped `Agent` with top-level `team_name` and `name` when the lane is absent but team-runtime delegation remains the route
-6. create or verify the task row through `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage` when task tracking is active
+6. create or verify the neutral identity task row through `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage` when task tracking is active
 7. treat standalone host evidence only as legacy/fallback evidence, not dispatch
-8. label the resulting truth before any user-facing claim: `member-created`, task-row-created, `dispatch pending`, fallback evidence, or blocker-routing with exhausted internal recovery basis
-9. after `member-created`, create or verify the task row when task tracking is active, then send assignment-grade `SendMessage` before monitoring, fallback dispatch, replacement, or user-facing progress
+8. label the resulting truth before any user-facing claim: `member-created`, `task-row-created`, `dispatch pending`, fallback evidence, or blocker-routing with exhausted internal recovery basis
+9. after `member-created` or `task-row-created`, send assignment-grade `SendMessage` before monitoring, fallback dispatch, replacement, or user-facing progress
 
 ## Parallel And Reuse Law
 - Configured project lanes come first.
@@ -65,6 +67,7 @@ Target-resolution preflight is mandatory before the tool call:
 - If no current-session team registration exists, `TeamCreate` is the next move before any `Agent`.
 - When task tracking is active for team-agent dispatch, consume `message-classes.md` `### Assignment Delivery Contract` before assignment-grade `SendMessage` and before task-scoped mutation.
 - Runtime dispatch keeps `TaskCreate`, `TaskUpdate`, task identity, and worker targeting inside that contract.
+- Task-state synchronization follows `message-classes.md` `### Assignment Delivery Contract`: update the same `TASK-ID` immediately at lifecycle transitions, never by changing a rendered row's owner, assignee, subject, or description, and never as a substitute for transport or retained-carrier truth.
 - Frozen `PARALLEL-GROUPS` and independent-surface separation outrank reuse convenience.
 - Runtime dispatch follows frozen `ACTIVE-CONCURRENT-AGENT-CAP`.
 - Before any same-segment parallel dispatch, reuse batch, or new `Agent`, count current live or standby dispatched-lane members plus planned nonblocked assignment targets.
@@ -73,7 +76,7 @@ Target-resolution preflight is mandatory before the tool call:
 - A batch that would exceed frozen `ACTIVE-CONCURRENT-AGENT-CAP` reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
 - If `PARALLEL-GROUPS` contains two or more nonblocked groups, dispatch or reuse the required agents in parallel within the same execution segment.
 - Do this before monitoring or any Reporting Plane status consideration; `dispatch pending` is internal dispatch truth unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception for an explicit status answer.
-- Dispatch, reuse, cap, runtime-readiness, shard, wave, round, target-state, and receipt-barrier facts stay internal Procedure Plane or Communication Plane truth; `task-execution` keeps required evidence in tool results, retained carriers, or runtime state and does not emit assistant-authored visible progress prose, success stdout, listings, counts, or summaries for those facts unless `.claude/reference/reporting-prohibition-law.md` admits an explicit status answer for the exact material.
+- Dispatch, reuse, cap, runtime-readiness, shard, wave, round, target-state, and receipt-barrier facts stay internal Procedure Plane or Communication Plane truth; `task-execution` keeps required evidence in tool results, retained carriers, or runtime state, and any `Bash` evidence command follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - When that condition holds, `PARALLEL-DISPATCH-LOCK` opens immediately after route freeze and target-resolution preflight.
 - Parallel `Agent` batch dispatch is not a trial step; every `Agent` call in each atomic same-envelope subgroup must pass target-resolution, team-scope, and canonical spawn-prompt screen-safety preflight before that subgroup is sent.
 - Ordinary team-scoped member creation uses the canonical prompt template from `message-classes.md`; alternate prompt text is a preflight exception, not the default.
@@ -85,6 +88,9 @@ Target-resolution preflight is mandatory before the tool call:
 - Allowed lock moves are only: required `TeamCreate`; deferred team-runtime tool schema discovery via `ToolSearch`; target-resolution preflight reads; binding-surface on-disk verification reads for the frozen packet's external carrier; same-batch valid `TaskCreate` satisfying `message-classes.md` `### Assignment Delivery Contract` for assignment `TASK-ID` identity when task tracking is active; team-scoped `Agent`; assignment-grade `SendMessage`; or retained-output directory or shared-carrier creation without assistant-authored visible output when the frozen packet requires it.
 - Narrow blocker exception: `hold|blocker` or `scope-pressure` for a proven dispatch blocker is the only lawful exit from lock-move execution; it is not one of the lock moves listed above but the lawful abandonment of the lock when execution cannot proceed.
 - Retained-output directory or shared-carrier creation while `PARALLEL-DISPATCH-LOCK` is open uses no assistant-authored visible output: no listing, count, probe, diagnostic output, or user-facing prose.
+- After any assignment-grade `SendMessage` cites a shared binding surface, that cited surface is frozen for already-dispatched lanes. Corrections use a per-lane correction packet, a versioned addendum for future lanes, or route replan; do not edit the already-cited binding file while live lanes are working from it.
+- Per-lane correction for already-dispatched live lane work preserves the frozen `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, and `WRITE-SCOPE` unless the prior assignment has been reconciled as no-side-effect, closed by accepted retained carrier, or superseded by route replan.
+- A correction that changes `RETAINED-OUTPUT-PATH` while the prior lane can still produce output is duplicate side-effect risk; route through `dispatch-recovery` or route replan instead of sending another packet.
 - `PARALLEL-DISPATCH-LOCK` contains only lawful lock moves until the dispatch/reuse attempt runs for every frozen nonblocked group; reads outside target-resolution or binding-surface verification are extra reads.
 - Codex/review tools, lead-side `TaskUpdate` mutations, packet rewrites after `assignment-packet.md` preflight has passed, monitoring, synthesis, and user-facing prose are outside the lock.
 - Lock state, lawful move list, retained-output setup, and dispatch preparation stay internal; visible non-tool prose appears only as a report admitted by `.claude/reference/reporting-prohibition-law.md` and shaped by `.claude/reference/reporting-user-reporting-law.md`.
@@ -93,15 +99,16 @@ Target-resolution preflight is mandatory before the tool call:
 - A parallel execution segment then reconciles every intended target before it moves out.
 - Assignment-grade `SendMessage` success arms a per-target receipt barrier keyed by the exact live process-backed member name.
 - Assignment-send success is `dispatch pending` only; it is not `agent started`, `running`, progress, or completion.
-- The receipt barrier clears only through official Communication Plane evidence: valid `dispatch-ack`, `scope-pressure`, `hold|blocker`, completion-grade `subjob-done`, failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis.
+- The receipt barrier clears only through official Communication Plane evidence: visible `dispatch-ack`, no-detail `scope-pressure`, no-detail `hold|blocker`, completion-grade visible `subjob-done`, failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis. `problem-report` preserves receipt-pending state until one of those resolution outcomes occurs.
 - Pane/final prose, teammate UI chatter, host-native rendered rows, inbox read state, and role labels do not clear the receipt barrier.
-- Valid target states after assignment send are `dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, `hold|blocker`, failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis. Agent-start evidence without a valid first upward outcome is activity evidence for monitoring and recovery only; it is not receipt clearance. `member-created` without assignment is `team-created-no-assignment` and immediately opens assignment-grade `SendMessage` on the same frozen route; it is not monitoring, fallback dispatch, or operator-policy-choice when the frozen route remains unchanged.
-- A target with no `dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, or `hold|blocker` enters `dispatch-recovery` as missing assignment acceptance.
+- Valid target states after assignment send are `problem-reported-pending-outcome`, visible `dispatch-ack`, completion-grade visible `subjob-done`, no-detail `scope-pressure`, no-detail `hold|blocker`, failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis. Agent-start evidence without a valid first upward resolution outcome is activity evidence for monitoring and recovery only; it is not receipt clearance. `member-created` or `task-row-created` without assignment-grade `SendMessage` is `team-created-no-assignment` and immediately opens assignment-grade `SendMessage` on the same frozen route; it is not monitoring, fallback dispatch, or operator-policy-choice when the frozen route remains unchanged.
+- A target with `problem-report` but no following `dispatch-ack`, completion-grade visible `subjob-done`, `scope-pressure`, or `hold|blocker` enters `dispatch-recovery` as `problem-reported-pending-outcome`.
+- A target with no visible `dispatch-ack`, completion-grade visible `subjob-done`, `scope-pressure`, `hold|blocker`, or `problem-report` enters `dispatch-recovery` as missing assignment acceptance.
 - Replacement, redistribution, or shutdown follows after the required follow-up, frozen re-check wait, and absent response/activity evidence classify that target as dead-or-unavailable for the current assignment.
-- A target with `dispatch-ack` but no later activity evidence enters `dispatch-recovery` as no-start after acceptance.
-- Before new `Agent` member creation, `task-execution` evaluates live or standby same-lane reuse when such a member exists.
+- A target with valid `dispatch-ack` stays active inside the frozen quiet activity window; it enters `dispatch-recovery` as no-start only after that window closes with no agent-originated activity, blocker, scope-pressure, failure, permission request, completion-grade handoff, or assigned-surface side-effect evidence.
+- Before new `Agent` member creation, `task-execution` evaluates live or standby same-lane reuse when such a member exists; raw `subjob-done` without retained-carrier acceptance is not standby and is not reuse-fit evidence.
 - Reuse-fit holds only under `.claude/reference/work-execution-core-law.md` `## Parallelism And Bottleneck Law`.
-- When reuse-fit holds, `task-execution` sends assignment-grade reuse-via-`SendMessage` before cleanup.
+- When reuse-fit holds, `task-execution` creates or verifies a distinct open assignment-block `TASK-ID` when task tracking is active, then sends assignment-grade reuse-via-`SendMessage` before cleanup. Reuse does not reopen, reassign, rename, or change status on the prior completed task row.
 - Successful same-segment dispatch or reuse proceeds to receipt monitoring, completion handling, or the next executable owner action without assistant-authored visible narration; preserve required evidence, but do not narrate readiness, cap, active-lane, wave, round, waiting, or holding state.
 - New `Agent` member creation opens only when no live or standby fit exists, the target is dead-or-unavailable for the assignment, the lane is absent, or reuse-fit fails by named basis.
 - `shutdown_request` before same-lane new member creation is valid only after reuse-fit fails, the target is dead-or-unavailable, the lane is no longer needed, or active `session-closeout` owns teardown.
@@ -125,7 +132,7 @@ Target-resolution preflight is mandatory before the tool call:
 
 ## Partial Parallel Failure Recovery
 When N parallel dispatches are attempted and M succeed while K fail before agent-start, recover K without stopping M.
-The K-failure conditions are: Agent spawn failure, missing receipt, no-start receipt, or packet rejection.
+The K-failure conditions are: Agent spawn failure, missing receipt, quiet-window no-start after valid `dispatch-ack`, or packet rejection.
 
 The failed K is retried or reassigned to surviving M without reopening `work-planning` only when all hold:
 - `AGENT-MAP`, `PARALLEL-GROUPS` independence, `LANE-REQUIRED-SKILLS-MAP`, and acceptance/proof separation are unchanged.

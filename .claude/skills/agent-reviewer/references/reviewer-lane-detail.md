@@ -51,7 +51,7 @@ When a reviewer role or skill says "reviewer additions" or "reviewer detail", co
   - `FAILURE-MODES`
   - `REGRESSION-RADIUS`
 
-If these fields are missing and truthful review would require inventing them, use `hold|blocker` transport instead of guessing.
+If these fields are missing and truthful review would require inventing them, route `hold|blocker` state instead of guessing.
 
 If truthful review needs a tool, rendered surface, or setup path unavailable to reviewer, the upward request to `team-lead` must include the common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`. Do not replace a required rendered or executable review surface with source-only evidence.
 If rendered evidence is available for review, inspect it for visible defects; do not treat capture existence as rendered fitness.
@@ -98,7 +98,7 @@ Specialist skill output is not automatically advisory. `security-review` and `co
 
 ## Specialist Skill Loading
 Reviewer lane evaluation selects and applies the materially relevant specialist lenses from the assigned review surface, frozen `SCOPE-BASELINE`, Phase 1/2 design basis, and expectation sources.
-Before acceptance-review severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, return `hold|blocker` instead of reviewing against a narrower surface.
+Before acceptance-review severity classification, consume frozen specialist contracts, oracles, and skill-basis records as review authority. If a material oracle is missing and cannot be derived from packet or artifact evidence, route `hold|blocker` instead of reviewing against a narrower surface.
 Defect promotion whose truth depends on governance, process, analysis, critique, review, validation, removal, patch-worthiness, or other team/design meaning follows `.claude/skills/task-execution/references/completion-handoff.md` `Common finding basis` before any reviewer severity mapping; severity mapping never creates `confirmed-defect` authority.
 Use this surface map:
 - Work-tool, spreadsheet, operations, business-rule, and workflow-state review: `business-workflow`, `work-tool-patterns`.
@@ -113,7 +113,7 @@ These are review lenses; acceptance findings use normal severity and are blockin
 Remediation stays with the producing owner.
 
 ## Reviewer Completion Detail
-- Reviewer `completion` carrier blocks must include `REVIEW-STATE: ready|hold|blocked`; `hold|blocker` transport uses blocker-native fields and adds `REVIEW-STATE` only as context.
+- Reviewer `completion` carrier blocks must include `REVIEW-STATE: ready|hold|blocked`; `hold|blocker` state uses the no-detail state token plus preceding non-rendered `problem-report` or governed carrier detail, and `REVIEW-STATE` is completion-context only.
 - Reviewer completion must include `TARGET-INTENT-BASIS` through the common completion spine.
 - Findings that propose removal, reduction, simplification, or optimization must satisfy the common finding basis in `.claude/skills/task-execution/references/completion-handoff.md`.
 - Without that basis, classify the item as preliminary evidence, not a completed review finding.
@@ -121,6 +121,7 @@ Remediation stays with the producing owner.
 - Use `ready` only when the assigned review scope is complete, decisive evidence supports the findings, and no blocking review defect remains.
 - Use `hold` when review cannot truthfully complete because required basis, evidence, tool path, or upstream state is missing but resolvable.
 - Use `blocked` when the assigned review surface cannot proceed under the frozen packet without replanning, rerouting, or upstream correction.
+- `No output`, quiet command success, suppressed stdout, folded `Read`/`Bash` rows, or stdout-based connectivity probes do not prove missing evidence or unavailable tool path. Before `REVIEW-STATE: hold|blocked` for a tool-path claim, cite explicit tool error, timeout, cancellation, permission denial, or absent completed tool-call result; otherwise continue through screen-safe evidence paths under `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - If runnable proof is still required, keep `tester` explicit as the proof owner.
 - If final validation is materially required, keep the validator ingress contract explicit:
   - `VALIDATION-TARGET-TYPE`

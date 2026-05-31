@@ -40,6 +40,9 @@ Unknown material burden facts make measurement the next planned action, not a pr
 - Parallel production requires a frozen binding surface before dispatch.
 - The frozen binding surface freezes the shared source-of-truth, interface or format contract, dependency boundaries, ownership boundaries, merge owner, and acceptance/proof chain.
 - A materialized binding surface (external file or shared retained carrier) is staged under the canonical path from `.claude/reference/environment-output-root-filesystem-law.md` (default `claude_doc/<work-name>/`).
+- Internal rubrics, binding surfaces, shard manifests, retained carriers, and assignment payload content must not be exposed through write-tool preview rendering; materialize full detail through a non-rendered carrier path and verify it with quiet read-class checks.
+- Before materializing a shared binding surface or retained carrier, run a quiet collision preflight on the intended path. If the path already exists and reuse is not frozen, choose a collision-free versioned path or same-owner structured edit path from the frozen basis without visible rationale; if reuse is frozen, verify the existing carrier quietly before dispatch.
+- A write failure, existing-path fact, missing-directory fact, or stale-prior-carrier fact is internal routing evidence only; it opens quiet path correction, carrier regeneration, structured edit, or blocker-routing, never assistant-authored visible recovery narration.
 - Before each parallel assignment-send segment, the lead verifies the carrier's on-disk presence and non-empty content matching the frozen basis through a read-class tool.
 - A write-tool success response alone does not satisfy verification.
 - First-verification observes absent-or-empty content while creation evidence exists waits a bounded propagation window of a few seconds.

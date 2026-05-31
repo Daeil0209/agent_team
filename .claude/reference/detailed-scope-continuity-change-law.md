@@ -55,10 +55,7 @@ The consuming owner records stale verdicts or carry-forward evidence when curren
 ## Continuity Routing Gate
 Judgment requires inspected live owner surfaces.
 Mutation requires reconstructed target intent.
-Positive synthesis requires carry-forward of:
-- same-session changes
-- sibling outputs
-- acceptance contracts
+Positive synthesis requires carry-forward through `.claude/skills/work-planning/references/cross-continuity.md` when cross-continuity facts affect synthesis.
 Removal requires reconstructed source-to-destination meaning.
 Governance text removal also satisfies `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate`.
 
@@ -73,7 +70,9 @@ Governance text removal also satisfies `.claude/reference/modification-minimal-g
 - Consequential work also starts from cited applicable core-law axes.
 - Existing-artifact judgment, mutation, migration, reduction, and reporting carry both as `TARGET-INTENT-BASIS`.
 - Receivers consume `TARGET-INTENT-BASIS` before lane work.
-- Receivers raise `scope-pressure` when `TARGET-INTENT-BASIS` is missing or unsafe.
+- When `TARGET-INTENT-BASIS` is missing or unsafe, receivers first apply direct artifact/evidence inspection, evidence-backed defaults, and lawful reconstruction inside the unchanged owner, route, and scope when those preserve truthful work.
+- Receivers raise `scope-pressure` for correctable missing or unsafe `TARGET-INTENT-BASIS` only after that path cannot restore truthful work.
+- Receivers use `hold|blocker` when missing or unsafe `TARGET-INTENT-BASIS` remains decisive and non-derivable after that path.
 - Original creation applies `.claude/reference/detailed-design-core-law.md` `## Design Intent And Scope Law` before recording concrete or `not-applicable` `TARGET-INTENT-BASIS`.
 
 ## Scope-Abuse Rules
@@ -90,18 +89,12 @@ Route to correction when the unsafe move is:
 
 Corrective route:
 - dispatcher uses `route-replan`
-- lane intake uses `scope-pressure`
-- uncorrected unsafe state uses `hold|blocker`
+- lane intake applies direct artifact/evidence inspection, evidence-backed defaults, and lawful reconstruction when those preserve truthful work
+- lane intake records non-rendered `problem-report` before no-detail `scope-pressure` for correctable unsafe packet or basis gaps only after the intake path cannot restore truthful work
+- uncorrected decisive unsafe state records non-rendered `problem-report` before no-detail `hold|blocker`
 
 ## Cross-Continuity Rules
-Before dispatch, synthesis, phase movement, or consequential user-facing output, apply:
-- same-session patches
-- confirmed corrections
-- recurrence barriers
-- lane charters
-- packet requirements
-- acceptance contracts
-- sibling outputs
+Before dispatch, synthesis, phase movement, or consequential user-facing output, apply `.claude/skills/work-planning/references/cross-continuity.md` for the full active cross-continuity item set.
 
 Drift reopens `work-planning`.
 

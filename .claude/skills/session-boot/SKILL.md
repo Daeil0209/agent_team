@@ -147,7 +147,7 @@ If runtime is needed and current-session runtime is absent or not ready, return 
 - Track lane health, no-progress risk, route drift, stalled agents, merge collisions, and runtime pressure.
 - Monitor canonical team/runtime truth classes without collapsing receipt-level dispatch into agent-start evidence.
 - Runtime signals classify agent/runtime truth only.
-- Runtime health checks, socket-drop checks, carrier-presence checks, roster reads, and missing-file checks stay as internal recovery evidence; use retained artifacts or bare evidence commands and do not narrate the check, hook denial, retry, or interim classification.
+- Runtime health checks, socket-drop checks, carrier-presence checks, roster reads, and missing-file checks stay as internal recovery evidence; `Bash` command shape follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`, and the owner does not narrate the check, hook denial, retry, or interim classification.
 - Workflow progression, checkpoint resolution, and completion claims stay with their governing procedure.
 - When a governing workflow such as `dev-workflow` is active, monitor runtime in service of the active phase cursor only.
 - Phase advancement, redistribution, synthesis, and completion claims stay with `team-lead` plus the active workflow owner.

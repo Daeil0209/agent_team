@@ -44,14 +44,14 @@ Rules:
 | **Review scope** | Code quality | + architecture consistency | + security (`security-review`) + infrastructure |
 | **Testing requirements** | Basic verification | Structured testing | E2E + security + performance |
 | **Documentation required** | Minimal (inline) | Feature-specific docs | Architecture + design + API docs |
-| **Default team size** | 1-2 agents | 2-4 agents | Precision 5-lane deployment |
+| **Default lane coverage shape** | 1-2 lane roles, dispatched within cap | 2-4 lane roles by wave or reuse, dispatched within cap | Precision 5-lane coverage by wave or reuse, dispatched within cap |
 | **Design options** | Conditional | Default | Required (3 architecture options) |
 | **User-input checkpoint candidates** | CP4 only when implementation approval is truly user-owned | CP1, CP3, CP4 only when evidence leaves a true user-owned decision | CP1-CP5 only when evidence leaves a true user-owned decision |
 | **Gap analysis** | Conditional | Default | Required before acceptance |
 | **Specialist skills** | None by tier alone | `dev-workflow` only when its activation criteria are true; add `external-tool-bridge` when external capability is active | `dev-workflow`, `security-review`, `enterprise-architecture`, or `external-tool-bridge` only when each skill's activation criteria is true |
 ### Checkpoint Semantics
 Checkpoint semantics (CP1-CP5) are defined by dev-workflow when active. This skill sizes where user input becomes relevant. Checkpoints and phase gates remain governed by their owning workflow. dev-workflow mandatory checkpoints still execute at all tiers and auto-resolve when doctrine, frozen request basis, and evidence decide the best owner path.
-Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
+Acceptance-depth semantics: the table sizes default review and proof evidence depth for project governance. Lane coverage shape is not a concurrent-agent allowance; `ACTIVE-CONCURRENT-AGENT-CAP` in `references/parallel-fit.md` controls simultaneous dispatch. The validator lane retains final `PASS/HOLD/FAIL` authority when a final validation verdict is required by role separation, task risk, or the active workflow.
 ## Direct-Evidence Discipline
 - Governance-depth tier is a sizing aid for review/proof/acceptance defaults; it does not override direct evidence.
 - Design-implementation match and coverage-of-promised-surfaces remain reviewer and validator concerns under `references/deliverable-defaults.md` and `.claude/CLAUDE.md` `## 6. Judgment Philosophy`; team-lead uses direct evidence (review findings, proof results, validator verdicts, frozen `SCOPE-BASELINE` coverage), not a numeric heuristic, to iterate, escalate, or proceed.

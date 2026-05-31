@@ -23,7 +23,7 @@ This reference is not a skill, runtime state file, or always-loaded context.
 - `team-lead` consumes this reference only for preservation audits, compression-safety challenges, duplicate-overlap checks, live-surface-porting checks, or source-to-destination traceability reviews.
 - Lane agents receive packetized traceability facts from `team-lead` only for lookup-only transfer.
 - When lane work judges context reduction, compression, preservation, migration, or source-to-destination traceability, the lane consumes the complete triggered section and records applied-rule mapping; packetized facts alone are insufficient.
-- Compression is lawful only when the shorter surface remains equal or stronger on action, owner, trigger, stop, evidence, verification, acceptance truth, and live cross-reference integrity.
+- Compression is lawful only when the shorter surface remains equal or stronger on action, owner boundary, trigger, stop condition, evidence, proof burden, verification, acceptance truth, and live cross-reference integrity.
 
 ## Current Source-To-Destination Index
 - Top doctrine intent stays in `.claude/CLAUDE.md` numbered philosophy sections.
@@ -85,4 +85,4 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 | Duplicate doctrine overlap | Compact rule is trigger/anchor; precise owner surface controls detailed procedure; divergent duplicate is tightened, re-homed, or removed, not averaged. |
 | User compliance challenge | Current conclusion becomes unverified draft; re-examine against philosophy, evidence, net benefit, owner fit, and preservation map. |
 
-If any scenario produces weaker action, stop condition, proof burden, owner boundary, or acceptance result than the longer source surface, the compression is not converged.
+If any scenario weakens any compression-safety axis named in `## Consumer And Ownership`, the compression is not converged.

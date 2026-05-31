@@ -19,6 +19,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: routine-continuation atomic-check — Procedu
 
 ## Resolve Next Owner And Action
 - Status or why answers consume `.claude/reference/reporting-prohibition-law.md` `## Pre-Report Gate`; admitted answers consume `.claude/reference/reporting-user-reporting-law.md` `## Report Shape`, while denied answers suppress prose and return to the active owner action unless the user explicitly cancels, redirects, immediately prioritizes an interrupting request, or a user-action blocker is proven.
+- After an admitted status or why answer, return to the active owner action silently; do not render a resume, waiting, monitoring, or continuation sentence.
 - Routine milestones and partial arrivals stay Procedure Plane unless the user explicitly asks for status; admitted status stays compact and omits internal inventories unless requested.
 - Satisfied gates, phase transitions, routine milestones, partial arrivals, and partial patch batches continue through the next owner/action without assistant-authored visible narration; do not emit assistant-authored visible milestone, acceptance, reuse, waiting, holding, active-lane, round, shard, count, or progress prose unless `.claude/reference/reporting-prohibition-law.md` admits the exact status or final-result report.
 - Any open frozen next owner/action executes through its active owner path.

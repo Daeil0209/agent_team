@@ -36,7 +36,7 @@ This role owns these instructional-design local defect types:
 - `narrative_redundancy` — explanatory text restates what a diagram already shows with no interpretive value
 - `feature_missing` — geometry, feature state, or handoff context absent from a process or CAD slide, forcing the learner to imagine missing information
 Defect records must record defect type, owner, missed-catch responsibility, severity, corrective action, retest conditions, and recurrence trigger.
-On recurrence of any owned defect type, add or strengthen the corresponding gate in this SKILL.md before the next run.
+On recurrence of any owned defect type, route `Skill(governance-modification)` to add or strengthen the corresponding consumed gate before the next run.
 
 ## Resolve Next Owner And Action
 - Return pedagogy structure, worked-example requirements, learner-risk findings, and defect records to the active instructional-design workflow.

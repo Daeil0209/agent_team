@@ -45,7 +45,7 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Review, proof, validation, and route ownership stay with their owning lanes.
 - When request-fit materially shapes development production, require the request-bound packet fields rather than reconstructing them from gist alone.
 - If safe lane, intent, bounded development production surface, source-of-truth, material closure row, disposition path, consumer/recompute path, and acceptance oracle are inferable without changing the assignment boundary, reconstruct the working packet explicitly and mark inferred pieces as inference.
-- If write scope, authority, acceptance contract, production-phase basis, or decisive production basis is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
+- If write scope, authority, acceptance contract, production-phase basis, or decisive production basis is materially ambiguous, route `hold|blocker` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 
 ## Escalation Triggers
 - These boundaries are modules:
@@ -76,11 +76,11 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
   - downstream proof owner is explicit
   - downstream acceptance owner is explicit
 - Carry the trigger basis in the completion carrier.
-- Send `scope-pressure` when the trigger can be resolved by:
+- Route `scope-pressure` when the trigger can be resolved by:
   - bounded split
   - replanning
   - route decision
-- Send `hold|blocker` when write authority, shared contract authority, or acceptance ownership is missing and cannot be restored through same-boundary packet correction, route decision, split, or replanning.
+- Route `hold|blocker` when write authority, shared contract authority, or acceptance ownership is missing and cannot be restored through same-boundary packet correction, route decision, split, or replanning.
 - Use `scope-pressure` or packet correction when those routes can restore the missing authority without changing the developer-owned production boundary.
 
 ## Development Production Workflow
@@ -90,18 +90,18 @@ If any answer is `no` or `unverified`, keep the exact user-perspective gap expli
 - Name the first lane action.
 - Name the stop condition.
 - Production proceeds only on `execute` or `reconstruct-with-inference`.
-PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€” the `scope-pressure / hold|blocker` stop-not-abandonment rule chain restates `.claude/agents/developer.md` lines 49-58 and `references/developer-lane-detail.md` lines 47-48 because developer lane consumes these rules in isolation context when encountering a constraint during production; defense-in-depth restatement.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€” the `scope-pressure / hold|blocker` stop-not-abandonment rule chain restates `.claude/agents/developer.md` developer constraint-resolution duties and `references/developer-lane-detail.md` completion-completeness challenge because developer lane consumes these rules in isolation context when encountering a constraint during production; defense-in-depth restatement.
 - `scope-pressure` and `hold|blocker` stop only the unsafe current path.
 - They open the team-lead resolution loop.
 - They are not task abandonment.
-- Send them immediately to `team-lead` via `SendMessage`.
+- Route them immediately to `team-lead` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
   - Include exact constraint, attempted or available path, why current execution cannot continue truthfully, and smallest next executable step.
   - Use `references/developer-lane-detail.md` as the controlling packet-field catalog for decisive basis, multiple-surface additions, executable launcher contract, user-facing surface, and path-bounded `WRITE-SCOPE`.
   - Do not maintain a second field list inside this skill body.
 - Reconstruct only when safe without changing owner, phase, proof burden, acceptance burden, deliverable shape, write scope, source-of-truth, closure row, disposition path, consumer/recompute path, or acceptance oracle.
 - Mark inferred pieces explicitly.
 - If production needs a tool, dependency setup, runtime bridge, or evidence surface outside the frozen packet boundary, stop only the blocked path.
-- Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage`.
+- Route `hold|blocker` or `scope-pressure` to `team-lead` through the canonical Transport Payload path in `.claude/skills/task-execution/references/message-classes.md`.
 - Include common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Include candidate route when known.
 - Include the smallest next executable step.
@@ -116,6 +116,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - For governance surfaces, verify stale residue is not being mistaken for current truth.
 - Use direct file inspection when the current root lacks a git repository.
 ### 3. Execution Guard
+- Developer `Bash` inspection, guarded execution, diagnostics, and verification support follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - For defect-fix work, default to a failing guard before correction.
 - If guard creation is impossible because no executable oracle, safe setup, stable reproduction path, or bounded guard surface exists, record `FALLBACK-BASIS` with attempted or unavailable guard path and keep the retest surface explicit.
 - Keep the retest surface explicit.
@@ -128,7 +129,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Keep production work inside the frozen change boundary.
 - For governance patch edits, consume `.claude/reference/modification-minimal-governance-change-law.md` `## Patch-Ready Gate` before mutation.
 - For governance patch edits, satisfy `.claude/skills/task-execution/references/lane-additions.md` lane-side governance patch quality contract.
-- If the assigned governance target is unconsumed, return `scope-pressure` unless the same bounded change makes it consumed.
+- If the assigned governance target is unconsumed, route `scope-pressure` unless the same bounded change makes it consumed.
 - Review, proof, and validation work remain explicit owning-lane surfaces.
 ### 5. Pre-Completion Integrity
 - No broken imports, missing references, contradictory logic, unreachable branches, syntax fragments, or dead renamed symbols.
@@ -141,7 +142,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Keep the applied boundary truthful: no hidden phase, hidden prerequisite, or hidden owner expansion.
 ### 6. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before developer-specific completion additions below.
-- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **PASS records require evidence citations** per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3; assertion-only completion carrier is fabrication and disqualifies handoff.
 - Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
@@ -168,7 +169,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 
 ## Active Communication Protocol
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
-- Completion uses `completion` only for converged developer-owned output.
+- Completion uses `subjob-done` only for converged developer-owned output.
 
 ## Resolve Next Owner And Action
 - Converged developer-owned output opens team-lead synthesis through the completion-grade path.

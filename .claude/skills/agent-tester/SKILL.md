@@ -52,7 +52,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Reconstruct only when proof target, proof expectation, proof surface, environment basis, scenario scope, closure/oracle row, state-postcondition, and decisive evidence basis are anchored in packet or artifact evidence.
 - Reconstruction preserves owner, phase, proof burden, acceptance burden, deliverable shape, tool/run-path basis, scenario boundary, closure/oracle row, state-postcondition, and evidence authority.
 - Mark inferred pieces explicitly.
-- If proof objective, design intent, expected result, scenario scope, tool requirement, or expected proof level is materially ambiguous, send `hold|blocker` to `team-lead` via `SendMessage`.
+- If proof objective, design intent, expected result, scenario scope, tool requirement, or expected proof level is materially ambiguous, route `hold|blocker` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Frozen user run path or burden-contract ambiguity is also `hold|blocker`.
 - Include the exact missing information request.
 - Proof work starts from packet, artifact, or marked safe inference.
@@ -63,7 +63,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - For slides, word-processing documents, spreadsheets, PDFs, HWP/HWPX, or other human-consumed artifacts, use a native-capable or format-faithful rendered/runtime proof path.
 - This applies when layout, formulas, pagination, interaction, or visible burden matter.
 - Missing, unavailable, or fidelity-uncertain user-surface tool path routes to `hold|blocker` or `scope-pressure`.
-- Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
+- Route `hold|blocker` or `scope-pressure` to `team-lead` through the canonical Transport Payload path in `.claude/skills/task-execution/references/message-classes.md`, using common tool/evidence-gap fields from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Do this unless a frozen discovery/setup path already authorizes the exact next step.
 - See `references/tester-lane-detail.md` for packet detail, interaction-coverage detail, human-facing checklist detail, and completion detail.
 
@@ -84,10 +84,10 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Map retained postcondition evidence after the action.
 - Map evidence artifact.
 - For UI/browser proof, the map must be executable through Playwright CLI or the frozen equivalent path unless that path is blocked and reported.
-- Missing packet-backed or safe-inference-backed map opens `hold|blocker` transport before proof work.
-- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `hold|blocker` transport.
+- Missing packet-backed or safe-inference-backed map opens `hold|blocker` state before proof work.
+- Request missing design intent, expected result, user path, state expectation, closure-defect probe, hard-test probe, postcondition evidence, or tool path through `hold|blocker` state.
 - If the packet is over-scoped but splitable, return one concrete split shape before proof begins.
-- If the packet is boundary-ambiguous or internally contradictory, return `hold|blocker` rather than guessing the proof surface.
+- If the packet is boundary-ambiguous or internally contradictory, route `hold|blocker` rather than guessing the proof surface.
 ### 2. Choose The Smallest Credible Test Set
 - Cover critical path and highest-risk paths first.
 - Add negative, boundary, and error cases proportional to risk.
@@ -101,9 +101,9 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Also use them for weak oracles, regression risk, or security exposure.
 - Adequate coverage maps to in-scope user, interaction, state, and data dimensions.
 ### 3. Execute Direct Checks
-- **Refuse narrative substitution**: narrative assertion, source-only inspection, page-load checks, DOM presence, or other surrogate evidence cannot substitute for executed proof on the frozen `PROOF-SURFACE`. Demand actual tool-call execution traces (Bash output, browser navigation, screenshot, runtime artifact) for every claimed proof.
+- **Refuse narrative substitution**: narrative assertion, source-only inspection, page-load checks, DOM presence, or other surrogate evidence cannot substitute for executed proof on the frozen `PROOF-SURFACE`. Demand actual tool-call execution traces (`Bash` command/result evidence captured under `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`, browser navigation, screenshot, runtime artifact) for every claimed proof.
 - Run actual commands.
-- Record exact commands, outputs, exit codes, or observed interaction evidence.
+- Record exact commands, retained outputs or result artifacts, exit codes, or observed interaction evidence.
 - When a log, report, screenshot, trace, result file, or dataset supports the proof claim, retain it under the approved project output root and cite that path in completion.
 - Retained evidence identity requires project-owned retained paths; `/tmp` fixture paths are scratch context only.
 - Keep the executed path explicit against `TOOL-REQUIREMENT`, `PROOF-EXPECTATION`, and assigned interaction scope.
@@ -119,7 +119,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - Choose the smallest truthful tool path.
 - Keep the choice bounded by the packet's discovery/setup objective.
 - Environment work stays bounded to the packet's discovery/setup objective.
-- Failed narrow search for a truthful executable path inside the frozen boundary sends the tool/evidence-gap request to `team-lead` via `SendMessage` before proof work continues.
+- Failed narrow search for a truthful executable path inside the frozen boundary routes the tool/evidence-gap request to `team-lead` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload` before proof work continues.
 - If execution drifts to a weaker path, downgrade the proof state immediately instead of continuing with `matched` assumptions.
 ### 4. Cover Human-Facing Surfaces
 - For documents, page-read, or office-format artifacts, keep rendered evidence explicit when human-visible acceptance depends on it.
@@ -148,7 +148,7 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before tester-specific completion additions below.
-- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Proof PASS in completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) corrupts validator and team-lead synthesis.
 - Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
@@ -167,8 +167,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 
 ## Active Communication Protocol
 - Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
-- Use `hold|blocker` transport only when blocked execution prevents a truthful tester-owned proof report; otherwise send `completion` with row-level `blocked` classifications and `OPEN-SURFACES`.
-- Completion uses `completion` only for converged tester-owned proof.
+- Route `hold|blocker` state only when blocked execution prevents a truthful tester-owned proof report; otherwise send `subjob-done` with row-level `blocked` classifications and `OPEN-SURFACES`.
+- Completion uses `subjob-done` only for converged tester-owned proof.
 
 ## Resolve Next Owner And Action
 - `TEST-STATE: ready` opens validator, reviewer, correction owner, or team-lead synthesis by the frozen route only as row-classified proof evidence, not as acceptance or pass evidence.

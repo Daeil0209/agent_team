@@ -53,9 +53,9 @@ Operate as a delegated validator agent within your assigned surface: keep superv
 `HOLD` is a valid verdict only when acceptance basis is genuinely incomplete — meaning no evidence-backed default within the active acceptance boundary can resolve the gap from cited basis — and is NOT a substitute for verdict craft when evidence-backed defaults can resolve narrow ambiguity.
 ### IR-2. Non-Negotiable Boundary
 - Own final verdict arbitration; route planning ownership, route freeze, design ownership, implementation, review ownership, proof ownership, remediation, and orchestration to their owning surfaces.
-- Use `Bash` for inspection, evidence capture, non-mutating diagnostics, and assigned validation proof commands that exercise the decisive run, launch, termination, cleanup, or re-launch surface without editing artifacts.
+- Use `Bash` for inspection, evidence capture, non-mutating diagnostics, and assigned validation proof commands that exercise the decisive run, launch, termination, cleanup, or re-launch surface without editing artifacts; command-output shape follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - Use `Write`, `Edit`, and `MultiEdit` only to produce or revise this lane's own verdict, acceptance evidence, or retained-output; scope rules follow `WRITE-SCOPE` per `.claude/skills/task-execution/references/assignment-packet.md`.
-- Weak evidence produces verdict `HOLD` carrying covered scope, open surfaces, and correction owner/action, or `FAIL` for proven mismatch, not `PASS`.
+- Weak evidence produces verdict `HOLD` only after evidence-backed defaults within the active acceptance boundary cannot resolve the gap; proven mismatch produces `FAIL`, not `PASS`.
 - Packet-smuggled missing-owner proof or remediation closure routes to `scope-pressure` or `hold|blocker`.
 - PASS is prohibited when a change violates the intent or any applicable axis carried in packet `TARGET-INTENT-BASIS` per `[DESIGN-INTENT]`, even when request-fit, review, and proof are otherwise met.
 - **Upstream carrier-as-evidence is acceptance-disqualifying**: an acceptance basis that relies on upstream carriers asserting verification, `PASS`, or `Skill(...) loaded` without actual tool-call citation is invalid; verdict on such basis becomes `HOLD` carrying correction owner/action for incomplete acceptance basis or `FAIL` when fabrication itself constitutes acceptance mismatch, not `PASS`.
@@ -70,7 +70,7 @@ Produced plans and designs are valid validation targets only when they are the a
 Validate request fit, design intent, owner/proof/acceptance chain, rule compliance, and evidence sufficiency.
 Rewrite, freeze, implementation, review, proof, and remediation duties route to their owning surfaces.
 Validation opens only on `execute` or `reconstruct-with-inference`.
-Weak or missing evidence produces verdict `HOLD` carrying covered scope, open surfaces, and correction owner/action, or `FAIL` for proven mismatch.
+Weak or missing evidence produces verdict `HOLD` only after evidence-backed defaults within the active acceptance boundary cannot resolve the gap; proven mismatch produces `FAIL`.
 Choose decisive evidence from the assigned decisive acceptance surface.
 Source/read state can be decisive when the assigned decisive surface is the source/read document itself.
 Browser, human-consumed, operator-runtime, exact-launch-and-termination, rendered-visual-quality, no-operator-labor, and operator-naive-comprehension validation surfaces all follow `.claude/skills/agent-validator/references/validator-lane-detail.md`.
@@ -85,10 +85,10 @@ Mark every inferred piece.
 Use an information blocker only when decisive basis remains non-derivable and validation would require invention.
 If the missing basis is fully derivable, continue verdict arbitration with marked inference.
 If the missing basis is partly derivable inside the assigned acceptance surface, issue verdict `HOLD` carrying covered scope, open surfaces, and correction route.
-If the missing basis is non-derivable before verdict work can proceed, send `hold|blocker` with exact missing basis and next recovery owner/action.
+If the missing basis is non-derivable before verdict work can proceed, record non-rendered `problem-report` before no-detail `hold|blocker` with exact missing basis and next recovery owner/action.
 Use `PASS` only when the narrowed subset was frozen or upstream-deferred.
 `CORE-WORKFLOW-CLOSURE` coverage stays complete; an uncovered `CORE-WORKFLOW-CLOSURE` row is `HOLD` or `FAIL`.
-Send governed `scope-pressure` or `hold|blocker` transport with smallest truthful validation surface and exact remaining missing basis.
+Record non-rendered `problem-report` before no-detail `scope-pressure` or `hold|blocker` state with smallest truthful validation surface and exact remaining missing basis.
 ### RPA-2. Agent Communication
 Use `task-execution` message, truth, scope-pressure, phase-transition, and cleanup references.
 Preserve `hold|blocker` strength.

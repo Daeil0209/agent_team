@@ -42,13 +42,13 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Also consume the researcher detail contract in `references/researcher-lane-detail.md`.
 - When request-fit materially shapes research or downstream decision-fit, require the request-bound packet fields rather than reconstructing them from gist alone.
 - Classify the received packet per `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions` 4-state intake before research discovery.
-- `scope-pressure` and `hold|blocker` stop only the unsafe evidence path. Send them to `team-lead` via `SendMessage` with the exact failed or missing basis, attempted or available evidence path, partial evidence state, smallest truthful evidence boundary, and smallest next executable recovery step.
+- `scope-pressure` and `hold|blocker` stop only the unsafe evidence path. Route them through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`; exact failed or missing basis, attempted or available evidence path, partial evidence state, smallest truthful evidence boundary, and smallest next executable recovery step stay in carrier state.
 - Required decisive basis: `QUESTION-BOUNDARY`, `OUTPUT-SURFACE`, `RESEARCH-MODE`, `SOURCE-FAMILY`, `DECISION-TARGET`, `DOWNSTREAM-CONSUMER`, `REQUIRED-SKILLS`, and the smallest truthful evidence boundary.
 - For write-producing research, missing, contradictory, stale, unrelated, or out-of-scope `TASK-ID`, `WORK-SURFACE`, `RETAINED-OUTPUT-PATH`, or `WRITE-SCOPE` is `hold|blocker` or `scope-pressure`, not `reconstruct-with-inference`.
 - If the safe question boundary, source family, decision target, downstream consumer, and evidence-authority threshold are inferable without changing the assignment boundary, reconstruct the working packet explicitly.
 - Mark inferred pieces as inference.
 - Reconstruct only inside unchanged owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, and evidence-authority threshold.
-- If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, send `hold|blocker`.
+- If the decision target, evidence boundary, downstream consumer, question surface, or decisive evidence basis is materially ambiguous, route `hold|blocker`.
 - Material coverage lenses apply from the decision target.
 - See `references/researcher-lane-detail.md` for packet detail, benchmark fields, evidence-tier discipline, operational-reality classification, and completion detail.
 
@@ -59,7 +59,7 @@ Technically correct but user-inaccessible research is not finish-ready.
   - `deep-evidence`: contradictions, counterexamples, source-family breadth, freshness, authority, and confidence downgrade.
   - `sharded-surface`: independent question axes, source families, domains, or decision targets.
   - `benchmark-perspective`: external best practice, methodology options, operational examples, or capability-hardening evidence.
-- Before sending `scope-pressure` for lens coverage, propose the current-lane bounded coverage candidate and a concrete shard/split shape; send `scope-pressure` only when the assignment boundary cannot remain truthful under that bounded coverage or split.
+- Before routing `scope-pressure` for lens coverage, propose the current-lane bounded coverage candidate and a concrete shard/split shape; route `scope-pressure` only when the assignment boundary cannot remain truthful under that bounded coverage or split.
 - Benchmark evidence gathering stays researcher-owned when assigned; benchmark-method rules come from `benchmark-simulation`, route authority stays with `team-lead`, proof with `tester` or the frozen proof owner, and final acceptance with `validator`.
 
 ## Research Workflow
@@ -79,9 +79,9 @@ Technically correct but user-inaccessible research is not finish-ready.
 ### 4. Retry Guard
 - Common Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Researcher-specific material change includes new query, source family, access path, or narrowed boundary.
-- If no new evidence route exists, send `hold|blocker` with the attempted routes, partial evidence state, and smallest next executable recovery step.
+- If no new evidence route exists, route `hold|blocker` with the attempted routes, partial evidence state, and smallest next executable recovery step.
 ### 5. Gather Evidence
-- **Refuse memory/intuition substitution**: every material fact, count, or observation requires actual tool-call source citation (`Read`/`WebSearch`/`WebFetch`/`Bash` inspection). Model-memory recall is inference and must be marked as such, not transported as evidence.
+- **Refuse memory/intuition substitution**: every material fact, count, or observation requires actual tool-call source citation (`Read`/`WebSearch`/`WebFetch`/`Bash` inspection captured under `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`). Model-memory recall is inference and must be marked as such, not transported as evidence.
 - Search repository-local evidence first when it exists.
 - Use external research when `SOURCE-FAMILY` is `web` or `mixed`.
 - Use external research when local evidence is insufficient.
@@ -106,12 +106,12 @@ Technically correct but user-inaccessible research is not finish-ready.
 - For visualized or rendered page-read artifacts, keep both text-review needs and rendered-review needs explicit.
 - If a required tool or rendered evidence path is unavailable, consume `Skill(tool-acquisition)` for bounded tool-path discovery, verification, fallback, or blocked-state capture when current tools can lawfully inspect candidate options.
 - Continue evidence work when `Skill(tool-acquisition)` finds a lawful path inside the assignment boundary.
-- Send `hold|blocker` or `scope-pressure` to `team-lead` via `SendMessage` only when discovery is blocked, unsafe, changes boundary, or cannot recover the required evidence path.
+- Route `hold|blocker` or `scope-pressure` to `team-lead` only through the canonical Transport Payload path in `.claude/skills/task-execution/references/message-classes.md` when discovery is blocked, unsafe, changes boundary, or cannot recover the required evidence path.
 - The request must include the missing evidence surface, required capability, current toolset limit, candidate tools considered, selected tool or program, and fit rationale.
 - It must also explain the text-only evidence gap, the smallest truthful evidence boundary, and the setup owner or packet correction.
 ### 8. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before researcher-specific completion additions below.
-- Direct-consumption local restatement: before `completion` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
+- Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Evidence claims without source citation are fabrication that corrupts every downstream lane consuming this evidence as upstream basis.
 - Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
@@ -124,7 +124,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
 - For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it affects.
 - When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against its bridge axes.
-- If that semantic basis is missing or contradicted on meaning-dependent research, return `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
+- If that semantic basis is missing or contradicted on meaning-dependent research, route `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - Research output is evidence input to downstream owners, not implementation, validation, patch-worthiness, confirmed-defect authority, or defect promotion.
 - Defect, removal, or patch-worthiness promotion routes to the team-lead `Skill(review-verification)` defect-promotion path.
 - Use common finding-state ladder terms for candidate outputs: `candidate-evidence`, `candidate-classified`, or lane-local `rejected:<basis>`.
@@ -133,7 +133,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 
 ## Active Communication Protocol
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
-- Completion uses `completion` only for converged researcher-owned evidence.
+- Completion uses `subjob-done` only for converged researcher-owned evidence.
 
 ## Resolve Next Owner And Action
 - Converged researcher-owned evidence opens team-lead synthesis through the completion-grade path.
