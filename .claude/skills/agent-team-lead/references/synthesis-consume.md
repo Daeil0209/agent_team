@@ -3,6 +3,7 @@ PRIMARY-OWNER: team-lead
 LOAD-POLICY: on-demand reference only
 SOURCE-ANCHOR: .claude/skills/agent-team-lead/SKILL.md
 SOURCE-RULES: "admitted-case-inventory; category-mapping; duplicate-work-collapse; coordinate-correlation; work-coordinate-work-items; synthesis-result; validator-pass-synthesis"
+REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
 # team-lead: Synthesis Consume
 
@@ -10,6 +11,7 @@ SOURCE-RULES: "admitted-case-inventory; category-mapping; duplicate-work-collaps
 Consume this reference when team-lead reconciles multiple completion-grade lane, shard, review, proof, or validation results.
 Own only synthesis: inventory every admitted completion-grade handed case, group same material meaning into categories, preserve independent cases, derive follow-on work-items from work coordinates, and return the synthesized result with next owner/action.
 Completion transport, report admission, finding promotion, verification, runtime reuse, and acceptance stay on their owning skills or references.
+Synthesis inventories and readiness facts are internal work products; after synthesis, team-lead silently opens self-verification, redispatch, correction, report-admission, or blocker-routing instead of `carrier accepted`, `synthesis ready`, `awaiting`, or other bridge prose.
 
 ## Terms
 - `case` — one admitted material completion-grade `VERIFIED-DATA-FEEDBACK` row from a lane, shard, review, proof, or validation surface.
@@ -37,7 +39,7 @@ Completion transport, report admission, finding promotion, verification, runtime
 2. Inventory every admitted handed case once with its source surface, original identifier or label, evidence anchor, and `ADMITTED-CASE-TOTAL`.
 3. Keep missing, late, insufficient, or otherwise unresolved inputs as unresolved input items outside the admitted-case inventory.
 4. Map every admitted case to exactly one `category` by same evidence-backed material feature; single-member categories are valid and `CATEGORY-MEMBER-TOTAL` must equal `ADMITTED-CASE-TOTAL`.
-5. Keep cases in separate categories when owner/action, causal mechanism, evidence need, acceptance truth, or correction path differs materially.
+5. Keep cases in separate categories when owner/action, causal mechanism, evidence need, claim strength, protected-function or rejection basis, acceptance truth, or correction path differs materially.
 6. For each category member, record every material resolved `work-coordinate` target; record `no-follow-on:<basis>` only when the category member has no material coordinate target.
 7. Collapse duplicate follow-on work only when category, retained material content, and resolved coordinate target are all the same; preserve collapsed case identifiers as `covered-cases`.
 8. When one resolved coordinate target carries multiple categories or retained material contents, emit one `correlation-analysis` work-item for that target and preserve all covered cases.
@@ -53,9 +55,9 @@ Completion transport, report admission, finding promotion, verification, runtime
 - Carry completion-carrier `OPEN-SURFACES` as unresolved input or routing items. A separate current completion-grade `VERIFIED-DATA-FEEDBACK` row may admit its verified material content as a case, but it does not close the `OPEN-SURFACES` item unless the carrier basis proves closure.
 - Carry source surfaces, case identifiers or labels, evidence anchors for category members, `ADMITTED-CASE-TOTAL`, `CATEGORY-MEMBER-TOTAL`, category mapping bases, coordinate resolution bases, work-item mapping, unresolved inputs, result coverage, and material `UPSTREAM-DECISION-BASIS`.
 - When follow-on work is material, return `ADMITTED-CASE-INVENTORY`, `CATEGORY-MEMBER-MAP`, `WORK-ITEMS`, each `work-item`'s type, resolved coordinate target, coordinate expression aliases, covered categories, retained material contents, and covered case identifiers or labels.
-- Do not emit two ordinary `WORK-ITEMS` for the same category, retained material content, and resolved coordinate target; preserve duplicated source cases only as covered cases.
-- Emit `TYPE: correlation-analysis` when one resolved coordinate target contains multiple categories or retained material contents; the follow-on owner must resolve all covered categories or return a narrower owner/action basis.
-- A single case or category may emit multiple `WORK-ITEMS` when retained material content is the same but resolved coordinate targets differ.
+- Do not record two ordinary `WORK-ITEMS` for the same category, retained material content, and resolved coordinate target; preserve duplicated source cases only as covered cases.
+- Record `TYPE: correlation-analysis` when one resolved coordinate target contains multiple categories or retained material contents; the follow-on owner must resolve all covered categories or return a narrower owner/action basis.
+- A single case or category may record multiple `WORK-ITEMS` when retained material content is the same but resolved coordinate targets differ.
 - State only the evidence and corpus coverage the synthesis actually supports.
 - Use frozen delivery contract, `SEMANTIC-INTENT-BASIS`, and `TARGET-INTENT-BASIS` only when meaning-dependent synthesis needs them.
 

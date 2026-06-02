@@ -1,6 +1,6 @@
 ---
 name: session-boot
-description: "Run lead-session boot, runtime-readiness gates, monitoring, runtime cleanup interpretation, and recovery. Use when team runtime readiness, session-start recovery, monitoring, or runtime cleanup truth is active."
+description: "Run lead-session boot, runtime-readiness gates, monitoring, runtime cleanup interpretation, and recovery. Use at lead-session fresh start, resume, pause-return, and when team runtime readiness, session-start recovery, monitoring, or runtime cleanup truth is active."
 user-invocable: false
 REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ---
@@ -40,7 +40,7 @@ Load at the main session's fresh start, resume, pause-return, or active-runtime 
 Session boot is loaded after the team-lead Startup Contract records the current same-session `REPORTING-BASIS`.
 Before any boot, resume, or monitoring prose, apply the current `REPORTING-BASIS` to the exact candidate surface.
 Clean startup preserves the current `REPORTING-BASIS` only when session, file, compaction/drop/truncation, and applied-rule freshness checks pass; otherwise reopen the team-lead startup refresh before any boot, resume, monitoring, or progress prose.
-If the Startup Contract lacks current `REPORTING-BASIS` before this skill loaded, route visible prose through the active team-lead startup owner before boot narration.
+If the Startup Contract lacks current `REPORTING-BASIS` before this skill loaded, omit visible boot prose and route basis refresh through the active team-lead startup owner.
 The minimal gate checks only whether runtime, recovery, monitoring, cleanup, compaction, or dispatch-state evidence is material to the next action.
 When none is material, record `runtime-ready: clean` internally.
 Then proceed without runtime-detail reference load, runtime-ledger inspection, or boot prose.

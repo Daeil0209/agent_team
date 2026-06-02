@@ -95,8 +95,16 @@ Protected filesystem mutation uses direct owner-file mutation through the struct
 - `parallel-fit` on-disk verification resolves materialized binding surfaces against this canonical location.
 - `<work-name>` is named by the owning `work-planning` freeze; sub-batch directories such as `claude_doc/<work-name>/<date-or-batch>/` are allowed when multiple runs of the same work shape are needed.
 - Before freezing or reusing `claude_doc/<work-name>/` for multi-lane, parallel, retained-carrier, or audit work, run quiet artifact-footprint preflight on the intended output root and planned retained-output paths.
-- If that root contains prior task-created outputs and current `work-planning` did not freeze explicit prior-output reuse, freeze a collision-free sub-batch root before carrier materialization or assignment dispatch; prior outputs remain excluded sources under `work-planning` boundary gates.
+- If quiet preflight finds prior task-created outputs and current `work-planning` did not freeze explicit prior-output reuse, record the collision internally and freeze a collision-free sub-batch root before carrier materialization or assignment dispatch; do not render prior-output discovery, path-choice rationale, or creating-next-root narration. Prior outputs remain excluded sources under `work-planning` boundary gates.
 - Existing retained-output paths are reusable only when the current frozen basis explicitly reuses that artifact and the artifact identity matches the current `TASK-ID`, `WORK-SURFACE`, binding surface, and completion spine; otherwise choose a collision-free path/root or reopen packet correction before dispatch.
+
+## Output-Root Failure Recovery
+- Consume this section when output-root creation, retained-path creation, carrier materialization, `Write`, or quiet artifact-footprint preflight returns missing-parent, existing/absent contradiction, create-says-existing while read says absent, repeated same-name creation failure, or path-state uncertainty.
+- A failed output-root or retained-path operation is internal filesystem evidence, not a report reason. Host-rendered failure rows do not authorize adjacent assistant-authored prose, path-choice rationale, or retry narration.
+- After the first failed create/preflight for an intended root, do not keep probing the same root as progress display. Run only checks required for the next owner decision, or choose a collision-free project-owned sibling/sub-batch root when allowed.
+- When the exact path was not explicitly required by the user and the task project folder remains usable, freeze a collision-free project-owned sibling or sub-batch root under `claude_doc/` before carrier materialization, packet assembly, assignment dispatch, or retained-output writes.
+- When the exact path was explicitly required and cannot be created or proven safe after quiet recovery checks, preserve the owner/action and route blocker truth; report to the user only if `.claude/reference/reporting-prohibition-law.md` admits a proven user-action blocker.
+- `/tmp`, shell scrollback, transient pane output, and scratch probe files are not retained carriers, output-root diagnostics, or substitute evidence for this recovery path.
 
 ## Filesystem Boundary Rules
 - Record these before file work:

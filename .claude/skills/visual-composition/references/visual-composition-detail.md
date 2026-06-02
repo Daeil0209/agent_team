@@ -34,31 +34,31 @@ Rules:
 - Medium documents (~10 pages) target ~5:5 or 6:4 text-to-visual ratio as default calibration.
 - Available benchmark/reference proposals supply concrete density targets (visuals per page, text-to-visual ratio per section type, whitespace budget) as calibration inputs that override defaults.
 - A visual included only to hit density still fails the justification gate.
-### Event Planning Document Visual Types
-Role-appropriate visual types for operational planning documents; each must pass visualization justification gate before inclusion:
-- **schedule tables** — time-sequenced activity grids with responsible party, location, status
-- **flow diagrams** — temporal or dependency chains showing event phases and handoffs
-- **venue layouts** — spatial arrangement for setup, movement, logistics
-- **role matrices** — responsibility assignment (who does what, when, with what authority)
-- **movement plans** — participant/resource flow across locations or phases
-- **assignment/logistics tables** — assignment tracking (who, what, where, when, status); required when resource assignments are in scope and no other visual tracks them
-- **preparation checklists** — binary-completion tracking (item, responsible party, status); required when preparatory tasks exist and no other visual tracks completion
+### Event Planning Document Visual Composition Checks
+When `document-automation` selects or freezes an event-planning visual type, `visual-composition` checks the rendered role and hierarchy:
+- **schedule tables** — verify time-sequenced activity grids carry responsible party, location, and status without overloading another reading task
+- **flow diagrams** — verify temporal or dependency chains make event phases and handoffs legible
+- **venue layouts** — verify setup, movement, and logistics are spatially inspectable
+- **role matrices** — verify responsibility assignment shows who does what, when, and with what authority
+- **movement plans** — verify participant/resource flow across locations or phases stays traceable
+- **assignment/logistics tables** — verify assignment tracking covers who, what, where, when, and status without duplicating another visual
+- **preparation checklists** — verify binary-completion tracking has item, responsible party, and status when selected
 - **Authority-Hierarchy Visual Marking**: assignment tables with authority-hierarchy participants must carry visually distinct row markers (shading, badge, or label). Absent distinct marking = `weak_hierarchy`.
-### R&D Proposal Document Visual Types
-Visual type by R&D proposal section:
-- **development overview**: structural diagram (component relationships or work breakdown)
-- **implementation system**: table/matrix (resource allocation, task assignment, method comparison)
-- **market/expected effects**: comparative diagram (before-after, baseline-target, multi-scenario)
-- **timeline**: Gantt/milestone chart with dependency/phase sequencing
+### R&D Proposal Document Visual Composition Checks
+When `document-automation` selects or freezes an R&D proposal visual, `visual-composition` checks the section role:
+- **development overview visuals**: verify structural relationships or work breakdown are inspectable
+- **implementation system visuals**: verify resource allocation, task assignment, or method comparison stays table/matrix-readable
+- **market/expected effects visuals**: verify before-after, baseline-target, or multi-scenario comparison is legible
+- **timeline visuals**: verify dependency/phase sequencing is clear in the selected Gantt or milestone form
 
-Each must pass the visualization justification gate before inclusion.
-### Research Report Visual Types and Quality
-Role-appropriate visual types for research reports, technology surveys, patent landscape analyses; each must pass the justification gate:
-- **patent/paper distribution map** — temporal/geographic distribution; justified when trend or coverage visibility requires it
-- **claim-evidence mapping table** — links claims to source citations and evidence-strength tier; required when report carries 10+ substantive claims
-- **competitive positioning map** — two-axis scatter placing entities by relevant dimensions; justified when comparative positioning is a primary reader judgment
-- **technology taxonomy diagram** — hierarchical/network diagram of classification relationships; must pass legibility floor when exceeding 12 nodes
-- **comparison matrix table** — feature/criterion comparison; justified when 3+ entities on 4+ dimensions
+Each selected visual must pass the visualization justification gate before visual-ready handoff.
+### Research Report Visual Composition Checks
+When `document-automation` selects or freezes a research-report, technology-survey, or patent-landscape visual, `visual-composition` checks the visual quality:
+- **patent/paper distribution maps** — verify temporal/geographic distribution makes trend or coverage visible
+- **claim-evidence mapping tables** — verify claims, source citations, and evidence-strength tiers remain scannable
+- **competitive positioning maps** — verify two-axis placement supports the stated comparative reader judgment
+- **technology taxonomy diagrams** — verify hierarchical/network classification relationships pass the legibility floor when exceeding 12 nodes
+- **comparison matrix tables** — verify feature/criterion comparison remains readable for the selected entity/dimension count
 **Research Diagram Legibility Floor**: diagrams with 12+ nodes must pass: minimum readable label size at target viewing distance, no overlapping node labels, edge crossings minimized. Failure = `diagram_text_unreadable`; blocks visual-ready handoff until redesigned or split.
 **Cross-Check Status Visual Marking**: evidence tables and claim-evidence mapping tables must visually distinguish row status using canonical evidence taxonomy.
 - `confirmed` stays explicit.

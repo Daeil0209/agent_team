@@ -69,7 +69,7 @@ Use this matrix to test whether compressed doctrine still produces the same proc
 
 | Scenario | Required outcome after compression |
 | --- | --- |
-| Fresh consequential request | `session-boot` opens first when runtime readiness triggers; otherwise `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` convergence runs before analyzed-result reporting or completion. |
+| Fresh consequential request | Top-level `team-lead` startup loads `Skill(agent-team-lead)` and `Skill(session-boot)` before `work-planning`; clean `session-boot` records `runtime-ready: clean` without loading runtime-detail reference, then `work-planning` freezes the boundary before execution or dispatch; `Skill(self-verification)` convergence runs before analyzed-result reporting or completion. |
 | Light answer-only request | No agent-specific skill, workflow, dispatch, or governance detail loads by habit. |
 | Read-only diagnostic, audit, or analytical work | Lead-local is valid only under `.claude/skills/agent-team-lead/references/lead-local-guarded-law.md` lead-local conditions; team fan-out requires frozen context-footprint or independent-evidence basis. |
 | Lead-local consequential work | Allowed only with complete local work items, required skills, first action, no lane-owned proof/validator substitution, no implied remainder, and self-verification convergence before analyzed-result reporting or completion. |

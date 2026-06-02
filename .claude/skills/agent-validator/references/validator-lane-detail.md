@@ -249,7 +249,7 @@ Validator states route-relevant evidence without freezing route. team-lead class
 - Keep conditional validator-specific fields explicit when they were materially part of the frozen validation surface:
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`
-- Keep these validator-specific status and reconciliation fields explicit in completion-grade completion:
+- Keep these validator-specific status and reconciliation fields explicit in retained-carrier completion-grade completion:
   - `PROOF-SURFACE-MATCH`
   - `RUN-PATH-STATUS`
   - `FIRST-USE-STATE-STATUS`

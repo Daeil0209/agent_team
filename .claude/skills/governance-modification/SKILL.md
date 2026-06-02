@@ -92,7 +92,7 @@ Execute patches through this section only after Step 4 design and Step 5 self-ve
 PROTECTED-LOCAL-RESTATEMENT-BASIS: patch-execution atomic-check — execution rules colocated here for atomic team-lead consultation at every patch application moment. `.claude/reference/modification-core-law.md` (removal-first edit selection, preservation rules) and `.claude/reference/modification-minimal-governance-change-law.md` (Patch-Ready Gate, Minimal Governance Rules) define the general patch rules; this surface applies them at execution time as a single-load operational check, with skill-specific additions (Hook-Last, MCP/external-tool handling) inline.
 - Patch from the current live file state; stale baselines, remembered content, and pre-session copies are evidence only.
 - Apply only reviewed, bounded, policy-compliant edits.
-- Prefer tighten, replace, trim, merge, re-home, or delete before append.
+- Before adding any sentence, inspect the consumed owner surface for related editable wording and carry the change through tighten, replace, trim, merge, re-home, or delete; add only when no related consumed sentence can carry the changed owner/action/trigger/stop/evidence meaning without weakening execution force, and record that basis.
 - For moved meaning, record source meaning, destination rationale, changed references, and preserved execution-critical fields.
 - For deletion, verify the deleted meaning is duplicate, obsolete, harmful, or preserved on the destination owner surface.
 - For recurrence or capability-gap repair, patch the existing consumed surface when it can carry the barrier.
@@ -101,7 +101,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: patch-execution atomic-check — execution ru
 - For MCP or external-tool capability changes, preserve official-behavior alignment, capability boundary, fallback, and cleanup truth on the owning environment/runtime surface.
 
 ## Post-Verify
-PROTECTED-LOCAL-RESTATEMENT-BASIS: post-mutation atomic-check — retroactive-application rules colocated here for atomic team-lead consultation at every patch post-verify moment. `.claude/reference/modification-core-law.md` `### Retroactive Application Rules` defines the general affected-surface classification and stale-verdict treatment; this surface applies them at post-mutation moment with skill-specific verification chain (review-verification reopen + self-verification load) inline.
+PROTECTED-LOCAL-RESTATEMENT-BASIS: post-mutation atomic-check — retroactive-application, patch-independence, positive-function, and report-prohibition no-negative-impact checks colocated here for atomic team-lead consultation at every patch post-verify moment. `.claude/reference/modification-core-law.md` defines the affected-surface classification, stale-verdict treatment, patch-independence, and positive-function checks; `.claude/reference/reporting-prohibition-law.md` owns report-prohibition impact. This surface applies them at post-mutation moment with skill-specific verification chain (review-verification reopen + self-verification load) inline.
 - Verify the resulting diff, owner semantics, live references, information preservation, affected consumed surfaces, and in-flight or prior-verdict impact.
 - Record the 5-axis post-patch verification matrix: defect closure, intent preservation, no new defect, cross-reference integrity, and functional independence.
 - Record positive-function inventory and no-negative-impact result for every positive function in the coherence radius.

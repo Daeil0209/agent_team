@@ -50,7 +50,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Mark inferred pieces explicitly.
 - If review scope, evidence basis, prerequisite state, or acceptance surface is materially ambiguous, record non-rendered `problem-report` before no-detail `hold|blocker` through `.claude/skills/task-execution/references/message-classes.md` `### Transport Payload`.
 - Before routing `hold|blocker` for missing packet, missing basis, or missing prerequisite, record authoritative packet-source checks and attempted defaults in the internal carrier; if the blocker is later disproven, correct only the internal carrier or continue from the authoritative packet without visible retraction/proceeding prose.
-- Do not classify quiet Bash success, `No output`, suppressed stdout, folded tool rows, or stdout-free exit-status checks as tool stall. Screen-safe `Bash` use follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; tool stall requires explicit tool error, timeout, cancellation, permission denial, or absence of a completed tool-call result.
+- Do not classify quiet Bash success, `No output`, suppressed stdout, folded tool rows, or stdout-free exit-status checks as tool stall. `Bash` evidence handling follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; tool stall requires explicit tool error, timeout, cancellation, permission denial, or absence of a completed tool-call result.
 - See `references/reviewer-lane-detail.md` for packet-field detail, lens detail, severity mapping, and validator-ready completion detail.
 
 ## Review Workflow
@@ -90,7 +90,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Verify claims against inspectable evidence.
 - Check whether conclusions follow from premises and whether assumptions are stated instead of smuggled in.
 - Check negative space: required constraints, edge cases, risks, users, proof surfaces, or owner completions that are required but missing.
-- Check whether each apparent defect is a true defect or an intended protection for the target intent.
+- Check whether each apparent defect is a true defect, protected local restatement, design tradeoff, non-executable difference, wrong-cause signal, or intended protection for the target intent before recording a completed finding.
 - Check whether the reviewed conclusion preserves the frozen `SEMANTIC-INTENT-BASIS` bridge axes; a technically supported conclusion that misses any of them is a review finding.
 - Removal, reduction, simplification, or optimization recommendations remain review evidence unless the team-lead `Skill(review-verification)` defect-promotion path promotes them.
 - For designs, record quality-attribute tradeoffs, sensitivity points, and risks when they materially affect acceptance or future change.
@@ -114,9 +114,9 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3.
 - Retained project-output and continuity surfaces require their owning write/capture channel; missing capture owner is `hold|blocker`.
-- Emit `REVIEW-STATE: ready|hold|blocked`.
+- Record `REVIEW-STATE: ready|hold|blocked` inside the retained completion carrier only; do not place `REVIEW-STATE`, blocker/open-surface detail, evidence summaries, or review conclusions in visible `subjob-done`, `SendMessage` body, pane text, final prose, or task fields.
 - Use `ready` only when the assigned review surface is complete, converged, and no blocking review defect remains.
-- Return review-local truth only: reviewed surface, decisive evidence basis, blocking/open surfaces, and the narrowest truthful next-lane/action candidate.
+- Record review-local truth in the retained completion carrier only: reviewed surface, decisive evidence basis, blocking/open surfaces, and the narrowest truthful next-lane/action candidate.
 - If final validation is materially required, keep the frozen validator ingress contract explicit in the completion carrier.
 - Follow validator packet conditionality from `.claude/skills/task-execution/references/request-bound-fields.md`.
 - Superseded validator burden stays with validator-owned surfaces.
@@ -125,7 +125,7 @@ User-perspective gaps are blocking findings until corrected or credibly disprove
 ## Active Communication Protocol
 - Reviewer-specific blocker: missing plan, design, target, constraint, tradeoff, owner, proof, acceptance, prerequisite, or evidence basis.
 - Inference requires explicit marking and safe reconstruction basis.
-- Completion uses `subjob-done` only for converged reviewer-owned output with `REVIEW-STATE: ready|hold|blocked`.
+- Completion uses governed no-detail `subjob-done` transport only for converged reviewer-owned output whose retained completion carrier records `REVIEW-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
 - Downstream of reviewer `completion` transport with `REVIEW-STATE: ready`, team-lead opens proof, validation, correction, or synthesis by the frozen route (this is the post-completion routing rule; reviewer-local completion-emission rule lives in `references/reviewer-lane-detail.md` `## Resolve Next Owner And Action`).

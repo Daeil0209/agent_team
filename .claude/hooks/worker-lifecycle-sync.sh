@@ -154,7 +154,7 @@ worker_turn_end_classification() {
       fi
       printf 'subjob-done-candidate'
       ;;
-    hold\|blocker|hold|blocker)
+    hold\|blocker)
       printf 'working-blocked'
       ;;
     scope-pressure)

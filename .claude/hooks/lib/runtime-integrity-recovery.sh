@@ -8,7 +8,7 @@
 #   runtime_integrity_classify <team_name>
 #       Print one hook-detectable defect per line: `CLASS=<A|B|C|D|E|F>\tDETAIL=<text>`
 #   runtime_integrity_reconcile_nondestructive <team_name>
-#       Apply Class B/D/F automatic cleanup. Class C tmux-pane termination stays unavailable.
+#       Apply Class B/D automatic cleanup and record Class F as log-only. Class C tmux-pane termination stays unavailable.
 #   runtime_integrity_destructive_report <team_name>
 #       Print HOLD-formatted lines for hook-detectable Class A/E requiring operator approval.
 #

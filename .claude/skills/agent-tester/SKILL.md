@@ -144,14 +144,14 @@ Assigned user-facing interaction requires executed interaction proof and observe
 - State what changed.
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - Tester-specific material change includes changed proof path.
-- Before completion, identify plausible developer mistakes that can survive the executed proof.
+- Before completion, identify plausible false-positive proof conditions and developer mistakes that can survive the executed proof.
 - If material, add one bounded probe or report the gap as an open surface.
 ### 7. Completion
 - Apply the common completion contract from `.claude/skills/task-execution/references/completion-handoff.md` as the completion gate before tester-specific completion additions below.
 - Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Proof PASS in completion carrier without execution-trace evidence (tool-call output, screenshot, runtime artifact) corrupts validator and team-lead synthesis.
-- Return proof-local truth only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate.
+- Record proof-local truth in the retained completion carrier only: proof surface exercised, decisive evidence basis, `TEST-STATE: ready|hold|blocked`, per-row proof classifications, closure-defect probes executed/skipped, hard-test probes executed/skipped, open surfaces, and the narrowest truthful next-lane/action candidate. Do not place `TEST-STATE`, proof classifications, evidence summaries, paths, open-surface detail, or proof conclusions in visible `subjob-done`, `SendMessage` body, pane text, final prose, or task fields.
 - Keep tester-specific proof-match and run-path status fields explicit and truthful.
 - Use `not-applicable` instead of omission when a status axis was not part of the frozen surface.
 - `matched` is reserved for real contract alignment on that surface.
@@ -167,8 +167,8 @@ Assigned user-facing interaction requires executed interaction proof and observe
 
 ## Active Communication Protocol
 - Tester-specific blocker: blocked execution, material ambiguity, unsafe packet, or wrong staffing shape.
-- Route `hold|blocker` state only when blocked execution prevents a truthful tester-owned proof report; otherwise send `subjob-done` with row-level `blocked` classifications and `OPEN-SURFACES`.
-- Completion uses `subjob-done` only for converged tester-owned proof.
+- Route `hold|blocker` state only when blocked execution prevents a truthful tester-owned proof report; otherwise send no-detail `subjob-done` and keep row-level `blocked` classifications plus `OPEN-SURFACES` in the retained completion carrier only.
+- Completion uses governed no-detail `subjob-done` transport only for converged tester-owned proof whose retained completion carrier records `TEST-STATE: ready|hold|blocked`.
 
 ## Resolve Next Owner And Action
 - `TEST-STATE: ready` opens validator, reviewer, correction owner, or team-lead synthesis by the frozen route only as row-classified proof evidence, not as acceptance or pass evidence.

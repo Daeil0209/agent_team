@@ -14,6 +14,7 @@ Load after `Skill(task-execution)` is active per the activation rule at `.claude
 Before this skill acts, the lead must already have:
 - actual full-body `Skill(task-execution)` load-and-learn or `same-session-loaded-and-learned:task-execution` for the current Claude session
 - current boundary `work-planning`
+- current `PLAN-VERIFICATION-BASIS` from `Skill(review-verification):plan-draft-readiness` when mandatory under work-planning
 - the current frozen workflow or sequence owner already opened when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is present
 - a frozen additional-agent route or ambiguous dispatch route
 - frozen team-runtime route basis from `work-planning` readiness for any `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, reuse, blocker-clear, or packet assembly move on a team-agent route
@@ -30,7 +31,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Missing or contradictory `COMPLETION-STOP-CONDITION` reopens `work-planning` when packet assembly, receiving-lane execution, report gating, or completion truth depends on it.
 - Missing or contradictory `DERIVED-DEFAULTS` reopens `work-planning` when packet assembly, proof surface, or receiving-lane execution depends on it.
 - Missing `REQUEST-BOUND-PACKET-FIELDS` reopens `work-planning`.
-- `TEAM-LEAD-WORK-PLAN` names the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
+- `TEAM-LEAD-WORK-PLAN` names the plan-draft review row when required, the dispatch row, post-dispatch synthesis/verification row, and termination row for the assignment-grade route.
 - Missing material `CLAIM-CEILING` reopens `work-planning`.
 - `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP` consumption (concrete-required conditions, cap consumption rule, cap-exceed routing, valid `not-applicable` bases) is governed by `.claude/skills/work-planning/references/parallel-fit.md` and `.claude/skills/work-planning/references/planning-record-fields.md`; `task-execution` consumes the frozen values without inferring or raising them from runtime convenience.
 - `task-execution` consumes the frozen team-runtime route basis together with `AGENT-MAP`, `PARALLEL-GROUPS`, and `ACTIVE-CONCURRENT-AGENT-CAP`; it must not infer team-runtime eligibility from tool visibility, convenience, or direct-Agent output outside team runtime.
@@ -44,7 +45,8 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - A team-lead dispatch route lacking required `CODEX-INDEPENDENT-REVIEW-BASIS` reopens `work-planning`.
 - `NEXT-CONSEQUENTIAL-ACTION` traces to the first executable row of `TEAM-LEAD-WORK-PLAN`; failed trace opens `work-planning`.
 - If `ACTIVE-WORKFLOW: dev-workflow` is present, consume `skipped:no-material-independent-review-trigger:<basis>` as valid skipped truth; other `skipped:*` values reopen `work-planning`.
-- `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
+- `EXECUTION-READINESS-BASIS` must be `ready:<basis>` before packet assembly, dispatch-bound carrier materialization, `TeamCreate`, `Agent`, assignment-grade `SendMessage`, assignment reuse, or assignment-grade dispatch.
+- When `PLAN-VERIFICATION-BASIS` is mandatory under work-planning, `ready:<basis>` is dispatch-valid only with current `PLAN-VERIFICATION-BASIS: Skill(review-verification):plan-draft-readiness:<PACKET-ID>:pass`; stale review, owner-local judgment, inline checklist, proxy prose, required corrections, or blocking `OPEN-SURFACES` reopens `work-planning` before packet assembly, materialization, runtime creation, or dispatch.
 - `blocked:<basis>` can enter this skill only for a dispatch-owned blocker-clear move named by `NEXT-CONSEQUENTIAL-ACTION`.
 - Otherwise return to `work-planning`.
 - A frozen route lacking measured burden basis reopens `work-planning`.
@@ -52,6 +54,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - Missing on-disk verification reopens `work-planning` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
 - A frozen route that will create retained outputs or write-producing lane carriers requires quiet artifact-footprint and retained-path collision preflight from `.claude/reference/environment-output-root-filesystem-law.md` before runtime creation, packet assembly, reuse, `SendMessage`, or `Agent`.
 - Missing, stale, or contradicted collision preflight reopens `work-planning` or packet correction before send; an existing retained-output path with mismatched current-run identity blocks assignment delivery instead of pushing collision discovery to the lane.
+- Output-root or retained-path creation/preflight failure consumes `.claude/reference/environment-output-root-filesystem-law.md` `## Output-Root Failure Recovery` before any same-path retry, packet assembly, reuse, `SendMessage`, or `Agent`.
 - `PARALLEL-GROUPS: none` on multi-surface work requires a measured dependency or serial-burden basis; missing basis reopens `work-planning`.
 - Route, staffing, parallelism, or dispatch options that doctrine and evidence can settle reopen `work-planning` or continue with the evidence-backed route.
 - A field required by the frozen route that is missing, contradictory, or marked `not-applicable` without an allowed basis reopens `work-planning`.
@@ -63,7 +66,7 @@ Consume only dispatch-relevant frozen fields in the order and conditionals owned
 - `task-execution` -> agent uses an assignment-grade dispatch packet derived from that basis.
 - agent -> `team-lead` state transport uses only the no-detail `dispatch-ack`, `scope-pressure`, `hold|blocker`, and `subjob-done` tokens.
 - agent -> `team-lead` problem/detail transport carries `problem-report`, lead-requested `status`, blocker-clear facts, blocker corrections, findings, counts, paths, and `MESSAGE-CLASS` blocks through non-rendered task state, retained carriers, runtime ledgers, or governed evidence artifacts as owned by `message-classes.md`; visible `SendMessage` fields carry only the allowed no-detail state token.
-- agent -> peer uses `SendMessage` challenger traffic for evidence notes, critique, clarification, or partial-result context inside unchanged ownership, cleanup, routing, and active surface.
+- agent -> peer visible `SendMessage` fields carry no evidence notes, critique detail, clarification detail, or partial-result context. Peer-required detail moves through retained carriers, non-rendered task state, runtime ledgers, or governed evidence artifacts while the visible envelope remains no-detail.
 - user -> teammate uses teammate UI for direct instruction, follow-up question, or redirect prompt inside the receiver's current authority and active surface.
 - Shared task-list state moves through `TaskCreate`, `TaskUpdate`, `TaskGet`, and `TaskList`; `TaskOutput` and `TaskStop` are background-task inspection/control, not task-list identity.
 - Task identity follows `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract`.

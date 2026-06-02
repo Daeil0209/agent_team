@@ -47,6 +47,7 @@ Defect-record fields inherit `.claude/CLAUDE.md` `## 6. Judgment Philosophy` and
 | **Critical** | Result correctness destroyed, derivation logic broken | Sign error changing physical meaning, wrong integration limits, division by zero unguarded, existence theorem violated |
 | **Major** | Result weakened but not destroyed, important constraint missing | Domain restriction omitted, boundary condition incomplete, convergence not verified, singular solution lost |
 | **Minor** | Presentation/notation issue with correctness preserved | Notation inconsistency, conventional symbol choice, formatting of equation |
+| **Advisory** | Observation only under the inherited reviewer mapping | Optional notation preference, nonblocking explanatory note |
 ### Mathematical Assumption Governance
 Assumption Governance still follows the blocking-vs-disclosed gate in `.claude/CLAUDE.md` `## 6. Judgment Philosophy`. The `Critical/Major/Minor` labels below are a mathematical local sensitivity aid. The shared blocking rule remains controlling.
 - **Critical**: initial/boundary conditions, existence/uniqueness conditions (Picard-Lindelöf), domain of validity, convergence conditions for series/integrals — must verify before proceeding; unverified critical assumptions are blocking and propagate through all dependent derivations

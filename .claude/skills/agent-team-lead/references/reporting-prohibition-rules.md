@@ -31,7 +31,7 @@ Record:
 - Missing cited lawful owner-deferral authority, explicit out-of-scope, user-action blocker, residual, or artifact-link basis opens the owning synthesis, proof, acceptance, closeout, or filesystem-result path.
 
 ## Resolve Next Owner And Action
-- Satisfied report-admission evidence-basis control returns to `.claude/reference/reporting-user-reporting-law.md` for admitted prose shape only, then resumes the reporting-law continuation or prior live owner/action.
+- Satisfied report-admission evidence-basis control returns to `.claude/reference/reporting-user-reporting-law.md` for admitted prose shape only. For `final verified result`, the admitted shape closes rendering at `REPORT-LOCATION-LINE`. For other admitted report reasons, resume the reporting-law continuation or prior live owner/action when allowed by `.claude/reference/reporting-prohibition-law.md`.
 - Reporting-law gaps stay suppressed and continue through the owning Procedure Plane or Communication Plane path.
 - Verification gaps open `Skill(self-verification)`.
 - Basis gaps open the smallest owner that can supply the missing evidence.

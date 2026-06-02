@@ -118,7 +118,7 @@ The abstraction-fit-adapt cycle applies to **verification methodology** itself.
 It applies beyond design surfaces.
 When choosing a novel, disputed, high-risk, or reusable verification approach, benchmark external best-practice the same way.
 Examples: test framework selection, proof tooling, coverage strategy, correction-criteria design.
-- compare verification patterns from authoritative sources (Google Testing Blog, Martin Fowler, Kent Beck, ThoughtWorks Tech Radar, framework-official testing guides)
+- compare verification patterns from `references/verification-methodology.md` `## Required Search Targets`
 - assess fit (does our user-surface match? does our scale match? does our risk profile match?)
 - synthesize verification approach from fitting patterns + reject misfits
 - compose with `tester` lane for execution and `validator` lane for final acceptance

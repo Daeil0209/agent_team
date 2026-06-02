@@ -103,7 +103,7 @@ Patch-ready records include affected-surface enumeration when the edit can affec
 When the modified artifact has no declared design-intent surface, the change packet carries owner intent and one-sentence `CHANGE-BOUNDARY` rationale; adding a declared-intent surface is follow-on work only when the frozen scope includes it.
 
 ## Patch-Ready Routing Gate
-Appending opens only after existing owner text has no tighten, replace, trim, merge, re-home, or delete operation available under `## Minimal Governance Rules`.
+Appending opens only after `EXISTING-OWNER-ENUMERATION:` proves no related editable sentence on the consumed owner surface can carry the changed owner/action/trigger/stop/evidence meaning through tighten, replace, trim, merge, re-home, or delete without losing execution-critical information.
 Merge or re-home executes before append when it can reduce procedure steps, branch paths, consumed documents, or repeated consumption points without losing execution-critical information.
 Appending requires `EXISTING-OWNER-ENUMERATION:` recorded on the consuming owner.
 `EXISTING-OWNER-ENUMERATION:` records every consumed owner surface on the failing execution path.
@@ -112,7 +112,7 @@ Each enumeration candidate is classified `adopt:<tighten|replace|trim|merge|re-h
 Append review requires each proposed governance sentence to carry one rule or action per `## Minimal Governance Rules`.
 Mutation requires proposed governance wording to carry each material owner action, trigger, stop, evidence, verification, acceptance truth, routing, or patch-readiness field required by the changed execution meaning.
 Mutation requires proposed governance wording to exclude non-executed procedure, example, condition, explanation, and context burden.
-Mutation requires proposed governance wording to remove evasion, ambiguous next action, semantic conflict, repeated-error bottleneck, over-detail bottleneck, and over-broad-blocking without required risk basis.
+Mutation requires proposed governance wording to remove evasion-enabling, ambiguous, conflicting, bottleneck-forming, and over-broad-blocking governance without required risk basis.
 Mutation requires the intended changed function set, positive-function inventory, and no-negative-impact result for every positive function in the coherence radius.
 Mutation blocks when the patch changes a correlated function without a recorded consumed contract, owner route, evidence basis, and verification basis.
 Draft requires current `PRE-MUTATION-BASIS` satisfying `## PRE-MUTATION-BASIS`.

@@ -48,11 +48,11 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Layer Violation Detection
 | Violation | Example | Severity |
 |---|---|---|
-| Domain imports infrastructure | Entity imports ORM model or HTTP client | T1 — block |
-| Application bypasses domain | Use case calls DB directly instead of repository interface | T1 — block |
-| Circular dependency | Module A imports Module B, Module B imports Module A | T1 — block |
-| Framework leak into domain | Domain entity extends framework base class | T2 — gate |
-| Infrastructure detail in API contract | DB column name exposed in response DTO | T2 — gate |
+| Domain imports infrastructure | Entity imports ORM model or HTTP client | Layer-L1 — block |
+| Application bypasses domain | Use case calls DB directly instead of repository interface | Layer-L1 — block |
+| Circular dependency | Module A imports Module B, Module B imports Module A | Layer-L1 — block |
+| Framework leak into domain | Domain entity extends framework base class | Layer-L2 — gate |
+| Infrastructure detail in API contract | DB column name exposed in response DTO | Layer-L2 — gate |
 ## Architecture Review Checklist
 Run this checklist before accepting any enterprise architecture work. All items must pass or carry explicit blocked-state evidence with a corrective path.
 - [ ] Clean Architecture layer separation maintained — no layer imports from an outer layer
@@ -118,7 +118,7 @@ For all infrastructure changes (database schema, message queue topology, network
 3. **Change plan with rollback** — document the forward change steps and the rollback procedure; rollback must be tested before production
 4. **Staging verification** — apply to staging environment, run affected integration tests, confirm monitoring shows expected behavior
 5. **Production application with monitoring** — apply to production with active monitoring; rollback window must remain open until stability is confirmed
-**Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 deployment block per `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework` (T0-T3 anchor reused for infrastructure-change governance).
+**Blocked condition:** production infrastructure change requires a tested rollback plan. Missing rollback proof is a T1 deployment block per `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Deployment-Block Escalation Tier`.
 
 ## Resolve Next Owner And Action
 - Return architecture review findings, communication-pattern selection, infrastructure change requirements, and rollback status to the active enterprise-architecture workflow.

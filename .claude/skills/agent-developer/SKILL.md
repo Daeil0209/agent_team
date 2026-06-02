@@ -117,10 +117,10 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Use direct file inspection when the current root lacks a git repository.
 ### 3. Execution Guard
 - Developer `Bash` inspection, guarded execution, diagnostics, and verification support follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
-- For defect-fix work, default to a failing guard before correction.
+- For defect-fix work, identify expected behavior, observed deviation, likely causal surface, and a failing guard when possible before correction.
 - If guard creation is impossible because no executable oracle, safe setup, stable reproduction path, or bounded guard surface exists, record `FALLBACK-BASIS` with attempted or unavailable guard path and keep the retest surface explicit.
 - Keep the retest surface explicit.
-- If root cause is unknown and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
+- If bounded investigation still leaves root cause unknown, the defect label remains at `candidate-evidence` strength, and no safe hypothesis exists, use `hold|blocker` instead of speculative patching.
 - Retry Guard rules live in `.claude/skills/task-execution/references/lane-additions.md` `## Common Lane-Core Preconditions`.
 - See `references/developer-lane-detail.md` for durability and regression-guard detail.
 ### 4. Execute Bounded Change
@@ -145,7 +145,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 - Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **PASS records require evidence citations** per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3; assertion-only completion carrier is fabrication and disqualifies handoff.
-- Return lane-local execution truth only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate.
+- Record lane-local execution truth in the retained completion carrier only: changed surface, evidence basis, `PREREQ-STATE: complete|partial|missing`, open surfaces, and the narrowest truthful next-lane/action candidate. Do not place `PREREQ-STATE`, evidence summaries, paths, open-surface detail, or completion conclusions in visible `subjob-done`, `SendMessage` body, pane text, final prose, or task fields.
 - Treat open surfaces as active resolution surfaces.
 - Name the constraint, needed owner, and smallest next executable step.
 - This lets team-lead route research, setup, packet correction, or another owner and return execution to developer.
@@ -169,7 +169,7 @@ PROTECTED-LOCAL-RESTATEMENT-BASIS: developer-lane discipline isolation safety â€
 
 ## Active Communication Protocol
 - Developer-specific blocker: blocked ambiguity, missing authority, unsafe packet, or wrong staffing shape.
-- Completion uses `subjob-done` only for converged developer-owned output.
+- Completion uses governed no-detail `subjob-done` transport only for converged developer-owned output whose retained completion carrier records developer-local truth.
 
 ## Resolve Next Owner And Action
 - Converged developer-owned output opens team-lead synthesis through the completion-grade path.

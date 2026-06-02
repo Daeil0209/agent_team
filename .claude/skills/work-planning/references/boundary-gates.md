@@ -11,10 +11,15 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 ## Corpus Measurement Gate
 - Corpus discovery is consequential when it is unknown, scope-changing, route-shaping, burden-sizing, or used as file/line/byte evidence for burden or parallel-fit judgment.
 - Exhaustive, full-corpus, whole-folder, unknown-corpus, governance-audit, and governance-review work freezes bounded corpus measurement first.
-- This gate is consumed before the first measurement or planning-inspection command, not after the corpus has already been printed.
+- This gate is consumed before the first measurement or planning-inspection command, not after corpus facts have already been used to freeze route or dispatch readiness.
 - Measurement basis includes file count, line or byte scale, semantic surface inventory, high-touch or critical-surface notes, and the burden or parallel-fit judgment those facts support.
-- Measurement `Bash` command shape follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; raw path manifests, per-file inventories, counts, high-volume line-count tables, grouped evidence, and route-sizing facts stay in retained carriers, task state, exit status, or internal state.
-- Run lawful measurement commands when they supply required work evidence, while keeping assistant-authored progress prose and labels suppressed.
+- Measurement uses the tool path that truthfully supplies the needed facts with the least owner drift: `Read`, `Grep`, `Glob`, task, runtime, tool-native APIs, or `Bash` when shell inspection is the fitting evidence path.
+- Raw path manifests, per-file inventories, counts, high-volume line-count tables, grouped evidence, partition/union facts, duplicate/missing facts, output-root facts, binding verification facts, and route-sizing facts stay in the planning basis, retained carriers, task state, governed file-backed capture, or internal state for the next owner; host-rendered wrapper rows are not report reasons.
+- Measurement, partition, preflight, and binding-verification commands do not print internal path manifests, per-file inventories, line-count tables, grouped evidence, partition/union summaries, duplicate/missing summaries, binding labels, directory listings, roster listings, or route-sizing facts to terminal stdout/stderr unless the current user explicitly requested that exact material and reporting law admits it.
+- Before measurement command execution, classify stdout/stderr. `find`/`sort`/`xargs`/`wc -l`/`ls`/`grep`/`cat`/`head`/`tail` pipelines that can print internal path or count surfaces must be rewritten to governed file-backed capture, silent predicate, or exit-status-only form before the `Bash` call.
+- Measurement helper scripts and generated check programs are internal evidence machinery, not user deliverables. Do not author them through a renderable file-content projection (`Write`/`Edit`/`MultiEdit` preview, heredoc body, or inline interpreter source) unless the current user explicitly requested that source and reporting law admits it.
+- Measurement, partition, preflight, and binding-verification commands must not carry non-executable progress narration, route rationale, or user-facing report labels. Assistant-authored measurement-complete, self-correction, approach-correction, count-summary, path-list, route-sizing, preflight-complete, binding-verified, or reference-needed prose stays suppressed unless reporting law admits the exact current user request.
+- Invalid, stale, contradicted, or insufficient measurement opens the next corrected measurement action, internal record correction, route replan, or blocker-routing; it never opens visible self-correction prose.
 - Run only the measurement action before route-ready freeze.
 - Reopen or complete `work-planning` from the measured basis.
 - Unmeasured material burden blocks dispatch-ready planning.
@@ -112,9 +117,11 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 - A plan that lacks a loop over all same-request `patch-ready` rows blocks dispatch-ready planning when patching is in scope.
 - Dispatch-ready planning includes:
   - `team-dispatch-readiness-plan`
+  - current `PLAN-VERIFICATION-BASIS` when required by `planning-record-fields.md`
   - `AGENT-MAP`
   - `PARALLEL-GROUPS`
   - dispatch-ready `NEXT-CONSEQUENTIAL-ACTION`
+- Missing current plan-draft review-verification pass blocks dispatch-ready planning for consequential dispatch-grade, governance-audit, governance-patch, high-risk judgment, multi-surface, or user-marked important routes.
 - `PARALLEL-GROUPS: none` is invalid unless measured dependency or serial-burden basis proves serial stronger than parallel for:
   - multi-surface work
   - unmeasured material corpus work
@@ -135,6 +142,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 
 ## Post-Planning Gate
 1. Open exactly one next owner/action from the frozen team-lead work plan by executing it directly.
+   - When required `PLAN-VERIFICATION-BASIS` is missing or stale, that owner/action is `Skill(review-verification):plan-draft-readiness`; local execution, workflow/sequence owner movement, write, materialization, packet assembly, `task-execution`, dispatch, and reporting stay blocked.
 2. If `ACTIVE-WORKFLOW` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 3. If a non-`not-applicable` `ACTIVE-SEQUENCE` is set, open the owner named by `NEXT-CONSEQUENTIAL-ACTION`.
 4. Load the named owner when absent or insufficient under that owner's freshness rule.
@@ -147,7 +155,7 @@ Use this file when activation scope, corpus measurement, same-boundary exclusion
 11. Consume the named owner before mutation.
 12. Rerun stale owner consumption to outcome before downstream movement.
 13. Reject named-owner consumption that lacks applied-rule mapping under `.claude/reference/work-skill-reference-binding-law.md` `## Reference Binding`.
-14. `team-routing candidate` and `ambiguous-route` open `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
+14. Any route requiring plan-draft review opens `Skill(review-verification):plan-draft-readiness` first when mandatory `PLAN-VERIFICATION-BASIS` is missing or stale; team-routing and ambiguous routes open `Skill(task-execution)` only after that basis passes.
 15. Reopen `work-planning` or the owning review path for disputed frozen-plan readiness; load and learn `Skill(self-verification)` only for a produced work-product surface awaiting handoff.
 16. Reopen `work-planning` when the frozen target is missing, vague, contradicted, or unconsumed.
 17. Reopen `work-planning` when the route is missing, vague, contradicted, or unconsumed.

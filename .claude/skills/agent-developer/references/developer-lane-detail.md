@@ -162,7 +162,7 @@ Support overlays defer to earlier controlling contracts.
 - Keep applied changes, executed checks, unrun or blocked checks, and unresolved assumptions separated so downstream lanes do not reconstruct implementation truth from the diff alone.
 - For current-scope implementation completion, set `FROZEN-CONTRACT-STATUS` against `DONE-CONDITION`, `CHANGE-BOUNDARY`, and any `SCOPE-BASELINE` rather than reporting only changed files.
 - For executable user-facing implementation, `FROZEN-CONTRACT-STATUS` also compares the produced launcher, `PRIMARY-OPERATOR-OS`, `ENV-COVERAGE`, `USER-RUN-PATH`, `BURDEN-CONTRACT`, `WINDOWS-LAUNCH-SURFACE` when Windows is primary, setup/start behavior, shutdown/cleanup, and clean re-launch implementation against the Phase 2 operator-delivery contract; WSL-only developer execution cannot close a Windows-primary implementation contract unless the packet carries `WINDOWS-EQUIVALENCE-BASIS`.
-- Include `PREREQ-STATE: complete|partial|missing` in consequential upward completion so downstream lanes do not infer prerequisite truth.
+- Record `PREREQ-STATE: complete|partial|missing` in the retained completion carrier for consequential upward completion so downstream lanes do not infer prerequisite truth from visible transport, task rows, or changed files.
 - For request-bound artifacts, state whether the applied change preserved the answer surface, deliverable shape, and excluded-scope boundary expected by the packet.
 
 ## Resolve Next Owner And Action

@@ -27,7 +27,6 @@ hook_config_source_lib hook-runtime-session.sh
 hook_config_source_lib hook-procedure-state.sh
 hook_config_source_lib hook-closeout-state.sh
 hook_config_source_lib hook-health-cron.sh
-hook_config_source_lib hook-governance-rm-approval.sh
 
 # hook-tool-response.sh (defines tool_response_succeeded) is intentionally NOT sourced here.
 # It is only needed by PostToolUse hooks, which source it directly. If a new hook requires

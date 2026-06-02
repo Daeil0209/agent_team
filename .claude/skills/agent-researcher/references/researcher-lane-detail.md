@@ -76,7 +76,7 @@ Evidence work is forbidden until the packet is classified as `execute` or `recon
 | Classification | Condition | Required action |
 | --- | --- | --- |
 | `execute` | Decisive evidence basis is explicit, bounded, and owner-consistent | Proceed through workflow |
-| `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, or evidence boundary | Mark inference, proceed through workflow |
+| `reconstruct-with-inference` | Missing detail is safely inferable without changing owner, phase, proof burden, acceptance burden, deliverable shape, evidence boundary, source family, decision target, downstream consumer, or evidence-authority threshold | Mark inference, proceed through workflow |
 | `scope-pressure` | Packet is too wide, mixed-phase, wrong-owner, shardable, hides a prerequisite, or smuggles drafting/proof/validation into evidence work | Stop only the unsafe evidence path; route pressure through Transport Payload with smallest truthful evidence boundary, attempted or available path, partial evidence state, and smallest next executable recovery step in carrier state |
 | `hold|blocker` | Decision target, evidence boundary, downstream consumer, question surface, decisive evidence basis, or smallest truthful evidence boundary is materially ambiguous after lawful reconstruction/defaults | Stop only the unsafe evidence path; route `hold|blocker` through Transport Payload with exact invalid or missing basis, attempted or available path, partial evidence state, and smallest next executable recovery step in carrier state |
 

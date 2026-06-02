@@ -10,8 +10,9 @@ auto-inject: false
 It does not assemble packets or prove results.
 It records whether the frozen next owner can execute the next action without re-deriving omitted route, packet, proof, setup, cleanup, parallel, or acceptance facts.
 
-For team-routed or dispatch-capable paths, readiness must cover:
+For paths whose `PLAN-VERIFICATION-BASIS` is mandatory, team-routed paths, or dispatch-capable paths, readiness must cover:
 - packet schema floor
+- plan-verification basis: current `PLAN-VERIFICATION-BASIS` from `Skill(review-verification):plan-draft-readiness` when required by `.claude/skills/work-planning/references/planning-record-fields.md`
 - request-bound fields
 - lane skill map
 - user-surface/proof/tool/setup/run-path/environment fields
@@ -48,9 +49,9 @@ Serial carry-forward also requires the fallback to stay inside the same frozen o
 Losing the planned parallel path while it changes staffing truth, independent-surface separation, burden, schedule, or closure risk reopens `work-planning` instead of silently collapsing to serial continuation.
 
 ## Resolve Next Owner And Action
-- Ready basis opens the frozen next owner/action.
-- Team-routed ready basis opens `Skill(task-execution)` when no fresh current same-session loaded-and-learned `task-execution` basis exists.
-- Team-routed ready basis opens loaded `task-execution` consumption only when fresh same-session `task-execution` basis exists.
+- Ready basis opens the frozen next owner/action only after any mandatory `PLAN-VERIFICATION-BASIS` is current.
+- Any ready basis opens `Skill(review-verification):plan-draft-readiness` when mandatory plan verification is missing or stale.
+- Local execution, workflow/sequence owner movement, write, packet assembly, materialization, and team-routed `Skill(task-execution)` open only after mandatory plan verification passes.
 - Blocked basis opens the named blocker-clear owner or blocker-routing after internal recovery is exhausted.
 - Unknown material readiness category opens blocker-clear or route correction before dispatch.
 - Route-changing readiness gap reopens `work-planning`.

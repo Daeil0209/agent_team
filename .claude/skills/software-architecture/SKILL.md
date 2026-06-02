@@ -42,6 +42,7 @@ Rendered composition → `visual-composition`.
 ## Boundary / Activation / Inputs
 Architecture work avoids duplicate ordinary coding work and preserves team-lead execution strategy.
 Activate for non-trivial applications, multi-module tools, stateful workflows, integration-heavy programs, or refactors where architecture quality materially affects outcome.
+When enterprise-scale activation conditions become proven, route that boundary to `Skill(enterprise-architecture)` instead of continuing under software-architecture alone.
 Start only after purpose and output class are explicit; require a business-rule packet only when workflow or business policy materially shapes the architecture.
 - Active request source, canonical contract, execution plan
 - Business workflow packet and relevant reference material or legacy code when present

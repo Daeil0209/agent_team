@@ -39,7 +39,7 @@ Report admission is owned by `.claude/reference/reporting-prohibition-law.md`; a
 - The next owner is unclear.
 - The next action is unclear.
 - A lane output might be mistaken for completion.
-- A status report might be mistaken for completion.
+- An internal status record might be mistaken for completion.
 - A runtime signal might be mistaken for completion.
 
 ## Required Output
@@ -97,7 +97,7 @@ Dispatch requires a packet that carries the receiver-required basis instead of l
 - `Skill(governance-modification)` owns current governance asset-change rows and confirmed recurrence-barrier hardening.
 - `Skill(governance-modification)` owns `Change Sequence` patch mechanics.
 - Planning routes to execution, dispatch, owner synthesis, or `Skill(self-verification)` convergence.
-- Treat dispatch, benchmarking, `governance-modification`, interrupt handling, and status reporting as nonterminal evidence.
+- Treat dispatch, benchmarking, `governance-modification`, interrupt handling, and internal status records as nonterminal evidence.
 - Treat review as evidence for acceptance path.
 - Treat proof as evidence for final acceptance.
 - Route final acceptance to `validator`.

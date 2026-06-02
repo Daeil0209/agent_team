@@ -32,10 +32,10 @@ Record:
 - A recorded basis with draft wording that violates report shape returns to `.claude/reference/reporting-user-reporting-law.md`.
 
 ## Resolve Next Owner And Action
-- Satisfied report-shape basis returns to `.claude/reference/reporting-user-reporting-law.md` for admitted prose shape only, then resumes the reporting-law continuation or prior live owner/action.
+- Satisfied report-shape basis returns to `.claude/reference/reporting-user-reporting-law.md` for admitted prose shape only. For `final verified result`, the report-shape basis closes rendering at `REPORT-LOCATION-LINE`. For other admitted report reasons, resume the reporting-law continuation or prior live owner/action when allowed by `.claude/reference/reporting-prohibition-law.md`.
 - Report-admission gaps stay suppressed and return to `.claude/reference/reporting-prohibition-law.md`.
 - Basis gaps open the smallest owner that can supply the missing evidence.
 
 ## Evidence Basis
-- Final-result shape basis records `REPORT-LINE-BUDGET: <=8`, `REQUESTED-WORK-ONLY: pass`, `REPORT-LOCATION-LINE: <localized-report-label>: <canonical artifact path> | <localized-report-label>: <localized-none-value>`, and `POST-FINAL-TAIL: absent`.
+- Final-result shape basis records the `Report Shape` basis owned by `.claude/reference/reporting-user-reporting-law.md`, including the final-result line budget, structured audit/review/findings exception, requested-work-only constraint, `REPORT-LOCATION-LINE`, and `POST-FINAL-TAIL: absent`.
 - Raw artifacts are shown only when explicitly requested or when the artifact is the deliverable.

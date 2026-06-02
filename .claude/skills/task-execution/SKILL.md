@@ -51,6 +51,7 @@ Boundary changes refresh `work-planning` fields, route basis, dispatch-entry che
 Same-session-loaded-and-learned `task-execution` basis becomes stale per `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules` staleness rule (session changed, this skill file changed after invocation, compaction/drop/truncation can affect the needed rule, or active path needs unconsumed trigger-specific detail); stale basis reloads and learns `Skill(task-execution)` or consumes the exact trigger-specific reference before action.
 Direct reading, searching, listing, summarizing, or reference-map traversal of `.claude/skills/task-execution/**` is inspection only; activation basis requires actual full-body skill load-and-learn or current same-session loaded-and-learned basis.
 Current boundary `work-planning` must be complete.
+Complete `work-planning` includes current `PLAN-VERIFICATION-BASIS` from `Skill(review-verification):plan-draft-readiness` whenever that basis is mandatory under work-planning.
 Any frozen named workflow or sequence owner must be complete.
 Light channels, `answer-only`, lead-local single-surface paths, receipt-only state, runtime-cleanup state, and phase-transition-only state stay with their current owner.
 Missing actual `work-planning` freeze discards the attempted dispatch path and returns to the missing owner before any dispatch step.
@@ -61,7 +62,7 @@ Hard surface:
 - After this skill or any trigger-specific reference loads from a frozen route, emit no assistant-authored prose; execute the next governed `TeamCreate`, `TaskCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, retained-carrier/file tool call, verification tool call, correction move, or blocker-routing path. `setup`, binding-surface authoring, runtime creation, carrier materialization, and collision recovery mean executable actions, not narration labels.
 - Required prior owners: current boundary `work-planning`, any frozen workflow/sequence owner, and a frozen additional-agent or ambiguous dispatch route.
 - New agent dispatch also requires dispatch-runtime execution proof consumed from `references/runtime-dispatch-law.md`.
-- `EXECUTION-READINESS-BASIS` must be `ready:<basis>` for assignment-grade dispatch.
+- `EXECUTION-READINESS-BASIS` must be `ready:<basis>` with current mandatory `PLAN-VERIFICATION-BASIS` before packet assembly, dispatch-bound carrier materialization, `TeamCreate`, `Agent`, assignment-grade `SendMessage`, assignment reuse, or assignment-grade dispatch.
 - Assignment-grade packets require `RECEIPT-COMPLETION-CONTRACT` before `SendMessage`.
 - `blocked:<basis>` enters only for a dispatch-bound blocker-clear move.
 - Missing, contradictory, stale, or route-unfit `not-applicable` route fields reopen `work-planning`.
@@ -94,16 +95,18 @@ Keep explicit:
 - the exact serial reason when `PARALLEL-GROUPS` is `none`
 ## Step 2: Dispatch / Reuse
 Run the actual execution move:
+- verify current mandatory `PLAN-VERIFICATION-BASIS` before packet assembly, retained-carrier creation, binding-surface or shard-manifest materialization, runtime creation, member creation, assignment send, reuse, or blocker-clear movement
 - create runtime when needed
 - reuse a suitable live or standby agent when that is the frozen path
 - dispatch new agents when reuse lacks fit
 - assemble the real outgoing packet from the frozen plan basis
-- run the output-root and retained-path collision preflight required by `dispatch-entry-contract.md` and `assignment-packet.md` before packet materialization or assignment/reuse send
-- materialize required retained-output directories, shared carriers, binding surfaces, or shard manifests through quiet tool/file paths without assistant-authored visible preface, progress, labels, listings, or rationale; do not emit labels such as binding-surface authoring, runtime creation, carrier setup, or fresh-path selection
+- run the output-root and retained-path collision preflight required by `dispatch-entry-contract.md` and `assignment-packet.md` before packet materialization or assignment/reuse send; when preflight finds prior, mismatched, or unsafe retained-output state, record that state internally, consume `.claude/reference/environment-output-root-filesystem-law.md`, choose the lawful collision-free root/path or packet-correction/replan path, and continue without assistant-authored prose
+- Before dispatch materialization for retained-output directories, shared carriers, binding surfaces, shard manifests, assignment carriers, runtime state, wave queues, receipt barriers, or reuse plans, classify the material as `user-deliverable` or `internal-orchestration`.
+- Internal-orchestration materialization must not use preview-rendered `Write`/`Edit`/`MultiEdit`/`Update`; use quiet tool/file paths, screen-safe assignment delivery, non-rendered task state, runtime ledger, or a non-rendering retained carrier, and route a missing screen-safe path to packet correction or route replan before dispatch.
 - run `.claude/skills/task-execution/references/message-classes.md` `### Assignment Delivery Contract` and packet final check before sending
 - reject any planned task-state tool call that violates that contract before the tool call
 - synchronize task-state lifecycle changes immediately on the same `TASK-ID` per `message-classes.md` `### Assignment Delivery Contract`; do not use task-row owner, assignee, subject, or description changes as state repair
-- confirm retained-output carriers with commands shaped by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; failed checks surface only through the governing blocker or correction path
+- run retained-carrier evidence predicates through quiet file-backed or structured tool paths shaped by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`; carrier-existence, field, count, and pass/fail facts stay internal unless the reporting law admits the final/status/blocker surface; failed checks route through the governing blocker or correction path
 - keep task-state mutation instructions out of packets for receivers without the required task-state tool
 - Carry `DERIVED-DEFAULTS`, `REQUIRED-SKILLS`, `SKILL-RECOMMENDATIONS`, and request-bound packet fields only from the frozen planning basis or active workflow owner's phase-local refinement.
 - Packet skill and request-bound field duties route through `references/assignment-packet.md` and `references/request-bound-fields.md`; dispatch preserves their frozen names and values.
@@ -111,7 +114,7 @@ Run the actual execution move:
 
 Packet final check:
 - Run packet preflight per `references/assignment-packet.md` against the frozen planning/workflow basis before send.
-- Reject any `TaskCreate` or `SendMessage` plan that fails `references/message-classes.md` `### Assignment Delivery Contract`.
+- Before any `TaskCreate` or assignment/state-signal `SendMessage`, preflight every visible field against `references/message-classes.md` `### Assignment Delivery Contract` and `### First Upward State-Signal Gate`; reject duplicated state tokens, visible message-body detail, visible suffixes, task detail, or receiver-required packet facts before the tool call.
 - Retry assignment delivery only after correcting the tool-envelope defect.
 - Reject assignment-grade `SendMessage` when the packet lacks `RECEIPT-COMPLETION-CONTRACT`.
 - Reject assignment-grade `SendMessage` when `RECEIPT-COMPLETION-CONTRACT` contradicts first-outcome or completion-handoff law.
@@ -178,16 +181,21 @@ The runtime truth ladder lives in `references/truth-rules.md`. Apply it at every
 Before assignment-send evidence exists, missing retained-output files are expected non-evidence; do not classify `dispatch-pending-no-ack`, dispatch-recovery, packet rejection, or no-start from absent output carriers before a valid assignment-grade `SendMessage` has been sent.
 
 Reporting consequences:
-- Assignment, dispatch, receipt, lane-count, waiting/idle, completion, retained-output, completion-acceptance, reuse/standby, and next-work facts stay internal while monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or closeout can continue.
+- Assignment, dispatch, receipt, lane-count, waiting/idle, completion, retained-output, completion-acceptance, reuse/standby, and next-work facts are state events: record them only in packets, non-rendered task state, retained carriers, runtime ledgers, or verification records, then execute monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or closeout; do not mirror them as assistant-authored visible prose.
+- After every successful `TeamCreate`, team-scoped `Agent`, assignment-grade `SendMessage`, reuse send, or packet-correction send, immediately select the next dispatch-owned action from receipt barrier, next target send, monitoring, recovery, retained-carrier consumption, task-state synchronization, reuse, merge, synthesis, correction, or blocker-routing. Success never opens a team-lead prose slot by itself.
 - Wave/task-row staging, assignment-dispatch staging, await-receipt text, receipt-cleared text, teammate-running text, and idle/wait text are dispatch progress narration; execute the next dispatch, monitoring, recovery, carrier-consumption, synthesis, correction, or blocker-routing action instead.
+- After all currently dispatchable assignment-send moves for a segment have run and the remaining work is lane execution, receipt monitoring, or completion arrival, team-lead records the resume/monitoring state internally and yields with no assistant-authored body when no immediate governed tool/action can run; this is not `HOLD`, deferral, completion, user burden transfer, or a basis for lead-owned pre-polling, root inspection, file counting, progress proof, or synthesis prep before a receipt, completion, failure, permission, scope-pressure, blocker, explicit user status request, or elapsed-window recovery trigger exists.
+- Apply `.claude/reference/reporting-prohibition-law.md` format-invariant projection classification to dispatch progress narration; wrappers, caveats, or self-denial wording do not create a visible prose slot.
 - User-requested dispatch status routes through `.claude/reference/reporting-prohibition-law.md` and `.claude/reference/reporting-user-reporting-law.md`, citing only the admitted user-relevant waiting condition; after the admitted answer, resume the active owner action without assistant-authored resume, waiting, or monitoring narration.
 - Multi-lane result reporting opens only after all frozen required outputs are reconciled, synthesized, covered by required `Skill(self-verification)` convergence or the independent verification route, admitted by `.claude/reference/reporting-prohibition-law.md`, and shaped by `.claude/reference/reporting-user-reporting-law.md`.
 
 Completion acceptance:
 - `MESSAGE-CLASS: subjob-done` receipt opens completion acceptance per `references/completion-handoff.md` `## Common Completion Result Spine`.
+- The immediate next visible move after a `subjob-done` token is the required `Read`, quiet carrier probe, correction tool, reuse dispatch, synthesis tool, or silent yield; do not preface it with returned/verifying/accepting prose.
 - Verify the retained carrier exists and contains every required completion payload field; field-presence check is necessary but not sufficient, field-value truth (actual evidence citation) is the acceptance gate.
 - Treat raw `subjob-done` as a completion-candidate signal only until retained-carrier acceptance passes; it does not create `STANDBY`, reuse eligibility, synthesis input, or task-result acceptance by itself.
 - Run acceptance probes and post-acceptance routing under `references/completion-handoff.md`; expected false branches stay internal, and acceptance/reuse narration remains suppressed by `.claude/reference/reporting-prohibition-law.md`.
+- After retained-carrier acceptance passes, immediately execute the next reuse, remaining-work dispatch, synthesis, correction, monitoring, or silent-yield action; do not render accepted counts, rejected counts, files-read totals, standby/reuse decisions, remaining-shard state, active-lane state, or waiting prose.
 - If the carrier is absent or incomplete, keep the producer on the same correction path and route only a bounded carrier-correction assignment to that same producer when an executable task is needed; do not assign fresh shard/work to that lane from the failed signal.
 - For carrier-asserted `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`/`Skill(...) loaded` claims, verify each cites actual tool-call evidence per `Skill(self-verification)` Step 1 and Step 3 citation requirements.
 - For carrier-asserted review-verification basis (`REVIEW-PACKET-CITATION`, packet consumption claims), verify each cites the `review_verification_packet` `PACKET-ID` or content reference per `Skill(review-verification)` Step 14 citation form.
@@ -198,7 +206,7 @@ Recovery reconciliation:
 - A dispatch segment becomes complete only after every target has a valid first upward resolution outcome (`dispatch-ack`, completion-grade `subjob-done`, `scope-pressure`, or `hold|blocker`), failed-send truth, replacement truth, or team-lead-recorded blocker-routing with exhausted internal recovery basis and next safe owner/action; `problem-report` is a pending-problem event, not segment completion.
 - Agent-start evidence after valid receipt supports monitoring and no-start recovery; agent-start evidence without valid receipt does not clear missing-receipt debt.
 - Reconcile by exact live target, not by role label, shard count, pane text, or inbox read state.
-- Before monitoring, replacement, shutdown, or user-facing progress, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
+- Before monitoring, replacement, shutdown, or reporting-law-admitted prose, reconcile every parallel target with runtime truth plus assigned-surface activity/side-effect evidence.
 - Per-interruption-point recovery procedures (missing-`dispatch-ack` state-reconciliation follow-up, `dispatch-ack`-without-agent-start state-reconciliation follow-up, dead-or-unavailable classification, unaffected-target movement) live in `references/dispatch-recovery.md` `## Dispatch Interruption Recovery`; SKILL.md consumes that reference for the executable detail at every recovery decision.
 ## Step 4: Interrupt / Resume Boundary
 Use `references/dispatch-recovery.md` for detailed interruption points and resume actions.
@@ -228,13 +236,15 @@ After the execution move:
 
 Canonical sequence:
 1. `work-planning`
-2. named workflow or sequence owner when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is frozen
-3. `task-execution`
-4. `session-boot` runtime observation
-5. agent execution
-6. team-lead synthesis
-7. `Skill(self-verification)` convergence
-8. user report or downstream consequential re-dispatch
+2. `Skill(review-verification):plan-draft-readiness` when required by `PLAN-VERIFICATION-BASIS`
+3. named workflow or sequence owner when `ACTIVE-WORKFLOW` or non-`not-applicable` `ACTIVE-SEQUENCE` is frozen
+4. `task-execution` entry contract
+5. dispatch-bound carrier or binding-surface materialization plus packet preflight
+6. team runtime creation/reuse and assignment dispatch
+7. agent execution
+8. team-lead synthesis
+9. `Skill(self-verification)` convergence
+10. user report or downstream consequential re-dispatch
 
 ## Move-Out Boundary
 Keep out of this spine:

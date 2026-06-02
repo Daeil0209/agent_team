@@ -12,7 +12,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `hold|blocker` state uses the no-detail state token from `.claude/skills/task-execution/references/message-classes.md`; blocker detail uses the preceding non-rendered `problem-report` fields: `PROBLEM-TYPE`, `PROBLEM-BASIS`, `AFFECTED-ACTION`, `ATTEMPTED-RECOVERY`, `CAN-CONTINUE`, `NEXT-STATE`, and `SMALLEST-NEXT-OWNER-ACTION`. Add completion context fields in the payload carrier only when they are known and help team-lead correct, replan, continue independent lanes, or classify a true blocker.
 - `status` and `scope-pressure` are Communication Plane states and carry receiver-required detail through non-rendered payload fields. Blocked state uses `hold|blocker`; do not emit bare `hold` or bare `blocker`.
 - Once a lane declares `completion` transport, a missing authoritative completion block makes the transport synthesis-invalid: team-lead must consume it as blocker/open-surface evidence or request corrected transport, not treat it as completion.
-- Session-readable completion blocks use the common completion spine as the required field floor.
+- Retained-carrier completion blocks use the common completion spine as the required field floor; they are session-readable to the receiving owner through the carrier, not pane text, final prose, visible `SendMessage` body, or task-row fields.
 - This reference adds only the lane-owned state fields below.
 - Lane-owned enumerated fields for consequential upward completion blocks:
   - `developer` -> `PREREQ-STATE: complete|partial|missing`

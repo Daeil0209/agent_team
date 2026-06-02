@@ -15,7 +15,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Section 6 is Step 3.
 - Section 7 is Step 4.
 - Section 8 is Internal Planning Record.
-- Section 9 is Progress Update Surface.
+- Section 9 is Suppressed Planning Render Boundary.
 - Section 10 is Post-Planning Gate.
 - Section 11 is Resolve Next Owner And Action.
 - Reference Map stays inside Purpose.
@@ -82,6 +82,12 @@ Pre-action gate fields, progress notes, task-plan UI, route notes, Codex calls, 
 Use `references/boundary-gates.md` for activation scope, corpus measurement, same-boundary exclusions, boundary axes, hard routing gates, and post-planning gates.
 For exhaustive, full-corpus, whole-folder, or unknown-corpus work, freeze bounded corpus measurement first.
 Before the first corpus measurement or planning-inspection command, apply `references/boundary-gates.md` and `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
+Corpus measurement and planning inspection choose `Read`, `Grep`, `Glob`, task, runtime, tool-native APIs, or `Bash` by evidence fitness and execution reliability.
+Internal planning commands may use `Bash` when shell inspection is the fitting evidence path, but their renderable projection must stay screen-safe.
+Screen-safe planning commands do not print banners, headings, paths, counts, lists, tables, summaries, binding/carrier labels, roster facts, route-sizing facts, or verification facts to terminal stdout/stderr unless reporting law admits the exact current command/result material; use silent predicates, exit status, tool-native APIs, or governed file-backed capture when those facts are needed.
+Stdout-producing `find`/`sort`/`xargs`/`wc -l`/`ls`/`grep`/`cat`/`head`/`tail` pipelines over internal surfaces are invalid unless captured through a governed file-backed path before execution.
+Planning-owned measurement must not render internal-only helper source through `Write`/`Edit`/`MultiEdit`, heredoc, or inline interpreter code; redesign the evidence path or use quiet capture instead.
+Do not mirror measurement facts as assistant-authored prose unless reporting law admits the exact current user request.
 Governance audit/review uses the bounded corpus measurement rule.
 Governance defect, removal, and preservation judgment is planned as bounded review/verification rows.
 Synthesized-result judgment goes through `Skill(self-verification)` first.
@@ -163,6 +169,8 @@ User-surface law:
 ## Step 3: Build Team-Lead Work Plan
 Before freeze, `team-lead` builds `TEAM-LEAD-WORK-PLAN` as the executable plan it will execute, route, monitor, synthesize, verify, and close.
 Plan field semantics, required rows, owner placement, verification placement, governance-modification placement, termination states, and coverage rules are owned by `references/planning-record-fields.md`.
+For consequential dispatch-grade, governance-audit, governance-patch, high-risk judgment, multi-surface, or user-marked important work, the plan body includes a distinct `Skill(review-verification):plan-draft-readiness` row before execution, write, packet-materialization, or dispatch rows.
+Dispatch-bound binding surfaces, shard manifests, retained carriers, and assignment packets are `task-execution` materialization rows after current `PLAN-VERIFICATION-BASIS` passes; lead-local `Write` is invalid for those surfaces.
 Step 3 produces the plan body; Step 4 freezes it with the current planning record.
 
 ## Step 4: Freeze Scope And Route
@@ -179,6 +187,7 @@ Always freeze:
 - `DERIVED-DEFAULTS`
 - `REQUEST-BOUND-PACKET-FIELDS`
 - `TEAM-LEAD-WORK-PLAN`
+- `PLAN-VERIFICATION-BASIS`
 - `ACTION-CLASS`
 - `ROUTING-SIGNAL`
 - `EXECUTION-READINESS-BASIS`
@@ -196,8 +205,9 @@ Freeze when material:
 Configured independent-review detail stays in `Skill(codex-independent-review)` at `.claude/skills/codex-independent-review/SKILL.md`.
 Hard routing gate detail stays in `references/boundary-gates.md`.
 Parallel dispatch-cap detail stays in `references/parallel-fit.md`, but any freeze containing `AGENT-MAP` or `PARALLEL-GROUPS` must record `ACTIVE-CONCURRENT-AGENT-CAP` on this surface before dispatch can open.
-Planning opens the first next owner/action from `TEAM-LEAD-WORK-PLAN` before execution, dispatch, or reporting.
-Team-routed or ambiguous dispatch opens `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
+Planning opens mandatory `Skill(review-verification):plan-draft-readiness` before the first executable owner/action when `PLAN-VERIFICATION-BASIS` is required.
+Planning opens the first non-review next owner/action from `TEAM-LEAD-WORK-PLAN` only after required current `PLAN-VERIFICATION-BASIS` passes.
+Team-routed or ambiguous dispatch opens `Skill(task-execution)` only after required current `PLAN-VERIFICATION-BASIS` passes.
 Route, staffing, parallelism, and dispatch option lists to the user are invalid when doctrine, current request, and evidence can choose the best route.
 
 Use `references/execution-readiness.md` when packet, proof, setup, cleanup, parallel, or acceptance readiness is at risk.
@@ -209,25 +219,28 @@ Keep it internal; user-visible next-action, blocker, or owner/action truth rende
 Write continuity only when a continuity owner requires it.
 Agent packets use `task-execution` translation.
 
-## Progress Update Surface
+## Suppressed Planning Render Boundary
 Follow `.claude/reference/reporting-prohibition-law.md`.
-The Progress Update Surface is a render boundary, not an output channel.
-Planning measurement, inventory, reference/skill load need, freeze truth, route/readiness truth, setup, dispatch setup, materialization, output-root choice, prior-artifact classification, and interim verification are internal planning facts.
-After a planning measurement or inventory tool returns, execute the next required `Read`, `Skill`, reference-consumption, carrier, dispatch, verification, correction, or blocker-routing move without measurement-complete, reference-loading, skill-loading, or next-step bridge prose.
-Planning measurement and carrier-materialization command shape is governed by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
+This section creates no progress-update permission; it is a render boundary that suppresses planning-stage prose unless the reporting law admits the exact current report reason and content.
+Planning facts are internal: measurement, inventory, reference/skill need, review or plan-readiness result, freeze, route/readiness, setup, materialization, output-root, prior-artifact classification, counts, and interim verification.
+After any planning fact returns, update only the internal planning record and immediately execute the next required `Read`, `Skill`, reference-consumption, carrier, dispatch, verification, correction, or blocker-routing move.
+Bridge-prose denial is category-based: basis convergence, freeze/readiness, review-result, correction-folded, count/partition, gate-opening, dispatch-opening, materialization-opening, reference-loading, and next-step narration stay suppressed regardless of phrasing or wrapper.
+Every planning-owned command shape is governed by `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 Blocked execution emits only a report granted a narrow exception by `.claude/reference/reporting-prohibition-law.md`.
 Keep the planning record internal.
 
 ## Post-Planning Gate
 After planning, apply `references/boundary-gates.md` Post-Planning Gate.
+Open mandatory `Skill(review-verification):plan-draft-readiness` before any local execution, workflow/sequence owner, write, carrier materialization, packet assembly, `task-execution`, dispatch, or report when required `PLAN-VERIFICATION-BASIS` is missing or stale.
 Open the first next owner/action from `TEAM-LEAD-WORK-PLAN` by executing the next tool, dispatch, carrier, verification, or blocker-routing move without rendering the phase row, action label, route rationale, or progress narration.
 Reopen `work-planning` when the frozen target, route, readiness basis, or next action is missing, vague, contradicted, or unconsumed.
 
 ## Resolve Next Owner And Action
 - A completed freeze opens `NEXT-CONSEQUENTIAL-ACTION`.
 - A workflow or sequence freeze opens the named workflow or sequence owner.
-- A team-routed or ambiguous route opens `Skill(task-execution)` when no fresh current same-session loaded-and-learned `task-execution` basis exists.
-- A team-routed or ambiguous route opens loaded `task-execution` consumption only when the fresh same-session `task-execution` basis exists; stale or uncertain basis reloads and learns `Skill(task-execution)`.
+- Any route requiring plan-draft review opens `Skill(review-verification):plan-draft-readiness` until current `PLAN-VERIFICATION-BASIS` passes.
+- Local execution, workflow/sequence movement, file write, carrier materialization, packet assembly, `task-execution`, `TeamCreate`, `Agent`, `SendMessage`, dispatch, and reporting stay blocked while required `PLAN-VERIFICATION-BASIS` is missing or stale.
+- A team-routed or ambiguous route opens `Skill(task-execution)` only when current `PLAN-VERIFICATION-BASIS` passes; stale or uncertain `task-execution` basis reloads and learns `Skill(task-execution)`.
 - A missing freeze field reopens `work-planning`.
 - A blocker-clear plan opens the named blocker-clear move.
 - Blocker-routing records planning owner, blocker, exhausted internal recovery basis, and next safe owner/action.

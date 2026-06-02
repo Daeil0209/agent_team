@@ -56,8 +56,8 @@ Positive completion requires:
 - requested content, function, format, data/example/use instructions, run/read path, and user burden satisfied
 - decisive user surface proven
 Final acceptance verdict routing follows `.claude/reference/judgment-core-law.md`.
-Local `final verified result` closure is a reporting exception only when no final-arbitration trigger applies.
-Local `final verified result` closure does not issue final `PASS/HOLD/FAIL`.
+Local `final verified result` closure is valid only when no final-arbitration trigger applies and the report avoids final acceptance or `PASS/HOLD/FAIL` wording.
+Local `final verified result` closure is a reporting exception, not a final acceptance verdict.
 
 ## Resolve Next Owner And Action
 - Missing-deliverable gaps open missing-deliverable correction.

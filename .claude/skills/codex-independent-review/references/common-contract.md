@@ -32,7 +32,11 @@ Do not use configured independent review as:
 - Consume `.mcp.json` `codex` args as the model/effort source.
 - Do not guess model, effort, verbosity, or tool shape from memory.
 - Use read-only operating constraints when the tool schema permits: `sandbox: "read-only"`, `approval-policy: "never"`, `cwd: <project-root>`.
-- Do not use shell `codex exec`, custom wrappers, worker lanes, login repair, package install, credential repair, or settings/hook edits inside Codex MCP review.
+- Do not use shell `codex exec`, non-MCP codex substitutes, login repair, package install, credential repair, or settings/hook edits inside Codex MCP review.
+- A configured lane holding the `mcp__codex__codex` tool may invoke the real Codex model within its own role for role-scoped independent-review evidence (researcher: investigation; developer: implementation cross-check; reviewer: review; tester: proof analysis; validator: validation); codex output stays independent-review evidence only and never substitutes the lane's own role judgment per `## Common Contract`.
+- Team-lead invokes configured independent review through a `run_in_background` lane spawn that calls `mcp__codex__codex`, so the lead stays unblocked for parallel work; a blocking direct team-lead codex call is used only when no independent lead work remains. Team-lead retains adjudication, acceptance, route, and user-facing-claim ownership over all returned codex evidence.
+- Dispatch-shape distinction (default vs codex-only): default dispatch for all configured lane work is team-agent runtime per `.claude/skills/task-execution/references/runtime-dispatch-law.md`; the `run_in_background` standalone codex relay is the only exception and never substitutes team-agent dispatch of non-codex lane work. The relay's lane role matches the checked work type per that law's codex-relay carve-out.
+- Independence boundary: a lane's own role-scoped codex evidence is consumed inside that lane's role judgment only; it does not satisfy team-lead `CODEX-INDEPENDENT-REVIEW-BASIS`, does not count as the first configured independent pass on a target, and never replaces the team-lead-adjudicated configured-review path.
 - Record `fail-open:<reason>` for `timeout`, `quota`, `parse_fail`, `mcp_unavailable`, `auth_error`, `tool_unavailable`, or `blocked_by_config`.
 - Retry one first-use connection miss before final `fail-open`.
 

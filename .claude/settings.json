@@ -57,6 +57,11 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh",
             "timeout": 20
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
           }
         ]
       }
@@ -68,6 +73,23 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/user-prompt-gate.sh",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "team-lead|reviewer|researcher|developer|tester|validator",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
           }
         ]
       }
@@ -106,27 +128,52 @@
         ]
       },
       {
-        "matcher": "Bash|Edit|MultiEdit|Write|NotebookEdit|SendMessage",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/compliance-supervisor.sh",
-            "timeout": 20
-          }
-        ]
-      },
-      {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/tmux-kill-block.sh",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/sendmessage-state-signal-coach.sh",
+            "timeout": 5
           }
         ]
       }
     ],
     "PostToolUse": [
+      {
+        "matcher": "Read|Grep|Glob|LS|TaskGet|TaskList|TaskOutput|Bash|Edit|MultiEdit|Write|NotebookEdit|Skill|Agent|TeamCreate|TeamDelete|TaskCreate|TaskUpdate|TaskStop|SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      },
       {
         "matcher": "Skill",
         "hooks": [
@@ -158,6 +205,29 @@
         ]
       }
     ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Read|Grep|Glob|LS|TaskGet|TaskList|TaskOutput|Bash|Edit|MultiEdit|Write|NotebookEdit|Skill|Agent|TeamCreate|TeamDelete|TaskCreate|TaskUpdate|TaskStop|SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolBatch": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "TeammateIdle": [
       {
         "hooks": [
@@ -165,6 +235,11 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/worker-lifecycle-sync.sh",
             "timeout": 20
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reporting-curtain-context.sh",
+            "timeout": 5
           }
         ]
       }

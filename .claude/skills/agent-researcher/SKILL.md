@@ -114,15 +114,15 @@ Technically correct but user-inaccessible research is not finish-ready.
 - Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing `Skill(self-verification) loaded` or `PASS-1`/`PASS-2`/`CONVERGENCE-PASS` records without actual same-turn tool-call evidence is fabrication. Evidence claims without source citation are fabrication that corrupts every downstream lane consuming this evidence as upstream basis.
-- Return evidence-local truth only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate.
+- Record evidence-local truth in the retained completion carrier only: researched surface, evidence basis, open surfaces, skill-fit notes, and the narrowest truthful next-lane/action candidate. Do not place evidence summaries, paths, open-surface detail, skill-fit notes, or research conclusions in visible `subjob-done`, `SendMessage` body, pane text, final prose, or task fields.
 - For benchmark-perspective work, include comparison frame, query ledger summary, source-family coverage, triangulation status, stopping rule, unverified claims, and downstream benchmark/proof needs.
 - Drafting authority, implementation authority, and final acceptance closure stay with their owning lanes.
 - See `references/researcher-lane-detail.md` for researcher-specific completion detail.
 
 ## Evidence Standards
 - Separate facts, inferences, assumptions, and unresolved contradictions explicitly.
-- Keep governance/process evidence classes explicit so document-only contradictions are not silently promoted into false runtime defects.
-- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, and quality/evidence/acceptance priority it affects.
+- Keep governance/process evidence classes explicit so document-only contradictions, repeated wording, label similarity, stale artifacts, and operational friction stay candidate evidence until downstream promotion proves the runtime or procedure defect.
+- For artifact, governance, program, report, or document critique, distinguish defect evidence from the target intent, protected function, direct-consumption relevance, and quality/evidence/acceptance priority it affects.
 - When `SEMANTIC-INTENT-BASIS` is present, challenge literal-text or target-only readings against its bridge axes.
 - If that semantic basis is missing or contradicted on meaning-dependent research, route `scope-pressure` or `hold|blocker` instead of completing evidence under a narrower frame.
 - Research output is evidence input to downstream owners, not implementation, validation, patch-worthiness, confirmed-defect authority, or defect promotion.
@@ -133,7 +133,7 @@ Technically correct but user-inaccessible research is not finish-ready.
 
 ## Active Communication Protocol
 - Researcher-specific blocker: blocked evidence path, material ambiguity, unsafe packet, or wrong staffing shape.
-- Completion uses `subjob-done` only for converged researcher-owned evidence.
+- Completion uses governed no-detail `subjob-done` transport only for converged researcher-owned evidence whose retained completion carrier records researcher-local truth.
 
 ## Resolve Next Owner And Action
 - Converged researcher-owned evidence opens team-lead synthesis through the completion-grade path.

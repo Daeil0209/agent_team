@@ -117,7 +117,10 @@ Cached facts:
 - Hook outputs can block or provide feedback depending on event type and output shape.
 - Command hooks execute shell commands automatically with the user's environment permissions.
 - Some hook events have no decision control.
+- `PreToolUse` can modify tool input with `hookSpecificOutput.updatedInput`; combine with `permissionDecision: "allow"` when the corrected tool input should proceed.
 - `PostToolUse` and async hooks cannot prevent the triggering action that already completed.
+- `PostToolUseFailure` can add `additionalContext` after a tool failure.
+- `PostToolBatch` runs once after the full tool-call batch resolves and before the next model request; it has no matcher and can inject `additionalContext` once for that batch.
 - Official security documentation emphasizes reviewing hook commands, sanitizing inputs, quoting variables, blocking path traversal, and using absolute paths.
 - Hook changes in settings can require review/reload behavior before they affect an active session.
 

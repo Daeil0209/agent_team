@@ -78,7 +78,7 @@ Client → API Gateway → Backend → Database
 | Missing required log fields | **T3** — advisory | Note for logging infrastructure |
 | request_id propagation gap across layers | **T3** — advisory | Note for traceability gap |
 > **Severity framework**:
-> - log-based-qa runtime signals reuse the deployment-block escalation tier T0–T3 and tier actions defined in `.claude/skills/security-review/references/security-review-detail.md` `## 3. Security Severity Framework`.
+> - log-based-qa runtime signals reuse the deployment-block escalation tier T0-T3 and tier actions defined in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Deployment-Block Escalation Tier`.
 > - log-specific actions only name evidence collection, owner routing, and retest.
 > - Finding severity (Critical / Major / Minor / Advisory) follows the canonical reviewer mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
 

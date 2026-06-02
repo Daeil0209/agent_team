@@ -273,7 +273,7 @@ else
 fi
 
 # ── Memory pressure check (throttled, supervisor only) ────────────────────
-# Replaces cron-based health-check memory monitoring.
+# Supplements cron-based health-check memory monitoring.
 # Runs at most once per 60s to avoid overhead on every tool call.
 if [[ "$AGENT_TYPE" == "supervisor" ]]; then
   _MEM_CHECK_THROTTLE="$LOG_DIR/.mem-check-throttle"

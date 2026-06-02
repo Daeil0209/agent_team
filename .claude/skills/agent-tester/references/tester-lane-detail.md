@@ -143,7 +143,7 @@ Tester lane evaluation selects and applies materially relevant specialist lenses
 Specialist lenses complement tester execution authority and do not replace user-surface proof.
 
 ## Tester Completion Detail
-- In completion-grade completion, keep these tester-specific fields explicit; use `not-applicable:<basis>` instead of omission when a status axis was not part of the frozen surface:
+- In retained-carrier completion-grade completion, keep these tester-specific fields explicit; use `not-applicable:<basis>` instead of omission when a status axis was not part of the frozen surface:
   - `TEST-STATE`
   - `USER-RUN-PATH`
   - `BURDEN-CONTRACT`

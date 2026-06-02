@@ -12,7 +12,7 @@ team-lead resolves checkpoints autonomously when the frozen request-fit basis an
 Destructive/security-sensitive action, material ambiguity, or material architecture/risk/scope change does not create a choice prompt here.
 Those classes open blocker-routing and re-entry through the owning path after internal recovery.
 CP5 is auto-resolved in normal gap flow.
-T0/T1 gaps follow Incident Response.
+P0/P1 gaps follow Incident Response; adjacent T labels map through `.claude/skills/dev-workflow/references/incident-response.md`.
 
 ## CP1 -- Plan Basis Freeze
 - **Phase**: Plan, before the canonical plan surface is finalized
@@ -68,4 +68,4 @@ T0/T1 gaps follow Incident Response.
 - CP5 proof/acceptance-chain evidence gap inside unchanged axes opens Phase 4 review/proof/validation re-evidence.
 - CP5 route-changing result opens `work-planning`.
 - CP5 no-blocking-gap result opens validator ingress, Final Acceptance Review after fresh or still-current validator `PASS`, or bounded acceptance-path closure.
-- T0/T1 gap opens `incident-response`.
+- P0/P1 gap opens `incident-response`.

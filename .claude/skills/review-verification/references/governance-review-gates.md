@@ -46,15 +46,15 @@ Synthesized conclusions require current finding authority before positive use.
 Before positive synthesis:
 - Consume completion-grade or otherwise evidence-bearing surfaces, not receipt, status, progress, file presence, or partial runtime signals.
 - Reconcile conflicts between agent outputs, evidence families, prior decisions, and sibling artifacts.
-- Separate candidate recall from defect-promotion filtering.
+- Separate candidate recall from elimination-first filtering and defect-promotion filtering; candidate recall names the suspected failure and the strongest visible protected-function, target-intent, direct-consumption, or non-defect classification that could defeat promotion.
 - Classify each item through `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law` and `## Cause And Remedy Classification Law` before using defect, patch-worthiness, patch-readiness, remedy, hook/settings, runtime/tool, reporting, transport-defect, malformed-transport, transport-remedy, or count language.
-- Promote a synthesized item to `confirmed-defect` only when the current evidence proves every required `confirmed-defect` element from `.claude/reference/review-and-verification-core-law.md`; otherwise preserve `candidate-evidence`, `candidate-classified`, `open-candidate`, or `rejected:<basis>`.
-- Treat reviewer agreement, repeated labels, similar wording, repair-order pressure, and fluent synthesis as non-promoting metadata.
+- Promote a synthesized item only through `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`; otherwise preserve the supported lower ladder state or `rejected:<basis>`.
+- Treat reviewer agreement, repeated labels, similar wording, apparent-defect framing, repair-order pressure, fluent synthesis, and lane-local conclusion labels as non-promoting metadata until the evidence defeats the strongest rejection basis.
 - Keep occurrence counts separate from root-cause counts.
 - Keep raw candidate counts separate from confirmed-defect, patch-worthy, patch-ready, rejected, and open-candidate counts.
 - Record per-item finding-state inventory before any downstream correction, routing, mutation, validation, reporting, or closure uses the synthesis.
-- Preserve common finding classes until promotion evidence is current.
-- Keep `risk-hypothesis`, `design-tradeoff`, `duplication`, `protected-restatement`, `non-issue`, and `unverified` findings in their current finding-state ladder state during synthesis.
+- Preserve common candidate and rejection classifications by mapping them to the canonical finding-state ladder before synthesis.
+- Keep proven rejection bases as `rejected:<basis>` values; treat repeated meaning without protected local-restatement basis as a duplication candidate class until canonical rejection or promotion is proven.
 - Name the exact finding-state ladder state instead of bare `CONFIRMED`.
 - Preserve open surfaces instead of flattening them into a clean conclusion.
 - Keep claim strength limited to the weakest material unresolved surface.

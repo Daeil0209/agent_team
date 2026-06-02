@@ -30,13 +30,13 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - The active owner carries that design basis through downstream packets, owner actions, and claims; dropping, replacing, or convenience-reinterpreting that basis opens packet correction, owner correction, or `work-planning` when the design boundary changes.
 - When target intent, solution structure, scope boundary, proof path, or acceptance path changes, the active owner reopens `work-planning` before downstream movement.
 - Process states are nonterminal evidence.
-- Status report, phase-transition signal, partial-result emission, intent announcement, and process-step record are process states.
+- Internal status records, phase-transition signals, partial-result records, intent records, and process-step records are process states; they do not create user-facing report permission.
 - Owner-local result checking that affects handoff, completion, reporting, redispatch, or stronger claims opens `Skill(self-verification)` convergence.
 - Completion-grade `LANE-LOCAL-RESULT-VERIFICATION` requires actual `Skill(self-verification)` loaded-and-learned basis; narrative checks, carrier-field text, and checklist-shaped prose route to completion correction.
 - Procedure Plane blocker-routing and Communication Plane `hold|blocker` are blocker-routing records, not closure, waiting permission, or user-handoff states; they require owner, blocker, exhausted internal recovery basis, and next safe owner/action.
 - Missing next owner or next action reopens the last valid owner.
 - `[PROC-HABIT]` Procedure and evidence outrank habit, convenience, source memory, model confidence, status signals, and partial stage completion.
-- Result-verification boundary reporting follows `work-planning -> execution/dispatch -> owner synthesis -> Skill(self-verification)` convergence.
+- Consequential dispatch-grade, governance-audit, governance-asset mutation, high-risk judgment, multi-surface, and user-marked important plans follow `work-planning -> Skill(review-verification):plan-draft-readiness -> execution/write/materialization/dispatch owner path`; produced-result verification then follows `owner synthesis -> Skill(self-verification)` convergence.
 - Frozen `COMPLETION-STOP-CONDITION`, `SCOPE-BASELINE`, and opened closure units remain binding until deliverable closure, cited lawful owner-deferral authority, explicit user-narrowed out-of-scope basis, or blocker-routing that preserves the next recovery owner/action.
 - An opened closure unit is the finest row, item, case, candidate, finding, proof row, validation row, patch row, or completion-stop row opened by the frozen request, plan, packet, lane carrier, synthesis inventory, or review basis.
 - The active owner resolves each opened closure unit at that same unit by completion, current-review rejection where that state is valid, cited lawful owner-deferral authority, explicit user-narrowed out-of-scope basis, or blocker-routing that preserves recovery.
@@ -52,14 +52,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Communication Plane `scope-pressure` and `hold|blocker` are resolution triggers; the receiving owner classifies and executes packet correction, replanning, owner routing, setup/research/tool acquisition, marked inference/default, parallel continuation, or blocker-routing after every executable internal resolution route is exhausted.
 - Final/turn closure requires one closure basis: zero live same-request executable owner/action, explicit user cancellation/redirect, or cited lawful owner-deferral authority. Blocker-routing without lawful deferral is not closure.
 - A live same-request executable owner/action drives the next tool call, dispatch, verification, mutation, routing action, or blocker-routing carrier before any reporting-law gate; final prose still requires `.claude/reference/reporting-prohibition-law.md` admission.
-- Planned continuation path requires an executable next owner/action; status reporting, proceed prompts, wave boundaries, future replanning, context pressure, and response boundaries remain process evidence only.
+- Planned continuation path requires an executable next owner/action; internal status records, proceed prompts, wave boundaries, future replanning, context pressure, and response boundaries remain process evidence only.
 - Downstream plans, assignment packets, correction packets, reuse packets, reroute packets, phase-transition packets, validation packets, and completion carriers must carry each material upstream review, verification, synthesis, validation, rejection, open-surface, blocker, or correction-ready basis that changes the next owner action, stop, evidence, claim ceiling, or acceptance truth.
 - Execution, phase movement, completion, validation, and positive synthesis require the material upstream decision basis or a current superseding basis; dropping, summarizing away, reinterpreting, or replacing that basis opens packet correction, owner correction, basis refresh, or blocker-routing with recovery owner/action.
 - Frozen completion and scope stay binding across lead-authored wave, batch, sample, priority tier, context limit, runtime limit, or convenience plans.
 - `Skill(self-verification)` is the producer-owned outbound gate for produced work-product surfaces; plan readiness disputes reopen `work-planning` or the owning review path.
 - Top-level Claude Code session is `team-lead`.
 - Lanes are `researcher`, `developer`, `reviewer`, `tester`, and `validator`.
-- Configured-lane work defaults to current team-agent runtime at owner selection time. A planned `Agent(<lane>)` call that would produce researcher, developer, reviewer, tester, validator, independent review, proof, validation, or parallel shard work opens `Skill(task-execution)` before any `Agent` call.
+- Configured-lane work defaults to current team-agent runtime at owner selection time. A planned `Agent(<lane>)` call that would produce researcher, developer, reviewer, tester, validator, independent review, proof, validation, or parallel shard work opens `Skill(task-execution)` only after required plan-draft readiness passes and before any `Agent` call.
 - Outside active `Skill(task-execution)`, direct `Agent(<lane>)` use outside team runtime is not lead-local execution, not self-verification execution, and not a configured-lane route; already-returned direct-Agent output from outside team runtime is fallback evidence only.
 - `team-lead` owner-duty detail is owned by `.claude/reference/work-procedure-ownership-law.md` `## Owner Separation`.
 - Lanes inherit `CLAUDE.md` and `.claude/skills/task-execution/references/lane-additions.md` Common Lane-Core Preconditions.
@@ -140,7 +140,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - This section is the mapped executable detail for `.claude/CLAUDE.md` Work Execution Philosophy skill, document, and reference consumption.
 - Skills load only when required by the active owner path.
 - Primary skill links load through their active owner-path triggers.
-- Required skill activation and loaded-skill basis require actual full-body `Skill(<skill>)` load-and-learn or current same-session loaded-and-learned basis under the named skill's freshness rule.
+- Required skill activation and loaded-skill basis require actual full-body `Skill(<skill>)` load-and-learn or current same-session loaded-and-learned basis under the freshness and stale-basis refresh rules owned by `.claude/reference/work-skill-reference-binding-law.md` `## Skill Rules`.
 - Skill load means the full active skill body is loaded and learned through `Skill(<skill>)`; frontmatter preload claims, direct reading, searching, listing, summarizing, reference-map traversal of `.claude/skills/<skill>/**`, host-rendered tool rows, tool status, or visible `Skill(...) loaded` text remains inspection/status evidence only.
 - Missing required primary skill activation after its trigger fires is a Work Execution Philosophy violation.
 - Agent role names remain role identifiers.
@@ -168,7 +168,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - Communication, Procedure, and Reporting are separate planes.
 - Communication Plane transport classes, Receipt Event Contract, `scope-pressure`/`hold|blocker` objection routing, channel registry, transport boundary, and team-runtime channel rules live in `.claude/skills/task-execution/references/message-classes.md`.
 - Communication Plane labels do not exempt renderable assistant-authored text from `.claude/reference/reporting-prohibition-law.md`; receiver-required detail travels in governed carriers, not visible envelopes.
-- Assignment-grade lane receipt requires a first upward outcome after packet review; successful `dispatch-ack` transport is the team-lead orchestration signal that the lane received the assignment and accepts it without objection before work starts.
+- Assignment-grade lane receipt requires a first upward outcome after packet review; successful `dispatch-ack` transport is the team-lead orchestration signal that the lane received the assignment and raised no objection before work starts.
 - First upward outcome validity and `dispatch-ack` work-start semantics are consumed from `.claude/skills/task-execution/references/message-classes.md`.
 - Agent-start evidence, pane activity, file mutation, or runtime liveness is monitoring evidence only and never substitutes for missing receipt transport.
 - A failed, schema-rejected, or malformed `dispatch-ack` attempt keeps receipt unresolved; corrected receipt transport, `scope-pressure`, or `hold|blocker` is the next Communication Plane action before assigned work.
@@ -178,14 +178,14 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `notification-only carry-forward` preserves an already-received teammate or runtime notification for the current owner with unchanged work boundary, owner, next action, visible-prose admission, and claim strength.
 
 ## Execution Progress Law
-- Process state report opens the next truthful action in the same turn.
+- Process-state record or signal opens the next truthful action in the same turn.
 - The next truthful action executes in the same turn or records cited lawful owner-deferral authority, blocker-routing with recovery owner/action, or explicit user cancellation/redirect.
 - Missing, stale, or absent basis is not closure; it opens the smallest basis-refresh, packet-correction, owner-correction, or blocker-routing only after executable correction routes are exhausted.
 - Same-turn next-action drive applies to every direct-execution step (`Edit`, `MultiEdit`, `Write`, `Bash`, `SendMessage`, `TaskCreate`, `TeamCreate`, `Agent`, every mutation, every dispatch, every tool call).
 - Parallel tool-call batches contain only independent calls; a tool call that reads, checks, validates, or depends on a file, runtime state, schema, task state, carrier, or other result produced by another tool call runs after the producer succeeds, not in the same batch.
 - The drive remains active at the execution boundary.
 - Host-rendered tool rows are execution evidence only and never create a user-facing prose slot.
-- Assistant-authored shell stdout/stderr is renderable report content; internal-evidence `Bash` command construction follows `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
+- Assistant-authored prose or report detail deliberately embedded in shell-generated text is renderable report content; internal-evidence `Bash` command construction and output handling follow `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - Assistant-authored direct-tool preambles, next-step narration, success narration, staging summaries, and scope-decision narration are renderable report content; execute the tool call or route through `.claude/reference/reporting-prohibition-law.md` instead.
 - Turn capacity preserves same-request execution from the user-deliverable perspective.
 - The agent keeps emitting required tool calls while live same-request executable owner/actions remain.
@@ -209,7 +209,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 ## Resolve Next Owner And Action
 - Missing owner, action, design basis, procedure path, closure basis, or consumed-reference mapping opens correction under the last valid owner or blocker-routing with owner, blocker, exhausted internal recovery basis, and next safe owner/action.
 - Boundary, route, staffing, scope, proof, validation, mutation, or acceptance movement opens the named owning skill, workflow, lane, or `work-planning` when the boundary changed.
-- Assignment-grade dispatch opens `Skill(task-execution)` and its triggered references.
+- Assignment-grade dispatch opens `Skill(task-execution)` and its triggered references only after required current `PLAN-VERIFICATION-BASIS` passes.
 - Runtime readiness, monitoring, cleanup, or runtime-boundary evidence opens `Skill(session-boot)`, `Skill(session-closeout)`, `Skill(task-execution)`, or the mapped runtime reference according to the active cleanup or teardown basis.
 - Missing truthful tool path, current-toolset gap, or bounded local tool discovery/setup that materially blocks the active owner path opens `Skill(tool-acquisition)`; external bridge risk opens `Skill(external-tool-bridge)`.
 - Governance asset mutation opens `Skill(governance-modification)` before mutation.

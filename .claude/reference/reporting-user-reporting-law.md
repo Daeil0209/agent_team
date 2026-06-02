@@ -20,6 +20,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 
 ## Report Shape
 - `final verified result` uses at most eight rendered lines.
+- When the user explicitly requested a rendered audit, review, findings report, or path:line evidence body as the deliverable and `.claude/reference/reporting-prohibition-law.md` admits that exact material, the admitted report body follows the user-requested structure and evidence floor; the eight-line cap applies only to any surrounding closure wrapper, not to the requested report artifact/body itself.
 - `final verified result` reports only the user-instructed work result and user-decisive exceptions required by the admitted report reason.
 - `final verified result` states the result first in concise Korean.
 - The first rendered line of a `final verified result` is the user-result line; no report-admission preface, verification preface, delivery announcement, or procedure-complete announcement appears before it.
@@ -33,7 +34,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `final verified result` avoids final acceptance or `PASS/HOLD/FAIL` wording unless the `validator` issued that verdict.
 - `user-action blocker` states the blocked user decision/action and the smallest safe next step.
 - Internal lane `scope-pressure`, `hold|blocker`, blocker-clear, blocker retraction, packet correction, runtime recovery, or carrier correction is not a `user-action blocker` unless `team-lead` proves the remaining blocker is user-owned after internal recovery paths are exhausted.
-- `explicit status answer` uses the narrowest truthful answer, including exact internal material only when that exact material was explicitly requested, and then returns to the active owner action unless the user redirected or a user-action blocker exists.
+- `explicit status answer` uses the narrowest truthful answer to the current user's explicit status, cause, or exact-internal-material request, includes exact internal material only when that exact material was explicitly requested, and then returns to the active owner action unless the user redirected or a user-action blocker exists.
 - Binary status questions get one yes/no sentence plus a user-action blocker only when present.
 - Delay, cause, or "why did this not happen" status questions get the cause class and current next action only; do not provide a timeline, numbered incident report, per-agent narrative, log excerpts, paths, counts, packet fields, or evidence inventory unless that exact field was requested.
 - Status answers omit internal topology, packet, shard, `problem-report`/state-signal transport, counts, paths, findings, evidence detail, retained-carrier detail, and per-agent narratives unless that exact field was requested.
@@ -41,7 +42,7 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 - `closeout residual` reports only residual state that affects the user.
 
 ## Resolve Next Owner And Action
-- Passing `## Report Shape` returns to `team-lead` for the admitted prose, then follows the continuation named by `.claude/reference/reporting-prohibition-law.md` or resumes the prior live owner/action unless redirected, blocked by a proven user-owned action, or final closure applies.
+- Passing `## Report Shape` returns to `team-lead` for admitted prose. For `final verified result`, rendering closes at `REPORT-LOCATION-LINE` and emits no same-report continuation or post-final-tail prose. For `user-action blocker`, `explicit status answer`, or `closeout residual`, follow the continuation named by `.claude/reference/reporting-prohibition-law.md` or resume the prior live owner/action unless redirected or blocked by a proven user-owned action.
 - Missing line-budget, requested-work-only, report-location, post-final-tail absence for a final-result report, or link-placement basis opens `.claude/skills/agent-team-lead/references/reporting-user-reporting-rules.md` evidence-basis correction.
 - Report-admission gaps return to `.claude/reference/reporting-prohibition-law.md`.
 - Non-excepted prose returns to the owning Procedure Plane or Communication Plane path without visible drafting.

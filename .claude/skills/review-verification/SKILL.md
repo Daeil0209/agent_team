@@ -21,10 +21,10 @@ Downstream citation of an unchanged packet is valid only when the downstream own
 A `review_verification_packet` exists only after current `Skill(review-verification)` activation reaches Step 14 for the exact target, corpus, bounded question, and scope; named-lens claims exist only for exact `REVIEW-VERIFICATION-LENSES` and returned lens-relevant fields.
 
 ## Reference Map
-- Load `.claude/reference/review-and-verification-core-law.md` for evidence quality, verification truth, live intent, coherence, execution force, negative risk, finding-state, or patch-worthiness.
-- Load `.claude/reference/judgment-core-law.md` for acceptance readiness, final arbitration, independent-lane separation, verdict support, or `PASS/HOLD/FAIL` risk.
-- Load `.claude/reference/modification-core-law.md` for governance patch design, removal-first choice, simplification, compression, consumed owner surface, mutation readiness, or meaning preservation.
-- Load `references/governance-review-gates.md` for detailed claim, artifact-change, synthesis, finding-promotion, or patch-worthiness review.
+- Load and consume `.claude/reference/review-and-verification-core-law.md` for evidence quality, verification truth, live intent, coherence, execution force, negative risk, finding-state, or patch-worthiness.
+- Load and consume `.claude/reference/judgment-core-law.md` for acceptance readiness, final arbitration, independent-lane separation, verdict support, or `PASS/HOLD/FAIL` risk.
+- Load and consume `.claude/reference/modification-core-law.md` for governance patch design, removal-first choice, simplification, compression, consumed owner surface, mutation readiness, or meaning preservation.
+- Load and consume `references/governance-review-gates.md` for detailed claim, artifact-change, synthesis, finding-promotion, or patch-worthiness review.
 
 ## Named Lane Lens Index
 Accept only these canonical `REVIEW-VERIFICATION-LENSES`: `design-intent-lens`, `owner-boundary-lens`, `procedure-adherence-lens`, `skill-consumption-lens`, `coherence-integrity-lens`, `governance-continuity-lens`, `minimum-executable-information-lens`, `negative-risk-lens`, `removal-first-lens`, `functional-independence-lens`, `patch-worthiness-lens`.
@@ -81,12 +81,12 @@ Treat inventory proof as coverage evidence only; inspect content before judgment
 Separate owner surfaces from references, generated outputs, runtime state, non-authoritative evidence, and stale artifacts before judgment.
 
 ### 4. Synthesize Findings
-Combine local or requested-shard findings into one evidence map.
+Combine local or requested-shard findings into one evidence map by elimination-first judgment: preserve retained items and the rejection basis for removed alternatives.
 Classify by owner semantics and operating effect.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Judgment Reliability Law` before using any high-risk judgment as a decisive basis.
 Apply `.claude/reference/review-and-verification-core-law.md` `## Cause And Remedy Classification Law` before promotion, rejection, patch-worthiness, patch-readiness, patch/no-patch selection, no-defect judgment, or remedy-owner routing.
-For any item proposed as `confirmed-defect`, record every required `confirmed-defect` element from `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`; missing elements keep the item `open-candidate` or `rejected:<basis>`.
+For any item proposed as `confirmed-defect`, apply `.claude/reference/review-and-verification-core-law.md` `## Candidate Filtering And Promotion Law`; missing required elements keep the item at the supported lower ladder state or `rejected:<basis>`.
 Do not use ordering pressure, repair-order need, reviewer agreement, repeated wording, label similarity, plausible future risk, or explanation fluency as promotion evidence.
 Keep raw candidate, candidate-classified, confirmed-defect, patch-worthy, patch-ready, rejected, no-patch, and open-candidate states separate.
 Reject bare `CONFIRMED`; use exact ladder state.

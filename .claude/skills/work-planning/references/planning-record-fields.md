@@ -24,6 +24,7 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Lawful direct-Agent evidence use outside team runtime records as `lead-local candidate` with an evidence-only `LEAD-LOCAL-WORK-ITEMS` basis.
 - Any route needing configured lane work, assignment-grade work, receipt, reuse, monitoring, or completion handoff records `team-routing candidate` or `ambiguous-route`.
 - `DISPATCH-BLOCKERS` must be `[]`, `blocked:<owner-and-basis>`, or `authorization-required:<basis>`.
+- `PLAN-VERIFICATION-BASIS` must be `Skill(review-verification):plan-draft-readiness:<PACKET-ID>:pass`, `blocked:<owner-and-basis>`, or `not-required:<basis>`.
 - `EXECUTION-READINESS-BASIS` must be `ready:<basis>`, `blocked:<owner-and-basis>`, or `not-applicable:<basis>` when required.
 - `CODEX-INDEPENDENT-REVIEW-BASIS` is the compatibility field for configured independent-review handling and must be `skipped:<basis>`, `triggered:accepted=<n>;rejected=<n>;dropped=<n>`, or `fail-open:<reason>`.
 
@@ -42,6 +43,9 @@ Record `not-applicable:<consumer-cite-or-basis>` instead of dropping a field; an
 - Each phase row records the opened closure unit its stop/evidence closes; category, pattern, theme, summary, wave, batch, priority, or work-item rows are valid as organization or follow-on mapping only, unless the frozen phase opened that row as its own closure unit.
 - Each phase row carries `UPSTREAM-DECISION-BASIS` as the material reviewed, verified, synthesized, validated, rejected, open, blocker, or correction-ready basis it consumes, passes forward, supersedes, or marks `not-applicable:<basis>`.
 - Each phase row records the review/verification judgment as `owner-local-sufficient:<basis>`, `Skill(self-verification):<target>`, `Skill(review-verification):<caller-and-question>`, independent lane owner, or blocker-routing with exhausted internal recovery basis.
+- For consequential dispatch-grade, governance-audit, governance-patch, high-risk judgment, multi-surface, or user-marked important plans, `owner-local-sufficient` is invalid for plan-draft readiness.
+- Required plan-draft readiness uses a distinct `Skill(review-verification):plan-draft-readiness:<bounded-question>` row covering `TEAM-LEAD-WORK-PLAN`, `EXECUTION-READINESS-BASIS`, request-bound packet fields, route/staffing/proof/acceptance rows, and the first execution/write/dispatch row.
+- Dispatch-bound binding-surface, shard-manifest, retained-carrier, and assignment-packet rows use `Skill(task-execution)` as owner after required `PLAN-VERIFICATION-BASIS` passes.
 - Place `Skill(governance-modification)` only at a planned governance asset-change row or confirmed recurrence-barrier hardening row.
 - Place `Skill(review-verification)` inside `Skill(self-verification)` Step 3 when the produced work-product surface set needs PASS-2 critical review.
 - Place `Skill(review-verification)` under `Skill(governance-modification)` as the review engine for governance patch design, consumed owner surface, mutation readiness, and material post-change coherence.
@@ -142,11 +146,17 @@ Reference activations are loaded by the named owning skill at the listed phases.
 - Codex MCP access failure is not a blocker by itself.
 - For any route eligible to enter `task-execution`, `EXECUTION-READINESS-BASIS` must state that packet preflight categories are frozen or explicitly blocked.
 - For assignment-grade dispatch, `EXECUTION-READINESS-BASIS` cannot be `ready:<basis>` unless the standard `RECEIPT-COMPLETION-CONTRACT` can be carried by `task-execution` packet assembly.
+- For consequential dispatch-grade, governance-audit, governance-patch, high-risk judgment, multi-surface, or user-marked important routes, `PLAN-VERIFICATION-BASIS` must cite current Step 14 `review_verification_packet` as `Skill(review-verification):plan-draft-readiness:<PACKET-ID>:pass`.
+- `PLAN-VERIFICATION-BASIS` must cite a packet whose target covers the frozen plan surface, scope, route, staffing, risk failure modes, first execution/write/dispatch row, pass-or-block result, and `.claude/reference/review-and-verification-core-law.md` `## Evidence Law` disproof-attempt evidence.
+- A packet with required corrections, blocking `OPEN-SURFACES`, or `NEXT-OWNER-ACTION` other than the planned next owner is not a pass basis; applying corrections that change the plan, binding surface, packet basis, route, staffing, proof, or acceptance path makes the prior packet stale and reopens `Skill(review-verification):plan-draft-readiness`.
+- `PLAN-VERIFICATION-BASIS: not-required:<basis>` is invalid for the required route classes above.
+- `EXECUTION-READINESS-BASIS: ready:<basis>` is invalid when required `PLAN-VERIFICATION-BASIS` is missing, stale, blocked, owner-local, inline checklist, proxy prose, or non-pass.
+- A passing `PLAN-VERIFICATION-BASIS` is internal route-readiness evidence only; record pass-preserving corrections in the internal planning record and execute the next frozen owner/action directly. It never opens review-result, correction-folded, verified-count, dispatch-opening, or next-step bridge prose.
 - If additional-agent routing is authorized and `PARALLEL-GROUPS` does not name each group, non-overlap boundary, and burden-balance basis, reopen `work-planning`.
 - `PARALLEL-GROUPS` burden-balance basis must not use file count alone. Use the smallest truthful weighted basis: line/byte scale, critical surfaces, reference density, proof/review complexity, and synthesis burden. The basis must come from the frozen planning path, a cited artifact, or self-verification-verified measurement; pre-`work-planning` measurement is invalid. Splittable material imbalance reopens `work-planning`.
 - If `PARALLEL-GROUPS` is `none`, record the exact serial reason.
-- `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
-- Team-routed or ambiguous `NEXT-CONSEQUENTIAL-ACTION` points to `Skill(task-execution)` activation per the activation rule at `.claude/skills/task-execution/SKILL.md` `## Activation`.
+- `NEXT-CONSEQUENTIAL-ACTION` must point to the first named local item, frozen workflow owner, frozen sequence owner, `Skill(review-verification):plan-draft-readiness`, `Skill(task-execution)` activation, loaded `task-execution` consumption, exact blocker-clear move, or exact authorization request from `TEAM-LEAD-WORK-PLAN`.
+- Any route whose required `PLAN-VERIFICATION-BASIS` is missing or stale points `NEXT-CONSEQUENTIAL-ACTION` to `Skill(review-verification):plan-draft-readiness`; it points to local execution, workflow/sequence owner, file write, `Skill(task-execution)`, packet assembly, materialization, or dispatch only after that basis passes.
 - If execution reveals a new consequential local item that is not frozen here, reopen `work-planning`.
 - A bounded correction stays inside the same frozen boundary through packet correction, bounded local carry-forward, or workflow-owned same-artifact/review-surface iteration.
 - That bounded correction exception ends immediately when execution reveals a moved `work-planning` boundary-change axis or route ambiguity.
@@ -164,6 +174,7 @@ DERIVED-DEFAULTS:
 CLAIM-CEILING:
 REQUEST-BOUND-PACKET-FIELDS:
 TEAM-LEAD-WORK-PLAN:
+PLAN-VERIFICATION-BASIS:
 PROJECT-TIER:
 ACTIVE-REQUEST-TIER:
 TIER-RAISE-REASON:
@@ -186,8 +197,10 @@ DISPATCH-BLOCKERS:
 
 ## Resolve Next Owner And Action
 - Complete planning record opens `NEXT-CONSEQUENTIAL-ACTION`.
-- `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner.
-- Team-routed ready basis opens one-time same-session `Skill(task-execution)` activation or loaded `task-execution` consumption according to current session state.
+- `EXECUTION-READINESS-BASIS: ready:<basis>` opens the frozen next owner only after any mandatory `PLAN-VERIFICATION-BASIS` is current.
+- Any ready basis opens `Skill(review-verification):plan-draft-readiness` when mandatory plan verification is missing or stale.
+- Team-routed ready basis opens `Skill(task-execution)` only after current plan verification passes.
+- After current plan verification passes, execute `Skill(task-execution)` activation or loaded `task-execution` consumption directly; do not narrate the pass, folded corrections, route readiness, binding-surface readiness, or dispatch opening.
 - Frozen workflow or sequence basis opens the named owner before deeper execution.
 - `EXECUTION-READINESS-BASIS: blocked:<owner-and-basis>` opens blocker-clear or blocker-routing after internal recovery is exhausted.
 - Missing mandatory field keeps `work-planning` open.

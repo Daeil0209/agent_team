@@ -11,10 +11,8 @@ REPORTING-CURTAIN: .claude/reference/reporting-prohibition-law.md
 Consume this reference when several owner triggers are active.
 Select one executable next owner/action.
 Treat procedural narration as nonterminal evidence.
-Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` before direct tool, renderable-field, visible-prose, or `Bash` stdout/stderr construction boundaries.
+Use `.claude/skills/agent-team-lead/references/pre-action-gate.md` before direct tool, renderable-field, visible-prose, or assistant-authored prose/detail embedded in tool payloads.
 For ordinary procedure routing with none of those boundaries, use `pre-action-gate` when the selected next procedure action can drift in owner, route, mutation boundary, dispatch boundary, proof/review/validation boundary, or claim strength.
-Keep trigger order, named artifacts, consumption status, and next-owner/action internal unless `.claude/reference/reporting-prohibition-law.md` grants a narrow exception.
-When no narrow report exception exists, continue through the selected next owner/action internally.
 
 ## Consume When
 - A named owner skill or sequence trigger is active.
@@ -62,14 +60,6 @@ Consume the highest active trigger first:
 9. `Skill(governance-modification)` when the current owner path names `.claude` governance asset change or confirmed recurrence-barrier hardening as the next owner/action after required `Skill(self-verification)` convergence
 
 After the current session-start artifact is current, trigger 3 reopens trigger 2 only when trigger 2 is independently active.
-
-- `Skill(session-boot)` records `runtime-ready: clean`, runtime-ready, or runtime-blocked declaration internally.
-- `Skill(work-planning)` records frozen-fields internally.
-- `Skill(review-verification)` returns internal `review_verification_packet`.
-- `Skill(self-verification)` records an internal convergence-state record.
-- `Skill(task-execution)` records dispatch-ready packet, dispatch-pending truth, or correction route internally.
-- `Skill(governance-modification)` records asset-change or recurrence-barrier hardening patch basis and post-verify result internally.
-- `Skill(session-closeout)` records closeout residual truth or teardown completion internally.
 
 ## Artifact Discipline
 Skill load is availability only.

@@ -120,14 +120,8 @@ Run each item against the identified security-sensitive surfaces. Record finding
 **Reviewer action:** Flag every outbound network call or URL-consuming operation where the target URL is fully or partially controlled by user input without strict allowlist enforcement. Redirect leaving application domain: T1. Intra-app redirect without path validation: T2.
 ---
 ## 3. Security Severity Framework
-Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`. Security findings additionally carry a deployment-block escalation tier T0–T3 to gate release activity:
-| Tier | Reviewer Severity | Action Required |
-|---|---|---|
-| **T0** | Critical | Block deployment immediately; fix required before any further release activity |
-| **T1** | Critical / Major | Fix before release; blocks the current release gate |
-| **T2** | Major / Minor | Fix in current sprint; blocks stage acceptance when 3 or more unresolved T2 findings create cumulative release risk on a shared asset, control family, attack path, or deployment surface |
-| **T3** | Advisory | Record and schedule; does not block current release |
-**Gate rule:** Any T0 or T1 finding is individually blocking. Three or more unresolved T2 findings collectively constitute a T1-equivalent blocking condition only when the reviewer records cumulative exploitability, shared control failure, or release-scope acceptance risk; otherwise keep them as current-sprint fixes with explicit rationale.
+Reviewer-grade finding severity uses the canonical Critical / Major / Minor / Advisory mapping in `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Severity Mapping`.
+Security findings additionally carry the shared deployment-block escalation tier T0-T3 owned by `.claude/skills/agent-reviewer/references/reviewer-lane-detail.md` `## Deployment-Block Escalation Tier`; security-specific checks assign tier values, while tier actions and accumulation gates stay with that owner.
 ---
 ## 5. Allowed and Prohibited Practices
 ### Allowed

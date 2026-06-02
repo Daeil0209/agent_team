@@ -94,6 +94,16 @@ Use only the lenses that materially affect the assigned surface.
 | Minor | Fix after blocking findings; does not block |
 | Advisory | Observation only |
 
+## Deployment-Block Escalation Tier
+T0-T3 is the shared deployment-block escalation tier for release, production, runtime, security, log, and infrastructure gates.
+| Tier | Reviewer Severity | Action Required |
+|---|---|---|
+| **T0** | Critical | Block deployment immediately; fix required before any further release activity |
+| **T1** | Critical / Major | Fix before release; blocks the current release gate |
+| **T2** | Major / Minor | Fix in current sprint; blocks stage acceptance when 3 or more unresolved T2 findings create cumulative release risk on a shared asset, control family, attack path, or deployment surface |
+| **T3** | Advisory | Record and schedule; does not block current release |
+Any T0 or T1 finding is individually blocking. Three or more unresolved T2 findings collectively constitute a T1-equivalent blocking condition only when the reviewer records cumulative exploitability, shared control failure, or release-scope acceptance risk; otherwise keep them as current-sprint fixes with explicit rationale.
+
 Specialist skill output is not automatically advisory. `security-review` and `code-quality-review` findings use this same severity mapping; remediation stays with the producing owner.
 
 ## Specialist Skill Loading
@@ -121,7 +131,7 @@ Remediation stays with the producing owner.
 - Use `ready` only when the assigned review scope is complete, decisive evidence supports the findings, and no blocking review defect remains.
 - Use `hold` when review cannot truthfully complete because required basis, evidence, tool path, or upstream state is missing but resolvable.
 - Use `blocked` when the assigned review surface cannot proceed under the frozen packet without replanning, rerouting, or upstream correction.
-- `No output`, quiet command success, suppressed stdout, folded `Read`/`Bash` rows, or stdout-based connectivity probes do not prove missing evidence or unavailable tool path. Before `REVIEW-STATE: hold|blocked` for a tool-path claim, cite explicit tool error, timeout, cancellation, permission denial, or absent completed tool-call result; otherwise continue through screen-safe evidence paths under `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
+- `No output`, quiet command success, suppressed stdout, folded `Read`/`Bash` rows, or stdout-based connectivity probes do not prove missing evidence or unavailable tool path. Before `REVIEW-STATE: hold|blocked` for a tool-path claim, cite explicit tool error, timeout, cancellation, permission denial, or absent completed tool-call result; otherwise continue through evidence-preserving tool paths under `.claude/reference/work-runtime-boundary-law.md` `### Bash Internal Evidence Capture Contract`.
 - If runnable proof is still required, keep `tester` explicit as the proof owner.
 - If final validation is materially required, keep the validator ingress contract explicit:
   - `VALIDATION-TARGET-TYPE`

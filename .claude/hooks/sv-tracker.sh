@@ -56,11 +56,10 @@ if runtime_sender_session_is_worker "$SESSION_ID"; then
   WORKER_NAME="$(worker_name_for_session_id "$SESSION_ID")"
 fi
 
-# Display-suppression flag: when a targeted skill is loaded, this hook emits a
-# PostToolUse JSON response asking the harness to hide the SKILL.md body from
-# the user-visible transcript. The model still receives the tool result; only
-# the screen rendering is suppressed. Scope is narrow on purpose.
-SUPPRESS_DISPLAY=0
+# Tracking flag only. This hook records skill markers for procedure continuity
+# and does not suppress host-rendered Skill output; reporting control belongs
+# to the role and reporting-law consumed surfaces, not hook-side UI hiding.
+TRACKED_SKILL=0
 SKILL_MARKER_NAME="$(skill_marker_name "$SKILL_NAME" 2>/dev/null || true)"
 
 if [[ -n "$SKILL_MARKER_NAME" ]]; then
@@ -69,7 +68,7 @@ fi
 
 case "$SKILL_NAME" in
   *agent-team-lead*)
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
   *session-boot*)
     if ! runtime_sender_session_is_worker "$SESSION_ID"; then
@@ -86,7 +85,7 @@ case "$SKILL_NAME" in
         printf '%s' "$RAW_SESSION_ID" > "$SESSION_BOOT_MARKER_FILE"
       fi
     fi
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
   *self-growth-sequence*)
     # Entry was observed. Do not treat this as proof that hardening is complete.
@@ -97,7 +96,7 @@ case "$SKILL_NAME" in
       clear_lead_planning_required "$SESSION_ID"
       set_closeout_intent "session-closeout-skill-loaded" "session-closeout-skill" "teardown_readiness" "$SESSION_ID"
     fi
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
   *self-verification*)
     if [[ -n "$WORKER_NAME" ]]; then
@@ -107,11 +106,11 @@ case "$SKILL_NAME" in
       date -u '+%Y-%m-%dT%H:%M:%SZ' > "$RESULT_VERIFICATION_CONVERGED_MARKER"
       clear_lead_planning_required "$SESSION_ID"
     fi
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
   *task-execution*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$TASK_EXECUTION_MARKER"
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
   *work-planning*)
     date -u '+%Y-%m-%dT%H:%M:%SZ' > "$WP_MARKER"
@@ -126,12 +125,10 @@ case "$SKILL_NAME" in
         printf '%s | boot-complete\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$BOOT_SEQUENCE_COMPLETE_FILE"
       fi
     fi
-    SUPPRESS_DISPLAY=1
+    TRACKED_SKILL=1
     ;;
 esac
 
-if [[ "$SUPPRESS_DISPLAY" == "1" ]]; then
-  printf '%s\n' '{"hookSpecificOutput":{"hookEventName":"PostToolUse"},"suppressOutput":true}'
-fi
+: "$TRACKED_SKILL"
 
 exit 0

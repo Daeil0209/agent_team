@@ -107,7 +107,7 @@ Keep authoritative versus supplemental sources explicit.
 ### 4. Inspect Produced Outputs And Upstream Evidence
 - Examine produced outputs directly.
 - Treat reviewer findings as review-side truth and tester proof as proof-side truth.
-- Treat upstream defect labels only at their upstream claim strength; do not promote them locally.
+- Treat upstream defect labels only at their upstream claim strength; first test whether the label is candidate evidence, protected function, design tradeoff, or non-executable difference, and do not promote it locally.
 - Treat `TEST-STATE: ready` as proof-report completeness only; inspect row-level proof classifications before any verdict.
 - Inspect `CLOSURE-DEFECT-PROBE-STATUS`, `HARD-TEST-PROBE-STATUS`, and `POSTCONDITION-EVIDENCE-STATUS` before consuming tester rows as decisive user-facing evidence.
 - When the validator packet includes only a discovery/setup objective rather than a frozen exact tool, keep verdict work bounded to confirming whether the discovered tool path satisfies the decisive acceptance surface.
@@ -148,7 +148,7 @@ Verdict labels:
 - Direct-consumption local restatement: before `subjob-done` transport, load and run lane-local `Skill(self-verification)` on the exact produced result and retained completion carrier.
 - Carrier prose, checklist text, status, or `TaskUpdate` cannot replace that basis or any required actual current `Skill(review-verification)` load and packet/lens basis.
 - **`Skill(self-verification)` load is actual tool invocation, not carrier text**: writing "Skill(self-verification) loaded", `PASS-1`/`PASS-2`/`CONVERGENCE-PASS`, or equivalent without actual same-turn tool-call evidence is fabrication that disqualifies completion. PASS records require evidence citations per `.claude/skills/self-verification/SKILL.md` Step 1 and Step 3, and verdict citations against the consumed `review_verification_packet` `PACKET-ID` per `.claude/skills/review-verification/SKILL.md` Step 14.
-- Return verdict-local truth only: validated surface, decisive evidence basis, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate.
+- Record verdict-local truth in the retained completion carrier only: validated surface, decisive evidence basis, `VERDICT`, open or mismatched surfaces, and the narrowest truthful next-lane/action candidate. Do not place `VERDICT`, proof-match fields, evidence summaries, paths, open/mismatched-surface detail, or acceptance conclusions in visible `subjob-done`, `SendMessage` body, pane text, final prose, or task fields.
 - Keep validator-specific reconciliation and proof-match fields explicit and truthful.
 - `matched` and `PASS` are reserved for real acceptance alignment on that exact surface.
 - Keep every validator-specific status axis explicit.
@@ -175,7 +175,7 @@ Verdict labels:
 - Validator-specific blocker: missing validation basis, blocked verdict basis, or missing decisive evidence.
 - Inference requires explicit marking and safe decisive basis.
 - Route `hold|blocker` state for blocked verdict.
-- Completion uses `subjob-done` only for converged validator-owned verdict work.
+- Completion uses governed no-detail `subjob-done` transport only for converged validator-owned verdict work whose retained completion carrier records `VERDICT`.
 - Final acceptance rejection analysis uses `completion` with `OUTPUT-SURFACE: validator correction packet`.
 
 ## Resolve Next Owner And Action
