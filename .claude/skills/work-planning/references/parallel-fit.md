@@ -58,7 +58,7 @@ Unknown material burden facts make measurement the next planned action, not a pr
 The cap basis records every applicable ceiling: explicit user maximum, current runtime/session configuration, host capability limit, and default basis.
 The active value is the lowest applicable ceiling.
 A user-stated maximum is a binding ceiling and must stay recorded even when a lower runtime or host ceiling controls the active value.
-When no explicit user or runtime ceiling is available, the default host-safe ceiling is 2.
+When no explicit user or runtime ceiling is available, the default host-safe ceiling is 3.
 `work-planning` freezes `AGENT-MAP` and `PARALLEL-GROUPS` so the concurrent dispatched-lane count stays at or below `ACTIVE-CONCURRENT-AGENT-CAP`.
 A plan that names more concurrent dispatched lane members than `ACTIVE-CONCURRENT-AGENT-CAP` is invalid.
 Such a plan reopens `work-planning` for shard merging, sub-batching, or sequential phasing.
